@@ -22,7 +22,7 @@ class Company extends AppModel {
 			'hasMany' => array(
 				'Customer' => array(
 					'className' => 'Customer',
-					'foreignKey' => 'customer_id',
+					'foreignKey' => 'company_id',
 					'dependent' => false,
 					'conditions' => '',
 					'fields' => '',

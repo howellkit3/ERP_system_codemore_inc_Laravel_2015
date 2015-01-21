@@ -23,7 +23,7 @@ class Customer extends AppModel {
 			'belongsTo' => array(
 				'Company' => array(
 					'className' => 'Company',
-					'foreignKey' => 'customer_id',
+					'foreignKey' => 'company_id',
 					'dependent' => false,
 					'conditions' => '',
 					'fields' => '',

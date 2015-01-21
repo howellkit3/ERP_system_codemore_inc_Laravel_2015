@@ -39,7 +39,7 @@ class SalesController extends SalesAppController {
 		$this->Session->read('Auth');
 		$this->Company->setDataSource('koufu_sale');
 		$this->loadModel('Sales.Company');
-		$this->loadModel('Sales.Customer');
+		
 		$this->Company->bind('Customer');
 		//pr($this->request->data);exit();
 		if ($this->request->is('post')) {
@@ -48,10 +48,11 @@ class SalesController extends SalesAppController {
             	//$this->Company->create();
             	$company = $this->Company->save($this->request->data);
             	if (!empty($company)) {
-           //  	 	$this->Customer->create();
-		             $this->request->data['Customer']['company_id'] = $this->Company->id;
-		            $this->Customer->create();
-		            $this->Customer->save($this->request->data);
+            		$this->loadModel('Sales.Customer');
+            		//pr($company);exit();
+		            $this->request->data['Customer']['company_id'] = $this->Company->id;
+		            //$this->Customer->create();
+		            $this->Company->Customer->save($this->request->data['Customer']);
 		            	 $this->Session->setFlash(__('Customer Info is successfully added in the system.'));
 		            	$this->redirect(
 		                    array('controller' => 'sales', 'action' => 'index','plugin' => 'sales')
