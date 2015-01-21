@@ -31,8 +31,6 @@
  * In production mode, flash messages redirect after a time interval.
  * In development mode, you need to click the flash message to continue.
  */
-
-
 	Configure::write('debug', 2);
 
 /**
@@ -224,12 +222,12 @@
 /**
  * A random string used in security hashing methods.
  */
-	Configure::write('Security.salt', 'DYhG93b0qyJfIxfs2gu987OHIIUVoUubW4gErhjkopwvniR2G0FgaC9mi');
+	Configure::write('Security.salt', 'bienkiedsfadsfadsfasdfsdafsdfdsfdsfdasfdsf');
 
 /**
  * A random numeric string (digits only) used to encrypt/decrypt strings.
  */
-	Configure::write('Security.cipherSeed', '7682359309657453454542496746796009883645');
+	Configure::write('Security.cipherSeed', '852462585852462585852462585852462585');
 
 /**
  * Apply timestamps with the last modified time to static assets (js, css, images).
@@ -269,7 +267,7 @@
  * Uncomment this line and correct your server timezone to fix
  * any date & time related errors.
  */
-	date_default_timezone_set('UTC');
+	//date_default_timezone_set('UTC');
 
 /**
  * `Config.timezone` is available in which you can set users' timezone string.
