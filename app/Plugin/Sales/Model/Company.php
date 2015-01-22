@@ -9,7 +9,7 @@ App::uses('AuthComponent', 'Controller/Component');
  */
 class Company extends AppModel {
 
-	public $useTable = 'companies'; // name of the database table 
+	//public $useTable = 'companies'; // name of the database table 
     public $useDbConfig = 'koufu_sale';
 
 	public $recursive = -1;
@@ -38,6 +38,7 @@ class Company extends AppModel {
 
 		$this->contain($model);
 	}
+	
 	public $validate = array(
 
 		'company_name' => array(

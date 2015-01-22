@@ -9,13 +9,12 @@ App::uses('AuthComponent', 'Controller/Component');
  */
 class Customer extends AppModel {
 
-	public $useTable = 'customers'; // name of the database table 
+	//public $useTable = 'customers'; // name of the database table 
     public $useDbConfig = 'koufu_sale';
 
 	public $recursive = -1;
 
 	public $actsAs = array('Containable');
-
 
 	public function bind($model = array('Group')){
 
@@ -39,6 +38,7 @@ class Customer extends AppModel {
 
 		$this->contain($model);
 	}
+	
 	public $validate = array(
 
 		'company_name' => array(

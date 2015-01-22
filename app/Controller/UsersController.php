@@ -14,7 +14,6 @@ class UsersController extends AppController
 
     public function beforeFilter() {
         parent::beforeFilter();
-        // $this->response->disableCache();
         $this->Auth->allow('login','add', 'index');
     }
 	public function home() {
@@ -42,7 +41,9 @@ class UsersController extends AppController
 
 	public function login() {
 
-    $this->Session->read('Auth');
+        $this->layout = 'login';
+
+        $this->Session->read('Auth');
 
 		 //if already logged-in, redirect
         if($this->Session->check('Auth.User')){

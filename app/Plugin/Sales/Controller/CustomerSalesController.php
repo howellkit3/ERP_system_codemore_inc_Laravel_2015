@@ -45,4 +45,16 @@ class CustomerSalesController extends SalesAppController {
 		
 	}
 
+	public function add(){
+
+	}
+
+	public function edit(){
+
+	}
+
+	public function view(){
+		
+	}
+
 }
