@@ -1,35 +1,43 @@
 <div class="users form">
+    <?php
+        echo $this->Html->link( "Sales",   array('plugin' => 'sales', 'controller' => 'sales', 'action' => 'index'));
+        echo "---";
+        echo $this->Html->link('Add', array('plugin' => 'sales', 'controller' => 'customers', 'action' => 'add'));
+        echo "---";
+        echo $this->Html->link( "View",   array('controller' =>'sales','action'=>'') );
+        echo "<br>";
+        echo "<br>";
+    ?>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h3 class="header smaller lighter blue">Customer List</h3>
+            <table aria-describedby="sample-table-2_info" id="ads-table" class="table table-striped table-bordered table-hover dataTable">
+                <thead>
+                    <tr role="row">
+                        <th aria-label="" colspan="1" rowspan="1" aria-controls="ads-table" tabindex="0" role="columnheader" class="sorting">Company Name</th>
+                        <th aria-label="" colspan="1" rowspan="1" aria-controls="ads-table" tabindex="0" role="columnheader" class="sorting">Company Address</th>
+                        <th aria-label="" colspan="1" rowspan="1" aria-controls="ads-table" tabindex="0" role="columnheader" class="sorting">State province</th>
+                         <th aria-label="" colspan="1" rowspan="1" aria-controls="ads-table" tabindex="0" role="columnheader" class="sorting">Company Contact</th>
+                         <th aria-label="" colspan="1" rowspan="1" aria-controls="ads-table" tabindex="0" role="columnheader" class="sorting">Contact Person</th>
+                        <th aria-label="" colspan="1" rowspan="1" aria-controls="ads-table" tabindex="0" role="columnheader" class="sorting">Email</th>
+                        <th aria-label="" colspan="1" rowspan="1" aria-controls="ads-table" tabindex="0" role="columnheader" class="sorting">Contact Number</th>
+                         <th aria-label="" colspan="1" rowspan="1" aria-controls="ads-table" tabindex="0" role="columnheader" class="sorting">Address</th>
+                         <th aria-label="" colspan="1" rowspan="1" aria-controls="ads-table" tabindex="0" role="columnheader" class="sorting">Action</th>
+                      
+                       
+                    </tr>
+                </thead>
+                <?php echo $this->element('customer_table'); ?>
+            </table>
+        </div>
+    </div>
  
-    <?php echo $this->Form->create('Company',array('url'=>(array('controller' => 'sales','action' => 'add')),'plugin' => 'sales'));?>
-        <fieldset>
-            <legend><?php echo __('Company Information'); ?></legend>
-            <?php 
-                echo $this->Form->input('company_name');
-                echo $this->Form->input('company_address');
-                echo $this->Form->input('state_province');
-                echo $this->Form->input('company_contact');
-               	
-                //echo $this->Form->submit('Add Customer Info', array('class' => 'form-submit',  'title' => 'Click here to add the user') );
-            ?>
-            <hr>
-            <br>
-            <legend><?php echo __('Contact Information'); ?></legend>
-            <?php 
-                echo $this->Form->input('Customer.firstname');
-                echo $this->Form->input('Customer.middlename');
-                echo $this->Form->input('Customer.lastname');
-                echo $this->Form->input('Customer.email');
-                echo $this->Form->input('Customer.contact_number');
-                echo $this->Form->input('Customer.address');
-               
-                echo $this->Form->submit('Add Customer Info', array('class' => 'form-submit',  'title' => 'Click here to add the user') );
-            ?>
-        </fieldset>
-    <?php echo $this->Form->end(); ?>
 </div>
+
 <?php
     if($this->Session->check('Auth.User')){
-        echo $this->Html->link( "Return to Dashboard",   array('action'=>'index') );
+        echo $this->Html->link( "Return to Dashboard",   array('controller' => '../dashboards','action'=>'index') );
         echo "<br>";
         //echo $this->Html->link( "Customer Info",   array('action'=>'add') );
 
