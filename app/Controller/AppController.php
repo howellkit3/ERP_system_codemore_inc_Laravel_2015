@@ -42,7 +42,7 @@ class AppController extends Controller {
                 	//'passwordHasher' => array('className' => 'Simple')
                 )
            	 ),
-	        'loginRedirect' => array('controller' => 'sales', 'action' => 'index','plugin' => 'sales'),
+	        'loginRedirect' => array('controller' => 'dashboards', 'action' => 'index'),
 	        'logoutRedirect' => array('controller' => 'users', 'action' => 'login'),
 	        'authError' => 'You must be logged in to view this page.',
 	        'loginError' => 'Invalid Username or Password entered, please try again.'
