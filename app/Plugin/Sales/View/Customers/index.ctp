@@ -8,6 +8,32 @@
 
      
     ?>
+    <?php echo $this->Form->create('Customer',array('url'=>(array('controller' => 'customers','action' => 'add','plugin' => 'sales'))));?>
+    
+        <fieldset>
+            <legend><?php echo __('Company Information'); ?></legend>
+            <?php 
+                echo $this->Form->input('company_name');
+                echo $this->Form->input('company_address');
+                echo $this->Form->input('state_province');
+                echo $this->Form->input('company_contact');
+                
+            ?>
+            <hr>
+            <br>
+            <legend><?php echo __('Contact Information'); ?></legend>
+            <?php 
+                echo $this->Form->input('Customer.firstname');
+                echo $this->Form->input('Customer.middlename');
+                echo $this->Form->input('Customer.lastname');
+                echo $this->Form->input('Customer.email');
+                echo $this->Form->input('Customer.contact_number');
+                echo $this->Form->input('Customer.address');
+               
+                echo $this->Form->submit('Add Customer Info', array('class' => 'form-submit',  'title' => 'Click here to add the user') );
+            ?>
+        </fieldset>
+    <?php echo $this->Form->end(); ?>
  
 </div>
 <?php

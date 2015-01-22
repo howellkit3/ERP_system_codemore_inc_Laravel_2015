@@ -1,5 +1,9 @@
 <?php
 App::uses('SalesAppController', 'Sales.Controller');
+App::uses('AppController', 'Controller');
+App::import('Controller', 'App');
+App::import('model','Sales.Company');
+App::import('model','Sales.Customer');
 /**
  * Sales Controller
  *
@@ -57,7 +61,5 @@ class SalesController extends SalesAppController {
 		$this->set(compact('company'));
 		
 	}
-
-	
 
 }

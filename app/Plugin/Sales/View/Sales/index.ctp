@@ -4,14 +4,14 @@
         echo "---";
         echo $this->Html->link('Add', array('plugin' => 'sales', 'controller' => 'customers', 'action' => 'add'));
         echo "---";
-        echo $this->Html->link( "View",   array('controller' =>'sales','action'=>'') );
+        //echo $this->Html->link( "View",   array('controller' =>'sales','action'=>'') );
         echo "<br>";
         echo "<br>";
     ?>
 
     <div class="row">
         <div class="col-xs-12">
-            <h3 class="header smaller lighter blue">Customer List</h3>
+            <h3 class="header smaller lighter blue">Customers List</h3>
             <table aria-describedby="sample-table-2_info" id="ads-table" class="table table-striped table-bordered table-hover dataTable">
                 <thead>
                     <tr role="row">

@@ -2,14 +2,17 @@
    <?php
         echo $this->Html->link( "Sales",   array('plugin' => 'sales', 'controller' => 'sales', 'action' => 'index'));
         echo "---";
-        echo $this->Html->link("Add", array('plugin' => 'sales', 'controller' => 'customers', 'action' => 'add'));
+        echo $this->Html->link(__('Add'), array('controller' => 'customers', 'action' => 'add', 'plugin' => 'sales'));
+        //echo $this->Html->link("Add", array('plugin' => 'sales', 'controller' => 'customers', 'action' => 'add'));
         echo "---";
-        echo $this->Html->link( "View",   array('controller' =>'sales','action'=>'') );
-
+        //echo $this->Html->link( "View",   array('controller' =>'sales','action'=>'') );
+        echo "<br>";
+        echo "<br>";
      
     ?>
  
-    <?php echo $this->Form->create('Customer',array('url'=>(array('controller' => 'customers','action' => 'add')),'plugin' => 'sales'));?>
+    <?php echo $this->Form->create('Customer',array('url'=>(array('controller' => 'customers','action' => 'add','plugin' => 'sales'))));?>
+
         <fieldset>
             <legend><?php echo __('Company Information'); ?></legend>
             <?php 
