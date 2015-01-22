@@ -38,14 +38,12 @@
                 <?php echo $customerlist['Customer'][0]['address'] ?>
             </td>
            
-
               <td class="actions">
                 <?php //echo $this->Html->link(__('View'), array('controller' => 'user_lists','action' => 'view', $userlist['User']['id'])); ?> |
                 <?php //echo $this->Html->link(__('Edit'), array('controller' => 'user_lists','action' => 'edit', $userlist['User']['id'])); ?> |
                 <?php //echo $this->Form->postLink(__('Delete'), array('controller' => 'user_lists','action' => 'delete', $userlist['User']['id']), array(), __('Are you sure you want to delete # %s?', $userlist['User']['id'])); ?>
             </td>
 
-         
         </tr>
 
     </tbody>

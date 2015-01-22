@@ -69,13 +69,13 @@ Cache::config('default', array('engine' => 'File'));
  * CakePlugin::load('DebugKit'); //Loads a single plugin named DebugKit
  *
  */
-//CakePlugin::loadAll(); // Loads all plugins at once
+CakePlugin::loadAll(); // Loads all plugins at once
 //CakePlugin::load('DebugKit'); 
 //CakePlugin::load('Sales',array('routes' = true));
-CakePlugin::loadAll(array(
+/* CakePlugin::loadAll(array(
     'DebugKit' => array('routes' => true),
-    'Sales' => array('bootstrap' => true, 'routes' => true),
-));
+    //'Sales' => array('bootstrap' => true, 'routes' => true),
+));*/
 /**
  * To prefer app translation over plugin translation, you can set
  *
@@ -119,4 +119,4 @@ CakeLog::config('error', array(
 	'file' => 'error',
 ));
 
-CakePlugin::load('Sales', array('bootstrap' => false, 'routes' => false));
+//CakePlugin::load('Sales', array('bootstrap' => false, 'routes' => false));
