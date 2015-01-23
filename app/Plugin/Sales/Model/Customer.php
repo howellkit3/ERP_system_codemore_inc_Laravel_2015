@@ -9,13 +9,12 @@ App::uses('AuthComponent', 'Controller/Component');
  */
 class Customer extends AppModel {
 
-	public $useTable = 'companies'; // name of the database table 
+	//public $useTable = 'customers'; // name of the database table 
     public $useDbConfig = 'koufu_sale';
 
 	public $recursive = -1;
 
 	public $actsAs = array('Containable');
-
 
 	public function bind($model = array('Group')){
 
@@ -39,23 +38,55 @@ class Customer extends AppModel {
 
 		$this->contain($model);
 	}
-	// public function beforeSave($options = array()) {
-	//     // if (isset($this->data[$this->alias]['password'])) {
-	//     //     $passwordHasher = new SimplePasswordHasher();
-	//     //     $this->data[$this->alias]['password'] = $passwordHasher->hash(
-	//     //         $this->data[$this->alias]['password']
-	//     //     );
-	//     // }
+	
+	public $validate = array(
 
-	//     // return true;
-	// }
-	// public function CustomerAction($data = null) {
-	// 	pr($data);exit();
-	// 	$customerInfo = ClassRegistry::init('Sale');
-	// 	// $passReal = $data['User']['password'];
-	// 	$customerInfo->save($data); 
-	// 	// return $this->saveField('password_real', $passReal);
-	// 	return true;
-	// }
+		'company_name' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+			),
+		),
+		'company_address' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+			),
+		),
+		'state_province' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+			),
+		),
+		'company_contact' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+			),
+		),
+		'firstname' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+			),
+		),	
+		'lastname' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+			),
+		),	
+		'email' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+			),
+		),
+		'contact_number' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+			),
+		),
+		'address' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+			),
+		),
+	
+	);
 	
 }
