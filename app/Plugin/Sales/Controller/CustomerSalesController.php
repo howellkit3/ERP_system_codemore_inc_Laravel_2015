@@ -43,6 +43,8 @@ class CustomerSalesController extends SalesAppController {
 		
 	}
 
+
+
 	public function add(){
 		
 		$this->loadModel('Sales.Company');
@@ -77,6 +79,11 @@ class CustomerSalesController extends SalesAppController {
 	}
 
 	public function edit(){
+
+	}
+
+	public function custom_field(){
+		
 
 	}
 
