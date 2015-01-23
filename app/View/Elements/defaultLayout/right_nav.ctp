@@ -2,7 +2,7 @@
 	<section id="col-left" class="col-left-nano">
 		<div id="col-left-inner" class="col-left-nano-content">
 			<div id="user-left-box" class="clearfix hidden-sm hidden-xs dropdown profile2-dropdown">
-				<img alt="" src="/img/samples/scarlet-159.png" />
+			<?php echo $this->Html->image('samples/scarlet-159.png',array('alt' => 'scarlet-159'));  ?>
 				<div class="user-box">
 					<span class="name">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -27,10 +27,40 @@
 						Navigation
 					</li>
 					<li class="active">
-						<a href="index-2.html">
+						<!-- <a href="index-2.html">
 							<i class="fa fa-dashboard"></i>
 							<span>Dashboard</span>
 							<span class="label label-primary label-circle pull-right">28</span>
+						</a> -->
+						<?php
+ 						echo $this->Html->link( "<i class='fa fa-dashboard'></i>
+							<span>Dashboard</span>
+							<span class='label label-primary label-circle pull-right'>28</span> ",   array('controller' =>'dashboards','action'=>'index','plugin' => null),array('escape' => false) );
+ 					?>
+
+					</li>
+					<li>
+					<?php
+ 						echo $this->Html->link( " <i class='fa fa-th-large'></i> <span>Sales</span> <span class='label label-success pull-right'>New</span> ",   array('controller' =>'customer_sales','action'=>'index','plugin' => 'sales'),array('escape' => false) );
+ 					?>
+						<!-- <a href="widgets.html">
+							
+							<span>Sales</span>
+							<span class="label label-success pull-right">New</span>
+						</a> -->
+					</li>
+					<li>
+						<a href="widgets.html">
+							<i class="fa fa-th-large"></i>
+							<span>Warehouse</span>
+							<span class="label label-success pull-right">New</span>
+						</a>
+					</li>
+					<li>
+						<a href="widgets.html">
+							<i class="fa fa-th-large"></i>
+							<span>Purchasing</span>
+							<span class="label label-success pull-right">New</span>
 						</a>
 					</li>
 					<li>

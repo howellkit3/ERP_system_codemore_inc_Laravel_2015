@@ -1,7 +1,7 @@
 <header class="navbar" id="header-navbar">
 	<div class="container">
 		<a href="/" id="logo" class="navbar-brand">
-			<img src="/img/logo.png" alt="" class="normal-logo logo-white"/>
+			<img src="/img/logo.png" alt="Koufu Net" class="normal-logo logo-white"/>
 			<img src="/img/logo-black.png" alt="" class="normal-logo logo-black"/>
 			<img src="/img/logo-small.png" alt="" class="small-logo hidden-xs hidden-sm hidden"/>
 		</a>
@@ -213,7 +213,7 @@
 				</li>
 				<li class="dropdown profile-dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-						<img src="/img/samples/scarlet-159.png" alt=""/>
+					<?php echo $this->Html->image('samples/scarlet-159.png',array('alt' => 'scarlet-159'));  ?>
 						<span class="hidden-xs">Scarlett Johansson</span> <b class="caret"></b>
 					</a>
 					<ul class="dropdown-menu dropdown-menu-right">

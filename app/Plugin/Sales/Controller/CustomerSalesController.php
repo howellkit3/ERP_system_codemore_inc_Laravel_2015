@@ -1,7 +1,6 @@
 <?php
-App::uses('SalesAppController', 'Sales.Controller');
 App::uses('AppController', 'Controller');
-App::import('Controller', 'App');
+
 App::import('model','Sales.Company');
 App::import('model','Sales.Customer');
 /**
@@ -9,7 +8,6 @@ App::import('model','Sales.Customer');
  *
  */
 class CustomerSalesController extends SalesAppController {
-
 
 	public $useDbConfig = 'koufu_sale';
 
@@ -46,6 +44,35 @@ class CustomerSalesController extends SalesAppController {
 	}
 
 	public function add(){
+		
+		$this->loadModel('Sales.Company');
+
+		$this->loadModel('Sales.Customer');
+
+		if ($this->request->is('post')) {
+
+            if (!empty($this->request->data)) {
+            	 
+            	$this->Company->create();
+            	
+            	if ($this->Company->save($this->request->data)) {
+
+		            $this->request->data['Customer']['company_id'] = $this->Company->id;
+		            $this->Customer->create();
+		            $this->Customer->save($this->request->data);
+		            	 $this->Session->setFlash(__('Customer Info is successfully added in the system.'));
+		            	$this->redirect(
+		                    array('controller' => 'customer_sales', 'action' => 'add')
+		                );
+		           
+	            }else{
+
+	            	echo "mmmm";exit();
+	            }
+            	
+            	
+            }
+        }
 
 	}
 
