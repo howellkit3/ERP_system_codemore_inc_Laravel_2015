@@ -144,6 +144,8 @@
 	        //theme scripts
 	        echo $this->Html->script('scripts');
 	        echo $this->Html->script('pace.min');
+	        echo $this->Html->script('global');
+	        //echo $this->Html->script('jquery.min');
 	        
 	    ?>
     

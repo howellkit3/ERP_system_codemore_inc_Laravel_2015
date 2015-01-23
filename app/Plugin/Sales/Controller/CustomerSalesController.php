@@ -37,13 +37,12 @@ class CustomerSalesController extends SalesAppController {
 
 		$this->Company->recursive = 0;
 
-		$company = $this->Company->find('all');
+		$company = $this->Company->find('all',array(
+    		'order' => array('Company.id DESC')));
 		
 		$this->set(compact('company'));
-		
+
 	}
-
-
 
 	public function add(){
 
