@@ -46,7 +46,7 @@ class CustomerSalesController extends SalesAppController {
 
 
 	public function add(){
-		
+
 		$this->loadModel('Sales.Company');
 
 		$this->loadModel('Sales.Customer');
@@ -62,7 +62,7 @@ class CustomerSalesController extends SalesAppController {
 		            $this->request->data['Customer']['company_id'] = $this->Company->id;
 		            $this->Customer->create();
 		            $this->Customer->save($this->request->data);
-		            	 $this->Session->setFlash(__('Customer Info is successfully added in the system.'));
+		            	$this->Session->setFlash(__('Customer Info is successfully added in the system.'));
 		            	$this->redirect(
 		                    array('controller' => 'customer_sales', 'action' => 'add')
 		                );

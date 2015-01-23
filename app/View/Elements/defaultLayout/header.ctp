@@ -220,7 +220,11 @@
 						<li><a href="user-profile.html"><i class="fa fa-user"></i>Profile</a></li>
 						<li><a href="#"><i class="fa fa-cog"></i>Settings</a></li>
 						<li><a href="#"><i class="fa fa-envelope-o"></i>Messages</a></li>
-						<li><a href="#"><i class="fa fa-power-off"></i>Logout</a></li>
+						<li>
+							<?php
+		 						echo $this->Html->link( "<i class='fa fa-power-off'></i>Logout ",   array('controller' =>'users','action'=>'logout','plugin' => null),array('escape' => false) );
+		 					?>
+						</li>
 					</ul>
 				</li>
 				<li class="hidden-xxs">

@@ -13,7 +13,11 @@
 							<li><a href="user-profile.html"><i class="fa fa-user"></i>Profile</a></li>
 							<li><a href="#"><i class="fa fa-cog"></i>Settings</a></li>
 							<li><a href="#"><i class="fa fa-envelope-o"></i>Messages</a></li>
-							<li><a href="#"><i class="fa fa-power-off"></i>Logout</a></li>
+							<li>
+								<?php
+			 						echo $this->Html->link( "<i class='fa fa-power-off'></i>Logout ",   array('controller' =>'users','action'=>'logout','plugin' => null),array('escape' => false) );
+			 					?>
+							</li>
 						</ul>
 					</span>
 					<span class="status">
@@ -52,7 +56,7 @@
 	 						echo $this->Html->link( " <i class='fa fa-th-large'></i> <span>Purchasing</span> <span class='label label-success pull-right'>New</span> ",   array('controller' =>'','action'=>'','plugin' => ''),array('escape' => false) );
 	 					?>
 					</li>
-					
+
 				</ul>
 			</div>
 		</div>

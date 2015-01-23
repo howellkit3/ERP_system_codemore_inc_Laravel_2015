@@ -23,11 +23,7 @@
 		<title>KoufuNet :: ERP Solution</title>
 		
 		<!-- bootstrap -->
-		<script type="text/javascript">
-			//<![CDATA[
-			try{if (!window.CloudFlare) {var CloudFlare=[{verbose:0,p:0,byc:0,owlid:"cf",bag2:1,mirage2:0,oracle:0,paths:{cloudflare:"/cdn-cgi/nexp/dok3v=1613a3a185/"},atok:"e2dc129ef418d464a59b90f774bb1667",petok:"674c4d58f92e2be71d353931fa99445a1a99e8b2-1421920199-1800",zone:"adbee.technology",rocket:"0",apps:{"ga_key":{"ua":"UA-49262924-2","ga_bs":"2"}}}];!function(a,b){a=document.createElement("script"),b=document.getElementsByTagName("script")[0],a.async=!0,a.src="../ajax.cloudflare.com/cdn-cgi/nexp/dok3v%3d919620257c/cloudflare.min.js",b.parentNode.insertBefore(a,b)}()}}catch(e){};
-			//]]>
-		</script>
+		
 		<?php
 
 			echo $this->fetch('meta');
@@ -67,7 +63,45 @@
 					<div id="content-wrapper">
 						<div class="row">
 							<div class="col-lg-12">
+								<div class="row">
+								    <div class="col-lg-12">
+								        <div id="content-header" class="clearfix">
+								            <div class="pull-left">
+
+								                <h1>Dashboards</h1>
+								                <ol class="breadcrumb">
+								                    <?php 
+									                    echo $this->Html->getCrumbs(' > ', array(
+														    'text' => 'Home',
+														    'url' => array('controller' => 'dashboards', 'action' => 'index','plugin' => false),
+														    'escape' => false
+														));
+								                    ?>
+
+								                </ol>
+								                
+								            </div>
+
+								            <div class="pull-right hidden-xs">
+								                <div class="xs-graph pull-left">
+								                    <div class="graph-label">
+								                        <b><i class="fa fa-shopping-cart"></i> 838</b> Orders
+								                    </div>
+								                    <div class="graph-content spark-orders"></div>
+								                </div>
+
+								                <div class="xs-graph pull-left mrg-l-lg mrg-r-sm">
+								                    <div class="graph-label">
+								                        <b>&dollar;12.338</b> Revenues
+								                    </div>
+								                    <div class="graph-content spark-revenues"></div>
+								                </div>
+								            </div>
+								        </div>
+								    </div>
+								</div>
 								<?php echo $this->fetch('content'); ?>
+								
 							</div>
 						</div>
 						<footer id="footer-bar" class="row">

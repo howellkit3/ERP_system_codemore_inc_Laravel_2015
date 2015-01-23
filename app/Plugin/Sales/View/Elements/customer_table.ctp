@@ -2,13 +2,13 @@
 
     <tbody aria-relevant="all" aria-live="polite" role="alert">
 
-        <tr class="even">
+        <tr class="">
 
-            <td class="sorting_1">
+            <td class="">
                 <?php echo $customerlist['Company']['company_name'] ?>  
             </td>
 
-            <td class="sorting_1">
+            <td class="">
                 <?php echo $customerlist['Company']['company_address'] ?>
             </td>
 
@@ -20,7 +20,7 @@
                 <?php echo $customerlist['Company']['company_contact'] ?>
             </td>
 
-            <td class="sorting_1">
+            <td class="">
                 <?php echo $customerlist['Customer'][0]['lastname'],
                             $customerlist['Customer'][0]['firstname'];"&nbsp;"; ?>
                 <?php echo $customerlist['Customer'][0]['middlename'] ?>
@@ -38,7 +38,7 @@
                 <?php echo $customerlist['Customer'][0]['address'] ?>
             </td>
            
-              <td class="actions">
+              <td class="">
                 <?php //echo $this->Html->link(__('View'), array('controller' => 'user_lists','action' => 'view', $userlist['User']['id'])); ?> |
                 <?php //echo $this->Html->link(__('Edit'), array('controller' => 'user_lists','action' => 'edit', $userlist['User']['id'])); ?> |
                 <?php //echo $this->Form->postLink(__('Delete'), array('controller' => 'user_lists','action' => 'delete', $userlist['User']['id']), array(), __('Are you sure you want to delete # %s?', $userlist['User']['id'])); ?>
