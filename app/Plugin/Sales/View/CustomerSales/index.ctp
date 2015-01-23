@@ -1,5 +1,34 @@
 <?php $this->Html->addCrumb('Sales', array('controller' => 'customer_sales', 'action' => 'index')); ?>
-
+    <div style="clear:both"></div>
+        <div class="nav-no-collapse navbar-left pull-left hidden-sm hidden-xs">
+            <ul class="nav navbar-nav pull-left">
+                <li class="dropdown hidden-xs">
+                    <a data-toggle="dropdown" class="btn dropdown-toggle">
+                        <span class="count">Quotation</span>
+                    </a>
+                    <ul class="dropdown-menu notifications-list">
+                        <li class="pointer">
+                            <div class="pointer-inner">
+                                <div class="arrow"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown hidden-xs">
+                    <a data-toggle="dropdown" class="btn dropdown-toggle">
+                        <span class="count">Settings</span>
+                    </a>
+                    <ul class="dropdown-menu notifications-list messages-list">
+                        <li class="item-footer">
+                           <!--  <a href="#">
+                            </a> -->
+                            <?php echo $this->Html->link(__('Add Custom field'), array('controller' => 'customer_sales','action' => 'custom_field')); ?>
+                        </li>
+                    </ul>
+                </li>
+           
+            </ul>
+        </div>
 <div class="row">
     <div class="col-lg-12">
         <div class="main-box clearfix">
@@ -49,36 +78,7 @@
                     <li><a href="#"><i class="fa fa-chevron-right"></i></a></li>
                 </ul>
             </div>
-            <div style="clear:both"></div>
-            <div class="nav-no-collapse navbar-left pull-left hidden-sm hidden-xs">
-                <ul class="nav navbar-nav pull-left">
-                    <li class="dropdown hidden-xs">
-                        <a data-toggle="dropdown" class="btn dropdown-toggle">
-                            <span class="count">Quotation</span>
-                        </a>
-                        <ul class="dropdown-menu notifications-list">
-                            <li class="pointer">
-                                <div class="pointer-inner">
-                                    <div class="arrow"></div>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown hidden-xs">
-                        <a data-toggle="dropdown" class="btn dropdown-toggle">
-                            <span class="count">Settings</span>
-                        </a>
-                        <ul class="dropdown-menu notifications-list messages-list">
-                            <li class="item-footer">
-                               <!--  <a href="#">
-                                </a> -->
-                                <?php echo $this->Html->link(__('Add Custom field'), array('controller' => 'customer_sales','action' => 'custom_field')); ?>
-                            </li>
-                        </ul>
-                    </li>
-               
-                </ul>
-            </div>
+    
         </div>
     </div>
 </div>
