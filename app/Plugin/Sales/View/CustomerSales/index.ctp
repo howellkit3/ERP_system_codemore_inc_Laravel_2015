@@ -1,7 +1,7 @@
 <?php $this->Html->addCrumb('Sales', array('controller' => 'customer_sales', 'action' => 'index')); ?>
     <div style="clear:both"></div>
         <div class="nav-no-collapse navbar-left pull-left hidden-sm hidden-xs">
-            <ul class="nav navbar-nav pull-left">
+            <ul style="margin-left:0" class="nav navbar-nav pull-left">
                 <li class="dropdown hidden-xs">
                     <a data-toggle="dropdown" class="btn dropdown-toggle">
                         <span class="count">Quotation</span>

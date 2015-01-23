@@ -3,6 +3,7 @@
 <div class="row">
     <div class="col-lg-6">
         <div class="main-box">
+        <?php $this->Session->flash(); ?>
             <header class="main-box-header clearfix">
                 <h2><u>Customer Information</u></h2>
             </header>

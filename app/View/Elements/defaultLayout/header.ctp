@@ -1,9 +1,9 @@
 <header class="navbar" id="header-navbar">
 	<div class="container">
 		<a href="/" id="logo" class="navbar-brand">
-			<img src="/img/logo.png" alt="Koufu Net" class="normal-logo logo-white"/>
-			<img src="/img/logo-black.png" alt="" class="normal-logo logo-black"/>
-			<img src="/img/logo-small.png" alt="" class="small-logo hidden-xs hidden-sm hidden"/>
+		<?php echo $this->Html->image('logo.png',array('alt' => '','class' =>'normal-logo logo-black'));  ?>
+		<?php echo $this->Html->image('logo-black.png',array('alt' => '','class' =>'normal-logo logo-black'));  ?>
+		<?php echo $this->Html->image('logo-small.png',array('alt' => '','class' =>'small-logo hidden-xs hidden-sm hidde'));  ?>
 		</a>
 		
 		<div class="clearfix">
@@ -86,7 +86,8 @@
 						</li>
 						<li class="item first-item">
 							<a href="#">
-								<img src="/img/samples/messages-photo-1.png" alt=""/>
+							
+									<?php echo $this->Html->image('samples/messages-photo-1.png',array('alt' => 'scarlet-159'));  ?>
 								<span class="content">
 									<span class="content-headline">
 										George Clooney
@@ -101,7 +102,7 @@
 						</li>
 						<li class="item">
 							<a href="#">
-								<img src="/img/samples/messages-photo-2.png" alt=""/>
+								<?php echo $this->Html->image('samples/messages-photo-2.png',array('alt' => 'scarlet-159'));  ?>
 								<span class="content">
 									<span class="content-headline">
 										Emma Watson
@@ -116,7 +117,7 @@
 						</li>
 						<li class="item">
 							<a href="#">
-								<img src="/img/samples/messages-photo-3.png" alt=""/>
+								<?php echo $this->Html->image('samples/messages-photo-3.png',array('alt' => 'scarlet-159'));  ?>
 								<span class="content">
 									<span class="content-headline">
 										Robert Downey Jr.

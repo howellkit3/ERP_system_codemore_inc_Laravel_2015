@@ -57,7 +57,7 @@ class UsersController extends AppController
 
             if ($this->Auth->login()) {
 
-                $this->Session->setFlash(__('Welcome, '. $this->Auth->user('lastname')));
+                // $this->Session->setFlash(__('Welcome, '. $this->Auth->user('lastname')));
                 $this->redirect($this->Auth->redirectUrl());
             } else {
 
