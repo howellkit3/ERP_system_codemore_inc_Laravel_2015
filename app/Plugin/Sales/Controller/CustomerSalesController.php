@@ -2,7 +2,9 @@
 App::uses('AppController', 'Controller');
 
 App::import('model','Sales.Company');
-App::import('model','Sales.Customer');
+App::import('model','Sales.ContactPerson');
+App::import('model','Sales.Address');
+App::import('model','Sales.Contact');
 /**
  * Sales Controller
  *
@@ -11,7 +13,7 @@ class CustomerSalesController extends SalesAppController {
 
 	public $useDbConfig = 'koufu_sale';
 
-	public $uses = array('Sales.Company,Sales.Customer');
+	public $uses = array('Sales.Company,Sales.ContactPerson,Sales.Address,Sales.Contact');
 
 	public function beforeFilter() {
 
@@ -31,7 +33,7 @@ class CustomerSalesController extends SalesAppController {
 
 		$this->loadModel('Sales.Company');
 
-		$this->loadModel('Sales.Customer');
+		$this->loadModel('Sales.ContactPerson');
 
 		$this->Company->bind(array('Customer'));
 
@@ -47,10 +49,13 @@ class CustomerSalesController extends SalesAppController {
 	public function add(){
 
 		$this->loadModel('Sales.Company');
-
-		$this->loadModel('Sales.Customer');
+		$this->loadModel('Sales.ContactPerson');
+		$this->loadModel('Sales.Address');
+		$this->loadModel('Sales.Contact');
 
 		if ($this->request->is('post')) {
+			
+			//pr($this->request->data);exit();
 
             if (!empty($this->request->data)) {
             	 
@@ -58,13 +63,30 @@ class CustomerSalesController extends SalesAppController {
             	
             	if ($this->Company->save($this->request->data)) {
 
-		            $this->request->data['Customer']['company_id'] = $this->Company->id;
-		            $this->Customer->create();
-		            $this->Customer->save($this->request->data);
-		            	$this->Session->setFlash(__('Customer Info is successfully added in the system.'));
-		            	$this->redirect(
-		                    array('controller' => 'customer_sales', 'action' => 'add')
-		                );
+		            $this->request->data['ContactPerson']['company_id'] = $this->Company->id;
+
+		            $this->ContactPerson->create();
+
+		            if($this->ContactPerson->save($this->request->data)){
+
+		            	$this->request->data['Address']['company_id'] = $this->Company->id;
+
+		            	$this->Address->create();
+		            	if($this->Address->save($this->request->data)){
+		            		$this->request->data['Contact']['company_id'] = $this->Company->id;
+		            		$this->Contact->create();
+
+		            		$this->Contact->save($this->request->data);
+
+			            	$this->Session->setFlash(__('Customer Info is successfully added in the system.'));
+			            	$this->redirect(
+			                    array('controller' => 'customer_sales', 'action' => 'add')
+			                );
+		            	}
+		            	
+		            }
+		            
+		            	
 		           
 	            }else{
 

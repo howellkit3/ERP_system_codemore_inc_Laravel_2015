@@ -20,8 +20,8 @@ class Company extends AppModel {
 
 		$this->bindModel(array(
 			'hasMany' => array(
-				'Customer' => array(
-					'className' => 'Customer',
+				'ContactPerson' => array(
+					'className' => 'ContactPerson',
 					'foreignKey' => 'company_id',
 					'dependent' => false,
 					'conditions' => '',
@@ -56,7 +56,22 @@ class Company extends AppModel {
 				'rule' => array('notEmpty'),
 			),
 		),
-		'company_contact' => array(
+		'street' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+			),
+		),
+		'company_email' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+			),
+		),
+		'company_telephone' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+			),
+		),
+		'company_cellphone' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 			),

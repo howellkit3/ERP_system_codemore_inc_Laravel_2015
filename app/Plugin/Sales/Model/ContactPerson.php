@@ -7,7 +7,7 @@ App::uses('AuthComponent', 'Controller/Component');
  * User Model
  *
  */
-class Customer extends AppModel {
+class ContactPerson extends AppModel {
 
 	//public $useTable = 'customers'; // name of the database table 
     public $useDbConfig = 'koufu_sale';
