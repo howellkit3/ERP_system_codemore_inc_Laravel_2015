@@ -1,9 +1,9 @@
 $('.multi-field-wrapper').each(function() {
     var $wrapper = $('.multi-fields', this);
     $(".add-field", $(this)).click(function(e) {
-    	 
+    	 no++;
         $('.multi-field:first-child', $wrapper).clone(true).appendTo($wrapper).find('input').val('').focus();
-
+        $(this).parent().before($("#phone_number_form").clone().attr("id","phone_number_form" + phone_number_form_index));
        	// var i = $("#multi").find("select").length;
        
     });
