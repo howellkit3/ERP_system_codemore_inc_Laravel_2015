@@ -7,7 +7,7 @@ App::uses('AuthComponent', 'Controller/Component');
  * User Model
  *
  */
-class Contact extends AppModel {
+class Email extends AppModel {
 
 	//public $useTable = 'customers'; // name of the database table 
     public $useDbConfig = 'koufu_sale';
@@ -33,9 +33,9 @@ class Contact extends AppModel {
 					'finderQuery' => '',
 					'counterQuery' => ''
 				),
-				'ContactPerson' => array(
-					'className' => 'ContactPerson',
-					'foreignKey' => 'foreign_key',
+				'Contactperson' => array(
+					'className' => 'Company',
+					'foreignKey' => 'Contactperson',
 					'dependent' => false,
 					'conditions' => '',
 					'fields' => '',
@@ -51,7 +51,5 @@ class Contact extends AppModel {
 
 		$this->contain($model);
 	}
-	
-	
 	
 }

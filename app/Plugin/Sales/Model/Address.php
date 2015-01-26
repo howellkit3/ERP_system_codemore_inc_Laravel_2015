@@ -22,7 +22,7 @@ class Address extends AppModel {
 			'belongsTo' => array(
 				'Company' => array(
 					'className' => 'Company',
-					'foreignKey' => 'company_id',
+					'foreignKey' => 'foreign_key',
 					'dependent' => false,
 					'conditions' => '',
 					'fields' => '',

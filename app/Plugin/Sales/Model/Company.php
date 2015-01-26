@@ -33,6 +33,49 @@ class Company extends AppModel {
 					'finderQuery' => '',
 					'counterQuery' => ''
 				)
+				
+			),
+			'hasOne' => array(
+				'Contact' => array(
+					'className' => 'Contact',
+					'foreignKey' => 'foreign_key',
+					'dependent' => false,
+					'conditions' => '',
+					'fields' => '',
+					'order' => '',
+					'limit' => '',
+					'offset' => '',
+					'exclusive' => '',
+					'finderQuery' => '',
+					'counterQuery' => ''
+				),
+				'Email' => array(
+					'className' => 'Email',
+					'foreignKey' => 'foreign_key',
+					'dependent' => false,
+					'conditions' => '',
+					'fields' => '',
+					'order' => '',
+					'limit' => '',
+					'offset' => '',
+					'exclusive' => '',
+					'finderQuery' => '',
+					'counterQuery' => ''
+				),
+				'Address' => array(
+					'className' => 'Address',
+					'foreignKey' => 'foreign_key',
+					'dependent' => false,
+					'conditions' => '',
+					'fields' => '',
+					'order' => '',
+					'limit' => '',
+					'offset' => '',
+					'exclusive' => '',
+					'finderQuery' => '',
+					'counterQuery' => ''
+				)
+				
 			)
 		));
 

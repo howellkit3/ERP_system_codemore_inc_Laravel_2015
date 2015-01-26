@@ -50,15 +50,17 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th><a href="#"><span>Company Name</span></a></th>
-                                <th><a href="#"><span>Company Address</span></a></th>
-                                <th><a href="#"><span>State province</span></a></th>
-                                <th><a href="#"><span>Company Contact</span></a></th>
-                                <th><a href="#"><span>Contact Person</span></a></th>
-                                <th><a href="#"><span>Email</span></a></th>
-                                <th><a href="#"><span>Contact Number</span></a></th>
+                                <th><a href="#"><span>Name</span></a></th>
+                                <th><a href="#"><span>Description</span></a></th>
+                                <th><a href="#"><span>Website</span></a></th>
+
                                 <th><a href="#"><span>Address</span></a></th>
-                                <th><a href="#"><span>Action</span></a></th>
+
+                                <th><a href="#"><span>Contact Info</span></a></th>
+
+                                <th><a href="#"><span>Contact Person</span></a></th>
+                                <th><a href="#"><span>Address</span></a></th>
+                                <th><a href="#"><span>Contact Info</span></a></th>
                                
                             </tr>
                         </thead>

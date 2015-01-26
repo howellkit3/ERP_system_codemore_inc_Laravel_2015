@@ -9,33 +9,41 @@
             </td>
 
             <td class="">
-                <?php echo $customerlist['Company']['company_address'] ?>
+                <?php echo $customerlist['Company']['description'] ?>
             </td>
 
             <td class="">
-                <?php echo $customerlist['Company']['state_province'] ?>
+                <?php echo $customerlist['Company']['website'] ?>
             </td>
 
             <td class="">
-                <?php echo $customerlist['Company']['company_contact'] ?>
+                1.<?php echo $customerlist['Address']['address1'] ?><br>
+                2.<?php echo $customerlist['Address']['address2'] ?><br>
+                City - <?php echo $customerlist['Address']['city'] ?><br>
+                State Province - <?php echo $customerlist['Address']['state_province'] ?><br>
+                Zip Code - <?php echo $customerlist['Address']['zip_code'] ?><br>
+                Country - <?php echo $customerlist['Address']['country'] ?>
+
             </td>
 
             <td class="">
-                <?php echo $customerlist['Customer'][0]['lastname'],
-                            $customerlist['Customer'][0]['firstname'];"&nbsp;"; ?>
-                <?php echo $customerlist['Customer'][0]['middlename'] ?>
+                <?php echo $customerlist['Contact']['number'] ?><br>
+                <?php echo $customerlist['Email']['email'] ?>
             </td>
 
             <td class="">
-                <?php echo $customerlist['Customer'][0]['email'] ?>
+                <?php //echo $customerlist['ContactPerson'][0]['lastname']","
+                           // $customerlist['ContactPerson'][0]['firstname'];"&nbsp;"; ?>
+                <?php //echo $customerlist['ContactPerson'][0]['middlename'] ?>
             </td>
 
             <td class="">
-                <?php echo $customerlist['Customer'][0]['contact_number'] ?>
+                1.<?php //echo $customerlist['Address'][0]['address1'] ?><br>
+                2.<?php //echo $customerlist['Address'][0]['address2'] ?>
             </td>
 
             <td class="">
-                <?php echo $customerlist['Customer'][0]['address'] ?>
+                <?php //echo $customerlist['Contact'][0]['number'] ?>
             </td>
            
               <td class="">

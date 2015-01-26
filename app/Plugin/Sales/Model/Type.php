@@ -7,7 +7,7 @@ App::uses('AuthComponent', 'Controller/Component');
  * User Model
  *
  */
-class Contact extends AppModel {
+class Type extends AppModel {
 
 	//public $useTable = 'customers'; // name of the database table 
     public $useDbConfig = 'koufu_sale';
@@ -19,10 +19,10 @@ class Contact extends AppModel {
 	public function bind($model = array('Group')){
 
 		$this->bindModel(array(
-			'belongsTo' => array(
-				'Company' => array(
-					'className' => 'Company',
-					'foreignKey' => 'foreign_key',
+			'hasMany' => array(
+				'ContactPerson' => array(
+					'className' => 'ContactPerson',
+					'foreignKey' => 'type',
 					'dependent' => false,
 					'conditions' => '',
 					'fields' => '',
@@ -33,9 +33,35 @@ class Contact extends AppModel {
 					'finderQuery' => '',
 					'counterQuery' => ''
 				),
-				'ContactPerson' => array(
-					'className' => 'ContactPerson',
-					'foreignKey' => 'foreign_key',
+				'Address' => array(
+					'className' => 'Address',
+					'foreignKey' => 'type',
+					'dependent' => false,
+					'conditions' => '',
+					'fields' => '',
+					'order' => '',
+					'limit' => '',
+					'offset' => '',
+					'exclusive' => '',
+					'finderQuery' => '',
+					'counterQuery' => ''
+				),
+				'Contact' => array(
+					'className' => 'Address',
+					'foreignKey' => 'type',
+					'dependent' => false,
+					'conditions' => '',
+					'fields' => '',
+					'order' => '',
+					'limit' => '',
+					'offset' => '',
+					'exclusive' => '',
+					'finderQuery' => '',
+					'counterQuery' => ''
+				),
+				'Email' => array(
+					'className' => 'Address',
+					'foreignKey' => 'type',
 					'dependent' => false,
 					'conditions' => '',
 					'fields' => '',
@@ -51,7 +77,5 @@ class Contact extends AppModel {
 
 		$this->contain($model);
 	}
-	
-	
 	
 }
