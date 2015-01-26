@@ -17,19 +17,18 @@
 $('.cloneMe').each(function(){
 
     var count=1;
+    var model = $(this).data('model');
 
-    $(".add-field",$(this)).click(function(e){
+    $(".add-field", $(this)).click(function(e){
         
-        count++;
+       
 
-        //$(this).parent().before($(".cloneMe").clone().attr("class","cloneMe" + count));
         $('.cloneMe').clone().insertAfter(".cloneMe").attr("class","cloneMe" + count);
        
-        //$(".cloneMe" + count).css("display","inline");
-       
         $(".cloneMe" + count + " :input").each(function(){
-            $(this).attr("name",$(this).attr("name") + "[" +count+"]");
-            //alert(myElements.eq(i).attr("name"));
+            $field = $(this).attr('alt');
+            $(this).attr("name",'name['+model+']['+count+"]["+$field+"]");
+
             $(this).attr("id",$(this).attr("id") + count);
             });
 
@@ -37,6 +36,8 @@ $('.cloneMe').each(function(){
             $(this).parents('.cloneMe').remove();
             //$(this).closest("div").remove();
         });
+
+         count++;
     }); 
 });
 

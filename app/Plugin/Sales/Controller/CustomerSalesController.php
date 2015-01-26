@@ -90,14 +90,15 @@ class CustomerSalesController extends SalesAppController {
 
 		if ($this->request->is('post')) {
 
-			pr($this->request->data);
+			pr($this->request->data['Address']);
+			exit();
 			foreach($this->request->data['Address'] as $add) {
-
+				pr($this->request->data['Address']);
 				//loop for each person added
 				
 				// $add['id']=$address;
 				// $this->Address->create();
-				// $this->Address->save($add);
+				// $this->Address->save($add); bakit wala ung pangalawa,.,
 			}
 			exit();
             if (!empty($this->request->data)) {
