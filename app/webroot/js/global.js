@@ -14,20 +14,21 @@
 //     });
 // });
 
-$('.cloneMe').each(function(){
 
-    var count=1;
+/*    var count=1;
     var model = $(this).data('model');
 
     $(".add-field", $(this)).click(function(e){
-        
-       
 
-        $('.cloneMe').clone().insertAfter(".cloneMe").attr("class","cloneMe" + count);
+        console.log(e);
+
+        $cloneParent = $(this).parents('.cloneMe');
+        
+        $cloneParent.clone().insertAfter($cloneParent).attr("class","cloneMe" + count);
        
-        $(".cloneMe" + count + " :input").each(function(){
+        $($cloneParent  + count + " :input").each(function(){
             $field = $(this).attr('alt');
-            $(this).attr("name",'name['+model+']['+count+"]["+$field+"]");
+            $(this).attr("name",'data['+model+']['+count+"]["+$field+"]");
 
             $(this).attr("id",$(this).attr("id") + count);
             });
@@ -39,154 +40,31 @@ $('.cloneMe').each(function(){
 
          count++;
     }); 
-});
+*/
 
-$('.cloneMe1').each(function(){
+function fieldReset($form, section)
+{
+    var count = $('.' + section).length;
 
-    var count=1;
+    $form.find('select, input').each(function() {
+        var $this = $(this),
+            nameProp = $this.prop('name'),
+            type = $this.prop('type'),
+            origIndex = count-1,
+            newIndex = count;
+        if(type == "text")
+        {
+            $this.val('');
+        }
+        $this.prop('name', nameProp.replace("[0]", "[" + newIndex + "]"));
+    });
 
-    $(".add-field1",$(this)).click(function(e){
-        
-        count++;
+    return $form;
+}
 
-        //$(this).parent().before($(".cloneMe").clone().attr("class","cloneMe" + count));
-        $('.cloneMe1').clone().insertAfter(".cloneMe1").attr("class","cloneMe1" + count);
-       
-        //$(".cloneMe" + count).css("display","inline");
-       
-        $(".cloneMe1" + count + " :input").each(function(){
-            $(this).attr("name",$(this).attr("name") + count);
-            $(this).attr("id",$(this).attr("id") + count);
-            });
-
-        $(".remove-field" + count,$(this)).click(function(e){
-            $(this).parents('.cloneMe1').remove();
-            //$(this).closest("div").remove();
-        });
-    }); 
-});
-
-$('.cloneMe2').each(function(){
-
-    var count=1;
-
-    $(".add-field2",$(this)).click(function(e){
-        
-        count++;
-
-        //$(this).parent().before($(".cloneMe").clone().attr("class","cloneMe" + count));
-        $('.cloneMe2').clone().insertAfter(".cloneMe2").attr("class","cloneMe2" + count);
-       
-        //$(".cloneMe" + count).css("display","inline");
-       
-        $(".cloneMe2" + count + " :input").each(function(){
-            $(this).attr("name",$(this).attr("name") + count);
-            $(this).attr("id",$(this).attr("id") + count);
-            });
-
-        $(".remove-field" + count,$(this)).click(function(e){
-            $(this).parents('.cloneMe2').remove();
-            //$(this).closest("div").remove();
-        });
-    }); 
-});
-
-$('.cloneMe3').each(function(){
-
-    var count=1;
-
-    $(".add-field3",$(this)).click(function(e){
-        
-        count++;
-
-        //$(this).parent().before($(".cloneMe").clone().attr("class","cloneMe" + count));
-        $('.cloneMe3').clone().insertAfter(".cloneMe3").attr("class","cloneMe3" + count);
-       
-        //$(".cloneMe" + count).css("display","inline");
-       
-        $(".cloneMe3" + count + " :input").each(function(){
-            $(this).attr("name",$(this).attr("name") + count);
-            $(this).attr("id",$(this).attr("id") + count);
-            });
-
-        $(".remove-field" + count,$(this)).click(function(e){
-            $(this).parents('.cloneMe3').remove();
-            //$(this).closest("div").remove();
-        });
-    }); 
-});
-
-$('.cloneMe4').each(function(){
-
-    var count=1;
-
-    $(".add-field4",$(this)).click(function(e){
-        
-        count++;
-
-        //$(this).parent().before($(".cloneMe").clone().attr("class","cloneMe" + count));
-        $('.cloneMe4').clone().insertAfter(".cloneMe4").attr("class","cloneMe4" + count);
-       
-        //$(".cloneMe" + count).css("display","inline");
-       
-        $(".cloneMe4" + count + " :input").each(function(){
-            $(this).attr("name",$(this).attr("name") + count);
-            $(this).attr("id",$(this).attr("id") + count);
-            });
-
-        $(".remove-field" + count,$(this)).click(function(e){
-            $(this).parents('.cloneMe4').remove();
-            //$(this).closest("div").remove();
-        });
-    }); 
-});
-
-$('.cloneMe5').each(function(){
-
-    var count=1;
-
-    $(".add-field5",$(this)).click(function(e){
-        
-        count++;
-
-        //$(this).parent().before($(".cloneMe").clone().attr("class","cloneMe" + count));
-        $('.cloneMe5').clone().insertAfter(".cloneMe5").attr("class","cloneMe5" + count);
-       
-        //$(".cloneMe" + count).css("display","inline");
-       
-        $(".cloneMe5" + count + " :input").each(function(){
-            $(this).attr("name",$(this).attr("name") + count);
-            $(this).attr("id",$(this).attr("id") + count);
-            });
-
-        $(".remove-field" + count,$(this)).click(function(e){
-            $(this).parents('.cloneMe5').remove();
-            //$(this).closest("div").remove();
-        });
-    }); 
-});
-$('.cloneMe6').each(function(){
-
-    var count=1;
-
-    $(".add-field6",$(this)).click(function(e){
-        
-        count++;
-
-        //$(this).parent().before($(".cloneMe").clone().attr("class","cloneMe" + count));
-        $('.cloneMe6').clone().insertAfter(".cloneMe6").attr("class","cloneMe6" + count);
-       
-        //$(".cloneMe" + count).css("display","inline");
-       
-        $(".cloneMe6" + count + " :input").each(function(){
-            $(this).attr("name",$(this).attr("name") + count);
-            $(this).attr("id",$(this).attr("id") + count);
-            });
-
-        $(".remove-field" + count,$(this)).click(function(e){
-            $(this).parents('.cloneMe6').remove();
-            //$(this).closest("div").remove();
-        });
-    }); 
-});
-
+function cloneData(whatSection)
+{
+    var data = $('.' + whatSection).first().clone();
+    data = fieldReset(data, whatSection);
+    $('.' + whatSection).last().after(data);
+}

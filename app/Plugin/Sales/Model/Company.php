@@ -21,7 +21,7 @@ class Company extends AppModel {
 		$this->bindModel(array(
 			'hasMany' => array(
 				'ContactPerson' => array(
-					'className' => 'ContactPerson',
+					'className' => 'Sales.ContactPerson',
 					'foreignKey' => 'company_id',
 					'dependent' => false,
 					'conditions' => '',
@@ -32,10 +32,20 @@ class Company extends AppModel {
 					'exclusive' => '',
 					'finderQuery' => '',
 					'counterQuery' => ''
-				)
-				
-			),
-			'hasOne' => array(
+				),
+				'Address' => array(
+					'className' => 'Sales.Address',
+					'foreignKey' => 'foreign_key',
+					'dependent' => false,
+					'conditions' => "model = 'Company'",
+					'fields' => '',
+					'order' => '',
+					'limit' => '',
+					'offset' => '',
+					'exclusive' => '',
+					'finderQuery' => '',
+					'counterQuery' => ''
+				),
 				'Contact' => array(
 					'className' => 'Contact',
 					'foreignKey' => 'foreign_key',
@@ -62,20 +72,6 @@ class Company extends AppModel {
 					'finderQuery' => '',
 					'counterQuery' => ''
 				),
-				'Address' => array(
-					'className' => 'Address',
-					'foreignKey' => 'foreign_key',
-					'dependent' => false,
-					'conditions' => '',
-					'fields' => '',
-					'order' => '',
-					'limit' => '',
-					'offset' => '',
-					'exclusive' => '',
-					'finderQuery' => '',
-					'counterQuery' => ''
-				)
-				
 			)
 		));
 
@@ -164,5 +160,27 @@ class Company extends AppModel {
 	// 	// // return $this->saveField('password_real', $passReal);
 	// 	// return true;
 	// }
+
+public function formatData($data = null,$auth= null){
+
+	//pr($data);exit();
+	foreach ($data['Address'] as $key => $value) {
+		$data['Address'][$key] = $value;
+		$data['Address'][$key]['model'] = 'Company';
+		$data['Address'][$key]['created_by'] =$auth;
+		$data['Address'][$key]['modified_by'] =$auth;
+	}
+
+	foreach ($data['Contact'] as $contactkey => $value) {
+		$data['Contact'][$contactkey] = $value;
+		$data['Contact'][$contactkey]['model'] = 'Company';
+		$data['Contact'][$contactkey]['created_by'] =$auth;
+		$data['Contact'][$contactkey]['modified_by'] =$auth;
+	}
+
+
+
+	return $data;
+}
 	
 }

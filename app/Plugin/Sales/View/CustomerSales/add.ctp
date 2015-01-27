@@ -64,17 +64,16 @@
                             </header>
                             
                             <div class="main-box-body clearfix">
-                                <div class="cloneMe" data-model ="Address">
+                                <section class="cloneMe addressSection" data-model ="Address">
                                     <div class="form-group">
                                         <label for="inputEmail1" class="col-lg-2 control-label">Address(1)</label>
                                         <div class="col-lg-2">
                                             <?php 
-                                                echo $this->Form->input('Address.0.address_types', array(
-                                                    'options' => array('Work', 'Home', 'Business'),
-                                                    'alt' => 'address_types',
+                                                echo $this->Form->input('Address.0.type', array(
+                                                    'options' => array('Work'=>'work', 'Home'=>'home', 'Business'=>'business'),
+                                                    'alt' => 'type',
                                                     'label' => false,
                                                     'class' => 'form-control col-lg-4',
-                                                    // 'id'    => 'addressID',
                                                     'empty' => false,
                                                     'data-name' => 'Address'
                                                 ));
@@ -82,8 +81,8 @@
                                         </div>
                                         <div class="col-lg-7">
                                             <?php 
-                                                echo $this->Form->input('Address.0.address', array('class' => 'form-control item_type',
-                                                    'alt' => 'address',
+                                                echo $this->Form->input('Address.0.address1', array('class' => 'form-control item_type',
+                                                    'alt' => 'address1',
                                                     'label' => false));
                                             ?>
                                         </div>
@@ -149,16 +148,16 @@
                                             ?>
                                         </div>
                                     </div>
+                                </section>
 
-                                    <div class="form-group">
-                                        <label for="inputPassword1" class="col-lg-2 control-label"></label>
-                                        <div class="col-lg-10">
-                                            <button type="button" data-model='Address' class="add-field table-link danger btn btn-success"> <i class="fa fa-plus"></i></button>
-                                            <button type="button" class="remove-field btn btn-danger"><i class="fa fa-minus"></i> </button>
-                                        </div>
+                                <div class="form-group">
+                                    <label for="inputPassword1" class="col-lg-2 control-label"></label>
+                                    <div class="col-lg-10">
+                                        <button type="button" data-model='Address' class="add-field table-link danger btn btn-success" onclick="cloneData('addressSection')"> <i class="fa fa-plus"></i></button>
+                                        <button type="button" class="remove-field btn btn-danger"><i class="fa fa-minus"></i> </button>
                                     </div>
-                                    
-                                </div> 
+                                </div>
+
                             </div>
 
                         </div>
@@ -174,14 +173,15 @@
                             </header>
                             
                             <div class="main-box-body clearfix ">
-                                <div class="cloneMe1">
+                                <section class="cloneMe1 contact_section" data-model ="Contact">
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 control-label">Contact Number</label>
                                         <div class="col-lg-2">
                                             <?php 
-                                                echo $this->Form->input('Contact.0.number_type', array(
-                                                    'options' => array('Work', 'Home', 'Business'),
+                                                echo $this->Form->input('Contact.0.type', array(
+                                                    'options' => array('Work'=>'work', 'Home'=>'home', 'Business'=>'business'),
                                                     'label' => false,
+                                                    'alt' => 'type',
                                                     'class' => 'form-control',
                                                     'empty' => false
                                                 ));
@@ -190,21 +190,17 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <?php 
-                                                echo $this->Form->input('Contact.0.number', array('class' => 'form-control','label' => false));
+                                                echo $this->Form->input('Contact.0.number', array('class' => 'form-control',
+                                                    'alt' => 'number',
+                                                    'label' => false));
                                             ?>
                                         </div>
                                         <div class="col-lg-2">
-                                            <button type="button" class="add-field1 table-link danger btn btn-success"><i class="fa fa-plus"></i></button>
+                                            <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneData('contact_section')"><i class="fa fa-plus"></i></button>
                                             <button type="button" class="remove-field btn btn-danger"><i class="fa fa-minus"></i> </button>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- <div class="form-group">
-                                    <div class="col-lg-offset-2 col-lg-10">
-                                        <button type="submit" class="btn btn-success">Sign in</button>
-                                    </div>
-                                </div> -->
-                                
+                                </section>
                             </div> 
                         </div>
                     </div>  
@@ -225,7 +221,7 @@
                                         <div class="col-lg-2">
                                             <?php 
                                                 echo $this->Form->input('Email.0.email_type', array(
-                                                    'options' => array('Work', 'Home', 'Business'),
+                                                    'options' => array('Work'=>'work', 'Home'=>'home', 'Business'=>'business'),
                                                     'label' => false,
                                                     'class' => 'form-control',
                                                     'empty' => false
@@ -300,7 +296,7 @@
                                             <div class="col-lg-2">
                                                 <?php 
                                                     echo $this->Form->input('ContactPerson.0.personNumber_type', array(
-                                                        'options' => array('Work', 'Home', 'Business'),
+                                                        'options' => array('Work'=>'work', 'Home'=>'home', 'Business'=>'business'),
                                                         'label' => false,
                                                         'class' => 'form-control',
                                                         'empty' => false
@@ -334,8 +330,8 @@
                                             <label for="inputPassword1" class="col-lg-2 control-label">Email</label>
                                             <div class="col-lg-2">
                                                 <?php 
-                                                    echo $this->Form->input('ContactPerson.0.personEmail_type', array(
-                                                        'options' => array('Work', 'Home', 'Business'),
+                                                    echo $this->Form->input('ContactEmail.0.personEmail_type', array(
+                                                        'options' => array('Work'=>'work', 'Home'=>'home', 'Business'=>'business'),
                                                         'label' => false,
                                                         'class' => 'form-control',
                                                         'empty' => false
@@ -345,7 +341,7 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <?php 
-                                                    echo $this->Form->input('ContactPerson.0.email', array('class' => 'form-control','label' => false));
+                                                    echo $this->Form->input('ContactEmail.0.email', array('class' => 'form-control','label' => false));
                                                 ?>
                                             </div>
                                             <div class="col-lg-2">
@@ -369,7 +365,7 @@
                                             <div class="col-lg-2">
                                                 <?php 
                                                     echo $this->Form->input('ContactPerson.0.personAddress_type', array(
-                                                        'options' => array('Work', 'Home', 'Business'),
+                                                        'options' => array('Work'=>'work', 'Home'=>'home', 'Business'=>'business'),
                                                         'label' => false,
                                                         'class' => 'form-control',
                                                         // 'id'    => 'addressID',

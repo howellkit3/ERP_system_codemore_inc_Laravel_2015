@@ -51,17 +51,10 @@
                         <thead>
                             <tr>
                                 <th><a href="#"><span>Name</span></a></th>
-                                <th><a href="#"><span>Description</span></a></th>
                                 <th><a href="#"><span>Website</span></a></th>
-
-                                <th><a href="#"><span>Address</span></a></th>
-
-                                <th><a href="#"><span>Contact Info</span></a></th>
-
                                 <th><a href="#"><span>Contact Person</span></a></th>
-                                <th><a href="#"><span>Address</span></a></th>
-                                <th><a href="#"><span>Contact Info</span></a></th>
-                               
+                                <th><a href="#"><span>Created</span></a></th>
+                                <th>Action</th>
                             </tr>
                         </thead>
 
