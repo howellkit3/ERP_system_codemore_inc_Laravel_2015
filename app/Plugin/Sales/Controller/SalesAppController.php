@@ -6,6 +6,4 @@ App::import('Controller', 'App');
 App::import('model','Sales.Company');
 App::import('model','Sales.ContactPerson');
 
-class SalesAppController extends AppController {
-
-}
+class SalesAppController extends AppController {}

@@ -4,7 +4,7 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="main-box">
-        <?php $this->Session->flash(); ?>
+        
             <header class="main-box-header clearfix">
                 <center><h1><u>Customer Information</u></h1></center><hr>
             </header>
@@ -64,13 +64,13 @@
                             </header>
                             
                             <div class="main-box-body clearfix">
-                                <section class="cloneMe addressSection" data-model ="Address">
+                                <section class="cloneMe addressSection">
                                     <div class="form-group">
                                         <label for="inputEmail1" class="col-lg-2 control-label">Address(1)</label>
                                         <div class="col-lg-2">
                                             <?php 
                                                 echo $this->Form->input('Address.0.type', array(
-                                                    'options' => array('Work'=>'work', 'Home'=>'home', 'Business'=>'business'),
+                                                    'options' => array('Work', 'Home', 'Business'),
                                                     'alt' => 'type',
                                                     'label' => false,
                                                     'class' => 'form-control col-lg-4',
@@ -135,26 +135,17 @@
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 control-label">Country</label>
                                         <div class="col-lg-9">
-                                            <?php 
-                                                echo $this->Form->input('Address.0.country', array(
-                                                    'options' => array('country', 'country', 'country'),
-                                                    'label' => false,
-                                                    'alt' => 'country',
-                                                    'class' => 'form-control',
-                                                    // 'id'    => 'addressID',
-                                                    'empty' => false
-                                                ));
-
-                                            ?>
+                                            <?php echo( $this->Country->select('Address.0.country',null,array('class' => 'form-control')));?> 
                                         </div>
                                     </div>
+                                    <hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
                                 </section>
 
                                 <div class="form-group">
                                     <label for="inputPassword1" class="col-lg-2 control-label"></label>
                                     <div class="col-lg-10">
                                         <button type="button" data-model='Address' class="add-field table-link danger btn btn-success" onclick="cloneData('addressSection')"> <i class="fa fa-plus"></i></button>
-                                        <button type="button" class="remove-field btn btn-danger"><i class="fa fa-minus"></i> </button>
+                                        <button type="button" class="remove-field btn btn-danger" onclick="removeClone('addressSection')"><i class="fa fa-minus"></i> </button>
                                     </div>
                                 </div>
 
@@ -173,13 +164,13 @@
                             </header>
                             
                             <div class="main-box-body clearfix ">
-                                <section class="cloneMe1 contact_section" data-model ="Contact">
+                                <section class="cloneMe1 contact_section">
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 control-label">Contact Number</label>
                                         <div class="col-lg-2">
                                             <?php 
                                                 echo $this->Form->input('Contact.0.type', array(
-                                                    'options' => array('Work'=>'work', 'Home'=>'home', 'Business'=>'business'),
+                                                    'options' => array('Work', 'Home', 'Business'),
                                                     'label' => false,
                                                     'alt' => 'type',
                                                     'class' => 'form-control',
@@ -197,10 +188,12 @@
                                         </div>
                                         <div class="col-lg-2">
                                             <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneData('contact_section')"><i class="fa fa-plus"></i></button>
-                                            <button type="button" class="remove-field btn btn-danger"><i class="fa fa-minus"></i> </button>
+                                            <button type="button" class="remove-field btn btn-danger" onclick="removeClone('contact_section')"><i class="fa fa-minus"></i> </button>
                                         </div>
                                     </div>
+                                    <hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
                                 </section>
+                                
                             </div> 
                         </div>
                     </div>  
@@ -215,13 +208,13 @@
                             </header>
                             
                             <div class="main-box-body clearfix">
-                                <div class="cloneMe2">
+                                <section class="cloneMe1 email_section" data-model ="Contact">
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 control-label">Email Address</label>
                                         <div class="col-lg-2">
                                             <?php 
-                                                echo $this->Form->input('Email.0.email_type', array(
-                                                    'options' => array('Work'=>'work', 'Home'=>'home', 'Business'=>'business'),
+                                                echo $this->Form->input('Email.0.type', array(
+                                                    'options' => array('Work', 'Home', 'Business'),
                                                     'label' => false,
                                                     'class' => 'form-control',
                                                     'empty' => false
@@ -231,15 +224,16 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <?php 
-                                                echo $this->Form->input('Email.0.mail', array('class' => 'form-control','label' => false));
+                                                echo $this->Form->input('Email.0.email', array('class' => 'form-control','label' => false));
                                             ?>
                                         </div>
                                         <div class="col-lg-2">
-                                            <button type="button" class="add-field2 table-link danger btn btn-success"><i class="fa fa-plus"></i></button>
-                                            <button type="button" class="remove-field btn btn-danger"><i class="fa fa-minus"></i> </button>
+                                            <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneData('email_section')"><i class="fa fa-plus"></i></button>
+                                             <button type="button" class="remove-field btn btn-danger" onclick="removeClone('email_section')"><i class="fa fa-minus"></i> </button>
                                         </div>
                                     </div>
-                                </div>
+                                    <hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
+                                </section>
                             </div> 
                         </div>
                     </div>  
@@ -252,7 +246,7 @@
                             <header class="main-box-header clearfix">
                                 <h1>Contact person</h1>
                             </header>
-                            <div class="cloneMe6"> 
+                            <section class="cloneMe1 contactPerson_section"> 
                                 <div class="main-box-body clearfix">
 
                                     <div class="form-group">
@@ -290,13 +284,13 @@
                                 </header>
                             
                                 <div class="main-box-body clearfix">
-                                    <div class="cloneMe3">   
+                                    <section class="cloneMe1 contactPersonNumber_section">   
                                         <div class="form-group">
                                             <label for="inputPassword1" class="col-lg-2 control-label">Contact Number</label>
                                             <div class="col-lg-2">
                                                 <?php 
-                                                    echo $this->Form->input('ContactPerson.0.personNumber_type', array(
-                                                        'options' => array('Work'=>'work', 'Home'=>'home', 'Business'=>'business'),
+                                                    echo $this->Form->input('ContactPersonData.Contact.0.type', array(
+                                                        'options' => array('Work', 'Home', 'Business'),
                                                         'label' => false,
                                                         'class' => 'form-control',
                                                         'empty' => false
@@ -306,15 +300,16 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <?php 
-                                                    echo $this->Form->input('ContactPerson.0.number', array('class' => 'form-control','label' => false));
+                                                    echo $this->Form->input('ContactPersonData.Contact.0.number', array('class' => 'form-control','label' => false));
                                                 ?>
                                             </div>
                                             <div class="col-lg-2">
-                                                <button type="button" class="add-field3 table-link danger btn btn-success"><i class="fa fa-plus"></i></button>
-                                                <button type="button" class="remove-field btn btn-danger"><i class="fa fa-minus"></i> </button>
+                                                <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneData('contactPersonNumber_section')"><i class="fa fa-plus"></i></button>
+                                                <button type="button" class="remove-field btn btn-danger" onclick="removeClone('contactPersonNumber_section')"><i class="fa fa-minus"></i> </button>
                                             </div>
                                         </div>
-                                    </div>
+                                        <hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
+                                    </section>
                                    
                                 </div> 
                      
@@ -325,13 +320,13 @@
                                 </header>
                             
                                 <div class="main-box-body clearfix">
-                                    <div class="cloneMe4">
+                                    <section class="cloneMe1 contactPersonEmail_section">
                                         <div class="form-group">
                                             <label for="inputPassword1" class="col-lg-2 control-label">Email</label>
                                             <div class="col-lg-2">
                                                 <?php 
-                                                    echo $this->Form->input('ContactEmail.0.personEmail_type', array(
-                                                        'options' => array('Work'=>'work', 'Home'=>'home', 'Business'=>'business'),
+                                                    echo $this->Form->input('ContactPersonData.Email.0.type', array(
+                                                        'options' => array('Work', 'Home', 'Business'),
                                                         'label' => false,
                                                         'class' => 'form-control',
                                                         'empty' => false
@@ -341,15 +336,16 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <?php 
-                                                    echo $this->Form->input('ContactEmail.0.email', array('class' => 'form-control','label' => false));
+                                                    echo $this->Form->input('ContactPersonData.Email.0.email', array('class' => 'form-control','label' => false));
                                                 ?>
                                             </div>
                                             <div class="col-lg-2">
-                                                <button type="button" class="add-field4 table-link danger btn btn-success"><i class="fa fa-plus"></i></button>
-                                                <button type="button" class="remove-field btn btn-danger"><i class="fa fa-minus"></i> </button>
+                                                <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneData('contactPersonEmail_section')"><i class="fa fa-plus"></i></button>
+                                                <button type="button" class="remove-field btn btn-danger" onclick="removeClone('contactPersonEmail_section')"><i class="fa fa-minus"></i> </button>
                                             </div>
                                         </div>
-                                    </div>
+                                        <hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
+                                    </section>
                                 </div>
 
                                 <hr>
@@ -359,13 +355,13 @@
                                 </header>
                             
                                 <div class="main-box-body clearfix">
-                                    <div class="cloneMe5">
+                                    <section class="cloneMe1 contactPersonAddress_section">
                                         <div class="form-group">
                                             <label for="inputEmail1" class="col-lg-2 control-label">Address(1)</label>
                                             <div class="col-lg-2">
                                                 <?php 
-                                                    echo $this->Form->input('ContactPerson.0.personAddress_type', array(
-                                                        'options' => array('Work'=>'work', 'Home'=>'home', 'Business'=>'business'),
+                                                    echo $this->Form->input('ContactPersonData.Address.0.type', array(
+                                                        'options' => array('Work', 'Home', 'Business'),
                                                         'label' => false,
                                                         'class' => 'form-control',
                                                         // 'id'    => 'addressID',
@@ -376,7 +372,7 @@
                                             </div>
                                             <div class="col-lg-7">
                                                 <?php 
-                                                    echo $this->Form->input('ContactPerson.0.address1', array('class' => 'form-control item_type','label' => false));
+                                                    echo $this->Form->input('ContactPersonData.Address.0.address1', array('class' => 'form-control item_type','label' => false));
                                                 ?>
                                             </div>
                                         </div>
@@ -385,7 +381,7 @@
                                             <label for="inputPassword1" class="col-lg-2 control-label">Address(2)</label>
                                             <div class="col-lg-9">
                                                 <?php 
-                                                    echo $this->Form->input('ContactPerson.0.address2', array('class' => 'form-control item_type','label' => false));
+                                                    echo $this->Form->input('ContactPersonData.Address.0.address2', array('class' => 'form-control item_type','label' => false));
                                                 ?>
                                             </div>
                                         </div>
@@ -394,7 +390,7 @@
                                             <label for="inputPassword1" class="col-lg-2 control-label">City</label>
                                             <div class="col-lg-9">
                                                 <?php 
-                                                    echo $this->Form->input('ContactPerson.0.city', array('class' => 'form-control','label' => false));
+                                                    echo $this->Form->input('ContactPersonData.Address.0.city', array('class' => 'form-control','label' => false));
                                                 ?>
                                             </div>
                                         </div>
@@ -403,7 +399,7 @@
                                             <label for="inputPassword1" class="col-lg-2 control-label">State Province</label>
                                             <div class="col-lg-9">
                                                 <?php 
-                                                    echo $this->Form->input('ContactPerson.0.state_province', array('class' => 'form-control','label' => false));
+                                                    echo $this->Form->input('ContactPersonData.Address.0.state_province', array('class' => 'form-control','label' => false));
                                                 ?>
                                             </div>
                                         </div>
@@ -412,7 +408,7 @@
                                             <label for="inputPassword1" class="col-lg-2 control-label">Zip Code</label>
                                             <div class="col-lg-9">
                                                 <?php 
-                                                    echo $this->Form->input('ContactPerson.0.zip_code', array('class' => 'form-control','label' => false,'type' => 'text'));
+                                                    echo $this->Form->input('ContactPersonData.Address.0.zip_code', array('class' => 'form-control','label' => false,'type' => 'text'));
                                                 ?>
                                             </div>
                                         </div>
@@ -420,40 +416,27 @@
                                         <div class="form-group">
                                             <label for="inputPassword1" class="col-lg-2 control-label">Country</label>
                                             <div class="col-lg-9">
-                                                <?php 
-                                                    echo $this->Form->input('ContactPerson.0.country', array(
-                                                        'options' => array('country', 'country', 'country'),
-                                                        'label' => false,
-                                                        'class' => 'form-control',
-                                                        // 'id'    => 'addressID',
-                                                        'empty' => false
-                                                    ));
-
-                                                ?>
+                                                <?php echo( $this->Country->select('ContactPersonData.Address.0.country',null,array('class' => 'form-control')));?> 
                                             </div>
                                         </div>
-
-                                        <div class="form-group">
-                                            <label for="inputPassword1" class="col-lg-2 control-label"></label>
-                                            <div class="col-lg-10">
-                                                <button type="button" class="add-field5 table-link danger btn btn-success"> <i class="fa fa-plus"></i></button>
-                                                <button type="button" class="remove-field btn btn-danger"><i class="fa fa-minus"></i> </button>
-                                            </div>
-                                        </div>
-
-                                        <hr>
-
-                                         
-                                    </div>
+                                        <hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
+                                    </section>
+                                
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 control-label"></label>
-                                        <div class="col-lg-10">
-                                            <button type="button" class="add-field6 table-link danger btn btn-success"> <i class="fa fa-plus"> Add Contact Person</i></button>
-                                            <button type="button" class="remove-field btn btn-danger"><i class="fa fa-minus"></i> </button>
-                                        </div>
+                                        <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneData('contactPersonAddress_section')"><i class="fa fa-plus"></i></button>
+                                        <button type="button" class="remove-field btn btn-danger" onclick="removeClone('contactPersonAddress_section')"><i class="fa fa-minus"></i> </button>
                                     </div>
-                                </div> 
-                            </div> 
+                                    <hr style="height:1px; border:none; color:#666666; background-color:#666666;">
+                                </div>
+                            </section> 
+                            <div class="form-group">
+                                <label for="inputPassword1" class="col-lg-2 control-label"></label>
+                                <div class="col-lg-4">
+                                    <button type="button" class="add-field6 table-link danger btn btn-success" onclick="cloneData('contactPerson_section')"> <i class="fa fa-plus"> Add Contact Person</i></button>
+                                    <button type="button" class="remove-field btn btn-danger" onclick="removeClone('contactPerson_section')"><i class="fa fa-minus"></i> </button>
+                                </div>
+                            </div>
                         </div>
                     </div>  
                 </div>

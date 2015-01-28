@@ -1,7 +1,6 @@
 <?php
 App::uses('AppModel', 'Model');
 App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
-App::uses('AuthComponent', 'Controller/Component');
 //namespace Sales\Model\Entity;
 /**
  * User Model
@@ -9,8 +8,9 @@ App::uses('AuthComponent', 'Controller/Component');
  */
 class Email extends AppModel {
 
-	//public $useTable = 'customers'; // name of the database table 
     public $useDbConfig = 'koufu_sale';
+
+    public $name = 'Email';
 
 	public $recursive = -1;
 
@@ -23,33 +23,41 @@ class Email extends AppModel {
 				'Company' => array(
 					'className' => 'Company',
 					'foreignKey' => 'foreign_key',
-					'dependent' => false,
-					'conditions' => '',
-					'fields' => '',
-					'order' => '',
-					'limit' => '',
-					'offset' => '',
-					'exclusive' => '',
-					'finderQuery' => '',
-					'counterQuery' => ''
+					'dependent' => false
 				),
 				'Contactperson' => array(
 					'className' => 'Company',
 					'foreignKey' => 'Contactperson',
-					'dependent' => false,
-					'conditions' => '',
-					'fields' => '',
-					'order' => '',
-					'limit' => '',
-					'offset' => '',
-					'exclusive' => '',
-					'finderQuery' => '',
-					'counterQuery' => ''
+					'dependent' => false
 				)
 			)
 		));
 
 		$this->contain($model);
+	}
+
+	public function beforeSave($options = array())
+	{
+		$userId = AuthComponent::user('id'); 
+
+		$this->data[$this->name]['created_by'] = $userId;
+		$this->data[$this->name]['modified_by'] = $userId;
+	}
+
+	public function saveContact($data, $contact_id)
+	{
+		
+		$this->create();
+
+		foreach ($data[$this->name] as $key => $emailData) {
+
+			$data[$this->name][$key]['model'] = "ContactPerson";
+			$data[$this->name][$key]['foreign_key'] = $contact_id;
+
+		}
+		
+		$this->saveAll($data[$this->name]);
+		
 	}
 	
 }

@@ -9,7 +9,6 @@ App::uses('AuthComponent', 'Controller/Component');
  */
 class Type extends AppModel {
 
-	//public $useTable = 'customers'; // name of the database table 
     public $useDbConfig = 'koufu_sale';
 
 	public $recursive = -1;

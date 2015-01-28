@@ -1,19 +1,11 @@
 <?php
 App::uses('AppController', 'Controller');
+App::uses('SessionComponent', 'Controller/Component');
 
-App::import('model','Sales.Company');
-App::import('model','Sales.ContactPerson');
-App::import('model','Sales.Address');
-App::import('model','Sales.Contact');
-App::import('model','Sales.Type');
-App::import('model','Sales.Email');
-/**
- * Sales Controller
- *
- */
 class CustomerSalesController extends SalesAppController {
 
 	public $uses = array('Sales.Company');
+	public $helper = array('Sales.Country');
 
 	public function beforeFilter() {
 
@@ -45,24 +37,29 @@ class CustomerSalesController extends SalesAppController {
 	public function add(){
 
 		$userData = $this->Session->read('Auth');
-
+		
 		if ($this->request->is('post')) {
-
-			pr($this->data);
-
             if (!empty($this->request->data)) {
-					
-            	$this->request->data = $this->Company->formatData($this->request->data,$userData['User']['id']);
+
+            	$this->Company->bind(array('Address','Contact','Email','ContactPerson'));
+
+            	$this->request->data = $this->Company->formatData($this->request->data, $userData['User']['id']);
 
             	$this->request->data['Company']['created_by'] = $userData['User']['id'];
             	$this->request->data['Company']['modified_by'] = $userData['User']['id'];
-            	//pr($this->request->data);exit();
-            	$this->Company->create();
-            	
-            	$this->Company->bind(array('Address','Contact'));
 
             	if ($this->Company->saveAssociated($this->request->data)) {
-            		echo "saveAll";exit();
+
+            		$contactPersonId = $this->Company->ContactPerson->id;
+					
+            		$this->Company->Contact->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
+            		$this->Company->Address->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
+            		$this->Company->Email->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
+				
+            		$this->Session->setFlash(__('Customer Information Complete.'));
+	            	$this->redirect(
+	                    array('controller' => 'customer_sales', 'action' => 'index')
+	                );
                   
 	            }else{
 
@@ -74,17 +71,29 @@ class CustomerSalesController extends SalesAppController {
 
 	}
 
-	public function edit(){
+	public function view($companyId = null){
+
+		$this->Company->bind(array('Address','Contact','Email','ContactPerson'));
+
+		$this->Company->recursive = 1;
+
+		$company = $this->Company->find('first', array(
+	        'conditions' => array('Company.id' => $companyId)
+	    ));
+		
+		$this->set(compact('company'));
 
 	}
 
-	public function custom_field(){
+	public function edit($companyId = null){
+
+	}
+
+	public function person($personId = null){
 		
 
 	}
 
-	public function view(){
-		
-	}
+	
 
 }

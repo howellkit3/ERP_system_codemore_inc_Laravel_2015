@@ -2,3 +2,9 @@
 	color : red;
 	font-weight: bolder;
 }
+.body-pad{
+	padding-top: 6px;
+}
+#newsfeed .remove-pad{
+	padding-left:0;
+}

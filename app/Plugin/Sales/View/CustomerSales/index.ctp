@@ -1,37 +1,12 @@
 <?php $this->Html->addCrumb('Sales', array('controller' => 'customer_sales', 'action' => 'index')); ?>
-    <div style="clear:both"></div>
-        <div class="nav-no-collapse navbar-left pull-left hidden-sm hidden-xs">
-            <ul style="margin-left:0" class="nav navbar-nav pull-left">
-                <li class="dropdown hidden-xs">
-                    <a data-toggle="dropdown" class="btn dropdown-toggle">
-                        <span class="count">Quotation</span>
-                    </a>
-                    <ul class="dropdown-menu notifications-list">
-                        <li class="pointer">
-                            <div class="pointer-inner">
-                                <div class="arrow"></div>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
-                <li class="dropdown hidden-xs">
-                    <a data-toggle="dropdown" class="btn dropdown-toggle">
-                        <span class="count">Settings</span>
-                    </a>
-                    <ul class="dropdown-menu notifications-list messages-list">
-                        <li class="item-footer">
-                           <!--  <a href="#">
-                            </a> -->
-                            <?php echo $this->Html->link(__('Add Custom field'), array('controller' => 'customer_sales','action' => 'custom_field')); ?>
-                        </li>
-                    </ul>
-                </li>
-           
-            </ul>
-        </div>
+
+<div style="clear:both"></div>
+
+<?php echo $this->element('sales_option'); ?>
+        
 <div class="row">
     <div class="col-lg-12">
-        <div class="main-box clearfix">
+        <div class="main-box clearfix body-pad">
             <header class="main-box-header clearfix">
                 <h2 class="pull-left">Customers List</h2>
                 
@@ -47,7 +22,7 @@
             
             <div class="main-box-body clearfix">
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table table-striped table-hover">
                         <thead>
                             <tr>
                                 <th><a href="#"><span>Name</span></a></th>

@@ -9,7 +9,6 @@ App::uses('AuthComponent', 'Controller/Component');
  */
 class Company extends AppModel {
 
-	//public $useTable = 'companies'; // name of the database table 
     public $useDbConfig = 'koufu_sale';
 
 	public $recursive = -1;
@@ -23,54 +22,25 @@ class Company extends AppModel {
 				'ContactPerson' => array(
 					'className' => 'Sales.ContactPerson',
 					'foreignKey' => 'company_id',
-					'dependent' => false,
-					'conditions' => '',
-					'fields' => '',
-					'order' => '',
-					'limit' => '',
-					'offset' => '',
-					'exclusive' => '',
-					'finderQuery' => '',
-					'counterQuery' => ''
+					'dependent' => false
 				),
 				'Address' => array(
 					'className' => 'Sales.Address',
 					'foreignKey' => 'foreign_key',
 					'dependent' => false,
-					'conditions' => "model = 'Company'",
-					'fields' => '',
-					'order' => '',
-					'limit' => '',
-					'offset' => '',
-					'exclusive' => '',
-					'finderQuery' => '',
-					'counterQuery' => ''
+					'conditions' => "model = 'Company'"
 				),
 				'Contact' => array(
-					'className' => 'Contact',
+					'className' => 'Sales.Contact',
 					'foreignKey' => 'foreign_key',
 					'dependent' => false,
-					'conditions' => '',
-					'fields' => '',
-					'order' => '',
-					'limit' => '',
-					'offset' => '',
-					'exclusive' => '',
-					'finderQuery' => '',
-					'counterQuery' => ''
+					'conditions' => "model = 'Company'"
 				),
 				'Email' => array(
-					'className' => 'Email',
+					'className' => 'Sales.Email',
 					'foreignKey' => 'foreign_key',
 					'dependent' => false,
-					'conditions' => '',
-					'fields' => '',
-					'order' => '',
-					'limit' => '',
-					'offset' => '',
-					'exclusive' => '',
-					'finderQuery' => '',
-					'counterQuery' => ''
+					'conditions' => "model = 'Company'"
 				),
 			)
 		));
@@ -85,7 +55,8 @@ class Company extends AppModel {
 				'rule' => array('notEmpty'),
 			),
 		),
-		'company_address' => array(
+
+		'address1' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 			),
@@ -95,26 +66,17 @@ class Company extends AppModel {
 				'rule' => array('notEmpty'),
 			),
 		),
-		'street' => array(
+		'city' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 			),
 		),
-		'company_email' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-			),
+		'zip_code' => array(
+			'rule' => 'numeric',
+			'allowEmpty' => true, //validate only if not empty
+			'message'=>'Zip Code should be numeric',
 		),
-		'company_telephone' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-			),
-		),
-		'company_cellphone' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-			),
-		),
+
 		'firstname' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
@@ -130,57 +92,53 @@ class Company extends AppModel {
 				'rule' => array('notEmpty'),
 			),
 		),
-		'contact_number' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-			),
-		),
-		'address' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-			),
+		'number' => array(
+			'rule' => 'numeric',
+			'allowEmpty' => true, //validate only if not empty
+			'message'=>'Zip Code should be numeric',
 		),
 	
 	);
-	// public function beforeSave($options = array()) {
-	//     // if (isset($this->data[$this->alias]['password'])) {
-	//     //     $passwordHasher = new SimplePasswordHasher();
-	//     //     $this->data[$this->alias]['password'] = $passwordHasher->hash(
-	//     //         $this->data[$this->alias]['password']
-	//     //     );
-	//     // }
 
-	//     // return true;
-	// }
-	// public function CustomerAction($data = null) {
-	// 	// pr($data);exit();
-	// 	// $customerInfo = ClassRegistry::init('Sale');
-	// 	// // $passReal = $data['User']['password'];
-	// 	// $customerInfo->save($data); 
-	// 	// // return $this->saveField('password_real', $passReal);
-	// 	// return true;
-	// }
+	public function formatData($data = null,$auth= null){
 
-public function formatData($data = null,$auth= null){
+		foreach ($data['Address'] as $key => $value) {
+			$data['Address'][$key] = $value;
+			$data['Address'][$key]['model'] = 'Company';
+			$data['Address'][$key]['created_by'] =$auth;
+			$data['Address'][$key]['modified_by'] =$auth;
+		}
 
-	//pr($data);exit();
-	foreach ($data['Address'] as $key => $value) {
-		$data['Address'][$key] = $value;
-		$data['Address'][$key]['model'] = 'Company';
-		$data['Address'][$key]['created_by'] =$auth;
-		$data['Address'][$key]['modified_by'] =$auth;
+		foreach ($data['Contact'] as $key => $value) {
+			$data['Contact'][$key] = $value;
+			$data['Contact'][$key]['model'] = 'Company';
+			$data['Contact'][$key]['created_by'] =$auth;
+			$data['Contact'][$key]['modified_by'] =$auth;
+		}
+
+		foreach ($data['Email'] as $key => $value) {
+			$data['Email'][$key] = $value;
+			$data['Email'][$key]['model'] = 'Company';
+			$data['Email'][$key]['created_by'] =$auth;
+			$data['Email'][$key]['modified_by'] =$auth;
+		}
+
+		foreach ($data['ContactPerson'] as $key => $value) {
+			$data['ContactPerson'][$key] = $value;
+			$data['ContactPerson'][$key]['model'] = 'Company';
+			$data['ContactPerson'][$key]['created_by'] =$auth;
+			$data['ContactPerson'][$key]['modified_by'] =$auth;
+		}
+
+		return $data;
 	}
 
-	foreach ($data['Contact'] as $contactkey => $value) {
-		$data['Contact'][$contactkey] = $value;
-		$data['Contact'][$contactkey]['model'] = 'Company';
-		$data['Contact'][$contactkey]['created_by'] =$auth;
-		$data['Contact'][$contactkey]['modified_by'] =$auth;
+	public function beforeSave($options = array())
+	{
+		$userId = AuthComponent::user('id'); 
+
+		$this->data[$this->name]['created_by'] = $userId;
+		$this->data[$this->name]['modified_by'] = $userId;
 	}
-
-
-
-	return $data;
-}
 	
 }

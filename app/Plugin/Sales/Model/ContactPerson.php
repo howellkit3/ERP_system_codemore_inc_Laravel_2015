@@ -9,7 +9,6 @@ App::uses('AuthComponent', 'Controller/Component');
  */
 class ContactPerson extends AppModel {
 
-	//public $useTable = 'customers'; // name of the database table 
     public $useDbConfig = 'koufu_sale';
 
 	public $recursive = -1;
@@ -21,18 +20,28 @@ class ContactPerson extends AppModel {
 		$this->bindModel(array(
 			'belongsTo' => array(
 				'Company' => array(
-					'className' => 'Company',
+					'className' => 'Sales.Company',
 					'foreignKey' => 'company_id',
+					'dependent' => false
+				),
+				'Address' => array(
+					'className' => 'Sales.Address',
+					'foreignKey' => 'foreign_key',
 					'dependent' => false,
-					'conditions' => '',
-					'fields' => '',
-					'order' => '',
-					'limit' => '',
-					'offset' => '',
-					'exclusive' => '',
-					'finderQuery' => '',
-					'counterQuery' => ''
-				)
+					'conditions' => "model = 'ContactPerson'"
+				),
+				'Contact' => array(
+					'className' => 'Sales.Contact',
+					'foreignKey' => 'foreign_key',
+					'dependent' => false,
+					'conditions' => "model = 'ContactPerson'"
+				),
+				'Email' => array(
+					'className' => 'Sales.Email',
+					'foreignKey' => 'foreign_key',
+					'dependent' => false,
+					'conditions' => "model = 'ContactPerson'"
+				),
 			)
 		));
 
@@ -88,5 +97,13 @@ class ContactPerson extends AppModel {
 		),
 	
 	);
+
+	public function beforeSave($options = array())
+	{
+		$userId = AuthComponent::user('id'); 
+
+		$this->data[$this->name]['created_by'] = $userId;
+		$this->data[$this->name]['modified_by'] = $userId;
+	}
 	
 }
