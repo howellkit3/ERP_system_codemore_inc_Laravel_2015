@@ -1,5 +1,5 @@
 <?php $this->Html->addCrumb('Sales', array('controller' => 'customer_sales', 'action' => 'index')); ?>
-<?php $this->Html->addCrumb('View', array('controller' => 'customer_sales', 'action' => 'view')); ?>
+<?php $this->Html->addCrumb('View', array('controller' => 'customer_sales', 'action' => 'view',$company['Company']['id'])); ?>
 
 <div style="clear:both"></div>
 
@@ -75,30 +75,37 @@
 											<div class="story-content remove-pad">
 												<header class="story-header">
 													<div class="story-author">
-														
-														 <?php
-										                foreach($company['Address'] as $contactAddress) { ?>
-
-										                    <div>Address(1) -
-										                    	<a href="#" class="story-author-link"> <?php echo $contactAddress['address1']; ?></a>
-										                    </div>
-
-										                    <div>Address(2) - 
-										                    	<a href="#" class="story-author-link"><?php echo $contactAddress['address2']; ?></a>
-										                    </div>
-										                    <div>City - 
-										                    	<a href="#" class="story-author-link"><?php echo $contactAddress['city']; ?></a>
-										                    </div>
-										                    <div>State Province - 
-										                    	<a href="#" class="story-author-link"><?php echo $contactAddress['state_province']; ?></a>
-										                    </div>
-										                    <div>Country - 
-										                    	<a href="#" class="story-author-link"><?php echo $contactAddress['state_province']; ?></a>
-										                    </div>
-										                    <hr style="height:1px; border:none; color:#666666; background-color:#666666;">
-										                <?php } ?>
-															
-														</a>
+														<table class="table table-striped table-hover">
+									                        <thead>
+									                            <tr>
+									                                <th><a href="#"><span>Address(1)</span></a></th>
+									                                <th><a href="#"><span>Address(1)</span></a></th>
+									                                <th><a href="#"><span>City</span></a></th>
+									                                <th><a href="#"><span>State Province</span></a></th>
+									                                <th><a href="#"><span>Zip Code</span></a></th>
+									                                <th><a href="#"><span>Country</span></a></th>
+									                            </tr>
+									                        </thead>
+									                        <?php
+										                		foreach($company['Address'] as $contactAddress) { ?>
+											                        <tbody aria-relevant="all" aria-live="polite" role="alert">
+											                         		<tr>
+											                         			<td><?php echo $contactAddress['address1']; ?>
+											                         			</td>
+											                         			<td><?php echo $contactAddress['address2']; ?>
+											                         			</td>
+											                         			<td><?php echo $contactAddress['city']; ?>
+											                         			</td>
+											                         			<td><?php echo $contactAddress['state_province']; ?>
+											                         			</td>
+											                         			<td><?php echo $contactAddress['zip_code']; ?>
+											                         			</td>
+											                         			<td><?php echo $contactAddress['country']; ?>
+											                         			</td>
+											                         		</tr>
+											                         </tbody>
+									                        <?php }?>
+									                    </table>
 														
 													</div>
 													
@@ -126,7 +133,7 @@
 															<td>
 																<?php echo $contactNumber['number']; ?>
 															</td>
-															<td>
+															<td class="pull-right">
 																<?php echo date('M d, Y', strtotime($contactNumber['created'])); ?>
 															</td>
 														</tr>
@@ -187,10 +194,10 @@
 														<td class="text-center">
 															<i class="fa fa-mail-reply-all"></i>
 														</td>
-														<td>
+														<td >
 															<?php echo $contactEmail['email']; ?>
 														</td>
-														<td>
+														<td class="pull-right">
 															<?php echo date('M d, Y', strtotime($contactEmail['created'])); ?>
 														</td>
 													</tr>

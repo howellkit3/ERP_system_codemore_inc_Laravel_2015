@@ -39,24 +39,25 @@ class Contact extends AppModel {
 	
 	public function saveContact($data, $contact_id)
 	{
-		
-		$this->create();
+		foreach ($data as $key => $contactData)
+		{
+			$this->create();
+			foreach ($contactData as $key => $contactIndex) 
+			{
+				
+				$contactData[$this->name][$key]['model'] = "ContactPerson";
+				$contactData[$this->name][$key]['foreign_key'] = $contact_id;
 
-		foreach ($data[$this->name] as $key => $contactData) {
-
-			$data[$this->name][$key]['model'] = "ContactPerson";
-			$data[$this->name][$key]['foreign_key'] = $contact_id;
-
+			}
+			$this->saveAll($contactData[$this->name]);
 		}
-		
-		$this->saveAll($data[$this->name]);
 		
 	}
 
 	public function beforeSave($options = array())
 	{
 		$userId = AuthComponent::user('id'); 
-
+		
 		$this->data[$this->name]['created_by'] = $userId;
 		$this->data[$this->name]['modified_by'] = $userId;
 	}

@@ -41,7 +41,7 @@ class Company extends AppModel {
 					'foreignKey' => 'foreign_key',
 					'dependent' => false,
 					'conditions' => "model = 'Company'"
-				),
+				)
 			)
 		));
 
@@ -107,6 +107,7 @@ class Company extends AppModel {
 			$data['Address'][$key]['model'] = 'Company';
 			$data['Address'][$key]['created_by'] =$auth;
 			$data['Address'][$key]['modified_by'] =$auth;
+			//pr($data);exit();
 		}
 
 		foreach ($data['Contact'] as $key => $value) {

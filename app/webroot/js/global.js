@@ -14,14 +14,20 @@ function fieldReset($form, section)
             $this.val('');
         }
         $this.prop('name', nameProp.replace("[0]", "[" + newIndex + "]"));
+        //console.log(nameProp);
     });
 
     return $form;
 }
 
-function cloneData(whatSection)
+function cloneData(whatSection, thisElement)
 {
-    var data = $('.' + whatSection).first().clone();
+    
+    var parentSection = $(thisElement).parents('.' + whatSection);
+
+    //console.log($(parentSection).attr('class'));
+
+    var data = $(parentSection).first().clone();
     data = fieldReset(data, whatSection);
     $('.' + whatSection).last().after(data);
 }
@@ -32,7 +38,20 @@ function removeClone(whatSection)
    
 }
 
-$('#bukatutup').click(function() {
-    alert("sdfadsf");
-    $('#target').toggle('slow');
-});
+// $(document).ready(function() {
+//     $('.add-field').click(counter);
+// });
+
+// counter = function() {
+//     var value = $('#text').val();
+
+//     if (value.length == 0) {
+//         $('#wordCount').html(0);
+//         return;
+//     }
+
+//     var regex = /\s+/gi;
+//     var wordCount = value.trim().replace(regex, ' ').split(' ').length;
+
+//     $('#wordCount').html(wordCount);
+// };

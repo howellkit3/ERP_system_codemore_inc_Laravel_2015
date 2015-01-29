@@ -39,6 +39,7 @@ class CustomerSalesController extends SalesAppController {
 		$userData = $this->Session->read('Auth');
 		
 		if ($this->request->is('post')) {
+
             if (!empty($this->request->data)) {
 
             	$this->Company->bind(array('Address','Contact','Email','ContactPerson'));
@@ -47,7 +48,7 @@ class CustomerSalesController extends SalesAppController {
 
             	$this->request->data['Company']['created_by'] = $userData['User']['id'];
             	$this->request->data['Company']['modified_by'] = $userData['User']['id'];
-
+            	//pr($this->request->data);exit();
             	if ($this->Company->saveAssociated($this->request->data)) {
 
             		$contactPersonId = $this->Company->ContactPerson->id;
@@ -85,14 +86,74 @@ class CustomerSalesController extends SalesAppController {
 
 	}
 
-	public function edit($companyId = null){
-
-	}
-
 	public function person($personId = null){
+
+		$this->Company->bind(array('Address','Contact','Email','ContactPerson'));
+
+		$this->Company->recursive = 1;
+
+		$contactPerson = $this->Company->ContactPerson->find('first', array(
+	        'conditions' => array('ContactPerson.id' => $personId)
+	    ));
+
+	    $contactAddress = $this->Company->Address->find('all', array(
+	        'conditions' => array('Address.foreign_key' => $personId,'Address.model' =>'ContactPerson')
+	    ));
+
+	    $contactNumber = $this->Company->Contact->find('all', array(
+	        'conditions' => array('Contact.foreign_key' => $personId,'Contact.model' =>'ContactPerson')
+	    ));
+
+	     $contactEmail = $this->Company->Email->find('all', array(
+	        'conditions' => array('Email.foreign_key' => $personId,'Email.model' =>'ContactPerson')
+	    ));
+
+		
+		$this->set(compact('contactPerson','contactAddress','contactNumber','contactEmail'));
 		
 
 	}
+
+	public function edit($companyId = null){
+
+		$this->Company->bind(array(
+			'Address',
+			'Contact',
+			'Email',
+			'ContactPerson'
+		));
+
+		$company = $this->Company->find('first', array(
+	        'conditions' => array('Company.id' => $companyId)
+	    ));
+
+		$this->Company->ContactPerson->bind(array('Address', 'Email', 'Contact'));
+
+	    $contactPerson = $this->Company->ContactPerson->find('first', array(
+	        'conditions' => array('ContactPerson.company_id' => $companyId)
+	    ));
+
+		if (!$this->request->data) {
+
+			$holder = array();
+
+			foreach($contactPerson as $key => $contact)
+			{
+				$holder['ContactPersonData'][$key] = $contact;
+			}
+
+			pr($holder); die;
+
+	        $this->request->data = am($company, $holder);
+
+	        //pr($this->request->data); die;
+	    }
+
+	    //$this->set(compact('contactPerson'));
+		
+	}
+
+	
 
 	
 

@@ -39,17 +39,18 @@ class Address extends AppModel {
 
 	public function saveContact($data, $contact_id)
 	{
-		
-		$this->create();
+		foreach ($data as $key => $addressData)
+		{
+			$this->create();
+			foreach ($addressData as $key => $addressIndex) 
+			{
+				
+				$addressData[$this->name][$key]['model'] = "ContactPerson";
+				$addressData[$this->name][$key]['foreign_key'] = $contact_id;
 
-		foreach ($data[$this->name] as $key => $addressData) {
-
-			$data[$this->name][$key]['model'] = "ContactPerson";
-			$data[$this->name][$key]['foreign_key'] = $contact_id;
-
+			}
+			$this->saveAll($addressData[$this->name]);
 		}
-		
-		$this->saveAll($data[$this->name]);
 		
 	}
 
