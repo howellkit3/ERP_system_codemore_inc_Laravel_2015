@@ -23,12 +23,12 @@ class Email extends AppModel {
 				'Company' => array(
 					'className' => 'Company',
 					'foreignKey' => 'foreign_key',
-					'dependent' => false
+					'dependent' => true
 				),
 				'Contactperson' => array(
 					'className' => 'Company',
 					'foreignKey' => 'Contactperson',
-					'dependent' => false
+					'dependent' => true
 				)
 			)
 		));
@@ -46,17 +46,16 @@ class Email extends AppModel {
 
 	public function saveContact($data, $contact_id)
 	{
-		foreach ($data as $key => $contactData)
+		foreach ($data as $key => $emailData)
 		{
 			$this->create();
-			foreach ($contactData as $key => $contactIndex) 
+			foreach ($emailData[$this->name] as $key => $emailValue) 
 			{
+				$emailValue['model'] = "ContactPerson";
+				$emailValue['foreign_key'] = $contact_id;	
 				
-				$contactData[$this->name][$key]['model'] = "ContactPerson";
-				$contactData[$this->name][$key]['foreign_key'] = $contact_id;
-
 			}
-			$this->saveAll($contactData[$this->name]);
+			$this->saveAll($emailValue);
 		}
 		
 	}

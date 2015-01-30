@@ -24,12 +24,12 @@ class Contact extends AppModel {
 				'Company' => array(
 					'className' => 'Company',
 					'foreignKey' => 'foreign_key',
-					'dependent' => false
+					'dependent' => true
 				),
 				'ContactPerson' => array(
 					'className' => 'ContactPerson',
 					'foreignKey' => 'foreign_key',
-					'dependent' => false
+					'dependent' => true
 				)
 			)
 		));
@@ -42,14 +42,13 @@ class Contact extends AppModel {
 		foreach ($data as $key => $contactData)
 		{
 			$this->create();
-			foreach ($contactData as $key => $contactIndex) 
+			foreach ($contactData[$this->name] as $key => $contactValue) 
 			{
+				$contactValue['model'] = "ContactPerson";
+				$contactValue['foreign_key'] = $contact_id;	
 				
-				$contactData[$this->name][$key]['model'] = "ContactPerson";
-				$contactData[$this->name][$key]['foreign_key'] = $contact_id;
-
 			}
-			$this->saveAll($contactData[$this->name]);
+			$this->saveAll($contactValue);
 		}
 		
 	}

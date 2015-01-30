@@ -42,14 +42,14 @@ class Address extends AppModel {
 		foreach ($data as $key => $addressData)
 		{
 			$this->create();
-			foreach ($addressData as $key => $addressIndex) 
+			foreach ($addressData[$this->name] as $key => $addressValue) 
 			{
+				$addressValue['model'] = "ContactPerson";
+				$addressValue['foreign_key'] = $contact_id;	
 				
-				$addressData[$this->name][$key]['model'] = "ContactPerson";
-				$addressData[$this->name][$key]['foreign_key'] = $contact_id;
-
 			}
-			$this->saveAll($addressData[$this->name]);
+			$this->saveAll($addressValue);
+			
 		}
 		
 	}

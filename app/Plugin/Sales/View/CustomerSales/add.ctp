@@ -438,7 +438,7 @@
                                 <div class="form-group">
                                     <label for="inputPassword1" class="col-lg-2 control-label"></label>
                                     <div class="col-lg-4">
-                                        <button type="button" class="add-field6 table-link danger btn btn-success" onclick="cloneData('contactPerson_section',this)"> <i class="fa fa-plus"> Add Contact Person</i></button>
+                                        <button type="button" class="add-field6 table-link danger btn btn-success" onclick="cloneDataArray('contactPerson_section',this)"> <i class="fa fa-plus"> Add Contact Person</i></button>
                                         <button type="button" class="remove-field btn btn-danger" onclick="removeClone('contactPerson_section')"><i class="fa fa-minus"></i> </button>
                                     </div>
                                 </div>

@@ -48,7 +48,7 @@ class CustomerSalesController extends SalesAppController {
 
             	$this->request->data['Company']['created_by'] = $userData['User']['id'];
             	$this->request->data['Company']['modified_by'] = $userData['User']['id'];
-            	//pr($this->request->data);exit();
+            	
             	if ($this->Company->saveAssociated($this->request->data)) {
 
             		$contactPersonId = $this->Company->ContactPerson->id;
@@ -129,7 +129,7 @@ class CustomerSalesController extends SalesAppController {
 
 		$this->Company->ContactPerson->bind(array('Address', 'Email', 'Contact'));
 
-	    $contactPerson = $this->Company->ContactPerson->find('first', array(
+	    $contactPerson = $this->Company->ContactPerson->find('all', array(
 	        'conditions' => array('ContactPerson.company_id' => $companyId)
 	    ));
 
@@ -142,19 +142,48 @@ class CustomerSalesController extends SalesAppController {
 				$holder['ContactPersonData'][$key] = $contact;
 			}
 
-			pr($holder); die;
-
 	        $this->request->data = am($company, $holder);
-
-	        //pr($this->request->data); die;
 	    }
-
-	    //$this->set(compact('contactPerson'));
 		
 	}
 
-	
+	public function delete($dataId = null, $personId = null){
+
+		$this->Company->bind(array('ContactPerson','Contact','Email'));
+		//$this->Company->ContactPerson->bind(array('Address', 'Email', 'Contact'));
+		
+		if ($this->Company->deleteAll($dataId)) {
+
+			// if($this->Company->ContactPerson->delete($personId)){
+
+			// 	$this->Session->setFlash(__('Customer Information Deleted.'));
+			// 	$this->redirect(
+			// 		array('controller' => 'customer_sales', 'action' => 'index')
+			// 	);
+
+			// }else{
+			// 		echo "Company error";
+
+			// 	$this->redirect(
+			// 		array('controller' => 'customer_sales', 'action' => 'index')
+			// 	);
+			// 	$this->Session->setFlash(__('Error Deleting Information.'));
+			// }
+
+			$this->redirect(
+					array('controller' => 'customer_sales', 'action' => 'index')
+				);
+
+		} else {
+			echo "ContactPerson error";
+			$this->Session->setFlash(__('Error Deleting Information.'));
+			$this->redirect(
+					array('controller' => 'customer_sales', 'action' => 'index')
+				);
+			
+		}
 
 	
+	}
 
 }

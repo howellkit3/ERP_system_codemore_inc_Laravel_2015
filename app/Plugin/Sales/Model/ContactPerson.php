@@ -22,26 +22,26 @@ class ContactPerson extends AppModel {
 				'Company' => array(
 					'className' => 'Sales.Company',
 					'foreignKey' => 'company_id',
-					'dependent' => false
+					'dependent' => true
 				),
 			),
 			'hasMany' => array(
 				'Address' => array(
 					'className' => 'Sales.Address',
 					'foreignKey' => 'foreign_key',
-					'dependent' => false,
+					'dependent' => true,
 					'conditions' => "Address.model = 'ContactPerson'"
 				),
 				'Contact' => array(
 					'className' => 'Sales.Contact',
 					'foreignKey' => 'foreign_key',
-					'dependent' => false,
+					'dependent' => true,
 					'conditions' => "Contact.model = 'ContactPerson'"
 				),
 				'Email' => array(
 					'className' => 'Sales.Email',
 					'foreignKey' => 'foreign_key',
-					'dependent' => false,
+					'dependent' => true,
 					'conditions' => "Email.model = 'ContactPerson'"
 				),
 			)

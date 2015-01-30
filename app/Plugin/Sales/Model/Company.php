@@ -22,28 +22,28 @@ class Company extends AppModel {
 				'ContactPerson' => array(
 					'className' => 'Sales.ContactPerson',
 					'foreignKey' => 'company_id',
-					'dependent' => false
+					'dependent' => true
 				),
 				'Address' => array(
 					'className' => 'Sales.Address',
 					'foreignKey' => 'foreign_key',
-					'dependent' => false,
-					'conditions' => "model = 'Company'"
+					'conditions' => "model = 'Company'",
+					'dependent' => true
 				),
 				'Contact' => array(
 					'className' => 'Sales.Contact',
 					'foreignKey' => 'foreign_key',
-					'dependent' => false,
-					'conditions' => "model = 'Company'"
+					'conditions' => "model = 'Company'",
+					'dependent' => true
 				),
 				'Email' => array(
 					'className' => 'Sales.Email',
 					'foreignKey' => 'foreign_key',
-					'dependent' => false,
-					'conditions' => "model = 'Company'"
+					'conditions' => "model = 'Company'",
+					'dependent' => true
 				)
 			)
-		));
+		),false);
 
 		$this->contain($model);
 	}
@@ -107,7 +107,6 @@ class Company extends AppModel {
 			$data['Address'][$key]['model'] = 'Company';
 			$data['Address'][$key]['created_by'] =$auth;
 			$data['Address'][$key]['modified_by'] =$auth;
-			//pr($data);exit();
 		}
 
 		foreach ($data['Contact'] as $key => $value) {
@@ -141,5 +140,6 @@ class Company extends AppModel {
 		$this->data[$this->name]['created_by'] = $userId;
 		$this->data[$this->name]['modified_by'] = $userId;
 	}
+	
 	
 }
