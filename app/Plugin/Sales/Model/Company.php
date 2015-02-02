@@ -123,12 +123,6 @@ class Company extends AppModel {
 			$data['Email'][$key]['modified_by'] =$auth;
 		}
 
-		foreach ($data['ContactPerson'] as $key => $value) {
-			$data['ContactPerson'][$key] = $value;
-			$data['ContactPerson'][$key]['model'] = 'Company';
-			$data['ContactPerson'][$key]['created_by'] =$auth;
-			$data['ContactPerson'][$key]['modified_by'] =$auth;
-		}
 
 		return $data;
 	}

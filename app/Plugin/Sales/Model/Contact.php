@@ -60,5 +60,18 @@ class Contact extends AppModel {
 		$this->data[$this->name]['created_by'] = $userId;
 		$this->data[$this->name]['modified_by'] = $userId;
 	}
+
+	public function deleteContact($personId = null){
+
+		$contactData = $this->find('all',array(
+			     'conditions' => array('model'=> "ContactPerson",
+			     'foreign_key' => $personId
+			)));
+
+		foreach ($contactData as $key => $value) {
+
+			$this->delete($value['Contact']['id']);
+		}
+	}
 	
 }

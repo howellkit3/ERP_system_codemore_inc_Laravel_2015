@@ -51,11 +51,12 @@ class CustomerSalesController extends SalesAppController {
             	
             	if ($this->Company->saveAssociated($this->request->data)) {
 
-            		$contactPersonId = $this->Company->ContactPerson->id;
-					
+					$contactPersonId = $this->Company->ContactPerson->saveContact($this->request->data['ContactPersonData'], $this->Company->id,$userData['User']['id']);
+            	
             		$this->Company->Contact->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
             		$this->Company->Address->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
             		$this->Company->Email->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
+
 				
             		$this->Session->setFlash(__('Customer Information Complete.'));
 	            	$this->redirect(
@@ -144,38 +145,31 @@ class CustomerSalesController extends SalesAppController {
 
 	        $this->request->data = am($company, $holder);
 	    }
+	    //pr($this->request->data);exit();
 		
 	}
 
 	public function delete($dataId = null, $personId = null){
 
-		$this->Company->bind(array('ContactPerson','Contact','Email'));
-		//$this->Company->ContactPerson->bind(array('Address', 'Email', 'Contact'));
+		$this->Company->bind(array('Contact','Email','Address','ContactPerson'));
 		
 		if ($this->Company->deleteAll($dataId)) {
+			
+			$this->loadModel('Contact');
+			$this->Contact->deleteContact($personId);
 
-			// if($this->Company->ContactPerson->delete($personId)){
+			$this->loadModel('Email');
+			$this->Email->deleteEmail($personId);
 
-			// 	$this->Session->setFlash(__('Customer Information Deleted.'));
-			// 	$this->redirect(
-			// 		array('controller' => 'customer_sales', 'action' => 'index')
-			// 	);
-
-			// }else{
-			// 		echo "Company error";
-
-			// 	$this->redirect(
-			// 		array('controller' => 'customer_sales', 'action' => 'index')
-			// 	);
-			// 	$this->Session->setFlash(__('Error Deleting Information.'));
-			// }
+			$this->loadModel('Address');
+			$this->Address->deleteAddress($personId);
 
 			$this->redirect(
-					array('controller' => 'customer_sales', 'action' => 'index')
-				);
-
+				array('controller' => 'customer_sales', 'action' => 'index')
+			);
+		
 		} else {
-			echo "ContactPerson error";
+			
 			$this->Session->setFlash(__('Error Deleting Information.'));
 			$this->redirect(
 					array('controller' => 'customer_sales', 'action' => 'index')
@@ -183,7 +177,6 @@ class CustomerSalesController extends SalesAppController {
 			
 		}
 
-	
 	}
 
 }

@@ -61,5 +61,18 @@ class Address extends AppModel {
 		$this->data[$this->name]['created_by'] = $userId;
 		$this->data[$this->name]['modified_by'] = $userId;
 	}
+
+	public function deleteAddress($personId = null){
+
+		$addressData = $this->find('all',array(
+			     'conditions' => array('model'=> "ContactPerson",
+			     'foreign_key' => $personId)
+			));
+
+			foreach ($addressData as $key => $value) {
+
+				$this->delete($value['Address']['id']);
+			}
+	}
 	
 }

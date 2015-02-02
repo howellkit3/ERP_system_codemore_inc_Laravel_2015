@@ -13,6 +13,8 @@ class ContactPerson extends AppModel {
 
 	public $recursive = -1;
 
+	 public $name = 'ContactPerson';
+
 	public $actsAs = array('Containable');
 
 	public function bind($model = array('Group')){
@@ -106,6 +108,25 @@ class ContactPerson extends AppModel {
 
 		$this->data[$this->name]['created_by'] = $userId;
 		$this->data[$this->name]['modified_by'] = $userId;
+	}
+
+	public function saveContact($data, $company_id,$auth)
+	{
+		foreach ($data as $key => $contactPersonData)
+		{
+			$this->create();
+			foreach ($contactPersonData[$this->name] as $key => $contactPersonValue) 
+			{
+				$contactPersonValue['model'] = "Company";
+				$contactPersonValue['company_id'] = $company_id;
+				$contactPersonValue['created_by'] = $auth;
+				$contactPersonValue['modified_by'] = $auth;	
+				
+			}
+			$this->saveAll($contactPersonValue);
+			return $this->id;
+		}
+		
 	}
 	
 }

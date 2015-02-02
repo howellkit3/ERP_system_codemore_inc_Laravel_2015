@@ -65,7 +65,7 @@
 
                             <section class="cloneMe addressSection">
                                 <header class="main-box-header clearfix">
-                                    <h1>Company Address</h1><span class="wordCount"></span>
+                                    <h1>Company Address</h1>
                                 </header>
                                  <div class="main-box-body clearfix">
 
@@ -257,7 +257,7 @@
                                         <label for="inputPassword1" class="col-lg-2 control-label">Firstname</label>
                                         <div class="col-lg-9">
                                             <?php 
-                                                echo $this->Form->input('ContactPerson.0.firstname', array('class' => 'form-control','label' => false));
+                                                echo $this->Form->input('ContactPersonData.0.ContactPerson.0.firstname', array('class' => 'form-control','label' => false));
                                             ?>
                                         </div>
                                     </div>
@@ -266,7 +266,7 @@
                                         <label for="inputPassword1" class="col-lg-2 control-label">Middlename</label>
                                         <div class="col-lg-9">
                                             <?php 
-                                                echo $this->Form->input('ContactPerson.0.middlename', array('class' => 'form-control','label' => false));
+                                                echo $this->Form->input('ContactPersonData.0.ContactPerson.0.middlename', array('class' => 'form-control','label' => false));
                                             ?>
                                         </div>
                                     </div>
@@ -275,7 +275,7 @@
                                         <label for="inputPassword1" class="col-lg-2 control-label">Lastname</label>
                                         <div class="col-lg-9">
                                             <?php 
-                                                echo $this->Form->input('ContactPerson.0.lastname', array('class' => 'form-control','label' => false));
+                                                echo $this->Form->input('ContactPersonData.0.ContactPerson.0.lastname', array('class' => 'form-control','label' => false));
                                             ?>
                                         </div>
                                     </div>
@@ -308,7 +308,7 @@
                                                 ?>
                                             </div>
                                             <div class="col-lg-2">
-                                                <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneData('contactPersonNumber_section', this)"><i class="fa fa-plus"></i></button>
+                                                <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneContactData('contactPersonNumber_section', this)"><i class="fa fa-plus"></i></button>
                                                 <button type="button" class="remove-field btn btn-danger" onclick="removeClone('contactPersonNumber_section')"><i class="fa fa-minus"></i> </button>
                                             </div>
                                         </div>
@@ -344,7 +344,7 @@
                                                 ?>
                                             </div>
                                             <div class="col-lg-2">
-                                                <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneData('contactPersonEmail_section',this)"><i class="fa fa-plus"></i></button>
+                                                <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneContactData('contactPersonEmail_section',this)"><i class="fa fa-plus"></i></button>
                                                 <button type="button" class="remove-field btn btn-danger" onclick="removeClone('contactPersonEmail_section')"><i class="fa fa-minus"></i> </button>
                                             </div>
                                         </div>
@@ -428,7 +428,7 @@
                                     
                                             <div class="form-group">
                                                 <label for="inputPassword1" class="col-lg-2 control-label"></label>
-                                                <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneData('contactPersonAddress_section',this)"><i class="fa fa-plus"></i></button>
+                                                <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneContactData('contactPersonAddress_section',this)"><i class="fa fa-plus"></i></button>
                                                 <button type="button" class="remove-field btn btn-danger" onclick="removeClone('contactPersonAddress_section')"><i class="fa fa-minus"></i> </button>
                                             </div>
                                             <hr style="height:1px; border:none; color:#666666; background-color:#666666;">
@@ -438,7 +438,7 @@
                                 <div class="form-group">
                                     <label for="inputPassword1" class="col-lg-2 control-label"></label>
                                     <div class="col-lg-4">
-                                        <button type="button" class="add-field6 table-link danger btn btn-success" onclick="cloneDataArray('contactPerson_section',this)"> <i class="fa fa-plus"> Add Contact Person</i></button>
+                                        <button type="button" class="add-field6 table-link danger btn btn-success" onclick="cloneData('contactPerson_section',this)"> <i class="fa fa-plus"> Add Contact Person</i></button>
                                         <button type="button" class="remove-field btn btn-danger" onclick="removeClone('contactPerson_section')"><i class="fa fa-minus"></i> </button>
                                     </div>
                                 </div>

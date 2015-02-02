@@ -59,5 +59,18 @@ class Email extends AppModel {
 		}
 		
 	}
+
+	public function deleteEmail($personId = null){
+
+		$emailData = $this->find('all',array(
+			     'conditions' => array('model'=> "ContactPerson",
+			     'foreign_key' => $personId)
+			));
+
+		foreach ($emailData as $key => $value) {
+
+			$this->delete($value['Email']['id']);
+		}
+	}
 	
 }

@@ -24,6 +24,7 @@ class UsersController extends AppController
 	}
 
 	public function add() {
+         $this->layout = 'add';
 		if ($this->request->is('post')) {
             
             if (!empty($this->request->data)) {
@@ -32,11 +33,12 @@ class UsersController extends AppController
             	$this->User->AddAction($this->request->data);
             	$this->Session->setFlash(__('Register Complete.'));
             	$this->redirect(
-                    array('controller' => 'users', 'action' => 'add')
+                    array('controller' => 'users', 'action' => 'login')
                 );
             	
             }
         }
+        //$this->layout=false;
 	}
 
 	public function login() {
