@@ -8,3 +8,9 @@
 #newsfeed .remove-pad{
 	padding-left:0;
 }
+#config-tool{
+	width: 300px;
+}
+#config-tool.closed {
+    right: -300px;
+}

@@ -54,47 +54,13 @@ class ContactPerson extends AppModel {
 	
 	public $validate = array(
 
-		'company_name' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-			),
-		),
-		'company_address' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-			),
-		),
-		'state_province' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-			),
-		),
-		'company_contact' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-			),
-		),
+		
 		'firstname' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 			),
 		),	
 		'lastname' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-			),
-		),	
-		'email' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-			),
-		),
-		'contact_number' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-			),
-		),
-		'address' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 			),

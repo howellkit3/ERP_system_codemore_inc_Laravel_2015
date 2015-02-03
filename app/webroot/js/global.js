@@ -1,8 +1,9 @@
 
+
 function fieldReset($form, section)
 {
     var count = $('.' + section).length;
-    console.log(count);
+    
     $form.find('select, input').each(function() {
         var $this = $(this),
             nameProp = $this.prop('name'),
@@ -17,7 +18,7 @@ function fieldReset($form, section)
             return '[' + (count) + ']'
         }));
          
-        console.log(nameProp);
+       
 
     });
     
@@ -29,10 +30,10 @@ function cloneData(whatSection, thisElement)
     var parentSection = $(thisElement).parents('.' + whatSection);
 
     var data = $(parentSection).first().clone();
-
+    console.log(data);
     data = fieldReset(data, whatSection);
     $('.' + whatSection).last().after(data);
-    console.log(data);
+    
 }
 
 function removeClone(whatSection)
@@ -79,6 +80,14 @@ function cloneContactData(whatSection, thisElement)
     var parentSection = $(thisElement).parents('.' + whatSection);
 
     var data = $(parentSection).first().clone();
+    data = fieldResetContact(data, whatSection);
+    $('.' + whatSection).last().after(data);
+}
+function cloneInquiry(whatSection, thisElement)
+{   
+    //var parentSection = $(thisElement).parents('.' + whatSection);
+    //console.log(parentSection);
+    var data = $('.' + whatSection).first().clone();
     data = fieldResetContact(data, whatSection);
     $('.' + whatSection).last().after(data);
 }

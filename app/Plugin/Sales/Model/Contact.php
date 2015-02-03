@@ -36,6 +36,16 @@ class Contact extends AppModel {
 
 		$this->contain($model);
 	}
+
+	public $validate = array(
+
+		'number' => array(
+			'rule' => 'numeric',
+			'allowEmpty' => true, //validate only if not empty
+			'message'=>'Zip Code should be numeric',
+		),
+	
+	);
 	
 	public function saveContact($data, $contact_id)
 	{

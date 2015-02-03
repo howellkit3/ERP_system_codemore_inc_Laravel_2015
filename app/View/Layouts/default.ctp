@@ -36,9 +36,13 @@
 	            'libs/jquery-jvectormap-1.2.2',
 	            'libs/weather-icons'
 	        ));
+	         echo $this->Html->script('jquery');
+	       
 
 	    ?>
-
+	    <script type="text/javascript">
+	    var serverPath = '<?php echo $this->Html->url("/")?>';
+	    </script>
 	    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
 	    <link type="image/x-icon" href="favicon.png" rel="shortcut icon"/>
 
@@ -123,7 +127,6 @@
 		 <?php
 		 	// SCRIPTS
 	        echo $this->Html->script('demo-skin-changer');
-	        echo $this->Html->script('jquery');
 	        echo $this->Html->script('bootstrap');
 	        echo $this->fetch('meta');
 	        echo $this->fetch('css');

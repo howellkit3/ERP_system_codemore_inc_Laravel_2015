@@ -31,7 +31,7 @@ class CustomerSalesController extends SalesAppController {
     		'order' => array('Company.id DESC')));
 
 		$this->set(compact('company'));
-	
+		
 	}
 
 	public function add(){
@@ -179,4 +179,77 @@ class CustomerSalesController extends SalesAppController {
 
 	}
 
+	public function inquiry_form(){
+
+		$userData = $this->Session->read('Auth');
+
+		$this->Company->bind(array('Contact','Email','Address','ContactPerson'));
+
+		$companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')));
+
+		$this->set('companyData', $companyData);
+
+		if ($this->request->is('post')) {
+
+            if (!empty($this->request->data)) {
+
+            	$this->Company->bind(array('Inquiry'));
+
+            	$this->request->data = $this->Company->Inquiry->saveInquiry($this->request->data, $userData['User']['id']);
+
+            	$this->Session->setFlash(__('Request Inquiry Success.'));
+            	$this->redirect(
+					array('controller' => 'customer_sales', 'action' => 'inquiry')
+				);
+
+            }
+        }
+
+	}
+
+	public function inquiry(){
+
+		$userData = $this->Session->read('Auth');
+
+		$this->Company->bind(array('Inquiry'));
+
+		$inquiryList = $this->Company->find('all',array(
+    		'order' => array('Company.id DESC')));
+
+		$this->set(compact('inquiryList'));
+	
+	}
+
+	public function review_inquiry($inquiryId = null){
+
+		$this->Company->bind(array('Address','Contact','Email','Inquiry'));
+
+		$inquiry = $this->Company->Inquiry->find('first', array(
+	        'conditions' => array('Inquiry.id' => $inquiryId)
+	    ));
+		
+	    $company = $this->Company->find('first', array(
+	        'conditions' => array('Company.id' => $inquiry['Inquiry']['company_id'])
+	    ));
+		
+		$this->set(compact('company','inquiry'));
+		//pr($company);exit();
+	}
+
+	public function settings(){
+		
+	}
+
+	public function find_data($id = null) {
+		
+		$this->layout = false;
+		$this->Company->bind(array('Contact','Email','Address'));
+
+		$data =$this->Company->find('first', array('conditions' => array('Company.id' => $id),'fields' => array('id', 'company_name')));
+		
+		echo json_encode($data);
+
+		$this->autoRender = false;
+
+	}
 }

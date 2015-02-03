@@ -36,6 +36,16 @@ class Email extends AppModel {
 		$this->contain($model);
 	}
 
+	public $validate = array(
+
+		'email' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+			),
+		),
+	
+	);
+
 	public function beforeSave($options = array())
 	{
 		$userId = AuthComponent::user('id'); 

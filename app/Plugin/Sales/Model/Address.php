@@ -37,6 +37,31 @@ class Address extends AppModel {
 		$this->contain($model);
 	}
 
+	public $validate = array(
+
+		'address1' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+			),
+		),
+		'state_province' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+			),
+		),
+		'city' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+			),
+		),
+		'zip_code' => array(
+			'rule' => 'numeric',
+			'allowEmpty' => true, //validate only if not empty
+			'message'=>'Zip Code should be numeric',
+		),
+
+	);
+
 	public function saveContact($data, $contact_id)
 	{
 		foreach ($data as $key => $addressData)

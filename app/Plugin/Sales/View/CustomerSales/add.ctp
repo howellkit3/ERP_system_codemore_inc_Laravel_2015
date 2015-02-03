@@ -8,7 +8,7 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="main-box">
-        
+            <?php echo $this->Session->flash(); ?>
             <header class="main-box-header clearfix">
                 <center><h1><u>Customer Information</u></h1></center><hr>
             </header>

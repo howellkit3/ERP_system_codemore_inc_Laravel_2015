@@ -41,6 +41,12 @@ class Company extends AppModel {
 					'foreignKey' => 'foreign_key',
 					'conditions' => "model = 'Company'",
 					'dependent' => true
+				),
+				'Inquiry' => array(
+					'className' => 'Sales.Inquiry',
+					'foreignKey' => 'company_id',
+					'conditions' => '',
+					'dependent' => true
 				)
 			)
 		),false);
@@ -50,6 +56,13 @@ class Company extends AppModel {
 	
 	public $validate = array(
 
+		'id' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'message'=>'Select Company',
+			),
+		),
+		
 		'company_name' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
