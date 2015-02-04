@@ -30,8 +30,8 @@ class QuotationsController extends SalesAppController {
 		$quotationData = $this->Company->Inquiry->find('all',array(
     		'order' => array('Inquiry.id DESC')));
 
-		$companyData = $this->Company->find('all',array(
-    		'order' => array('Company.id DESC')));
+		$companyData = $this->Company->find('list',array(
+    		'fields' => array('id','company_name')));
 
 		$this->set(compact('companyData','quotationData'));
 		//pr($quotationData);exit();

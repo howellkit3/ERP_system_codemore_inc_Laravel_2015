@@ -10,7 +10,7 @@ App::uses('AuthComponent', 'Controller/Component');
 class Quotation extends AppModel {
 
     public $useDbConfig = 'koufu_sale';
-
+	
 	public $recursive = -1;
 
 	public $name = 'Quotation';

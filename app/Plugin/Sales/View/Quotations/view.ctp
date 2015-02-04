@@ -129,7 +129,7 @@
 					<div class="form-group">
 						<div class="col-lg-7"></div>
 						<div class="col-lg-4">
-							Position:_________________
+							Date:_________________
 						</div>
 					</div>
 				</form>

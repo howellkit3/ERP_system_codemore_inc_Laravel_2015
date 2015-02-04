@@ -1,9 +1,9 @@
 <?php $this->Html->addCrumb('Sales', array('controller' => 'customer_sales', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Quotation', array('controller' => 'quotation', 'action' => 'index')); ?>
-<?php echo $this->Html->script('Sales.inquiry');?>
+
 <div style="clear:both"></div>
 
-<?php echo $this->element('sales_option');?>
+<?php echo $this->element('sales_option');?><br><br>
 
 <div class="row">
     <div class="col-lg-12">
@@ -28,8 +28,6 @@
                             <tr>
                                 <th><a href="#"><span>Company</span></a></th>
                                 <th><a href="#"><span>Request Inquiry</span></a></th>
-                                <th><a href="#"><span>Quotation</span></a></th>
-                                <th><a href="#"><span>Created</span></a></th>
                                 <th>Action</th>
                             </tr>
                         </thead>

@@ -5,23 +5,18 @@
         <tr class="">
 
             <td class="">
-                <?php //echo $inquiryList['Company']['company_name'] ?>  
+                <?php echo $companyData[$quotationList['Inquiry']['company_id']] ?>  
             </td>
             <td class="">
                 <?php echo $quotationList['Inquiry']['quotes'] ?>
             </td>
-            <td class="">
-                <?php //echo $quotationList['Inquiry']['quotes'] ?>
-            </td>
-            <td>
-                <?php //echo date('M d, Y', strtotime($customerlist['Company']['created'])); ?>
-            </td>
+            
             <td>
                 <?php
                     echo $this->Html->link('<span class="fa-stack">
                         <i class="fa fa-square fa-stack-2x"></i>
                         <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-                        </span> ', array('controller' => 'quotations', 'action' => 'view',$quotationList['Inquiry']['id']),array('class' =>' table-link','escape' => false,'title'=>'View Information'));
+                        </span> ', array('controller' => 'quotations', 'action' => 'view',$quotationList['Inquiry']['id']),array('class' =>' table-link','escape' => false,'title'=>'View Quotation'));
                 ?>
                 <?php
                     // echo $this->Html->link('<span class="fa-stack">
@@ -39,7 +34,7 @@
                     echo $this->Html->link('<span class="fa-stack">
                     <i class="fa fa-square fa-stack-2x"></i>
                     <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-                    </span>', array('controller' => 'qouotations', 'action' => 'delete'),array('class' =>' table-link','escape' => false,'title'=>'Delete Information'));
+                    </span>', array('controller' => 'qouotations', 'action' => 'delete',$quotationList['Inquiry']['id']),array('class' =>' table-link','escape' => false,'title'=>'Delete Quotation'));
                 ?>
                 
             </td>

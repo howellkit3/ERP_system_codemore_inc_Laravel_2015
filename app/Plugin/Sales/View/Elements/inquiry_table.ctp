@@ -1,18 +1,20 @@
 <?php foreach ($inquiryData as $inquiryList ):?>
 
-    <?php //foreach ($companyData['Company'] as $companylist ): ?>
     <tbody aria-relevant="all" aria-live="polite" role="alert">
 
         <tr class="">
 
             <td class="">
-                <?php //echo $companylist['Company']['company_name'] ?>  
+                <?php echo $companyData[$inquiryList['Inquiry']['company_id']] ?>  
             </td>
             <td class="">
                 <?php echo $inquiryList['Inquiry']['quotes'] ?>
             </td>
             <td class="">
                 <?php echo $inquiryList['Inquiry']['remarks'] ?>
+            </td>
+            <td class="">
+                <?php echo count($inquiryList['Quotation']); ?>
             </td>
 
             <td>
@@ -42,5 +44,4 @@
         </tr>
 
     </tbody>
-    <?php //endforeach; ?> 
 <?php endforeach; ?> 

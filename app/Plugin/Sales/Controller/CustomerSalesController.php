@@ -211,16 +211,25 @@ class CustomerSalesController extends SalesAppController {
 
 		$userData = $this->Session->read('Auth');
 
-		$this->Company->bind(array('Inquiry'));
+		$this->loadModel('Sales.Inquiry');
 
-		$inquiryData = $this->Company->Inquiry->find('all',array(
-    		'order' => array('Inquiry.id DESC')));
+		$this->Inquiry->bind(array('Quotation'));
 
-		$companyData = $this->Company->find('all',array(
-    		'order' => array('Company.id DESC')));
+		$inquiryData = $this->Inquiry->find('all',
+			array(
+    			'order' => array('Inquiry.id DESC'),
+    			'contain' => array(
+    				'Quotation' => array(
+    					'fields' => array('id')
+    				)
+    			)
+    		)
+    	);
+
+		$companyData = $this->Company->find('list',array('fields' => array('id', 'company_name')));
 
 		$this->set(compact('companyData','inquiryData'));
-		//pr($inquiryData);exit();
+		
 	}
 
 	public function review_inquiry($inquiryId = null){
