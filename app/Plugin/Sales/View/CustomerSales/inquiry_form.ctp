@@ -9,7 +9,7 @@
 <div class="row">
 	<div class="col-lg-12">
 		<div class="main-box">
-			<?php echo $this->Session->flash(); ?>
+			<?php //echo $this->Session->flash(); ?>
 			<header class="main-box-header clearfix">
 				<h2>Inquiry form</h2>
 			</header>

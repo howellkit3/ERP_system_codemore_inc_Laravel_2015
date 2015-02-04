@@ -13,7 +13,7 @@ class Quotation extends AppModel {
 
 	public $recursive = -1;
 
-	 public $name = 'Quotation';
+	public $name = 'Quotation';
 
 	public $actsAs = array('Containable');
 
@@ -26,6 +26,11 @@ class Quotation extends AppModel {
 					'foreignKey' => 'inquiry_id',
 					'dependent' => true
 				),
+				'CustomField' => array(
+					'className' => 'Sales.CustomField',
+					'foreignKey' => 'inquiry_id',
+					'dependent' => true
+				),
 			)
 		));
 
@@ -34,13 +39,13 @@ class Quotation extends AppModel {
 
 	public $validate = array(
 
-		'quotes' => array(
+		'label' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				
 			),
 		),
-		'remarks' => array(
+		'description' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				
@@ -54,9 +59,9 @@ class Quotation extends AppModel {
 			
 		$this->create();
 		
-			$data['Inquiry']['company_id'] = $data['Company']['id'];
-			$data['Inquiry']['created_by'] = $auth;
-			$data['Inquiry']['modified_by'] = $auth;	
+		$data['Inquiry']['company_id'] = $data['Company']['id'];
+		$data['Inquiry']['created_by'] = $auth;
+		$data['Inquiry']['modified_by'] = $auth;	
 			
 		
 		$this->saveAll($data);
@@ -67,14 +72,16 @@ class Quotation extends AppModel {
 	public function addQuotation($data, $auth,$inquiryId){
 		
 		$this->create();
-		
-			$data['inquiry_id'] = $inquiryId;
-			$data['created_by'] = $auth;
-			$data['modified_by'] = $auth;	
-			
-		
-		$this->saveAll($data);
-		return $this->id;
+			foreach ($data as $key => $quotationValue) 
+			{
+				
+				$quotationValue['inquiry_id'] = $inquiryId;	
+				$quotationValue['created_by'] = $auth;
+				$quotationValue['modified_by'] = $auth;
+				
+				$this->saveAll($quotationValue);
+			}
+
 	}
 	
 }

@@ -155,13 +155,13 @@ class CustomerSalesController extends SalesAppController {
 		
 		if ($this->Company->deleteAll($dataId)) {
 			
-			$this->loadModel('Contact');
+			$this->loadModel('Sales.Contact');
 			$this->Contact->deleteContact($personId);
 
-			$this->loadModel('Email');
+			$this->loadModel('Sales.Email');
 			$this->Email->deleteEmail($personId);
 
-			$this->loadModel('Address');
+			$this->loadModel('Sales.Address');
 			$this->Address->deleteAddress($personId);
 
 			$this->redirect(
@@ -213,11 +213,14 @@ class CustomerSalesController extends SalesAppController {
 
 		$this->Company->bind(array('Inquiry'));
 
-		$inquiryList = $this->Company->find('all',array(
+		$inquiryData = $this->Company->Inquiry->find('all',array(
+    		'order' => array('Inquiry.id DESC')));
+
+		$companyData = $this->Company->find('all',array(
     		'order' => array('Company.id DESC')));
 
-		$this->set(compact('inquiryList'));
-	
+		$this->set(compact('companyData','inquiryData'));
+		//pr($inquiryData);exit();
 	}
 
 	public function review_inquiry($inquiryId = null){
@@ -236,10 +239,6 @@ class CustomerSalesController extends SalesAppController {
 		//pr($company);exit();
 	}
 
-	public function settings(){
-		
-	}
-
 	public function find_data($id = null) {
 		
 		$this->layout = false;
@@ -251,5 +250,16 @@ class CustomerSalesController extends SalesAppController {
 
 		$this->autoRender = false;
 
+	}
+
+	public function deleteInquiry($inquiryId = null){
+		$this->loadModel('Sales.Inquiry');
+		if ($this->Inquiry->delete($inquiryId)) {
+
+			$this->Session->setFlash(__('Inquiry Deleted.'));
+            	$this->redirect(
+					array('controller' => 'customer_sales', 'action' => 'inquiry')
+				);
+		}
 	}
 }

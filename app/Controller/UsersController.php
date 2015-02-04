@@ -60,7 +60,10 @@ class UsersController extends AppController
             if ($this->Auth->login()) {
 
                 // $this->Session->setFlash(__('Welcome, '. $this->Auth->user('lastname')));
-                $this->redirect($this->Auth->redirectUrl());
+                //$this->redirect($this->Auth->redirectUrl());
+                $this->redirect(
+                    array('controller' => 'dashboards', 'action' => 'index')
+                );
             } else {
 
               

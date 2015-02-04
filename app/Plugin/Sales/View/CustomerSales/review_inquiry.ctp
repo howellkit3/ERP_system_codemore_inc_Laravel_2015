@@ -1,6 +1,6 @@
 <?php $this->Html->addCrumb('Sales', array('controller' => 'customer_sales', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Inquiry', array('controller' => 'customer_sales', 'action' => 'inquiry')); ?>
-<?php $this->Html->addCrumb('Review', array('controller' => 'customer_sales', 'action' => 'reviewInquiry')); ?>
+<?php $this->Html->addCrumb('Review', array('controller' => 'customer_sales', 'action' => 'review_inquiry',$inquiry['Inquiry']['id'])); ?>
 <?php echo $this->Html->script('Sales.inquiry');?>
 <div style="clear:both"></div>
 
@@ -58,10 +58,7 @@
 									<?php echo $company['Address'][0]['city']; ?>
 								</ul>
 							</div>
-							
-							
 						</div>
-						
 					</div>
 				</div>
 				
@@ -70,9 +67,6 @@
 						<div class="tabs-wrapper profile-tabs">
 							<ul class="nav nav-tabs">
 								<li class="active"><a href="#tab-newsfeed" data-toggle="tab">Request Inquiry</a></li>
-								<li><a href="#tab-activity" data-toggle="tab">Others</a></li>
-								<!-- <li><a href="#tab-chat" data-toggle="tab">Email</a></li>
-								<li><a href="#tab-friends" data-toggle="tab">Contact Person</a></li> -->
 							</ul>
 							
 							<div class="tab-content">
@@ -85,7 +79,7 @@
 													<h2></h2>
 													<div class="filter-block pull-right">
 									                    <?php
-									                        echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Make Quotation ', array('controller' => 'quotation', 'action' => 'create',$inquiry['Inquiry']['id']),array('class' =>'btn btn-primary pull-right','escape' => false));
+									                        echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Make Quotation ', array('controller' => 'quotations', 'action' => 'create',$inquiry['Inquiry']['id']),array('class' =>'btn btn-primary pull-right','escape' => false));
 									                       
 									                    ?>
 									                </div>
@@ -122,21 +116,9 @@
 											</div>
 										</div>
 									</div>
-									
 								</div>
-								
-								<div class="tab-pane fade" id="tab-activity">
-									
-									<div class="table-responsive">
-										
-										
-									</div>
-									
-								</div>
-								
 							</div>
 						</div>
-						
 					</div>
 				</div>
 			</div>
