@@ -4,7 +4,7 @@
 <?php echo $this->Html->script('Sales.inquiry');?>
 <div style="clear:both"></div>
 
-<?php echo $this->element('sales_option');?>
+<?php echo $this->element('sales_option');?><br><br>
 
 <div class="row">
     <div class="col-lg-12">
@@ -93,7 +93,6 @@
 								                                echo $this->Form->textarea('Inquiry.quotes', array('class' => 'form-control item_type',
 								                                    'alt' => 'Request Inquiry',
 								                                    'label' => false,
-								                                    'rows' => '6',
 								                                    'value' => !empty($inquiry['Inquiry']['quotes']) ? $inquiry['Inquiry']['quotes'] : '' ,
 								                                    'readonly' => 'readonly'
 								                                    ));
@@ -105,7 +104,6 @@
 								                                echo $this->Form->textarea('Inquiry.remarks', array('class' => 'form-control item_type',
 								                                    'alt' => 'Request Inquiry',
 								                                    'label' => false,
-								                                    'rows' => '6',
 								                                    'value' => !empty($inquiry['Inquiry']['remarks']) ? $inquiry['Inquiry']['remarks'] : '',
 								                                    'readonly' => 'readonly'
 								                                    ));

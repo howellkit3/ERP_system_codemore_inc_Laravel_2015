@@ -22,7 +22,7 @@ class QuotationsController extends SalesAppController {
 	public function index() {
 
 		$userData = $this->Session->read('Auth');
-
+		
 		$this->Company->bind(array('Inquiry'));
 
 		$this->Company->Inquiry->bind(array('Quotation'));
@@ -98,6 +98,6 @@ class QuotationsController extends SalesAppController {
 	        'conditions' => array('Company.id' => $inquiry['Inquiry']['company_id'])
 	    ));
 		$this->set(compact('company','inquiry','field'));
-		//pr($inquiry);exit();
+		
 	}
 }

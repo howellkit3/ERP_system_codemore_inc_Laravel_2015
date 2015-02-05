@@ -1,10 +1,11 @@
 <?php $this->Html->addCrumb('Sales', array('controller' => 'customer_sales', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Quotation', array('controller' => 'quotation', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Create', array('controller' => 'quotation', 'action' => 'create')); ?>
-<?php echo $this->Html->script('Sales.inquiry');?>
+<?php echo $this->Html->script('Sales.quotation');?>
 <div style="clear:both"></div>
 
-<?php echo $this->element('sales_option');?>
+<?php echo $this->element('sales_option');?><br><br>
+
 <?php if(!empty($inquiry['Inquiry']['id'])) { ?>
 	<div class="row">
 	    <div class="col-lg-12">
