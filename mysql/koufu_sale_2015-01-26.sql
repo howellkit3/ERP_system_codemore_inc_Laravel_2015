@@ -154,17 +154,36 @@ CREATE TABLE `inquiries` (
   `company_id` int(11) DEFAULT NULL,
   `quotes` text,
   `remarks` text,
-  `quotation_count` int(11) DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   `modified_by` int(11) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 /*Data for the table `inquiries` */
 
-insert  into `inquiries`(`id`,`company_id`,`quotes`,`remarks`,`quotation_count`,`created_by`,`modified_by`,`created`,`modified`) values (1,13,'inquiry test','remarks test',0,1,1,'2015-02-03 05:38:20','2015-02-03 05:38:20'),(4,13,'fdsaf','asdf',1,1,1,'2015-02-03 05:43:22','2015-02-03 05:43:22'),(6,14,'testing ','testing',1,1,1,'2015-02-04 00:41:04','2015-02-04 00:41:04'),(7,14,'baso ','smal lng ',2,1,1,'2015-02-05 06:35:24','2015-02-05 06:35:24');
+insert  into `inquiries`(`id`,`company_id`,`quotes`,`remarks`,`created_by`,`modified_by`,`created`,`modified`) values (5,13,'baso','triangle po',1,1,'2015-02-06 06:40:52','2015-02-06 06:40:52'),(6,14,'plato','oblong po',1,1,'2015-02-06 06:41:24','2015-02-06 06:41:24');
+
+/*Table structure for table `quotation_fields` */
+
+DROP TABLE IF EXISTS `quotation_fields`;
+
+CREATE TABLE `quotation_fields` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `quotation_id` int(11) DEFAULT NULL,
+  `custom_fields_id` int(11) DEFAULT NULL,
+  `description` varchar(120) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+
+/*Data for the table `quotation_fields` */
+
+insert  into `quotation_fields`(`id`,`quotation_id`,`custom_fields_id`,`description`,`created_by`,`modified_by`,`created`,`modified`) values (11,5,1,'plato',1,1,'2015-02-06 06:42:14','2015-02-06 06:42:14'),(12,5,2,'oblong',1,1,'2015-02-06 06:42:14','2015-02-06 06:42:14'),(13,5,3,'500',1,1,'2015-02-06 06:42:14','2015-02-06 06:42:14'),(14,5,4,'30000',1,1,'2015-02-06 06:42:14','2015-02-06 06:42:14'),(15,6,1,'baso',1,1,'2015-02-06 06:44:52','2015-02-06 06:44:52'),(16,6,2,'triangle',1,1,'2015-02-06 06:44:52','2015-02-06 06:44:52'),(17,6,3,'500',1,1,'2015-02-06 06:44:52','2015-02-06 06:44:52'),(18,6,4,'60000',1,1,'2015-02-06 06:44:52','2015-02-06 06:44:52');
 
 /*Table structure for table `quotations` */
 
@@ -172,20 +191,21 @@ DROP TABLE IF EXISTS `quotations`;
 
 CREATE TABLE `quotations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(120) DEFAULT NULL,
+  `company_id` int(11) DEFAULT NULL,
   `inquiry_id` int(11) DEFAULT NULL,
-  `label` int(11) DEFAULT NULL,
-  `description` varchar(60) DEFAULT NULL,
   `status` int(1) DEFAULT NULL,
+  `unique_id` int(11) DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   `modified_by` int(11) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 /*Data for the table `quotations` */
 
-insert  into `quotations`(`id`,`inquiry_id`,`label`,`description`,`status`,`created_by`,`modified_by`,`created`,`modified`) values (1,6,1,'fadsf',1,1,1,'2015-02-04 02:50:57','2015-02-04 02:50:57'),(2,6,2,'fdsaf',1,1,1,'2015-02-04 02:50:57','2015-02-04 02:50:57'),(3,6,3,'fdsaf',1,1,1,'2015-02-04 02:50:57','2015-02-04 02:50:57'),(4,6,4,'fdsf',1,1,1,'2015-02-04 02:50:57','2015-02-04 02:50:57'),(5,4,1,'jollibee',1,1,1,'2015-02-05 05:36:33','2015-02-05 05:36:33'),(6,4,2,'coke size',1,1,1,'2015-02-05 05:36:33','2015-02-05 05:36:33'),(7,4,3,'100pc',1,1,1,'2015-02-05 05:36:33','2015-02-05 05:36:33'),(8,4,6,'white with red',1,1,1,'2015-02-05 05:36:34','2015-02-05 05:36:34'),(9,4,4,'2000php',1,1,1,'2015-02-05 05:36:34','2015-02-05 05:36:34'),(10,7,1,'test',0,1,1,'2015-02-05 06:53:23','2015-02-05 06:53:23'),(11,7,1,'test',0,1,1,'2015-02-05 06:54:04','2015-02-05 06:54:04'),(12,7,6,'black',NULL,1,1,'2015-02-05 08:21:43','2015-02-05 08:21:43');
+insert  into `quotations`(`id`,`name`,`company_id`,`inquiry_id`,`status`,`unique_id`,`created_by`,`modified_by`,`created`,`modified`) values (5,'bien quotation',NULL,6,1,NULL,1,1,'2015-02-06 06:42:14','2015-02-06 06:45:02'),(6,'irvin quotation',13,NULL,0,NULL,1,1,'2015-02-06 06:44:52','2015-02-06 06:44:52');
 
 /*Table structure for table `types` */
 
