@@ -29,7 +29,7 @@
                                 <th><a href="#"><span>Company</span></a></th>
                                 <th><a href="#"><span>Request Inquiry</span></a></th>
                                 <th><a href="#"><span>Remarks</span></a></th>
-                                <th><a href="#"><span>Quotation</span></a></th>
+                                <th class="text-center"><a href="#"><span>Quotation</span></a></th>
                                 <th><a href="#"><span>Created</span></a></th>
                                 <th>Action</th>
                             </tr>

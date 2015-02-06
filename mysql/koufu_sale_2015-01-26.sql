@@ -112,15 +112,17 @@ DROP TABLE IF EXISTS `custom_fields`;
 
 CREATE TABLE `custom_fields` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `label` varchar(60) DEFAULT NULL,
+  `fieldlabel` varchar(60) DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   `modified_by` int(11) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 /*Data for the table `custom_fields` */
+
+insert  into `custom_fields`(`id`,`fieldlabel`,`created_by`,`modified_by`,`created`,`modified`) values (1,'Item',1,1,'2015-02-04 02:16:34','2015-02-04 02:16:34'),(2,'Size',1,1,'2015-02-04 02:18:19','2015-02-04 02:18:19'),(3,'Qty',1,1,'2015-02-04 02:18:29','2015-02-04 02:18:29'),(4,'Unit Price',1,1,'2015-02-04 02:19:05','2015-02-04 02:19:05'),(5,'Material',1,1,'2015-02-04 02:19:21','2015-02-04 02:19:21'),(6,'Color',1,1,'2015-02-04 02:19:29','2015-02-04 02:19:29'),(7,'Process',1,1,'2015-02-04 02:19:37','2015-02-04 02:19:37'),(8,'Packaging',1,1,'2015-02-04 02:19:48','2015-02-04 02:19:48'),(9,'Other Specs',1,1,'2015-02-04 02:20:07','2015-02-04 02:20:07'),(10,'Terms',1,1,'2015-02-04 02:20:13','2015-02-04 02:20:13');
 
 /*Table structure for table `emails` */
 
@@ -152,16 +154,17 @@ CREATE TABLE `inquiries` (
   `company_id` int(11) DEFAULT NULL,
   `quotes` text,
   `remarks` text,
+  `quotation_count` int(11) DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   `modified_by` int(11) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 /*Data for the table `inquiries` */
 
-insert  into `inquiries`(`id`,`company_id`,`quotes`,`remarks`,`created_by`,`modified_by`,`created`,`modified`) values (1,13,'inquiry test','remarks test',1,1,'2015-02-03 05:38:20','2015-02-03 05:38:20'),(2,14,'dsad','sad',1,1,'2015-02-03 05:39:52','2015-02-03 05:39:52'),(3,13,'sfas','asdf',1,1,'2015-02-03 05:42:31','2015-02-03 05:42:31'),(4,13,'fdsaf','asdf',1,1,'2015-02-03 05:43:22','2015-02-03 05:43:22'),(5,13,'fdsafasdf','asdfsdf',1,1,'2015-02-03 08:09:26','2015-02-03 08:09:26'),(6,14,'testing ','testing',1,1,'2015-02-04 00:41:04','2015-02-04 00:41:04');
+insert  into `inquiries`(`id`,`company_id`,`quotes`,`remarks`,`quotation_count`,`created_by`,`modified_by`,`created`,`modified`) values (1,13,'inquiry test','remarks test',0,1,1,'2015-02-03 05:38:20','2015-02-03 05:38:20'),(4,13,'fdsaf','asdf',1,1,1,'2015-02-03 05:43:22','2015-02-03 05:43:22'),(6,14,'testing ','testing',1,1,1,'2015-02-04 00:41:04','2015-02-04 00:41:04'),(7,14,'baso ','smal lng ',2,1,1,'2015-02-05 06:35:24','2015-02-05 06:35:24');
 
 /*Table structure for table `quotations` */
 
@@ -172,16 +175,17 @@ CREATE TABLE `quotations` (
   `inquiry_id` int(11) DEFAULT NULL,
   `label` int(11) DEFAULT NULL,
   `description` varchar(60) DEFAULT NULL,
+  `status` int(1) DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   `modified_by` int(11) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 /*Data for the table `quotations` */
 
-insert  into `quotations`(`id`,`inquiry_id`,`label`,`description`,`created_by`,`modified_by`,`created`,`modified`) values (1,2,3,'100',1,1,'2015-02-04 00:05:15','2015-02-04 00:05:15');
+insert  into `quotations`(`id`,`inquiry_id`,`label`,`description`,`status`,`created_by`,`modified_by`,`created`,`modified`) values (1,6,1,'fadsf',1,1,1,'2015-02-04 02:50:57','2015-02-04 02:50:57'),(2,6,2,'fdsaf',1,1,1,'2015-02-04 02:50:57','2015-02-04 02:50:57'),(3,6,3,'fdsaf',1,1,1,'2015-02-04 02:50:57','2015-02-04 02:50:57'),(4,6,4,'fdsf',1,1,1,'2015-02-04 02:50:57','2015-02-04 02:50:57'),(5,4,1,'jollibee',1,1,1,'2015-02-05 05:36:33','2015-02-05 05:36:33'),(6,4,2,'coke size',1,1,1,'2015-02-05 05:36:33','2015-02-05 05:36:33'),(7,4,3,'100pc',1,1,1,'2015-02-05 05:36:33','2015-02-05 05:36:33'),(8,4,6,'white with red',1,1,1,'2015-02-05 05:36:34','2015-02-05 05:36:34'),(9,4,4,'2000php',1,1,1,'2015-02-05 05:36:34','2015-02-05 05:36:34'),(10,7,1,'test',0,1,1,'2015-02-05 06:53:23','2015-02-05 06:53:23'),(11,7,1,'test',0,1,1,'2015-02-05 06:54:04','2015-02-05 06:54:04'),(12,7,6,'black',NULL,1,1,'2015-02-05 08:21:43','2015-02-05 08:21:43');
 
 /*Table structure for table `types` */
 

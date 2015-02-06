@@ -63,13 +63,19 @@ class Inquiry extends AppModel {
 		
 			$data['Inquiry']['company_id'] = $data['Company']['id'];
 			$data['Inquiry']['created_by'] = $auth;
-			$data['Inquiry']['modified_by'] = $auth;	
-			
+			$data['Inquiry']['modified_by'] = $auth;
 		
 		$this->saveAll($data);
 		return $this->id;
 		
-		
 	}
+
+	// public function quotationCount($inquiryId = null){
+	// 	$this->updateAll(
+	//         array('Inquiry.quotation_count' => 'Inquiry.quotation_count+1'),                    
+	//         array('Inquiry.id' => $inquiryId)
+ //    	);
+	// }
+
 	
 }

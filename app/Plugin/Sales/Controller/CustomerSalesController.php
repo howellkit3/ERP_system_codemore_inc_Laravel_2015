@@ -220,12 +220,13 @@ class CustomerSalesController extends SalesAppController {
     			'order' => array('Inquiry.id DESC'),
     			'contain' => array(
     				'Quotation' => array(
-    					'fields' => array('id')
+    					'conditions' => array('Quotation.inquiry_id' => 'Inquiry.id')
     				)
     			)
     		)
     	);
 
+		
 		$companyData = $this->Company->find('list',array('fields' => array('id', 'company_name')));
 
 		$this->set(compact('companyData','inquiryData'));
@@ -261,14 +262,38 @@ class CustomerSalesController extends SalesAppController {
 
 	}
 
-	public function deleteInquiry($inquiryId = null){
-		$this->loadModel('Sales.Inquiry');
-		if ($this->Inquiry->delete($inquiryId)) {
+	public function delete_inquiry($inquiryId = null){
 
+		$this->loadModel('Sales.Quotation');
+
+		$this->Company->bind(array('Inquiry'));
+
+		$qouteCount = $this->Quotation->find('all',array(
+			'conditions' => array('Quotation.inquiry_id' => $inquiryId)));
+
+		foreach ($qouteCount as $key => $value) {
+
+			$this->Quotation->bind(array('QuotationField'));
+
+			$quotationData = $this->Quotation->QuotationField->find('all',array(
+				'conditions' => array('QuotationField.quotation_id' => $value['Quotation']['id'])));
+
+			$this->Quotation->QuotationField->deleteQuoteFields($value['Quotation']['id']);
+
+			$this->Quotation->delete($value['Quotation']['id']);
+			
+		}
+
+		if ($this->Company->Inquiry->delete($inquiryId)) {
+			
 			$this->Session->setFlash(__('Inquiry Deleted.'));
             	$this->redirect(
 					array('controller' => 'customer_sales', 'action' => 'inquiry')
 				);
+		} else {
+
+			echo "error";exit();
+
 		}
 	}
 }

@@ -1,10 +1,28 @@
 <?php $this->Html->addCrumb('Sales', array('controller' => 'customer_sales', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Quotation', array('controller' => 'quotation', 'action' => 'index')); ?>
-<?php $this->Html->addCrumb('View', array('controller' => 'quotation', 'action' => 'view')); ?>
+<?php $this->Html->addCrumb('View', array('controller' => 'quotation', 'action' => 'view',$quotation['Quotation']['id'])); ?>
 <?php echo $this->Html->script('Sales.inquiry');?>
 <div style="clear:both"></div>
 
-<?php echo $this->element('sales_option');?><br><br>
+<?php echo $this->element('sales_option');?>
+
+<div class="filter-block pull-right">
+    <?php
+        echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array(
+        	'controller' => 'quotations', 
+        	'action' => 'print_word',
+        	'ext' => 'pdf',
+        	$quotation['Quotation']['id'],
+        	$companyId
+        	),
+        	array('class' =>'btn btn-primary pull-right','escape' => false));
+
+    ?>
+    <?php echo $quotation['Quotation']['status'] != (0) ?
+     '<span class="btn btn-success disabled">Already Approved</span>' : 
+     $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i> Click to Approved ', array('controller' => 'quotations', 'action' => 'approved',$quotation['Quotation']['id']),array('class' =>'btn btn-primary pull-right','escape' => false)) ; ?>
+   <br><br>
+</div>
 
 <div class="row">
 	<div class="col-lg-12">
@@ -26,7 +44,9 @@
 							Attention
 						</div>
 						<div class="col-lg-6">
-							:&emsp;<?php echo $company['Company']['company_name'] ?>
+							:&emsp;
+							<?php echo !empty($quotation['Quotation']['company_id']) ? $companyData[$quotation['Quotation']['company_id']] : $companyData[$inquiryId[$quotation['Quotation']['inquiry_id']]] 
+							?>
 						</div>
 						<div class="col-lg-2">
 							No:
@@ -38,14 +58,14 @@
 							_____________________________________________________________________________
 						</div>
 						<div class="col-lg-2">
-							Date:
+							Date:&nbsp;<?php echo !empty($quotation['Quotation']['created']) ? date('M d, Y', strtotime($quotation['Quotation']['created'])) : '' ?>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-lg-1"></div>
 						<div class="col-lg-10">
-							Dear :&nbsp; <?php echo $company['ContactPerson'][0]['firstname'] ?>&nbsp;
-							<?php echo $company['ContactPerson'][0]['lastname'] ?>
+							Dear :&nbsp; <?php echo $contactInfo['ContactPerson']['firstname'] ?>&nbsp;
+							<?php echo $contactInfo['ContactPerson']['lastname'] ?>
 						</div>
 					</div>
 					<div class="form-group">
@@ -54,17 +74,14 @@
 							We are pleased to submit our price quotation on your printing requirement under the following specifications:
 						</div>
 					</div><br>
-					<?php foreach ($inquiry['Quotation'] as $key => $value) { ?>
+					<?php foreach ($quotationFieldInfo as $key => $value) { ?>
 						<div class="form-group">
 							<div class="col-lg-1"></div>
 							<div class="col-lg-2">
-								<?php echo $field[$value['label']] ?>
-							</div>
-							<div class="col-lg-1">
-								:
+								<?php echo $field[$value['QuotationField']['custom_fields_id']] ?>
 							</div>
 							<div class="col-lg-8">
-								<?php echo $value['description'] ?>
+								:&emsp;<?php echo $value['QuotationField']['description'] ?>
 							</div>
 						</div>
 					<?php } ?>
@@ -78,7 +95,8 @@
 					<div class="form-group">
 						<div class="col-lg-1"></div>
 						<div class="col-lg-5">
-							Bien sample
+							<?php echo $user['User']['first_name']?>&nbsp;
+							<?php echo $user['User']['last_name']?>
 							<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
 						</div>
 					</div>
@@ -108,7 +126,7 @@
 						</div>
 						<div class="col-lg-4"></div>
 						<div class="col-lg-4">
-							Date:
+							Date:________________
 						</div>
 					</div>
 					<div class="form-group">
@@ -129,7 +147,13 @@
 					<div class="form-group">
 						<div class="col-lg-7"></div>
 						<div class="col-lg-4">
-							Date:_________________
+							&emsp;&nbsp;Date:_________________
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-lg-1"></div>
+						<div class="col-lg-9">
+							<?php echo (new \DateTime())->format('l, F d, Y '); ?>
 						</div>
 					</div>
 				</form>

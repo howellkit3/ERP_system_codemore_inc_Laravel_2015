@@ -26,9 +26,9 @@ class Quotation extends AppModel {
 					'foreignKey' => 'inquiry_id',
 					'dependent' => true
 				),
-				'CustomField' => array(
-					'className' => 'Sales.CustomField',
-					'foreignKey' => 'inquiry_id',
+				'QuotationField' => array(
+					'className' => 'Sales.QuotationField',
+					'foreignKey' => 'quotation_id',
 					'dependent' => true
 				),
 			)
@@ -39,6 +39,12 @@ class Quotation extends AppModel {
 
 	public $validate = array(
 
+		'name' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				
+			),
+		),
 		'label' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
@@ -69,19 +75,43 @@ class Quotation extends AppModel {
 	
 	}
 
-	public function addQuotation($data, $auth,$inquiryId){
-		
-		$this->create();
-			foreach ($data as $key => $quotationValue) 
-			{
-				
-				$quotationValue['inquiry_id'] = $inquiryId;	
-				$quotationValue['created_by'] = $auth;
-				$quotationValue['modified_by'] = $auth;
-				
-				$this->saveAll($quotationValue);
-			}
+	public function addInquiryQuotation($data, $auth,$inquiryId){
 
+		$this->create();
+
+		$data['inquiry_id'] = $inquiryId;	
+		$data['created_by'] = $auth;
+		$data['modified_by'] = $auth;
+		$data['status'] = 0;
+		
+		$this->save($data);
+
+		return $this->id;
+
+	}
+
+	public function addCompanyQuotation($data, $auth,$companyId){
+
+		$this->create();
+
+		$data['company_id'] = $companyId;	
+		$data['created_by'] = $auth;
+		$data['modified_by'] = $auth;
+		$data['status'] = 0;
+		
+		$this->save($data);
+		
+		return $this->id;		
+
+	}
+
+	public function approvedData($quotationId = null){
+		
+		$this->id = $this->find('first',array('conditions' => array('Quotation.id' => $quotationId)));
+				
+		if ($this->id) {
+		    $this->saveField('status', 1);
+		}
 	}
 	
 }

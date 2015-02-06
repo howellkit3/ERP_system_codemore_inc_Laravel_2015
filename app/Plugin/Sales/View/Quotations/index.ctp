@@ -26,8 +26,9 @@
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
+                                <th><a href="#"><span>Name</span></a></th>
                                 <th><a href="#"><span>Company</span></a></th>
-                                <th><a href="#"><span>Request Inquiry</span></a></th>
+                                <th class="text-center"><a href="#"><span>Status</span></a></th>
                                 <th>Action</th>
                             </tr>
                         </thead>

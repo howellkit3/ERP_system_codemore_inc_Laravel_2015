@@ -9,7 +9,7 @@ jQuery(function($){
 		type: "get",
 		dataType: "json",
 		success: function(data) {
-			
+			console.log(data);
 			if (data.length == 0){
 				$('#address1').val('');
 				$('#contact').val('');	
@@ -17,7 +17,9 @@ jQuery(function($){
 			}else{
 				$('#address1').val(data.Address[0].address1);
 				$('#contact').val(data.Contact[0].number);	
-				$('#email').val(data.Email[0].email);	
+				$('#email').val(data.Email[0].email);
+				$('#id').val(data.Company.id);
+
 			}
 			
 		}

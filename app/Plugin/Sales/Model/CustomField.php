@@ -22,9 +22,9 @@ class CustomField extends AppModel {
 		$this->bindModel(array(
 			
 			'hasMany' => array(
-				'Quotation' => array(
-					'className' => 'Sales.Quotation',
-					'foreignKey' => 'inquiry_id',
+				'QuotationField' => array(
+					'className' => 'Sales.QuotationField',
+					'foreignKey' => 'custom_field_id',
 					'dependent' => true
 				),
 			)

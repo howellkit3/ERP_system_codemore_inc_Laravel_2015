@@ -81,7 +81,6 @@ CakePlugin::loadAll(); // Loads all plugins at once
  *
  * Configure::write('I18n.preferApp', true);
  */
-
 /**
  * You can attach event listeners to the request lifecycle as Dispatcher Filter. By default CakePHP bundles two filters:
  *
