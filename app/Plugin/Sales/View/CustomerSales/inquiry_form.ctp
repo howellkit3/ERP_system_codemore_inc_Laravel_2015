@@ -11,7 +11,12 @@
 		<div class="main-box">
 			<?php //echo $this->Session->flash(); ?>
 			<header class="main-box-header clearfix">
-				<h2>Inquiry form</h2>
+				<h2>
+					Inquiry form
+					<?php 
+                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'customer_sales', 'action' => 'inquiry'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                    ?>
+				</h2>
 			</header>
 			<?php echo $this->Form->create('Company',array('url'=>(array('controller' => 'customer_sales','action' => 'inquiry_form')),'class' => 'form-horizontal'));?>
 				<div class="main-box-body clearfix">
@@ -98,6 +103,11 @@
 						<div class="form-group">
 							<div class="col-lg-offset-2 col-lg-10">
 								<button type="submit" class="btn btn-success">Submit</button>
+							
+							
+								<?php 
+			                        echo $this->Html->link('Cancel ', array('controller' => 'customer_sales', 'action' => 'inquiry'),array('class' =>'btn btn-primary ','escape' => false));
+			                    ?>
 							</div>
 						</div>
 					</form>

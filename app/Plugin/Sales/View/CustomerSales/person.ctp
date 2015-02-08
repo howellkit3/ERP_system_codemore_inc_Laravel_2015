@@ -11,30 +11,25 @@
 				<div class="col-lg-12 col-md-4 col-sm-4">
 					<div class="main-box clearfix">
 						<header class="main-box-header clearfix">
-							<center>
-								<h1>
-									<?php echo $contactPerson['ContactPerson']['lastname']; ?>,
-									<?php echo $contactPerson['ContactPerson']['firstname']; ?> &nbsp;
-									<?php echo $contactPerson['ContactPerson']['middlename']; ?>
-								</h1>
-							</center>
+							<h1>
+								<center>
+									<b>
+										<?php echo $contactPerson['ContactPerson']['lastname']; ?>,
+										<?php echo $contactPerson['ContactPerson']['firstname']; ?> &nbsp;
+										<?php echo $contactPerson['ContactPerson']['middlename']; ?>
+									</b>
+
+								<?php
+			                       echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'customer_sales', 'action' => 'view',$contactPerson['ContactPerson']['company_id']),array('class' =>'btn btn-primary pull-left','escape' => false));
+			                    ?>
+			                    </center>
+							</h1>
 						</header>
-						
+
 						<div class="main-box-body clearfix">
 							
-							<div class="profile-stars">
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star-o"></i>
-								<hr>
-							</div>
-
 							<header class="main-box-header clearfix">
-								<h1>
-									Address
-								</h1>
+								<h1>Address</h1>
 							</header>
 
 							

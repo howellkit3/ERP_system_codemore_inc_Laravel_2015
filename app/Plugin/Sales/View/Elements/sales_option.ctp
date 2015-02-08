@@ -21,7 +21,7 @@
 
         <li class="dropdown hidden-xs">
             
-            <?php echo $this->Html->link("<span class='count'>Purchasing Order</span>", array('controller' => 'purchasing_orders', 'action' => 'index'),array('escape' => false,'class' => 'btn')); ?>
+            <?php echo $this->Html->link("<span class='count'>Sales Order</span>", array('controller' => 'sales_orders', 'action' => 'index'),array('escape' => false,'class' => 'btn')); ?>
         
         </li>
 

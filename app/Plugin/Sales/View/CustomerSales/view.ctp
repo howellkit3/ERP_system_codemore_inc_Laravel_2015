@@ -3,7 +3,7 @@
 
 <div style="clear:both"></div>
 
-<?php echo $this->element('sales_option'); ?>
+<?php echo $this->element('sales_option'); ?><br><br>
 
 <div class="row">
     <div class="col-lg-12">
@@ -78,21 +78,30 @@
 														<table class="table table-striped table-hover">
 									                        <thead>
 									                            <tr>
-									                                <th><a href="#"><span>Address(1)</span></a></th>
-									                                <th><a href="#"><span>Address(1)</span></a></th>
+									                                <th><a href="#"><span>Address</span></a></th>
 									                                <th><a href="#"><span>City</span></a></th>
 									                                <th><a href="#"><span>State Province</span></a></th>
 									                                <th><a href="#"><span>Zip Code</span></a></th>
 									                                <th><a href="#"><span>Country</span></a></th>
+									                                <th><a href="#"><span>Created</span></a></th>
 									                            </tr>
 									                        </thead>
 									                        <?php
 										                		foreach($company['Address'] as $contactAddress) { ?>
 											                        <tbody aria-relevant="all" aria-live="polite" role="alert">
 											                         		<tr>
-											                         			<td><?php echo $contactAddress['address1']; ?>
-											                         			</td>
-											                         			<td><?php echo $contactAddress['address2']; ?>
+											                         			<td>
+											                         				<?php 
+											                         					if (!empty($contactAddress['address2'])) {
+											                         						echo "(1)&nbsp";
+											                         						echo $contactAddress['address1'];
+											                         						echo "<br>";
+											                         						echo "(2)&nbsp";
+											                         						echo $contactAddress['address2'];
+											                         					}else{
+											                         						echo $contactAddress['address1'];
+											                         					}
+											                         				?>
 											                         			</td>
 											                         			<td><?php echo $contactAddress['city']; ?>
 											                         			</td>
@@ -101,6 +110,11 @@
 											                         			<td><?php echo $contactAddress['zip_code']; ?>
 											                         			</td>
 											                         			<td><?php echo $contactAddress['country']; ?>
+											                         			</td>
+											                         			<td>
+											                         				<i class="fa fa-clock-o">
+											                         				<?php echo date('M d, Y', strtotime($contactAddress['created']));
+											                         				?>
 											                         			</td>
 											                         		</tr>
 											                         </tbody>
@@ -121,96 +135,108 @@
 								<div class="tab-pane fade" id="tab-activity">
 									
 									<div class="table-responsive">
-										<?php 
-											foreach($company['Contact'] as $contactNumber) { ?>
-												<table class="table">
-													<tbody>
-														
-														<tr>
-															<td class="text-center">
-																<i class="fa fa-phone"></i>
-															</td>
-															<td>
-																<?php echo $contactNumber['number']; ?>
-															</td>
-															<td class="pull-right">
-																<?php echo date('M d, Y', strtotime($contactNumber['created'])); ?>
-															</td>
-														</tr>
-													
-													</tbody>
-												</table>
-												<hr style="height:1px; border:none; color:#666666; background-color:#666666;">
-										<?php } ?>
-										
+
+										<table class="table table-striped table-hover">
+					                        <thead>
+					                            <tr>
+					                                <th><a href="#"><span></span></a></th>
+					                                <th><a href="#"><span>Number</span></a></th>
+					                                <th><a href="#"><span>Created</span></a></th>
+					                            </tr>
+					                        </thead>
+					                        <?php
+						                		foreach($company['Contact'] as $contactNumber) { ?>
+							                        <tbody aria-relevant="all" aria-live="polite" role="alert">
+						                         		<tr>
+						                         			<td>
+						                         				<i class="fa fa-phone"></i>
+						                         			</td>
+						                         			<td>
+						                         				<?php echo $contactNumber['number']; ?>
+						                         			</td>
+						                         			<td>
+						                         				<i class="fa fa-clock-o">
+						                         				<?php echo date('M d, Y', strtotime($contactNumber['created'])); 
+						                         				?>
+						                         			</td>
+						                         		</tr>
+							                        </tbody>
+					                        <?php } ?>
+					                    </table>
 									</div>
-									
 								</div>
 								
 								<div class="tab-pane clearfix fade" id="tab-friends">
-									<?php 
-										foreach($company['ContactPerson'] as $contactPerson) { ?>
-											<ul class="widget-users row">
-												
-												<li class="col-md-8">
-													<div class="details">
-														<div class="name">
-															<a href="#" class"user-link">
-																<?php echo $contactPerson['lastname']; ?>,
-																<?php echo $contactPerson['firstname']; ?> &nbsp;
-																<?php echo $contactPerson['middlename']; ?>
-															</a>
-														</div>
-														<div class="time">
-															<i class="fa fa-clock-o"></i> Created: <?php echo date('M d, Y', strtotime($contactPerson['created'])); ?>
-														</div>
-														
-													</div>
-												</li>
-												<li class="col-md-4">
-													<div class="type">
-														<?php
-
-									                        echo $this->Html->link(' View Details ', array('controller' => 'customer_sales', 'action' => 'person',$contactPerson['id']),array('class' =>'btn btn-primary','escape' => false));
-									                       
-									                    ?>
-													</div>
-												</li>
-											</ul>
-											
-											<hr style="height:1px; border:none; color:#666666; background-color:#666666;">
-									<?php } ?>
-
+									<table class="table table-striped table-hover">
+				                        <thead>
+				                            <tr>
+				                                <th><a href="#"><span>Name</span></a></th>
+				                                <th><a href="#"><span>Position</span></a></th>
+				                                <th><a href="#"><span>Created</span></a></th>
+				                                <th><a href="#"><span>Action</span></a></th>
+				                            </tr>
+				                        </thead>
+				                        <?php
+					                		foreach($company['ContactPerson'] as $contactPerson) { ?>
+						                        <tbody aria-relevant="all" aria-live="polite" role="alert">
+					                         		<tr>
+					                         			<td>
+					                         				<?php echo $contactPerson['lastname']; ?>,
+															<?php echo $contactPerson['firstname']; ?> &nbsp;
+															<?php echo $contactPerson['middlename']; ?>
+					                         			</td>
+					                         			<td>
+					                         				<?php //echo $contactEmail['email']; ?>
+					                         			</td>
+					                         			<td>
+					                         				<i class="fa fa-clock-o"></i>
+					                         				<?php echo date('M d, Y', strtotime($contactPerson['created'])); 
+					                         				?>
+					                         			</td>
+					                         			<td>
+					                         				<?php
+										                        echo $this->Html->link(' View Details ', array('controller' => 'customer_sales', 'action' => 'person',$contactPerson['id']),array('class' =>'btn btn-primary','escape' => false));
+										                    ?>
+					                         			</td>
+					                         		</tr>
+						                        </tbody>
+				                        <?php } ?>
+				                    </table>
 								</div>
 								
 								<div class="tab-pane fade" id="tab-chat">
 									<div class="table-responsive">
-										<?php 
-											foreach($company['Email'] as $contactEmail) { ?>
-											<table class="table">
-												<tbody>
-													
-													<tr>
-														<td class="text-center">
-															<i class="fa fa-mail-reply-all"></i>
-														</td>
-														<td >
-															<?php echo $contactEmail['email']; ?>
-														</td>
-														<td class="pull-right">
-															<?php echo date('M d, Y', strtotime($contactEmail['created'])); ?>
-														</td>
-													</tr>
-														
-												</tbody>
-											</table>
-											<hr style="height:1px; border:none; color:#666666; background-color:#666666;">
-										<?php } ?>	
+										<table class="table table-striped table-hover">
+					                        <thead>
+					                            <tr>
+					                                <th><a href="#"><span></span></a></th>
+					                                <th><a href="#"><span>Email</span></a></th>
+					                                <th><a href="#"><span>Created</span></a></th>
+					                            </tr>
+					                        </thead>
+					                        <?php
+						                		foreach($company['Email'] as $contactEmail) { ?>
+							                        <tbody aria-relevant="all" aria-live="polite" role="alert">
+						                         		<tr>
+						                         			<td>
+						                         				<i class="fa fa-mail-reply-all"></i>
+						                         			</td>
+						                         			<td>
+						                         				<?php echo $contactEmail['email']; ?>
+						                         			</td>
+						                         			<td>
+						                         				<i class="fa fa-clock-o">
+						                         				<?php echo date('M d, Y', strtotime($contactEmail['created'])); 
+						                         				?>
+						                         			</td>
+						                         		</tr>
+							                        </tbody>
+					                        <?php } ?>
+					                    </table>
 									</div>
 								</div>
 							</div>
 						</div>
-						
 					</div>
 				</div>
 			</div>

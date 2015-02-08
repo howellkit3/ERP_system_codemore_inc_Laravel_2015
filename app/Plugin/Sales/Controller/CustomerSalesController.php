@@ -5,6 +5,7 @@ App::uses('SessionComponent', 'Controller/Component');
 class CustomerSalesController extends SalesAppController {
 
 	public $uses = array('Sales.Company');
+
 	public $helper = array('Sales.Country');
 
 	public function beforeFilter() {
@@ -84,7 +85,7 @@ class CustomerSalesController extends SalesAppController {
 	    ));
 		
 		$this->set(compact('company'));
-
+		
 	}
 
 	public function person($personId = null){

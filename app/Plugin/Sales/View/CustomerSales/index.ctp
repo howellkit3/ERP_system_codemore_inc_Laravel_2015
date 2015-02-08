@@ -8,7 +8,7 @@
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
             <header class="main-box-header clearfix">
-                <h2 class="pull-left">Customers List</h2>
+                <h2 class="pull-left"><b>Customers List</b></h2>
                 
                 <div class="filter-block pull-right">
                     

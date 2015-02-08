@@ -71,7 +71,13 @@
 										<div class="col-lg-12">
 											<div class="main-box">
 												<header class="main-box-header clearfix">
-													<h4>We are pleased to submit our price quotation on your printing requirement under the following specifications:</h4>
+													<?php 
+								                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'customer_sales', 'action' => 'review_inquiry',$inquiry['Inquiry']['id']),array('class' =>'btn btn-primary pull-right','escape' => false));
+								                    ?>
+								                    <br><br>
+													<h4>
+														We are pleased to submit our price quotation on your printing requirement under the following specifications:
+													</h4>
 												</header>
 												<hr>
 												<div class="main-box-body clearfix">
@@ -131,9 +137,13 @@
 
 														<div class="form-group">
 															<div class="col-lg-3">
-																<button type="submit" class="btn btn-success">Submit Quotation</button>
+																<button type="submit" class="btn btn-success pull-right">Submit Quotation</button>
+
 															</div>
-															<div class="col-lg-8">
+															<div class="col-lg-3">
+															<?php 
+										                        echo $this->Html->link('Cancel', array('controller' => 'customer_sales', 'action' => 'review_inquiry',$inquiry['Inquiry']['id']),array('class' =>'btn btn-primary','escape' => false));
+										                    ?>
 																
 															</div>
 														</div>

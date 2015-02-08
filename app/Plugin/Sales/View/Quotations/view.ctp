@@ -12,15 +12,31 @@
         	'controller' => 'quotations', 
         	'action' => 'print_word',
         	'ext' => 'pdf',
-        	$quotation['Quotation']['id'],
-        	$companyId
-        	),
-        	array('class' =>'btn btn-primary pull-right','escape' => false));
+        	$quotation['Quotation']['id'],$companyId),
+        	array('class' =>'btn btn-primary pull-right','escape' => false,'target' => '_blank'));
 
     ?>
-    <?php echo $quotation['Quotation']['status'] != (0) ?
-     '<span class="btn btn-success disabled">Already Approved</span>' : 
-     $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i> Click to Approved ', array('controller' => 'quotations', 'action' => 'approved',$quotation['Quotation']['id']),array('class' =>'btn btn-primary pull-right','escape' => false)) ; ?>
+    <?php
+    	if ($quotation['Quotation']['status'] != 0) {
+
+    		if (!empty($salesStatus['SalesOrder']['quotation_id'])) {
+
+    			echo $this->Html->link('<font color="white"><i class="fa fa-gift fa-lg"></i> Sales Order</font> ', array('controller' => 'quotations', 'action' => 'create_order',$quotation['Quotation']['id']),array('class' =>'btn btn-success pull-right','escape' => false,'disabled' => 'disabled')) ;
+
+    		}else{
+
+    			echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Create Order ', array('controller' => 'quotations', 'action' => 'create_order',$quotation['Quotation']['id']),array('class' =>'btn btn-primary pull-right','escape' => false)) ;
+
+    		}
+    		
+    	} else{
+
+    		echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i> Click to Approved ', array('controller' => 'quotations', 'action' => 'approved',$quotation['Quotation']['id']),array('class' =>'btn btn-primary pull-right','escape' => false)) ;
+
+    		echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit ', array('controller' => 'quotations', 'action' => 'approved',$quotation['Quotation']['id']),array('class' =>'btn btn-primary pull-right','escape' => false)) ;
+    	}
+     ?>
+   
    <br><br>
 </div>
 

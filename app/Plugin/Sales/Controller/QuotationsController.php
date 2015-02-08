@@ -122,7 +122,11 @@ class QuotationsController extends SalesAppController {
 		$contactInfo = $this->Company->ContactPerson->find('first',array(
 			'conditions' => array('ContactPerson.company_id' => $companyId )));
 
-		$this->Quotation->bind(array('QuotationField'));
+		$this->Quotation->bind(array('QuotationField','SalesOrder'));
+
+		$salesStatus = $this->Quotation->SalesOrder->find('first',array('conditions' => array('SalesOrder.quotation_id' => $quotationId)));
+		
+		// pr($salesStatus);exit();
 
 		$quotationFieldInfo = $this->Quotation->QuotationField->find('all',array(
 			'conditions' => array('QuotationField.quotation_id' => $quotationId )));
@@ -135,8 +139,10 @@ class QuotationsController extends SalesAppController {
 		$this->loadModel('User');
 		$user = $this->User->find('first',array('conditions' => array(
 			'User.id' => $userData['User']['id'] )));
-
-		$this->set(compact('companyData','companyId','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field'));
+		
+		$this->set(compact('companyData','companyId',
+			'quotation','inquiryId','user','contactInfo',
+			'quotationFieldInfo','field','salesStatus'));
 		
 	}
 
@@ -213,6 +219,19 @@ class QuotationsController extends SalesAppController {
 			array('controller' => 'quotations', 'action' => 'index')
 		);
 		
+	}
+
+	public function create_order($quotationId = null){
+
+		$userData = $this->Session->read('Auth');
+
+		$this->Quotation->bind(array('SalesOrder'));
+		
+		$this->Quotation->SalesOrder->approvedData($quotationId,$userData['User']['id']);
+
+		$this->redirect(
+            array('controller' => 'sales_orders', 'action' => 'index')
+        );
 	}
 
 }

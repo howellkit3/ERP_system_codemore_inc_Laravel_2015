@@ -9,14 +9,11 @@
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
             <header class="main-box-header clearfix">
-                <h2 class="pull-left">Quotations List</h2>
+                <h2 class="pull-left"><b>Quotations List</b></h2>
                 
                 <div class="filter-block pull-right">
-                    
                     <?php
-
                        echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Make Quotation ', array('controller' => 'quotations', 'action' => 'create'),array('class' =>'btn btn-primary pull-right','escape' => false));
-                       
                     ?>
                 </div>
             </header>
@@ -38,7 +35,7 @@
                     </table>
                     <hr>
                 </div>
-                <ul class="pagination pull-right">
+                <!-- <ul class="pagination pull-right">
                     <li><a href="#"><i class="fa fa-chevron-left"></i></a></li>
                     <li><a href="#">1</a></li>
                     <li><a href="#">2</a></li>
@@ -46,7 +43,7 @@
                     <li><a href="#">4</a></li>
                     <li><a href="#">5</a></li>
                     <li><a href="#"><i class="fa fa-chevron-right"></i></a></li>
-                </ul>
+                </ul> -->
             </div>
     
         </div>

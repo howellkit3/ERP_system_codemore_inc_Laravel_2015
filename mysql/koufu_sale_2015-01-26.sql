@@ -205,7 +205,26 @@ CREATE TABLE `quotations` (
 
 /*Data for the table `quotations` */
 
-insert  into `quotations`(`id`,`name`,`company_id`,`inquiry_id`,`status`,`unique_id`,`created_by`,`modified_by`,`created`,`modified`) values (5,'bien quotation',NULL,6,1,NULL,1,1,'2015-02-06 06:42:14','2015-02-06 06:45:02'),(6,'irvin quotation',13,NULL,0,NULL,1,1,'2015-02-06 06:44:52','2015-02-06 06:44:52');
+insert  into `quotations`(`id`,`name`,`company_id`,`inquiry_id`,`status`,`unique_id`,`created_by`,`modified_by`,`created`,`modified`) values (5,'bien quotation',NULL,6,1,NULL,1,1,'2015-02-06 06:42:14','2015-02-08 09:35:19'),(6,'irvin quotation',13,NULL,0,NULL,1,1,'2015-02-06 06:44:52','2015-02-06 06:44:52');
+
+/*Table structure for table `sales_orders` */
+
+DROP TABLE IF EXISTS `sales_orders`;
+
+CREATE TABLE `sales_orders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `quotation_id` int(11) DEFAULT NULL,
+  `status` int(1) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+/*Data for the table `sales_orders` */
+
+insert  into `sales_orders`(`id`,`quotation_id`,`status`,`created_by`,`modified_by`,`created`,`modified`) values (1,5,1,1,1,'2015-02-08 09:35:29','2015-02-08 09:35:29');
 
 /*Table structure for table `types` */
 

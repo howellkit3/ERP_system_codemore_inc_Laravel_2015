@@ -78,10 +78,14 @@
 												<header class="main-box-header clearfix">
 													<h2></h2>
 													<div class="filter-block pull-right">
+														<?php 
+									                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'customer_sales', 'action' => 'inquiry'),array('class' =>'btn btn-primary pull-right','escape' => false));
+									                    ?>
 									                    <?php
 									                        echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Make Quotation ', array('controller' => 'quotations', 'action' => 'create',$inquiry['Inquiry']['id']),array('class' =>'btn btn-primary pull-right','escape' => false));
 									                       
 									                    ?>
+
 									                </div>
 												</header>
 												
