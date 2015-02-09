@@ -6,7 +6,7 @@
 					<div class="main-box clearfix">
 						<header class="main-box-header clearfix">
 							<h1>
-							<?php echo $company['Company']['company_name']; ?>
+							<?php echo ucfirst($company['Company']['company_name']); ?>
 							</h1>
 						</header>
 						
@@ -27,7 +27,7 @@
 							<div class="profile-details">
 								<ul class="fa-ul">
 								<i class="fa fa-dedent"></i>
-									<?php echo $company['Company']['description']; ?>
+									<?php echo ucfirst($company['Company']['description']); ?>
 								</ul>
 							</div>
 							<div class="profile-details">
@@ -45,9 +45,11 @@
 							<div class="profile-details">
 								<ul class="fa-ul">
 									<i class="fa fa-home"></i>
-									<?php echo $company['Address'][0]['address1']; ?><br>&emsp;&nbsp;
-									<?php echo $company['Address'][0]['state_province']; ?><br>&emsp;&nbsp;
-									<?php echo $company['Address'][0]['city']; ?>
+									<?php echo ucfirst($company['Address'][0]['address1']); ?><br>
+									State Povince :
+									<?php echo ucfirst($company['Address'][0]['state_province']); ?><br>
+									City :
+									<?php echo ucfirst($company['Address'][0]['city']); ?>
 								</ul>
 							</div>
 							

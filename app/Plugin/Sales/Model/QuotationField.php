@@ -56,8 +56,8 @@ class QuotationField extends AppModel {
 
 	);
 
-	public function saveQuotationField($data,$quotationId,$auth){
-	
+	public function saveQuotationField($data = null,$quotationId= null,$auth = nnull){
+			
 		$this->create();
 
 		foreach ($data[$this->name] as $key => $customFieldValue) 

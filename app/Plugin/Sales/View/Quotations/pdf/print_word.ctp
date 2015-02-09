@@ -22,7 +22,9 @@
 							<?php echo !empty($quotation['Quotation']['company_id']) ? $companyData[$quotation['Quotation']['company_id']] : $companyData[$inquiryId[$quotation['Quotation']['inquiry_id']]] 
 							?>
 						</td>
-						<td>No:</td>
+						<td>
+							No : <u><?php echo $quotation['Quotation']['unique_id'] ?></u>
+						</td>
 					</tr>
 					<tr>
 						<td></td>
@@ -118,7 +120,7 @@
 			</table>
 			<center>
 				<header class="main-box-header clearfix">
-					<p>I do hereby accept the price and other details submitted on your price quotation no.CQO1408129<br> Also, I do hereby authorize your company to proceed with and supply the work described above.</p><br>
+					<p>I do hereby accept the price and other details submitted on your price quotation no.<?php echo $quotation['Quotation']['unique_id'] ?><br> Also, I do hereby authorize your company to proceed with and supply the work described above.</p><br>
 				</header>
 			</center>
 			<table class="layout">

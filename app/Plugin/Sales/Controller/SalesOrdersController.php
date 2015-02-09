@@ -23,13 +23,24 @@ class SalesOrdersController extends SalesAppController {
 		$userData = $this->Session->read('Auth');
 
 		$this->Quotation->bind(array('SalesOrder'));
+
 		$this->Quotation->SalesOrder->bind(array('Quotation'));
 		
 		$salesOder = $this->Quotation->SalesOrder->find('all');
 
-		$quoteName = $this->Quotation->find('list',array('id','name'));
+		$this->loadModel('Sales.Company');
 
-		$this->set(compact('salesOder','quoteName'));
+		$this->Company->bind(array('Inquiry'));
+
+		$companyData = $this->Company->find('list',array(
+     		'fields' => array('id','company_name')));
+
+		$inquiryId = $this->Company->Inquiry->find('list',array(
+     		'fields' => array('company_id')));
+
+		$quoteName = $this->Quotation->find('list',array('id','name'));
+		
+		$this->set(compact('salesOder','quoteName','companyData','inquiryId'));
 	}
 
 }

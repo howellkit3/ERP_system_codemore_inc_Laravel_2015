@@ -14,9 +14,9 @@
 							<h1>
 								<center>
 									<b>
-										<?php echo $contactPerson['ContactPerson']['lastname']; ?>,
-										<?php echo $contactPerson['ContactPerson']['firstname']; ?> &nbsp;
-										<?php echo $contactPerson['ContactPerson']['middlename']; ?>
+										<?php echo ucfirst($contactPerson['ContactPerson']['lastname']); ?>,
+										<?php echo ucfirst($contactPerson['ContactPerson']['firstname']); ?> &nbsp;
+										<?php echo ucfirst($contactPerson['ContactPerson']['middlename']); ?>
 									</b>
 
 								<?php
@@ -36,29 +36,42 @@
 		                	<table class="table table-striped table-hover">
 		                        <thead>
 		                            <tr>
-		                                <th><a href="#"><span>Address(1)</span></a></th>
-		                                <th><a href="#"><span>Address(1)</span></a></th>
+		                                <th><a href="#"><span>Address</span></a></th>
 		                                <th><a href="#"><span>City</span></a></th>
 		                                <th><a href="#"><span>State Province</span></a></th>
 		                                <th><a href="#"><span>Zip Code</span></a></th>
 		                                <th><a href="#"><span>Country</span></a></th>
+		                                <th><a href="#"><span>Created</span></a></th>
 		                            </tr>
 		                        </thead>
 		                        <?php
 		                			foreach($contactAddress as $personAddress) {  ?>
 				                        <tbody aria-relevant="all" aria-live="polite" role="alert">
 				                         		<tr>
-				                         			<td><?php echo $personAddress['Address']['address1']; ?>
+				                         			<td>
+				                         				<?php 
+				                         					if (!empty($personAddress['Address']['address2'])) {
+				                         						echo "(1)&nbsp";
+				                         						echo ucfirst($personAddress['Address']['address1']);
+				                         						echo "<br>";
+				                         						echo "(2)&nbsp";
+				                         						echo ucfirst($personAddress['Address']['address2']);
+				                         					}else{
+				                         						echo ucfirst($personAddress['Address']['address1']);
+				                         					}
+				                         				?>
 				                         			</td>
-				                         			<td><?php echo $personAddress['Address']['address2']; ?>
+				                         			<td><?php echo ucfirst($personAddress['Address']['city']); ?>
 				                         			</td>
-				                         			<td><?php echo $personAddress['Address']['city']; ?>
-				                         			</td>
-				                         			<td><?php echo $personAddress['Address']['state_province']; ?>
+				                         			<td><?php echo ucfirst($personAddress['Address']['state_province']); ?>
 				                         			</td>
 				                         			<td><?php echo $personAddress['Address']['zip_code']; ?>
 				                         			</td>
-				                         			<td><?php echo $personAddress['Address']['country']; ?>
+				                         			<td><?php echo ucfirst($personAddress['Address']['country']); ?>
+				                         			</td>
+				                         			<td><i class="fa fa-clock-o">
+				                         				<?php echo date('M d, Y', strtotime($personAddress['Address']['created']));
+				                         				?>
 				                         			</td>
 				                         		</tr>
 				                         </tbody>

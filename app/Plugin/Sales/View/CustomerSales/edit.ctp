@@ -3,13 +3,23 @@
 
 <div style="clear:both"></div>
 
-<?php echo $this->element('sales_option'); ?>
+<?php echo $this->element('sales_option'); ?><br><br>
 <div class="row">
     <div class="col-lg-12">
         <div class="main-box">
         
             <header class="main-box-header clearfix">
-                <center><h1><u>Customer Information</u></h1></center><hr>
+                <center>
+                    <h1>
+                        <u>
+                            Customer Information
+                        </u>
+                        <?php 
+                            echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'customer_sales', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                        ?>
+                    </h1>
+                </center><hr>
+                
             </header>
             
             <div class="main-box-body clearfix">
@@ -311,6 +321,14 @@
                                                 ?>
                                             </div>
                                         </div>
+                                        <div class="form-group">
+                                            <label for="inputPassword1" class="col-lg-2 control-label">Position</label>
+                                            <div class="col-lg-9">
+                                                <?php 
+                                                    echo $this->Form->input('ContactPersonData.0.ContactPerson.0.position', array('class' => 'form-control','label' => false,'value' => !empty($value['ContactPerson']['position']) ? $value['ContactPerson']['position'] : ''));
+                                                ?>
+                                            </div>
+                                        </div>
                                     </div> 
 
                                     <hr>
@@ -494,18 +512,18 @@
                                                         <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneData('contactPersonAddress_section',this)"><i class="fa fa-plus"></i></button>
                                                         <button type="button" class="remove-field btn btn-danger" onclick="removeClone('contactPersonAddress_section')"><i class="fa fa-minus"></i> </button>
                                                     </div>
-                                                    <hr style="height:1px; border:none; color:#666666; background-color:#666666;">
+                                                    <!-- <hr style="height:1px; border:none; color:#666666; background-color:#666666;"> -->
                                                 </div>
                                             </section>
                                     <?php } } ?>
                                  
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 control-label"></label>
                                         <div class="col-lg-4">
                                             <button type="button" class="add-field6 table-link danger btn btn-success" onclick="cloneData('contactPerson_section',this)"> <i class="fa fa-plus"> Add Contact Person</i></button>
                                             <button type="button" class="remove-field btn btn-danger" onclick="removeClone('contactPerson_section')"><i class="fa fa-minus"></i> </button>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </section>
                             <?php } ?>
                         </div>
@@ -519,12 +537,15 @@
                         <div class="multi-fields clearfix">
                             <div class="multi-field clearfix">
                                 <div class="col-xs-2 col-md-2"></div>
-                                <div class="col-xs-8 col-md-8 2">
+                                <div class="col-xs-2 col-md-2 2">
                                     <?php 
-                                        echo $this->Form->submit('Submit Customer Information', array('class' => 'btn btn-success',  'title' => 'Click here to add the customer') );
+                                        echo $this->Form->submit('Submit Customer Information', array('class' => 'btn btn-success pull-right',  'title' => 'Click here to add the customer') );
                                     ?>
                                 </div>
-                                <div class="col-xs-4 col-md-2 1"><br><br>
+                                <div class="col-xs-2 col-md-2 2">
+                                    <?php 
+                                        echo $this->Html->link('Cancel ', array('controller' => 'customer_sales', 'action' => 'index'),array('class' =>'btn btn-primary','escape' => false));
+                                    ?>
                                 </div>
                             </div>
                         </div>

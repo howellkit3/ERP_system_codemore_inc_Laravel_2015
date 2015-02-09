@@ -24,9 +24,9 @@ class QuotationsController extends SalesAppController {
 
 		$userData = $this->Session->read('Auth');
 		
-		$quotationData = $this->Quotation->find('all');
+		$quotationData = $this->Quotation->find('all',array('order' => 'Quotation.id DESC'));
 
-		$this->Company->bind(array('Inquiry',));
+		$this->Company->bind(array('Inquiry'));
 
 		$inquiryId = $this->Company->Inquiry->find('list',array(
      		'fields' => array('company_id')));
@@ -34,9 +34,15 @@ class QuotationsController extends SalesAppController {
 	 	$companyData = $this->Company->find('list',array(
      		'fields' => array('id','company_name')));
 
-		$this->set(compact('companyData','quotationData','inquiryId'));
-		
+	 	$this->loadModel('Sales.SalesOrder');
+
+	 	$salesStatus = $this->SalesOrder->find('list',array('fields' => array('quotation_id','id')));
+
+	 	//pr($salesStatus);exit();
+		$this->set(compact('companyData','quotationData','inquiryId','salesStatus'));
+
 	}
+
 	public function create($inquiryId = null) {
 
 		$userData = $this->Session->read('Auth');
@@ -79,7 +85,7 @@ class QuotationsController extends SalesAppController {
 		$this->Quotation->bind(array('QuotationField'));
 
 		if ($this->request->is('post')) {
-
+			
             if (!empty($this->request->data)) {
             	
             	if(!empty($this->request->data['Inquiry']['id'])){
@@ -91,7 +97,7 @@ class QuotationsController extends SalesAppController {
             		$quotationId = $this->Quotation->addCompanyQuotation($this->request->data['Quotation'],$userData['User']['id'],$companyId);
 					
             	}
-            	
+            	$this->Quotation->bind(array('QuotationField'));
             	$this->Quotation->QuotationField->saveQuotationField($this->request->data,$quotationId,$userData['User']['id']);
         		
             	$this->Session->setFlash(__('Quotation Complete.'));
@@ -204,7 +210,9 @@ class QuotationsController extends SalesAppController {
 
 	public function delete($quotationId = null){
 
-		$this->Quotation->bind(array('QuotationField'));
+		$this->Quotation->bind(array('QuotationField','SalesOrder'));
+
+		$this->Quotation->SalesOrder->deleteSalesOrder($quotationId);
 
 		$quotationData = $this->Quotation->QuotationField->find('all',array(
 			'conditions' => array('QuotationField.quotation_id' => $quotationId)));
@@ -232,6 +240,36 @@ class QuotationsController extends SalesAppController {
 		$this->redirect(
             array('controller' => 'sales_orders', 'action' => 'index')
         );
+	}
+
+	public function edit($quotationId = null , $companyId){
+
+		$this->Company->bind(array(
+			'Address',
+			'Contact',
+			'Email'
+		));
+
+		$company = $this->Company->find('first', array(
+	        'conditions' => array('Company.id' => $companyId)
+	    ));
+
+	    $this->Quotation->bind(array('QuotationField'));
+
+	    $quotation = $this->Quotation->find('first', array(
+	        'conditions' => array('Quotation.id' => $quotationId)
+	    ));
+
+	   	$this->loadModel('Sales.CustomField');
+
+		$customField = $this->CustomField->find('list', array('fields' => array('id', 'fieldlabel')));
+	   
+		if (!$this->request->data) {
+
+	        $this->request->data = am($company,$quotation);
+	        
+	    }
+	    $this->set(compact('customField','quotationId','companyId'));
 	}
 
 }

@@ -35,7 +35,7 @@
 							<div class="profile-details">
 								<ul class="fa-ul">
 								<i class="fa fa-dedent"></i>
-									<?php echo $company['Company']['description']; ?>
+									<?php echo ucfirst($company['Company']['description']); ?>
 								</ul>
 							</div>
 							<div class="profile-details">
@@ -53,9 +53,11 @@
 							<div class="profile-details">
 								<ul class="fa-ul">
 									<i class="fa fa-home"></i>
-									<?php echo $company['Address'][0]['address1']; ?><br>&emsp;&nbsp;
-									<?php echo $company['Address'][0]['state_province']; ?><br>&emsp;&nbsp;
-									<?php echo $company['Address'][0]['city']; ?>
+									<?php echo ucfirst($company['Address'][0]['address1']); ?><br>
+									State Province :
+									<?php echo ucfirst($company['Address'][0]['state_province']); ?><br>
+									City :
+									<?php echo ucfirst($company['Address'][0]['city']); ?>
 								</ul>
 							</div>
 						</div>

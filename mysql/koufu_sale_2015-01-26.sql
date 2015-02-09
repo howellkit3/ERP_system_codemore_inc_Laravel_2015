@@ -36,11 +36,11 @@ CREATE TABLE `addresses` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 /*Data for the table `addresses` */
 
-insert  into `addresses`(`id`,`model`,`foreign_key`,`type`,`address1`,`address2`,`city`,`state_province`,`zip_code`,`country`,`created_by`,`modified_by`,`created`,`modified`) values (1,'Company',13,0,'laguna','laguna','laguna','laguna',111,'BS',1,1,'2015-02-02 03:56:10','2015-02-02 04:08:12'),(2,'ContactPerson',1,0,'filinvest','filinvest','filinvest','filinvest',22,'AS',1,1,'2015-02-02 03:56:10','2015-02-02 04:08:12'),(3,'Company',14,0,'web address','sdf','sadf','asdf',123,'AT',1,1,'2015-02-03 01:06:43','2015-02-03 01:06:43'),(4,'ContactPerson',2,0,'irvin haus','dsf','dfs','sdfs',213,'AO',1,1,'2015-02-03 01:06:43','2015-02-03 01:06:43');
+insert  into `addresses`(`id`,`model`,`foreign_key`,`type`,`address1`,`address2`,`city`,`state_province`,`zip_code`,`country`,`created_by`,`modified_by`,`created`,`modified`) values (5,'Company',19,0,'pacita','pacita2','san pedro','laguna',3123,'AO',1,1,'2015-02-09 04:11:30','2015-02-09 04:11:30'),(6,'ContactPerson',7,0,'filinvest','filinvest2','san pedro','laguna',12312,'AS',1,1,'2015-02-09 04:11:30','2015-02-09 04:11:30'),(7,'Company',20,0,'web address','address2','san pedro','laguna',12312,'AL',1,1,'2015-02-09 04:13:12','2015-02-09 04:13:12'),(8,'ContactPerson',8,0,'irvin haus','irvin haus2','san pedro','laguna',3212,'DZ',1,1,'2015-02-09 04:13:12','2015-02-09 04:13:12'),(9,'Company',21,0,'tesda address','tesda address2','san pedro','laguna',321,'AS',1,1,'2015-02-09 04:14:43','2015-02-09 05:24:17'),(10,'ContactPerson',9,0,'gerald haus','gerald haus2','gma','cavite',2321,'AS',1,1,'2015-02-09 04:14:44','2015-02-09 05:24:18');
 
 /*Table structure for table `companies` */
 
@@ -56,11 +56,11 @@ CREATE TABLE `companies` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
 /*Data for the table `companies` */
 
-insert  into `companies`(`id`,`company_name`,`description`,`website`,`created_by`,`modified_by`,`created`,`modified`) values (13,'CodeMore','web','codemore.com',1,1,'2015-02-02 03:56:10','2015-02-02 04:08:12'),(14,'Web Instrument','web development','webinstrument.com',1,1,'2015-02-03 01:06:43','2015-02-03 01:06:43');
+insert  into `companies`(`id`,`company_name`,`description`,`website`,`created_by`,`modified_by`,`created`,`modified`) values (19,'CodeMore','web development','codemore.com',1,1,'2015-02-09 04:11:30','2015-02-09 04:11:30'),(20,'Web Instrument','web development','webinstrument.com',1,1,'2015-02-09 04:13:12','2015-02-09 04:13:12'),(21,'TESDA','school','tesda.com',1,1,'2015-02-09 04:14:43','2015-02-09 05:24:17');
 
 /*Table structure for table `contact_people` */
 
@@ -72,6 +72,7 @@ CREATE TABLE `contact_people` (
   `firstname` varchar(50) DEFAULT NULL,
   `middlename` varchar(50) DEFAULT NULL,
   `lastname` varchar(50) DEFAULT NULL,
+  `position` varchar(120) DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   `modified_by` int(11) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
@@ -79,11 +80,11 @@ CREATE TABLE `contact_people` (
   PRIMARY KEY (`id`),
   KEY `id_idx` (`company_id`),
   CONSTRAINT `id` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 /*Data for the table `contact_people` */
 
-insert  into `contact_people`(`id`,`company_id`,`firstname`,`middlename`,`lastname`,`created_by`,`modified_by`,`created`,`modified`) values (1,13,'bien','c','relampagos',1,1,'2015-02-02 03:56:10','2015-02-02 04:08:12'),(2,14,'irvin','c','pogi',1,1,'2015-02-03 01:06:43','2015-02-03 01:06:43');
+insert  into `contact_people`(`id`,`company_id`,`firstname`,`middlename`,`lastname`,`position`,`created_by`,`modified_by`,`created`,`modified`) values (7,19,'bien','c','relampagos','manager',1,1,'2015-02-09 04:11:30','2015-02-09 04:11:30'),(8,20,'irvin','c','pogi','manager',1,1,'2015-02-09 04:13:12','2015-02-09 04:13:12'),(9,21,'Gerald','f','sinlao','clerk',1,1,'2015-02-09 04:14:43','2015-02-09 05:24:17');
 
 /*Table structure for table `contacts` */
 
@@ -100,11 +101,11 @@ CREATE TABLE `contacts` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 /*Data for the table `contacts` */
 
-insert  into `contacts`(`id`,`model`,`foreign_key`,`type`,`number`,`created_by`,`modified_by`,`created`,`modified`) values (1,'Company',13,0,'111',1,1,'2015-02-02 03:56:10','2015-02-02 04:08:12'),(2,'ContactPerson',1,0,'22',1,1,'2015-02-02 03:56:10','2015-02-02 04:08:12'),(3,'Company',14,0,'21312',1,1,'2015-02-03 01:06:43','2015-02-03 01:06:43'),(4,'ContactPerson',2,0,'3221',1,1,'2015-02-03 01:06:43','2015-02-03 01:06:43');
+insert  into `contacts`(`id`,`model`,`foreign_key`,`type`,`number`,`created_by`,`modified_by`,`created`,`modified`) values (5,'Company',19,0,'312312',1,1,'2015-02-09 04:11:30','2015-02-09 04:11:30'),(6,'ContactPerson',7,0,'2123',1,1,'2015-02-09 04:11:30','2015-02-09 04:11:30'),(7,'Company',20,0,'13212',1,1,'2015-02-09 04:13:12','2015-02-09 04:13:12'),(8,'ContactPerson',8,0,'213',1,1,'2015-02-09 04:13:12','2015-02-09 04:13:12'),(9,'Company',21,0,'2131',1,1,'2015-02-09 04:14:43','2015-02-09 05:24:17'),(10,'ContactPerson',9,0,'21312',1,1,'2015-02-09 04:14:43','2015-02-09 05:24:17');
 
 /*Table structure for table `custom_fields` */
 
@@ -139,11 +140,11 @@ CREATE TABLE `emails` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 /*Data for the table `emails` */
 
-insert  into `emails`(`id`,`model`,`foreign_key`,`type`,`email`,`created_by`,`modified_by`,`created`,`modified`) values (1,'Company',13,0,'codemore@yahoo.com',1,1,'2015-02-02 03:56:10','2015-02-02 04:08:12'),(2,'ContactPerson',1,0,'bien@yahoo.com',1,1,'2015-02-02 03:56:10','2015-02-02 04:08:12'),(3,'Company',14,0,'instrument@yahoo.com',1,1,'2015-02-03 01:06:43','2015-02-03 01:06:43'),(4,'ContactPerson',2,0,'irvin@yahoo.com',1,1,'2015-02-03 01:06:44','2015-02-03 01:06:44');
+insert  into `emails`(`id`,`model`,`foreign_key`,`type`,`email`,`created_by`,`modified_by`,`created`,`modified`) values (5,'Company',19,0,'codemore@yahoo.com',1,1,'2015-02-09 04:11:30','2015-02-09 04:11:30'),(6,'ContactPerson',7,0,'bien@yahoo.com',1,1,'2015-02-09 04:11:30','2015-02-09 04:11:30'),(7,'Company',20,0,'web@yahoo.com',1,1,'2015-02-09 04:13:12','2015-02-09 04:13:12'),(8,'ContactPerson',8,0,'irvin@yahoo.com',1,1,'2015-02-09 04:13:12','2015-02-09 04:13:12'),(9,'Company',21,0,'tesda@yahoo.com',1,1,'2015-02-09 04:14:43','2015-02-09 05:24:17'),(10,'ContactPerson',9,0,'gerald@yahoo.com',1,1,'2015-02-09 04:14:44','2015-02-09 05:24:18');
 
 /*Table structure for table `inquiries` */
 
@@ -159,11 +160,11 @@ CREATE TABLE `inquiries` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 /*Data for the table `inquiries` */
 
-insert  into `inquiries`(`id`,`company_id`,`quotes`,`remarks`,`created_by`,`modified_by`,`created`,`modified`) values (5,13,'baso','triangle po',1,1,'2015-02-06 06:40:52','2015-02-06 06:40:52'),(6,14,'plato','oblong po',1,1,'2015-02-06 06:41:24','2015-02-06 06:41:24');
+insert  into `inquiries`(`id`,`company_id`,`quotes`,`remarks`,`created_by`,`modified_by`,`created`,`modified`) values (7,19,'testing inquiry','test',1,1,'2015-02-09 04:15:19','2015-02-09 04:15:19'),(8,20,'test 2','test 2',1,1,'2015-02-09 04:15:47','2015-02-09 04:15:47'),(9,21,'test 3','test 3',1,1,'2015-02-09 04:16:03','2015-02-09 04:16:03');
 
 /*Table structure for table `quotation_fields` */
 
@@ -179,11 +180,11 @@ CREATE TABLE `quotation_fields` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 
 /*Data for the table `quotation_fields` */
 
-insert  into `quotation_fields`(`id`,`quotation_id`,`custom_fields_id`,`description`,`created_by`,`modified_by`,`created`,`modified`) values (11,5,1,'plato',1,1,'2015-02-06 06:42:14','2015-02-06 06:42:14'),(12,5,2,'oblong',1,1,'2015-02-06 06:42:14','2015-02-06 06:42:14'),(13,5,3,'500',1,1,'2015-02-06 06:42:14','2015-02-06 06:42:14'),(14,5,4,'30000',1,1,'2015-02-06 06:42:14','2015-02-06 06:42:14'),(15,6,1,'baso',1,1,'2015-02-06 06:44:52','2015-02-06 06:44:52'),(16,6,2,'triangle',1,1,'2015-02-06 06:44:52','2015-02-06 06:44:52'),(17,6,3,'500',1,1,'2015-02-06 06:44:52','2015-02-06 06:44:52'),(18,6,4,'60000',1,1,'2015-02-06 06:44:52','2015-02-06 06:44:52');
+insert  into `quotation_fields`(`id`,`quotation_id`,`custom_fields_id`,`description`,`created_by`,`modified_by`,`created`,`modified`) values (1,1,1,'baso',1,1,'2015-02-09 04:17:32','2015-02-09 06:00:34'),(2,1,2,'bilog',1,1,'2015-02-09 04:17:32','2015-02-09 06:00:34'),(3,1,6,'blue',1,1,'2015-02-09 04:17:32','2015-02-09 06:00:34'),(4,1,3,'200',1,1,'2015-02-09 04:17:32','2015-02-09 06:00:35'),(5,1,4,'5000',1,1,'2015-02-09 04:17:32','2015-02-09 06:00:35'),(6,2,1,'plato',1,1,'2015-02-09 04:18:30','2015-02-09 04:18:30'),(7,2,2,'triangle',1,1,'2015-02-09 04:18:30','2015-02-09 04:18:30'),(8,2,3,'20',1,1,'2015-02-09 04:18:30','2015-02-09 04:18:30'),(9,2,4,'3000',1,1,'2015-02-09 04:18:30','2015-02-09 04:18:30'),(10,3,1,'computer case',1,1,'2015-02-09 04:19:42','2015-02-09 04:19:42'),(11,3,2,'small',1,1,'2015-02-09 04:19:42','2015-02-09 04:19:42'),(12,3,3,'1',1,1,'2015-02-09 04:19:42','2015-02-09 04:19:42'),(13,3,4,'1000',1,1,'2015-02-09 04:19:42','2015-02-09 04:19:42'),(25,4,1,'sample item',1,1,'2015-02-09 06:49:50','2015-02-09 06:49:50'),(26,4,2,'big',1,1,'2015-02-09 06:49:50','2015-02-09 06:49:50'),(27,4,4,'500',1,1,'2015-02-09 06:49:51','2015-02-09 06:49:51');
 
 /*Table structure for table `quotations` */
 
@@ -195,17 +196,17 @@ CREATE TABLE `quotations` (
   `company_id` int(11) DEFAULT NULL,
   `inquiry_id` int(11) DEFAULT NULL,
   `status` int(1) DEFAULT NULL,
-  `unique_id` int(11) DEFAULT NULL,
+  `unique_id` varchar(120) DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   `modified_by` int(11) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 /*Data for the table `quotations` */
 
-insert  into `quotations`(`id`,`name`,`company_id`,`inquiry_id`,`status`,`unique_id`,`created_by`,`modified_by`,`created`,`modified`) values (5,'bien quotation',NULL,6,1,NULL,1,1,'2015-02-06 06:42:14','2015-02-08 09:35:19'),(6,'irvin quotation',13,NULL,0,NULL,1,1,'2015-02-06 06:44:52','2015-02-06 06:44:52');
+insert  into `quotations`(`id`,`name`,`company_id`,`inquiry_id`,`status`,`unique_id`,`created_by`,`modified_by`,`created`,`modified`) values (1,'Tesda Quotations',NULL,9,0,'656-1423461634',1,1,'2015-02-09 04:17:32','2015-02-09 06:00:34'),(2,'web quotation',NULL,8,1,'8-11423455510',1,1,'2015-02-09 04:18:30','2015-02-09 04:20:56'),(3,'code quotation',19,NULL,1,'512-1423455582',1,1,'2015-02-09 04:19:42','2015-02-09 04:20:18'),(4,'sample quotation',21,NULL,0,'987-1423464590',1,1,'2015-02-09 06:49:50','2015-02-09 06:49:50');
 
 /*Table structure for table `sales_orders` */
 
@@ -220,11 +221,11 @@ CREATE TABLE `sales_orders` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 /*Data for the table `sales_orders` */
 
-insert  into `sales_orders`(`id`,`quotation_id`,`status`,`created_by`,`modified_by`,`created`,`modified`) values (1,5,1,1,1,'2015-02-08 09:35:29','2015-02-08 09:35:29');
+insert  into `sales_orders`(`id`,`quotation_id`,`status`,`created_by`,`modified_by`,`created`,`modified`) values (1,3,1,1,1,'2015-02-09 04:20:38','2015-02-09 04:20:38'),(2,2,1,1,1,'2015-02-09 06:19:28','2015-02-09 06:19:28');
 
 /*Table structure for table `types` */
 

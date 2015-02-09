@@ -154,7 +154,7 @@ class CustomerSalesController extends SalesAppController {
 
 		$this->Company->bind(array('Contact','Email','Address','ContactPerson'));
 		
-		if ($this->Company->deleteAll($dataId)) {
+		if ($this->Company->delete($dataId)) {
 			
 			$this->loadModel('Sales.Contact');
 			$this->Contact->deleteContact($personId);

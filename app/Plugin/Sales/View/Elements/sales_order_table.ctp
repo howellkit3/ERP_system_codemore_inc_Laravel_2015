@@ -5,11 +5,11 @@
         <tr class="">
 
             <td class="">
-                <?php echo $quoteName[$salesOderlist['SalesOrder']['quotation_id']] ?>  
+                <?php echo ucfirst($quoteName[$salesOderlist['SalesOrder']['quotation_id']]) ?>  
             </td>
-           <!--  <td class="">
-                <?php //echo $customerlist['Company']['website'] ?>
-            </td> -->
+            <td class="">
+                <?php echo !empty($salesOderlist['Quotation']['company_id']) ? ucfirst($companyData[$salesOderlist['Quotation']['company_id']]) : ucfirst($companyData[$inquiryId[$salesOderlist['Quotation']['inquiry_id']]]) ?>
+            </td> 
             <td class="text-center">
                 <?php echo $salesOderlist['SalesOrder']['status'] != (0) ? '<span class="label label-success">Approved</span>' : '<span class="label label-danger">Pending</span>' ; ?>
             </td>

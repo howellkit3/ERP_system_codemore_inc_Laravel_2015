@@ -48,5 +48,16 @@ class SalesOrder extends AppModel {
         }
 		
 	}
+
+	public function deleteSalesOrder($quotationId = null){
+
+		$salesData = $this->find('all',array('conditions' => array('SalesOrder.quotation_id' => $quotationId)));
+		
+		foreach ($salesData as $key => $value) {
+
+			$this->delete($value['SalesOrder']['id']);
+
+		}	
+	}
 	
 }

@@ -13,7 +13,7 @@
 					<div class="main-box clearfix">
 						<header class="main-box-header clearfix">
 							<h1>
-							<?php echo $company['Company']['company_name']; ?>
+							<?php echo ucfirst($company['Company']['company_name']); ?>
 							</h1>
 						</header>
 						
@@ -34,7 +34,7 @@
 							<div class="profile-details">
 								<ul class="fa-ul">
 								<i class="fa fa-dedent"></i>
-									<?php echo $company['Company']['description']; ?>
+									<?php echo ucfirst($company['Company']['description']); ?>
 								</ul>
 							</div>
 							<div class="profile-details">
@@ -64,6 +64,9 @@
 								<li><a href="#tab-activity" data-toggle="tab">Phone</a></li>
 								<li><a href="#tab-chat" data-toggle="tab">Email</a></li>
 								<li><a href="#tab-friends" data-toggle="tab">Contact Person</a></li>
+								<?php 
+			                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'customer_sales', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+			                    ?>
 							</ul>
 							
 							<div class="tab-content">
@@ -94,22 +97,22 @@
 											                         				<?php 
 											                         					if (!empty($contactAddress['address2'])) {
 											                         						echo "(1)&nbsp";
-											                         						echo $contactAddress['address1'];
+											                         						echo ucfirst($contactAddress['address1']);
 											                         						echo "<br>";
 											                         						echo "(2)&nbsp";
-											                         						echo $contactAddress['address2'];
+											                         						echo ucfirst($contactAddress['address2']);
 											                         					}else{
-											                         						echo $contactAddress['address1'];
+											                         						echo ucfirst($contactAddress['address1']);
 											                         					}
 											                         				?>
 											                         			</td>
-											                         			<td><?php echo $contactAddress['city']; ?>
+											                         			<td><?php echo ucfirst($contactAddress['city']); ?>
 											                         			</td>
-											                         			<td><?php echo $contactAddress['state_province']; ?>
+											                         			<td><?php echo ucfirst($contactAddress['state_province']); ?>
 											                         			</td>
 											                         			<td><?php echo $contactAddress['zip_code']; ?>
 											                         			</td>
-											                         			<td><?php echo $contactAddress['country']; ?>
+											                         			<td><?php echo ucfirst($contactAddress['country']); ?>
 											                         			</td>
 											                         			<td>
 											                         				<i class="fa fa-clock-o">
@@ -181,12 +184,12 @@
 						                        <tbody aria-relevant="all" aria-live="polite" role="alert">
 					                         		<tr>
 					                         			<td>
-					                         				<?php echo $contactPerson['lastname']; ?>,
-															<?php echo $contactPerson['firstname']; ?> &nbsp;
-															<?php echo $contactPerson['middlename']; ?>
+					                         				<?php echo ucfirst($contactPerson['lastname']); ?>,
+															<?php echo ucfirst($contactPerson['firstname']); ?> &nbsp;
+															<?php echo ucfirst($contactPerson['middlename']); ?>
 					                         			</td>
 					                         			<td>
-					                         				<?php //echo $contactEmail['email']; ?>
+					                         				<?php echo ucfirst($contactPerson['position']); ?>
 					                         			</td>
 					                         			<td>
 					                         				<i class="fa fa-clock-o"></i>

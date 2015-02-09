@@ -26,18 +26,19 @@ class Quotation extends AppModel {
 					'foreignKey' => 'inquiry_id',
 					'dependent' => true
 				),
-				'QuotationField' => array(
-					'className' => 'Sales.QuotationField',
-					'foreignKey' => 'quotation_id',
-					'dependent' => true
-				),
 				'SalesOrder' => array(
 					'className' => 'Sales.SalesOrder',
 					'foreignKey' => 'quotation_id',
 					'dependent' => true
 				),
+			),
+			'hasMany' => array(
+				'QuotationField' => array(
+					'className' => 'Sales.QuotationField',
+					'foreignKey' => 'quotation_id',
+					'dependent' => true
+				),
 			)
-
 		));
 
 		$this->contain($model);
@@ -89,6 +90,7 @@ class Quotation extends AppModel {
 		$data['created_by'] = $auth;
 		$data['modified_by'] = $auth;
 		$data['status'] = 0;
+		$data['unique_id'] = $inquiryId.'-'.rand(0,9).time();
 		
 		$this->save($data);
 
@@ -104,6 +106,8 @@ class Quotation extends AppModel {
 		$data['created_by'] = $auth;
 		$data['modified_by'] = $auth;
 		$data['status'] = 0;
+		//$data['unique_id'] = $companyId.'-'.rand(0,9).time();
+		$data['unique_id'] = rand(0,999).'-'.time();
 		
 		$this->save($data);
 		

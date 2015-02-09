@@ -5,17 +5,14 @@
         <tr class="">
 
             <td class="">
-                <?php echo $companyData[$inquiryList['Inquiry']['company_id']] ?>  
+                <?php echo ucfirst($companyData[$inquiryList['Inquiry']['company_id']]) ?>  
             </td>
             <td class="">
-                <?php echo $inquiryList['Inquiry']['quotes'] ?>
+                <?php echo ucfirst($inquiryList['Inquiry']['quotes']) ?>
             </td>
             <td class="">
-                <?php echo $inquiryList['Inquiry']['remarks'] ?>
+                <?php echo ucfirst($inquiryList['Inquiry']['remarks']) ?>
             </td>
-            <!-- <td class="">
-                <?php echo count($inquiryList['Quotation']); ?>
-            </td> -->
             <td class="text-center">
                 <span class="label label-success">
                     <?php echo count($inquiryList['Quotation']); ?>
@@ -41,7 +38,7 @@
                     echo $this->Html->link('<span class="fa-stack">
                     <i class="fa fa-square fa-stack-2x"></i>
                     <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-                    </span>', array('controller' => 'customer_sales', 'action' => 'delete_inquiry',$inquiryList['Inquiry']['id']),array('class' =>' table-link','escape' => false,'title'=>'Delete Information'));
+                    </span>', array('controller' => 'customer_sales', 'action' => 'delete_inquiry',$inquiryList['Inquiry']['id']),array('class' =>' table-link','escape' => false,'title'=>'Delete Information','confirm' => 'Do you want to delete Inquiry ?'));
                 ?>
                 
             </td>

@@ -5,15 +5,21 @@
         <tr class="">
 
             <td class="">
-                <?php echo $quotationList['Quotation']['name'] ?>  
+                <?php echo ucfirst($quotationList['Quotation']['name']) ?>  
             </td>
             <td class="">
                
-                <?php echo !empty($quotationList['Quotation']['company_id']) ? $companyData[$quotationList['Quotation']['company_id']] : $companyData[$inquiryId[$quotationList['Quotation']['inquiry_id']]] ?>
+                <?php echo !empty($quotationList['Quotation']['company_id']) ? ucfirst($companyData[$quotationList['Quotation']['company_id']]) : ucfirst($companyData[$inquiryId[$quotationList['Quotation']['inquiry_id']]]) ?>
             </td>
             <td class="text-center">
             <?php echo $quotationList['Quotation']['status'] != (0) ? '<span class="label label-success">Approved</span>' : '<span class="label label-danger">Pending</span>' ; ?>
-           
+           <?php
+                if(!empty($salesStatus[$quotationList['Quotation']['id']])){
+                    echo "<span class='label label-success'>Sales Order</span>";
+                     //echo $salesStatus[$quotationList['Quotation']['id']];
+                }
+               
+            ?>
             </td>
             
             <td>
@@ -23,12 +29,23 @@
                         <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
                         </span> ', array('controller' => 'quotations', 'action' => 'view',$quotationList['Quotation']['id'],!empty($quotationList['Quotation']['company_id']) ? $quotationList['Quotation']['company_id'] : $inquiryId[$quotationList['Quotation']['inquiry_id']]),array('class' =>' table-link','escape' => false,'title'=>'Review Quotation'));
                 ?>
+
+                <?php
+                if ($quotationList['Quotation']['status'] != (1)) {
+
+                   echo $this->Html->link('<span class="fa-stack">
+                    <i class="fa fa-square fa-stack-2x"></i>
+                    <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                    </span> ', array('controller' => 'quotations', 'action' => 'edit',$quotationList['Quotation']['id'],!empty($quotationList['Quotation']['company_id']) ? $quotationList['Quotation']['company_id'] : $inquiryId[$quotationList['Quotation']['inquiry_id']]),array('class' =>' table-link','escape' => false,'title'=>'Review Quotation'));
+                }
+
+                ?>
               
                 <?php
                     echo $this->Html->link('<span class="fa-stack">
                     <i class="fa fa-square fa-stack-2x"></i>
                     <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-                    </span>', array('controller' => 'quotations', 'action' => 'delete',$quotationList['Quotation']['id']),array('class' =>' table-link','escape' => false,'title'=>'Delete Quotation'));
+                    </span>', array('controller' => 'quotations', 'action' => 'delete',$quotationList['Quotation']['id']),array('class' =>' table-link','escape' => false,'title'=>'Delete Quotation','confirm' => 'Do you want to delete Quotaion ?'));
                 ?>
                 
             </td>

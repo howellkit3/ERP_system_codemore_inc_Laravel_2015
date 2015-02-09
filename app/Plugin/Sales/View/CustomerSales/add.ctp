@@ -174,7 +174,7 @@
                         <div class="main-box">
 
                             <header class="main-box-header clearfix">
-                                <h1>Contact Number</h1>
+                                <h1>Company Number</h1>
                             </header>
                             
                             <div class="main-box-body clearfix ">
@@ -218,7 +218,7 @@
                         <div class="main-box">
 
                             <header class="main-box-header clearfix">
-                                <h1>Email</h1>
+                                <h1>Company Email</h1>
                             </header>
                             
                             <div class="main-box-body clearfix">
@@ -286,6 +286,15 @@
                                         <div class="col-lg-9">
                                             <?php 
                                                 echo $this->Form->input('ContactPersonData.0.ContactPerson.0.lastname', array('class' => 'form-control','label' => false));
+                                            ?>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="inputPassword1" class="col-lg-2 control-label">Position</label>
+                                        <div class="col-lg-9">
+                                            <?php 
+                                                echo $this->Form->input('ContactPersonData.0.ContactPerson.0.position', array('class' => 'form-control','label' => false));
                                             ?>
                                         </div>
                                     </div>
@@ -466,13 +475,12 @@
                                 <div class="col-xs-2 col-md-2"></div>
                                 <div class="col-xs-2 col-md-2 2">
                                     <?php 
-                                        echo $this->Form->submit('Submit Customer Information', array('class' => 'btn btn-success',  'title' => 'Click here to add the customer') );
+                                        echo $this->Form->submit('Submit Customer Information', array('class' => 'btn btn-success pull-right',  'title' => 'Click here to add the customer') );
                                     ?>
                                 </div>
-                                <div class="col-xs-1 col-md-1"></div>
                                 <div class="col-xs-2 col-md-2 2">
                                     <?php 
-                                        echo $this->Html->link('Cancel ', array('controller' => 'customer_sales', 'action' => 'index'),array('class' =>'btn btn-primary pull-left','escape' => false));
+                                        echo $this->Html->link('Cancel ', array('controller' => 'customer_sales', 'action' => 'index'),array('class' =>'btn btn-primary','escape' => false));
                                     ?>
                                 </div>
                             </div>

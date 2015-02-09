@@ -8,16 +8,19 @@
 
 <div class="filter-block pull-right">
     <?php
-        echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array(
-        	'controller' => 'quotations', 
-        	'action' => 'print_word',
-        	'ext' => 'pdf',
-        	$quotation['Quotation']['id'],$companyId),
-        	array('class' =>'btn btn-primary pull-right','escape' => false,'target' => '_blank'));
+
+        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'quotations', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
 
     ?>
     <?php
     	if ($quotation['Quotation']['status'] != 0) {
+
+    		echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array(
+		        	'controller' => 'quotations', 
+		        	'action' => 'print_word',
+		        	'ext' => 'pdf',
+		        	$quotation['Quotation']['id'],$companyId),
+		        	array('class' =>'btn btn-primary pull-right','escape' => false,'target' => '_blank'));
 
     		if (!empty($salesStatus['SalesOrder']['quotation_id'])) {
 
@@ -33,7 +36,7 @@
 
     		echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i> Click to Approved ', array('controller' => 'quotations', 'action' => 'approved',$quotation['Quotation']['id']),array('class' =>'btn btn-primary pull-right','escape' => false)) ;
 
-    		echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit ', array('controller' => 'quotations', 'action' => 'approved',$quotation['Quotation']['id']),array('class' =>'btn btn-primary pull-right','escape' => false)) ;
+    		echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit ', array('controller' => 'quotations', 'action' => 'edit',$quotation['Quotation']['id'],$companyId),array('class' =>'btn btn-primary pull-right','escape' => false)) ;
     	}
      ?>
    
@@ -59,22 +62,22 @@
 						<div class="col-lg-2">
 							Attention
 						</div>
-						<div class="col-lg-6">
+						<div class="col-lg-5">
 							:&emsp;
 							<?php echo !empty($quotation['Quotation']['company_id']) ? $companyData[$quotation['Quotation']['company_id']] : $companyData[$inquiryId[$quotation['Quotation']['inquiry_id']]] 
 							?>
 						</div>
-						<div class="col-lg-2">
-							No:
+						<div class="col-lg-4">&emsp;&emsp;&nbsp;&nbsp;&nbsp;
+							No : <u><?php echo $quotation['Quotation']['unique_id'] ?></u>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-lg-3"></div>
-						<div class="col-lg-6">
-							_____________________________________________________________________________
+						<div class="col-lg-5">
+							_______________________________________________________________________
 						</div>
-						<div class="col-lg-2">
-							Date:&nbsp;<?php echo !empty($quotation['Quotation']['created']) ? date('M d, Y', strtotime($quotation['Quotation']['created'])) : '' ?>
+						<div class="col-lg-4">&emsp;&emsp;
+							Date :&nbsp;<?php echo !empty($quotation['Quotation']['created']) ? date('F d, Y', strtotime($quotation['Quotation']['created'])) : '' ?>
 						</div>
 					</div>
 					<div class="form-group">
@@ -146,9 +149,13 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<div class="col-lg-1"></div>
-						<div class="col-lg-9">
-							I do hereby accept the price and other details submitted on your price quotation no.CQO1408129 Also, I do hereby authorize your company to proceed with and supply the work described above.
+						<div class="col-lg-11">
+							<center>
+								I do hereby accept the price and other details submitted on your price quotation no.
+								<?php echo $quotation['Quotation']['unique_id'] ?><br> Also, I do hereby authorize your company to proceed with and supply the work described above.
+							</center>
+						</div>
+						<div class="col-lg-1">
 						</div>
 					</div>
 					<div class="form-group">

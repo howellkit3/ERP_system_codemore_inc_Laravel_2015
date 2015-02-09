@@ -5,17 +5,15 @@
 
 <?php echo $this->element('sales_option');?><br><br>
 
+<?php echo $this->element('summary_header');?>
+
 <div class="row">
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
             <header class="main-box-header clearfix">
+
                 <h2 class="pull-left"><b>Sales Order List</b></h2>
                 
-                <div class="filter-block pull-right">
-                    <?php
-                       //echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Make Quotation ', array('controller' => 'quotations', 'action' => 'create'),array('class' =>'btn btn-primary pull-right','escape' => false));
-                    ?>
-                </div>
             </header>
             
             <div class="main-box-body clearfix">
@@ -24,7 +22,7 @@
                         <thead>
                             <tr>
                                 <th><a href="#"><span>Quotation Name</span></a></th>
-                                <!-- <th><a href="#"><span>Company</span></a></th> -->
+                                <th><a href="#"><span>Company</span></a></th>
                                 <th class="text-center"><a href="#"><span>Status</span></a></th>
                                 <th class="text-center"><a href="#"><span>Created</span></a></th>
                                 <th>Action</th>

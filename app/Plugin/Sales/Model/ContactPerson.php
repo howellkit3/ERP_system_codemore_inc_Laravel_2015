@@ -65,6 +65,11 @@ class ContactPerson extends AppModel {
 				'rule' => array('notEmpty'),
 			),
 		),
+		'position' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+			),
+		),
 	
 	);
 
