@@ -9,19 +9,17 @@
 		<div class="tabs-wrapper profile-tabs">
 			<ul class="nav nav-tabs">
 				<li class="active"><a href="#tab-newsfeed" data-toggle="tab">Add Custom Field</a></li>
-				<li><a href="#tab-activity" data-toggle="tab">Others</a></li>
-				<li><a href="#tab-chat" data-toggle="tab">Others</a></li>
-				<li><a href="#tab-friends" data-toggle="tab">Others</a></li>
 			</ul>
 			
 			<div class="tab-content">
 				<div class="tab-pane fade in active" id="tab-newsfeed">
 					
 					<div class="table-responsive">
-						<div class="col-lg-12">
+						
+						<div class="col-lg-6">
 							<div class="main-box">
 								<header class="main-box-header clearfix">
-									<h2></h2>
+									<h2><b>Add Label</b></h2>
 								</header>
 								
 								<div class="main-box-body clearfix">
@@ -46,18 +44,27 @@
 								</div>								
 							</div>
 						</div>
+						<div class="col-lg-6 col-md-4 col-sm-4">
+							<div class="main-box clearfix">
+								<header class="main-box-header clearfix">
+									<h1>Custom Fields List</h1>
+								</header>
+								<table class="table table-striped table-hover">
+			                        <thead>
+			                            <tr>
+			                                <th><a href="#"><span>Label</span></a></th>
+			                                <th><a href="#"><span>Created</span></a></th>
+			                                <th>Action</th>
+			                            </tr>
+			                        </thead>
+
+			                        <?php echo $this->element('custom_field_table'); ?>
+
+			                    </table>
+								
+							</div>
+						</div>
 					</div>
-				</div>
-				<div class="tab-pane fade" id="tab-activity">
-				2					
-				</div>
-								
-				<div class="tab-pane clearfix fade" id="tab-friends">
-				4
-				</div>
-								
-				<div class="tab-pane fade" id="tab-chat">
-				3
 				</div>
 			</div>
 		</div>

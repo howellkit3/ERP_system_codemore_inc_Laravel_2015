@@ -20,7 +20,13 @@ class SettingsController extends SalesAppController {
     }
 	    	    
 	public function index() {
-	
+
+		$customField = $this->CustomField->find('all',array('order' => array('CustomField.id DESC')));
+
+		//pr($customField);exit();
+
+		$this->set(compact('customField'));
+
 	}
 
 	public function custom_field() {
@@ -35,11 +41,25 @@ class SettingsController extends SalesAppController {
 
             	$this->Session->setFlash(__('Register Complete.'));
             	$this->redirect(
-                    array('controller' => 'settings', 'action' => 'custom_field')
+                    array('controller' => 'settings', 'action' => 'index')
                 );
             	
 			}
 		}
+	}
+
+	public function delete_field($fieldId = null){
+
+		if($this->CustomField->delete($fieldId)){
+
+			$this->Session->setFlash(__('Error Deleting Information.'));
+			$this->redirect(
+					array('controller' => 'settings', 'action' => 'index')
+				);
+
+		}
+
+		
 	}
 	
 }
