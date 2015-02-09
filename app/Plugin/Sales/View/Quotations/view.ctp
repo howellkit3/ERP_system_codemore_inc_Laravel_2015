@@ -28,7 +28,7 @@
 
     		}else{
 
-    			echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Create Order ', array('controller' => 'quotations', 'action' => 'create_order',$quotation['Quotation']['id']),array('class' =>'btn btn-primary pull-right','escape' => false)) ;
+    			echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Create Order ', array('controller' => 'quotations', 'action' => 'create_order',$quotation['Quotation']['id'],$quotation['Quotation']['unique_id']),array('class' =>'btn btn-primary pull-right','escape' => false)) ;
 
     		}
     		

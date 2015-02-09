@@ -19,24 +19,12 @@
             </td>
             <td>
                 <?php
-                    // echo $this->Html->link('<span class="fa-stack">
-                    //     <i class="fa fa-square fa-stack-2x"></i>
-                    //     <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-                    //     </span> ', array('controller' => 'customer_sales', 'action' => 'view',$salesOderlist['SalesOder']['id']),array('class' =>' table-link','escape' => false,'title'=>'View Information'));
+                    echo $this->Html->link('<span class="fa-stack">
+                        <i class="fa fa-square fa-stack-2x"></i>
+                        <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                        </span> ', array('controller' => 'quotations', 'action' => 'view',$salesOderlist['Quotation']['id'],!empty($salesOderlist['Quotation']['company_id']) ? $salesOderlist['Quotation']['company_id'] : $inquiryId[$salesOderlist['Quotation']['inquiry_id']]),array('class' =>' table-link','escape' => false,'title'=>'View Information'));
                 ?>
-                <?php
-                    // echo $this->Html->link('<span class="fa-stack">
-                    // <i class="fa fa-square fa-stack-2x"></i>
-                    // <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-                    // </span> ', array('controller' => 'customer_sales', 'action' => 'edit',$customerlist['Company']['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Information'));
-                ?>
-                <?php
-                    // echo $this->Html->link('<span class="fa-stack">
-                    // <i class="fa fa-square fa-stack-2x"></i>
-                    // <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-                    // </span>', array('controller' => 'customer_sales', 'action' => 'delete',$customerlist['Company']['id'],$contactPerson['id']),array('class' =>' table-link','escape' => false,'title'=>'Delete Information'));
-                ?>
-                
+               
             </td>
         </tr>
 

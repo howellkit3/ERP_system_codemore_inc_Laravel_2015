@@ -30,14 +30,15 @@
 			echo $this->Html->css(array('bootstrap/bootstrap.min',
 	            'font-awesome/css/font-awesome',
 	            'libs/nanoscroller',
+	            'libs/timeline',
 	            'compiled/theme_styles',
 	            'global',
 	            'libs/daterangepicker',
 	            'libs/jquery-jvectormap-1.2.2',
 	            'libs/weather-icons'
 	        ));
-	         echo $this->Html->script('jquery');
-	       
+	        echo $this->Html->script('jquery');
+	       	//echo $this->Html->script('scripts');
 
 	    ?>
 	    <script type="text/javascript">
@@ -45,7 +46,7 @@
 	    </script>
 	    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
 	    <link type="image/x-icon" href="favicon.png" rel="shortcut icon"/>
-
+	    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300|Titillium+Web:200,300,400' rel='stylesheet' type='text/css'>
 	  
 		<!--[if lt IE 9]>
 			<script src="js/html5shiv.js"></script>
@@ -133,6 +134,7 @@
 	        echo $this->fetch('script');
 	        echo $this->Html->script('jquery.nanoscroller.min');
 	        echo $this->Html->script('demo');
+	         echo $this->Html->script('demo-rtl');
 	        echo $this->Html->script('moment.min');
 	        echo $this->Html->script('jquery-jvectormap-1.2.2.min');
 	        echo $this->Html->script('jquery-jvectormap-world-merc-en');
@@ -149,8 +151,12 @@
 	        echo $this->Html->script('pace.min');
 	        echo $this->Html->script('global');
 	        //echo $this->Html->script('jquery.min');
+	        echo $this->Html->script('demo-skin-changer');
+	        echo $this->Html->script('modernizr');
+	        echo $this->Html->script('timeline');
 	        
 	    ?>
     
 	</body>
 </html>
+	

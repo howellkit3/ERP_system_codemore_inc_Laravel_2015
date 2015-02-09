@@ -229,7 +229,7 @@ class QuotationsController extends SalesAppController {
 		
 	}
 
-	public function create_order($quotationId = null){
+	public function create_order($quotationId = null,$uniqueId = null){
 
 		$userData = $this->Session->read('Auth');
 
@@ -237,6 +237,10 @@ class QuotationsController extends SalesAppController {
 		
 		$this->Quotation->SalesOrder->approvedData($quotationId,$userData['User']['id']);
 
+		$this->loadModel('Ticket.Ticket');
+
+		$this->Ticket->saveUniqueId($uniqueId,$userData['User']['id']);
+		
 		$this->redirect(
             array('controller' => 'sales_orders', 'action' => 'index')
         );

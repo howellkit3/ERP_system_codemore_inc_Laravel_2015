@@ -34,18 +34,23 @@
 
 						<?php
 	 						echo $this->Html->link( "<i class='fa fa-dashboard'></i>
-								<span>Dashboard</span>
-								<span class='label label-primary label-circle pull-right'>28</span> ",   array('controller' =>'dashboards','action'=>'index','plugin' => null),array('escape' => false) );
+								<span>Dashboard</span>",   array('controller' =>'dashboards','action'=>'index','plugin' => null),array('escape' => false) );
 	 					?>
 					</li>
 
 					<li>
 						<?php
-	 						echo $this->Html->link( " <i class='fa fa-th-large'></i> <span>Sales</span> <span class='label label-success pull-right'>New</span> ",   array('controller' =>'customer_sales','action'=>'index','plugin' => 'sales'),array('escape' => false) );
+	 						echo $this->Html->link( " <i class='fa fa-shopping-cart'></i> <span>Sales</span> ",   array('controller' =>'customer_sales','action'=>'index','plugin' => 'sales'),array('escape' => false) );
 	 					?>
 					</li>
 
 					<li>
+						<?php
+	 						echo $this->Html->link( " <i class='fa fa-ticket'></i> <span>Ticketing System</span>",   array('controller' =>'ticketing_systems','action'=>'index','plugin' => 'ticket'),array('escape' => false) );
+	 					?>
+					</li>
+
+					<!-- <li>
 						<?php
 	 						echo $this->Html->link( " <i class='fa fa-th-large'></i> <span>Warehouse</span> <span class='label label-success pull-right'>New</span> ",   array('controller' =>'','action'=>'','plugin' => ''),array('escape' => false) );
 	 					?>
@@ -55,7 +60,7 @@
 						<?php
 	 						echo $this->Html->link( " <i class='fa fa-th-large'></i> <span>Purchasing</span> <span class='label label-success pull-right'>New</span> ",   array('controller' =>'','action'=>'','plugin' => ''),array('escape' => false) );
 	 					?>
-					</li>
+					</li> -->
 
 				</ul>
 			</div>
