@@ -109,7 +109,7 @@
 											                                'options' => array($customField),
 											                                'type' => 'select',
 											                                'label' => false,
-											                                'class' => 'form-control col-lg-4',
+											                                'class' => 'form-control col-lg-4 required',
 											                                'empty' => '---Select Label---',
 											                                'id'	=> 'CustomFieldId'
 											                                 ));
@@ -117,7 +117,7 @@
 																</div>
 																<div class="col-lg-8">
 																	<?php 
-						                                                echo $this->Form->input('QuotationField.0.description', array('class' => 'form-control item_type',
+						                                                echo $this->Form->input('QuotationField.0.description', array('class' => 'form-control item_type required',
 						                                                    'alt' => 'address1',
 						                                                    'label' => false));
 						                                            ?>
@@ -150,6 +150,9 @@
 															</div>
 														</div>
 													<?php echo $this->Form->end(); ?>
+													<script>
+												        $("#QuotationCreateForm").validate();
+												    </script>
 												</div>								
 											</div>
 										</div>

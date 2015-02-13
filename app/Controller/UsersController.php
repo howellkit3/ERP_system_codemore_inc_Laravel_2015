@@ -14,7 +14,7 @@ class UsersController extends AppController
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('login','add', 'index');
+        $this->Auth->allow('login','add');
     }
 	public function home() {
 		
@@ -24,21 +24,32 @@ class UsersController extends AppController
 	}
 
 	public function add() {
-         $this->layout = 'add';
+
+        $this->layout = 'add';
+
 		if ($this->request->is('post')) {
             
             if (!empty($this->request->data)) {
-            	// pr($this->request->data);exit();
+            
             	$this->User->create();
-            	$this->User->AddAction($this->request->data);
-            	$this->Session->setFlash(__('Register Complete.'));
-            	$this->redirect(
-                    array('controller' => 'users', 'action' => 'login')
-                );
-            	
-            }
+
+            	if($this->User->save($this->request->data)){
+
+                    $this->Session->setFlash(__('Register Complete.'));
+
+                    $this->redirect(
+                        array('controller' => 'users', 'action' => 'login')
+                    );
+                } else {
+
+                    $this->Session->setFlash(
+                        __('The invalid data. Please, try again.')
+                    );
+                }
+	
+            } 
         }
-        //$this->layout=false;
+
 	}
 
 	public function login() {
@@ -59,25 +70,23 @@ class UsersController extends AppController
 
             if ($this->Auth->login()) {
 
-                // $this->Session->setFlash(__('Welcome, '. $this->Auth->user('lastname')));
-                //$this->redirect($this->Auth->redirectUrl());
+                $this->Session->setFlash(__('Welcome, '. $this->Auth->user('lastname')));
+                
                 $this->redirect(
                     array('controller' => 'dashboards', 'action' => 'index')
                 );
+
             } else {
 
-              
-
                $this->Session->setFlash(
-                 __('Username or password is incorrect'),
-                'default',
-                array(),
-                'auth'
-              );
+                     __('Email or password is incorrect'),
+                    'default',
+                    array(),
+                    'auth'
+                  );
             }
         } 
 
-		
 	}
 	public function logout() {
         $this->redirect($this->Auth->logout());

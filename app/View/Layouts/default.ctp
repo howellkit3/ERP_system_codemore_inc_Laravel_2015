@@ -38,6 +38,8 @@
 	            'libs/weather-icons'
 	        ));
 	        echo $this->Html->script('jquery');
+	        echo $this->Html->script('jquery-validation/dist/jquery.validate');
+	        echo $this->Html->script('jquery-validation/dist/jquery.validate.min');
 	       	//echo $this->Html->script('scripts');
 
 	    ?>

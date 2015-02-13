@@ -1,5 +1,8 @@
-
-
+// function validateForm($form)
+// {
+//     var validator = $( "#CompanyAddForm" ).validate();
+//     validator.form();
+// }
 function fieldReset($form, section)
 {
     var count = $('.' + section).length;

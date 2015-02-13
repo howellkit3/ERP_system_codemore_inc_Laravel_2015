@@ -110,7 +110,7 @@
 																<div class="col-lg-3">Quotation Name</div>
 																<div class="col-lg-8">
 																	<?php 
-						                                                echo $this->Form->input('Quotation.name', array('class' => 'form-control item_type',
+						                                                echo $this->Form->input('Quotation.name', array('class' => 'form-control item_type required',
 						                                                    'alt' => 'address1',
 						                                                    'label' => false));
 						                                            ?>
@@ -141,7 +141,7 @@
 													                                'options' => array($customField),
 													                                'type' => 'select',
 													                                'label' => false,
-													                                'class' => 'form-control col-lg-4',
+													                                'class' => 'form-control col-lg-4 required',
 													                                'empty' => '---Select Label---',
 													                                'default' => !empty($value['custom_fields_id']) ? $value['custom_fields_id'] : '',
 													                                'name' => $name,
@@ -151,7 +151,7 @@
 																		</div>
 																		<div class="col-lg-8">
 																			<?php 
-								                                                echo $this->Form->input('QuotationField.0.description', array('class' => 'form-control item_type',
+								                                                echo $this->Form->input('QuotationField.0.description', array('class' => 'form-control item_type required',
 								                                                    'label' => false,
 								                                                    'name' => $name2,
 								                                                    'id' => $id2,
@@ -200,5 +200,8 @@
 		</div>
 	</div>
 <?php echo $this->Form->end(); ?>
+<script>
+$("#QuotationEditForm").validate();
+</script>
 
 

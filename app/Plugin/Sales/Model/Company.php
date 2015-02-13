@@ -72,50 +72,106 @@ class Company extends AppModel {
 		'company_name' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
+				'message' => 'Required fields.',
 			),
 		),
+
+		'description' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'message' => 'Required fields.',
+			),
+		),
+
+		// 'website' => array(
+		// 	'notEmpty' => array(
+		// 		'rule' => array('notEmpty'),
+		// 		'message' => 'Required fields.',
+		// 	),
+		// ),
+
+
 
 		'address1' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
+				'message' => 'Required fields.',
 			),
 		),
 		'state_province' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
+				'message' => 'Required fields.',
 			),
 		),
 		'city' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
+				'message' => 'Required fields.',
+			),
+		),
+		'country' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'message' => 'Required fields.',
 			),
 		),
 		'zip_code' => array(
-			'rule' => 'numeric',
-			'allowEmpty' => true, //validate only if not empty
-			'message'=>'Zip Code should be numeric',
-		),
-
-		'firstname' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
+				'message' => 'Required fields.',
 			),
-		),	
+			'numeric'=> array(
+	            'rule' => 'numeric',
+	            'message'=> 'Zip Code should be numeric'
+	        ),
+		),
+		// 'zip_code' => array(
+		// 	'rule' => 'numeric',
+		// 	'allowEmpty' => false, //validate only if not empty
+		// 	'message'=>'Zip Code should be numeric',
+		// ),
+
+		'first_name' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'message' => 'Required fields.',
+			),
+			'alphaNumeric'=> array(
+	            'rule' => 'alphaNumeric',
+	            'message'=> 'Please enter a valid name'
+	        ),
+		),
 		'lastname' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
+				'message' => 'Required fields.',
 			),
+			'alphaNumeric'=> array(
+	            'rule' => 'alphaNumeric',
+	            'message'=> 'Please enter a valid name'
+	        ),
 		),	
 		'email' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
+			'email' => array(
+				'rule' => array('email'),
 			),
 		),
 		'number' => array(
-			'rule' => 'numeric',
-			'allowEmpty' => true, //validate only if not empty
-			'message'=>'Zip Code should be numeric',
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'message' => 'Required fields.',
+			),
+			'numeric'=> array(
+	            'rule' => 'numeric',
+	            'message'=> 'It should be numeric'
+	        ),
 		),
+		// 'number' => array(
+		// 	'rule' => 'numeric',
+		// 	'allowEmpty' => true, //validate only if not empty
+		// 	'message'=>'Zip Code should be numeric',
+		// ),
 	
 	);
 

@@ -1,6 +1,14 @@
 .message{
-	color : red;
-	font-weight: bolder;
+	 color: #000;
+    display: block;
+    font-size: 120%;
+    margin: 1em 0;
+    padding: 0.8em;
+    background: -moz-linear-gradient(center top , #76bf6b, #3b8230) repeat-x scroll 0 0 #3b8230;
+    
+    clear: both;
+    color: #fff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
 }
 .body-pad{
 	padding-top: 6px;
@@ -13,4 +21,24 @@
 }
 #config-tool.closed {
     right: -300px;
+}
+.notice {
+    color: #000;
+    display: block;
+    font-size: 120%;
+    margin: 1em 0;
+    padding: 0.8em;
+}
+.success {
+    background: -moz-linear-gradient(center top , #76bf6b, #3b8230) repeat-x scroll 0 0 #3b8230;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    clear: both;
+    color: #fff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
+}
+.error-message {
+    color: red;
+}
+.error{
+    color: red;
 }

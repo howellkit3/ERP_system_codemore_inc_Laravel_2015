@@ -69,13 +69,5 @@ class Inquiry extends AppModel {
 		return $this->id;
 		
 	}
-
-	// public function quotationCount($inquiryId = null){
-	// 	$this->updateAll(
-	//         array('Inquiry.quotation_count' => 'Inquiry.quotation_count+1'),                    
-	//         array('Inquiry.id' => $inquiryId)
- //    	);
-	// }
-
 	
 }

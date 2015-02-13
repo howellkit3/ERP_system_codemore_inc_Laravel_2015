@@ -64,7 +64,7 @@
 						</div>
 						<div class="col-lg-5">
 							:&emsp;
-							<?php echo !empty($quotation['Quotation']['company_id']) ? $companyData[$quotation['Quotation']['company_id']] : $companyData[$inquiryId[$quotation['Quotation']['inquiry_id']]] 
+							<?php echo !empty($quotation['Quotation']['company_id']) ? ucfirst($companyData[$quotation['Quotation']['company_id']]) : ucfirst($companyData[$inquiryId[$quotation['Quotation']['inquiry_id']]]) 
 							?>
 						</div>
 						<div class="col-lg-4">&emsp;&emsp;&nbsp;&nbsp;&nbsp;
@@ -83,8 +83,8 @@
 					<div class="form-group">
 						<div class="col-lg-1"></div>
 						<div class="col-lg-10">
-							Dear :&nbsp; <?php echo $contactInfo['ContactPerson']['firstname'] ?>&nbsp;
-							<?php echo $contactInfo['ContactPerson']['lastname'] ?>
+							Dear :&nbsp; <?php echo ucfirst($contactInfo['ContactPerson']['firstname']) ?>&nbsp;
+							<?php echo ucfirst($contactInfo['ContactPerson']['lastname']) ?>
 						</div>
 					</div>
 					<div class="form-group">
@@ -114,8 +114,8 @@
 					<div class="form-group">
 						<div class="col-lg-1"></div>
 						<div class="col-lg-5">
-							<?php echo $user['User']['first_name']?>&nbsp;
-							<?php echo $user['User']['last_name']?>
+							<?php echo ucfirst($user['User']['first_name']) ?>&nbsp;
+							<?php echo ucfirst($user['User']['last_name'])?>
 							<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
 						</div>
 					</div>

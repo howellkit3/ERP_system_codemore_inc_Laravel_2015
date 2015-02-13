@@ -42,22 +42,36 @@ class Address extends AppModel {
 		'address1' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
+				'message' => 'Required fields.',
 			),
 		),
 		'state_province' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
+				'message' => 'Required fields.',
 			),
 		),
 		'city' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
+				'message' => 'Required fields.',
+			),
+		),
+		'country' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'message' => 'Required fields.',
 			),
 		),
 		'zip_code' => array(
-			'rule' => 'numeric',
-			'allowEmpty' => true, //validate only if not empty
-			'message'=>'Zip Code should be numeric',
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'message' => 'Required fields.',
+			),
+			'numeric'=> array(
+	            'rule' => 'numeric',
+	            'message'=> 'Zip Code should be numeric'
+	        ),
 		),
 
 	);

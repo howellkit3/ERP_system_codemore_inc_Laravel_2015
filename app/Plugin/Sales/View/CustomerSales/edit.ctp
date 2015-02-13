@@ -46,7 +46,7 @@
                                     <label for="inputEmail1" class="col-lg-2 control-label">Name</label>
                                     <div class="col-lg-9">
                                         <?php
-                                            echo $this->Form->input('Company.company_name', array('class' => 'form-control col-lg-6','label' => false));
+                                            echo $this->Form->input('Company.company_name', array('class' => 'form-control col-lg-6 required','label' => false));
                                         ?>
                                     </div>
                                 </div>
@@ -54,7 +54,7 @@
                                     <label for="inputPassword1" class="col-lg-2 control-label">Description</label>
                                     <div class="col-lg-9">
                                         <?php
-                                            echo $this->Form->input('Company.description', array('class' => 'form-control col-lg-6','label' => false));
+                                            echo $this->Form->input('Company.description', array('class' => 'form-control col-lg-6 required','label' => false));
                                         ?>
                                     </div>
                                 </div>
@@ -106,7 +106,7 @@
                                             </div>
                                             <div class="col-lg-7">
                                                 <?php 
-                                                    echo $this->Form->input('Address.0.address1', array('class' => 'form-control item_type',
+                                                    echo $this->Form->input('Address.0.address1', array('class' => 'form-control item_type required',
                                                         'alt' => 'address1',
                                                         'label' => false));
                                                 ?>
@@ -128,7 +128,7 @@
                                             <label for="inputPassword1" class="col-lg-2 control-label">City</label>
                                             <div class="col-lg-9">
                                                 <?php 
-                                                    echo $this->Form->input('Address.0.city', array('class' => 'form-control',
+                                                    echo $this->Form->input('Address.0.city', array('class' => 'form-control required',
                                                         'alt' => 'city',
                                                         'label' => false));
                                                 ?>
@@ -139,7 +139,7 @@
                                             <label for="inputPassword1" class="col-lg-2 control-label">State Province</label>
                                             <div class="col-lg-9">
                                                 <?php 
-                                                    echo $this->Form->input('Address.0.state_province', array('class' => 'form-control',
+                                                    echo $this->Form->input('Address.0.state_province', array('class' => 'form-control required',
                                                         'alt' => 'state_province',
                                                         'label' => false));
                                                 ?>
@@ -150,7 +150,7 @@
                                             <label for="inputPassword1" class="col-lg-2 control-label">Zip Code</label>
                                             <div class="col-lg-9">
                                                 <?php 
-                                                    echo $this->Form->input('Address.0.zip_code', array('class' => 'form-control',
+                                                    echo $this->Form->input('Address.0.zip_code', array('class' => 'form-control required number',
                                                         'alt' => 'zip_code',
                                                         'label' => false,'type' => 'text'));
                                                 ?>
@@ -160,7 +160,7 @@
                                         <div class="form-group">
                                             <label for="inputPassword1" class="col-lg-2 control-label">Country</label>
                                             <div class="col-lg-9">
-                                                <?php echo( $this->Country->select('Address.0.country',null,array('class' => 'form-control','default' => !empty($value['country']) ? $value['country'] : '')));?>  
+                                                <?php echo( $this->Country->select('Address.0.country',null,array('class' => 'form-control required','default' => !empty($value['country']) ? $value['country'] : '')));?>  
                                             </div>
                                         </div>
                                         <hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
@@ -205,7 +205,7 @@
                                                         'label' => false,
                                                         'alt' => 'type',
                                                         'default' => !empty($value['type']) ? $value['type'] : '',
-                                                        'class' => 'form-control',
+                                                        'class' => 'form-control required',
                                                         'empty' => false
                                                     ));
 
@@ -213,7 +213,7 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <?php 
-                                                    echo $this->Form->input('Contact.0.number', array('class' => 'form-control',
+                                                    echo $this->Form->input('Contact.0.number', array('class' => 'form-control required',
                                                         'alt' => 'number',
                                                         'label' => false));
                                                 ?>
@@ -263,7 +263,7 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <?php 
-                                                    echo $this->Form->input('Email.0.email', array('class' => 'form-control','label' => false));
+                                                    echo $this->Form->input('Email.0.email', array('class' => 'form-control required email','label' => false));
                                                 ?>
                                             </div>
                                             <div class="col-lg-2">
@@ -299,7 +299,7 @@
                                             <label for="inputPassword1" class="col-lg-2 control-label">Firstname</label>
                                             <div class="col-lg-9">
                                                 <?php 
-                                                    echo $this->Form->input('ContactPersonData.0.ContactPerson.0.firstname', array('class' => 'form-control','label' => false,'value' => !empty($value['ContactPerson']['firstname']) ? $value['ContactPerson']['firstname'] : ''));
+                                                    echo $this->Form->input('ContactPersonData.0.ContactPerson.0.firstname', array('class' => 'form-control required','label' => false,'value' => !empty($value['ContactPerson']['firstname']) ? $value['ContactPerson']['firstname'] : ''));
                                                 ?>
                                             </div>
                                         </div>
@@ -317,7 +317,7 @@
                                             <label for="inputPassword1" class="col-lg-2 control-label">Lastname</label>
                                             <div class="col-lg-9">
                                                 <?php 
-                                                    echo $this->Form->input('ContactPersonData.0.ContactPerson.0.lastname', array('class' => 'form-control','label' => false,'value' => !empty($value['ContactPerson']['lastname']) ? $value['ContactPerson']['lastname'] : ''));
+                                                    echo $this->Form->input('ContactPersonData.0.ContactPerson.0.lastname', array('class' => 'form-control required','label' => false,'value' => !empty($value['ContactPerson']['lastname']) ? $value['ContactPerson']['lastname'] : ''));
                                                 ?>
                                             </div>
                                         </div>
@@ -325,7 +325,7 @@
                                             <label for="inputPassword1" class="col-lg-2 control-label">Position</label>
                                             <div class="col-lg-9">
                                                 <?php 
-                                                    echo $this->Form->input('ContactPersonData.0.ContactPerson.0.position', array('class' => 'form-control','label' => false,'value' => !empty($value['ContactPerson']['position']) ? $value['ContactPerson']['position'] : ''));
+                                                    echo $this->Form->input('ContactPersonData.0.ContactPerson.0.position', array('class' => 'form-control required','label' => false,'value' => !empty($value['ContactPerson']['position']) ? $value['ContactPerson']['position'] : ''));
                                                 ?>
                                             </div>
                                         </div>
@@ -366,7 +366,7 @@
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <?php 
-                                                                echo $this->Form->input('ContactPersonData.0.Contact.0.number', array('class' => 'form-control','label' => false));
+                                                                echo $this->Form->input('ContactPersonData.0.Contact.0.number', array('class' => 'form-control required','label' => false));
                                                             ?>
                                                         </div>
                                                         <div class="col-lg-2">
@@ -411,7 +411,7 @@
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <?php 
-                                                                echo $this->Form->input('ContactPersonData.0.Email.0.email', array('class' => 'form-control','label' => false));
+                                                                echo $this->Form->input('ContactPersonData.0.Email.0.email', array('class' => 'form-control required email','label' => false));
                                                             ?>
                                                         </div>
                                                         <div class="col-lg-2">
@@ -457,7 +457,7 @@
                                                         </div>
                                                         <div class="col-lg-7">
                                                             <?php 
-                                                                echo $this->Form->input('ContactPersonData.0.Address.0.address1', array('class' => 'form-control item_type','label' => false));
+                                                                echo $this->Form->input('ContactPersonData.0.Address.0.address1', array('class' => 'form-control item_type required','label' => false));
                                                             ?>
                                                         </div>
                                                     </div>
@@ -475,7 +475,7 @@
                                                         <label for="inputPassword1" class="col-lg-2 control-label">City</label>
                                                         <div class="col-lg-9">
                                                             <?php 
-                                                                echo $this->Form->input('ContactPersonData.0.Address.0.city', array('class' => 'form-control','label' => false));
+                                                                echo $this->Form->input('ContactPersonData.0.Address.0.city', array('class' => 'form-control required','label' => false));
                                                             ?>
                                                         </div>
                                                     </div>
@@ -484,7 +484,7 @@
                                                         <label for="inputPassword1" class="col-lg-2 control-label">State Province</label>
                                                         <div class="col-lg-9">
                                                             <?php 
-                                                                echo $this->Form->input('ContactPersonData.0.Address.0.state_province', array('class' => 'form-control','label' => false));
+                                                                echo $this->Form->input('ContactPersonData.0.Address.0.state_province', array('class' => 'form-control required','label' => false));
                                                             ?>
                                                         </div>
                                                     </div>
@@ -493,7 +493,7 @@
                                                         <label for="inputPassword1" class="col-lg-2 control-label">Zip Code</label>
                                                         <div class="col-lg-9">
                                                             <?php 
-                                                                echo $this->Form->input('ContactPersonData.0.Address.0.zip_code', array('class' => 'form-control','label' => false,'type' => 'text'));
+                                                                echo $this->Form->input('ContactPersonData.0.Address.0.zip_code', array('class' => 'form-control required number','label' => false,'type' => 'text'));
                                                             ?>
                                                         </div>
                                                     </div>
@@ -501,7 +501,7 @@
                                                     <div class="form-group">
                                                         <label for="inputPassword1" class="col-lg-2 control-label">Country</label>
                                                         <div class="col-lg-9">
-                                                            <?php echo( $this->Country->select('ContactPersonData.0.Address.0.country',null,array('class' => 'form-control','default' => !empty($value['country']) ? $value['country'] : '')));?> 
+                                                            <?php echo( $this->Country->select('ContactPersonData.0.Address.0.country',null,array('class' => 'form-control required','default' => !empty($value['country']) ? $value['country'] : '')));?> 
                                                         </div>
                                                     </div>
                                                     <hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
@@ -553,6 +553,9 @@
                 </div>
 
                 <?php echo $this->Form->end(); ?>
+                <script>
+                $("#CustomerEditForm").validate();
+                </script>
 
             </div>
         </div>

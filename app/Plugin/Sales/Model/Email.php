@@ -39,8 +39,8 @@ class Email extends AppModel {
 	public $validate = array(
 
 		'email' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
+			'email' => array(
+				'rule' => array('email'),
 			),
 		),
 	

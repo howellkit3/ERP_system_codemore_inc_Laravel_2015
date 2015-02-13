@@ -67,7 +67,7 @@
 				                         			</td>
 				                         			<td><?php echo $personAddress['Address']['zip_code']; ?>
 				                         			</td>
-				                         			<td><?php echo ucfirst($personAddress['Address']['country']); ?>
+				                         			<td><?php echo $this->Country->countryList(ucfirst($personAddress['Address']['country'])); ?>
 				                         			</td>
 				                         			<td><i class="fa fa-clock-o">
 				                         				<?php echo date('M d, Y', strtotime($personAddress['Address']['created']));

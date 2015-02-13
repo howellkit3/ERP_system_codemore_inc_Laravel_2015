@@ -112,7 +112,7 @@
 											                         			</td>
 											                         			<td><?php echo $contactAddress['zip_code']; ?>
 											                         			</td>
-											                         			<td><?php echo ucfirst($contactAddress['country']); ?>
+											                         			<td><?php echo $this->Country->countryList(ucfirst($contactAddress['country'])); ?>
 											                         			</td>
 											                         			<td>
 											                         				<i class="fa fa-clock-o">

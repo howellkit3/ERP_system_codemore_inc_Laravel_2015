@@ -66,7 +66,9 @@ class CustomerSalesController extends SalesAppController {
                   
 	            }else{
 
-	            	echo "mmmm";exit();
+	            	$this->Session->setFlash(
+                        __('The invalid data. Please, try again.')
+                    );
 	            }
             	
             }
@@ -76,6 +78,7 @@ class CustomerSalesController extends SalesAppController {
 
 	public function view($companyId = null){
 
+		
 		$this->Company->bind(array('Address','Contact','Email','ContactPerson'));
 
 		$this->Company->recursive = 1;

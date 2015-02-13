@@ -40,9 +40,14 @@ class Contact extends AppModel {
 	public $validate = array(
 
 		'number' => array(
-			'rule' => 'numeric',
-			'allowEmpty' => true, //validate only if not empty
-			'message'=>'Zip Code should be numeric',
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'message' => 'Required fields.',
+			),
+			'numeric'=> array(
+	            'rule' => 'numeric',
+	            'message'=> 'It should be numeric'
+	        ),
 		),
 	
 	);

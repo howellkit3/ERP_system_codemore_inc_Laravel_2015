@@ -7,6 +7,7 @@ App::uses('AuthComponent', 'Controller/Component');
  *
  */
 class User extends AppModel {
+
 	public $recursive = -1;
 	
 	public $actsAs = array('Containable');
@@ -20,31 +21,35 @@ class User extends AppModel {
 			'unique' => array(
 				'rule'    => 'isUnique',
 				'message' => 'This Email has already been taken.'
-			)
+			),
 		),
-			
-		'firstname' => array(
+		'first_name' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 			),
+			'alphaNumeric'=> array(
+	            'rule' => 'alphaNumeric',
+	            'message'=> 'Please enter a valid name'
+	        ),
 		),
-		// 'middlename' => array(
-		// 	'notEmpty' => array(
-		// 		'rule' => array('notEmpty'),
-		// 	),
-		// ),
-		'lastname' => array(
+		'last_name' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 			),
+			'alphaNumeric'=> array(
+	            'rule' => 'alphaNumeric',
+	            'message'=> 'Please enter a valid name'
+	        ),
 		),
-		'password' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-			),
-		)	
+		 'password' => array(
+            'rule' => array('between', 8, 20),
+            'required' => true,
+            'allowEmpty' => false,
+            'message' => 'Between 8-20 characters'
+        ) 	
 	
 	);
+
 	public function beforeSave($options = array()) {
 	    if (isset($this->data[$this->alias]['password'])) {
 	        $passwordHasher = new SimplePasswordHasher();
@@ -55,13 +60,13 @@ class User extends AppModel {
 
 	    return true;
 	}
-	public function AddAction($data = null) {
+	// public function AddAction($data = null) {
 
-		$user = ClassRegistry::init('User');
-		$passReal = $data['User']['password'];
-		$user->save($data); 
-		return $this->saveField('password_real', $passReal);
+	// 	$user = ClassRegistry::init('User');
+	// 	$passReal = $data['User']['password'];
+	// 	$user->save($data); 
+	// 	return $this->saveField('password_real', $passReal);
 
-	}
+	// }
 	
 }

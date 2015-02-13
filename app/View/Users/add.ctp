@@ -1,81 +1,68 @@
-<div class="users form">
- 
-    <?php echo $this->Form->create('User',array('class' => 'form-horizontal'));?>
 
-        <div id="login-box-holder">
-            <div class="row">
-                <div class="col-xs-3">
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <div id="login-box">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <?php echo $this->Session->flash(); ?>
+                        <header id="login-header">
+                            <div id="login-logo">
+                                <!-- <img src="img/logo.png" alt="Koufu Net"/> -->
+                                <?php //echo $this->Html->image('koufu.png'); ?>
+                                Koufu Net
+                            </div>
+                        </header>
+                        <div id="login-box-inner">
+                            <?php echo $this->Form->create('User',array('class' => 'form-horizontal'));?>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                    <?php
+                                        echo $this->Form->input('first_name', array('class' => 'form-control col-lg-6','label' => false,'placeholder' => 'Firstname'));
+                                    ?>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                    <?php
+                                        echo $this->Form->input('last_name', array('class' => 'form-control col-lg-6','label' => false,'placeholder' => 'Lastname'));
+                                    ?>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                    <?php
+                                        echo $this->Form->input('email', array('class' => 'form-control col-lg-6','label' => false,'placeholder' => 'Email'));
+                                    ?>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-unlock-alt"></i></span>
+                                    <?php
+                                         echo $this->Form->input('password', array('label' => 'Password ', 'maxLength' => 255, 'title' => 'Password', 'type'=>'password','class' => 'form-control col-lg-6','label' => false,'placeholder' => 'Password'));
+                                    ?>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <?php
+                                             echo $this->Form->submit('Register', array('class' => 'btn btn-success col-xs-12',  'title' => 'Click here to add the user') );
+                                        ?>
+                                    </div>
+                                </div>
+                            <?php echo $this->Form->end(); ?>
+                            
+                        </div>
+                        <?php
+                            if($this->Session->check('Auth.User')){
+                                echo $this->Html->link( "Return to Dashboard",   array('action'=>'index') );
+                                echo "<br>";
+                                echo $this->Html->link( "Logout",   array('action'=>'logout') );
+                            }else{
+                                echo $this->Html->link( "Return to Login Screen",   array('action'=>'login') );
+                            }
+                        ?>
+                    </div>
                 </div>
-                <div class="col-xs-9">
-                    <div class="main-box-body clearfix">
-                        <legend><?php echo __('Register Account'); ?></legend>   
-                        <div class="form-group">
-                            <label for="inputEmail1" class="col-lg-2 control-label">Firstname</label>
-                            <div class="col-lg-5">
-                                <?php
-                                    echo $this->Form->input('first_name', array('class' => 'form-control col-lg-6','label' => false));
-                                ?>
-                            </div>
-                        </div>
-                        <!-- <div class="form-group">
-                            <label for="inputPassword1" class="col-lg-2 control-label">Middlename</label>
-                            <div class="col-lg-5">
-                                <?php
-                                    echo $this->Form->input('middlename', array('class' => 'form-control col-lg-6','label' => false));
-                                ?>
-                            </div>
-                        </div> -->
-
-                         <div class="form-group">
-                            <label for="inputPassword1" class="col-lg-2 control-label">Lastname</label>
-                            <div class="col-lg-5">
-                                <?php
-                                    echo $this->Form->input('last_name', array('class' => 'form-control col-lg-6','label' => false));
-                                ?>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="inputPassword1" class="col-lg-2 control-label">Email</label>
-                            <div class="col-lg-5">
-                                <?php
-                                    echo $this->Form->input('email', array('class' => 'form-control col-lg-6','label' => false));
-                                ?>
-                            </div>
-                        </div>
-
-                         <div class="form-group">
-                            <label for="inputPassword1" class="col-lg-2 control-label">Password</label>
-                            <div class="col-lg-5">
-                                <?php
-                                     echo $this->Form->input('password', array('label' => 'Password ', 'maxLength' => 255, 'title' => 'Password', 'type'=>'password','class' => 'form-control col-lg-6','label' => false));
-                                ?>
-                            </div>
-                        </div>
-
-                         <div class="form-group">
-                            <label for="inputPassword1" class="col-lg-2 control-label"></label>
-                            <div class="col-lg-5">
-                                <?php
-                                     echo $this->Form->submit('Add User', array('class' => 'form-submit btn btn-success',  'title' => 'Click here to add the user') );
-                                ?>
-                            </div>
-                        </div>
-
-                    </div> 
-                    <?php echo $this->Form->end(); ?>
-                    <?php
-                        if($this->Session->check('Auth.User')){
-                            echo $this->Html->link( "Return to Dashboard",   array('action'=>'index') );
-                            echo "<br>";
-                            echo $this->Html->link( "Logout",   array('action'=>'logout') );
-                        }else{
-                            echo $this->Html->link( "Return to Login Screen",   array('action'=>'login') );
-                        }
-                    ?>
-                </div>
-                
             </div>
         </div>
+    </div>
+</div>
        
     

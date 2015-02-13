@@ -19,7 +19,7 @@
 						<td style="width:123px;font-family: Calibri;">Attention</td>
 						<td style="width:20px;">:</td>
 						<td style="width:400px;">
-							<?php echo !empty($quotation['Quotation']['company_id']) ? $companyData[$quotation['Quotation']['company_id']] : $companyData[$inquiryId[$quotation['Quotation']['inquiry_id']]] 
+							<?php echo !empty($quotation['Quotation']['company_id']) ? ucfirst($companyData[$quotation['Quotation']['company_id']]) : ucfirst($companyData[$inquiryId[$quotation['Quotation']['inquiry_id']]]) 
 							?>
 						</td>
 						<td>
@@ -46,8 +46,8 @@
 							Dear 
 						</td>
 						<td>
-							<?php echo $contactInfo['ContactPerson']['firstname'] ?>
-							<?php echo $contactInfo['ContactPerson']['lastname'] ?>,
+							<?php echo ucfirst($contactInfo['ContactPerson']['firstname']) ?>
+							<?php echo ucfirst($contactInfo['ContactPerson']['lastname']) ?>,
 						</td>
 					</tr>
 				</thead>
@@ -83,8 +83,8 @@
 					</tr>
 					<tr>
 						<td style="width:335px;">
-							<?php echo $user['User']['first_name']?>
-							<?php echo $user['User']['last_name']?>
+							<?php echo ucfirst($user['User']['first_name']) ?>
+							<?php echo ucfirst($user['User']['last_name'])?>
 							<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
 						</td>
 					</tr>

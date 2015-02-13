@@ -29,7 +29,7 @@
 	                                'options' => array($companyData),
 	                                'type' => 'select',
 	                                'label' => false,
-	                                'class' => 'form-control col-lg-4',
+	                                'class' => 'form-control col-lg-4 required',
 	                                'empty' => '---Select Company---',
 	                                'id' => 'select_company'
 	                                 ));
@@ -112,7 +112,10 @@
 						</div>
 					</form>
 				</div>	
-			<?php echo $this->Form->end(); ?>							
+			<?php echo $this->Form->end(); ?>
+			<script>
+                $("#CompanyInquiryFormForm").validate();
+            </script>							
 		</div>
 	</div>	
 </div>

@@ -90,7 +90,8 @@ class Quotation extends AppModel {
 		$data['created_by'] = $auth;
 		$data['modified_by'] = $auth;
 		$data['status'] = 0;
-		$data['unique_id'] = $inquiryId.'-'.rand(0,9).time();
+		//$data['unique_id'] = $inquiryId.'-'.rand(0,9).time().substr(-6);
+		$data['unique_id'] = rand(0,999).'-'.time();
 		
 		$this->save($data);
 

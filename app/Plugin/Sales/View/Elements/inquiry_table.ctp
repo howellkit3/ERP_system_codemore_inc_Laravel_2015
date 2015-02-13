@@ -8,10 +8,11 @@
                 <?php echo ucfirst($companyData[$inquiryList['Inquiry']['company_id']]) ?>  
             </td>
             <td class="">
-                <?php echo ucfirst($inquiryList['Inquiry']['quotes']) ?>
+                <?php echo substr(ucfirst($inquiryList['Inquiry']['quotes']),0,25) ?>...
+                
             </td>
             <td class="">
-                <?php echo ucfirst($inquiryList['Inquiry']['remarks']) ?>
+                <?php echo substr(ucfirst($inquiryList['Inquiry']['remarks']),0,25) ?>..
             </td>
             <td class="text-center">
                 <span class="label label-success">
