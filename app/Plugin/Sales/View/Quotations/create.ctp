@@ -122,39 +122,230 @@
 							                                            ?>
 																	</div>
 																</div>
-																<section class="cloneMe1 quotation_section">
-																	<div class="form-group">
-																		<div class="col-lg-3">
-																			<?php 
-								                                                echo $this->Form->input('QuotationField.0.label', array(
-													                                'options' => array($customField),
-													                                'type' => 'select',
-													                                'label' => false,
-													                                'class' => 'form-control col-lg-4 required',
-													                                'empty' => '---Select Label---',
-													                                'id'	=> 'CustomFieldId'
-													                                 ));
-								                                            ?>
-																		</div>
-																		<div class="col-lg-8">
-																			<?php 
-								                                                echo $this->Form->input('QuotationField.0.description', array('class' => 'form-control item_type required',
-								                                                    'alt' => 'address1',
-								                                                    'label' => false));
-								                                            ?>
-																		</div>
-																	</div>
-																</section>
-																<div class="form-group">
-																	<div class="col-lg-3">
-																		<button type="button" class="add-field6 table-link danger btn btn-success" onclick="cloneInquiry('quotation_section',this)"> <i class="fa fa-plus"> Add Field</i></button>
-																	</div>
+																 <div class="form-group">
+																	<div class="col-lg-3"><?php echo $customField['1']?></div>
 																	<div class="col-lg-8">
-																		
+																		<?php 
+							                                                echo $this->Form->input('QuotationField.1.description', array('class' => 'form-control item_type',
+							                                                	'id'	=> 'CustomFieldId',
+							                                                    'alt' => 'address1',
+							                                                    'label' => false));
+							                                            ?>
+							                                            <?php 
+							                                                echo $this->Form->input('QuotationField.1.custom_fields_id', array(
+							                                                	'type' => 'hidden',
+							                                                	'value' => '1',
+							                                                    'label' => false));
+							                                            ?>
 																	</div>
 																</div>
-																
-																
+																<div class="form-group">
+																	<div class="col-lg-3"><?php echo $customField['2']?></div>
+																	<div class="col-lg-8">
+																		<?php 
+							                                                echo $this->Form->input('QuotationField.2.description', array('class' => 'form-control item_type',
+							                                                	'id'	=> 'CustomFieldId',
+							                                                    'alt' => 'address1',
+							                                                    'label' => false));
+							                                            ?>
+							                                            <?php 
+							                                                echo $this->Form->input('QuotationField.2.custom_fields_id', array(
+							                                                	'type' => 'hidden',
+							                                                	'value' => '2',
+							                                                    'label' => false));
+							                                            ?>
+																	</div>
+																</div>
+																<div class="form-group">
+																	<div class="col-lg-3"><?php echo $customField['3']?></div>
+																	<div class="col-lg-8">
+																		<?php 
+							                                                echo $this->Form->input('QuotationField.3.description', array('class' => 'form-control item_type',
+							                                                	'id'	=> 'CustomFieldId',
+							                                                    'alt' => 'address1',
+							                                                    'label' => false));
+							                                            ?>
+							                                            <?php 
+							                                                echo $this->Form->input('QuotationField.3.custom_fields_id', array(
+							                                                	'type' => 'hidden',
+							                                                	'value' => '3',
+							                                                    'label' => false));
+							                                            ?>
+																	</div>
+																</div>
+																<div class="form-group">
+																	<div class="col-lg-3"><?php echo $customField['4']?></div>
+																	<div class="col-lg-8">
+																		<?php 
+							                                                echo $this->Form->input('QuotationField.4.description', array('class' => 'form-control item_type',
+							                                                	'id'	=> 'CustomFieldId',
+							                                                    'alt' => 'address1',
+							                                                    'label' => false));
+							                                            ?>
+							                                            <?php 
+							                                                echo $this->Form->input('QuotationField.4.custom_fields_id', array(
+							                                                	'type' => 'hidden',
+							                                                	'value' => '4',
+							                                                    'label' => false));
+							                                            ?>
+																	</div>
+																</div>
+													
+																<div class="form-group">
+																	<div class="col-lg-3"><b><?php echo $customField['11']?></b></div>
+																	<div class="col-lg-8">
+																		<?php 
+							                                                echo $this->Form->input('QuotationField.11.description', array('class' => 'form-control item_type',
+							                                                	'id'	=> 'CustomFieldId',
+							                                                    'alt' => 'address1',
+							                                                    'label' => false));
+							                                            ?>
+							                                            <?php 
+							                                                echo $this->Form->input('QuotationField.11.custom_fields_id', array(
+							                                                	'type' => 'hidden',
+							                                                	'value' => '11',
+							                                                    'label' => false));
+							                                            ?>
+																	</div>
+																</div>
+																<div class="form-group">
+																	<div class="col-lg-3"><?php echo $customField['5']?></div>
+																	<div class="col-lg-8">
+																		<?php 
+							                                                echo $this->Form->input('QuotationField.5.description', array('class' => 'form-control item_type',
+							                                                	'id'	=> 'CustomFieldId',
+							                                                    'alt' => 'address1',
+							                                                    'label' => false));
+							                                            ?>
+							                                            <?php 
+							                                                echo $this->Form->input('QuotationField.5.custom_fields_id', array(
+							                                                	'type' => 'hidden',
+							                                                	'value' => '5',
+							                                                    'label' => false));
+							                                            ?>
+																	</div>
+																</div>
+																<div class="form-group">
+																	<div class="col-lg-3"><?php echo $customField['6']?></div>
+																	<div class="col-lg-8">
+																		<?php 
+							                                                echo $this->Form->input('QuotationField.6.description', array('class' => 'form-control item_type',
+							                                                	'id'	=> 'CustomFieldId',
+							                                                    'alt' => 'address1',
+							                                                    'label' => false));
+							                                            ?>
+							                                            <?php 
+							                                                echo $this->Form->input('QuotationField.6.custom_fields_id', array(
+							                                                	'type' => 'hidden',
+							                                                	'value' => '6',
+							                                                    'label' => false));
+							                                            ?>
+																	</div>
+																</div>
+																<div class="form-group">
+																	<div class="col-lg-3"><?php echo $customField['7']?></div>
+																	<div class="col-lg-8">
+																		<?php 
+							                                                echo $this->Form->input('QuotationField.7.description', array('class' => 'form-control item_type',
+							                                                	'id'	=> 'CustomFieldId',
+							                                                    'alt' => 'address1',
+							                                                    'label' => false));
+							                                            ?>
+							                                            <?php 
+							                                                echo $this->Form->input('QuotationField.7.custom_fields_id', array(
+							                                                	'type' => 'hidden',
+							                                                	'value' => '7',
+							                                                    'label' => false));
+							                                            ?>
+																	</div>
+																</div>											
+																<div class="form-group">
+																	<div class="col-lg-3"><?php echo $customField['8']?></div>
+																	<div class="col-lg-8">
+																		<?php 
+							                                                echo $this->Form->input('QuotationField.8.description', array('class' => 'form-control item_type',
+							                                                	'id'	=> 'CustomFieldId',
+							                                                    'alt' => 'address1',
+							                                                    'label' => false));
+							                                            ?>
+							                                            <?php 
+							                                                echo $this->Form->input('QuotationField.8.custom_fields_id', array(
+							                                                	'type' => 'hidden',
+							                                                	'value' => '8',
+							                                                    'label' => false));
+							                                            ?>
+																	</div>
+																</div>				
+																<div class="form-group">
+																	<div class="col-lg-3"><?php echo $customField['9']?></div>
+																	<div class="col-lg-8">
+																		<?php 
+							                                                echo $this->Form->input('QuotationField.9.description', array('class' => 'form-control item_type',
+							                                                	'id'	=> 'CustomFieldId',
+							                                                    'alt' => 'address1',
+							                                                    'label' => false));
+							                                            ?>
+							                                            <?php 
+							                                                echo $this->Form->input('QuotationField.9.custom_fields_id', array(
+							                                                	'type' => 'hidden',
+							                                                	'value' => '9',
+							                                                    'label' => false));
+							                                            ?>
+																	</div>
+																</div>											
+																<div class="form-group">
+																	<div class="col-lg-3"><?php echo $customField['10']?></div>
+																	<div class="col-lg-8">
+																		<?php 
+							                                                echo $this->Form->input('QuotationField.10.description', array('class' => 'form-control item_type',
+							                                                	'id'	=> 'CustomFieldId',
+							                                                    'alt' => 'address1',
+							                                                    'label' => false));
+							                                            ?>
+							                                            <?php 
+							                                                echo $this->Form->input('QuotationField.10.custom_fields_id', array(
+							                                                	'type' => 'hidden',
+							                                                	'value' => '10',
+							                                                    'label' => false));
+							                                            ?>
+																	</div>
+																</div>											
+																<div class="form-group">
+																	<div class="col-lg-3"><?php echo $customField['12']?></div>
+																	<div class="col-lg-8">
+																		<?php 
+							                                                echo $this->Form->input('QuotationField.12.description', array('class' => 'form-control item_type',
+							                                                	'id'	=> 'CustomFieldId',
+							                                                    'alt' => 'address1',
+							                                                    'label' => false));
+							                                            ?>
+							                                            <?php 
+							                                                echo $this->Form->input('QuotationField.12.custom_fields_id', array(
+							                                                	'type' => 'hidden',
+							                                                	'value' => '12',
+							                                                    'label' => false));
+							                                            ?>
+																	</div>
+																</div>										
+																<div class="form-group">
+																	<div class="col-lg-3"><?php echo $customField['13']?></div>
+																	<div class="col-lg-8">
+																		<?php 
+							                                                echo $this->Form->input('QuotationField.13.description', array('class' => 'form-control item_type',
+							                                                	'id'	=> 'CustomFieldId',
+							                                                    'alt' => 'address1',
+							                                                    'label' => false));
+							                                            ?>
+							                                            <?php 
+							                                                echo $this->Form->input('QuotationField.13.custom_fields_id', array(
+							                                                	'type' => 'hidden',
+							                                                	'value' => '13',
+							                                                    'label' => false));
+							                                            ?>
+																	</div>
+																</div>
+
+
 																<hr style="height:1px; border:none; color:#666666; background-color:#666666;">
 
 																<div class="form-group">

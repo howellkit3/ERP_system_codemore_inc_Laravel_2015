@@ -52,12 +52,12 @@ class Quotation extends AppModel {
 				
 			),
 		),
-		'label' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
+		// 'label' => array(
+		// 	'notEmpty' => array(
+		// 		'rule' => array('notEmpty'),
 				
-			),
-		),
+		// 	),
+		// ),
 		'description' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),

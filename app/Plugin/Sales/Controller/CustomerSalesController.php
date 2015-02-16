@@ -41,6 +41,7 @@ class CustomerSalesController extends SalesAppController {
 		
 		if ($this->request->is('post')) {
 
+
             if (!empty($this->request->data)) {
 
             	$this->Company->bind(array('Address','Contact','Email','ContactPerson'));

@@ -85,7 +85,7 @@ class QuotationsController extends SalesAppController {
 		$this->Quotation->bind(array('QuotationField'));
 
 		if ($this->request->is('post')) {
-			
+
             if (!empty($this->request->data)) {
             	
             	if(!empty($this->request->data['Inquiry']['id'])){

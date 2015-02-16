@@ -239,9 +239,8 @@ CREATE TABLE `types` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-/*Data for the table `types` */
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+-- Feb 2 2015 Irvin
+INSERT INTO `custom_fields` (`id`, `fieldlabel`, `created_by`, `modified_by`, `created`, `modified`) VALUES
+(11, 'Vat Price', 1, 1, '2015-02-16 10:26:33', '2015-02-16 10:26:33'),
+(12, 'Validity', 1, 1, '2015-02-16 10:36:58', '2015-02-16 10:36:58'),
+(13, 'Remarks', 1, 1, '2015-02-16 10:37:06', '2015-02-16 10:37:06');

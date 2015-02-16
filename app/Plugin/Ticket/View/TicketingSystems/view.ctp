@@ -14,11 +14,15 @@
 					<h2>Prepress</h2>
 					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut.</p>
 					<div class="clearfix">
+					<button type="button" class="btn btn-info">Pending</button>
+					<button type="button" class="btn btn-warning">On process</button>
+					<button type="button" class="btn btn-success">Complete</button>
 						<div class="col-md-1 col-sm-6 col-xs-6 pricing-package pull-right">
-							<div class="pricing-star">Task<br>Done</div>
-							<div class="package-header yellow-bg">
+							<!-- <div class="pricing-star">Task<br>Done</div> -->
+
+						<!-- 	<div class="package-header yellow-bg">
 								<a class="btn yellow-bg pull-right"><font color="white">Finished</font></a>
-							</div>
+							</div> -->
 						</div>
 						
 					</div>
