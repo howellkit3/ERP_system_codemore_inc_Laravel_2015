@@ -57,7 +57,7 @@
 		
 	</head>
 
-	<body id="login-page-full">
+	<body id="login-page-full" class="<?php echo $this->params['controllers'].'_'.$this->params['action']; ?>">
 
 		<div id="theme-wrapper">
 			<?php echo $this->element('defaultLayout/header'); ?>
