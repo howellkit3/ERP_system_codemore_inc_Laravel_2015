@@ -1,0 +1,2 @@
+<?php $this->Html->addCrumb('WareHouseSystems', array('controller' => 'customer_sales', 'action' => 'index')); ?>
+<?php $this->Html->addCrumb('Settings', array('controller' => 'customer_sales', 'action' => 'settings')); ?>
