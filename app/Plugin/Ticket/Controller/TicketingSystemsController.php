@@ -29,10 +29,39 @@ class TicketingSystemsController extends TicketAppController {
 	}
 
 	public function view($ticketid = null) {
+		$ticketData = $this->Ticket->find('first', array('conditions' => array('Ticket.id' =>$ticketid
+			)
+			));
+		//pr($ticketdata);
+		//exit();
+		$this->set(compact('ticketid','ticketData'));
+	}
 
-	
-		
-	
+	public function updatePendingStatus($ticketId = null) {
+
+		$this->Ticket->updateStatus($ticketId);
+
+    	$this->redirect(
+
+         array('controller' => 'ticketing_systems', 
+            	'action' => 'view',
+            	 $ticketId
+
+          ));	
+	}
+
+	public function finishedJob($ticketId = null){
+
+		 $this->Ticket->finishedJob($ticketId);
+
+		 $this->redirect(
+
+         array('controller' => 'ticketing_systems', 
+             	'action' => 'view',
+             	 $ticketId
+
+          ));
+
 	}
 
 }

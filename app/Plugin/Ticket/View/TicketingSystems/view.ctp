@@ -14,9 +14,47 @@
 					<h2>Prepress</h2>
 					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut.</p>
 					<div class="clearfix">
-					<button type="button" class="btn btn-info">Pending</button>
-					<button type="button" class="btn btn-warning">On process</button>
-					<button type="button" class="btn btn-success">Complete</button>
+
+						<?php
+							if( ($ticketData['Ticket']['status'] == 0) && ($ticketData['Ticket']['job_ticket_id'] == 1)){
+						?>
+
+							<span class="label label-default label-large">Pending</span><br><br>
+							<hr></hr>
+						<?php
+                       				echo $this->Html->link('Accept Job', array('controller' => 'ticketing_systems', 
+                       							'action' => 'updatePendingStatus', 
+                       							$ticketid),array('class' =>'btn btn-info',
+                       							'escape' => false));
+                       	?>
+
+                       	<?php
+                       				echo $this->Html->link('Finished Job', array('controller' => 'ticketing_systems', 
+                       								'action' => 'finishedJob',
+                       								$ticketid),array('class' =>'btn btn-info',
+                       								'escape' => false));
+								
+							}
+
+							elseif ( ($ticketData['Ticket']['status'] == 1) && ($ticketData['Ticket']['job_ticket_id'] == 1)){
+							?>
+								<hr></hr>
+								<button type="button" class="btn btn-warning" >On process</button>
+								
+							<?php
+                       			echo $this->Html->link('Finished Job', array('controller' => 'ticketing_systems', 
+                       							 'action' => 'finishedJob',
+                       							  $ticketid),array('class' =>'btn btn-info',
+                       							  'escape' => false));
+                   			 }
+                   			 else{
+
+                   			 	?>
+                   			 		<span class="label label-success label-large">Complete</span><br><br>
+
+                   		<?php
+                   			 }
+                   		?>
 						<div class="col-md-1 col-sm-6 col-xs-6 pricing-package pull-right">
 							<!-- <div class="pricing-star">Task<br>Done</div> -->
 
@@ -39,7 +77,56 @@
 					<h2>Plate Making</h2>
 					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde?</p>
 					<div class="clearfix">
-						<a class="btn btn-primary pull-right">Waiting</a>
+						<?php
+							if($ticketData['Ticket']['job_ticket_id'] == 1){
+						?>
+								<span class="label label-default label-large">Waiting</span><br><br>
+						<?php
+
+							}
+							else{
+
+								if( ($ticketData['Ticket']['status'] == 0) && ($ticketData['Ticket']['job_ticket_id'] == 2)){
+
+						?>
+									<span class="label label-default label-large">Pending</span><br><br>
+									<hr></hr>
+						<?php
+                       				echo $this->Html->link('Accept Job', array('controller' => 'ticketing_systems', 
+                       							'action' => 'updatePendingStatus', 
+                       							$ticketid),array('class' =>'btn btn-info',
+                       							'escape' => false));
+                       	?>
+
+                       	<?php
+                       				echo $this->Html->link('Finished Job', array('controller' => 'ticketing_systems', 
+                       								'action' => 'finishedJob',
+                       								$ticketid),array('class' =>'btn btn-info',
+                       								'escape' => false));
+								
+								}
+
+								elseif ( ($ticketData['Ticket']['status'] == 1) && ($ticketData['Ticket']['job_ticket_id'] == 2)){
+							?>
+									<hr></hr>
+									<button type="button" class="btn btn-warning" >On process</button>
+								
+							<?php
+                       				echo $this->Html->link('Finished Job', array('controller' => 'ticketing_systems', 
+                       							 'action' => 'finishedJob',
+                       							  $ticketid),array('class' =>'btn btn-info',
+                       							  'escape' => false));
+                   				 }
+
+                   			 	else{
+
+                   			 	?>
+                   			 		<span class="label label-success label-large">Complete</span><br><br>
+
+                   		<?php
+                   				 }
+                   			}
+                   		?>	
 					</div>
 					<span class="cd-date">15:40</span>
 				</div>
@@ -54,7 +141,56 @@
 					<h2>RM Requisition</h2>
 					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, obcaecati, quisquam id molestias eaque asperiores voluptatibus cupiditate error assumenda delectus odit similique earum voluptatem doloremque dolorem ipsam quae rerum quis. Odit, itaque, deserunt corporis vero ipsum nisi eius odio natus ullam provident pariatur temporibus quia eos repellat consequuntur perferendis enim amet quae quasi repudiandae sed quod veniam dolore possimus rem voluptatum eveniet eligendi quis fugiat aliquam sunt similique aut adipisci.</p>
 					<div class="clearfix">
-						<a class="btn btn-primary pull-right">Waiting</a>
+						<?php
+							if(($ticketData['Ticket']['job_ticket_id'] == 1) || ($ticketData['Ticket']['job_ticket_id'] == 2)){
+						?>
+								<span class="label label-default label-large">Waiting</span><br><br>
+						<?php
+
+							}
+							else{
+
+								if( ($ticketData['Ticket']['status'] == 0) && ($ticketData['Ticket']['job_ticket_id'] == 3)){
+
+						?>
+									 <span class="label label-default label-large">Pending</span><br><br>
+									<hr></hr>
+						<?php
+                       				echo $this->Html->link('Accept Job', array('controller' => 'ticketing_systems', 
+                       							'action' => 'updatePendingStatus', 
+                       							$ticketid),array('class' =>'btn btn-info',
+                       							'escape' => false));
+                       	?>
+
+                       	<?php
+                       				echo $this->Html->link('Finished Job', array('controller' => 'ticketing_systems', 
+                       								'action' => 'finishedJob',
+                       								$ticketid),array('class' =>'btn btn-info',
+                       								'escape' => false));
+								
+								}
+
+								elseif ( ($ticketData['Ticket']['status'] == 1) && ($ticketData['Ticket']['job_ticket_id'] == 3)){
+							?>
+									<hr></hr>
+									<button type="button" class="btn btn-warning" >On process</button>
+								
+							<?php
+                       				echo $this->Html->link('Finished Job', array('controller' => 'ticketing_systems', 
+                       							 'action' => 'finishedJob',
+                       							  $ticketid),array('class' =>'btn btn-info',
+                       							  'escape' => false));
+                   				 }
+
+                   			 	else{
+
+                   			 	?>
+                   			 		<span class="label label-success label-large">Complete</span><br><br>
+
+                   		<?php
+                   				 }
+                   			}
+                   		?>	
 					</div>
 					<span class="cd-date">18:12</span>
 				</div>
@@ -69,7 +205,58 @@
 					<h2>Production</h2>
 					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut.</p>
 					<div class="clearfix">
-						<a class="btn btn-primary pull-right">Waiting</a>
+
+						<?php
+							if(($ticketData['Ticket']['job_ticket_id'] == 1) || ($ticketData['Ticket']['job_ticket_id'] == 2) || ($ticketData['Ticket']['job_ticket_id'] == 3)){
+						?>
+								<span class="label label-default label-large">Waiting</span><br><br>
+						<?php
+
+							}
+							else{
+
+								if( ($ticketData['Ticket']['status'] == 0) && ($ticketData['Ticket']['job_ticket_id'] == 4)){
+
+						?>
+									
+									<span class="label label-default label-large">Pending</span><br><br>
+									<hr></hr>
+						<?php
+                       				echo $this->Html->link('Accept Job', array('controller' => 'ticketing_systems', 
+                       							'action' => 'updatePendingStatus', 
+                       							$ticketid),array('class' =>'btn btn-info',
+                       							'escape' => false));
+                       	?>
+
+                       	<?php
+                       				echo $this->Html->link('Finished Job', array('controller' => 'ticketing_systems', 
+                       								'action' => 'finishedJob',
+                       								$ticketid),array('class' =>'btn btn-info',
+                       								'escape' => false));
+								
+								}
+
+								elseif ( ($ticketData['Ticket']['status'] == 1) && ($ticketData['Ticket']['job_ticket_id'] == 4)){
+							?>
+									<hr></hr>
+									<button type="button" class="btn btn-warning" >On process</button>
+								
+						<?php
+                       				echo $this->Html->link('Finished Job', array('controller' => 'ticketing_systems', 
+                       							 'action' => 'finishedJob',
+                       							  $ticketid),array('class' =>'btn btn-info',
+                       							  'escape' => false));
+                   				 }
+
+                   			 	else{
+
+                   			 	?>
+                   			 		<span class="label label-success label-large">Complete</span><br><br>
+
+                   		<?php
+                   				 }
+                   			}
+                   		?>	
 					</div>
 					<span class="cd-date">20:48</span>
 				</div>
@@ -84,7 +271,57 @@
 					<h2>Finished Goods</h2>
 					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum.</p>
 					<div class="clearfix">
-						<a class="btn btn-primary pull-right">Waiting</a>
+						<?php
+							if(($ticketData['Ticket']['job_ticket_id'] == 1) || ($ticketData['Ticket']['job_ticket_id'] == 2) || ($ticketData['Ticket']['job_ticket_id'] == 3) || 
+								($ticketData['Ticket']['job_ticket_id'] == 4)){
+						?>
+								<span class="label label-default label-large">Waiting</span><br><br>
+						<?php
+
+							}
+							else{
+
+								if( ($ticketData['Ticket']['status'] == 0) && ($ticketData['Ticket']['job_ticket_id'] == 5)){
+
+						?>
+									<span class="label label-default label-large">Pending</span><br><br>
+									<hr></hr>
+						<?php
+                       				echo $this->Html->link('Accept Job', array('controller' => 'ticketing_systems', 
+                       							'action' => 'updatePendingStatus', 
+                       							$ticketid),array('class' =>'btn btn-info',
+                       							'escape' => false));
+                       	?>
+
+                       	<?php
+                       				echo $this->Html->link('Finished Job', array('controller' => 'ticketing_systems', 
+                       								'action' => 'finishedJob',
+                       								$ticketid),array('class' =>'btn btn-info',
+                       								'escape' => false));
+								
+								}
+
+								elseif ( ($ticketData['Ticket']['status'] == 1) && ($ticketData['Ticket']['job_ticket_id'] == 5)){
+							?>
+									<hr></hr>
+									<button type="button" class="btn btn-warning" >On process</button>
+								
+						<?php
+                       				echo $this->Html->link('Finished Job', array('controller' => 'ticketing_systems', 
+                       							 'action' => 'finishedJob',
+                       							  $ticketid),array('class' =>'btn btn-info',
+                       							  'escape' => false));
+                   				 }
+
+                   			 	else{
+
+                   			 	?>
+                   			 		<span class="label label-success label-large">Complete</span><br><br>
+
+                   		<?php
+                   				 }
+                   			}
+                   		?>	
 					</div>
 					<span class="cd-date">21:22</span>
 				</div>
@@ -104,6 +341,7 @@
 					<span class="cd-date">23:59</span>
 				</div>
 			</div>
+			
 		</section>
 	</div>
 </div>

@@ -47,7 +47,7 @@ class Ticket extends AppModel {
 	
 	);
 
-	public function saveUniqueId($uniqueId = null,$auth = nnull){
+	public function saveUniqueId($uniqueId = null, $auth = null){
 
 		$this->create();
 
@@ -56,6 +56,45 @@ class Ticket extends AppModel {
         	return $this->id;
 
         }
+	}
+
+	
+	public function updateStatus($ticketId){
+		
+		$this->id = $this->find('first',array(
+			'conditions' => array(
+				'Ticket.id' => $ticketId
+				)
+			));
+
+		if ($this->id) {
+		    $this->saveField('status', 1);
+
+		}
+
+		return $this->id;
+
+	}
+
+	public function finishedJob($ticketId){
+
+		$ticketQuery = $this->id = $this->find('first',array(
+			'conditions' => array(
+				'Ticket.id' => $ticketId
+				)
+			)); 
+		$jobTicketId = $ticketQuery['Ticket']['job_ticket_id'] + 1;
+		pr($jobTicketId);
+
+		if ($this->id) {
+			    $this->save(array('status' =>0,
+		     				'job_ticket_id' =>$jobTicketId 
+		    ));
+
+		 }
+
+		  return $this->id;
+
 	}
 
 }

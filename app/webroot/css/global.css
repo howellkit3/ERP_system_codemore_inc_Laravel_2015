@@ -42,3 +42,9 @@
 .error{
     color: red;
 }
+/*this is my CSS */
+hr { 
+    display: block;
+    border-style: inset;
+    border-width: 1px;
+} 
