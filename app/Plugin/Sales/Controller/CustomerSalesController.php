@@ -263,6 +263,8 @@ class CustomerSalesController extends SalesAppController {
 		
 		echo json_encode($data);
 
+
+
 		$this->autoRender = false;
 
 	}
