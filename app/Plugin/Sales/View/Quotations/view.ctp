@@ -93,7 +93,7 @@
 							We are pleased to submit our price quotation on your printing requirement under the following specifications:
 						</div>
 					</div><br>
-					<?php foreach ($quotationFieldInfo as $key => $value) { ?>
+					<?php foreach ($quotationFieldInfo as $key => $value) {?>
 						<div class="form-group">
 							<div class="col-lg-1"></div>
 							<div class="col-lg-2">

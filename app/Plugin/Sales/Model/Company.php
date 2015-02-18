@@ -83,14 +83,22 @@ class Company extends AppModel {
 			),
 		),
 
-		// 'website' => array(
-		// 	'notEmpty' => array(
-		// 		'rule' => array('notEmpty'),
-		// 		'message' => 'Required fields.',
-		// 	),
-		// ),
-
-
+		'tin' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'message' => 'Required fields.',
+			),
+			'numeric'=> array(
+	            'rule' => 'numeric',
+	            'message'=> 'Zip Code should be numeric'
+	        ),
+		),
+		'payment_term' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'message' => 'Required fields.',
+			),
+		),
 
 		'address1' => array(
 			'notEmpty' => array(

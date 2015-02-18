@@ -126,8 +126,7 @@
 																	<div class="col-lg-3"><?php echo $customField['1']?></div>
 																	<div class="col-lg-8">
 																		<?php 
-							                                                echo $this->Form->input('QuotationField.1.description', array('class' => 'form-control item_type',
-							                                                	'id'	=> 'CustomFieldId',
+							                                                echo $this->Form->input('QuotationField.1.description', array('class' => 'form-control item_type test',
 							                                                    'alt' => 'address1',
 							                                                    'label' => false));
 							                                            ?>
@@ -143,8 +142,7 @@
 																	<div class="col-lg-3"><?php echo $customField['2']?></div>
 																	<div class="col-lg-8">
 																		<?php 
-							                                                echo $this->Form->input('QuotationField.2.description', array('class' => 'form-control item_type',
-							                                                	'id'	=> 'CustomFieldId',
+							                                                echo $this->Form->input('QuotationField.2.description', array('class' => 'form-control item_type test',
 							                                                    'alt' => 'address1',
 							                                                    'label' => false));
 							                                            ?>
@@ -160,7 +158,7 @@
 																	<div class="col-lg-3"><?php echo $customField['3']?></div>
 																	<div class="col-lg-8">
 																		<?php 
-							                                                echo $this->Form->input('QuotationField.3.description', array('class' => 'form-control item_type',
+							                                                echo $this->Form->input('QuotationField.3.description', array('class' => 'form-control item_type test',
 							                                                	'id'	=> 'CustomFieldId',
 							                                                    'alt' => 'address1',
 							                                                    'label' => false));
@@ -178,7 +176,6 @@
 																	<div class="col-lg-8">
 																		<?php 
 							                                                echo $this->Form->input('QuotationField.4.description', array('class' => 'form-control item_type',
-							                                                	'id'	=> 'CustomFieldId',
 							                                                    'alt' => 'address1',
 							                                                    'label' => false));
 							                                            ?>
@@ -196,7 +193,6 @@
 																	<div class="col-lg-8">
 																		<?php 
 							                                                echo $this->Form->input('QuotationField.11.description', array('class' => 'form-control item_type',
-							                                                	'id'	=> 'CustomFieldId',
 							                                                    'alt' => 'address1',
 							                                                    'label' => false));
 							                                            ?>
@@ -213,7 +209,6 @@
 																	<div class="col-lg-8">
 																		<?php 
 							                                                echo $this->Form->input('QuotationField.5.description', array('class' => 'form-control item_type',
-							                                                	'id'	=> 'CustomFieldId',
 							                                                    'alt' => 'address1',
 							                                                    'label' => false));
 							                                            ?>
@@ -230,7 +225,6 @@
 																	<div class="col-lg-8">
 																		<?php 
 							                                                echo $this->Form->input('QuotationField.6.description', array('class' => 'form-control item_type',
-							                                                	'id'	=> 'CustomFieldId',
 							                                                    'alt' => 'address1',
 							                                                    'label' => false));
 							                                            ?>
@@ -247,7 +241,6 @@
 																	<div class="col-lg-8">
 																		<?php 
 							                                                echo $this->Form->input('QuotationField.7.description', array('class' => 'form-control item_type',
-							                                                	'id'	=> 'CustomFieldId',
 							                                                    'alt' => 'address1',
 							                                                    'label' => false));
 							                                            ?>
@@ -264,7 +257,6 @@
 																	<div class="col-lg-8">
 																		<?php 
 							                                                echo $this->Form->input('QuotationField.8.description', array('class' => 'form-control item_type',
-							                                                	'id'	=> 'CustomFieldId',
 							                                                    'alt' => 'address1',
 							                                                    'label' => false));
 							                                            ?>
@@ -281,7 +273,6 @@
 																	<div class="col-lg-8">
 																		<?php 
 							                                                echo $this->Form->input('QuotationField.9.description', array('class' => 'form-control item_type',
-							                                                	'id'	=> 'CustomFieldId',
 							                                                    'alt' => 'address1',
 							                                                    'label' => false));
 							                                            ?>
@@ -298,7 +289,6 @@
 																	<div class="col-lg-8">
 																		<?php 
 							                                                echo $this->Form->input('QuotationField.10.description', array('class' => 'form-control item_type',
-							                                                	'id'	=> 'CustomFieldId',
 							                                                    'alt' => 'address1',
 							                                                    'label' => false));
 							                                            ?>
@@ -315,7 +305,6 @@
 																	<div class="col-lg-8">
 																		<?php 
 							                                                echo $this->Form->input('QuotationField.12.description', array('class' => 'form-control item_type',
-							                                                	'id'	=> 'CustomFieldId',
 							                                                    'alt' => 'address1',
 							                                                    'label' => false));
 							                                            ?>
@@ -331,8 +320,7 @@
 																	<div class="col-lg-3"><?php echo $customField['13']?></div>
 																	<div class="col-lg-8">
 																		<?php 
-							                                                echo $this->Form->input('QuotationField.13.description', array('class' => 'form-control item_type',
-							                                                	'id'	=> 'CustomFieldId',
+							                                                echo $this->Form->textarea('QuotationField.13.description', array('class' => 'form-control item_type',
 							                                                    'alt' => 'address1',
 							                                                    'label' => false));
 							                                            ?>
@@ -373,8 +361,38 @@
 			</div>
 		</div>
 	<?php echo $this->Form->end(); ?>
+	<form id="myform">
+<label for="mobile_phone">Mobile phone: </label>
+<input class="left phone-group" id="mobile_phone" name="mobile_phone.0.test">
+<br/>
+<label for="home_phone">Home phone: </label>
+<input class="left phone-group" id="home_phone" name="mobile_phone.1.test">
+<br/>
+<label for="work_phone">Work phone: </label>
+<input class="left phone-group" id="work_phone" name="mobile_phone.2.test">
+<br/>
+<input type="submit" value="Validate!">
+</form>
 	<script>
-        $("#QuotationCreateForm").validate();
+        // $("#QuotationCreateForm").validate();
+  //      
+
+   $("#QuotationCreateForm").validate( {
+});
+  $("[name*='data[QuotationField]']").each(function () {
+        $(this).rules("add", {
+            required: true
+        });
+    });
+
+
+
+
+
+
     </script>
+
+
+
 <?php	} ?>
 

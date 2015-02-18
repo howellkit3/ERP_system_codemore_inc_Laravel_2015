@@ -62,6 +62,37 @@
                                         ?>
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <label for="inputPassword1" class="col-lg-2 control-label">TIN</label>
+                                    <div class="col-lg-9">
+                                        <?php
+                                            echo $this->Form->input('Company.tin', array('class' => 'form-control col-lg-6 required number','label' => false,'type' => 'text'));
+                                        ?>
+                            
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword1" class="col-lg-2 control-label">Payment Term</label>
+                                    <div class="col-lg-9">
+                                        <?php 
+                                            echo $this->Form->input('Company.payment_term', array(
+                                                'options' => array(
+                                                    'PIA - Payment in advance' => 'PIA - Payment in advance',
+                                                    'Net 7 - Payment seven days after invoice date' => 'Net 7 - Payment seven days after invoice date',
+                                                    'Net 10 - Payment ten days after invoice date' =>'Net 10 - Payment ten days after invoice date'
+                                                    ,
+                                                    'Net 30 - Payment 30 days after invoice date' => 'Net 30 - Payment 30 days after invoice date',
+                                                    'Net 60 - Payment 60 days after invoice date' => 'Net 60 - Payment 60 days after invoice date',
+                                                    'Net 90 - Payment 90 days after invoice date' => 'Net 90 - Payment 90 days after invoice date'),
+                                                'label' => false,
+                                                'class' => 'form-control required',
+                                                'empty' => '--Please Select Payment Term--'
+                                            ));
+
+                                        ?>
+                                    </div>
+                                </div>
                                
                             </div> 
 
@@ -384,7 +415,7 @@
                                                 <div class="col-lg-2">
                                                     <?php 
                                                         echo $this->Form->input('ContactPersonData.0.Address.0.type', array(
-                                                            'options' => array('Work', 'Home', 'Business'),
+                                                            'options' => array('Office', 'Plant 1', 'Plant 2'),
                                                             'label' => false,
                                                             'class' => 'form-control required',
                                                             // 'id'    => 'addressID',

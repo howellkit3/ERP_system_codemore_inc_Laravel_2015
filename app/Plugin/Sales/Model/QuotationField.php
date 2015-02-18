@@ -62,6 +62,7 @@ class QuotationField extends AppModel {
 
 		foreach ($data[$this->name] as $key => $customFieldValue) 
 		{	
+
 			$customFieldValue['quotation_id'] = $quotationId;
 			$customFieldValue['created_by'] = $auth;
 			$customFieldValue['modified_by'] = $auth;

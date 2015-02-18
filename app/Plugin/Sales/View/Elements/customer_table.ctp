@@ -10,6 +10,9 @@
             <td class="">
                 <?php echo $customerlist['Company']['website'] ?>
             </td>
+               <td class="">
+                <?php echo $customerlist['Company']['tin'] ?>
+            </td>
             <td class="">
 
                 <?php

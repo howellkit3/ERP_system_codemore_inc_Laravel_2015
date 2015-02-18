@@ -38,6 +38,7 @@ class CustomField extends AppModel {
 		'fieldlabel' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
+				'message' => 'Required fields.',
 				
 			),
 		),

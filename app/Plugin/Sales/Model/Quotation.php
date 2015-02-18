@@ -49,21 +49,22 @@ class Quotation extends AppModel {
 		'name' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
+				'message' => 'Required fields.',
 				
 			),
 		),
-		// 'label' => array(
-		// 	'notEmpty' => array(
-		// 		'rule' => array('notEmpty'),
-				
-		// 	),
-		// ),
+
 		'description' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
+				'message' => 'Required fields.',
 				
 			),
 		),
+		
+
+	
+
 
 	);
 

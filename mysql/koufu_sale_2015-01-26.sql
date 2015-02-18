@@ -244,3 +244,7 @@ INSERT INTO `custom_fields` (`id`, `fieldlabel`, `created_by`, `modified_by`, `c
 (11, 'Vat Price', 1, 1, '2015-02-16 10:26:33', '2015-02-16 10:26:33'),
 (12, 'Validity', 1, 1, '2015-02-16 10:36:58', '2015-02-16 10:36:58'),
 (13, 'Remarks', 1, 1, '2015-02-16 10:37:06', '2015-02-16 10:37:06');
+
+--- Feb 18 2015 Irvin
+ALTER TABLE `companies` ADD `tin` INT(250) NULL AFTER `website`;
+ALTER TABLE `companies` ADD `payment_term` varchar(250) NULL AFTER `website`;
