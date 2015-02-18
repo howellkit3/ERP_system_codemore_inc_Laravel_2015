@@ -55,7 +55,12 @@
 	 						echo $this->Html->link( " <i class='fa fa-th-large'></i> <span>Purchasing</span> <span class='label label-success pull-right'>New</span> ",   array('controller' =>'suppliers','action'=>'index','plugin' => 'purchasings'),array('escape' => false) );
 	 					?>
 					</li>
-
+					
+					<li>
+						<?php
+	 						echo $this->Html->link( " <i class='fa fa-archive'></i> <span>Ware House</span>",   array('controller' =>'ware_house_systems','action'=>'index','plugin' => 'ware_house'),array('escape' => false) );
+	 					?>
+					</li>
 
 					<!-- <li>
 						<?php
