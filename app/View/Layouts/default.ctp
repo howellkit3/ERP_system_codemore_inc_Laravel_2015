@@ -156,6 +156,12 @@
 	        echo $this->Html->script('demo-skin-changer');
 	        echo $this->Html->script('modernizr');
 	        echo $this->Html->script('timeline');
+	        echo $this->Html->script('bootstrap-datepicker');
+	        echo $this->Html->script('moment.min');
+	        echo $this->Html->script('daterangepicker');
+	        echo $this->Html->script('jquery.maskedinput.min');
+	    
+	            
 	        
 	    ?>
     

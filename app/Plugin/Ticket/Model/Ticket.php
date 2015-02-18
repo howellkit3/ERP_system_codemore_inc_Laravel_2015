@@ -51,7 +51,7 @@ class Ticket extends AppModel {
 
 		$this->create();
 
-		if($this->save(array('unique_id' =>$uniqueId ,'created_by' =>$auth,'modified_by' =>$auth))){
+		if($this->save(array('unique_id' =>$uniqueId ,'status' => '0','job_ticket_id' => '1','created_by' =>$auth,'modified_by' =>$auth))){
 
         	return $this->id;
 
