@@ -13,7 +13,7 @@
 
                   <div class="filter-block pull-right">
                     
-                    <?php echo $this->Html->link('<i class="fa fa-plus-circle fa-lg"></i> Add Supplier ', array('controller' => 'customer_sales', 'action' => 'add'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                    <?php echo $this->Html->link('<i class="fa fa-plus-circle fa-lg"></i> Add Supplier ', array('controller' => 'suppliers', 'action' => 'add'),array('class' =>'btn btn-primary pull-right','escape' => false));
                      ?>
                 </div>
                 
@@ -25,18 +25,30 @@
                         <thead>
                             <tr>
                                 <th><a href="#"><span>Company</span></a></th>
-                                <th><a href="#"><span>Product</span></a></th>
+                                <th><a href="#"><span>Website</span></a></th>
                                 <th class="text-center"><a href="#"><span>Status</span></a></th>
                                 <th class="text-center"><a href="#"><span>Created</span></a></th>
                                 <th>Action</th>
                             </tr>
                         </thead>
 
-                        <?php //echo $this->element('purchasing_order_table'); ?>
+                        <?php echo $this->element('supplier_order_table',array(
+                                'suppliers' => $suppliers
+                            )); ?>
+
+
 
                     </table>
                     <hr>
                 </div>
+
+            <ul class="pagination pull-right">
+                    <?php 
+                     echo $this->Paginator->prev('< ' . __('previous'), array('before' => 'a','tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'prev disabled'));
+                     echo $this->Paginator->numbers(array('separator' => '','tag' => 'li'));
+                     echo $this->Paginator->next(__('next') . ' >', array('tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'next disabled')); ?>
+               
+              </ul>
               
             </div>
     

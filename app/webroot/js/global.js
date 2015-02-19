@@ -39,6 +39,22 @@ function cloneData(whatSection, thisElement)
     
 }
 
+function cloneInputTable(whatSection, thisElement) {
+
+    var data =  $('.'+whatSection).last().clone();
+    var buttons = $('.'+whatSection).next().last().clone();
+    data = fieldReset(data, whatSection);
+    $('.'+whatSection).parents('table').append(data).append(buttons);
+
+    //datepicker
+    $('.datepick').datepicker('refresh');
+
+}
+function removeCloneInputTable(whatSection)
+{   
+     $('.' + whatSection).last().remove();
+     $('.' + whatSection).next().last().remove();  
+}
 function removeClone(whatSection)
 {   
      $('.' + whatSection).last().remove(); 

@@ -18,11 +18,11 @@ class Supplier extends AppModel {
 	public function bind($model = array('Product')){
 
 		$this->bindModel(array(
-			'belongsTo' => array(
-				'Product' => array(
-					'className' => 'Purchasing.Product',
+			'hasMany' => array(
+				'Address' => array(
+					'className' => 'Purchasings.Address',
 					'foreignKey' => 'foreign_key',
-					'dependent' => false
+					'dependent' => true
 				),
 			)
 		));

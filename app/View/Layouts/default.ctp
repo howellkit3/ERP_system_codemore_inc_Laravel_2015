@@ -33,6 +33,7 @@
 	            'libs/timeline',
 	            'compiled/theme_styles',
 	            'global',
+	            'libs/datepicker',
 	            'libs/daterangepicker',
 	            'libs/jquery-jvectormap-1.2.2',
 	            'libs/weather-icons'
@@ -107,6 +108,7 @@
 								        </div>
 								    </div>
 								</div>
+								 <?php echo $this->Session->flash(); ?>
 								<?php echo $this->fetch('content'); ?>
 								
 							</div>
@@ -152,6 +154,8 @@
 	        echo $this->Html->script('scripts');
 	        echo $this->Html->script('pace.min');
 	        echo $this->Html->script('global');
+	        echo $this->Html->script('custom');
+
 	        //echo $this->Html->script('jquery.min');
 	        echo $this->Html->script('demo-skin-changer');
 	        echo $this->Html->script('modernizr');
