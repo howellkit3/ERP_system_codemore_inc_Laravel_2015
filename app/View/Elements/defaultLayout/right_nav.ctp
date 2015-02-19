@@ -63,9 +63,17 @@
 					</li>
 					<li class="<?php echo ($this->params['plugin'] == 'production') ? 'active' : '' ?>">
 						<?php
-	 						echo $this->Html->link( " <i class='fa fa-archive'></i> <span>Production</span>",   array('controller' =>'production_systems',
+	 						echo $this->Html->link( " <i class='fa fa-archive'></i> <span>Production</span>",   array('controller' =>'schedules',
 	 											'action'=>'index',
 	 											'plugin' => 'production'),
+	 											array('escape' => false) );
+	 					?>
+					</li>
+					<li class="<?php echo ($this->params['plugin'] == 'production') ? 'active' : '' ?>">
+						<?php
+	 						echo $this->Html->link( " <i class='fa fa-truck'></i> <span>Delivery</span>",   array('controller' =>'delivery',
+	 											'action'=>'index',
+	 											'plugin' => 'delivery'),
 	 											array('escape' => false) );
 	 					?>
 					</li>

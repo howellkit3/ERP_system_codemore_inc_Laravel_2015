@@ -9,7 +9,7 @@
 
                   <div class="filter-block pull-right">
                     
-                    <?php echo $this->Html->link('<i class="fa fa-plus-circle fa-lg"></i> Add Schedule ', array('controller' => 'production_systems', 'action' => 'add'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                    <?php echo $this->Html->link('<i class="fa fa-plus-circle fa-lg"></i> Add Schedule ', array('controller' => 'schedules', 'action' => 'add'),array('class' =>'btn btn-primary pull-right','escape' => false));
                      ?>
                 </div>
                 
@@ -21,12 +21,13 @@
                         <thead>
                             <tr>
                                 <th><a href="#"><span>Unique ID</span></a></th>
-                                <th><a href="#"><span>Action</span></a></th>
-                                <th>Action</th>
+                                <th><a href="#"><span>Description</span></a></th>
+                                <th><a href="#"><span>Start Date<br>(MM/DD/YYYY)</span></a></th>
+                                <th><a href="#"><span>End Date<br>(MM/DD/YYYY)</span></a></th>
                             </tr>
                         </thead>
 
-                        <?php //echo $this->element('purchasing_order_table'); ?>
+                        <?php echo $this->element('schedule_table'); ?>
 
                     </table>
                     <hr>
