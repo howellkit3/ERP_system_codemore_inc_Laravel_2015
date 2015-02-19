@@ -8,4 +8,6 @@ jQuery(function($) {
 	            $(this).parents('.multi-field').remove();
 	    });
     });
+
+    $("li.current,li.disabled").wrapInner("<a href='#'></a>")
 });

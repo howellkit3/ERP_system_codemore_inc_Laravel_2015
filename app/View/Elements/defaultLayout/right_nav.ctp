@@ -52,7 +52,7 @@
 
 					 <li class="<?php echo ($this->params['plugin'] == 'purchasings') ? 'active' : '' ?>">
 						<?php
-	 						echo $this->Html->link( " <i class='fa fa-th-large'></i> <span>Purchasing</span> <span class='label label-success pull-right'>New</span> ",   array('controller' =>'suppliers','action'=>'index','plugin' => 'purchasings'),array('escape' => false) );
+	 						echo $this->Html->link( " <i class='fa fa-th-large'></i> <span>Purchasing</span>",   array('controller' =>'suppliers','action'=>'index','plugin' => 'purchasings'),array('escape' => false) );
 	 					?>
 					</li>
 					
