@@ -39,8 +39,8 @@ class CustomerSalesController extends SalesAppController {
 
 		$userData = $this->Session->read('Auth');
 		
+	
 		if ($this->request->is('post')) {
-
 
             if (!empty($this->request->data)) {
 
@@ -52,17 +52,21 @@ class CustomerSalesController extends SalesAppController {
             	$this->request->data['Company']['modified_by'] = $userData['User']['id'];
             	
             	if ($this->Company->saveAssociated($this->request->data)) {
-
+  
 					$contactPersonId = $this->Company->ContactPerson->saveContact($this->request->data['ContactPersonData'], $this->Company->id,$userData['User']['id']);
             	
             		$this->Company->Contact->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
             		$this->Company->Address->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
             		$this->Company->Email->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
 
-				
-            		$this->Session->setFlash(__('Customer Information Complete.'));
+					if($this->request->is('ajax')){
+ 							echo $this->Company->getLastInsertID();
+ 							exit();
+					}
+            		$this->Session->setFlash(__('New Customer Information Added.'));
+
 	            	$this->redirect(
-	                    array('controller' => 'customer_sales', 'action' => 'index')
+	                    array('controller' => 'customer_sales', 'action' => 'inquiry_form')
 	                );
                   
 	            }else{

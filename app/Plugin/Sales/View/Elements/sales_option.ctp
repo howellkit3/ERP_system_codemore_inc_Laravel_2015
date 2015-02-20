@@ -24,6 +24,9 @@
             <?php echo $this->Html->link("<span class='count'>Sales Order</span>", array('controller' => 'sales_orders', 'action' => 'index'),array('escape' => false,'class' => 'btn')); ?>
         
         </li>
+        <!-- <li class="dropdown hidden-xs"> -->
+            <?php //echo $this->Html->link("<span class='count'>Summary</span>", array('controller' => 'summaries', 'action' => 'index'),array('escape' => false,'class' => 'btn')); ?>
+        <!-- </li> -->
 
         <li class="dropdown hidden-xs">
             <?php echo $this->Html->link("<span class='count'>Settings</span>", array('controller' => 'settings', 'action' => 'index'),array('escape' => false,'class' => 'btn')); ?>

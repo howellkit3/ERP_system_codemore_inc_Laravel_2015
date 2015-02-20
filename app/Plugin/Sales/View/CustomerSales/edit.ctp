@@ -95,7 +95,7 @@
                                             <div class="col-lg-2">
                                                 <?php 
                                                     echo $this->Form->input('Address.0.type', array(
-                                                        'options' => array('Work', 'Home', 'Business'),
+                                                        'options' => array('Office', 'Plant 1', 'Plant 2'),
                                                         'alt' => 'type',
                                                         'label' => false,
                                                         'class' => 'form-control col-lg-4',
@@ -252,7 +252,7 @@
                                             <div class="col-lg-2">
                                                 <?php 
                                                     echo $this->Form->input('Email.0.type', array(
-                                                        'options' => array('Work', 'Home', 'Business'),
+                                                        'options' => array('Office', 'Plant 1', 'Plant 2'),
                                                         'label' => false,
                                                         'default' => !empty($value['type']) ? $value['type'] : '',
                                                         'class' => 'form-control',
@@ -446,7 +446,7 @@
                                                         <div class="col-lg-2">
                                                             <?php 
                                                             echo $this->Form->input('ContactPersonData.0.Address.0.type', array(
-                                                                'options' => array('Work', 'Home', 'Business'),
+                                                                'options' => array('Office', 'Plant 1', 'Plant 2'),
                                                                 'label' => false,
                                                                 'class' => 'form-control',
                                                                 'empty' => false,
