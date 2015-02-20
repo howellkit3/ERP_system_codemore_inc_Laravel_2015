@@ -38,15 +38,15 @@ class QuotationsController extends SalesAppController {
 
 	 	$salesStatus = $this->SalesOrder->find('list',array('fields' => array('quotation_id','id')));
 
-	 	//pr($salesStatus);exit();
 		$this->set(compact('companyData','quotationData','inquiryId','salesStatus'));
 
 	}
 
 	public function create($inquiryId = null) {
 
-		$userData = $this->Session->read('Auth');
 
+
+		$userData = $this->Session->read('Auth');
 		$this->loadModel('Sales.CustomField');
 
 		$customField = $this->CustomField->find('list', array('fields' => array('id', 'fieldlabel')));

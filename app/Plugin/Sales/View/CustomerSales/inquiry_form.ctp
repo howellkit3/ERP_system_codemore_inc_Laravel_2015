@@ -4,18 +4,34 @@
 <?php echo $this->Html->script('Sales.inquiry');?>
 <div style="clear:both"></div>
 
+
+
+
+<script type="text/javascript">
+	    $("#CompanyInquiryFormForm").validate();
+</script>
 <?php echo $this->element('sales_option');?>
 
 <div class="row">
 	<div class="col-lg-12">
+
 		<div class="main-box">
-			<?php //echo $this->Session->flash(); ?>
+			<?php echo $this->Session->flash(); ?>
 			<header class="main-box-header clearfix">
 				<h2>
 					Inquiry form
 					<?php 
                         echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'customer_sales', 'action' => 'inquiry'),array('class' =>'btn btn-primary pull-right','escape' => false));
                     ?>
+					
+					<button style="margin-right:10px;" class="md-trigger btn btn-primary mrg-b-lg pull-right" data-modal="modal-1"><i class="fa fa-plus-circle fa-lg"></i> Add Customer</button>
+					<?php 
+						echo $this->element('customer_info');
+						echo $this->html->css(array('libs/nifty-component'));
+						echo $this->Html->script(array('modernizr.custom','classie','modalEffects'));
+					?>
+					<div class="md-overlay"></div>
+
 				</h2>
 			</header>
 			<?php echo $this->Form->create('Company',array('url'=>(array('controller' => 'customer_sales','action' => 'inquiry_form')),'class' => 'form-horizontal'));?>
@@ -103,7 +119,6 @@
 						<div class="form-group">
 							<div class="col-lg-offset-2 col-lg-10">
 								<button type="submit" class="btn btn-success">Submit</button>
-							
 							
 								<?php 
 			                        echo $this->Html->link('Cancel ', array('controller' => 'customer_sales', 'action' => 'inquiry'),array('class' =>'btn btn-primary ','escape' => false));

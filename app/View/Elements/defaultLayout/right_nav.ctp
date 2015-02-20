@@ -50,43 +50,39 @@
 	 					?>
 					</li>
 
-					 <li class="<?php echo ($this->params['plugin'] == 'purchasings') ? 'active' : '' ?>">
-						<?php
-	 						echo $this->Html->link( " <i class='fa fa-th-large'></i> <span>Purchasing</span>",   array('controller' =>'suppliers','action'=>'index','plugin' => 'purchasings'),array('escape' => false) );
-	 					?>
-					</li>
+		
 					
-					<li class="<?php echo ($this->params['plugin'] == 'ware_house') ? 'active' : '' ?>">
+				<!-- 	<li class="<?php //echo ($this->params['plugin'] == 'ware_house') ? 'active' : '' ?>">
 						<?php
-	 						echo $this->Html->link( " <i class='fa fa-archive'></i> <span>Ware House</span>",   array('controller' =>'ware_house_systems','action'=>'index','plugin' => 'ware_house'),array('escape' => false) );
+	 						// echo $this->Html->link( " <i class='fa fa-archive'></i> <span>Ware House</span>",   array('controller' =>'ware_house_systems','action'=>'index','plugin' => 'ware_house'),array('escape' => false) );
 	 					?>
-					</li>
-					<li class="<?php echo ($this->params['plugin'] == 'production') ? 'active' : '' ?>">
+					</li> -->
+					<!-- <li class="<?php //echo ($this->params['plugin'] == 'production') ? 'active' : '' ?>"> -->
 						<?php
-	 						// echo $this->Html->link( " <i class='fa fa-archive'></i> <span>Production</span>",   array('controller' =>'schedules',
-	 						// 					'action'=>'index',
-	 						// 					'plugin' => 'production'),
-	 						// 					array('escape' => false) );
+	 					//	echo $this->Html->link( " <i class='fa fa-archive'></i> <span>Production</span>",   array('controller' =>'schedules',
+	 											// 'action'=>'index',
+	 											// 'plugin' => 'production'),
+	 											// array('escape' => false) );
 	 					?>
-					</li>
-					<li class="<?php echo ($this->params['plugin'] == 'production') ? 'active' : '' ?>">
+					<!-- </li> -->
+					<!-- <li class="<?php //echo ($this->params['plugin'] == 'production') ? 'active' : '' ?>"> -->
 						<?php
 	 						// echo $this->Html->link( " <i class='fa fa-truck'></i> <span>Delivery</span>",   array('controller' =>'delivery',
-	 						// 					'action'=>'index',
-	 						// 					'plugin' => 'delivery'),
-	 						// 					array('escape' => false) );
+	 											// 'action'=>'index',
+	 											// 'plugin' => 'delivery'),
+	 											// array('escape' => false) );
 	 					?>
-					</li>
+					<!-- </li> -->
 
 					<!-- <li>
 						<?php
-	 						echo $this->Html->link( " <i class='fa fa-th-large'></i> <span>Warehouse</span> <span class='label label-success pull-right'>New</span> ",   array('controller' =>'','action'=>'','plugin' => ''),array('escape' => false) );
+	 						// echo $this->Html->link( " <i class='fa fa-th-large'></i> <span>Warehouse</span> <span class='label label-success pull-right'>New</span> ",   array('controller' =>'','action'=>'','plugin' => ''),array('escape' => false) );
 	 					?>
 					</li>
 
 					<li>
 						<?php
-	 						echo $this->Html->link( " <i class='fa fa-th-large'></i> <span>Purchasing</span> <span class='label label-success pull-right'>New</span> ",   array('controller' =>'','action'=>'','plugin' => ''),array('escape' => false) );
+	 						// echo $this->Html->link( " <i class='fa fa-th-large'></i> <span>Purchasing</span> <span class='label label-success pull-right'>New</span> ",   array('controller' =>'','action'=>'','plugin' => ''),array('escape' => false) );
 	 					?>
 					</li> -->
 
