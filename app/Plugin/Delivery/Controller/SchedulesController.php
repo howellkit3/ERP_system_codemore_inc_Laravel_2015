@@ -30,6 +30,7 @@ class SchedulesController extends DeliveryAppController {
                                                     'conditions' => array(
                                                             'status' => 'available'
                                                             )
+                                                    ));
                             
 
         // if($this->request->is('post')){
@@ -42,7 +43,6 @@ class SchedulesController extends DeliveryAppController {
         //                 ));
     
         // }
-
         $this->set(compact('quotationId','truckId'));
         
     }

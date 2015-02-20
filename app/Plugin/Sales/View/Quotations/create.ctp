@@ -25,7 +25,7 @@
 					
 								<header class="main-box-header clearfix">
 									
-									<?php echo $this->Form->input('Company.id', array(
+									<?php echo '<span style="color:red">*</span> '. $this->Form->input('Company.id', array(
 		                                'options' => array($companyData),
 		                                'type' => 'select',
 		                                'label' => false,
@@ -117,7 +117,7 @@
 												                        'id' => 'id'));
 					                                            ?>
 					                                            <div class="form-group">
-																	<div class="col-lg-3">Quotation Name</div>
+																	<div class="col-lg-3"><span style="color:red">*</span> Quotation Name</div>
 																	<div class="col-lg-8">
 																		<?php 
 							                                                echo $this->Form->input('Quotation.name', array('class' => 'form-control item_type',

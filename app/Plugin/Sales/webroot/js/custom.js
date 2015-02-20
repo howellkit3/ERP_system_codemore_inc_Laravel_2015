@@ -1,4 +1,7 @@
 jQuery(function($) {
+
+    $('#pages').hide();
+    
     $('.multi-field-wrapper').each(function() {
     var $wrapper = $('.multi-fields', this);
     $(".add-field", $(this)).click(function(e) {
