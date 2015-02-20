@@ -22,7 +22,7 @@
 				<div class="main-box-body clearfix">
 					<form class="form-horizontal" role="form">
 						<div class="form-group">
-							<label for="inputEmail1" class="col-lg-2 control-label">Company</label>
+							<label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Company</label>
 							<div class="col-lg-8">
 							<?php 
 	                            echo $this->Form->input('Company.id', array(
@@ -76,7 +76,7 @@
 						</div>
 
 						<div class="form-group">
-							<label for="inputPassword1" class="col-lg-2 control-label">Request Inquiry</label>
+							<label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span> Request Inquiry</label>
 							<div class="col-lg-8">
 								<?php 
 	                                echo $this->Form->textarea('Inquiry.quotes', array('class' => 'form-control item_type',
@@ -89,7 +89,7 @@
 						</div>
 
 						<div class="form-group">
-							<label for="inputPassword1" class="col-lg-2 control-label">Remarks</label>
+							<label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span> Remarks</label>
 							<div class="col-lg-8">
 								<?php 
 	                                echo $this->Form->textarea('Inquiry.remarks', array('class' => 'form-control item_type',

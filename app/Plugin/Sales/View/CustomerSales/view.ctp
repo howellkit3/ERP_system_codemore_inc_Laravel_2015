@@ -43,6 +43,7 @@
 									<?php echo $company['Company']['website']; ?>
 								</ul>
 							</div>
+
 							<div class="profile-details">
 								<ul class="fa-ul">
 									<i class="fa fa-phone"></i>
@@ -50,7 +51,20 @@
 								</ul>
 							</div>
 							
+							<div class="profile-details">
+								<ul class="fa-ul">
+								<i class="fa fa-book"></i>
+									<?php echo $company['Company']['tin']; ?>
+								</ul>
+							</div>
 							
+							<div class="profile-details">
+								<ul class="fa-ul">
+								<i class="fa fa-calendar"></i>
+									<?php echo $company['Company']['payment_term']; ?>
+								</ul>
+							</div>
+
 						</div>
 						
 					</div>

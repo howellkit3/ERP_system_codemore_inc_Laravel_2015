@@ -21,7 +21,7 @@
 							<div class="main-box clearfix">
 								<header class="main-box-header clearfix">
 									
-									<?php echo $this->Form->input('Company.id', array(
+									<?php echo '<span style="color:red">*</span> '. $this->Form->input('Company.id', array(
 		                                'options' => array($companyData),
 		                                'type' => 'select',
 		                                'label' => false,
@@ -113,7 +113,7 @@
 												                        'id' => 'id'));
 					                                            ?>
 					                                            <div class="form-group">
-																	<div class="col-lg-3">Quotation Name</div>
+																	<div class="col-lg-3"><span style="color:red">*</span> Quotation Name</div>
 																	<div class="col-lg-8">
 																		<?php 
 							                                                echo $this->Form->input('Quotation.name', array('class' => 'form-control item_type',
@@ -123,10 +123,10 @@
 																	</div>
 																</div>
 																 <div class="form-group">
-																	<div class="col-lg-3"><?php echo $customField['1']?></div>
+																	<div class="col-lg-3"><span style="color:red">*</span> <?php echo $customField['1']?></div>
 																	<div class="col-lg-8">
 																		<?php 
-							                                                echo $this->Form->input('QuotationField.1.description', array('class' => 'form-control item_type test',
+							                                                echo$this->Form->input('QuotationField.1.description', array('class' => 'form-control item_type test',
 							                                                    'alt' => 'address1',
 							                                                    'label' => false));
 							                                            ?>
@@ -139,7 +139,7 @@
 																	</div>
 																</div>
 																<div class="form-group">
-																	<div class="col-lg-3"><?php echo $customField['2']?></div>
+																	<div class="col-lg-3"><span style="color:red">*</span> <?php echo $customField['2']?></div>
 																	<div class="col-lg-8">
 																		<?php 
 							                                                echo $this->Form->input('QuotationField.2.description', array('class' => 'form-control item_type test',
@@ -155,7 +155,7 @@
 																	</div>
 																</div>
 																<div class="form-group">
-																	<div class="col-lg-3"><?php echo $customField['3']?></div>
+																	<div class="col-lg-3"><span style="color:red">*</span> <?php echo $customField['3']?></div>
 																	<div class="col-lg-8">
 																		<?php 
 							                                                echo $this->Form->input('QuotationField.3.description', array('class' => 'form-control item_type test',
@@ -172,7 +172,7 @@
 																	</div>
 																</div>
 																<div class="form-group">
-																	<div class="col-lg-3"><?php echo $customField['4']?></div>
+																	<div class="col-lg-3"><span style="color:red">*</span> <?php echo $customField['4']?></div>
 																	<div class="col-lg-8">
 																		<?php 
 							                                                echo $this->Form->input('QuotationField.4.description', array('class' => 'form-control item_type',
@@ -189,7 +189,7 @@
 																</div>
 													
 																<div class="form-group">
-																	<div class="col-lg-3"><b><?php echo $customField['11']?></b></div>
+																	<div class="col-lg-3"><b><span style="color:red">*</span> <?php echo $customField['11']?></b></div>
 																	<div class="col-lg-8">
 																		<?php 
 							                                                echo $this->Form->input('QuotationField.11.description', array('class' => 'form-control item_type',
@@ -205,7 +205,7 @@
 																	</div>
 																</div>
 																<div class="form-group">
-																	<div class="col-lg-3"><?php echo $customField['5']?></div>
+																	<div class="col-lg-3"><span style="color:red">*</span> <?php echo $customField['5']?></div>
 																	<div class="col-lg-8">
 																		<?php 
 							                                                echo $this->Form->input('QuotationField.5.description', array('class' => 'form-control item_type',
@@ -221,7 +221,7 @@
 																	</div>
 																</div>
 																<div class="form-group">
-																	<div class="col-lg-3"><?php echo $customField['6']?></div>
+																	<div class="col-lg-3"><span style="color:red">*</span> <?php echo $customField['6']?></div>
 																	<div class="col-lg-8">
 																		<?php 
 							                                                echo $this->Form->input('QuotationField.6.description', array('class' => 'form-control item_type',
@@ -237,7 +237,7 @@
 																	</div>
 																</div>
 																<div class="form-group">
-																	<div class="col-lg-3"><?php echo $customField['7']?></div>
+																	<div class="col-lg-3"><span style="color:red">*</span> <?php echo $customField['7']?></div>
 																	<div class="col-lg-8">
 																		<?php 
 							                                                echo $this->Form->input('QuotationField.7.description', array('class' => 'form-control item_type',
@@ -253,7 +253,7 @@
 																	</div>
 																</div>											
 																<div class="form-group">
-																	<div class="col-lg-3"><?php echo $customField['8']?></div>
+																	<div class="col-lg-3"><span style="color:red">*</span> <?php echo $customField['8']?></div>
 																	<div class="col-lg-8">
 																		<?php 
 							                                                echo $this->Form->input('QuotationField.8.description', array('class' => 'form-control item_type',
@@ -269,7 +269,7 @@
 																	</div>
 																</div>				
 																<div class="form-group">
-																	<div class="col-lg-3"><?php echo $customField['9']?></div>
+																	<div class="col-lg-3"><span style="color:red">*</span> <?php echo $customField['9']?></div>
 																	<div class="col-lg-8">
 																		<?php 
 							                                                echo $this->Form->input('QuotationField.9.description', array('class' => 'form-control item_type',
@@ -285,7 +285,7 @@
 																	</div>
 																</div>											
 																<div class="form-group">
-																	<div class="col-lg-3"><?php echo $customField['10']?></div>
+																	<div class="col-lg-3"><span style="color:red">*</span> <?php echo $customField['10']?></div>
 																	<div class="col-lg-8">
 																		<?php 
 							                                                echo $this->Form->input('QuotationField.10.description', array('class' => 'form-control item_type',
@@ -301,7 +301,7 @@
 																	</div>
 																</div>											
 																<div class="form-group">
-																	<div class="col-lg-3"><?php echo $customField['12']?></div>
+																	<div class="col-lg-3"><span style="color:red">*</span> <?php echo $customField['12']?></div>
 																	<div class="col-lg-8">
 																		<?php 
 							                                                echo $this->Form->input('QuotationField.12.description', array('class' => 'form-control item_type',
@@ -317,7 +317,7 @@
 																	</div>
 																</div>										
 																<div class="form-group">
-																	<div class="col-lg-3"><?php echo $customField['13']?></div>
+																	<div class="col-lg-3"><span style="color:red">*</span> <?php echo $customField['13']?></div>
 																	<div class="col-lg-8">
 																		<?php 
 							                                                echo $this->Form->textarea('QuotationField.13.description', array('class' => 'form-control item_type',
