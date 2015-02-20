@@ -1,0 +1,19 @@
+.business-organization-others,.business-type-others {
+	display: none;
+}
+.visible {
+	display: block;
+}
+.no_border.input {
+  background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+  border: 0 none;
+  width: 100%;
+}
+.business_registation .input-group-addon {
+  border: 0 none;
+  float: left;
+  margin-right: 10px;
+}
+.business_registation input {
+  padding: 4px;
+}

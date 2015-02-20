@@ -52,7 +52,11 @@
 
 					 <!-- <li class="<?php echo ($this->params['plugin'] == 'purchasings') ? 'active' : '' ?>"> -->
 						<?php
+<<<<<<< HEAD
 	 						// echo $this->Html->link( " <i class='fa fa-th-large'></i> <span>Purchasing</span> <span class='label label-success pull-right'>New</span> ",   array('controller' =>'suppliers','action'=>'index','plugin' => 'purchasings'),array('escape' => false) );
+=======
+	 						echo $this->Html->link( " <i class='fa fa-th-large'></i> <span>Purchasing</span>",   array('controller' =>'suppliers','action'=>'index','plugin' => 'purchasings'),array('escape' => false) );
+>>>>>>> 392e9db0c6466190dfae16350186d65dfd960ccc
 	 					?>
 					<!-- </li> -->
 					
@@ -63,9 +67,17 @@
 					</li> -->
 					<li class="<?php echo ($this->params['plugin'] == 'production') ? 'active' : '' ?>">
 						<?php
-	 						echo $this->Html->link( " <i class='fa fa-archive'></i> <span>Production</span>",   array('controller' =>'production_systems',
+	 						echo $this->Html->link( " <i class='fa fa-archive'></i> <span>Production</span>",   array('controller' =>'schedules',
 	 											'action'=>'index',
 	 											'plugin' => 'production'),
+	 											array('escape' => false) );
+	 					?>
+					</li>
+					<li class="<?php echo ($this->params['plugin'] == 'production') ? 'active' : '' ?>">
+						<?php
+	 						echo $this->Html->link( " <i class='fa fa-truck'></i> <span>Delivery</span>",   array('controller' =>'delivery',
+	 											'action'=>'index',
+	 											'plugin' => 'delivery'),
 	 											array('escape' => false) );
 	 					?>
 					</li>
