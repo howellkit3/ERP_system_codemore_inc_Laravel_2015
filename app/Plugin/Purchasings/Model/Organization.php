@@ -5,11 +5,11 @@ App::uses('AppModel', 'Model');
  * Supllier Model
  *
  */
-class Address extends AppModel {
+class Organization extends AppModel {
 
     public $useDbConfig = 'koufu_purchasing';
 
-    public $name = 'Address';
+    public $name = 'Organization';
 
 	public $recursive = -1;
 
@@ -21,7 +21,7 @@ class Address extends AppModel {
 			'belongsTo' => array(
 				'Supplier' => array(
 					'className' => 'Purchasings.Supplier',
-					'foreignKey' => 'foreign_key',
+					'foreignKey' => 'supplier_id',
 					'dependent' => true
 				),
 			)

@@ -47,7 +47,7 @@ function cloneInputTable(whatSection, thisElement) {
     $('.'+whatSection).parents('table').append(data).append(buttons);
 
     //datepicker
-    $('.datepick').datepicker('refresh');
+    $('.datepick').datepicker({'refresh' : true , format: 'yyyy-mm-dd'});
 
 }
 function removeCloneInputTable(whatSection)
@@ -110,4 +110,3 @@ function cloneInquiry(whatSection, thisElement)
     data = fieldResetContact(data, whatSection);
     $('.' + whatSection).last().after(data);
 }
-

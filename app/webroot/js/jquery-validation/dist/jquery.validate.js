@@ -404,7 +404,8 @@ $.extend( $.validator, {
 				this.check( elements[ i ] );
 			}
 			return this.valid();
-		},
+		}, 
+
 
 		// http://jqueryvalidation.org/Validator.element/
 		element: function( element ) {
@@ -956,11 +957,14 @@ $.extend( $.validator, {
 	},
 
 	attributeRules: function( element ) {
+
+		console.log(element);
 		var rules = {},
 			$element = $( element ),
 			type = element.getAttribute( "type" ),
 			method, value;
 
+			console.log(method);
 		for ( method in $.validator.methods ) {
 
 			// support for <input required> in both html5 and older browsers

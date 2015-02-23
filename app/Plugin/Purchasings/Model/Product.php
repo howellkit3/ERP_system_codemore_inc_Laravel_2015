@@ -5,23 +5,23 @@ App::uses('AppModel', 'Model');
  * Supllier Model
  *
  */
-class Address extends AppModel {
+class Product extends AppModel {
 
     public $useDbConfig = 'koufu_purchasing';
 
-    public $name = 'Address';
+    public $name = 'Product';
 
 	public $recursive = -1;
 
 	public $actsAs = array('Containable');
 
-	public function bind($model = array('Product')){
+	public function bind($model = array('Supplier')){
 
 		$this->bindModel(array(
 			'belongsTo' => array(
-				'Supplier' => array(
+				'Supllier' => array(
 					'className' => 'Purchasings.Supplier',
-					'foreignKey' => 'foreign_key',
+					'foreignKey' => 'supplier_id',
 					'dependent' => true
 				),
 			)
@@ -30,4 +30,5 @@ class Address extends AppModel {
 		$this->contain($model);
 	}
 
-}
+
+} ?>
