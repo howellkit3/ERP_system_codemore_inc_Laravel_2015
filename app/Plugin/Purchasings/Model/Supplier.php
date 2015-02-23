@@ -37,7 +37,7 @@ class Supplier extends AppModel {
 				'Email' => array(
 					'className' => 'Purchasings.Email',
 					'foreignKey' => 'foreign_key',
-					'conditions' => "model = 'Company'",
+					'conditions' => "model = 'Supplier'",
 					'dependent' => true
 				),
 			),
@@ -59,7 +59,7 @@ class Supplier extends AppModel {
 				
 				foreach ($data['Address'] as $key => $value) {
 					$data['Address'][$key] = $value;
-					$data['Address'][$key]['model'] = 'Supllier';
+					$data['Address'][$key]['model'] = 'Supplier';
 					$data['Address'][$key]['created_by'] =$auth;
 					$data['Address'][$key]['modified_by'] =$auth;
 				}
@@ -68,7 +68,7 @@ class Supplier extends AppModel {
 				
 				foreach ($data['Contact'] as $key => $value) {
 					$data['Contact'][$key] = $value;
-					$data['Contact'][$key]['model'] = 'Supllier';
+					$data['Contact'][$key]['model'] = 'Supplier';
 					$data['Contact'][$key]['created_by'] =$auth;
 					$data['Contact'][$key]['modified_by'] =$auth;
 				}
@@ -77,7 +77,7 @@ class Supplier extends AppModel {
 			if (!empty($data['Email'])) {
 				foreach ($data['Email'] as $key => $value) {
 					$data['Email'][$key] = $value;
-					$data['Email'][$key]['model'] = 'Supllier';
+					$data['Email'][$key]['model'] = 'Supplier';
 					$data['Email'][$key]['created_by'] =$auth;
 					$data['Email'][$key]['modified_by'] =$auth;
 				}

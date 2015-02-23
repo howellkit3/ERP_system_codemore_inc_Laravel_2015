@@ -1,5 +1,5 @@
-<?php $this->Html->addCrumb('Sales', array('controller' => 'customer_sales', 'action' => 'index')); ?>
-<?php $this->Html->addCrumb('Add', array('controller' => 'customer_sales', 'action' => 'add')); ?>
+<?php $this->Html->addCrumb('Supplier', array('controller' => 'suppliers', 'action' => 'index')); ?>
+<?php $this->Html->addCrumb('Add', array('controller' => 'suppliers', 'action' => 'add')); ?>
 <?php echo $this->Html->script('Purchasings.add_supplier'); ?>
 <?php echo $this->Html->css('purchasings/custom'); ?>
 
@@ -10,7 +10,6 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="main-box">
-        	   <?php //echo $this->Session->flash(); ?>
             <header class="main-box-header clearfix">
                 <center>
                     <h1>
@@ -65,18 +64,9 @@
                                     </div>
                                 </div>
 
-                                
-                                <!-- <div class="form-group">
-                                    <label for="inputPassword1" class="col-lg-2 control-label">TIN</label>
-                                    <div class="col-lg-9">
-                                        <?php
-                                            echo $this->Form->input('Supplier.tin', array('class' => 'form-control col-lg-6','label' => false));
-                                        ?>
-                                    </div> -->
                                 </div>
                             </div> 
-
-                        </div>
+                         </div>
                     </div>
 
 

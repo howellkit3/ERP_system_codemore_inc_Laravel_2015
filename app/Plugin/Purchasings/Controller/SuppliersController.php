@@ -53,6 +53,18 @@ class SuppliersController extends PurchasingsAppController {
         }
 		
 	}
+	public function view ($dataId = null) {
+
+		if (!empty($dataId)) {
+
+				$this->Supplier->bind(array('Address','Product','Permit','Email','Organization'));
+
+				$supplier = $this->Supplier->read(null,$dataId);
+
+				$this->set(compact('supplier'));
+		}
+
+	}
 
 	public function delete($dataId = null){
 
@@ -78,8 +90,26 @@ class SuppliersController extends PurchasingsAppController {
 
 	public function edit($dataId = null){
 
-		if ($this->request->is('post')) {
+		if (!empty($this->request->data)) {
 
+
+	        	$this->Supplier->bind(array('Address','Product','Permit','Email','Organization'));
+
+	        	$user = $this->Session->read('Auth.User');
+
+	        	$this->request->data = $this->Supplier->formatData($this->request->data,$user['id']);
+	        	
+	        	if ($this->Supplier->saveAssociated($this->request->data)) {
+
+	            	$this->Session->setFlash('Edit Supplier Successfully','success');
+
+	            	return $this->redirect(array('action' => 'index'));
+
+	            } else {
+
+	            	$this->Session->setFlash('There\'s a problem saving the data','error');
+	            }
+	          
 
 		} else {
 
