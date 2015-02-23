@@ -26,7 +26,12 @@
             </header>
 
              <div class="main-box-body clearfix">
-                  <?php echo $this->Form->create('Supplier',array('url'=>(array('controller' => 'suppliers','action' => 'add')),'class' => 'form-horizontal'));?>
+                  <?php 
+                  echo $this->Form->create('Supplier',array('url'=>(array('controller' => 'suppliers','action' => 'add')),'class' => 'form-horizontal'));
+
+                  echo $this->Form->input('Supplier.id');
+
+                  ?>
 
                 <div class="row">
                     <div class="col-lg-12">
@@ -65,14 +70,6 @@
                                     </div>
                                 </div>
 
-                                
-                                <!-- <div class="form-group">
-                                    <label for="inputPassword1" class="col-lg-2 control-label">TIN</label>
-                                    <div class="col-lg-9">
-                                        <?php
-                                            echo $this->Form->input('Supplier.tin', array('class' => 'form-control col-lg-6','label' => false));
-                                        ?>
-                                    </div> -->
                                 </div>
                             </div> 
 

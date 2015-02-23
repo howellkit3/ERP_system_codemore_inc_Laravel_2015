@@ -35,10 +35,8 @@
                         <?php echo $this->element('supplier_order_table',array(
                                 'suppliers' => $suppliers
                             )); ?>
-
-
-
-                    </table>
+                            
+                     </table>
                     <hr>
                 </div>
 
