@@ -51,8 +51,9 @@ class Schedule extends AppModel {
 	}
 
 	public function addSchedule($data,$auth){
+		// pr($data);exit();
 		$this->create();
-		 
+		$data['Schedule']['status'] = 'Pending';
 		$data['Schedule']['created_by'] = $auth;
 		$data['Schedule']['modified_by'] = $auth;
 		$this->save($data);

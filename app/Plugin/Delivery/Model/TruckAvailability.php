@@ -50,10 +50,9 @@ class TruckAvailability extends AppModel {
 		$this->contain($model);
 	}
 
-	// public function addSchedule($data,$auth){
-	// 	$this->create();
-		 
-	// 	$data['Schedule']['created_by'] = $auth;
+	// public function addSchedule($data){
+		
+	// 	$data['TruckAvailabil']['created_by'] = $auth;
 	// 	$data['Schedule']['modified_by'] = $auth;
 	// 	$this->save($data);
 

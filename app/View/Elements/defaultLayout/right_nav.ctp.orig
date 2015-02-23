@@ -58,33 +58,8 @@
 	 					?>
 					</li> -->
 					<!-- <li class="<?php //echo ($this->params['plugin'] == 'production') ? 'active' : '' ?>"> -->
-						<?php
-	 					//	echo $this->Html->link( " <i class='fa fa-archive'></i> <span>Production</span>",   array('controller' =>'schedules',
-	 											// 'action'=>'index',
-	 											// 'plugin' => 'production'),
-	 											// array('escape' => false) );
-	 					?>
-					<!-- </li> -->
-					<li class="<?php //echo ($this->params['plugin'] == 'production') ? 'active' : '' ?>">
-						<?php
-	 						echo $this->Html->link( " <i class='fa fa-truck'></i> <span>Delivery</span>",   array('controller' =>'deliveries',
-	 											'action'=>'index',
-	 											'plugin' => 'delivery'),
-	 											array('escape' => false) );
-	 					?>
-					</li>
 
-					<!-- <li>
-						<?php
-	 						// echo $this->Html->link( " <i class='fa fa-th-large'></i> <span>Warehouse</span> <span class='label label-success pull-right'>New</span> ",   array('controller' =>'','action'=>'','plugin' => ''),array('escape' => false) );
-	 					?>
-					</li>
 
-					<li>
-						<?php
-	 						// echo $this->Html->link( " <i class='fa fa-th-large'></i> <span>Purchasing</span> <span class='label label-success pull-right'>New</span> ",   array('controller' =>'','action'=>'','plugin' => ''),array('escape' => false) );
-	 					?>
-					</li> -->
 
 				</ul>
 			</div>

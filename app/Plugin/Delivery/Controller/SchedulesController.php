@@ -10,63 +10,101 @@ class SchedulesController extends DeliveryAppController {
    }
 
     public function add($id = null) {
+
         $userData = $this->Session->read('Auth');
-        $this->loadModel('Sales.Quotation');
-        $quotationId = $this->Quotation->find('first', array(
-                                    'condition'=> array(
+
+        
+            if($this->request->is('post')){
+            //pr($this->request->data);exit();
+                if(!empty($this->request->data)){
+                    $this->Schedule->addSchedule($this->request->data, $userData['User']['id']);
+                    $this->redirect(
+                             array(
+                                 'controller' => 'sales_orders', 
+                                 'action' => 'index',
+                                 'plugin' => 'sales'
+                             ));
+        
+                  }
+            }
+             
+            $this->loadModel('Sales.Quotation');
+            $quotationId = $this->Quotation->find('first', array(
+                                    'conditions'=> array(
                                     'id'=> $id
                                     )
                                 ));
-        $this->loadModel('Delivery.Schedule');
 
-        $this->Schedule->bind(array('Truck'));
+            $this->loadModel('Delivery.Schedule');
+        //pr($quotationId);exit();
+            $salesOrderIdHolder = $this->Schedule->find('first', array(
+                                                            'conditions' => array(
+                                                                                   'sales_order_id' => $quotationId['Quotation']['unique_id']
+                                                                                )
+                                                        ));
+
+            if(empty($salesOrderIdHolder)){
+                $salesOrderId = Null;
+            }
+            else{
+            
+                $salesOrderId = $salesOrderIdHolder;
+            }
+
+            $this->Schedule->bind(array('Truck'));
+
         
+            $this->Schedule->Truck->bind(array('TruckAvailability'));
+
+            $this->Schedule->Truck->TruckAvailability->bind('Truck');
+
+            $truckId = $this->Schedule->Truck->TruckAvailability->find('list', array(
+                                                    'fields'=> array('Truck.id','Truck.plate_number'),
+                                                    'conditions' => array(
+                                                            'status' => 'available'
+                                                            )
+                                                    ));
+           
+            $this->set(compact('quotationId','truckId','salesOrderId'));
+         
+
+    }     
+
+    public function view($id = null) {
+
+        $userData = $this->Session->read('Auth');
+
+        $quotationId = $id;
+        
+        $scheduleInfo = $this->Schedule->find('first', array(
+                                                'conditions' => array(
+                                                                        'sales_order_id' => $quotationId
+                                                                    )
+
+                                            ));
+
+       
+        $this->Schedule->bind(array('Truck'));
+
         $this->Schedule->Truck->bind(array('TruckAvailability'));
 
         $this->Schedule->Truck->TruckAvailability->bind('Truck');
 
         $truckId = $this->Schedule->Truck->TruckAvailability->find('list', array(
-                                                    'fields'=> array('id','Truck.plate_number'),
-                                                    'conditions' => array(
-                                                            'status' => 'available'
-                                                            )
-                                                    ));
-                            
+                                                                   'fields'=> array('Truck.id','Truck.plate_number'),
+                                                                   'conditions' => array(
+                                                                            'status' => 'available'
+                                                    )
+                                            ));
 
-        // if($this->request->is('post')){
-        //     $this->loadModel('Production.Schedule');
-        //     $this->Schedule->addSchedule($this->request->data, $userData['User']['id']);
-        //     $this->redirect(
-        //                 array(
-        //                     'controller' => 'schedules', 
-        //                     'action' => 'index'
-        //                 ));
-    
-        // }
-        $this->set(compact('quotationId','truckId'));
-        
+        $this->set(compact('truckId','scheduleInfo'));
+
     }
+    public function save($id = null) {
 
-    public function find_data($id = null) {
-        // $this->loadModel('Sales.Company');
-        // $this->layout = false;
-        // $this->Company->bind(array('Quotation','Inquiry'));
-        
-        // $inquiryData = $this->Company->Inquiry->find('first', array(
-        //                                              'condition' => array(
-        //                                              'Inquiry.company_id' => $id
-        //                                                     )
-        //                                             ));
-        
-        // $uniqueId = $this->Company->Quotation->find('first', array(
-        //                                             'conditions'=> array(
-        //                                                                 'Quotation.company_id' => $id
-        //                                                                 )
-                
-        //                                             ));
+        $userData = $this->Session->read('Auth');
 
-        // echo json_encode($uniqueId);
-        // $this->autoRender = false;
+        
     }
      
 }

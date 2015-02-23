@@ -23,9 +23,9 @@
 							<div class="main-box clearfix">
 							
 					
-								<header class="main-box-header clearfix">
+								<header class="main-box-header clearfix"><span style="color:red">*</span>
 									
-									<?php echo '<span style="color:red">*</span> '. $this->Form->input('Company.id', array(
+									<?php echo $this->Form->input('Company.id', array(
 		                                'options' => array($companyData),
 		                                'type' => 'select',
 		                                'label' => false,
@@ -130,6 +130,7 @@
 															
 																 <div class="form-group">
 																	<div class="col-lg-3">
+																	<span style="color:red">*</span>
 																	<?php echo $customField[$key]?></div>
 																	<div class="col-lg-8">
 																		<?php 
