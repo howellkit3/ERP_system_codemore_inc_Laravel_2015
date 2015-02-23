@@ -36,10 +36,7 @@ class SuppliersController extends PurchasingsAppController {
 
             	$this->request->data = $this->Supplier->formatData($this->request->data,$user['id']);
             	
-            	$this->Supplier->saveAssociated($this->request->data);	
-
-
-	            if ($this->Supplier->saveAssociated($this->request->data)) {
+            	if ($this->Supplier->saveAssociated($this->request->data)) {
 
 	            	$this->Session->setFlash('Save Successfully','success');
 
