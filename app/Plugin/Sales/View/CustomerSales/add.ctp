@@ -49,7 +49,11 @@
                                     <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span> Description</label>
                                     <div class="col-lg-9">
                                         <?php
-                                            echo $this->Form->input('Company.description', array('class' => 'form-control col-lg-6 required','label' => false));
+                                            echo $this->Form->input('Company.description', array('type' => 'text', 
+                                                                                                'maxlength'=>'1000',
+                                                                                                 'class' => 'form-control col-lg-6 required',
+                                                                                                 'label' => false
+                                                                                                 ));
                                         ?>
                                     </div>
                                 </div>
@@ -79,6 +83,7 @@
                                             echo $this->Form->input('Company.payment_term', array(
                                                 'options' => array(
                                                     'PIA - Payment in advance' => 'PIA - Payment in advance',
+                                                    'COD – Cash on Delivery',
                                                     'Net 7 - Payment seven days after invoice date' => 'Net 7 - Payment seven days after invoice date',
                                                     'Net 10 - Payment ten days after invoice date' =>'Net 10 - Payment ten days after invoice date'
                                                     ,

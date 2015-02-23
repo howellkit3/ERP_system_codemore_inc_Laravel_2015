@@ -50,15 +50,22 @@ class TruckAvailability extends AppModel {
 		$this->contain($model);
 	}
 
-	// public function addSchedule($data){
-		
-	// 	$data['TruckAvailabil']['created_by'] = $auth;
-	// 	$data['Schedule']['modified_by'] = $auth;
-	// 	$this->save($data);
+	public function addSchedule($data,$auth){
+		//pr($data);exit();
+		$this->create();
+		$data['TruckAvailability']['truck_id'] = $data['TruckAvailabilities']['truckPlateNumber'];
+		$data['TruckAvailability']['sales_order_id'] = $data['TruckAvailabilities']['sales_order_id'];
+		$data['TruckAvailability']['location'] = $data['TruckAvailabilities']['location'];
+		$data['TruckAvailability']['date'] = $data['TruckAvailabilities']['schedule'];
+		$data['TruckAvailability']['time_from'] = $data['TruckAvailabilities']['timeFrom'];
+		$data['TruckAvailability']['time_to'] = $data['TruckAvailabilities']['timeTo'];
+		$data['TruckAvailability']['created_by'] = $auth;
+		$data['TruckAvailability']['modified_by'] = $auth;
+		$this->save($data);
 
-	// 	return $this->id;
+		return $this->id;
 		
 
-	// }
+	}
 	
 }

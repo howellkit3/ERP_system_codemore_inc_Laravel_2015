@@ -59,10 +59,8 @@ class SchedulesController extends DeliveryAppController {
             $this->Schedule->Truck->TruckAvailability->bind('Truck');
 
             $truckId = $this->Schedule->Truck->TruckAvailability->find('list', array(
-                                                    'fields'=> array('Truck.id','Truck.plate_number'),
-                                                    'conditions' => array(
-                                                            'status' => 'available'
-                                                            )
+                                                    'fields'=> array('Truck.id','Truck.plate_number')
+                                                
                                                     ));
            
             $this->set(compact('quotationId','truckId','salesOrderId'));
@@ -92,19 +90,38 @@ class SchedulesController extends DeliveryAppController {
 
         $truckId = $this->Schedule->Truck->TruckAvailability->find('list', array(
                                                                    'fields'=> array('Truck.id','Truck.plate_number'),
-                                                                   'conditions' => array(
-                                                                            'status' => 'available'
-                                                    )
+                                                                   
+                                                    
                                             ));
+        //pr($truckId);exit();
 
-        $this->set(compact('truckId','scheduleInfo'));
-
-    }
-    public function save($id = null) {
-
-        $userData = $this->Session->read('Auth');
-
+            $this->set(compact('truckId','scheduleInfo'));
         
+         
+         
+       
+
+
     }
+
+
+    // public function save($id = null) {
+
+    //     $userData = $this->Session->read('Auth');
+    //     if($this->request->is('post')){
+    //         //pr($this->request->data);exit();
+    //             if(!empty($this->request->data)){
+    //                 $this->loadModel('Delivery.TruckAvailability');
+    //                 $this->TruckAvailability->addSchedule($this->request->data, $userData['User']['id']);
+    //                 $this->redirect(
+    //                          array(
+    //                              'controller' => 'sales_orders', 
+    //                              'action' => 'index',
+                            
+    //                          ));
+        
+    //             }
+    //     }
+    // }
      
 }

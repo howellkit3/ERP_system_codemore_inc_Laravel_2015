@@ -7,7 +7,7 @@
 <?php echo $this->element('sales_option');?><br><br>
 
 <?php echo $this->Form->create('Quotation',
-	array('url'=> array('controller' => 'quotations','action' => 'add'),'type' => 'post'));?>
+	array('url'=> array('controller' => 'quotations','action' => 'edit',$quotationId,$companyId),'type' => 'post'));?>
 	<div class="row">
 	    <div class="col-lg-12">
 	        <div class="main-box clearfix body-pad">

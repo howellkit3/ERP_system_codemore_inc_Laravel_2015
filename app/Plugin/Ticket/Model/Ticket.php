@@ -84,7 +84,7 @@ class Ticket extends AppModel {
 				)
 			)); 
 		$jobTicketId = $ticketQuery['Ticket']['job_ticket_id'] + 1;
-		pr($jobTicketId);
+		//pr($jobTicketId);
 
 		if ($this->id) {
 			    $this->save(array('status' =>0,
