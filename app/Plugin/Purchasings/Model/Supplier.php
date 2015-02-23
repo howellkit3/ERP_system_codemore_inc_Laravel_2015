@@ -40,6 +40,17 @@ class Supplier extends AppModel {
 					'conditions' => "model = 'Supplier'",
 					'dependent' => true
 				),
+				'ContactPerson' => array(
+					'className' => 'Purchasings.ContactPerson',
+					'foreignKey' => 'supplier_id',
+					'dependent' => true
+				),
+				'Contact' => array(
+					'className' => 'Purchasings.Contact',
+					'foreignKey' => 'foreign_key',
+					'conditions' => "model = 'Supplier'",
+					'dependent' => true
+				),
 			),
 			'hasOne' => array(
 				'Organization'  => array (
@@ -96,6 +107,16 @@ class Supplier extends AppModel {
 
 
 			return $data;
+		}
+
+
+		public function updateModelField ( $field = null,$value = null,$id = null) {
+
+			if (!empty($id) && !empty($field) && !empty($value)) {
+				$this->id = $id;
+				$this->saveField($field,$value);
+			}
+
 		}
 
 }

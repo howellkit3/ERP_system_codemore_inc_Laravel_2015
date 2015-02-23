@@ -1,48 +1,52 @@
 <?php
 App::uses('AppModel', 'Model');
-//namespace Sales\Model\Entity;
 /**
- * Supllier Model
+ * Contact Model
  *
  */
-class Address extends AppModel {
+class Contact extends AppModel {
 
     public $useDbConfig = 'koufu_purchasing';
 
-    public $name = 'Address';
+    public $name = 'Contact';
 
 	public $recursive = -1;
 
 	public $actsAs = array('Containable');
 
-	public function bind($model = array('Product')){
+	public function bind($model = array('Group')){
 
 		$this->bindModel(array(
 			'belongsTo' => array(
 				'Supplier' => array(
-					'className' => 'Purchasings.Supplier',
+					'className' => 'Supplier',
 					'foreignKey' => 'foreign_key',
 					'dependent' => true
 				),
+				'ContactPerson' => array(
+					'className' => 'ContactPerson',
+					'foreignKey' => 'foreign_key',
+					'dependent' => true
+				)
 			)
 		));
 
 		$this->contain($model);
 	}
 
-		public function saveContact($data, $contact_id)
+	
+	public function saveContact($data = null , $contact_id = null)
 	{
-		foreach ($data as $key => $addressData)
+		foreach ($data as $key => $contactData)
 		{
 			$this->create();
-			foreach ($addressData[$this->name] as $key => $addressValue) 
+			foreach ($contactData[$this->name] as $key => $contactValue) 
 			{
-				$addressValue['model'] = "ContactPerson";
-				$addressValue['foreign_key'] = $contact_id;	
+				$contactValue['model'] = "ContactPerson";
+				$contactValue['foreign_key'] = $contact_id;	
 				
 			}
-			$this->saveAll($addressValue);
-			
+			$this->saveAll($contactValue);
 		}
 		
 	}
@@ -50,9 +54,9 @@ class Address extends AppModel {
 	public function beforeSave($options = array())
 	{
 		$userId = AuthComponent::user('id'); 
-
+		
 		$this->data[$this->name]['created_by'] = $userId;
 		$this->data[$this->name]['modified_by'] = $userId;
 	}
-
+	
 }

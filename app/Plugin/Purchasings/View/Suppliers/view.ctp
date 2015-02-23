@@ -1,5 +1,5 @@
-<?php $this->Html->addCrumb('Sales', array('controller' => 'customer_sales', 'action' => 'index')); ?>
-<?php $this->Html->addCrumb('View', array('controller' => 'customer_sales', 'action' => 'view',$supplier['Company']['id'])); ?>
+<?php $this->Html->addCrumb('Suppliers', array('controller' => 'suppliers', 'action' => 'index')); ?>
+<?php $this->Html->addCrumb('View', array('controller' => 'suppliers', 'action' => 'view',$suppliers['Supplier']['id'])); ?>
 
 <div style="clear:both"></div>
 
@@ -13,7 +13,7 @@
 					<div class="main-box clearfix">
 						<header class="main-box-header clearfix">
 							<h1>
-							<?php echo ucfirst($company['Company']['company_name']); ?>
+							<?php echo ucfirst($suppliers['Supplier']['name']); ?>
 							</h1>
 						</header>
 						
@@ -28,42 +28,42 @@
 							</div>
 							
 							<div class="profile-since">
-								<?php echo date('M d, Y', strtotime($company['Company']['created'])); ?>
+								<?php echo date('M d, Y', strtotime($suppliers['Supplier']['created'])); ?>
 							</div>
 							
 							<div class="profile-details">
 								<ul class="fa-ul">
 								<i class="fa fa-dedent"></i>
-									<?php echo ucfirst($company['Company']['description']); ?>
+									<?php echo ucfirst($suppliers['Supplier']['description']); ?>
 								</ul>
 							</div>
 							<div class="profile-details">
 								<ul class="fa-ul">
 								<i class="fa fa-external-link-square"></i>
-									<?php echo $company['Company']['website']; ?>
+									<?php echo $suppliers['Supplier']['website']; ?>
 								</ul>
 							</div>
 
-							<div class="profile-details">
+							<!-- <div class="profile-details">
 								<ul class="fa-ul">
 									<i class="fa fa-phone"></i>
-									<?php echo $company['Contact'][0]['number']; ?>
+									<?php echo $suppliers['Contact'][0]['number']; ?>
 								</ul>
 							</div>
 							
 							<div class="profile-details">
 								<ul class="fa-ul">
 								<i class="fa fa-book"></i>
-									<?php echo $company['Company']['tin']; ?>
+									<?php echo $Supplier['Supplier']['tin']; ?>
 								</ul>
 							</div>
 							
 							<div class="profile-details">
 								<ul class="fa-ul">
 								<i class="fa fa-calendar"></i>
-									<?php echo $company['Company']['payment_term']; ?>
+									<?php echo $Supplier['Supplier']['payment_term']; ?>
 								</ul>
-							</div>
+							</div>  -->
 
 						</div>
 						
@@ -104,7 +104,7 @@
 									                            </tr>
 									                        </thead>
 									                        <?php
-										                		foreach($company['Address'] as $contactAddress) { ?>
+										                		foreach($suppliers['Address'] as $contactAddress) { ?>
 											                        <tbody aria-relevant="all" aria-live="polite" role="alert">
 											                         		<tr>
 											                         			<td>
@@ -162,7 +162,7 @@
 					                            </tr>
 					                        </thead>
 					                        <?php
-						                		foreach($company['Contact'] as $contactNumber) { ?>
+						                		foreach($supplier['Contact'] as $contactNumber) { ?>
 							                        <tbody aria-relevant="all" aria-live="polite" role="alert">
 						                         		<tr>
 						                         			<td>
@@ -194,7 +194,7 @@
 				                            </tr>
 				                        </thead>
 				                        <?php
-					                		foreach($company['ContactPerson'] as $contactPerson) { ?>
+					                		foreach($Supplier['ContactPerson'] as $contactPerson) { ?>
 						                        <tbody aria-relevant="all" aria-live="polite" role="alert">
 					                         		<tr>
 					                         			<td>
@@ -232,7 +232,7 @@
 					                            </tr>
 					                        </thead>
 					                        <?php
-						                		foreach($company['Email'] as $contactEmail) { ?>
+						                		foreach($suppliers['Email'] as $contactEmail) { ?>
 							                        <tbody aria-relevant="all" aria-live="polite" role="alert">
 						                         		<tr>
 						                         			<td>
