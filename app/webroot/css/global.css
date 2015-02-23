@@ -42,6 +42,10 @@
 .error{
     color: red;
 }
+li.current a {
+  color: #000 !important;
+  font-weight: bold;
+}
 /*this is my CSS */
 hr { 
     display: block;

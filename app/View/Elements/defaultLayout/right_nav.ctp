@@ -50,13 +50,18 @@
 	 					?>
 					</li>
 
+					<li class="<?php echo ($this->params['plugin'] == 'purchasing') ? 'active' : '' ?>">
+						<?php echo $this->Html->link( " <i class='fa fa-th-large'></i> <span>Purchasing</span>",   array('controller' =>'suppliers','action'=>'index','plugin' => 'purchasings'),array('escape' => false) );
+	 					?>
+					</li>
+
 		
 					
-				<!-- 	<li class="<?php //echo ($this->params['plugin'] == 'ware_house') ? 'active' : '' ?>">
+					<li class="<?php echo ($this->params['plugin'] == 'ware_house') ? 'active' : '' ?>">
 						<?php
-	 						// echo $this->Html->link( " <i class='fa fa-archive'></i> <span>Ware House</span>",   array('controller' =>'ware_house_systems','action'=>'index','plugin' => 'ware_house'),array('escape' => false) );
+	 						 echo $this->Html->link( " <i class='fa fa-archive'></i> <span>Ware House</span>",   array('controller' =>'ware_house_systems','action'=>'index','plugin' => 'ware_house'),array('escape' => false) );
 	 					?>
-					</li> -->
+					</li>
 					<!-- <li class="<?php //echo ($this->params['plugin'] == 'production') ? 'active' : '' ?>"> -->
 						<?php
 	 					//	echo $this->Html->link( " <i class='fa fa-archive'></i> <span>Production</span>",   array('controller' =>'schedules',

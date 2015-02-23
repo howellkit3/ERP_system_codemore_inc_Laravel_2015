@@ -5,7 +5,7 @@ jQuery(document).ready(function($){
 
 			var data_change = $(this).data('change');
 
-			if ($(this).val() == 'others'){
+			if ($(this).val() == 'Others'){
 				$('.'+data_change).addClass('visible'); 
 			} else {
 				$('.'+data_change).removeClass('visible'); 
@@ -15,13 +15,7 @@ jQuery(document).ready(function($){
 
 	//datepicker
 	$('.datepick').datepicker({
-	format: 'mm-dd-yyyy'
+		format: 'yyyy-mm-dd'
 	});
-
-	$('#datepickerDateComponent').datepicker();
-
-	//daterange picker
-	$('#datepickerDateRange').daterangepicker();
-
-
+	
 });

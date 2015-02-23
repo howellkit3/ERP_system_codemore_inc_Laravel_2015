@@ -268,9 +268,7 @@
                                                     'label' => false,
                                                     'class' => 'form-control required',
                                                     'empty' => false
-                                                ));
-
-                                            ?>
+                                                )); ?>
                                         </div>
                                         <div class="col-lg-6">
                                             <?php 
@@ -279,7 +277,7 @@
                                         </div>
                                         <div class="col-lg-2">
                                             <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneData('email_section',this)"><i class="fa fa-plus"></i></button>
-                                             <button type="button" class="remove-field btn btn-danger" onclick="removeClone('email_section')"><i class="fa fa-minus"></i> </button>
+                                            <button type="button" class="remove-field btn btn-danger" onclick="removeClone('email_section')"><i class="fa fa-minus"></i> </button>
                                         </div>
                                     </div>
                                     <hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">

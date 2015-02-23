@@ -30,12 +30,13 @@ class SuppliersController extends PurchasingsAppController {
 
             if (!empty($this->request->data)) {
 
-            	$this->Supplier->bind(array('Address'));
+            	$this->Supplier->bind(array('Address','Product','Permit','Email','Organization'));
 
-            	pr($this->request->data);
+            	$user = $this->Session->read('Auth.User');
 
-
-	            if ($this->Supplier->saveAssociated($this->request->data)) {
+            	$this->request->data = $this->Supplier->formatData($this->request->data,$user['id']);
+            	
+            	if ($this->Supplier->saveAssociated($this->request->data)) {
 
 	            	$this->Session->setFlash('Save Successfully','success');
 
@@ -45,11 +46,83 @@ class SuppliersController extends PurchasingsAppController {
 
 	            	$this->Session->setFlash('There\'s a problem saving the data','error');
 	            }
-	            	exit();
+	            
+	            exit();
 
 			}
         }
 		
-	} 
+	}
+	public function view ($dataId = null) {
+
+		if (!empty($dataId)) {
+
+				$this->Supplier->bind(array('Address','Product','Permit','Email','Organization'));
+
+				$supplier = $this->Supplier->read(null,$dataId);
+
+				$this->set(compact('supplier'));
+		}
+
+	}
+
+	public function delete($dataId = null){
+
+		$this->Supplier->bind(array('Address','Product','Permit','Email','Organization'));
+
+		if ($this->Supplier->delete($dataId)) {
+			
+			$this->Session->setFlash(__('Supplier info has been deleted successfully.'),'success');
+			$this->redirect(
+				array('controller' => 'suppliers', 'action' => 'index')
+			);
+		
+		} else {
+			
+			$this->Session->setFlash(__('Error Deleting Information.'),'error');
+			$this->redirect(
+					array('controller' => 'suppliers', 'action' => 'index')
+				);
+			
+		}
+
+	}
+
+	public function edit($dataId = null){
+
+		if (!empty($this->request->data)) {
+
+
+	        	$this->Supplier->bind(array('Address','Product','Permit','Email','Organization'));
+
+	        	$user = $this->Session->read('Auth.User');
+
+	        	$this->request->data = $this->Supplier->formatData($this->request->data,$user['id']);
+	        	
+	        	if ($this->Supplier->saveAssociated($this->request->data)) {
+
+	            	$this->Session->setFlash('Edit Supplier Successfully','success');
+
+	            	return $this->redirect(array('action' => 'index'));
+
+	            } else {
+
+	            	$this->Session->setFlash('There\'s a problem saving the data','error');
+	            }
+	          
+
+		} else {
+
+
+			if (!empty($dataId)) {
+
+				$this->Supplier->bind(array('Address','Product','Permit','Email','Organization'));
+
+				$this->request->data = $this->Supplier->read(null,$dataId);
+			}
+		}
+
+	}
+
 
 }
