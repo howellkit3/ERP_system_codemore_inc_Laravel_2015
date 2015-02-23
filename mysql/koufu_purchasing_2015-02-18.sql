@@ -97,3 +97,23 @@ CREATE TABLE IF NOT EXISTS `organizations` (
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+-- Table structure for table `addresses`  feb/23/2015
+
+CREATE TABLE IF NOT EXISTS `addresses` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `model` varchar(45) DEFAULT NULL,
+  `foreign_key` int(11) DEFAULT NULL,
+  `type` int(11) DEFAULT NULL,
+  `address1` varchar(180) DEFAULT NULL,
+  `address2` varchar(180) DEFAULT NULL,
+  `city` varchar(80) DEFAULT NULL,
+  `state_province` varchar(50) DEFAULT NULL,
+  `zip_code` int(11) DEFAULT NULL,
+  `country` varchar(50) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
