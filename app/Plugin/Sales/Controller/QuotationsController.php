@@ -247,7 +247,13 @@ class QuotationsController extends SalesAppController {
 	}
 
 	public function edit($quotationId = null , $companyId){
-
+		if($this->request->is('post')){
+			$this->Quotation->edit($this->request->data,$quotationId);
+			$this->redirect(
+            			array('controller' => 'quotations', 'action' => 'view',$quotationId,$companyId)
+        	);
+		}
+		
 		$this->Company->bind(array(
 			'Address',
 			'Contact',

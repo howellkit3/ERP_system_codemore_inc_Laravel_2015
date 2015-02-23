@@ -165,7 +165,7 @@
 	        echo $this->Html->script('daterangepicker');
 	        echo $this->Html->script('jquery.maskedinput.min');
 	    	echo $this->Html->script('bootstrap-datepicker');
-	   
+	    	echo $this->Html->script('bootstrap-timepicker.min');
 	        
 	    ?>
     

@@ -37,13 +37,17 @@ class Schedule extends AppModel {
     public function bind($model = array('Group')){
 
 		$this->bindModel(array(
-			'hasMany' => array(
+			'belongsTo' => array(
 				'Truck' => array(
 					'className' => 'Delivery.Truck',
 					'foreignKey' => 'truck_id',
 					'dependent' => true
 				),
-				
+				'TruckAvailability' => array(
+					'className' => 'Delivery.TruckAvailability',
+					'foreignKey' => false,
+					'conditions' => 'TruckAvailability.truck_id = Truck.id'
+				),
 			)
 		),false);
 
@@ -60,6 +64,24 @@ class Schedule extends AppModel {
 
 		return $this->id;
 		
+
+	}
+	public function updateStatus($id,$action){
+		//pr($id);exit();
+		$this->id = $this->find('first',array(
+									'conditions' => array(
+														'sales_order_id' => $id
+														)
+									));
+		//$salesOrderId = $scheduleQuery['Schedule']['sales_order_id'];
+		if ($this->id) {
+		    $this->saveField('status', $action);
+
+		}
+
+		return $this->id;
+		
+		//pr($salesOrderId);exit();
 
 	}
 	
