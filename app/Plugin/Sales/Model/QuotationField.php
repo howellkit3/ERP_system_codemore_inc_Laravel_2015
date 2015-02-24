@@ -84,5 +84,22 @@ class QuotationField extends AppModel {
 		}	
 		
 	}
+	public function editFields($data = null, $quotationId = null){
+		//pr($data);exit();
+		
+		//pr($quotationId);exit();
+		$this->id = $this->find('all',array( 
+								'conditions' => array(
+								'quotation_id' => $quotationId
+								)));
+		//pr($this->id);exit();
+		if ($this->id) {
+			foreach ($data[$this->name] as $key => $customFieldValue) 
+			{
+				$this->save($customFieldValue);
+			}
+		}
+		return $this->id;
+	}
 	
 }

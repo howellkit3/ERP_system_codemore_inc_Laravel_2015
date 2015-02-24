@@ -37,13 +37,17 @@ class Schedule extends AppModel {
     public function bind($model = array('Group')){
 
 		$this->bindModel(array(
-			'hasMany' => array(
+			'belongsTo' => array(
 				'Truck' => array(
 					'className' => 'Delivery.Truck',
 					'foreignKey' => 'truck_id',
 					'dependent' => true
 				),
-				
+				'TruckSchedule' => array(
+					'className' => 'Delivery.TruckSchedule',
+					'foreignKey' => false,
+					'conditions' => 'TruckSchedule.truck_id = Truck.id'
+				),
 			)
 		),false);
 
@@ -51,8 +55,12 @@ class Schedule extends AppModel {
 	}
 
 	public function addSchedule($data,$auth){
-		// pr($data);exit();
+		//pr($data);exit();
 		$this->create();
+		$data['Schedule']['sales_order_id'] = $data['RequestDeliverySchedule']['sales_order_id'];
+		$data['Schedule']['schedule'] = $data['RequestDeliverySchedule']['schedule'];
+		$data['Schedule']['location'] = $data['RequestDeliverySchedule']['location'];
+		$data['Schedule']['quantity'] = $data['RequestDeliverySchedule']['quantity'];
 		$data['Schedule']['status'] = 'Pending';
 		$data['Schedule']['created_by'] = $auth;
 		$data['Schedule']['modified_by'] = $auth;
@@ -60,6 +68,41 @@ class Schedule extends AppModel {
 
 		return $this->id;
 		
+
+	}
+
+	public function updateSchedule($data,$auth){
+		pr($data);exit();
+		$this->id = $this->find('first',array(
+								'conditions' => array(
+								'sales_order_id' => $id
+									)
+								));
+
+		if($this->id){
+
+
+		}
+
+	}
+	public function updateStatus($data,$auth){
+		//pr($data);exit();
+		$this->id = $this->find('first',array(
+								'conditions' => array(
+								'sales_order_id' => $data['TruckSchedules']['sales_order_id']
+									)
+								));
+		if ($this->id) {
+			    $this->save( array(
+			    			'status' =>'Accepted',
+		     				'truck_id' =>$data['TruckSchedules']['truckPlateNumber'] 
+		    				));
+
+		 }
+
+		return $this->id;
+		
+		//pr($salesOrderId);exit();
 
 	}
 	

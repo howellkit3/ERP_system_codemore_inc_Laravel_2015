@@ -30,5 +30,29 @@ class Email extends AppModel {
 		$this->contain($model);
 	}
 
+	public function beforeSave($options = array())
+	{
+		$userId = AuthComponent::user('id'); 
+
+		$this->data[$this->name]['created_by'] = $userId;
+		$this->data[$this->name]['modified_by'] = $userId;
+	}
+
+	public function saveContact($data, $contact_id)
+	{
+		foreach ($data as $key => $emailData)
+		{
+			$this->create();
+			foreach ($emailData[$this->name] as $key => $emailValue) 
+			{
+				$emailValue['model'] = "ContactPerson";
+				$emailValue['foreign_key'] = $contact_id;	
+				
+			}
+			$this->saveAll($emailValue);
+		}
+		
+	}
+
 
 } ?>

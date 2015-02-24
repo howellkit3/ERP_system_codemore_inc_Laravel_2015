@@ -38,6 +38,20 @@ class Supplier extends AppModel {
 					'className' => 'Purchasings.Email',
 					'foreignKey' => 'foreign_key',
 					'conditions' => "model = 'Supplier'",
+<<<<<<< HEAD
+=======
+					'dependent' => true
+				),
+				'ContactPerson' => array(
+					'className' => 'Purchasings.ContactPerson',
+					'foreignKey' => 'supplier_id',
+					'dependent' => true
+				),
+				'Contact' => array(
+					'className' => 'Purchasings.Contact',
+					'foreignKey' => 'foreign_key',
+					'conditions' => "model = 'Supplier'",
+>>>>>>> 0c4197a85f0bf097cdb0bbca91814d07baa776fc
 					'dependent' => true
 				),
 			),
@@ -59,7 +73,7 @@ class Supplier extends AppModel {
 				
 				foreach ($data['Address'] as $key => $value) {
 					$data['Address'][$key] = $value;
-					$data['Address'][$key]['model'] = 'Supllier';
+					$data['Address'][$key]['model'] = 'Supplier';
 					$data['Address'][$key]['created_by'] =$auth;
 					$data['Address'][$key]['modified_by'] =$auth;
 				}
@@ -68,7 +82,7 @@ class Supplier extends AppModel {
 				
 				foreach ($data['Contact'] as $key => $value) {
 					$data['Contact'][$key] = $value;
-					$data['Contact'][$key]['model'] = 'Supllier';
+					$data['Contact'][$key]['model'] = 'Supplier';
 					$data['Contact'][$key]['created_by'] =$auth;
 					$data['Contact'][$key]['modified_by'] =$auth;
 				}
@@ -77,7 +91,7 @@ class Supplier extends AppModel {
 			if (!empty($data['Email'])) {
 				foreach ($data['Email'] as $key => $value) {
 					$data['Email'][$key] = $value;
-					$data['Email'][$key]['model'] = 'Supllier';
+					$data['Email'][$key]['model'] = 'Supplier';
 					$data['Email'][$key]['created_by'] =$auth;
 					$data['Email'][$key]['modified_by'] =$auth;
 				}
@@ -96,6 +110,16 @@ class Supplier extends AppModel {
 
 
 			return $data;
+		}
+
+
+		public function updateModelField ( $field = null,$value = null,$id = null) {
+
+			if (!empty($id) && !empty($field) && !empty($value)) {
+				$this->id = $id;
+				$this->saveField($field,$value);
+			}
+
 		}
 
 }

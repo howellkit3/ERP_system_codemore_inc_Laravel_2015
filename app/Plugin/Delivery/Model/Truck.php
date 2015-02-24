@@ -43,12 +43,16 @@ class Truck extends AppModel {
 					'foreignKey' => 'truck_id',
 					'dependent' => true
 				),
-				'TruckAvailability' => array(
-					'className' => 'Delivery.TruckAvailability',
+				
+			),
+			'hasMany' => array(
+				'TruckSchedule' => array(
+					'className' => 'Delivery.TruckSchedule',
 					'foreignKey' => 'truck_id',
 					'dependent' => true
 				),
-			)
+				
+			),
 		),false);
 
 		$this->contain($model);

@@ -117,3 +117,44 @@ CREATE TABLE IF NOT EXISTS `addresses` (
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+
+
+-- Table structure for table `contacts` feb/23/2015
+
+CREATE TABLE IF NOT EXISTS `contacts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `model` varchar(45) DEFAULT NULL,
+  `foreign_key` int(11) DEFAULT NULL,
+  `type` int(11) DEFAULT NULL,
+  `number` varchar(50) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+
+
+-- Table structure for table `contact_people`
+
+CREATE TABLE IF NOT EXISTS `contact_people` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `supplier_id` int(11) DEFAULT NULL,
+  `firstname` varchar(50) DEFAULT NULL,
+  `middlename` varchar(50) DEFAULT NULL,
+  `lastname` varchar(50) DEFAULT NULL,
+  `position` varchar(120) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_idx` (`company_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+
+ALTER TABLE `contact_people`
+  ADD CONSTRAINT `id` FOREIGN KEY (`supplier_id`) REFERENCES `companies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+  -- add unique id for supplier
+
+  ALTER TABLE `suppliers`  ADD `unique_id` VARCHAR(255) NULL  AFTER `id`;
