@@ -4,7 +4,7 @@
         <div class="main-box clearfix body-pad">
             <header class="main-box-header clearfix">
 
-                <h2 class="pull-left"><b>Schedule List</b></h2>
+                <h2 class="pull-left"><b>Schedule Requests</b></h2>
                 
             </header>
             
@@ -51,7 +51,7 @@
                                                 echo $this->Html->link('<span class="fa-stack">
                                                     <i class="fa fa-square fa-stack-2x"></i>
                                                     <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-                                                    </span> ', array('controller' => 'truckAvailabilities', 
+                                                    </span> ', array('controller' => 'Schedules', 
                                                                         'action' => 'view',
                                                                         $scheduleDataList['Schedule']['sales_order_id'] 
                                                                     ),

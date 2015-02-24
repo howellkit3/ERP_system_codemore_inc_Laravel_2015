@@ -129,24 +129,24 @@
 																	<div class="form-group">
 																		<div class="col-lg-3">
 																			<?php 
-
+																				//pr($customField[$value['custom_fields_id']]);die;
 																				echo $this->Form->input('QuotationField.0.id', array(
 																				'hidden' => 'hidden',
 																				'label' => false,
 																				'name' => $hiddenName,
 													                            'id' => $hiddenId,
 													                            'value' => !empty($value['id']) ? $value['id'] : ''));
-
-								                                                echo $this->Form->input('QuotationField.0.label', array(
-													                                'options' => array($customField),
-													                                'type' => 'select',
-													                                'label' => false,
-													                                'class' => 'form-control col-lg-4 required',
-													                                'empty' => '---Select Label---',
-													                                'default' => !empty($value['custom_fields_id']) ? $value['custom_fields_id'] : '',
-													                                'name' => $name,
-													                                'id' => $id
-													                                 ));
+																				echo $customField[$value['custom_fields_id']];
+								                                     //             echo $this->Form->input('QuotationField.0.label', array(
+													                                // 'options' => array($customField),
+													                                // 'type' => 'select',
+													                                // 'label' => false,
+													                                // 'class' => 'form-control col-lg-4 required',
+													                                // 'empty' => '---Select Label---',
+													                                // 'default' => !empty($value['custom_fields_id']) ? $value['custom_fields_id'] : '',
+													                                // 'name' => $name,
+													                                // 'id' => $id
+													                                //  ));
 								                                            ?>
 																		</div>
 																		<div class="col-lg-8">
@@ -163,14 +163,6 @@
 
 															<?php } ?>
 
-															<div class="form-group">
-																<div class="col-lg-3">
-																	<button type="button" class="add-field6 table-link danger btn btn-success" onclick="cloneInquiry('quotation_section',this)"> <i class="fa fa-plus"> Add Field</i></button>
-																</div>
-																<div class="col-lg-8">
-																	
-																</div>
-															</div>
 															
 															
 															<hr style="height:1px; border:none; color:#666666; background-color:#666666;">

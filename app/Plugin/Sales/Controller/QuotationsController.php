@@ -87,7 +87,7 @@ class QuotationsController extends SalesAppController {
 		if ($this->request->is('post')) {
 		
             if (!empty($this->request->data)) {
-            	
+            	//pr($this->request->data);
             	if(!empty($this->request->data['Inquiry']['id'])){
             		$inquiryId = $this->request->data['Inquiry']['id'];
             		$quotationId = $this->Quotation->addInquiryQuotation($this->request->data['Quotation'],$userData['User']['id'],$inquiryId);
