@@ -37,7 +37,7 @@ class Supplier extends AppModel {
 				'Email' => array(
 					'className' => 'Purchasings.Email',
 					'foreignKey' => 'foreign_key',
-					'conditions' => "model = 'Company'",
+					'conditions' => "model = 'Supplier'",
 					'dependent' => true
 				),
 			),

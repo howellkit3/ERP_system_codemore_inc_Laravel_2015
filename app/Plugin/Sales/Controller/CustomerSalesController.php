@@ -38,7 +38,6 @@ class CustomerSalesController extends SalesAppController {
 	public function add(){
 
 		$userData = $this->Session->read('Auth');
-		
 	
 		if ($this->request->is('post')) {
 
