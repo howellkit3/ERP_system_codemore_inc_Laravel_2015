@@ -534,6 +534,12 @@
                                 <header class="main-box-header clearfix">
                                     <h1>Contact Person Email</h1>
                                 </header>
+
+                                <?php foreach ($this->request->data['ContactPersonInfo']['Email'] as $key => $value) { 
+
+                                    $this->request->data['ContactPersonData'][$key]['Email'][$key] = $value;
+                                      echo $this->Form->input('ContactPersonData.'.$key.'.Email.'.$key.'.id');
+                                ?>
                             
                                 <div class="main-box-body clearfix">
                                     <section class="cloneMe1 contactPersonEmail_section">
@@ -541,7 +547,7 @@
                                             <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span> Email</label>
                                             <div class="col-lg-2">
                                                 <?php 
-                                                    echo $this->Form->input('ContactPersonData.0.Email.0.type', array(
+                                                    echo $this->Form->input('ContactPersonData.'.$key.'.Email.'.$key.'.type', array(
                                                         'options' => array('Work', 'Home', 'Business'),
                                                         'label' => false,
                                                         'class' => 'form-control required',
@@ -552,7 +558,7 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <?php 
-                                                    echo $this->Form->input('ContactPersonData.0.Email.0.email', array('class' => 'form-control required email','label' => false));
+                                                    echo $this->Form->input('ContactPersonData.'.$key.'.Email.'.$key.'.email', array('class' => 'form-control required email','label' => false));
                                                 ?>
                                             </div>
                                             <div class="col-lg-2">
@@ -563,6 +569,8 @@
                                         <hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
                                     </section>
                                 </div>
+
+                            <?php } ?>
 
                                 <hr>
                                 <section class="cloneMe1 contactPersonAddress_section">

@@ -162,7 +162,7 @@
 					                            </tr>
 					                        </thead>
 					                        <?php
-						                		foreach($supplier['Contact'] as $contactNumber) { ?>
+						                		foreach($suppliers['Contact'] as $contactNumber) { ?>
 							                        <tbody aria-relevant="all" aria-live="polite" role="alert">
 						                         		<tr>
 						                         			<td>
@@ -190,11 +190,10 @@
 				                                <th><a href="#"><span>Name</span></a></th>
 				                                <th><a href="#"><span>Position</span></a></th>
 				                                <th><a href="#"><span>Created</span></a></th>
-				                                <th><a href="#"><span>Action</span></a></th>
 				                            </tr>
 				                        </thead>
 				                        <?php
-					                		foreach($Supplier['ContactPerson'] as $contactPerson) { ?>
+					                		foreach($suppliers['ContactPerson'] as $contactPerson) { ?>
 						                        <tbody aria-relevant="all" aria-live="polite" role="alert">
 					                         		<tr>
 					                         			<td>
@@ -210,11 +209,11 @@
 					                         				<?php echo date('M d, Y', strtotime($contactPerson['created'])); 
 					                         				?>
 					                         			</td>
-					                         			<td>
+					                         			<!-- <td>
 					                         				<?php
-										                        echo $this->Html->link(' View Details ', array('controller' => 'customer_sales', 'action' => 'person',$contactPerson['id']),array('class' =>'btn btn-primary','escape' => false));
+										                        // echo $this->Html->link(' View Details ', array('controller' => 'customer_sales', 'action' => 'person',$contactPerson['id']),array('class' =>'btn btn-primary','escape' => false));
 										                    ?>
-					                         			</td>
+					                         			</td> -->
 					                         		</tr>
 						                        </tbody>
 				                        <?php } ?>

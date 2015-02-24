@@ -38,7 +38,6 @@ class SuppliersController extends PurchasingsAppController {
 
             	$this->request->data = $this->Supplier->formatData($this->request->data,$user['id']);
 
-
             	if ($this->Supplier->saveAssociated($this->request->data)) {
             		
             		$value = $this->Supplier->id.'-'.time();
@@ -46,9 +45,10 @@ class SuppliersController extends PurchasingsAppController {
             		$this->Supplier->updateModelField('unique_id',$value,$this->Supplier->id);
 
             	 	$contactPersonId = $this->Supplier->ContactPerson->saveContact($this->request->data['ContactPersonData'], $this->Supplier->id,$userData['User']['id']);
-            	
             		$this->Supplier->Contact->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
             		$this->Supplier->Address->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
+            		$this->Supplier->Email->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
+
 
 	            	$this->Session->setFlash('Save Successfully','success');
 
@@ -69,10 +69,10 @@ class SuppliersController extends PurchasingsAppController {
 
 		if (!empty($dataId)) {
 
-				$this->Supplier->bind(array('Address','Product','Permit','Email','Organization'));
+				$this->Supplier->bind(array('Address','Product','Permit','Email','Organization','Contact','ContactPerson'));
 
 				$suppliers = $this->Supplier->findById($dataId);
-
+				
 				$this->set(compact('suppliers'));
 		}
 
@@ -103,18 +103,22 @@ class SuppliersController extends PurchasingsAppController {
 		if (!empty($this->request->data)) {
 
 
+
 	        	$this->Supplier->bind(array('Address','Product','Permit','Email','Organization','Contact','ContactPerson'));
 
 	        	$user = $this->Session->read('Auth.User');
 
 	        	$this->request->data = $this->Supplier->formatData($this->request->data,$user['id']);
+
 	        	
 	        	if ($this->Supplier->saveAssociated($this->request->data)) {
 
 	        		$contactPersonId = $this->Supplier->ContactPerson->saveContact($this->request->data['ContactPersonData'], $this->Supplier->id,$userData['User']['id']);
-            	
+            		
             		$this->Supplier->Contact->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
             		$this->Supplier->Address->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
+            		$this->Supplier->Email->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
+
 
 					$this->Session->setFlash('Edit Supplier Successfully','success');
 
