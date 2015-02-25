@@ -38,8 +38,6 @@ class Supplier extends AppModel {
 					'className' => 'Purchasings.Email',
 					'foreignKey' => 'foreign_key',
 					'conditions' => "model = 'Supplier'",
-<<<<<<< HEAD
-=======
 					'dependent' => true
 				),
 				'ContactPerson' => array(
@@ -51,7 +49,6 @@ class Supplier extends AppModel {
 					'className' => 'Purchasings.Contact',
 					'foreignKey' => 'foreign_key',
 					'conditions' => "model = 'Supplier'",
->>>>>>> 0c4197a85f0bf097cdb0bbca91814d07baa776fc
 					'dependent' => true
 				),
 			),
