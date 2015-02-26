@@ -16,6 +16,21 @@
                                     )); 
         ?>
         </li>
+          <li class="dropdown hidden-xs">
+        <?php 
+            echo $this->Html->link("<span class='count'>Raw Materials
+</span>", array(
+                                    'controller' => 'raw_materials', 
+                                    'action' => 'index',
+                                    'plugin' => 'ware_house'
+                                    ),
+                                    array(
+                                    'escape' => false,
+                                    'class' => 'btn'
+                                    )); 
+        ?>
+        </li>
+   
    
     </ul>
 </div>
