@@ -4,7 +4,7 @@ App::uses('SessionComponent', 'Controller/Component');
 
 class QuotationsController extends SalesAppController {
 
-	public $uses = array('Sales.Company','Sales.Quotation');
+	public $uses = array('Sales.Company','Sales.Quotation','Sales.Inquiry');
 	public $helper = array('Sales.Country');
 	public $useDbConfig = array('koufu_system');
 
@@ -85,21 +85,70 @@ class QuotationsController extends SalesAppController {
 		$this->Quotation->bind(array('QuotationField'));
 
 		if ($this->request->is('post')) {
-		
+			//pr($this->request->data);exit();
+
             if (!empty($this->request->data)) {
-            	//pr($this->request->data);
+            	
+            	//pr($inquiryId); exit();
+            	
             	if(!empty($this->request->data['Inquiry']['id'])){
+            		$this->Company->bind(array('Inquiry'));
+	            	$bindData = $this->Company->Inquiry->find('first', 
+	            														array(
+													  		  'conditions' => 
+													  		  			array(
+													  		  'Inquiry.id' => $this->request->data['Inquiry']['id']
+																)
+															));
+
+	            	$companyName = $this->Company->find('first',array(
+	            										'conditions' => 
+	            												array(
+	            										'id' => $bindData['Inquiry']['company_id']
+	            										)
+	            									));
+	            	//pr($companyName); exit();
+
             		$inquiryId = $this->request->data['Inquiry']['id'];
             		$quotationId = $this->Quotation->addInquiryQuotation($this->request->data['Quotation'],$userData['User']['id'],$inquiryId);
+            		$quotationUniqueId = $this->Quotation->find('first', 
+            															array(
+            													'conditions' => 
+            															array(
+            													'inquiry_id' => $inquiryId 
+            														)
+            													));
+            		//pr($quotationUniqueId);exit();
+            		
             		
             	}else{
+
+
             		$companyId = $this->request->data['Company']['id'];
+            		$companyName = $this->Company->find('first',array(
+	            										'conditions' => 
+	            												array(
+	            										'id' =>$this->request->data['Company']['id']
+	            										)
+	            									));
+
+            		//pr($companyName);exit();
             		$quotationId = $this->Quotation->addCompanyQuotation($this->request->data['Quotation'],$userData['User']['id'],$companyId);
+            		$quotationUniqueId = $this->Quotation->find('first', 
+            															array(
+            													'conditions' =>
+            															 array(
+            													'company_id' => $companyId
+            														)
+            													));
 					
             	}
             	$this->Quotation->bind(array('QuotationField'));
             	$this->Quotation->QuotationField->saveQuotationField($this->request->data,$quotationId,$userData['User']['id']);
-        		
+
+        		$this->loadModel('Ticket.JobTicketSummary');
+        		$this->JobTicketSummary->addSummaryDetails($companyName,$quotationUniqueId,$userData['User']['id']);
+
             	$this->Session->setFlash(__('Quotation Complete.'));
             	$this->redirect(
                     array('controller' => 'quotations', 'action' => 'index')

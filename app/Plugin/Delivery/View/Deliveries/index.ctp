@@ -1,4 +1,3 @@
-
 <div class="row">
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
@@ -49,17 +48,32 @@
                                         <td>
                                             <?php
                                                 echo $this->Html->link('<span class="fa-stack">
-                                                    <i class="fa fa-square fa-stack-2x"></i>
-                                                    <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-                                                    </span> ', array('controller' => 'Schedules', 
+                                                                        <i class="fa fa-square fa-stack-2x"></i>
+                                                                        <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                                                                        </span> ', array(
+                                                                        'controller' => 'Schedules', 
                                                                         'action' => 'view',
                                                                         $scheduleDataList['Schedule']['sales_order_id'] 
-                                                                    ),
-                                                                    array(
+                                                                                    ), array(
                                                                         'class' =>' table-link',
                                                                         'escape' => false,
                                                                         'title'=>'View Information'
                                                                     ));
+
+                                            ?>
+                                            <?php
+                                                echo $this->Html->link('<span class="fa-stack">
+                                                                        <i class="fa fa-square fa-stack-2x"></i>
+                                                                        <i class="fa fa fa-check-square fa-lg fa-stack-1x fa-inverse"></i>
+                                                                        </span> ', array( 
+                                                                        'controller' => 'Deliveries', 
+                                                                        'action' => 'createDeliveryReceipts',
+                                                                         $scheduleDataList['Schedule']['sales_order_id'] 
+                                                                                ), array(
+                                                                        'class' =>' table-link',
+                                                                        'escape' => false,
+                                                                        'title'=>'Create Delivery Receipt'
+                                                        ));
 
                                             ?>
                                         </td>
@@ -72,15 +86,6 @@
                     </table>
                     <hr>
                 </div>
-                <!-- <ul class="pagination pull-right">
-                    <li><a href="#"><i class="fa fa-chevron-left"></i></a></li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#"><i class="fa fa-chevron-right"></i></a></li>
-                </ul> -->
             </div>
     
         </div>

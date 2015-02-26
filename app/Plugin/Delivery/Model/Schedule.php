@@ -46,7 +46,7 @@ class Schedule extends AppModel {
 				'TruckSchedule' => array(
 					'className' => 'Delivery.TruckSchedule',
 					'foreignKey' => false,
-					'conditions' => 'TruckSchedule.truck_id = Truck.id'
+					'conditions' => 'TruckSchedule.truck_id = Schedule.truck_id'
 				),
 			)
 		),false);
@@ -93,9 +93,12 @@ class Schedule extends AppModel {
 									)
 								));
 		if ($this->id) {
+
 			    $this->save( array(
 			    			'status' =>'Accepted',
-		     				'truck_id' =>$data['TruckSchedules']['truckPlateNumber'] 
+		     				'truck_id' =>$data['TruckSchedules']['truckPlateNumber'], 
+		     				'quantity' => $data['TruckSchedules']['quantity'],
+		     				'schedule' => $data['TruckSchedules']['schedule'],
 		    				));
 
 		 }

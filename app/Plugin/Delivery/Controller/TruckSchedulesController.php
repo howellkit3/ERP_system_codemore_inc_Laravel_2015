@@ -19,6 +19,7 @@ class TruckSchedulesController extends DeliveryAppController {
                                               'sales_order_id' => $id
                                                 )
                                              ));
+
         $this->loadModel('Delivery.Truck');
         $truckId = $this->Truck->find('list', array(
                                          'fields' => array(
@@ -40,19 +41,19 @@ class TruckSchedulesController extends DeliveryAppController {
         $userData = $this->Session->read('Auth');
         if($this->request->is('post')){
             if(!empty($this->request->data)){
-                // $this->loadModel('Delivery.TruckSchedule');
-                // $this->TruckSchedule->addTruckSchedule($this->request->data, $userData['User']['id']);
+                $this->loadModel('Delivery.TruckSchedule');
+                $this->TruckSchedule->addTruckSchedule($this->request->data, $userData['User']['id']);
 
-                // $this->Schedule->updateStatus($this->request->data, $userData['User']['id']);
+                $this->Schedule->updateStatus($this->request->data, $userData['User']['id']);
 
                 $this->loadModel('Sales.RequestDeliverySchedule');
                 $this->RequestDeliverySchedule->updateRequest($this->request->data, $userData['User']['id']);
 
                 $this->redirect( array(
-                             'controller' => 'deliveries', 
-                             'action' => 'index',
-                             'plugin' => 'delivery'
-                         ));
+                                     'controller' => 'deliveries', 
+                                     'action' => 'index',
+                                     'plugin' => 'delivery'
+                                ));
     
             }
         }

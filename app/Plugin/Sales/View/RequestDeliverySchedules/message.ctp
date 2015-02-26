@@ -1,3 +1,4 @@
+<?php echo $this->element('sales_option');?><br><br>
 <center>
 	<?php
 		echo $this->Html->image('post_processing_icon.jpg', array(

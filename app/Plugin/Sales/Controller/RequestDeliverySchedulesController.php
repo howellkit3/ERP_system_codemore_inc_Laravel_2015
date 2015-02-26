@@ -17,11 +17,14 @@ class RequestDeliverySchedulesController extends SalesAppController {
                 $this->loadModel('Delivery.Schedule');
                 $this->Schedule->addSchedule($this->request->data, $userData['User']['id']);
 
+                $this->loadModel('Ticket.JobTicketSummary');
+                $this->JobTicketSummary->updateSchedule($this->request->data, $userData['User']['id']);
+
                 $this->redirect( array(
 		                             'controller' => 'RequestDeliverySchedules', 
 		                             'action' => 'message',
 		      
-		        ));
+		        				));
             }
         }
 
@@ -53,7 +56,6 @@ class RequestDeliverySchedulesController extends SalesAppController {
 			$this->redirect( array(
 		                             'controller' => 'RequestDeliverySchedules', 
 		                             'action' => 'message',
-		      
 		                         ));
 
 		}
@@ -61,8 +63,7 @@ class RequestDeliverySchedulesController extends SalesAppController {
 		else if($salesOrderId['Schedule']['status'] == "Accepted"){
 			$this->redirect( array(
 		                             'controller' => 'RequestDeliverySchedules', 
-		                             'action' => 'accept',
-		      
+		                             'action' => 'accept',$salesOrderId['Schedule']['sales_order_id']
 		                         ));
 		}
 
@@ -72,7 +73,31 @@ class RequestDeliverySchedulesController extends SalesAppController {
 	public function message(){
 
 	}
-	public function accept(){
+	public function accept($id = null){
+
+        $requestScheduleInfo = $this->RequestDeliverySchedule->find('first', array(
+                                             				 		'conditions' => array(
+                                             				 		'sales_order_id' => $id
+                                              				  )
+                                           				 ));
+
+        $this->loadModel('Delivery.Schedule');
+        // $this->loadModel('Delivery.TruckSchedule');
+        $this->Schedule->bind(array('TruckSchedule'));
+        $scheduleInfo = $this->Schedule->find('first',array(
+        							  'conditions' => array(
+        							  'Schedule.sales_order_id' => $id
+        							  	)
+        							));
+        // pr($bind['TruckSchedule']['time_from']);exit();
+        // $scheduleInfo = $this->TruckSchedule->find('first', array(
+        //                      				  'conditions' => array(
+        //                      				  'sales_order_id' => $id
+        //                           				  )
+        //                        				 ));
+      
+
+        $this->set(compact('requestScheduleInfo','scheduleInfo'));
 
 	}
 	

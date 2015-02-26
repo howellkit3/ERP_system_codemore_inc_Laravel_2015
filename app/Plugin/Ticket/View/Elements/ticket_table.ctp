@@ -14,11 +14,36 @@
             <td>
                 <?php
                     echo $this->Html->link('<span class="fa-stack">
-                        <i class="fa fa-square fa-stack-2x"></i>
-                        <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-                        </span> ', array('controller' => 'ticketing_systems', 'action' => 'view',$ticketDataList['Ticket']['id']),array('class' =>' table-link','escape' => false,'title'=>'View Information'));
+                                            <i class="fa fa-square fa-stack-2x"></i>
+                                            <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                                            </span> ', 
+                                                     array(
+                                            'controller' => 'ticketing_systems', 
+                                            'action' => 'view' 
+                                           // $ticketDataList['Ticket']['id']
+                                                ), array( 
+                                            'class' =>' table-link','escape' => false, 
+                                            'title'=>'View Information'
+
+                                            ));
                 ?>
-               
+                 <?php
+                        echo $this->Html->link('<span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa fa-check-square fa-lg fa-stack-1x fa-inverse"></i>
+                                                </span> ', array( 
+                                                'controller' => 'jobTicketSummaries', 
+                                                'action' => 'index', 
+                                                $ticketDataList['Ticket']['unique_id']
+                                                //'plugin' => 'Ticket'
+                                                 //$scheduleDataList['Schedule']['sales_order_id'] 
+                                                        ), array(
+                                                'class' =>' table-link',
+                                                'escape' => false,
+                                                'title'=>'Create Delivery Receipt'
+                                ));
+
+                    ?>
             </td>
         </tr>
 
