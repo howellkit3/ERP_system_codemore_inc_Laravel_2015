@@ -19,11 +19,11 @@
                                             </span> ', 
                                                      array(
                                             'controller' => 'ticketing_systems', 
-                                            'action' => 'view' 
-                                           // $ticketDataList['Ticket']['id']
+                                            'action' => 'view', 
+                                            $ticketDataList['Ticket']['id']
                                                 ), array( 
                                             'class' =>' table-link','escape' => false, 
-                                            'title'=>'View Information'
+                                            'title'=>'View Timeline'
 
                                             ));
                 ?>
@@ -40,7 +40,7 @@
                                                         ), array(
                                                 'class' =>' table-link',
                                                 'escape' => false,
-                                                'title'=>'Create Delivery Receipt'
+                                                'title'=>'Create Job Ticket Details'
                                 ));
 
                     ?>

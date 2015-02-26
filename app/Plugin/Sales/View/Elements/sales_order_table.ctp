@@ -27,16 +27,20 @@
                 ?>
                 <?php
                     echo $this->Html->link('<span class="fa-stack">
-                        <i class="fa fa-square fa-stack-2x"></i>
-                        <i class="fa fa-truck fa-stack-1x fa-inverse"></i>
-                        </span> ', array('controller' => 'requestDeliverySchedules', 
-                                         'action' => 'add',
-                                         $salesOderlist['Quotation']['id'],), 
-                                    array(
-                                        'class' =>' table-link',
-                                        'escape' => false,
-                                        'title'=>'Request Delivery'
-                                        ));
+                                            <i class="fa fa-square fa-stack-2x"></i>
+                                            <i class="fa fa-truck fa-stack-1x fa-inverse"></i>
+                                            </span> ', 
+                                                        array( 
+                                            'controller' => 'requestDeliverySchedules', 
+                                            'action' => 'add',
+                                             $salesOderlist['Quotation']['id'],'sales'
+                                             ),
+                                            
+                                                        array(
+                                            'class' =>' table-link',
+                                            'escape' => false,
+                                            'title'=>'Request Delivery'
+                                            ));
                             
                 ?>
             </td>

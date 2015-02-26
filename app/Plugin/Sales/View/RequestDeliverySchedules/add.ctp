@@ -13,29 +13,7 @@
 	<div class="row">
 	    <div class="col-lg-12">
 	        <div class="main-box">
-	        	<?php
-	    //     		//pr($salesOrderId['Schedule']['sales_order_id']);exit();
-	    //     		if($quotationId['Quotation']['unique_id'] == $salesOrderId['Schedule']['sales_order_id']){
-	    //     			echo "Your Request for Delivery had been Sent so please wait for confirmation";
-	    //     	?>
-	        		<?php
-	    //     		 		echo $this->Html->link('Back', array(
-	    //     		 											'controller' => 'sales_orders', 
-     //                    									    'action' => 'index',
-     //                    									   	'plugin' =>'sales'),
-				 //                        					array(
-     //            												'class' =>'btn btn-primary',
-     //            												'escape' => false
-				 //                        						));
-				 // ?>
-	
-				 	<?php
-	    //     		}
-	        		
-	    //     		else{
-	        	?>
-
-	        			<header class="main-box-header clearfix">
+	  	        			<header class="main-box-header clearfix">
 	                	<h1>Add Schedule</h1>
 	           		 	</header>
 	            
@@ -129,10 +107,26 @@
 								</div>
 								<div class="col-lg-8">
 									<?php 
+										$action = "";
+										$plugin ="";
+										$controller ="";
+
+										if($path == "ticket") {
+											$controller = "jobTicketSummaries";
+											$action = "index"."/".$quotationId['Quotation']['unique_id'];
+											$plugin = "ticket";
+
+										}
+										else{
+											$controller = "sales_orders";
+											$action = "index";
+											$plugin = "sales";
+										}
+
 				                        echo $this->Html->link('Cancel', array(
-				                        										'controller' => 'sales_orders', 
-				                        									   'action' => 'index',
-				                        									   	'plugin' =>'sales'),
+				                        										'controller' => $controller, 
+				                        									   'action' => $action,
+				                        									   	'plugin' => $plugin),
 		                        										 array(
 		                        												'class' =>'btn btn-primary',
 		                        												'escape' => false
