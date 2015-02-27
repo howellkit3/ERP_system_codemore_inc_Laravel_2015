@@ -46,8 +46,8 @@ class Truck extends AppModel {
 				
 			),
 			'hasMany' => array(
-				'TruckAvailability' => array(
-					'className' => 'Delivery.TruckAvailability',
+				'TruckSchedule' => array(
+					'className' => 'Delivery.TruckSchedule',
 					'foreignKey' => 'truck_id',
 					'dependent' => true
 				),

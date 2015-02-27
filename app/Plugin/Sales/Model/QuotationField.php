@@ -85,41 +85,21 @@ class QuotationField extends AppModel {
 		
 	}
 	public function editFields($data = null, $quotationId = null){
+		//pr($data);exit();
+		
 		//pr($quotationId);exit();
-		$this->id = $this->find('all',array('conditions' => array('quotation_id' => $quotationId))
-																);
-		//pr($data[$this->name]);exit();
+		$this->id = $this->find('all',array( 
+								'conditions' => array(
+								'quotation_id' => $quotationId
+								)));
+		//pr($this->id);exit();
 		if ($this->id) {
 			foreach ($data[$this->name] as $key => $customFieldValue) 
-			{	
-				$this->saveAll($customFieldValue);
+			{
+				$this->save($customFieldValue);
 			}
 		}
 		return $this->id;
-		// if ($this->id) {
-
-		//     $this->saveField('name', $data['Quotation']['name']);
-		//     $this->bind(array('QuotationField'));
-		//     $this->QuotationField->editFields($data);
-		//     //pr($data);exit();
-		//     //$this->QuotationField
-
-		// }
-		//pr($data[$this->name]);exit();
-			
-		// $this->create();
-
-		// // foreach ($data[$this->name] as $key => $customFieldValue) 
-		// // {	
-
-		// // 	$customFieldValue['quotation_id'] = $quotationId;
-		// // 	$customFieldValue['created_by'] = $auth;
-		// // 	$customFieldValue['modified_by'] = $auth;
-		// // 	$this->saveAll($customFieldValue);
-		// // }
-		
-		// ;
-	
 	}
 	
 }

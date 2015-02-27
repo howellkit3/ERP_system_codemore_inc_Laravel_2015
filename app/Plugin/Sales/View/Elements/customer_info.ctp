@@ -473,10 +473,10 @@
                                                 <div class="multi-field clearfix">
                                                    <div class="">
                                                         <?php 
-                                                            echo $this->Html->link('Cancel ', array('controller' => 'customer_sales', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                                                            echo $this->Html->link('Cancel ', array('controller' => 'customer_sales', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false,'style' => 'margin-left:10px;'));
                                                         ?>
                                                     </div>   
-                                                    <div class="margin-left: 10px;">
+                                                    <div class="">
                                                         <?php 
                                                             echo $this->Form->submit('Submit Customer Information', array('class' => 'btn btn-success pull-right',  'title' => 'Click here to add the customer'));
                                                         ?>

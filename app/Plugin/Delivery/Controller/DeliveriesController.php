@@ -10,5 +10,9 @@ class DeliveriesController extends DeliveryAppController {
         //pr($scheduleData);
         $this->set(compact('scheduleData'));
    }
+
+   public function createDeliveryReceipts(){
+   		
+   }
      
 }

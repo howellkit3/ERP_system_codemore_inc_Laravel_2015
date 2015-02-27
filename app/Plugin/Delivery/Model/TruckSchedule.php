@@ -2,13 +2,13 @@
 App::uses('AppModel', 'Model');
 App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
 
-class TruckAvailability extends AppModel {
+class TruckSchedule extends AppModel {
 	public $recursive = -1;
 	
 	public $actsAs = array('Containable');
 
     public $useDbConfig = 'koufu_delivery_system';
-    public $name = 'TruckAvailability';
+    public $name = 'TruckSchedule';
     
 	// public $validate = array(
  //        'description' => array(
@@ -50,17 +50,17 @@ class TruckAvailability extends AppModel {
 		$this->contain($model);
 	}
 
-	public function addSchedule($data,$auth){
+	public function addTruckSchedule($data,$auth){
 		//pr($data);exit();
 		$this->create();
-		$data['TruckAvailability']['truck_id'] = $data['TruckAvailabilities']['truckPlateNumber'];
-		$data['TruckAvailability']['sales_order_id'] = $data['TruckAvailabilities']['sales_order_id'];
-		$data['TruckAvailability']['location'] = $data['TruckAvailabilities']['location'];
-		$data['TruckAvailability']['date'] = $data['TruckAvailabilities']['schedule'];
-		$data['TruckAvailability']['time_from'] = $data['TruckAvailabilities']['timeFrom'];
-		$data['TruckAvailability']['time_to'] = $data['TruckAvailabilities']['timeTo'];
-		$data['TruckAvailability']['created_by'] = $auth;
-		$data['TruckAvailability']['modified_by'] = $auth;
+		$data['TruckSchedule']['truck_id'] = $data['TruckSchedules']['truckPlateNumber'];
+		$data['TruckSchedule']['sales_order_id'] = $data['TruckSchedules']['sales_order_id'];
+		$data['TruckSchedule']['location'] = $data['TruckSchedules']['location'];
+		$data['TruckSchedule']['date'] = $data['TruckSchedules']['schedule'];
+		$data['TruckSchedule']['time_from'] = $data['TruckSchedules']['timeFrom'];
+		$data['TruckSchedule']['time_to'] = $data['TruckSchedules']['timeTo'];
+		$data['TruckSchedule']['created_by'] = $auth;
+		$data['TruckSchedule']['modified_by'] = $auth;
 		$this->save($data);
 
 		return $this->id;
