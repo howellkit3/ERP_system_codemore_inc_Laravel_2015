@@ -139,7 +139,7 @@ CREATE TABLE IF NOT EXISTS `contacts` (
 
 CREATE TABLE IF NOT EXISTS `contact_people` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `supplier_id` int(11) DEFAULT NULL,
+  `company_id` int(11) DEFAULT NULL,
   `firstname` varchar(50) DEFAULT NULL,
   `middlename` varchar(50) DEFAULT NULL,
   `lastname` varchar(50) DEFAULT NULL,
@@ -151,9 +151,6 @@ CREATE TABLE IF NOT EXISTS `contact_people` (
   PRIMARY KEY (`id`),
   KEY `id_idx` (`company_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
-
-ALTER TABLE `contact_people`
-  ADD CONSTRAINT `id` FOREIGN KEY (`supplier_id`) REFERENCES `companies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
   -- add unique id for supplier
 
