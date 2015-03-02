@@ -38,7 +38,7 @@ class JobTicketSummary extends AppModel {
     	$this->create();
     	$data['JobTicketSummary']['detail_id'] = $detailId['JobTicketDetail']['id'];	
     	$data['JobTicketSummary']['description_id'] = $descriptionId;
-    	$data['JobTicketSummary']['value'] = $uniqueId['QuotationField'][$descriptionId]['description'];	
+    	$data['JobTicketSummary']['value'] = $uniqueId['QuotationField'][$descriptionId + 2]['description'];	
 		$data['JobTicketSummary']['created_by'] = $auth;
 		$data['JobTicketSummary']['modified_by'] = $auth;
 
@@ -84,5 +84,6 @@ class JobTicketSummary extends AppModel {
 
 
 	}
+    
 
 }

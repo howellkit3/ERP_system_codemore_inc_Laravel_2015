@@ -83,14 +83,14 @@ class CustomerSalesController extends SalesAppController {
 	public function view($companyId = null){
 
 		
-		$this->Company->bind(array('Address','Contact','Email','ContactPerson'));
+		$this->Company->bind(array('Address','Contact','Email','ContactPerson','Product'));
 
 		$this->Company->recursive = 1;
 
 		$company = $this->Company->find('first', array(
 	        'conditions' => array('Company.id' => $companyId)
 	    ));
-		
+		//pr($company);exit();
 		$this->set(compact('company'));
 		
 	}

@@ -78,6 +78,7 @@
 								<li><a href="#tab-activity" data-toggle="tab">Phone</a></li>
 								<li><a href="#tab-chat" data-toggle="tab">Email</a></li>
 								<li><a href="#tab-friends" data-toggle="tab">Contact Person</a></li>
+								<li><a href="#tab-products" data-toggle="tab">Products</a></li>
 								<?php 
 			                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'customer_sales', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
 			                    ?>
@@ -252,6 +253,57 @@
 					                    </table>
 									</div>
 								</div>
+
+								<div class="tab-pane fade" id="tab-products">
+									<div class="table-responsive">
+										<?php 
+			                       			 echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg">
+			                       			 						</i> Add Product ', 
+			                       			 									array( 
+			                       			 						'controller' => 'products', 
+			                       			 						'action' => 'add', 
+			                       			 						$company['Company']['id']
+			                       			 									), 
+			                       			 									array(
+			                       			 						'class' =>'btn btn-primary pull-right',
+			                       			 						'escape' => false
+			                       			 						));
+			                    		?>
+										<table class="table table-striped table-hover">
+					                        <thead>
+					                            <tr>
+					                                <th><a href="#"><span>Product</span></a></th>
+					                                <th><a href="#"><span>Date Created</span></a></th>
+					                                <th><a href="#"><span>Action</span></a></th>
+					                   
+					                            </tr>
+					                        </thead>
+					                        <?php
+						                		foreach($company['Product'] as $companyProduct) { ?>
+							                        <tbody aria-relevant="all" aria-live="polite" role="alert">
+						                         		<tr>
+						                         			
+						                         			<td>
+						                         				<?php echo $companyProduct['product_name']; ?>
+						                         			</td>
+						                         			<td>
+						                         				<i class="fa fa-clock-o">
+						                         				<?php echo date('M d, Y', strtotime($companyProduct['created'])); 
+						                         				?>
+						                         			</td>
+						                         			<td>
+						                         				<i class="fa fa-clock-o">
+						                         				<?php echo date('M d, Y', strtotime($companyProduct['created'])); 
+						                         				?>
+						                         			</td>
+
+						                         		</tr>
+							                        </tbody>
+					                        <?php } ?>
+					                    </table>
+									</div>
+								</div>
+
 							</div>
 						</div>
 					</div>

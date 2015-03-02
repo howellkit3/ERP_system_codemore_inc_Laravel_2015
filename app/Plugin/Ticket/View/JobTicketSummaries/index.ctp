@@ -19,9 +19,10 @@
                 //pr($truckAvailability);
                 //pr($truckId);
                   echo $this->Html->link('<i class="fa fa-check-square fa-lg"></i> Edit ', 
-                        array('controller' => 'truckSchedules', 
-                            'action' => 'add',
-                            //$scheduleInfo['Schedule']['sales_order_id']
+                        array('controller' => 'jobTicketSummaries', 
+                            'action' => 'edit',
+                            $companyDetails['JobTicketDetail']['unique_id']
+                           
                             ),
                         array('class' =>'btn btn-primary pull-right',
                             'escape' => false));
@@ -41,7 +42,7 @@
               $value= "";
 
               if( !empty($description[3]['JobTicketSummary']['value'])){
-                    $value = array($description[3]['JobTicketSummary']['value'],$description[2]['JobTicketSummary']['value'],$description[4]['JobTicketSummary']['value']);
+                    $value = array( $description[2]['JobTicketSummary']['value'], $description[3]['JobTicketSummary']['value'],  !empty($description[4]['JobTicketSummary']['value']));
                    
               } 
               else{
@@ -59,7 +60,7 @@
                                             'class' =>' table-link',
                                             'escape' => false,
                                             'title'=>'Request Delivery'
-                                            )), "" , "");
+                                            )), "Not Yet Available" , "Not Yet Available");
               }
             ?>
             <div class="main-box-body clearfix">
@@ -81,6 +82,21 @@
                    								<td>Quantity</td>
                    								<td><?php echo $description[0]['JobTicketSummary']['value']; ?></td>
                  							</tr>
+
+                              <tr>
+                                  <td>Process</td>
+                                  <td><?php //echo $description[0]['JobTicketSummary']['value']; ?></td>
+                              </tr>
+
+                              <tr>
+                                  <td>Materials</td>
+                                  <td><?php //echo $description[0]['JobTicketSummary']['value']; ?></td>
+                              </tr>
+
+                              <tr>
+                                  <td>Sizes and Thickness</td>
+                                  <td><?php //echo $description[0]['JobTicketSummary']['value']; ?></td>
+                              </tr>
 
                  							<tr>
                    								<td>Unit Price</td>

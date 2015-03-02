@@ -248,3 +248,7 @@ INSERT INTO `custom_fields` (`id`, `fieldlabel`, `created_by`, `modified_by`, `c
 --- Feb 18 2015 Irvin
 ALTER TABLE `companies` ADD `tin` INT(250) NULL AFTER `website`;
 ALTER TABLE `companies` ADD `payment_term` varchar(250) NULL AFTER `website`;
+
+--- March 2 2015 Jaimeer
+ ALTER TABLE `koufu_sale`.`products`     ADD COLUMN `company_id` INT NULL AFTER `type_id`;
+ products;
