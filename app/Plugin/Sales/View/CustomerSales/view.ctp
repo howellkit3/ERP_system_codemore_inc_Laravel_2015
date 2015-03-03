@@ -292,9 +292,34 @@
 						                         				?>
 						                         			</td>
 						                         			<td>
-						                         				<i class="fa fa-clock-o">
-						                         				<?php echo date('M d, Y', strtotime($companyProduct['created'])); 
-						                         				?>
+						                         				<?php
+												                    echo $this->Html->link('<span class="fa-stack">
+																		                    <i class="fa fa-square fa-stack-2x"></i>
+																		                    <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+																		                    </span> ', 
+																		                    		array( 
+																		                    'controller' => 'customer_sales', 
+																		                    'action' => 'edit'), 
+																		                    		array( 
+																		                    'class' =>' table-link', 
+																		                    'escape' => false,'title'=>'Edit Information'));
+												                ?>
+												                <?php
+												                    echo $this->Html->link('<span class="fa-stack">
+																		                    <i class="fa fa-square fa-stack-2x"></i>
+																		                    <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+																		                    </span>', 
+																		                    		array( 
+																		                    'controller' => 'customer_sales', 
+																		                    'action' => 'delete'
+																		                    		),
+																		                    		array( 
+																		                    'class' =>' table-link', 
+																		                    'escape' => false, 
+																		                    'title'=>'Delete Information', 
+																		                    'confirm' => 'Do you want to delete Customer ?'
+																		                    ));
+												                ?>
 						                         			</td>
 
 						                         		</tr>

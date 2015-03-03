@@ -23,9 +23,75 @@ jQuery(function($){
 			}
 			
 		}
-		})
+		});
 			
 	});
+
+	$('#itemCategory').change(function(){
+		//alert($(this).val());
+
+		var option = $(this).val();
+		//var type = $('#itemType').val();
+		
+		$.ajax({
+			url: serverPath + "sales/products/get_type/"+option,
+			type: "GET",
+			dataType: "json",
+			success: function(data) {
+				$('.option_append').remove();
+					$.each(data,function(i,name) {
+						console.log(name);
+						$('#itemType').append($('<option class="option_append">').text(name).attr('value',i));
+
+
+
+					});	
+				
+				}
+		}).done(function(){
+				$.ajax({
+				url: serverPath + "sales/products/get_product/"+$('#itemType').val()+"/"+$('#select_company').val(),
+				type: "GET",
+				dataType: "json",
+				success: function(data) {
+					$('.option_append_item').remove();
+						$.each(data,function(i,name) {
+							console.log(name);
+							$('#product').append($('<option class="option_append_item">').text(name).attr('value',i));
+
+						});
+					
+					}
+			});
+
+		});
+			
+	});
+
+	$('#itemType').change(function(){
+		//alert($(this).val());
+
+		var option = $(this).val();
+		//var type = $('#itemType').val();
+		
+			$.ajax({
+			url: serverPath + "sales/products/get_product/"+$('#itemType').val()+"/"+$('#select_company').val(),
+			type: "GET",
+			dataType: "json",
+			success: function(data) {
+				$('.option_append_item').remove();
+					$.each(data,function(i,name) {
+						console.log(name);
+						$('#product').append($('<option class="option_append_item">').text(name).attr('value',i));
+
+					});
+				
+				}
+			});
+
+		});
+			
+	
 
 });
 

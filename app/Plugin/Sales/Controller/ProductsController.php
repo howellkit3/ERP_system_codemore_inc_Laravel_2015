@@ -31,7 +31,11 @@ class ProductsController extends SalesAppController {
 												  'fields' =>
 												  		array(
 												  	'id','category_name'
-												  			)
+												  			),
+												  'conditions' => 
+												  		array(
+												  'status' => 'active'
+												  		)
 
 												));
 		
@@ -69,6 +73,68 @@ class ProductsController extends SalesAppController {
 		$this->autoRender = false;
 
 	}
+	public function get_product($typeId = null, $companyId = null){
 
+		$this->layout = false;
+		$this->loadModel('Sales.Product');
+		$data = $this->Product->find('list', 
+											array(
+									  'fields' =>
+											array(
+									  'id','product_name'
+											),
+									  'conditions' => 
+									  		array(
+									  'type_id' => $typeId, 
+									  'company_id' => $companyId
+									  		)
+										));
+		//pr($data);exit();
+		
+		echo json_encode($data);
+
+
+
+		$this->autoRender = false;
+
+	}
+
+	public function get_company_product($companyId = null){
+		$this->layout = false;
+	
+		$this->loadModel('Sales.Product');
+		$this->Product->bind(array('ItemType'));
+		$company = $this->Product->find('list', 
+											array(
+										'conditions' => 
+											array(
+										'company_id' => $companyId
+											),
+										'fields' => 
+											array(
+										'id','type_id'
+
+											)
+										));
+
+
+		pr($company);exit();
+		// $type = $this->ItemType->find('all', 
+		// 									array(
+		// 							  'conditions' => 
+		// 							  		array(
+		// 							  'id' =>$company
+		// 							  )
+
+		// 							));
+		// pr($type);exit();
+		
+		echo json_encode($data);
+
+
+
+		$this->autoRender = false;
+
+	}
 
 }

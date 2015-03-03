@@ -85,6 +85,7 @@ class Quotation extends AppModel {
 
 	public function addInquiryQuotation($data, $auth,$inquiryId){
 
+
 		$this->create();
 
 		$data['inquiry_id'] = $inquiryId;	
@@ -101,9 +102,10 @@ class Quotation extends AppModel {
 	}
 
 	public function addCompanyQuotation($data, $auth,$companyId){
+		//pr($data);die;
 
 		$this->create();
-
+		$data['product_id'] = $data['product'];
 		$data['company_id'] = $companyId;	
 		$data['created_by'] = $auth;
 		$data['modified_by'] = $auth;

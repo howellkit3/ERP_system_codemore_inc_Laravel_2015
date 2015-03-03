@@ -10,7 +10,22 @@ App::uses('AuthComponent', 'Controller/Component');
 class Product extends AppModel {
 	public $useDbConfig = 'koufu_sale';
     public $name = 'Product';
+    public $actsAs = array('Containable');
+    public function bind($model = array('Group')){
 
+		$this->bindModel(array(
+			
+			'belongsTo' => array(
+				'ItemType' => array(
+					'className' => 'Sales.ItemType',
+					'foreignKey' => 'type_id',
+					'dependent' => true
+				),
+			)
+		));
+
+		$this->contain($model);
+	}
 
 	public function addProduct($data,$auth){
 		//pr($id);exit();

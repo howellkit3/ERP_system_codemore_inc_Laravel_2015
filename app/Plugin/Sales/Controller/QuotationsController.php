@@ -51,6 +51,22 @@ class QuotationsController extends SalesAppController {
 
 		$customField = $this->CustomField->find('list', array('fields' => array('id', 'fieldlabel')));
 
+		$this->loadModel('Sales.ItemCategory');
+		$this->ItemCategory->bind(array('ItemType'));
+		$category = $this->ItemCategory->find('list',
+													array(
+											  'fields' => 
+											  		array(
+											 'id','category_name'
+											  	),
+											  'conditions' => 
+											  		array(
+											  'status' => 'active'
+											  	)
+
+											));
+		//pr($category);die;
+
 		if(!empty($inquiryId)){
 
 			$this->Company->bind(array('Address','Contact','Email','Inquiry'));
@@ -75,6 +91,7 @@ class QuotationsController extends SalesAppController {
 
 			$this->set(compact('companyData','customField'));
 		}
+		$this->set(compact('category'));
 		
 	}
 
@@ -88,8 +105,6 @@ class QuotationsController extends SalesAppController {
 			//pr($this->request->data);exit();
 
             if (!empty($this->request->data)) {
-            	
-            	
             	
             	if(!empty($this->request->data['Inquiry']['id'])){
             		$this->Company->bind(array('Inquiry'));
@@ -118,9 +133,7 @@ class QuotationsController extends SalesAppController {
             													'name' => $this->request->data['Quotation']['name']
             														)
             													));
-            		
-            		
-            		
+            			
             	}else{
 
 
@@ -145,7 +158,8 @@ class QuotationsController extends SalesAppController {
             	}
 
             	$this->Quotation->bind(array('QuotationField'));
-            	$this->Quotation->QuotationField->saveQuotationField($this->request->data, $quotationId,$userData['User']['id']);
+            	//pr($this->Qoutation->find('all'));die;
+            	$this->Quotation->QuotationField->saveQuotationField($this->request->data, $this->request->data['Quotation']['product'],$userData['User']['id']);
             	
     //     		$this->loadModel('Ticket.JobTicketDetail');
     //     		$this->JobTicketDetail->addJobDetails($companyName, $quotationUniqueId, $userData['User']['id']);
@@ -299,7 +313,7 @@ class QuotationsController extends SalesAppController {
 		$this->Quotation->SalesOrder->deleteSalesOrder($quotationId);
 
 		$quotationData = $this->Quotation->QuotationField->find('all',array(
-			'conditions' => array('QuotationField.quotation_id' => $quotationId)));
+			'conditions' => array('QuotationField.product_id' => $quotationId)));
 
 		$this->Quotation->QuotationField->deleteQuoteFields($quotationId);
 

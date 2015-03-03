@@ -120,9 +120,53 @@
 																	<div class="col-lg-3"><span style="color:red">*</span> Quotation Name</div>
 																	<div class="col-lg-8">
 																		<?php 
-							                                                echo $this->Form->input('Quotation.name', array('class' => 'form-control item_type',
-							                                                    'alt' => 'address1',
-							                                                    'label' => false));
+							                                                echo $this->Form->input('Quotation.name', 
+							                                                									array( 
+							                                                						'class' => 'form-control item_type',
+												                                                    'alt' => 'address1', 
+												                                                    'label' => false
+												                                                    ));
+							                                            ?>
+																	</div>
+																</div>
+
+																<div class="form-group">
+																	<div class="col-lg-3"><span style="color:red">*</span> Item</div>
+																	<div class="col-lg-8">
+																		<?php 
+							                                                echo $this->Form->input('itemCategory', 
+							                                                									array( 
+							                                                						'type' => 'select',
+							                                                						'options' => $category,
+							                                                						'class' => 'form-control item_type', 
+							                                                    					//'alt' => 'address1',
+							                                                    					'label' => false,
+							                                                    					'id' => 'itemCategory',
+							                                                    					'empty' => '--Select Category--'
+							                                                    					));
+							                                            ?><br>
+							                                            <?php 
+							                                                echo $this->Form->input('itemType', 
+							                                                									array( 
+							                                                						'type' => 'select',
+							                                                						'class' => 'form-control item_type', 
+							                                                    					//'alt' => 'address1',
+							                                                    					'label' => false,
+							                                                    					'id' => 'itemType',
+							                                                    					//'empty' => '--Select Type--' 
+							                                                    					));
+							                                            ?><br>
+							                                             <?php 
+							                                                echo $this->Form->input('product', 
+							                                                									array( 
+							                                                						'type' => 'select',
+							                                                						'class' => 'form-control item_type', 
+							                                                    					//'alt' => 'address1',
+							                                                    					'label' => false, 
+							                                                    					'id' => 'product',
+
+							                                                    					//'empty' => '--Select Product--'
+							                                                    					));
 							                                            ?>
 																	</div>
 																</div>

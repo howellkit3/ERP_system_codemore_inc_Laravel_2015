@@ -121,31 +121,16 @@
 								</div>
 								<div class="col-lg-8">
 									<?php 
-										$action = "";
-										// $plugin ="";
-										// $controller ="";
-
-										// if($path == "ticket") {
-										// 	$controller = "jobTicketSummaries";
-										// 	$action = "index"."/".$quotationId['Quotation']['unique_id'];
-										// 	$plugin = "ticket";
-
-										// }
-										// else{
-										// 	$controller = "sales_orders";
-										// 	$action = "index";
-										// 	$plugin = "sales";
-										// }
-
-				                        echo $this->Html->link('Cancel', array(
-				                        										// 'controller' => $controller, 
-				                        									 //   'action' => $action,
-				                        									 //   	'plugin' => $plugin
-				                        	),
-		                        										 array(
-		                        												'class' =>'btn btn-primary',
-		                        												'escape' => false
-		                        												));
+				                        echo $this->Html->link('Cancel', 
+				                        								array(
+	                    									   'controller' => 'customer_sales', 
+	                    									 	'action' => 'view',
+	                    									 	$companyName['Company']['id'] 
+				                        									),
+		                        										array(
+                												'class' =>'btn btn-primary',
+                												'escape' => false
+                												));
 				                    ?>
 								</div>
 							</div>

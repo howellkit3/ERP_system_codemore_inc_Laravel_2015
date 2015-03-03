@@ -56,14 +56,16 @@ class QuotationField extends AppModel {
 
 	);
 
-	public function saveQuotationField($data = null,$quotationId= null,$auth = nnull){
-			
+	public function saveQuotationField($data = null,$productId= null,$auth = nnull){
+		//pr($data[$this->name]);die;
+		
+		
 		$this->create();
 
 		foreach ($data[$this->name] as $key => $customFieldValue) 
 		{	
 
-			$customFieldValue['quotation_id'] = $quotationId;
+			$customFieldValue['product_id'] = $productId;
 			$customFieldValue['created_by'] = $auth;
 			$customFieldValue['modified_by'] = $auth;
 			$this->saveAll($customFieldValue);
@@ -75,7 +77,7 @@ class QuotationField extends AppModel {
 
 	public function deleteQuoteFields($quotationData = null){
 
-		$fieldsData = $this->find('all',array('conditions' => array('QuotationField.quotation_id' => $quotationData)));
+		$fieldsData = $this->find('all',array('conditions' => array('QuotationField.product_id' => $quotationData)));
 		
 		foreach ($fieldsData as $key => $value) {
 
