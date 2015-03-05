@@ -56,7 +56,7 @@ class QuotationField extends AppModel {
 
 	);
 
-	public function saveQuotationField($data = null,$productId= null,$auth = nnull){
+	public function saveQuotationField($data = null,$quotaionId= null,$auth = nnull){
 		//pr($data[$this->name]);die;
 		
 		
@@ -65,7 +65,7 @@ class QuotationField extends AppModel {
 		foreach ($data[$this->name] as $key => $customFieldValue) 
 		{	
 
-			$customFieldValue['product_id'] = $productId;
+			$customFieldValue['quotation_id'] = $quotaionId;
 			$customFieldValue['created_by'] = $auth;
 			$customFieldValue['modified_by'] = $auth;
 			$this->saveAll($customFieldValue);

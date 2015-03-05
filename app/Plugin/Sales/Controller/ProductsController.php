@@ -7,36 +7,35 @@ class ProductsController extends SalesAppController {
 
 	public function add($companyId = null){
 		
-		 $userData = $this->Session->read('Auth');
+		$userData = $this->Session->read('Auth');
         if($this->request->is('post')){
 
         	//pr($id);exit();
             if(!empty($this->request->data)){
-            	//pr($this->request->data);
+            	//pr($this->request->data);die;
             	
-            	$productDetails = $this->request->data;
-            	$this->loadModel('Sales.Product');
-                $this->Product->addProduct($productDetails, $userData['User']['id']);
-                $this->redirect( array(
-                                     'controller' => 'customer_sales', 
-                                     'action' => 'view',
-                                     $productDetails['Product']['companyId']
-                              
-                                ));
-            }
+	        	 $productDetails = $this->request->data;
+	        	 $this->loadModel('Sales.Product');
+	             $productId = $this->Product->addProduct($productDetails, $userData['User']['id']);
+
+	             $this->loadModel('Sales.ProductSpec');
+	             $this->ProductSpec->addProductSpec($productDetails, $productId, $userData['User']['id']);
+
+	             $this->redirect( array(
+	                                     'controller' => 'customer_sales', 
+	                                     'action' => 'view',
+	                                     $productDetails['Product']['companyId']
+	                              
+	                             ));
+	            }
         }
 
-		$itemCategory = $this->ItemCategory->find('list', 
-														array(
-												  'fields' =>
-												  		array(
-												  	'id','category_name'
-												  			),
-												  'conditions' => 
-												  		array(
-												  'status' => 'active'
+		$itemCategory = $this->ItemCategory->find('list', array(
+													'fields' => array(
+														'id','category_name'),
+													'conditions' => array(
+														'status' => 'active'
 												  		)
-
 												));
 		
 		//pr($itemCategory);exit();
@@ -47,7 +46,23 @@ class ProductsController extends SalesAppController {
 											'id' =>  $companyId
 												)
 											));
-		$this->set(compact('companyName','itemCategory'));
+
+		$this->loadModel('Sales.CustomField');
+		$customField = $this->CustomField->find('list', 
+													array( 
+												'fields' => 
+													array(
+												'id', 'fieldlabel'
+													),
+												'conditions' => 
+													array( 
+												'id NOT' => array(3,13,11)
+
+													)
+												));
+
+		//pr($customField );
+		$this->set(compact('companyName','itemCategory','customField'));
 
 	}
 
@@ -134,6 +149,145 @@ class ProductsController extends SalesAppController {
 
 
 		$this->autoRender = false;
+
+	}
+	public function get_product_spec($productId = null){
+		$this->layout = false;
+	
+		$this->loadModel('Sales.Product');
+		$this->Product->bind(array('ProductSpec'));
+		$data = $this->Product->ProductSpec->find('all', array(
+											'conditions' => array(
+												'product_id' => $productId
+											)
+									
+										));
+
+
+		//pr($data);exit();
+		// $type = $this->ItemType->find('all', 
+		// 									array(
+		// 							  'conditions' => 
+		// 							  		array(
+		// 							  'id' =>$company
+		// 							  )
+
+		// 							));
+		// pr($type);exit();
+		
+		echo json_encode($data);
+
+
+
+		$this->autoRender = false;
+
+	}
+
+	public function view($companyId = null,$productId){
+		$itemCategory = $this->ItemCategory->find('list', array(
+													'fields' => array(
+														'id','category_name'),
+													'conditions' => array(
+														'status' => 'active'
+												  		)
+												));
+		
+		//pr($itemCategory);exit();
+		$this->loadModel('Sales.Company');
+		$companyName = $this->Company->find('first', array(
+												'conditions' => array(
+													'id' =>  $companyId
+												)
+											));
+		$this->loadModel('Sales.Product');
+		$this->Product->bind(array('ProductSpec'));
+		$productDetails = $this->Product->find('first', array(
+													'conditions' => array(
+														'id' => $productId
+														)
+													));
+		//pr($productDetails);die;
+
+		$this->loadModel('Sales.CustomField');
+		$customField = $this->CustomField->find('list',	array( 
+													'fields' => array(
+														'id', 'fieldlabel'
+														),
+													'conditions' => array( 
+														'id NOT' => array(3,13,11)
+													)
+												));
+
+		//pr($customField );
+		$this->set(compact('companyName','itemCategory','customField','productDetails'));
+
+	}
+
+	public function edit($companyId = null,$productId){
+		$itemCategory = $this->ItemCategory->find('list', array(
+													'fields' => array(
+														'id','category_name'),
+													'conditions' => array(
+														'status' => 'active'
+												  		)
+												));
+		
+		//pr($itemCategory);exit();
+		$this->loadModel('Sales.Company');
+		$companyName = $this->Company->find('first', array(
+												'conditions' => array(
+													'id' =>  $companyId
+												)
+											));
+		$this->loadModel('Sales.Product');
+		$this->Product->bind(array('ProductSpec'));
+		$productDetails = $this->Product->find('first', array(
+													'conditions' => array(
+														'id' => $productId
+														)
+													));
+		//pr($productDetails);die;
+
+		$this->loadModel('Sales.CustomField');
+		$customField = $this->CustomField->find('list',	array( 
+													'fields' => array(
+														'id', 'fieldlabel'
+														),
+													'conditions' => array( 
+														'id NOT' => array(3,13,11)
+													)
+												));
+
+		//pr($customField );
+		$this->set(compact('companyName','itemCategory','customField','productDetails'));
+
+	}
+
+	public function saveProduct(){
+
+		$userData = $this->Session->read('Auth');
+        if($this->request->is('post')){
+
+        	//pr($id);exit();
+            if(!empty($this->request->data)){
+            	//pr($this->request->data);die;
+            	
+	        	 $productDetails = $this->request->data;
+	        	 $this->loadModel('Sales.Product');
+	             $productId = $this->Product->addProduct($productDetails, $userData['User']['id']);
+
+	             $this->loadModel('Sales.ProductSpec');
+	             $this->ProductSpec->addProductSpec($productDetails, $productId, $userData['User']['id']);
+
+	             $this->redirect( array(
+	                                     'controller' => 'customer_sales', 
+	                                     'action' => 'view',
+	                                     $productDetails['Product']['companyId']
+	                              
+	                             ));
+	            }
+        }
+
 
 	}
 

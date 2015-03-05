@@ -198,6 +198,7 @@ class CustomerSalesController extends SalesAppController {
 		$this->set('companyData', $companyData);
 
 		if ($this->request->is('post')) {
+			pr($this->request->data);die;
 
             if (!empty($this->request->data)) {
 

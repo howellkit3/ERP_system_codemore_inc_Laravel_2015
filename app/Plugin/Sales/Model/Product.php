@@ -21,6 +21,18 @@ class Product extends AppModel {
 					'foreignKey' => 'type_id',
 					'dependent' => true
 				),
+				'Quotation' => array(
+					'className' => 'Sales.Quotation',
+					'foreignKey' => 'product_id',
+					'dependent' => true
+				)
+			),
+			'hasMany' => array(
+				'ProductSpec' => array(
+					'className' => 'Sales.ProductSpec',
+					'foreignKey' => 'product_id',
+					'dependent' => true
+				)
 			)
 		));
 
@@ -33,7 +45,7 @@ class Product extends AppModel {
 		$data['Product']['type_id'] = $data['Product']['item_type'];
 		$data['Product']['company_id'] = $data['Product']['companyId'];
 		$data['Product']['product_name'] = $data['Product']['productName'];
-		$data['TruckSchedule']['remarks'] = $data['Product']['remarks'];
+		//$data['TruckSchedule']['remarks'] = $data['Product']['remarks'];
 		$data['Product']['created_by'] = $auth;
 		$data['Product']['modified_by'] = $auth;
 		$this->save($data);

@@ -30,15 +30,24 @@ class Quotation extends AppModel {
 					'className' => 'Sales.SalesOrder',
 					'foreignKey' => 'quotation_id',
 					'dependent' => true
-				),
+				)
+
 			),
 			'hasMany' => array(
 				'QuotationField' => array(
 					'className' => 'Sales.QuotationField',
 					'foreignKey' => 'quotation_id',
 					'dependent' => true
-				),
-			)
+				)
+			),
+			'hasOne' => array(
+				'Product' => array(
+					'className' => 'Sales.Product',
+					'foreignKey' => false,
+					'conditions' => 'Product.id = Quotation.product_id'
+				)
+			 )
+			
 		));
 
 		$this->contain($model);
@@ -87,7 +96,7 @@ class Quotation extends AppModel {
 
 
 		$this->create();
-
+		$data['product_id'] = $data['product'];
 		$data['inquiry_id'] = $inquiryId;	
 		$data['created_by'] = $auth;
 		$data['modified_by'] = $auth;

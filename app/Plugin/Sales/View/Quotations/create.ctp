@@ -1,7 +1,7 @@
 <?php $this->Html->addCrumb('Sales', array('controller' => 'customer_sales', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Quotation', array('controller' => 'quotation', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Create', array('controller' => 'quotation', 'action' => 'create')); ?>
-<?php echo $this->Html->script('Sales.inquiry');?>
+<?php echo $this->Html->script('Sales.company_quotation');?>
 <div style="clear:both"></div>
 
 
@@ -116,7 +116,7 @@
 												                        'label' => false,
 												                        'id' => 'id'));
 					                                            ?>
-					                                            <div class="form-group">
+					                                            <!-- <div class="form-group">
 																	<div class="col-lg-3"><span style="color:red">*</span> Quotation Name</div>
 																	<div class="col-lg-8">
 																		<?php 
@@ -128,7 +128,7 @@
 												                                                    ));
 							                                            ?>
 																	</div>
-																</div>
+																</div> -->
 
 																<div class="form-group">
 																	<div class="col-lg-3"><span style="color:red">*</span> Item</div>
@@ -165,7 +165,7 @@
 							                                                    					'label' => false, 
 							                                                    					'id' => 'product',
 
-							                                                    					//'empty' => '--Select Product--'
+							                                                    					'empty' => '--Select Product--'
 							                                                    					));
 							                                            ?>
 																	</div>

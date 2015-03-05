@@ -1,12 +1,11 @@
 <?php echo $this->Form->create('Product', array(
-																'url'=>( 
-														  array(
-																'controller' => 'products',
-																'action' => 'add'
-															))),
-														  array(
-														  		'class' => 'form-horizontal'
-													 		));
+									'url'=>( array(
+										'controller' => 'products',
+										'action' => 'add'
+											)
+									)), array(
+										 'class' => 'form-horizontal'
+									 		));
 
 ?>
 <?php echo $this->Html->script('Sales.item_type');?>
@@ -14,7 +13,7 @@
 	    <div class="col-lg-12">
 	        <div class="main-box">
 	  	        			<header class="main-box-header clearfix">
-	                	<h1>Add Schedule</h1>
+	                	<h1>Add Product</h1>
 	           		 	</header>
 	            
 			           	 <div class="main-box-body clearfix">
@@ -87,39 +86,50 @@
 												    					'label' => false,
 												   						'class' => 'form-control',
 												    					'empty' => false,
-												    		
+												    					'required' => true
 																		));
 			                        ?>
+			                        <br>
 									</div>
 									<span class="help-block" style= "color:white">ex. MM/DD/YYYY</span>
 				                </div>
 				            </div>
+		             
+				          <?php foreach ($customField as $key => $value) { ?>
+															
+							 <div class="form-group">
+								<label for="inputPassword1" class="col-lg-2 control-label"><?php echo $customField[$key]?></label>
 
-				            <div class="form-group">
-				                <label for="inputPassword1" class="col-lg-2 control-label">Remarks</label>
-				                <div class="col-lg-9">
+								<div class="col-lg-9">
 									<div class="input-group">
 										<span class="input-group-addon"></span>
-										 <?php
-			                           			echo $this->Form->input('remarks', array( 
-			                           									'type' => 'textarea',
-					                           							'alt' => 'type',
-												    					'label' => false,
-												   						'class' => 'form-control',
-												    					'empty' => false,
-												    					
-																		));
-			                        ?>
-									</div>
-									<span class="help-block" style= "color:white">ex. MM/DD/YYYY</span>
-				                </div>
-				            </div>
+									<?php 
+                                        echo $this->Form->input('QuotationField.'.$key.'.description', array('class' => 'form-control item_type test',
+                                            'alt' => 'address1',
+                                            'label' => false,
+                                            'required' => true));
+                                    ?><br>
+                                    <?php 
+                                        echo $this->Form->input('QuotationField.'.$key.'.custom_fields_id', array(
+                                        	'type' => 'hidden',
+                                        	'value' => $key,
+                                            'label' => false));
+                                    ?>
+                               		</div>
 
-			              	<div class="form-group">
-								<div class="col-lg-3">
-									<button type="submit" class="btn btn-success pull-right">Save</button>
+                               		<span class="help-block" style= "color:white">ex. MM/DD/YYYY</span>
 								</div>
-								<div class="col-lg-8">
+							</div>
+
+							
+						<?php }?>
+							
+							<span class="help-block" style= "color:white">ex. MM/DD/YYYY</span>
+			              	<div class="form-group">
+								<div class="col-lg-2">
+									<button type="submit" class="btn btn-success pull-left">Save</button>
+								</div>
+								<div class="col-lg-3">
 									<?php 
 				                        echo $this->Html->link('Cancel', 
 				                        								array(

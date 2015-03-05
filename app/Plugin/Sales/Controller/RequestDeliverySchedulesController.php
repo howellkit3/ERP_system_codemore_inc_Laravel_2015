@@ -29,20 +29,20 @@ class RequestDeliverySchedulesController extends SalesAppController {
                                                     ));
                 //pr($requestData['RequestDeliverySchedule']['sales_order_id']);exit();
                 
-                $values = "";
-                for ($x = 2; $x < 4; $x++) {
+                // $values = "";
+                // for ($x = 2; $x < 4; $x++) {
 
-                    $this->loadModel('Ticket.JobTicketSummary');
-                    if ($x == 2){
-                        $values = $requestData['RequestDeliverySchedule']['schedule'];
-                    }
-                    else{
-                        $values = $requestData['RequestDeliverySchedule']['quantity'];
-                    }
-                     $this->JobTicketSummary->addSummarySchedule($detailId, $values, $x + 1, $userData['User']['id']);
+                //     $this->loadModel('Ticket.JobTicketSummary');
+                //     if ($x == 2){
+                //         $values = $requestData['RequestDeliverySchedule']['schedule'];
+                //     }
+                //     else{
+                //         $values = $requestData['RequestDeliverySchedule']['quantity'];
+                //     }
+                //      $this->JobTicketSummary->addSummarySchedule($detailId, $values, $x + 1, $userData['User']['id']);
                 
    
-                }
+                // }
 
                 $this->RequestDeliverySchedule->addRequest($requestData , $userData['User']['id']);
 
@@ -58,21 +58,15 @@ class RequestDeliverySchedulesController extends SalesAppController {
         }
 
         $this->loadModel('Sales.Quotation');
-        $quotationId = $this->Quotation->find('first', 
-                                                    array(
-                                			'conditions'=> 
-                                                    array(
-                                			'id'=> $id
-                                					)
+        $quotationId = $this->Quotation->find('first', array(
+                                			     'conditions'=>  array(
+                                			         'id'=> $id)
                             					));
 
         $this->loadModel('Delivery.Schedule');
-        $salesOrderIdHolder = $this->Schedule->find('first', 
-                                                            array(
-                                                    'conditions' => 
-                                                            array(
-                                                    'sales_order_id' => $quotationId['Quotation']['unique_id']
-                                                        )
+        $salesOrderIdHolder = $this->Schedule->find('first',   array(
+                                                        'conditions' =>  array(
+                                                            'sales_order_id' => $quotationId['Quotation']['unique_id'])
                                                     ));
 
         
@@ -99,8 +93,28 @@ class RequestDeliverySchedulesController extends SalesAppController {
 		                         ));
 		}
 
+        $this->loadModel('Sales.Company');
+        $this->Company->bind(array('Address','Quotation'));
+        $quotationCompany = $this->Company->Quotation->find('first', array(
+                                                'conditions' => array(
+                                                    'Quotation.id' => $id)
+                                            ));
+        $companyName = $this->Company->find('first', array(
+                                                'conditions' => array(
+                                                    'id' => $quotationCompany['Quotation']['company_id'])
+                                            ));
+        //pr($companyName);die;
+        $this->loadModel('Sales.Quotation');
+        $this->Quotation->bind(array('QuotationField'));
+        $quantity = $this->Quotation->find('first', array(
+                                                'conditions' => array(
+                                                    'id' => $id
+                                                        )
+                                                    ));
+        //pr($quantity);die;
 
-         $this->set(compact('quotationId','path'));
+         $this->set(compact('quotationId','path','companyName','quantity'));
+
 	}
 
 	public function message(){

@@ -99,7 +99,7 @@
 								Item
 							</div>
 							<div class="col-lg-8">
-								:&emsp;
+								:&emsp;<?php echo $productName['Product']['product_name']?>
 							</div>
 						</div>
 					<?php foreach ($quotationFieldInfo as $key => $value) {?>
