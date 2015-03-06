@@ -142,7 +142,7 @@
 									
 								<?php 
 			                        echo $this->Html->link('Cancel', array(
-	                									   'controller' => 'customer_sales', 
+	                									   'controller' => 'products', 
 	                									 	'action' => 'view',
 	                									 	$companyName['Company']['id'],
 	                									 	$productDetails['Product']['id']), array(
