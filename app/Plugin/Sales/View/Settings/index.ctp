@@ -9,8 +9,8 @@
 		<div class="tabs-wrapper profile-tabs">
 			<ul class="nav nav-tabs">
 				<li class="active"><a href="#tab-newsfeed" data-toggle="tab">Add Custom Field</a></li>
-				<li><a href="#tab-category" data-toggle="tab">Add Item Category</a></li>
-				<li><a href="#tab-type" data-toggle="tab">Add Item Type</a></li>
+				<li ><a href="#tab-category" data-toggle="tab">Add Item Category</a></li>
+				<li ><a href="#tab-type" data-toggle="tab">Add Item Type</a></li>
 			</ul>
 			
 			<div class="tab-content">
@@ -69,7 +69,7 @@
 					</div>
 				</div>
 
-				<div class="tab-pane fade in active" id="tab-category">
+				<div class="tab-pane fade" id="tab-category">
 					
 					<div class="table-responsive">
 						<?php echo $this->element('item_category');?><br><br>
@@ -77,7 +77,7 @@
 					</div>
 				</div>
 
-				<div class="tab-pane fade in active" id="tab-type">
+				<div class="tab-pane fade" id="tab-type">
 					
 					<div class="table-responsive">
 						

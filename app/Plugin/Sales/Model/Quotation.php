@@ -140,7 +140,7 @@ class Quotation extends AppModel {
 		$this->id = $this->find('first',array('conditions' => array('Quotation.id' => $quotationId)));
 		if ($this->id) {
 
-		    $this->saveField('name', $data['Quotation']['name']);
+		    //$this->saveField('name', $data['Quotation']['name']);
 		    $this->bind(array('QuotationField'));
 		    $this->QuotationField->editFields($data,$quotationId);
 		    //pr($data);exit();

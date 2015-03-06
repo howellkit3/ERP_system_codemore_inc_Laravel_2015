@@ -47,4 +47,38 @@ class ProductSpec extends AppModel {
 
 	}
 
+	public function editProductSpec($data ,$auth){
+		//$this->loadModel('Sales.QuotationField');
+		//pr($data);exit();
+		$productSpec = $this->find('all', array( 
+										'conditions' => array(
+											'product_id' => $data['Product']['productId']
+										)
+									));
+		//pr($data['QuotationField']);exit();
+		if ($productSpec) {
+			//pr($data['QuotationField']);exit();
+			foreach ($data['QuotationField'] as $key => $customFieldValue) 
+			{
+				$this->save($customFieldValue);
+			}
+		}
+		else{
+			$this->create();
+
+			foreach ($data['QuotationField'] as $key => $customFieldValue) 
+			{	
+
+				$customFieldValue['product_id'] = $data['Product']['productId'];
+				$customFieldValue['created_by'] = $auth;
+				$customFieldValue['modified_by'] = $auth;
+				$this->saveAll($customFieldValue);
+			}
+
+		}
+		return $this->id;
+	
+		
+
+	}
 }

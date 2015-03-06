@@ -134,15 +134,6 @@ class ProductsController extends SalesAppController {
 
 
 		pr($company);exit();
-		// $type = $this->ItemType->find('all', 
-		// 									array(
-		// 							  'conditions' => 
-		// 							  		array(
-		// 							  'id' =>$company
-		// 							  )
-
-		// 							));
-		// pr($type);exit();
 		
 		echo json_encode($data);
 
@@ -274,10 +265,11 @@ class ProductsController extends SalesAppController {
             	
 	        	 $productDetails = $this->request->data;
 	        	 $this->loadModel('Sales.Product');
-	             $productId = $this->Product->addProduct($productDetails, $userData['User']['id']);
+	             $productId = $this->Product->editProduct($productDetails, $userData['User']['id']);
 
-	             $this->loadModel('Sales.ProductSpec');
-	             $this->ProductSpec->addProductSpec($productDetails, $productId, $userData['User']['id']);
+	             //exit();
+	             // $this->loadModel('Sales.ProductSpec');
+	             // $this->ProductSpec->editProductSpec($productDetails, $userData['User']['id']);
 
 	             $this->redirect( array(
 	                                     'controller' => 'customer_sales', 

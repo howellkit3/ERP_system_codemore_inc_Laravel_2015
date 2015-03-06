@@ -172,6 +172,9 @@ class CustomerSalesController extends SalesAppController {
 			$this->loadModel('Sales.Address');
 			$this->Address->deleteAddress($personId);
 
+			$this->loadModel('Sales.Quotation');
+			$this->Quotation->deleteQuotation($dataId);
+
 			$this->redirect(
 				array('controller' => 'customer_sales', 'action' => 'index')
 			);

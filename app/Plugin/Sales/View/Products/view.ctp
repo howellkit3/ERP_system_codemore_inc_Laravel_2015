@@ -13,23 +13,36 @@
 <?php echo $this->Html->script('Sales.item_type');?>
 
 	<div class="row">
-	    <div class="col-lg-12">
+	    <div class="col-lg-9">
 	        <div class="main-box">
-	        	<?php 
-           			 echo $this->Html->link('<i class="fa fa-pencil  fa-lg">
-           			 						</i> Edit', array( 
-           			 						'controller' => 'products', 
-           			 						'action' => 'edit',
-           			 						$companyName['Company']['id'],
-           			 						$productDetails['Product']['id']
-           			 						), array(
-           			 						'class' =>'btn btn-primary pull-right',
-           			 						'escape' => false
-           			 						));
-        		?>
-	  	        		<header class="main-box-header clearfix">
+				<header class="main-box-header clearfix">
 	                		<h1>View Product</h1>
-	           		 	</header>
+	                		<div>
+								<?php 
+				           			 echo $this->Html->link('<i class="fa fa-pencil  fa-lg">
+				           			 						</i> Edit', array( 
+				           			 						'controller' => 'products', 
+				           			 						'action' => 'edit',
+				           			 						$companyName['Company']['id'],
+				           			 						$productDetails['Product']['id']
+				           			 						), array(
+				           			 						'class' =>'btn btn-primary pull-right',
+				           			 						'escape' => false
+				           			 						));
+
+			        			?>
+			        			
+		        			</div>
+	                		<div class="col-lg-11">
+		                		
+			                		<?php 
+					                  	echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'customer_sales', 
+					    									 	'action' => 'view',
+					    									 	$companyName['Company']['id']),array('class' =>'btn btn-primary pull-right','escape' => false));
+				            		?>
+				            </div>
+				            
+	           	</header>
 	           		 	<center>
    		 					
 	            
@@ -98,30 +111,7 @@
 								<span class="help-block" style= "color:white">ex. MM/DD/YYYY</span>
 							
 						<?php }?>
-							
-							<span class="help-block" style= "color:white">ex. MM/DD/YYYY</span>
-			              	<div class="form-group">
-								
-								<div class="col-lg-3">
-									<?php 
-				                        echo $this->Html->link('Cancel', 
-				                        								array(
-	                    									   'controller' => 'customer_sales', 
-	                    									 	'action' => 'view',
-	                    									 	$companyName['Company']['id'] 
-				                        									),
-		                        										array(
-                												'class' =>'btn btn-primary',
-                												'escape' => false
-                												));
-				                    ?>
-								</div>
-							</div>
-
 			            </div>
-	        	<?php
-	        		//}
-	        	?>
 	        	</center>
 	        </div>
 	    </div>  
