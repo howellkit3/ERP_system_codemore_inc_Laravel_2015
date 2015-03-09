@@ -18,8 +18,8 @@ class TruckSchedulesController extends DeliveryAppController {
                                               'conditions' => array(
                                               'sales_order_id' => $id
                                                 )
-                                             ));
-
+        
+                                              ));
         $this->loadModel('Delivery.Truck');
         $truckId = $this->Truck->find('list', array(
                                          'fields' => array(
@@ -57,5 +57,30 @@ class TruckSchedulesController extends DeliveryAppController {
     
             }
         }
+    }
+
+    public function get_product_schedule() {
+
+        $this->layout = false;
+  
+        $this->loadModel('Delivery.TruckSchedule');
+        
+        $data = $this->TruckSchedule->find('all', array(
+                                              'conditions' => array(
+                                                  'truck_id' => $this->request->data['plate_number'],
+                                                  'date' => $this->request->data['sched_date']),
+                                              'fields' => array(
+                                                  'time_from', 'time_to', 'location'
+                                                )
+                                           ));
+        //pr($this->request->data);die;
+       $this->set(compact('data'));
+        
+        // echo json_encode($data);
+
+
+
+        // $this->autoRender = false;
+
     }
 }

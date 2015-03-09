@@ -12,6 +12,7 @@ class DeliveriesController extends DeliveryAppController {
    }
 
    public function createDeliveryReceipts(){
+
    		
    }
      

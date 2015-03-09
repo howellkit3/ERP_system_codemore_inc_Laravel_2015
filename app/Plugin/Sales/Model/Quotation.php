@@ -70,10 +70,6 @@ class Quotation extends AppModel {
 				
 			),
 		),
-		
-
-	
-
 
 	);
 

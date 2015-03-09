@@ -1,11 +1,11 @@
+<?php echo $this->element('sales_option'); ?><br><br>
 <?php echo $this->Form->create('Product', array(
 									'url'=>( array(
 										'controller' => 'products',
-										'action' => 'add'
-											)
-									)), array(
-										 'class' => 'form-horizontal'
-									 		));
+										'action' => 'add')
+										)), array(
+										'class' => 'form-horizontal'
+									 ));
 
 ?>
 <?php echo $this->Html->script('Sales.item_type');?>

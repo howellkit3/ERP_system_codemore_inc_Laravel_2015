@@ -1,0 +1,28 @@
+.tbl{
+	border-collapse: collapse;
+}
+.row{
+	border: none;
+
+}
+.column{
+	border-left:  1px solid black;
+	border-right:  1px solid black;
+	border-top:  1px solid black;
+}
+.column2{
+	border-left:  1px solid black;
+	border-right:  1px solid black;
+	
+}
+.column3{
+	border-left:  1px solid black;
+	border-right:  1px solid black;
+	border-top:  1px solid black;
+	border-bottom:  1px solid black;
+	
+}
+.column4{
+	border-top:  1px solid black;
+	
+}

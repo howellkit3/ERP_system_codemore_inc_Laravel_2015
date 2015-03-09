@@ -239,13 +239,20 @@ class QuotationsController extends SalesAppController {
 
 	public function print_word($quotationId = null,$companyId = null) {
 
-			$this->layout = 'pdf';
+		$this->layout = 'pdf';
 
 		Configure::write('debug',2);
 
 		$userData = $this->Session->read('Auth');
 
 		$userData = $this->Session->read('Auth');
+
+		$this->Quotation->bind(array('Product'));
+		$productName = $this->Quotation->find('first', array(
+													'conditions' => array(
+														'Quotation.id' => $quotationId
+														)
+													));
 
 		$this->Company->bind(array('Address','Contact','Email','Inquiry','ContactPerson','Quotation'));
 
@@ -276,7 +283,7 @@ class QuotationsController extends SalesAppController {
 		$user = $this->User->find('first',array('conditions' => array(
 			'User.id' => $userData['User']['id'] )));
 
-		$this->set(compact('companyData','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field'));
+		$this->set(compact('companyData','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','productName'));
 	
 		//$this->render('/quotations/word/print_word');
 
@@ -288,8 +295,9 @@ class QuotationsController extends SalesAppController {
 
 		$this->Quotation->SalesOrder->deleteSalesOrder($quotationId);
 
-		$quotationData = $this->Quotation->QuotationField->find('all',array(
-			'conditions' => array('QuotationField.product_id' => $quotationId)));
+		$quotationData = $this->Quotation->QuotationField->find('all', array(
+																	'conditions' => array('QuotationField.product_id' => $quotationId)
+																));
 
 		$this->Quotation->QuotationField->deleteQuoteFields($quotationId);
 
@@ -323,8 +331,7 @@ class QuotationsController extends SalesAppController {
 	public function edit($quotationId = null , $companyId){
 		if($this->request->is('post')){
 			$this->Quotation->edit($this->request->data,$quotationId);
-			$this->redirect(
-            			array('controller' => 'quotations', 'action' => 'view',$quotationId,$companyId)
+			$this->redirect(array('controller' => 'quotations', 'action' => 'view',$quotationId,$companyId)
         	);
 		}
 		

@@ -5,65 +5,13 @@ App::uses('SessionComponent', 'Controller/Component');
 class SchedulesController extends DeliveryAppController {
 
     public function index() {
-    //     $scheduleData = $this->Schedule->find('all');
-    // //     $this->set(compact('scheduleData'));
+    
    }
 
     public function add($id = null) {
-
-        // $userData = $this->Session->read('Auth');
-
-        
-        //     if($this->request->is('post')){
-        //         if(!empty($this->request->data)){
-        //             $this->Schedule->addSchedule($this->request->data, $userData['User']['id']);
-        //             $this->redirect(
-        //                      array(
-        //                          'controller' => 'sales_orders', 
-        //                          'action' => 'index',
-        //                          'plugin' => 'sales'
-        //                      ));
-        
-        //           }
-        //     }
-             
-        //     $this->loadModel('Sales.Quotation');
-        //     $quotationId = $this->Quotation->find('first', array(
-        //                                         'conditions'=> array(
-        //                                         'id'=> $id
-        //                                                 )
-        //                                         ));
-
-        //     $this->loadModel('Delivery.Schedule');
-      
-        //     $salesOrderIdHolder = $this->Schedule->find('first', array(
-        //                                                 'conditions' => array(
-        //                                                 'sales_order_id' => $quotationId['Quotation']['unique_id']
-        //                                                     )
-        //                                                 ));
-
-        //     if(empty($salesOrderIdHolder)){
-        //         $salesOrderId = Null;
-        //     }
-        //     else{
-            
-        //         $salesOrderId = $salesOrderIdHolder;
-        //     }
-
-        //     $this->Schedule->bind(array('Truck'));
+        pr($id);die;
 
         
-        //     $this->Schedule->Truck->bind(array('TruckAvailability'));
-
-        //     $this->Schedule->Truck->TruckAvailability->bind('Truck');
-
-        //     $truckId = $this->Schedule->Truck->TruckAvailability->find('list', array(
-        //                                             'fields'=> array('Truck.id','Truck.plate_number')
-                                                
-        //                                             ));
-           
-        //     $this->set(compact('quotationId','truckId','salesOrderId'));
-         
 
     }     
 
@@ -77,14 +25,75 @@ class SchedulesController extends DeliveryAppController {
                                               'sales_order_id' => $salesOrderId
                                                 )
                                             ));
-
-            $this->set(compact('scheduleInfo'));
+                                    
         
-         
-         
+        if($scheduleInfo['Schedule']['status'] == "Accepted"){
+
+            $this->redirect( array(
+                                 'controller' => 'schedules', 
+                                 'action' => 'approved', $id
+                                 //'plugin' => 'delivery'
+                            ));
+
+        }
        
 
+        $this->set(compact('scheduleInfo'));
+        
+    }
+    public function approved($id = null){
+        $this->loadModel('Sales.RequestDeliverySchedule');
+        $requestScheduleInfo = $this->RequestDeliverySchedule->find('first', array(
+                                                                        'conditions' => array(
+                                                                            'sales_order_id' => $id
+                                                                        )
+                                                                    ));
+        //pr($requestScheduleInfo);die;
+        $this->Schedule->bind(array('TruckSchedule'));
+        $scheduleInfo = $this->Schedule->find('first', array(
+                                                 'conditions' =>  array(
+                                                     'Schedule.sales_order_id' => $id
+                                                      )
+                                             ));
+        $this->set(compact('requestScheduleInfo','scheduleInfo'));
 
     }
+     public function delivery_receipt($id = null){
+       
+        $this->layout = 'pdf';
+        Configure::write('debug',2);
+
+        $this->loadModel('Sales.Quotation');
+        $this->Quotation->bind(array('QuotationField','Product'));
+        $ticketDetails = $this->Quotation->find('first', array(
+                                                    'conditions' => array(
+                                                        'unique_id' => $id
+                                                        )
+                                                    ));
+
+        $this->loadModel('Sales.Company');
+        if(!empty($ticketDetails['Quotation']['inquiry_id'])){
+
+            $this->Company->bind(array('Address','Contact','Email','Inquiry'));
+            $companyName = $this->Company->Inquiry->find('first', array(
+                                            'conditions' => array(
+                                                'Inquiry.id' => $ticketDetails['Quotation']['inquiry_id']
+                                                )
+                                            ));
+        }   
+
+        else{
+
+            $this->Company->bind(array('Address','Contact','Email'));
+            $companyName = $this->Company->find('first', array(
+                                                    'conditions' => array(
+                                                        'id' => $ticketDetails['Quotation']['company_id'])
+                                            ));
+        }
+        //pr($ticketDetails);die;
+        $this->set(compact('ticketDetails','companyName'));
+
+    }
+
      
 }
