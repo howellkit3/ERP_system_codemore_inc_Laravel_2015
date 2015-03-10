@@ -70,7 +70,7 @@ class RequestDeliverySchedulesController extends SalesAppController {
 		                         ));
 
 		}
-		else if($salesOrderId['Schedule']['status'] == "Accepted"){
+		else if(($salesOrderId['Schedule']['status'] == "Accepted") || ($salesOrderId['Schedule']['status'] == "Approved")){
 			$this->redirect( array(
 		                             'controller' => 'RequestDeliverySchedules', 
 		                             'action' => 'accept',$salesOrderId['Schedule']['sales_order_id']

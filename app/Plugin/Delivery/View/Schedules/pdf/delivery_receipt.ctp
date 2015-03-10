@@ -79,16 +79,16 @@
 					<td >
 						CUSTOMER: <?php echo $companyName['Company']['company_name']; ?>
 					</td>
-						
+						 
 					<td >
-						ADDRESS: <?php echo $companyName['Address'][0]['address1']; ?>
+						REF. NO.:
 					</td>
 				
 				</tr>
 
 				<tr>
 					<td class = "column4">
-						 REF. NO.:
+						 ADDRESS: <?php echo $companyName['Address'][0]['address1']; ?>
 					</td>
 					
 					<td class = "column4">
@@ -103,26 +103,26 @@
 	<tr >
 		<td >
 
-			<table style="width: 100%;  height: 25px;" class = "tbl">
+			<table style="width: 100%;  height: 15px;" class = "tbl">
 				<tr class = "row">
 					<td align ="center" bgcolor="black" width ="20%" height= "25px" class = "column">
-						<font color = "white">
+						<font color = "white" size = "15px">
 							P.O. #
 						</font>
 					</td>
 						
 					<td align ="center" bgcolor="black" width = "40%" height= "25px" class = "column">
-						<font color = "white">
+						<font color = "white" size = "15px">
 							ITEM
 						</font>
 					</td>
 					<td align ="center" bgcolor="black" width = "25%" height= "25px" class = "column">
-						<font color = "white">
+						<font color = "white" size = "13px">
 							BUNDLES X (QTY/BUNDLE)
 						</font>
 					</td>
 					<td align ="center" bgcolor="black" width = "15%" height= "25px" class = "column">
-						<font color = "white">
+						<font color = "white" size = "15px">
 							TOTAL QTY
 						</font>
 					</td>

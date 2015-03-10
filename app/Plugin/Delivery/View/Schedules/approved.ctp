@@ -1,10 +1,28 @@
 <html>
-	<div class="main-box-body clearfix">
-		<div class="alert alert-success">
-			<i class="fa fa-check-circle fa-fw fa-lg"></i>
-			Request Accept
-		</div>
-	</div>
+	<?php
+		if(!empty($scheduleInfo)){
+			if($scheduleInfo['Schedule']['status'] == "Accepted"){
+	?>
+				<div class="main-box-body clearfix">
+					<div class="alert alert-success">
+						<i class="fa fa-check-circle fa-fw fa-lg"></i>
+						Request has been accepted
+					</div>
+				</div>
+	<?php
+			}
+			else{
+	?>
+			<div class="main-box-body clearfix">
+					<div class="alert alert-success">
+						<i class="fa fa-check-circle fa-fw fa-lg"></i>
+						Requested Schedule Approved
+					</div>
+				</div>
+	<?php
+			}
+		}
+	?>
  <div class="filter-block pull-right">
 	<?php 
 		echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array( 
@@ -16,7 +34,9 @@
 	?>
 
 	<?php
-		echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array(
+		if(!empty($scheduleInfo)){
+			if($scheduleInfo['Schedule']['status'] == "Approved"){
+				echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array(
 				        	'controller' => 'Schedules', 
 				        	'action' => 'delivery_receipt',
 				        	$scheduleInfo['Schedule']['sales_order_id'],
@@ -25,6 +45,21 @@
 				        	array('class' =>'btn btn-primary pull-right',
 				        		'escape' => false,'target' => '_blank'
 				        		));
+
+			}
+			else{
+				echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i> Click to Approved ', array(
+				        	'controller' => 'Schedules', 
+				        	'action' => 'update_status',
+				        	$scheduleInfo['Schedule']['sales_order_id']
+				        	
+				        	),
+				        	array('class' =>'btn btn-primary pull-right',
+				        		'escape' => false
+				        		));
+			}
+		}
+		
 	?>
 </div>
 	<div class="row">

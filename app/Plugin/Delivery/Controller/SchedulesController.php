@@ -6,12 +6,9 @@ class SchedulesController extends DeliveryAppController {
 
     public function index() {
     
-   }
+    }
 
     public function add($id = null) {
-        pr($id);die;
-
-        
 
     }     
 
@@ -27,7 +24,7 @@ class SchedulesController extends DeliveryAppController {
                                             ));
                                     
         
-        if($scheduleInfo['Schedule']['status'] == "Accepted"){
+        if(($scheduleInfo['Schedule']['status'] == "Accepted") || ($scheduleInfo['Schedule']['status'] == "Approved")){
 
             $this->redirect( array(
                                  'controller' => 'schedules', 
@@ -37,8 +34,8 @@ class SchedulesController extends DeliveryAppController {
 
         }
        
-
         $this->set(compact('scheduleInfo'));
+        
         
     }
     public function approved($id = null){
@@ -48,7 +45,7 @@ class SchedulesController extends DeliveryAppController {
                                                                             'sales_order_id' => $id
                                                                         )
                                                                     ));
-        //pr($requestScheduleInfo);die;
+        
         $this->Schedule->bind(array('TruckSchedule'));
         $scheduleInfo = $this->Schedule->find('first', array(
                                                  'conditions' =>  array(
@@ -58,7 +55,8 @@ class SchedulesController extends DeliveryAppController {
         $this->set(compact('requestScheduleInfo','scheduleInfo'));
 
     }
-     public function delivery_receipt($id = null){
+
+    public function delivery_receipt($id = null){
        
         $this->layout = 'pdf';
         Configure::write('debug',2);
@@ -90,10 +88,19 @@ class SchedulesController extends DeliveryAppController {
                                                         'id' => $ticketDetails['Quotation']['company_id'])
                                             ));
         }
-        //pr($ticketDetails);die;
+
         $this->set(compact('ticketDetails','companyName'));
 
     }
 
+    public function update_status($id = null){
+
+        $this->Schedule->update_status($id);
+        $this->redirect( array(
+                                 'controller' => 'schedules', 
+                                 'action' => 'approved', $id
+                                 //'plugin' => 'delivery'
+                            ));
+    }
      
 }

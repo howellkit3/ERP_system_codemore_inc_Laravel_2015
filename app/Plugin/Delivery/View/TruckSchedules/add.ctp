@@ -164,14 +164,13 @@
 										<div class="input-group input-append bootstrap-timepicker">
 											<?php
 												echo $this->Form->input('timeTo', array( 
-			                       									
-			                       									'type' => 'text',
-				                           							'alt' => 'type',
-											    					'label' => false,
-											   						'class' => 'form-control',
-											    					'empty' => false,
-											    					'id' => 'timepicker2'
-																	));
+																						'type' => 'text',
+									                           							'alt' => 'type',
+																    					'label' => false,
+																   						'class' => 'form-control',
+																    					'empty' => false,
+																    					'id' => 'timepicker2'
+																		));
 											?>
 											<span class="add-on input-group-addon"><i class="fa fa-clock-o"></i></span>
 										</div>

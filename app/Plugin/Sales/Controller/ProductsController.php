@@ -238,7 +238,7 @@ class ProductsController extends SalesAppController {
 	                                     $productDetails['Product']['companyId']
 	                              
 	                             ));
-	            }
+	        }
         }
 
 

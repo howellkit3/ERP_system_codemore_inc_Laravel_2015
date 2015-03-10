@@ -69,16 +69,17 @@
 					<td>
 						CUSTOMER: <?php echo $companyName['Company']['company_name']; ?>
 					</td>
-						
+						 REF. NO.:
 					<td >
-						ADDRESS: <?php echo $companyName['Address'][0]['address1']; ?>
+						
 					</td>
 				
 				</tr>
 
 				<tr>
 					<td>
-						 REF. NO.:
+						ADDRESS: <?php echo $companyName['Address'][0]['address1']; ?>
+						
 					</td>
 					
 					<td >

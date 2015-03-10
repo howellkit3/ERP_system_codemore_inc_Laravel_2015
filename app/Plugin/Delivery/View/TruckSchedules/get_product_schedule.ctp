@@ -1,12 +1,22 @@
 Truck Schedule
+<?php
+	if(!empty($message)){
+		if($message == "Conflict"){
+		echo "<font color='red'>There is a conflict in the time that you chose!</font>";
+
+
+		}
+	}
+
+?>
 <table border = 1 style="width: 100%; border: 0; cellspacing: 0; cellpadding: 0;">
-	<tr>
-		<th>
+	<tr >
+		<td align = "center">
 			Time
-		</th>
-		<th>
+		</td>
+		<td align = "center">
 			Location
-		</th>
+		</td>
 	</tr>
 	
 	<?php
@@ -15,7 +25,7 @@ Truck Schedule
 		<tr>
 			<td>
 				<?php
-					echo $value['TruckSchedule']['time_from']." to ". $value['TruckSchedule']['time_to'];
+					echo "<b>".$value['TruckSchedule']['time_from']."</b> to <b>". $value['TruckSchedule']['time_to']."</b>";
 				?>
 			</td>
 			<td>

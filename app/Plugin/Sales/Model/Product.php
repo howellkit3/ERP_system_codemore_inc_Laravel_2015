@@ -55,19 +55,16 @@ class Product extends AppModel {
 
 	}
 	public function editProduct($data,$auth){
-		//pr($data);exit();
+		
 		$this->id = $this->find('first',array('conditions' => array('id' => $data['Product']['productId'])));
-		//pr($this->id);exit();
+	
 		if ($this->id) {
-			//pr($this->id);exit();
+			
 		    $this->saveField('product_name', $data['Product']['productName']);
 
 		    $this->bind(array('ProductSpec'));
 	        $this->ProductSpec->editProductSpec($data, $auth);
-		    // $this->bind(array('ProductSpec'));
-		    // $this->QuotationField->editFields($data,$quotationId);
-		    //pr($data);exit();
-		    //$this->QuotationField
+		  
 
 		}
 
