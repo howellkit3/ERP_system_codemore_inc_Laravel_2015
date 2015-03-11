@@ -1,3 +1,4 @@
+<?php echo $this->element('ticket_option'); ?><br><br>
 <div class="row1">
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">

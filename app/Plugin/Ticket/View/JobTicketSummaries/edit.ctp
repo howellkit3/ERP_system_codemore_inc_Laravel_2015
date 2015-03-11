@@ -20,31 +20,6 @@
                 
             </header>
             
-            <?php 
-              //$value= "";
-
-              // if( !empty($description[3]['JobTicketSummary']['value'])){
-              //       $value = array( $description[2]['JobTicketSummary']['value'], $description[3]['JobTicketSummary']['value'],  !empty($description[4]['JobTicketSummary']['value']));
-                   
-              // } 
-              // else{
-              //      $value =array($this->Html->link('<span class="fa-stack">
-              //                               <i class="fa fa-square fa-stack-2x"></i>
-              //                               <i class="fa fa-truck fa-stack-1x fa-inverse"></i>
-              //                               </span> ', 
-              //                                           array( 
-              //                               'controller' => 'requestDeliverySchedules', 
-              //                               'action' => 'add',
-              //                               $quotationId['Quotation']['id'],'ticket',
-              //                               'plugin' =>'sales'
-              //                               ),
-              //                                           array(
-              //                               'class' =>' table-link',
-              //                               'escape' => false,
-              //                               'title'=>'Request Delivery'
-              //                               )), "Not Yet Available" , "Not Yet Available");
-              // }
-            ?>
             <div class="main-box-body clearfix">
                 <div class="table-responsive">
                     <table class="table table-striped table-hover">
@@ -110,21 +85,6 @@
 	                  					</div>
            									<?php //echo ; ?></td>
          						  </tr>
-<!-- 
-         						  <tr>
-           								<td>Unit Price</td>
-           								<td><?php echo $description[1]['JobTicketSummary']['value']; ?></td>
-         						  </tr>
-
-	                              <tr>
-	                                  <td>Schedule of Delivery</td>
-	                                  <td><?php //echo $value[0]; ?></td>
-	                              </tr>
-
-         						  <tr>
-           								<td>Quantity Needed to be Deliver</td>
-           								<td><?php //echo $value[1]; ?></td>
-         						  </tr> -->
 
        						</tbody>
                     </table>

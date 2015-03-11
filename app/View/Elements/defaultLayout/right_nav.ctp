@@ -78,6 +78,14 @@
 	 											array('escape' => false) );
 	 					?>
 					</li>
+					<li class="<?php //echo ($this->params['plugin'] == 'production') ? 'active' : '' ?>">
+						<?php
+	 						echo $this->Html->link( " <i class='fa fa-money'></i> <span>Accounting</span>",   array('controller' =>'accounting',
+	 											'action'=>'index',
+	 											'plugin' => 'accounting'),
+	 											array('escape' => false) );
+	 					?>
+					</li>
 
 					<!-- <li>
 						<?php

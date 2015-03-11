@@ -1,4 +1,4 @@
-<?php echo $this->element('deliveries_options'); ?><br><br>
+<?php echo $this->element('ticket_option'); ?><br><br>
 <html>
 	<div class="row1">
     	<div class="col-lg-12">
@@ -6,23 +6,6 @@
 			 	
 		        <div class="table-responsive">
 		        	<div class="col-lg-10">
-			        	<div class="filter-block">
-							<?php 
-								$location = "";
-								if(!empty($url)){
-									$location = "index";
-								}
-								else{
-									$location = "delivery_detail";
-								}
-								echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array( 
-																'controller' => 'deliveries', 
-																'action' => $location
-																), array(
-																'class' =>'btn btn-primary pull-right', 
-																'escape' => false));
-							?>
-						</div>
 					</div>
 		            <table class="table table-striped table-hover">
 		            	

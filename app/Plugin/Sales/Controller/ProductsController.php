@@ -40,24 +40,17 @@ class ProductsController extends SalesAppController {
 												));
 		
 		//pr($itemCategory);exit();
-		$companyName = $this->Company->find('first', 
-													array(
-											'conditions' => 
-													array(
-											'id' =>  $companyId
-												)
+		$companyName = $this->Company->find('first', array(
+												'conditions' => array(
+													'id' =>  $companyId)
 											));
 
 		$this->loadModel('Sales.CustomField');
-		$customField = $this->CustomField->find('list', 
-													array( 
-												'fields' => 
-													array(
-												'id', 'fieldlabel'
-													),
-												'conditions' => 
-													array( 
-												'id NOT' => array(3,13,11)
+		$customField = $this->CustomField->find('list', array( 
+													'fields' => array(
+														'id', 'fieldlabel'),
+													'conditions' => array( 
+													'id NOT' => array(3,13,11)
 
 													)
 												));
@@ -118,7 +111,7 @@ class ProductsController extends SalesAppController {
 										));
 
 
-		pr($company);exit();
+		//pr($company);exit();
 		
 		echo json_encode($data);
 

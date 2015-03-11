@@ -67,13 +67,14 @@
                                                                         <i class="fa fa-square fa-stack-2x"></i>
                                                                         <i class="fa fa fa-check-square fa-lg fa-stack-1x fa-inverse"></i>
                                                                         </span> ', array( 
-                                                                        'controller' => 'Deliveries', 
+                                                                        'controller' => 'deliveries', 
                                                                         'action' => 'add',
-                                                                         $scheduleDataList['Schedule']['sales_order_id'] 
+                                                                         $scheduleDataList['Schedule']['sales_order_id'], 
+                                                                         'schedule' 
                                                                                 ), array(
                                                                         'class' =>' table-link',
                                                                         'escape' => false,
-                                                                        'title'=>'Create Delivery Receipt'
+                                                                        'title'=>'Create Delivery Information'
                                                         ));
 
                                             ?>

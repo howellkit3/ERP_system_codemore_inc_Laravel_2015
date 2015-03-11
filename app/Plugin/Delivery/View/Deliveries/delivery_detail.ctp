@@ -5,7 +5,23 @@
             <header class="main-box-header clearfix">
 
                 <h2 class="pull-left"><b>Delivery Details</b></h2>
-                
+                 <div class="filter-block pull-right">
+                   <?php
+                    //pr($truckAvailability);
+                    //pr($truckId);
+                      echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Add Delivery Details ', 
+                            array('controller' => 'deliveries', 
+                                    'action' => 'add',
+
+                                ),
+                            array('class' =>'btn btn-primary pull-right',
+                                'escape' => false));
+
+
+                    ?>  
+
+                   <br><br>
+               </div>
             </header>
             
             <div class="main-box-body clearfix">
@@ -43,12 +59,12 @@
                                                                             <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
                                                                             </span> ', array(
                                                                             'controller' => 'Deliveries', 
-                                                                            'action' => 'delivery_info'
-                                                                            //$scheduleDataList['Schedule']['sales_order_id'] 
+                                                                            'action' => 'delivery_info',
+                                                                            $salesIdList['Delivery']['sales_order_id'] 
                                                                                         ), array(
                                                                             'class' =>' table-link',
                                                                             'escape' => false,
-                                                                            'title'=>'View Information'
+                                                                            'title'=>'View Details'
                                                                         ));
 
                                                 ?>

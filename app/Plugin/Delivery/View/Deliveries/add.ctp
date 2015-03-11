@@ -3,7 +3,7 @@
 <?php echo $this->Form->create('Delivery', array(
 									'url'=>( array( 
 										'controller' => 'deliveries',
-										'action' => 'delivery_info')
+										'action' => 'add')
 									)), array( 
 									'class' => 'form-horizontal'
 								));
@@ -14,12 +14,14 @@
         	<header class="main-box-header clearfix">
         	<h1>Add Delivery Information</h1>
    		 	</header>
-    
+    			
            	 <div class="main-box-body clearfix">
                 <div class="form-group">
                     <label for="inputPassword1" class="col-lg-2 control-label">Purchase Number</label>
                     <div class="col-lg-9">
                         <?php
+                        if(!empty($scheduleInfo['Schedule']['sales_order_id'])){
+
                            echo $this->Form->input('sales_order_id', array(
     												'value' => $scheduleInfo['Schedule']['sales_order_id'],
     												'readonly' => true,
@@ -30,6 +32,23 @@
 							    					'empty' => false,
 							    					'id' => 'unique_id'
 													));
+                       }
+                       else{
+
+                       		echo $this->Form->input('sales_order_id', array(
+                       								'type' => 'select',
+    												'options' => $scheduleInfo,
+
+    												//'readonly' => true,
+							    					//'alt' => 'type',
+							    					
+							    					'label' => false,
+							   						'class' => 'form-control col-lg-4 required',
+							    					'empty' => '--Select Purchase Id',
+							    					'id' => 'unique_id'
+													));
+
+                       }
                         ?>
 
 
@@ -41,7 +60,8 @@
                     <div class="col-lg-9">
                         <?php
                            echo $this->Form->input('qty', array(
-    												'value' => $scheduleInfo['Schedule']['quantity'],
+
+    												'value' => !empty($scheduleInfo['Schedule']['quantity']) ? $scheduleInfo['Schedule']['quantity'] : '',
     												'readonly' => true,
 							    					'alt' => 'type',
 							    					'type' => 'text',
@@ -64,7 +84,8 @@
 							<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 							   <?php
                            			echo $this->Form->input('delivered_date', array( 
-                           									'value' => $scheduleInfo['Schedule']['schedule'],
+
+                           									'value' => !empty($scheduleInfo['Schedule']['schedule']) ? $scheduleInfo['Schedule']['schedule'] : '',
                            									'type' => 'text',
 		                           							'alt' => 'type',
 									    					'label' => false,
@@ -148,12 +169,20 @@
 					</div>
 					<div class="col-lg-8">
 						<?php 
+						//pr($action);die;
+							$location = "";
+							if($action == "delivery_detail"){
+								$location = "delivery_detail";
+								
+							}
+							else{
+								$location = "index";
+							}
 	                        echo $this->Html->link('Cancel', array('controller' => 'deliveries', 
-	                        									   'action' => 'index'),
-	                        										array(
-	                        												'class' =>'btn btn-primary',
-	                        												'escape' => false
-	                        												));
+	                        									   'action' => $location), array(
+	                												'class' =>'btn btn-primary',
+	                												'escape' => false
+	                												));
 	                    ?>
 					</div>
 				 	</div>
