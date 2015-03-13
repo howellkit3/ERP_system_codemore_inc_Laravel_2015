@@ -77,15 +77,14 @@ class ProductsController extends SalesAppController {
 		$this->autoRender = false;
 
 	}
-	public function get_product($typeId = null, $companyId = null){
+	public function get_product( $companyId = null){
 
 		$this->layout = false;
 		$this->loadModel('Sales.Product');
 		$data = $this->Product->find('list', array(
 										'fields' => array(
 									  		'id','product_name'),
-									  	'conditions' => array(
-									  		'type_id' => $typeId, 
+									  	'conditions' => array( 
 											'company_id' => $companyId)
 										));
 		//pr($data);exit();

@@ -1,4 +1,45 @@
 jQuery(function($){
+	$.ajax({
+
+			url: serverPath + "sales/products/get_product/"+$('#company_id').val(),
+			type: "GET",
+			dataType: "json",
+			success: function(data) {
+				$('.option_append_item').remove();
+					$.each(data,function(i,name) {
+						console.log(name);
+						$('#selectProduct').append($('<option class="option_append_item">').text(name).attr('value',i));
+
+					});
+				
+				}
+	});
+	$("#selectProduct").prop('disabled', false);
+	$("#txtProduct").prop('disabled', false);
+	$("#selectProduct").hide();
+	$("#checkBack").hide();
+	$("#back").hide();
+	
+	$('#checkAdd').change(function(){
+		
+		$("#selectProduct").show();
+		$("#checkBack").show();
+		$("#back").show();
+		$("#txtProduct").hide();
+		$("#checkAdd").hide();
+		$("#add").hide();
+		
+	});
+
+	$('#checkBack').change(function(){
+		$("#selectProduct").hide();
+		$("#checkBack").hide();
+		$("#back").hide();
+		$("#txtProduct").show();
+		$("#checkAdd").show();
+		$("#add").show();
+	});
+
 
 	$('#select_company').change(function(){
 

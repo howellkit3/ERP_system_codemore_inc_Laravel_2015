@@ -77,7 +77,7 @@ class QuotationField extends AppModel {
 
 	public function deleteQuoteFields($quotationData = null){
 
-		$fieldsData = $this->find('all',array('conditions' => array('QuotationField.product_id' => $quotationData)));
+		$fieldsData = $this->find('all',array('conditions' => array('QuotationField.quotation_id' => $quotationData)));
 		
 		foreach ($fieldsData as $key => $value) {
 

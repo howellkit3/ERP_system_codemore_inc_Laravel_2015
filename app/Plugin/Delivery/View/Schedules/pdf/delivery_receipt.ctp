@@ -43,7 +43,9 @@
 									  NO:
 								</td>
 								<td height= "20px" class = "column4">
-									&nbsp;
+									<?php
+										echo $scheduleInfo['Schedule']['delivery_no']
+									?>
 								</td>
 							</tr>
 							<tr>

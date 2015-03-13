@@ -16,11 +16,11 @@ class Product extends AppModel {
 		$this->bindModel(array(
 			
 			'belongsTo' => array(
-				'ItemType' => array(
-					'className' => 'Sales.ItemType',
-					'foreignKey' => 'type_id',
-					'dependent' => true
-				),
+				// 'ItemType' => array(
+				// 	'className' => 'Sales.ItemType',
+				// 	'foreignKey' => 'type_id',
+				// 	'dependent' => true
+				// ),
 				'Quotation' => array(
 					'className' => 'Sales.Quotation',
 					'foreignKey' => 'product_id',
@@ -45,6 +45,22 @@ class Product extends AppModel {
 		$data['Product']['type_id'] = $data['Product']['item_type'];
 		$data['Product']['company_id'] = $data['Product']['companyId'];
 		$data['Product']['product_name'] = $data['Product']['productName'];
+		//$data['TruckSchedule']['remarks'] = $data['Product']['remarks'];
+		$data['Product']['created_by'] = $auth;
+		$data['Product']['modified_by'] = $auth;
+		$this->save($data);
+
+		return $this->id;
+		
+
+	}
+
+	public function addQuotationProduct($data,$auth){
+		//pr($id);exit();
+		$this->create();
+		
+		$data['Product']['company_id'] = $data['0'];
+		$data['Product']['product_name'] = $data['1'];
 		//$data['TruckSchedule']['remarks'] = $data['Product']['remarks'];
 		$data['Product']['created_by'] = $auth;
 		$data['Product']['modified_by'] = $auth;

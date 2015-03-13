@@ -114,7 +114,9 @@ class Schedule extends AppModel {
 		
 		if ($this->id) {
 			    $this->save( array(
+			    			'delivery_no' => 'DR-'.time(),
 			    			'status' =>'Approved',
+
 		     				
 		    				));
 

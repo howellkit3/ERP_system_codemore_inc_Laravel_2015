@@ -18,8 +18,8 @@ class SchedulesController extends DeliveryAppController {
        
         
         $scheduleInfo = $this->Schedule->find('first', array(
-                                              'conditions' => array(
-                                              'sales_order_id' => $salesOrderId
+                                                  'conditions' => array(
+                                                        'sales_order_id' => $salesOrderId
                                                 )
                                             ));
                                     
@@ -61,6 +61,12 @@ class SchedulesController extends DeliveryAppController {
         $this->layout = 'pdf';
         Configure::write('debug',2);
 
+        $scheduleInfo = $this->Schedule->find('first', array(
+                                                  'conditions' => array(
+                                                        'sales_order_id' => $id
+                                                )
+                                            ));
+
         $this->loadModel('Sales.Quotation');
         $this->Quotation->bind(array('QuotationField','Product'));
         $ticketDetails = $this->Quotation->find('first', array(
@@ -74,10 +80,10 @@ class SchedulesController extends DeliveryAppController {
 
             $this->Company->bind(array('Address','Contact','Email','Inquiry'));
             $companyName = $this->Company->Inquiry->find('first', array(
-                                            'conditions' => array(
-                                                'Inquiry.id' => $ticketDetails['Quotation']['inquiry_id']
-                                                )
-                                            ));
+                                                            'conditions' => array(
+                                                                'Inquiry.id' => $ticketDetails['Quotation']['inquiry_id']
+                                                                )
+                                                            ));
         }   
 
         else{
@@ -89,7 +95,7 @@ class SchedulesController extends DeliveryAppController {
                                             ));
         }
 
-        $this->set(compact('ticketDetails','companyName'));
+        $this->set(compact('ticketDetails','companyName','scheduleInfo'));
 
     }
 

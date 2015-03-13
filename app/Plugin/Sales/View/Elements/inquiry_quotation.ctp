@@ -112,40 +112,38 @@
 																 <div class="form-group">
 																	<div class="col-lg-3"><span style="color:red">*</span> Item</div>
 																	<div class="col-lg-8">
+																	<?php 
+							                                                echo $this->Form->input('txtproduct', 
+							                                                									array( 
+							                                                						'type' => 'text',
+							                                                						'class' => 'form-control item_type', 
+							                                                    					//'alt' => 'address1',
+							                                                    					'label' => false, 
+							                                                    					'id' => 'txtProduct',
+
+							                                                    					//'empty' => '--Select Product--'
+							                                                    					));
+							                                            ?>
 																		<?php 
-							                                                echo $this->Form->input('itemCategory', 
-							                                                									array( 
-							                                                						'type' => 'select',
-							                                                						'options' => $category,
-							                                                						'class' => 'form-control item_type', 
-							                                                    					//'alt' => 'address1',
-							                                                    					'label' => false,
-							                                                    					'id' => 'itemCategory',
-							                                                    					'empty' => '--Select Category--'
-							                                                    					));
-							                                            ?><br>
-							                                            <?php 
-							                                                echo $this->Form->input('itemType', 
-							                                                									array( 
-							                                                						'type' => 'select',
-							                                                						'class' => 'form-control item_type', 
-							                                                    					//'alt' => 'address1',
-							                                                    					'label' => false,
-							                                                    					'id' => 'itemType',
-							                                                    					//'empty' => '--Select Type--' 
-							                                                    					));
-							                                            ?><br>
-							                                             <?php 
 							                                                echo $this->Form->input('product', 
 							                                                									array( 
 							                                                						'type' => 'select',
 							                                                						'class' => 'form-control item_type', 
 							                                                    					//'alt' => 'address1',
 							                                                    					'label' => false, 
-							                                                    					'id' => 'product',
-
+							                                                    					'id' => 'selectProduct',
 							                                                    					'empty' => '--Select Product--'
 							                                                    					));
+							                                           	 	?>
+							                                           
+							                                            
+							                                            <?php 
+							                                                echo $this->Form->checkbox('checkAdd', array('id' => 'checkAdd')). 
+							                                                						" <font color='blue'><span id='add'>Click to Search Product</span></font>";
+							                                            ?>
+							                                             <?php 
+							                                                echo $this->Form->checkbox('checkBack', array('id' => 'checkBack')). 
+							                                                						"<font color='blue' id =><span id='back'>Back</span></font>";
 							                                            ?>
 																	</div>
 																</div>

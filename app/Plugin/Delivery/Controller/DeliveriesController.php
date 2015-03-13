@@ -6,7 +6,11 @@ class DeliveriesController extends DeliveryAppController {
 
   public function index() {
         $this->loadModel('Delivery.Schedule');
-        $scheduleData = $this->Schedule->find('all');
+        $scheduleData = $this->Schedule->find('all', array(
+                                                  'order' => array(
+                                                        'schedule DESC'
+                                                  )
+                                            ));
         //pr($scheduleData);
         $this->set(compact('scheduleData'));
    }
@@ -118,8 +122,7 @@ class DeliveriesController extends DeliveryAppController {
             $this->loadModel('Delivery.Schedule');
             $scheduleInfo = $this->Schedule->find('list', array(
                                                       'fields' => array(
-                                                          'sales_order_id','sales_order_id'
-                                                        ),
+                                                          'sales_order_id','sales_order_id'),
                                                       'conditions' => array(
                                                           'sales_order_id NOT' => $salesId,
                                                           'status' => 'Approved'
