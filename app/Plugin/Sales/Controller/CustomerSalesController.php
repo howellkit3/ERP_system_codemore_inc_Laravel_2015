@@ -44,8 +44,9 @@ class CustomerSalesController extends SalesAppController {
             if (!empty($this->request->data)) {
 
             	$this->Company->bind(array('Address','Contact','Email','ContactPerson'));
-
+            	//pr($this->request->data);die;
             	$this->request->data = $this->Company->formatData($this->request->data, $userData['User']['id']);
+
 
             	$this->request->data['Company']['created_by'] = $userData['User']['id'];
             	$this->request->data['Company']['modified_by'] = $userData['User']['id'];
