@@ -1,7 +1,7 @@
 <?php $this->Html->addCrumb('Sales', array('controller' => 'customer_sales', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Quotation', array('controller' => 'quotation', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Create', array('controller' => 'quotation', 'action' => 'create')); ?>
-<?php echo $this->Html->script('Sales.inquiry');?>
+<?php echo $this->Html->script('Sales.company_quotation');?>
 <div style="clear:both"></div>
 
 
@@ -116,13 +116,57 @@
 												                        'label' => false,
 												                        'id' => 'id'));
 					                                            ?>
-					                                            <div class="form-group">
+					                                            <!-- <div class="form-group">
 																	<div class="col-lg-3"><span style="color:red">*</span> Quotation Name</div>
 																	<div class="col-lg-8">
 																		<?php 
-							                                                echo $this->Form->input('Quotation.name', array('class' => 'form-control item_type',
-							                                                    'alt' => 'address1',
-							                                                    'label' => false));
+							                                                echo $this->Form->input('Quotation.name', 
+							                                                									array( 
+							                                                						'class' => 'form-control item_type',
+												                                                    'alt' => 'address1', 
+												                                                    'label' => false
+												                                                    ));
+							                                            ?>
+																	</div>
+																</div> -->
+
+																<div class="form-group">
+																	<div class="col-lg-3"><span style="color:red">*</span> Item</div>
+																	<div class="col-lg-8">
+																		<?php 
+							                                                echo $this->Form->input('itemCategory', 
+							                                                									array( 
+							                                                						'type' => 'select',
+							                                                						'options' => $category,
+							                                                						'class' => 'form-control item_type', 
+							                                                    					//'alt' => 'address1',
+							                                                    					'label' => false,
+							                                                    					'id' => 'itemCategory',
+							                                                    					'empty' => '--Select Category--'
+							                                                    					));
+							                                            ?><br>
+							                                            <?php 
+							                                                echo $this->Form->input('itemType', 
+							                                                									array( 
+							                                                						'type' => 'select',
+							                                                						'class' => 'form-control item_type', 
+							                                                    					//'alt' => 'address1',
+							                                                    					'label' => false,
+							                                                    					'id' => 'itemType',
+							                                                    					//'empty' => '--Select Type--' 
+							                                                    					));
+							                                            ?><br>
+							                                             <?php 
+							                                                echo $this->Form->input('product', 
+							                                                									array( 
+							                                                						'type' => 'select',
+							                                                						'class' => 'form-control item_type', 
+							                                                    					//'alt' => 'address1',
+							                                                    					'label' => false, 
+							                                                    					'id' => 'product',
+
+							                                                    					'empty' => '--Select Product--'
+							                                                    					));
 							                                            ?>
 																	</div>
 																</div>

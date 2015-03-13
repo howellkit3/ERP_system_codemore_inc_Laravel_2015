@@ -15,20 +15,6 @@
 
                 ?>  
 
-              <?php
-                //pr($truckAvailability);
-                //pr($truckId);
-                  echo $this->Html->link('<i class="fa fa-check-square fa-lg"></i> Edit ', 
-                        array('controller' => 'truckSchedules', 
-                            'action' => 'add',
-                            //$scheduleInfo['Schedule']['sales_order_id']
-                            ),
-                        array('class' =>'btn btn-primary pull-right',
-                            'escape' => false));
-
-
-                ?>  
-
                <br><br>
            </div>
             <header class="main-box-header clearfix">
@@ -36,32 +22,7 @@
                 <h2 class="pull-left"><b>Job Ticket Details</b></h2>
                 
             </header>
-            
-            <?php 
-              $value= "";
 
-              if( !empty($description[3]['JobTicketSummary']['value'])){
-                    $value = array($description[3]['JobTicketSummary']['value'],$description[2]['JobTicketSummary']['value'],$description[4]['JobTicketSummary']['value']);
-                   
-              } 
-              else{
-                   $value =array($this->Html->link('<span class="fa-stack">
-                                            <i class="fa fa-square fa-stack-2x"></i>
-                                            <i class="fa fa-truck fa-stack-1x fa-inverse"></i>
-                                            </span> ', 
-                                                        array( 
-                                            'controller' => 'requestDeliverySchedules', 
-                                            'action' => 'add',
-                                            $quotationId['Quotation']['id'],'ticket',
-                                            'plugin' =>'sales'
-                                            ),
-                                                        array(
-                                            'class' =>' table-link',
-                                            'escape' => false,
-                                            'title'=>'Request Delivery'
-                                            )), "" , "");
-              }
-            ?>
             <div class="main-box-body clearfix">
                 <div class="table-responsive">
                     <table class="table table-striped table-hover">
@@ -69,40 +30,52 @@
 
                  							<tr>
                    								<td>Job Ticket Id</td>
-                   								<td><?php echo $companyDetails['JobTicketDetail']['unique_id']; ?></td>
+                   								<td><?php echo $ticketDetails['Quotation']['unique_id']; ?></td>
                  							</tr>
-
                  							<tr>
                    								<td>Company Name</td>
-                   								<td><?php echo $companyDetails['JobTicketDetail']['company_name']; ?></td>
+                   								<td><?php echo $companyName['Company']['company_name']; ?></td>
                  							</tr>
-
-                 							<tr>
-                   								<td>Quantity</td>
-                   								<td><?php echo $description[0]['JobTicketSummary']['value']; ?></td>
-                 							</tr>
-
-                 							<tr>
-                   								<td>Unit Price</td>
-                   								<td><?php echo $description[1]['JobTicketSummary']['value']; ?></td>
-                 							</tr>
-
                               <tr>
-                                  <td>Schedule of Delivery</td>
-                                  <td><?php echo $value[0]; ?></td>
+                                  <td>Address</td>
+                                  <td><?php echo $companyName['Address'][0]['address1']; ?></td>
+
+                              </tr>
+                              <tr>
+                                  <td></td>
+                                  <td><?php echo $companyName['Address'][0]['address2']; ?></td>
+                                  
+                              </tr>
+                              <tr>
+                                  <td>Contact Numbers</td>
+                                  <td><?php echo $companyName['Contact'][0]['number']; ?></td>
+                              </tr>
+                               <tr>
+                                  <td>Email</td>
+                                  <td><?php echo $companyName['Email'][0]['email']; ?></td>
                               </tr>
 
-                 							<tr>
-                   								<td>Quantity Needed to be Deliver</td>
-                   								<td><?php echo $value[1]; ?></td>
-                 							</tr>
-
-                 							
-
-                 							<tr>
-                   								<td>Delivered Quantity</td>
-                   								<td><?php echo $value[2] ?></td>
-                 							</tr>
+                              <tr>
+                                  <td>Product Name</td>
+                                  <td><?php echo $productName['Product']['product_name']; ?></td>
+                              </tr>
+                              <?php foreach ($customField as $key => $value) { 
+                                          //pr($key);//foreach ($ticketDetails['QuotationField'] as $key => $value){?>
+                              
+                              <tr>
+                                  <td>
+                                    <?php echo $customField[$key]?>
+                                  </td>
+                                  <td>
+                                      <?php echo $ticketDetails['QuotationField'][$key-2]['description']; ?>
+                                  </td>
+                                  
+                              </tr>
+                              
+                              <?php 
+                               // }
+                              }
+                            ?>
 
                						</tbody>
                     </table>

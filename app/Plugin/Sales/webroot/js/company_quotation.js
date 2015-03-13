@@ -1,5 +1,4 @@
 jQuery(function($){
-
 	$('#select_company').change(function(){
 
 		var option = $(this).val();
@@ -26,7 +25,6 @@ jQuery(function($){
 		});
 			
 	});
-
 	$('#itemCategory').change(function(){
 		//alert($(this).val());
 
@@ -50,7 +48,7 @@ jQuery(function($){
 				}
 		}).done(function(){
 				$.ajax({
-				url: serverPath + "sales/products/get_product/"+$('#itemType').val()+"/"+$('#company_id').val(),
+				url: serverPath + "sales/products/get_product/"+$('#itemType').val()+"/"+$('#select_company').val(),
 				type: "GET",
 				dataType: "json",
 				success: function(data) {
@@ -75,7 +73,7 @@ jQuery(function($){
 		//var type = $('#itemType').val();
 		
 			$.ajax({
-			url: serverPath + "sales/products/get_product/"+$('#itemType').val()+"/"+$('#company_id').val(),
+			url: serverPath + "sales/products/get_product/"+$('#itemType').val()+"/"+$('#select_company').val(),
 			type: "GET",
 			dataType: "json",
 			success: function(data) {
@@ -129,10 +127,4 @@ jQuery(function($){
 			});
 
 		});
-	
-	
-
 });
-
-
-	

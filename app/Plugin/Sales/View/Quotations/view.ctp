@@ -93,6 +93,15 @@
 							We are pleased to submit our price quotation on your printing requirement under the following specifications:
 						</div>
 					</div><br>
+					<div class="form-group">
+							<div class="col-lg-1"></div>
+							<div class="col-lg-2">
+								Item
+							</div>
+							<div class="col-lg-8">
+								:&emsp;<?php echo $productName['Product']['product_name']?>
+							</div>
+						</div>
 					<?php foreach ($quotationFieldInfo as $key => $value) {?>
 						<div class="form-group">
 							<div class="col-lg-1"></div>

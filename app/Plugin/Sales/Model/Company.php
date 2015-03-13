@@ -53,6 +53,12 @@ class Company extends AppModel {
 					'foreignKey' => 'company_id',
 					'conditions' => '',
 					'dependent' => true
+				),
+				'Product' => array(
+					'className' => 'Sales.Product',
+					'foreignKey' => 'company_id',
+					'conditions' => '',
+					'dependent' => true
 				)
 			)
 		),false);

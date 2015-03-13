@@ -1,14 +1,12 @@
 <?php echo $this->Html->script('Sales.custom');?>
 <?php echo $this->element('sales_option');?><br><br>
-<?php echo $this->Form->create('RequestDeliverySchedule', array(
-																'url'=>( 
-														  array(
-																'controller' => 'requestDeliverySchedules',
-																'action' => 'add'
-															))),
-														  array(
+ <?php echo $this->Form->create('RequestDeliverySchedule', array(
+																'url'=>( array(
+																	'controller' => 'requestDeliverySchedules',
+																	'action' => 'add')
+																)), array(
 														  		'class' => 'form-horizontal'
-													 		));
+												 		));
 ?>
 	<div class="row">
 	    <div class="col-lg-12">
@@ -50,7 +48,8 @@
 												    					'label' => false,
 												   						'class' => 'form-control',
 												    					'empty' => false,
-												    					'id' => 'datepickerDate'
+												    					'id' => 'datepickerDate',
+												    					'required' => true
 												    	
 												    
 																));
@@ -73,7 +72,7 @@
 												    					'label' => false,
 												   						'class' => 'form-control',
 												    					'empty' => false,
-												    		
+												    					'value' => $companyName['Address'][0]['address1']
 																		));
 			                        ?>
 									</div>
@@ -93,7 +92,7 @@
 												    					'label' => false,
 												   						'class' => 'form-control',
 												    					'empty' => false,
-												    					
+												    					'value' => $quantity['QuotationField'][1]['description']
 																		));
 			                        ?>
 									</div>

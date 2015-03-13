@@ -1,3 +1,4 @@
+<?php echo $this->Html->script('Sales.inquiry');?>
 <div class="row">
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
@@ -8,6 +9,14 @@
 							<h1>
 							<?php echo ucfirst($company['Company']['company_name']); ?>
 							</h1>
+							<?php 
+                                echo $this->Form->input('company_id', array(
+                                	'type' => 'hidden',
+                                	'value' => $company['Company']['id'],
+                                    'label' => false,
+                                    'id' => 'company_id'
+                                    ));
+                            ?>
 						</header>
 						
 						<div class="main-box-body clearfix">
@@ -90,7 +99,7 @@
 										                        'value' => !empty($inquiry['Inquiry']['id']) ? $inquiry['Inquiry']['id'] : '' ,
 										                        'label' => false));
 			                                            ?>
-			                                            <div class="form-group">
+			                                            <!-- <div class="form-group">
 															<div class="col-lg-3">Quotation Name</div>
 															<div class="col-lg-8">
 																<?php 
@@ -99,21 +108,44 @@
 					                                                    'label' => false));
 					                                            ?>
 															</div>
-														</div>
+														</div> -->
 																 <div class="form-group">
-																	<div class="col-lg-3"><?php echo $customField['1']?></div>
+																	<div class="col-lg-3"><span style="color:red">*</span> Item</div>
 																	<div class="col-lg-8">
 																		<?php 
-							                                                echo $this->Form->input('QuotationField.1.description', array('class' => 'form-control item_type',
-							                                                	'id'	=> 'CustomFieldId',
-							                                                    'alt' => 'address1',
-							                                                    'label' => false));
-							                                            ?>
+							                                                echo $this->Form->input('itemCategory', 
+							                                                									array( 
+							                                                						'type' => 'select',
+							                                                						'options' => $category,
+							                                                						'class' => 'form-control item_type', 
+							                                                    					//'alt' => 'address1',
+							                                                    					'label' => false,
+							                                                    					'id' => 'itemCategory',
+							                                                    					'empty' => '--Select Category--'
+							                                                    					));
+							                                            ?><br>
 							                                            <?php 
-							                                                echo $this->Form->input('QuotationField.1.custom_fields_id', array(
-							                                                	'type' => 'hidden',
-							                                                	'value' => '1',
-							                                                    'label' => false));
+							                                                echo $this->Form->input('itemType', 
+							                                                									array( 
+							                                                						'type' => 'select',
+							                                                						'class' => 'form-control item_type', 
+							                                                    					//'alt' => 'address1',
+							                                                    					'label' => false,
+							                                                    					'id' => 'itemType',
+							                                                    					//'empty' => '--Select Type--' 
+							                                                    					));
+							                                            ?><br>
+							                                             <?php 
+							                                                echo $this->Form->input('product', 
+							                                                									array( 
+							                                                						'type' => 'select',
+							                                                						'class' => 'form-control item_type', 
+							                                                    					//'alt' => 'address1',
+							                                                    					'label' => false, 
+							                                                    					'id' => 'product',
+
+							                                                    					'empty' => '--Select Product--'
+							                                                    					));
 							                                            ?>
 																	</div>
 																</div>

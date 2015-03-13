@@ -40,7 +40,7 @@
                                                         ), array(
                                                 'class' =>' table-link',
                                                 'escape' => false,
-                                                'title'=>'Create Job Ticket Details'
+                                                'title'=>'View Job Ticket Summary'
                                 ));
 
                     ?>

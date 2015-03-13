@@ -196,6 +196,22 @@ CREATE TABLE `permits` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+/*Table structure for table `product_specs` */
+
+DROP TABLE IF EXISTS `product_specs`;
+
+CREATE TABLE `product_specs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) DEFAULT NULL,
+  `custom_fields_id` int(11) DEFAULT NULL,
+  `description` varchar(100) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+
 /*Table structure for table `products` */
 
 DROP TABLE IF EXISTS `products`;
@@ -205,13 +221,12 @@ CREATE TABLE `products` (
   `type_id` int(11) NOT NULL,
   `company_id` int(11) DEFAULT NULL,
   `product_name` varchar(255) DEFAULT NULL,
-  `remarks` varchar(300) DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   `modified_by` int(11) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
 /*Table structure for table `quotation_fields` */
 
@@ -227,7 +242,7 @@ CREATE TABLE `quotation_fields` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=163 DEFAULT CHARSET=latin1;
 
 /*Table structure for table `quotations` */
 
@@ -235,7 +250,6 @@ DROP TABLE IF EXISTS `quotations`;
 
 CREATE TABLE `quotations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(120) DEFAULT NULL,
   `company_id` int(11) DEFAULT NULL,
   `inquiry_id` int(11) DEFAULT NULL,
   `product_id` int(11) DEFAULT NULL,
@@ -246,7 +260,7 @@ CREATE TABLE `quotations` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
 
 /*Table structure for table `request_delivery_schedules` */
 
@@ -264,7 +278,7 @@ CREATE TABLE `request_delivery_schedules` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 /*Table structure for table `sales_orders` */
 
@@ -279,7 +293,7 @@ CREATE TABLE `sales_orders` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 /*Table structure for table `suppliers` */
 

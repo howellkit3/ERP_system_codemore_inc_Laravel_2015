@@ -83,14 +83,14 @@ class CustomerSalesController extends SalesAppController {
 	public function view($companyId = null){
 
 		
-		$this->Company->bind(array('Address','Contact','Email','ContactPerson'));
+		$this->Company->bind(array('Address','Contact','Email','ContactPerson','Product'));
 
 		$this->Company->recursive = 1;
 
 		$company = $this->Company->find('first', array(
 	        'conditions' => array('Company.id' => $companyId)
 	    ));
-		
+		//pr($company);exit();
 		$this->set(compact('company'));
 		
 	}
@@ -172,6 +172,9 @@ class CustomerSalesController extends SalesAppController {
 			$this->loadModel('Sales.Address');
 			$this->Address->deleteAddress($personId);
 
+			$this->loadModel('Sales.Quotation');
+			$this->Quotation->deleteQuotation($dataId);
+
 			$this->redirect(
 				array('controller' => 'customer_sales', 'action' => 'index')
 			);
@@ -198,6 +201,7 @@ class CustomerSalesController extends SalesAppController {
 		$this->set('companyData', $companyData);
 
 		if ($this->request->is('post')) {
+			pr($this->request->data);die;
 
             if (!empty($this->request->data)) {
 

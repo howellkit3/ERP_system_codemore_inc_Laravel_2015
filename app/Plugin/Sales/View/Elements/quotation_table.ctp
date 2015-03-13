@@ -5,7 +5,7 @@
         <tr class="">
 
             <td class="">
-                <?php echo ucfirst($quotationList['Quotation']['name']) ?>  
+                <?php echo ucfirst($quotationList['Product']['product_name']) ?>  
             </td>
             <td class="">
                

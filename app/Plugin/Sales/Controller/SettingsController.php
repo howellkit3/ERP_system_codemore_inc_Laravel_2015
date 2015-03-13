@@ -4,7 +4,7 @@ App::uses('SessionComponent', 'Controller/Component');
 
 class SettingsController extends SalesAppController {
 
-	public $uses = array('Sales.CustomField');
+	public $uses = array('Sales.CustomField','Sales.ItemCategory','Sales.ItemType');
 	public $helper = array('Sales.Country');
 
 	public function beforeFilter() {
@@ -23,9 +23,22 @@ class SettingsController extends SalesAppController {
 
 		$customField = $this->CustomField->find('all',array('order' => array('CustomField.id DESC')));
 
+		$category = $this->ItemCategory->find('list', array(
+											  'fields' => array(
+											  'id', 'category_name'
+											  		),
+											  'conditions' => array(
+											  'status' => 'active'
+
+											  	)
+												));
+		$this->ItemCategory->bind(array('ItemType'));
+		$type = $this->ItemCategory->find('all');
+
+		//pr($type);die;
 		//pr($customField);exit();
 
-		$this->set(compact('customField'));
+		$this->set(compact('customField','category','type'));
 
 	}
 
@@ -39,7 +52,6 @@ class SettingsController extends SalesAppController {
             	
             	$this->CustomField->savelabel($this->request->data,$userData['User']['id']);
 
-            	$this->Session->setFlash(__('Register Complete.'));
             	$this->redirect(
                     array('controller' => 'settings', 'action' => 'index')
                 );

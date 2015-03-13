@@ -30,15 +30,24 @@ class Quotation extends AppModel {
 					'className' => 'Sales.SalesOrder',
 					'foreignKey' => 'quotation_id',
 					'dependent' => true
-				),
+				)
+
 			),
 			'hasMany' => array(
 				'QuotationField' => array(
 					'className' => 'Sales.QuotationField',
 					'foreignKey' => 'quotation_id',
 					'dependent' => true
-				),
-			)
+				)
+			),
+			'hasOne' => array(
+				'Product' => array(
+					'className' => 'Sales.Product',
+					'foreignKey' => false,
+					'conditions' => 'Product.id = Quotation.product_id'
+				)
+			 )
+			
 		));
 
 		$this->contain($model);
@@ -85,8 +94,9 @@ class Quotation extends AppModel {
 
 	public function addInquiryQuotation($data, $auth,$inquiryId){
 
-		$this->create();
 
+		$this->create();
+		$data['product_id'] = $data['product'];
 		$data['inquiry_id'] = $inquiryId;	
 		$data['created_by'] = $auth;
 		$data['modified_by'] = $auth;
@@ -101,9 +111,10 @@ class Quotation extends AppModel {
 	}
 
 	public function addCompanyQuotation($data, $auth,$companyId){
+		//pr($data);die;
 
 		$this->create();
-
+		$data['product_id'] = $data['product'];
 		$data['company_id'] = $companyId;	
 		$data['created_by'] = $auth;
 		$data['modified_by'] = $auth;
@@ -129,7 +140,7 @@ class Quotation extends AppModel {
 		$this->id = $this->find('first',array('conditions' => array('Quotation.id' => $quotationId)));
 		if ($this->id) {
 
-		    $this->saveField('name', $data['Quotation']['name']);
+		    //$this->saveField('name', $data['Quotation']['name']);
 		    $this->bind(array('QuotationField'));
 		    $this->QuotationField->editFields($data,$quotationId);
 		    //pr($data);exit();
