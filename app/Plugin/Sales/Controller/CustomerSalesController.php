@@ -44,7 +44,7 @@ class CustomerSalesController extends SalesAppController {
             if (!empty($this->request->data)) {
 
             	$this->Company->bind(array('Address','Contact','Email','ContactPerson'));
-            	//pr($this->request->data);die;
+            	
             	$this->request->data = $this->Company->formatData($this->request->data, $userData['User']['id']);
 
 
@@ -53,8 +53,9 @@ class CustomerSalesController extends SalesAppController {
             	
             	if ($this->Company->saveAssociated($this->request->data)) {
   
-					$contactPersonId = $this->Company->ContactPerson->saveContact($this->request->data['ContactPersonData'], $this->Company->id,$userData['User']['id']);
-            	
+					$contactPersonId = $this->Company->ContactPerson->saveContact($this->request->data['ContactPersonData'], $this->Company->id);
+					
+					
             		$this->Company->Contact->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
             		$this->Company->Address->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
             		$this->Company->Email->saveContact($this->request->data['ContactPersonData'], $contactPersonId);

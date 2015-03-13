@@ -57,23 +57,23 @@ class ContactPerson extends AppModel {
 		
 		'firstname' => array(
 			'notEmpty' => array(
-				'rule' => array('notEmpty'),
+				'rule' => array('notEmpty'," "),
 				'message' => 'Required fields.',
 			),
-			'alphaNumeric'=> array(
-	            'rule' => 'alphaNumeric',
-	            'message'=> 'Please enter a valid name'
-	        ),
+			// 'alphaNumeric'=> array(
+	  //           'rule' => 'alphaNumeric',
+	  //           'message'=> 'Please enter a valid name'
+	  //       ),
 		),
 		'lastname' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				'message' => 'Required fields.',
 			),
-			'alphaNumeric'=> array(
-	            'rule' => 'alphaNumeric',
-	            'message'=> 'Please enter a valid name'
-	        ),
+			// 'alphaNumeric'=> array(
+	  //           'rule' => 'alphaNumeric',
+	  //           'message'=> 'Please enter a valid name'
+	  //       ),
 		),	
 		'position' => array(
 			'notEmpty' => array(
@@ -92,17 +92,19 @@ class ContactPerson extends AppModel {
 		$this->data[$this->name]['modified_by'] = $userId;
 	}
 
-	public function saveContact($data, $company_id,$auth)
+	public function saveContact($data, $company_id)
 	{
+		
 		foreach ($data as $key => $contactPersonData)
 		{
+
 			$this->create();
 			foreach ($contactPersonData[$this->name] as $key => $contactPersonValue) 
 			{
-				$contactPersonValue['model'] = "Company";
+				//pr($contactPersonData[$this->name]);pr($company_id);die;
+				//$contactPersonValue['model'] = "Company";
 				$contactPersonValue['company_id'] = $company_id;
-				$contactPersonValue['created_by'] = $auth;
-				$contactPersonValue['modified_by'] = $auth;	
+					
 				
 			}
 			$this->saveAll($contactPersonValue);
