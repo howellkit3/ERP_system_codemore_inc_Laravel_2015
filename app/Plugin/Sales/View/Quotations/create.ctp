@@ -19,7 +19,7 @@
 		    <div class="col-lg-12">
 		        <div class="main-box clearfix body-pad">
 					<div class="row" id="user-profile">
-						<div class="col-lg-4 col-md-4 col-sm-4">
+						<div class="col-lg-3 col-md-4 col-sm-4">
 							<div class="main-box clearfix">
 							
 					
