@@ -56,5 +56,14 @@ hr {
    position: relative;
    bottom: 10px;
 } 
+.boxed {
+    border: 1px solid black ;
+    width: 380px;
+    height: 180px;
+    text-align: justify;
+  /*  padding: 25px;
+    border: 25px solid navy;
+    margin: 25px;*/
 
+}
 

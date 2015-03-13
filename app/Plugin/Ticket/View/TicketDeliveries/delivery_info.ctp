@@ -51,8 +51,9 @@
 									?>
 								</td>
 							</tr>
-							<?php foreach ($deliveryDetail as $key => $value) { 
-		                                  //foreach ($ticketDetails['QuotationField'] as $key => $value){?>
+							<?php 
+								foreach ($deliveryDetail as $key => $value) { 
+		                    ?>
 		                      
 		                      <tr>
 		                          <td>
@@ -65,7 +66,7 @@
 		                      </tr>
 		                      
 		                      <?php 
-		                       // }
+		                       
 		                      }
 		                    ?>
 							</tbody>

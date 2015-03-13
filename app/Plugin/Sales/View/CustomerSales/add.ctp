@@ -8,7 +8,7 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="main-box">
-            <?php //echo $this->Session->flash(); ?>
+            
             <header class="main-box-header clearfix">
                 <center>
                     <h1>
@@ -491,17 +491,11 @@
                                                 <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneContactData('contactPersonAddress_section',this)"><i class="fa fa-plus"></i></button>
                                                 <button type="button" class="remove-field btn btn-danger" onclick="removeClone('contactPersonAddress_section')"><i class="fa fa-minus"></i> </button>
                                             </div>
-                                            <!-- <hr style="height:1px; border:none; color:#666666; background-color:#666666;"> -->
+                                           
                                     </div>
                                 </section>
                              
-                                <!-- <div class="form-group">
-                                    <label for="inputPassword1" class="col-lg-2 control-label"></label>
-                                    <div class="col-lg-4">
-                                        <button type="button" class="add-field6 table-link danger btn btn-success" onclick="cloneData('contactPerson_section',this)"> <i class="fa fa-plus"> Add Contact Person</i></button>
-                                        <button type="button" class="remove-field btn btn-danger" onclick="removeClone('contactPerson_section')"><i class="fa fa-minus"></i> </button>
-                                    </div>
-                                </div> -->
+                            
                             </section>
                         </div>
                     </div>  
@@ -518,7 +512,7 @@
                                     <?php 
                                         echo $this->Form->submit('Submit Customer Information', array('class' => 'btn btn-success pull-right',  'title' => 'Click here to add the customer'));
                                     ?>
-                                  <!--   <button type="button" class="btn btn-success pull-right" onclick="validateForm('CompanyAddForm')">Submit Customer Information</button> -->
+                                  
                                 </div>
                                 <div class="col-xs-2 col-md-2 2">
                                     <?php 

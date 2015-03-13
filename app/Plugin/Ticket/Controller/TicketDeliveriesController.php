@@ -43,8 +43,6 @@ class TicketDeliveriesController extends TicketAppController {
                                           'conditions' => array(
                                             'sales_order_id' => $id)
                                         ));
-	    //pr($count);die;
-
 
         if($count == 0){
           $this->redirect( array(
@@ -70,7 +68,6 @@ class TicketDeliveriesController extends TicketAppController {
 															'unique_id' => $id
 															)
 														));
-		//pr($ticketDetails);die;
 		$this->set(compact('ticketDetails'));
 
     }

@@ -29,7 +29,7 @@ class SchedulesController extends DeliveryAppController {
             $this->redirect( array(
                                  'controller' => 'schedules', 
                                  'action' => 'approved', $id
-                                 //'plugin' => 'delivery'
+                                
                             ));
 
         }
@@ -105,7 +105,6 @@ class SchedulesController extends DeliveryAppController {
         $this->redirect( array(
                                  'controller' => 'schedules', 
                                  'action' => 'approved', $id
-                                 //'plugin' => 'delivery'
                             ));
     }
      

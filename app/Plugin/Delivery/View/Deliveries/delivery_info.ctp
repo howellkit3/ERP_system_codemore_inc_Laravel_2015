@@ -33,7 +33,7 @@
 								</td>
 								<td>
 									<?php
-										echo $scheduleInfo['Schedule']['id'];
+										echo $scheduleInfo['Schedule']['delivery_no'];
 									?>
 								</td>
 
@@ -69,7 +69,7 @@
 								</td>
 							</tr>
 							<?php foreach ($deliveryDetail as $key => $value) { 
-		                                  //foreach ($ticketDetails['QuotationField'] as $key => $value){?>
+		                               ?>
 		                      
 		                      <tr>
 		                          <td>

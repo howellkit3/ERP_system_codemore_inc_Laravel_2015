@@ -40,12 +40,11 @@ class Product extends AppModel {
 	}
 
 	public function addProduct($data,$auth){
-		//pr($id);exit();
+		
 		$this->create();
 		$data['Product']['type_id'] = $data['Product']['item_type'];
 		$data['Product']['company_id'] = $data['Product']['companyId'];
 		$data['Product']['product_name'] = $data['Product']['productName'];
-		//$data['TruckSchedule']['remarks'] = $data['Product']['remarks'];
 		$data['Product']['created_by'] = $auth;
 		$data['Product']['modified_by'] = $auth;
 		$this->save($data);
@@ -56,12 +55,11 @@ class Product extends AppModel {
 	}
 
 	public function addQuotationProduct($data,$auth){
-		//pr($id);exit();
+	
 		$this->create();
 		
 		$data['Product']['company_id'] = $data['0'];
 		$data['Product']['product_name'] = $data['1'];
-		//$data['TruckSchedule']['remarks'] = $data['Product']['remarks'];
 		$data['Product']['created_by'] = $auth;
 		$data['Product']['modified_by'] = $auth;
 		$this->save($data);

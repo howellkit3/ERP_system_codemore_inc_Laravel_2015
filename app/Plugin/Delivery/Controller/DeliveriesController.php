@@ -11,7 +11,7 @@ class DeliveriesController extends DeliveryAppController {
                                                         'schedule DESC'
                                                   )
                                             ));
-        //pr($scheduleData);
+       
         $this->set(compact('scheduleData'));
    }
 
@@ -117,7 +117,6 @@ class DeliveriesController extends DeliveryAppController {
                                                   )
                                             ));
 
-            //pr($salesId);die;
 
             $this->loadModel('Delivery.Schedule');
             $scheduleInfo = $this->Schedule->find('list', array(
@@ -131,8 +130,6 @@ class DeliveriesController extends DeliveryAppController {
 
         }
 
-        
-        //pr($scheduleInfo);die;
   
         $this->set(compact('scheduleInfo','action'));
    }
@@ -172,15 +169,8 @@ class DeliveriesController extends DeliveryAppController {
    
       echo json_encode($data);
 
-
-
       $this->autoRender = false;
 
-    
-
-  
-
-      
    }
      
 }

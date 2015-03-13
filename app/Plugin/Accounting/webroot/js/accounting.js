@@ -24,7 +24,7 @@ jQuery(function($){
 				$('#delivery_no').val(data[0]['Schedule']['delivery_no']);
 				$('#company_name').val(data[2]['Company']['company_name']);
 				$('#product_name').val(data[1]['Product']['product_name']);
-				$('#ordered_quantity').val(data[1]['QuotationField'][3]['description']);
+				$('#ordered_quantity').val(data[1]['QuotationField'][1]['description']);
 				$('#price').val(data[1]['QuotationField'][2]['description']);
 				$('#delivered_date').val(data[3][0]['Delivery']['description']);
 				$('#quantity_delivered').val(data[3][1]['Delivery']['description']);

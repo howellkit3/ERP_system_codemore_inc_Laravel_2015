@@ -38,7 +38,7 @@ class TruckSchedule extends AppModel {
 	}
 
 	public function addTruckSchedule($data,$auth){
-		//pr($data);exit();
+	
 		$this->create();
 		$data['TruckSchedule']['truck_id'] = $data['TruckSchedules']['truck_plate_number'];
 		$data['TruckSchedule']['sales_order_id'] = $data['TruckSchedules']['sales_order_id'];

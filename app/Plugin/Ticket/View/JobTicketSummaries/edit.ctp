@@ -31,7 +31,6 @@
 	                        					<?php
 							                          echo $this->Form->input('jobTicketId', array(
 							    												'value' => $companyDetails['JobTicketDetail']['unique_id'],
-							    												//'readonly' => true,
 														    					'alt' => 'type',
 														    					'type' => 'text',
 														    					'label' => false,
@@ -51,7 +50,6 @@
 	                        					<?php
 							                          echo $this->Form->input('jobTicketId', array(
 							    												'value' => $companyDetails['JobTicketDetail']['company_name'],
-							    												//'readonly' => true,
 														    					'alt' => 'type',
 														    					'type' => 'text',
 														    					'label' => false,
@@ -71,7 +69,6 @@
 	                        					<?php
 							                          echo $this->Form->input('jobTicketId', array(
 							    												'value' => $description[0]['JobTicketSummary']['value'],
-							    												//'readonly' => true,
 														    					'alt' => 'type',
 														    					'type' => 'text',
 														    					'label' => false,
@@ -93,9 +90,9 @@
 			               <?php
 			                  echo $this->Html->link('<i class="fa  fa-arrow-left fa-lg"></i> Back ', 
 									                        array(
-						                        	'controller' => 'jobTicketSummaries', 
-						                            'action' => 'index', 
-									                $companyDetails['JobTicketDetail']['unique_id']
+									                        	'controller' => 'jobTicketSummaries', 
+									                            'action' => 'index', 
+												                $companyDetails['JobTicketDetail']['unique_id']
 									                            ),
 									                        array('class' =>'btn btn-primary pull-right',
 									                            'escape' => false));
@@ -108,7 +105,7 @@
 			                        array('controller' => 'jobTicketSummaries', 
 			                            'action' => 'editQuantity',
 			                            $companyDetails['JobTicketDetail']['unique_id']
-			                            //$scheduleInfo['Schedule']['sales_order_id']
+			                        
 			                            ),
 			                        array('class' =>'btn btn-primary pull-right',
 			                            'escape' => false));

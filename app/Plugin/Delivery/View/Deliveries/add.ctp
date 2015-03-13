@@ -38,10 +38,6 @@
                        		echo $this->Form->input('sales_order_id', array(
                        								'type' => 'select',
     												'options' => $scheduleInfo,
-
-    												//'readonly' => true,
-							    					//'alt' => 'type',
-							    					
 							    					'label' => false,
 							   						'class' => 'form-control col-lg-4 required',
 							    					'empty' => '--Select Purchase Id',
@@ -169,7 +165,7 @@
 					</div>
 					<div class="col-lg-8">
 						<?php 
-						//pr($action);die;
+						
 							$location = "";
 							if($action == "delivery_detail"){
 								$location = "delivery_detail";

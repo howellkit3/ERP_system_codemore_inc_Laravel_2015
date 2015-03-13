@@ -11,22 +11,16 @@ class RequestDeliverySchedulesController extends SalesAppController {
 
 		if($this->request->is('post')){
 
-            
-
             if(!empty($this->request->data)){
 
                 $requestData = $this->request->data;
-                //pr($requestData);exit();
+            
                 
                 $this->loadModel('Ticket.JobTicketDetail');
-                $detailId = $this->JobTicketDetail->find('first', 
-                                                                array(
-                                                         'conditions' => 
-                                                                array(
-                                                         'unique_id' =>  $requestData['RequestDeliverySchedule']['sales_order_id']
-                                                            )
-
-                                                    ));
+                $detailId = $this->JobTicketDetail->find('first', array(
+                                                            'conditions' =>  array(
+                                                                'unique_id' =>  $requestData['RequestDeliverySchedule']['sales_order_id'])
+                                                         ));
 
                 $this->RequestDeliverySchedule->addRequest($requestData , $userData['User']['id']);
 
@@ -36,7 +30,6 @@ class RequestDeliverySchedulesController extends SalesAppController {
                 $this->redirect( array(
 		                             'controller' => 'RequestDeliverySchedules', 
 		                             'action' => 'message'
-                                     //'plugin' => 'sales'
 		        				));
             }
         }
@@ -87,15 +80,13 @@ class RequestDeliverySchedulesController extends SalesAppController {
                                                 'conditions' => array(
                                                     'id' => $quotationCompany['Quotation']['company_id'])
                                             ));
-        //pr($companyName);die;
+        
         $this->loadModel('Sales.Quotation');
         $this->Quotation->bind(array('QuotationField'));
         $quantity = $this->Quotation->find('first', array(
                                                 'conditions' => array(
-                                                    'id' => $id
-                                                        )
+                                                    'id' => $id)
                                                     ));
-        //pr($quantity);die;
 
          $this->set(compact('quotationId','path','companyName','quantity'));
 
@@ -108,16 +99,14 @@ class RequestDeliverySchedulesController extends SalesAppController {
 
         $requestScheduleInfo = $this->RequestDeliverySchedule->find('first', array(
                                              				 		    'conditions' => array(
-                                             				 		        'sales_order_id' => $id
-                                              				              )
+                                             				 		        'sales_order_id' => $id)
                                            				             ));
 
         $this->loadModel('Delivery.Schedule');
         $this->Schedule->bind(array('TruckSchedule'));
         $scheduleInfo = $this->Schedule->find('first', array(
         							             'conditions' =>  array(
-        							                 'Schedule.sales_order_id' => $id
-        						                      )
+        							                 'Schedule.sales_order_id' => $id)
         							         ));
       
         $this->set(compact('requestScheduleInfo','scheduleInfo'));

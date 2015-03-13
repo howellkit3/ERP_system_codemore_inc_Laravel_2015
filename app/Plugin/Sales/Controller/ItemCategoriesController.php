@@ -31,15 +31,7 @@ class ItemCategoriesController extends SalesAppController {
             $this->redirect(
                     array('controller' => 'settings', 'action' => 'index')
                         );
-            
-            // if($this->ItemCategory->delete($categoryName)){
-            //     $this->redirect(
-            //         array('controller' => 'settings', 'action' => 'index')
-            //     );
-            // }
-            // else{
-            //     mysql_error();
-            // }
+
         
     }
 }

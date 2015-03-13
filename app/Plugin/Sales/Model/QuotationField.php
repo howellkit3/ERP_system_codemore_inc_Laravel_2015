@@ -57,7 +57,7 @@ class QuotationField extends AppModel {
 	);
 
 	public function saveQuotationField($data = null,$quotaionId= null,$auth = nnull){
-		//pr($data[$this->name]);die;
+		
 		
 		
 		$this->create();
@@ -87,14 +87,12 @@ class QuotationField extends AppModel {
 		
 	}
 	public function editFields($data = null, $quotationId = null){
-		//pr($data);exit();
 		
-		//pr($quotationId);exit();
 		$this->id = $this->find('all',array( 
 								'conditions' => array(
 								'quotation_id' => $quotationId
 								)));
-		//pr($this->id);exit();
+		
 		if ($this->id) {
 			foreach ($data[$this->name] as $key => $customFieldValue) 
 			{

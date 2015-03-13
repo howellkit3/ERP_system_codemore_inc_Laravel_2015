@@ -35,8 +35,7 @@
                                                 'controller' => 'jobTicketSummaries', 
                                                 'action' => 'index', 
                                                 $ticketDataList['Ticket']['unique_id']
-                                                //'plugin' => 'Ticket'
-                                                 //$scheduleDataList['Schedule']['sales_order_id'] 
+                                                
                                                         ), array(
                                                 'class' =>' table-link',
                                                 'escape' => false,

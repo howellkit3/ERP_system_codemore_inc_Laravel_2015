@@ -35,9 +35,6 @@ class SettingsController extends SalesAppController {
 		$this->ItemCategory->bind(array('ItemType'));
 		$type = $this->ItemCategory->find('all');
 
-		//pr($type);die;
-		//pr($customField);exit();
-
 		$this->set(compact('customField','category','type'));
 
 	}

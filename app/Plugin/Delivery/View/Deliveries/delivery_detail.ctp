@@ -7,8 +7,7 @@
                 <h2 class="pull-left"><b>Delivery Details</b></h2>
                  <div class="filter-block pull-right">
                    <?php
-                    //pr($truckAvailability);
-                    //pr($truckId);
+
                       echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Add Delivery Details ', 
                             array('controller' => 'deliveries', 
                                     'action' => 'add',
@@ -16,7 +15,6 @@
                                 ),
                             array('class' =>'btn btn-primary pull-right',
                                 'escape' => false));
-
 
                     ?>  
 

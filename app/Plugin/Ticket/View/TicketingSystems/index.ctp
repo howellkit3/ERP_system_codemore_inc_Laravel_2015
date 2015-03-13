@@ -7,9 +7,7 @@
                 <h2 class="pull-left"><b>Ticketing Lists</b></h2>
                 
                 <div class="filter-block pull-right">
-                    <?php
-                       //echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Make Quotation ', array('controller' => 'quotations', 'action' => 'create'),array('class' =>'btn btn-primary pull-right','escape' => false));
-                    ?>
+                  
                 </div>
             </header>
             
@@ -29,15 +27,7 @@
                     </table>
                     <hr>
                 </div>
-                <!-- <ul class="pagination pull-right">
-                    <li><a href="#"><i class="fa fa-chevron-left"></i></a></li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#"><i class="fa fa-chevron-right"></i></a></li>
-                </ul> -->
+                
             </div>
     
         </div>

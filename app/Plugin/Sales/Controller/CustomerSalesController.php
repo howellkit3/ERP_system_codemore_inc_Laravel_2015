@@ -137,7 +137,7 @@ class CustomerSalesController extends SalesAppController {
 		$company = $this->Company->find('first', array(
 	        'conditions' => array('Company.id' => $companyId)
 	    ));
-		//pr($company);exit();
+
 		$this->set(compact('company'));
 		
 	}
@@ -172,11 +172,11 @@ class CustomerSalesController extends SalesAppController {
 	public function edit($companyId = null){
 
 		$this->Company->bind(array(
-			'Address',
-			'Contact',
-			'Email',
-			'ContactPerson'
-		));
+									'Address',
+									'Contact',
+									'Email',
+									'ContactPerson'
+								));
 
 		$company = $this->Company->find('first', array(
 	        'conditions' => array('Company.id' => $companyId)
@@ -220,8 +220,6 @@ class CustomerSalesController extends SalesAppController {
 			$this->loadModel('Sales.Address');
 			$this->Address->deleteAddress($personId);
 
-			// $this->loadModel('Sales.Quotation');
-			// $this->Quotation->deleteQuotation($dataId);
 			$this->Session->setFlash(__('Successfully Deleted.'));
 			$this->redirect(
 				array('controller' => 'customer_sales', 'action' => 'index')
@@ -249,7 +247,6 @@ class CustomerSalesController extends SalesAppController {
 		$this->set('companyData', $companyData);
 
 		if ($this->request->is('post')) {
-			//pr($this->request->data);die;
 
             if (!empty($this->request->data)) {
 
@@ -275,16 +272,15 @@ class CustomerSalesController extends SalesAppController {
 
 		$this->Inquiry->bind(array('Quotation'));
 
-		$inquiryData = $this->Inquiry->find('all',
-			array(
-    			'order' => array('Inquiry.id DESC'),
-    			'contain' => array(
-    				'Quotation' => array(
-    					'conditions' => array('Quotation.inquiry_id' => 'Inquiry.id')
-    				)
-    			)
-    		)
-    	);
+		$inquiryData = $this->Inquiry->find('all', array(
+								    			'order' => array('Inquiry.id DESC'),
+								    			'contain' => array(
+								    				'Quotation' => array(
+								    					'conditions' => array('Quotation.inquiry_id' => 'Inquiry.id')
+								    				)
+								    			)
+								    		)
+								    	);
 
 		
 		$companyData = $this->Company->find('list',array('fields' => array('id', 'company_name')));
@@ -306,7 +302,7 @@ class CustomerSalesController extends SalesAppController {
 	    ));
 		
 		$this->set(compact('company','inquiry'));
-		//pr($company);exit();
+		
 	}
 
 	public function find_data($id = null) {
@@ -314,7 +310,12 @@ class CustomerSalesController extends SalesAppController {
 		$this->layout = false;
 		$this->Company->bind(array('Contact','Email','Address'));
 
-		$data =$this->Company->find('first', array('conditions' => array('Company.id' => $id),'fields' => array('id', 'company_name')));
+		$data =$this->Company->find('first', array(
+										'conditions' => array(
+											'Company.id' => $id), 
+										'fields' => array(
+											'id', 'company_name')
+										));
 		
 		echo json_encode($data);
 
@@ -331,14 +332,18 @@ class CustomerSalesController extends SalesAppController {
 		$this->Company->bind(array('Inquiry'));
 
 		$qouteCount = $this->Quotation->find('all',array(
-			'conditions' => array('Quotation.inquiry_id' => $inquiryId)));
+												'conditions' => array(
+														'Quotation.inquiry_id' => $inquiryId)
+												));
 
 		foreach ($qouteCount as $key => $value) {
 
 			$this->Quotation->bind(array('QuotationField'));
 
 			$quotationData = $this->Quotation->QuotationField->find('all',array(
-				'conditions' => array('QuotationField.quotation_id' => $value['Quotation']['id'])));
+																		'conditions' => array(
+																				'QuotationField.quotation_id' => $value['Quotation']['id'])
+																		));
 
 			$this->Quotation->QuotationField->deleteQuoteFields($value['Quotation']['id']);
 

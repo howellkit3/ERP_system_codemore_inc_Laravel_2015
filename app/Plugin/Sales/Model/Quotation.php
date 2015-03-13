@@ -97,7 +97,7 @@ class Quotation extends AppModel {
 		$data['created_by'] = $auth;
 		$data['modified_by'] = $auth;
 		$data['status'] = 0;
-		//$data['unique_id'] = $inquiryId.'-'.rand(0,9).time().substr(-6);
+		
 		$data['unique_id'] = "PO".'-'.time();
 		
 		$this->save($data);
@@ -115,7 +115,7 @@ class Quotation extends AppModel {
 		$data['created_by'] = $inquiryAuth;
 		$data['modified_by'] = $inquiryAuth;
 		$data['status'] = 0;
-		//$data['unique_id'] = $inquiryId.'-'.rand(0,9).time().substr(-6);
+		
 		$data['unique_id'] = "PO".'-'.time();
 		
 		$this->save($data);
@@ -125,7 +125,7 @@ class Quotation extends AppModel {
 	}
 
 	public function addCompanyQuotation($data, $auth,$companyId){
-		//pr($data);die;
+		
 
 		$this->create();
 		$data['product_id'] = $data['product'];
@@ -133,7 +133,7 @@ class Quotation extends AppModel {
 		$data['created_by'] = $auth;
 		$data['modified_by'] = $auth;
 		$data['status'] = 0;
-		//$data['unique_id'] = $companyId.'-'.rand(0,9).time();
+		
 		$data['unique_id'] = "PO".'-'.time();
 		
 		$this->save($data);
@@ -151,7 +151,7 @@ class Quotation extends AppModel {
 		$data['created_by'] = $newAuth;
 		$data['modified_by'] = $newAuth;
 		$data['status'] = 0;
-		//$data['unique_id'] = $companyId.'-'.rand(0,9).time();
+		
 		$data['unique_id'] = "PO".'-'.time();
 		
 		$this->save($data);

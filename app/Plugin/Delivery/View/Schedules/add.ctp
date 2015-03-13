@@ -12,7 +12,7 @@
 	    <div class="col-lg-12">
 	        <div class="main-box">
 	        	<?php
-	        		//pr($salesOrderId['Schedule']['sales_order_id']);exit();
+	        		
 	        		if($quotationId['Quotation']['unique_id'] == $salesOrderId['Schedule']['sales_order_id']){
 	        			echo "Your Request for Delivery had been Sent so please wait for confirmation";
 	        	?>

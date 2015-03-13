@@ -84,8 +84,7 @@
 	                        </thead>
 
 	                        <?php 
-	                        //pr($scheduleInfo['RequestDeliverySchedule']['sales_order_id']);exit();
-	                        //pr($requestScheduleInfo);die;
+	                       
 	                        if(!empty($requestScheduleInfo)){
 	                           
 	                        ?>
@@ -150,7 +149,7 @@
 	                        </thead>
 
 	                        <?php 
-	                        //pr($scheduleInfo['RequestDeliverySchedule']['sales_order_id']);exit();
+	                        
 	                        if(!empty($scheduleInfo)){
 	                           
 	                        ?>

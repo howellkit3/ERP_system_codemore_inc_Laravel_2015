@@ -10,9 +10,9 @@ class ProductsController extends SalesAppController {
 		$userData = $this->Session->read('Auth');
         if($this->request->is('post')){
 
-        	//pr($id);exit();
+        	
             if(!empty($this->request->data)){
-            	//pr($this->request->data);die;
+            	
             	
 	        	 $productDetails = $this->request->data;
 	        	 $this->loadModel('Sales.Product');
@@ -39,7 +39,7 @@ class ProductsController extends SalesAppController {
 												  		)
 												));
 		
-		//pr($itemCategory);exit();
+		
 		$companyName = $this->Company->find('first', array(
 												'conditions' => array(
 													'id' =>  $companyId)
@@ -51,11 +51,9 @@ class ProductsController extends SalesAppController {
 														'id', 'fieldlabel'),
 													'conditions' => array( 
 													'id NOT' => array(3,13,11)
-
 													)
 												));
 
-		//pr($customField );
 		$this->set(compact('companyName','itemCategory','customField'));
 
 	}
@@ -68,8 +66,6 @@ class ProductsController extends SalesAppController {
 									  		'fields' => array(
 									  			'id','type_description')
 									));
-		//pr($data);exit();
-		
 		echo json_encode($data);
 
 
@@ -87,8 +83,7 @@ class ProductsController extends SalesAppController {
 									  	'conditions' => array( 
 											'company_id' => $companyId)
 										));
-		//pr($data);exit();
-		
+	
 		echo json_encode($data);
 
 
@@ -108,10 +103,6 @@ class ProductsController extends SalesAppController {
 											'fields' => array(
 												'id','type_id')
 										));
-
-
-		//pr($company);exit();
-		
 		echo json_encode($data);
 
 
@@ -165,14 +156,12 @@ class ProductsController extends SalesAppController {
 		$this->loadModel('Sales.CustomField');
 		$customField = $this->CustomField->find('list',	array( 
 													'fields' => array(
-														'id', 'fieldlabel'
-														),
+														'id', 'fieldlabel'),
 													'conditions' => array( 
 														'id NOT' => array(3,13,11)
 													)
 												));
 
-		//pr($customField );
 		$this->set(compact('companyName','itemCategory','customField','productDetails'));
 
 	}
@@ -232,8 +221,6 @@ class ProductsController extends SalesAppController {
 	                             ));
 	        }
         }
-
-
 	}
 
 }

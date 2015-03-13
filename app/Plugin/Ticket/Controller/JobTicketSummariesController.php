@@ -33,8 +33,6 @@ class JobTicketSummariesController extends TicketAppController {
 											));
 		}
 
-		//pr($companyName);die;
-
 		$this->loadModel('Sales.CustomField');
 		$customField = $this->CustomField->find('list', array('fields' => array('id', 'fieldlabel')));
 		

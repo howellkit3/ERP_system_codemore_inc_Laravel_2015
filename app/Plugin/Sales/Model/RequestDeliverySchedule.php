@@ -22,7 +22,7 @@ class RequestDeliverySchedule extends AppModel {
 
 	public function updateRequest($data,$auth){
 
-		//pr($data);exit();
+	
 		$this->id = $this->find('first',array(
 								'conditions' => array(
 								'sales_order_id' => $data['TruckSchedules']['sales_order_id']
@@ -31,7 +31,7 @@ class RequestDeliverySchedule extends AppModel {
 		if ($this->id) {
 			    $this->save( array(
 			    			'status' =>'Accepted',
-		     				//'truck_id' =>$data['TruckSchedules']['truckPlateNumber'] 
+		     				
 		    				));
 
 		 }

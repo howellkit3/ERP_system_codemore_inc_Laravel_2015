@@ -63,7 +63,6 @@ class Contact extends AppModel {
 			$this->create();
 			foreach ($contactData[$this->name] as $key => $contactValue) 
 			{
-				//pr($contactValue['model']);die;
 				$contactValue['model'] = "ContactPerson";
 				$contactValue['foreign_key'] = $contact_id;	
 				

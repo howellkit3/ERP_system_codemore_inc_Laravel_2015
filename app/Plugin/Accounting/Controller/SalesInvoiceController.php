@@ -5,24 +5,39 @@ App::uses('SessionComponent', 'Controller/Component');
 class SalesInvoiceController extends AccountingAppController {
 
 	public function index(){
-
-		
-		$this->loadModel('Delivery.Schedule');
-        $scheduleData = $this->Schedule->find('all', array(
-        										'conditions' => array(
-        												'status' => "Approved"
-        											)
-        									));
+		$this->loadModel('Delivery.Delivery');
+      	$detailValue = $this->Delivery->find('list', array(
+                                          			'fields' => array(
+                                              			'sales_order_id'),
+                                        		));
+      	$this->loadModel('Delivery.Schedule');
+		$scheduleData = $this->Schedule->find('all', array(
+												'conditions' => array(
+													'sales_order_id' => $detailValue)
+											));
 
         $this->set(compact('scheduleData'));
 	}
 
 	public function add(){
 
-		
+
+		$userData = $this->Session->read('Auth');
+        if($this->request->is('post')){
+
+            if(!empty($this->request->data)){
+            	
+            	$this->SalesInvoice->addSalesInvoice($this->request->data, $userData['User']['id']);
+            	$this->Session->setFlash(__(' Successfully Created.'));
+	        	$this->redirect( array(
+                                 'controller' => 'salesInvoice', 
+                                 'action' => 'create_sales_invoice'
+                            ));
+	        }
+        }
 		$salesId = $this->SalesInvoice->find('list', array(
                                                 'fields' => array(
-                                                    'delivery_id'
+                                                    'sales_order_no'
                                                   )
                                             ));
 		$this->loadModel('Delivery.Delivery');
@@ -37,10 +52,8 @@ class SalesInvoiceController extends AccountingAppController {
 												'fields' => array(
 													'sales_order_id','sales_order_id'),
 												'conditions' => array(
-													'id NOT' => $salesId, 
-													'sales_order_id' => $detailValue
-
-													)
+													'sales_order_id NOT' => $salesId, 
+													'sales_order_id' => $detailValue)
 											));
 		
 
@@ -88,8 +101,7 @@ class SalesInvoiceController extends AccountingAppController {
         $this->loadModel('Delivery.Delivery');
         $deliveryDetails = $this->Delivery->find('all', array(
 		                                            'conditions' => array(
-		                                                'sales_order_id' => $id
-		                                              ),
+		                                                'sales_order_id' => $id),
 		                                            'order' => array(
 		                                            	'delivery_details_id ASC'
 		                                            )
@@ -106,5 +118,7 @@ class SalesInvoiceController extends AccountingAppController {
 	public function get_data(){
 		
 
+	}
+	public function create_sales_invoice(){
 	}
 }

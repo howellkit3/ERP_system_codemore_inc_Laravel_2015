@@ -1,8 +1,8 @@
 <html>
 	<?php echo $this->Html->script('Accounting.accounting');?>
-	<?php echo $this->Form->create('Delivery', array(
+	<?php echo $this->Form->create('Accounting', array(
 									'url'=>( array( 
-										'controller' => 'deliveries',
+										'controller' => 'salesInvoice',
 										'action' => 'add')
 									)), array( 
 									'class' => 'form-horizontal'

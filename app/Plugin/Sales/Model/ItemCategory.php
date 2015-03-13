@@ -39,7 +39,7 @@ class ItemCategory extends AppModel {
 
     }
     public function deleteItem($name){
-    	//pr($name);exit();
+    	
     	$this->id = $this->find('first',array(
 			'conditions' => array(
 				'category_name' => $name,

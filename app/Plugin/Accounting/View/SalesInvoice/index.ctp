@@ -11,9 +11,7 @@
                     //pr($truckId);
                       echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Create Sales Invoice ', 
                             array('controller' => 'salesInvoice', 
-                                    'action' => 'add',
-
-                                ),
+                                    'action' => 'add',),
                             array('class' =>'btn btn-primary pull-right',
                                 'escape' => false));
 
@@ -66,7 +64,7 @@
 						                                                        <i class="fa fa fa-check-square fa-lg fa-stack-1x fa-inverse"></i>
 						                                                        </span> ', array( 
 						                                                        'controller' => 'salesInvoice', 
-						                                                        'action' => 'add',
+						                                                        'action' => 'create_sales_invoice',
 						                                                         $scheduleDataList['Schedule']['sales_order_id']
 						                                                                ), array(
 						                                                        'class' =>' table-link',
