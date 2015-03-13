@@ -69,10 +69,8 @@ jQuery(function($){
 	});
 
 	$('#itemCategory').change(function(){
-		//alert($(this).val());
 
 		var option = $(this).val();
-		//var type = $('#itemType').val();
 		
 		$.ajax({
 			url: serverPath + "sales/products/get_type/"+option,
@@ -110,10 +108,10 @@ jQuery(function($){
 	});
 
 	$('#itemType').change(function(){
-		//alert($(this).val());
+		
 
 		var option = $(this).val();
-		//var type = $('#itemType').val();
+		
 		
 			$.ajax({
 			url: serverPath + "sales/products/get_product/"+$('#itemType').val()+"/"+$('#company_id').val(),
@@ -132,7 +130,6 @@ jQuery(function($){
 
 		});
 	$('#product').change(function(){
-		//alert($(this).val());
 
 		var option = $(this).val();
 		
