@@ -64,7 +64,7 @@ function fieldResetContact($form, section)
 {
     var count = $('.' + section).length;
    
-    $form.find('select, input').each(function() {
+    $form.find('select, input, textarea').each(function() {
         var $this = $(this),
             nameProp = $this.prop('name'),
             type = $this.prop('type'),

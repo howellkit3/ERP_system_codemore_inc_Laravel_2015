@@ -24,7 +24,7 @@ class RequestStocksController extends WareHouseAppController {
 				$this->RequestStock->addrequeststock($data, $userData['User']['id']);
 
             	$this->Session->setFlash(__('New Customer Information Added.'));
-            	$this->redirect( array('controller' => 'request_stocks', 'action' => 'add'));
+            	$this->redirect( array('controller' => 'request_stocks', 'action' => 'index'));
             } else{
 	            	$this->Session->setFlash(__('The invalid data. Please, try again.'));
 	        }
@@ -35,12 +35,14 @@ class RequestStocksController extends WareHouseAppController {
 	public function edit($id = null){
 		
 		if ($this->request->is('post')) {
-
+			 if ($this->RequestStock->save($this->request->data)) {
+		            // Set a session flash message and redirect.
+		            $this->Session->setFlash('Stock updated!');
+		           $this->redirect( array('controller' => 'request_stocks', 'action' => 'index'));
+		        }
 		} else {
 			if ($id) {
-
 				$data = $this->RequestStock->findById($id);
-
 					$this->set(compact('data'));
 			
 			}

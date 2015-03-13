@@ -35,5 +35,9 @@ class RequestStock extends AppModel {
 		return $this->id;
 
 	}
+	public function updateSave($data){
+
+		$this->save($data);
+	}
 
 }
