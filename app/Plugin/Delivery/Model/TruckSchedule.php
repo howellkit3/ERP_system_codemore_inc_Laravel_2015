@@ -9,30 +9,17 @@ class TruckSchedule extends AppModel {
 
     public $useDbConfig = 'koufu_delivery_system';
     public $name = 'TruckSchedule';
-    
-	// public $validate = array(
- //        'description' => array(
-	// 		'notEmpty' => array(
-	// 			'rule' => array('notEmpty'),
-	// 			'message'=>'Select Company',
-	// 		),
-	// 	),
-		
-	// 	'schedule_from' => array(
-	// 		'notEmpty' => array(
-	// 			'rule' => array('notEmpty'),
-	// 			'message' => 'Required fields.',
-	// 		),
-	// 	),
 
-	// 	'schedule_to' => array(
-	// 		'notEmpty' => array(
-	// 			'rule' => array('notEmpty'),
-	// 			'message' => 'Required fields.',
-	// 		),
-	// 	),
+     public $validate = array(
 
- //    );
+        'truck_plate_number' => array(
+            'notEmpty' => array(
+                'rule' => array('notEmpty'),
+                'message' => 'Required fields.',
+                
+            )
+        ),
+    );
 
     public function bind($model = array('Group')){
 
@@ -53,7 +40,7 @@ class TruckSchedule extends AppModel {
 	public function addTruckSchedule($data,$auth){
 		//pr($data);exit();
 		$this->create();
-		$data['TruckSchedule']['truck_id'] = $data['TruckSchedules']['truckPlateNumber'];
+		$data['TruckSchedule']['truck_id'] = $data['TruckSchedules']['truck_plate_number'];
 		$data['TruckSchedule']['sales_order_id'] = $data['TruckSchedules']['sales_order_id'];
 		$data['TruckSchedule']['location'] = $data['TruckSchedules']['location'];
 		$data['TruckSchedule']['date'] = $data['TruckSchedules']['schedule'];

@@ -13,7 +13,7 @@ class ItemCategoriesController extends SalesAppController {
             	
             	$this->ItemCategory->saveCategory($this->request->data,$userData['User']['id']);
 
-            	//$this->Session->setFlash(__('Register Complete.'));
+            	$this->Session->setFlash(__('Added Successfully.'));
             	$this->redirect( array(
                                 'controller' => 'settings', 
                                 'action' => 'index'
@@ -27,6 +27,7 @@ class ItemCategoriesController extends SalesAppController {
     public function delete_item($categoryName = null){
 
             $this->ItemCategory->deleteItem($categoryName);
+            $this->Session->setFlash(__('Deleted Successfully.'));
             $this->redirect(
                     array('controller' => 'settings', 'action' => 'index')
                         );

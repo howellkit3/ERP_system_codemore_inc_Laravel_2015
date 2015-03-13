@@ -23,7 +23,7 @@
 							<div class="main-box clearfix">
 							
 					
-								<header class="main-box-header clearfix"><span style="color:red">*</span>
+								<header class="main-box-header clearfix"><span style="color:red" id = "message">PLEASE CHOOSE A COMPANY!</span>
 									
 									<?php echo $this->Form->input('Company.id', array(
 		                                'options' => array($companyData),
@@ -116,76 +116,62 @@
 												                        'label' => false,
 												                        'id' => 'id'));
 					                                            ?>
-					                                            <!-- <div class="form-group">
-																	<div class="col-lg-3"><span style="color:red">*</span> Quotation Name</div>
-																	<div class="col-lg-8">
-																		<?php 
-							                                                echo $this->Form->input('Quotation.name', 
-							                                                									array( 
-							                                                						'class' => 'form-control item_type',
-												                                                    'alt' => 'address1', 
-												                                                    'label' => false
-												                                                    ));
-							                                            ?>
-																	</div>
-																</div> -->
 
-																<div class="form-group">
+																<div class="form-group" id="existing_items">
 																	<div class="col-lg-3"><span style="color:red">*</span> Item</div>
 																	<div class="col-lg-8">
 																		<?php 
-							                                                echo $this->Form->input('itemCategory', 
+							                                                echo $this->Form->input('txtproduct', 
 							                                                									array( 
-							                                                						'type' => 'select',
-							                                                						'options' => $category,
+							                                                						'type' => 'text',
 							                                                						'class' => 'form-control item_type', 
 							                                                    					//'alt' => 'address1',
-							                                                    					'label' => false,
-							                                                    					'id' => 'itemCategory',
-							                                                    					'empty' => '--Select Category--'
+							                                                    					'label' => false, 
+							                                                    					'id' => 'txtProduct',
+
+							                                                    					//'empty' => '--Select Product--'
 							                                                    					));
-							                                            ?><br>
-							                                            <?php 
-							                                                echo $this->Form->input('itemType', 
-							                                                									array( 
-							                                                						'type' => 'select',
-							                                                						'class' => 'form-control item_type', 
-							                                                    					//'alt' => 'address1',
-							                                                    					'label' => false,
-							                                                    					'id' => 'itemType',
-							                                                    					//'empty' => '--Select Type--' 
-							                                                    					));
-							                                            ?><br>
-							                                             <?php 
+							                                            ?>
+																		<?php 
 							                                                echo $this->Form->input('product', 
 							                                                									array( 
 							                                                						'type' => 'select',
 							                                                						'class' => 'form-control item_type', 
 							                                                    					//'alt' => 'address1',
 							                                                    					'label' => false, 
-							                                                    					'id' => 'product',
-
+							                                                    					'id' => 'selectProduct',
 							                                                    					'empty' => '--Select Product--'
 							                                                    					));
+							                                           	 	?>
+							                                           
+							                                            
+							                                            <?php 
+							                                                echo $this->Form->checkbox('checkAdd', array('id' => 'checkAdd')). 
+							                                                						" <font color='blue'><span id='add'>Click to Search Product</span></font>";
+							                                            ?>
+							                                             <?php 
+							                                                echo $this->Form->checkbox('checkBack', array('id' => 'checkBack')). 
+							                                                						"<font color='blue' id =><span id='back'>Back</span></font>";
 							                                            ?>
 																	</div>
 																</div>
-																<?php foreach ($customField as $key => $value) { ?>
-															
+												
+																<?php foreach ($customField as $key => $value) {?>
+																			
 																 <div class="form-group">
 																	<div class="col-lg-3">
 																	<span style="color:red">*</span>
 																	<?php echo $customField[$key]?></div>
 																	<div class="col-lg-8">
 																		<?php 
-							                                                echo $this->Form->input('QuotationField.'.$key.'.description', array('class' => 'form-control item_type test',
+							                                                echo $this->Form->input('QuotationField.'.($key).'.description', array('class' => 'form-control item_type test',
 							                                                    'alt' => 'address1',
 							                                                    'label' => false));
 							                                            ?>
 							                                            <?php 
-							                                                echo $this->Form->input('QuotationField.'.$key.'.custom_fields_id', array(
+							                                                echo $this->Form->input('QuotationField.'.($key).'.custom_fields_id', array(
 							                                                	'type' => 'hidden',
-							                                                	'value' => $key,
+							                                                	'value' => ($key),
 							                                                    'label' => false));
 							                                            ?>
 																	</div>

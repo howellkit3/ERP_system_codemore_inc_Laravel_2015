@@ -1,3 +1,4 @@
+<?php echo $this->element('ticket_option'); ?><br><br>
 <div class="row1">
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
@@ -56,7 +57,7 @@
                               </tr>
 
                               <tr>
-                                  <td>Product Name</td>
+                                  <td>Item Name</td>
                                   <td><?php echo $productName['Product']['product_name']; ?></td>
                               </tr>
                               <?php foreach ($customField as $key => $value) { 

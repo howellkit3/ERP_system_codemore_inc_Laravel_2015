@@ -1,5 +1,37 @@
 jQuery(function($){
+	$('#itemCategory').prop('disabled', true);
+	$("#itemType").prop('disabled', true);
+	$("#selectProduct").prop('disabled', true);
+	$("#txtProduct").prop('disabled', true);
+	$("#selectProduct").hide();
+	$("#checkBack").hide();
+	$("#back").hide();
+	
+	$('#checkAdd').change(function(){
+		$("#selectProduct").show();
+		$("#checkBack").show();
+		$("#back").show();
+		$("#txtProduct").hide();
+		$("#checkAdd").hide();
+		$("#add").hide();
+		
+	});
+
+	$('#checkBack').change(function(){
+		$("#selectProduct").hide();
+		$("#checkBack").hide();
+		$("#back").hide();
+		$("#txtProduct").show();
+		$("#checkAdd").show();
+		$("#add").show();
+	});
+
 	$('#select_company').change(function(){
+		
+		$("#selectProduct").prop('disabled', false);
+		$("#txtProduct").prop('disabled', false);
+		$("#message").css("color", "white");
+		
 
 		var option = $(this).val();
 		
@@ -22,6 +54,22 @@ jQuery(function($){
 			}
 			
 		}
+		}).done(function(){
+				$.ajax({
+				url: serverPath + "sales/products/get_product/"+$('#select_company').val(),
+				type: "GET",
+				dataType: "json",
+				success: function(data) {
+					$('.option_append_item').remove();
+						$.each(data,function(i,name) {
+							console.log(name);
+							$('#selectProduct').append($('<option class="option_append_item">').text(name).attr('value',i));
+
+						});
+					
+					}
+			});
+
 		});
 			
 	});
@@ -88,7 +136,7 @@ jQuery(function($){
 			});
 
 		});
-	$('#product').change(function(){
+	$('#selectProduct').change(function(){
 		//alert($(this).val());
 
 		var option = $(this).val();

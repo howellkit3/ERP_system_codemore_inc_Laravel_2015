@@ -5,7 +5,7 @@
         <tr class="">
 
             <td class="">
-                <?php echo ucfirst($quoteName[$salesOderlist['SalesOrder']['quotation_id']]) ?>  
+                <?php echo ucfirst($salesOderlist['Quotation']['unique_id']) ?>  
             </td>
             <td class="">
                 <?php echo !empty($salesOderlist['Quotation']['company_id']) ? ucfirst($companyData[$salesOderlist['Quotation']['company_id']]) : ucfirst($companyData[$inquiryId[$salesOderlist['Quotation']['inquiry_id']]]) ?>

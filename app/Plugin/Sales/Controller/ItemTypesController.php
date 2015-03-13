@@ -13,7 +13,7 @@ class ItemTypesController extends SalesAppController {
                 //pr($this->request->data);exit();
             	
             	$this->ItemType->saveType($this->request->data);
-
+                $this->Session->setFlash(__('Added Successfully.'));
             	$this->redirect(
                     array('controller' => 'settings', 'action' => 'index')
                 );

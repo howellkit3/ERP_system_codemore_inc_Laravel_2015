@@ -16,11 +16,11 @@ class Product extends AppModel {
 		$this->bindModel(array(
 			
 			'belongsTo' => array(
-				'ItemType' => array(
-					'className' => 'Sales.ItemType',
-					'foreignKey' => 'type_id',
-					'dependent' => true
-				),
+				// 'ItemType' => array(
+				// 	'className' => 'Sales.ItemType',
+				// 	'foreignKey' => 'type_id',
+				// 	'dependent' => true
+				// ),
 				'Quotation' => array(
 					'className' => 'Sales.Quotation',
 					'foreignKey' => 'product_id',
@@ -54,20 +54,33 @@ class Product extends AppModel {
 		
 
 	}
+
+	public function addQuotationProduct($data,$auth){
+		//pr($id);exit();
+		$this->create();
+		
+		$data['Product']['company_id'] = $data['0'];
+		$data['Product']['product_name'] = $data['1'];
+		//$data['TruckSchedule']['remarks'] = $data['Product']['remarks'];
+		$data['Product']['created_by'] = $auth;
+		$data['Product']['modified_by'] = $auth;
+		$this->save($data);
+
+		return $this->id;
+		
+
+	}
 	public function editProduct($data,$auth){
-		//pr($data);exit();
+		
 		$this->id = $this->find('first',array('conditions' => array('id' => $data['Product']['productId'])));
-		//pr($this->id);exit();
+	
 		if ($this->id) {
-			//pr($this->id);exit();
+			
 		    $this->saveField('product_name', $data['Product']['productName']);
 
 		    $this->bind(array('ProductSpec'));
 	        $this->ProductSpec->editProductSpec($data, $auth);
-		    // $this->bind(array('ProductSpec'));
-		    // $this->QuotationField->editFields($data,$quotationId);
-		    //pr($data);exit();
-		    //$this->QuotationField
+		  
 
 		}
 
