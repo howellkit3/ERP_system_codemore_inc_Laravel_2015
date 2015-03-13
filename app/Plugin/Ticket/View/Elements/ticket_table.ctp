@@ -15,7 +15,7 @@
                 <?php
                     echo $this->Html->link('<span class="fa-stack">
                                             <i class="fa fa-square fa-stack-2x"></i>
-                                            <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                                            <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "0.75px"> Timeline </font></span>
                                             </span> ', 
                                                      array(
                                             'controller' => 'ticketing_systems', 
@@ -30,7 +30,7 @@
                  <?php
                         echo $this->Html->link('<span class="fa-stack">
                                                 <i class="fa fa-square fa-stack-2x"></i>
-                                                <i class="fa fa fa-check-square fa-lg fa-stack-1x fa-inverse"></i>
+                                                <i class="fa fa fa-check-square fa-lg fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Summary </font></span>
                                                 </span> ', array( 
                                                 'controller' => 'jobTicketSummaries', 
                                                 'action' => 'index', 

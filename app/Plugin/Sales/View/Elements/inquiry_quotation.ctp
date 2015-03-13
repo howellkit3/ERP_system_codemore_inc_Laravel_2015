@@ -1,6 +1,6 @@
 <?php echo $this->Html->script('Sales.inquiry');?>
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-lg-13">
         <div class="main-box clearfix body-pad">
 			<div class="row" id="user-profile">
 				<div class="col-lg-3 col-md-4 col-sm-4">

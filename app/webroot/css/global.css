@@ -52,4 +52,9 @@ hr {
     border-style: inset;
     border-width: 1px;
 } 
+.post{ 
+   position: relative;
+   bottom: 10px;
+} 
+
 
