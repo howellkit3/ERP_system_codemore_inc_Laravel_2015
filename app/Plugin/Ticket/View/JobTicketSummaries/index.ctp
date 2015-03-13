@@ -57,7 +57,7 @@
                               </tr>
 
                               <tr>
-                                  <td>Product Name</td>
+                                  <td>Item Name</td>
                                   <td><?php echo $productName['Product']['product_name']; ?></td>
                               </tr>
                               <?php foreach ($customField as $key => $value) { 

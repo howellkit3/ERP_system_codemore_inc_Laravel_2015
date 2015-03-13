@@ -23,7 +23,7 @@
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th><a href="#"><span>Product Name</span></a></th>
+                                <th><a href="#"><span>Item Name</span></a></th>
                                 <th><a href="#"><span>Company</span></a></th>
                                 <th class="text-center"><a href="#"><span>Status</span></a></th>
                                 <th>Action</th>

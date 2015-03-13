@@ -269,7 +269,7 @@
 										<table class="table table-striped table-hover">
 					                        <thead>
 					                            <tr>
-					                                <th><a href="#"><span>Product</span></a></th>
+					                                <th><a href="#"><span>Item Name</span></a></th>
 					                                <th><a href="#"><span>Date Created</span></a></th>
 					                                <th><a href="#"><span>Action</span></a></th>
 					                   
