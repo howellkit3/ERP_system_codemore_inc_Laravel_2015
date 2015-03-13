@@ -16,6 +16,8 @@
                     
                     <?php echo $this->Html->link('<i class="fa fa-plus-circle fa-lg"></i> Add New Raw Material ', array('controller' => 'raw_materials', 'action' => 'add'),array('class' =>'btn btn-primary pull-right','escape' => false));
                      ?>
+                      <?php //echo $this->Html->link('<i class="fa fa-plus-circle fa-lg"></i> Pull Out Raw Material ', array('controller' => 'raw_materials', 'action' => 'pull_out'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                     ?>
                 </div>
              
             </header>
@@ -37,6 +39,7 @@
 
                         <tbody>
                             <?php foreach ($rawData  as $key => $list) { ?>
+                       
                             <tr>
                                 <td>
                                     <?php echo $list['RawMaterial']['name'] ?>

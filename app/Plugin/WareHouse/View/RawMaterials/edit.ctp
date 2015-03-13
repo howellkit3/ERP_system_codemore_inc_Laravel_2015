@@ -25,7 +25,7 @@
             
             <div class="main-box-body clearfix">
 
-                <?php echo $this->Form->create('RawMaterial',array('url'=>(array('controller' => 'raw_materials','action' => 'add')),'class' => 'form-horizontal'));?>
+                  <?php echo $this->Form->create('RawMaterial',array('url'=>(array('controller' => 'raw_materials','action' => 'edit',$data['RawMaterial']['id'])),'class' => 'form-horizontal','type' =>'post'));?>
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="main-box">
@@ -35,6 +35,9 @@
                                         <div class="form-group">
                                             <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span> Name</label>
                                             <div class="col-lg-9">
+                                              <?php 
+                                                    echo $this->Form->input('id', array('class' => 'form-control item_type','label' => false, 'type' => 'hidden'));
+                                                ?>
                                                 <?php 
                                                     echo $this->Form->input('name', array('class' => 'form-control item_type','label' => false));
                                                 ?>
