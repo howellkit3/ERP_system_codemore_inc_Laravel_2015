@@ -63,6 +63,17 @@
 			</table>
 			<table class="layout">
 				<thead>
+					<tr>
+						<td style="width:123px;">
+							Product Name
+						</td>
+						<td style="width:20px;">:</td>
+						<td>
+							<?php
+								echo $productName['Product']['product_name'];
+							?>
+						</td>
+					</tr>
 					<?php foreach ($quotationFieldInfo as $key => $value) { ?>
 						<tr>
 							<td style="width:123px;">

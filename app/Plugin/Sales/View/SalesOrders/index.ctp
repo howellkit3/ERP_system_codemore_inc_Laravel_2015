@@ -21,7 +21,7 @@
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th><a href="#"><span>Quotation Name</span></a></th>
+                                <th><a href="#"><span>Order Number</span></a></th>
                                 <th><a href="#"><span>Company</span></a></th>
                                 <th class="text-center"><a href="#"><span>Status</span></a></th>
                                 <th class="text-center"><a href="#"><span>Created</span></a></th>

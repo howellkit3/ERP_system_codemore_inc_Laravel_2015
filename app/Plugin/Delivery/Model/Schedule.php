@@ -72,7 +72,7 @@ class Schedule extends AppModel {
 	}
 
 	public function updateSchedule($data,$auth){
-		pr($data);exit();
+		
 		$this->id = $this->find('first',array(
 								'conditions' => array(
 								'sales_order_id' => $id
@@ -86,7 +86,7 @@ class Schedule extends AppModel {
 
 	}
 	public function updateStatus($data,$auth){
-		//pr($data);exit();
+		
 		$this->id = $this->find('first',array(
 								'conditions' => array(
 								'sales_order_id' => $data['TruckSchedules']['sales_order_id']
@@ -96,7 +96,7 @@ class Schedule extends AppModel {
 
 			    $this->save( array(
 			    			'status' =>'Accepted',
-		     				'truck_id' =>$data['TruckSchedules']['truckPlateNumber'], 
+		     				'truck_id' =>$data['TruckSchedules']['truck_plate_number'], 
 		     				'quantity' => $data['TruckSchedules']['quantity'],
 		     				'schedule' => $data['TruckSchedules']['schedule'],
 		    				));
@@ -104,9 +104,26 @@ class Schedule extends AppModel {
 		 }
 
 		return $this->id;
-		
-		//pr($salesOrderId);exit();
-
 	}
+	public function update_status($salesOrderId){
+		$this->id = $this->find('first',array(
+									'conditions' => array(
+										'sales_order_id' => $salesOrderId
+									)
+								));
+		
+		if ($this->id) {
+			    $this->save( array(
+			    			'delivery_no' => 'DR-'.time(),
+			    			'status' =>'Approved',
+
+		     				
+		    				));
+
+		 }
+
+		return $this->id;
+	}
+	
 	
 }

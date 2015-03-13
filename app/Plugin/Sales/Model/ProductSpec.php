@@ -28,8 +28,7 @@ class ProductSpec extends AppModel {
 	}
 
 	public function addProductSpec($data, $productId = null ,$auth){
-		//$this->loadModel('Sales.QuotationField');
-		//pr($data['QuotationField']);exit();
+		
 		$this->create();
 
 		foreach ($data['QuotationField'] as $key => $customFieldValue) 
@@ -48,16 +47,15 @@ class ProductSpec extends AppModel {
 	}
 
 	public function editProductSpec($data ,$auth){
-		//$this->loadModel('Sales.QuotationField');
-		//pr($data);exit();
+		
 		$productSpec = $this->find('all', array( 
 										'conditions' => array(
 											'product_id' => $data['Product']['productId']
 										)
 									));
-		//pr($data['QuotationField']);exit();
+		
 		if ($productSpec) {
-			//pr($data['QuotationField']);exit();
+			
 			foreach ($data['QuotationField'] as $key => $customFieldValue) 
 			{
 				$this->save($customFieldValue);

@@ -308,7 +308,7 @@ a:hover, a:focus {
   background-clip: padding-box;
   /* stops bg color from leaking outside the border: */
 }
-@media (max-width: 767px) {
+@media (max-width: 770px) {
   .main-box {
     margin-bottom: 10px;
   }

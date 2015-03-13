@@ -1,0 +1,35 @@
+.tbl{
+	border-collapse: collapse;
+	font-family : Verdana,Helvetica,Arial,sans-serif;
+
+}
+.row{
+	border: none;
+	font-family : Verdana,Helvetica,Arial,sans-serif;
+
+}
+.column{
+	border-left:  1px solid black;
+	border-right:  1px solid black;
+	border-top:  1px solid black;
+	font-family : Verdana,Helvetica,Arial,sans-serif;
+}
+.column2{
+	border-left:  1px solid black;
+	border-right:  1px solid black;
+	font-family : Verdana,Helvetica,Arial,sans-serif;
+}
+.column3{
+	border-left:  1px solid black;
+	border-right:  1px solid black;
+	border-top:  1px solid black;
+	border-bottom:  1px solid black;
+	font-family : Verdana,Helvetica,Arial,sans-serif;
+	/*font-size : "25px";*/
+	
+}
+.column4{
+	border-top:  1px solid black;
+	font-family : Verdana,Helvetica,Arial,sans-serif;
+	
+}

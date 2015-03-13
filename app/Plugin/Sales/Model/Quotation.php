@@ -70,10 +70,6 @@ class Quotation extends AppModel {
 				
 			),
 		),
-		
-
-	
-
 
 	);
 
@@ -102,7 +98,25 @@ class Quotation extends AppModel {
 		$data['modified_by'] = $auth;
 		$data['status'] = 0;
 		//$data['unique_id'] = $inquiryId.'-'.rand(0,9).time().substr(-6);
-		$data['unique_id'] = rand(0,999).'-'.time();
+		$data['unique_id'] = "PO".'-'.time();
+		
+		$this->save($data);
+
+		return $this->id;
+
+	}
+
+		public function addNewInquiryQuotation($inquiryData, $inquiryAuth,$newInquiryId){
+
+
+		$this->create();
+		$data['product_id'] = $inquiryData;
+		$data['inquiry_id'] = $newInquiryId;	
+		$data['created_by'] = $inquiryAuth;
+		$data['modified_by'] = $inquiryAuth;
+		$data['status'] = 0;
+		//$data['unique_id'] = $inquiryId.'-'.rand(0,9).time().substr(-6);
+		$data['unique_id'] = "PO".'-'.time();
 		
 		$this->save($data);
 
@@ -120,7 +134,26 @@ class Quotation extends AppModel {
 		$data['modified_by'] = $auth;
 		$data['status'] = 0;
 		//$data['unique_id'] = $companyId.'-'.rand(0,9).time();
-		$data['unique_id'] = rand(0,999).'-'.time();
+		$data['unique_id'] = "PO".'-'.time();
+		
+		$this->save($data);
+		
+		return $this->id;		
+
+	}
+
+	public function addNewCompanyQuotation($newData, $newAuth, $newCompanyId){
+		// pr($data);
+		// pr($companyId[0]);die;
+
+		$this->create();
+		$data['product_id'] = $newData;
+		$data['company_id'] = $newCompanyId[0];	
+		$data['created_by'] = $newAuth;
+		$data['modified_by'] = $newAuth;
+		$data['status'] = 0;
+		//$data['unique_id'] = $companyId.'-'.rand(0,9).time();
+		$data['unique_id'] = "PO".'-'.time();
 		
 		$this->save($data);
 		
@@ -140,11 +173,9 @@ class Quotation extends AppModel {
 		$this->id = $this->find('first',array('conditions' => array('Quotation.id' => $quotationId)));
 		if ($this->id) {
 
-		    //$this->saveField('name', $data['Quotation']['name']);
 		    $this->bind(array('QuotationField'));
 		    $this->QuotationField->editFields($data,$quotationId);
-		    //pr($data);exit();
-		    //$this->QuotationField
+		   
 
 		}
 	}

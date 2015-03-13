@@ -1,3 +1,4 @@
+<?php echo $this->element('deliveries_options'); ?><br><br>
 <div class="row">
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
@@ -66,13 +67,14 @@
                                                                         <i class="fa fa-square fa-stack-2x"></i>
                                                                         <i class="fa fa fa-check-square fa-lg fa-stack-1x fa-inverse"></i>
                                                                         </span> ', array( 
-                                                                        'controller' => 'Deliveries', 
-                                                                        'action' => 'createDeliveryReceipts',
-                                                                         $scheduleDataList['Schedule']['sales_order_id'] 
+                                                                        'controller' => 'deliveries', 
+                                                                        'action' => 'add',
+                                                                         $scheduleDataList['Schedule']['sales_order_id'], 
+                                                                         'schedule' 
                                                                                 ), array(
                                                                         'class' =>' table-link',
                                                                         'escape' => false,
-                                                                        'title'=>'Create Delivery Receipt'
+                                                                        'title'=>'Create Delivery Information'
                                                         ));
 
                                             ?>

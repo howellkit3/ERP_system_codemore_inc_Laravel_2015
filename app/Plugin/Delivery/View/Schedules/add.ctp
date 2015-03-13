@@ -1,15 +1,11 @@
 <?php echo $this->Html->script('Delivery.datepicker');?>
 <?php echo $this->element('sales_options');?><br><br>
-<?php echo $this->Form->create('Schedule', 
-										array(
-								'url'=>( 
-										array( 
-								'controller' => 'schedules',
-								'action' => 'add'
-										)
-									)), 
-										array( 
-								'class' => 'form-horizontal'
+<?php echo $this->Form->create('Schedule', array(
+									'url'=>( array( 
+										'controller' => 'schedules',
+										'action' => 'add')
+									)), array( 
+									'class' => 'form-horizontal'
 								));
 ?>
 	<div class="row">
