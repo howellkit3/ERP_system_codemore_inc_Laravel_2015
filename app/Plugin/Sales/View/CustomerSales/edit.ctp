@@ -24,7 +24,7 @@
             
             <div class="main-box-body clearfix">
 
-                <?php echo $this->Form->create('Customer',array('url'=>(array('controller' => 'customer_sales','action' => 'add')),'class' => 'form-horizontal'));
+                <?php echo $this->Form->create('Customer',array('url'=>(array('controller' => 'customer_sales','action' => 'update')),'class' => 'form-horizontal'));
                    
                     echo $this->Form->input('Company.id', array('class' => 'form-control item_type',
                         'type' => 'hidden',

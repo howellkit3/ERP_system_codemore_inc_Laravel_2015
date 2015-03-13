@@ -81,6 +81,51 @@ class CustomerSalesController extends SalesAppController {
 
 	}
 
+	public function update(){
+
+		$userData = $this->Session->read('Auth');
+	
+		if ($this->request->is('post')) {
+
+            if (!empty($this->request->data)) {
+
+            	$this->Company->bind(array('Address','Contact','Email','ContactPerson'));
+
+            	$this->request->data = $this->Company->formatData($this->request->data, $userData['User']['id']);
+
+            	$this->request->data['Company']['created_by'] = $userData['User']['id'];
+            	$this->request->data['Company']['modified_by'] = $userData['User']['id'];
+            	
+            	if ($this->Company->saveAssociated($this->request->data)) {
+  
+					$contactPersonId = $this->Company->ContactPerson->saveContact($this->request->data['ContactPersonData'], $this->Company->id,$userData['User']['id']);
+            	
+            		$this->Company->Contact->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
+            		$this->Company->Address->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
+            		$this->Company->Email->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
+
+					if($this->request->is('ajax')){
+ 							echo $this->Company->getLastInsertID();
+ 							exit();
+					}
+            		$this->Session->setFlash(__('Customer Information Successfully Updated.'));
+
+	            	$this->redirect(
+	                    array('controller' => 'customer_sales', 'action' => 'index')
+	                );
+                  
+	            }else{
+
+	            	$this->Session->setFlash(
+                        __('The invalid data. Please, try again.')
+                    );
+	            }
+            	
+            }
+        }
+
+	}
+
 	public function view($companyId = null){
 
 		
@@ -118,7 +163,6 @@ class CustomerSalesController extends SalesAppController {
 	        'conditions' => array('Email.foreign_key' => $personId,'Email.model' =>'ContactPerson')
 	    ));
 
-		
 		$this->set(compact('contactPerson','contactAddress','contactNumber','contactEmail'));
 		
 
@@ -153,19 +197,21 @@ class CustomerSalesController extends SalesAppController {
 			}
 
 	        $this->request->data = am($company, $holder);
+
+
 	    }
-	    //pr($this->request->data);exit();
 		
 	}
 
 	public function delete($dataId = null, $personId = null){
 
 		$this->Company->bind(array('Contact','Email','Address','ContactPerson'));
-		
+
 		if ($this->Company->delete($dataId)) {
-			
+
 			$this->loadModel('Sales.Contact');
 			$this->Contact->deleteContact($personId);
+		
 
 			$this->loadModel('Sales.Email');
 			$this->Email->deleteEmail($personId);
@@ -173,9 +219,9 @@ class CustomerSalesController extends SalesAppController {
 			$this->loadModel('Sales.Address');
 			$this->Address->deleteAddress($personId);
 
-			$this->loadModel('Sales.Quotation');
-			$this->Quotation->deleteQuotation($dataId);
-
+			// $this->loadModel('Sales.Quotation');
+			// $this->Quotation->deleteQuotation($dataId);
+			$this->Session->setFlash(__('Successfully Deleted.'));
 			$this->redirect(
 				array('controller' => 'customer_sales', 'action' => 'index')
 			);

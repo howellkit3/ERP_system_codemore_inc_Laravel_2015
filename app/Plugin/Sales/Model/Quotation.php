@@ -143,8 +143,7 @@ class Quotation extends AppModel {
 	}
 
 	public function addNewCompanyQuotation($newData, $newAuth, $newCompanyId){
-		// pr($data);
-		// pr($companyId[0]);die;
+		
 
 		$this->create();
 		$data['product_id'] = $newData;
