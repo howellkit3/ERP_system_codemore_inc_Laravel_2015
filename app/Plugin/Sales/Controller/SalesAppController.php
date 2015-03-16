@@ -9,4 +9,5 @@ App::import('model','Sales.ContactPerson');
 class SalesAppController extends AppController {
 
 	public $components = array('RequestHandler');
+	
 }
