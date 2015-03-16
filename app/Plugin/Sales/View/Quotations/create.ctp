@@ -29,7 +29,7 @@
 		                                'options' => array($companyData),
 		                                'type' => 'select',
 		                                'label' => false,
-		                                'class' => 'form-control col-lg-4 required',
+		                                'class' => 'form-control required',
 		                                'empty' => '---Select Company---',
 		                                'id' => 'select_company'
 		                                 )); 
@@ -40,13 +40,13 @@
 								
 								<div class="main-box-body clearfix">
 									
-									<div class="profile-stars">
+								<!-- 	<div class="profile-stars">
 										<i class="fa fa-star"></i>
 										<i class="fa fa-star"></i>
 										<i class="fa fa-star"></i>
 										<i class="fa fa-star"></i>
 										<i class="fa fa-star-o"></i>
-									</div>
+									</div> -->
 									
 									<div class="profile-details">
 										<?php 
@@ -124,7 +124,7 @@
 							                                                echo $this->Form->input('txtproduct', 
 							                                                									array( 
 							                                                						'type' => 'text',
-							                                                						'class' => 'form-control item_type', 
+							                                                						'class' => 'form-control item_type required', 
 							                                                    					//'alt' => 'address1',
 							                                                    					'label' => false, 
 							                                                    					'id' => 'txtProduct',
@@ -145,29 +145,43 @@
 							                                           	 	?>
 							                                           
 							                                            
-							                                            <?php 
+							                                        
+																	</div>
+																</div>
+																 <div class="form-group">
+																	<div class="col-lg-3">
+																	</div>
+																		<div class="col-lg-8">
+													    <?php 
 							                                                echo $this->Form->checkbox('checkAdd', array('id' => 'checkAdd')). 
-							                                                						" <font color='blue'><span id='add'>Click to Search Product</span></font>";
+							                                                						" <font color='blue' style='position: relative;
+    top: -2px;' ><span id='add'>Click to Search Product</span></font>";
 							                                            ?>
 							                                             <?php 
 							                                                echo $this->Form->checkbox('checkBack', array('id' => 'checkBack')). 
-							                                                						"<font color='blue' id =><span id='back'>Back</span></font>";
+							                                                						"<font color='blue' style='position: relative;
+    top: -2px;'><span id='back'> Back</span></font>";
 							                                            ?>
-																	</div>
-																</div>
-												
+							                                            	</div>
+							                                            	</div>
 																<?php foreach ($customField as $key => $value) {?>
-																			
+																
 																 <div class="form-group">
 																	<div class="col-lg-3">
-																	<span style="color:red">*</span>
-																	<?php echo $customField[$key]?></div>
+																	<span style="color:red"></span>
+																	<?php 
+																
+
+																	echo $customField[$key]?>
+																	</div>
 																	<div class="col-lg-8">
 																		<?php 
-							                                                echo $this->Form->input('QuotationField.'.($key).'.description', array('class' => 'form-control item_type test',
+
+							                                                echo $this->Form->input('QuotationField.'.($key).'.description', array('class' => 'form-control item_type test ',
 							                                                    'alt' => 'address1',
 							                                                    'label' => false));
 							                                            ?>
+							                                    
 							                                            <?php 
 							                                                echo $this->Form->input('QuotationField.'.($key).'.custom_fields_id', array(
 							                                                	'type' => 'hidden',
@@ -208,11 +222,11 @@
 
 	<script>
 		$("#QuotationCreateForm").validate();
-		$("[name*='data[QuotationField]']").each(function () {
-		$(this).rules("add", {
-		    required: true
-		});
-		});
+		// $("[name*='data[Quotation][product]']").each(function () {
+		// $(this).rules("add", {
+		//     required: true
+		// });
+		// });
     </script>
 
 

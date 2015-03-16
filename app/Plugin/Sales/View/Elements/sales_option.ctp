@@ -1,3 +1,5 @@
+<?php echo $this->Html->css('/Sales/css/default'); ?>
+
 <div class="nav-no-collapse navbar-left pull-left hidden-sm hidden-xs">
     <ul style="margin-left:0" class="nav navbar-nav pull-left">
 

@@ -217,6 +217,7 @@
                                                         'alt' => 'number',
                                                         'label' => false));
                                                 ?>
+                                                <span class="lighter-color">Ex. (02)-565-2056</span>
                                             </div>
                                             <div class="col-lg-2">
                                                 <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneData('contact_section',this)"><i class="fa fa-plus"></i></button>
@@ -265,6 +266,7 @@
                                                 <?php 
                                                     echo $this->Form->input('Email.0.email', array('class' => 'form-control required email','label' => false));
                                                 ?>
+                                                <span class="lighter-color">Ex. example@email.com</span>
                                             </div>
                                             <div class="col-lg-2">
                                                 <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneData('email_section',this)"><i class="fa fa-plus"></i></button>
@@ -368,6 +370,7 @@
                                                             <?php 
                                                                 echo $this->Form->input('ContactPersonData.0.Contact.0.number', array('class' => 'form-control required','label' => false));
                                                             ?>
+                                                            <span class="lighter-color">Ex. (02)-565-2056</span>
                                                         </div>
                                                         <div class="col-lg-2">
                                                             <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneData('contactPersonNumber_section', this)"><i class="fa fa-plus"></i></button>
@@ -413,6 +416,7 @@
                                                             <?php 
                                                                 echo $this->Form->input('ContactPersonData.0.Email.0.email', array('class' => 'form-control required email','label' => false));
                                                             ?>
+                                                            <span class="lighter-color">Ex. example@email.com</span>
                                                         </div>
                                                         <div class="col-lg-2">
                                                             <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneData('contactPersonEmail_section',this)"><i class="fa fa-plus"></i></button>

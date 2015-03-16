@@ -19,13 +19,13 @@
 						
 						<div class="main-box-body clearfix">
 							
-							<div class="profile-stars">
+							<!-- <div class="profile-stars">
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star-o"></i>
-							</div>
+							</div> -->
 							
 							<div class="profile-since">
 								<?php echo date('M d, Y', strtotime($company['Company']['created'])); ?>
