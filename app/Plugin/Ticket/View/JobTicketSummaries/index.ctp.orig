@@ -59,8 +59,13 @@
                                   <td>Item Name</td>
                                   <td><?php echo $productName['Product']['product_name']; ?></td>
                               </tr>
+<<<<<<< HEAD
                               <?php foreach ($customField as $key => $value) { 
                                 ?>       
+=======
+                              <?php foreach ($customField as $key => $value) { ?>
+                                          
+>>>>>>> a9de2c0ce159411350ad0e374f505b2bb0b4fe4a
                               
                               <tr>
                                   <td>

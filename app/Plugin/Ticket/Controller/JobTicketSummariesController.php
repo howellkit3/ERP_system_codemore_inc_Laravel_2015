@@ -17,12 +17,20 @@ class JobTicketSummariesController extends TicketAppController {
 		if(!empty($ticketDetails['Quotation']['inquiry_id'])){
 
 			$this->Company->bind(array('Address','Contact','Email','Inquiry'));
-			$companyName = $this->Company->Inquiry->find('first', array(
+			$inquiry = $this->Company->Inquiry->find('first', array(
 															'conditions' => array(
 																'Inquiry.id' => $ticketDetails['Quotation']['inquiry_id']
 																)
 															));
-						}	
+			
+			$companyName = $this->Company->find('first', array(
+		        									'conditions' => array(
+		        										'Company.id' => $inquiry['Inquiry']['company_id'])
+
+		    										));
+		  
+		}	
+
 
 		else{
 

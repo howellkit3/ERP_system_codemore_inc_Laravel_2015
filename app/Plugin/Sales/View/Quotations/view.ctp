@@ -139,8 +139,20 @@
 						<div class="col-lg-5">
 							Ms. Carryll Yu
 							<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
+
 						</div>
+						<div class="col-lg-3 pull-right">
+								<p class = "doc">
+									<font size ="1">
+										Doc No.: KFP-FR-MKT-07<br>
+										REV. No.: 01
+									</font>
+								</p>
+							</div>
 					</div>
+					
+						
+					
 					<hr style="height: 0; border-style: STYLEHERE; border-width: 1px 0 0 0; border-color:#COLORHERE;">
 					<center>
 						<header class="main-box-header clearfix">
@@ -148,29 +160,27 @@
 						</header>
 					</center>
 					<div class="form-group">
-						<div class="col-lg-2"></div>
+						<div class="col-lg-3"></div>
 						<div class="col-lg-2">
 							Send to manager
 						</div>
 						<div class="col-lg-4"></div>
-						<div class="col-lg-4">
+						<div class="col-lg-4 pull-right">
 							Date:________________
 						</div>
 					</div>
-					<div class="form-group">
-						<div class="col-lg-11">
-							<center>
-								I do hereby accept the price and other details submitted on your price quotation no.
-								<?php echo $quotation['Quotation']['unique_id'] ?><br> Also, I do hereby authorize your company to proceed with and supply the work described above.
-							</center>
-						</div>
-						<div class="col-lg-1">
-						</div>
-					</div>
+					<header class="main-box-header clearfix para">
+					<center>
+					<p align ="justify" class = "col-lg-10 pull-right">
+						I do hereby accept the price and other details submitted on your price quotation no.<?php echo $quotation['Quotation']['unique_id'] ?><br> Also, I do hereby authorize your company to proceed with and supply the work described above.
+						
+					</p>
+					</center>
+				</header>
 					<div class="form-group">
 						<div class="col-lg-2"></div>
 						<div class="col-lg-5">
-							Athorized by:_________________
+							Authorized by:_________________
 						</div>
 						<div class="col-lg-4">
 							Position:_________________
@@ -183,11 +193,15 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<div class="col-lg-1"></div>
+						<div class="col-lg-2"></div>
 						<div class="col-lg-9">
 							<?php echo (new \DateTime())->format('l, F d, Y '); ?>
 						</div>
+						<div class="col-lg-3 pull-right">
+							<?php echo "Page 1 of 1"; ?>
+						</div>
 					</div>
+	
 				</form>
 			</div>								
 		</div>

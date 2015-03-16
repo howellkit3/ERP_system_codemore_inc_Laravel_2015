@@ -236,10 +236,10 @@
                                                 echo $this->Form->input('Contact.0.number', array('class' => 'form-control required',
                                                     'alt' => 'number',
                                                     'label' => false,
-                                                    'id' => 'maskedPhone'));
+                                                    ));
 
                                             ?>
-                                             <span class="lighter-color">Ex. (02)-565-2056</span>
+                                             <!-- <span class="lighter-color">Ex. (02)-565-2056</span> -->
                                         </div>
                                         <div class="col-lg-2">
                                             <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneData('contact_section',this)"><i class="fa fa-plus"></i></button>
@@ -363,9 +363,9 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <?php 
-                                                    echo $this->Form->input('ContactPersonData.0.Contact.0.number', array('class' => 'form-control required','label' => false, 'id' => 'maskedPhone2'));
+                                                    echo $this->Form->input('ContactPersonData.0.Contact.0.number', array('class' => 'form-control required','label' => false, ));
                                                 ?>
-                                                <span class="lighter-color">Ex. (02)-565-2056</span>
+                                                <!-- <span class="lighter-color">Ex. (02)-565-2056</span> -->
                                             </div>
                                             <div class="col-lg-2">
                                                 <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneContactData('contactPersonNumber_section', this)"><i class="fa fa-plus"></i></button>
