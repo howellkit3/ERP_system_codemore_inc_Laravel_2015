@@ -4,7 +4,7 @@
 <div style="clear:both"></div>
 
 <?php echo $this->element('sales_option'); ?>
-
+<?php echo $this->Html->script('Sales.company_quotation');?>
 <div class="row">
     <div class="col-lg-12">
         <div class="main-box">
@@ -235,7 +235,8 @@
                                             <?php 
                                                 echo $this->Form->input('Contact.0.number', array('class' => 'form-control required',
                                                     'alt' => 'number',
-                                                    'label' => false));
+                                                    'label' => false,
+                                                    'id' => 'maskedPhone'));
 
                                             ?>
                                              <span class="lighter-color">Ex. (02)-565-2056</span>
@@ -362,7 +363,7 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <?php 
-                                                    echo $this->Form->input('ContactPersonData.0.Contact.0.number', array('class' => 'form-control required','label' => false));
+                                                    echo $this->Form->input('ContactPersonData.0.Contact.0.number', array('class' => 'form-control required','label' => false, 'id' => 'maskedPhone2'));
                                                 ?>
                                                 <span class="lighter-color">Ex. (02)-565-2056</span>
                                             </div>
