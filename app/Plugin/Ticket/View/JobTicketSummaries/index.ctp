@@ -60,11 +60,11 @@
                                   <td><?php echo $productName['Product']['product_name']; ?></td>
                               </tr>
                               <?php foreach ($customField as $key => $value) { 
-                                          
+                                ?>       
                               
                               <tr>
                                   <td>
-                                    <?php echo $customField[$key]?>
+                                    <?php echo $customField[$key] ?>
                                   </td>
                                   <td>
                                       <?php echo $ticketDetails['QuotationField'][$key-2]['description']; ?>
