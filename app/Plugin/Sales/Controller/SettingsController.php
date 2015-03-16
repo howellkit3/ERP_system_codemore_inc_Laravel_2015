@@ -35,6 +35,7 @@ class SettingsController extends SalesAppController {
 		$this->ItemCategory->bind(array('ItemType'));
 		$type = $this->ItemCategory->find('all');
 
+
 		$this->set(compact('customField','category','type'));
 
 	}
@@ -62,6 +63,19 @@ class SettingsController extends SalesAppController {
 		if($this->CustomField->delete($fieldId)){
 
 			$this->Session->setFlash(__('Error Deleting Information.'));
+			$this->redirect(
+					array('controller' => 'settings', 'action' => 'index')
+				);
+
+		}
+
+		
+	}
+	public function delete_item($fieldId = null){
+
+		if($this->ItemType->delete($fieldId)){
+
+			$this->Session->setFlash(__('Delete Information.'));
 			$this->redirect(
 					array('controller' => 'settings', 'action' => 'index')
 				);

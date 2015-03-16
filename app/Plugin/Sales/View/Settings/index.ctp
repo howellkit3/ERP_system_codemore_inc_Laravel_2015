@@ -195,13 +195,15 @@
 															                    </span>', 
 															                    		array(
 															                   'controller' => 'settings', 
-															                   'action' => 'delete_field'
+															                   'action' => 'delete_item',
+															                   $itemType['id']
+
 															                   			), 
 															                    		array(
 															                    'class' =>' table-link', 
 															                    'escape' => false, 
 															                    'title'=>'Delete Information', 
-															                    'confirm' => 'Do you want to delete Custom Field Label ?'
+															                    'confirm' => 'Do you want to delete this Item Type ?'
 															                    ));
 									                ?>
 									                
