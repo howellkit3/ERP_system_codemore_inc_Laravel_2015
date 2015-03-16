@@ -2,23 +2,28 @@
 	<section id="col-left" class="col-left-nano">
 		<div id="col-left-inner" class="col-left-nano-content">
 			<div id="user-left-box" class="clearfix hidden-sm hidden-xs dropdown profile2-dropdown">
-			<?php echo $this->Html->image('samples/scarlet-159.png',array('alt' => 'scarlet-159'));  ?>
+			<?php echo $this->Html->image('samples/icon-user-default.png',array('alt' => 'scarlet-159'));  ?>
 				<div class="user-box">
 					<span class="name">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-							Scarlett J. 
-							<i class="fa fa-angle-down"></i>
+							<?php 
+							if(isset($userDetails)){
+								echo $userDetails['User']['first_name'].' '.$userDetails['User']['last_name'];
+							}
+							
+							?>
+							<!-- <i class="fa fa-angle-down"></i> -->
 						</a>
-						<ul class="dropdown-menu">
-							<li><a href="user-profile.html"><i class="fa fa-user"></i>Profile</a></li>
+						<!-- <ul class="dropdown-menu"> -->
+						<!-- 	<li><a href="user-profile.html"><i class="fa fa-user"></i>Profile</a></li>
 							<li><a href="#"><i class="fa fa-cog"></i>Settings</a></li>
-							<li><a href="#"><i class="fa fa-envelope-o"></i>Messages</a></li>
-							<li>
+							<li><a href="#"><i class="fa fa-envelope-o"></i>Messages</a></li> -->
+							<!-- <li> -->
 								<?php
-			 						echo $this->Html->link( "<i class='fa fa-power-off'></i>Logout ",   array('controller' =>'users','action'=>'logout','plugin' => null),array('escape' => false) );
+			 						//echo $this->Html->link( "<i class='fa fa-power-off'></i>Logout ",   array('controller' =>'users','action'=>'logout','plugin' => null),array('escape' => false) );
 			 					?>
-							</li>
-						</ul>
+							<!-- </li> -->
+						<!-- </ul> -->
 					</span>
 					<span class="status">
 						<i class="fa fa-circle"></i> Online
