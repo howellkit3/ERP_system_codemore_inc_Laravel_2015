@@ -175,4 +175,6 @@ jQuery(function($){
 			});
 
 		});
+$("#maskedPhone").mask("(99)-999-9999");
+$("#maskedPhone2").mask("(99)-999-9999");
 });

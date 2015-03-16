@@ -26,7 +26,10 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     /*color: inherit;
     font-family: inherit;
     font-weight: 500;*/
-    line-height: 1.1 !important;
+    line-height: 1.0 !important;
     margin: 0;
+}
+.main-pdf{
+  height: 100px;
 }
 
