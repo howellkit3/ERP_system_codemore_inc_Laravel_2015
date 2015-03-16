@@ -4,8 +4,9 @@
     font-size: 120%;
     margin: 1em 0;
     padding: 0.8em;
-    background: -moz-linear-gradient(center top , #76bf6b, #3b8230) repeat-x scroll 0 0 #3b8230;
-    
+    /*background: linear-gradient(center top , #76bf6b, #3b8230) repeat-x scroll 0 0 #3b8230;*/
+     /*-webkit-background: -webkit-linear-gradient(center top , #76bf6b, #3b8230) repeat-x scroll 0 0 #3b8230;*/
+    background: #76bf6b;
     clear: both;
     color: #fff;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);

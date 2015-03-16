@@ -67,7 +67,7 @@ class CustomerSalesController extends SalesAppController {
             		$this->Session->setFlash(__('New Customer Information Added.'));
 
 	            	$this->redirect(
-	                    array('controller' => 'customer_sales', 'action' => 'inquiry_form')
+	                    array('controller' => 'customer_sales', 'action' => 'index')
 	                );
                   
 	            }else{
