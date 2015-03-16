@@ -2,10 +2,11 @@
 <?php $this->Html->addCrumb('Quotation', array('controller' => 'quotation', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Create', array('controller' => 'quotation', 'action' => 'create')); ?>
 <?php echo $this->Html->script('Sales.company_quotation');?>
+<style type="text/css">#QuotationField12Description{background-color:#fff;}</style>
 <div style="clear:both"></div>
 
 
-       
+        
 <?php echo $this->element('sales_option');?><br><br>
 
 <?php if(!empty($inquiry['Inquiry']['id'])) {
@@ -154,13 +155,11 @@
 																		<div class="col-lg-8">
 													    <?php 
 							                                                echo $this->Form->checkbox('checkAdd', array('id' => 'checkAdd')). 
-							                                                						" <font color='blue' style='position: relative;
-    top: -2px;' ><span id='add'>Click to Search Product</span></font>";
+							                                                						" <font color='blue' style='position: relative;top: -2px;' ><span id='add'>Click to Search Product</span></font>";
 							                                            ?>
 							                                             <?php 
 							                                                echo $this->Form->checkbox('checkBack', array('id' => 'checkBack')). 
-							                                                						"<font color='blue' style='position: relative;
-    top: -2px;'><span id='back'> Back</span></font>";
+							                                                						"<font color='blue' style='position: relative;top: -2px;'><span id='back'> Back</span></font>";
 							                                            ?>
 							                                            	</div>
 							                                            	</div>
@@ -168,16 +167,22 @@
 																
 																 <div class="form-group">
 																	<div class="col-lg-3">
-																	<span style="color:red"></span>
-																	<?php 
+																	<span style="color:red"></span>																	<?php 
 																
-
-																	echo $customField[$key]?>
+																	echo $value; ?>
 																	</div>
 																	<div class="col-lg-8">
 																		<?php 
-
-							                                                echo $this->Form->input('QuotationField.'.($key).'.description', array('class' => 'form-control item_type test ',
+																		if($value == 'Validity'){
+																		$datepick = 'datepick';
+																		$readonly = 'readonly';
+																		}
+																		else{
+																		$datepick = '';
+																		$readonly ='';
+																		}
+							                                                echo $this->Form->input('QuotationField.'.($key).'.description', array('class' => 'form-control item_type '.$datepick.' test',
+							                                                	'readonly' => $readonly,
 							                                                    'alt' => 'address1',
 							                                                    'label' => false));
 							                                            ?>
@@ -185,12 +190,12 @@
 							                                            <?php 
 							                                                echo $this->Form->input('QuotationField.'.($key).'.custom_fields_id', array(
 							                                                	'type' => 'hidden',
+
 							                                                	'value' => ($key),
 							                                                    'label' => false));
 							                                            ?>
 																	</div>
 																</div>
-															
 															<?php }?>
 																<hr style="height:1px; border:none; color:#666666; background-color:#666666;">
 
@@ -227,6 +232,14 @@
 		//     required: true
 		// });
 		// });
+		jQuery(document).ready(function($){
+			//datepicker
+			$('.datepick').datepicker({
+				format: 'yyyy-mm-dd'
+			});
+			
+});
+	
     </script>
 
 
