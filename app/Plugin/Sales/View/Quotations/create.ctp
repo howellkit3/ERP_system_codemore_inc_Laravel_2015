@@ -1,11 +1,12 @@
 <?php $this->Html->addCrumb('Sales', array('controller' => 'customer_sales', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Quotation', array('controller' => 'quotation', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Create', array('controller' => 'quotation', 'action' => 'create')); ?>
-<?php echo $this->Html->script('Sales.inquiry');?>
+<?php echo $this->Html->script('Sales.company_quotation');?>
+<style type="text/css">#QuotationField12Description{background-color:#fff;}</style>
 <div style="clear:both"></div>
 
 
-       
+        
 <?php echo $this->element('sales_option');?><br><br>
 
 <?php if(!empty($inquiry['Inquiry']['id'])) {
@@ -23,13 +24,13 @@
 							<div class="main-box clearfix">
 							
 					
-								<header class="main-box-header clearfix"><span style="color:red">*</span>
+								<header class="main-box-header clearfix"><span style="color:red" id = "message">PLEASE CHOOSE A COMPANY!</span>
 									
 									<?php echo $this->Form->input('Company.id', array(
 		                                'options' => array($companyData),
 		                                'type' => 'select',
 		                                'label' => false,
-		                                'class' => 'form-control col-lg-4 required',
+		                                'class' => 'form-control required',
 		                                'empty' => '---Select Company---',
 		                                'id' => 'select_company'
 		                                 )); 
@@ -40,13 +41,13 @@
 								
 								<div class="main-box-body clearfix">
 									
-									<div class="profile-stars">
+								<!-- 	<div class="profile-stars">
 										<i class="fa fa-star"></i>
 										<i class="fa fa-star"></i>
 										<i class="fa fa-star"></i>
 										<i class="fa fa-star"></i>
 										<i class="fa fa-star-o"></i>
-									</div>
+									</div> -->
 									
 									<div class="profile-details">
 										<?php 
@@ -116,37 +117,85 @@
 												                        'label' => false,
 												                        'id' => 'id'));
 					                                            ?>
-					                                            <div class="form-group">
-																	<div class="col-lg-3"><span style="color:red">*</span> Quotation Name</div>
+
+																<div class="form-group" id="existing_items">
+																	<div class="col-lg-3"><span style="color:red">*</span> Item</div>
 																	<div class="col-lg-8">
 																		<?php 
-							                                                echo $this->Form->input('Quotation.name', array('class' => 'form-control item_type',
-							                                                    'alt' => 'address1',
-							                                                    'label' => false));
+							                                                echo $this->Form->input('txtproduct', 
+							                                                									array( 
+							                                                						'type' => 'text',
+							                                                						'class' => 'form-control item_type required', 
+							                                                    					//'alt' => 'address1',
+							                                                    					'label' => false, 
+							                                                    					'id' => 'txtProduct',
+
+							                                                    					//'empty' => '--Select Product--'
+							                                                    					));
 							                                            ?>
+																		<?php 
+							                                                echo $this->Form->input('product', 
+							                                                									array( 
+							                                                						'type' => 'select',
+							                                                						'class' => 'form-control item_type', 
+							                                                    					//'alt' => 'address1',
+							                                                    					'label' => false, 
+							                                                    					'id' => 'selectProduct',
+							                                                    					'empty' => '--Select Product--'
+							                                                    					));
+							                                           	 	?>
+							                                           
+							                                            
+							                                        
 																	</div>
 																</div>
-																<?php foreach ($customField as $key => $value) { ?>
-															
 																 <div class="form-group">
 																	<div class="col-lg-3">
-																	<span style="color:red">*</span>
-																	<?php echo $customField[$key]?></div>
+																	</div>
+																		<div class="col-lg-8">
+													    <?php 
+							                                                echo $this->Form->checkbox('checkAdd', array('id' => 'checkAdd')). 
+							                                                						" <font color='blue' style='position: relative;top: -2px;' ><span id='add'>Click to Search Product</span></font>";
+							                                            ?>
+							                                             <?php 
+							                                                echo $this->Form->checkbox('checkBack', array('id' => 'checkBack')). 
+							                                                						"<font color='blue' style='position: relative;top: -2px;'><span id='back'> Back</span></font>";
+							                                            ?>
+							                                            	</div>
+							                                            	</div>
+																<?php foreach ($customField as $key => $value) {?>
+																
+																 <div class="form-group">
+																	<div class="col-lg-3">
+																	<span style="color:red"></span>																	<?php 
+																
+																	echo $value; ?>
+																	</div>
 																	<div class="col-lg-8">
 																		<?php 
-							                                                echo $this->Form->input('QuotationField.'.$key.'.description', array('class' => 'form-control item_type test',
+																		if($value == 'Validity'){
+																		$datepick = 'datepick';
+																		$readonly = 'readonly';
+																		}
+																		else{
+																		$datepick = '';
+																		$readonly ='';
+																		}
+							                                                echo $this->Form->input('QuotationField.'.($key).'.description', array('class' => 'form-control item_type '.$datepick.' test',
+							                                                	'readonly' => $readonly,
 							                                                    'alt' => 'address1',
 							                                                    'label' => false));
 							                                            ?>
+							                                    
 							                                            <?php 
-							                                                echo $this->Form->input('QuotationField.'.$key.'.custom_fields_id', array(
+							                                                echo $this->Form->input('QuotationField.'.($key).'.custom_fields_id', array(
 							                                                	'type' => 'hidden',
-							                                                	'value' => $key,
+
+							                                                	'value' => ($key),
 							                                                    'label' => false));
 							                                            ?>
 																	</div>
 																</div>
-															
 															<?php }?>
 																<hr style="height:1px; border:none; color:#666666; background-color:#666666;">
 
@@ -178,11 +227,19 @@
 
 	<script>
 		$("#QuotationCreateForm").validate();
-		$("[name*='data[QuotationField]']").each(function () {
-		$(this).rules("add", {
-		    required: true
-		});
-		});
+		// $("[name*='data[Quotation][product]']").each(function () {
+		// $(this).rules("add", {
+		//     required: true
+		// });
+		// });
+		jQuery(document).ready(function($){
+			//datepicker
+			$('.datepick').datepicker({
+				format: 'yyyy-mm-dd'
+			});
+			
+});
+	
     </script>
 
 

@@ -3,8 +3,7 @@
         <div class="main-box clearfix body-pad">
             <div class="filter-block pull-right">
                <?php
-                //pr($truckAvailability);
-                //pr($truckId);
+                
                   echo $this->Html->link('<i class="fa  fa-arrow-left fa-lg"></i> Back ', 
                         array('controller' => 'deliveries', 
                             'action' => 'index'
@@ -16,8 +15,7 @@
                 ?>  
 
               <?php
-                //pr($truckAvailability);
-                //pr($truckId);
+                
                   echo $this->Html->link('<i class="fa fa-check-square fa-lg"></i> Create Schedule ', 
                         array('controller' => 'truckSchedules', 
                             'action' => 'add',

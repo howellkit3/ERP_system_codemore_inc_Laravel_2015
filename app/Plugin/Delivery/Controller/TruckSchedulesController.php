@@ -8,8 +8,7 @@ class TruckSchedulesController extends DeliveryAppController {
     
 
 	public function index() {
-    //     $scheduleData = $this->Schedule->find('all');
-    // //     $this->set(compact('scheduleData'));
+    
    }
 
 	 public function add($id = null) {
@@ -18,8 +17,8 @@ class TruckSchedulesController extends DeliveryAppController {
                                               'conditions' => array(
                                               'sales_order_id' => $id
                                                 )
-                                             ));
-
+        
+                                              ));
         $this->loadModel('Delivery.Truck');
         $truckId = $this->Truck->find('list', array(
                                          'fields' => array(
@@ -34,9 +33,6 @@ class TruckSchedulesController extends DeliveryAppController {
 
 
     public function save($id = null) {
-        // $str = ("11:58");
-        // list($hour, $minute) = split(":",$str);
-        // pr($hour);die;
 
         $userData = $this->Session->read('Auth');
         if($this->request->is('post')){
@@ -57,5 +53,45 @@ class TruckSchedulesController extends DeliveryAppController {
     
             }
         }
+    }
+
+    public function get_product_schedule() {
+        $this->loadModel('Delivery.TruckSchedule');
+
+        if(isset($this->request->data['time_from'])){
+          
+           $count = $this->TruckSchedule->find('count', array(
+                                                  'conditions' => array(
+                                                      'truck_id' => $this->request->data['plate_number'],
+                                                      'date' => $this->request->data['sched_date'],
+                                                      'time_from' => $this->request->data['time_from']),
+                                                  'fields' => array(
+                                                      'time_from', 'time_to', 'location'
+                                                    )
+                                               ));
+        }
+        
+        $data = $this->TruckSchedule->find('all', array(
+                                              'conditions' => array(
+                                                  'truck_id' => $this->request->data['plate_number'],
+                                                  'date' => $this->request->data['sched_date']),
+                                              'fields' => array(
+                                                  'time_from', 'time_to', 'location'
+                                                )
+                                           ));
+
+        if(!empty($count)){
+            if($count == "0"){
+              $message = "Without Conflict";
+
+            }
+            else{
+                $message = "Conflict";
+            }
+
+        }
+        
+       $this->set(compact('data','message'));
+
     }
 }

@@ -4,7 +4,7 @@ App::uses('SessionComponent', 'Controller/Component');
 
 class SettingsController extends SalesAppController {
 
-	public $uses = array('Sales.CustomField');
+	public $uses = array('Sales.CustomField','Sales.ItemCategory','Sales.ItemType');
 	public $helper = array('Sales.Country');
 
 	public function beforeFilter() {
@@ -23,9 +23,20 @@ class SettingsController extends SalesAppController {
 
 		$customField = $this->CustomField->find('all',array('order' => array('CustomField.id DESC')));
 
-		//pr($customField);exit();
+		$category = $this->ItemCategory->find('list', array(
+											  'fields' => array(
+											  'id', 'category_name'
+											  		),
+											  'conditions' => array(
+											  'status' => 'active'
 
-		$this->set(compact('customField'));
+											  	)
+												));
+		$this->ItemCategory->bind(array('ItemType'));
+		$type = $this->ItemCategory->find('all');
+
+
+		$this->set(compact('customField','category','type'));
 
 	}
 
@@ -39,7 +50,6 @@ class SettingsController extends SalesAppController {
             	
             	$this->CustomField->savelabel($this->request->data,$userData['User']['id']);
 
-            	$this->Session->setFlash(__('Register Complete.'));
             	$this->redirect(
                     array('controller' => 'settings', 'action' => 'index')
                 );
@@ -53,6 +63,19 @@ class SettingsController extends SalesAppController {
 		if($this->CustomField->delete($fieldId)){
 
 			$this->Session->setFlash(__('Error Deleting Information.'));
+			$this->redirect(
+					array('controller' => 'settings', 'action' => 'index')
+				);
+
+		}
+
+		
+	}
+	public function delete_item($fieldId = null){
+
+		if($this->ItemType->delete($fieldId)){
+
+			$this->Session->setFlash(__('Delete Information.'));
 			$this->redirect(
 					array('controller' => 'settings', 'action' => 'index')
 				);

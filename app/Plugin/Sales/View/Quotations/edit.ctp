@@ -30,13 +30,13 @@
 							
 							<div class="main-box-body clearfix">
 								
-								<div class="profile-stars">
+								<!-- <div class="profile-stars">
 									<i class="fa fa-star"></i>
 									<i class="fa fa-star"></i>
 									<i class="fa fa-star"></i>
 									<i class="fa fa-star"></i>
 									<i class="fa fa-star-o"></i>
-								</div>
+								</div> -->
 								
 								<div class="profile-details">
 									<?php 
@@ -106,13 +106,11 @@
 											                        'label' => false,
 											                        'id' => 'id'));
 				                                            ?>
-				                                            <div class="form-group">
-																<div class="col-lg-3">Quotation Name</div>
+				                                           <div class="form-group">
+																<div class="col-lg-3">Product Name</div>
 																<div class="col-lg-8">
 																	<?php 
-						                                                echo $this->Form->input('Quotation.name', array('class' => 'form-control item_type required',
-						                                                    'alt' => 'address1',
-						                                                    'label' => false));
+						                                              echo $productName['Product']['product_name'];
 						                                            ?>
 																</div>
 															</div>

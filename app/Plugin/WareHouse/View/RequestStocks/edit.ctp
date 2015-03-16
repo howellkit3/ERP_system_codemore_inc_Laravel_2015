@@ -1,5 +1,5 @@
 <?php echo $this->element('ware_house_option');?>
-    <?php echo $this->Form->create('RequestStocks',array('url'=>(array('controller' => 'request_stocks','action' => 'add'))));?>
+    <?php echo $this->Form->create('RequestStock',array('url'=>(array('controller' => 'request_stocks','action' => 'edit',$data['RequestStock']['id']))));?>
         <div class="row">
             <div class="col-lg-12">
                 <div class="main-box clearfix body-pad">
@@ -33,7 +33,15 @@
                                                             </div>
                                                               <?php 
                                                                         echo $this->Form->input('po', array('class' => 'form-control item_type test',
-                                                                            'alt' => 'address1',
+                                                                            'alt' => 'address0',
+                                                                            'type' =>'hidden',
+                                                                            'value' => $data['RequestStock']['po'],
+                                                                            'label' => false));
+                                                                    ?>  
+                                                                     <?php 
+                                                                        echo $this->Form->input('id', array('class' => 'form-control item_type',
+                                                                            'alt' => 'address2',
+                                                                            'value' => $data['RequestStock']['id'],
                                                                             'type' =>'hidden',
                                                                             'label' => false));
                                                                     ?>  

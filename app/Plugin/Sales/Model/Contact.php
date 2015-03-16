@@ -46,16 +46,20 @@ class Contact extends AppModel {
 			),
 			'numeric'=> array(
 	            'rule' => 'numeric',
-	            'message'=> 'It should be numeric'
+	            'message'=> 'Please follow the format'
 	        ),
 		),
 	
 	);
 	
 	public function saveContact($data, $contact_id)
+
 	{
+		
 		foreach ($data as $key => $contactData)
 		{
+			
+			
 			$this->create();
 			foreach ($contactData[$this->name] as $key => $contactValue) 
 			{
@@ -64,7 +68,10 @@ class Contact extends AppModel {
 				
 			}
 			$this->saveAll($contactValue);
+			return $this->id;
+
 		}
+		$this->id;
 		
 	}
 

@@ -32,8 +32,7 @@ class TicketingSystemsController extends TicketAppController {
 		$ticketData = $this->Ticket->find('first', array('conditions' => array('Ticket.id' =>$ticketid
 			)
 			));
-		// pr($ticketData);
-		// exit();
+		
 		$this->set(compact('ticketid','ticketData'));
 	}
 

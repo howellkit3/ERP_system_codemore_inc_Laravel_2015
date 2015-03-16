@@ -33,10 +33,12 @@ class SalesOrdersController extends SalesAppController {
 		$this->Company->bind(array('Inquiry'));
 
 		$companyData = $this->Company->find('list',array(
-     		'fields' => array('id','company_name')));
+     											'fields' => array('id','company_name')
+     										));
 
 		$inquiryId = $this->Company->Inquiry->find('list',array(
-     		'fields' => array('company_id')));
+     													'fields' => array('company_id')
+     												));
 
 		$quoteName = $this->Quotation->find('list',array('id','name'));
 		

@@ -1,18 +1,18 @@
 <?php echo $this->Html->script('Delivery.datepicker');?>
 <?php echo $this->element('sales_options');?><br><br>
 <?php echo $this->Form->create('Schedule', array(
-								'url'=>( array( 
-								'controller' => 'schedules',
-								'action' => 'add')
+									'url'=>( array( 
+										'controller' => 'schedules',
+										'action' => 'add')
 									)), array( 
-								'class' => 'form-horizontal'
+									'class' => 'form-horizontal'
 								));
 ?>
 	<div class="row">
 	    <div class="col-lg-12">
 	        <div class="main-box">
 	        	<?php
-	        		//pr($salesOrderId['Schedule']['sales_order_id']);exit();
+	        		
 	        		if($quotationId['Quotation']['unique_id'] == $salesOrderId['Schedule']['sales_order_id']){
 	        			echo "Your Request for Delivery had been Sent so please wait for confirmation";
 	        	?>

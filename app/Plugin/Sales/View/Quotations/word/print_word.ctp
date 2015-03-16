@@ -50,7 +50,7 @@
 							<div class="form-group">
 								<div class="col-lg-3"></div>
 								<div class="col-lg-8">
-									We are pleased to submit our price quotation on your printing requirement under the following specifications:
+									We are pleased to submit our price quotation on your printing requirement under the following specifications:asdasd
 								</div>
 							</div><br>
 							<?php foreach ($inquiry['Quotation'] as $key => $value) { ?>

@@ -57,10 +57,12 @@
 							We are pleased to submit our price quotation on your printing requirement under the following <br>specifications:
 						</td>
 					</tr>
+
 				</thead>
 			</table>
 			<table class="layout">
-				<thead>
+		
+
 					<?php foreach ($quotationFieldInfo as $key => $value) { ?>
 						<tr>
 							<td style="width:123px;">
@@ -72,7 +74,7 @@
 							</td>
 						</tr>
 					<?php } ?>
-				</thead>
+				
 			</table><br>
 			<table class="layout">
 				<thead>

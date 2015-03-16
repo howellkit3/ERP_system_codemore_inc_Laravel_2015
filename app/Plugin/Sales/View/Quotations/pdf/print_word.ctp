@@ -4,13 +4,13 @@
 </style>
 <div class="row">
 	<div class="col-lg-12">
-		<div class="main-box">
+		<div class="main-box main-pdf" >
 			<center>
 				<header class="main-box-header clearfix">
 					<h3>KOU FU COLOR PRINTING CORP.</h3>
-					<h6 style="font-family: Calibri;">Lot 4-5, Blk 3 Phase 2, Mountview Industrial Complex, Carmona, Cavite</h6>
+					<h6 style="font-family: Calibri;">Lot 4-5, Blk 3 Phase 2, Mountview Industrial Complex, Bancal, Carmona, Cavite</h6>
 					<h6>Tel#: (046) 972-1111 to 13 Fax#: (046) 972-0120</h6><br>
-					<h3>Price Quotation</h3><br>
+					<h3>Price Quotation</h3>
 				</header>
 			</center>
 			<table class="layout">
@@ -33,7 +33,7 @@
 							___________________________________________________
 						</td>
 						<td>Date:
-							<?php echo !empty($quotation['Quotation']['created']) ? date('M d, Y', strtotime($quotation['Quotation']['created'])) : '' 
+							<?php echo !empty($quotation['Quotation']['created']) ? date('Y/m/d', strtotime($quotation['Quotation']['created'])) : '' 
 							?>
 						</td>
 					</tr>
@@ -63,6 +63,17 @@
 			</table>
 			<table class="layout">
 				<thead>
+					<tr>
+						<td style="width:123px;">
+							Product Name
+						</td>
+						<td style="width:20px;">:</td>
+						<td>
+							<?php
+								echo $productName['Product']['product_name'];
+							?>
+						</td>
+					</tr>
 					<?php foreach ($quotationFieldInfo as $key => $value) { ?>
 						<tr>
 							<td style="width:123px;">
@@ -75,7 +86,8 @@
 						</tr>
 					<?php } ?>
 				</thead>
-			</table><br>
+			</table>
+			
 			<table class="layout">
 				<thead>
 					<tr>
@@ -100,14 +112,20 @@
 							Ms. Carryll Yu
 							<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
 						</td>
+
 					</tr>
 				</thead>
-			</table>
-			<br>
+			</table >
+			<p class = "doc">
+				<font size ="9px">
+					Doc No.: KFP-FR-MKT-07<br>
+					REV. No.: 01
+				</font>
+			</p>
 			<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
 			<center>
 				<header class="main-box-header clearfix">
-					<h4>Acceptance Slip</h4><br>
+					<h4>Acceptance Slip</h4>
 				</header>
 			</center>
 			<table class="layout">
@@ -119,33 +137,59 @@
 				</thead>
 			</table>
 			<center>
-				<header class="main-box-header clearfix">
-					<p>I do hereby accept the price and other details submitted on your price quotation no.<?php echo $quotation['Quotation']['unique_id'] ?><br> Also, I do hereby authorize your company to proceed with and supply the work described above.</p><br>
+				<header class="main-box-header clearfix para">
+					<center>
+					<p align ="justify">
+						<font size ="15px">I do hereby accept the price and other details submitted on your price quotation no.<?php echo $quotation['Quotation']['unique_id'] ?><br> Also, I do hereby authorize your company to proceed with and supply the work described above.
+						</font>
+					</p>
+					</center>
 				</header>
 			</center>
-			<table class="layout">
+			<table class="layout" >
 				<thead>
 					<tr>
-						<td>Athorized by:_________________</td>
+						<td>Authorized by:_________________</td>
 						<td style="padding-left: 270px;">Position:_________________</td>
 					</tr>
 					<tr>
-						<td></td>
+						<td> </td>
 						<td style="padding-left: 285px;">Date:_________________</td>
 					</tr>
 				</thead>
 			</table>
-			<br><br>
-			<table class="layout">
-				<thead>
+			<footer >
+				<table class ="tables-css">
 					<tr>
-						<td><?php echo (new \DateTime())->format('l, F d, Y '); ?></td>
-						
+						<td class ="footer">
+
+							<font size = "12px">
+								<?php echo (new \DateTime())->format('l, F d, Y '); ?>
+							</font>
+						</td>
+						<td class ="footer">
+							&nbsp;&nbsp;&nbsp;
+						</td>
+						<td class ="footer">
+							&nbsp;&nbsp;&nbsp;
+						</td>
+						<td class = "footer2">
+							<font size = "12px">
+							
+							Page 1 of 1
+							</font>
+
+						</td>
 					</tr>
-				</thead>
-			</table>
+				</table>
+								
+			</footer>
+			<br><br>
+
+			
 			
 									
 		</div>
+
 	</div>	
 </div>

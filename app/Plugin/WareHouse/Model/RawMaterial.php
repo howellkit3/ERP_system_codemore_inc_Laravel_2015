@@ -17,6 +17,24 @@ class RawMaterial extends AppModel {
 
 	public $actsAs = array('Containable');
 
+	public function bind($model = array('Group')){
+
+	$this->bindModel(array(
+		
+		'hasMany' => array(
+			'PullOut' => array(
+				'className' => 'WareHouse.PullOut',
+				'foreignKey' => 'raw_material_id',
+				'dependent' => true,
+				'conditions' => 'PullOut.raw_material_id = "3"',
+
+			),
+		)
+	));
+
+	// $this->contain($model);
+	}
+
 	public $validate = array(
 		'name' => array(
 			'notEmpty' => array(
@@ -58,7 +76,8 @@ class RawMaterial extends AppModel {
 		foreach ($data as $key => $rawData)
 		{
 			$rawData['created_by']	= $authId;
-			$rawData['modified_by']	= $authId;		
+			$rawData['modified_by']	= $authId;	
+			$rawData['status']	= 'in_stock';
 		}
 		$this->saveAll($rawData);
 		

@@ -19,7 +19,7 @@
 						<i class="fa fa-bars"></i>
 					</a>
 				</li>
-				<li class="dropdown hidden-xs">
+		<!-- 		<li class="dropdown hidden-xs">
 					<a class="btn dropdown-toggle" data-toggle="dropdown">
 						<i class="fa fa-bell"></i>
 						<span class="count">8</span>
@@ -72,8 +72,8 @@
 							</a>
 						</li>
 					</ul>
-				</li>
-				<li class="dropdown hidden-xs">
+				</li> -->
+		<!-- 		<li class="dropdown hidden-xs">
 					<a class="btn dropdown-toggle" data-toggle="dropdown">
 						<i class="fa fa-envelope-o"></i>
 						<span class="count">16</span>
@@ -136,8 +136,8 @@
 							</a>
 						</li>
 					</ul>
-				</li>
-				<li class="dropdown hidden-xs">
+				</li> -->
+		<!-- 		<li class="dropdown hidden-xs">
 					<a class="btn dropdown-toggle" data-toggle="dropdown">
 						New Item
 						<i class="fa fa-caret-down"></i>
@@ -168,8 +168,8 @@
 							</a>
 						</li>
 					</ul>
-				</li>
-				<li class="dropdown hidden-xs">
+				</li> -->
+		<!-- 		<li class="dropdown hidden-xs">
 					<a class="btn dropdown-toggle" data-toggle="dropdown">
 						English
 						<i class="fa fa-caret-down"></i>
@@ -191,13 +191,13 @@
 							</a>
 						</li>
 					</ul>
-				</li>
+				</li> -->
 			</ul>
 		</div>
 		
 		<div class="nav-no-collapse pull-right" id="header-nav">
 			<ul class="nav navbar-nav pull-right">
-				<li class="mobile-search">
+			<!-- 	<li class="mobile-search">
 					<a class="btn">
 						<i class="fa fa-search"></i>
 					</a>
@@ -211,28 +211,31 @@
 						</form>
 					</div>
 					
-				</li>
+				</li> -->
 				<li class="dropdown profile-dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-					<?php echo $this->Html->image('samples/scarlet-159.png',array('alt' => 'scarlet-159'));  ?>
-						<span class="hidden-xs">Scarlett Johansson</span> <b class="caret"></b>
-					</a>
+				<?php
+		 						echo $this->Html->link( "<i class='fa fa-power-off'></i> Logout ",   array('controller' =>'users','action'=>'logout','plugin' => null),array('escape' => false) );
+		 					?>
+					<!-- <a href="#" class="dropdown-toggle" data-toggle="dropdown"> -->
+					<?php // echo $this->Html->image('samples/scarlet-159.png',array('alt' => 'scarlet-159'));  ?>
+						<!-- <span class="hidden-xs"><i class='fa fa-power-off'></i></span> <b class="caret"></b> -->
+					<!-- </a> -->
 					<ul class="dropdown-menu dropdown-menu-right">
-						<li><a href="user-profile.html"><i class="fa fa-user"></i>Profile</a></li>
+					<!-- 	<li><a href="user-profile.html"><i class="fa fa-user"></i>Profile</a></li>
 						<li><a href="#"><i class="fa fa-cog"></i>Settings</a></li>
-						<li><a href="#"><i class="fa fa-envelope-o"></i>Messages</a></li>
-						<li>
+						<li><a href="#"><i class="fa fa-envelope-o"></i>Messages</a></li> -->
+					<!-- 	<li>
 							<?php
-		 						echo $this->Html->link( "<i class='fa fa-power-off'></i>Logout ",   array('controller' =>'users','action'=>'logout','plugin' => null),array('escape' => false) );
+		 						//echo $this->Html->link( "<i class='fa fa-power-off'></i>Logout ",   array('controller' =>'users','action'=>'logout','plugin' => null),array('escape' => false) );
 		 					?>
 						</li>
-					</ul>
+	 -->				</ul>
 				</li>
-				<li class="hidden-xxs">
+			<!-- 	<li class="hidden-xxs">
 					<a class="btn">
 						<i class="fa fa-power-off"></i>
 					</a>
-				</li>
+				</li> -->
 			</ul>
 		</div>
 		</div>

@@ -4,8 +4,9 @@
     font-size: 120%;
     margin: 1em 0;
     padding: 0.8em;
-    background: -moz-linear-gradient(center top , #76bf6b, #3b8230) repeat-x scroll 0 0 #3b8230;
-    
+    /*background: linear-gradient(center top , #76bf6b, #3b8230) repeat-x scroll 0 0 #3b8230;*/
+     /*-webkit-background: -webkit-linear-gradient(center top , #76bf6b, #3b8230) repeat-x scroll 0 0 #3b8230;*/
+    background: #76bf6b;
     clear: both;
     color: #fff;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
@@ -52,4 +53,18 @@ hr {
     border-style: inset;
     border-width: 1px;
 } 
+.post{ 
+   position: relative;
+   bottom: 10px;
+} 
+.boxed {
+    border: 1px solid black ;
+    width: 380px;
+    height: 180px;
+    text-align: justify;
+  /*  padding: 25px;
+    border: 25px solid navy;
+    margin: 25px;*/
+
+}
 

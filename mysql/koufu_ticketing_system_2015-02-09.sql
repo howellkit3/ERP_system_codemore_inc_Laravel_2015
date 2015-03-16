@@ -16,6 +16,49 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`koufu_ticketing_system` /*!40100 DEFAUL
 
 USE `koufu_ticketing_system`;
 
+/*Table structure for table `job_ticket_descriptions` */
+
+DROP TABLE IF EXISTS `job_ticket_descriptions`;
+
+CREATE TABLE `job_ticket_descriptions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descriptions` varchar(100) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+/*Table structure for table `job_ticket_details` */
+
+DROP TABLE IF EXISTS `job_ticket_details`;
+
+CREATE TABLE `job_ticket_details` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `unique_id` varchar(100) DEFAULT NULL,
+  `company_name` varchar(100) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+/*Table structure for table `job_ticket_summaries` */
+
+DROP TABLE IF EXISTS `job_ticket_summaries`;
+
+CREATE TABLE `job_ticket_summaries` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `detail_id` int(11) DEFAULT NULL,
+  `description_id` int(11) DEFAULT NULL,
+  `value` varchar(100) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+
 /*Table structure for table `job_tickets` */
 
 DROP TABLE IF EXISTS `job_tickets`;
@@ -27,10 +70,6 @@ CREATE TABLE `job_tickets` (
   `modified` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
-
-/*Data for the table `job_tickets` */
-
-insert  into `job_tickets`(`id`,`job_ticket_desc`,`created`,`modified`) values (1,'Prepressed','2015-02-17 10:05:59','2015-02-17 10:05:53'),(2,'Plate Making',NULL,NULL),(3,'RM Requisition',NULL,NULL),(4,'Production',NULL,NULL),(5,'Finished Goods',NULL,NULL),(6,'Shipping',NULL,NULL);
 
 /*Table structure for table `tickets` */
 
@@ -46,11 +85,7 @@ CREATE TABLE `tickets` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
-/*Data for the table `tickets` */
-
-insert  into `tickets`(`id`,`unique_id`,`status`,`job_ticket_id`,`created_by`,`modified_by`,`created`,`modified`) values (1,'987-1423464590',0,1,1,1,'2015-02-09 09:59:32','2015-02-17 05:30:14'),(2,'656-1423461634',0,6,1,1,'2015-02-17 01:35:01','2015-02-17 08:20:58');
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

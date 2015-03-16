@@ -4,11 +4,11 @@
 <div style="clear:both"></div>
 
 <?php echo $this->element('sales_option'); ?>
-
+<?php echo $this->Html->script('Sales.company_quotation');?>
 <div class="row">
     <div class="col-lg-12">
         <div class="main-box">
-            <?php //echo $this->Session->flash(); ?>
+            
             <header class="main-box-header clearfix">
                 <center>
                     <h1>
@@ -228,13 +228,18 @@
                                                 ));
 
                                             ?>
+                                           
                                         </div>
+                                        
                                         <div class="col-lg-6">
                                             <?php 
                                                 echo $this->Form->input('Contact.0.number', array('class' => 'form-control required',
                                                     'alt' => 'number',
-                                                    'label' => false));
+                                                    'label' => false,
+                                                    'id' => 'maskedPhone'));
+
                                             ?>
+                                             <span class="lighter-color">Ex. (02)-565-2056</span>
                                         </div>
                                         <div class="col-lg-2">
                                             <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneData('contact_section',this)"><i class="fa fa-plus"></i></button>
@@ -274,6 +279,7 @@
                                             <?php 
                                                 echo $this->Form->input('Email.0.email', array('class' => 'form-control required email','label' => false));
                                             ?>
+                                            <span class="lighter-color">Ex. example@email.com</span>
                                         </div>
                                         <div class="col-lg-2">
                                             <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneData('email_section',this)"><i class="fa fa-plus"></i></button>
@@ -357,8 +363,9 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <?php 
-                                                    echo $this->Form->input('ContactPersonData.0.Contact.0.number', array('class' => 'form-control required','label' => false));
+                                                    echo $this->Form->input('ContactPersonData.0.Contact.0.number', array('class' => 'form-control required','label' => false, 'id' => 'maskedPhone2'));
                                                 ?>
+                                                <span class="lighter-color">Ex. (02)-565-2056</span>
                                             </div>
                                             <div class="col-lg-2">
                                                 <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneContactData('contactPersonNumber_section', this)"><i class="fa fa-plus"></i></button>
@@ -395,6 +402,7 @@
                                                 <?php 
                                                     echo $this->Form->input('ContactPersonData.0.Email.0.email', array('class' => 'form-control required email','label' => false));
                                                 ?>
+                                                <span class="lighter-color">Ex. example@email.com</span>
                                             </div>
                                             <div class="col-lg-2">
                                                 <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneContactData('contactPersonEmail_section',this)"><i class="fa fa-plus"></i></button>
@@ -484,17 +492,11 @@
                                                 <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneContactData('contactPersonAddress_section',this)"><i class="fa fa-plus"></i></button>
                                                 <button type="button" class="remove-field btn btn-danger" onclick="removeClone('contactPersonAddress_section')"><i class="fa fa-minus"></i> </button>
                                             </div>
-                                            <!-- <hr style="height:1px; border:none; color:#666666; background-color:#666666;"> -->
+                                           
                                     </div>
                                 </section>
                              
-                                <!-- <div class="form-group">
-                                    <label for="inputPassword1" class="col-lg-2 control-label"></label>
-                                    <div class="col-lg-4">
-                                        <button type="button" class="add-field6 table-link danger btn btn-success" onclick="cloneData('contactPerson_section',this)"> <i class="fa fa-plus"> Add Contact Person</i></button>
-                                        <button type="button" class="remove-field btn btn-danger" onclick="removeClone('contactPerson_section')"><i class="fa fa-minus"></i> </button>
-                                    </div>
-                                </div> -->
+                            
                             </section>
                         </div>
                     </div>  
@@ -511,7 +513,7 @@
                                     <?php 
                                         echo $this->Form->submit('Submit Customer Information', array('class' => 'btn btn-success pull-right',  'title' => 'Click here to add the customer'));
                                     ?>
-                                  <!--   <button type="button" class="btn btn-success pull-right" onclick="validateForm('CompanyAddForm')">Submit Customer Information</button> -->
+                                  
                                 </div>
                                 <div class="col-xs-2 col-md-2 2">
                                     <?php 

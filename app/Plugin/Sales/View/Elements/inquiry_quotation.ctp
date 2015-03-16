@@ -1,5 +1,6 @@
+<?php echo $this->Html->script('Sales.inquiry');?>
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-lg-13">
         <div class="main-box clearfix body-pad">
 			<div class="row" id="user-profile">
 				<div class="col-lg-3 col-md-4 col-sm-4">
@@ -8,17 +9,25 @@
 							<h1>
 							<?php echo ucfirst($company['Company']['company_name']); ?>
 							</h1>
+							<?php 
+                                echo $this->Form->input('company_id', array(
+                                	'type' => 'hidden',
+                                	'value' => $company['Company']['id'],
+                                    'label' => false,
+                                    'id' => 'company_id'
+                                    ));
+                            ?>
 						</header>
 						
 						<div class="main-box-body clearfix">
 							
-							<div class="profile-stars">
+							<!-- <div class="profile-stars">
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star-o"></i>
-							</div>
+							</div> -->
 							
 							<div class="profile-since">
 								<?php echo date('M d, Y', strtotime($inquiry['Inquiry']['created'])); ?>
@@ -90,7 +99,7 @@
 										                        'value' => !empty($inquiry['Inquiry']['id']) ? $inquiry['Inquiry']['id'] : '' ,
 										                        'label' => false));
 			                                            ?>
-			                                            <div class="form-group">
+			                                            <!-- <div class="form-group">
 															<div class="col-lg-3">Quotation Name</div>
 															<div class="col-lg-8">
 																<?php 
@@ -99,21 +108,42 @@
 					                                                    'label' => false));
 					                                            ?>
 															</div>
-														</div>
+														</div> -->
 																 <div class="form-group">
-																	<div class="col-lg-3"><?php echo $customField['1']?></div>
+																	<div class="col-lg-3"><span style="color:red">*</span> Item</div>
 																	<div class="col-lg-8">
-																		<?php 
-							                                                echo $this->Form->input('QuotationField.1.description', array('class' => 'form-control item_type',
-							                                                	'id'	=> 'CustomFieldId',
-							                                                    'alt' => 'address1',
-							                                                    'label' => false));
+																	<?php 
+							                                                echo $this->Form->input('txtproduct', 
+							                                                									array( 
+							                                                						'type' => 'text',
+							                                                						'class' => 'form-control item_type', 
+							                                                    					//'alt' => 'address1',
+							                                                    					'label' => false, 
+							                                                    					'id' => 'txtProduct',
+
+							                                                    					//'empty' => '--Select Product--'
+							                                                    					));
 							                                            ?>
+																		<?php 
+							                                                echo $this->Form->input('product', 
+							                                                									array( 
+							                                                						'type' => 'select',
+							                                                						'class' => 'form-control item_type', 
+							                                                    					//'alt' => 'address1',
+							                                                    					'label' => false, 
+							                                                    					'id' => 'selectProduct',
+							                                                    					'empty' => '--Select Product--'
+							                                                    					));
+							                                           	 	?>
+							                                           
+							                                            
 							                                            <?php 
-							                                                echo $this->Form->input('QuotationField.1.custom_fields_id', array(
-							                                                	'type' => 'hidden',
-							                                                	'value' => '1',
-							                                                    'label' => false));
+							                                                echo $this->Form->checkbox('checkAdd', array('id' => 'checkAdd')). 
+							                                                						" <font color='blue'><span id='add'>Click to Search Product</span></font>";
+							                                            ?>
+							                                             <?php 
+							                                                echo $this->Form->checkbox('checkBack', array('id' => 'checkBack')). 
+							                                                						"<font color='blue' id =><span id='back'>Back</span></font>";
 							                                            ?>
 																	</div>
 																</div>

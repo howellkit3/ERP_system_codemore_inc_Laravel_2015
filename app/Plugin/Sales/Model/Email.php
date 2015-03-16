@@ -66,6 +66,7 @@ class Email extends AppModel {
 				
 			}
 			$this->saveAll($emailValue);
+			return $this->id;
 		}
 		
 	}

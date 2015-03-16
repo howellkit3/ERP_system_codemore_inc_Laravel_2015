@@ -30,15 +30,24 @@ class Quotation extends AppModel {
 					'className' => 'Sales.SalesOrder',
 					'foreignKey' => 'quotation_id',
 					'dependent' => true
-				),
+				)
+
 			),
 			'hasMany' => array(
 				'QuotationField' => array(
 					'className' => 'Sales.QuotationField',
 					'foreignKey' => 'quotation_id',
 					'dependent' => true
-				),
-			)
+				)
+			),
+			'hasOne' => array(
+				'Product' => array(
+					'className' => 'Sales.Product',
+					'foreignKey' => false,
+					'conditions' => 'Product.id = Quotation.product_id'
+				)
+			 )
+			
 		));
 
 		$this->contain($model);
@@ -61,10 +70,6 @@ class Quotation extends AppModel {
 				
 			),
 		),
-		
-
-	
-
 
 	);
 
@@ -85,14 +90,33 @@ class Quotation extends AppModel {
 
 	public function addInquiryQuotation($data, $auth,$inquiryId){
 
-		$this->create();
 
+		$this->create();
+		$data['product_id'] = $data['product'];
 		$data['inquiry_id'] = $inquiryId;	
 		$data['created_by'] = $auth;
 		$data['modified_by'] = $auth;
 		$data['status'] = 0;
-		//$data['unique_id'] = $inquiryId.'-'.rand(0,9).time().substr(-6);
-		$data['unique_id'] = rand(0,999).'-'.time();
+		
+		$data['unique_id'] = "PO".'-'.time();
+		
+		$this->save($data);
+
+		return $this->id;
+
+	}
+
+		public function addNewInquiryQuotation($inquiryData, $inquiryAuth,$newInquiryId){
+
+
+		$this->create();
+		$data['product_id'] = $inquiryData;
+		$data['inquiry_id'] = $newInquiryId;	
+		$data['created_by'] = $inquiryAuth;
+		$data['modified_by'] = $inquiryAuth;
+		$data['status'] = 0;
+		
+		$data['unique_id'] = "PO".'-'.time();
 		
 		$this->save($data);
 
@@ -101,15 +125,34 @@ class Quotation extends AppModel {
 	}
 
 	public function addCompanyQuotation($data, $auth,$companyId){
+		
 
 		$this->create();
-
+		$data['product_id'] = $data['product'];
 		$data['company_id'] = $companyId;	
 		$data['created_by'] = $auth;
 		$data['modified_by'] = $auth;
 		$data['status'] = 0;
-		//$data['unique_id'] = $companyId.'-'.rand(0,9).time();
-		$data['unique_id'] = rand(0,999).'-'.time();
+		
+		$data['unique_id'] = "PO".'-'.time();
+		
+		$this->save($data);
+		
+		return $this->id;		
+
+	}
+
+	public function addNewCompanyQuotation($newData, $newAuth, $newCompanyId){
+		
+
+		$this->create();
+		$data['product_id'] = $newData;
+		$data['company_id'] = $newCompanyId[0];	
+		$data['created_by'] = $newAuth;
+		$data['modified_by'] = $newAuth;
+		$data['status'] = 0;
+		
+		$data['unique_id'] = "PO".'-'.time();
 		
 		$this->save($data);
 		
@@ -129,11 +172,9 @@ class Quotation extends AppModel {
 		$this->id = $this->find('first',array('conditions' => array('Quotation.id' => $quotationId)));
 		if ($this->id) {
 
-		    $this->saveField('name', $data['Quotation']['name']);
 		    $this->bind(array('QuotationField'));
 		    $this->QuotationField->editFields($data,$quotationId);
-		    //pr($data);exit();
-		    //$this->QuotationField
+		   
 
 		}
 	}

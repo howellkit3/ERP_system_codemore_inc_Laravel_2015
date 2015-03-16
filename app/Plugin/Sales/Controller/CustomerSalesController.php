@@ -44,6 +44,53 @@ class CustomerSalesController extends SalesAppController {
             if (!empty($this->request->data)) {
 
             	$this->Company->bind(array('Address','Contact','Email','ContactPerson'));
+            	
+            	$this->request->data = $this->Company->formatData($this->request->data, $userData['User']['id']);
+
+
+            	$this->request->data['Company']['created_by'] = $userData['User']['id'];
+            	$this->request->data['Company']['modified_by'] = $userData['User']['id'];
+            	
+            	if ($this->Company->saveAssociated($this->request->data)) {
+  
+					$contactPersonId = $this->Company->ContactPerson->saveContact($this->request->data['ContactPersonData'], $this->Company->id);
+					
+					
+            		$this->Company->Contact->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
+            		$this->Company->Address->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
+            		$this->Company->Email->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
+
+					if($this->request->is('ajax')){
+ 							echo $this->Company->getLastInsertID();
+ 							exit();
+					}
+            		$this->Session->setFlash(__('New Customer Information Added.'));
+
+	            	$this->redirect(
+	                    array('controller' => 'customer_sales', 'action' => 'index')
+	                );
+                  
+	            }else{
+
+	            	$this->Session->setFlash(
+                        __('The invalid data. Please, try again.')
+                    );
+	            }
+            	
+            }
+        }
+
+	}
+
+	public function update(){
+
+		$userData = $this->Session->read('Auth');
+	
+		if ($this->request->is('post')) {
+
+            if (!empty($this->request->data)) {
+
+            	$this->Company->bind(array('Address','Contact','Email','ContactPerson'));
 
             	$this->request->data = $this->Company->formatData($this->request->data, $userData['User']['id']);
 
@@ -62,10 +109,10 @@ class CustomerSalesController extends SalesAppController {
  							echo $this->Company->getLastInsertID();
  							exit();
 					}
-            		$this->Session->setFlash(__('New Customer Information Added.'));
+            		$this->Session->setFlash(__('Customer Information Successfully Updated.'));
 
 	            	$this->redirect(
-	                    array('controller' => 'customer_sales', 'action' => 'inquiry_form')
+	                    array('controller' => 'customer_sales', 'action' => 'index')
 	                );
                   
 	            }else{
@@ -83,14 +130,14 @@ class CustomerSalesController extends SalesAppController {
 	public function view($companyId = null){
 
 		
-		$this->Company->bind(array('Address','Contact','Email','ContactPerson'));
+		$this->Company->bind(array('Address','Contact','Email','ContactPerson','Product'));
 
 		$this->Company->recursive = 1;
 
 		$company = $this->Company->find('first', array(
 	        'conditions' => array('Company.id' => $companyId)
 	    ));
-		
+
 		$this->set(compact('company'));
 		
 	}
@@ -117,7 +164,6 @@ class CustomerSalesController extends SalesAppController {
 	        'conditions' => array('Email.foreign_key' => $personId,'Email.model' =>'ContactPerson')
 	    ));
 
-		
 		$this->set(compact('contactPerson','contactAddress','contactNumber','contactEmail'));
 		
 
@@ -126,11 +172,11 @@ class CustomerSalesController extends SalesAppController {
 	public function edit($companyId = null){
 
 		$this->Company->bind(array(
-			'Address',
-			'Contact',
-			'Email',
-			'ContactPerson'
-		));
+									'Address',
+									'Contact',
+									'Email',
+									'ContactPerson'
+								));
 
 		$company = $this->Company->find('first', array(
 	        'conditions' => array('Company.id' => $companyId)
@@ -152,19 +198,21 @@ class CustomerSalesController extends SalesAppController {
 			}
 
 	        $this->request->data = am($company, $holder);
+
+
 	    }
-	    //pr($this->request->data);exit();
 		
 	}
 
 	public function delete($dataId = null, $personId = null){
 
 		$this->Company->bind(array('Contact','Email','Address','ContactPerson'));
-		
+
 		if ($this->Company->delete($dataId)) {
-			
+
 			$this->loadModel('Sales.Contact');
 			$this->Contact->deleteContact($personId);
+		
 
 			$this->loadModel('Sales.Email');
 			$this->Email->deleteEmail($personId);
@@ -172,6 +220,7 @@ class CustomerSalesController extends SalesAppController {
 			$this->loadModel('Sales.Address');
 			$this->Address->deleteAddress($personId);
 
+			$this->Session->setFlash(__('Successfully Deleted.'));
 			$this->redirect(
 				array('controller' => 'customer_sales', 'action' => 'index')
 			);
@@ -223,16 +272,15 @@ class CustomerSalesController extends SalesAppController {
 
 		$this->Inquiry->bind(array('Quotation'));
 
-		$inquiryData = $this->Inquiry->find('all',
-			array(
-    			'order' => array('Inquiry.id DESC'),
-    			'contain' => array(
-    				'Quotation' => array(
-    					'conditions' => array('Quotation.inquiry_id' => 'Inquiry.id')
-    				)
-    			)
-    		)
-    	);
+		$inquiryData = $this->Inquiry->find('all', array(
+								    			'order' => array('Inquiry.id DESC'),
+								    			'contain' => array(
+								    				'Quotation' => array(
+								    					'conditions' => array('Quotation.inquiry_id' => 'Inquiry.id')
+								    				)
+								    			)
+								    		)
+								    	);
 
 		
 		$companyData = $this->Company->find('list',array('fields' => array('id', 'company_name')));
@@ -254,7 +302,7 @@ class CustomerSalesController extends SalesAppController {
 	    ));
 		
 		$this->set(compact('company','inquiry'));
-		//pr($company);exit();
+		
 	}
 
 	public function find_data($id = null) {
@@ -262,7 +310,12 @@ class CustomerSalesController extends SalesAppController {
 		$this->layout = false;
 		$this->Company->bind(array('Contact','Email','Address'));
 
-		$data =$this->Company->find('first', array('conditions' => array('Company.id' => $id),'fields' => array('id', 'company_name')));
+		$data =$this->Company->find('first', array(
+										'conditions' => array(
+											'Company.id' => $id), 
+										'fields' => array(
+											'id', 'company_name')
+										));
 		
 		echo json_encode($data);
 
@@ -279,14 +332,18 @@ class CustomerSalesController extends SalesAppController {
 		$this->Company->bind(array('Inquiry'));
 
 		$qouteCount = $this->Quotation->find('all',array(
-			'conditions' => array('Quotation.inquiry_id' => $inquiryId)));
+												'conditions' => array(
+														'Quotation.inquiry_id' => $inquiryId)
+												));
 
 		foreach ($qouteCount as $key => $value) {
 
 			$this->Quotation->bind(array('QuotationField'));
 
 			$quotationData = $this->Quotation->QuotationField->find('all',array(
-				'conditions' => array('QuotationField.quotation_id' => $value['Quotation']['id'])));
+																		'conditions' => array(
+																				'QuotationField.quotation_id' => $value['Quotation']['id'])
+																		));
 
 			$this->Quotation->QuotationField->deleteQuoteFields($value['Quotation']['id']);
 

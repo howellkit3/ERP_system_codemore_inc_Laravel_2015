@@ -70,11 +70,19 @@
 	 											// array('escape' => false) );
 	 					?>
 					<!-- </li> -->
-					<li class="<?php //echo ($this->params['plugin'] == 'production') ? 'active' : '' ?>">
+					<li class="<?php echo ($this->params['plugin'] == 'delivery') ? 'active' : '' ?>">
 						<?php
 	 						echo $this->Html->link( " <i class='fa fa-truck'></i> <span>Delivery</span>",   array('controller' =>'deliveries',
 	 											'action'=>'index',
 	 											'plugin' => 'delivery'),
+	 											array('escape' => false) );
+	 					?>
+					</li>
+					<li class="<?php echo ($this->params['plugin'] == 'accounting') ? 'active' : '' ?>">
+						<?php
+	 						echo $this->Html->link( " <i class='fa fa-money'></i> <span>Accounting</span>",   array('controller' =>'salesInvoice',
+	 											'action'=>'index',
+	 											'plugin' => 'accounting'),
 	 											array('escape' => false) );
 	 					?>
 					</li>

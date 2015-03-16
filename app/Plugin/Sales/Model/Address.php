@@ -88,6 +88,7 @@ class Address extends AppModel {
 				
 			}
 			$this->saveAll($addressValue);
+			return $this->id;
 			
 		}
 		
