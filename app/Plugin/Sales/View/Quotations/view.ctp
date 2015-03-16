@@ -49,7 +49,7 @@
 			<center>
 				<header class="main-box-header clearfix">
 					<h1>KOU FU COLOR PRINTING CORP.</h1>
-					<h5>Lot 4-5, Blk 3 Phase 2, Mountview Industrial Complex, Carmona, Cavite</h5>
+					<h5>Lot 4-5, Blk 3 Phase 2, Mountview Industrial Complex, Bancal, Carmona, Cavite</h5>
 					<h6>Tel#: (046) 972-1111 to 13 Fax#: (046) 972-0120</h6><br>
 					<h2>Price Quotation</h2><br>
 				</header>
@@ -77,7 +77,7 @@
 							_______________________________________________________________________
 						</div>
 						<div class="col-lg-4">&emsp;&emsp;
-							Date :&nbsp;<?php echo !empty($quotation['Quotation']['created']) ? date('F d, Y', strtotime($quotation['Quotation']['created'])) : '' ?>
+							Date :&nbsp;<?php echo !empty($quotation['Quotation']['created']) ? date('Y/m/d', strtotime($quotation['Quotation']['created'])) : '' ?>
 						</div>
 					</div>
 					<div class="form-group">

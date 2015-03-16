@@ -33,7 +33,7 @@
 							___________________________________________________
 						</td>
 						<td>Date:
-							<?php echo !empty($quotation['Quotation']['created']) ? date('M d, Y', strtotime($quotation['Quotation']['created'])) : '' 
+							<?php echo !empty($quotation['Quotation']['created']) ? date('Y/m/d', strtotime($quotation['Quotation']['created'])) : '' 
 							?>
 						</td>
 					</tr>
@@ -87,7 +87,7 @@
 					<?php } ?>
 				</thead>
 			</table>
-			<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
+			
 			<table class="layout">
 				<thead>
 					<tr>
@@ -112,10 +112,16 @@
 							Ms. Carryll Yu
 							<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
 						</td>
+
 					</tr>
 				</thead>
 			</table >
-			
+			<p class = "doc">
+				<font size ="12px">
+					Doc No.: KFP-FR-MKT-07<br>
+					REV. No.: 01
+				</font>
+			</p>
 			<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
 			<center>
 				<header class="main-box-header clearfix">
@@ -131,8 +137,13 @@
 				</thead>
 			</table>
 			<center>
-				<header class="main-box-header clearfix">
-					<p>I do hereby accept the price and other details submitted on your price quotation no.<?php echo $quotation['Quotation']['unique_id'] ?><br> Also, I do hereby authorize your company to proceed with and supply the work described above.</p>
+				<header class="main-box-header clearfix para">
+					<center>
+					<p align ="justify">
+						<font size ="15px">I do hereby accept the price and other details submitted on your price quotation no.<?php echo $quotation['Quotation']['unique_id'] ?><br> Also, I do hereby authorize your company to proceed with and supply the work described above.
+						</font>
+					</p>
+					</center>
 				</header>
 			</center>
 			<table class="layout" >
@@ -142,15 +153,43 @@
 						<td style="padding-left: 270px;">Position:_________________</td>
 					</tr>
 					<tr>
-						<td> <?php echo (new \DateTime())->format('l, F d, Y '); ?></td>
+						<td> </td>
 						<td style="padding-left: 285px;">Date:_________________</td>
 					</tr>
 				</thead>
 			</table>
+			<footer >
+				<table class ="tables-css">
+					<tr>
+						<td class ="footer">
+
+							<font size = "12px">
+								<?php echo (new \DateTime())->format('l, F d, Y '); ?>
+							</font>
+						</td>
+						<td class ="footer">
+							&nbsp;&nbsp;&nbsp;
+						</td>
+						<td class ="footer">
+							&nbsp;&nbsp;&nbsp;
+						</td>
+						<td class = "footer2">
+							<font size = "12px">
+							
+							Page 1 of 1
+							</font>
+
+						</td>
+					</tr>
+				</table>
+								
+			</footer>
 			<br><br>
+
 			
 			
 									
 		</div>
+
 	</div>	
 </div>
