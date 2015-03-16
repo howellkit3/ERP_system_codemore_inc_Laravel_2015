@@ -117,7 +117,7 @@
 				</thead>
 			</table >
 			<p class = "doc">
-				<font size ="12px">
+				<font size ="9px">
 					Doc No.: KFP-FR-MKT-07<br>
 					REV. No.: 01
 				</font>
@@ -149,7 +149,7 @@
 			<table class="layout" >
 				<thead>
 					<tr>
-						<td>Athorized by:_________________</td>
+						<td>Authorized by:_________________</td>
 						<td style="padding-left: 270px;">Position:_________________</td>
 					</tr>
 					<tr>
