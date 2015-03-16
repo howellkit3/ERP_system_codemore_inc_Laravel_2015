@@ -67,7 +67,8 @@
                                     <?php echo $customField[$key] ?>
                                   </td>
                                   <td>
-                                      <?php echo $ticketDetails['QuotationField'][$key-2]['description']; ?>
+                                      
+                                      <?php echo !empty($ticketDetails['QuotationField'][$key-2]['description']) ? $ticketDetails['QuotationField'][$key-2]['description'] : '' ; ?>
                                   </td>
                                   
                               </tr>
