@@ -18,7 +18,7 @@
                             <tr>
                                 <th><a href="#"><span>Purchase No.:</span></a></th>
                                  <th><a href="#"><span>Created</span></a></th>
-                                <th>Action</th>
+                                <th style="text-align:center">Action</th>
                             </tr>
                         </thead>
 
