@@ -32,6 +32,12 @@ App::uses('Controller', 'Controller');
  */
 class AppController extends Controller {
 
+
+public function beforeFilter(){
+	$userDetails = $this->Session->read('Auth');
+	$this->set(compact('userDetails'));
+	}
+	
 	public $components = array(
 	    'RequestHandler',
 	    'Session',
