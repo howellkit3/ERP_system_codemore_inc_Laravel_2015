@@ -56,22 +56,35 @@ class QuotationField extends AppModel {
 
 	);
 
-	public function saveQuotationField($data = null,$quotaionId= null,$auth = nnull){
-		
-		
-		
-		$this->create();
+	public function saveQuotationField($data = null, $quotaionId= null, $auth = nnull){
 
+
+		$this->create();
 		foreach ($data[$this->name] as $key => $customFieldValue) 
 		{	
+			// foreach ($data['MultipleField'] as $multiple => $multipleFieldValue){
+			// 	$customFieldValue['description'] = $multipleFieldValue['Qty']['description'];
+			// 	$customFieldValue['custom_fields_id'] = $multipleFieldValue['Qty']['custom_fields_id'];
 
+			// 	$customFieldValue['description'] = $multipleFieldValue['Uprice']['description'];
+			// 	$customFieldValue['custom_fields_id'] = $multipleFieldValue['Uprice']['custom_fields_id'];
+
+			// 	$customFieldValue['description'] = $multipleFieldValue['Vat']['description'];
+			// 	$customFieldValue['custom_fields_id'] = $multipleFieldValue['Vat']['custom_fields_id'];
+
+			// 	$customFieldValue['description'] = $multipleFieldValue['Mat']['description'];
+			// 	$customFieldValue['custom_fields_id'] = $multipleFieldValue['Mat']['custom_fields_id'];
+
+			// }
+	
 			$customFieldValue['quotation_id'] = $quotaionId;
 			$customFieldValue['created_by'] = $auth;
 			$customFieldValue['modified_by'] = $auth;
 			$this->saveAll($customFieldValue);
+			
 		}
-		
 		return $this->id;
+		
 	
 	}
 

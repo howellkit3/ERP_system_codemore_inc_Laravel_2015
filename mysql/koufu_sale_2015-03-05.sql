@@ -1,24 +1,45 @@
 /*
+
 SQLyog Ultimate v8.55 
 MySQL - 5.6.21 : Database - koufu_sale
+
 *********************************************************************
+
 */
+
+
 
 /*!40101 SET NAMES utf8 */;
 
+
+
 /*!40101 SET SQL_MODE=''*/;
 
+
+
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
 CREATE DATABASE /*!32312 IF NOT EXISTS*/`koufu_sale` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+
 
 USE `koufu_sale`;
 
+
+
 /*Table structure for table `addresses` */
 
+
+
 DROP TABLE IF EXISTS `addresses`;
+
+
 
 CREATE TABLE `addresses` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -38,9 +59,15 @@ CREATE TABLE `addresses` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
 
+
+
 /*Table structure for table `companies` */
 
+
+
 DROP TABLE IF EXISTS `companies`;
+
+
 
 CREATE TABLE `companies` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -56,9 +83,15 @@ CREATE TABLE `companies` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
 
+
+
 /*Table structure for table `contact_people` */
 
+
+
 DROP TABLE IF EXISTS `contact_people`;
+
+
 
 CREATE TABLE `contact_people` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -76,9 +109,15 @@ CREATE TABLE `contact_people` (
   CONSTRAINT `id` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
+
+
 /*Table structure for table `contacts` */
 
+
+
 DROP TABLE IF EXISTS `contacts`;
+
+
 
 CREATE TABLE `contacts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -93,9 +132,15 @@ CREATE TABLE `contacts` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 
+
+
 /*Table structure for table `custom_fields` */
 
+
+
 DROP TABLE IF EXISTS `custom_fields`;
+
+
 
 CREATE TABLE `custom_fields` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -107,9 +152,15 @@ CREATE TABLE `custom_fields` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
+
+
 /*Table structure for table `emails` */
 
+
+
 DROP TABLE IF EXISTS `emails`;
+
+
 
 CREATE TABLE `emails` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -124,9 +175,15 @@ CREATE TABLE `emails` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
 
+
+
 /*Table structure for table `inquiries` */
 
+
+
 DROP TABLE IF EXISTS `inquiries`;
+
+
 
 CREATE TABLE `inquiries` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -140,9 +197,15 @@ CREATE TABLE `inquiries` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
+
+
 /*Table structure for table `item_categories` */
 
+
+
 DROP TABLE IF EXISTS `item_categories`;
+
+
 
 CREATE TABLE `item_categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -153,9 +216,15 @@ CREATE TABLE `item_categories` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
+
+
 /*Table structure for table `item_types` */
 
+
+
 DROP TABLE IF EXISTS `item_types`;
+
+
 
 CREATE TABLE `item_types` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -166,9 +235,15 @@ CREATE TABLE `item_types` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
+
+
 /*Table structure for table `organizations` */
 
+
+
 DROP TABLE IF EXISTS `organizations`;
+
+
 
 CREATE TABLE `organizations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -180,9 +255,15 @@ CREATE TABLE `organizations` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+
+
 /*Table structure for table `permits` */
 
+
+
 DROP TABLE IF EXISTS `permits`;
+
+
 
 CREATE TABLE `permits` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -196,9 +277,15 @@ CREATE TABLE `permits` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+
+
 /*Table structure for table `product_specs` */
 
+
+
 DROP TABLE IF EXISTS `product_specs`;
+
+
 
 CREATE TABLE `product_specs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -212,9 +299,15 @@ CREATE TABLE `product_specs` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
+
+
 /*Table structure for table `products` */
 
+
+
 DROP TABLE IF EXISTS `products`;
+
+
 
 CREATE TABLE `products` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -228,9 +321,15 @@ CREATE TABLE `products` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
+
+
 /*Table structure for table `quotation_fields` */
 
+
+
 DROP TABLE IF EXISTS `quotation_fields`;
+
+
 
 CREATE TABLE `quotation_fields` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -244,9 +343,15 @@ CREATE TABLE `quotation_fields` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=163 DEFAULT CHARSET=latin1;
 
+
+
 /*Table structure for table `quotations` */
 
+
+
 DROP TABLE IF EXISTS `quotations`;
+
+
 
 CREATE TABLE `quotations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -262,9 +367,15 @@ CREATE TABLE `quotations` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
 
+
+
 /*Table structure for table `request_delivery_schedules` */
 
+
+
 DROP TABLE IF EXISTS `request_delivery_schedules`;
+
+
 
 CREATE TABLE `request_delivery_schedules` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -280,9 +391,15 @@ CREATE TABLE `request_delivery_schedules` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
+
+
 /*Table structure for table `sales_orders` */
 
+
+
 DROP TABLE IF EXISTS `sales_orders`;
+
+
 
 CREATE TABLE `sales_orders` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -295,9 +412,15 @@ CREATE TABLE `sales_orders` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
+
+
 /*Table structure for table `suppliers` */
 
+
+
 DROP TABLE IF EXISTS `suppliers`;
+
+
 
 CREATE TABLE `suppliers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -311,9 +434,15 @@ CREATE TABLE `suppliers` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+
+
 /*Table structure for table `types` */
 
+
+
 DROP TABLE IF EXISTS `types`;
+
+
 
 CREATE TABLE `types` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -323,7 +452,26 @@ CREATE TABLE `types` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+
+-- March 18, 2015-Jaimeer
+/*[09:49:49][  78 ms]*/ INSERT INTO `koufu_sale`.`custom_fields`(`id`,`fieldlabel`,`created_by`,`modified_by`,`created`,`modified`) VALUES ( 2,'Size',1,1,now(),now());
+/*[09:49:55][  31 ms]*/ INSERT INTO `koufu_sale`.`custom_fields`(`id`,`fieldlabel`,`created_by`,`modified_by`,`created`,`modified`) VALUES ( 3,'Qty',1,1,now(),now());
+/*[09:50:00][  16 ms]*/ INSERT INTO `koufu_sale`.`custom_fields`(`id`,`fieldlabel`,`created_by`,`modified_by`,`created`,`modified`) VALUES ( 4,'Unit Price',1,1,now(),now());
+/*[09:50:05][  32 ms]*/ INSERT INTO `koufu_sale`.`custom_fields`(`id`,`fieldlabel`,`created_by`,`modified_by`,`created`,`modified`) VALUES ( 5,'Vat Price',1,1,now(),now());
+/*[09:50:10][  31 ms]*/ INSERT INTO `koufu_sale`.`custom_fields`(`id`,`fieldlabel`,`created_by`,`modified_by`,`created`,`modified`) VALUES ( 6,'Material',1,1,now(),now());
+/*[09:50:21][  15 ms]*/ INSERT INTO `koufu_sale`.`custom_fields`(`id`,`fieldlabel`,`created_by`,`modified_by`,`created`,`modified`) VALUES ( 7,'Color',1,1,now(),now());
+/*[09:50:25][  15 ms]*/ INSERT INTO `koufu_sale`.`custom_fields`(`id`,`fieldlabel`,`created_by`,`modified_by`,`created`,`modified`) VALUES ( 8,'Process',1,1,now(),now());
+/*[09:50:29][  15 ms]*/ INSERT INTO `koufu_sale`.`custom_fields`(`id`,`fieldlabel`,`created_by`,`modified_by`,`created`,`modified`) VALUES ( 9,'Packaging',1,1,now(),now());
+/*[09:50:36][  16 ms]*/ INSERT INTO `koufu_sale`.`custom_fields`(`id`,`fieldlabel`,`created_by`,`modified_by`,`created`,`modified`) VALUES ( 10,'OtherSpecs',1,1,now(),now());
+/*[09:50:39][  15 ms]*/ INSERT INTO `koufu_sale`.`custom_fields`(`id`,`fieldlabel`,`created_by`,`modified_by`,`created`,`modified`) VALUES ( 11,'Terms',1,1,now(),now());
+/*[09:51:28][  31 ms]*/ INSERT INTO `koufu_sale`.`custom_fields`(`id`,`fieldlabel`,`created_by`,`modified_by`,`created`,`modified`) VALUES ( 12,'Validity',1,1,now(),now());
+/*[09:51:33][  15 ms]*/ INSERT INTO `koufu_sale`.`custom_fields`(`id`,`fieldlabel`,`created_by`,`modified_by`,`created`,`modified`) VALUES ( 13,'Remarks',1,1,now(),now());
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+

@@ -105,23 +105,26 @@
 			<table class="layout">
 				<thead>
 					<tr>
-						<td>Approved by</td>
-					</tr>
-					<tr>
-						<td style="width:335px;">
-							Ms. Carryll Yu
-							<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
+						<td style="width:500px;">
+							<div style="display:inline-block; vertical-align:top; border-bottom: 1px solid #b2b2b2;width:335px">
+								Approved by <br/><br>
+								Ms. Carryll Yu
+								<!-- <hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;"> -->
+							</div>
+							<div style="display:inline-block; vertical-align:top; border-bottom: 1px solid #b2b2b2;width:335px">
+							</div>
+							<div style="display:inline-block; vertical-align: bottom;text-align:right; margin-right:150px;">
+								<font size ="9px">
+									Doc No.: KFP-FR-MKT-07<br>
+									REV. No.: 01	
+								</font>				
+							</div>
 						</td>
 
 					</tr>
 				</thead>
 			</table >
-			<p class = "doc">
-				<font size ="9px">
-					Doc No.: KFP-FR-MKT-07<br>
-					REV. No.: 01
-				</font>
-			</p>
+			
 			<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
 			<center>
 				<header class="main-box-header clearfix">

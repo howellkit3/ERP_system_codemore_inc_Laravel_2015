@@ -279,7 +279,7 @@
                                             <?php 
                                                 echo $this->Form->input('Email.0.email', array('class' => 'form-control required email','label' => false));
                                             ?>
-                                            <span class="lighter-color">Ex. example@email.com</span>
+                                            <span class="lighter-color2">Ex. example@email.com</span>
                                         </div>
                                         <div class="col-lg-2">
                                             <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneData('email_section',this)"><i class="fa fa-plus"></i></button>
@@ -402,7 +402,7 @@
                                                 <?php 
                                                     echo $this->Form->input('ContactPersonData.0.Email.0.email', array('class' => 'form-control required email','label' => false));
                                                 ?>
-                                                <span class="lighter-color">Ex. example@email.com</span>
+                                                <span class="lighter-color2">Ex. example@email.com</span>
                                             </div>
                                             <div class="col-lg-2">
                                                 <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneContactData('contactPersonEmail_section',this)"><i class="fa fa-plus"></i></button>
