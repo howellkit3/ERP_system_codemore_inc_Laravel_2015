@@ -284,7 +284,9 @@ else{ ?>
 																										"type" => "button",
 																										"class" => "remove-field btn btn-danger",
 																										"onclick" => "removeClone('cloneFields')",
-																										"label" =>false
+																										"label" =>false,
+																										"id" => 'minus'
+
 																									));
 					                                            	?>
 					                                            </div>

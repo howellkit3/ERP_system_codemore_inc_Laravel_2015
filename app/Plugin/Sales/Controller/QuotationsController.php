@@ -107,7 +107,7 @@ class QuotationsController extends SalesAppController {
 		$this->Quotation->bind(array('QuotationField'));
 
 		if ($this->request->is('post')) {
-			pr($this->request->data);die;
+			//pr($this->request->data);die;
 			
 
             if (!empty($this->request->data)) {
@@ -209,6 +209,7 @@ class QuotationsController extends SalesAppController {
 
             	$this->Quotation->QuotationField->saveQuotationField($this->request->data, $quotationId,$userData['User']['id']);
             	
+            	
             	$this->Session->setFlash(__('Quotation Complete.'));
             	$this->redirect(
                     array('controller' => 'quotations', 'action' => 'index')
@@ -256,11 +257,27 @@ class QuotationsController extends SalesAppController {
 																		));
 		
 		
-		
-
-		
 
 		$this->Quotation->QuotationField->bind(array('CustomField'));
+
+		$customField = $this->Quotation->QuotationField->CustomField->find('all', array(
+														'fields' => array(
+															'id', 'fieldlabel')
+														
+														));
+
+
+		$customValue = $this->Quotation->QuotationField->find('list', array(
+																	'fields' =>array(
+																		'custom_fields_id','description'),
+																	'conditions' => array(
+																		'quotation_id' => $quotationId
+
+																	)
+																));
+		pr($quotationFieldInfo);die;
+
+		
 
 		$field = $this->Quotation->QuotationField->CustomField->find('list', array(
 																		'fields' => array(
@@ -274,13 +291,14 @@ class QuotationsController extends SalesAppController {
 								));
 		
 		$this->Quotation->bind(array('Product'));
+
 		$productName = $this->Quotation->find('first', array(
 													'conditions' => array(
 														'Quotation.id' => $quotationId
 														)
 													));
 		
-		$this->set(compact('companyData','companyId',
+		$this->set(compact('companyData','companyId', 'customField', 'customValue',
 			'quotation','inquiryId','user','contactInfo',
 			'quotationFieldInfo','field','salesStatus', 'productName'));
 		

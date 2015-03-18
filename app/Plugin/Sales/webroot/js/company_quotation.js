@@ -6,6 +6,7 @@ jQuery(function($){
 	$("#selectProduct").hide();
 	$("#checkBack").hide();
 	$("#back").hide();
+	$("#minus").hide();
 	
 	$('#checkAdd').change(function(){
 		$("#selectProduct").show();
@@ -183,25 +184,30 @@ jQuery(function($){
 
 function cloneInput(whatSection, thisElement)
 {
-	var count = $('.' + whatSection).children().length;
-    console.log(count);
+	// var count = $('.' + whatSection).children().length;
+ //    console.log(count);
+ 	$("#minus").show();
+ 	$name = $('.main-box-body .cloneFields input').last().attr('name');
+ 	var count = $name.match(/\d+/)[0];
+ 	console.log( $name );
+
     var parentSection = $(thisElement).parents('.' + whatSection);
 	var data = $(parentSection).first().clone();
 
-	for(x = count; x > 0; x--){
-		console.log(x);
-    	data = fieldResetInput(data, whatSection);
-	}
+    
+    data = fieldResetInput(data, whatSection,count);
+	
 
     $('.' + whatSection).last().after(data);
     
 }
-function fieldResetInput($form, section)
+
+
+    function fieldResetInput($form, section,count)
 {
-    var count = $('.' + section).children().length;
-    //console.log(count);
-    
+
     $form.find('select, input').each(function() {
+     count_now =  count++;
         var $this = $(this),
             nameProp = $this.prop('name'),
 
@@ -212,10 +218,13 @@ function fieldResetInput($form, section)
         {
             $this.val('');
         }
-  
-    	console.log(nameProp);
-        $this.prop('name', nameProp.replace(/\[(\d+)\]/, function(str,p1){	
-        	return '[' + (count + 14 ) + ']' 
+    
+    var input = count;
+    if ($(this).attr('type') == 'hidden') {
+     count_now  = count_now - 1;
+    }
+        $this.prop('name', nameProp.replace(/\[(\d+)\]/, function(str,p1){ 
+         return '[' + (count_now + 14) + ']' 
         }));
     });
     

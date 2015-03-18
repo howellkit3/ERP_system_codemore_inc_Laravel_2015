@@ -94,6 +94,7 @@
 						</div>
 					</div><br>
 					<div class="form-group">
+
 							<div class="col-lg-1"></div>
 							<div class="col-lg-2">
 								Item
@@ -101,7 +102,9 @@
 							<div class="col-lg-8">
 								:&emsp;<?php echo $productName['Product']['product_name']?>
 							</div>
-						</div>
+
+					</div>
+					
 					<?php foreach ($quotationFieldInfo as $key => $value) {?>
 						<div class="form-group">
 							<div class="col-lg-1"></div>

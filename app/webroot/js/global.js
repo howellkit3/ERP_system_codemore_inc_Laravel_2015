@@ -59,6 +59,7 @@ function removeCloneInputTable(whatSection)
 function removeClone(whatSection)
 {   
      $('.' + whatSection).last().remove(); 
+     $("#minus").hide();
 }
 
 function fieldResetContact($form, section)

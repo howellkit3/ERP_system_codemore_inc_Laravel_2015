@@ -63,8 +63,7 @@
                               </tr>
                               <?php  ?>
                               <?php foreach ($customField as $value) { 
-                                  
-                                ?>       
+                              ?>       
                               
                               <tr>
                                   <td>
