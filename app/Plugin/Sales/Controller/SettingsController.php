@@ -4,7 +4,7 @@ App::uses('SessionComponent', 'Controller/Component');
 
 class SettingsController extends SalesAppController {
 
-	public $uses = array('Sales.CustomField','Sales.ItemCategory','Sales.ItemType');
+	public $uses = array('Sales.CustomField','Sales.ItemCategory','Sales.ItemType','Sales.ProcessField');
 	public $helper = array('Sales.Country');
 
 	public function beforeFilter() {
@@ -22,7 +22,8 @@ class SettingsController extends SalesAppController {
 	public function index() {
 
 		$customField = $this->CustomField->find('all',array('order' => array('CustomField.id DESC')));
-
+		$processField = $this->ProcessField->find('all',array('order' => array('ProcessField.id DESC')));
+		
 		$category = $this->ItemCategory->find('list', array(
 											  'fields' => array(
 											  'id', 'category_name'
@@ -36,7 +37,7 @@ class SettingsController extends SalesAppController {
 		$type = $this->ItemCategory->find('all');
 
 
-		$this->set(compact('customField','category','type'));
+		$this->set(compact('customField','category','type','processField'));
 
 	}
 
@@ -58,6 +59,24 @@ class SettingsController extends SalesAppController {
 		}
 	}
 
+	public function process_field() {
+
+		$userData = $this->Session->read('Auth');
+		
+		if ($this->request->is('post')) {
+
+            if (!empty($this->request->data)) {
+            	
+            	$this->ProcessField->saveProcess($this->request->data,$userData['User']['id']);
+
+            	$this->redirect(
+                    array('controller' => 'settings', 'action' => 'index')
+                );
+            	
+			}
+		}
+	}
+
 	public function delete_field($fieldId = null){
 
 		if($this->CustomField->delete($fieldId)){
@@ -67,6 +86,25 @@ class SettingsController extends SalesAppController {
 					array('controller' => 'settings', 'action' => 'index')
 				);
 
+		}
+
+		
+	}
+
+	public function delete_process($fieldId = null){
+
+		if($this->ProcessField->delete($fieldId)){
+
+			$this->Session->setFlash(__('Process was successfully Deleted.'));
+			$this->redirect(
+					array('controller' => 'settings', 'action' => 'index')
+				);
+
+		}else{
+			$this->Session->setFlash(__('Error Deleting Information.'));
+			$this->redirect(
+					array('controller' => 'settings', 'action' => 'index')
+				);
 		}
 
 		

@@ -2,6 +2,7 @@
 <?php $this->Html->addCrumb('Quotation', array('controller' => 'quotation', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Create', array('controller' => 'quotation', 'action' => 'create')); ?>
 <?php echo $this->Html->script('Sales.company_quotation');?>
+<?php echo $this->Html->script('Sales.checkvat');?>
 <style type="text/css">#QuotationField12Description{background-color:#fff;}</style>
 <div style="clear:both"></div>
 
@@ -171,19 +172,40 @@
 																
 																	echo $value; ?>
 																	</div>
-																	<div class="col-lg-8">
-																		<?php 
-																		if($value == 'Validity'){
-																		$datepick = 'datepick';
-																		$readonly = 'readonly';
+																	<?php 
+																		$form = 'form-control';
+																		if($value == 'Vat Price'){
+																					
+																			$checkbox = 'checkbox';
+																			$readonly = '';
+																			$addclass = 'Vat-check';
+																			$divclass = 'checkbox-nice';
+																			$form = '';
 																		}
 																		else{
-																		$datepick = '';
-																		$readonly ='';
+																			$checkbox = '';
+																			$form = 'form-control';
+																			$addclass = '';
 																		}
-							                                                echo $this->Form->input('QuotationField.'.($key).'.description', array('class' => 'form-control item_type '.$datepick.' test',
+																	?>
+																	<div class="col-lg-8">
+																		<?php 
+																			if($value == 'Validity'){
+																			
+																				$datepick = 'datepick';
+																				$readonly = 'readonly';
+																				
+																			}
+																			else{
+																				$datepick = '';
+																				$readonly ='';
+																				
+																			}
+							                                                echo $this->Form->input('QuotationField.'.($key).'.description', array('class' => ''.$form.' item_type '.$datepick.' test ' .$addclass.'',
 							                                                	'readonly' => $readonly,
 							                                                    'alt' => 'address1',
+							                                                    'type' => $checkbox,
+							                                                    'rel' => .12,
 							                                                    'label' => false));
 							                                            ?>
 							                                    
@@ -197,6 +219,7 @@
 																	</div>
 																</div>
 															<?php }?>
+															
 																<hr style="height:1px; border:none; color:#666666; background-color:#666666;">
 
 																<div class="form-group">

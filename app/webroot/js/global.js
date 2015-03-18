@@ -110,3 +110,4 @@ function cloneInquiry(whatSection, thisElement)
     data = fieldResetContact(data, whatSection);
     $('.' + whatSection).last().after(data);
 }
+
