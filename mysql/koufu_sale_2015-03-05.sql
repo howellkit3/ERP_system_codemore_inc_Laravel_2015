@@ -1,24 +1,45 @@
 /*
+
 SQLyog Ultimate v8.55 
 MySQL - 5.6.21 : Database - koufu_sale
+
 *********************************************************************
+
 */
+
+
 
 /*!40101 SET NAMES utf8 */;
 
+
+
 /*!40101 SET SQL_MODE=''*/;
 
+
+
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
 CREATE DATABASE /*!32312 IF NOT EXISTS*/`koufu_sale` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+
 
 USE `koufu_sale`;
 
+
+
 /*Table structure for table `addresses` */
 
+
+
 DROP TABLE IF EXISTS `addresses`;
+
+
 
 CREATE TABLE `addresses` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -42,9 +63,15 @@ CREATE TABLE `addresses` (
 
 insert  into `addresses`(`id`,`model`,`foreign_key`,`type`,`address1`,`address2`,`city`,`state_province`,`zip_code`,`country`,`created_by`,`modified_by`,`created`,`modified`) values (1,'Company',1,0,'san pedro','pacita','san pedro','laguna',4023,'AZ',2,2,'2015-03-17 02:25:31','2015-03-17 02:25:31'),(2,'ContactPerson',1,0,'filinvest','bagong silang','san pedro','laguna',4023,'AU',2,2,'2015-03-17 02:25:31','2015-03-17 02:25:31');
 
+
+
 /*Table structure for table `companies` */
 
+
+
 DROP TABLE IF EXISTS `companies`;
+
+
 
 CREATE TABLE `companies` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -64,9 +91,15 @@ CREATE TABLE `companies` (
 
 insert  into `companies`(`id`,`company_name`,`description`,`website`,`payment_term`,`tin`,`created_by`,`modified_by`,`created`,`modified`) values (1,'CodeMore','web','codemore.com','PIA - Payment in advance',123,2,2,'2015-03-17 02:25:31','2015-03-17 02:25:31');
 
+
+
 /*Table structure for table `contact_people` */
 
+
+
 DROP TABLE IF EXISTS `contact_people`;
+
+
 
 CREATE TABLE `contact_people` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -88,9 +121,15 @@ CREATE TABLE `contact_people` (
 
 insert  into `contact_people`(`id`,`company_id`,`firstname`,`middlename`,`lastname`,`position`,`created_by`,`modified_by`,`created`,`modified`) values (1,1,'bienskie','castardo','relampagos','developer',2,2,'2015-03-17 02:25:31','2015-03-17 02:25:31');
 
+
+
 /*Table structure for table `contacts` */
 
+
+
 DROP TABLE IF EXISTS `contacts`;
+
+
 
 CREATE TABLE `contacts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -109,9 +148,15 @@ CREATE TABLE `contacts` (
 
 insert  into `contacts`(`id`,`model`,`foreign_key`,`type`,`number`,`created_by`,`modified_by`,`created`,`modified`) values (1,'Company',1,0,'213213',2,2,'2015-03-17 02:25:31','2015-03-17 02:25:31'),(2,'ContactPerson',1,0,'12313',2,2,'2015-03-17 02:25:31','2015-03-17 02:25:31');
 
+
+
 /*Table structure for table `custom_fields` */
 
+
+
 DROP TABLE IF EXISTS `custom_fields`;
+
+
 
 CREATE TABLE `custom_fields` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -129,7 +174,11 @@ insert  into `custom_fields`(`id`,`fieldlabel`,`created_by`,`modified_by`,`creat
 
 /*Table structure for table `emails` */
 
+
+
 DROP TABLE IF EXISTS `emails`;
+
+
 
 CREATE TABLE `emails` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -148,9 +197,15 @@ CREATE TABLE `emails` (
 
 insert  into `emails`(`id`,`model`,`foreign_key`,`type`,`email`,`created_by`,`modified_by`,`created`,`modified`) values (1,'Company',1,0,'code@gmail.com',2,2,'2015-03-17 02:25:31','2015-03-17 02:25:31'),(2,'ContactPerson',1,0,'bien@yahoo.com',2,2,'2015-03-17 02:25:31','2015-03-17 02:25:31');
 
+
+
 /*Table structure for table `inquiries` */
 
+
+
 DROP TABLE IF EXISTS `inquiries`;
+
+
 
 CREATE TABLE `inquiries` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -166,9 +221,15 @@ CREATE TABLE `inquiries` (
 
 /*Data for the table `inquiries` */
 
+
+
 /*Table structure for table `item_categories` */
 
+
+
 DROP TABLE IF EXISTS `item_categories`;
+
+
 
 CREATE TABLE `item_categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -181,9 +242,15 @@ CREATE TABLE `item_categories` (
 
 /*Data for the table `item_categories` */
 
+
+
 /*Table structure for table `item_types` */
 
+
+
 DROP TABLE IF EXISTS `item_types`;
+
+
 
 CREATE TABLE `item_types` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -196,9 +263,15 @@ CREATE TABLE `item_types` (
 
 /*Data for the table `item_types` */
 
+
+
 /*Table structure for table `organizations` */
 
+
+
 DROP TABLE IF EXISTS `organizations`;
+
+
 
 CREATE TABLE `organizations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -210,11 +283,15 @@ CREATE TABLE `organizations` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-/*Data for the table `organizations` */
+
 
 /*Table structure for table `permits` */
 
+
+
 DROP TABLE IF EXISTS `permits`;
+
+
 
 CREATE TABLE `permits` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -230,7 +307,9 @@ CREATE TABLE `permits` (
 
 /*Data for the table `permits` */
 
+
 /*Table structure for table `process_fields` */
+
 
 DROP TABLE IF EXISTS `process_fields`;
 
@@ -248,9 +327,15 @@ CREATE TABLE `process_fields` (
 
 insert  into `process_fields`(`id`,`process`,`created_by`,`modified_by`,`created`,`modified`) values (2,'test',2,2,'2015-03-17 09:10:09','2015-03-17 09:10:09');
 
+
+
 /*Table structure for table `products` */
 
+
+
 DROP TABLE IF EXISTS `products`;
+
+
 
 CREATE TABLE `products` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -267,9 +352,15 @@ CREATE TABLE `products` (
 
 /*Data for the table `products` */
 
+
+
 /*Table structure for table `quotation_fields` */
 
+
+
 DROP TABLE IF EXISTS `quotation_fields`;
+
+
 
 CREATE TABLE `quotation_fields` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -285,9 +376,15 @@ CREATE TABLE `quotation_fields` (
 
 /*Data for the table `quotation_fields` */
 
+
+
 /*Table structure for table `quotations` */
 
+
+
 DROP TABLE IF EXISTS `quotations`;
+
+
 
 CREATE TABLE `quotations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -306,9 +403,15 @@ CREATE TABLE `quotations` (
 
 /*Data for the table `quotations` */
 
+
+
 /*Table structure for table `request_delivery_schedules` */
 
+
+
 DROP TABLE IF EXISTS `request_delivery_schedules`;
+
+
 
 CREATE TABLE `request_delivery_schedules` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -326,9 +429,15 @@ CREATE TABLE `request_delivery_schedules` (
 
 /*Data for the table `request_delivery_schedules` */
 
+
+
 /*Table structure for table `sales_orders` */
 
+
+
 DROP TABLE IF EXISTS `sales_orders`;
+
+
 
 CREATE TABLE `sales_orders` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -343,9 +452,15 @@ CREATE TABLE `sales_orders` (
 
 /*Data for the table `sales_orders` */
 
+
+
 /*Table structure for table `suppliers` */
 
+
+
 DROP TABLE IF EXISTS `suppliers`;
+
+
 
 CREATE TABLE `suppliers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -359,11 +474,14 @@ CREATE TABLE `suppliers` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-/*Data for the table `suppliers` */
 
 /*Table structure for table `types` */
 
+
+
 DROP TABLE IF EXISTS `types`;
+
+
 
 CREATE TABLE `types` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -375,7 +493,26 @@ CREATE TABLE `types` (
 
 /*Data for the table `types` */
 
+
+-- March 18, 2015-Jaimeer
+/*[09:49:49][  78 ms]*/ INSERT INTO `koufu_sale`.`custom_fields`(`id`,`fieldlabel`,`created_by`,`modified_by`,`created`,`modified`) VALUES ( 2,'Size',1,1,now(),now());
+/*[09:49:55][  31 ms]*/ INSERT INTO `koufu_sale`.`custom_fields`(`id`,`fieldlabel`,`created_by`,`modified_by`,`created`,`modified`) VALUES ( 3,'Qty',1,1,now(),now());
+/*[09:50:00][  16 ms]*/ INSERT INTO `koufu_sale`.`custom_fields`(`id`,`fieldlabel`,`created_by`,`modified_by`,`created`,`modified`) VALUES ( 4,'Unit Price',1,1,now(),now());
+/*[09:50:05][  32 ms]*/ INSERT INTO `koufu_sale`.`custom_fields`(`id`,`fieldlabel`,`created_by`,`modified_by`,`created`,`modified`) VALUES ( 5,'Vat Price',1,1,now(),now());
+/*[09:50:10][  31 ms]*/ INSERT INTO `koufu_sale`.`custom_fields`(`id`,`fieldlabel`,`created_by`,`modified_by`,`created`,`modified`) VALUES ( 6,'Material',1,1,now(),now());
+/*[09:50:21][  15 ms]*/ INSERT INTO `koufu_sale`.`custom_fields`(`id`,`fieldlabel`,`created_by`,`modified_by`,`created`,`modified`) VALUES ( 7,'Color',1,1,now(),now());
+/*[09:50:25][  15 ms]*/ INSERT INTO `koufu_sale`.`custom_fields`(`id`,`fieldlabel`,`created_by`,`modified_by`,`created`,`modified`) VALUES ( 8,'Process',1,1,now(),now());
+/*[09:50:29][  15 ms]*/ INSERT INTO `koufu_sale`.`custom_fields`(`id`,`fieldlabel`,`created_by`,`modified_by`,`created`,`modified`) VALUES ( 9,'Packaging',1,1,now(),now());
+/*[09:50:36][  16 ms]*/ INSERT INTO `koufu_sale`.`custom_fields`(`id`,`fieldlabel`,`created_by`,`modified_by`,`created`,`modified`) VALUES ( 10,'OtherSpecs',1,1,now(),now());
+/*[09:50:39][  15 ms]*/ INSERT INTO `koufu_sale`.`custom_fields`(`id`,`fieldlabel`,`created_by`,`modified_by`,`created`,`modified`) VALUES ( 11,'Terms',1,1,now(),now());
+/*[09:51:28][  31 ms]*/ INSERT INTO `koufu_sale`.`custom_fields`(`id`,`fieldlabel`,`created_by`,`modified_by`,`created`,`modified`) VALUES ( 12,'Validity',1,1,now(),now());
+/*[09:51:33][  15 ms]*/ INSERT INTO `koufu_sale`.`custom_fields`(`id`,`fieldlabel`,`created_by`,`modified_by`,`created`,`modified`) VALUES ( 13,'Remarks',1,1,now(),now());
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+

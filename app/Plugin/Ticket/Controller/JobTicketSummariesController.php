@@ -8,11 +8,13 @@ class JobTicketSummariesController extends TicketAppController {
 
 		$this->loadModel('Sales.Quotation');
 		$this->Quotation->bind(array('QuotationField'));
+		
 		$ticketDetails = $this->Quotation->find('first', array(
 													'conditions' => array(
 														'unique_id' => $id
 														)
 													));
+	
 		$this->loadModel('Sales.Company');
 		if(!empty($ticketDetails['Quotation']['inquiry_id'])){
 
@@ -41,8 +43,27 @@ class JobTicketSummariesController extends TicketAppController {
 											));
 		}
 
-		$this->loadModel('Sales.CustomField');
-		$customField = $this->CustomField->find('list', array('fields' => array('id', 'fieldlabel')));
+		
+		
+		$this->loadModel("Sales.CustomField");
+		$this->CustomField->bind('QuotationField');
+		
+		$customField = $this->CustomField->find('all', array(
+														'fields' => array(
+															'id', 'fieldlabel'),
+														
+														));
+		
+		$customValue = $this->CustomField->QuotationField->find('list', array(
+																	'fields' =>array(
+																		'custom_fields_id','description'),
+																	'conditions' => array(
+																		'quotation_id' => $ticketDetails['Quotation']['id']
+
+																	)
+																));
+		
+		
 		
 		$this->Quotation->bind(array('Product'));
 		$productName = $this->Quotation->find('first', array(
@@ -50,7 +71,8 @@ class JobTicketSummariesController extends TicketAppController {
 														'Quotation.id' =>$ticketDetails['Quotation']['id']
 														)
 													));
-		$this->set(compact('companyName','ticketDetails','customField','productName'));
+		
+		$this->set(compact('companyName','ticketDetails','customField','productName','customValue'));
 
 	}
 

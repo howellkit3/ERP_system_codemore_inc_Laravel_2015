@@ -5,8 +5,9 @@
 // }
 function fieldReset($form, section)
 {
-    var count = $('.' + section).length;
     
+    var count = $('.' + section).length;
+    console.log(count);
     $form.find('select, input').each(function() {
         var $this = $(this),
             nameProp = $this.prop('name'),

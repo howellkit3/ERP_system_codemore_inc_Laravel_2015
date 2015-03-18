@@ -1,6 +1,6 @@
 <header class="main-box-header clearfix">
 	<center>
-		<table  style="width: 800px;" border ="1">
+		<table  style="width: 800px;">
 			<tr>
 				<td>
 					<?php
@@ -119,8 +119,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td align ="center" colspan = "3" height = "200px">
-				<div class="boxed"><font size ="1px">
+			<td align ="center" colspan = "3" height = "250px">
+				<div class="boxed"><font size ="2px">
   					CONDITION OF SALES: It is understood that the mechandise herein described<br>
   					remains the property of KOU FU COLOR PRINTING CORP. until the invoice is <br>
   					paid. Our responsibility ceases when merchandise is delivered in good condi-<br> tion. Overdue payments on any part of this invoice shall bear interest equal to <br> twenty four(24%) percent per annum plus twenty five (25%) percent to cover<br> cost of collection and attorney's fee. In any case of litigation arising out of this in-<br>voice, the parties submit themselves to jurisdiction of the court of Carmona, Cavite to the exclusion of all others</font>
@@ -163,17 +163,40 @@
 				</table>
 			</td>
 		</tr>
-		<tr>
-			<td >
-				PREPARED BY:
-			</td>
-			<td colspan = "2">
-				APPROVED BY:
-			</td>
-			<td colspan = "2">
-				RECEIVED BY:
-			</td>
-		</tr>
+		
+		<table style="width: 800px; border: 0; cellspacing: 0; cellpadding: 0;" border ="1">
+			<tr>
+				<td width = "33%" height = "100px" align = "center" valign ="top">
+					PREPARED BY:
+				</td>
+				<td width = "33%" height = "100px" align = "center" valign ="top">
+					APPROVED BY:
+				</td>
+				<td width = "33%" height = "100px" align = "center" valign ="top">
+					RECEIVED BY:
+				</td>
+			</tr>
+		</table>
+		<table style="width: 800px; border: 0; cellspacing: 0; cellpadding: 0;" border ="1">
+			<tr>
+				<td>
+					250 BKLTS(50x3) 112501-125000 BIR Authority to Print No.: 1AU0001259261<br>
+					Date Issued: 7-7-14 Valid until: 7-17-19 * JPIEC PRINTING SERVICES<br>
+					454 JM Loyola St. Carmona, Cavite * JOSEFINA B. BALLACILLO-Prop.<br>
+					TIN: 142-933-914-000 VAT
+				</td>
+				<td>
+					Printer's Accreditation No.: 54AMP20140000000024<br>
+					Date Issued: 03-11-2014
+				</td>
+				<td>
+					Doc. No.: KFP-FR-ACC-07<br>
+					Rev. No.:1
+				</td>
+			</tr>
+		</table>
+			
 
 	</table>
+	<h5> "THIS SALES INVOICE SHALL BE VALID FOR FIVE(5) YEARS FROM THE DATE OF ATP"</h5>
 </center>

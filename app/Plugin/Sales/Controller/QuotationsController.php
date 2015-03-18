@@ -55,7 +55,12 @@ class QuotationsController extends SalesAppController {
 		$userData = $this->Session->read('Auth');
 		$this->loadModel('Sales.CustomField');
 
-		$customField = $this->CustomField->find('list', array('fields' => array('id', 'fieldlabel')));
+		$customField = $this->CustomField->find('list', array(
+													'fields' => array('id', 'fieldlabel'),
+													'conditions' => array(
+														'id NOT' => array('2','3','4','5','6')
+														)
+													));
 
 		$this->loadModel('Sales.ItemCategory');
 		$this->ItemCategory->bind(array('ItemType'));
@@ -102,9 +107,11 @@ class QuotationsController extends SalesAppController {
 		$this->Quotation->bind(array('QuotationField'));
 
 		if ($this->request->is('post')) {
+			pr($this->request->data);die;
 			
 
             if (!empty($this->request->data)) {
+
 
             	if(!empty($this->request->data['Inquiry']['id'])){
             	
@@ -199,6 +206,7 @@ class QuotationsController extends SalesAppController {
 
 
             	$this->Quotation->bind(array('QuotationField'));
+
             	$this->Quotation->QuotationField->saveQuotationField($this->request->data, $quotationId,$userData['User']['id']);
             	
             	$this->Session->setFlash(__('Quotation Complete.'));

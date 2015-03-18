@@ -46,7 +46,7 @@ class Contact extends AppModel {
 			),
 			'numeric'=> array(
 	            'rule' => 'numeric',
-	            'message'=> 'Please follow the format'
+	            'message'=> 'It should be numeric'
 	        ),
 		),
 	

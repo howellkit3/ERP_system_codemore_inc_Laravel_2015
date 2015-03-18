@@ -27,7 +27,9 @@
                 <div class="table-responsive">
                     <table class="table table-striped table-hover">
                						<tbody>
-
+                              <?php
+                               
+                              ?>
                  							<tr>
                    								<td>Job Ticket Id</td>
                    								<td><?php echo $ticketDetails['Quotation']['unique_id']; ?></td>
@@ -59,17 +61,21 @@
                                   <td>Item Name</td>
                                   <td><?php echo $productName['Product']['product_name']; ?></td>
                               </tr>
-                              <?php foreach ($customField as $key => $value) { 
+                              <?php  ?>
+                              <?php foreach ($customField as $value) { 
+                                  
                                 ?>       
                               
                               <tr>
                                   <td>
-                                    <?php echo $customField[$key] ?>
+                                    <?php echo $value['CustomField']['fieldlabel'];?>
+
                                   </td>
                                   <td>
-                                      
-                                      <?php echo !empty($ticketDetails['QuotationField'][$key-2]['description']) ? $ticketDetails['QuotationField'][$key-2]['description'] : '' ; ?>
+                                      <?php echo !empty($customValue[$value['CustomField']['id']]) ? $customValue[$value['CustomField']['id']] : "NO VALUE" ; ?>
+
                                   </td>
+                                  
                                   
                               </tr>
                               
