@@ -28,7 +28,7 @@
 
 						<div class="main-box-body clearfix">
 							
-							<header class="main-box-header clearfix">
+							<!-- <header class="main-box-header clearfix">
 								<h1>Address</h1>
 							</header>
 
@@ -76,7 +76,7 @@
 				                         		</tr>
 				                         </tbody>
 		                        <?php }?>
-		                    </table>
+		                    </table> -->
 									
 
 							<header class="main-box-header clearfix">

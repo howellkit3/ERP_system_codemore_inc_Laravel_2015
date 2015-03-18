@@ -125,7 +125,7 @@
 				</thead>
 			</table >
 			
-			<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
+			<!-- <hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
 			<center>
 				<header class="main-box-header clearfix">
 					<h4>Acceptance Slip</h4>
@@ -186,7 +186,7 @@
 					</tr>
 				</table>
 								
-			</footer>
+			</footer> -->
 			<br><br>
 
 			

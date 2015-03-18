@@ -8,16 +8,21 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
+            <div id="searchfield" class="pull-left">
+                <form><input type="text" name="currency" class="biginput" id="autocomplete" placeholder="Search Quotation"></form>
+            </div>
             <header class="main-box-header clearfix">
                 <h2 class="pull-left"><b>Quotations List</b></h2>
+                 
                 
                 <div class="filter-block pull-right">
+
                     <?php
                        echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Make Quotation ', array('controller' => 'quotations', 'action' => 'create'),array('class' =>'btn btn-primary pull-right','escape' => false));
                     ?>
                 </div>
             </header>
-            
+
             <div class="main-box-body clearfix">
                 <div class="table-responsive">
                     <table class="table table-striped table-hover">

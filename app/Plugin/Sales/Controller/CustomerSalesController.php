@@ -57,7 +57,7 @@ class CustomerSalesController extends SalesAppController {
 					
 					
             		$this->Company->Contact->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
-            		$this->Company->Address->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
+            		//$this->Company->Address->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
             		$this->Company->Email->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
 
 					if($this->request->is('ajax')){
