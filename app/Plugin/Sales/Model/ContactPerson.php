@@ -102,7 +102,7 @@ class ContactPerson extends AppModel {
 			foreach ($contactPersonData[$this->name] as $key => $contactPersonValue) 
 			{
 				//pr($contactPersonData[$this->name]);pr($company_id);die;
-				//$contactPersonValue['model'] = "Company";
+				$contactPersonValue['model'] = "Company";
 				$contactPersonValue['company_id'] = $company_id;
 					
 				

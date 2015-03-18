@@ -40,7 +40,7 @@ class CustomerSalesController extends SalesAppController {
 		$userData = $this->Session->read('Auth');
 	
 		if ($this->request->is('post')) {
-
+			//pr($this->request->data);die;
             if (!empty($this->request->data)) {
 
             	$this->Company->bind(array('Address','Contact','Email','ContactPerson'));

@@ -19,4 +19,39 @@ jQuery(function($) {
         
 
     });
+  
 });
+function cloneData(whatSection, thisElement)
+{
+    var parentSection = $(thisElement).parents('.' + whatSection);
+
+    var data = $(parentSection).first().clone();
+    console.log(data);
+    data = fieldReset(data, whatSection);
+    $('.' + whatSection).last().after(data);
+
+}
+function fieldReset($form, section)
+{
+    var count = $('.' + section).length;
+    
+    $form.find('select, input').each(function() {
+        var $this = $(this),
+            nameProp = $this.prop('name'),
+            newIndex = count;
+            type = $this.prop('type');
+        if(type == "text")
+        {
+            $this.val('');
+        }
+        //$this.prop('name', nameProp.replace("[0]", "[" + newIndex + "]"));
+        $this.prop('name', nameProp.replace(/\[(\d+)\]/, function(str,p1){
+            return '[' + (count) + ']'
+        }));
+         
+       
+
+    });
+    
+    return $form;
+}

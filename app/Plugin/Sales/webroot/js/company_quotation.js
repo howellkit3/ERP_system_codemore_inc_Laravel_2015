@@ -175,6 +175,50 @@ jQuery(function($){
 			});
 
 		});
-$(".maskedPhone").mask("(99)-999-9999");
-$(".maskedPhone2").mask("(99)-999-9999");
+	$(".maskedPhone").mask("(99)-999-9999");
+	$(".maskedPhone2").mask("(99)-999-9999");
+	$('.form-group.addButton').wrapAll('<div class="addValues"></div>');
+	
 });
+
+function cloneInput(whatSection, thisElement)
+{
+	var count = $('.' + whatSection).children().length;
+    console.log(count);
+    var parentSection = $(thisElement).parents('.' + whatSection);
+	var data = $(parentSection).first().clone();
+
+	for(x = count; x > 0; x--){
+		console.log(x);
+    	data = fieldResetInput(data, whatSection);
+	}
+
+    $('.' + whatSection).last().after(data);
+    
+}
+function fieldResetInput($form, section)
+{
+    var count = $('.' + section).children().length;
+    //console.log(count);
+    
+    $form.find('select, input').each(function() {
+        var $this = $(this),
+            nameProp = $this.prop('name'),
+
+            newIndex = count;
+            type = $this.prop('type');
+
+        if(type == "text")
+        {
+            $this.val('');
+        }
+  
+    	console.log(nameProp);
+        $this.prop('name', nameProp.replace(/\[(\d+)\]/, function(str,p1){	
+        	return '[' + (count + 14 ) + ']' 
+        }));
+    });
+    
+    return $form;
+   
+}

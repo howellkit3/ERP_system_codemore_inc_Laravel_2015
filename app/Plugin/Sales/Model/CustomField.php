@@ -24,7 +24,7 @@ class CustomField extends AppModel {
 			'hasMany' => array(
 				'QuotationField' => array(
 					'className' => 'Sales.QuotationField',
-					'foreignKey' => 'custom_field_id',
+					'foreignKey' => 'custom_fields_id',
 					'dependent' => true
 				),
 			)

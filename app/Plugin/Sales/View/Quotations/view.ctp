@@ -136,21 +136,26 @@
 					</div>
 					<div class="form-group">
 						<div class="col-lg-1"></div>
-						<div class="col-lg-5">
+						<div class="col-lg-5" style="display:inline-block !important;">
+
 							Ms. Carryll Yu
 							<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
 
 						</div>
-						<div class="col-lg-3 pull-right">
-								<p class = "doc">
-									<font size ="1">
-										Doc No.: KFP-FR-MKT-07<br>
-										REV. No.: 01
-									</font>
-								</p>
-							</div>
+						<br><br>
+						<div class=" pull-right col-lg-3" style="display:inline-block !important;">
+							<p class = "doc">
+								<font size ="1">
+									Doc No.: KFP-FR-MKT-07<br>
+									REV. No.: 01
+								</font>
+							</p>
+						</div>
+
+
 					</div>
-					
+					<div style ="clear:both">
+					</div>
 						
 					
 					<hr style="height: 0; border-style: STYLEHERE; border-width: 1px 0 0 0; border-color:#COLORHERE;">
@@ -196,11 +201,12 @@
 						<div class="col-lg-2"></div>
 						<div class="col-lg-9">
 							<?php echo (new \DateTime())->format('l, F d, Y '); ?>
-						</div>
-						<div class="col-lg-3 pull-right">
+							<div class="col-lg-3 pull-right">
 							<?php echo "Page 1 of 1"; ?>
+							</div>
+
 						</div>
-					</div>
+						
 	
 				</form>
 			</div>								

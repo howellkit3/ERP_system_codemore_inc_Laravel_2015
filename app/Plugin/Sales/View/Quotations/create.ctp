@@ -13,7 +13,8 @@
 
 	echo $this->element('inquiry_quotation');
 
-}else{ ?>
+}
+else{ ?>
 
 	<?php echo $this->Form->create('Quotation',array('url'=>(array('controller' => 'quotations','action' => 'add'))));?>
 		<div class="row">
@@ -112,15 +113,16 @@
 															<div class="form-horizontal">
 																<?php 
 					                                                echo $this->Form->input('Company.id', array('class' => 'form-control item_type',
-												                        'hidden' => 'hidden',
-												                        'readonly' => 'readonly',
-												                        'label' => false,
-												                        'id' => 'id'));
+													                        'hidden' => 'hidden',
+													                        
+													                        'label' => false,
+													                        'id' => 'id'));
 					                                            ?>
 
 																<div class="form-group" id="existing_items">
-																	<div class="col-lg-3"><span style="color:red">*</span> Item</div>
+																	
 																	<div class="col-lg-8">
+																		<div class="col-lg-5"><span style="color:red">*</span> Item</div>
 																		<?php 
 							                                                echo $this->Form->input('txtproduct', 
 							                                                									array( 
@@ -144,59 +146,185 @@
 							                                                    					'empty' => '--Select Product--'
 							                                                    					));
 							                                           	 	?>
-							                                           
-							                                            
-							                                        
 																	</div>
 																</div>
 																 <div class="form-group">
-																	<div class="col-lg-3">
-																	</div>
 																		<div class="col-lg-8">
-													    <?php 
-							                                                echo $this->Form->checkbox('checkAdd', array('id' => 'checkAdd')). 
-							                                                						" <font color='blue' style='position: relative;top: -2px;' ><span id='add'>Click to Search Product</span></font>";
-							                                            ?>
-							                                             <?php 
-							                                                echo $this->Form->checkbox('checkBack', array('id' => 'checkBack')). 
-							                                                						"<font color='blue' style='position: relative;top: -2px;'><span id='back'> Back</span></font>";
-							                                            ?>
-							                                            	</div>
-							                                            	</div>
-																<?php foreach ($customField as $key => $value) {?>
-																
-																 <div class="form-group">
-																	<div class="col-lg-3">
-																	<span style="color:red"></span>																	<?php 
-																
-																	echo $value; ?>
-																	</div>
-																	<div class="col-lg-8">
-																		<?php 
-																		if($value == 'Validity'){
-																		$datepick = 'datepick';
-																		$readonly = 'readonly';
-																		}
-																		else{
-																		$datepick = '';
-																		$readonly ='';
-																		}
-							                                                echo $this->Form->input('QuotationField.'.($key).'.description', array('class' => 'form-control item_type '.$datepick.' test',
-							                                                	'readonly' => $readonly,
-							                                                    'alt' => 'address1',
-							                                                    'label' => false));
-							                                            ?>
-							                                    
-							                                            <?php 
-							                                                echo $this->Form->input('QuotationField.'.($key).'.custom_fields_id', array(
-							                                                	'type' => 'hidden',
+																			<div class="col-lg-5">
+																			</div>
+														    				<?php 
+								                                                echo $this->Form->checkbox('checkAdd', array('id' => 'checkAdd')). 
+								                                                						" <font color='blue' style='position: relative;top: -2px;' ><span id='add'>Click to Search Product</span></font>";
+								                                            ?>
+								                                             <?php 
+								                                                echo $this->Form->checkbox('checkBack', array('id' => 'checkBack')). 
+								                                                						"<font color='blue' style='position: relative;top: -2px;'><span id='back'> Back</span></font>";
+								                                            ?>
+							                                            </div>
+							                                       </div>
 
-							                                                	'value' => ($key),
-							                                                    'label' => false));
-							                                            ?>
+							                                       <div class="form-group">
+								                                       <div class="col-lg-8">
+																			<div class="col-lg-5">Size</div>
+																			<?php 
+								                                                echo $this->Form->input('QuotationField.2.description', array( 
+									                                                						'type' => 'text',
+									                                                						'class' => 'form-control item_type required', 
+									                                                    					'label' => false, 
+									                                                    					'alt' => 'address1',
+								                                                    					));
+
+								                                            ?>
+								                                             <?php 
+						                                                		echo $this->Form->input('QuotationField.2.custom_fields_id', array(
+														                                                	'type' => 'hidden',
+														                                                	'value' => 2,
+														                                                    'label' => false));
+						                                            		?>
+																			
+																		</div>
+																	</div>
+																<div class = "cloneFields">
+							                                       <div class="form-group">
+								                                       <div class="col-lg-8">
+																			<div class="col-lg-5">Qty</div>
+																			<?php 
+								                                                echo $this->Form->input('QuotationField.3.description', array( 
+									                                                						'type' => 'text',
+									                                                						'class' => 'form-control item_type cloneMe required ' , 
+									                                                    					'label' => false, 
+									                                                    					'alt' => 'address1',
+								                                               
+								                                                    					));
+								                                            ?>
+								                                             <?php 
+						                                                		echo $this->Form->input('QuotationField.3.custom_fields_id', array(
+														                                                	'type' => 'hidden',
+														                                                	'value' => 3,
+														                                                    'label' => false));
+						                                            		?>
+																			
+																		</div>
+																	</div>
+
+																	<div class="form-group">
+																		<div class="col-lg-8">
+																			<div class="col-lg-5">Unit Price</div>
+																			<?php 
+								                                                echo $this->Form->input('QuotationField.4.description', array( 
+								                                                						'type' => 'text',
+								                                                						'class' => 'form-control item_type cloneMe required ', 
+								                                                    					'label' => false, 
+								                                                    					'alt' => 'address1',
+								                                                    				
+								                                                    					));
+
+								                                            ?>
+								                                             <?php 
+						                                                		echo $this->Form->input('QuotationField.4.custom_fields_id', array(
+														                                                	'type' => 'hidden',
+														                                                	'value' => 4,
+														                                                    'label' => false));
+						                                            		?>
+																		
+																		</div>
+																	</div>
+																	<div class="form-group">
+																		<div class="col-lg-8">
+																			<div class="col-lg-5">Vat Price</div>
+																			<?php 
+								                                                echo $this->Form->input('QuotationField.5.description', array( 
+								                                                						'type' => 'text',
+								                                                						'class' => 'form-control item_type cloneMe required ', 
+								                                                    					'label' => false, 
+								                                                    					'alt' => 'address1',
+								                                                    					));
+								                                            ?>
+								                                             <?php 
+						                                                		echo $this->Form->input('QuotationField.5.custom_fields_id', array(
+														                                                	'type' => 'hidden',
+														                                                	'value' => 5,
+														                                                    'label' => false));
+						                                            		?>
+																		</div>
+																	</div>
+
+																	<div class="form-group">
+																		<div class="col-lg-8">
+																			<div class="col-lg-5">Material</div>
+																			<?php 
+								                                                echo $this->Form->input('QuotationField.6.description', array( 
+								                                                						'type' => 'text',
+								                                                						'class' => 'form-control item_type cloneMe required ', 
+								                                                    					'label' => false, 
+								                                                    					'alt' => 'address1',
+								                                                    					
+								                                                    					));
+								                                            ?>
+								                                             <?php 
+						                                                		echo $this->Form->input('QuotationField.6.custom_fields_id', array(
+														                                                	'type' => 'hidden',
+														                                                	'value' => 6,
+														                                                    'label' => false));
+						                                            		?>
+																		</div>
+																	</div>
+																	 
+						                                            <?php
+						                                            	echo $this->Form->button("<i class ='fa fa-plus'></i>", array(
+						                                            										"type" => "button",
+																											"class" => "add-field1 table-link danger btn btn-success",
+																											"onclick" => "cloneInput('cloneFields', this)",
+																											"label" =>false
+																								));
+						                                            ?>
+
+						                                            <?php	
+																		echo $this->Form->button("<i class ='fa fa-minus'></i>", array(
+																										"type" => "button",
+																										"class" => "remove-field btn btn-danger",
+																										"onclick" => "removeClone('cloneFields')",
+																										"label" =>false
+																									));
+					                                            	?>
+					                                            </div>
+
+																<?php foreach ($customField as $key => $value) {?>
+															
+																	 <div class="form-group" >
+																		<div class="col-lg-8">
+																			<?php
+																				if($value == 'Validity'){
+																					$datepick = 'datepick';
+																					$readonly = 'readonly';
+																				}
+																				else{
+																					$datepick = '';
+																					$readonly ='';
+																				}
+																			?>
+																			<div class="col-lg-5">
+																				<span style="color:red"></span>
+																				<?php echo $value; ?>
+																			</div>
+
+																			<?php
+								                                                echo $this->Form->input('QuotationField.'.($key).'.description', array('class' => 'form-control 
+															                                                	item_type '.$datepick.' test ',
+															                                                	'readonly' => $readonly,
+															                                                    'alt' => 'address1',
+															                                                    'label' => false));
+								                                            ?>
+								                                            <?php 
+						                                                		echo $this->Form->input('QuotationField.'.($key).'.custom_fields_id', array(
+														                                                	'type' => 'hidden',
+														                                                	'value' => ($key),
+														                                                    'label' => false));
+						                                            		?>
 																	</div>
 																</div>
 															<?php }?>
+														
 																<hr style="height:1px; border:none; color:#666666; background-color:#666666;">
 
 																<div class="form-group">
@@ -226,6 +354,8 @@
 	<?php echo $this->Form->end(); ?>
 
 	<script>
+
+	
 		$("#QuotationCreateForm").validate();
 		// $("[name*='data[Quotation][product]']").each(function () {
 		// $(this).rules("add", {
