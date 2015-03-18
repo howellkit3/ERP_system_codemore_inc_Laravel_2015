@@ -3,7 +3,7 @@ App::uses('AppController', 'Controller');
 App::uses('SessionComponent', 'Controller/Component');
 
 class ProductsController extends SalesAppController {
-	public $uses = array('Sales.Company','Sales.ItemCategory','Sales.ItemType');
+	public $uses = array('Sales.Company','Sales.ItemCategory','Sales.ItemType','Sales.ProcessField');
 
 	public function add($companyId = null){
 		
@@ -38,6 +38,8 @@ class ProductsController extends SalesAppController {
 														'status' => 'active'
 												  		)
 												));
+
+		$processField = $this->ProcessField->find('all');
 		
 		
 		$companyName = $this->Company->find('first', array(
@@ -54,7 +56,7 @@ class ProductsController extends SalesAppController {
 													)
 												));
 
-		$this->set(compact('companyName','itemCategory','customField'));
+		$this->set(compact('companyName','itemCategory','customField','processField'));
 
 	}
 

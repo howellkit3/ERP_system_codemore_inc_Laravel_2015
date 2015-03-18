@@ -57,7 +57,11 @@ CREATE TABLE `addresses` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+/*Data for the table `addresses` */
+
+insert  into `addresses`(`id`,`model`,`foreign_key`,`type`,`address1`,`address2`,`city`,`state_province`,`zip_code`,`country`,`created_by`,`modified_by`,`created`,`modified`) values (1,'Company',1,0,'san pedro','pacita','san pedro','laguna',4023,'AZ',2,2,'2015-03-17 02:25:31','2015-03-17 02:25:31'),(2,'ContactPerson',1,0,'filinvest','bagong silang','san pedro','laguna',4023,'AU',2,2,'2015-03-17 02:25:31','2015-03-17 02:25:31');
 
 
 
@@ -81,7 +85,11 @@ CREATE TABLE `companies` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+/*Data for the table `companies` */
+
+insert  into `companies`(`id`,`company_name`,`description`,`website`,`payment_term`,`tin`,`created_by`,`modified_by`,`created`,`modified`) values (1,'CodeMore','web','codemore.com','PIA - Payment in advance',123,2,2,'2015-03-17 02:25:31','2015-03-17 02:25:31');
 
 
 
@@ -107,7 +115,11 @@ CREATE TABLE `contact_people` (
   PRIMARY KEY (`id`),
   KEY `id_idx` (`company_id`),
   CONSTRAINT `id` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+/*Data for the table `contact_people` */
+
+insert  into `contact_people`(`id`,`company_id`,`firstname`,`middlename`,`lastname`,`position`,`created_by`,`modified_by`,`created`,`modified`) values (1,1,'bienskie','castardo','relampagos','developer',2,2,'2015-03-17 02:25:31','2015-03-17 02:25:31');
 
 
 
@@ -130,7 +142,11 @@ CREATE TABLE `contacts` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+/*Data for the table `contacts` */
+
+insert  into `contacts`(`id`,`model`,`foreign_key`,`type`,`number`,`created_by`,`modified_by`,`created`,`modified`) values (1,'Company',1,0,'213213',2,2,'2015-03-17 02:25:31','2015-03-17 02:25:31'),(2,'ContactPerson',1,0,'12313',2,2,'2015-03-17 02:25:31','2015-03-17 02:25:31');
 
 
 
@@ -152,7 +168,9 @@ CREATE TABLE `custom_fields` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
+/*Data for the table `custom_fields` */
 
+insert  into `custom_fields`(`id`,`fieldlabel`,`created_by`,`modified_by`,`created`,`modified`) values (2,'Size',2,2,'2015-03-17 02:30:49','2015-03-17 02:30:49'),(3,'Qty',2,2,'2015-03-17 02:33:29','2015-03-17 02:33:29'),(4,'Unit Price',2,2,'2015-03-17 02:33:45','2015-03-17 02:33:45'),(5,'Vat Price',2,2,'2015-03-17 02:36:46','2015-03-17 02:36:46'),(6,'Material',2,2,'2015-03-17 02:36:54','2015-03-17 02:36:54'),(7,'Color',2,2,'2015-03-17 02:37:03','2015-03-17 02:37:03'),(8,'Process',2,2,'2015-03-17 02:37:13','2015-03-17 02:37:13'),(9,'Packaging',2,2,'2015-03-17 02:37:23','2015-03-17 02:37:23'),(10,'OtherSpecs',2,2,'2015-03-17 02:37:41','2015-03-17 02:37:41'),(11,'Terms',2,2,'2015-03-17 02:37:51','2015-03-17 02:37:51'),(12,'Validity',2,2,'2015-03-17 02:38:02','2015-03-17 02:38:02'),(13,'Remarks',2,2,'2015-03-17 02:38:10','2015-03-17 02:38:10');
 
 /*Table structure for table `emails` */
 
@@ -173,7 +191,11 @@ CREATE TABLE `emails` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+/*Data for the table `emails` */
+
+insert  into `emails`(`id`,`model`,`foreign_key`,`type`,`email`,`created_by`,`modified_by`,`created`,`modified`) values (1,'Company',1,0,'code@gmail.com',2,2,'2015-03-17 02:25:31','2015-03-17 02:25:31'),(2,'ContactPerson',1,0,'bien@yahoo.com',2,2,'2015-03-17 02:25:31','2015-03-17 02:25:31');
 
 
 
@@ -195,7 +217,9 @@ CREATE TABLE `inquiries` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `inquiries` */
 
 
 
@@ -214,7 +238,9 @@ CREATE TABLE `item_categories` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `item_categories` */
 
 
 
@@ -233,7 +259,9 @@ CREATE TABLE `item_types` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `item_types` */
 
 
 
@@ -277,27 +305,27 @@ CREATE TABLE `permits` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+/*Data for the table `permits` */
 
 
-/*Table structure for table `product_specs` */
+/*Table structure for table `process_fields` */
 
 
+DROP TABLE IF EXISTS `process_fields`;
 
-DROP TABLE IF EXISTS `product_specs`;
-
-
-
-CREATE TABLE `product_specs` (
+CREATE TABLE `process_fields` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `product_id` int(11) DEFAULT NULL,
-  `custom_fields_id` int(11) DEFAULT NULL,
-  `description` varchar(100) DEFAULT NULL,
+  `process` varchar(120) DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   `modified_by` int(11) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+/*Data for the table `process_fields` */
+
+insert  into `process_fields`(`id`,`process`,`created_by`,`modified_by`,`created`,`modified`) values (2,'test',2,2,'2015-03-17 09:10:09','2015-03-17 09:10:09');
 
 
 
@@ -314,12 +342,15 @@ CREATE TABLE `products` (
   `type_id` int(11) NOT NULL,
   `company_id` int(11) DEFAULT NULL,
   `product_name` varchar(255) DEFAULT NULL,
+  `remarks` varchar(300) DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   `modified_by` int(11) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `products` */
 
 
 
@@ -341,7 +372,9 @@ CREATE TABLE `quotation_fields` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=163 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `quotation_fields` */
 
 
 
@@ -355,6 +388,7 @@ DROP TABLE IF EXISTS `quotations`;
 
 CREATE TABLE `quotations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(120) DEFAULT NULL,
   `company_id` int(11) DEFAULT NULL,
   `inquiry_id` int(11) DEFAULT NULL,
   `product_id` int(11) DEFAULT NULL,
@@ -365,7 +399,9 @@ CREATE TABLE `quotations` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `quotations` */
 
 
 
@@ -389,7 +425,9 @@ CREATE TABLE `request_delivery_schedules` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `request_delivery_schedules` */
 
 
 
@@ -410,7 +448,9 @@ CREATE TABLE `sales_orders` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `sales_orders` */
 
 
 
@@ -435,7 +475,6 @@ CREATE TABLE `suppliers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-
 /*Table structure for table `types` */
 
 
@@ -451,6 +490,8 @@ CREATE TABLE `types` (
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `types` */
 
 
 -- March 18, 2015-Jaimeer

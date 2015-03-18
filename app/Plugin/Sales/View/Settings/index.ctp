@@ -11,6 +11,7 @@
 				<li class="active"><a href="#tab-newsfeed" data-toggle="tab">Add Custom Field</a></li>
 				<li ><a href="#tab-category" data-toggle="tab">Add Item Category</a></li>
 				<li ><a href="#tab-type" data-toggle="tab">Add Item Type</a></li>
+				<li ><a href="#tab-process" data-toggle="tab">Add Process</a></li>
 			</ul>
 			
 			<div class="tab-content">
@@ -68,6 +69,63 @@
 						</div>
 					</div>
 				</div>
+
+
+				<div class="tab-pane fade in active" id="tab-process">
+					
+					<div class="table-responsive">
+						
+						<div class="col-lg-6">
+							<div class="main-box">
+								<header class="main-box-header clearfix">
+									<h2><b>Add Process</b></h2>
+								</header>
+								
+								<div class="main-box-body clearfix">
+									<?php echo $this->Form->create('ProcessField',array('url'=>(array('controller' => 'settings','action' => 'process_field')),'class' => 'form-horizontal'));?>
+										<div class="form-group">
+											<label for="inputEmail1" class="col-lg-2 control-label">Process Name</label>
+											<div class="col-lg-8">
+												<?php 
+	                                                echo $this->Form->input('ProcessField.process', array('class' => 'form-control item_type',
+	                                                    'alt' => 'address1',
+	                                                    'label' => false));
+	                                            ?>
+											</div>
+										</div>
+										
+										<div class="form-group">
+											<div class="col-lg-offset-2 col-lg-10">
+												<button type="submit" class="btn btn-success">Add Process</button>
+											</div>
+										</div>
+									<?php echo $this->Form->end(); ?>
+								</div>								
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-4 col-sm-4">
+							<div class="main-box clearfix">
+								<header class="main-box-header clearfix">
+									<h1>Process List</h1>
+								</header>
+								<table class="table table-striped table-hover">
+			                        <thead>
+			                            <tr>
+			                                <th><a href="#"><span>Process</span></a></th>
+			                                <th><a href="#"><span>Created</span></a></th>
+			                                <th>Action</th>
+			                            </tr>
+			                        </thead>
+
+			                        <?php echo $this->element('process_table'); ?>
+
+			                    </table>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+
 
 				<div class="tab-pane fade" id="tab-category">
 					
