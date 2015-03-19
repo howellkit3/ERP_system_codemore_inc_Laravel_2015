@@ -1,7 +1,43 @@
 jQuery(function($) {
+
+    $('#generatedPoNumber').hide();
+    $('#back').hide();
+    $('#checkBack').hide();
     $('#datepickerDate').datepicker({
-          format: 'mm-dd-yyyy'
+          format: 'mm/dd/yyyy'
     });
+
+  $.ajax({
+    url: serverPath + "sales/create_order/get_quotation_options",
+    type: "POST",
+     data: {"position": "1", "quotation": $("#quotationId").val()},
+    //dataType: "json",
+    success: function(data) {
+            console.log(data);
+            //alert(data);
+            $("#quotations").html(data);
+
+        }
+    });
+
+  $('#checkAdd').change(function(){
+        
+        $("#checkBack").show();
+        $("#back").show();
+        $("#po_number").val($('#generatePoNumber').val());
+        $("#checkAdd").hide();
+        $("#add").hide();
+        
+    });
+
+    $('#checkBack').change(function(){
+        $("#checkBack").hide();
+        $("#back").hide();
+        $("#po_number").val("");
+        $("#checkAdd").show();
+        $("#add").show();
+    });
+
 
     $('#pages').hide();
         
@@ -19,6 +55,25 @@ jQuery(function($) {
         
 
     });
+    $("#quotation li").on("click", function(){
+        $("#position").val($(this).val());
+        console.log($(this).val());
+        $.ajax({
+        url: serverPath + "sales/create_order/get_quotation_options",
+        type: "POST",
+         data: {"position": $(this).val(), "quotation": $("#quotationId").val()},
+        //dataType: "json",
+        success: function(data) {
+                console.log(data);
+                //alert(data);
+                $("#quotations").html(data);
+
+            }
+        });
+
+    });
+
+
   
 });
 function cloneData(whatSection, thisElement)

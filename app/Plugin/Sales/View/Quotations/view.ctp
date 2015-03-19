@@ -28,7 +28,7 @@
 
     		}else{
 
-    			echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Create Order ', array('controller' => 'quotations', 'action' => 'create_order',$quotation['Quotation']['id'],$quotation['Quotation']['unique_id']),array('class' =>'btn btn-primary pull-right','escape' => false)) ;
+    			echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Create Order ', array('controller' => 'create_order', 'action' => 'add',$quotation['Quotation']['id'],$quotation['Quotation']['unique_id']),array('class' =>'btn btn-primary pull-right','escape' => false)) ;
 
     		}
     		
@@ -104,8 +104,87 @@
 							</div>
 
 					</div>
+					<div class="form-group">
+
+							<div class="col-lg-1"></div>
+							<div class="col-lg-2">
+								Size
+							</div>
+							<div class="col-lg-8">
+								:&emsp;<?php echo $quotationSize['QuotationField']['description']?>
+							</div>
+
+					</div>
+					<div>
+					<!-- <div class ="boxed2"> -->
+					<div class="form-group">
+						<div class="col-lg-1"></div>
+							<div class="col-lg-2">
+								Qty<br><br>
+								Unit Price<br><br>
+								Vat Price<br><br>
+								Material
+							</div>
+
+							<table  class = "tbl">
+								<tr>
+									<?php
+										foreach ($quotationOption as $desc){
+											if($desc['QuotationOption']['custom_fields_id'] == "3"){
+												
+									?>
+												<td height ="40px" valign ="top" class ="column3"> 
+													<div class="col-lg-9">
+														<?php echo $desc['QuotationOption']['description'];?> 
+													</div>
+												</td>	
+									<?php
+											}
+										}
+									?>
+								</tr>
+
+								<tr >
+									<?php
+										foreach ($quotationOption as $desc){
+											if($desc['QuotationOption']['custom_fields_id'] == "4"){
+									?>
+												<td height ="70px" valign ="top" class = "column4">
+													<div class="col-lg-8">
+														<?php echo $desc['QuotationOption']['description'];?> 
+													</div>
+												</td>
+									<?php
+											}
+										}
+									?>	
+								</tr>
+
+								<tr>
+									<?php
+										foreach ($quotationOption as $desc){
+											if($desc['QuotationOption']['custom_fields_id'] == "6"){
+									?>
+												<td height ="30px" class ="column2">
+													<div class="col-lg-8">
+														<?php echo $desc['QuotationOption']['description'];?> 
+													</div>
+												</td>
+									<?php
+											}
+										}
+									?>
+								</tr>
+							</table>
+
+					</div>
+			
+						<!-- </div> -->
 					
-					<?php foreach ($quotationFieldInfo as $key => $value) {?>
+
+					<?php foreach ($quotationFieldInfo as $key => $value) {
+					?>
+							
 						<div class="form-group">
 							<div class="col-lg-1"></div>
 							<div class="col-lg-2">
