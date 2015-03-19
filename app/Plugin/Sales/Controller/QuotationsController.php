@@ -264,10 +264,7 @@ class QuotationsController extends SalesAppController {
 																			'quotation_id' =>  $quotationId
 																		)
 																));
-<<<<<<< HEAD
-=======
-		
->>>>>>> 921e740124ed4182efb77cc184da47ad58b93cff
+
 
 		$quotationOption = $this->Quotation->QuotationOption->find('all', array(
 																		'conditions' => array(
