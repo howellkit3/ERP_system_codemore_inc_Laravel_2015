@@ -82,9 +82,9 @@
 					<div class="form-group">
 						<div class="col-lg-3"></div>
 						<div class="col-lg-5">
-							_______________________________________________________________________
+							___________________________________________________
 						</div>
-						<div class="col-lg-4">&emsp;&emsp;
+						<div class="col-lg-4">&emsp;&emsp;&emsp;
 							Date :&nbsp;<?php echo !empty($quotation['Quotation']['created']) ? date('Y/m/d', strtotime($quotation['Quotation']['created'])) : '' ?>
 						</div>
 					</div>
@@ -133,57 +133,58 @@
 								Vat Price<br><br>
 								Material
 							</div>
-
-							<table  class = "tbl">
-								<tr>
-									<?php
-										foreach ($quotationOption as $desc){
-											if($desc['QuotationOption']['custom_fields_id'] == "3"){
-												
-									?>
-												<td height ="40px" valign ="top" class ="column3"> 
-													<div class="col-lg-9">
-														<?php echo $desc['QuotationOption']['description'];?> 
-													</div>
-												</td>	
-									<?php
+							<div class="col-lg-8">
+								<table  class = "tbl">
+									<tr>
+										<?php
+											foreach ($quotationOption as $desc){
+												if($desc['QuotationOption']['custom_fields_id'] == "3"){
+													
+										?>
+													<td height ="40px" valign ="top" class ="column3"> 
+														<div class="col-lg-9">
+															<?php echo $desc['QuotationOption']['description'];?> 
+														</div>
+													</td>	
+										<?php
+												}
 											}
-										}
-									?>
-								</tr>
+										?>
+									</tr>
 
-								<tr >
-									<?php
-										foreach ($quotationOption as $desc){
-											if($desc['QuotationOption']['custom_fields_id'] == "4"){
-									?>
-												<td height ="70px" valign ="top" class = "column4">
-													<div class="col-lg-8">
-														<?php echo $desc['QuotationOption']['description'];?> 
-													</div>
-												</td>
-									<?php
+									<tr >
+										<?php
+											foreach ($quotationOption as $desc){
+												if($desc['QuotationOption']['custom_fields_id'] == "4"){
+										?>
+													<td height ="70px" valign ="top" class = "column4">
+														<div class="col-lg-8">
+															<?php echo $desc['QuotationOption']['description'];?> 
+														</div>
+													</td>
+										<?php
+												}
 											}
-										}
-									?>	
-								</tr>
+										?>	
+									</tr>
 
-								<tr>
-									<?php
-										foreach ($quotationOption as $desc){
-											if($desc['QuotationOption']['custom_fields_id'] == "6"){
-									?>
-												<td height ="30px" class ="column2">
-													<div class="col-lg-8">
-														<?php echo $desc['QuotationOption']['description'];?> 
-													</div>
-												</td>
-									<?php
+									<tr>
+										<?php
+											foreach ($quotationOption as $desc){
+												if($desc['QuotationOption']['custom_fields_id'] == "6"){
+										?>
+													<td height ="30px" class ="column2">
+														<div class="col-lg-8">
+															<?php echo $desc['QuotationOption']['description'];?> 
+														</div>
+													</td>
+										<?php
+												}
 											}
-										}
-									?>
-								</tr>
-							</table>
+										?>
+									</tr>
+								</table>
+							</div>
 
 					</div>
 			
@@ -246,58 +247,6 @@
 					</div>
 					<div style ="clear:both">
 					</div>
-						
-					
-					<hr style="height: 0; border-style: STYLEHERE; border-width: 1px 0 0 0; border-color:#COLORHERE;">
-					<center>
-						<header class="main-box-header clearfix">
-							<h2>Acceptance Slip</h2><br>
-						</header>
-					</center>
-					<div class="form-group">
-						<div class="col-lg-3"></div>
-						<div class="col-lg-2">
-							Send to manager
-						</div>
-						<div class="col-lg-4"></div>
-						<div class="col-lg-4 pull-right">
-							Date:________________
-						</div>
-					</div>
-					<header class="main-box-header clearfix para">
-					<center>
-					<p align ="justify" class = "col-lg-10 pull-right">
-						I do hereby accept the price and other details submitted on your price quotation no.<?php echo $quotation['Quotation']['unique_id'] ?><br> Also, I do hereby authorize your company to proceed with and supply the work described above.
-						
-					</p>
-					</center>
-				</header>
-					<div class="form-group">
-						<div class="col-lg-2"></div>
-						<div class="col-lg-5">
-							Authorized by:_________________
-						</div>
-						<div class="col-lg-4">
-							Position:_________________
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-lg-7"></div>
-						<div class="col-lg-4">
-							&emsp;&nbsp;Date:_________________
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-lg-2"></div>
-						<div class="col-lg-9">
-							<?php echo (new \DateTime())->format('l, F d, Y '); ?>
-							<div class="col-lg-3 pull-right">
-							<?php echo "Page 1 of 1"; ?>
-							</div>
-
-						</div>
-						
-	
 				</form>
 			</div>								
 		</div>
