@@ -205,10 +205,12 @@ class QuotationsController extends SalesAppController {
 
 
 
-            	$this->Quotation->bind(array('QuotationField'));
+            	$this->Quotation->bind(array('QuotationField','QuotationOption'));
 
-            	$this->Quotation->QuotationField->saveQuotationField($this->request->data, $quotationId,$userData['User']['id']);
-            	
+            	$this->Quotation->QuotationField->saveQuotationField($this->request->data, $quotationId, $userData['User']['id']);
+            	//pr($this->request->data);die;
+
+            	$this->Quotation->QuotationOption->saveQuotationOption($this->request->data, $quotationId, $userData['User']['id']);
             	
             	$this->Session->setFlash(__('Quotation Complete.'));
             	$this->redirect(
@@ -246,44 +248,40 @@ class QuotationsController extends SalesAppController {
 																)
 															));
 
-		$this->Quotation->bind(array('QuotationField','SalesOrder','Product'));
+		$this->Quotation->bind(array('QuotationField','SalesOrder','Product','QuotationOption'));
 
 		$salesStatus = $this->Quotation->SalesOrder->find('first',array('conditions' => array('SalesOrder.quotation_id' => $quotationId)));
 
 		$quotationFieldInfo = $this->Quotation->QuotationField->find('all', array(
 																		'conditions' => array( 
-																			'QuotationField.quotation_id' => $quotationId 
-																			)
+																			'QuotationField.quotation_id' => $quotationId,
+																			'custom_fields_id NOT' => array('2','3','4','5','6')
+																			)	
 																		));
+		$quotationSize = $this->Quotation->QuotationField->find('first', array(
+																	'conditions' => array(
+																			'custom_fields_id' => "2",
+																			'quotation_id' =>  $quotationId
+																		)
+																));
+<<<<<<< HEAD
+=======
 		
-		
+>>>>>>> 921e740124ed4182efb77cc184da47ad58b93cff
+
+		$quotationOption = $this->Quotation->QuotationOption->find('all', array(
+																		'conditions' => array(
+																				'quotation_id' => $quotationId
+																			)
+																	));
 
 		$this->Quotation->QuotationField->bind(array('CustomField'));
 
-		$customField = $this->Quotation->QuotationField->CustomField->find('all', array(
-														'fields' => array(
-															'id', 'fieldlabel')
-														
-														));
-
-
-		$customValue = $this->Quotation->QuotationField->find('list', array(
-																	'fields' =>array(
-																		'custom_fields_id','description'),
-																	'conditions' => array(
-																		'quotation_id' => $quotationId
-
-																	)
-																));
-		
-
-		
-
 		$field = $this->Quotation->QuotationField->CustomField->find('list', array(
 																		'fields' => array(
-																			'id','fieldlabel')
+																			'id','fieldlabel'),
+																		
 																	));
-		
 		$this->loadModel('User');
 		$user = $this->User->find('first', array(
 									'conditions' => array(
@@ -298,7 +296,7 @@ class QuotationsController extends SalesAppController {
 														)
 													));
 		
-		$this->set(compact('companyData','companyId', 'customField', 'customValue',
+		$this->set(compact('companyData','companyId', 'quotationSize', 'quotationOption',
 			'quotation','inquiryId','user','contactInfo',
 			'quotationFieldInfo','field','salesStatus', 'productName'));
 		

@@ -38,7 +38,13 @@ class Quotation extends AppModel {
 					'className' => 'Sales.QuotationField',
 					'foreignKey' => 'quotation_id',
 					'dependent' => true
+				),
+				'QuotationOption' => array(
+					'className' => 'Sales.QuotationOption',
+					'foreignKey' => 'quotation_id',
+					'dependent' => true
 				)
+
 			),
 			'hasOne' => array(
 				'Product' => array(
@@ -98,7 +104,7 @@ class Quotation extends AppModel {
 		$data['modified_by'] = $auth;
 		$data['status'] = 1;
 		
-		$data['unique_id'] = "PO".'-'.time();
+		$data['unique_id'] = "PQ".'-'.time();
 		
 		$this->save($data);
 
@@ -116,7 +122,7 @@ class Quotation extends AppModel {
 		$data['modified_by'] = $inquiryAuth;
 		$data['status'] = 1;
 		
-		$data['unique_id'] = "PO".'-'.time();
+		$data['unique_id'] = "PQ".'-'.time();
 		
 		$this->save($data);
 
@@ -134,7 +140,7 @@ class Quotation extends AppModel {
 		$data['modified_by'] = $auth;
 		$data['status'] = 1;
 		
-		$data['unique_id'] = "PO".'-'.time();
+		$data['unique_id'] = "PQ".'-'.time();
 		
 		$this->save($data);
 		
@@ -152,7 +158,7 @@ class Quotation extends AppModel {
 		$data['modified_by'] = $newAuth;
 		$data['status'] = 1;
 		
-		$data['unique_id'] = "PO".'-'.time();
+		$data['unique_id'] = "PQ".'-'.time();
 		
 		$this->save($data);
 		

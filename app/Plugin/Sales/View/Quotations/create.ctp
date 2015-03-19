@@ -127,11 +127,8 @@
 							                                                									array( 
 							                                                						'type' => 'text',
 							                                                						'class' => 'form-control item_type required', 
-							                                                    					//'alt' => 'address1',
 							                                                    					'label' => false, 
 							                                                    					'id' => 'txtProduct',
-
-							                                                    					//'empty' => '--Select Product--'
 							                                                    					));
 							                                            ?>
 																		<?php 
@@ -183,12 +180,20 @@
 						                                            		?>
 																		</div>
 																	</div>
+																	 <?php 
+				                                                			// echo $this->Form->input('QuotationOption.count', array(
+													                                          //       	'type' => 'hidden',
+													                                           			
+													                                          //       	'id' => 'count',
+													                                          //           'label' => false));
+						                                            		?>
 																	<div class ="cloneFields">
+																		
 																		<div class="form-group">
 																			<div class="col-lg-3"> Qty</div>
 																			<div class="col-lg-8">
 																				<?php 
-										                                            echo $this->Form->input('QuotationField.3.description', array(
+										                                            echo $this->Form->input('QuotationOption.3.description', array(
 										                                            								'class' => 'form-control item_type',
 																                                                    'alt' => 'address1',
 																                                                    'type' => 'text',
@@ -196,9 +201,16 @@
 																                                                    'label' => false));
 									                                            ?>
 																				  <?php 
-							                                                			echo $this->Form->input('QuotationField.3.custom_fields_id', array(
+							                                                			echo $this->Form->input('QuotationOption.3.custom_fields_id', array(
 																                                                	'type' => 'hidden',
 																                                                	'value' =>3,
+																                                                    'label' => false));
+							                                            		?>
+							                                            		 <?php 
+							                                                			echo $this->Form->input('QuotationOption.3.position', array(
+																                                                	'type' => 'hidden',
+																                                                	'id' => 'qty',
+																                                                	'value' =>1,
 																                                                    'label' => false));
 							                                            		?>
 																			</div>
@@ -208,18 +220,26 @@
 																			<div class="col-lg-3"> Unit Price</div>
 																			<div class="col-lg-8">
 																				<?php 
-										                                            echo $this->Form->input('QuotationField.4.description', array(
+										                                            echo $this->Form->input('QuotationOption.4.description', array(
 										                                            								'class' => 'form-control item_type',
 																                                                    'alt' => 'address1',
 																                                                    'type' => 'text',
-																                                                    
 																                                                    'label' => false));
 									                                            ?>
-																				  <?php 
-							                                                			echo $this->Form->input('QuotationField.4.custom_fields_id', array(
+																				 <?php 
+							                                                			echo $this->Form->input('QuotationOption.4.custom_fields_id', array(
 																                                                	'type' => 'hidden',
 																                                                	'value' => 4,
-																                                                    'label' => false));
+																                                                    'label' => false, 
+														
+																                                                    ));
+							                                            		?> 
+							                                            		<?php 
+							                                                			echo $this->Form->input('QuotationOption.4.position', array(
+																	                                                	'type' => 'hidden',
+																	                                                	'id' => 'uprice',
+																	                                                	'value' =>1,
+																	                                                 	'label' => false));
 							                                            		?>
 																			</div>
 																		</div>
@@ -234,7 +254,7 @@
 																                                                    'type' => 'checkbox',
 																                                                    'rel' => .12,
 																                                                    'value' => 'VAT Exempted',
-																                                                    'label' => false))."asdas";
+																                                                    'label' => false))."<font color='blue' style='position: relative;top: -2px;' ><span id='add'>Click to Compute the Unit Price with VAT</span></font>";
 									                                            ?>
 
 																				  <?php 
@@ -250,23 +270,36 @@
 																			<div class="col-lg-3"> Material</div>
 																			<div class="col-lg-8">
 																				<?php 
-										                                            echo $this->Form->input('QuotationField.6.description', array(
+										                                            echo $this->Form->input('QuotationOption.6.description', array(
 										                                            								'class' => 'form-control item_type',
 																                                                    'alt' => 'address1',
 																                                                    'type' => 'text',
-																                                                   
 																                                                    'label' => false));
 									                                            ?>
 																				  <?php 
-							                                                			echo $this->Form->input('QuotationField.6.custom_fields_id', array(
+							                                                			echo $this->Form->input('QuotationOption.6.custom_fields_id', array(
 																                                                	'type' => 'hidden',
 																                                                	'value' => 6,
 																                                                    'label' => false));
 							                                            		?>
+							                                            		<?php 
+							                                                			echo $this->Form->input('QuotationOption.6.position', array(
+																                                                	'type' => 'hidden',
+																                                                	'id' => 'material',
+																                                                	'value' =>1,
+																                                                    'label' => false));
+							                                            		?>
 																			</div>
 																		</div>
-																		<button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneInput('cloneFields',this)"><i class="fa fa-plus"></i></button>
-																		<button type="button" class="remove-field btn btn-danger" onclick="removeClone('cloneMe')" id ="minus"><i class="fa fa-minus"></i> </button>
+
+																		<div class="form-group">
+																			<div class="col-lg-3"></div>
+																				<div class="col-lg-8">
+																				<button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneInput('cloneFields',this)"><i class="fa fa-plus"></i></button>
+
+																				<button type="button" class="remove-field btn btn-danger" onclick="removeClone('cloneFields')" id ="minus"><i class="fa fa-minus"></i> </button>
+																			</div>
+																		</div>
 																	</div>
 																<?php foreach ($customField as $key => $value) {?>
 																

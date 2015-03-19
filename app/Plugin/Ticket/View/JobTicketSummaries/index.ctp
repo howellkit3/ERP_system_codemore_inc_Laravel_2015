@@ -62,8 +62,7 @@
                                   <td><?php echo $productName['Product']['product_name']; ?></td>
                               </tr>
                               <?php  ?>
-                              <?php foreach ($customField as $value) { 
-                              ?>       
+                              <?php foreach ($customField as $value) { ?>       
                               
                               <tr>
                                   <td>
