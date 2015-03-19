@@ -104,4 +104,16 @@ hr {
 #searchfield form .biginput:focus {
   color: #858585;
 }
+/*#custom-templates .empty-message {
+padding: 5px 10px;
+text-align: center;
+} */
+.categories_right #AdSearchForm input.ui-autocomplete-input {
+    color: #777;
+    padding: 6px 11px;
+    width: 100%;
+}
 
+.filter-block.pull-left.searchboxfieldcont {
+    margin-left: 19px;
+}

@@ -1,5 +1,7 @@
 <?php $this->Html->addCrumb('Sales', array('controller' => 'customer_sales', 'action' => 'index')); ?>
-<?php $this->Html->addCrumb('View', array('controller' => 'customer_sales', 'action' => 'view',$company['Company']['id'])); ?>
+<?php $this->Html->addCrumb('View', array('controller' => 'customer_sales', 'action' => 'view',$company['Company']['id'])); 
+
+?>
 
 <div style="clear:both"></div>
 
@@ -86,59 +88,64 @@
 							
 							<div class="tab-content">
 								<div class="tab-pane fade in active" id="tab-newsfeed">
-									
+								
 									<div id="">
 										<div class="story">
 											
 											<div class="story-content remove-pad">
 												<header class="story-header">
 													<div class="story-author">
-														<table class="table table-striped table-hover">
-									                        <thead>
-									                            <tr>
-									                                <th><a href="#"><span>Address</span></a></th>
-									                                <th><a href="#"><span>City</span></a></th>
-									                                <th><a href="#"><span>State Province</span></a></th>
-									                                <th><a href="#"><span>Zip Code</span></a></th>
-									                                <th><a href="#"><span>Country</span></a></th>
-									                                <th><a href="#"><span>Created</span></a></th>
-									                            </tr>
-									                        </thead>
-									                        <?php
-										                		foreach($company['Address'] as $contactAddress) { ?>
-											                        <tbody aria-relevant="all" aria-live="polite" role="alert">
-											                         		<tr>
-											                         			<td>
-											                         				<?php 
-											                         					if (!empty($contactAddress['address2'])) {
-											                         						echo "(1)&nbsp";
-											                         						echo ucfirst($contactAddress['address1']);
-											                         						echo "<br>";
-											                         						echo "(2)&nbsp";
-											                         						echo ucfirst($contactAddress['address2']);
-											                         					}else{
-											                         						echo ucfirst($contactAddress['address1']);
-											                         					}
-											                         				?>
-											                         			</td>
-											                         			<td><?php echo ucfirst($contactAddress['city']); ?>
-											                         			</td>
-											                         			<td><?php echo ucfirst($contactAddress['state_province']); ?>
-											                         			</td>
-											                         			<td><?php echo $contactAddress['zip_code']; ?>
-											                         			</td>
-											                         			<td><?php echo $this->Country->countryList(ucfirst($contactAddress['country'])); ?>
-											                         			</td>
-											                         			<td>
-											                         				<i class="fa fa-clock-o">
-											                         				<?php echo date('M d, Y', strtotime($contactAddress['created']));
-											                         				?>
-											                         			</td>
-											                         		</tr>
-											                         </tbody>
-									                        <?php }?>
-									                    </table>
+														<div class="table-responsive">
+															<a data-toggle="modal" href="#myModal" class="btn btn-primary mrg-b-lg pull-right"><i class="fa fa-plus-circle fa-lg">
+								                       			 </i> Add Address</a>
+															
+															<table class="table table-striped table-hover">
+										                        <thead>
+										                            <tr>
+										                                <th><a href="#"><span>Address</span></a></th>
+										                                <th><a href="#"><span>City</span></a></th>
+										                                <th><a href="#"><span>State Province</span></a></th>
+										                                <th><a href="#"><span>Zip Code</span></a></th>
+										                                <th><a href="#"><span>Country</span></a></th>
+										                                <th><a href="#"><span>Created</span></a></th>
+										                            </tr>
+										                        </thead>
+										                        <?php
+											                		foreach($company['Address'] as $contactAddress) { ?>
+												                        <tbody aria-relevant="all" aria-live="polite" role="alert">
+												                         		<tr>
+												                         			<td>
+												                         				<?php 
+												                         					if (!empty($contactAddress['address2'])) {
+												                         						echo "(1)&nbsp";
+												                         						echo ucfirst($contactAddress['address1']);
+												                         						echo "<br>";
+												                         						echo "(2)&nbsp";
+												                         						echo ucfirst($contactAddress['address2']);
+												                         					}else{
+												                         						echo ucfirst($contactAddress['address1']);
+												                         					}
+												                         				?>
+												                         			</td>
+												                         			<td><?php echo ucfirst($contactAddress['city']); ?>
+												                         			</td>
+												                         			<td><?php echo ucfirst($contactAddress['state_province']); ?>
+												                         			</td>
+												                         			<td><?php echo $contactAddress['zip_code']; ?>
+												                         			</td>
+												                         			<td><?php echo $this->Country->countryList(ucfirst($contactAddress['country'])); ?>
+												                         			</td>
+												                         			<td>
+												                         				<i class="fa fa-clock-o">
+												                         				<?php echo date('M d, Y', strtotime($contactAddress['created']));
+												                         				?>
+												                         			</td>
+												                         		</tr>
+												                         </tbody>
+										                        <?php }?>
+										                    </table>
 														
+														</div>
 													</div>
 													
 												</header>
@@ -153,7 +160,8 @@
 								<div class="tab-pane fade" id="tab-activity">
 									
 									<div class="table-responsive">
-
+										<a data-toggle="modal" href="#myModalContact" class="btn btn-primary mrg-b-lg pull-right"><i class="fa fa-plus-circle fa-lg"></i> Add Contact Number</a>
+										
 										<table class="table table-striped table-hover">
 					                        <thead>
 					                            <tr>
@@ -185,45 +193,61 @@
 								</div>
 								
 								<div class="tab-pane clearfix fade" id="tab-friends">
-									<table class="table table-striped table-hover">
-				                        <thead>
-				                            <tr>
-				                                <th><a href="#"><span>Name</span></a></th>
-				                                <th><a href="#"><span>Position</span></a></th>
-				                                <th><a href="#"><span>Created</span></a></th>
-				                                <th><a href="#"><span>Action</span></a></th>
-				                            </tr>
-				                        </thead>
-				                        <?php
-					                		foreach($company['ContactPerson'] as $contactPerson) { ?>
-						                        <tbody aria-relevant="all" aria-live="polite" role="alert">
-					                         		<tr>
-					                         			<td>
-					                         				<?php echo ucfirst($contactPerson['lastname']); ?>,
-															<?php echo ucfirst($contactPerson['firstname']); ?> &nbsp;
-															<?php echo ucfirst($contactPerson['middlename']); ?>
-					                         			</td>
-					                         			<td>
-					                         				<?php echo ucfirst($contactPerson['position']); ?>
-					                         			</td>
-					                         			<td>
-					                         				<i class="fa fa-clock-o"></i>
-					                         				<?php echo date('M d, Y', strtotime($contactPerson['created'])); 
-					                         				?>
-					                         			</td>
-					                         			<td>
-					                         				<?php
-										                        echo $this->Html->link(' View Details ', array('controller' => 'customer_sales', 'action' => 'person',$contactPerson['id']),array('class' =>'btn btn-primary','escape' => false));
-										                    ?>
-					                         			</td>
-					                         		</tr>
-						                        </tbody>
-				                        <?php } ?>
-				                    </table>
+									<div class="table-responsive">
+										<a data-toggle="modal" href="#myModalContactPerson" class="btn btn-primary mrg-b-lg pull-right"><i class="fa fa-plus-circle fa-lg"></i> Add Contact Person</a>
+										
+										<table class="table table-striped table-hover">
+					                        <thead>
+					                            <tr>
+					                                <th><a href="#"><span>Name</span></a></th>
+					                                <th><a href="#"><span>Position</span></a></th>
+					                                <th><a href="#"><span>Email</span></a></th>
+					                                <th><a href="#"><span>Contact</span></a></th>
+					                                <th><a href="#"><span>Created</span></a></th>
+					                               
+					                            </tr>
+					                        </thead>
+					                        <?php 
+						                		foreach($contactPerson as $contactPersonData) { $key= 0;?>
+						                			
+							                        <tbody aria-relevant="all" aria-live="polite" role="alert">
+						                         		<tr>
+						                         			<td>
+						                         				<?php echo ucfirst($contactPersonData['ContactPerson']['lastname']); ?>,
+																<?php echo ucfirst($contactPersonData['ContactPerson']['firstname']); ?> &nbsp;
+																<?php echo ucfirst($contactPersonData['ContactPerson']['middlename']); ?>
+						                         			</td>
+						                         			<td>
+						                         				<?php echo ucfirst($contactPersonData['ContactPerson']['position']); ?>
+						                         			</td>
+						                         			<td>
+						                         				<?php echo $contactPersonData['Email'][$key]['email'];?>
+						                         				<?php
+											                        // echo $this->Html->link(' View Details ', array('controller' => 'customer_sales', 'action' => 'person',$contactPerson['id']),array('class' =>'btn btn-primary','escape' => false));
+											                    ?>
+						                         			</td>
+
+						                         			<td>
+						                         				<?php echo $contactPersonData['Contact'][$key]['number'];?>
+						                         			</td>
+
+						                         			<td>
+						                         				<i class="fa fa-clock-o"></i>
+						                         				<?php echo date('M d, Y', strtotime($contactPersonData['ContactPerson']['created'])); 
+						                         				?>
+						                         			</td>
+						                         		</tr>
+							                        </tbody>
+					                        <?php  } $key++; ?>
+					                    </table>
+					                </div>
 								</div>
 								
 								<div class="tab-pane fade" id="tab-chat">
 									<div class="table-responsive">
+
+										<a data-toggle="modal" href="#myModalEmail" class="btn btn-primary mrg-b-lg pull-right"><i class="fa fa-plus-circle fa-lg"></i> Add Email</a>
+						
 										<table class="table table-striped table-hover">
 					                        <thead>
 					                            <tr>
@@ -321,3 +345,4 @@
 		</div>
 	</div>
 </div>
+<?php echo $this->element('modals'); ?>

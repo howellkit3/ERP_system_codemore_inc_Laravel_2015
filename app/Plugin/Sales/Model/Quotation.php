@@ -96,7 +96,7 @@ class Quotation extends AppModel {
 		$data['inquiry_id'] = $inquiryId;	
 		$data['created_by'] = $auth;
 		$data['modified_by'] = $auth;
-		$data['status'] = 0;
+		$data['status'] = 1;
 		
 		$data['unique_id'] = "PO".'-'.time();
 		
@@ -114,7 +114,7 @@ class Quotation extends AppModel {
 		$data['inquiry_id'] = $newInquiryId;	
 		$data['created_by'] = $inquiryAuth;
 		$data['modified_by'] = $inquiryAuth;
-		$data['status'] = 0;
+		$data['status'] = 1;
 		
 		$data['unique_id'] = "PO".'-'.time();
 		
@@ -132,7 +132,7 @@ class Quotation extends AppModel {
 		$data['company_id'] = $companyId;	
 		$data['created_by'] = $auth;
 		$data['modified_by'] = $auth;
-		$data['status'] = 0;
+		$data['status'] = 1;
 		
 		$data['unique_id'] = "PO".'-'.time();
 		
@@ -150,7 +150,7 @@ class Quotation extends AppModel {
 		$data['company_id'] = $newCompanyId[0];	
 		$data['created_by'] = $newAuth;
 		$data['modified_by'] = $newAuth;
-		$data['status'] = 0;
+		$data['status'] = 1;
 		
 		$data['unique_id'] = "PO".'-'.time();
 		
@@ -177,6 +177,31 @@ class Quotation extends AppModel {
 		   
 
 		}
+	}
+	public function searchFilter($params=null){
+		$keyword = $params['keyword'];
+		
+
+		if ( !empty($params) ){
+			
+				$condHome = array();
+			
+			$cond=array( $condHome,
+						'AND'=>array(array("Quotation.unique_id LIKE '%$keyword%'") ));    
+		} 
+
+		return $cond;
+	}
+
+	public function updateStatus($id = null ,$quotationId = null){
+		$this->id = $this->find('first',array('conditions' => array('Quotation.id' => $quotationId)));
+		if ($this->id) {
+		    $this->saveField('status', $id);
+		}else{
+			echo "string";exit();
+		}
+		
+		return $this->id;
 	}
 	
 }

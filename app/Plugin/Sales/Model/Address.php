@@ -45,34 +45,6 @@ class Address extends AppModel {
 				'message' => 'Required fields.',
 			),
 		),
-		'state_province' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				'message' => 'Required fields.',
-			),
-		),
-		'city' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				'message' => 'Required fields.',
-			),
-		),
-		'country' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				'message' => 'Required fields.',
-			),
-		),
-		'zip_code' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				'message' => 'Required fields.',
-			),
-			'numeric'=> array(
-	            'rule' => 'numeric',
-	            'message'=> 'Zip Code should be numeric'
-	        ),
-		),
 
 	);
 
@@ -113,6 +85,21 @@ class Address extends AppModel {
 
 				$this->delete($value['Address']['id']);
 			}
+	}
+
+	public function saveAddress($data = null, $companyId = null, $auth = null){
+
+		$this->create();
+		$data['Address']['created_by'] = $auth;
+		$data['Address']['modified_by'] = $auth;
+		$data['Address']['foreign_key'] = $companyId;
+		
+    	if($this->save($data['Address'])){
+
+            return $this->id;
+
+        } 
+		
 	}
 	
 }

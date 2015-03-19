@@ -112,5 +112,19 @@ class ContactPerson extends AppModel {
 		}
 		
 	}
+
+	public function saveContactPerson($data = null, $companyId = null, $auth = null){
+		
+		$this->create();
+		$data['ContactPerson']['created_by'] = $auth;
+		$data['ContactPerson']['modified_by'] = $auth;
+		$data['ContactPerson']['company_id'] = $companyId;
+		
+    	if($this->save($data['ContactPerson'])){
+
+            return $this->id;
+
+        } 
+	}
 	
 }

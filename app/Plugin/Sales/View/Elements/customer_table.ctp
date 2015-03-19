@@ -16,15 +16,17 @@
             <td class="">
 
                 <?php
-                foreach($customerlist['ContactPerson'] as $contactPerson) { ?>
+                //pr($customerlist['ContactPerson'][0]['firstname']);exit();
+               // foreach($customerlist['ContactPerson'] as $contactPerson) { 
+                   ?>
 
                     <div>
-                        <?php echo ucfirst($contactPerson['lastname']); ?>, 
-                        <?php echo ucfirst($contactPerson['firstname']); ?> &nbsp;
-                        <?php echo ucfirst($contactPerson['middlename']); ?>
+                        <?php echo ucfirst($customerlist['ContactPerson'][0]['lastname']); ?>, 
+                        <?php echo ucfirst($customerlist['ContactPerson'][0]['firstname']); ?> &nbsp;
+                        <?php echo ucfirst($customerlist['ContactPerson'][0]['middlename']); ?>
                     </div>
 
-                <?php } ?>
+                <?php //} ?>
             </td>
 
             <td>
@@ -58,7 +60,7 @@
                     echo $this->Html->link('<span class="fa-stack">
                     <i class="fa fa-square fa-stack-2x"></i>
                     <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> Delete </font></span>
-                    </span>', array('controller' => 'customer_sales', 'action' => 'delete',$customerlist['Company']['id'],$contactPerson['id']),array('class' =>' table-link','escape' => false,'title'=>'Delete Information','confirm' => 'Do you want to delete Customer ?'));
+                    </span>', array('controller' => 'customer_sales', 'action' => 'delete',$customerlist['Company']['id']),array('class' =>' table-link','escape' => false,'title'=>'Delete Information','confirm' => 'Do you want to delete Customer ?'));
                 ?>
                  
                 

@@ -138,7 +138,14 @@ class CustomerSalesController extends SalesAppController {
 	        'conditions' => array('Company.id' => $companyId)
 	    ));
 
-		$this->set(compact('company'));
+		$this->Company->ContactPerson->bind(array('Contact','Email'));
+
+	    $contactPerson = $this->Company->ContactPerson->find('all', array(
+	        'conditions' => array('ContactPerson.company_id' => $companyId)
+	    ));
+		
+	    //pr($company['Email']);exit();
+		$this->set(compact('company','contactPerson'));
 		
 	}
 
@@ -208,18 +215,24 @@ class CustomerSalesController extends SalesAppController {
 
 		$this->Company->bind(array('Contact','Email','Address','ContactPerson'));
 
-		if ($this->Company->delete($dataId)) {
+		$personId = $this->Company->ContactPerson->find('first',
+					array('conditions' => array('ContactPerson.company_id' => $dataId)));
 
-			$this->loadModel('Sales.Contact');
-			$this->Contact->deleteContact($personId);
+		$contactId = $this->Company->Contact->find('first',
+					array('conditions' => array('Contact.foreign_key' => $personId['ContactPerson']['id'])));
+
+		$emailId = $this->Company->Email->find('first',
+					array('conditions' => array('Email.foreign_key' => $personId['ContactPerson']['id'])));
+
+		//pr($personId['ContactPerson']['id']);exit();
+		//$this->Company->ContactPerson->delete($personId['id']);
+
+		if ($this->Company->ContactPerson->delete($personId['ContactPerson']['id'])) {
+			$this->Company->delete($dataId);
 		
-
-			$this->loadModel('Sales.Email');
-			$this->Email->deleteEmail($personId);
-
-			$this->loadModel('Sales.Address');
-			$this->Address->deleteAddress($personId);
-
+			$this->Company->Contact->deleteContact($personId['ContactPerson']['id']);
+			$this->Company->Email->deleteEmail($personId['ContactPerson']['id']);
+		
 			$this->Session->setFlash(__('Successfully Deleted.'));
 			$this->redirect(
 				array('controller' => 'customer_sales', 'action' => 'index')
@@ -361,6 +374,50 @@ class CustomerSalesController extends SalesAppController {
 
 			echo "error";exit();
 
+		}
+	}
+	public function add_data(){
+
+		$userData = $this->Session->read('Auth');
+	
+		if ($this->request->is('post')) {
+
+            if (!empty($this->request->data)) {
+
+            	$companyId = $this->request->data['Company']['id'];
+
+            	$this->Company->bind(array('Address','Contact','Email','ContactPerson'));
+
+            	if(!empty($this->request->data['Contact'])){
+            		//pr($this->request->data);exit();
+            		$this->Company->Contact->saveNumber($this->request->data, $companyId, $userData['User']['id']);
+            		$this->Session->setFlash(__('Contact Successfully added in the system.'));
+            	}
+            	if(!empty($this->request->data['Address'])){
+            		//pr($this->request->data);exit();
+            		$this->Company->Address->saveAddress($this->request->data, $companyId, $userData['User']['id']);
+            		$this->Session->setFlash(__('Address Successfully added in the system.'));
+            	}
+            	if(!empty($this->request->data['Email'])){
+            		//pr($this->request->data);exit();
+            		$this->Company->Email->saveEmail($this->request->data, $companyId, $userData['User']['id']);
+            		$this->Session->setFlash(__('Email Successfully added in the system.'));
+            	}
+            	if(!empty($this->request->data['ContactPerson'])){
+            		
+            		$personId = $this->Company->ContactPerson->saveContactPerson($this->request->data, $companyId, $userData['User']['id']);
+            		
+            		$this->Company->Contact->saveNumber($this->request->data, $personId, $userData['User']['id']);
+
+            		$this->Company->Email->saveEmail($this->request->data, $personId, $userData['User']['id']);
+
+            		$this->Session->setFlash(__('Contact Person Successfully added in the system.'));
+            	}
+            	
+            	$this->redirect(
+					array('controller' => 'customer_sales', 'action' => 'view', $companyId)
+				);
+			}
 		}
 	}
 }
