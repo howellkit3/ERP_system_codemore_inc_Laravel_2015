@@ -36,11 +36,16 @@
 	            'libs/datepicker',
 	            'libs/daterangepicker',
 	            'libs/jquery-jvectormap-1.2.2',
-	            'libs/weather-icons'
+	            'libs/weather-icons',
+	            'jquery-ui',
+	            'libs/nifty-component'
 	        ));
 	        echo $this->Html->script('jquery');
 	        echo $this->Html->script('jquery-validation/dist/jquery.validate');
 	        echo $this->Html->script('jquery-validation/dist/jquery.validate.min');
+	        //echo $this->Html->script('auto_complete');
+	        echo $this->Html->script('search');
+	        echo $this->Html->script('jquery-ui');
 	       	//echo $this->Html->script('scripts');
 
 	    ?>
@@ -166,6 +171,10 @@
 	        echo $this->Html->script('jquery.maskedinput.min');
 	    	echo $this->Html->script('bootstrap-datepicker');
 	    	echo $this->Html->script('bootstrap-timepicker.min');
+	    	echo $this->Html->script('modalEffects');
+	    	echo $this->Html->script('modernizr.custom');
+	    	echo $this->Html->script('classie');
+	    	
 	        
 	    ?>
     

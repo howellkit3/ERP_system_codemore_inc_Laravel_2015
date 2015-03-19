@@ -24,9 +24,9 @@ class QuotationsController extends SalesAppController {
 
 		$userData = $this->Session->read('Auth');
 
-		$this->Quotation->bind(array('Product'));
+		$this->Quotation->bind(array('Product','QuotationField'));
 		$quotationData = $this->Quotation->find('all', array('order' => 'Quotation.id DESC'));
-
+		
 
 		$this->Company->bind(array('Inquiry'));
 
@@ -264,6 +264,10 @@ class QuotationsController extends SalesAppController {
 																			'quotation_id' =>  $quotationId
 																		)
 																));
+<<<<<<< HEAD
+=======
+		
+>>>>>>> 921e740124ed4182efb77cc184da47ad58b93cff
 
 		$quotationOption = $this->Quotation->QuotationOption->find('all', array(
 																		'conditions' => array(
@@ -454,4 +458,109 @@ class QuotationsController extends SalesAppController {
 	    $this->set(compact('customField','quotationId','companyId','productName'));
 	}
 
+	// public function auto_complete() {
+	// 	$this->Quotation->bind(array('QuotationField'));
+ //        $terms = $this->Quotation->find('all', array(
+ //            'conditions' => array(
+ //                'Quotation.unique_id LIKE' => $this->params['url']['autoCompleteText'].'%'
+ //            ),
+ //            'fields' => array('unique_id'),
+ //            'limit' => 3,
+ //            'recursive'=>-1,
+ //        ));
+ //        $uniqueId = Set::Extract($terms,'{n}.Quotation.unique_id');
+ //        $this->set('uniqueId', $terms);
+ //        $this->layout = 'ajax';    
+ //    } 
+
+	public function autoComplete() {
+        $this->autoRender = false;
+        $this->Quotation->bind(array('QuotationField'));
+        $users = $this->Quotation->find('all', array(
+            'conditions' => array(
+            'Quotation.unique_id LIKE' => '%' . $_GET['term'] . '%',
+            )));
+        echo json_encode($this->_encode($users));
+    }
+    private function _encode($postData) {
+        $temp = array();
+        foreach ($postData as $user) {
+            array_push($temp, array(
+            'id' => $user['Quotation']['id'],
+            'label' => $user['Quotation']['unique_id'],
+            'value' => $user['Quotation']['unique_id'],
+            ));
+        }
+        return $temp;
+    }
+
+    public function search(){
+
+    	$userData = $this->Session->read('Auth');
+
+  		$params = array(
+						'keyword' =>$this->request->query('q'),
+				  );
+
+		$this->Quotation->bind(array('Product','QuotationField'));
+
+		$quotationData = $this->Quotation->find('all', array('conditions' => array('Quotation.unique_id' => $params)));
+		
+
+		$this->Company->bind(array('Inquiry'));
+
+		$inquiryId = $this->Company->Inquiry->find('list', array(
+     													'fields' => array(
+     														'company_id')
+     												));
+	
+	 	$companyData = $this->Company->find('list',array(
+     											'fields' => array(
+     												'id','company_name')
+     										));
+
+	 	$this->loadModel('Sales.SalesOrder');
+
+	 	$salesStatus = $this->SalesOrder->find('list',array('fields' => array('quotation_id','id')));
+
+		$this->set(compact('companyData','quotationData','inquiryId','salesStatus'));
+
+		
+		
+		
+		
+	}
+
+	public function ajax_search(){
+		
+		$this->autoRender = false; 
+	    $this->request->onlyAllow('ajax');
+		
+		$keyword = $this->request->query('term');
+		
+		if ( !empty($keyword) ){
+			$cond=array( 'OR'=>array("Quotation.unique_id LIKE '%$keyword%'")  );
+		} else {
+			$cond=array();
+		}
+		$quotationUniqueId = $this->Quotation->find('all',array('fields'=> array('Quotation.unique_id'),'conditions' => $cond ));
+		
+
+		foreach ($quotationUniqueId as $json) {
+			$data[] = array(
+						'value' => $json['Quotation']['unique_id'],
+						 'label' => $json['Quotation']['unique_id']
+					);
+		}
+
+		return json_encode($data);
+	}
+
+	public function status($id = null ,$quotationId = null){
+
+		$this->Quotation->updateStatus($id,$quotationId);
+		$this->redirect(
+            array('controller' => 'quotations', 'action' => 'index')
+        );
+	}
 }

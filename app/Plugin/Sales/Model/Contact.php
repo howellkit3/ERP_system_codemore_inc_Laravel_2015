@@ -95,5 +95,20 @@ class Contact extends AppModel {
 			$this->delete($value['Contact']['id']);
 		}
 	}
+
+	public function saveNumber($data = null, $companyId = null, $auth = null){
+
+		$this->create();
+		$data['Contact']['created_by'] = $auth;
+		$data['Contact']['modified_by'] = $auth;
+		$data['Contact']['foreign_key'] = $companyId;
+		
+    	if($this->save($data['Contact'])){
+
+            return $this->id;
+
+        } 
+		
+	}
 	
 }

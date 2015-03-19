@@ -10,7 +10,7 @@ class CountryHelper extends HtmlHelper {
     {
         $list = '<div class="input">';
 
-        $options = array('default' => $default,'empty' => 'Please Select a Country');
+        $options = array('default' => $default,'value' => 'PH');
 
         if (is_array($attributes)) {
             $options = array_merge($options,$attributes);

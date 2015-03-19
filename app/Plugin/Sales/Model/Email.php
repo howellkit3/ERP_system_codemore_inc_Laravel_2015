@@ -84,4 +84,18 @@ class Email extends AppModel {
 		}
 	}
 	
+	public function saveEmail($data = null, $companyId = null, $auth = null){
+
+		$this->create();
+		$data['Email']['created_by'] = $auth;
+		$data['Email']['modified_by'] = $auth;
+		$data['Email']['foreign_key'] = $companyId;
+	
+    	if($this->save($data['Email'])){
+
+            return $this->id;
+
+        } 
+		
+	}
 }

@@ -10,14 +10,15 @@
         <div class="main-box clearfix body-pad">
            
             <div class="col-lg-5">
-                <?php echo $this->Form->create('Quotation',array('controller' => 'quotations','action' => 'search', 'type'=> 'get')); ?>
-                    <div class="searchboxfieldcont">
-                      <input placeholder="Enter keyword and hit enter" id="hint" name="q" class="form-control" type="search" />
-                    </div>
-                   <!--  <span><i class="fa fa-search"></i></span> -->
-                    
-                 <?php echo $this->Form->end(); ?> 
-       
+            <?php echo $this->Form->create('Quotation',array('controller' => 'quotations','action' => 'search', 'type'=> 'get')); ?>
+                <div class="searchboxfieldcont">
+                 <!--  <i class="fa fa-search"></i> -->
+                  <input placeholder="Enter keyword and hit enter" id="hint" name="q" class="form-control" type="search" />
+
+                </div>
+                
+             <?php echo $this->Form->end(); ?> 
+           
             </div>
             
             <header class="main-box-header clearfix">
@@ -45,7 +46,13 @@
                             </tr>
                         </thead>
 
-                        <?php echo $this->element('quotation_table'); ?>
+                        <?php
+                            if(!empty($quotationData)){
+                                echo $this->element('quotation_table'); 
+                            }else{
+                                echo "NO RESULT";
+                            }
+                        ?>
 
                     </table>
                     <hr>

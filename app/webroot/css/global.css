@@ -111,3 +111,45 @@ hr {
     margin-left: 21px;
 }
 
+
+/*#searchfield { display: block; width: 100%; text-align: center; margin-bottom: 35px; }*/
+ 
+#searchfield form {
+  display: inline-block;
+  background: #eeefed;
+  padding: 0;
+  margin: 0;
+  padding: 5px;
+  border-radius: 3px;
+  margin: 5px 0 0 19px;
+}
+#searchfield form .biginput {
+  width: 412px;
+  height: 40px;
+  padding: 0 10px 0 10px;
+  background-color: #fff;
+  border: 1px solid #c8c8c8;
+  border-radius: 3px;
+  color: #aeaeae;
+  font-weight:normal;
+  font-size: 1.5em;
+  -webkit-transition: all 0.2s linear;
+  -moz-transition: all 0.2s linear;
+  transition: all 0.2s linear;
+}
+#searchfield form .biginput:focus {
+  color: #858585;
+}
+/*#custom-templates .empty-message {
+padding: 5px 10px;
+text-align: center;
+} */
+.categories_right #AdSearchForm input.ui-autocomplete-input {
+    color: #777;
+    padding: 6px 11px;
+    width: 100%;
+}
+
+.filter-block.pull-left.searchboxfieldcont {
+    margin-left: 19px;
+}

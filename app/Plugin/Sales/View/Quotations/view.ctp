@@ -13,14 +13,14 @@
 
     ?>
     <?php
-    	if ($quotation['Quotation']['status'] != 0) {
+    	if ($quotation['Quotation']['status'] != 1) {
 
-    		echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array(
-		        	'controller' => 'quotations', 
-		        	'action' => 'print_word',
-		        	'ext' => 'pdf',
-		        	$quotation['Quotation']['id'],$companyId),
-		        	array('class' =>'btn btn-primary pull-right','escape' => false,'target' => '_blank'));
+    		// echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array(
+		    //     	'controller' => 'quotations', 
+		    //     	'action' => 'print_word',
+		    //     	'ext' => 'pdf',
+		    //     	$quotation['Quotation']['id'],$companyId),
+		    //     	array('class' =>'btn btn-primary pull-right','escape' => false,'target' => '_blank'));
 
     		if (!empty($salesStatus['SalesOrder']['quotation_id'])) {
 
@@ -34,10 +34,18 @@
     		
     	} else{
 
-    		echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i> Click to Approved ', array('controller' => 'quotations', 'action' => 'approved',$quotation['Quotation']['id']),array('class' =>'btn btn-primary pull-right','escape' => false)) ;
+    		echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i>Approved ', array('controller' => 'quotations', 'action' => 'approved',$quotation['Quotation']['id']),array('class' =>'btn btn-success pull-right','escape' => false)) ;
 
-    		echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit ', array('controller' => 'quotations', 'action' => 'edit',$quotation['Quotation']['id'],$companyId),array('class' =>'btn btn-primary pull-right','escape' => false)) ;
+    		echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit ', array('controller' => 'quotations', 'action' => 'edit',$quotation['Quotation']['id'],$companyId),array('class' =>'btn btn-info pull-right','escape' => false)) ;
     	}
+    		echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array(
+		        	'controller' => 'quotations', 
+		        	'action' => 'print_word',
+		        	'ext' => 'pdf',
+		        	$quotation['Quotation']['id'],$companyId),
+		        	array('class' =>'btn btn-info pull-right','escape' => false,'target' => '_blank'));
+    	 echo $this->Html->link('<i class="fa fa-times fa-lg"></i> Terminate ', array('controller' => 'quotations', 'action' => 'status',3,$quotation['Quotation']['id']),array('class' =>'btn btn-danger pull-right','escape' => false));
+    	 echo $this->Html->link('<i class="fa fa-location-arrow fa-lg"></i> Withdraw ', array('controller' => 'quotations', 'action' => 'status',4,$quotation['Quotation']['id']),array('class' =>'btn btn-warning pull-right','escape' => false));
      ?>
    
    <br><br>

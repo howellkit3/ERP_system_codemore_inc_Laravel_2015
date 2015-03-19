@@ -95,32 +95,96 @@
 				                </div>
 				            </div>
 		             
-				          <?php foreach ($customField as $key => $value) { ?>
-															
-							 <div class="form-group">
-								<label for="inputPassword1" class="col-lg-2 control-label"><?php echo $customField[$key]?></label>
+				          	<?php foreach ($customField as $key => $value) { ?>
+							
+							<?php if($customField[$key] == 'Process'){	?>
+							<div class="row">	
+								<div class="col-md-6 hidden-xs hidden-sm">
+									<div id="external-events" class="main-box">
+										<header class="main-box-header clearfix">
+											<h2>Select Process</h2>
+										</header>
+										
+										<div class="main-box-body clearfix">
+											<?php foreach ($processField as $key => $value) { ?>
 
-								<div class="col-lg-9">
-									<div class="input-group">
-										<span class="input-group-addon"></span>
-									<?php 
-                                        echo $this->Form->input('QuotationField.'.$key.'.description', array('class' => 'form-control item_type test',
-                                            'alt' => 'address1',
-                                            'label' => false,
-                                            'required' => true));
-                                    ?><br>
-                                    <?php 
-                                        echo $this->Form->input('QuotationField.'.$key.'.custom_fields_id', array(
-                                        	'type' => 'hidden',
-                                        	'value' => $key,
-                                            'label' => false));
-                                    ?>
-                               		</div>
+												<div class="col-lg-8">
+													<div class="input-group">
+														<div data-eventclass="label-primary" class="external-event label-default ui-draggable" style="margin-bottom: 8px;padding:7px;position: relative; z-index: auto; left: 0px; top: 0px;width:341px;h">
+															<?php
+																echo $value['ProcessField']['process'];
+																// echo $this->Form->input('check', array('class' => 'form-control item_type test',
+						          //                                  		'type' => 'checkbox',
+						          //                                  		'label' => false,
+						          //                                  		'required' => true));
+															?>
 
-                               		<span class="help-block" style= "color:white">ex. MM/DD/YYYY</span>
+														</div>
+
+													</div>
+							                        
+								                </div>
+											<?php } ?>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6 hidden-xs hidden-sm">
+									<div id="external-events" class="main-box">
+										<header class="main-box-header clearfix">
+											<h2>Arrange Process</h2>
+										</header>
+										
+										<div class="main-box-body clearfix">
+
+
+
+
+
+
+
+
+											
+										</div>
+									</div>
 								</div>
 							</div>
 
+							<?php } else {	?>						
+								<div class="form-group">
+									<label for="inputPassword1" class="col-lg-2 control-label"><?php echo $customField[$key]?></label>
+									
+									<div class="col-lg-9">
+										<div class="input-group">
+											<span class="input-group-addon"></span>
+										<?php 
+											if($customField[$key] == 'Process'){
+											// echo $this->Form->input('Process', array( 
+											//                    		'options' => $processField,
+											//                    		'type' => 'select',
+											//                      	'alt' => 'type',
+											// 	    					'label' => false,
+											// 	   						'class' => 'form-control',
+											// 	    					'empty' => '--Select Process--',
+											// 	    					'id' => 'item_category'
+											// 					));
+
+											}else{
+		                                        echo $this->Form->input('QuotationField.'.$key.'.description', array('class' => 'form-control item_type test',
+		                                            'alt' => 'address1',
+		                                            'label' => false,
+		                                            'required' => true));
+	                                    	}	
+	                                    	echo $this->Form->input('QuotationField.'.$key.'.custom_fields_id', array(
+		                                        	'type' => 'hidden',
+		                                        	'value' => $key,
+		                                            'label' => false));
+	                                    ?>
+	                               		</div>
+
+	                               		<span class="help-block" style= "color:white">ex. MM/DD/YYYY</span>
+									</div>
+								</div>
+							<?php }?>
 							
 						<?php }?>
 							
