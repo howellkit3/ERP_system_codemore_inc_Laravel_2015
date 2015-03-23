@@ -196,11 +196,13 @@ function cloneInput(whatSection, thisElement)
 	var data = $(parentSection).first().clone();
     data = fieldResetInput(data, whatSection,count);
     $('.' + whatSection).last().after(data);
+
     $("#qty").val(count2+1);
     $("#uprice").val(count2+1);
     $("#material").val(count2+1);
     
 }
+
 
 
     function fieldResetInput($form, section,count)
@@ -219,9 +221,7 @@ function cloneInput(whatSection, thisElement)
         {
             $this.val('');
         }
-    //  var count2 = $('.' + section).length;
-    // console.log(count2 + 1);
-    $("#qty").val(count2+1);
+ 
     
     var input = count;
     if ($(this).attr('type') != 'hidden') {

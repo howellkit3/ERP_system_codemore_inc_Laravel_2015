@@ -165,7 +165,7 @@
 																	</div>
 																</div>
 																<div class="form-group">
-																	<div class="col-lg-3"><?php echo $customField['3']?></div>
+																	<div class="col-lg-3">Qty</div>
 																	<div class="col-lg-8">
 																		<?php 
 							                                                echo $this->Form->input('QuotationField.3.description', array('class' => 'form-control item_type',
@@ -182,7 +182,7 @@
 																	</div>
 																</div>
 																<div class="form-group">
-																	<div class="col-lg-3"><?php echo $customField['4']?></div>
+																	<div class="col-lg-3">Unit Price</div>
 																	<div class="col-lg-8">
 																		<?php 
 							                                                echo $this->Form->input('QuotationField.4.description', array('class' => 'form-control item_type',
@@ -200,7 +200,7 @@
 																</div>
 													
 																<div class="form-group">
-																	<div class="col-lg-3"><b><?php echo $customField['11']?></b></div>
+																	<div class="col-lg-3"><b>VAT Price</b></div>
 																	<div class="col-lg-8">
 																		<?php 
 							                                                echo $this->Form->input('QuotationField.11.description', array('class' => 'form-control item_type',
@@ -217,7 +217,7 @@
 																	</div>
 																</div>
 																<div class="form-group">
-																	<div class="col-lg-3"><?php echo $customField['5']?></div>
+																	<div class="col-lg-3">Material</div>
 																	<div class="col-lg-8">
 																		<?php 
 							                                                echo $this->Form->input('QuotationField.5.description', array('class' => 'form-control item_type',
