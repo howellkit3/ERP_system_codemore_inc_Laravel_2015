@@ -3,9 +3,11 @@ App::uses('AppController', 'Controller');
 App::uses('SessionComponent', 'Controller/Component');
 
 class CreateOrderController extends SalesAppController {
-	public $uses = array('Sales.QuotationOption','Sales.Quotation','Sales.Company','Sales.CreateOrder','Sales.SalesOrder');
+
+	public $uses = array('Sales.QuotationOption','Sales.Quotation','Sales.Company','Sales.CreateOrder','Sales.SalesOrder','Sales.ClientOrder');
 
 	public function add($quotationId = null, $salesOrderId = null){
+
 		$quotationData = $this->Quotation->find('first', array(
 												'conditions' => array(
 													'id' => $quotationId
@@ -18,22 +20,6 @@ class CreateOrderController extends SalesAppController {
 													'id' => $quotationData['Quotation']['company_id']
 												)
 											));
-
-		$count = $this->QuotationOption->find('count', array(
-											'conditions' => array(
-												'custom_fields_id' => '3',
-												'custom_fields_id' => '4',
-												'custom_fields_id' => '6',
-												'quotation_id' => $quotationId
-											)
-										));
-		$first = $this->QuotationOption->find('all', array(
-												'conditions' => array(
-													'custom_fields_id' => array('3','4','6'),
-													'position' => '1',
-													'quotation_id' => $quotationId
-											)
-										));
 
 		$this->set(compact('count','first','quotationData','companyData'));
 	}
@@ -65,6 +51,59 @@ class CreateOrderController extends SalesAppController {
 
 			 }
 		}
+	}
+
+	public function index($quotationId = null, $uuid = null){
+
+		$this->Quotation->bind(array('QuotationItemDetail'));
+
+		$quotationData = $this->Quotation->find('first', array(
+												'conditions' => array(
+													'id' => $quotationId
+												)
+											));
+
+		$companyData = $this->Company->find('first', array(
+												'conditions' => array('Company.id' => $quotationData['Quotation']['company_id'])
+											));
+		//pr($quotationData);exit();
+
+
+		$this->set(compact('quotationData','companyData'));
+	}
+
+	public function find_item_detail($itemDetailId = null){
+
+		$this->Quotation->bind(array('QuotationItemDetail'));
+
+		$itemDetail = $this->Quotation->QuotationItemDetail->find('first',array('conditions' => array('QuotationItemDetail.id' => $itemDetailId)));
+
+		echo json_encode($itemDetail);
+
+		$this->autoRender = false;
+	}
+
+	public function order_create(){
+
+		$userData = $this->Session->read('Auth');
+	
+		if ($this->request->is('post')) {
+
+            if (!empty($this->request->data)) {
+            	//pr($this->request->data);die;
+            	$this->ClientOrder->bind(array('ClientOrderDeliverySchedule','ClientOrderItemDetail'));
+
+            	$this->id = $this->ClientOrder->saveClientOrder($this->request->data, $userData['User']['id']);
+            	
+            	$this->ClientOrder->ClientOrderDeliverySchedule->saveClientOrderDeliverySchedule($this->request->data, $userData['User']['id'], $this->id);
+
+            	$this->Session->setFlash(__('Create Order was successfully added in the system.'));
+    			$this->redirect(
+            		array('controller' => 'sales_orders', 'action' => 'index')
+       			 );
+
+            }
+        }
 	}
 }
 ?>

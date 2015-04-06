@@ -1,6 +1,6 @@
 <?php $this->Html->addCrumb('Sales', array('controller' => 'customer_sales', 'action' => 'index')); ?>
-<?php $this->Html->addCrumb('Quotation', array('controller' => 'quotation', 'action' => 'index')); ?>
-<?php $this->Html->addCrumb('View', array('controller' => 'quotation', 'action' => 'view',$quotation['Quotation']['id'])); ?>
+<?php $this->Html->addCrumb('Quotation', array('controller' => 'quotations', 'action' => 'index')); ?>
+<?php $this->Html->addCrumb('View', array('controller' => 'quotations', 'action' => 'view',$quotation['Quotation']['id'])); ?>
 <?php echo $this->Html->script('Sales.inquiry');?>
 <div style="clear:both"></div>
 
@@ -8,43 +8,32 @@
 
 <div class="filter-block pull-right">
     <?php
-
+    	// buttons
         echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'quotations', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
 
-    ?>
-    <?php
-    	if ($quotation['Quotation']['status'] != 1) {
+		if($clientOrderCount == 0){
 
-    		// echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array(
-		    //     	'controller' => 'quotations', 
-		    //     	'action' => 'print_word',
-		    //     	'ext' => 'pdf',
-		    //     	$quotation['Quotation']['id'],$companyId),
-		    //     	array('class' =>'btn btn-primary pull-right','escape' => false,'target' => '_blank'));
+			echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Create Order ', array('controller' => 'create_order', 'action' => 'index',$quotation['Quotation']['id'],$quotation['Quotation']['uuid']),array('class' =>'btn btn-primary pull-right','escape' => false)) ;
+			
+		}else{
 
-    		if (!empty($salesStatus['SalesOrder']['quotation_id'])) {
+			echo $this->Html->link('<font color="white"><i class="fa fa-gift fa-lg"></i> Sales Order</font> ', array('controller' => 'quotations', 'action' => 'create_order',$quotation['Quotation']['id']),array('class' =>'btn btn-success pull-right','escape' => false,'disabled' => 'disabled')) ;
+		}
+	
 
-    			echo $this->Html->link('<font color="white"><i class="fa fa-gift fa-lg"></i> Sales Order</font> ', array('controller' => 'quotations', 'action' => 'create_order',$quotation['Quotation']['id']),array('class' =>'btn btn-success pull-right','escape' => false,'disabled' => 'disabled')) ;
+    	echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i>Approved ', array('controller' => 'quotations', 'action' => 'approved',$quotation['Quotation']['id']),array('class' =>'btn btn-success pull-right','escape' => false)) ;
 
-    		}else{
-
-    			echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Create Order ', array('controller' => 'create_order', 'action' => 'add',$quotation['Quotation']['id'],$quotation['Quotation']['unique_id']),array('class' =>'btn btn-primary pull-right','escape' => false)) ;
-
-    		}
-    		
-    	} else{
-
-    		echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i>Approved ', array('controller' => 'quotations', 'action' => 'approved',$quotation['Quotation']['id']),array('class' =>'btn btn-success pull-right','escape' => false)) ;
-
-    		echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit ', array('controller' => 'quotations', 'action' => 'edit',$quotation['Quotation']['id'],$companyId),array('class' =>'btn btn-info pull-right','escape' => false)) ;
-    	}
-    		echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array(
+    	echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit ', array('controller' => 'quotations', 'action' => 'edit',$quotation['Quotation']['id'],$companyId),array('class' =>'btn btn-info pull-right','escape' => false)) ;
+    	
+    	echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array(
 		        	'controller' => 'quotations', 
 		        	'action' => 'print_word',
 		        	'ext' => 'pdf',
 		        	$quotation['Quotation']['id'],$companyId),
 		        	array('class' =>'btn btn-info pull-right','escape' => false,'target' => '_blank'));
+
     	 echo $this->Html->link('<i class="fa fa-times fa-lg"></i> Terminate ', array('controller' => 'quotations', 'action' => 'status',3,$quotation['Quotation']['id']),array('class' =>'btn btn-danger pull-right','escape' => false));
+
     	 echo $this->Html->link('<i class="fa fa-location-arrow fa-lg"></i> Withdraw ', array('controller' => 'quotations', 'action' => 'status',4,$quotation['Quotation']['id']),array('class' =>'btn btn-warning pull-right','escape' => false));
      ?>
    
@@ -72,11 +61,13 @@
 						</div>
 						<div class="col-lg-5">
 							:&emsp;
-							<?php echo !empty($quotation['Quotation']['company_id']) ? ucfirst($companyData[$quotation['Quotation']['company_id']]) : ucfirst($companyData[$inquiryId[$quotation['Quotation']['inquiry_id']]]) 
+							<?php 
+								//echo $quotation['Quotation']['attention_details']
+								echo !empty($quotation['Quotation']['company_id']) ? ucfirst($companyData[$quotation['Quotation']['company_id']]) : ucfirst($companyData[$inquiryId[$quotation['Quotation']['inquiry_id']]]) 
 							?>
 						</div>
 						<div class="col-lg-4">&emsp;&emsp;&nbsp;&nbsp;&nbsp;
-							No : <u><?php echo $quotation['Quotation']['unique_id'] ?></u>
+							No : <u>PQ-<?php echo $quotation['Quotation']['uuid'] ?></u>
 						</div>
 					</div>
 					<div class="form-group">
@@ -108,7 +99,7 @@
 								Item
 							</div>
 							<div class="col-lg-8">
-								:&emsp;<?php echo $productName['Product']['product_name']?>
+								:&emsp;<?php //echo $productName['Product']['product_name']?>
 							</div>
 
 					</div>
@@ -119,91 +110,158 @@
 								Size
 							</div>
 							<div class="col-lg-8">
-								:&emsp;<?php echo $quotationSize['QuotationField']['description']?>
+								:&emsp;<?php echo $quotation['QuotationDetail']['size']?>
 							</div>
 
 					</div>
 					<div>
 					<!-- <div class ="boxed2"> -->
 					<div class="form-group">
-						<div class="col-lg-1"></div>
+							<div class="col-lg-1"></div>
 							<div class="col-lg-2">
 								Qty<br><br>
 								Unit Price<br><br>
 								Vat Price<br><br>
 								Material
 							</div>
-							<div class="col-lg-8">
-								<table  class = "tbl">
-									<tr>
-										<?php
-											foreach ($quotationOption as $desc){
-												if($desc['QuotationOption']['custom_fields_id'] == "3"){
-													
-										?>
-													<td height ="40px" valign ="top" class ="column3"> 
-														<div class="col-lg-9">
-															<?php echo $desc['QuotationOption']['description'];?> 
-														</div>
-													</td>	
-										<?php
-												}
-											}
-										?>
-									</tr>
+							<div class="col-lg-8"><div class="pull-left"></div>
+								<?php foreach ($quotation['QuotationItemDetail'] as $itemDetail){ ?>
+									<table  class = "tbl">
+										<tr>
+											
+											<td height ="35px" valign ="top" class ="column3 col-md-8"> 
+												<div class="col-lg-12">
+													<?php echo $itemDetail['quantity'];?> 
+												</div>
+											</td>	
+											
+										</tr>
 
-									<tr >
-										<?php
-											foreach ($quotationOption as $desc){
-												if($desc['QuotationOption']['custom_fields_id'] == "4"){
-										?>
-													<td height ="70px" valign ="top" class = "column4">
-														<div class="col-lg-8">
-															<?php echo $desc['QuotationOption']['description'];?> 
-														</div>
-													</td>
-										<?php
-												}
-											}
-										?>	
-									</tr>
+										<tr >
+											
+											<td height ="35px" valign ="top" class = "column4 col-md-8">
+												<div class="col-lg-12">
+													<?php echo $itemDetail['unit_price'];?> 
+												</div>
+											</td>
+											
+										</tr>
 
-									<tr>
-										<?php
-											foreach ($quotationOption as $desc){
-												if($desc['QuotationOption']['custom_fields_id'] == "6"){
-										?>
-													<td height ="30px" class ="column2">
-														<div class="col-lg-8">
-															<?php echo $desc['QuotationOption']['description'];?> 
-														</div>
-													</td>
-										<?php
-												}
-											}
-										?>
-									</tr>
-								</table>
+										<tr>
+											
+											<td height ="40px" class ="column2 col-md-8">
+												<div class="col-lg-12">
+													<?php echo $itemDetail['vat_price'];?> 
+												</div>
+											</td>
+											
+										</tr>
+
+										<tr>
+											
+											<td height ="30px" class ="column2 col-md-8">
+												<div class="col-lg-12">
+													<?php echo $itemDetail['material'];?> 
+												</div>
+											</td>
+											
+										</tr>
+
+									</table>
+								<?php } ?>
+
 							</div>
 
-					</div>
-			
-						<!-- </div> -->
-					
+						</div>
 
-					<?php foreach ($quotationFieldInfo as $key => $value) {
-					?>
-							
 						<div class="form-group">
+
 							<div class="col-lg-1"></div>
 							<div class="col-lg-2">
-								<?php echo $field[$value['QuotationField']['custom_fields_id']] ?>
+								Color
 							</div>
 							<div class="col-lg-8">
-								:&emsp;<?php echo $value['QuotationField']['description'] ?>
+								:&emsp;<?php echo $quotation['QuotationDetail']['color']?>
 							</div>
+
 						</div>
-					<?php } ?>
+
+						<div class="form-group">
+
+							<div class="col-lg-1"></div>
+							<div class="col-lg-2">
+								Process
+							</div>
+							<div class="col-lg-8">
+								:&emsp;<?php echo $quotation['QuotationDetail']['process']?>
+							</div>
+
+						</div>
+
+						<div class="form-group">
+
+							<div class="col-lg-1"></div>
+							<div class="col-lg-2">
+								Packaging
+							</div>
+							<div class="col-lg-8">
+								:&emsp;<?php echo $quotation['QuotationDetail']['packaging']?>
+							</div>
+
+						</div>
+
+						<div class="form-group">
+
+							<div class="col-lg-1"></div>
+							<div class="col-lg-2">
+								Other Specs
+							</div>
+							<div class="col-lg-8">
+								:&emsp;<?php echo $quotation['QuotationDetail']['other_specs']?>
+							</div>
+
+						</div>
+
+						<div class="form-group">
+
+							<div class="col-lg-1"></div>
+							<div class="col-lg-2">
+								Terms
+							</div>
+							<div class="col-lg-8">
+								:&emsp;<?php echo $quotation['Quotation']['payment_terms']?>
+							</div>
+
+						</div>
+
+						<div class="form-group">
+
+							<div class="col-lg-1"></div>
+							<div class="col-lg-2">
+								Validity
+							</div>
+							<div class="col-lg-8">
+								:&emsp;<?php echo date('M d, Y', strtotime($quotation['Quotation']['validity'])); ?>
+							</div>
+
+						</div>
+
+						<div class="form-group">
+
+							<div class="col-lg-1"></div>
+							<div class="col-lg-2">
+								Remarks
+							</div>
+							<div class="col-lg-8">
+								:&emsp;<?php echo $quotation['QuotationDetail']['remarks']?>
+							</div>
+
+						</div>
+			
+						
+					
+
+					
 					<br><br>
 					<div class="form-group">
 						<div class="col-lg-1"></div>

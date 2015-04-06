@@ -3,45 +3,42 @@
     <tbody aria-relevant="all" aria-live="polite" role="alert">
 
         <tr class="">
-
+             <td class="">
+                PQ-<?php echo $quotationList['Quotation']['uuid'] ?>  
+            </td>
             <td class="">
-                <?php echo ucfirst($quotationList['Product']['product_name']) ?>  
+                <?php echo ucfirst($quotationList['Quotation']['name']) ?>  
             </td>
             <td class="">
                
                 <?php echo !empty($quotationList['Quotation']['company_id']) ? ucfirst($companyData[$quotationList['Quotation']['company_id']]) : ucfirst($companyData[$inquiryId[$quotationList['Quotation']['inquiry_id']]]) ?>
             </td>
             <td class="text-center">
-                <?php foreach ($quotationList['QuotationField'] as $validity):
-                    if ($validity['custom_fields_id'] == 12) {
-                        echo $validity['description'];
-                        # code...
-                    }
-                endforeach;?>
+                  <?php echo date('M d, Y', strtotime($quotationList['Quotation']['validity'])); ?>
             </td>
             <td class="text-center">
             <?php 
-                if($quotationList['Quotation']['status'] == (1)) {
-                   echo '<span class="label label-default">Pending</span>'; 
-                }
-                if($quotationList['Quotation']['status'] == (2)) {
-                   echo '<span class="label label-success">Approved</span>'; 
-                }
-                if($quotationList['Quotation']['status'] == (3)) {
-                   echo '<span class="label label-danger">terminate</span>'; 
-                }
-                if($quotationList['Quotation']['status'] == (4)) {
-                   echo '<span class="label label-warning">withdraw</span>'; 
-                }
+                // if($quotationList['Quotation']['status'] == (1)) {
+                //    echo '<span class="label label-default">Pending</span>'; 
+                // }
+                // if($quotationList['Quotation']['status'] == (2)) {
+                //    echo '<span class="label label-success">Approved</span>'; 
+                // }
+                // if($quotationList['Quotation']['status'] == (3)) {
+                //    echo '<span class="label label-danger">terminate</span>'; 
+                // }
+                // if($quotationList['Quotation']['status'] == (4)) {
+                //    echo '<span class="label label-warning">withdraw</span>'; 
+                // }
 
 
 
             //echo $quotationList['Quotation']['status'] != (1) ? '<span class="label label-success">Approved</span>' : '<span class="label label-danger">Pending</span>' ; ?>
            <?php
-                if(!empty($salesStatus[$quotationList['Quotation']['id']])){
-                    echo "<span class='label label-success'>Sales Order</span>";
-                     //echo $salesStatus[$quotationList['Quotation']['id']];
-                }
+                // if(!empty($salesStatus[$quotationList['Quotation']['id']])){
+                //     echo "<span class='label label-success'>Sales Order</span>";
+                //      //echo $salesStatus[$quotationList['Quotation']['id']];
+                // }
                
             ?>
             </td>
@@ -55,13 +52,13 @@
                 ?>
 
                 <?php
-                if ($quotationList['Quotation']['status'] != (1)) {
+                // if ($quotationList['Quotation']['status'] != (1)) {
 
-                   echo $this->Html->link('<span class="fa-stack">
-                    <i class="fa fa-square fa-stack-2x"></i>
-                    <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit </font></span>
-                    </span> ', array('controller' => 'quotations', 'action' => 'edit',$quotationList['Quotation']['id'],!empty($quotationList['Quotation']['company_id']) ? $quotationList['Quotation']['company_id'] : $inquiryId[$quotationList['Quotation']['inquiry_id']]),array('class' =>' table-link','escape' => false,'title'=>'Review Quotation'));
-                }
+                //    echo $this->Html->link('<span class="fa-stack">
+                //     <i class="fa fa-square fa-stack-2x"></i>
+                //     <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit </font></span>
+                //     </span> ', array('controller' => 'quotations', 'action' => 'edit',$quotationList['Quotation']['id'],!empty($quotationList['Quotation']['company_id']) ? $quotationList['Quotation']['company_id'] : $inquiryId[$quotationList['Quotation']['inquiry_id']]),array('class' =>' table-link','escape' => false,'title'=>'Review Quotation'));
+                // }
 
                 ?>
               

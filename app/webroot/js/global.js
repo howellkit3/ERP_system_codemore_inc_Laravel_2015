@@ -8,7 +8,7 @@ function fieldReset($form, section)
     
     var count = $('.' + section).length;
     console.log(count);
-    $form.find('select, input').each(function() {
+    $form.find('select, input,checkbox').each(function() {
         var $this = $(this),
             nameProp = $this.prop('name'),
             newIndex = count;
@@ -16,6 +16,10 @@ function fieldReset($form, section)
         if(type == "text")
         {
             $this.val('');
+        }
+         if(type == "checkbox")
+        {
+             $this.prop('checked', false);
         }
         //$this.prop('name', nameProp.replace("[0]", "[" + newIndex + "]"));
         $this.prop('name', nameProp.replace(/\[(\d+)\]/, function(str,p1){
@@ -34,9 +38,12 @@ function cloneData(whatSection, thisElement)
     var parentSection = $(thisElement).parents('.' + whatSection);
 
     var data = $(parentSection).first().clone();
+
     console.log(data);
     data = fieldReset(data, whatSection);
     $('.' + whatSection).last().after(data);
+    $('.remove').show();
+    if ($('.remove').length == 1) $('.remove').hide();
     
 }
 
@@ -59,7 +66,7 @@ function removeCloneInputTable(whatSection)
 function removeClone(whatSection)
 {   
      $('.' + whatSection).last().remove(); 
-     $("#minus").hide();
+     $(".remove").hide();
 }
 
 function fieldResetContact($form, section)

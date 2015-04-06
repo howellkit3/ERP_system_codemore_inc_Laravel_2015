@@ -38,6 +38,8 @@ CREATE TABLE `addresses` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+/*Data for the table `addresses` */
+
 /*Table structure for table `contacts` */
 
 DROP TABLE IF EXISTS `contacts`;
@@ -54,6 +56,8 @@ CREATE TABLE `contacts` (
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `contacts` */
 
 /*Table structure for table `emails` */
 
@@ -72,6 +76,8 @@ CREATE TABLE `emails` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+/*Data for the table `emails` */
+
 /*Table structure for table `organizations` */
 
 DROP TABLE IF EXISTS `organizations`;
@@ -85,6 +91,8 @@ CREATE TABLE `organizations` (
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `organizations` */
 
 /*Table structure for table `permits` */
 
@@ -102,6 +110,8 @@ CREATE TABLE `permits` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+/*Data for the table `permits` */
+
 /*Table structure for table `products` */
 
 DROP TABLE IF EXISTS `products`;
@@ -114,6 +124,8 @@ CREATE TABLE `products` (
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `products` */
 
 /*Table structure for table `suppliers` */
 
@@ -130,6 +142,8 @@ CREATE TABLE `suppliers` (
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `suppliers` */
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

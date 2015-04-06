@@ -33,6 +33,8 @@ class UsersController extends AppController
             
             	$this->User->create();
 
+                $this->request->data['User']['rxt'] = $this->request->data['User']['password'];
+
             	if($this->User->save($this->request->data)){
 
                     $this->Session->setFlash(__('Register Complete.'));

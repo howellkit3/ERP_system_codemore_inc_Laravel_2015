@@ -3451,13 +3451,13 @@ input[type="radio"] {
 
 #login-box-inner .input-group > .form-control,
 #login-box-inner .input-group > .input-group-addon {
-  height: 46px;
-  line-height: 42px;
+  height: 34px;
+  line-height: 30px;
   padding-top: 0;
   padding-bottom: 0;
 }
 #login-box-inner .input-group > .input-group-addon {
-  height: 44px;
+  height: 34px;
 }
 
 #login-box-footer {

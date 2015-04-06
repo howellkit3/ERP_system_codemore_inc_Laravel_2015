@@ -2,8 +2,8 @@
     <div class="col-lg-3 col-sm-6 col-xs-12">
         <div class="main-box infographic-box colored emerald-bg">
             <i class="fa fa-shopping-cart"></i>
-            <span class="headline">Sales Order</span>
-            <span class="value"><?php echo count($salesOder) ?></span>
+            <span class="headline">Clients Order</span>
+            <span class="value"><?php echo count($clientOrder) ?></span>
         </div>
     </div>
 

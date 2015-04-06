@@ -1,5 +1,5 @@
 <?php $this->Html->addCrumb('Sales', array('controller' => 'customer_sales', 'action' => 'index')); ?>
-<?php $this->Html->addCrumb('Purchasing Orders', array('controller' => 'purchasing_orders', 'action' => 'index')); ?>
+<?php $this->Html->addCrumb('Clients Order', array('controller' => 'sales_orders', 'action' => 'index')); ?>
 <?php echo $this->Html->script('Sales.inquiry');?>
 <div style="clear:both"></div>
 
@@ -12,7 +12,7 @@
         <div class="main-box clearfix body-pad">
             <header class="main-box-header clearfix">
 
-                <h2 class="pull-left"><b>Sales Order List</b></h2>
+                <h2 class="pull-left"><b>Client Order List</b></h2>
                 
             </header>
             

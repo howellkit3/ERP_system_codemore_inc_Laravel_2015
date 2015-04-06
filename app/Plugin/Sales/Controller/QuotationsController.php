@@ -24,25 +24,21 @@ class QuotationsController extends SalesAppController {
 
 		$userData = $this->Session->read('Auth');
 
-		$this->Quotation->bind(array('Product','QuotationField'));
+		$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail'));
+
 		$quotationData = $this->Quotation->find('all', array('order' => 'Quotation.id DESC'));
-		
 
 		$this->Company->bind(array('Inquiry'));
+
+		$companyData = $this->Company->find('list',array(
+     											'fields' => array(
+     												'id','company_name')
+     										));
 
 		$inquiryId = $this->Company->Inquiry->find('list', array(
      													'fields' => array(
      														'company_id')
      												));
-	
-	 	$companyData = $this->Company->find('list',array(
-     											'fields' => array(
-     												'id','company_name')
-     										));
-
-	 	$this->loadModel('Sales.SalesOrder');
-
-	 	$salesStatus = $this->SalesOrder->find('list',array('fields' => array('quotation_id','id')));
 
 		$this->set(compact('companyData','quotationData','inquiryId','salesStatus'));
 
@@ -53,23 +49,6 @@ class QuotationsController extends SalesAppController {
 
 
 		$userData = $this->Session->read('Auth');
-		$this->loadModel('Sales.CustomField');
-
-		$customField = $this->CustomField->find('list', array(
-													'fields' => array('id', 'fieldlabel'),
-													'conditions' => array(
-														'id NOT' => array('2','3','4','5','6')
-														)
-													));
-
-		$this->loadModel('Sales.ItemCategory');
-		$this->ItemCategory->bind(array('ItemType'));
-		$category = $this->ItemCategory->find('list', array(
-												'fields' => array(
-											 		'id','category_name'),
-												'conditions' => array(
-													'status' => 'active')
-											));
 
 		if(!empty($inquiryId)){
 
@@ -84,7 +63,7 @@ class QuotationsController extends SalesAppController {
 		        'conditions' => array('Company.id' => $inquiry['Inquiry']['company_id'])
 		    ));
 			
-			$this->set(compact('company','inquiry','customField'));
+			$this->set(compact('company','inquiry'));
 
 		}else{
 
@@ -96,7 +75,7 @@ class QuotationsController extends SalesAppController {
 
 			$this->set(compact('companyData','customField'));
 		}
-		$this->set(compact('category'));
+		$this->set(compact('category','inquiryId'));
 		
 	}
 
@@ -104,115 +83,52 @@ class QuotationsController extends SalesAppController {
 
 		$userData = $this->Session->read('Auth');
 		
-		$this->Quotation->bind(array('QuotationField'));
+		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail'));
 
 		if ($this->request->is('post')) {
-			//pr($this->request->data);die;
-			
 
             if (!empty($this->request->data)) {
-
-
-            	if(!empty($this->request->data['Inquiry']['id'])){
             	
-            		if(!empty($this->request->data['Quotation']['product'])){
-            			$this->Company->bind(array('Inquiry'));
-		            	$bindData = $this->Company->Inquiry->find('first', array(
+            	if(!empty($this->request->data['Inquiry']['id'])){
+            		
+            		$this->Company->bind(array('Inquiry'));
+
+            			$inquiryId = $this->request->data['Inquiry']['id'];
+
+            			$inquiryCompanyId = $this->Company->Inquiry->find('first', array(
 														  		  		'conditions' => array(
 														  		  			'Inquiry.id' => $this->request->data['Inquiry']['id'])
 																));
+            			
+            			$this->request->data['Quotation']['inquiry_id'] = $inquiryId;
 
-		            	$companyName = $this->Company->find('first', array(
-		            											'conditions' => array(
-		            													'id' => $bindData['Inquiry']['company_id'])
-		            									));
+            			$this->request->data['Quotation']['company_id'] = $inquiryCompanyId['Inquiry']['company_id'];
 
+            			$this->id = $this->Quotation->addQuotation($this->request->data, $userData['User']['id']);
 
-		            	
-	            		$inquiryId = $this->request->data['Inquiry']['id'];
-	            		$quotationId = $this->Quotation->addInquiryQuotation($this->request->data['Quotation'],$userData['User']['id'],$inquiryId);
+            			$this->Quotation->QuotationDetail->addQuotationDetail($this->request->data, $userData['User']['id'], $this->id);
 
-	            		$quotationUniqueId = $this->Quotation->find('first', array(
-	            														'conditions' => array(
-	            															'product_id' => $this->request->data['Quotation']['product'])
-	            													));
-	            			
-            		}
-            		else{
+            			$this->Quotation->QuotationItemDetail->addQuotationItemDetail($this->request->data, $this->id);
 
-            			$this->Company->bind(array('Inquiry'));
-		            	$bindData = $this->Company->Inquiry->find('first', array(
-														  		  		'conditions' => array(
-														  		  			'Inquiry.id' => $this->request->data['Inquiry']['id'])
-																));
-
-		            	$companyName = $this->Company->find('first', array(
-		            											'conditions' => array(
-		            													'id' => $bindData['Inquiry']['company_id'])
-		            									));
-		            	$productDetails= array($companyName['Company']['id'],$this->request->data['Quotation']['txtproduct']);
-		            	
-	             		$productId = $this->Product->addQuotationProduct($productDetails, $userData['User']['id']);
-
-	            		$inquiryId = $this->request->data['Inquiry']['id'];
-	            		$quotationId = $this->Quotation->addNewInquiryQuotation($productId, $userData['User']['id'], $inquiryId);
-
-	            		$quotationUniqueId = $this->Quotation->find('first', array(
-	            														'conditions' => array(
-	            															'product_id' => $this->request->data['Quotation']['product'])
-	            													));
-
-            		}
+            		
 
             		
             	}else{
 
-            		if(!empty($this->request->data['Quotation']['product'])){
-
             			$companyId = $this->request->data['Company']['id'];
-	            		$companyName = $this->Company->find('first', array(
-		            											'conditions' => array(
-		            												'id' =>$this->request->data['Company']['id'])
-		            									));
 
-	            		$quotationId = $this->Quotation->addCompanyQuotation($this->request->data['Quotation'],$userData['User']['id'],$companyId);
-	            		$quotationUniqueId = $this->Quotation->find('first', array(
-	            														'conditions' => array(
-	            															'product_id' => $this->request->data['Quotation']['product'])
-	            													));
+            			$this->request->data['Quotation']['company_id'] = $companyId;
 
-            		}
-            		else{
-            			$companyId = $this->request->data['Company']['id'];
-            			$productDetails= array($this->request->data['Company']['id'],$this->request->data['Quotation']['txtproduct']);
-            			
-	             		$productId = $this->Product->addQuotationProduct($productDetails, $userData['User']['id']);
-	             		
+            			$this->id = $this->Quotation->addQuotation($this->request->data, $userData['User']['id']);
 
-	             		$quotationId = $this->Quotation->addNewCompanyQuotation($productId, $userData['User']['id'], $productDetails);
-	            		$quotationUniqueId = $this->Quotation->find('first', array(
-	            														'conditions' => array(
-	            															'product_id' => $productId)
-	            													));
+            			$this->Quotation->QuotationDetail->addQuotationDetail($this->request->data, $userData['User']['id'], $this->id);
 
-            		
-            		}
+            			$this->Quotation->QuotationItemDetail->addQuotationItemDetail($this->request->data, $this->id);
 
-
-            		
-					
             	}
-
-
-
-            	$this->Quotation->bind(array('QuotationField','QuotationOption'));
-
-            	$this->Quotation->QuotationField->saveQuotationField($this->request->data, $quotationId, $userData['User']['id']);
-            	//pr($this->request->data);die;
-
-            	$this->Quotation->QuotationOption->saveQuotationOption($this->request->data, $quotationId, $userData['User']['id']);
             	
             	$this->Session->setFlash(__('Quotation Complete.'));
+
             	$this->redirect(
                     array('controller' => 'quotations', 'action' => 'index')
                 );
@@ -227,10 +143,6 @@ class QuotationsController extends SalesAppController {
 
 		$this->Company->bind(array('Address','Contact','Email','Inquiry','ContactPerson','Quotation'));
 
-		$quotation = $this->Company->Quotation->find('first', array(
-														'conditions' => array( 
-															'Quotation.id' => $quotationId)
-													));
 
 		$companyData = $this->Company->find('list', array(
      											'fields' => array( 
@@ -247,55 +159,37 @@ class QuotationsController extends SalesAppController {
 																	'ContactPerson.company_id' => $companyId 
 																)
 															));
+		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder'));
 
-		$this->Quotation->bind(array('QuotationField','SalesOrder','Product','QuotationOption'));
+		$quotation = $this->Quotation->find('first', array(
+														'conditions' => array( 
+															'Quotation.id' => $quotationId)
+													));
+		$clientOrder = $this->Quotation->ClientOrder->find('first', array(
+														'conditions' => array( 
+															'ClientOrder.quotation_id' => $quotationId)
+													));
+		
+		if (!empty($clientOrder['ClientOrder'])) {
 
-		$salesStatus = $this->Quotation->SalesOrder->find('first',array('conditions' => array('SalesOrder.quotation_id' => $quotationId)));
+			$clientOrderCount = count($clientOrder['ClientOrder']['quotation_id']);
+			
+		} else {
 
-		$quotationFieldInfo = $this->Quotation->QuotationField->find('all', array(
-																		'conditions' => array( 
-																			'QuotationField.quotation_id' => $quotationId,
-																			'custom_fields_id NOT' => array('2','3','4','5','6')
-																			)	
-																		));
-		$quotationSize = $this->Quotation->QuotationField->find('first', array(
-																	'conditions' => array(
-																			'custom_fields_id' => "2",
-																			'quotation_id' =>  $quotationId
-																		)
-																));
-
-
-		$quotationOption = $this->Quotation->QuotationOption->find('all', array(
-																		'conditions' => array(
-																				'quotation_id' => $quotationId
-																			)
-																	));
-
-		$this->Quotation->QuotationField->bind(array('CustomField'));
-
-		$field = $this->Quotation->QuotationField->CustomField->find('list', array(
-																		'fields' => array(
-																			'id','fieldlabel'),
-																		
-																	));
+			$clientOrderCount = 0;
+		}
+		
 		$this->loadModel('User');
 		$user = $this->User->find('first', array(
 									'conditions' => array(
 										'User.id' => $userData['User']['id'] )
 								));
 		
-		$this->Quotation->bind(array('Product'));
-
-		$productName = $this->Quotation->find('first', array(
-													'conditions' => array(
-														'Quotation.id' => $quotationId
-														)
-													));
+		
 		
 		$this->set(compact('companyData','companyId', 'quotationSize', 'quotationOption',
 			'quotation','inquiryId','user','contactInfo',
-			'quotationFieldInfo','field','salesStatus', 'productName'));
+			'quotationFieldInfo','field','salesStatus', 'productName','clientOrderCount'));
 		
 	}
 
@@ -472,10 +366,10 @@ class QuotationsController extends SalesAppController {
 
 	public function autoComplete() {
         $this->autoRender = false;
-        $this->Quotation->bind(array('QuotationField'));
+        $this->Quotation->bind(array('QuotationItemDetail','QuotationDetail'));
         $users = $this->Quotation->find('all', array(
             'conditions' => array(
-            'Quotation.unique_id LIKE' => '%' . $_GET['term'] . '%',
+            'Quotation.uuid LIKE' => '%' . $_GET['term'] . '%',
             )));
         echo json_encode($this->_encode($users));
     }
@@ -484,8 +378,8 @@ class QuotationsController extends SalesAppController {
         foreach ($postData as $user) {
             array_push($temp, array(
             'id' => $user['Quotation']['id'],
-            'label' => $user['Quotation']['unique_id'],
-            'value' => $user['Quotation']['unique_id'],
+            'label' => $user['Quotation']['uuid'],
+            'value' => $user['Quotation']['uuid'],
             ));
         }
         return $temp;
@@ -499,9 +393,9 @@ class QuotationsController extends SalesAppController {
 						'keyword' =>$this->request->query('q'),
 				  );
 
-		$this->Quotation->bind(array('Product','QuotationField'));
+		$this->Quotation->bind(array('QuotationItemDetail','QuotationDetail'));
 
-		$quotationData = $this->Quotation->find('all', array('conditions' => array('Quotation.unique_id' => $params)));
+		$quotationData = $this->Quotation->find('all', array('conditions' => array('Quotation.uuid' => $params)));
 		
 
 		$this->Company->bind(array('Inquiry'));
@@ -536,17 +430,17 @@ class QuotationsController extends SalesAppController {
 		$keyword = $this->request->query('term');
 		
 		if ( !empty($keyword) ){
-			$cond=array( 'OR'=>array("Quotation.unique_id LIKE '%$keyword%'")  );
+			$cond=array( 'OR'=>array("Quotation.uuid LIKE '%$keyword%'")  );
 		} else {
 			$cond=array();
 		}
-		$quotationUniqueId = $this->Quotation->find('all',array('fields'=> array('Quotation.unique_id'),'conditions' => $cond ));
+		$quotationUniqueId = $this->Quotation->find('all',array('fields'=> array('Quotation.uuid'),'conditions' => $cond ));
 		
 
 		foreach ($quotationUniqueId as $json) {
 			$data[] = array(
-						'value' => $json['Quotation']['unique_id'],
-						 'label' => $json['Quotation']['unique_id']
+						'value' => $json['Quotation']['uuid'],
+						 'label' => $json['Quotation']['uuid']
 					);
 		}
 

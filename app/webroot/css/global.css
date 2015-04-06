@@ -70,6 +70,8 @@ hr {
 .tbl{
     border-collapse: collapse;
     font-family : Verdana,Helvetica,Arial,sans-serif;
+    float: left;
+    border: 2px solid #e0e0e0;
 
 }
 .row{
@@ -84,11 +86,12 @@ hr {
 }
 
 .column2{
-    border-left: 1px solid black;
+    /*border-left: 1px solid black;
     border-right: 1px solid black;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid black;*/
     border-top:  1px solid black;
     font-family : Verdana,Helvetica,Arial,sans-serif;
+    border: 2px solid #e0e0e0;
 }
 .column3{
    border-left: 1px solid black;
@@ -152,4 +155,11 @@ text-align: center;
 
 .filter-block.pull-left.searchboxfieldcont {
     margin-left: 19px;
+}
+
+.top-space{
+  padding-top: 20px;
+}
+.item-detail{
+  text-align: center;
 }

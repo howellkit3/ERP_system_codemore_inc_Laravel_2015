@@ -34,13 +34,14 @@ class Quotation extends AppModel {
 
 			),
 			'hasMany' => array(
-				'QuotationField' => array(
-					'className' => 'Sales.QuotationField',
+				
+				'QuotationItemDetail' => array(
+					'className' => 'Sales.QuotationItemDetail',
 					'foreignKey' => 'quotation_id',
 					'dependent' => true
 				),
-				'QuotationOption' => array(
-					'className' => 'Sales.QuotationOption',
+				'ClientOrder' => array(
+					'className' => 'Sales.ClientOrder',
 					'foreignKey' => 'quotation_id',
 					'dependent' => true
 				)
@@ -51,6 +52,11 @@ class Quotation extends AppModel {
 					'className' => 'Sales.Product',
 					'foreignKey' => false,
 					'conditions' => 'Product.id = Quotation.product_id'
+				),
+				'QuotationDetail' => array(
+					'className' => 'Sales.QuotationDetail',
+					'foreignKey' => 'quotation_id',
+					'dependent' => true
 				)
 			 )
 			
@@ -78,6 +84,22 @@ class Quotation extends AppModel {
 		),
 
 	);
+
+	//new function for saving quotation
+	public function addQuotation($quotationData = null,$auth){
+		
+		$this->create();
+			
+		$quotationData['Quotation']['created_by'] = $auth;
+		$quotationData['Quotation']['modified_by'] = $auth;
+		$quotationData['Quotation']['uuid'] = time();
+		$quotationData['Quotation']['validity'] = $quotationData['Quotation']['validity_field'];
+		
+		$this->save($quotationData);
+
+		return $this->id;
+
+	}
 
 	public function saveInquiry($data,$auth)
 	{

@@ -67,6 +67,56 @@ jQuery(function($){
 		});
 			
 	});
+	//this function is for item detail
+	$('.select-item').change(function(){
+
+		var option = $(this).val();
+		console.log(option);
+		$.ajax({
+		url: serverPath + "sales/create_order/find_item_detail/"+option,
+		type: "get",
+		dataType: "json",
+		success: function(data) {
+			console.log(data);
+			if (data.length == 0){
+				$('#quantity').val('');
+				$('#unit_price').val('');	
+				$('#vat_price').val('');
+				$('#material').val('');	
+				$('#itemDetailId').val('');
+			}else{
+				$('#quantity').val(data.QuotationItemDetail.quantity);
+				$('#unit_price').val(data.QuotationItemDetail.unit_price);	
+				$('#vat_price').val(data.QuotationItemDetail.vat_price);
+				$('#material').val(data.QuotationItemDetail.material);
+				$('#itemDetailId').val(data.QuotationItemDetail.id);
+
+			}
+			
+		}
+		});
+			
+	});
+	// generate PO number
+	$('.generate-poNumber').change(function(){
+
+		if($(this).is( ":checked" ) == true){
+			
+            var data = "PO-" + new Date().getTime();
+           	// data.substr(0,-3);
+			$('#generate-poNumber').val(data);
+			
+			$('#generate-poNumber').attr('readonly','true');
+        }
+        
+        if($(this).is( ":checked" ) == false){
+			
+			$('#generate-poNumber').val('');
+			$('#generate-poNumber').removeAttr("readonly");
+           
+        }
+	
+	});
 
 	$('#itemCategory').change(function(){
 
