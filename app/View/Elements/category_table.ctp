@@ -16,7 +16,7 @@
                <?php echo ucfirst($CategoryDataList['ItemTypeHolder']['name']) ?>
                
             </td>
-            <td class="">
+            <td class="text-center">
                 
             
                   <?php echo date('M d, Y', strtotime($CategoryDataList['ItemCategoryHolder']['created'])); ?>

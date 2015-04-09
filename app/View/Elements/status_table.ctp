@@ -12,7 +12,7 @@
                <?php  echo ucfirst($StatusDataList['StatusFieldHolder']['status']) ?>
                
             </td>
-            <td class="">
+            <td class="text-center">
                 
             
                   <?php echo  date('M d, Y', strtotime($StatusDataList['StatusFieldHolder']['created'])); ?>
