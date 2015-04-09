@@ -27,7 +27,7 @@
 
         <li class="dropdown hidden-xs">
            
-            <?php echo $this->Html->link("<span class='count'>Packaging</span>", array('controller' => 'settings', 'action' => 'status'),array('escape' => false,'class' => 'btn')); ?>
+            <?php echo $this->Html->link("<span class='count'>Packaging</span>", array('controller' => 'settings', 'action' => 'packaging'),array('escape' => false,'class' => 'btn')); ?>
            
         </li>
         
@@ -38,7 +38,7 @@
 
         <li class="dropdown hidden-xs">
            
-            <?php echo $this->Html->link("<span class='count'>Payment</span>", array('controller' => 'settings', 'action' => 'status'),array('escape' => false,'class' => 'btn')); ?>
+            <?php echo $this->Html->link("<span class='count'>Payment</span>", array('controller' => 'settings', 'action' => 'payment_term'),array('escape' => false,'class' => 'btn')); ?>
            
         </li>
         

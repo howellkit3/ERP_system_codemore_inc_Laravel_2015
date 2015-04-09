@@ -55,14 +55,14 @@ class StatusFieldHolder extends AppModel {
     	}
 	} */
 
-	public function saveStatus($categoryData = null, $auth = null){
+	public function saveStatus($statusData = null, $auth = null){
 		//pr($categoryData); exit;
 		$this->create();
 
-        $categoryData['created_by'] = $auth;
-        $categoryData['modified_by'] = $auth;
+        $statusData['created_by'] = $auth;
+        $statusData['modified_by'] = $auth;
 
-    	if($this->save($categoryData)){
+    	if($this->save($statusData)){
     		return $this->id;
     	}
 	} 
