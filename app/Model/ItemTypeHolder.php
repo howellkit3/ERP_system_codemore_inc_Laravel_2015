@@ -45,7 +45,7 @@ class ItemTypeholder extends AppModel {
         $this->contain($model);
     }
 
-    public function bindStatus($model = array('Group')){
+  /*  public function bindStatus($model = array('Group')){
 
         $this->bindModel(array(
             
@@ -59,7 +59,7 @@ class ItemTypeholder extends AppModel {
         ));
 
         $this->contain($model);
-    }
+    } */
 
     public function saveItemType($categoryData = nunll,$categoryId = null){
         //pr($categoryData);exit();

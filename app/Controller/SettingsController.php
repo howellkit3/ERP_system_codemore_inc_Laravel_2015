@@ -72,7 +72,7 @@ class SettingsController extends AppController
 
         $userData = $this->Session->read('Auth');
 
-        $this->StatusFieldHolder->bindStatus(array('ItemTypeHolder'));
+        $this->StatusFieldHolder->bind(array('ItemTypeHolder'));
 
 
         $statusData = $this->StatusFieldHolder->find('all', array('order' => 'StatusFieldHolder.id DESC'));
