@@ -72,9 +72,6 @@ class SettingsController extends AppController
 
         $userData = $this->Session->read('Auth');
 
-        $this->StatusFieldHolder->bind(array('ItemTypeHolder'));
-
-
         $statusData = $this->StatusFieldHolder->find('all', array('order' => 'StatusFieldHolder.id DESC'));
         if ($this->request->is('post')) {
             
@@ -87,8 +84,7 @@ class SettingsController extends AppController
 
                 $this->id = $this->StatusFieldHolder->saveStatus($this->request->data['StatusFieldHolder'], $userData['User']['id']);
 
-                $this->StatusFieldHolder->ItemTypeHolder->saveItemType($this->request->data['id'], $this->id);
-
+            
                 $this->Session->setFlash(__('Add Status Complete.'));
 
                 $this->redirect(
