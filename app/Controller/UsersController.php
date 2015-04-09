@@ -19,10 +19,9 @@ class UsersController extends AppController
 	public function home() {
 		
 	}
-	public function index() {
-		
+	public function index() {	
 	}
-
+    
 	public function add() {
 
         $this->layout = 'add';
@@ -67,7 +66,10 @@ class UsersController extends AppController
         }
          
         // if we get the post information, try to authenticate
+        echo 'hello';
         if ($this->request->is('post')) {
+
+            pr($this->request->data);
             
 
             if ($this->Auth->login()) {

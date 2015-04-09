@@ -21,7 +21,7 @@
                    ?>
 
                     <div>
-                        <?php echo ucfirst($customerlist['ContactPerson'][0]['lastname']); ?>, 
+                        <?php  echo ucfirst($customerlist['ContactPerson'][0]['lastname']); ?>, 
                         <?php echo ucfirst($customerlist['ContactPerson'][0]['firstname']); ?> &nbsp;
                         <?php echo ucfirst($customerlist['ContactPerson'][0]['middlename']); ?>
                     </div>

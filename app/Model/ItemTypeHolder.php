@@ -45,6 +45,22 @@ class ItemTypeholder extends AppModel {
         $this->contain($model);
     }
 
+    public function bindStatus($model = array('Group')){
+
+        $this->bindModel(array(
+            
+            'belongsTo' => array(
+                'StatusFieldHolder' => array(
+                    'className' => 'StatusFieldHolder',
+                    'foreignKey' => 'id',
+                    'dependent' => true
+                ),
+            )
+        ));
+
+        $this->contain($model);
+    }
+
     public function saveItemType($categoryData = nunll,$categoryId = null){
         //pr($categoryData);exit();
         $this->create();

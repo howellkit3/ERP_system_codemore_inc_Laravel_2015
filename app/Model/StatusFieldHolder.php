@@ -7,11 +7,11 @@ App::uses('AuthComponent', 'Controller/Component');
  * User Model
  *
  */
-class ItemCategoryHolder extends AppModel {
+class StatusFieldHolder extends AppModel {
 
 	public $useDbConfig = 'default';
 
-    public $name = 'ItemCategoryHolder';
+    public $name = 'StatusFieldHolder';
 
     public $recursive = -1;
 
@@ -19,11 +19,7 @@ class ItemCategoryHolder extends AppModel {
 
     public $validate = array(
 
-		'name' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-			),
-		),
+		
 		'status' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
@@ -36,7 +32,7 @@ class ItemCategoryHolder extends AppModel {
 
 		$this->bindModel(array(
 			
-			'hasOne' => array(
+			'hasMany' => array(
 				'ItemTypeHolder' => array(
 					'className' => 'ItemTypeHolder',
 					'foreignKey' => 'item_category_holder_id',
@@ -47,7 +43,7 @@ class ItemCategoryHolder extends AppModel {
 
 		$this->contain($model);
 	}
-	public function saveCategory($categoryData = null, $auth = null){
+	/*public function saveCategory($categoryData = null, $auth = null){
 		
 		$this->create();
 
@@ -57,5 +53,17 @@ class ItemCategoryHolder extends AppModel {
     	if($this->save($categoryData)){
     		return $this->id;
     	}
-	}
+	} */
+
+	public function saveStatus($categoryData = null, $auth = null){
+		//pr($categoryData); exit;
+		$this->create();
+
+        $categoryData['created_by'] = $auth;
+        $categoryData['modified_by'] = $auth;
+
+    	if($this->save($categoryData)){
+    		return $this->id;
+    	}
+	} 
 }

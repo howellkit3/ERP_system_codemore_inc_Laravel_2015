@@ -24,12 +24,12 @@
             
             <div class="main-box-body clearfix">
 
-                <?php echo $this->Form->create('Customer',array('url'=>(array('controller' => 'customer_sales','action' => 'update')),'class' => 'form-horizontal'));
+                <?php echo $this->Form->create('Customer',array('url'=>(array('controller' => 'customer_sales','action' => 'update')),'class' => 'form-horizontal')); 
                    
                     echo $this->Form->input('Company.id', array('class' => 'form-control item_type',
                         'type' => 'hidden',
                         'value' => !empty($this->request->data['Company']['id']) ? $this->request->data['Company']['id'] : '' ,
-                        'label' => false));
+                        'label' => false)); 
                 ?>
 
                 <div class="row">
@@ -46,7 +46,7 @@
                                     <label for="inputEmail1" class="col-lg-2 control-label">Name</label>
                                     <div class="col-lg-9">
                                         <?php
-                                            echo $this->Form->input('Company.company_name', array('class' => 'form-control col-lg-6 required','label' => false));
+                                            echo $this->Form->input('Company.company_name', array('class' => 'form-control col-lg-6 required','label' => false)); 
                                         ?>
                                     </div>
                                 </div>
