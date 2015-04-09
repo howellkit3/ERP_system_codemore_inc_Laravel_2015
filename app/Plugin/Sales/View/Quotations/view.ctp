@@ -1,7 +1,7 @@
 <?php $this->Html->addCrumb('Sales', array('controller' => 'customer_sales', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Quotation', array('controller' => 'quotations', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('View', array('controller' => 'quotations', 'action' => 'view',$quotation['Quotation']['id'])); ?>
-<?php echo $this->Html->script('Sales.inquiry');?>
+<?php //echo $this->Html->script('Sales.inquiry');?>
 <div style="clear:both"></div>
 
 <?php echo $this->element('sales_option');?>

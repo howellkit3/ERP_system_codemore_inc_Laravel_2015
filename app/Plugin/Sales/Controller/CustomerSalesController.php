@@ -47,10 +47,11 @@ class CustomerSalesController extends SalesAppController {
             	
             	$this->request->data = $this->Company->formatData($this->request->data, $userData['User']['id']);
 
-
+            	$this->request->data['Company']['uuid'] = time();
+            	//pr($this->request->data['Company']['uuid']);exit();rand(100,999).
             	$this->request->data['Company']['created_by'] = $userData['User']['id'];
             	$this->request->data['Company']['modified_by'] = $userData['User']['id'];
-            	
+            	//pr($this->request->data);exit();
             	if ($this->Company->saveAssociated($this->request->data)) {
   
 					$contactPersonId = $this->Company->ContactPerson->saveContact($this->request->data['ContactPersonData'], $this->Company->id);
@@ -87,29 +88,32 @@ class CustomerSalesController extends SalesAppController {
 		$userData = $this->Session->read('Auth');
 	
 		if ($this->request->is('post')) {
-
+			//pr($this->request->data);die;
             if (!empty($this->request->data)) {
 
             	$this->Company->bind(array('Address','Contact','Email','ContactPerson'));
-
+            	
             	$this->request->data = $this->Company->formatData($this->request->data, $userData['User']['id']);
 
+            	$this->request->data['Company']['uuid'] = time();
+            	//pr($this->request->data['Company']['uuid']);exit();rand(100,999).
             	$this->request->data['Company']['created_by'] = $userData['User']['id'];
             	$this->request->data['Company']['modified_by'] = $userData['User']['id'];
-            	
+            	//pr($this->request->data);exit();
             	if ($this->Company->saveAssociated($this->request->data)) {
   
-					$contactPersonId = $this->Company->ContactPerson->saveContact($this->request->data['ContactPersonData'], $this->Company->id,$userData['User']['id']);
-            	
+					$contactPersonId = $this->Company->ContactPerson->saveContact($this->request->data['ContactPersonData'], $this->Company->id);
+					
+					
             		$this->Company->Contact->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
-            		$this->Company->Address->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
+            		//$this->Company->Address->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
             		$this->Company->Email->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
 
 					if($this->request->is('ajax')){
  							echo $this->Company->getLastInsertID();
  							exit();
 					}
-            		$this->Session->setFlash(__('Customer Information Successfully Updated.'));
+            		$this->Session->setFlash(__('Customer Information Succesfully updated.'));
 
 	            	$this->redirect(
 	                    array('controller' => 'customer_sales', 'action' => 'index')
@@ -420,4 +424,6 @@ class CustomerSalesController extends SalesAppController {
 			}
 		}
 	}
+
+	
 }

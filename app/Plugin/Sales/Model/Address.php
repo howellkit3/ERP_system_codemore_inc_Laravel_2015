@@ -50,8 +50,10 @@ class Address extends AppModel {
 
 	public function saveContact($data, $contact_id)
 	{
+
 		foreach ($data as $key => $addressData)
 		{
+			
 			$this->create();
 			foreach ($addressData[$this->name] as $key => $addressValue) 
 			{

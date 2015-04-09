@@ -11,7 +11,7 @@
 						Make Quotation
 					</h1>
 					<?php 
-                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'quotations', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'customer_sales', 'action' => 'review_inquiry',!empty($inquiry['Inquiry']['id']) ? $inquiry['Inquiry']['id'] : ''),array('class' =>'btn btn-primary pull-right','escape' => false));
                     ?>
 				</header>
 

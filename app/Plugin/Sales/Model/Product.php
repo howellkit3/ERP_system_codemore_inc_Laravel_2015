@@ -25,6 +25,11 @@ class Product extends AppModel {
 					'className' => 'Sales.Quotation',
 					'foreignKey' => 'product_id',
 					'dependent' => true
+				),
+				'Company' => array(
+					'className' => 'Sales.Company',
+					'foreignKey' => 'company_id',
+					'dependent' => true
 				)
 			),
 			'hasMany' => array(

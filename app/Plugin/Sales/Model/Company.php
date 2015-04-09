@@ -88,23 +88,23 @@ class Company extends AppModel {
 			),
 		),
 
-		'description' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				'message' => 'Required fields.',
-			),
-		),
+		// 'description' => array(
+		// 	'notEmpty' => array(
+		// 		'rule' => array('notEmpty'),
+		// 		'message' => 'Required fields.',
+		// 	),
+		// ),
 
-		'tin' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				'message' => 'Required fields.',
-			),
-			'numeric'=> array(
-	            'rule' => 'numeric',
-	            'message'=> 'Zip Code should be numeric'
-	        ),
-		),
+		// 'tin' => array(
+		// 	'notEmpty' => array(
+		// 		'rule' => array('notEmpty'),
+		// 		'message' => 'Required fields.',
+		// 	),
+		// 	'numeric'=> array(
+	 //            'rule' => 'numeric',
+	 //            'message'=> 'Zip Code should be numeric'
+	 //        ),
+		// ),
 		'payment_term' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
@@ -118,29 +118,29 @@ class Company extends AppModel {
 				'message' => 'Required fields.',
 			),
 		),
-		'state_province' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				'message' => 'Required fields.',
-			),
-		),
-		'city' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				'message' => 'Required fields.',
-			),
-		),
-		'country' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				'message' => 'Required fields.',
-			),
-		),
+		// 'state_province' => array(
+		// 	'notEmpty' => array(
+		// 		'rule' => array('notEmpty'),
+		// 		'message' => 'Required fields.',
+		// 	),
+		// ),
+		// 'city' => array(
+		// 	'notEmpty' => array(
+		// 		'rule' => array('notEmpty'),
+		// 		'message' => 'Required fields.',
+		// 	),
+		// ),
+		// 'country' => array(
+		// 	'notEmpty' => array(
+		// 		'rule' => array('notEmpty'),
+		// 		'message' => 'Required fields.',
+		// 	),
+		// ),
 		'zip_code' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				'message' => 'Required fields.',
-			),
+			// 'notEmpty' => array(
+			// 	'rule' => array('notEmpty'),
+			// 	'message' => 'Required fields.',
+			// ),
 			'numeric'=> array(
 	            'rule' => 'numeric',
 	            'message'=> 'Zip Code should be numeric'
@@ -177,16 +177,16 @@ class Company extends AppModel {
 				'rule' => array('email'),
 			),
 		),
-		'number' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				'message' => 'Required fields.',
-			),
-			'numeric'=> array(
-	            'rule' => 'numeric',
-	            'message'=> 'It should be numeric'
-	        ),
-		),
+		// 'number' => array(
+		// 	'notEmpty' => array(
+		// 		'rule' => array('notEmpty'),
+		// 		'message' => 'Required fields.',
+		// 	),
+		// 	'numeric'=> array(
+	 //            'rule' => 'numeric',
+	 //            'message'=> 'It should be numeric'
+	 //        ),
+		// ),
 		// 'number' => array(
 		// 	'rule' => 'numeric',
 		// 	'allowEmpty' => true, //validate only if not empty

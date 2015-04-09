@@ -3,6 +3,9 @@
 //     var validator = $( "#CompanyAddForm" ).validate();
 //     validator.form();
 // }
+jQuery(function($){
+    $('.remove').hide();
+});
 function fieldReset($form, section)
 {
     

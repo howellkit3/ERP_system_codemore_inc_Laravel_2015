@@ -9,7 +9,7 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <div class="main-box clearfix body-pad">
+        <!-- <div class="main-box clearfix body-pad"> -->
 			<div class="row" id="user-profile">
 				<div class="col-lg-3 col-md-4 col-sm-4">
 					<div class="main-box clearfix">
@@ -284,7 +284,7 @@
 			                       			 echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg">
 			                       			 						</i> Add Product ', array( 
 			                       			 						'controller' => 'products', 
-			                       			 						'action' => 'add', 
+			                       			 						'action' => 'create', 
 			                       			 						$company['Company']['id']), array(
 			                       			 						'class' =>'btn btn-primary pull-right',
 			                       			 						'escape' => false
@@ -299,17 +299,17 @@
 					                   
 					                            </tr>
 					                        </thead>
-					                        <?php
-						                		foreach($company['Product'] as $companyProduct) { ?>
+					                       <!--  <?php
+						                		//foreach($company['Product'] as $companyProduct) { ?>
 							                        <tbody aria-relevant="all" aria-live="polite" role="alert">
 						                         		<tr>
 						                         			
 						                         			<td>
-						                         				<?php echo $companyProduct['product_name']; ?>
+						                         				<?php //echo $companyProduct['product_name']; ?>
 						                         			</td>
 						                         			<td>
 						                         				<i class="fa fa-clock-o">
-						                         				<?php echo date('M d, Y', strtotime($companyProduct['created'])); 
+						                         				<?php //echo date('M d, Y', strtotime($companyProduct['created'])); 
 						                         				?>
 						                         			</td>
 						                         			<td>
@@ -321,8 +321,8 @@
 																		                    		array( 
 																		                    'controller' => 'products', 
 																		                    'action' => 'view',
-																		                    $company['Company']['id'],
-																		                    $companyProduct['id']
+																		                    //$company['Company']['id'],
+																		                    //$companyProduct['id']
 																		                    ), 
 																		                    		array( 
 																		                    'class' =>' table-link', 
@@ -332,7 +332,7 @@
 
 						                         		</tr>
 							                        </tbody>
-					                        <?php } ?>
+					                        <?php //} ?> -->
 					                    </table>
 									</div>
 								</div>
@@ -342,7 +342,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		<!-- </div> -->
 	</div>
 </div>
 <?php echo $this->element('modals'); ?>

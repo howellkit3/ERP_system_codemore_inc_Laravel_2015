@@ -3,7 +3,7 @@ App::uses('AppController', 'Controller');
 App::uses('SessionComponent', 'Controller/Component');
 
 class ProductsController extends SalesAppController {
-	public $uses = array('Sales.Company','Sales.ItemCategory','Sales.ItemType','Sales.ProcessField');
+	public $uses = array('Sales.Company','Sales.ItemCategoryHolder','Sales.ItemType','Sales.ProcessField');
 
 	public function add($companyId = null){
 		
@@ -223,6 +223,26 @@ class ProductsController extends SalesAppController {
 	                             ));
 	        }
         }
+	}
+
+	public function create($companyId = null){
+		
+		$userData = $this->Session->read('Auth');
+		// $this->Company->bind(array('Product'));
+		$companyName = $this->Company->find('first', array(
+										'conditions' => array(
+											'id' =>  $companyId)
+									));
+		
+		$this->loadModel('ItemCategoryHolder');
+
+		$this->ItemCategoryHolder->bind(array('ItemTypeHolder'));
+
+		$itemCategoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name')));
+		$itemTypeData = $this->ItemCategoryHolder->ItemTypeHolder->find('list', array('fields' => array('id', 'name')));
+
+		//pr($itemCategoryData);exit();
+		$this->set(compact('companyName','itemCategoryData','itemTypeData'));
 	}
 
 }

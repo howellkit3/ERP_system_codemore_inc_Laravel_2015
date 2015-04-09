@@ -64,6 +64,7 @@ class Inquiry extends AppModel {
 			$data['Inquiry']['company_id'] = $data['Company']['id'];
 			$data['Inquiry']['created_by'] = $auth;
 			$data['Inquiry']['modified_by'] = $auth;
+			$data['Inquiry']['uuid'] = time();
 		
 		$this->saveAll($data);
 		return $this->id;
