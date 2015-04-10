@@ -364,6 +364,23 @@ public function payment_term() {
                 $this->request->data = $post;
             }
     }
+    public function deleteProduct($id) {
+      
+       /* if ($this->request->is('get')) {
+            throw new MethodNotAllowedException();
+        } */
+        if ($this->Product->delete($id)) {
+            $this->Session->setFlash(
+                __('Successfully deleted.', h($id))
+            );
+        } else {
+            $this->Session->setFlash(
+                __('The post cannot be deleted.', h($id))
+            );
+        }
+
+        return $this->redirect(array(' controller' => 'products', 'action' => 'index'));
+    }
 
 }
             

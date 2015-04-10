@@ -44,6 +44,32 @@ class Product extends AppModel {
 		$this->contain($model);
 	}
 
+	public $validate = array(
+
+		'uuid' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'message' => 'Required fields.',
+			),
+			'numeric'=> array(
+	            'rule' => 'numeric',
+	            'message'=> 'It should be numeric'
+	        ),
+		),
+
+		'name' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'message' => 'Required fields.',
+			),	
+		)
+
+
+
+
+
+	);
+
 	public function addProduct($data,$auth){
 		
 		$this->create();
@@ -88,5 +114,7 @@ class Product extends AppModel {
 		}
 
 	}
+
+
 
 }

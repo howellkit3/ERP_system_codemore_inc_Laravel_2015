@@ -31,7 +31,13 @@
         <!-- </li> -->
 
         <li class="dropdown hidden-xs">
-            <?php echo $this->Html->link("<span class='count'>Settings</span>", array('controller' => 'settings', 'action' => 'index'),array('escape' => false,'class' => 'btn')); ?>
+            <?php echo $this->Html->link("<span class='count'>Settings</span>", array('controller' => 'customer_sales', 'action' => 'index'),array('escape' => false,'class' => 'btn')); ?>
+        </li>
+
+        <li class="dropdown hidden-xs">
+            
+            <?php echo $this->Html->link("<span class='count'>Products</span>", array('controller' => 'products', 'action' => 'create_product'),array('escape' => false,'class' => 'btn')); ?>
+        
         </li>
    
     </ul>

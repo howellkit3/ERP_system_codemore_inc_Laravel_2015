@@ -2,6 +2,7 @@
 <?php $this->Html->addCrumb('Inquiry', array('controller' => 'customer_sales', 'action' => 'inquiry')); ?>
 <?php echo $this->Html->script('Sales.inquiry');?>
 <div style="clear:both"></div>
+
 <?php echo $this->element('sales_option');?><br><br>
       
 <div class="row">
@@ -9,6 +10,15 @@
         <div class="main-box clearfix body-pad">
             <header class="main-box-header clearfix">
                 <h2 class="pull-left"><b>Product List</b></h2>
+                
+                <div class="filter-block pull-right">
+                    
+                    <?php
+
+                        echo $this->Html->link('<i class="fa fa-plus-circle fa-lg"></i> Add Product ', array('controller' => 'customer_sales', 'action' => 'product_form'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                       
+                    ?>
+                </div>
             </header>
             
             <div class="main-box-body clearfix">
@@ -16,17 +26,16 @@
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th><a href="#"><span>Item Number</span></a></th>
-                                <th><a href="#"><span>Product Name</span></a></th>
-                                <th><a href="#"><span>Item Category</span></a></th>
-                                <th><a href="#"><span>Item Status</span></a></th>
+                                <th><a href="#"><span>Company</span></a></th>
+                                <th><a href="#"><span>Request Inquiry</span></a></th>
                                 <th><a href="#"><span>Remarks</span></a></th>
+                                <th class="text-center"><a href="#"><span>Quotation</span></a></th>
                                 <th><a href="#"><span>Created</span></a></th>
                                 <th>Action</th>
                             </tr>
                         </thead>
 
-                        <?php echo $this->element('product_table'); ?>
+                        <?php echo $this->element('inquiry_table'); ?>
 
                     </table>
                     <hr>
@@ -47,4 +56,3 @@
         </div>
     </div>
 </div>
-

@@ -66,4 +66,39 @@ class SalesOrdersController extends SalesAppController {
 
 	}
 
+	  public function status() {
+
+        $userData = $this->Session->read('Auth');
+
+        $productData = $this->AddProduct->find('all', array('order' => 'StatusFieldHolder.id DESC'));
+        if ($this->request->is('post')) {
+            
+            if (!empty($this->request->data)) {
+               // pr($this->request->data); exit;
+
+              //  pr($this->StatusFieldHolder->ItemTypeHolder->saveItemType($this->request->data['id'], $this->id));exit();
+
+                $this->StatusFieldHolder->create();
+
+                $this->id = $this->StatusFieldHolder->saveStatus($this->request->data['StatusFieldHolder'], $userData['User']['id']);
+
+            
+                $this->Session->setFlash(__('Add Status Complete.'));
+
+                $this->redirect(
+                    array('controller' => 'settings', 'action' => 'status')
+                );
+            }
+        }
+
+       // $categoryData = $this->ItemCategoryHolder->find('all', array('order' => 'StatusFieldHolder.id DESC'));
+        $this->set(compact('productData'));
+        //$this->set(compact('categoryData'));
+    }
+	
+
+
+
+	
+
 }

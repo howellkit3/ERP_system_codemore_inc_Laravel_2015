@@ -425,5 +425,72 @@ class CustomerSalesController extends SalesAppController {
 		}
 	}
 
+	public function product_form(){
+	
+		$userData = $this->Session->read('Auth');
+
+		$this->Company->bind(array('Contact','Email','Address','ContactPerson'));
+
+
+		//$companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')));
+
+		$this->loadModel('ItemCategoryHolder');
+
+		$categoryname = $this->ItemCategoryHolder->find('list', array('fields' => array('name')));
+
+		$this->loadModel('StatusFieldHolder');
+
+		$statusname = $this->StatusFieldHolder->find('list', array('fields' => array('status')));
+
+
+		$this->set('categoryname', $categoryname);
+
+		$this->set('statusname', $statusname);
+
+		if ($this->request->is('post')) {
+
+            if (!empty($this->request->data)) {
+
+            	$this->Company->bind(array('Inquiry'));
+
+            	$this->request->data = $this->Company->Inquiry->saveInquiry($this->request->data, $userData['User']['id']);
+
+            	$this->Session->setFlash(__('Request Inquiry Success.'));
+            	$this->redirect(
+					array('controller' => 'customer_sales', 'action' => 'inquiry')
+				);
+
+            }
+        }
+
+	}
+
+	public function add_product(){
+
+		$userData = $this->Session->read('Auth');
+
+		$this->loadModel('Sales.Inquiry');
+
+		$this->Inquiry->bind(array('Quotation'));
+
+		$inquiryData = $this->Inquiry->find('all', array(
+								    			'order' => array('Inquiry.id DESC'),
+								    			'contain' => array(
+								    				'Quotation' => array(
+								    					'conditions' => array('Quotation.inquiry_id' => 'Inquiry.id')
+								    				)
+								    			)
+								    		)
+								    	);
+
+		
+		$companyData = $this->Company->find('list',array('fields' => array('id', 'company_name')));
+
+		$this->set(compact('companyData','inquiryData'));
+		
+	}
+
+
+
 	
 }
