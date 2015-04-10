@@ -9,7 +9,13 @@
         <div class="main-box clearfix body-pad">
             <header class="main-box-header clearfix">
                 <h2 class="pull-left"><b>Product List</b></h2>
+                 <?php
+
+                        echo $this->Html->link('<i class="fa fa-plus-circle fa-lg"></i> Add Product ', array('controller' => 'products', 'action' => 'create_product'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                       
+                    ?>
             </header>
+           
             
             <div class="main-box-body clearfix">
                 <div class="table-responsive">
