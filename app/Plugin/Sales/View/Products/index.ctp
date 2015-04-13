@@ -15,9 +15,7 @@
                        
                     ?>
             </header>
-           
-            
-            <div class="main-box-body clearfix">
+           <div class="main-box-body clearfix">
                 <div class="table-responsive">
                     <table class="table table-striped table-hover">
                         <thead>
