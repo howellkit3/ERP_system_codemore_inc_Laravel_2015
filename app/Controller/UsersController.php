@@ -66,11 +66,8 @@ class UsersController extends AppController
         }
          
         // if we get the post information, try to authenticate
-        echo 'hello';
+        
         if ($this->request->is('post')) {
-
-            pr($this->request->data);
-            
 
             if ($this->Auth->login()) {
 
