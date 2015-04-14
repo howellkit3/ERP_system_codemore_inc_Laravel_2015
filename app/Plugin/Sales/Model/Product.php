@@ -11,6 +11,7 @@ class Product extends AppModel {
 	public $useDbConfig = 'koufu_sale';
     public $name = 'Product';
     public $actsAs = array('Containable');
+    
     public function bind($model = array('Group')){
 
 		$this->bindModel(array(

@@ -1,5 +1,3 @@
-
-
 <?php foreach ($categoryData as $CategoryDataList ):?>
     
     <tbody aria-relevant="all" aria-live="polite" role="alert">
@@ -11,6 +9,8 @@
                 <?php echo ucfirst($CategoryDataList['ItemCategoryHolder']['name']) ?>
             </td>
           
+        
+
             <td class="text-center">
             
                   <?php echo date('M d, Y', strtotime($CategoryDataList['ItemCategoryHolder']['created'])); ?>

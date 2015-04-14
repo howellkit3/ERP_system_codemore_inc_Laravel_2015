@@ -38,11 +38,17 @@ class SettingsController extends AppController
 
         $this->loadModel('ItemCategoryHolder');
 
+        $this->loadModel('ItemTypeHolder');
+
         $userData = $this->Session->read('Auth');
+
+        $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
 
         $categoryData = $this->ItemCategoryHolder->find('all');
 
         $categoryDataDropList = $this->ItemCategoryHolder->find('list');
+
+        $nameTypeData = $this->ItemTypeHolder->find('all');
 
 
         if ($this->request->is('post')) {
@@ -54,12 +60,13 @@ class SettingsController extends AppController
                 $this->Session->setFlash(__('Add Category Complete.'));
 
                 $this->redirect(
+
                     array('controller' => 'settings', 'action' => 'category')
                 );
             }
         }
 
-        $this->set(compact('categoryDataDropList', 'categoryData'));
+        $this->set(compact('categoryDataDropList', 'categoryData','nameTypeData' ));
     }
 
     public function name_type() {
@@ -70,15 +77,20 @@ class SettingsController extends AppController
 
         $nameTypeData = $this->ItemTypeHolder->find('all');
 
+        $categoryTable = $this->ItemCategoryHolder->find('list', array('ItemCategoryHolder.name'));
+
             if ($this->request->is('post')) {
                 
                 if (!empty($this->request->data)) {
+
+                    $this->ItemTypeHolder->save($this->request->data);
 
                     $this->ItemTypeHolder->save($this->request->data);
            
                     $this->Session->setFlash(__('Add Name Type Complete.'));
 
                     $this->redirect(
+
                         array('controller' => 'settings', 'action' => 'category')
                     );
                 }
@@ -220,10 +232,7 @@ class SettingsController extends AppController
             if ($this->request->is('post')) {
                 
                 if (!empty($this->request->data)) {
-                   // pr($this->request->data); exit;
-
-                  //  pr($this->StatusFieldHolder->ItemTypeHolder->saveItemType($this->request->data['id'], $this->id));exit();
-
+                   
                     $this->PackagingHolder->create();
 
                     $this->id = $this->PackagingHolder->savePackaging($this->request->data['PackagingHolder'], $userData['User']['id']);
@@ -236,9 +245,7 @@ class SettingsController extends AppController
                 }
             }
 
-       // $categoryData = $this->ItemCategoryHolder->find('all', array('order' => 'StatusFieldHolder.id DESC'));
         $this->set(compact('packagingData'));
-        //$this->set(compact('categoryData'));
     }
 
     public function packaging_edit($id = null) {
@@ -246,7 +253,6 @@ class SettingsController extends AppController
             if (!$id) {
                 throw new NotFoundException(__('Invalid post'));
             }
-
 
             $post = $this->PackagingHolder->findById($id);
             if (!$post) {
@@ -259,30 +265,33 @@ class SettingsController extends AppController
                 if ($this->StatusFieldHolder->save($this->request->data)) {
 
                     $this->PackagingHolder->save($this->request->data);
-                   // $this->PackagingHolder->bind(array('id'));
-                   // $this->PackagingHolder->ItemTypeHolder->save($this->request->data);
+
                     $this->Session->setFlash(__('Package has been updated.'));
+
                     return $this->redirect(array('action' => 'packaging'));
                 }
+
                 $this->Session->setFlash(__('Unable to update your post.'));
             }
 
             if (!$this->request->data) {
+
                 $this->request->data = $post;
             }
     }
 
     public function deletePackaging($id) {
       
-       /* if ($this->request->is('get')) {
-            throw new MethodNotAllowedException();
-        } */
         if ($this->PackagingHolder->delete($id)) {
+
             $this->Session->setFlash(
+
                 __('Successfully deleted.', h($id))
             );
+
         } else {
             $this->Session->setFlash(
+
                 __('The post cannot be deleted.', h($id))
             );
         }
@@ -298,39 +307,36 @@ class SettingsController extends AppController
                 if ($this->request->is('post')) {
                     
                     if (!empty($this->request->data)) {
-                       // pr($this->request->data); exit;
-
-                      //  pr($this->StatusFieldHolder->ItemTypeHolder->saveItemType($this->request->data['id'], $this->id));exit();
 
                         $this->PaymentTermHolder->create();
 
                         $this->id = $this->PaymentTermHolder->savePaymentTerm($this->request->data['PaymentTermHolder'], $userData['User']['id']);
 
-                    
                         $this->Session->setFlash(__('Add Package Complete.'));
 
                         $this->redirect(
+
                             array('controller' => 'settings', 'action' => 'payment_term')
                         );
                     }
                 }
 
-               // $categoryData = $this->ItemCategoryHolder->find('all', array('order' => 'StatusFieldHolder.id DESC'));
                 $this->set(compact('paymentTermData'));
-                //$this->set(compact('categoryData'));
     }
 
     public function deletePaymentTerm($id) {
       
-       /* if ($this->request->is('get')) {
-            throw new MethodNotAllowedException();
-        } */
         if ($this->PaymentTermHolder->delete($id)) {
+
             $this->Session->setFlash(
+
                 __('Successfully deleted.', h($id))
             );
+
         } else {
+
             $this->Session->setFlash(
+
                 __('The post cannot be deleted.', h($id))
             );
         }
@@ -344,9 +350,6 @@ class SettingsController extends AppController
                 throw new NotFoundException(__('Invalid post'));
             }
 
-             //$this->PackagingHolder->bind(array('ItemTypeHolder'));
-
-
             $post = $this->PaymentTermHolder->findById($id);
             if (!$post) {
                 throw new NotFoundException(__('Invalid post'));
@@ -358,9 +361,9 @@ class SettingsController extends AppController
                 if ($this->PaymentTermHolder->save($this->request->data)) {
 
                     $this->PaymentTermHolder->save($this->request->data);
-                   // $this->PackagingHolder->bind(array('id'));
-                   // $this->PackagingHolder->ItemTypeHolder->save($this->request->data);
+
                     $this->Session->setFlash(__('Payment Term has been updated.'));
+
                     return $this->redirect(array('action' => 'payment'));
                 }
                 $this->Session->setFlash(__('Unable to update your post.'));
@@ -373,10 +376,8 @@ class SettingsController extends AppController
 
     public function deleteProduct($id) {
       
-       /* if ($this->request->is('get')) {
-            throw new MethodNotAllowedException();
-        } */
         if ($this->Product->delete($id)) {
+            
             $this->Session->setFlash(
                 __('Successfully deleted.', h($id))
             );
