@@ -16,35 +16,6 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`koufu_delivery_system` /*!40100 DEFAULT
 
 USE `koufu_delivery_system`;
 
-/*Table structure for table `deliveries` */
-
-DROP TABLE IF EXISTS `deliveries`;
-
-CREATE TABLE `deliveries` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `sales_order_id` varchar(100) DEFAULT NULL,
-  `delivery_details_id` int(11) DEFAULT NULL,
-  `description` varchar(100) DEFAULT NULL,
-  `status` varchar(100) DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
-  `modified_by` int(11) DEFAULT NULL,
-  `modified` datetime DEFAULT NULL,
-  `created` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
-
-/*Table structure for table `delivery_details` */
-
-DROP TABLE IF EXISTS `delivery_details`;
-
-CREATE TABLE `delivery_details` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `description` varchar(100) DEFAULT NULL,
-  `modified` datetime DEFAULT NULL,
-  `created` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
-
 /*Table structure for table `schedules` */
 
 DROP TABLE IF EXISTS `schedules`;
@@ -62,7 +33,7 @@ CREATE TABLE `schedules` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 /*Table structure for table `truck_schedules` */
 
@@ -81,7 +52,7 @@ CREATE TABLE `truck_schedules` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Table structure for table `trucks` */
 
