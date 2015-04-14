@@ -1,24 +1,45 @@
 /*
+
 SQLyog Ultimate v8.55 
 MySQL - 5.6.21 : Database - koufu_delivery_system
+
 *********************************************************************
+
 */
+
+
 
 /*!40101 SET NAMES utf8 */;
 
+
+
 /*!40101 SET SQL_MODE=''*/;
 
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`koufu_delivery_system` /*!40100 DEFAULT CHARACTER SET latin1 */;
 
-USE `koufu_delivery_system`;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`koufu_delivery` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+
+
+USE `koufu_delivery`;
+
+
 
 /*Table structure for table `deliveries` */
 
+
+
 DROP TABLE IF EXISTS `deliveries`;
+
+
 
 CREATE TABLE `deliveries` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -31,11 +52,21 @@ CREATE TABLE `deliveries` (
   `modified` datetime DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+/*Data for the table `deliveries` */
+
+
 
 /*Table structure for table `delivery_details` */
 
+
+
 DROP TABLE IF EXISTS `delivery_details`;
+
+
 
 CREATE TABLE `delivery_details` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -43,15 +74,26 @@ CREATE TABLE `delivery_details` (
   `modified` datetime DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+/*Data for the table `delivery_details` */
+
+
 
 /*Table structure for table `schedules` */
 
+
+
 DROP TABLE IF EXISTS `schedules`;
+
+
 
 CREATE TABLE `schedules` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `sales_order_id` varchar(100) DEFAULT NULL,
+  `delivery_no` varchar(100) DEFAULT NULL,
   `truck_id` int(11) DEFAULT NULL,
   `schedule` varchar(100) DEFAULT NULL,
   `location` varchar(100) DEFAULT NULL,
@@ -62,11 +104,21 @@ CREATE TABLE `schedules` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+/*Data for the table `schedules` */
+
+
 
 /*Table structure for table `truck_schedules` */
 
+
+
 DROP TABLE IF EXISTS `truck_schedules`;
+
+
 
 CREATE TABLE `truck_schedules` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -81,11 +133,21 @@ CREATE TABLE `truck_schedules` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+/*Data for the table `truck_schedules` */
+
+
 
 /*Table structure for table `trucks` */
 
+
+
 DROP TABLE IF EXISTS `trucks`;
+
+
 
 CREATE TABLE `trucks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -100,9 +162,19 @@ CREATE TABLE `trucks` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+/*Data for the table `trucks` */
+
+
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
