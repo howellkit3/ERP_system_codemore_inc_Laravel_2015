@@ -47,6 +47,7 @@ class ItemCategoryHolder extends AppModel {
 
 		$this->contain($model);
 	}
+	
 	public function saveCategory($categoryData = null, $auth = null){
 		
 		$this->create();

@@ -43,25 +43,12 @@ class ItemTypeholder extends AppModel {
         ));
 
         $this->contain($model);
-    }
+    } 
 
-  /*  public function bindStatus($model = array('Group')){
 
-        $this->bindModel(array(
-            
-            'belongsTo' => array(
-                'StatusFieldHolder' => array(
-                    'className' => 'StatusFieldHolder',
-                    'foreignKey' => 'id',
-                    'dependent' => true
-                ),
-            )
-        ));
 
-        $this->contain($model);
-    } */
 
-    public function saveItemType($categoryData = nunll,$categoryId = null){
+    public function saveItemType($categoryData = null,$categoryId = null){
         //pr($categoryData);exit();
         $this->create();
 
@@ -69,6 +56,17 @@ class ItemTypeholder extends AppModel {
         
 
         if($this->save($categoryData)){
+            return $this->id;
+        }
+    }
+
+    public function saveType($typeData = null, $auth = null){
+        $this->create();
+
+        $typeData['created_by'] = $auth;
+        $typeData['modified_by'] = $auth;
+
+        if($this->save($typeData)){
             return $this->id;
         }
     }
