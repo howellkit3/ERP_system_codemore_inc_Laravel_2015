@@ -169,6 +169,17 @@ class ProductsController extends SalesAppController {
 	}
 
 	public function edit($companyId = null,$productId){
+
+		$this->loadModel('ItemCategoryHolder');
+
+		$this->loadModel('Sales.Company');
+@
+		$this->loadModel('Sales.Product');
+
+		$this->loadModel('Sales.CustomField');
+
+
+
 		$itemCategory = $this->ItemCategory->find('list', array(
 													'fields' => array(
 														'id','category_name'),
@@ -199,6 +210,35 @@ class ProductsController extends SalesAppController {
 														'id NOT' => array(3,13,11)
 													)
 												));
+
+		 if (!$id) {
+
+                throw new NotFoundException(__('Invalid post'));
+            }
+
+            $post = $this->ItemTypeHolder->findById($id,  array('order' => 'ItemTypeHolder.id DESC'));
+
+            if (!$post) {
+                throw new NotFoundException(__('Invalid post'));
+            }
+
+            if ($this->request->is(array('post', 'put'))) {
+                $this->Product->id = $id;
+
+                if ($this->Product->save($this->request->data)) {
+
+                    $this->Product->save($this->request->data);
+                    //$this->Product->bind(array('Product'));
+                    //$this->Product->ItemCategoryHolder->save($this->request->data);
+                    $this->Session->setFlash(__('Type has been updated.'));
+                    return $this->redirect(array('action' => 'category'));
+                }
+                $this->Session->setFlash(__('Unable to update your post.'));
+            }
+
+            if (!$this->request->data) {
+                $this->request->data = $post;
+            }
 
 		$this->set(compact('companyName','itemCategory','customField','productDetails'));
 
@@ -287,6 +327,8 @@ class ProductsController extends SalesAppController {
 		$productData = $this->Product->find('all',array(
     		'order' => array('Product.id DESC')));
 
+		//pr($productData);
+
 		$this->set(compact('productData'));
 		
 	}
@@ -363,39 +405,6 @@ class ProductsController extends SalesAppController {
         }
 
         return $this->redirect(array(' controller' => 'products', 'action' => 'index'));
-    }
-
-
-     public function product_edit($id = null) {
-            if (!$id) {
-                throw new NotFoundException(__('Invalid post'));
-            }
-
-             $this->Product->bind(array('Product'));
-
-
-            $post = $this->Product->findById($id);
-            if (!$post) {
-                throw new NotFoundException(__('Invalid post'));
-            }
-
-            if ($this->request->is(array('post', 'put'))) {
-                $this->Product->id = $id;
-
-                if ($this->Product->save($this->request->data)) {
-
-                    $this->Product->save($this->request->data);
-                    $this->Product->bind(array('id'));
-                    $this->Product->ItemTypeHolder->save($this->request->data);
-                    $this->Session->setFlash(__('Status has been updated.'));
-                    return $this->redirect(array(' controller' => 'products', 'action' => 'index'));
-                }
-                $this->Session->setFlash(__('Unable to update your post.'));
-            }
-
-            if (!$this->request->data) {
-                $this->request->data = $post;
-            }
     }
 
 }

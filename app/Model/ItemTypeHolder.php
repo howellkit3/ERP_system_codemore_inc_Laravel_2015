@@ -25,6 +25,18 @@ class ItemTypeholder extends AppModel {
             'notEmpty' => array(
                 'rule' => array('notEmpty'),
             ),
+        ),
+
+        'status' => array(
+            'notEmpty' => array(
+                'rule' => array('notEmpty'),
+            ),
+        ),
+
+        'category' => array(
+            'notEmpty' => array(
+                'rule' => array('notEmpty'),
+            ),
         )
     
     );
@@ -44,9 +56,6 @@ class ItemTypeholder extends AppModel {
 
         $this->contain($model);
     } 
-
-
-
 
     public function saveItemType($categoryData = null,$categoryId = null){
         //pr($categoryData);exit();

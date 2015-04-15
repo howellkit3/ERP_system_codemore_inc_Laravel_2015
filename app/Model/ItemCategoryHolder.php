@@ -28,7 +28,15 @@ class ItemCategoryHolder extends AppModel {
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 			),
+		),
+
+		'category' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+			),
 		)
+
+
 	
 	);
 

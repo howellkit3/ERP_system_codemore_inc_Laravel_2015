@@ -28,7 +28,7 @@
 							<div class="main-box-body clearfix">
 								<div class="form-horizontal">
 									<div class="form-group">
-										<label class="col-lg-2 control-label">Status</label>
+										<label class="col-lg-2 control-label">Package</label>
 										<div class="col-lg-8">
 											<?php 
 	                                            echo $this->Form->input('PackagingHolder.name', array(
@@ -50,10 +50,6 @@
 
 										</div>
 									</div>
-
-									
-
-								
 
 									<div class="form-group">
 										<div class="col-lg-2"></div>

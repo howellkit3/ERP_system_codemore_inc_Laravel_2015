@@ -28,23 +28,13 @@
 							<div class="main-box-body clearfix">
 								<div class="form-horizontal">
 									<div class="form-group">
-										<label class="col-lg-2 control-label">Status</label>
+										<label class="col-lg-2 control-label">Package</label>
 										<div class="col-lg-8">
 											<?php 
 	                                            echo $this->Form->input('PackagingHolder.name', array(
 	                                            								'class' => 'form-control item_type',
 							                                                    'label' => false,
 							                                                    'placeholder' => 'Package Name'));
-	                                            /* echo $this->Form->input('PackagingHolder.id', array(
-	                                            								'class' => 'form-control item_type',
-	                                            								'hidden' => 'hidden',
-							                                                    'label' => false,
-							                                                    'placeholder' => 'Name Category'));
-	                                              echo $this->Form->input('PackagingHolder.id', array(
-	                                            								'class' => 'form-control item_type',
-	                                            								'hidden' => 'hidden',
-							                                                    'label' => false,
-							                                                    'placeholder' => 'Name Category')); */
                                             
                                             ?> 
 

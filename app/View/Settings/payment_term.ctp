@@ -35,17 +35,6 @@
 	                                            								'class' => 'form-control item_type',
 							                                                    'label' => false,
 							                                                    'placeholder' => 'Payment Term Name'));
-	                                            /* echo $this->Form->input('PaymentTermHolder.id', array(
-	                                            								'class' => 'form-control item_type',
-	                                            								'hidden' => 'hidden',
-							                                                    'label' => false,
-							                                                    'placeholder' => 'Name Category'));
-	                                              echo $this->Form->input('PaymentTermHolder.id', array(
-	                                            								'class' => 'form-control item_type',
-	                                            								'hidden' => 'hidden',
-							                                                    'label' => false,
-							                                                    'placeholder' => 'Name Category')); */
-                                            
                                             ?> 
 
 										</div>

@@ -8,7 +8,7 @@ App::uses('AuthComponent', 'Controller/Component');
  *
  */
 class ItemCategory extends AppModel {
-	public $useDbConfig = 'koufu_sale';
+	public $useDbConfig = 'default';
     public $name = 'ItemCategory';
     public $actsAs = array('Containable');
 

@@ -120,7 +120,7 @@
 					</div>
 					</div>
 
-					<?php echo $this->Form->create('StatusFieldHolder',array('url'=>(array('controller' => 'settings','action' => 'name_type'))));?>
+					<?php echo $this->Form->create('ItemCategoryHolder',array('url'=>(array('controller' => 'settings','action' => 'name_type'))));?>
 
 					<div class="row">
 						<div class="col-lg-12">
@@ -148,7 +148,8 @@
 															'type' => 'select',
 															'label' => false,
 															'class' => 'form-control required',
-															'empty' => '---Select Category---'					                               
+															'empty' => '---Select Category---',
+															'required' => true					                               
 															)); 
 															?>
 														</div>

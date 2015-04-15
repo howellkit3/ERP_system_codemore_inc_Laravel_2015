@@ -12,7 +12,7 @@
 						Edit Category
 					</h1>
 					<?php 
-                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'settings', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'settings', 'action' => 'category'),array('class' =>'btn btn-primary pull-right','escape' => false));
                     ?>
 				</header>
 
@@ -44,34 +44,11 @@
 	                                            								'class' => 'form-control item_type',
 	                                            								'hidden' => 'hidden',
 							                                                    'label' => false,
-							                                                    'placeholder' => 'Name Category'));
+							                                                    'placeholder' => 'Name Category',
+							                                                    'required' => true));
                                             
                                             ?>
 
-										</div>
-									</div>
-
-									<div class="form-group">
-										<label class="col-lg-2 control-label">Status</label>
-										<div class="col-lg-8">
-											<?php 
-	                                            echo $this->Form->input('ItemCategoryHolder.status', array(
-	                                            								'class' => 'form-control item_type',
-							                                                    'label' => false,
-							                                                    'placeholder' => 'Status'));
-                                            ?>
-										</div>
-									</div>
-
-									<div class="form-group">
-										<label class="col-lg-2 control-label">Name Type</label>
-										<div class="col-lg-8">
-											<?php 
-	                                            echo $this->Form->input('ItemTypeHolder.name', array(
-	                                            								'class' => 'form-control item_type',
-							                                                    'label' => false,
-							                                                    'placeholder' => 'Name Type'));
-                                            ?>
 										</div>
 									</div>
 

@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 class SettingsController extends AppController
 {
 
-    public $uses = array('ItemCategoryHolder', 'StatusFieldHolder' , 'PackagingHolder', 'PaymentTermHolder');
+    public $uses = array('ItemCategoryHolder', 'StatusFieldHolder' , 'PackagingHolder', 'PaymentTermHolder', 'ItemTypeholder');
 
     public $useDbConfig = array('default');
 
@@ -44,11 +44,11 @@ class SettingsController extends AppController
 
         $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
 
-        $categoryData = $this->ItemCategoryHolder->find('all');
+        $categoryData = $this->ItemCategoryHolder->find('all',  array('order' => 'ItemCategoryHolder.id DESC'));
 
-        $categoryDataDropList = $this->ItemCategoryHolder->find('list');
+        $categoryDataDropList = $this->ItemCategoryHolder->find('list',  array('order' => 'ItemCategoryHolder.id DESC'));
 
-        $nameTypeData = $this->ItemTypeHolder->find('all');
+        $nameTypeData = $this->ItemTypeHolder->find('all',  array('order' => 'ItemTypeHolder.id DESC'));
 
 
         if ($this->request->is('post')) {
@@ -75,7 +75,7 @@ class SettingsController extends AppController
 
         $userData = $this->Session->read('Auth');
 
-        $nameTypeData = $this->ItemTypeHolder->find('all');
+        $nameTypeData = $this->ItemTypeHolder->find('all',  array('order' => 'ItemTypeHolder.id DESC'));
 
         $categoryTable = $this->ItemCategoryHolder->find('list', array('ItemCategoryHolder.name'));
 
@@ -133,7 +133,6 @@ class SettingsController extends AppController
 
              $this->ItemCategoryHolder->bind(array('ItemTypeHolder'));
 
-
             $post = $this->ItemCategoryHolder->findById($id);
             if (!$post) {
                 throw new NotFoundException(__('Invalid post'));
@@ -145,8 +144,6 @@ class SettingsController extends AppController
                 if ($this->ItemCategoryHolder->save($this->request->data)) {
 
                     $this->ItemCategoryHolder->save($this->request->data);
-                    $this->ItemCategoryHolder->bind(array('ItemTypeHolder'));
-                    $this->ItemCategoryHolder->ItemTypeHolder->save($this->request->data);
                     $this->Session->setFlash(__('Category has been updated.'));
                     return $this->redirect(array('action' => 'category'));
                 }
@@ -156,6 +153,51 @@ class SettingsController extends AppController
             if (!$this->request->data) {
                 $this->request->data = $post;
             }
+    }
+
+    public function name_type_edit($id = null) {
+
+            $this->loadModel('ItemCategoryHolder');
+
+            $this->loadModel('ItemTypeHolder');
+
+            $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
+
+            $categoryDataDropList = $this->ItemCategoryHolder->find('list',  array('order' => 'ItemCategoryHolder.id DESC'));
+
+            if (!$id) {
+                throw new NotFoundException(__('Invalid post'));
+            }
+
+            $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
+
+            //pr( $this->ItemTypeHolder); exit;
+
+            $post = $this->ItemTypeHolder->findById($id,  array('order' => 'ItemTypeHolder.id DESC'));
+
+            if (!$post) {
+                throw new NotFoundException(__('Invalid post'));
+            }
+
+            if ($this->request->is(array('post', 'put'))) {
+                $this->ItemTypeHolder->id = $id;
+
+                if ($this->ItemTypeHolder->save($this->request->data)) {
+
+                    $this->ItemTypeHolder->save($this->request->data);
+                    $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
+                    $this->ItemTypeHolder->ItemCategoryHolder->save($this->request->data);
+                    $this->Session->setFlash(__('Type has been updated.'));
+                    return $this->redirect(array('action' => 'category'));
+                }
+                $this->Session->setFlash(__('Unable to update your post.'));
+            }
+
+            if (!$this->request->data) {
+                $this->request->data = $post;
+            }
+
+            $this->set(compact('categoryDataDropList', 'categoryData','nameTypeData' ));
     }
 
     public function delete($id) {
@@ -170,6 +212,26 @@ class SettingsController extends AppController
             }
 
             return $this->redirect(array('action' => 'category'));
+    }
+
+    public function deleteType($id) {
+
+            
+        if ($this->ItemTypeholder->delete($id)) {
+
+            $this->Session->setFlash(
+
+                __('Successfully deleted.', h($id))
+            );
+
+        } else {
+            $this->Session->setFlash(
+
+                __('The post cannot be deleted.', h($id))
+            );
+        }
+
+        return $this->redirect(array('action' => 'category'));
     }
 
     public function deleteStatus($id) {
@@ -198,7 +260,7 @@ class SettingsController extends AppController
              $this->StatusFieldHolder->bind(array('ItemTypeHolder'));
 
 
-            $post = $this->StatusFieldHolder->findById($id);
+            $post = $this->StatusFieldHolder->findById($id );
 
             if (!$post) {
                 throw new NotFoundException(__('Invalid post'));
@@ -262,7 +324,7 @@ class SettingsController extends AppController
             if ($this->request->is(array('post', 'put'))) {
                 $this->PackagingHolder->id = $id;
 
-                if ($this->StatusFieldHolder->save($this->request->data)) {
+                if ($this->PackagingHolder->save($this->request->data)) {
 
                     $this->PackagingHolder->save($this->request->data);
 
