@@ -12,7 +12,7 @@ class ItemTypeholder extends AppModel {
 	public $useDbConfig = 'default';
 
     public $name = 'ItemTypeholder';
-
+    
     public $useTable = 'item_type_holders';
 
     public $recursive = -1;
