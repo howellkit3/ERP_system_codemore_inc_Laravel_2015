@@ -6,29 +6,7 @@ class ProductsController extends SalesAppController {
 
 	public $uses = array('Sales.Company','Sales.ItemCategoryHolder','Sales.ItemType','Sales.ProcessField');
 
-	public $validate = array(
-
-        'item_category_holder_id' => array(
-            'notEmpty' => array(
-                'rule' => array('notEmpty'),
-            ),
-        ), 
-
-        'item_type_holder_id' => array(
-            'notEmpty' => array(
-                'rule' => array('notEmpty'),
-            ),
-        ), 
-
-        'name' => array(
-            'notEmpty' => array(
-                'rule' => array('notEmpty'),
-            ),
-        ), 
-
-    
-    );
-
+	
 	function beforeFilter() {
   		$this->myRandomNumber = rand(1,4);
 	}
@@ -66,6 +44,7 @@ class ProductsController extends SalesAppController {
 													'status' => 'active'
 												  		)
 												));
+
 
 		$processField = $this->ProcessField->find('all');
 		
@@ -197,7 +176,7 @@ class ProductsController extends SalesAppController {
 
 	}
 
-	public function edit($companyId = null,$productId){
+	public function edit($id){
 
 		$this->loadModel('ItemCategoryHolder');
 
@@ -208,44 +187,12 @@ class ProductsController extends SalesAppController {
 		$this->loadModel('Sales.CustomField');
 
 
-
-		$itemCategory = $this->ItemCategory->find('list', array(
-													'fields' => array(
-														'id','category_name'),
-															'conditions' => array(
-																'status' => 'active'
-												  		)
-												));
-		
-		$this->loadModel('Sales.Company');
-		$companyName = $this->Company->find('first', array(
-												'conditions' => array(
-													'id' =>  $companyId
-												)
-											));
-		$this->loadModel('Sales.Product');
-		$this->Product->bind(array('ProductSpec'));
-		$productDetails = $this->Product->find('first', array(
-													'conditions' => array(
-														'id' => $productId
-														)
-													));
-
-		$this->loadModel('Sales.CustomField');
-		$customField = $this->CustomField->find('list',	array( 
-													'fields' => array(
-														'id', 'fieldlabel'),
-													'conditions' => array( 
-														'id NOT' => array(3,13,11)
-													)
-												));
-
 		 if (!$id) {
 
                 throw new NotFoundException(__('Invalid post'));
             }
 
-            $post = $this->ItemTypeHolder->findById($id,  array('order' => 'ItemTypeHolder.id DESC'));
+            $post = $this->Product->findById($id);
 
             if (!$post) {
                 throw new NotFoundException(__('Invalid post'));
@@ -260,7 +207,7 @@ class ProductsController extends SalesAppController {
                     //$this->Product->bind(array('Product'));
                     //$this->Product->ItemCategoryHolder->save($this->request->data);
                     $this->Session->setFlash(__('Type has been updated.'));
-                    return $this->redirect(array('action' => 'category'));
+                    return $this->redirect(array('action' => 'index'));
                 }
                 $this->Session->setFlash(__('Unable to update your post.'));
             }
@@ -269,7 +216,13 @@ class ProductsController extends SalesAppController {
                 $this->request->data = $post;
             }
 
-		$this->set(compact('companyName','itemCategory','customField','productDetails'));
+
+		$this->ItemCategoryHolder->bind(array('ItemTypeHolder'));
+		$itemCategoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name')));
+		$itemTypeData = $this->ItemCategoryHolder->ItemTypeHolder->find('list', array('fields' => array('id', 'name')));
+		$productData = $this->ItemCategoryHolder->ItemTypeHolder->find('list', array('fields' => array('id', 'name')));
+
+		$this->set(compact('itemCategoryData','itemTypeData','productData','productDetails'));
 
 	}
 
@@ -294,27 +247,28 @@ class ProductsController extends SalesAppController {
         }
 	}
 
+
+
 	public function create_product($companyId = null){
 		
 
 		if ($this->request->is('post')) {
+				$userData = $this->Session->read('Auth');
+			 	$productDetails = $this->request->data;
+	        	 $this->loadModel('Sales.Product');
+	        	 $productDetails['Product']['uuid'] = time();
 
-			$userData = $this->Session->read('Auth');
-		 	$productDetails = $this->request->data;
-        	 $this->loadModel('Sales.Product');
-        	 $productDetails['Product']['uuid'] = time();
-
-            if ($this->Product->save($productDetails)) {
+	            if ($this->Product->save($productDetails)) {
 
 	           	 $this->Session->setFlash(__('Products Successfully Added'));
 	             $this->redirect( array(
 	                                     'controller' => 'products', 
 	                                     'action' => 'index',	                              
 	                             ));
-            } else {
+	            } else {
 
-            		 $this->Session->setFlash(__('There\'s an error saving your product'));	             	
-            }
+	            		 $this->Session->setFlash(__('There\'s an error saving your product'));	             	
+	            }
 		}
 
 		$userData = $this->Session->read('Auth');
@@ -434,15 +388,16 @@ class ProductsController extends SalesAppController {
     	$this->loadModel('ItemCategoryHolder');
 		$this->ItemCategoryHolder->bind(array('ItemTypeHolder'));
 
-		$itemdata =$this->ItemCategoryHolder->ItemTypeHolder->find('all', array(
+		$itemdata =$this->ItemCategoryHolder->ItemTypeHolder->find('first', array(
 										'conditions' => array(
 											'ItemTypeHolder.Item_category_holder_id' => $itemId), 
 										'fields' => array(
 											'id', 'name')
 										));
-	
+
+		
 		echo json_encode($itemdata);
-		exit();
+
 
 		$this->autoRender = false;
     	

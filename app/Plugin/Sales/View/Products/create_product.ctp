@@ -45,12 +45,7 @@
 									<div class="form-group">
 										<label class="col-lg-2 control-label">Item Category</label>
 										<div class="col-lg-8">
-											<?php 
-	                                            // echo $this->Form->input('Product.status', array(
-	                                            // 								'class' => 'form-control item_type',
-							                                      //               'label' => false,
-							                                      //               'placeholder' => 'Item Category'));
-                                            ?>
+											<input type="hidden" id="selected_type" value="">
                                             <?php echo $this->Form->input('Product.item_category_holder_id', array(
 					                                'options' => array($itemCategoryData),
 					                                'type' => 'select',

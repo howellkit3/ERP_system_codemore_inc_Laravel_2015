@@ -46,20 +46,26 @@ jQuery(function($){
 		$('.option-append').remove();	
 		var option = $(this).val();
 
+		var selected = $('#selected_type').val();
+
 		$.ajax({
 		url: serverPath + "sales/products/find_item/"+option,
 		type: "get",
 		dataType: "json",
 		success: function(data) {
-			// console.log(data);
 
 			$.each(data, function(key, value) {
 
-			     $('#item_type_holder_id').append("<option class='option-append' value="+value.ItemTypeHolder.id+">"+value.ItemTypeHolder.name+"</option>");
+				if (value.id == selected) {
+					$option = "<option class='option-append' selected value="+value.id+">"+value.name+"</option>";	
+				} else {
+					$option = "<option class='option-append'  value="+value.id+">"+value.name+"</option>";
+				}
+			     $('#item_type_holder_id').append($option);
 			});			
 		}
 		});			
-	});
+	}).trigger('change');
 
 	$('#select_company').change(function(){
 
