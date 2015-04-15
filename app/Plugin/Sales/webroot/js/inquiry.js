@@ -53,7 +53,6 @@ jQuery(function($){
 		type: "get",
 		dataType: "json",
 		success: function(data) {
-
 			$.each(data, function(key, value) {
 
 				if (value.id == selected) {
