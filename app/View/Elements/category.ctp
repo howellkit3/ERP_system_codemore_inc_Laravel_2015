@@ -27,7 +27,7 @@
 							<div class="main-box-body clearfix">
 								<div class="form-horizontal">
 									<div class="form-group">
-										<label class="col-lg-2 control-label">Name Categorydd</label>
+										<label class="col-lg-2 control-label">Name Category</label>
 										<div class="col-lg-8">
 											<?php 
 	                                            echo $this->Form->input('ItemCategoryHolder.name', array(

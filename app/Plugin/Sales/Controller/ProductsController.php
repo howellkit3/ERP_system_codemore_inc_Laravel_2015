@@ -3,7 +3,35 @@ App::uses('AppController', 'Controller');
 App::uses('SessionComponent', 'Controller/Component');
 
 class ProductsController extends SalesAppController {
+
 	public $uses = array('Sales.Company','Sales.ItemCategoryHolder','Sales.ItemType','Sales.ProcessField');
+
+	public $validate = array(
+
+        'item_category_holder_id' => array(
+            'notEmpty' => array(
+                'rule' => array('notEmpty'),
+            ),
+        ), 
+
+        'item_type_holder_id' => array(
+            'notEmpty' => array(
+                'rule' => array('notEmpty'),
+            ),
+        ), 
+
+        'name' => array(
+            'notEmpty' => array(
+                'rule' => array('notEmpty'),
+            ),
+        ), 
+
+    
+    );
+
+	function beforeFilter() {
+  		$this->myRandomNumber = rand(1,4);
+	}
 
 	public function add($companyId = null){
 		
@@ -33,9 +61,9 @@ class ProductsController extends SalesAppController {
 
 		$itemCategory = $this->ItemCategory->find('list', array(
 													'fields' => array(
-														'id','category_name'),
+													'id','category_name'),
 													'conditions' => array(
-														'status' => 'active'
+													'status' => 'active'
 												  		)
 												));
 
@@ -48,6 +76,7 @@ class ProductsController extends SalesAppController {
 											));
 
 		$this->loadModel('Sales.CustomField');
+
 		$customField = $this->CustomField->find('list', array( 
 													'fields' => array(
 														'id', 'fieldlabel'),
@@ -173,7 +202,7 @@ class ProductsController extends SalesAppController {
 		$this->loadModel('ItemCategoryHolder');
 
 		$this->loadModel('Sales.Company');
-@
+
 		$this->loadModel('Sales.Product');
 
 		$this->loadModel('Sales.CustomField');
@@ -183,8 +212,8 @@ class ProductsController extends SalesAppController {
 		$itemCategory = $this->ItemCategory->find('list', array(
 													'fields' => array(
 														'id','category_name'),
-													'conditions' => array(
-														'status' => 'active'
+															'conditions' => array(
+																'status' => 'active'
 												  		)
 												));
 		
@@ -265,73 +294,70 @@ class ProductsController extends SalesAppController {
         }
 	}
 
-
-
 	public function create_product($companyId = null){
 		
 
 		if ($this->request->is('post')) {
 
-		
-				$userData = $this->Session->read('Auth');
-			 	$productDetails = $this->request->data;
-	        	 $this->loadModel('Sales.Product');
+			$userData = $this->Session->read('Auth');
+		 	$productDetails = $this->request->data;
+        	 $this->loadModel('Sales.Product');
+        	 $productDetails['Product']['uuid'] = time();
 
-	            if ($this->Product->save($productDetails)) {
+            if ($this->Product->save($productDetails)) {
 
 	           	 $this->Session->setFlash(__('Products Successfully Added'));
 	             $this->redirect( array(
 	                                     'controller' => 'products', 
-	                                     'action' => 'index',
-	                              
+	                                     'action' => 'index',	                              
 	                             ));
+            } else {
 
-	            } else {
-
-	            		 $this->Session->setFlash(__('There\'s an error saving your product'));
-	             	
-	            }
-
-
-	            
-
+            		 $this->Session->setFlash(__('There\'s an error saving your product'));	             	
+            }
 		}
+
 		$userData = $this->Session->read('Auth');
-		// $this->Company->bind(array('Product'));
 		$companyName = $this->Company->find('first', array(
 										'conditions' => array(
 											'id' =>  $companyId)
 									));
 		
 		$this->loadModel('ItemCategoryHolder');
-
 		$this->ItemCategoryHolder->bind(array('ItemTypeHolder'));
-
 		$itemCategoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name')));
 		$itemTypeData = $this->ItemCategoryHolder->ItemTypeHolder->find('list', array('fields' => array('id', 'name')));
 		$productData = $this->ItemCategoryHolder->ItemTypeHolder->find('list', array('fields' => array('id', 'name')));
-
-		//pr($itemCategoryData);exit();
 		$this->set(compact('companyName','itemCategoryData','itemTypeData'));
 	}
 
 	public function index() {
 
-		$userData = $this->Session->read('Auth');
+		$this->loadModel('ItemCategoryHolder');
 
-		//$this->Product->bind(array('ContactPerson'));
+        $this->loadModel('ItemTypeHolder');
+
+		//$userData = $this->Session->read('Auth');
+
 		$this->loadModel('Sales.Product');
 
 		$this->Product->recursive = 1;
+		
+		$itemCategoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name')));
+
+		$itemTypeData = $this->ItemTypeHolder->find('list', array('fields' => array('id', 'name')));
+
+		$nameTypeData = $this->ItemTypeHolder->find('all',  array('order' => 'ItemTypeHolder.id DESC'));
+
+		$categoryData = $this->ItemCategoryHolder->find('all',  array('order' => 'ItemCategoryHolder.id DESC'));
 
 		$productData = $this->Product->find('all',array(
     		'order' => array('Product.id DESC')));
 
-		//pr($productData);
+		$this->set(compact('productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData'));
 
-		$this->set(compact('productData'));
-		
 	}
+
 	public function review_product($productId = null){
 
 		$this->Company->bind(array('Address','Contact','Email','Inquiry'));
@@ -340,12 +366,7 @@ class ProductsController extends SalesAppController {
 	        'conditions' => array('Product.id' => $productId)
 	    ));
 		
-	    //$company = $this->Company->find('first', array(
-	      //  'conditions' => array('Product.id' => $product['Product']['company_id'])
-	    //));
-		
-		$this->set(compact('product'));
-		
+		$this->set(compact('product'));		
 	}
 
 	public function delete_product($productId = null){
@@ -407,4 +428,23 @@ class ProductsController extends SalesAppController {
         return $this->redirect(array(' controller' => 'products', 'action' => 'index'));
     }
 
+    public function find_item($itemId = null){
+
+    	$this->layout = false;
+    	$this->loadModel('ItemCategoryHolder');
+		$this->ItemCategoryHolder->bind(array('ItemTypeHolder'));
+
+		$itemdata =$this->ItemCategoryHolder->ItemTypeHolder->find('all', array(
+										'conditions' => array(
+											'ItemTypeHolder.Item_category_holder_id' => $itemId), 
+										'fields' => array(
+											'id', 'name')
+										));
+	
+		echo json_encode($itemdata);
+		exit();
+
+		$this->autoRender = false;
+    	
+    }
 }

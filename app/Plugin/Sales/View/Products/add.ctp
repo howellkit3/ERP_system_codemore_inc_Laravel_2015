@@ -28,8 +28,6 @@
 					                           							'alt' => 'type',
 												    					'label' => false,
 												   						'class' => 'form-control'
-												    					//'empty' => '--Select Category--'
-												    					//'id' => 'co'
 																));
 			                        		?>
 			                        <?php
@@ -113,10 +111,6 @@
 														<div data-eventclass="label-primary" class="external-event label-default ui-draggable" style="margin-bottom: 8px;padding:7px;position: relative; z-index: auto; left: 0px; top: 0px;width:341px;h">
 															<?php
 																echo $value['ProcessField']['process'];
-																// echo $this->Form->input('check', array('class' => 'form-control item_type test',
-						          //                                  		'type' => 'checkbox',
-						          //                                  		'label' => false,
-						          //                                  		'required' => true));
 															?>
 
 														</div>
@@ -130,20 +124,12 @@
 								</div>
 								<div class="col-md-6 hidden-xs hidden-sm">
 									<div id="external-events" class="main-box">
-										<header class="main-box-header clearfix">
-											<h2>Arrange Process</h2>
-										</header>
+											<header class="main-box-header clearfix">
+												<h2>Arrange Process</h2>
+											</header>
 										
 										<div class="main-box-body clearfix">
-
-
-
-
-
-
-
-
-											
+	
 										</div>
 									</div>
 								</div>
@@ -210,10 +196,6 @@
 							</div>
 
 			            </div>
-	        	<?php
-	        		//}
-	        	?>
-
 	        </div>
 	    </div>  
 	</div>

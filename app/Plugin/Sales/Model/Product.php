@@ -2,11 +2,7 @@
 App::uses('AppModel', 'Model');
 App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
 App::uses('AuthComponent', 'Controller/Component');
-//namespace Sales\Model\Entity;
-/**
- * User Model
- *
- */
+
 class Product extends AppModel {
 	public $useDbConfig = 'koufu_sale';
     public $name = 'Product';
@@ -31,13 +27,24 @@ class Product extends AppModel {
 					'className' => 'Sales.Company',
 					'foreignKey' => 'company_id',
 					'dependent' => true
-				)
-			),
-			'hasMany' => array(
-				'ProductSpec' => array(
-					'className' => 'Sales.ProductSpec',
-					'foreignKey' => 'product_id',
+				),
+				'Category' => array( /** DITO KAMI HULING TUMIGIL NI HOWELL */
+					'className' => 'Sales.ItemCategory',
+					'foreignKey' => 'item_category_holder_id',
 					'dependent' => true
+				),
+
+				'ItemType' => array(
+					'className' => 'Sales.ItemType',
+					'foreignKey' => 'item_type_holder_id',
+					'dependent' => true
+				),
+			),
+				'hasMany' => array(
+				'ProductSpec' => array(
+				'className' => 'Sales.ProductSpec',
+				'foreignKey' => 'product_id',
+				'dependent' => true
 				)
 			)
 		));
@@ -65,10 +72,6 @@ class Product extends AppModel {
 			),	
 		)
 
-
-
-
-
 	);
 
 	public function addProduct($data,$auth){
@@ -79,6 +82,8 @@ class Product extends AppModel {
 		$data['Product']['product_name'] = $data['Product']['productName'];
 		$data['Product']['created_by'] = $auth;
 		$data['Product']['modified_by'] = $auth;
+		$data['Product']['uuid'] = rand(999,999).time();
+
 		$this->save($data);
 
 		return $this->id;

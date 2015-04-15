@@ -157,11 +157,13 @@ class SettingsController extends AppController
 
     public function name_type_edit($id = null) {
 
+
+            
             $this->loadModel('ItemCategoryHolder');
 
             $this->loadModel('ItemTypeHolder');
 
-            $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
+            $this->loadModel('ItemCategoryHolder');
 
             $categoryDataDropList = $this->ItemCategoryHolder->find('list',  array('order' => 'ItemCategoryHolder.id DESC'));
 
@@ -169,11 +171,11 @@ class SettingsController extends AppController
                 throw new NotFoundException(__('Invalid post'));
             }
 
-            $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
+            //$this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
 
-            //pr( $this->ItemTypeHolder); exit;
+           $post = $this->ItemTypeHolder->findById($id);
 
-            $post = $this->ItemTypeHolder->findById($id,  array('order' => 'ItemTypeHolder.id DESC'));
+            //pr($categoryDataDropList); exit;
 
             if (!$post) {
                 throw new NotFoundException(__('Invalid post'));
@@ -186,10 +188,10 @@ class SettingsController extends AppController
 
                     $this->ItemTypeHolder->save($this->request->data);
                     $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
-                    $this->ItemTypeHolder->ItemCategoryHolder->save($this->request->data);
+                   // $this->ItemCategoryHolder->save($this->request->data);
                     $this->Session->setFlash(__('Type has been updated.'));
-                    return $this->redirect(array('action' => 'category'));
-                }
+                    return $this->redirect(array('action' => 'category','tab' => 'tab-type'));
+               }
                 $this->Session->setFlash(__('Unable to update your post.'));
             }
 
@@ -426,7 +428,7 @@ class SettingsController extends AppController
 
                     $this->Session->setFlash(__('Payment Term has been updated.'));
 
-                    return $this->redirect(array('action' => 'payment'));
+                    return $this->redirect(array('action' => 'payment_term'));
                 }
                 $this->Session->setFlash(__('Unable to update your post.'));
             }

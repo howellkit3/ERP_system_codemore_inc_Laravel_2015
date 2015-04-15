@@ -10,20 +10,21 @@ App::uses('AuthComponent', 'Controller/Component');
 class ItemTypeholder extends AppModel {
 
 	public $useDbConfig = 'koufu_system';
+
     public $name = 'ItemTypeholder';
 
     public $recursive = -1;
     
 	public $actsAs = array('Containable');
 
-    public function bind($model = array('Group')){
+       public function bind($model = array('Group')){
 
         $this->bindModel(array(
             
-            'belongsTo' => array(
-                'ItemCategoryholder' => array(
-                    'className' => 'ItemCategoryholder',
-                    'foreignKey' => 'item_category_holder_id',
+            'hasOne' => array(
+                'ItemTypeHolder' => array(
+                    'className' => 'Sales.ItemType',
+                    'foreignKey' => 'item_type_holder_id',
                     'dependent' => true
                 ),
             )
@@ -31,5 +32,3 @@ class ItemTypeholder extends AppModel {
 
         $this->contain($model);
     }
-
-}

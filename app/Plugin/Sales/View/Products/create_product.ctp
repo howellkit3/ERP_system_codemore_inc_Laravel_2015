@@ -1,6 +1,5 @@
 <?php $this->Html->addCrumb('Sales', array('controller' => 'customer_sales', 'action' => 'index')); ?>
-
-
+<?php echo $this->Html->script('Sales.inquiry');?>
 <?php echo $this->element('sales_option'); ?><br><br>
 
 <div class="row">
@@ -30,21 +29,7 @@
 						<div class="top-space"></div>
 						<div class="main-box-body clearfix">
 							<div class="main-box-body clearfix">
-								<div class="form-horizontal">
-
-									<div class="form-group">
-										<label class="col-lg-2 control-label">Item Number</label>
-										<div class="col-lg-8">
-											<?php 
-	                                            echo $this->Form->input('Product.uuid', array(
-	                                            								'class' => 'form-control item_type',
-							                                                    'label' => false,
-							                                                    'placeholder' => 'Item Number',
-							                                                    'required' =>'required'));
-                                            ?>
-										</div>
-									</div>
-									
+								<div class="form-horizontal">									
 									<div class="form-group">
 										<label class="col-lg-2 control-label">Name</label>
 										<div class="col-lg-8">
@@ -70,10 +55,12 @@
 					                                'options' => array($itemCategoryData),
 					                                'type' => 'select',
 					                                'label' => false,
-					                                'class' => 'form-control required',
+					                                'readonly' => 'readonly',
+					                                'class' => 'form-control required categorylist',
 					                                'empty' => '---Select Item Category---'
 					                               
 					                                 )); 
+
 
 					                            ?>
 										</div>
@@ -83,11 +70,12 @@
 										<label class="col-lg-2 control-label">Item Type</label>
 										<div class="col-lg-8">
 											 <?php echo $this->Form->input('Product.item_type_holder_id', array(
-					                                'options' => array($itemTypeData),
-					                                'type' => 'select',
+					                                // 'type' => 'select',
 					                                'label' => false,
+					                                'readonly' => 'readonly',
 					                                'class' => 'form-control required',
-					                                'empty' => '---Select Item Type---'
+					                                'empty' => '---Select Item Type---',
+					                                'id' => 'item_type_holder_id'
 					                               
 					                                 )); 
 
@@ -99,7 +87,7 @@
 										<label class="col-lg-2 control-label">Remarks</label>
 										<div class="col-lg-8">
 											<?php 
-	                                            echo $this->Form->input('Product.remarks', array(
+	                                            echo $this->Form->textarea('Product.remarks', array(
 	                                            								'class' => 'form-control item_type',
 							                                                    'label' => false,
 							                                                    'placeholder' => 'Remarks'));

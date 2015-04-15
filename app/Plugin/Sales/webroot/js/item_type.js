@@ -12,7 +12,6 @@ jQuery(function($){
 		success: function(data) {
 			$('.option_append').remove();
 				$.each(data,function(i,name) {
-					console.log(name);
 					$('#item_type').append($('<option class="option_append">').text(name).attr('value',i));
 
 				});

@@ -41,6 +41,26 @@ jQuery(function($){
 	});
 
 
+	$('.categorylist').change(function(){
+
+		$('.option-append').remove();	
+		var option = $(this).val();
+
+		$.ajax({
+		url: serverPath + "sales/products/find_item/"+option,
+		type: "get",
+		dataType: "json",
+		success: function(data) {
+			// console.log(data);
+
+			$.each(data, function(key, value) {
+
+			     $('#item_type_holder_id').append("<option class='option-append' value="+value.ItemTypeHolder.id+">"+value.ItemTypeHolder.name+"</option>");
+			});			
+		}
+		});			
+	});
+
 	$('#select_company').change(function(){
 
 		var option = $(this).val();
@@ -60,9 +80,7 @@ jQuery(function($){
 				$('#contact').val(data.Contact[0].number);	
 				$('#email').val(data.Email[0].email);
 				$('#id').val(data.Company.id);
-
-			}
-			
+			}		
 		}
 		});
 			
@@ -127,31 +145,40 @@ jQuery(function($){
 			type: "GET",
 			dataType: "json",
 			success: function(data) {
-				$('.option_append').remove();
-					$.each(data,function(i,name) {
-						console.log(name);
-						$('#itemType').append($('<option class="option_append">').text(name).attr('value',i));
+
+			$.each(data, function(key, value) {
+				console.log(key);
+				console.log(value);
+				     $('#itemType')
+				         .append($("<option></option>")
+				         .attr("value",key)
+				         .text(value));
+				});
+				// $('.option_append').remove();
+				// 	$.each(data,function(i,name) {
+				// 		console.log(name);
+				// 		$('#itemType').append($('<option class="option_append">').text(name).attr('value',i));
 
 
 
-					});	
+				// 	});	
 				
 				}
-		}).done(function(){
-				$.ajax({
-				url: serverPath + "sales/products/get_product/"+$('#itemType').val()+"/"+$('#company_id').val(),
-				type: "GET",
-				dataType: "json",
-				success: function(data) {
-					$('.option_append_item').remove();
-						$.each(data,function(i,name) {
-							console.log(name);
-							$('#product').append($('<option class="option_append_item">').text(name).attr('value',i));
+		// }).done(function(){
+		// 		$.ajax({
+		// 		url: serverPath + "sales/products/get_product/"+$('#itemType').val()+"/"+$('#company_id').val(),
+		// 		type: "GET",
+		// 		dataType: "json",
+		// 		success: function(data) {
+		// 			$('.option_append_item').remove();
+		// 				$.each(data,function(i,name) {
+		// 					console.log(name);
+		// 					$('#product').append($('<option class="option_append_item">').text(name).attr('value',i));
 
-						});
+		// 				});
 					
-					}
-			});
+		// 			}
+		// 	});
 
 		});
 			

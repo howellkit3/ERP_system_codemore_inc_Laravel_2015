@@ -19,7 +19,7 @@ class ItemTypeholder extends AppModel {
     
 	public $actsAs = array('Containable');
 
-     public $validate = array(
+    public $validate = array(
 
         'name' => array(
             'notEmpty' => array(

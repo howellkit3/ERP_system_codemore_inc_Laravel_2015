@@ -98,7 +98,6 @@
 
 								<div class="col-lg-9">
 									<div class="input-group">
-										<!-- <span class="input-group-addon"></span> -->
 									<?php 
                                         echo $this->Form->input('QuotationField.'.$key.'.description', array('class' => 'form-control item_type test',
                                         	'value' =>!empty($productDetails['ProductSpec'][$keyholder]['description']) ? $productDetails['ProductSpec'][$keyholder]['description'] : '' ,

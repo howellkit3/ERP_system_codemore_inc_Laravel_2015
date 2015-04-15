@@ -1,5 +1,3 @@
-<?php//pr($categoryData) ?>
-
 <?php foreach ($nameTypeData as $nameTypeDataList ):?>
     
     <tbody aria-relevant="all" aria-live="polite" role="alert">

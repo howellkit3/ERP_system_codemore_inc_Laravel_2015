@@ -1,20 +1,21 @@
-							<?php echo $this->element('setting_option');?><br><br>
-							<?php //echo $this->element('category_option');?><br><br>
+<?php echo $this->element('setting_option');?><br><br>
+<?php //echo $this->element('category_option');?><br><br>
+<?php 
 
+$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : 'tab-category' ;
 
-
-
+?>
 <div class="row">
 	<div class="col-lg-12">
 		<div class="main-box clearfix">
 			<div class="main-box-body clearfix">
 				<div class="tabs-wrapper">
 					<ul class="nav nav-tabs">
-						<li class="active"><a href="#tab-home" data-toggle="tab">Category</a></li>
-						<li><a href="#tab-help" data-toggle="tab">Name Type</a></li>
+						<li class="<?php echo ($active_tab == 'tab-category') ? 'active' : '' ?>" alt="tab-category"><a href="#tab-category" data-toggle="tab">Category</a></li>
+						<li class="<?php echo ($active_tab == 'tab-type') ? 'active' : '' ?>" alt="tab-type"><a href="#tab-type" id = 'itemType' data-toggle="tab">Type</a></li>
 					</ul>
 					<div class="tab-content">
-						<div class="tab-pane fade in active" id="tab-home">
+						<div class="tab-pane fade  <?php echo ($active_tab == 'tab-category') ? 'in active' : '' ?>" id="tab-category">
 							<div class="row">
 								<div class="col-lg-12">
 									<div class="row">
@@ -100,7 +101,7 @@
 								</div>
 							</div>
 						</div>
-					<div class="tab-pane fade" id="tab-help">
+					<div class="tab-pane fade <?php echo ($active_tab == 'tab-type') ? 'in active' : '' ?>" id="tab-type">
 					<div class="row">
 					<div class="col-lg-12">
 					<div class="row">
@@ -108,7 +109,7 @@
 					<header class="main-box-header clearfix">
 
 					<h1 class="pull-left">
-					Add Name Type
+					Add Type
 					</h1>
 
 					<?php 
@@ -130,13 +131,13 @@
 										<div class="main-box-body clearfix">
 											<div class="form-horizontal">
 												<div class="form-group">
-													<label class="col-lg-2 control-label">Name Type</label>
+													<label class="col-lg-2 control-label">Type</label>
 													<div class="col-lg-8">
 														<?php 
 														echo $this->Form->input('ItemTypeHolder.name', array(
 																	'class' => 'form-control item_type',
 														            'label' => false,
-														            'placeholder' => 'Name Type'));
+														            'placeholder' => 'Type Name'));
 														?>
 													</div>
 												</div>
@@ -147,6 +148,7 @@
 															'options' => array($categoryDataDropList),
 															'type' => 'select',
 															'label' => false,
+															'readonly' => 'readonly',
 															'class' => 'form-control required',
 															'empty' => '---Select Category---',
 															'required' => true					                               
@@ -158,7 +160,7 @@
 												<div class="form-group">
 													<div class="col-lg-2"></div>
 														<div class="col-lg-8">
-															<button type="submit" class="btn btn-primary pull-left">Submit Name Type</button>&nbsp;
+															<button type="submit" class="btn btn-primary pull-left">Submit Type</button>&nbsp;
 															<?php 
 															echo $this->Html->link('Cancel', array('controller' => 'settings', 'action' => 'index'),array('class' =>'btn btn-default','escape' => false));
 															?>
@@ -177,7 +179,7 @@
 							<div class="col-lg-12">
 								<div class="main-box">
 								<header class="main-box-header clearfix">
-								<h1>Name Type List</h1>
+								<h1>Type List</h1>
 								</header>
 									<div class="main-box-body clearfix">
 										<div class="table-responsive">

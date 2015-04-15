@@ -15,7 +15,6 @@
                         echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'settings', 'action' => 'category'),array('class' =>'btn btn-primary pull-right','escape' => false));
                     ?>
 				</header>
-
 			</div>
 		</div>
 		<?php echo $this->Form->create('ItemTypeHolder',array('url'=>(array('controller' => 'settings','action' => 'name_type_edit'))));?>
@@ -54,7 +53,8 @@
 													'type' => 'select',
 													'label' => false,
 													'class' => 'form-control required',
-													'required' => true				                               
+													'required' => true,
+													'readonly' => 'readonly'				                               
 													)); 
 													?>
 												</div>

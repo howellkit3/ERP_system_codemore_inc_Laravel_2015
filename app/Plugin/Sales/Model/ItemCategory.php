@@ -19,7 +19,7 @@ class ItemCategory extends AppModel {
 			'hasMany' => array(
 				'ItemType' => array(
 					'className' => 'Sales.ItemType',
-					'foreignKey' => 'category_id',
+					'foreignKey' => 'item_category_holder_id',
 					'dependent' => true
 				),
 			)
