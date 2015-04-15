@@ -185,7 +185,7 @@ class SettingsController extends AppController
                 $this->ItemTypeHolder->id = $id;
 
                 if ($this->ItemTypeHolder->save($this->request->data)) {
-                 
+
                     $this->ItemTypeHolder->save($this->request->data);
                     $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
                    // $this->ItemCategoryHolder->save($this->request->data);
@@ -218,7 +218,8 @@ class SettingsController extends AppController
 
     public function deleteType($id) {
 
-            
+        $this->loadModel('ItemTypeHolder');
+
         if ($this->ItemTypeholder->delete($id)) {
 
             $this->Session->setFlash(
