@@ -39,6 +39,12 @@
                                          echo $this->Form->input('password', array('label' => 'Password ', 'maxLength' => 255, 'title' => 'Password', 'type'=>'password','class' => 'form-control col-lg-6','label' => false,'placeholder' => 'Password'));
                                     ?>
                                 </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-unlock-alt"></i></span>
+                                    <?php
+                                         echo $this->Form->input('repassword', array('label' => 'Confirm Password ', 'maxLength' => 255, 'title' => 'Password', 'type'=>'password','class' => 'form-control col-lg-6','label' => false,'placeholder' => 'Confirm Password'));
+                                    ?>
+                                </div>
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <?php

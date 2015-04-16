@@ -41,14 +41,32 @@ class User extends AppModel {
 	            'message'=> 'Please enter a valid name'
 	        ),
 		),
-		 'password' => array(
-            'rule' => array('between', 8, 20),
-            'required' => true,
-            'allowEmpty' => false,
-            'message' => 'Between 8-20 characters'
+	 	'password' => array(
+            'identicalFieldValues' => array( 
+				'rule' => array('identicalFieldValues', 'repassword' ), 
+				'message' => 'Please re-enter your password twice so that the values match' 
+    		), 
+            'length' => array(
+				'rule' => array('between', 8, 20),
+				'message' => 'Between 8-20 characters'
+			),
+
         ) 	
 	
 	);
+	
+	public function identicalFieldValues( $field=array(), $compare_field=null ) { 
+        foreach( $field as $key => $value ){ 
+            $v1 = $value; 
+            $v2 = $this->data[$this->name][ $compare_field ];  
+            if($v1 !== $v2) { 
+                return FALSE; 
+            } else { 
+                continue; 
+            } 
+        } 
+        return TRUE; 
+    } 
 
 	public function beforeSave($options = array()) {
 	    if (isset($this->data[$this->alias]['password'])) {

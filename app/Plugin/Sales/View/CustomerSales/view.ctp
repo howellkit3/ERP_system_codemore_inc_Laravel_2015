@@ -14,7 +14,7 @@
 				<div class="col-lg-3 col-md-4 col-sm-4">
 					<div class="main-box clearfix">
 						<header class="main-box-header clearfix">
-							<h1>
+							<h1 style="word-wrap:break-word">
 							<?php echo ucfirst($company['Company']['company_name']); ?>
 							</h1>
 						</header>

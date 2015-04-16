@@ -392,7 +392,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="main-box">
-                            <h1>Contact Person Number</h1>
+                            <h1>Contact Person Email</h1>
                             <!-- <div class="top-space"></div> -->
                             <div class="main-box-body clearfix">
                                 <div class="main-box-body clearfix">
@@ -466,5 +466,6 @@
 </div>
 
 <script>
+    jQuery('.remove').hide();
     $("#CompanyAddForm").validate();
 </script>
