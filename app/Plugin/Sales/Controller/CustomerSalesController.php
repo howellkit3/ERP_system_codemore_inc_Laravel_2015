@@ -31,6 +31,7 @@ class CustomerSalesController extends SalesAppController {
 		$company = $this->Company->find('all',array(
     		'order' => array('Company.id DESC')));
 
+
 		$this->set(compact('company'));
 		
 	}
