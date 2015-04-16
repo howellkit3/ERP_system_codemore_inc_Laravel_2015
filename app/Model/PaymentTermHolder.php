@@ -13,20 +13,19 @@ class PaymentTermHolder extends AppModel {
 
     public $name = 'PaymentTermHolder';
 
-    public $useTable = 'Payment_term_holders';
+    public $useTable = 'payment_term_holders';
 
     public $recursive = -1;
     
 	public $actsAs = array('Containable');
 
-     public $validate = array(
+    public $validate = array(
 
         'name' => array(
             'notEmpty' => array(
                 'rule' => array('notEmpty'),
             ),
-        )
-    
+        )    
     );
 
     public function bind($model = array('Group')){
@@ -44,22 +43,6 @@ class PaymentTermHolder extends AppModel {
 
         $this->contain($model);
     }
-
-  /*  public function bindStatus($model = array('Group')){
-
-        $this->bindModel(array(
-            
-            'belongsTo' => array(
-                'StatusFieldHolder' => array(
-                    'className' => 'StatusFieldHolder',
-                    'foreignKey' => 'id',
-                    'dependent' => true
-                ),
-            )
-        ));
-
-        $this->contain($model);
-    } */
 
     public function savePaymentTerm($paymentTermData = null, $auth = null){
         

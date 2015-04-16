@@ -13,7 +13,7 @@ class PackagingHolder extends AppModel {
 
     public $name = 'PackagingHolder';
 
-    public $useTable = 'Packaging_holders';
+    public $useTable = 'packaging_holders';
 
     public $recursive = -1;
     

@@ -13,11 +13,7 @@ class Product extends AppModel {
 		$this->bindModel(array(
 			
 			'belongsTo' => array(
-				// 'ItemType' => array(
-				// 	'className' => 'Sales.ItemType',
-				// 	'foreignKey' => 'type_id',
-				// 	'dependent' => true
-				// ),
+				
 				'Quotation' => array(
 					'className' => 'Sales.Quotation',
 					'foreignKey' => 'product_id',
@@ -28,13 +24,13 @@ class Product extends AppModel {
 					'foreignKey' => 'company_id',
 					'dependent' => true
 				),
-				'Category' => array( /** DITO KAMI HULING TUMIGIL NI HOWELL */
+				'ItemCategoryData' => array( /** DITO KAMI HULING TUMIGIL NI HOWELL */
 					'className' => 'Sales.ItemCategory',
 					'foreignKey' => 'item_category_holder_id',
 					'dependent' => true
 				),
 
-				'ItemType' => array(
+				'ItemTypeData' => array(
 					'className' => 'Sales.ItemType',
 					'foreignKey' => 'item_type_holder_id',
 					'dependent' => true
