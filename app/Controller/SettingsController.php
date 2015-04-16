@@ -211,7 +211,7 @@ class SettingsController extends AppController
             );
         }
 
-        return $this->redirect(array('action' => 'category'));
+        return $this->redirect(array('action' => 'category','tab' => 'tab-type'));
     }
 
     public function deleteStatus($id) {

@@ -3,15 +3,17 @@
 //     var validator = $( "#CompanyAddForm" ).validate();
 //     validator.form();
 // }
-jQuery(function($){
-    $('.remove').hide();
-});
+
+
 function fieldReset($form, section)
 {
-    
+
     var count = $('.' + section).length;
-    console.log(count);
+    
+    // jQuery('.addressSection').addClass('io-'+count);
+  
     $form.find('select, input,checkbox').each(function() {
+
         var $this = $(this),
             nameProp = $this.prop('name'),
             newIndex = count;
@@ -37,15 +39,14 @@ function fieldReset($form, section)
 }
 
 function cloneData(whatSection, thisElement)
-{
+{   
     var parentSection = $(thisElement).parents('.' + whatSection);
-
     var data = $(parentSection).first().clone();
-
-    console.log(data);
+    data.find('.remove').show();
     data = fieldReset(data, whatSection);
     $('.' + whatSection).last().after(data);
-    $('.remove').show();
+    // $('.remove').show();
+
     if ($('.remove').length == 1) $('.remove').hide();
     
 }
@@ -69,7 +70,6 @@ function removeCloneInputTable(whatSection)
 function removeClone(whatSection)
 {   
      $('.' + whatSection).last().remove(); 
-     $(".remove").hide();
 }
 
 function fieldResetContact($form, section)
@@ -111,6 +111,8 @@ function cloneContactData(whatSection, thisElement)
     var parentSection = $(thisElement).parents('.' + whatSection);
 
     var data = $(parentSection).first().clone();
+     data.find('.remove-field.btn.btn-danger.remove').show();
+    data.find('.remove-field.btn.btn-danger').show();
     data = fieldResetContact(data, whatSection);
     $('.' + whatSection).last().after(data);
 }

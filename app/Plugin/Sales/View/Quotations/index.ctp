@@ -14,12 +14,12 @@
                  
                 
                 <div class="filter-block pull-right">
-                    <div class="form-group pull-left">
+                   <!--  <div class="form-group pull-left">
                         <?php echo $this->Form->create('Quotation',array('controller' => 'quotations','action' => 'search', 'type'=> 'get')); ?>
                             <input placeholder="Search..." id="hint" name="q" class="form-control" type="search" />
                             <i class="fa fa-search search-icon"></i>
                          <?php echo $this->Form->end(); ?>
-                    </div>
+                    </div> -->
                     <?php
                             echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Make Quotation ', array('controller' => 'quotations', 'action' => 'create'),array('class' =>'btn btn-primary pull-right','escape' => false));
                         ?>

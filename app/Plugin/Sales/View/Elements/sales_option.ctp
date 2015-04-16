@@ -1,3 +1,4 @@
+<style type="text/css">.main-box > h1 {padding: 20px 0 6px 20px;}</style>
 <?php echo $this->Html->css('/Sales/css/default'); ?>
 
 <div class="nav-no-collapse navbar-left pull-left hidden-sm hidden-xs">
@@ -29,10 +30,10 @@
         <!-- <li class="dropdown hidden-xs"> -->
             <?php //echo $this->Html->link("<span class='count'>Summary</span>", array('controller' => 'summaries', 'action' => 'index'),array('escape' => false,'class' => 'btn')); ?>
         <!-- </li> -->
-
+<!-- 
         <li class="dropdown hidden-xs">
             <?php echo $this->Html->link("<span class='count'>Settings</span>", array('controller' => 'customer_sales', 'action' => 'index'),array('escape' => false,'class' => 'btn')); ?>
-        </li>
+        </li> -->
 
         <li class="dropdown hidden-xs">
             

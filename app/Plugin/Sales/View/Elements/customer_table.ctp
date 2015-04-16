@@ -33,10 +33,10 @@
                     </span> ', array('controller' => 'customer_sales', 'action' => 'edit',$customerlist['Company']['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Information'));
                 ?>
                 <?php
-                    echo $this->Html->link('<span class="fa-stack">
-                    <i class="fa fa-square fa-stack-2x"></i>
-                    <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> Delete </font></span>
-                    </span>', array('controller' => 'customer_sales', 'action' => 'delete',$customerlist['Company']['id']),array('class' =>' table-link','escape' => false,'title'=>'Delete Information','confirm' => 'Do you want to delete Customer ?'));
+                    // echo $this->Html->link('<span class="fa-stack">
+                    // <i class="fa fa-square fa-stack-2x"></i>
+                    // <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> Delete </font></span>
+                    // </span>', array('controller' => 'customer_sales', 'action' => 'delete',$customerlist['Company']['id']),array('class' =>' table-link','escape' => false,'title'=>'Delete Information','confirm' => 'Do you want to delete Customer ?'));
                 ?>
             </td>
         </tr>
