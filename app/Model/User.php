@@ -41,11 +41,16 @@ class User extends AppModel {
 	            'message'=> 'Please enter a valid name'
 	        ),
 		),
-		 'password' => array(
-            'rule' => array('between', 8, 20),
-            'required' => true,
-            'allowEmpty' => false,
-            'message' => 'Between 8-20 characters'
+	 	'password' => array(
+            'identicalFieldValues' => array( 
+				'rule' => array('identicalFieldValues', 'repassword' ), 
+				'message' => 'Please re-enter your password twice so that the values match' 
+    		), 
+            'length' => array(
+				'rule' => array('between', 8, 20),
+				'message' => 'Between 8-20 characters'
+			),
+
         ) 	
 	
 	);

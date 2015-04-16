@@ -24,7 +24,7 @@
                 <div class="table-responsive">
                     <table class="table table-striped table-hover">
                         <thead>
-                            <tr>
+                            <tr> 
                                 <th><a href="#"><span>Name</span></a></th>
                                 <th><a href="#"><span>Website</span></a></th>
                                 <th><a href="#"><span>TIN</span></a></th>
@@ -35,7 +35,7 @@
                         </thead>
 
                         <?php echo $this->element('customer_table'); ?>
-
+ 
                     </table>
                     <hr>
                 </div>

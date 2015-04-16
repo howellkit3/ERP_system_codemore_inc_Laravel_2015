@@ -76,11 +76,7 @@ class SettingsController extends AppController
                     $this->ItemTypeHolder->save($this->request->data);
            
                     $this->Session->setFlash(__('Add Name Type Complete.'));
-
-                    $this->redirect(
-
-                        array('controller' => 'settings', 'action' => 'category')
-                    );
+                    return $this->redirect(array('action' => 'category','tab' => 'tab-type'));
                 }
             }
 
