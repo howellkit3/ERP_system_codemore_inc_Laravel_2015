@@ -7,7 +7,7 @@ $('#ItemTypeHolderItemCategoryHolderId').change(function(){
 		var selected = $('#selected_type').val();
 
 		$.ajax({
-		url: serverPath + "/settings/category_find/"+option,
+		url: serverPath + "settings/category_find/"+option,
 		type: "get",
 		dataType: "json",
 		success: function(data) {
