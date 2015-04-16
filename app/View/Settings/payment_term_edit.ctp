@@ -50,11 +50,6 @@
 
 										</div>
 									</div>
-
-									
-
-			
-
 									<div class="form-group">
 										<div class="col-lg-2"></div>
 										<div class="col-lg-8">
@@ -70,8 +65,6 @@
 					</div>
 				</div>
 			</div>
-		<?php echo $this->Form->end(); ?>
-
-		
+		<?php echo $this->Form->end(); ?>		
 	</div>
 </div>

@@ -3,22 +3,10 @@ App::uses('AppController', 'Controller');
 
 class SettingsController extends AppController
 {
-
     public $uses = array('ItemCategoryHolder', 'StatusFieldHolder' , 'PackagingHolder', 'PaymentTermHolder', 'ItemTypeholder');
 
     public $useDbConfig = array('default');
 
-    // public function beforeFilter() {
-
-    //     parent::beforeFilter();
-
-    //     $userData = $this->Session->read('Auth');
-
-    //     $this->Auth->allow('setting','index');
-
-    //     $this->set(compact('userData'));
-
-    // }
     public $paginate = array(
         'limit' => 25,
         'conditions' => array('status' => '1'),
@@ -156,8 +144,6 @@ class SettingsController extends AppController
     }
 
     public function name_type_edit($id = null) {
-
-
             
             $this->loadModel('ItemCategoryHolder');
 
@@ -171,11 +157,7 @@ class SettingsController extends AppController
                 throw new NotFoundException(__('Invalid post'));
             }
 
-            //$this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
-
            $post = $this->ItemTypeHolder->findById($id);
-
-            //pr($categoryDataDropList); exit;
 
             if (!$post) {
                 throw new NotFoundException(__('Invalid post'));
@@ -188,7 +170,6 @@ class SettingsController extends AppController
 
                     $this->ItemTypeHolder->save($this->request->data);
                     $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
-                   // $this->ItemCategoryHolder->save($this->request->data);
                     $this->Session->setFlash(__('Type has been updated.'));
                     return $this->redirect(array('action' => 'category','tab' => 'tab-type'));
                }
@@ -238,8 +219,7 @@ class SettingsController extends AppController
     }
 
     public function deleteStatus($id) {
-      
-     
+           
             if ($this->StatusFieldHolder->delete($id)) {
                 $this->Session->setFlash(
                     __('Successfully deleted.', h($id))
@@ -287,9 +267,10 @@ class SettingsController extends AppController
                 $this->request->data = $post;
          }
     }
-
          
     public function packaging() {
+
+        $this->loadModel('PackagingHolder');
 
         $userData = $this->Session->read('Auth');
 
@@ -365,6 +346,8 @@ class SettingsController extends AppController
     }
 
     public function payment_term() {
+
+                $this->loadModel('PaymentTermHolder');
 
                 $userData = $this->Session->read('Auth');
 
@@ -455,13 +438,11 @@ class SettingsController extends AppController
         return $this->redirect(array(' controller' => 'products', 'action' => 'index'));
     }
 
-
     public function category_index() {
 
     }
 
     public function category_option() {
-
                     
     }
 

@@ -5,7 +5,6 @@ App::uses('SessionComponent', 'Controller/Component');
 class ProductsController extends SalesAppController {
 
 	public $uses = array('Sales.Company','Sales.ItemCategoryHolder','Sales.ItemType','Sales.ProcessField');
-
 	
 	function beforeFilter() {
   		$this->myRandomNumber = rand(1,4);
@@ -78,11 +77,10 @@ class ProductsController extends SalesAppController {
 									));
 		echo json_encode($data);
 
-
-
 		$this->autoRender = false;
 
 	}
+
 	public function get_product( $companyId = null){
 
 		$this->layout = false;
@@ -92,11 +90,8 @@ class ProductsController extends SalesAppController {
 									  		'id','product_name'),
 									  	'conditions' => array( 
 											'company_id' => $companyId)
-										));
-	
+										));	
 		echo json_encode($data);
-
-
 
 		$this->autoRender = false;
 
@@ -115,11 +110,10 @@ class ProductsController extends SalesAppController {
 										));
 		echo json_encode($data);
 
-
-
 		$this->autoRender = false;
 
 	}
+
 	public function get_product_spec($productId = null){
 		$this->layout = false;
 	
@@ -132,8 +126,6 @@ class ProductsController extends SalesAppController {
 												));
 		
 		echo json_encode($data);
-
-
 
 		$this->autoRender = false;
 
@@ -220,8 +212,6 @@ class ProductsController extends SalesAppController {
 		$this->ItemCategoryHolder->bind(array('ItemTypeHolder'));
 		$itemCategoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name')));
 		$itemTypeData = $this->ItemCategoryHolder->ItemTypeHolder->find('list', array('fields' => array('id', 'name')));
-		$productData = $this->ItemCategoryHolder->ItemTypeHolder->find('list', array('fields' => array('id', 'name')));
-
 		$this->set(compact('itemCategoryData','itemTypeData','productData','productDetails'));
 
 	}
@@ -363,11 +353,7 @@ class ProductsController extends SalesAppController {
 	}
 
 	 public function deleteProduct($id) {
-      
-       /* if ($this->request->is('get')) {
-            throw new MethodNotAllowedException();
-        } */
-
+     
 	   $this->loadModel('Sales.Product');
         if ($this->Product->delete($id)) {
             $this->Session->setFlash(
@@ -397,7 +383,6 @@ class ProductsController extends SalesAppController {
 
 		
 		echo json_encode($itemdata);
-
 
 		$this->autoRender = false;
     	

@@ -6,14 +6,14 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<header class="main-box-header clearfix">
-					
-                    
+					                    
 					<h1 class="pull-left">
 						Add Packaging
 					</h1>
 					<?php 
                         echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'settings', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
                     ?>
+
 				</header>
 
 			</div>
@@ -56,9 +56,7 @@
 					</div>
 				</div>
 			</div>
-		<?php echo $this->Form->end(); ?>
-
-		
+		<?php echo $this->Form->end(); ?>		
 	</div>
 </div>
 
@@ -72,10 +70,8 @@
 		                <div class="table-responsive">
 		                    <table class="table table-striped table-hover">
 		                        <thead>
-		                            <tr>
-		                              
-		                                <th><a href="#"><span>Packaging</span></a></th>
-		                              
+		                            <tr>		                              
+		                                <th><a href="#"><span>Packaging</span></a></th>		                              
 		                                <th class="text-center"><a href="#"><span>Created</span></a></th>
 		                                <th>Action</th>
 		                            </tr>

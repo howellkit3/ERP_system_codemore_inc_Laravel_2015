@@ -13,7 +13,7 @@ class PaymentTermHolder extends AppModel {
 
     public $name = 'PaymentTermHolder';
 
-    public $useTable = 'Payment_Term_holders';
+    public $useTable = 'Payment_term_holders';
 
     public $recursive = -1;
     
