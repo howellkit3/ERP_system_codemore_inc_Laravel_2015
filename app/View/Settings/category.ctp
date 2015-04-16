@@ -1,3 +1,4 @@
+<?php echo $this->Html->script('category'); ?>
 <?php echo $this->element('setting_option');?><br><br>
 <?php //echo $this->element('category_option');?><br><br>
 <?php 
@@ -40,7 +41,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 											<div class="main-box-body clearfix">
 												<div class="main-box-body clearfix">
 													<div class="form-horizontal">
-														<div class="form-group">
+														<div class="form-group"> <br>
 															<label class="col-lg-2 control-label">Name Category</label>
 																<div class="col-lg-8">
 																	<?php 
@@ -51,6 +52,23 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																	?>
 																</div>
 														</div>
+
+														<div class="form-group"> 
+															<label class="col-lg-2 control-label"></label>
+															<div class="col-lg-8">
+																<div class="radio">
+																			<input type="radio" name="data[ItemCategoryHolder][category_type]" id="categoryRadio1" value="0" checked>
+																			<label for="categoryRadio1">
+																			Product Category
+																			</label>
+																			<input type="radio" name="data[ItemCategoryHolder][category_type]" id="categoryRadio2" value="1">
+																			<label for="categoryRadio2">
+																			Item Group
+																			</label>
+																</div>
+															</div>
+														</div>
+
 														<div class="form-group">
 															<div class="col-lg-2"></div>
 																<div class="col-lg-8">
@@ -140,9 +158,9 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																	?>
 																</div>
 															</div>
-																<div class="form-group">
-																<label class="col-lg-2 control-label">Category</label>
-																	<div class="col-lg-8">
+														<div class="form-group">
+															<label class="col-lg-2 control-label">Category</label>
+															<div class="col-lg-8">
 																		<?php echo $this->Form->input('ItemTypeHolder.item_category_holder_id', array(
 																		'options' => array($categoryDataDropList),
 																		'type' => 'select',
@@ -153,7 +171,25 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																		'required' => true					                               
 																		)); 
 																		?>
-																	</div>
+															</div>
+														</div>
+
+														<div class="form-group"> 
+															<label class="col-lg-2 control-label"></label>
+																<div class="col-lg-8">
+																	<div class="radio-type">
+																			<input type="radio" name="data[ItemTypeHolder][category_type]" id="TypeRadio2" value="0" checked>
+																			<label for="categoryRadio">
+																			Product Category
+																			</label>
+											
+																			<input type="radio" name="data[ItemTypeHolder][category_type]" id="TypeRadio2" value="1">
+																			<label for="itemGroupRadio">
+																			Item Group
+																			</label>
+																		</div>
+																</div>
+
 														</div>
 
 															<div class="form-group">

@@ -109,7 +109,6 @@ class ProductsController extends SalesAppController {
 												'id','type_id')
 										));
 		echo json_encode($data);
-
 		$this->autoRender = false;
 
 	}
@@ -131,40 +130,66 @@ class ProductsController extends SalesAppController {
 
 	}
 
-	public function view($companyId = null,$productId){
-		$itemCategory = $this->ItemCategory->find('list', array(
-													'fields' => array(
-														'id','category_name'),
-													'conditions' => array(
-														'status' => 'active'
-												  		)
-												));
+	public function create_product($companyId = null){
 		
-		
-		$this->loadModel('Sales.Company');
+
+		if ($this->request->is('post')) {
+
+				$userData = $this->Session->read('Auth');
+			 	$productDetails = $this->request->data;
+	        	$this->loadModel('Sales.Product');
+	        	$productDetails['Product']['uuid'] = time();
+
+	           if ($this->Product->save($productDetails)) {
+
+	           	 $this->Session->setFlash(__('Products Successfully Added'));
+	             $this->redirect( array(
+	                                     'controller' => 'products', 
+	                                     'action' => 'index',	                              
+	                             ));
+	            } else {
+
+	            		 $this->Session->setFlash(__('There\'s an error saving your product'));	             	
+	            }
+		}
+
+
+		$userData = $this->Session->read('Auth');
 		$companyName = $this->Company->find('first', array(
-												'conditions' => array(
-													'id' =>  $companyId
-												)
-											));
+										'conditions' => array(
+											'id' =>  $companyId)
+									));
+		
+		$this->loadModel('ItemCategoryHolder');
+		$this->ItemCategoryHolder->bind(array('ItemTypeHolder'));
+		$itemCategoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name')));
+		$itemTypeData = $this->ItemCategoryHolder->ItemTypeHolder->find('list', array('fields' => array('id', 'name')));
+		$productData = $this->ItemCategoryHolder->ItemTypeHolder->find('list', array('fields' => array('id', 'name')));
+		$companyData = $this->Company->getList(array('id','company_name'));
+		$this->set(compact('itemCategoryData','itemTypeData', 'companyData'));
+	}
+
+	public function view($id){
+
+		$this->loadModel('ItemCategoryHolder');
+
+        $this->loadModel('ItemTypeHolder');
+
+        $this->loadModel('Company');
+
 		$this->loadModel('Sales.Product');
-		$this->Product->bind(array('ProductSpec'));
-		$productDetails = $this->Product->find('first', array(
-													'conditions' => array(
-														'id' => $productId
-														)
-													));
 
-		$this->loadModel('Sales.CustomField');
-		$customField = $this->CustomField->find('list',	array( 
-													'fields' => array(
-														'id', 'fieldlabel'),
-													'conditions' => array( 
-														'id NOT' => array(3,13,11)
-													)
-												));
+		$this->Product->recursive = 1;
 
-		$this->set(compact('companyName','itemCategory','customField','productDetails'));
+		$product = $this->request->data =  $this->Product->findById($id);
+
+		$this->request->data['Company'] = $this->Company->read(null,$product['Product']['company_id'])['Company'];
+
+		$productData = $this->Product->find('all',array(
+    		'order' => array('Product.id DESC')));	
+
+		$this->set(compact('product','productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData', 'companyData'));
+
 
 	}
 
@@ -196,9 +221,7 @@ class ProductsController extends SalesAppController {
                 if ($this->Product->save($this->request->data)) {
 
                     $this->Product->save($this->request->data);
-                    //$this->Product->bind(array('Product'));
-                    //$this->Product->ItemCategoryHolder->save($this->request->data);
-                    $this->Session->setFlash(__('Type has been updated.'));
+                    $this->Session->setFlash(__('Product has been updated.'));
                     return $this->redirect(array('action' => 'index'));
                 }
                 $this->Session->setFlash(__('Unable to update your post.'));
@@ -208,11 +231,12 @@ class ProductsController extends SalesAppController {
                 $this->request->data = $post;
             }
 
-
 		$this->ItemCategoryHolder->bind(array('ItemTypeHolder'));
 		$itemCategoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name')));
 		$itemTypeData = $this->ItemCategoryHolder->ItemTypeHolder->find('list', array('fields' => array('id', 'name')));
-		$this->set(compact('itemCategoryData','itemTypeData','productData','productDetails'));
+		$companyData = $this->Company->getList(array('id','company_name'));
+		$this->set(compact('itemCategoryData','itemTypeData','productData','productDetails','companyData'));
+		$this->set(compact('companyName','itemCategoryData','itemTypeData', 'companyData'));
 
 	}
 
@@ -237,43 +261,7 @@ class ProductsController extends SalesAppController {
         }
 	}
 
-
-
-	public function create_product($companyId = null){
-		
-
-		if ($this->request->is('post')) {
-				$userData = $this->Session->read('Auth');
-			 	$productDetails = $this->request->data;
-	        	 $this->loadModel('Sales.Product');
-	        	 $productDetails['Product']['uuid'] = time();
-
-	            if ($this->Product->save($productDetails)) {
-
-	           	 $this->Session->setFlash(__('Products Successfully Added'));
-	             $this->redirect( array(
-	                                     'controller' => 'products', 
-	                                     'action' => 'index',	                              
-	                             ));
-	            } else {
-
-	            		 $this->Session->setFlash(__('There\'s an error saving your product'));	             	
-	            }
-		}
-
-		$userData = $this->Session->read('Auth');
-		$companyName = $this->Company->find('first', array(
-										'conditions' => array(
-											'id' =>  $companyId)
-									));
-		
-		$this->loadModel('ItemCategoryHolder');
-		$this->ItemCategoryHolder->bind(array('ItemTypeHolder'));
-		$itemCategoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name')));
-		$itemTypeData = $this->ItemCategoryHolder->ItemTypeHolder->find('list', array('fields' => array('id', 'name')));
-		$productData = $this->ItemCategoryHolder->ItemTypeHolder->find('list', array('fields' => array('id', 'name')));
-		$this->set(compact('companyName','itemCategoryData','itemTypeData'));
-	}
+	
 
 	public function index() {
 
@@ -281,24 +269,32 @@ class ProductsController extends SalesAppController {
 
         $this->loadModel('ItemTypeHolder');
 
-		//$userData = $this->Session->read('Auth');
+        $this->loadModel('Company');
 
 		$this->loadModel('Sales.Product');
 
 		$this->Product->recursive = 1;
 		
-		$itemCategoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name')));
+		$itemCategoryData = $this->ItemCategoryHolder->find('list', array('fields' => array(
+			'id', 'name')));
 
-		$itemTypeData = $this->ItemTypeHolder->find('list', array('fields' => array('id', 'name')));
+		$itemTypeData = $this->ItemTypeHolder->find('list', array('fields' => array(
+			'id', 'name')));
 
-		$nameTypeData = $this->ItemTypeHolder->find('all',  array('order' => 'ItemTypeHolder.id DESC'));
+		$nameTypeData = $this->ItemTypeHolder->find('all',  array(
+			'order' => 'ItemTypeHolder.id DESC'));
 
-		$categoryData = $this->ItemCategoryHolder->find('all',  array('order' => 'ItemCategoryHolder.id DESC'));
+		$categoryData = $this->ItemCategoryHolder->find('all',  array(
+			'order' => 'ItemCategoryHolder.id DESC'));
+
+		$companyData = $this->Company->getList(array('id','company_name'));
 
 		$productData = $this->Product->find('all',array(
     		'order' => array('Product.id DESC')));
 
-		$this->set(compact('productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData'));
+
+
+		$this->set(compact('productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData', 'companyData'));
 
 	}
 

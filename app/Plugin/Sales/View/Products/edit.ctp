@@ -17,9 +17,7 @@
 
 			</div>
 		</div>
-		<?php echo $this->Form->create('Product',array('url'=>(array('controller' => 'products','action' => 'edit'))));?>
-			
-
+		<?php echo $this->Form->create('Product',array('url'=>(array('controller' => 'products','action' => 'edit'))));?>			
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="main-box">
@@ -34,8 +32,27 @@
 	                                            echo $this->Form->input('Product.name', array(
 	                                            								'class' => 'form-control item_type',
 							                                                    'label' => false,
+							                                                    'required' => 'required',
 							                                                    'placeholder' => 'Item Name'));
                                             ?>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-lg-2 control-label">Customer</label>
+										<div class="col-lg-8">
+											<input type="hidden" id="selected_type" value="">
+                                            <?php echo $this->Form->input('Product.company_id', array(
+					                                'options' => array($companyData),
+					                                'type' => 'select',
+					                                'label' => false,
+					                                'readonly' => 'readonly',
+					                                'required' => 'required',
+					                                'class' => 'form-control required categorylist',
+					                                'empty' => '---Select Customer---',
+					                               	'required' => 'required'
+					                                 )); 
+					                            ?>
 										</div>
 									</div>
 
@@ -48,16 +65,14 @@
 					                                'type' => 'select',
 					                                'label' => false,
 					                                'readonly' => 'readonly',
+					                                'required' => 'required',
 					                                'class' => 'form-control required categorylist',
 					                                'empty' => '---Select Item Category---'
 					                               
 					                                 )); 
-
-
 					                            ?>
 										</div>
 									</div>
-
 									<div class="form-group">
 										<label class="col-lg-2 control-label">Item Type</label>
 										<input type="hidden" id="selected_type" value="<?php echo $this->request->data['Product']['item_type_holder_id']; ?>">
@@ -69,9 +84,9 @@
 					                                'class' => 'form-control required',
 					                                'empty' => '---Select Item Type---',
 					                                'id' => 'item_type_holder_id',
+					                                'required' => 'required',
 					                               	'selected'  => $this->request->data['Product']['item_type_holder_id']
 					                                 )); 
-
 					                            ?>
 										</div>
 									</div>

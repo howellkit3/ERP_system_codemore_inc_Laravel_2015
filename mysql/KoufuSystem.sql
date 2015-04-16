@@ -308,3 +308,7 @@ insert  into `users`(`id`,`uuid`,`first_name`,`last_name`,`email`,`username`,`pa
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+/*april 16 2015 howell*/
+ALTER TABLE `item_type_holders`  ADD `category_type` BOOLEAN NULL  AFTER `name`;
+ALTER TABLE `item_category_holders`  ADD `category_type` BOOLEAN NULL  AFTER `modified_by`;

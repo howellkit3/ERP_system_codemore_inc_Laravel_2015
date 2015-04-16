@@ -446,6 +446,28 @@ class SettingsController extends AppController
                     
     }
 
+    public function category_find($id) {
+
+
+        $this->layout = false;
+
+        $this->loadModel('ItemCategoryHolder');
+
+        if (!empty($id)) {
+
+            $category = $this->ItemCategoryHolder->findById($id);
+
+            echo json_encode($category);
+
+            //$this->autoRender = false;
+
+        }
+         $this->autoRender = false;
+         exit();
+    
+
+    }
+
 }
             
 

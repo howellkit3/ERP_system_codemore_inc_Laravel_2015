@@ -2474,10 +2474,10 @@ label {
   padding: 7px;
 }
 
-.radio {
+.radio,.radio-type {
   padding-left: 2px;
 }
-.radio label {
+.radio label,.radio-type label {
   display: inline-block;
   cursor: pointer;
   position: relative;
@@ -2492,16 +2492,17 @@ input[type="radio"] {
 }
 
 .radio input[type=radio],
-.radio-inline input[type=radio] {
+.radio-inline input[type=radio],
+.radio-type input[type=radio]{
   float: left;
   margin-left: -20px;
 }
 
-.radio input[type=radio] {
+.radio input[type=radio],.radio-type input[type=radio]{
   display: none;
 }
 
-.radio label:before {
+.radio label:before,.radio-type label:before{
   background: none repeat scroll 0 0 #ffffff;
   border: 2px solid #e7ebee;
   border-radius: 50%;
@@ -2516,7 +2517,7 @@ input[type="radio"] {
   width: 20px;
 }
 
-.radio label:after {
+.radio label:after,.radio-type label:after{
   background-color: #03a9f4;
   border: 1px solid #03a9f4;
   border-radius: 50%;
@@ -2535,11 +2536,14 @@ input[type="radio"] {
 }
 
 .radio input[type=radio]:checked + label:before,
-.radio input[type=radio]:hover + label:before {
+.radio input[type=radio]:hover + label:before,
+.radio-type input[type=radio]:checked + label:before,
+.radio-type input[type=radio]:hover + label:before,
+ {
   border-color: #03a9f4;
 }
 
-.radio input[type=radio]:checked + label:after {
+.radio input[type=radio]:checked + label:after,.radio-type input[type=radio]:checked + label:after{
   line-height: 16px;
   transform: scale(0.63);
   transition: transform 0.1s 0s cubic-bezier(0.4, 0.02, 0.3, 1.2);

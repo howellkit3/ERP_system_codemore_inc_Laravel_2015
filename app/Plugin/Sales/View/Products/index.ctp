@@ -23,6 +23,7 @@
                                 <tr>
                                     <th><a href="#"><span>Item Number</span></a></th>
                                     <th><a href="#"><span>Product Name</span></a></th>
+                                    <th><a href="#"><span>Customer</span></a></th>
                                     <th><a href="#"><span>Item Category</span></a></th>
                                     <th><a href="#"><span>Item Type</span></a></th>
                                     <th><a href="#"><span>Remarks</span></a></th>

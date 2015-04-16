@@ -1,120 +1,168 @@
-<?php echo $this->element('sales_option'); ?><br><br>
+<?php //$this->Html->addCrumb('Sales', array('controller' => 'customer_sales', 'action' => 'index')); ?>
+<?php //$this->Html->addCrumb('Clients Order', array('controller' => 'sales_orders', 'action' => 'index')); ?>
+<?php // $this->Html->addCrumb('View', array('controller' => 'sales_orders', 'action' => 'view',$productData['Product']['id'])); ?>
+<?php //echo $this->Html->script('Sales.Product');?>
 
-<?php echo $this->Form->create('Product', array(
-									'url'=>( array(
-										'controller' => 'products',
-										'action' => 'add'
-											)
-									)), array(
-										 'class' => 'form-horizontal'
-									 		));
+<?php //pr($itemTypeData); exit;?>
 
-?>
-<?php echo $this->Html->script('Sales.item_type');?>
+<div style="clear:both"></div>
 
-	<div class="row">
-	    <div class="col-lg-9">
-	        <div class="main-box">
+<?php echo $this->element('sales_option');?><br><br>
+
+<div class="row">
+	<div class="col-lg-12">
+		
+		<div class="row">
+			<div class="col-lg-12">
 				<header class="main-box-header clearfix">
-	                		<h1>View Product</h1>
-	                		<div>
-								<?php 
-				           			 echo $this->Html->link('<i class="fa fa-pencil  fa-lg">
-				           			 						</i> Edit', array( 
-				           			 						'controller' => 'products', 
-				           			 						'action' => 'edit',
-				           			 						$companyName['Company']['id'],
-				           			 						$productDetails['Product']['id']
-				           			 						), array(
-				           			 						'class' =>'btn btn-primary pull-right',
-				           			 						'escape' => false
-				           			 						));
+					
+                    
+					<h1 class="pull-left">
+						<?php
+							//echo ucfirst($companyName[$clientOrderData['ClientOrder']['company_id']]); 
+						?>
+					</h1>
+					<?php 
+                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'product', 'action' => 'view'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                    ?>
+				</header>
 
-			        			?>
-			        			
-		        			</div>
-	                		<div class="col-lg-11">
-		                		
-			                		<?php 
-					                  	echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'customer_sales', 
-					    									 	'action' => 'view',
-					    									 	$companyName['Company']['id']),array('class' =>'btn btn-primary pull-right','escape' => false));
-				            		?>
-				            </div>
-				            
-	           	</header>
-	           		 	<center>
-   		 					
-	            
-			           	 <div class="main-box-body clearfix">
-			                <div class="form-group">
-			                    <label for="inputPassword1" class="col-lg-2 control-label">Company Name</label>
-
-			                    <div class="col-lg-9">
-			                    	<?php
-			                           			echo $this->Form->input('companyId', array( 
-			                           									'value' => $companyName['Company']['id'],
-			                           									'type' => 'hidden',
-					                           							'alt' => 'type',
-												    					'label' => false,
-												   						'class' => 'form-control'
-												    					//'empty' => '--Select Category--'
-												    					//'id' => 'co'
-																));
-			                        		?>
-			                        <?php
-			                           echo $companyName['Company']['company_name'];
-			                        ?>
-
-
-			                    </div>
-			                </div> <br><br>
-							 <div class="form-group">
-				                <label for="inputPassword1" class="col-lg-2 control-label">Name</label>
-				                <div class="col-lg-9">
-									<div class="input-group">
-										
-										 <?php
-			                           			echo $productDetails['Product']['product_name']
-			                        	?>
-			                        <br>
+			</div>
+		</div>
+				<?php echo $this->Form->create('Product',array('url'=>(array('controller' => 'products','action' => 'view'))));?>			
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="main-box">
+						<header class="main-box-header clearfix">
+						<h2 class="pull-left">Product Details</h2>
+					</header>
+						<div class="top-space"></div>
+						<div class="main-box-body clearfix">
+							<div class="main-box-body clearfix">
+								<div class="form-horizontal">									
+									<div class="form-group">
+										<label class="col-lg-2 control-label">Item Number</label>
+										<input type="hidden" id="selected_type" value="<?php // echo $this->request->data['Product']['id']; ?>">
+										<div class="col-lg-8">
+											<?php 
+	                                            echo $this->Form->input('Product.uuid', array(
+	                                            								'class' => 'form-control item_type',
+	                                            								'disabled' => true,
+							                                                    'label' => false,       
+							                                                    'placeholder' => 'Item Number',
+							                                                    'fields' =>array('name')));
+                                            ?>
+										</div>
 									</div>
-									<span class="help-block" style= "color:white">ex. MM/DD/YYYY</span>
-				                </div>
-				            </div>
-		             
-				          <?php foreach ($customField as $key => $value) { 
-				          		$keyholder = "";
-				          		if($key == 2){
-				          			$keyholder = $key-2;
 
-				          		}
-				          		else if($key == 12){
-				          			$keyholder = $key-4;
-				          		}
-				          		else{
+									<div class="form-group">
+										<label class="col-lg-2 control-label">Item Name</label>
+										<div class="col-lg-8">
+											<?php 
+	                                            echo $this->Form->input('Product.name', array(
+	                                            								'class' => 'form-control item_type',
+							                                                    'label' => false,
+							                                                    'disabled' => true,
+							                                                    'placeholder' => 'Product Name',
+							                                                    'fields' =>array('name')));
+                                            ?>
+										</div>
+									</div>
 
-				          			$keyholder = $key-3;
+									<div class="form-group">
+										<label class="col-lg-2 control-label">Remarks</label>
+										<div class="col-lg-8">
+											<?php 
+	                                            echo $this->Form->input('Product.remarks', array(
+	                                            								'class' => 'form-control item_type',
+							                                                    'label' => false,
+							                                                    'disabled' => true,
+							                                                    'placeholder' => 'Remarks'));
+                                            ?>
+										</div>
+									</div>
 
-				          		}
-				          	//pr($keyholder);?>
-															
-							 <div class="form-group">
-								<label for="inputPassword1" class="col-lg-2 control-label"><?php echo $customField[$key]?></label><br>
-
-								<div class="col-lg-9">
-									<?php echo !empty($productDetails['ProductSpec'][$keyholder]['description']) ? $productDetails['ProductSpec'][$keyholder]['description'] : '' ; ?>
-
-                               		<span class="help-block" style= "color:white">ex. MM/DD/YYYY</span>
 								</div>
 							</div>
-								<span class="help-block" style= "color:white">ex. MM/DD/YYYY</span>
-							
-						<?php }?>
-			            </div>
-	        	</center>
-	        </div>
-	    </div>  
-	</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		<?php echo $this->Form->end(); ?>
 
-<?php echo $this->Form->end(); ?>
+		<?php echo $this->Form->create('Product',array('url'=>(array('controller' => 'products','action' => 'view'))));?>			
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="main-box">
+						<header class="main-box-header clearfix">
+						<h2 class="pull-left">Company Details</h2>
+					</header>
+						<div class="top-space"></div>
+						<div class="main-box-body clearfix">
+							<div class="main-box-body clearfix">
+								<div class="form-horizontal">									
+									<div class="form-group">
+										<label class="col-lg-2 control-label">Customer Name</label>
+
+										<div class="col-lg-8">
+											<?php 
+	                                            echo $this->Form->input('Company.name', array(
+
+	                                            								'class' => 'form-control item_type',
+							                                                    'label' => false,
+							                                                    'disabled' => true,
+							                                                    'placeholder' => 'Customer Name'));
+                                            ?>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-lg-2 control-label">Description</label>
+										<div class="col-lg-8">
+											<?php 
+	                                            echo $this->Form->input('Company.description', array(
+	                                            								'class' => 'form-control item_type',
+							                                                    'label' => false,
+							                                                    'disabled' => true,
+							                                                    'placeholder' => 'Description'));
+                                            ?>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-lg-2 control-label">Website</label>
+										<div class="col-lg-8">
+											<?php 
+	                                            echo $this->Form->input('Company.website', array(
+	                                            								'class' => 'form-control item_type',
+							                                                    'label' => false,
+							                                                    'disabled' => true,
+							                                                    'placeholder' => 'Website',
+							                                                    'fields' => array('website')));
+                                            ?>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		<?php echo $this->Form->end(); ?>
+
+		
+	</div>
+</div>
+
+<script>
+
+	jQuery(document).ready(function($){
+		//datepicker
+		$('.datepick').datepicker({
+			format: 'yyyy-mm-dd'
+		});
+		
+	});
+
+</script>
