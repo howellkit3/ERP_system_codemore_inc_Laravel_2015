@@ -46,8 +46,6 @@ class QuotationsController extends SalesAppController {
 
 	public function create($inquiryId = null) {
 
-
-
 		$userData = $this->Session->read('Auth');
 
 		if(!empty($inquiryId)){
@@ -143,7 +141,6 @@ class QuotationsController extends SalesAppController {
 
 		$this->Company->bind(array('Address','Contact','Email','Inquiry','ContactPerson','Quotation'));
 
-
 		$companyData = $this->Company->find('list', array(
      											'fields' => array( 
      												'id','company_name')
@@ -165,19 +162,23 @@ class QuotationsController extends SalesAppController {
 														'conditions' => array( 
 															'Quotation.id' => $quotationId)
 													));
-		$clientOrder = $this->Quotation->ClientOrder->find('first', array(
+
+	
+		$quotationDetailData = $this->Quotation->ClientOrder->find('first', array(
 														'conditions' => array( 
 															'ClientOrder.quotation_id' => $quotationId)
 													));
+
 		
-		if (!empty($clientOrder['ClientOrder'])) {
+		 if(!empty($clientOrder['ClientOrder'])) {
 
 			$clientOrderCount = count($clientOrder['ClientOrder']['quotation_id']);
 			
 		} else {
 
 			$clientOrderCount = 0;
-		}
+		} 
+
 		
 		$this->loadModel('User');
 		$user = $this->User->find('first', array(
@@ -185,11 +186,7 @@ class QuotationsController extends SalesAppController {
 										'User.id' => $userData['User']['id'] )
 								));
 		
-		
-		
-		$this->set(compact('companyData','companyId', 'quotationSize', 'quotationOption',
-			'quotation','inquiryId','user','contactInfo',
-			'quotationFieldInfo','field','salesStatus', 'productName','clientOrderCount'));
+		$this->set(compact('companyData','companyId', 'quotationSize', 'quotationOption','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','salesStatus', 'productName','clientOrderCount','quotationDetailData'));
 		
 	}
 
@@ -414,11 +411,7 @@ class QuotationsController extends SalesAppController {
 
 	 	$salesStatus = $this->SalesOrder->find('list',array('fields' => array('quotation_id','id')));
 
-		$this->set(compact('companyData','quotationData','inquiryId','salesStatus'));
-
-		
-		
-		
+		$this->set(compact('companyData','quotationData','inquiryId','salesStatus'));		
 		
 	}
 

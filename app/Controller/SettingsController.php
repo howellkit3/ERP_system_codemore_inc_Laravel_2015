@@ -109,6 +109,32 @@ class SettingsController extends AppController
 
     }
 
+    public function supplier() {
+
+        $userData = $this->Session->read('Auth');
+
+        $statusData = $this->StatusFieldHolder->find('all', array('order' => 'StatusFieldHolder.id DESC'));
+        if ($this->request->is('post')) {
+            
+            if (!empty($this->request->data)) {
+
+                $this->StatusFieldHolder->create();
+
+                $this->id = $this->StatusFieldHolder->saveStatus($this->request->data['StatusFieldHolder'], $userData['User']['id']);
+
+            
+                $this->Session->setFlash(__('Add Status Complete.'));
+
+                $this->redirect(
+                    array('controller' => 'settings', 'action' => 'status')
+                );
+            }
+        }
+
+        $this->set(compact('statusData'));
+
+    }
+
     public function category_edit($id = null) {
 
             if (!$id) {

@@ -38,7 +38,15 @@ class CustomerSalesController extends SalesAppController {
 
 	public function add(){
 
+		$this->loadModel('PaymentTermHolder');
+
 		$userData = $this->Session->read('Auth');
+
+		$paymentTermData = $this->PaymentTermHolder->find('list', array(
+													'fields' => array(
+													'id','name'),
+												  		)
+												);
 	
 		if ($this->request->is('post')) {
 			//pr($this->request->data);die;
@@ -59,7 +67,6 @@ class CustomerSalesController extends SalesAppController {
 					
 					
             		$this->Company->Contact->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
-            		//$this->Company->Address->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
             		$this->Company->Email->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
 
 					if($this->request->is('ajax')){
@@ -81,6 +88,8 @@ class CustomerSalesController extends SalesAppController {
             	
             }
         }
+
+        $this->set(compact('paymentTermData'));
 
 	}
 
@@ -229,8 +238,6 @@ class CustomerSalesController extends SalesAppController {
 		$emailId = $this->Company->Email->find('first',
 					array('conditions' => array('Email.foreign_key' => $personId['ContactPerson']['id'])));
 
-		//pr($personId['ContactPerson']['id']);exit();
-		//$this->Company->ContactPerson->delete($personId['id']);
 
 		if ($this->Company->ContactPerson->delete($personId['ContactPerson']['id'])) {
 			$this->Company->delete($dataId);
@@ -483,7 +490,6 @@ class CustomerSalesController extends SalesAppController {
 								    			)
 								    		)
 								    	);
-
 		
 		$companyData = $this->Company->find('list',array('fields' => array('id', 'company_name')));
 

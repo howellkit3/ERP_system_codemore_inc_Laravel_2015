@@ -26,8 +26,6 @@ class SalesOrdersController extends SalesAppController {
 
 		$clientOrder = $this->Quotation->ClientOrder->find('all', array('order' => 'ClientOrder.id DESC'));
 
-
-		// pr($clientOrder);exit();
 		$this->loadModel('Sales.Company');
 
 		$this->Company->bind(array('Inquiry'));
@@ -47,9 +45,13 @@ class SalesOrdersController extends SalesAppController {
 
 	public function view($clientOrderId = null){
 
-		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail'));
+		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail', 'PaymentTermHolder'));
 
-		$this->ClientOrder->bind(array('ClientOrderDeliverySchedule'));
+		$this->ClientOrder->bind(array('ClientOrderDeliverySchedule','PaymentTermHolder'));
+
+		$this->loadModel('PaymentTermHolder');
+
+		$this->loadModel('Sales.PaymentTermHolder');
 
 		$clientOrderData = $this->ClientOrder->find('first',array('conditions' => array('ClientOrder.id' => $clientOrderId)));
 
@@ -60,9 +62,12 @@ class SalesOrdersController extends SalesAppController {
      												));
 
 		$quotationItemDetail = $this->Quotation->QuotationItemDetail->find('first',array('conditions' => array('QuotationItemDetail.id' => $clientOrderData['ClientOrder']['client_order_item_details_id'])));
-		//pr($quotationItemDetail);exit();
 
-		$this->set(compact('clientOrderData','quotationData','companyName','quotationItemDetail'));
+		$paymentTermData = $this->PaymentTermHolder->find('first',array($clientOrderData['ClientOrder']['payment_terms']));
+
+		$PaymentTermClientData = $this->PaymentTermHolder->find('all');
+													
+		$this->set(compact('clientOrderData','quotationData','companyName','quotationItemDetail','paymentTermData', 'PaymentTermClientData'));
 
 	}
 

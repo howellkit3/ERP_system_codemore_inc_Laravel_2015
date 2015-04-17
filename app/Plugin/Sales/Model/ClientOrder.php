@@ -31,6 +31,12 @@ class ClientOrder extends AppModel {
 					'foreignKey' => 'company_id',
 					'dependent' => true
 				),
+
+				'Sales.PaymentTermHolder' => array(
+					'className' => 'PaymentTerms',
+					'foreignKey' => 'payment_terms',
+					'dependent' => true
+				)
 			),
 			'hasMany' => array(
 				

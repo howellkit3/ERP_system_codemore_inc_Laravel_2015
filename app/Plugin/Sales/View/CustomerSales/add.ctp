@@ -79,21 +79,18 @@
                                         <div class="col-lg-9">
                                             <?php 
                                                 echo $this->Form->input('Company.payment_term', array(
-                                                    'options' => array(
-                                                        'PIA - Payment in advance' => 'PIA - Payment in advance',
-                                                        'COD – Cash on Delivery',
-                                                        'Net 7 - Payment seven days after invoice date' => 'Net 7 - Payment seven days after invoice date',
-                                                        'Net 10 - Payment ten days after invoice date' =>'Net 10 - Payment ten days after invoice date'
-                                                        ,
-                                                        'Net 30 - Payment 30 days after invoice date' => 'Net 30 - Payment 30 days after invoice date',
-                                                        'Net 60 - Payment 60 days after invoice date' => 'Net 60 - Payment 60 days after invoice date',
-                                                        'Net 90 - Payment 90 days after invoice date' => 'Net 90 - Payment 90 days after invoice date'),
+                                                    'options' => array($paymentTermData),
                                                     'label' => false,
+                                                    'style' => 'text-transform:capitalize',
+                                                     'readonly' => 'readonly',
                                                     'class' => 'form-control required',
                                                     'empty' => '--Please Select Payment Term--'
                                                 ));
 
                                             ?>
+
+                                        </div>
+                                    </div>
                                         </div>
                                     </div>
                                 </div>
@@ -462,8 +459,7 @@
                 </div>
             </div>
         <?php echo $this->Form->end(); ?>
-    </div>
-</div>
+
 
 <script>
     jQuery('.remove').hide();

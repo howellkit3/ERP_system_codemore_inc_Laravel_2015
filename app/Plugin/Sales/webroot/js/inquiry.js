@@ -46,13 +46,14 @@ jQuery(function($){
 		$('.option-append').remove();	
 		var option = $(this).val();
 
-		var selected = $('#selected_type').val();
+		var selected = $('#selected_item_type').val();
 
 		$.ajax({
 		url: serverPath + "sales/products/find_item/"+option,
 		type: "get",
 		dataType: "json",
 		success: function(data) {
+			
 			$.each(data, function(key, value) {
 
 				if (value.id == selected) {

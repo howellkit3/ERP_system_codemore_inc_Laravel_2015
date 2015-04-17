@@ -41,7 +41,7 @@
 									<div class="form-group">
 										<label class="col-lg-2 control-label">Customer</label>
 										<div class="col-lg-8">
-											<input type="hidden" id="selected_type" value="">
+											<input type="hidden" id="category_selected_type" value="">
                                             <?php echo $this->Form->input('Product.company_id', array(
 					                                'options' => array($companyData),
 					                                'type' => 'select',
@@ -75,7 +75,7 @@
 									</div>
 									<div class="form-group">
 										<label class="col-lg-2 control-label">Item Type</label>
-										<input type="hidden" id="selected_type" value="<?php echo $this->request->data['Product']['item_type_holder_id']; ?>">
+										<input type="hidden" id="selected_item_type" value="<?php echo $this->request->data['Product']['item_type_holder_id']; ?>">
 										<div class="col-lg-8">
 											 <?php echo $this->Form->input('Product.item_type_holder_id', array(
 					                                // 'type' => 'select',
