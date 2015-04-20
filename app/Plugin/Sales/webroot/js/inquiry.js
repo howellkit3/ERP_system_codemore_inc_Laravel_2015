@@ -54,10 +54,8 @@ jQuery(function($){
 		dataType: "json",
 		success: function(data) {
 
-			
-			$.each(data, function(key, value) {
-
-				if (value.id == selected) {
+				$.each(data, function(key, value) {	
+				if (value.ItemTypeHolder.id == selected) {
 					$option = "<option class='option-append' selected value="+value.ItemTypeHolder.id+">"+value.ItemTypeHolder.name+"</option>";	
 				} else {
 					$option = "<option class='option-append'  value="+value.ItemTypeHolder.id+">"+value.ItemTypeHolder.name+"</option>";
@@ -67,7 +65,7 @@ jQuery(function($){
 		}
 		});			
 	}).trigger('change');
-
+	
 	$('#select_company').change(function(){
 
 		var option = $(this).val();
@@ -77,7 +75,6 @@ jQuery(function($){
 		type: "get",
 		dataType: "json",
 		success: function(data) {
-			console.log(data);
 			if (data.length == 0){
 				$('#address1').val('');
 				$('#contact').val('');	
@@ -96,13 +93,11 @@ jQuery(function($){
 	$('.select-item').change(function(){
 
 		var option = $(this).val();
-		console.log(option);
 		$.ajax({
 		url: serverPath + "sales/create_order/find_item_detail/"+option,
 		type: "get",
 		dataType: "json",
 		success: function(data) {
-			console.log(data);
 			if (data.length == 0){
 				$('#quantity').val('');
 				$('#unit_price').val('');	
@@ -117,7 +112,6 @@ jQuery(function($){
 				$('#itemDetailId').val(data.QuotationItemDetail.id);
 
 			}
-			
 		}
 		});
 			
@@ -154,8 +148,6 @@ jQuery(function($){
 			success: function(data) {
 
 			$.each(data, function(key, value) {
-				console.log(key);
-				console.log(value);
 				     $('#itemType')
 				         .append($("<option></option>")
 				         .attr("value",key)
