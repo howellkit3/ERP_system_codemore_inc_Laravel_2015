@@ -113,25 +113,27 @@ class SettingsController extends AppController
 
         $userData = $this->Session->read('Auth');
 
-        $statusData = $this->StatusFieldHolder->find('all', array('order' => 'StatusFieldHolder.id DESC'));
+        $this->loadModel('Supplier');
+
+        $supplierData = $this->Supplier->find('all', array('order' => 'Supplier.id DESC'));
         if ($this->request->is('post')) {
             
             if (!empty($this->request->data)) {
 
-                $this->StatusFieldHolder->create();
+                $this->Supplier->create();
 
-                $this->id = $this->StatusFieldHolder->saveStatus($this->request->data['StatusFieldHolder'], $userData['User']['id']);
+                $this->id = $this->Supplier->save($this->request->data);
 
             
-                $this->Session->setFlash(__('Add Status Complete.'));
+                $this->Session->setFlash(__('Add Supplier Complete.'));
 
                 $this->redirect(
-                    array('controller' => 'settings', 'action' => 'status')
+                    array('controller' => 'settings', 'action' => 'supplier')
                 );
             }
         }
 
-        $this->set(compact('statusData'));
+        $this->set(compact('supplierData'));
 
     }
 

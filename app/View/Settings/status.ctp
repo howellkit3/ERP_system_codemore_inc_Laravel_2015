@@ -2,7 +2,6 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		
 		<div class="row">
 			<div class="col-lg-12">
 				<header class="main-box-header clearfix">
@@ -27,8 +26,6 @@
 						<div class="main-box-body clearfix">
 							<div class="main-box-body clearfix">
 								<div class="form-horizontal">
-									
-
 									<div class="form-group">
 										<label class="col-lg-2 control-label">Status</label>
 										<div class="col-lg-8">
@@ -40,9 +37,6 @@
                                             ?>
 										</div>
 									</div>
-
-								
-
 									<div class="form-group">
 										<div class="col-lg-2"></div>
 										<div class="col-lg-8">
