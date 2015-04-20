@@ -55,6 +55,8 @@ jQuery(function($){
 		success: function(data) {
 
 				$.each(data, function(key, value) {	
+					console.log(value);
+					console.log(selected);
 				if (value.ItemTypeHolder.id == selected) {
 					$option = "<option class='option-append' selected value="+value.ItemTypeHolder.id+">"+value.ItemTypeHolder.name+"</option>";	
 				} else {
@@ -65,7 +67,7 @@ jQuery(function($){
 		}
 		});			
 	}).trigger('change');
-	
+
 	$('#select_company').change(function(){
 
 		var option = $(this).val();
