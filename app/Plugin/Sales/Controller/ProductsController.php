@@ -291,6 +291,7 @@ class ProductsController extends SalesAppController {
 
 		$productData = $this->Product->find('all',array(
     		'order' => array('Product.id DESC')));
+	
 
 
 
@@ -370,17 +371,58 @@ class ProductsController extends SalesAppController {
     	$this->loadModel('ItemCategoryHolder');
 		$this->ItemCategoryHolder->bind(array('ItemTypeHolder'));
 
-		$itemdata =$this->ItemCategoryHolder->ItemTypeHolder->find('first', array(
+		$itemdata =$this->ItemCategoryHolder->ItemTypeHolder->find('all', array(
 										'conditions' => array(
 											'ItemTypeHolder.Item_category_holder_id' => $itemId), 
 										'fields' => array(
 											'id', 'name')
 										));
 
+
+
 		
 		echo json_encode($itemdata);
 
 		$this->autoRender = false;
+    	
+    }
+     public function find_categ($itemId = null){
+
+    	$this->layout = false;
+    	$this->loadModel('ItemCategoryHolder');
+		$this->ItemCategoryHolder->bind(array('ItemTypeHolder'));
+
+		$itemdata =$this->ItemCategoryHolder->ItemTypeHolder->find('all', array(
+										'conditions' => array(
+											'ItemTypeHolder.Item_category_holder_id' => $itemId), 
+										'fields' => array(
+											'id', 'name')
+										));
+
+	
+
+		
+		echo json_encode($itemdata);
+
+		$this->autoRender = false;
+    	
+    }
+    public function find_product($itemtypeid = null){
+
+    	$this->autoRender = false;
+
+    	$this->loadModel('Sales.Product');
+
+    	$productData = $this->Product->find('all',array(
+    										'conditions' => array(
+											'Product.item_type_holder_id' => $itemtypeid),
+											'fields' => array(
+											'id', 'name')));
+    	
+    	$this->layout = false;
+
+		echo json_encode($productData);
+
     	
     }
 }

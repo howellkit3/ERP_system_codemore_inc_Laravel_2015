@@ -37,7 +37,7 @@ class SettingsController extends AppController
         $categoryDataDropList = $this->ItemCategoryHolder->find('list',  array('order' => 'ItemCategoryHolder.id DESC'));
 
         $nameTypeData = $this->ItemTypeHolder->find('all',  array('order' => 'ItemTypeHolder.id DESC'));
-
+     
 
         if ($this->request->is('post')) {
             

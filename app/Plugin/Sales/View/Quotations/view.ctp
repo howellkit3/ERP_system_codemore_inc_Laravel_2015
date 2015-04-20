@@ -99,7 +99,7 @@
 								Item
 							</div>
 							<div class="col-lg-8">
-								:&emsp;<?php //echo $productName['Product']['product_name']?>
+								:&emsp;<?php echo $quotation['ProductDetail']['name']?>
 							</div>
 
 					</div>

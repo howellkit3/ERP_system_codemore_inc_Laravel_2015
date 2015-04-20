@@ -24,7 +24,7 @@ class QuotationsController extends SalesAppController {
 
 		$userData = $this->Session->read('Auth');
 
-		$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail'));
+		$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail','ProductDetail'));
 
 		$quotationData = $this->Quotation->find('all', array('order' => 'Quotation.id DESC'));
 
@@ -39,6 +39,8 @@ class QuotationsController extends SalesAppController {
      													'fields' => array(
      														'company_id')
      												));
+
+
 
 		$this->set(compact('companyData','quotationData','inquiryId','salesStatus'));
 
@@ -65,14 +67,21 @@ class QuotationsController extends SalesAppController {
 
 		}else{
 
+		
+		
+			$this->loadModel('ItemCategoryHolder');
+			
+			$itemCategoryData = $this->ItemCategoryHolder->find('list');
+
 			$userData = $this->Session->read('Auth');
 
 			$this->Company->bind(array('Contact','Email','Address','ContactPerson'));
 
 			$companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')));
 
-			$this->set(compact('companyData','customField'));
+			$this->set(compact('companyData','customField','itemCategoryData'));
 		}
+
 		$this->set(compact('category','inquiryId'));
 		
 	}
@@ -112,6 +121,7 @@ class QuotationsController extends SalesAppController {
 
             		
             	}else{
+
 
             			$companyId = $this->request->data['Company']['id'];
 
@@ -156,7 +166,7 @@ class QuotationsController extends SalesAppController {
 																	'ContactPerson.company_id' => $companyId 
 																)
 															));
-		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder'));
+		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder','ProductDetail'));
 
 		$quotation = $this->Quotation->find('first', array(
 														'conditions' => array( 

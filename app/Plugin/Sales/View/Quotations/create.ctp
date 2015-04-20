@@ -78,29 +78,85 @@
 											</div>
 										</div>
 
-										<div class="form-group" id="existing_items">
+									<!-- 	<div class="form-group" id="existing_items">
 											<label class="col-lg-2 control-label">Item</label>
 											<div class="col-lg-8">
 												<?php 
 	                                                echo $this->Form->input('Quotation.name', 
 	                                                									array( 
-	                                                						'class' => 'form-control item_type ', 
+	                                                						'class' => 'form-control item_type', 
 	                                                    					'label' => false, 
 	                                                    					'id' => 'txtProduct',
 	                                                    					'placeholder' => 'Item'
 	                                                    					));
 	                                            ?>
 												<?php 
-	                                                echo $this->Form->input('product', 
+	                                                // echo $this->Form->input('product', 
+	                                                // 									array( 
+	                                                // 						'type' => 'select',
+	                                                // 						'class' => 'form-control item_type', 
+	                                                //     					//'alt' => 'address1',
+	                                                //     					'label' => false, 
+	                                                //     					'id' => 'selectProduct',
+	                                                //     					'empty' => '--Select Product--'
+	                                                //     					));
+	                                           	 	?>
+											</div>
+											
+										</div>
+ -->
+
+										<div class="form-group" id="existing_items">
+											<label class="col-lg-2 control-label">Category</label>
+											<div class="col-lg-8">
+												<?php 
+	                                                echo $this->Form->input('Quotation.item_category_holder_id', 
+	                                                									array( 
+	                                                						'options' => array($itemCategoryData),				
+	                                                						'type' => 'select',
+	                                                						'class' => 'form-control item_type categorylist required', 
+	                                                    					'label' => false, 
+	                                                    					'placeholder' => 'Item',
+	                                                    					'empty' => '--Select Category--'
+	                                                    					));
+	                                            ?>
+											</div>
+											
+										</div>
+
+										<div class="form-group" id="existing_items">
+											<label class="col-lg-2 control-label">Type</label>
+											<div class="col-lg-8">
+												<?php 
+	                                                echo $this->Form->input('Quotation.item_type_holder_id', 
 	                                                									array( 
 	                                                						'type' => 'select',
-	                                                						'class' => 'form-control item_type', 
-	                                                    					//'alt' => 'address1',
+	                                                						'class' => 'form-control item_type jsoncat required', 
 	                                                    					'label' => false, 
-	                                                    					'id' => 'selectProduct',
-	                                                    					'empty' => '--Select Product--'
+	                                                    					'id' => 'item_type_holder_id',
+	                                                    					'placeholder' => 'Item',
+	                                                    					'empty' => '--Select Type--'
 	                                                    					));
-	                                           	 	?>
+	                                            ?>
+											</div>
+											
+										</div>
+
+										<div class="form-group" id="existing_items">
+											<label class="col-lg-2 control-label">Item</label>
+											<div class="col-lg-8">
+												<?php 
+	                                                echo $this->Form->input('Quotation.name', 
+	                                                									array( 
+	                                                						'type' => 'select',
+	                                                						'class' => 'form-control item_type required', 
+	                                                    					'label' => false,
+	                                                    					'id' => 'txtProduct',
+	                                                    					'id' => 'product_holder_id',
+	                                                    					'placeholder' => 'Item',
+	                                                    					'empty' => '--Select Item--'
+	                                                    					));
+	                                            ?>
 											</div>
 											
 										</div>
@@ -352,9 +408,61 @@
 				format: 'yyyy-mm-dd'
 			});
 			
-		});
-		
+
+
+
+
+
+
+		$('.categorylist').change(function(){
+			$('.option-append').remove();
+			$('.option-append2').remove();	
+			var option = $(this).val();
+			var selected = $('#selected_item_type').val();
+			$.ajax({
+				url: serverPath + "sales/products/find_categ/"+option,
+				type: "get",
+				async: false,
+				dataType: "json",
+				success: function(data) {
+
+
+					
+					$.each(data, function(key, value) {
+						if (value.id == selected) {
+							$option = "<option class='option-append' selected value="+value.ItemTypeHolder.id+">"+value.ItemTypeHolder.name+"</option>";	
+						} else {
+							$option = "<option class='option-append'  value="+value.ItemTypeHolder.id+">"+value.ItemTypeHolder.name+"</option>";
+						}
+					     $('#item_type_holder_id').append($option);
+					});			
+				}
+			});			
+	}).trigger('change');
+	});
+
+	$('#item_type_holder_id').change(function(){
+			var itemtypeid = $(this).val();
+			$('.option-append2').remove();
+			$.ajax({
+				url: serverPath + "sales/products/find_product/"+itemtypeid,
+				type: "get",
+				dataType: "json",
+				success: function(data) {
+					
+					$.each(data, function(key, value) {
+						if (value.id == itemtypeid) {
+						$option = "<option class='option-append2' selected value="+value.Product.id+">"+value.Product.name+"</option>";	
+						} else {
+						$option = "<option class='option-append2'  value="+value.Product.id+">"+value.Product.name+"</option>";
+						}
+						$('#product_holder_id').append($option);
+					});			
+			}
+			});		
+		}).trigger('change');
 	 </script>
+
 
 
 
