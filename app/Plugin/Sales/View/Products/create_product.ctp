@@ -1,5 +1,5 @@
 <?php $this->Html->addCrumb('Sales', array('controller' => 'customer_sales', 'action' => 'index')); ?>
-<?php echo $this->Html->script('Sales.inquiry');?>
+<?php echo $this->Html->script(array('Sales.inquiry','Sales.product'));?>
 <?php echo $this->element('sales_option'); ?><br><br>
 
 <div class="row">
