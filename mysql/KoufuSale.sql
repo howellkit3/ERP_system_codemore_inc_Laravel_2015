@@ -503,3 +503,6 @@ CREATE TABLE `statuses` (
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Irvin 20/04/2015
+ALTER TABLE `quotations` ADD `item_type_holder_id` INT NULL AFTER `inquiry_id`, ADD `item_category_holder_id` INT NULL AFTER `item_type_holder_id`;

@@ -6,8 +6,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<header class="main-box-header clearfix">
-					
-                    
+					    
 					<h1 class="pull-left">
 						Edit Supplier
 					</h1>
@@ -15,7 +14,6 @@
                         echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'settings', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
                     ?>
 				</header>
-
 			</div>
 		</div>
 		<?php echo $this->Form->create('Supplier',array('url'=>(array('controller' => 'settings','action' => 'supplier_edit'))));?>
@@ -45,7 +43,6 @@
 	                                            								'hidden' => 'hidden',
 							                                                    'label' => false,
 							                                                    'placeholder' => 'Name Category'));
-                                            
                                             ?>
 
 										</div>
@@ -61,7 +58,6 @@
 							                                                    'placeholder' => 'Description of Supplier'));
                                             
                                             ?>
-
 										</div>
 									</div>
 

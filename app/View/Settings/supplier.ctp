@@ -74,8 +74,7 @@
 		                <div class="table-responsive">
 		                    <table class="table table-striped table-hover">
 		                        <thead>
-		                            <tr>
-		                              
+		                            <tr>        
 		                                <th><a href="#"><span>Supplier</span></a></th>
 		                                <th><a href="#"><span>Description</span></a></th>
 		                                <th class="text-center"><a href="#"><span>Created</span></a></th>

@@ -46,6 +46,7 @@ class Quotation extends AppModel {
 					'foreignKey' => 'quotation_id',
 					'dependent' => true
 				),
+				
 				'ClientOrder' => array(
 					'className' => 'Sales.ClientOrder',
 					'foreignKey' => 'quotation_id',
@@ -58,6 +59,12 @@ class Quotation extends AppModel {
 					'className' => 'Sales.Product',
 					'foreignKey' => false,
 					'conditions' => 'Product.id = Quotation.product_id'
+				),
+				'ProductDetail'  => array(
+					'className' => 'Sales.Product',
+					'foreignKey' => false,
+					'conditions' => array('Quotation.item_category_holder_id = ProductDetail.item_category_holder_id'),
+					'dependent' => false
 				),
 				'QuotationDetail' => array(
 					'className' => 'Sales.QuotationDetail',

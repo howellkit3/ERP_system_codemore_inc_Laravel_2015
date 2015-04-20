@@ -19,6 +19,12 @@ class Product extends AppModel {
 					'foreignKey' => 'product_id',
 					'dependent' => true
 				),
+				'ProductDetail' => array(
+					'className' => 'Sales.ProductDetail',
+					'foreignKey' => false,
+					'conditions' => array('ProductDetail.item_category_holder_id' => 'Quotation.item_category_holder_id'),
+					'dependent' => true
+				),
 				'Company' => array(
 					'className' => 'Sales.Company',
 					'foreignKey' => 'company_id',
