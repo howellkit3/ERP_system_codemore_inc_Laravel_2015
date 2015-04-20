@@ -53,13 +53,14 @@ jQuery(function($){
 		type: "get",
 		dataType: "json",
 		success: function(data) {
+
 			
 			$.each(data, function(key, value) {
 
 				if (value.id == selected) {
-					$option = "<option class='option-append' selected value="+value.id+">"+value.name+"</option>";	
+					$option = "<option class='option-append' selected value="+value.ItemTypeHolder.id+">"+value.ItemTypeHolder.name+"</option>";	
 				} else {
-					$option = "<option class='option-append'  value="+value.id+">"+value.name+"</option>";
+					$option = "<option class='option-append'  value="+value.ItemTypeHolder.id+">"+value.ItemTypeHolder.name+"</option>";
 				}
 			     $('#item_type_holder_id').append($option);
 			});			
