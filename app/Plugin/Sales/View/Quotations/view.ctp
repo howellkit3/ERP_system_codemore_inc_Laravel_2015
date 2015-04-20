@@ -4,6 +4,7 @@
 <?php //echo $this->Html->script('Sales.inquiry');?>
 <div style="clear:both"></div>
 
+
 <?php echo $this->element('sales_option');?>
 
 <div class="filter-block pull-right">
@@ -62,7 +63,7 @@
 						<div class="col-lg-5">
 							:&emsp;
 							<?php 
-								//echo $quotation['Quotation']['attention_details']
+							// 	echo $quotation['Quotation']['attention_details']
 								echo !empty($quotation['Quotation']['company_id']) ? ucfirst($companyData[$quotation['Quotation']['company_id']]) : ucfirst($companyData[$inquiryId[$quotation['Quotation']['inquiry_id']]]) 
 							?>
 						</div>
@@ -82,8 +83,8 @@
 					<div class="form-group">
 						<div class="col-lg-1"></div>
 						<div class="col-lg-10">
-							Dear :&nbsp; <?php echo ucfirst($contactInfo['ContactPerson']['firstname']) ?>&nbsp;
-							<?php echo ucfirst($contactInfo['ContactPerson']['lastname']) ?>
+							Dear :&nbsp; <?php echo ucfirst($quotation['Quotation']['attention_details']) ?>&nbsp;
+							<?php //echo ucfirst($contactInfo['ContactPerson']['lastname']) ?>
 						</div>
 					</div>
 					<div class="form-group">
