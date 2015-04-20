@@ -37,6 +37,12 @@ class ItemTypeholder extends AppModel {
             'notEmpty' => array(
                 'rule' => array('notEmpty'),
             ),
+        ), 
+
+        'category_type' => array(
+            'notEmpty' => array(
+                'rule' => array('notEmpty'),
+            ),
         )
     
     );

@@ -22,10 +22,9 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<header class="main-box-header clearfix">
-						
-	                    
+							                    
 						<h1 class="pull-left">
-							Make Quotation
+							Make Quotation 
 						</h1>
 						<?php 
 	                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'quotations', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));

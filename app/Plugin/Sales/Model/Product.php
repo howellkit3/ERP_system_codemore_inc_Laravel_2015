@@ -36,7 +36,8 @@ class Product extends AppModel {
 					'dependent' => true
 				),
 			),
-				'hasMany' => array(
+
+			'hasMany' => array(
 				'ProductSpec' => array(
 				'className' => 'Sales.ProductSpec',
 				'foreignKey' => 'product_id',

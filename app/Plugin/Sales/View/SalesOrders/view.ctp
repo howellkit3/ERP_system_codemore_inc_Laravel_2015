@@ -88,7 +88,7 @@
 				</div>
 			</div>
 
-			 <div class="row">
+			<div class="row">
 				<div class="col-lg-12">
 					<div class="main-box">
 						<header class="main-box-header clearfix">
@@ -132,19 +132,19 @@
 			                                ?>
 										</div>
 									</div>
-								</div>
+								
 
 		                    	<div class="form-group">
 		                    		<label class="col-lg-2 control-label">Remarks</label>
-									<div class="col-lg-8">
-										<?php 
-		                                    echo $this->Form->input('ClientOrder.remarks', array(
-		                                    								'class' => 'form-control item_type',
-						                                                    'label' => false,
-						                                                    'readonly' => 'readonly',
-						                                                    'value' => $clientOrderData['ClientOrder']['remarks']));
-		                                ?>	
-
+										<div class="col-lg-8">
+											<?php 
+			                                    echo $this->Form->input('ClientOrder.remarks', array(
+			                                    								'class' => 'form-control item_type',
+							                                                    'label' => false,
+							                                                    'readonly' => 'readonly',
+							                                                    'value' => $clientOrderData['ClientOrder']['remarks']));
+			                                ?>	
+			                            </div>
 									</div>
 								</div>							
 							</div>
@@ -213,70 +213,72 @@
 				</div>
 			</div>
 
-			<div class="row">
+			 <div class="row">
 				<div class="col-lg-12">
-					<div class="main-box">
-						<header class="main-box-header clearfix">
-							<h2 class="pull-left">Quotation Details
-							
-							</h2>
-						</header>
-						<div class="main-box-body clearfix">
+						<div class="main-box">
+							<header class="main-box-header clearfix">
+								<h2 class="pull-left">Quotation Details
+								
+								</h2>
+							</header>
 							<div class="main-box-body clearfix">
-								<div class="form-horizontal">
-									<?php 
-	                                    echo $this->Form->input('Company.id', array('class' => 'form-control item_type',
-					                        'hidden' => 'hidden',
-					                        'readonly' => 'readonly',
-					                        'label' => false,
-					                        'id' => 'id'));
-	                                ?>
+								<div class="main-box-body clearfix">
+									<div class="form-horizontal">
+										<?php 
+		                                    echo $this->Form->input('Company.id', array('class' => 'form-control item_type',
+						                        'hidden' => 'hidden',
+						                        'readonly' => 'readonly',
+						                        'label' => false,
+						                        'id' => 'id'));
+		                                ?>
 
-	                                <div class="form-group">
-	                                	<label class="col-lg-2 control-label">Attention</label>
-										<div class="col-lg-8">
-											<?php 
-	                                            echo $this->Form->input('Quotation.name', array(
-	                                            								'class' => 'form-control item_type',
-							                                                    'label' => false,
-							                                                    'readonly' => 'readonly',
-							                                                    'value' => $quotationData['Quotation']['attention_details']));
-	                                        ?>
+		                                <div class="form-group">
+		                                	<label class="col-lg-2 control-label">Attention</label>
+											<div class="col-lg-8">
+												<?php 
+		                                            echo $this->Form->input('Quotation.name', array(
+		                                            								'class' => 'form-control item_type',
+								                                                    'label' => false,
+								                                                    'readonly' => 'readonly',
+								                                                    'value' => $quotationData['Quotation']['attention_details']));
+		                                        ?>
+											</div>
 										</div>
-									</div>
 
-									<div class="form-group" id="existing_items">
-										<label class="col-lg-2 control-label">Payment Terms</label>
-										<div class="col-lg-8">
-											<?php 
-	                                            echo $this->Form->input('Quotation.payment_terms_field', array(
-	                                            								'class' => 'form-control item_type',
-							                                                    'label' => false,
-							                                                    'readonly' => 'readonly',
-							                                                    'value' =>  $quotationData['PaymentTermHolder']['name']));
-	                                        ?>
-										</div>									
-									</div>
-	                            	<div class="form-group">
-	                            		<label class="col-lg-2 control-label">Validity</label>
-										<div class="col-lg-8">
-											<?php 
-	                                            echo $this->Form->input('Quotation.validity_field', array(
-	                                            								'class' => 'form-control item_type',
-							                                                    'label' => false,
-							                                                    'readonly' => 'readonly',
-							                                                    'value' => date("Y-m-d", strtotime($quotationData['Quotation']['validity']))));
-
-
-	                                        ?>
-											  
+										<div class="form-group" id="existing_items">
+											<label class="col-lg-2 control-label">Payment Terms</label>
+											<div class="col-lg-8">
+												<?php 
+												//($clientOrderData);
+		                                            echo $this->Form->input('Quotation.payment_terms_field', array(
+		                                            								'class' => 'form-control item_type',
+								                                                    'label' => false,
+								                                                    'readonly' => 'readonly',
+								                                                    'value' =>  $quotationData['PaymentTermHolder']['name']));
+		                                        ?>
+											</div>									
 										</div>
+
+		                            	<div class="form-group">
+		                            		<label class="col-lg-2 control-label">Validity</label>
+											<div class="col-lg-8">
+												<?php 
+		                                            echo $this->Form->input('Quotation.validity_field', array(
+		                                            								'class' => 'form-control item_type',
+								                                                    'label' => false,
+								                                                    'readonly' => 'readonly',
+								                                                    'value' => date("Y-m-d", strtotime($quotationData['Quotation']['validity']))));
+
+
+		                                        ?>
+												  
+											</div>
+										</div>
+										
 									</div>
-									
 								</div>
 							</div>
 						</div>
-					</div>
 				</div>
 			</div>
 
@@ -443,27 +445,27 @@
 										</div>
 									</div>
 
-								<div class="form-group">
-                            		<label class="col-lg-2 control-label">Material</label>
-									<div class="col-lg-8">
-										<?php 
-                                            echo $this->Form->input('QuotationItemDetail.material', array(
-                                            								'class' => 'form-control item_type',
-						                                                    'label' => false,
-						                                                    'readonly' => 'readonly',
-						                                                    'value' => $quotationItemDetail['QuotationItemDetail']['material']));
-                                        ?>
-										  
+									<div class="form-group">
+	                            		<label class="col-lg-2 control-label">Material</label>
+										<div class="col-lg-8">
+											<?php 
+	                                            echo $this->Form->input('QuotationItemDetail.material', array(
+	                                            								'class' => 'form-control item_type',
+							                                                    'label' => false,
+							                                                    'readonly' => 'readonly',
+							                                                    'value' => $quotationItemDetail['QuotationItemDetail']['material']));
+	                                        ?>
+											  
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			</div>  
-		</div>
+				</div>  
+			</div> 
 	</div>
-
+</div>
 <script>
 
 	jQuery(document).ready(function($){

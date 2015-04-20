@@ -47,7 +47,7 @@ class SalesOrdersController extends SalesAppController {
 
 		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail', 'PaymentTermHolder'));
 
-		$this->ClientOrder->bind(array('ClientOrderDeliverySchedule','PaymentTermHolder'));
+		$this->ClientOrder->bind(array('ClientOrderDeliverySchedule'));
 
 		$this->loadModel('PaymentTermHolder');
 
