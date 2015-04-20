@@ -291,7 +291,7 @@ class ProductsController extends SalesAppController {
 
 		$productData = $this->Product->find('all',array(
     		'order' => array('Product.id DESC')));
-	
+
 
 
 
