@@ -63,5 +63,35 @@
 			</div>
 		</div>
 		<?php echo $this->Form->end(); ?>
+
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="main-box">
+				  	<header class="main-box-header clearfix">
+                        <h1>Supplier List</h1>
+                    </header>
+					<div class="main-box-body clearfix">
+		                <div class="table-responsive">
+		                    <table class="table table-striped table-hover">
+		                        <thead>
+		                            <tr>
+		                              
+		                                <th><a href="#"><span>Supplier</span></a></th>
+		                                <th><a href="#"><span>Description</span></a></th>
+		                                <th class="text-center"><a href="#"><span>Created</span></a></th>
+		                                <th>Action</th>
+		                            </tr>
+		                        </thead>
+
+		                        <?php echo $this->element('supplier_table'); ?>
+
+		                    </table>
+		                    <hr>
+		                </div>
+		            </div>
+				</div>
+			</div>
+		</div>
+
 	</div>
 </div>

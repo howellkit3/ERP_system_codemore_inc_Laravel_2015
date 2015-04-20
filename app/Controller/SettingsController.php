@@ -137,6 +137,54 @@ class SettingsController extends AppController
 
     }
 
+    public function supplier_edit($id = null) {
+
+            $this->loadModel('Supplier');
+
+            if (!$id) {
+                throw new NotFoundException(__('Invalid post'));
+            }
+
+            $post = $this->Supplier->findById($id );
+
+            if (!$post) {
+                throw new NotFoundException(__('Invalid post'));
+            }
+
+            if ($this->request->is(array('post', 'put'))) {
+                $this->Supplier->id = $id;
+
+                if ($this->Supplier->save($this->request->data)) {
+
+                    $this->Supplier->save($this->request->data);
+                    $this->Session->setFlash(__('Supplier has been updated.'));
+                    return $this->redirect(array('action' => 'supplier'));
+                }
+                $this->Session->setFlash(__('Unable to update your post.'));
+            }
+
+            if (!$this->request->data) {
+                $this->request->data = $post;
+         }
+    }
+
+    public function deleteSupplier($id) {
+
+            $this->loadModel('Supplier');
+           
+            if ($this->Supplier->delete($id)) {
+                $this->Session->setFlash(
+                    __('Successfully deleted.', h($id))
+                );
+            } else {
+                $this->Session->setFlash(
+                    __('The post cannot be deleted.', h($id))
+                );
+            }
+
+            return $this->redirect(array('action' => 'supplier'));
+    }
+
     public function category_edit($id = null) {
 
             if (!$id) {
@@ -220,6 +268,9 @@ class SettingsController extends AppController
 
             return $this->redirect(array('action' => 'category'));
     }
+
+
+
 
     public function deleteType($id) {
 
@@ -445,6 +496,8 @@ class SettingsController extends AppController
                 $this->request->data = $post;
             }
     }
+
+
 
     public function deleteProduct($id) {
       
