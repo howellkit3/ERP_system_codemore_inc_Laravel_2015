@@ -26,7 +26,7 @@ class QuotationsController extends SalesAppController {
 
 		$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail','ProductDetail'));
 
-		$quotationData = $this->Quotation->find('all', array('order' => 'Quotation.id DESC'));
+		$quotationData = $this->Quotation->find('all', array('order' => 'Quotation.id DESC','group' => 'Quotation.id'));
 
 		$this->Company->bind(array('Inquiry'));
 
