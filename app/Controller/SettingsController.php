@@ -3,7 +3,7 @@ App::uses('AppController', 'Controller');
 
 class SettingsController extends AppController
 {
-    public $uses = array('ItemCategoryHolder','ItemTypeholder', 'PackagingHolder', 'StatusFieldHolder', 'PaymentTermHolder','GeneralItem' );
+    public $uses = array('ItemCategoryHolder','ItemTypeHolder', 'PackagingHolder', 'StatusFieldHolder', 'PaymentTermHolder','GeneralItem' );
 
     public $useDbConfig = array('default');
 
