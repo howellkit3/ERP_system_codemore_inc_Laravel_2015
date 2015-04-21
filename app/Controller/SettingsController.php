@@ -401,7 +401,7 @@ class SettingsController extends AppController
 
         $this->loadModel('ItemTypeHolder');
 
-        if ($this->ItemTypeholder->delete($id)) {
+        if ($this->ItemTypeHolder->delete($id)) {
 
             $this->Session->setFlash(
 
