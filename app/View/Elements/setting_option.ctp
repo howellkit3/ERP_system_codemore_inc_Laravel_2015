@@ -58,7 +58,7 @@
 
         <li class="dropdown hidden-xs">
            
-            <?php echo $this->Html->link("<span class='count'>Payment</span>", array('controller' => 'settings', 'action' => 'payment_term'),array('escape' => false,'class' => 'btn')); ?>
+            <?php echo $this->Html->link("<span class='count'>Term</span>", array('controller' => 'settings', 'action' => 'payment_term'),array('escape' => false,'class' => 'btn')); ?>
            
         </li>
         
