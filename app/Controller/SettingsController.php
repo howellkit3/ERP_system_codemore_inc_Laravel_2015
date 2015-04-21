@@ -643,7 +643,7 @@ class SettingsController extends AppController
         $this->paginate = array(
             'conditions' => $conditions,
             'limit' => $limit,
-            'fields' => array('id', 'uuid','name', 'ItemCategoryHolder.name','ItemTypeholder.name', 'Supplier.name', 'measure', 'created'),
+            'fields' => array('id', 'uuid','name', 'ItemCategoryHolder.name','ItemTypeHolder.name', 'Supplier.name', 'measure', 'created'),
             'order' => 'ItemCategoryHolder.id DESC',
         );
 
@@ -761,7 +761,6 @@ class SettingsController extends AppController
 
        echo json_encode($itemdata);
     }
-
 
 
 }
