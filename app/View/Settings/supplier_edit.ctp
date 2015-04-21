@@ -26,7 +26,7 @@
 							<div class="main-box-body clearfix">
 								<div class="form-horizontal">
 									<div class="form-group">
-										<label class="col-lg-2 control-label">Supplier</label>
+										<label class="col-lg-2 control-label"><span style="color:red">*</span>Supplier</label>
 										<div class="col-lg-8">
 											<?php 
 	                                            echo $this->Form->input('Supplier.name', array(

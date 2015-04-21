@@ -42,7 +42,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 														<div class="main-box-body clearfix">
 															<div class="form-horizontal">
 																<div class="form-group"> <br>
-																	<label class="col-lg-2 control-label">Name</label>
+																	<label class="col-lg-2 control-label"><span style="color:red">*</span>Name</label>
 																	<div class="col-lg-8">
 																			<?php 
 																			echo $this->Form->input('GeneralItem.name', array(
@@ -55,7 +55,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																</div>
 
 																<div class="form-group">
-																	<label class="col-lg-2 control-label">Category</label>
+																	<label class="col-lg-2 control-label"><span style="color:red">*</span>Category</label>
 																	<div class="col-lg-8">
 																		<input type="hidden" id="selected_type" value="">
 																		<?php echo $this->Form->input('GeneralItem.category_id', array(
@@ -71,7 +71,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																</div>
 
 																<div class="form-group">
-																	<label class="col-lg-2 control-label">Type</label>
+																	<label class="col-lg-2 control-label"><span style="color:red">*</span>Type</label>
 																	<div class="col-lg-8">
 																		<input type="hidden" id="selected_type" value="">
 																		<?php echo $this->Form->input('GeneralItem.type_id', array(
@@ -87,7 +87,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																</div>
 
 																<div class="form-group">
-																	<label class="col-lg-2 control-label">Manufacturer</label>
+																	<label class="col-lg-2 control-label"><span style="color:red">*</span>Manufacturer</label>
 																	<div class="col-lg-8">
 																		<input type="hidden" id="selected_type" value="">
 																		<?php echo $this->Form->input('GeneralItem.manufacturer_id', array(
@@ -103,7 +103,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																</div>
 
 																<div class="form-group"> <br>
-																<label class="col-lg-2 control-label">Measure</label>
+																<label class="col-lg-2 control-label"><span style="color:red">*</span>Measure</label>
 																	<div class="col-lg-8">
 																		<?php 
 																		echo $this->Form->input('GeneralItem.measure', array(
@@ -172,6 +172,15 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 
 														</table>
 														<hr>
+
+														<ul class="pagination pull-right">
+															<?php 
+																echo $this->Paginator->prev('< ' . __('previous'), array('before' => 'a','tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'prev disabled'));
+																echo $this->Paginator->numbers(array('separator' => '','tag' => 'li'));
+																echo $this->Paginator->next(__('next') . ' >', array('tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'next disabled')); 
+															?>
+														</ul>
+
 														</div>
 													</div>
 												</div>

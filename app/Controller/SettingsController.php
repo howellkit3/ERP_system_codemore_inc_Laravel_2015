@@ -3,7 +3,7 @@ App::uses('AppController', 'Controller');
 
 class SettingsController extends AppController
 {
-    public $uses = array('ItemCategoryHolder','ItemTypeholder');
+    public $uses = array('ItemCategoryHolder','ItemTypeholder', 'PackagingHolder', 'StatusFieldHolder', 'PaymentTermHolder','GeneralItem' );
 
     public $useDbConfig = array('default');
 
@@ -511,8 +511,6 @@ class SettingsController extends AppController
 
     public function payment_term() {
 
-                $this->loadModel('PaymentTermHolder');
-
                 $userData = $this->Session->read('Auth');
 
                 $limit = 5;
@@ -638,7 +636,18 @@ class SettingsController extends AppController
 
         $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.id DESC'));
 
-        $generalItemData = $this->GeneralItem->find('all',  array('order' => 'GeneralItem.id DESC'));
+        $limit = 5;
+
+        $conditions = array();
+
+        $this->paginate = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            'fields' => array('id', 'uuid','name', 'ItemCategoryHolder.name','ItemTypeholder.name', 'Supplier.name', 'measure', 'created'),
+            'order' => 'ItemCategoryHolder.id DESC',
+        );
+
+        $generalItemData = $this->paginate('GeneralItem');
 
        if ($this->request->is('post')) {
                $generalItemDetails = $this->request->data;

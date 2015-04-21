@@ -30,7 +30,7 @@
 									
 
 									<div class="form-group">
-										<label class="col-lg-2 control-label">Status</label>
+										<label class="col-lg-2 control-label"><span style="color:red">*</span>Status</label>
 										<div class="col-lg-8">
 											<?php 
 	                                            echo $this->Form->input('StatusFieldHolder.status', array(

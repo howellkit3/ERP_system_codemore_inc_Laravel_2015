@@ -25,7 +25,7 @@
 							<div class="main-box-body clearfix">
 								<div class="form-horizontal">
 									<div class="form-group">
-										<label class="col-lg-2 control-label">Term</label>
+										<label class="col-lg-2 control-label"><span style="color:red">*</span>Term</label>
 										<div class="col-lg-8">
 											<?php 
 	                                            echo $this->Form->input('PaymentTermHolder.name', array(

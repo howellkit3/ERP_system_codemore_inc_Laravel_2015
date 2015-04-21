@@ -28,7 +28,7 @@
 							<div class="main-box-body clearfix">
 								<div class="form-horizontal">
 									<div class="form-group">
-										<label class="col-lg-2 control-label">General Item Name</label>
+										<label class="col-lg-2 control-label"><span style="color:red">*</span>Name</label>
 										<div class="col-lg-8">
 											<?php 
 	                                            echo $this->Form->input('GeneralItem.name', array(
@@ -42,7 +42,7 @@
 									</div>
 
 									<div class="form-group">
-										<label class="col-lg-2 control-label">Category</label>
+										<label class="col-lg-2 control-label"><span style="color:red">*</span>Category</label>
 										<div class="col-lg-8">
 											<?php 
 												echo $this->Form->input('GeneralItem.category_id', array(
@@ -58,7 +58,7 @@
 									</div>
 
 									<div class="form-group">
-										<label class="col-lg-2 control-label">Type</label>
+										<label class="col-lg-2 control-label"><span style="color:red">*</span>Type</label>
 										<div class="col-lg-8">
 											<?php echo $this->Form->input('ItemTypeHolder.id',array('id' => 'selected_type')); ?>
 												<?php echo $this->Form->input('GeneralItem.type_id', array(
@@ -74,7 +74,7 @@
 									</div>
 
 									<div class="form-group">
-										<label class="col-lg-2 control-label">Manufacturer</label>
+										<label class="col-lg-2 control-label"><span style="color:red">*</span>Manufacturer</label>
 										<div class="col-lg-8">
 											<?php echo $this->Form->input('GeneralItem.manufacturer_id', array(
 														'options' => array($supplierData),
@@ -89,7 +89,7 @@
 									</div>
 
 									<div class="form-group">
-										<label class="col-lg-2 control-label">Measurement</label>
+										<label class="col-lg-2 control-label"><span style="color:red">*</span>Measurement</label>
 										<div class="col-lg-8">
 											<?php 
 	                                            echo $this->Form->input('GeneralItem.measure', array(

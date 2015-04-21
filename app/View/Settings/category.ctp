@@ -41,7 +41,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 												<div class="main-box-body clearfix">
 													<div class="form-horizontal">
 														<div class="form-group"> <br>
-															<label class="col-lg-2 control-label">Name Category</label>
+															<label class="col-lg-2 control-label"><span style="color:red">*</span>Name Category</label>
 																<div class="col-lg-8">
 																	<?php 
 																	echo $this->Form->input('ItemCategoryHolder.name', array(
@@ -155,7 +155,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 													<div class="main-box-body clearfix">
 														<div class="form-horizontal">
 															<div class="form-group">
-																<label class="col-lg-2 control-label">Type</label>
+																<label class="col-lg-2 control-label"><span style="color:red">*</span>Type</label>
 																<div class="col-lg-8">
 																	<?php 
 																	echo $this->Form->input('ItemTypeHolder.name', array(
@@ -166,7 +166,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																</div>
 															</div>
 														<div class="form-group">
-															<label class="col-lg-2 control-label">Category</label>
+															<label class="col-lg-2 control-label"><span style="color:red">*</span>Category</label>
 															<div class="col-lg-8">
 																		<?php echo $this->Form->input('ItemTypeHolder.item_category_holder_id', array(
 																		'options' => array($categoryDataDropList),
