@@ -28,21 +28,31 @@ class Supplier extends AppModel {
 	
 	);
 
- //    public function bind($model = array('Group')){
+     public function bind($model = array('Group')){
 
-	// 	$this->bindModel(array(
+		$this->bindModel(array(
 			
-	// 		'hasMany' => array(
-	// 			'ItemTypeHolder' => array(
-	// 				'className' => 'ItemTypeHolder',
-	// 				'foreignKey' => 'item_category_holder_id',
-	// 				'dependent' => true
-	// 			),
-	// 		)
-	// 	));
+			'hasMany' => array(
+				'ItemTypeHolder' => array(
+					'className' => 'ItemTypeHolder',
+					'foreignKey' => 'item_category_holder_id',
+					'dependent' => true
+				),
+			),
 
-	// 	$this->contain($model);
-	// }
+			'hasOne' => array(
+				'GeneralItem' => array(
+					'className' => 'ItemTypeHolder',
+					'foreignKey' => 'item_category_holder_id',
+					'dependent' => true
+				),
+			),
+
+
+		));
+
+		$this->contain($model);
+	}
 	public function saveSupplier($supplierData = null, $auth = null){
 		
 		$this->create();

@@ -20,7 +20,7 @@
         </li>
         
     </ul>
-<!-- 
+ 
     <ul style="margin-left:0" class="nav navbar-nav pull-left">
 
         <li class="dropdown hidden-xs">
@@ -29,7 +29,7 @@
            
         </li>
         
-    </ul> -->
+    </ul> 
 
      <ul style="margin-left:0" class="nav navbar-nav pull-left">
 

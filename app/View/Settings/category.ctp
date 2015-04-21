@@ -1,6 +1,5 @@
 <?php echo $this->Html->script('category'); ?>
 <?php echo $this->element('setting_option');?><br><br>
-<?php //echo $this->element('category_option');?><br><br>
 <?php 
 
 $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : 'tab-category';
@@ -107,9 +106,17 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 													</thead>
 
 													<?php echo $this->element('category_table'); ?>
-
 													</table>
+
 													<hr>
+
+											            <ul class="pagination pull-right">
+											                    <?php 
+											                     echo $this->Paginator->prev('< ' . __('previous'), array('before' => 'a','tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'prev disabled'));
+											                     echo $this->Paginator->numbers(array('separator' => '','tag' => 'li'));
+											                     echo $this->Paginator->next(__('next') . ' >', array('tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'next disabled')); ?>
+											               
+											              </ul>
 													</div>
 												</div>
 											</div>
@@ -165,7 +172,6 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																		'options' => array($categoryDataDropList),
 																		'type' => 'select',
 																		'label' => false,
-																		'readonly' => 'readonly',
 																		'class' => 'form-control required',
 																		'empty' => '---Select Category---',
 																		'required' => true					                               
@@ -229,11 +235,17 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 															</thead>
 
 														<?php echo $this->element('name_type_table'); ?>
-
+											  
 														</table>
 
 													<hr>
-
+														   <ul class="pagination pull-right">
+											                    <?php 
+											                     echo $this->Paginator->prev('< ' . __('previous'), array('before' => 'a','tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'prev disabled'));
+											                     echo $this->Paginator->numbers(array('separator' => '','tag' => 'li'));
+											                     echo $this->Paginator->next(__('next') . ' >', array('tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'next disabled')); ?>
+											               
+											              </ul>
 													</div>
 												</div>
 											</div>

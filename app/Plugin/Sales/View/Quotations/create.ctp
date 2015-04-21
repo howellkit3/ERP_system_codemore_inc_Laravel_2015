@@ -24,7 +24,7 @@
 					<header class="main-box-header clearfix">
 							                    
 						<h1 class="pull-left">
-							Make Quotation 
+							Make Quotation
 						</h1>
 						<?php 
 	                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'quotations', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
@@ -111,7 +111,7 @@
 												<?php 
 	                                                echo $this->Form->input('Quotation.item_category_holder_id', 
 	                                                									array( 
-	                                                						'options' => array($itemCategoryData),				
+	                                                						'options' => array($itemCategoryData),		
 	                                                						'type' => 'select',
 	                                                						'class' => 'form-control item_type categorylist required', 
 	                                                    					'label' => false, 
@@ -120,7 +120,6 @@
 	                                                    					));
 	                                            ?>
 											</div>
-											
 										</div>
 
 										<div class="form-group" id="existing_items">
@@ -138,7 +137,6 @@
 	                                                    					));
 	                                            ?>
 											</div>
-											
 										</div>
 
 										<div class="form-group" id="existing_items">
@@ -157,7 +155,6 @@
 	                                                    					));
 	                                            ?>
 											</div>
-											
 										</div>
 
 	                                	<div class="form-group">
@@ -173,7 +170,6 @@
 												  
 											</div>
 										</div>
-										
 									</div>
 								</div>
 							</div>

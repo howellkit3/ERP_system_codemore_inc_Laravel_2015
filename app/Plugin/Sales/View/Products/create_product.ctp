@@ -47,7 +47,7 @@
 					                                'options' => array($companyData),
 					                                'type' => 'select',
 					                                'label' => false,
-					                                'readonly' => 'readonly',
+					                                //'readonly' => 'readonly',
 					                                'class' => 'form-control required categorylist',
 					                                'empty' => '---Select Customer---',
 					                               	'required' => 'required'
@@ -64,7 +64,7 @@
 					                                'options' => array($itemCategoryData),
 					                                'type' => 'select',
 					                                'label' => false,
-					                                'readonly' => 'readonly',
+					                                //'readonly' => 'readonly',
 					                                'class' => 'form-control required categorylist',
 					                                'empty' => '---Select Item Category---',
 					                               	'required' => 'required'
@@ -81,7 +81,7 @@
 											 <?php echo $this->Form->input('Product.item_type_holder_id', array(
 					                                // 'type' => 'select',
 					                                'label' => false,
-					                                'readonly' => 'readonly',
+					                                //'readonly' => 'readonly',
 					                                'class' => 'form-control required',
 					                                'empty' => '---Select Item Type---',
 					                                'id' => 'item_type_holder_id',

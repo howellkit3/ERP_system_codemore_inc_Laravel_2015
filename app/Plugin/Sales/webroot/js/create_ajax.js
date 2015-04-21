@@ -10,9 +10,7 @@
 				async: false,
 				dataType: "json",
 				success: function(data) {
-
-
-					
+			
 					$.each(data, function(key, value) {
 						if (value.id == selected) {
 							$option = "<option class='option-append' selected value="+value.ItemTypeHolder.id+">"+value.ItemTypeHolder.name+"</option>";	
@@ -20,10 +18,11 @@
 							$option = "<option class='option-append'  value="+value.ItemTypeHolder.id+">"+value.ItemTypeHolder.name+"</option>";
 						}
 					     $('#item_type_holder_id').append($option);
-					});			
+					});	
 				}
 			});			
 	}).trigger('change');
+
 	$('#item_type_holder_id').change(function(){
 			var itemtypeid = $(this).val();
 			$('.option-append2').remove();

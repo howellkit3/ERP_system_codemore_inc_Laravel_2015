@@ -46,7 +46,7 @@
 					                                'options' => array($companyData),
 					                                'type' => 'select',
 					                                'label' => false,
-					                                'readonly' => 'readonly',
+					                                //'readonly' => 'readonly',
 					                                'required' => 'required',
 					                                'class' => 'form-control required categorylist',
 					                                'empty' => '---Select Customer---',
@@ -64,7 +64,7 @@
 					                                'options' => array($itemCategoryData),
 					                                'type' => 'select',
 					                                'label' => false,
-					                                'readonly' => 'readonly',
+					                                //'readonly' => 'readonly',
 					                                'required' => 'required',
 					                                'class' => 'form-control required categorylist',
 					                                'empty' => '---Select Item Category---'
@@ -80,7 +80,7 @@
 											 <?php echo $this->Form->input('Product.item_type_holder_id', array(
 					                                // 'type' => 'select',
 					                                'label' => false,
-					                                'readonly' => 'readonly',
+					                                //'readonly' => 'readonly',
 					                                'class' => 'form-control required',
 					                                'empty' => '---Select Item Type---',
 					                                'id' => 'item_type_holder_id',
@@ -102,7 +102,6 @@
                                             ?>
 										</div>
 									</div>
-
 									<div class="form-group">
 										<div class="col-lg-2"></div>
 										<div class="col-lg-8">

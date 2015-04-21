@@ -7,7 +7,7 @@
 			<div class="col-lg-12">
 				<header class="main-box-header clearfix">					                    
 					<h1 class="pull-left">
-						Add Payment Term
+						Add Term
 					</h1>
 					<?php 
                         echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'settings', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
@@ -25,13 +25,13 @@
 							<div class="main-box-body clearfix">
 								<div class="form-horizontal">
 									<div class="form-group">
-										<label class="col-lg-2 control-label">Payment</label>
+										<label class="col-lg-2 control-label">Term</label>
 										<div class="col-lg-8">
 											<?php 
 	                                            echo $this->Form->input('PaymentTermHolder.name', array(
 	                                            								'class' => 'form-control item_type',
 							                                                    'label' => false,
-							                                                    'placeholder' => 'Payment Term Name'));
+							                                                    'placeholder' => 'Term Name'));
                                             ?> 
 
 										</div>
@@ -40,7 +40,7 @@
 									<div class="form-group">
 										<div class="col-lg-2"></div>
 										<div class="col-lg-8">
-											<button type="submit" class="btn btn-primary pull-left">Submit Payment Term</button>&nbsp;
+											<button type="submit" class="btn btn-primary pull-left">Submit Term</button>&nbsp;
 											<?php 
 						                        echo $this->Html->link('Cancel', array('controller' => 'settings', 'action' => 'index'),array('class' =>'btn btn-default','escape' => false));
 						                    ?>
@@ -53,8 +53,6 @@
 				</div>
 			</div>
 		<?php echo $this->Form->end(); ?>
-
-		
 	</div>
 </div>
 
@@ -62,7 +60,7 @@
 			<div class="col-lg-12">
 				<div class="main-box">
 				  	<header class="main-box-header clearfix">
-                        <h1>Payment List</h1>
+                        <h1>Term List</h1>
                     </header>
 					<div class="main-box-body clearfix">
 		                <div class="table-responsive">
@@ -70,7 +68,7 @@
 		                        <thead>
 		                            <tr>
 		                              
-		                                <th><a href="#"><span>Payment Term</span></a></th>
+		                                <th><a href="#"><span>Term</span></a></th>
 		                              
 		                                <th class="text-center"><a href="#"><span>Created</span></a></th>
 		                                <th>Action</th>
@@ -81,6 +79,14 @@
 
 		                    </table>
 		                    <hr>
+
+		                    <ul class="pagination pull-right">
+									<?php 
+									echo $this->Paginator->prev('< ' . __('previous'), array('before' => 'a','tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'prev disabled'));
+									echo $this->Paginator->numbers(array('separator' => '','tag' => 'li'));
+									echo $this->Paginator->next(__('next') . ' >', array('tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'next disabled')); ?>
+							</ul>
+
 		                </div>
 		            </div>
 				</div>

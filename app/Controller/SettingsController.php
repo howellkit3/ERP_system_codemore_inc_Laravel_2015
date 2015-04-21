@@ -3,7 +3,7 @@ App::uses('AppController', 'Controller');
 
 class SettingsController extends AppController
 {
-    public $uses = array('ItemCategoryHolder', 'StatusFieldHolder' , 'PackagingHolder', 'PaymentTermHolder', 'ItemTypeholder');
+    public $uses = array('ItemCategoryHolder','ItemTypeholder');
 
     public $useDbConfig = array('default');
 
@@ -30,14 +30,33 @@ class SettingsController extends AppController
 
         $userData = $this->Session->read('Auth');
 
-        $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
+        $this->ItemTypeHolder->bind(array('ItemCategoryHolder',));
 
-        $categoryData = $this->ItemCategoryHolder->find('all',  array('order' => 'ItemCategoryHolder.id DESC'));
+        $limit = 5;
+
+        $conditions = array();
+
+        $this->paginate = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            'fields' => array('id', 'name', 'created','modified','ItemCategoryHolder.name'),
+            'order' => 'ItemCategoryHolder.id DESC',
+        );
+
+        $categoryData = $this->paginate('ItemCategoryHolder');
+
+        //$categoryData = $this->ItemCategoryHolder->find('all',  array('order' => 'ItemCategoryHolder.id DESC'));
 
         $categoryDataDropList = $this->ItemCategoryHolder->find('list',  array('order' => 'ItemCategoryHolder.id DESC'));
 
-        $nameTypeData = $this->ItemTypeHolder->find('all',  array('order' => 'ItemTypeHolder.id DESC'));
+        $this->paginate = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            'fields' => array('id', 'name', 'created','ItemCategoryHolder.name'),
+            'order' => 'ItemTypeHolder.id DESC',
+        );
 
+        $nameTypeData = $this->paginate('ItemTypeHolder');
 
         if ($this->request->is('post')) {
             
@@ -55,6 +74,67 @@ class SettingsController extends AppController
         }
 
         $this->set(compact('categoryDataDropList', 'categoryData','nameTypeData' ));
+    }
+
+      public function category_edit($id = null) {
+
+            if (!$id) {
+                throw new NotFoundException(__('Invalid post'));
+            }
+
+             $this->ItemCategoryHolder->bind(array('ItemTypeHolder'));
+
+            $post = $this->ItemCategoryHolder->findById($id);
+            if (!$post) {
+                throw new NotFoundException(__('Invalid post'));
+            }
+
+            if ($this->request->is(array('post', 'put'))) {
+                $this->ItemCategoryHolder->id = $id;
+
+                if ($this->ItemCategoryHolder->save($this->request->data)) {
+
+                    $this->ItemCategoryHolder->save($this->request->data);
+                    $this->Session->setFlash(__('Category has been updated.'));
+                    return $this->redirect(array('action' => 'category'));
+                }
+                $this->Session->setFlash(__('Unable to update your post.'));
+            }
+
+            if (!$this->request->data) {
+                $this->request->data = $post;
+            }
+    }
+
+
+    public function category_index() {
+
+    }
+
+    public function category_option() {
+                    
+    }
+
+    public function category_find($id) {
+
+
+        $this->layout = false;
+
+        $this->loadModel('ItemCategoryHolder');
+
+        if (!empty($id)) {
+
+            $category = $this->ItemCategoryHolder->findById($id);
+
+            echo json_encode($category);
+
+            //$this->autoRender = false;
+
+        }
+         $this->autoRender = false;
+         exit();
+    
+
     }
 
     public function name_type() {
@@ -83,11 +163,65 @@ class SettingsController extends AppController
             $this->set(compact('nameTypeData'));
 	}
 
+        public function name_type_edit($id = null) {
+            
+            $this->loadModel('ItemCategoryHolder');
+
+            $this->loadModel('ItemTypeHolder');
+
+            $this->loadModel('ItemCategoryHolder');
+
+            $categoryDataDropList = $this->ItemCategoryHolder->find('list',  array('order' => 'ItemCategoryHolder.id DESC'));
+
+            if (!$id) {
+                throw new NotFoundException(__('Invalid post'));
+            }
+
+           $post = $this->ItemTypeHolder->findById($id);
+
+            if (!$post) {
+                throw new NotFoundException(__('Invalid post'));
+            }
+
+            if ($this->request->is(array('post', 'put'))) {
+                $this->ItemTypeHolder->id = $id;
+
+                if ($this->ItemTypeHolder->save($this->request->data)) {
+
+                    $this->ItemTypeHolder->save($this->request->data);
+                    $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
+                    $this->Session->setFlash(__('Type has been updated.'));
+                    return $this->redirect(array('action' => 'category','tab' => 'tab-type'));
+               }
+                $this->Session->setFlash(__('Unable to update your post.'));
+            }
+
+            if (!$this->request->data) {
+                $this->request->data = $post;
+            }
+
+            $this->set(compact('categoryDataDropList', 'categoryData','nameTypeData' ));
+    }
+
     public function status() {
 
         $userData = $this->Session->read('Auth');
+        
+        $this->loadModel('StatusFieldHolder');
 
-        $statusData = $this->StatusFieldHolder->find('all', array('order' => 'StatusFieldHolder.id DESC'));
+        $limit = 5;
+
+        $conditions = array();
+
+        $this->paginate = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            'fields' => array('id', 'status','created'),
+            'order' => 'StatusFieldHolder.id DESC',
+        );
+
+        $statusData = $this->paginate('StatusFieldHolder');
+
         if ($this->request->is('post')) {
             
             if (!empty($this->request->data)) {
@@ -96,11 +230,12 @@ class SettingsController extends AppController
 
                 $this->id = $this->StatusFieldHolder->saveStatus($this->request->data['StatusFieldHolder'], $userData['User']['id']);
 
-            
                 $this->Session->setFlash(__('Add Status Complete.'));
 
                 $this->redirect(
+
                     array('controller' => 'settings', 'action' => 'status')
+
                 );
             }
         }
@@ -109,13 +244,75 @@ class SettingsController extends AppController
 
     }
 
+    public function deleteStatus($id) {
+           
+            if ($this->StatusFieldHolder->delete($id)) {
+                $this->Session->setFlash(
+                    __('Successfully deleted.', h($id))
+                );
+            } else {
+                $this->Session->setFlash(
+                    __('The post cannot be deleted.', h($id))
+                );
+            }
+
+            return $this->redirect(array('action' => 'status'));
+    }
+
+
+    public function status_edit($id = null) {
+
+            if (!$id) {
+                throw new NotFoundException(__('Invalid post'));
+            }
+
+             $this->StatusFieldHolder->bind(array('ItemTypeHolder'));
+
+
+            $post = $this->StatusFieldHolder->findById($id );
+
+            if (!$post) {
+                throw new NotFoundException(__('Invalid post'));
+            }
+
+            if ($this->request->is(array('post', 'put'))) {
+                $this->StatusFieldHolder->id = $id;
+
+                if ($this->StatusFieldHolder->save($this->request->data)) {
+
+                    $this->StatusFieldHolder->save($this->request->data);
+                    $this->StatusFieldHolder->bind(array('id'));
+                    $this->StatusFieldHolder->ItemTypeHolder->save($this->request->data);
+                    $this->Session->setFlash(__('Status has been updated.'));
+                    return $this->redirect(array('action' => 'status'));
+                }
+                $this->Session->setFlash(__('Unable to update your post.'));
+            }
+
+            if (!$this->request->data) {
+                $this->request->data = $post;
+         }
+    }
+
     public function supplier() {
 
         $userData = $this->Session->read('Auth');
 
         $this->loadModel('Supplier');
 
-        $supplierData = $this->Supplier->find('all', array('order' => 'Supplier.id DESC'));
+        $limit = 5;
+
+        $conditions = array();
+
+        $this->paginate = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            'fields' => array('id', 'name', 'description','created'),
+            'order' => 'Supplier.id DESC',
+        );
+
+        $supplierData = $this->paginate('Supplier');
+
         if ($this->request->is('post')) {
             
             if (!empty($this->request->data)) {
@@ -123,8 +320,7 @@ class SettingsController extends AppController
                 $this->Supplier->create();
 
                 $this->id = $this->Supplier->save($this->request->data);
-
-            
+ 
                 $this->Session->setFlash(__('Add Supplier Complete.'));
 
                 $this->redirect(
@@ -185,75 +381,7 @@ class SettingsController extends AppController
             return $this->redirect(array('action' => 'supplier'));
     }
 
-    public function category_edit($id = null) {
 
-            if (!$id) {
-                throw new NotFoundException(__('Invalid post'));
-            }
-
-             $this->ItemCategoryHolder->bind(array('ItemTypeHolder'));
-
-            $post = $this->ItemCategoryHolder->findById($id);
-            if (!$post) {
-                throw new NotFoundException(__('Invalid post'));
-            }
-
-            if ($this->request->is(array('post', 'put'))) {
-                $this->ItemCategoryHolder->id = $id;
-
-                if ($this->ItemCategoryHolder->save($this->request->data)) {
-
-                    $this->ItemCategoryHolder->save($this->request->data);
-                    $this->Session->setFlash(__('Category has been updated.'));
-                    return $this->redirect(array('action' => 'category'));
-                }
-                $this->Session->setFlash(__('Unable to update your post.'));
-            }
-
-            if (!$this->request->data) {
-                $this->request->data = $post;
-            }
-    }
-
-    public function name_type_edit($id = null) {
-            
-            $this->loadModel('ItemCategoryHolder');
-
-            $this->loadModel('ItemTypeHolder');
-
-            $this->loadModel('ItemCategoryHolder');
-
-            $categoryDataDropList = $this->ItemCategoryHolder->find('list',  array('order' => 'ItemCategoryHolder.id DESC'));
-
-            if (!$id) {
-                throw new NotFoundException(__('Invalid post'));
-            }
-
-           $post = $this->ItemTypeHolder->findById($id);
-
-            if (!$post) {
-                throw new NotFoundException(__('Invalid post'));
-            }
-
-            if ($this->request->is(array('post', 'put'))) {
-                $this->ItemTypeHolder->id = $id;
-
-                if ($this->ItemTypeHolder->save($this->request->data)) {
-
-                    $this->ItemTypeHolder->save($this->request->data);
-                    $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
-                    $this->Session->setFlash(__('Type has been updated.'));
-                    return $this->redirect(array('action' => 'category','tab' => 'tab-type'));
-               }
-                $this->Session->setFlash(__('Unable to update your post.'));
-            }
-
-            if (!$this->request->data) {
-                $this->request->data = $post;
-            }
-
-            $this->set(compact('categoryDataDropList', 'categoryData','nameTypeData' ));
-    }
 
     public function delete($id) {
     
@@ -268,9 +396,6 @@ class SettingsController extends AppController
 
             return $this->redirect(array('action' => 'category'));
     }
-
-
-
 
     public function deleteType($id) {
 
@@ -293,55 +418,7 @@ class SettingsController extends AppController
         return $this->redirect(array('action' => 'category','tab' => 'tab-type'));
     }
 
-    public function deleteStatus($id) {
-           
-            if ($this->StatusFieldHolder->delete($id)) {
-                $this->Session->setFlash(
-                    __('Successfully deleted.', h($id))
-                );
-            } else {
-                $this->Session->setFlash(
-                    __('The post cannot be deleted.', h($id))
-                );
-            }
-
-            return $this->redirect(array('action' => 'status'));
-    }
-
-
-    public function status_edit($id = null) {
-
-            if (!$id) {
-                throw new NotFoundException(__('Invalid post'));
-            }
-
-             $this->StatusFieldHolder->bind(array('ItemTypeHolder'));
-
-
-            $post = $this->StatusFieldHolder->findById($id );
-
-            if (!$post) {
-                throw new NotFoundException(__('Invalid post'));
-            }
-
-            if ($this->request->is(array('post', 'put'))) {
-                $this->StatusFieldHolder->id = $id;
-
-                if ($this->StatusFieldHolder->save($this->request->data)) {
-
-                    $this->StatusFieldHolder->save($this->request->data);
-                    $this->StatusFieldHolder->bind(array('id'));
-                    $this->StatusFieldHolder->ItemTypeHolder->save($this->request->data);
-                    $this->Session->setFlash(__('Status has been updated.'));
-                    return $this->redirect(array('action' => 'status'));
-                }
-                $this->Session->setFlash(__('Unable to update your post.'));
-            }
-
-            if (!$this->request->data) {
-                $this->request->data = $post;
-         }
-    }
+    
          
     public function packaging() {
 
@@ -349,7 +426,19 @@ class SettingsController extends AppController
 
         $userData = $this->Session->read('Auth');
 
-        $packagingData = $this->PackagingHolder->find('all', array('order' => 'PackagingHolder.id DESC'));
+        $limit = 5;
+
+        $conditions = array();
+
+        $this->paginate = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            'fields' => array('id', 'name','created'),
+            'order' => 'PackagingHolder.id DESC',
+        );
+
+        $packagingData = $this->paginate('PackagingHolder');
+
             if ($this->request->is('post')) {
                 
                 if (!empty($this->request->data)) {
@@ -426,7 +515,19 @@ class SettingsController extends AppController
 
                 $userData = $this->Session->read('Auth');
 
-                $paymentTermData = $this->PaymentTermHolder->find('all', array('order' => 'PaymentTermHolder.id DESC'));
+                $limit = 5;
+
+                $conditions = array();
+
+                $this->paginate = array(
+                    'conditions' => $conditions,
+                    'limit' => $limit,
+                    'fields' => array('id', 'name','created'),
+                    'order' => 'PaymentTermHolder.id DESC',
+                );
+
+                $paymentTermData = $this->paginate('PaymentTermHolder');
+
                 if ($this->request->is('post')) {
                     
                     if (!empty($this->request->data)) {
@@ -435,7 +536,7 @@ class SettingsController extends AppController
 
                         $this->id = $this->PaymentTermHolder->savePaymentTerm($this->request->data['PaymentTermHolder'], $userData['User']['id']);
 
-                        $this->Session->setFlash(__('Add Package Complete.'));
+                        $this->Session->setFlash(__('Add Term Complete.'));
 
                         $this->redirect(
 
@@ -497,8 +598,6 @@ class SettingsController extends AppController
             }
     }
 
-
-
     public function deleteProduct($id) {
       
         if ($this->Product->delete($id)) {
@@ -515,35 +614,146 @@ class SettingsController extends AppController
         return $this->redirect(array(' controller' => 'products', 'action' => 'index'));
     }
 
-    public function category_index() {
-
-    }
-
-    public function category_option() {
-                    
-    }
-
-    public function category_find($id) {
-
-
-        $this->layout = false;
+      public function item_group() {
 
         $this->loadModel('ItemCategoryHolder');
 
-        if (!empty($id)) {
+        $this->loadModel('ItemTypeHolder');
 
-            $category = $this->ItemCategoryHolder->findById($id);
+        $this->loadModel('Supplier');
 
-            echo json_encode($category);
+        $this->loadModel('GeneralItem');
 
-            //$this->autoRender = false;
+        $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
 
+        $this->GeneralItem->bind(array('ItemCategoryHolder', 'ItemTypeHolder', 'Supplier'));
+
+        $categoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name'),
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+     
+        $typeData = $this->ItemTypeHolder->find('list', array('fields' => array('id', 'name'),
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+
+        $categoryDataDropList = $this->ItemCategoryHolder->find('list',  array('order' => 'ItemCategoryHolder.id DESC'));
+
+        $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.id DESC'));
+
+        $generalItemData = $this->GeneralItem->find('all',  array('order' => 'GeneralItem.id DESC'));
+
+       if ($this->request->is('post')) {
+               $generalItemDetails = $this->request->data;
+          
+            if (!empty($generalItemDetails)) {
+
+                $userData = $this->Session->read('Auth');
+                $generalItemDetails['GeneralItem']['uuid'] = time();
+                $generalItemDetails['GeneralItem']['created_by'] = $userData['User']['id'];
+                $generalItemDetails['GeneralItem']['modified_by'] = $userData['User']['id'];
+
+                $this->GeneralItem->save($generalItemDetails);
+
+                $this->Session->setFlash(__('Add General Item Complete.'));
+
+                $this->redirect(
+
+                    array('controller' => 'settings', 'action' => 'item_group')
+                );
+            }
         }
-         $this->autoRender = false;
-         exit();
-    
+
+        $this->set(compact('categoryDataDropList', 'categoryData','typeData', 'supplierData', 'generalItemData' ));
 
     }
+
+        public function deleteGeneralItem($id) {
+      
+        if ($this->GeneralItem->delete($id)) {
+            
+            $this->Session->setFlash(
+                __('Successfully deleted.', h($id))
+            );
+        } else {
+            $this->Session->setFlash(
+                __('The post cannot be deleted.', h($id))
+            );
+        }
+
+        return $this->redirect(array(' controller' => 'settings', 'action' => 'item_group'));
+    } 
+
+    public function general_item_edit($id = null) {
+
+        $this->loadModel('ItemCategoryHolder');
+
+        $this->loadModel('ItemTypeHolder');
+
+        $this->loadModel('Supplier');
+
+        $this->loadModel('GeneralItem');
+
+        $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
+
+        $this->GeneralItem->bind(array('ItemCategoryHolder','ItemTypeHolder', 'Supplier'));
+
+        $categoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name'),
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+     
+        $typeData = $this->ItemTypeHolder->find('list', array('fields' => array('id', 'name'),
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+
+        $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.id DESC'));
+
+
+            if (!$id) {
+                throw new NotFoundException(__('Invalid post'));
+            }
+
+            $post = $this->GeneralItem->findById($id);
+
+            if (!$post) {
+                throw new NotFoundException(__('Invalid post'));
+            }
+
+            if ($this->request->is(array('post', 'put'))) {
+                $this->GeneralItem->id = $id;
+
+                if ($this->GeneralItem->save($this->request->data)) {
+
+                    $this->GeneralItem->save($this->request->data);
+
+                    $this->Session->setFlash(__('General Item has been updated.'));
+
+                    return $this->redirect(array('action' => 'item_group'));
+                }
+                $this->Session->setFlash(__('Unable to update your post.'));
+            }
+
+            if (!$this->request->data) {
+                $this->request->data = $post;
+            }
+
+            $this->set(compact('generalItemData', 'categoryData' , 'typeData', 'supplierData' ));
+    }
+
+    public function ajax_categ($itemId = false){
+
+
+        $this->autoRender = false;
+
+        $this->loadModel('ItemCategoryHolder');
+        $this->ItemCategoryHolder->bind(array('ItemTypeHolder'));
+
+        $itemdata = $this->ItemCategoryHolder->ItemTypeHolder->find('all', array(
+                                        'conditions' => array(
+                                            'ItemTypeHolder.Item_category_holder_id' => $itemId), 
+                                        'fields' => array(
+                                            'id', 'name')
+                                        ));
+
+       echo json_encode($itemdata);
+    }
+
+
 
 }
             

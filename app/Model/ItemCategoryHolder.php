@@ -41,9 +41,6 @@ class ItemCategoryHolder extends AppModel {
 				'rule' => array('notEmpty'),
 			),
 		)
-
-
-	
 	);
 
     public function bind($model = array('Group')){
