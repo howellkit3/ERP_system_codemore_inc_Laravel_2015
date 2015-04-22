@@ -24,6 +24,17 @@ class SettingsController extends AppController
 
     public function category() {
 
+
+        $limit = 5;
+
+        $conditions = array();
+
+
+        if ($this->RequestHandler->isAjax()) {
+                $this->layout = "";
+        }
+
+
         $this->loadModel('ItemCategoryHolder');
 
         $this->loadModel('ItemTypeHolder');
@@ -32,29 +43,33 @@ class SettingsController extends AppController
 
         $this->ItemTypeHolder->bind(array('ItemCategoryHolder',));
 
-        $limit = 5;
+        if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'ItemCategoryHolder' ) {
+            
+            $this->paginate = array(
+                'conditions' => $conditions,
+                'limit' => $limit,
+                'fields' => array('id', 'name', 'created','modified','ItemCategoryHolder.name'),
+                'order' => array('ItemCategoryHolder.id DESC'),
+            );
 
-        $conditions = array();
+            $categoryData = $this->paginate('ItemCategoryHolder');
 
-        $this->paginate = array(
-            'conditions' => $conditions,
-            'limit' => $limit,
-            'fields' => array('id', 'name', 'created','modified','ItemCategoryHolder.name'),
-            'order' => 'ItemCategoryHolder.id DESC',
-        );
-
-        $categoryData = $this->paginate('ItemCategoryHolder');
+        }
 
         $categoryDataDropList = $this->ItemCategoryHolder->find('list',  array('order' => 'ItemCategoryHolder.id DESC'));
 
-        $this->paginate = array(
-            'conditions' => $conditions,
-            'limit' => $limit,
-            'fields' => array('id', 'name', 'created','ItemCategoryHolder.name'),
-            'order' => 'ItemTypeHolder.id DESC',
-        );
+        if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'ItemTypeHolder' ) {
+            $this->paginate = array(
+                'conditions' => $conditions,
+                'limit' => $limit,
+                'fields' => array('id', 'name', 'created','ItemCategoryHolder.name'),
+                'order' => array('ItemTypeHolder.id DESC'),
+            );
 
-        $nameTypeData = $this->paginate('ItemTypeHolder');
+            $nameTypeData = $this->paginate('ItemTypeHolder');
+
+        }
+
 
         if ($this->request->is('post')) {
             
