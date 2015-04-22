@@ -22,19 +22,13 @@ class Substrate extends AppModel {
 			),
 		),
 
-		'type_id' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-			),
-		),
+		// 'type_id' => array(
+		// 	'notEmpty' => array(
+		// 		'rule' => array('notEmpty'),
+		// 	),
+		// ),
 
 		'category_id' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-			),
-		),
-
-		'measure' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 			),
