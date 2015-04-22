@@ -42,7 +42,7 @@ class Supplier extends AppModel {
 
 			'hasOne' => array(
 				'GeneralItem' => array(
-					'className' => 'ItemTypeHolder',
+					'className' => 'GeneralItem',
 					'foreignKey' => 'item_category_holder_id',
 					'dependent' => true
 				),

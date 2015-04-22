@@ -641,6 +641,8 @@ class SettingsController extends AppController
 
         $this->GeneralItem->bind(array('ItemCategoryHolder', 'ItemTypeHolder', 'Supplier'));
 
+        $this->Substrate->bind(array('ItemCategoryHolder', 'ItemTypeHolder', 'Supplier'));
+
         $categoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name'),
                                                                 'conditions' => array('ItemCategoryHolder.category_type' => '1')));
      
@@ -651,18 +653,35 @@ class SettingsController extends AppController
 
         $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.id DESC'));
 
-        $limit = 5;
+        $generalItemData = $this->GeneralItem->find('all',  array('order' => 'GeneralItem.id DESC','limit'=>4, 'offset'=>3));
 
-        $conditions = array();
+        $substrateData = $this->Substrate->find('all', array('order' => 'Substrate.id DESC'));
 
-        $this->paginate = array(
-            'conditions' => $conditions,
-            'limit' => $limit,
-            'fields' => array('id', 'uuid','name', 'ItemCategoryHolder.name','ItemTypeHolder.name', 'Supplier.name', 'measure', 'created'),
-            'order' => 'ItemCategoryHolder.id DESC',
-        );
+        //pr($substrateData); exit;
 
-        $generalItemData = $this->paginate('GeneralItem');
+        // $limit = 5;
+
+        // $conditions = array();
+
+        // $this->paginate = array(
+        //     'conditions' => $conditions,
+        //     'limit' => $limit,
+        //    // 'fields' => array('id', 'uuid','name', 'ItemCategoryHolder.name','ItemTypeHolder.name', 'Supplier.name', 'measure', 'created'),
+        //    // 'order' => 'GeneralItem.id DESC',
+        // );
+
+        // $generalItemData = $this->paginate('GeneralItem');
+
+        //  $this->paginate = array(
+        //     'conditions' => $conditions,
+        //     'limit' => $limit,
+        //     //'fields' => array('id', 'uuid','name', 'ItemCategoryHolder.name','ItemTypeHolder.name', 'Supplier.name', 'Substrate.type', 'thickness', 'created'),
+        //   //  'order' => 'Substrate.id DESC',
+        // );
+
+        // $substrateData = $this->paginate('Substrate');
+
+       // pr($substrateData); exit;
 
        if ($this->request->is('post')) {
                $generalItemDetails = $this->request->data;
@@ -685,11 +704,11 @@ class SettingsController extends AppController
             }
         }
 
-        $this->set(compact('categoryDataDropList', 'categoryData','typeData', 'supplierData', 'generalItemData' ));
+        $this->set(compact('categoryDataDropList', 'categoryData','typeData', 'supplierData', 'generalItemData','substrateData'));
 
     }
 
-        public function deleteGeneralItem($id) {
+    public function deleteGeneralItem($id) {
       
         if ($this->GeneralItem->delete($id)) {
             
@@ -717,7 +736,7 @@ class SettingsController extends AppController
 
         $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
 
-        $this->GeneralItem->bind(array('ItemCategoryHolder','ItemTypeHolder', 'Supplier'));
+       $this->GeneralItem->bind(array('ItemCategoryHolder','ItemTypeHolder', 'Supplier'));
 
         $categoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name'),
                                                                 'conditions' => array('ItemCategoryHolder.category_type' => '1')));
@@ -759,37 +778,105 @@ class SettingsController extends AppController
             $this->set(compact('generalItemData', 'categoryData' , 'typeData', 'supplierData' ));
     }
 
-        public function substrate() {
+    public function substrate() {
 
         $this->loadModel('Substrate');
 
+        $substrateData = $this->Substrate->find('all',  array('order' => 'Substrate.id DESC','limit'=>4, 'offset'=>3));
+
         $userData = $this->Session->read('Auth');
 
-        $substratesDetails = $this->request->data;
+            if ($this->request->is('post')) {
 
-        pr($substratesDetails); exit;
+                 $substrateDetails = $this->request->data;
+                
+                if (!empty($substrateDetails)) {
 
-          /*   if ($this->request->is('post')) {
-               $substratesDetails = $this->request->data;
-          
-            if (!empty($generalItemDetails)) {
+                    $userData = $this->Session->read('Auth');
+                    $substrateDetails['Substrate']['uuid'] = time();
+                    $substrateDetails['Substrate']['created_by'] = $userData['User']['id'];
+                    $substrateDetails['Substrate']['modified_by'] = $userData['User']['id'];
 
-                $userData = $this->Session->read('Auth');
-                $substratesDetails['GeneralItem']['uuid'] = time();
-                $substratesDetails['GeneralItem']['created_by'] = $userData['User']['id'];
-                $substratesDetails['GeneralItem']['modified_by'] = $userData['User']['id'];
+                    $this->Substrate->save($substrateDetails);
+           
+                    $this->Session->setFlash(__('Add Substrate Complete.'));
 
-                $this->GeneralItem->save($generalItemDetails);
-
-                $this->Session->setFlash(__('Add General Item Complete.'));
-
-                $this->redirect(
-
-                    array('controller' => 'settings', 'action' => 'item_group')
-                );
+                    return $this->redirect(array('action' => 'item_group','tab' => 'tab-substrates'));
+                }
             }
-        } */
+
+            $this->set(compact('substrateData'));
     }
+
+    public function substrate_edit($id = null) {
+
+        $this->loadModel('ItemCategoryHolder');
+
+        $this->loadModel('ItemTypeHolder');
+
+        $this->loadModel('Supplier');
+
+        $this->loadModel('GeneralItem');
+
+        $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
+
+        $this->Substrate->bind(array('ItemCategoryHolder','ItemTypeHolder', 'Supplier'));
+
+        $categoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name'),
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+     
+        $typeData = $this->ItemTypeHolder->find('list', array('fields' => array('id', 'name'),
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+
+        $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.id DESC'));
+
+
+            if (!$id) {
+                throw new NotFoundException(__('Invalid post'));
+            }
+
+            $post = $this->Substrate->findById($id);
+
+            if (!$post) {
+                throw new NotFoundException(__('Invalid post'));
+            }
+
+            if ($this->request->is(array('post', 'put'))) {
+                $this->Substrate->id = $id;
+
+                if ($this->Substrate->save($this->request->data)) {
+
+                    $this->Substrate->save($this->request->data);
+
+                    $this->Session->setFlash(__('Substrate has been updated.'));
+
+                    return $this->redirect(array('action' => 'item_group','tab' => 'tab-substrates'));
+                }
+                $this->Session->setFlash(__('Unable to update your post.'));
+            }
+
+            if (!$this->request->data) {
+                $this->request->data = $post;
+            }
+
+            $this->set(compact( 'categoryData' , 'typeData', 'supplierData' ));
+    }
+
+    public function deleteSubstrate($id) {
+      
+        if ($this->Substrate->delete($id)) {
+            
+            $this->Session->setFlash(
+                __('Successfully deleted.', h($id))
+            );
+        } else {
+            $this->Session->setFlash(
+                __('The post cannot be deleted.', h($id))
+            );
+        }
+
+        return $this->redirect(array(' controller' => 'settings', 'action' => 'item_group','tab' => 'tab-substrate'));
+    } 
 
     public function ajax_categ($itemId = false){
 
