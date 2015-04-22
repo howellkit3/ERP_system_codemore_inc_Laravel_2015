@@ -11,7 +11,7 @@
 				</td>
 				<td align ="left">
 					<center>
-						<b>KOU FU COLOR PRINTING CORPORATION</b>
+						<b>Kou Fu Packaging Corp.</b>
 					<br>
 					Lot 4-5, Blk 3 Phase 2, Mountview Industrial Complex, <br>Bancal, Carmona, Cavite<br>
 
@@ -122,7 +122,7 @@
 			<td align ="center" colspan = "3" height = "250px">
 				<div class="boxed"><font size ="2px">
   					CONDITION OF SALES: It is understood that the mechandise herein described<br>
-  					remains the property of KOU FU COLOR PRINTING CORP. until the invoice is <br>
+  					remains the property of Kou Fu Packaging Corp. until the invoice is <br>
   					paid. Our responsibility ceases when merchandise is delivered in good condi-<br> tion. Overdue payments on any part of this invoice shall bear interest equal to <br> twenty four(24%) percent per annum plus twenty five (25%) percent to cover<br> cost of collection and attorney's fee. In any case of litigation arising out of this in-<br>voice, the parties submit themselves to jurisdiction of the court of Carmona, Cavite to the exclusion of all others</font>
 				</div>
 			</td>

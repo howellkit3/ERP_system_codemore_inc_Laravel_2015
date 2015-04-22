@@ -3,7 +3,7 @@ App::uses('AppController', 'Controller');
 
 class SettingsController extends AppController
 {
-    public $uses = array('ItemCategoryHolder','ItemTypeHolder', 'PackagingHolder', 'StatusFieldHolder', 'PaymentTermHolder','GeneralItem' );
+    public $uses = array('ItemCategoryHolder','ItemTypeHolder', 'PackagingHolder', 'StatusFieldHolder', 'PaymentTermHolder','GeneralItem', 'Substrate' );
 
     public $useDbConfig = array('default');
 
@@ -44,8 +44,6 @@ class SettingsController extends AppController
         );
 
         $categoryData = $this->paginate('ItemCategoryHolder');
-
-        //$categoryData = $this->ItemCategoryHolder->find('all',  array('order' => 'ItemCategoryHolder.id DESC'));
 
         $categoryDataDropList = $this->ItemCategoryHolder->find('list',  array('order' => 'ItemCategoryHolder.id DESC'));
 
@@ -622,6 +620,8 @@ class SettingsController extends AppController
 
         $this->loadModel('GeneralItem');
 
+        $this->loadModel('Substrate');
+
         $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
 
         $this->GeneralItem->bind(array('ItemCategoryHolder', 'ItemTypeHolder', 'Supplier'));
@@ -742,6 +742,38 @@ class SettingsController extends AppController
             }
 
             $this->set(compact('generalItemData', 'categoryData' , 'typeData', 'supplierData' ));
+    }
+
+        public function substrate() {
+
+        $this->loadModel('Substrate');
+
+        $userData = $this->Session->read('Auth');
+
+        $substratesDetails = $this->request->data;
+
+        pr($substratesDetails); exit;
+
+          /*   if ($this->request->is('post')) {
+               $substratesDetails = $this->request->data;
+          
+            if (!empty($generalItemDetails)) {
+
+                $userData = $this->Session->read('Auth');
+                $substratesDetails['GeneralItem']['uuid'] = time();
+                $substratesDetails['GeneralItem']['created_by'] = $userData['User']['id'];
+                $substratesDetails['GeneralItem']['modified_by'] = $userData['User']['id'];
+
+                $this->GeneralItem->save($generalItemDetails);
+
+                $this->Session->setFlash(__('Add General Item Complete.'));
+
+                $this->redirect(
+
+                    array('controller' => 'settings', 'action' => 'item_group')
+                );
+            }
+        } */
     }
 
     public function ajax_categ($itemId = false){

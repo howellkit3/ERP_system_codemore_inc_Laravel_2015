@@ -18,7 +18,7 @@
 								</td>
 								<td  height = "40">
 									<center>
-										KOU FU COLOR PRINTING CORP.<br>
+										Kou Fu Packaging Corp.<br>
 										<font size ="1">
 											Lot 4-5, Blk 3 Phase 2, Mountview Industrial Complex, Carmona, Cavite<br>
 											Tel#: (046) 972-1111 to 13 Fax#: (046) 972-012
