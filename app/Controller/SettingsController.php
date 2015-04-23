@@ -886,6 +886,36 @@ class SettingsController extends AppController
         return $this->redirect(array(' controller' => 'settings', 'action' => 'item_group','tab' => 'tab-substrate'));
     } 
 
+    public function compound_substrate() {
+
+        $this->loadModel('CompoundSubstrate');
+
+        $compoundSubstrateData = $this->CompoundSubstrate->find('all',  array('order' => 'CompoundSubstrate.id DESC','limit'=>4, 'offset'=>3));
+
+        $userData = $this->Session->read('Auth');
+
+            if ($this->request->is('post')) {
+
+                 $CompoundSubstrateDetails = $this->request->data;
+                
+                if (!empty($substrateDetails)) {
+
+                    $userData = $this->Session->read('Auth');
+                    $CompoundSubstrateDetails['CompoundSubstrate']['uuid'] = time();
+                    $CompoundSubstrateDetails['CompoundSubstrate']['created_by'] = $userData['User']['id'];
+                    $CompoundSubstrateDetails['CompoundSubstrate']['modified_by'] = $userData['User']['id'];
+
+                    $this->CompoundSubstrate->save($CompoundSubstrateDetails);
+           
+                    $this->Session->setFlash(__('Add Compound Substrate Complete.'));
+
+                    return $this->redirect(array('action' => 'item_group','tab' => 'tab-compound_substrates'));
+                }
+            }
+
+            $this->set(compact('compoundSubstrateData'));
+    }
+
     public function ajax_categ($itemId = false){
 
 
