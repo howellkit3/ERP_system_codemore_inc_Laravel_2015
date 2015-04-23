@@ -7,12 +7,21 @@ class SettingsController extends AppController
 
     public $useDbConfig = array('default');
 
-    public $paginate = array(
-        'limit' => 25,
-        'conditions' => array('status' => '1'),
-        'order' => array('User.email' => 'asc' )
-    );
-
+    var $paginate = array( 
+        'ItemCategoryHolder' => array( 
+                'fields' => array( 
+                        'Image.filename', 'Image.caption' 
+                ), 
+                'limit' => 5, 
+                'order' => array('ItemCategoryHolder.id DESC')
+            ), 
+        'ItemTypeHolder' => array( 
+                'limit' => 5,
+                'fields' => array('id', 'name', 'created','ItemCategoryHolder.name'),
+                'order' => array('ItemTypeHolder.id DESC'),
+            ) 
+    ); 
+    
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('index','category');
@@ -45,7 +54,7 @@ class SettingsController extends AppController
 
         if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'ItemCategoryHolder' ) {
             
-            $this->paginate = array(
+            $this->paginate['ItemCategoryHolder'] = array(
                 'conditions' => $conditions,
                 'limit' => $limit,
                 'fields' => array('id', 'name', 'created','modified','ItemCategoryHolder.name'),
@@ -59,7 +68,7 @@ class SettingsController extends AppController
         $categoryDataDropList = $this->ItemCategoryHolder->find('list',  array('order' => 'ItemCategoryHolder.id DESC'));
 
         if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'ItemTypeHolder' ) {
-            $this->paginate = array(
+            $this->paginate['ItemTypeHolder'] = array(
                 'conditions' => $conditions,
                 'limit' => $limit,
                 'fields' => array('id', 'name', 'created','ItemCategoryHolder.name'),
@@ -68,8 +77,7 @@ class SettingsController extends AppController
 
             $nameTypeData = $this->paginate('ItemTypeHolder');
 
-        }
-
+        }   
 
         if ($this->request->is('post')) {
             

@@ -163,3 +163,24 @@ text-align: center;
 .item-detail{
   text-align: center;
 }
+
+
+.paging span {
+  border-right: 1px solid #ccc;
+  padding: 8px 15px;
+}
+.paging span:nth-child(1) {
+  border-left: 1px solid #ccc;
+}
+.paging span.next {
+  border-left: 1px solid #ccc;
+}
+.paging span {
+  border-bottom: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+  padding: 8px 15px;
+}
+.table-responsive {
+  overflow:initial;
+}
