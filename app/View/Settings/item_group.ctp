@@ -2,6 +2,7 @@
 <?php echo $this->Html->script('AddSubstrate'); ?>
 <?php echo $this->Html->script('AddGeneralItem'); ?>
 <?php echo $this->Html->script('AddCompoundSubstrate');?>
+<?php echo $this->Html->script('AddCorrugatedPaper');?>
 <?php echo $this->Html->script('AddLayer'); ?>
 
 <?php 
@@ -110,13 +111,13 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 															</div>
 
 															<div class="form-group"> <br>
-															<label class="col-lg-2 control-label"><span style="color:red">*</span>Measure</label>
+															<label class="col-lg-2 control-label">Measure</label>
 																<div class="col-lg-8">
 																	<?php 
 																	echo $this->Form->input('GeneralItem.measure', array(
 																								'class' => 'form-control item_type',
 																	                            'label' => false,
-																	                            'required' => 'required',
+																	                             //'required' => 'required',
 																	                            'placeholder' => 'Name Category'));
 																	?>
 																</div>
@@ -586,7 +587,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 									</div>
 
 										<?php
-											 echo $this->Form->create('GeneralItem',array('url'=>(array('controller' => 'settings','action' => 'item_group'))));
+											 echo $this->Form->create('CorrugatedPaper',array('url'=>(array('controller' => 'settings','action' =>'corrugated_paper'))));
 										?>
 
 									<div class="row">
@@ -599,11 +600,11 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																<label class="col-lg-2 control-label"><span style="color:red">*</span>Name</label>
 																<div class="col-lg-8">
 																		<?php 
-																		echo $this->Form->input('GeneralItem.name', array(
+																		echo $this->Form->input('CorrugatedPaper.name', array(
 																									'class' => 'form-control item_type',
 																		                            'label' => false,
 																		                            'required' => 'required',
-																		                            'placeholder' => 'Name General Item'));
+																		                            'placeholder' => 'Corrugated Paper Name'));
 																		?>
 																</div>
 															</div>
@@ -612,7 +613,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																<label class="col-lg-2 control-label"><span style="color:red">*</span>Category</label>
 																<div class="col-lg-8">
 																	<input type="hidden" id="selected_type" value="">
-																	<?php echo $this->Form->input('GeneralItem.category_id', array(
+																	<?php echo $this->Form->input('CorrugatedPaper.category_id', array(
 																	'options' => array($categoryData),
 																	'type' => 'select',
 																	'label' => false,
@@ -628,7 +629,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																<label class="col-lg-2 control-label"><span style="color:red">*</span>Type</label>
 																<div class="col-lg-8">
 																	<input type="hidden" id="selected_type" value="">
-																	<?php echo $this->Form->input('GeneralItem.type_id', array(
+																	<?php echo $this->Form->input('CorrugatedPaper.type_id', array(
 																	'options' => '',
 																	'type' => 'select',
 																	'label' => false,
@@ -644,28 +645,30 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																<label class="col-lg-2 control-label"><span style="color:red">*</span>Manufacturer</label>
 																<div class="col-lg-8">
 																	<input type="hidden" id="selected_type" value="">
-																	<?php echo $this->Form->input('GeneralItem.manufacturer_id', array(
-																	'options' => array($supplierData),
-																	'type' => 'select',
-																	'label' => false,
-																	'class' => 'form-control required categorylist',
-																	'empty' => '---Select Supplier---',
-																	'required' => 'required'
-																	)); 
+																	<?php 
+																	echo $this->Form->input('CorrugatedPaper.manufacturer_id', array(
+																								'options' => array($supplierData),
+																								'type' => 'select',
+																								'label' => false,
+																								'class' => 'form-control required categorylist',
+																								'empty' => '---Select Supplier---',
+																								'required' => 'required'
+																								)); 
 																?>
 																</div>
 															</div>
 
 															<div class="form-group"> <br>
-															<label class="col-lg-2 control-label"><span style="color:red">*</span>Measure</label>
+																<label class="col-lg-2 control-label"><span style="color:red">*</span>Layer</label>
 																<div class="col-lg-8">
-																	<?php 
-																	echo $this->Form->input('GeneralItem.measure', array(
-																								'class' => 'form-control item_type',
-																	                            'label' => false,
-																	                            'required' => 'required',
-																	                            'placeholder' => 'Name Category'));
-																	?>
+																		<?php 
+																			echo $this->Form->input('CorrugatedPaper.layers', array(
+																									'class' => 'form-control layer',
+																		                            'label' => false,
+																		                            'rule' => 'numeric',
+																		                           	'style'=>'width: 150px',
+																		                            'placeholder' => 'Layer'));
+																		?>
 																</div>
 															</div>
 
@@ -673,10 +676,10 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																<label class="col-lg-2 control-label">Remarks</label>
 																<div class="col-lg-8">
 																	<?php 
-																	echo $this->Form->textarea('GeneralItem.remarks', array(
-																	'class' => 'form-control item_type',
-																	'label' => false,
-																	'placeholder' => 'Remarks'));
+																		echo $this->Form->textarea('CorrugatedPaper.remarks', array(
+																									'class' => 'form-control item_type',
+																									'label' => false,
+																									'placeholder' => 'Remarks'));
 																	?>
 																</div>
 															</div>
@@ -685,7 +688,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																<div class="col-lg-2"></div>
 																	<div class="col-lg-8">
 
-																		<button type="submit" class="btn btn-primary pull-left">Submit General Item</button>&nbsp;
+																		<button type="submit" class="btn btn-primary pull-left">Submit Corrugated Paper</button>&nbsp;
 
 																		<?php 
 																		echo $this->Html->link('Cancel', array('controller' => 'settings', 'action' => 'index'),array('class' =>'btn btn-default','escape' => false));
@@ -711,7 +714,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 													<table class="table table-striped table-hover">
 													<thead>
 													<tr>
-													<th class="text-center"><a href="#"><span>General Item ID</span></a></th>
+													<th class="text-center"><a href="#"><span>Corrugated Paper ID</span></a></th>
 													<th class="text-center"><a href="#"><span>Name</span></a></th>
 													<th class="text-center"><a href="#"><span>Category</span></a></th>
 													<th class="text-center"><a href="#"><span>Type</span></a></th>

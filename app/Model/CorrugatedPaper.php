@@ -3,11 +3,11 @@ App::uses('AppModel', 'Model');
 App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
 App::uses('AuthComponent', 'Controller/Component');
 
-class GeneralItem extends AppModel {
+class CorrugatedPaper extends AppModel {
 
 	public $useDbConfig = 'default';
 
-    public $name = 'GeneralItem';
+    public $name = 'CorrugatedPaper';
 
     public $recursive = -1;
 
@@ -32,13 +32,17 @@ class GeneralItem extends AppModel {
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 			),
-		)
+		),
 
-		// 'measure' => array(
-		// 	'notEmpty' => array(
+		// 'layers' => array(
+		// 	'Numeric'=> array(
+	 //            'rule' => 'Numeric',
+	 //            'message'=> 'Please enter a number of layer'
+	 //        ),
+	 //        	'notEmpty' => array(
 		// 		'rule' => array('notEmpty'),
 		// 	),
-		// )
+		// ),
 
 	);
 

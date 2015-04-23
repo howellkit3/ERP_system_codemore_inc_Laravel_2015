@@ -3,7 +3,7 @@ App::uses('AppController', 'Controller');
 
 class SettingsController extends AppController
 {
-    public $uses = array('ItemCategoryHolder','ItemTypeHolder', 'PackagingHolder', 'StatusFieldHolder', 'PaymentTermHolder','GeneralItem', 'Substrate' , 'CompoundSubstrate');
+    public $uses = array('ItemCategoryHolder','ItemTypeHolder', 'PackagingHolder', 'StatusFieldHolder', 'PaymentTermHolder','GeneralItem', 'Substrate' , 'CompoundSubstrate', 'CorrugatedPaper');
 
     public $useDbConfig = array('default');
 
@@ -956,6 +956,7 @@ class SettingsController extends AppController
             $this->set(compact( 'categoryData' , 'typeData', 'supplierData' ));
     }
 
+
     public function deleteCompoundSubstrate($id) {
       
         if ($this->CompoundSubstrate->delete($id)) {
@@ -970,6 +971,37 @@ class SettingsController extends AppController
         }
 
         return $this->redirect(array(' controller' => 'settings', 'action' => 'item_group','tab' => 'tab-compound_substrate'));
+    }
+
+    public function corrugated_paper() {
+
+        $this->loadModel('CorrugatedPaper');
+
+        $corrugatedPaperData = $this->CorrugatedPaper->find('all',  array('order' => 'CorrugatedPaper.id DESC','limit'=>4, 'offset'=>3));
+
+        $userData = $this->Session->read('Auth');
+
+            if ($this->request->is('post')) {
+
+                 $corrugatedDetails = $this->request->data;
+                
+                if (!empty($corrugatedDetails)) {
+
+                    $userData = $this->Session->read('Auth');
+                    $corrugatedDetails['CorrugatedPaper']['uuid'] = time();
+                    $corrugatedDetails['CorrugatedPaper']['created_by'] = $userData['User']['id'];
+                    $corrugatedDetails['CorrugatedPaper']['modified_by'] = $userData['User']['id'];
+
+                    $this->CorrugatedPaper->save($corrugatedDetails);
+           
+                    $this->Session->setFlash(__('Add Corrugated Paper Complete.'));
+
+                    return $this->redirect(array('action' => 'item_group','tab' => 'tab-corrugated_paper'));
+                } 
+            }
+
+            $this->set(compact('corrugatedPaperData'));
+    
     } 
 
     public function ajax_categ($itemId = false){
