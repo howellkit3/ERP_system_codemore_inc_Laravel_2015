@@ -34,7 +34,13 @@ class SettingsController extends AppController
             'limit' => 10,
             //'fields' => array('id', 'name', 'created'),
             'order' => 'CompoundSubstrate.id DESC'
-        ) 
+        ),
+
+        'CorrugatedPaper' => array( 
+            'limit' => 10,
+            //'fields' => array('id', 'name', 'created'),
+            'order' => 'CorrugatedPaper.id DESC'
+         )   
 
     ); 
     
@@ -668,6 +674,8 @@ class SettingsController extends AppController
 
         $this->loadModel('CompoundSubstrate');
 
+        $this->loadModel('CorrugatedPaper');
+
         $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
 
         
@@ -683,8 +691,6 @@ class SettingsController extends AppController
 
         $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.id DESC'));
 
-        
-       
 
 
         //general item
@@ -717,7 +723,7 @@ class SettingsController extends AppController
 
         }
        
-          //substrateData
+          //Compound substrateData
          $this->CompoundSubstrate->bind(array('ItemCategoryHolder', 'ItemTypeHolder', 'Supplier'));
 
         if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'CompoundSubstrate' ) {
@@ -728,6 +734,20 @@ class SettingsController extends AppController
             );
 
             $compoundSubstrateData = $this->paginate('CompoundSubstrate');
+
+        }
+
+          //Corrugated Paper
+         $this->CorrugatedPaper->bind(array('ItemCategoryHolder', 'ItemTypeHolder', 'Supplier'));
+
+        if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'CorrugatedPaper' ) {
+            
+            $this->paginate['CorrugatedPaper'] = array(
+                'conditions' =>  array(),
+                'limit' => 10,
+            );
+
+            $corrugatedPaperData = $this->paginate('CorrugatedPaper');
 
         }
 
@@ -754,7 +774,7 @@ class SettingsController extends AppController
             }
         }
 
-        $this->set(compact('categoryDataDropList', 'categoryData','typeData', 'supplierData', 'generalItemData','substrateData', 'compoundSubstrateData'));
+        $this->set(compact('categoryDataDropList', 'categoryData','typeData', 'supplierData', 'generalItemData','substrateData', 'compoundSubstrateData', 'corrugatedPaperData'));
 
     }
 
@@ -999,7 +1019,7 @@ class SettingsController extends AppController
 
                     $this->CompoundSubstrate->save($this->request->data);
 
-                    $this->Session->setFlash(__('Substrate has been updated.'));
+                    $this->Session->setFlash(__('Compound Substrate has been updated.'));
 
                     return $this->redirect(array('action' => 'item_group','tab' => 'tab-compound_substrates'));
                 }
@@ -1053,13 +1073,82 @@ class SettingsController extends AppController
            
                     $this->Session->setFlash(__('Add Corrugated Paper Complete.'));
 
-                    return $this->redirect(array('action' => 'item_group','tab' => 'tab-corrugated_paper'));
+                    return $this->redirect(array('action' => 'item_group','tab' => 'tab-corrugated_papers'));
                 } 
             }
 
-            $this->set(compact('corrugatedPaperData'));
-    
+            $this->set(compact('corrugatedPaperData'));    
     } 
+
+     public function corrugated_paper_edit($id = null) {
+
+        $this->loadModel('ItemCategoryHolder');
+
+        $this->loadModel('ItemTypeHolder');
+
+        $this->loadModel('Supplier');
+
+        $this->loadModel('CorrugatedPaper');
+
+        $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
+
+        $this->CorrugatedPaper->bind(array('ItemCategoryHolder','ItemTypeHolder', 'Supplier'));
+
+        $categoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name'),
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+     
+        $typeData = $this->ItemTypeHolder->find('list', array('fields' => array('id', 'name'),
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+
+        $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.id DESC'));
+
+
+            if (!$id) {
+                throw new NotFoundException(__('Invalid post'));
+            }
+
+            $post = $this->CorrugatedPaper->findById($id);
+
+            if (!$post) {
+                throw new NotFoundException(__('Invalid post'));
+            }
+
+            if ($this->request->is(array('post', 'put'))) {
+                $this->CorrugatedPaper->id = $id;
+
+                if ($this->CorrugatedPaper->save($this->request->data)) {
+
+                    $this->CorrugatedPaper->save($this->request->data);
+
+                    $this->Session->setFlash(__('Corrugated Paper has been updated.'));
+
+                    return $this->redirect(array('action' => 'item_group','tab' => 'tab-corrugated_papers'));
+                }
+                $this->Session->setFlash(__('Unable to update your post.'));
+            }
+
+            if (!$this->request->data) {
+                $this->request->data = $post;
+            }
+
+            $this->set(compact( 'categoryData','typeData','supplierData' ));
+    }
+
+     public function deleteCorrugatedPaper($id) {
+      
+        if ($this->CorrugatedPaper->delete($id)) {
+            
+            $this->Session->setFlash(
+                __('Successfully deleted.', h($id))
+            );
+        } else {
+            $this->Session->setFlash(
+                __('The post cannot be deleted.', h($id))
+            );
+        }
+
+        return $this->redirect(array(' controller' => 'settings', 'action' => 'item_group','tab' => 'tab-corrugated_papers'));
+    }
 
     public function ajax_categ($itemId = false){
 

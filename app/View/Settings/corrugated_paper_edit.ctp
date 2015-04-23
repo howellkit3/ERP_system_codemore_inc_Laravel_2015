@@ -1,5 +1,5 @@
 <?php echo $this->element('setting_option');?><br><br>
-<?php echo $this->Html->script('compound_substrate'); ?>
+<?php echo $this->Html->script('corrugated_paper'); ?>
 
 <div class="row">
 	<div class="col-lg-12">
@@ -12,7 +12,7 @@
 						Edit Corrugated Paper
 					</h1>
 					<?php 
-                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'settings', 'action' => 'item_group','tab' => 'tab-compound_substrates'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'settings', 'action' => 'item_group','tab' => 'tab-corrugated_papers'),array('class' =>'btn btn-primary pull-right','escape' => false));
                     ?>
 				</header>
 
@@ -34,7 +34,7 @@
                         								'class' => 'form-control item_type',
 	                                                    'label' => false,
 	                                                    'required' => 'required',
-	                                                    'placeholder' => 'Substrate Name'));
+	                                                    'placeholder' => 'Corrugated Paper Name'));
                                             ?>
 
 										</div>
@@ -65,8 +65,8 @@
 														'type' => 'select',
 														'label' => false,
 														'class' => 'form-control required categorylist',
-														'empty' => '---Select Item Type---',
-														'required' => 'required'
+														'empty' => '---Select Item Type---'
+														//'required' => 'required'
 												)); 
 												?>
 										</div>
