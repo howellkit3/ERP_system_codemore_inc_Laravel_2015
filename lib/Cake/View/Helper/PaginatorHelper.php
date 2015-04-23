@@ -720,6 +720,7 @@ class PaginatorHelper extends AppHelper {
  */
 	
 	public function numbers($options = array()) {
+
 		if ($options === true) {
 			$options = array(
 				'before' => ' | ', 'after' => ' | ', 'first' => 'first', 'last' => 'last'
@@ -831,7 +832,6 @@ class PaginatorHelper extends AppHelper {
 
 			$out .= $after;
 		}
-
 		return $out;
 	}
 
