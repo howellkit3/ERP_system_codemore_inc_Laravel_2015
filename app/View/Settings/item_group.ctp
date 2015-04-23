@@ -494,22 +494,6 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																</div>
 															</div>
 
-
-															<div class="form-group"> <br>
-																<label class="col-lg-2 control-label"></label>
-																<div class="col-lg-8">
-																		<?php 
-																			echo $this->Form->input('Substrate.name', array(
-																									'class' => 'form-control layer',
-																		                            'label' => false,
-																		                   			'required' => 'required'
-																		                            //'placeholder' => 'Layer'
-																		                            ));
-																		?>
-																</div>
-															</div>
-
-
 															<div class="form-group">
 																<label class="col-lg-2 control-label">Remarks</label>
 																<div class="col-lg-8">
@@ -545,25 +529,24 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 										<div class="col-lg-12">
 											<div class="main-box">
 											<header class="main-box-header clearfix">
-											<h1>General Item List</h1>
+											<h1>Compound Substrate List</h1>
 											</header>
 												<div class="main-box-body clearfix">
 													<div class="table-responsive">
 													<table class="table table-striped table-hover">
 													<thead>
 													<tr>
-													<th class="text-center"><a href="#"><span>General Item ID</span></a></th>
+													<th class="text-center"><a href="#"><span>Compound Substrate ID</span></a></th>
 													<th class="text-center"><a href="#"><span>Name</span></a></th>
 													<th class="text-center"><a href="#"><span>Category</span></a></th>
 													<th class="text-center"><a href="#"><span>Type</span></a></th>
 													<th class="text-center"><a href="#"><span>Manufacturer</span></a></th>
-													<th class="text-center"><a href="#"><span>Measure</span></a></th>
 													<th class="text-center"><a href="#"><span>Created</span></a></th>
 													<th>Action</th>
 													</tr>
 													</thead>
 
-													<?php echo $this->element('general_item_table'); ?>
+													<?php echo $this->element('compound_substrate_table'); ?>
 
 													</table>
 													<hr>

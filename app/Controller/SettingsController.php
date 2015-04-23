@@ -3,7 +3,7 @@ App::uses('AppController', 'Controller');
 
 class SettingsController extends AppController
 {
-    public $uses = array('ItemCategoryHolder','ItemTypeHolder', 'PackagingHolder', 'StatusFieldHolder', 'PaymentTermHolder','GeneralItem', 'Substrate' );
+    public $uses = array('ItemCategoryHolder','ItemTypeHolder', 'PackagingHolder', 'StatusFieldHolder', 'PaymentTermHolder','GeneralItem', 'Substrate' , 'CompoundSubstrate');
 
     public $useDbConfig = array('default');
 
@@ -650,11 +650,15 @@ class SettingsController extends AppController
 
         $this->loadModel('Substrate');
 
+        $this->loadModel('CompoundSubstrate');
+
         $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
 
         $this->GeneralItem->bind(array('ItemCategoryHolder', 'ItemTypeHolder', 'Supplier'));
 
         $this->Substrate->bind(array('ItemCategoryHolder', 'ItemTypeHolder', 'Supplier'));
+
+        $this->CompoundSubstrate->bind(array('ItemCategoryHolder', 'ItemTypeHolder', 'Supplier'));
 
         $categoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name'),
                                                                 'conditions' => array('ItemCategoryHolder.category_type' => '1')));
@@ -669,6 +673,8 @@ class SettingsController extends AppController
         $generalItemData = $this->GeneralItem->find('all',  array('order' => 'GeneralItem.id DESC','limit'=>4, 'offset'=>3));
 
         $substrateData = $this->Substrate->find('all', array('order' => 'Substrate.id DESC'));
+
+        $compoundSubstrateData = $this->CompoundSubstrate->find('all', array('order' => 'CompoundSubstrate.id DESC'));
 
        if ($this->request->is('post')) {
                $generalItemDetails = $this->request->data;
@@ -691,7 +697,7 @@ class SettingsController extends AppController
             }
         }
 
-        $this->set(compact('categoryDataDropList', 'categoryData','typeData', 'supplierData', 'generalItemData','substrateData'));
+        $this->set(compact('categoryDataDropList', 'categoryData','typeData', 'supplierData', 'generalItemData','substrateData', 'compoundSubstrateData'));
 
     }
 
@@ -895,6 +901,76 @@ class SettingsController extends AppController
             $this->set(compact('compoundSubstrateData'));
     
     }
+
+    public function compound_substrate_edit($id = null) {
+
+        $this->loadModel('ItemCategoryHolder');
+
+        $this->loadModel('ItemTypeHolder');
+
+        $this->loadModel('Supplier');
+
+        $this->loadModel('CompoundSubstrate');
+
+        $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
+
+        $this->CompoundSubstrate->bind(array('ItemCategoryHolder','ItemTypeHolder', 'Supplier'));
+
+        $categoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name'),
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+     
+        $typeData = $this->ItemTypeHolder->find('list', array('fields' => array('id', 'name'),
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+
+        $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.id DESC'));
+
+
+            if (!$id) {
+                throw new NotFoundException(__('Invalid post'));
+            }
+
+            $post = $this->CompoundSubstrate->findById($id);
+
+            if (!$post) {
+                throw new NotFoundException(__('Invalid post'));
+            }
+
+            if ($this->request->is(array('post', 'put'))) {
+                $this->CompoundSubstrate->id = $id;
+
+                if ($this->CompoundSubstrate->save($this->request->data)) {
+
+                    $this->CompoundSubstrate->save($this->request->data);
+
+                    $this->Session->setFlash(__('Substrate has been updated.'));
+
+                    return $this->redirect(array('action' => 'item_group','tab' => 'tab-compound_substrates'));
+                }
+                $this->Session->setFlash(__('Unable to update your post.'));
+            }
+
+            if (!$this->request->data) {
+                $this->request->data = $post;
+            }
+
+            $this->set(compact( 'categoryData' , 'typeData', 'supplierData' ));
+    }
+
+    public function deleteCompoundSubstrate($id) {
+      
+        if ($this->CompoundSubstrate->delete($id)) {
+            
+            $this->Session->setFlash(
+                __('Successfully deleted.', h($id))
+            );
+        } else {
+            $this->Session->setFlash(
+                __('The post cannot be deleted.', h($id))
+            );
+        }
+
+        return $this->redirect(array(' controller' => 'settings', 'action' => 'item_group','tab' => 'tab-compound_substrate'));
+    } 
 
     public function ajax_categ($itemId = false){
 
