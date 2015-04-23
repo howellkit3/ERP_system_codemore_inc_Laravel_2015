@@ -896,16 +896,16 @@ class SettingsController extends AppController
 
             if ($this->request->is('post')) {
 
-                 $CompoundSubstrateDetails = $this->request->data;
+                 $compoundSubstrateDetails = $this->request->data;
                 
-                if (!empty($substrateDetails)) {
+                if (!empty($compoundSubstrateDetails)) {
 
                     $userData = $this->Session->read('Auth');
-                    $CompoundSubstrateDetails['CompoundSubstrate']['uuid'] = time();
-                    $CompoundSubstrateDetails['CompoundSubstrate']['created_by'] = $userData['User']['id'];
-                    $CompoundSubstrateDetails['CompoundSubstrate']['modified_by'] = $userData['User']['id'];
+                    $compoundSubstrateDetails['CompoundSubstrate']['uuid'] = time();
+                    $compoundSubstrateDetails['CompoundSubstrate']['created_by'] = $userData['User']['id'];
+                    $compoundSubstrateDetails['CompoundSubstrate']['modified_by'] = $userData['User']['id'];
 
-                    $this->CompoundSubstrate->save($CompoundSubstrateDetails);
+                    $this->CompoundSubstrate->save($compoundSubstrateDetails);
            
                     $this->Session->setFlash(__('Add Compound Substrate Complete.'));
 
@@ -914,6 +914,7 @@ class SettingsController extends AppController
             }
 
             $this->set(compact('compoundSubstrateData'));
+    
     }
 
     public function ajax_categ($itemId = false){
