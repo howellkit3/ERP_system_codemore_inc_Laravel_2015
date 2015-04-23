@@ -413,6 +413,12 @@ class PaginatorHelper extends AppHelper {
 		$url = $this->url($url, true, $model);
 
 		$obj = isset($options['update']) ? $this->_ajaxHelperClass : 'Html';
+		//customize merge to chgeck what model to paginate
+		if (!empty($options['paginate'])) {
+
+			$url = array_merge($url,array('model' => $options['paginate']));
+		}
+		
 		return $this->{$obj}->link($title, $url, $options);
 	}
 
@@ -522,6 +528,8 @@ class PaginatorHelper extends AppHelper {
 				);
 			}
 			$link = $this->link($title, $url, compact('escape', 'model') + $options);
+
+
 			return $this->Html->tag($tag, $link, compact('class'));
 		}
 		unset($options['rel']);

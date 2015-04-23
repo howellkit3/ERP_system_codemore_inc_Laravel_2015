@@ -1,4 +1,6 @@
 <?php echo $this->Html->script('category'); ?>
+<?php echo $this->Html->script('ajax_pagination'); ?>
+
 <?php echo $this->element('setting_option');?><br><br>
 <?php 
 
@@ -16,7 +18,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 					</ul>
 					<div class="tab-content">
 						<div class="tab-pane fade  <?php echo ($active_tab == 'tab-category') ? 'in active' : '' ?>" id="tab-category">
-							<div class="row">
+							<div class="row" >
 								<div class="col-lg-12">
 									<div class="row">
 									<div class="col-lg-12">
@@ -87,8 +89,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 									</div>
 								</div>
 								<?php echo $this->Form->end(); ?>
-
-									<div class="row">
+									<div class="row" id="categoryTables">
 										<div class="col-lg-12">
 											<div class="main-box">
 											<header class="main-box-header clearfix">
@@ -110,21 +111,25 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 
 													<hr>
 
-											            <ul class="pagination pull-right">
-											                    <?php 
-											                     echo $this->Paginator->prev('< ' . __('previous'), array('before' => 'a','tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'prev disabled'));
-											                     echo $this->Paginator->numbers(array('separator' => '','tag' => 'li'));
-											                     echo $this->Paginator->next(__('next') . ' >', array('tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'next disabled')); ?>
-											               
-											              </ul>
-													</div>
+										           <div class="paging" id="item_category_pagination">
+									                <?php
+
+									                echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'ItemCategoryHolder'), null, array('class' => 'disable','model' => 'category'));
+									                echo $this->Paginator->numbers(array('separator' => ''), array('paginate' => 'ItemCategoryHolder'));
+									                echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'ItemCategoryHolder'), null, array('class' => 'disable'));
+									                ?>
+                    								</div>
 												</div>
 											</div>
 										</div>
 									</div>
+
+
 								</div>
 							</div>
 						</div>
+						</div>
+
 					<div class="tab-pane fade  <?php echo ($active_tab == 'tab-type') ? 'in active' : '' ?>" id="tab-type">
 							<div class="row">
 								<div class="col-lg-12">
@@ -215,37 +220,40 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 								</div>
 
 								<?php echo $this->Form->end(); ?>
+									<div class="row" id="itemTypeTables">
+										<div class="row">
+											<div class="col-lg-12">
+												<div class="main-box">
+												<header class="main-box-header clearfix">
+												<h1>Type List</h1>
+												</header>
+													<div class="main-box-body clearfix">
+														<div class="table-responsive">
+															<table class="table table-striped table-hover">
+																<thead>
+																	<tr>		                              
+																		<th><a href="#"><span>Item Type</span></a></th>
+																		<th><a href="#"><span>Category</span></a></th>
+																		<th class="text-center"><a href="#"><span>Created</span></a></th>
+																		<th>Action</th>
+																	</tr>
+																</thead>
 
-									<div class="row">
-										<div class="col-lg-12">
-											<div class="main-box">
-											<header class="main-box-header clearfix">
-											<h1>Type List</h1>
-											</header>
-												<div class="main-box-body clearfix">
-													<div class="table-responsive">
-														<table class="table table-striped table-hover">
-															<thead>
-																<tr>		                              
-																	<th><a href="#"><span>Item Type</span></a></th>
-																	<th><a href="#"><span>Category</span></a></th>
-																	<th class="text-center"><a href="#"><span>Created</span></a></th>
-																	<th>Action</th>
-																</tr>
-															</thead>
+															<?php echo $this->element('name_type_table'); ?>
+												  
+															</table>
 
-														<?php echo $this->element('name_type_table'); ?>
-											  
-														</table>
+														<hr>
+															 
+											           <div class="paging" id="item_type_pagination">
+										                <?php
 
-													<hr>
-														   <ul class="pagination pull-right">
-											                    <?php 
-											                     echo $this->Paginator->prev('< ' . __('previous'), array('before' => 'a','tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'prev disabled'));
-											                     echo $this->Paginator->numbers(array('separator' => '','tag' => 'li'));
-											                     echo $this->Paginator->next(__('next') . ' >', array('tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'next disabled')); ?>
-											               
-											              </ul>
+										                echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'ItemTypeHolder'), null, array('class' => 'disable','model' => 'ItemTypeHolder'));
+										                echo $this->Paginator->numbers(array('separator' => ''), array('paginate' => 'ItemTypeHolder'));
+										                echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'ItemTypeHolder'), null, array('class' => 'disable'));
+										                ?>
+	                    								</div>
+														</div>
 													</div>
 												</div>
 											</div>
@@ -260,7 +268,6 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 		</div>
 	</div>
 </div>
-
 
 
 

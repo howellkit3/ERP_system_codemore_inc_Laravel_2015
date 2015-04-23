@@ -13,6 +13,7 @@ class ProductsController extends SalesAppController {
 	public function add($companyId = null){
 		
 		$userData = $this->Session->read('Auth');
+
         if($this->request->is('post')){
 
         	
@@ -265,6 +266,7 @@ class ProductsController extends SalesAppController {
 
 	public function index() {
 
+		
 		$this->loadModel('ItemCategoryHolder');
 
         $this->loadModel('ItemTypeHolder');
@@ -289,10 +291,18 @@ class ProductsController extends SalesAppController {
 
 		$companyData = $this->Company->getList(array('id','company_name'));
 
-		$productData = $this->Product->find('all',array(
-    		'order' => array('Product.id DESC')));
+		$limit = 5;
 
+		$conditions = array();
+			
+		$this->paginate = array(
+            'conditions' => $conditions,
+            'limit' => 3,
+            //'fields' => array('id', 'name', 'created','modified'),
+            'order' => 'Product.id DESC',
+        );
 
+        $productData = $this->paginate('Product');
 
 
 		$this->set(compact('productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData', 'companyData'));
