@@ -670,8 +670,8 @@ class SettingsController extends AppController
 
         $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.id DESC'));
 
-        $generalItemData = $this->GeneralItem->find('all',  array('order' => 'GeneralItem.id DESC','limit'=>4, 'offset'=>3));
-
+        $generalItemData = $this->GeneralItem->find('all',  array('order' => 'GeneralItem.id DESC','limit'=>4));
+        
         $substrateData = $this->Substrate->find('all', array('order' => 'Substrate.id DESC'));
 
         $compoundSubstrateData = $this->CompoundSubstrate->find('all', array('order' => 'CompoundSubstrate.id DESC'));

@@ -181,13 +181,15 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 														</table>
 														<hr>
 
-														<ul class="pagination pull-right">
-															<?php 
-																echo $this->Paginator->prev('< ' . __('previous'), array('before' => 'a','tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'prev disabled'));
-																echo $this->Paginator->numbers(array('separator' => '','tag' => 'li'));
-																echo $this->Paginator->next(__('next') . ' >', array('tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'next disabled')); 
-															?>
-														</ul>
+														<div class="paging" id="">
+														<?php
+											               
+											                echo $this->Paginator->prev('< ' . __('previous'), null , null, array('class' => 'disable'));
+											                echo $this->Paginator->numbers(array('separator' => '',null, array('paginate' => 'ItemTypeHolder')));
+											                echo $this->Paginator->next(__('next') . ' >',null, null, array('class' => 'disable'));
+
+											                ?>
+										                </div>
 
 														</div>
 													</div>
@@ -374,13 +376,16 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 															</table>
 															<hr>
 
-															<ul class="pagination pull-right">
-																<?php 
-																	echo $this->Paginator->prev('< ' . __('previous'), array('before' => 'a','tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'prev disabled'));
-																	echo $this->Paginator->numbers(array('separator' => '','tag' => 'li'));
-																	echo $this->Paginator->next(__('next') . ' >', array('tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'next disabled')); 
-																?>
-															</ul>
+															<div class="paging" id="">
+														<?php
+											               
+											                echo $this->Paginator->prev('< ' . __('previous'), null , null, array('class' => 'disable'));
+											                echo $this->Paginator->numbers(array('separator' => '',null, array('paginate' => 'ItemTypeHolder')));
+											                echo $this->Paginator->next(__('next') . ' >',null, null, array('class' => 'disable'));
+
+											                ?>
+										                </div>
+
 														</div>
 													</div>
 												</div>
@@ -552,13 +557,16 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 													</table>
 													<hr>
 
-													<ul class="pagination pull-right">
-														<?php 
-															echo $this->Paginator->prev('< ' . __('previous'), array('before' => 'a','tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'prev disabled'));
-															echo $this->Paginator->numbers(array('separator' => '','tag' => 'li'));
-															echo $this->Paginator->next(__('next') . ' >', array('tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'next disabled')); 
-														?>
-													</ul>
+													<div class="paging" id="">
+														<?php
+											               
+											                echo $this->Paginator->prev('< ' . __('previous'), null , null, array('class' => 'disable'));
+											                echo $this->Paginator->numbers(array('separator' => '',null, array('paginate' => 'ItemTypeHolder')));
+											                echo $this->Paginator->next(__('next') . ' >',null, null, array('class' => 'disable'));
+
+											                ?>
+										                </div>
+
 
 													</div>
 												</div>
@@ -729,14 +737,15 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 
 													</table>
 													<hr>
+													  <div class="paging" id="">
+														<?php
+											               
+											                echo $this->Paginator->prev('< ' . __('previous'), null , null, array('class' => 'disable'));
+											                echo $this->Paginator->numbers(array('separator' => '',null, array('paginate' => 'ItemTypeHolder')));
+											                echo $this->Paginator->next(__('next') . ' >',null, null, array('class' => 'disable'));
 
-													<ul class="pagination pull-right">
-														<?php 
-															echo $this->Paginator->prev('< ' . __('previous'), array('before' => 'a','tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'prev disabled'));
-															echo $this->Paginator->numbers(array('separator' => '','tag' => 'li'));
-															echo $this->Paginator->next(__('next') . ' >', array('tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'next disabled')); 
-														?>
-													</ul>
+											                ?>
+										                </div>
 
 													</div>
 												</div>
