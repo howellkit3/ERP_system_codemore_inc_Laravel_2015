@@ -112,7 +112,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 														 <div class="paging" id="item_category_pagination">
 									                <?php
 
-									                echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'ItemCategoryHolder','model' => 'ItemCategoryHolder'), null, array('class' => 'disable','model' => 'category'));
+									                echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'ItemCategoryHolder','model' => 'ItemCategoryHolder'), null, array('class' => 'disable','model' => 'ItemCategoryHolder'));
 									                echo $this->Paginator->numbers(array('separator' => '','model' => 'ItemCategoryHolder'), array('paginate' => 'ItemCategoryHolder'));
 									                echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'ItemCategoryHolder','model' => 'ItemCategoryHolder'), null, array('class' => 'disable'));
 									                ?>

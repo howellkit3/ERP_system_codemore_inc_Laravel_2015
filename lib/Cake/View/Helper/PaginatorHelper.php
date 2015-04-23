@@ -718,6 +718,7 @@ class PaginatorHelper extends AppHelper {
  * @return string Numbers string.
  * @link http://book.cakephp.org/2.0/en/core-libraries/helpers/paginator.html#PaginatorHelper::numbers
  */
+	
 	public function numbers($options = array()) {
 		if ($options === true) {
 			$options = array(
