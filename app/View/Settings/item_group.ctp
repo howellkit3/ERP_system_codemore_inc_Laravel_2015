@@ -475,19 +475,6 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																</div>
 															</div>
 
-															<div class="form-group"> <br>
-															<label class="col-lg-2 control-label"><span style="color:red">*</span>Measure</label>
-																<div class="col-lg-8">
-																	<?php 
-																	echo $this->Form->input('GeneralItem.measure', array(
-																								'class' => 'form-control item_type',
-																	                            'label' => false,
-																	                            'required' => 'required',
-																	                            'placeholder' => 'Name Category'));
-																	?>
-																</div>
-															</div>
-
 															<div class="form-group">
 																<label class="col-lg-2 control-label">Remarks</label>
 																<div class="col-lg-8">

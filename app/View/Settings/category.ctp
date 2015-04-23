@@ -1,5 +1,5 @@
 <?php echo $this->Html->script('category'); ?>
-<?php echo $this->Html->script('ajax_pagination'); ?>
+<?php echo $this->Html->script(array('ajax_pagination','tabs')); ?>
 
 <?php echo $this->element('setting_option');?><br><br>
 <?php 
@@ -96,7 +96,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 											<h1>Category List</h1>
 											</header>
 												<div class="main-box-body clearfix">
-													<div class="table-responsive">
+												<div class="table-responsive">
 													<table class="table table-striped table-hover">
 													<thead>
 													<tr>
@@ -108,18 +108,19 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 
 													<?php echo $this->element('category_table'); ?>
 													</table>
-
-													<hr>
-
-										           <div class="paging" id="item_category_pagination">
+														<br>
+														 <div class="paging" id="item_category_pagination">
 									                <?php
 
-									                echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'ItemCategoryHolder'), null, array('class' => 'disable','model' => 'category'));
-									                echo $this->Paginator->numbers(array('separator' => ''), array('paginate' => 'ItemCategoryHolder'));
-									                echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'ItemCategoryHolder'), null, array('class' => 'disable'));
+									                echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'ItemCategoryHolder','model' => 'ItemCategoryHolder'), null, array('class' => 'disable','model' => 'ItemCategoryHolder'));
+									                echo $this->Paginator->numbers(array('separator' => '','paginate' => 'ItemCategoryHolder'), array('paginate' => 'ItemCategoryHolder'));
+									                echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'ItemCategoryHolder','model' => 'ItemCategoryHolder'), null, array('class' => 'disable'));
 									                ?>
                     								</div>
 												</div>
+
+
+										          
 											</div>
 										</div>
 									</div>
@@ -247,10 +248,11 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 															 
 											           <div class="paging" id="item_type_pagination">
 										                <?php
+										               
+										                echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'ItemTypeHolder','model' => 'ItemTypeHolder'), null, array('class' => 'disable','model' => 'ItemTypeHolder'));
+										                echo $this->Paginator->numbers(array('separator' => '','paginate' => 'ItemTypeHolder'), array('paginate' => 'ItemTypeHolder'));
+										                echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'ItemTypeHolder','model' => 'ItemTypeHolder'), null, array('class' => 'disable'));
 
-										                echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'ItemTypeHolder'), null, array('class' => 'disable','model' => 'ItemTypeHolder'));
-										                echo $this->Paginator->numbers(array('separator' => ''), array('paginate' => 'ItemTypeHolder'));
-										                echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'ItemTypeHolder'), null, array('class' => 'disable'));
 										                ?>
 	                    								</div>
 														</div>
@@ -268,9 +270,3 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 		</div>
 	</div>
 </div>
-
-
-
-
-
-

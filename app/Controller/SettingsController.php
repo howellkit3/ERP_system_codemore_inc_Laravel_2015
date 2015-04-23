@@ -7,12 +7,21 @@ class SettingsController extends AppController
 
     public $useDbConfig = array('default');
 
-    public $paginate = array(
-        'limit' => 25,
-        'conditions' => array('status' => '1'),
-        'order' => array('User.email' => 'asc' )
-    );
-
+    var $paginate = array( 
+        'ItemCategoryHolder' => array( 
+                'fields' => array( 
+                        'Image.filename', 'Image.caption' 
+                ), 
+                'limit' => 5, 
+                'order' => 'ItemCategoryHolder.id DESC'
+            ), 
+        'ItemTypeHolder' => array( 
+                'limit' => 5,
+                'fields' => array('id', 'name', 'created','ItemCategoryHolder.name'),
+                'order' => 'ItemTypeHolder.id DESC',
+            ) 
+    ); 
+    
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('index','category');
@@ -45,11 +54,10 @@ class SettingsController extends AppController
 
         if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'ItemCategoryHolder' ) {
             
-            $this->paginate = array(
+            $this->paginate['ItemCategoryHolder'] = array(
                 'conditions' => $conditions,
                 'limit' => $limit,
                 'fields' => array('id', 'name', 'created','modified','ItemCategoryHolder.name'),
-                'order' => array('ItemCategoryHolder.id DESC'),
             );
 
             $categoryData = $this->paginate('ItemCategoryHolder');
@@ -59,17 +67,15 @@ class SettingsController extends AppController
         $categoryDataDropList = $this->ItemCategoryHolder->find('list',  array('order' => 'ItemCategoryHolder.id DESC'));
 
         if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'ItemTypeHolder' ) {
-            $this->paginate = array(
+            $this->paginate['ItemTypeHolder'] = array(
                 'conditions' => $conditions,
                 'limit' => $limit,
                 'fields' => array('id', 'name', 'created','ItemCategoryHolder.name'),
-                'order' => array('ItemTypeHolder.id DESC'),
             );
 
             $nameTypeData = $this->paginate('ItemTypeHolder');
 
-        }
-
+        }   
 
         if ($this->request->is('post')) {
             
@@ -167,9 +173,10 @@ class SettingsController extends AppController
                     $this->ItemTypeHolder->save($this->request->data);
 
                     $this->ItemTypeHolder->save($this->request->data);
-           
+                
                     $this->Session->setFlash(__('Add Name Type Complete.'));
-                    return $this->redirect(array('action' => 'category','tab' => 'tab-type'));
+
+                    return $this->redirect(array('action' => 'category#tab-type'));
                 }
             }
 
@@ -204,7 +211,7 @@ class SettingsController extends AppController
                     $this->ItemTypeHolder->save($this->request->data);
                     $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
                     $this->Session->setFlash(__('Type has been updated.'));
-                    return $this->redirect(array('action' => 'category','tab' => 'tab-type'));
+                   return $this->redirect(array('action' => 'category#tab-type'));
                }
                 $this->Session->setFlash(__('Unable to update your post.'));
             }
@@ -877,6 +884,36 @@ class SettingsController extends AppController
 
         return $this->redirect(array(' controller' => 'settings', 'action' => 'item_group','tab' => 'tab-substrate'));
     } 
+
+    public function compound_substrate() {
+
+        $this->loadModel('CompoundSubstrate');
+
+        $compoundSubstrateData = $this->CompoundSubstrate->find('all',  array('order' => 'CompoundSubstrate.id DESC','limit'=>4, 'offset'=>3));
+
+        $userData = $this->Session->read('Auth');
+
+            if ($this->request->is('post')) {
+
+                 $CompoundSubstrateDetails = $this->request->data;
+                
+                if (!empty($substrateDetails)) {
+
+                    $userData = $this->Session->read('Auth');
+                    $CompoundSubstrateDetails['CompoundSubstrate']['uuid'] = time();
+                    $CompoundSubstrateDetails['CompoundSubstrate']['created_by'] = $userData['User']['id'];
+                    $CompoundSubstrateDetails['CompoundSubstrate']['modified_by'] = $userData['User']['id'];
+
+                    $this->CompoundSubstrate->save($CompoundSubstrateDetails);
+           
+                    $this->Session->setFlash(__('Add Compound Substrate Complete.'));
+
+                    return $this->redirect(array('action' => 'item_group','tab' => 'tab-compound_substrates'));
+                }
+            }
+
+            $this->set(compact('compoundSubstrateData'));
+    }
 
     public function ajax_categ($itemId = false){
 
