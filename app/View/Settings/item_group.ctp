@@ -1,10 +1,13 @@
 <?php echo $this->element('setting_option');?><br><br>
-<?php echo $this->Html->script('AddSubstrate'); ?>
-<?php echo $this->Html->script('AddGeneralItem'); ?>
-<?php echo $this->Html->script('AddCompoundSubstrate');?>
-<?php echo $this->Html->script('AddCorrugatedPaper');?>
-<?php echo $this->Html->script('AddLayer'); ?>
 
+<?php echo $this->Html->script(array(
+									'AddSubstrate',
+									'AddGeneralItem',
+									'AddCompoundSubstrate',
+									'AddCorrugatedPaper',
+									'AddLayer',	
+									'ajax_pagination'
+							)); ?>
 <?php 
 $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : 'tab-general-items';
 ?>
@@ -154,7 +157,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 										</div>
 											<?php echo $this->Form->end(); ?>
 
-										<div class="row">
+										<div class="row" id="general-item-table">
 											<div class="col-lg-12">
 												<div class="main-box">
 												<header class="main-box-header clearfix">
@@ -181,13 +184,19 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 														</table>
 														<hr>
 
-														<ul class="pagination pull-right">
-															<?php 
-																echo $this->Paginator->prev('< ' . __('previous'), array('before' => 'a','tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'prev disabled'));
-																echo $this->Paginator->numbers(array('separator' => '','tag' => 'li'));
-																echo $this->Paginator->next(__('next') . ' >', array('tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'next disabled')); 
-															?>
-														</ul>
+														<div class="paging" id="general_items_pagination">
+												
+
+										                 <?php
+										               
+										                echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'GeneralItem','model' => 'GeneralItem'), null, array('class' => 'disable','model' => 'GeneralItem'));
+										                echo $this->Paginator->numbers(array('separator' => '','paginate' => 'GeneralItem'), array('paginate' => 'GeneralItem'));
+										                echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'GeneralItem','model' => 'GeneralItem'), null, array('class' => 'disable'));
+
+										                ?>
+
+										                </div>
+
 
 														</div>
 													</div>
@@ -344,7 +353,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 										</div>
 											<?php echo $this->Form->end(); ?>
 
-										<div class="row">
+										<div class="row" id="substrate-table">
 											<div class="col-lg-12">
 												<div class="main-box">
 												<header class="main-box-header clearfix">
@@ -374,13 +383,16 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 															</table>
 															<hr>
 
-															<ul class="pagination pull-right">
-																<?php 
-																	echo $this->Paginator->prev('< ' . __('previous'), array('before' => 'a','tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'prev disabled'));
-																	echo $this->Paginator->numbers(array('separator' => '','tag' => 'li'));
-																	echo $this->Paginator->next(__('next') . ' >', array('tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'next disabled')); 
-																?>
-															</ul>
+															<div class="paging" id="substrate_pagination">
+														 <?php
+										               
+										                echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'Substrate','model' => 'Substrate'), null, array('class' => 'disable','model' => 'Substrate'));
+										                echo $this->Paginator->numbers(array('separator' => '','paginate' => 'Substrate'), array('paginate' => 'Substrate'));
+										                echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'Substrate','model' => 'Substrate'), null, array('class' => 'disable'));
+
+										                ?>
+										                </div>
+
 														</div>
 													</div>
 												</div>
@@ -526,7 +538,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 									</div>
 										<?php echo $this->Form->end(); ?>
 
-									<div class="row">
+									<div class="row" id="compound-substrate-table">
 										<div class="col-lg-12">
 											<div class="main-box">
 											<header class="main-box-header clearfix">
@@ -552,13 +564,16 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 													</table>
 													<hr>
 
-													<ul class="pagination pull-right">
-														<?php 
-															echo $this->Paginator->prev('< ' . __('previous'), array('before' => 'a','tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'prev disabled'));
-															echo $this->Paginator->numbers(array('separator' => '','tag' => 'li'));
-															echo $this->Paginator->next(__('next') . ' >', array('tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'next disabled')); 
-														?>
-													</ul>
+													<div class="paging" id="compound_substrate_pagination">
+														 <?php
+										               
+										                echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'CompoundSubstrate','model' => 'CompoundSubstrate'), null, array('class' => 'disable','model' => 'CompoundSubstrate'));
+										                echo $this->Paginator->numbers(array('separator' => '','paginate' => 'CompoundSubstrate'), array('paginate' => 'CompoundSubstrate'));
+										                echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'CompoundSubstrate','model' => 'CompoundSubstrate'), null, array('class' => 'disable'));
+
+										                ?>
+										                </div>
+
 
 													</div>
 												</div>
@@ -729,14 +744,15 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 
 													</table>
 													<hr>
+													  <div class="paging" id="">
+														<?php
+											               
+											                echo $this->Paginator->prev('< ' . __('previous'), null , null, array('class' => 'disable'));
+											                echo $this->Paginator->numbers(array('separator' => '',null, array('paginate' => 'ItemTypeHolder')));
+											                echo $this->Paginator->next(__('next') . ' >',null, null, array('class' => 'disable'));
 
-													<ul class="pagination pull-right">
-														<?php 
-															echo $this->Paginator->prev('< ' . __('previous'), array('before' => 'a','tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'prev disabled'));
-															echo $this->Paginator->numbers(array('separator' => '','tag' => 'li'));
-															echo $this->Paginator->next(__('next') . ' >', array('tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'next disabled')); 
-														?>
-													</ul>
+											                ?>
+										                </div>
 
 													</div>
 												</div>

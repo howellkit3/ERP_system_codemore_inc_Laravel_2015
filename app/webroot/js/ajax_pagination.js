@@ -34,4 +34,34 @@ $(function(){
 		
 	});
 
+	$('body').on('click','#general_items_pagination span > a',function(e) {
+		e.preventDefault();
+
+		$url = $(this).attr('href');
+
+		getNextItem($url,'#general-item-table','.main-box-body');
+		
+		
+	});
+
+
+	$('body').on('click','#substrate_pagination span > a',function(e) {
+		e.preventDefault();
+
+		$url = $(this).attr('href');
+
+		getNextItem($url,'#substrate-table','.main-box-body');
+		
+		
+	});
+
+	$('body').on('click','#compound_substrate_pagination span > a',function(e) {
+		e.preventDefault();
+		$url = $(this).attr('href');
+
+		getNextItem($url,'#compound-substrate-table','.main-box-body');
+		
+		
+	});
+
 });

@@ -12,14 +12,30 @@ class SettingsController extends AppController
                 'fields' => array( 
                         'Image.filename', 'Image.caption' 
                 ), 
-                'limit' => 5, 
+                'limit' => 10, 
                 'order' => 'ItemCategoryHolder.id DESC'
             ), 
         'ItemTypeHolder' => array( 
-                'limit' => 5,
+                'limit' => 10,
                 'fields' => array('id', 'name', 'created','ItemCategoryHolder.name'),
                 'order' => 'ItemTypeHolder.id DESC',
-            ) 
+            ),
+        'GeneralItem' => array( 
+                'limit' => 10,
+                //'fields' => array('id', 'name', 'created'),
+                'order' => 'GeneralItem.id DESC'
+            ),
+        'Substrate' => array( 
+                'limit' => 10,
+                //'fields' => array('id', 'name', 'created'),
+                'order' => 'Substrate.id DESC'
+            ), 
+        'CompoundSubstrate' => array( 
+            'limit' => 10,
+            //'fields' => array('id', 'name', 'created'),
+            'order' => 'CompoundSubstrate.id DESC'
+        ) 
+
     ); 
     
     public function beforeFilter() {
@@ -34,7 +50,7 @@ class SettingsController extends AppController
     public function category() {
 
 
-        $limit = 5;
+        $limit = 10;
 
         $conditions = array();
 
@@ -654,11 +670,8 @@ class SettingsController extends AppController
 
         $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
 
-        $this->GeneralItem->bind(array('ItemCategoryHolder', 'ItemTypeHolder', 'Supplier'));
-
-        $this->Substrate->bind(array('ItemCategoryHolder', 'ItemTypeHolder', 'Supplier'));
-
-        $this->CompoundSubstrate->bind(array('ItemCategoryHolder', 'ItemTypeHolder', 'Supplier'));
+        
+       
 
         $categoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name'),
                                                                 'conditions' => array('ItemCategoryHolder.category_type' => '1')));
@@ -670,13 +683,57 @@ class SettingsController extends AppController
 
         $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.id DESC'));
 
-        $generalItemData = $this->GeneralItem->find('all',  array('order' => 'GeneralItem.id DESC','limit'=>4, 'offset'=>3));
+        
+       
 
-        $substrateData = $this->Substrate->find('all', array('order' => 'Substrate.id DESC'));
 
-        $compoundSubstrateData = $this->CompoundSubstrate->find('all', array('order' => 'CompoundSubstrate.id DESC'));
+        //general item
+         $this->GeneralItem->bind(array('ItemCategoryHolder', 'ItemTypeHolder', 'Supplier'));
+
+         if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'GeneralItem' ) {
+          
+           $this->paginate['GeneralItem'] = array(
+                'conditions' =>  array(),
+                'limit' => 10,
+            );
+
+            $generalItemData = $this->paginate('GeneralItem');
+
+        }
+    
+
+       
+        //substrateData
+          $this->Substrate->bind(array('ItemCategoryHolder', 'ItemTypeHolder', 'Supplier'));
+
+         if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'Substrate' ) {
+            
+            $this->paginate['Substrate'] = array(
+                'conditions' =>  array(),
+                'limit' => 10,
+            );
+
+            $substrateData = $this->paginate('Substrate');
+
+        }
+       
+          //substrateData
+         $this->CompoundSubstrate->bind(array('ItemCategoryHolder', 'ItemTypeHolder', 'Supplier'));
+
+        if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'CompoundSubstrate' ) {
+            
+            $this->paginate['CompoundSubstrate'] = array(
+                'conditions' =>  array(),
+                'limit' => 10,
+            );
+
+            $compoundSubstrateData = $this->paginate('CompoundSubstrate');
+
+        }
+
 
        if ($this->request->is('post')) {
+               
                $generalItemDetails = $this->request->data;
           
             if (!empty($generalItemDetails)) {
