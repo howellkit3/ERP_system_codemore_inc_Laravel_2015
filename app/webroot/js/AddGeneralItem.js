@@ -5,7 +5,7 @@ $(function(){
 			var option = $(this).val();
 			 var selected = $('#GeneralItemCategoryId').val();
 			$.ajax({
-				url: serverPath + "/settings/ajax_categ/"+option,
+				url: serverPath + "settings/ajax_categ/"+option,
 				type: "get",
 				async: false,
 				dataType: "json",

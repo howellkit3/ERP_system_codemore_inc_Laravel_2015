@@ -23,10 +23,6 @@
                     </span> ', array('controller' => 'settings', 'action' => 'category_edit',$CategoryDataList['ItemCategoryHolder']['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Information'));
                 ?>
 
-                
-
-               
-
             </td>    
         </tr>
 

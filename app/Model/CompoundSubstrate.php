@@ -32,7 +32,17 @@ class CompoundSubstrate extends AppModel {
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 			),
-		)
+		),
+
+		'layers' => array(
+			'Numeric'=> array(
+	            'rule' => 'Numeric',
+	            'message'=> 'Please enter a number of layer'
+	        ),
+	        	'notEmpty' => array(
+				'rule' => array('notEmpty'),
+			),
+		),
 
 	);
 

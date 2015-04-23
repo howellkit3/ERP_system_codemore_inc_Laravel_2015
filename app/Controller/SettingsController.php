@@ -78,10 +78,16 @@ class SettingsController extends AppController
         }   
 
         if ($this->request->is('post')) {
+
+            $categoryDetails = $this->request->data;
             
             if (!empty($this->request->data)) {
 
-                $this->ItemCategoryHolder->save($this->request->data);
+                    $userData = $this->Session->read('Auth');
+                    $categoryDetails['ItemCategoryHolder']['created_by'] = $userData['User']['id'];
+                    $categoryDetails['ItemCategoryHolder']['modified_by'] = $userData['User']['id'];
+
+                $this->ItemCategoryHolder->save($categoryDetails);
 
                 $this->Session->setFlash(__('Add Category Complete.'));
 
@@ -663,32 +669,6 @@ class SettingsController extends AppController
         $generalItemData = $this->GeneralItem->find('all',  array('order' => 'GeneralItem.id DESC','limit'=>4, 'offset'=>3));
 
         $substrateData = $this->Substrate->find('all', array('order' => 'Substrate.id DESC'));
-
-        //pr($substrateData); exit;
-
-        // $limit = 5;
-
-        // $conditions = array();
-
-        // $this->paginate = array(
-        //     'conditions' => $conditions,
-        //     'limit' => $limit,
-        //    // 'fields' => array('id', 'uuid','name', 'ItemCategoryHolder.name','ItemTypeHolder.name', 'Supplier.name', 'measure', 'created'),
-        //    // 'order' => 'GeneralItem.id DESC',
-        // );
-
-        // $generalItemData = $this->paginate('GeneralItem');
-
-        //  $this->paginate = array(
-        //     'conditions' => $conditions,
-        //     'limit' => $limit,
-        //     //'fields' => array('id', 'uuid','name', 'ItemCategoryHolder.name','ItemTypeHolder.name', 'Supplier.name', 'Substrate.type', 'thickness', 'created'),
-        //   //  'order' => 'Substrate.id DESC',
-        // );
-
-        // $substrateData = $this->paginate('Substrate');
-
-       // pr($substrateData); exit;
 
        if ($this->request->is('post')) {
                $generalItemDetails = $this->request->data;

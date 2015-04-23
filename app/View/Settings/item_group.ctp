@@ -1,8 +1,10 @@
 <?php echo $this->element('setting_option');?><br><br>
 <?php echo $this->Html->script('AddSubstrate'); ?>
 <?php echo $this->Html->script('AddGeneralItem'); ?>
-<?php 
+<?php echo $this->Html->script('AddCompoundSubstrate');?>
+<?php echo $this->Html->script('AddLayer'); ?>
 
+<?php 
 $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : 'tab-general-items';
 ?>
 
@@ -405,7 +407,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 									</div>
 
 										<?php
-											 echo $this->Form->create('GeneralItem',array('url'=>(array('controller' => 'settings','action' => 'item_group'))));
+											 echo $this->Form->create('CompoundSubstrate',array('url'=>(array('controller' => 'settings','action' =>'compound_substrate'))));
 										?>
 
 									<div class="row">
@@ -418,11 +420,11 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																<label class="col-lg-2 control-label"><span style="color:red">*</span>Name</label>
 																<div class="col-lg-8">
 																		<?php 
-																		echo $this->Form->input('GeneralItem.name', array(
-																									'class' => 'form-control item_type',
+																			echo $this->Form->input('CompoundSubstrate.name', array(
+																									'class' => 'form-control name',
 																		                            'label' => false,
 																		                            'required' => 'required',
-																		                            'placeholder' => 'Name General Item'));
+																		                            'placeholder' => 'Compound Substrate Name'));
 																		?>
 																</div>
 															</div>
@@ -431,13 +433,14 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																<label class="col-lg-2 control-label"><span style="color:red">*</span>Category</label>
 																<div class="col-lg-8">
 																	<input type="hidden" id="selected_type" value="">
-																	<?php echo $this->Form->input('GeneralItem.category_id', array(
-																	'options' => array($categoryData),
-																	'type' => 'select',
-																	'label' => false,
-																	'class' => 'form-control required categorylist',
-																	'empty' => '---Select Item Category---',
-																	'required' => 'required'
+																	<?php 
+																		echo $this->Form->input('CompoundSubstrate.category_id', array(
+																									'options' => array($categoryData),
+																									'type' => 'select',
+																									'label' => false,
+																									'class' => 'form-control required categorylist',
+																									'empty' => '---Select Item Category---',
+																									'required' => 'required'
 																	)); 
 																?>
 																</div>
@@ -447,13 +450,14 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																<label class="col-lg-2 control-label"><span style="color:red">*</span>Type</label>
 																<div class="col-lg-8">
 																	<input type="hidden" id="selected_type" value="">
-																	<?php echo $this->Form->input('GeneralItem.type_id', array(
-																	'options' => '',
-																	'type' => 'select',
-																	'label' => false,
-																	'class' => 'form-control required categorylist',
-																	'empty' => '---Select Item Type---',
-																	'required' => 'required'
+																	<?php 
+																		echo $this->Form->input('CompoundSubstrate.type_id', array(
+																									'options' => '',
+																									'type' => 'select',
+																									'label' => false,
+																									'class' => 'form-control required typelist',
+																									'empty' => '---Select Item Type---'
+																									//'required' => 'required'
 																	)); 
 																?>
 																</div>
@@ -463,26 +467,57 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																<label class="col-lg-2 control-label"><span style="color:red">*</span>Manufacturer</label>
 																<div class="col-lg-8">
 																	<input type="hidden" id="selected_type" value="">
-																	<?php echo $this->Form->input('GeneralItem.manufacturer_id', array(
-																	'options' => array($supplierData),
-																	'type' => 'select',
-																	'label' => false,
-																	'class' => 'form-control required categorylist',
-																	'empty' => '---Select Supplier---',
-																	'required' => 'required'
-																	)); 
+																	<?php
+																		 echo $this->Form->input('CompoundSubstrate.manufacturer_id', array(
+																									'options' => array($supplierData),
+																									'type' => 'select',
+																									'label' => false,
+																									'class' => 'form-control required supplier',
+																									'empty' => '---Select Supplier---',
+																									'required' => 'required'
+																									)); 
 																?>
 																</div>
 															</div>
+
+															<div class="form-group"> <br>
+																<label class="col-lg-2 control-label"><span style="color:red">*</span>Layer</label>
+																<div class="col-lg-8">
+																		<?php 
+																			echo $this->Form->input('CompoundSubstrate.layers', array(
+																									'class' => 'form-control layer',
+																		                            'label' => false,
+																		                            'rule' => 'numeric',
+																		                           	'style'=>'width: 150px',
+																		                            'placeholder' => 'Layer'));
+																		?>
+																</div>
+															</div>
+
+
+															<div class="form-group"> <br>
+																<label class="col-lg-2 control-label"></label>
+																<div class="col-lg-8">
+																		<?php 
+																			echo $this->Form->input('Substrate.name', array(
+																									'class' => 'form-control layer',
+																		                            'label' => false,
+																		                   			'required' => 'required'
+																		                            //'placeholder' => 'Layer'
+																		                            ));
+																		?>
+																</div>
+															</div>
+
 
 															<div class="form-group">
 																<label class="col-lg-2 control-label">Remarks</label>
 																<div class="col-lg-8">
 																	<?php 
-																	echo $this->Form->textarea('GeneralItem.remarks', array(
-																	'class' => 'form-control item_type',
-																	'label' => false,
-																	'placeholder' => 'Remarks'));
+																	echo $this->Form->textarea('CompoundSubstrate.remarks', array(
+																								'class' => 'form-control remark',
+																								'label' => false,
+																								'placeholder' => 'Remarks'));
 																	?>
 																</div>
 															</div>
@@ -491,7 +526,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																<div class="col-lg-2"></div>
 																	<div class="col-lg-8">
 
-																		<button type="submit" class="btn btn-primary pull-left">Submit General Item</button>&nbsp;
+																		<button type="submit" class="btn btn-primary pull-left">Submit Compound Substrate</button>&nbsp;
 
 																		<?php 
 																		echo $this->Html->link('Cancel', array('controller' => 'settings', 'action' => 'index'),array('class' =>'btn btn-default','escape' => false));
