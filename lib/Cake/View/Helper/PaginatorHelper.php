@@ -740,6 +740,7 @@ class PaginatorHelper extends AppHelper {
 		unset($options['model']);
 
 		$params['pageCount'] = !empty($params['pageCount']) ? $params['pageCount'] : 0;
+		
 		if ($params['pageCount'] <= 1) {
 			return '';
 		}
