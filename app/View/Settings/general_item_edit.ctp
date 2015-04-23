@@ -89,13 +89,13 @@
 									</div>
 
 									<div class="form-group">
-										<label class="col-lg-2 control-label"><span style="color:red">*</span>Measurement</label>
+										<label class="col-lg-2 control-label">Measurement</label>
 										<div class="col-lg-8">
 											<?php 
 	                                            echo $this->Form->input('GeneralItem.measure', array(
                         								'class' => 'form-control item_type',
 	                                                    'label' => false,
-	                                                    'required' => 'required',
+	                                                    //'required' => 'required',
 	                                                    'placeholder' => 'Measure'));
                                             ?>
 
