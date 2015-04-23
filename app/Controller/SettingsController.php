@@ -13,12 +13,12 @@ class SettingsController extends AppController
                         'Image.filename', 'Image.caption' 
                 ), 
                 'limit' => 5, 
-                'order' => array('ItemCategoryHolder.id DESC')
+                'order' => 'ItemCategoryHolder.id DESC'
             ), 
         'ItemTypeHolder' => array( 
                 'limit' => 5,
                 'fields' => array('id', 'name', 'created','ItemCategoryHolder.name'),
-                'order' => array('ItemTypeHolder.id DESC'),
+                'order' => 'ItemTypeHolder.id DESC',
             ) 
     ); 
     
@@ -58,7 +58,6 @@ class SettingsController extends AppController
                 'conditions' => $conditions,
                 'limit' => $limit,
                 'fields' => array('id', 'name', 'created','modified','ItemCategoryHolder.name'),
-                'order' => array('ItemCategoryHolder.id DESC'),
             );
 
             $categoryData = $this->paginate('ItemCategoryHolder');
@@ -72,7 +71,6 @@ class SettingsController extends AppController
                 'conditions' => $conditions,
                 'limit' => $limit,
                 'fields' => array('id', 'name', 'created','ItemCategoryHolder.name'),
-                'order' => array('ItemTypeHolder.id DESC'),
             );
 
             $nameTypeData = $this->paginate('ItemTypeHolder');
@@ -175,9 +173,10 @@ class SettingsController extends AppController
                     $this->ItemTypeHolder->save($this->request->data);
 
                     $this->ItemTypeHolder->save($this->request->data);
-           
+                
                     $this->Session->setFlash(__('Add Name Type Complete.'));
-                    return $this->redirect(array('action' => 'category','tab' => 'tab-type'));
+
+                    return $this->redirect(array('action' => 'category#tab-type'));
                 }
             }
 
@@ -212,7 +211,7 @@ class SettingsController extends AppController
                     $this->ItemTypeHolder->save($this->request->data);
                     $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
                     $this->Session->setFlash(__('Type has been updated.'));
-                    return $this->redirect(array('action' => 'category','tab' => 'tab-type'));
+                   return $this->redirect(array('action' => 'category#tab-type'));
                }
                 $this->Session->setFlash(__('Unable to update your post.'));
             }
