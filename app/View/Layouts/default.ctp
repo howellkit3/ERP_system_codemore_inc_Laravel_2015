@@ -6,6 +6,7 @@
 	// @author Jr Relampagos - Systems Architect
 	// @author Bien Relampagos - Systems Dev
 	// @author Irvin Llanora - Systems Dev
+	// @author Howell Calabia - Systems Dev
 	// @date Jan 22, 2015
 	// @developed Codemore Web Development Services
 	// @website www.codemoreph.com
@@ -27,8 +28,8 @@
 		<?php
 
 			echo $this->fetch('meta');
-			echo $this->Html->css(array('bootstrap/bootstrap.min',
-	            'font-awesome/css/font-awesome',
+			echo $this->Html->css(array(
+				'bootstrap/bootstrap.min',
 	            'libs/nanoscroller',
 	            'libs/timeline',
 	            'compiled/theme_styles',
@@ -38,23 +39,20 @@
 	            'libs/jquery-jvectormap-1.2.2',
 	            'libs/weather-icons',
 	            'jquery-ui',
-	            'libs/nifty-component'
+	            'libs/nifty-component',
+				'/css/font-awesome/css/font-awesome',
 	        ));
-	        echo $this->Html->script('jquery');
-	        echo $this->Html->script('jquery-validation/dist/jquery.validate');
-	        echo $this->Html->script('jquery-validation/dist/jquery.validate.min');
-	        //echo $this->Html->script('auto_complete');
-	        echo $this->Html->script('search');
-	        echo $this->Html->script('jquery-ui');
-	       	//echo $this->Html->script('scripts');
 
 	    ?>
+
 	    <script type="text/javascript">
-	    var serverPath = '<?php echo $this->Html->url("/")?>';
+	    var serverPath = '<?php echo $this->Html->url("/", true)?>';
 	    </script>
-	    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
-	    <link type="image/x-icon" href="favicon.png" rel="shortcut icon"/>
-	    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300|Titillium+Web:200,300,400' rel='stylesheet' type='text/css'>
+	    <!--<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>-->
+	    <!--<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300|Titillium+Web:200,300,400' rel='stylesheet' type='text/css'>-->
+		<link type="image/x-icon" href="favicon.png" rel="shortcut icon"/>
+
+		<!--<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">-->
 	  
 		<!--[if lt IE 9]>
 			<script src="js/html5shiv.js"></script>
@@ -120,7 +118,7 @@
 						</div>
 						<footer id="footer-bar" class="row">
 							<p id="footer-copyright" class="col-xs-12">
-								Powered by Cube Theme.
+								Kou Fu Net - Copyright @ 2015 - All rights reserved.
 							</p>
 						</footer>
 					</div>
@@ -134,8 +132,17 @@
 
 		<!-- global scripts -->
 	 
-		 <?php
+		<?php
 		 	// SCRIPTS
+
+			echo $this->Html->script('jquery');
+			echo $this->Html->script('jquery-validation/dist/jquery.validate');
+			echo $this->Html->script('jquery-validation/dist/jquery.validate.min');
+			//echo $this->Html->script('auto_complete');
+			echo $this->Html->script('search');
+			echo $this->Html->script('jquery-ui');
+			//echo $this->Html->script('scripts');
+
 	        echo $this->Html->script('demo-skin-changer');
 	        echo $this->Html->script('bootstrap');
 	        echo $this->fetch('meta');
@@ -143,7 +150,7 @@
 	        echo $this->fetch('script');
 	        echo $this->Html->script('jquery.nanoscroller.min');
 	        echo $this->Html->script('demo');
-	         echo $this->Html->script('demo-rtl');
+		    echo $this->Html->script('demo-rtl');
 	        echo $this->Html->script('moment.min');
 	        echo $this->Html->script('jquery-jvectormap-1.2.2.min');
 	        echo $this->Html->script('jquery-jvectormap-world-merc-en');
