@@ -3,7 +3,7 @@ App::uses('AppController', 'Controller');
 
 class SettingsController extends AppController
 {
-    public $uses = array('ItemCategoryHolder','ItemTypeHolder', 'PackagingHolder', 'StatusFieldHolder', 'PaymentTermHolder','GeneralItem', 'Substrate' , 'CompoundSubstrate', 'CorrugatedPaper');
+    public $uses = array('ItemCategoryHolder','ItemTypeHolder','GeneralItem', 'Substrate' , 'CompoundSubstrate', 'CorrugatedPaper');
 
     public $useDbConfig = array('default');
 
@@ -64,11 +64,6 @@ class SettingsController extends AppController
         if ($this->RequestHandler->isAjax()) {
                 $this->layout = "";
         }
-
-
-        $this->loadModel('ItemCategoryHolder');
-
-        $this->loadModel('ItemTypeHolder');
 
         $userData = $this->Session->read('Auth');
 
@@ -167,15 +162,11 @@ class SettingsController extends AppController
 
         $this->layout = false;
 
-        $this->loadModel('ItemCategoryHolder');
-
         if (!empty($id)) {
 
             $category = $this->ItemCategoryHolder->findById($id);
 
             echo json_encode($category);
-
-            //$this->autoRender = false;
 
         }
          $this->autoRender = false;
@@ -185,8 +176,6 @@ class SettingsController extends AppController
     }
 
     public function name_type() {
-
-        $this->loadModel('ItemTypeHolder');
 
         $userData = $this->Session->read('Auth');
 
@@ -212,12 +201,6 @@ class SettingsController extends AppController
 	}
 
         public function name_type_edit($id = null) {
-            
-            $this->loadModel('ItemCategoryHolder');
-
-            $this->loadModel('ItemTypeHolder');
-
-            $this->loadModel('ItemCategoryHolder');
 
             $categoryDataDropList = $this->ItemCategoryHolder->find('list',  array('order' => 'ItemCategoryHolder.id DESC'));
 
@@ -293,6 +276,8 @@ class SettingsController extends AppController
     }
 
     public function deleteStatus($id) {
+
+         $this->loadModel('StatusFieldHolder');
            
             if ($this->StatusFieldHolder->delete($id)) {
                 $this->Session->setFlash(
@@ -309,6 +294,8 @@ class SettingsController extends AppController
 
 
     public function status_edit($id = null) {
+
+         $this->loadModel('StatusFieldHolder');
 
             if (!$id) {
                 throw new NotFoundException(__('Invalid post'));
@@ -447,8 +434,6 @@ class SettingsController extends AppController
 
     public function deleteType($id) {
 
-        $this->loadModel('ItemTypeHolder');
-
         if ($this->ItemTypeHolder->delete($id)) {
 
             $this->Session->setFlash(
@@ -508,6 +493,8 @@ class SettingsController extends AppController
 
     public function packaging_edit($id = null) {
 
+        $this->loadModel('PackagingHolder');
+
             if (!$id) {
                 throw new NotFoundException(__('Invalid post'));
             }
@@ -539,6 +526,8 @@ class SettingsController extends AppController
     }
 
     public function deletePackaging($id) {
+
+        $this->loadModel('PackagingHolder');
       
         if ($this->PackagingHolder->delete($id)) {
 
@@ -558,6 +547,8 @@ class SettingsController extends AppController
     }
 
     public function payment_term() {
+
+        $this->loadModel('PaymentTermHolder');
 
                 $userData = $this->Session->read('Auth');
 
@@ -593,28 +584,10 @@ class SettingsController extends AppController
 
                 $this->set(compact('paymentTermData'));
     }
-
-    public function deletePaymentTerm($id) {
-      
-        if ($this->PaymentTermHolder->delete($id)) {
-
-            $this->Session->setFlash(
-
-                __('Successfully deleted.', h($id))
-            );
-
-        } else {
-
-            $this->Session->setFlash(
-
-                __('The post cannot be deleted.', h($id))
-            );
-        }
-
-        return $this->redirect(array('action' => 'payment_term'));
-    }
  
     public function payment_term_edit($id = null) {
+
+        $this->loadModel('PaymentTermHolder');
 
             if (!$id) {
                 throw new NotFoundException(__('Invalid post'));
@@ -644,27 +617,45 @@ class SettingsController extends AppController
             }
     }
 
-    public function deleteProduct($id) {
+       public function deletePaymentTerm($id) {
+
+        $this->loadModel('PaymentTermHolder');
       
-        if ($this->Product->delete($id)) {
-            
+        if ($this->PaymentTermHolder->delete($id)) {
+
             $this->Session->setFlash(
+
                 __('Successfully deleted.', h($id))
             );
+
         } else {
+
             $this->Session->setFlash(
+
                 __('The post cannot be deleted.', h($id))
             );
         }
 
-        return $this->redirect(array(' controller' => 'products', 'action' => 'index'));
+        return $this->redirect(array('action' => 'payment_term'));
     }
 
+    // public function deleteProduct($id) {
+      
+    //     if ($this->Product->delete($id)) {
+            
+    //         $this->Session->setFlash(
+    //             __('Successfully deleted.', h($id))
+    //         );
+    //     } else {
+    //         $this->Session->setFlash(
+    //             __('The post cannot be deleted.', h($id))
+    //         );
+    //     }
+
+    //     return $this->redirect(array(' controller' => 'products', 'action' => 'index'));
+    // }
+
       public function item_group() {
-
-        $this->loadModel('ItemCategoryHolder');
-
-        $this->loadModel('ItemTypeHolder');
 
         $this->loadModel('Supplier');
 
@@ -678,9 +669,6 @@ class SettingsController extends AppController
 
         $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
 
-        
-       
-
         $categoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name'),
                                                                 'conditions' => array('ItemCategoryHolder.category_type' => '1')));
      
@@ -690,8 +678,6 @@ class SettingsController extends AppController
         $categoryDataDropList = $this->ItemCategoryHolder->find('list',  array('order' => 'ItemCategoryHolder.id DESC'));
 
         $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.id DESC'));
-
-
 
         //general item
          $this->GeneralItem->bind(array('ItemCategoryHolder', 'ItemTypeHolder', 'Supplier'));
@@ -706,8 +692,6 @@ class SettingsController extends AppController
             $generalItemData = $this->paginate('GeneralItem');
 
         }
-    
-
        
         //substrateData
           $this->Substrate->bind(array('ItemCategoryHolder', 'ItemTypeHolder', 'Supplier'));
@@ -779,6 +763,8 @@ class SettingsController extends AppController
     }
 
     public function deleteGeneralItem($id) {
+
+        $this->loadModel('GeneralItem');
       
         if ($this->GeneralItem->delete($id)) {
             
@@ -795,10 +781,6 @@ class SettingsController extends AppController
     } 
 
     public function general_item_edit($id = null) {
-
-        $this->loadModel('ItemCategoryHolder');
-
-        $this->loadModel('ItemTypeHolder');
 
         $this->loadModel('Supplier');
 
@@ -880,9 +862,7 @@ class SettingsController extends AppController
 
     public function substrate_edit($id = null) {
 
-        $this->loadModel('ItemCategoryHolder');
-
-        $this->loadModel('ItemTypeHolder');
+        $this->loadModel('Substrate');
 
         $this->loadModel('Supplier');
 
@@ -929,10 +909,13 @@ class SettingsController extends AppController
                 $this->request->data = $post;
             }
 
+
             $this->set(compact( 'categoryData' , 'typeData', 'supplierData' ));
     }
 
     public function deleteSubstrate($id) {
+
+        $this->loadModel('Substrate');
       
         if ($this->Substrate->delete($id)) {
             
@@ -952,6 +935,7 @@ class SettingsController extends AppController
 
         $this->loadModel('CompoundSubstrate');
 
+        $this->CompoundSubstrate->bind(array('ItemGroupLayer'));
         $compoundSubstrateData = $this->CompoundSubstrate->find('all',  array('order' => 'CompoundSubstrate.id DESC','limit'=>4, 'offset'=>3));
 
         $userData = $this->Session->read('Auth');
@@ -968,6 +952,19 @@ class SettingsController extends AppController
                     $compoundSubstrateDetails['CompoundSubstrate']['modified_by'] = $userData['User']['id'];
 
                     $this->CompoundSubstrate->save($compoundSubstrateDetails);
+
+                    $dataHolder = array();
+                    for($groupLayerCount=0; $groupLayerCount < count($this->request->data['ItemGroupLayer']['no']); $groupLayerCount++) {
+
+                        $this->CompoundSubstrate->ItemGroupLayer->create();
+
+                        $dataHolder['ItemGroupLayer']['foreign_key'] = $this->CompoundSubstrate->id;
+                        $dataHolder['ItemGroupLayer']['no'] = $this->request->data['ItemGroupLayer']['no'][$groupLayerCount];
+                        $dataHolder['ItemGroupLayer']['substrate'] = $this->request->data['ItemGroupLayer']['substrate'][$groupLayerCount];
+                        $dataHolder['ItemGroupLayer']['model'] = 'CompoundSubstrate';
+                        $this->CompoundSubstrate->ItemGroupLayer->save($dataHolder);
+                    }
+
            
                     $this->Session->setFlash(__('Add Compound Substrate Complete.'));
 
@@ -980,10 +977,6 @@ class SettingsController extends AppController
     }
 
     public function compound_substrate_edit($id = null) {
-
-        $this->loadModel('ItemCategoryHolder');
-
-        $this->loadModel('ItemTypeHolder');
 
         $this->loadModel('Supplier');
 
@@ -1035,6 +1028,8 @@ class SettingsController extends AppController
 
 
     public function deleteCompoundSubstrate($id) {
+
+        $this->loadModel('CompoundSubstrate');
       
         if ($this->CompoundSubstrate->delete($id)) {
             
@@ -1082,9 +1077,6 @@ class SettingsController extends AppController
 
      public function corrugated_paper_edit($id = null) {
 
-        $this->loadModel('ItemCategoryHolder');
-
-        $this->loadModel('ItemTypeHolder');
 
         $this->loadModel('Supplier');
 
@@ -1135,6 +1127,8 @@ class SettingsController extends AppController
     }
 
      public function deleteCorrugatedPaper($id) {
+
+        $this->loadModel('CorrugatedPaper');
       
         if ($this->CorrugatedPaper->delete($id)) {
             

@@ -46,7 +46,7 @@ class CompoundSubstrate extends AppModel {
 
 	);
 
-	public function bind($model = array('Group')){
+	public function bind($model = array('ItemCategoryHolder')){
 
 		$this->bindModel(array(
 			'belongsTo' => array(
@@ -65,6 +65,13 @@ class CompoundSubstrate extends AppModel {
 					'dependent' => false
 				),
 
+			),
+			'hasMany' => array(
+				'ItemGroupLayer' => array(
+					'className' => 'ItemGroupLayer',
+					'foreignKey' => 'foreign_key',
+					'conditions' => 'ItemGroupLayer.model = "CompoundSubstrate"'
+				),
 			)
 		
 		));

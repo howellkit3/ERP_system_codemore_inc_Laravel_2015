@@ -274,7 +274,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																		'label' => false,
 																		'class' => 'form-control required categorylist',
 																		'empty' => '---Select Item Type---',
-																		//'required' => 'required'
+																		'required' => 'required'
 																		)); 
 																	?>
 																	</div>
