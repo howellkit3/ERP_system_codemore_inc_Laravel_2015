@@ -65,8 +65,8 @@
 														'type' => 'select',
 														'label' => false,
 														'class' => 'form-control required categorylist',
-														'empty' => '---Select Item Type---'
-														//'required' => 'required'
+														'empty' => '---Select Item Type---',
+														'required' => 'required'
 												)); 
 												?>
 										</div>

@@ -1,5 +1,5 @@
 $(function(){
-	
+
 $('#SubstrateCategoryId').change(function(){
 			$('.option-append').remove();
 			var option = $(this).val();

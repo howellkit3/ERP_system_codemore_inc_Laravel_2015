@@ -1086,7 +1086,7 @@ class SettingsController extends AppController
                     $this->Session->setFlash(__('Adding Corrugated Paper Complete.'));
 
                     return $this->redirect(array('action' => 'item_group','tab' => 'tab-corrugated_papers'));
-            }
+            } 
         }
 
 

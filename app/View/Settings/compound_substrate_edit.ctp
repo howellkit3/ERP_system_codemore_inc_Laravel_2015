@@ -103,7 +103,7 @@
 									<div class="form-group">
 										<div class="col-lg-2"></div>
 										<div class="col-lg-8">
-											<button type="submit" class="btn btn-primary pull-left">Submit Corrugated Substrate</button>&nbsp;
+											<button type="submit" class="btn btn-primary pull-left">Submit Compound Substrate</button>&nbsp;
 											<?php 
 						                        echo $this->Html->link('Cancel', array('controller' => 'settings', 'action' => 'index'),array('class' =>'btn btn-default','escape' => false));
 						                    ?>
