@@ -107,6 +107,7 @@
 											<?php 
 	                                            echo $this->Form->input('Substrate.thickness', array(
                         								'class' => 'form-control item_type',
+                        								'required' => 'required',
 	                                                    'label' => false,
 	                                                    'placeholder' => 'Thickness'));
                                             ?>

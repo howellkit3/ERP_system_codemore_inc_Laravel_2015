@@ -52,8 +52,7 @@
 													'type' => 'select',
 													'label' => false,
 													'class' => 'form-control required',
-													'required' => true,
-													'readonly' => 'readonly'				                               
+													'required' => true			                               
 													)); 
 													?>
 												</div>

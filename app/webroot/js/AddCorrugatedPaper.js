@@ -1,9 +1,9 @@
 $(function(){
 	
-	$('#GeneralItemCategoryId').change(function(){
+$('#CorrugatedPaperCategoryId').change(function(){
 			$('.option-append').remove();
 			var option = $(this).val();
-			 var selected = $('#GeneralItemCategoryId').val();
+			var selected = $('#CorrugatedPaperCategoryId').val();
 			$.ajax({
 				url: serverPath + "settings/ajax_categ/"+option,
 				type: "get",
@@ -18,7 +18,7 @@ $(function(){
 						} else {
 							$option = "<option class='option-append'  value="+value.ItemTypeHolder.id+">"+value.ItemTypeHolder.name+"</option>";
 						}
-					     $('#GeneralItemTypeId').append($option);
+					     $('#CorrugatedPaperTypeId').append($option);
 					});			
 				}
 			});			

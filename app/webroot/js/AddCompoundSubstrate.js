@@ -1,11 +1,11 @@
 $(function(){
 	
-	$('#GeneralItemCategoryId').change(function(){
+$('#CompoundSubstrateCategoryId').change(function(){
 			$('.option-append').remove();
 			var option = $(this).val();
-			 var selected = $('#GeneralItemCategoryId').val();
+			var selected = $('#CompoundSubstrateCategoryId').val();
 			$.ajax({
-				url: serverPath + "/settings/ajax_categ/"+option,
+				url: serverPath + "settings/ajax_categ/"+option,
 				type: "get",
 				async: false,
 				dataType: "json",
@@ -18,7 +18,7 @@ $(function(){
 						} else {
 							$option = "<option class='option-append'  value="+value.ItemTypeHolder.id+">"+value.ItemTypeHolder.name+"</option>";
 						}
-					     $('#GeneralItemTypeId').append($option);
+					     $('#CompoundSubstrateTypeId').append($option);
 					});			
 				}
 			});			

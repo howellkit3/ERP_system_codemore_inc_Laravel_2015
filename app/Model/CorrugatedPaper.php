@@ -3,11 +3,11 @@ App::uses('AppModel', 'Model');
 App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
 App::uses('AuthComponent', 'Controller/Component');
 
-class CompoundSubstrate extends AppModel {
+class CorrugatedPaper extends AppModel {
 
 	public $useDbConfig = 'default';
 
-    public $name = 'CompoundSubstrate';
+    public $name = 'CorrugatedPaper';
 
     public $recursive = -1;
 
@@ -34,19 +34,19 @@ class CompoundSubstrate extends AppModel {
 			),
 		),
 
-		'layers' => array(
-			'Numeric'=> array(
-	            'rule' => 'Numeric',
-	            'message'=> 'Please enter a number of layer'
-	        ),
-	        	'notEmpty' => array(
-				'rule' => array('notEmpty'),
-			),
-		),
+		// 'layers' => array(
+		// 	'Numeric'=> array(
+	 //            'rule' => 'Numeric',
+	 //            'message'=> 'Please enter a number of layer'
+	 //        ),
+	 //        	'notEmpty' => array(
+		// 		'rule' => array('notEmpty'),
+		// 	),
+		// ),
 
 	);
 
-	public function bind($model = array('ItemCategoryHolder')){
+	public function bind($model = array('Group')){
 
 		$this->bindModel(array(
 			'belongsTo' => array(
@@ -65,13 +65,6 @@ class CompoundSubstrate extends AppModel {
 					'dependent' => false
 				),
 
-			),
-			'hasMany' => array(
-				'ItemGroupLayer' => array(
-					'className' => 'ItemGroupLayer',
-					'foreignKey' => 'foreign_key',
-					'conditions' => 'ItemGroupLayer.model = "CompoundSubstrate"'
-				),
 			)
 		
 		));

@@ -721,6 +721,8 @@ class PaginatorHelper extends AppHelper {
 	
 	public function numbers($options = array()) {
 
+		
+
 		if ($options === true) {
 			$options = array(
 				'before' => ' | ', 'after' => ' | ', 'first' => 'first', 'last' => 'last'
@@ -737,6 +739,8 @@ class PaginatorHelper extends AppHelper {
 		$params = (array)$this->params($options['model']) + array('page' => 1);
 		unset($options['model']);
 
+		$params['pageCount'] = !empty($params['pageCount']) ? $params['pageCount'] : 0;
+		
 		if ($params['pageCount'] <= 1) {
 			return '';
 		}

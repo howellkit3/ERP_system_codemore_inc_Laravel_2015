@@ -32,13 +32,13 @@ class GeneralItem extends AppModel {
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 			),
-		),
-
-		'measure' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-			),
 		)
+
+		// 'measure' => array(
+		// 	'notEmpty' => array(
+		// 		'rule' => array('notEmpty'),
+		// 	),
+		// )
 
 	);
 

@@ -1,8 +1,14 @@
 <?php echo $this->element('setting_option');?><br><br>
-<?php echo $this->Html->script('AddSubstrate'); ?>
-<?php echo $this->Html->script('AddGeneralItem'); ?>
-<?php 
 
+<?php echo $this->Html->script(array(
+									'AddSubstrate',
+									'AddGeneralItem',
+									'AddCompoundSubstrate',
+									'AddCorrugatedPaper',
+									'AddLayer',	
+									'ajax_pagination'
+							)); ?>
+<?php 
 $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : 'tab-general-items';
 ?>
 
@@ -108,13 +114,13 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 															</div>
 
 															<div class="form-group"> <br>
-															<label class="col-lg-2 control-label"><span style="color:red">*</span>Measure</label>
+															<label class="col-lg-2 control-label">Measure</label>
 																<div class="col-lg-8">
 																	<?php 
 																	echo $this->Form->input('GeneralItem.measure', array(
 																								'class' => 'form-control item_type',
 																	                            'label' => false,
-																	                            'required' => 'required',
+																	                             //'required' => 'required',
 																	                            'placeholder' => 'Name Category'));
 																	?>
 																</div>
@@ -151,7 +157,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 										</div>
 											<?php echo $this->Form->end(); ?>
 
-										<div class="row">
+										<div class="row" id="general-item-table">
 											<div class="col-lg-12">
 												<div class="main-box">
 												<header class="main-box-header clearfix">
@@ -178,13 +184,19 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 														</table>
 														<hr>
 
-														<ul class="pagination pull-right">
-															<?php 
-																echo $this->Paginator->prev('< ' . __('previous'), array('before' => 'a','tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'prev disabled'));
-																echo $this->Paginator->numbers(array('separator' => '','tag' => 'li'));
-																echo $this->Paginator->next(__('next') . ' >', array('tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'next disabled')); 
-															?>
-														</ul>
+														<div class="paging" id="general_items_pagination">
+												
+
+										                 <?php
+										               
+										                echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'GeneralItem','model' => 'GeneralItem'), null, array('class' => 'disable','model' => 'GeneralItem'));
+										                echo $this->Paginator->numbers(array('separator' => '','paginate' => 'GeneralItem'), array('paginate' => 'GeneralItem'));
+										                echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'GeneralItem','model' => 'GeneralItem'), null, array('class' => 'disable'));
+
+										                ?>
+
+										                </div>
+
 
 														</div>
 													</div>
@@ -262,7 +274,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																		'label' => false,
 																		'class' => 'form-control required categorylist',
 																		'empty' => '---Select Item Type---',
-																		//'required' => 'required'
+																		'required' => 'required'
 																		)); 
 																	?>
 																	</div>
@@ -341,7 +353,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 										</div>
 											<?php echo $this->Form->end(); ?>
 
-										<div class="row">
+										<div class="row" id="substrate-table">
 											<div class="col-lg-12">
 												<div class="main-box">
 												<header class="main-box-header clearfix">
@@ -371,13 +383,16 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 															</table>
 															<hr>
 
-															<ul class="pagination pull-right">
-																<?php 
-																	echo $this->Paginator->prev('< ' . __('previous'), array('before' => 'a','tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'prev disabled'));
-																	echo $this->Paginator->numbers(array('separator' => '','tag' => 'li'));
-																	echo $this->Paginator->next(__('next') . ' >', array('tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'next disabled')); 
-																?>
-															</ul>
+															<div class="paging" id="substrate_pagination">
+														 <?php
+										               
+										                echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'Substrate','model' => 'Substrate'), null, array('class' => 'disable','model' => 'Substrate'));
+										                echo $this->Paginator->numbers(array('separator' => '','paginate' => 'Substrate'), array('paginate' => 'Substrate'));
+										                echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'Substrate','model' => 'Substrate'), null, array('class' => 'disable'));
+
+										                ?>
+										                </div>
+
 														</div>
 													</div>
 												</div>
@@ -405,7 +420,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 									</div>
 
 										<?php
-											 echo $this->Form->create('GeneralItem',array('url'=>(array('controller' => 'settings','action' => 'item_group'))));
+											 echo $this->Form->create('CompoundSubstrate',array('url'=>(array('controller' => 'settings','action' =>'compound_substrate'))));
 										?>
 
 									<div class="row">
@@ -418,11 +433,11 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																<label class="col-lg-2 control-label"><span style="color:red">*</span>Name</label>
 																<div class="col-lg-8">
 																		<?php 
-																		echo $this->Form->input('GeneralItem.name', array(
-																									'class' => 'form-control item_type',
+																			echo $this->Form->input('CompoundSubstrate.name', array(
+																									'class' => 'form-control name',
 																		                            'label' => false,
 																		                            'required' => 'required',
-																		                            'placeholder' => 'Name General Item'));
+																		                            'placeholder' => 'Compound Substrate Name'));
 																		?>
 																</div>
 															</div>
@@ -431,13 +446,14 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																<label class="col-lg-2 control-label"><span style="color:red">*</span>Category</label>
 																<div class="col-lg-8">
 																	<input type="hidden" id="selected_type" value="">
-																	<?php echo $this->Form->input('GeneralItem.category_id', array(
-																	'options' => array($categoryData),
-																	'type' => 'select',
-																	'label' => false,
-																	'class' => 'form-control required categorylist',
-																	'empty' => '---Select Item Category---',
-																	'required' => 'required'
+																	<?php 
+																		echo $this->Form->input('CompoundSubstrate.category_id', array(
+																									'options' => array($categoryData),
+																									'type' => 'select',
+																									'label' => false,
+																									'class' => 'form-control required categorylist',
+																									'empty' => '---Select Item Category---',
+																									'required' => 'required'
 																	)); 
 																?>
 																</div>
@@ -447,13 +463,14 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																<label class="col-lg-2 control-label"><span style="color:red">*</span>Type</label>
 																<div class="col-lg-8">
 																	<input type="hidden" id="selected_type" value="">
-																	<?php echo $this->Form->input('GeneralItem.type_id', array(
-																	'options' => '',
-																	'type' => 'select',
-																	'label' => false,
-																	'class' => 'form-control required categorylist',
-																	'empty' => '---Select Item Type---',
-																	'required' => 'required'
+																	<?php 
+																		echo $this->Form->input('CompoundSubstrate.type_id', array(
+																									'options' => '',
+																									'type' => 'select',
+																									'label' => false,
+																									'class' => 'form-control required typelist',
+																									'empty' => '---Select Item Type---'
+																									//'required' => 'required'
 																	)); 
 																?>
 																</div>
@@ -463,15 +480,30 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																<label class="col-lg-2 control-label"><span style="color:red">*</span>Manufacturer</label>
 																<div class="col-lg-8">
 																	<input type="hidden" id="selected_type" value="">
-																	<?php echo $this->Form->input('GeneralItem.manufacturer_id', array(
-																	'options' => array($supplierData),
-																	'type' => 'select',
-																	'label' => false,
-																	'class' => 'form-control required categorylist',
-																	'empty' => '---Select Supplier---',
-																	'required' => 'required'
-																	)); 
+																	<?php
+																		 echo $this->Form->input('CompoundSubstrate.manufacturer_id', array(
+																									'options' => array($supplierData),
+																									'type' => 'select',
+																									'label' => false,
+																									'class' => 'form-control required supplier',
+																									'empty' => '---Select Supplier---',
+																									'required' => 'required'
+																									)); 
 																?>
+																</div>
+															</div>
+
+															<div class="form-group"> <br>
+																<label class="col-lg-2 control-label"><span style="color:red">*</span>Layer</label>
+																<div class="col-lg-8">
+																		<?php 
+																			echo $this->Form->input('CompoundSubstrate.layers', array(
+																									'class' => 'form-control layer',
+																		                            'label' => false,
+																		                            'rule' => 'numeric',
+																		                           	'style'=>'width: 150px',
+																		                            'placeholder' => 'Layer'));
+																		?>
 																</div>
 															</div>
 
@@ -479,10 +511,10 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																<label class="col-lg-2 control-label">Remarks</label>
 																<div class="col-lg-8">
 																	<?php 
-																	echo $this->Form->textarea('GeneralItem.remarks', array(
-																	'class' => 'form-control item_type',
-																	'label' => false,
-																	'placeholder' => 'Remarks'));
+																	echo $this->Form->textarea('CompoundSubstrate.remarks', array(
+																								'class' => 'form-control remark',
+																								'label' => false,
+																								'placeholder' => 'Remarks'));
 																	?>
 																</div>
 															</div>
@@ -491,7 +523,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																<div class="col-lg-2"></div>
 																	<div class="col-lg-8">
 
-																		<button type="submit" class="btn btn-primary pull-left">Submit General Item</button>&nbsp;
+																		<button type="submit" class="btn btn-primary pull-left">Submit Compound Substrate</button>&nbsp;
 
 																		<?php 
 																		echo $this->Html->link('Cancel', array('controller' => 'settings', 'action' => 'index'),array('class' =>'btn btn-default','escape' => false));
@@ -506,40 +538,42 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 									</div>
 										<?php echo $this->Form->end(); ?>
 
-									<div class="row">
+									<div class="row" id="compound-substrate-table">
 										<div class="col-lg-12">
 											<div class="main-box">
 											<header class="main-box-header clearfix">
-											<h1>General Item List</h1>
+											<h1>Compound Substrate List</h1>
 											</header>
 												<div class="main-box-body clearfix">
 													<div class="table-responsive">
 													<table class="table table-striped table-hover">
 													<thead>
 													<tr>
-													<th class="text-center"><a href="#"><span>General Item ID</span></a></th>
+													<th class="text-center"><a href="#"><span>Compound Substrate ID</span></a></th>
 													<th class="text-center"><a href="#"><span>Name</span></a></th>
 													<th class="text-center"><a href="#"><span>Category</span></a></th>
 													<th class="text-center"><a href="#"><span>Type</span></a></th>
 													<th class="text-center"><a href="#"><span>Manufacturer</span></a></th>
-													<th class="text-center"><a href="#"><span>Measure</span></a></th>
 													<th class="text-center"><a href="#"><span>Created</span></a></th>
 													<th>Action</th>
 													</tr>
 													</thead>
 
-													<?php echo $this->element('general_item_table'); ?>
+													<?php echo $this->element('compound_substrate_table'); ?>
 
 													</table>
 													<hr>
 
-													<ul class="pagination pull-right">
-														<?php 
-															echo $this->Paginator->prev('< ' . __('previous'), array('before' => 'a','tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'prev disabled'));
-															echo $this->Paginator->numbers(array('separator' => '','tag' => 'li'));
-															echo $this->Paginator->next(__('next') . ' >', array('tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'next disabled')); 
-														?>
-													</ul>
+													<div class="paging" id="compound_substrate_pagination">
+														 <?php
+										               
+										                echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'CompoundSubstrate','model' => 'CompoundSubstrate'), null, array('class' => 'disable','model' => 'CompoundSubstrate'));
+										                echo $this->Paginator->numbers(array('separator' => '','paginate' => 'CompoundSubstrate'), array('paginate' => 'CompoundSubstrate'));
+										                echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'CompoundSubstrate','model' => 'CompoundSubstrate'), null, array('class' => 'disable'));
+
+										                ?>
+										                </div>
+
 
 													</div>
 												</div>
@@ -568,7 +602,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 									</div>
 
 										<?php
-											 echo $this->Form->create('GeneralItem',array('url'=>(array('controller' => 'settings','action' => 'item_group'))));
+											 echo $this->Form->create('CorrugatedPaper',array('url'=>(array('controller' => 'settings','action' =>'corrugated_paper'))));
 										?>
 
 									<div class="row">
@@ -581,11 +615,11 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																<label class="col-lg-2 control-label"><span style="color:red">*</span>Name</label>
 																<div class="col-lg-8">
 																		<?php 
-																		echo $this->Form->input('GeneralItem.name', array(
+																		echo $this->Form->input('CorrugatedPaper.name', array(
 																									'class' => 'form-control item_type',
 																		                            'label' => false,
 																		                            'required' => 'required',
-																		                            'placeholder' => 'Name General Item'));
+																		                            'placeholder' => 'Corrugated Paper Name'));
 																		?>
 																</div>
 															</div>
@@ -594,7 +628,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																<label class="col-lg-2 control-label"><span style="color:red">*</span>Category</label>
 																<div class="col-lg-8">
 																	<input type="hidden" id="selected_type" value="">
-																	<?php echo $this->Form->input('GeneralItem.category_id', array(
+																	<?php echo $this->Form->input('CorrugatedPaper.category_id', array(
 																	'options' => array($categoryData),
 																	'type' => 'select',
 																	'label' => false,
@@ -610,7 +644,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																<label class="col-lg-2 control-label"><span style="color:red">*</span>Type</label>
 																<div class="col-lg-8">
 																	<input type="hidden" id="selected_type" value="">
-																	<?php echo $this->Form->input('GeneralItem.type_id', array(
+																	<?php echo $this->Form->input('CorrugatedPaper.type_id', array(
 																	'options' => '',
 																	'type' => 'select',
 																	'label' => false,
@@ -626,28 +660,30 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																<label class="col-lg-2 control-label"><span style="color:red">*</span>Manufacturer</label>
 																<div class="col-lg-8">
 																	<input type="hidden" id="selected_type" value="">
-																	<?php echo $this->Form->input('GeneralItem.manufacturer_id', array(
-																	'options' => array($supplierData),
-																	'type' => 'select',
-																	'label' => false,
-																	'class' => 'form-control required categorylist',
-																	'empty' => '---Select Supplier---',
-																	'required' => 'required'
-																	)); 
+																	<?php 
+																	echo $this->Form->input('CorrugatedPaper.manufacturer_id', array(
+																								'options' => array($supplierData),
+																								'type' => 'select',
+																								'label' => false,
+																								'class' => 'form-control required categorylist',
+																								'empty' => '---Select Supplier---',
+																								'required' => 'required'
+																								)); 
 																?>
 																</div>
 															</div>
 
 															<div class="form-group"> <br>
-															<label class="col-lg-2 control-label"><span style="color:red">*</span>Measure</label>
+																<label class="col-lg-2 control-label"><span style="color:red">*</span>Layer</label>
 																<div class="col-lg-8">
-																	<?php 
-																	echo $this->Form->input('GeneralItem.measure', array(
-																								'class' => 'form-control item_type',
-																	                            'label' => false,
-																	                            'required' => 'required',
-																	                            'placeholder' => 'Name Category'));
-																	?>
+																		<?php 
+																			echo $this->Form->input('CorrugatedPaper.layers', array(
+																									'class' => 'form-control layer',
+																		                            'label' => false,
+																		                            'rule' => 'numeric',
+																		                           	'style'=>'width: 150px',
+																		                            'placeholder' => 'Layer'));
+																		?>
 																</div>
 															</div>
 
@@ -655,10 +691,10 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																<label class="col-lg-2 control-label">Remarks</label>
 																<div class="col-lg-8">
 																	<?php 
-																	echo $this->Form->textarea('GeneralItem.remarks', array(
-																	'class' => 'form-control item_type',
-																	'label' => false,
-																	'placeholder' => 'Remarks'));
+																		echo $this->Form->textarea('CorrugatedPaper.remarks', array(
+																									'class' => 'form-control item_type',
+																									'label' => false,
+																									'placeholder' => 'Remarks'));
 																	?>
 																</div>
 															</div>
@@ -667,7 +703,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																<div class="col-lg-2"></div>
 																	<div class="col-lg-8">
 
-																		<button type="submit" class="btn btn-primary pull-left">Submit General Item</button>&nbsp;
+																		<button type="submit" class="btn btn-primary pull-left">Submit Corrugated Paper</button>&nbsp;
 
 																		<?php 
 																		echo $this->Html->link('Cancel', array('controller' => 'settings', 'action' => 'index'),array('class' =>'btn btn-default','escape' => false));
@@ -686,36 +722,36 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 										<div class="col-lg-12">
 											<div class="main-box">
 											<header class="main-box-header clearfix">
-											<h1>General Item List</h1>
+											<h1>Corrugated PaperList</h1>
 											</header>
 												<div class="main-box-body clearfix">
 													<div class="table-responsive">
 													<table class="table table-striped table-hover">
 													<thead>
 													<tr>
-													<th class="text-center"><a href="#"><span>General Item ID</span></a></th>
+													<th class="text-center"><a href="#"><span>Corrugated Paper ID</span></a></th>
 													<th class="text-center"><a href="#"><span>Name</span></a></th>
 													<th class="text-center"><a href="#"><span>Category</span></a></th>
 													<th class="text-center"><a href="#"><span>Type</span></a></th>
 													<th class="text-center"><a href="#"><span>Manufacturer</span></a></th>
-													<th class="text-center"><a href="#"><span>Measure</span></a></th>
 													<th class="text-center"><a href="#"><span>Created</span></a></th>
 													<th>Action</th>
 													</tr>
 													</thead>
 
-													<?php echo $this->element('general_item_table'); ?>
+													<?php echo $this->element('corrugated_paper_table'); ?>
 
 													</table>
 													<hr>
+													  <div class="paging" id="">
+														<?php
+											               
+											                echo $this->Paginator->prev('< ' . __('previous'), null , null, array('class' => 'disable'));
+											                echo $this->Paginator->numbers(array('separator' => '',null, array('paginate' => 'ItemTypeHolder')));
+											                echo $this->Paginator->next(__('next') . ' >',null, null, array('class' => 'disable'));
 
-													<ul class="pagination pull-right">
-														<?php 
-															echo $this->Paginator->prev('< ' . __('previous'), array('before' => 'a','tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'prev disabled'));
-															echo $this->Paginator->numbers(array('separator' => '','tag' => 'li'));
-															echo $this->Paginator->next(__('next') . ' >', array('tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'next disabled')); 
-														?>
-													</ul>
+											                ?>
+										                </div>
 
 													</div>
 												</div>
