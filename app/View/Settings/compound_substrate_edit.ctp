@@ -1,6 +1,8 @@
 <?php echo $this->element('setting_option');?><br><br>
-<?php echo $this->Html->script('compound_substrate'); ?>
-
+<?php echo $this->Html->script(array(
+									'jquery',
+									'compound_substrate'
+							)); ?>
 <div class="row">
 	<div class="col-lg-12">
 		

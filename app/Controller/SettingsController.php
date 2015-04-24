@@ -722,7 +722,7 @@ class SettingsController extends AppController
         }
 
           //Corrugated Paper
-         $this->CorrugatedPaper->bind(array('ItemCategoryHolder', 'ItemTypeHolder', 'Supplier'));
+         $this->CorrugatedPaper->bind(array('ItemCategoryHolder', 'ItemTypeHolder', 'Supplier', 'ItemGroupLayer'));
 
         if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'CorrugatedPaper' ) {
             
@@ -1104,7 +1104,7 @@ class SettingsController extends AppController
 
         $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
 
-        $this->CorrugatedPaper->bind(array('ItemCategoryHolder','ItemTypeHolder', 'Supplier'));
+        $this->CorrugatedPaper->bind(array('ItemCategoryHolder','ItemTypeHolder', 'Supplier', 'ItemGroupLayer'));
 
         $categoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name'),
                                                                 'conditions' => array('ItemCategoryHolder.category_type' => '1')));
@@ -1143,7 +1143,7 @@ class SettingsController extends AppController
                 $this->request->data = $post;
             }
 
-            $this->set(compact( 'categoryData','typeData','supplierData' ));
+            $this->set(compact( 'categoryData','typeData','supplierData', 'itemGroupLayerData' ));
     }
 
      public function deleteCorrugatedPaper($id) {
@@ -1163,6 +1163,40 @@ class SettingsController extends AppController
 
         return $this->redirect(array(' controller' => 'settings', 'action' => 'item_group','tab' => 'tab-corrugated_papers'));
     }
+
+    public function view_corrugated_paper($id){
+
+        // $this->loadModel('ItemCategoryHolder');
+
+        // $this->loadModel('ItemTypeHolder');
+
+        // $this->loadModel('CorrugatedPaper');
+
+        // $this->loadModel('ItemGroupLayer');
+
+        // $this->Product->recursive = 1;
+
+        // $product = $this->request->data =  $this->Product->findById($id);
+
+        // //$this->request->data['CorrugatedPaper'] = $this->CorrugatedPaper->read(null,$product['Product']['company_id'])['Company'];
+
+        // $this->CorrugatedPaper->bind(array('ItemCategoryHolder', 'ItemTypeHolder', 'Supplier', 'ItemGroupLayer'));
+
+        // if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'CorrugatedPaper' ) {
+            
+        //     $this->paginate['CorrugatedPaper'] = array(
+        //         'conditions' =>  array(),
+        //         'limit' => 10,
+        //     );
+
+        //     $corrugatedPaperData = $this->paginate('CorrugatedPaper');
+
+        // }
+
+        // $this->set(compact('corrugatedPaperData'));
+
+    }
+
 
     public function ajax_categ($itemId = false){
 

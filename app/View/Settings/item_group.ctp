@@ -1,6 +1,5 @@
 <?php echo $this->element('setting_option');?><br><br>
 <?php echo $this->Html->script(array(
-									'jquery',
 									'AddSubstrate',
 									'AddGeneralItem',
 									'AddCompoundSubstrate',
@@ -681,11 +680,39 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																<div class="col-lg-8">
 																		<?php 
 																			echo $this->Form->input('CorrugatedPaper.layers', array(
-																									'class' => 'form-control layer',
+																									'class' => 'form-control brust',
 																		                            'label' => false,
 																		                            'rule' => 'numeric',
 																		                           	'style'=>'width: 150px',
 																		                            'placeholder' => 'Layer'));
+																		?>
+																</div>
+															</div>
+
+															<div class="form-group"> <br>
+																<label class="col-lg-2 control-label">Brust</label>
+																<div class="col-lg-8">
+																		<?php 
+																			echo $this->Form->input('CorrugatedPaper.brust', array(
+																									'class' => 'form-control fct',
+																		                            'label' => false,
+																		                            'rule' => 'numeric',
+																		                           	'style'=>'width: 150px',
+																		                            'placeholder' => 'Brust'));
+																		?>
+																</div>
+															</div>
+
+															<div class="form-group"> <br>
+																<label class="col-lg-2 control-label">FCT</label>
+																<div class="col-lg-8">
+																		<?php 
+																			echo $this->Form->input('CorrugatedPaper.fct', array(
+																									'class' => 'form-control layer',
+																		                            'label' => false,
+																		                            'rule' => 'numeric',
+																		                           	'style'=>'width: 150px',
+																		                            'placeholder' => 'FCT'));
 																		?>
 																</div>
 															</div>
