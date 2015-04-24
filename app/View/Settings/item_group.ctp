@@ -1,11 +1,11 @@
 <?php echo $this->element('setting_option');?><br><br>
-
 <?php echo $this->Html->script(array(
 									'AddSubstrate',
 									'AddGeneralItem',
 									'AddCompoundSubstrate',
 									'AddCorrugatedPaper',
-									'AddLayer',	
+									'AddLayerCompoundSubstrate',
+									'AddLayerCorrugatedPaper',	
 									'ajax_pagination'
 							)); ?>
 <?php 
@@ -469,8 +469,8 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																									'type' => 'select',
 																									'label' => false,
 																									'class' => 'form-control required typelist',
-																									'empty' => '---Select Item Type---'
-																									//'required' => 'required'
+																									'empty' => '---Select Item Type---',
+																									'required' => 'required'
 																	)); 
 																?>
 																</div>

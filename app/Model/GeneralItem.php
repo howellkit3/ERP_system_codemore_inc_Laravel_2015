@@ -34,12 +34,6 @@ class GeneralItem extends AppModel {
 			),
 		)
 
-		// 'measure' => array(
-		// 	'notEmpty' => array(
-		// 		'rule' => array('notEmpty'),
-		// 	),
-		// )
-
 	);
 
 	public function bind($model = array('Group')){

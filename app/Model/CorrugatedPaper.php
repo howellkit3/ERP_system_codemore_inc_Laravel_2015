@@ -34,19 +34,19 @@ class CorrugatedPaper extends AppModel {
 			),
 		),
 
-		// 'layers' => array(
-		// 	'Numeric'=> array(
-	 //            'rule' => 'Numeric',
-	 //            'message'=> 'Please enter a number of layer'
-	 //        ),
-	 //        	'notEmpty' => array(
-		// 		'rule' => array('notEmpty'),
-		// 	),
-		// ),
+		'layers' => array(
+			'Numeric'=> array(
+	            'rule' => 'Numeric',
+	            'message'=> 'Please enter a number of layer'
+	        ),
+	        	'notEmpty' => array(
+				'rule' => array('notEmpty'),
+			),
+		),
 
 	);
 
-	public function bind($model = array('Group')){
+	public function bind($model = array('ItemCategoryHolder')){
 
 		$this->bindModel(array(
 			'belongsTo' => array(
@@ -65,6 +65,13 @@ class CorrugatedPaper extends AppModel {
 					'dependent' => false
 				),
 
+			),
+			'hasMany' => array(
+				'ItemGroupLayer' => array(
+					'className' => 'ItemGroupLayer',
+					'foreignKey' => 'foreign_key',
+					'conditions' => 'ItemGroupLayer.model = "CorrugatedPaper"'
+				),
 			)
 		
 		));

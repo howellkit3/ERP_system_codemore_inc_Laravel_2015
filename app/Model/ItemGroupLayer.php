@@ -23,5 +23,21 @@ class ItemGroupLayer extends AppModel {
         )
     
     );
+
+	 public function bind($model = array('Group')){
+
+		$this->bindModel(array(
+			
+			'belongsTo' => array(
+				'CorrugatedPaper' => array(
+					'className' => 'CorrugatedPaper',
+					'foreignKey' => 'foreign_key',
+					'dependent' => true
+				),
+			)
+		));
+
+		$this->contain($model);
+	}
 	
 }

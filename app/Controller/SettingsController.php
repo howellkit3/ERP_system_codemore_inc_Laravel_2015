@@ -3,7 +3,7 @@ App::uses('AppController', 'Controller');
 
 class SettingsController extends AppController
 {
-    public $uses = array('ItemCategoryHolder','ItemTypeHolder','GeneralItem', 'Substrate' , 'CompoundSubstrate', 'CorrugatedPaper');
+    public $uses = array('ItemCategoryHolder','ItemTypeHolder');
 
     public $useDbConfig = array('default');
 
@@ -749,7 +749,7 @@ class SettingsController extends AppController
 
                 $this->GeneralItem->save($generalItemDetails);
 
-                $this->Session->setFlash(__('Add General Item Complete.'));
+                $this->Session->setFlash(__('Adding General Item Complete.'));
 
                 $this->redirect(
 
@@ -851,7 +851,7 @@ class SettingsController extends AppController
 
                     $this->Substrate->save($substrateDetails);
            
-                    $this->Session->setFlash(__('Add Substrate Complete.'));
+                    $this->Session->setFlash(__('Adding Substrate Complete.'));
 
                     return $this->redirect(array('action' => 'item_group','tab' => 'tab-substrates'));
                 }
@@ -935,6 +935,8 @@ class SettingsController extends AppController
 
         $this->loadModel('CompoundSubstrate');
 
+        $this->loadModel('ItemGroupLayer');
+
         $this->CompoundSubstrate->bind(array('ItemGroupLayer'));
         $compoundSubstrateData = $this->CompoundSubstrate->find('all',  array('order' => 'CompoundSubstrate.id DESC','limit'=>4, 'offset'=>3));
 
@@ -966,7 +968,7 @@ class SettingsController extends AppController
                     }
 
            
-                    $this->Session->setFlash(__('Add Compound Substrate Complete.'));
+                    $this->Session->setFlash(__('Adding Compound Substrate Complete.'));
 
                     return $this->redirect(array('action' => 'item_group','tab' => 'tab-compound_substrates'));
                 }
@@ -1049,6 +1051,8 @@ class SettingsController extends AppController
 
         $this->loadModel('CorrugatedPaper');
 
+        $this->loadModel('ItemGroupLayer');
+
         $corrugatedPaperData = $this->CorrugatedPaper->find('all',  array('order' => 'CorrugatedPaper.id DESC','limit'=>4, 'offset'=>3));
 
         $userData = $this->Session->read('Auth');
@@ -1065,15 +1069,31 @@ class SettingsController extends AppController
                     $corrugatedDetails['CorrugatedPaper']['modified_by'] = $userData['User']['id'];
 
                     $this->CorrugatedPaper->save($corrugatedDetails);
+                    $dataHolder = array();
+
+                    for($groupLayerCount=0; $groupLayerCount < count($this->request->data['ItemGroupLayer']['no']); $groupLayerCount++) {
+
+                    $this->ItemGroupLayer->create();
+
+                    $dataHolder['ItemGroupLayer']['foreign_key'] = $this->CorrugatedPaper->id;
+                    $dataHolder['ItemGroupLayer']['no'] = $this->request->data['ItemGroupLayer']['no'][$groupLayerCount];
+                    $dataHolder['ItemGroupLayer']['substrate'] = $this->request->data['ItemGroupLayer']['substrate'][$groupLayerCount];
+                    $dataHolder['ItemGroupLayer']['model'] = 'CorrugatedPaper';
+                    $this->ItemGroupLayer->save($dataHolder);
+
+                    }
            
-                    $this->Session->setFlash(__('Add Corrugated Paper Complete.'));
+                    $this->Session->setFlash(__('Adding Corrugated Paper Complete.'));
 
                     return $this->redirect(array('action' => 'item_group','tab' => 'tab-corrugated_papers'));
-                } 
             }
+        }
+
 
             $this->set(compact('corrugatedPaperData'));    
-    } 
+        
+    }
+
 
      public function corrugated_paper_edit($id = null) {
 
