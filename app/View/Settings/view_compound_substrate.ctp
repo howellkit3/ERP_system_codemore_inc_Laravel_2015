@@ -71,14 +71,14 @@
 									<div class="form-group">
 										<label class="col-lg-2 control-label">Type</label>
 										<div class="col-lg-8">
-											<?php echo $this->Form->input('ItemTypeHolder.id',array('id' => 'selected_type')); ?>
-												<?php echo $this->Form->input('CompoundSubstrate.type_id', array(
-														'options' => array($categoryData),
-														'class' => 'form-control item_type',
-							                            'label' => false,
-							                            'disabled' => true
-												)); 
-												?>
+											<?php 
+												echo $this->Form->input('CompoundSubstrate.type_id', array(
+																			'options' => array($typeData),
+																			'class' => 'form-control item_type',
+												                            'label' => false,
+												                            'disabled' => true
+																		)); 
+											?>
 										</div>
 									</div>
 

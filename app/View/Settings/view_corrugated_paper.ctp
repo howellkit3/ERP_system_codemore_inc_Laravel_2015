@@ -55,7 +55,7 @@
 									</div>
 
 									<div class="form-group">
-										<label class="col-lg-2 control-label"><span style="color:red">*</span>Category</label>
+										<label class="col-lg-2 control-label">Category</label>
 										<div class="col-lg-8">
 											<?php 
 												echo $this->Form->input('CorrugatedPaper.category_id', array(
@@ -69,16 +69,16 @@
 									</div>
 
 									<div class="form-group">
-										<label class="col-lg-2 control-label"><span style="color:red">*</span>Type</label>
+										<label class="col-lg-2 control-label">Type</label>
 										<div class="col-lg-8">
-											<?php echo $this->Form->input('ItemTypeHolder.id',array('id' => 'selected_type')); ?>
-												<?php echo $this->Form->input('CorrugatedPaper.type_id', array(
-														'options' => array($categoryData),
-														'class' => 'form-control item_type',
-							                            'label' => false,
-							                            'disabled' => true
-												)); 
-												?>
+											<?php 
+												echo $this->Form->input('CorrugatedPaper.type_id', array(
+																			'options' => array($typeData),
+																			'class' => 'form-control item_type',
+												                            'label' => false,
+												                            'disabled' => true
+																		)); 
+											?>
 										</div>
 									</div>
 
