@@ -135,7 +135,7 @@
 										<label class="col-lg-2 control-label">Remarks</label>
 										<div class="col-lg-8">
 											<?php 
-	                                            echo $this->Form->input('CorrugatedPaper.remarks', array(
+	                                            echo $this->Form->input('CorrugatedPaper.remark', array(
                         								'class' => 'form-control item_type',
 	                                                    'label' => false,
 	                                                    'placeholder' => 'Remarks'));
