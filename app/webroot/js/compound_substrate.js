@@ -11,12 +11,9 @@ $(function(){
 		type: "get",
 		dataType: "json",
 		success: function(data) {
-				console.log(data);
 
 					$.each(data, function(key, value) {
-						
-				console.log(value.ItemTypeHolder.id);
-				console.log(selected);
+
 						if (value.ItemTypeHolder.id == selected) {
 							$option = "<option class='option-append' selected value="+value.ItemTypeHolder.id+">"+value.ItemTypeHolder.name+"</option>";	
 						} else {

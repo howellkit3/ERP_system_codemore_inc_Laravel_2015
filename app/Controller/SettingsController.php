@@ -955,19 +955,8 @@ class SettingsController extends AppController
 
                     $this->CompoundSubstrate->save($compoundSubstrateDetails);
 
-                    $dataHolder = array();
-                    for($groupLayerCount=0; $groupLayerCount < count($this->request->data['ItemGroupLayer']['no']); $groupLayerCount++) {
-
-                        $this->CompoundSubstrate->ItemGroupLayer->create();
-
-                        $dataHolder['ItemGroupLayer']['foreign_key'] = $this->CompoundSubstrate->id;
-                        $dataHolder['ItemGroupLayer']['no'] = $this->request->data['ItemGroupLayer']['no'][$groupLayerCount];
-                        $dataHolder['ItemGroupLayer']['substrate'] = $this->request->data['ItemGroupLayer']['substrate'][$groupLayerCount];
-                        $dataHolder['ItemGroupLayer']['model'] = 'CompoundSubstrate';
-                        $this->CompoundSubstrate->ItemGroupLayer->save($dataHolder);
-                    }
-
-           
+                    $this->CompoundSubstrate->save_substrate($this->request->data,$this->CompoundSubstrate->id); 
+                    
                     $this->Session->setFlash(__('Adding Compound Substrate Complete.'));
 
                     return $this->redirect(array('action' => 'item_group','tab' => 'tab-compound_substrates'));
@@ -977,7 +966,6 @@ class SettingsController extends AppController
             $this->set(compact('compoundSubstrateData'));
     
     }
-
     public function compound_substrate_edit($id = null) {
 
         $this->loadModel('Supplier');
@@ -986,7 +974,7 @@ class SettingsController extends AppController
 
         $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
 
-        $this->CompoundSubstrate->bind(array('ItemCategoryHolder','ItemTypeHolder', 'Supplier'));
+        $this->CompoundSubstrate->bind(array('ItemCategoryHolder','ItemTypeHolder', 'Supplier','ItemGroupLayer'));
 
         $categoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name'),
                                                                 'conditions' => array('ItemCategoryHolder.category_type' => '1')));
@@ -995,6 +983,7 @@ class SettingsController extends AppController
                                                                 'conditions' => array('ItemCategoryHolder.category_type' => '1')));
 
         $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.id DESC'));
+
 
 
             if (!$id) {
@@ -1010,9 +999,11 @@ class SettingsController extends AppController
             if ($this->request->is(array('post', 'put'))) {
                 $this->CompoundSubstrate->id = $id;
 
+
                 if ($this->CompoundSubstrate->save($this->request->data)) {
 
-                    $this->CompoundSubstrate->save($this->request->data);
+                    //save substrate
+                    $this->CompoundSubstrate->save_substrate($this->request->data,$this->CompoundSubstrate->id); 
 
                     $this->Session->setFlash(__('Compound Substrate has been updated.'));
 
