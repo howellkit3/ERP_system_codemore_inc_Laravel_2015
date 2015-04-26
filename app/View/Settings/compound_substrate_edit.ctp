@@ -1,7 +1,8 @@
 <?php echo $this->element('setting_option');?><br><br>
 <?php echo $this->Html->script(array(
 									'jquery',
-									'compound_substrate'
+									'compound_substrate',
+									'AddLayerCompoundSubstrate'
 							)); ?>
 <div class="row">
 	<div class="col-lg-12">
@@ -88,6 +89,50 @@
 											?>
 										</div>
 									</div>
+
+
+									<div class="form-group"> <br>
+																<label class="col-lg-2 control-label"><span style="color:red">*</span>Layer</label>
+																<div class="col-lg-8">
+																		<?php 
+																			echo $this->Form->input('CompoundSubstrate.layers', array(
+																									'class' => 'form-control layer edit',
+																		                            'label' => false,
+																		                            'rule' => 'numeric',
+																		                           	'style'=>'width: 150px',
+																		                            'placeholder' => 'Layer'));
+																		?>
+																	</div>
+									</div>
+
+									<!--layers -->
+							<?php if (!empty($this->request->data['CompoundSubstrate']['layers'])) : ?>	
+
+								<?php $countLayers = 1; foreach($this->request->data['ItemGroupLayer'] as $key => $layers) : ?>
+							<div class="form-group substrate-layers">
+							<label class="col-lg-2 control-label">
+							<span style="color:red">*</span>Substrate <?php echo $countLayers ?></label>
+							<div class="col-lg-8">
+							<input type="hidden" maxlength="120"  class="form-control layer" name="data[ItemGroupLayer][no][]" value="<?php echo $key; ?>"></div>
+							<div class="col-lg-8">
+							<input type="text" maxlength="120" required = "required" placeholder = "Substrate name" class="form-control layer" name="data[ItemGroupLayer][substrate][<?php echo $key ?>][substrate]" value="<?php echo $layers['substrate']?>">
+								<input type="hidden" required = "required" placeholder = "Substrate name" class="form-control layer" name="data[ItemGroupLayer][substrate][<?php echo $key ?>][id]" value="<?php echo $layers['id']?>">
+								<input type="hidden" class="form-control layer remove-field" name="data[ItemGroupLayer][substrate][<?php echo $key ?>][remove]" value="false">
+							</div>
+
+							  <div class="form-group">
+                                            <label for="inputPassword1" class="col-lg-2 control-label"></label>
+                                            <div class="col-lg-1">
+                                             
+                                                <button type="button" class="remove-field remove-layers btn btn-danger" ><i class="fa fa-minus"></i> </button>
+                                            </div>
+                              </div>
+
+
+							</div>
+								<?php $countLayers++; endforeach; ?>
+
+							<?php endif; ?>
 
 									<div class="form-group">
 										<label class="col-lg-2 control-label">Remarks</label>

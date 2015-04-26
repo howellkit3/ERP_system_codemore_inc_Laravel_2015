@@ -79,4 +79,51 @@ class CompoundSubstrate extends AppModel {
 		$this->contain($model);
 	}
 
+	public function save_substrate($data,$foreignKey = null,$model = null) {
+
+		if (!empty($data)) {
+
+
+			pr($data);
+
+			 $dataHolder = array();
+
+
+       		 for($groupLayerCount=0; $groupLayerCount < count($data['ItemGroupLayer']['no']); $groupLayerCount++) {
+
+				$this->ItemGroupLayer->create();
+
+				$dataHolder['ItemGroupLayer']['foreign_key'] = $this->id;
+				$dataHolder['ItemGroupLayer']['no'] = $data['ItemGroupLayer']['no'][$groupLayerCount];
+
+				$dataHolder['ItemGroupLayer']['substrate'] = $data['ItemGroupLayer']['substrate'][$groupLayerCount];
+				
+				$dataHolder['ItemGroupLayer']['id']  = '';
+				if (is_array($dataHolder['ItemGroupLayer']['substrate'])) {
+					echo "true";
+					$dataHolder['ItemGroupLayer']['substrate'] = $data['ItemGroupLayer']['substrate'][$groupLayerCount]['substrate'];
+					$dataHolder['ItemGroupLayer']['id'] = !empty($data['ItemGroupLayer']['substrate'][$groupLayerCount]['id']) ? $data['ItemGroupLayer']['substrate'][$groupLayerCount]['id'] : '';
+				
+				}
+
+				$dataHolder['ItemGroupLayer']['model'] = 'CompoundSubstrate';
+				$this->bind('ItemGroupLayer');
+
+
+				
+
+				if (!empty($data['ItemGroupLayer']['substrate'][$groupLayerCount]['remove']) &&  $data['ItemGroupLayer']['substrate'][$groupLayerCount]['remove'] != 'false') {
+					
+					$this->ItemGroupLayer->delete($data['ItemGroupLayer']['substrate'][$groupLayerCount]['id']);
+
+				} else {
+					
+					$this->ItemGroupLayer->save($dataHolder);
+				}
+				
+			}
+
+		}	
+	}
+
 }
