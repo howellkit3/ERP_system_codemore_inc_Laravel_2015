@@ -449,9 +449,7 @@ class SettingsController extends AppController
         }
 
         return $this->redirect(array('action' => 'category','tab' => 'tab-type'));
-    }
-
-    
+    }    
          
     public function packaging() {
 
@@ -830,6 +828,33 @@ class SettingsController extends AppController
             $this->set(compact('generalItemData', 'categoryData' , 'typeData', 'supplierData' ));
     }
 
+    public function view_general_item($id){
+
+        $this->loadModel('Supplier');
+
+        $this->loadModel('GeneralItem');
+
+        $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
+
+        $this->GeneralItem->bind(array('ItemCategoryHolder','ItemTypeHolder', 'Supplier'));
+
+        $categoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name'),
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+     
+        $typeData = $this->ItemTypeHolder->find('list', array('fields' => array('id', 'name'),
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+
+        $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.id DESC'));
+
+        $post = $this->GeneralItem->findById($id);
+
+            if (!$this->request->data) {
+                $this->request->data = $post;
+            }
+
+            $this->set(compact( 'categoryData' , 'typeData', 'supplierData' ));
+    }
+
     public function substrate() {
 
         $this->loadModel('Substrate');
@@ -930,6 +955,34 @@ class SettingsController extends AppController
 
         return $this->redirect(array(' controller' => 'settings', 'action' => 'item_group','tab' => 'tab-substrate'));
     } 
+
+
+    public function view_substrate($id){
+
+        $this->loadModel('Supplier');
+
+        $this->loadModel('Substrate');
+
+        $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
+
+        $this->Substrate->bind(array('ItemCategoryHolder','ItemTypeHolder', 'Supplier'));
+
+        $categoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name'),
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+     
+        $typeData = $this->ItemTypeHolder->find('list', array('fields' => array('id', 'name'),
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+
+        $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.id DESC'));
+
+        $post = $this->Substrate->findById($id);
+
+            if (!$this->request->data) {
+                $this->request->data = $post;
+            }
+
+            $this->set(compact( 'categoryData' , 'typeData', 'supplierData' ));
+    }
 
     public function compound_substrate() {
 
@@ -1046,6 +1099,34 @@ class SettingsController extends AppController
 
         return $this->redirect(array(' controller' => 'settings', 'action' => 'item_group','tab' => 'tab-compound_substrate'));
     }
+
+    public function view_compound_substrate($id){
+
+        $this->loadModel('Supplier');
+
+        $this->loadModel('CompoundSubstrate');
+
+        $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
+
+        $this->CompoundSubstrate->bind(array('ItemCategoryHolder','ItemTypeHolder', 'Supplier', 'ItemGroupLayer'));
+
+        $categoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name'),
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+     
+        $typeData = $this->ItemTypeHolder->find('list', array('fields' => array('id', 'name'),
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+
+        $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.id DESC'));
+
+        $post = $this->CompoundSubstrate->findById($id);
+
+            if (!$this->request->data) {
+                $this->request->data = $post;
+            }
+
+            $this->set(compact( 'categoryData' , 'typeData', 'supplierData' ));
+    }
+
 
     public function corrugated_paper() {
 
@@ -1192,88 +1273,193 @@ class SettingsController extends AppController
             $this->set(compact( 'categoryData','typeData' , 'supplierData'));
     }
 
-    public function view_compound_substrate($id){
+    public function process() {
 
-        $this->loadModel('Supplier');
+        $this->loadModel('Process');
 
-        $this->loadModel('CompoundSubstrate');
+        $userData = $this->Session->read('Auth');
 
-        $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
+        $limit = 5;
 
-        $this->CompoundSubstrate->bind(array('ItemCategoryHolder','ItemTypeHolder', 'Supplier', 'ItemGroupLayer'));
+        $conditions = array();
 
-        $categoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name'),
-                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
-     
-        $typeData = $this->ItemTypeHolder->find('list', array('fields' => array('id', 'name'),
-                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+        $this->paginate = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            'fields' => array('id', 'name','created'),
+            'order' => 'Process.id DESC',
+        );
 
-        $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.id DESC'));
+        $processData = $this->paginate('Process');
 
-        $post = $this->CompoundSubstrate->findById($id);
+            if ($this->request->is('post')) {
+                
+                if (!empty($this->request->data)) {
+                   
+                    $this->Process->create();
 
-            if (!$this->request->data) {
-                $this->request->data = $post;
+                    $this->id = $this->Process->saveProcess($this->request->data['Process'], $userData['User']['id']);
+           
+                    $this->Session->setFlash(__('Add Process Complete.'));
+
+                    $this->redirect(
+                        array('controller' => 'settings', 'action' => 'process')
+                    );
+                }
             }
 
-            $this->set(compact( 'categoryData' , 'typeData', 'supplierData' ));
+        $this->set(compact('processData'));
     }
 
-    public function view_substrate($id){
+     public function process_edit($id = null) {
 
-        $this->loadModel('Supplier');
+        $this->loadModel('Process');
 
-        $this->loadModel('Substrate');
-
-        $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
-
-        $this->Substrate->bind(array('ItemCategoryHolder','ItemTypeHolder', 'Supplier'));
-
-        $categoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name'),
-                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
-     
-        $typeData = $this->ItemTypeHolder->find('list', array('fields' => array('id', 'name'),
-                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
-
-        $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.id DESC'));
-
-        $post = $this->Substrate->findById($id);
-
-            if (!$this->request->data) {
-                $this->request->data = $post;
+            if (!$id) {
+                throw new NotFoundException(__('Invalid post'));
             }
 
-            $this->set(compact( 'categoryData' , 'typeData', 'supplierData' ));
-    }
-
-    public function view_general_item($id){
-
-        $this->loadModel('Supplier');
-
-        $this->loadModel('GeneralItem');
-
-        $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
-
-        $this->GeneralItem->bind(array('ItemCategoryHolder','ItemTypeHolder', 'Supplier'));
-
-        $categoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name'),
-                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
-     
-        $typeData = $this->ItemTypeHolder->find('list', array('fields' => array('id', 'name'),
-                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
-
-        $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.id DESC'));
-
-        $post = $this->GeneralItem->findById($id);
-
-            if (!$this->request->data) {
-                $this->request->data = $post;
+            $post = $this->Process->findById($id);
+            if (!$post) {
+                throw new NotFoundException(__('Invalid post'));
             }
 
-            $this->set(compact( 'categoryData' , 'typeData', 'supplierData' ));
+            if ($this->request->is(array('post', 'put'))) {
+                $this->Process->id = $id;
+
+                if ($this->Process->save($this->request->data)) {
+
+                    $this->Process->save($this->request->data);
+
+                    $this->Session->setFlash(__('Process has been updated.'));
+
+                    return $this->redirect(array('action' => 'process'));
+                }
+
+                $this->Session->setFlash(__('Unable to update your post.'));
+            }
+
+            if (!$this->request->data) {
+
+                $this->request->data = $post;
+            }
     }
 
+    public function deleteProcess($id) {
 
+        $this->loadModel('Process');
+      
+        if ($this->Process->delete($id)) {
+
+            $this->Session->setFlash(
+
+                __('Successfully deleted.', h($id))
+            );
+
+        } else {
+
+            $this->Session->setFlash(
+
+                __('The post cannot be deleted.', h($id))
+            );
+        }
+
+        return $this->redirect(array('action' => 'process'));
+    }
+
+     public function unit() {
+
+        $this->loadModel('Unit');
+
+        $userData = $this->Session->read('Auth');
+
+        $limit = 5;
+
+        $conditions = array();
+
+        $this->paginate = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            'fields' => array('id', 'unit','created'),
+            'order' => 'Unit.id DESC',
+        );
+
+        $unitData = $this->paginate('Unit');
+
+            if ($this->request->is('post')) {
+                
+                if (!empty($this->request->data)) {
+                   
+                    $this->Unit->create();
+
+                    $this->id = $this->Unit->saveUnit($this->request->data['Unit'], $userData['User']['id']);
+           
+                    $this->Session->setFlash(__('Add Unit Complete.'));
+
+                    $this->redirect(
+                        array('controller' => 'settings', 'action' => 'unit')
+                    );
+                }
+            }
+
+        $this->set(compact('unitData'));
+    }
+
+    public function unit_edit($id = null) {
+
+        $this->loadModel('Unit');
+
+            if (!$id) {
+                throw new NotFoundException(__('Invalid post'));
+            }
+
+            $post = $this->Unit->findById($id);
+            if (!$post) {
+                throw new NotFoundException(__('Invalid post'));
+            }
+
+            if ($this->request->is(array('post', 'put'))) {
+                $this->Unit->id = $id;
+
+                if ($this->Unit->save($this->request->data)) {
+
+                    $this->Unit->save($this->request->data);
+
+                    $this->Session->setFlash(__('Unit has been updated.'));
+
+                    return $this->redirect(array('action' => 'unit'));
+                }
+
+                $this->Session->setFlash(__('Unable to update your post.'));
+            }
+
+            if (!$this->request->data) {
+
+                $this->request->data = $post;
+            }
+    }
+
+    public function deleteUnit($id) {
+
+        $this->loadModel('Unit');
+      
+        if ($this->Unit->delete($id)) {
+
+            $this->Session->setFlash(
+
+                __('Successfully deleted.', h($id))
+            );
+
+        } else {
+
+            $this->Session->setFlash(
+
+                __('The post cannot be deleted.', h($id))
+            );
+        }
+
+        return $this->redirect(array('action' => 'unit'));
+    }
 
     public function ajax_categ($itemId = false){
 
