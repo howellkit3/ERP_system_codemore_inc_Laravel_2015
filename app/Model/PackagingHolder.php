@@ -29,7 +29,7 @@ class PackagingHolder extends AppModel {
     
     );
 
-    public function bind($model = array('Group')){
+    /*public function bind($model = array('Group')){
 
         $this->bindModel(array(
             
@@ -45,7 +45,7 @@ class PackagingHolder extends AppModel {
         $this->contain($model);
     }
 
-  /*  public function bindStatus($model = array('Group')){
+    public function bindStatus($model = array('Group')){
 
         $this->bindModel(array(
             

@@ -10,7 +10,7 @@
 				<header class="main-box-header clearfix">
 					
 					<?php 
-	               	 echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'settings', 'action' => 'item_group','tab' => 'tab-corrugated_papers'),array('class' =>'btn btn-primary pull-right','escape' => false));
+	               	 echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'settings', 'action' => 'item_group','tab' => 'tab-substrate'),array('class' =>'btn btn-primary pull-right','escape' => false));
 	                ?>
 				</header>
 
