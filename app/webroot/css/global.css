@@ -185,3 +185,56 @@ text-align: center;
 .table-responsive {
   overflow:initial;
 }
+
+
+
+
+/*new css for sorting fields bienskie*/
+
+body.dragging, body.dragging * {
+    cursor: move !important;
+}
+ .dragged {
+    position: absolute;
+    top: 0;
+    opacity: .5;
+    z-index: 2000;
+}
+ .sorted-table tr {
+    cursor: pointer;
+}
+ .sorted-table tr.placeholder {
+    display: block;
+    background: red;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+ .sorted-table tr.placeholder:before {
+    content:"";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 5px solid transparent;
+    border-left-color: red;
+    margin-top: -5px;
+    left: -5px;
+    border-right: none;
+}
+.ui-state-default {
+  background: none repeat scroll 0 0 white !important;
+  border: medium none !important;
+  cursor: all-scroll;
+}
+
+.ui-state-default > section {
+  margin-left: 24px !important;
+}
+
+#sortable { list-style-type: none; margin: 0 0 0 176px; padding: 0; width: 87%; }
+  /*#sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
+  #sortable li span { position: absolute; margin-left: -1.3em; }*/
+.col-lg-2.control-label.my-pad {
+  width: 161px;
+}

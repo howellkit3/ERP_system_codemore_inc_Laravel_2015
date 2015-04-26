@@ -4,7 +4,7 @@ App::uses('SessionComponent', 'Controller/Component');
 
 class ProductsController extends SalesAppController {
 
-	public $uses = array('Sales.Company','Sales.ItemCategoryHolder','Sales.ItemType','Sales.ProcessField');
+	public $uses = array('Sales.Company','ItemCategoryHolder','Sales.ItemCategoryHolder','Sales.ItemType','Sales.ProcessField','GeneralItem');
 	
 	function beforeFilter() {
   		$this->myRandomNumber = rand(1,4);
@@ -135,7 +135,8 @@ class ProductsController extends SalesAppController {
 		
 
 		if ($this->request->is('post')) {
-
+				pr($this->request->data);
+				exit();
 				$userData = $this->Session->read('Auth');
 			 	$productDetails = $this->request->data;
 	        	$this->loadModel('Sales.Product');
@@ -428,6 +429,35 @@ class ProductsController extends SalesAppController {
 											'Product.item_type_holder_id' => $itemtypeid),
 											'fields' => array(
 											'id', 'name')));
+    	
+    	$this->layout = false;
+
+		echo json_encode($productData);
+
+    	
+    }
+
+    public function find_dropdown($dropdownId = null){
+
+    	$this->autoRender = false;
+
+    	$this->ItemCategoryHolder->bind(array('ItemTypeHolder'));
+
+    	if($dropdownId == 0){
+    		$generalData = $this->GeneralItem->find('list',array(
+											'fields' => array(
+											'id', 'category_id')));
+    		
+
+    		$categoryData = $this->ItemCategoryHolder->find('all');
+											// 'fields' => array(
+											// 'id', 'name')
+											// )
+    							// 		);
+    		pr($categoryData);exit();
+    	}
+
+    	
     	
     	$this->layout = false;
 
