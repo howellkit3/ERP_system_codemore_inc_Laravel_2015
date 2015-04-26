@@ -16,7 +16,7 @@
 
 			</div>
 		</div>
-				<?php echo $this->Form->create('CorrugatedPaper',array('url'=>(array('controller' => 'settings','action' => 'item_type'))));?>			
+		
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="main-box">
@@ -85,13 +85,13 @@
 									<div class="form-group">
 										<label class="col-lg-2 control-label">Manufacturer</label>
 										<div class="col-lg-8">
-											<?php 
-	                                            echo $this->Form->input('CorrugatedPaper.name', array(
-	                                            								'class' => 'form-control item_type',
-							                                                    'label' => false,
-							                                                    'disabled' => true,
-							                                                    'fields' =>array('name')));
-                                            ?>
+											<?php echo $this->Form->input('CorrugatedPaper.manufacturer_id', array(
+														'options' => array($supplierData),
+														'class' => 'form-control item_type',
+							                            'label' => false,
+							                            'disabled' => true
+											)); 
+											?>
 										</div>
 									</div>
 
@@ -133,6 +133,7 @@
 	                                            echo $this->Form->input('CorrugatedPaper.remark', array(
                         								'class' => 'form-control item_type',
 	                                                    'label' => false,
+	                                                    'disabled' => true,
 	                                                    'placeholder' => 'Remarks'));
                                             ?>
 
@@ -145,7 +146,6 @@
 					</div>
 				</div>
 			</div>
-		<?php echo $this->Form->end(); ?>
 
 		<?php echo $this->Form->create('Product',array('url'=>(array('controller' => 'products','action' => 'view'))));?>			
 			<div class="row">

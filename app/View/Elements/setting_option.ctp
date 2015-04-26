@@ -41,8 +41,6 @@
         
     </ul>
 
-     </ul>
-
      <ul style="margin-left:0" class="nav navbar-nav pull-left">
 
         <li class="dropdown hidden-xs">
@@ -52,7 +50,16 @@
         </li>
 
     </ul>
-     </ul>
+
+    <ul style="margin-left:0" class="nav navbar-nav pull-left">
+
+        <li class="dropdown hidden-xs">
+           
+            <?php echo $this->Html->link("<span class='count'>Process</span>", array('controller' => 'settings', 'action' => 'payment_term'),array('escape' => false,'class' => 'btn')); ?>
+           
+        </li>
+        
+    </ul>
 
      <ul style="margin-left:0" class="nav navbar-nav pull-left">
 

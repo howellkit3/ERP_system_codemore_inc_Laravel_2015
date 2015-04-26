@@ -1189,11 +1189,10 @@ class SettingsController extends AppController
                 $this->request->data = $post;
             }
 
-            $this->set(compact( 'categoryData','typeData','supplierData', 'itemGroupLayerData' ));
+            $this->set(compact( 'categoryData','typeData' , 'supplierData'));
     }
 
-      public function view_compound_substrate($id){
-
+    public function view_compound_substrate($id){
 
         $this->loadModel('Supplier');
 
@@ -1201,7 +1200,7 @@ class SettingsController extends AppController
 
         $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
 
-        $this->CorrugatedPaper->bind(array('ItemCategoryHolder','ItemTypeHolder', 'Supplier', 'ItemGroupLayer'));
+        $this->CompoundSubstrate->bind(array('ItemCategoryHolder','ItemTypeHolder', 'Supplier', 'ItemGroupLayer'));
 
         $categoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name'),
                                                                 'conditions' => array('ItemCategoryHolder.category_type' => '1')));
@@ -1217,8 +1216,64 @@ class SettingsController extends AppController
                 $this->request->data = $post;
             }
 
-            $this->set(compact( 'categoryData','typeData','supplierData', 'itemGroupLayerData' ));
+            $this->set(compact( 'categoryData' , 'typeData', 'supplierData' ));
     }
+
+    public function view_substrate($id){
+
+        $this->loadModel('Supplier');
+
+        $this->loadModel('Substrate');
+
+        $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
+
+        $this->Substrate->bind(array('ItemCategoryHolder','ItemTypeHolder', 'Supplier'));
+
+        $categoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name'),
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+     
+        $typeData = $this->ItemTypeHolder->find('list', array('fields' => array('id', 'name'),
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+
+        $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.id DESC'));
+
+        $post = $this->Substrate->findById($id);
+
+            if (!$this->request->data) {
+                $this->request->data = $post;
+            }
+
+            $this->set(compact( 'categoryData' , 'typeData', 'supplierData' ));
+    }
+
+    public function view_general_item($id){
+
+        $this->loadModel('Supplier');
+
+        $this->loadModel('GeneralItem');
+
+        $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
+
+        $this->GeneralItem->bind(array('ItemCategoryHolder','ItemTypeHolder', 'Supplier'));
+
+        $categoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name'),
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+     
+        $typeData = $this->ItemTypeHolder->find('list', array('fields' => array('id', 'name'),
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+
+        $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.id DESC'));
+
+        $post = $this->GeneralItem->findById($id);
+
+            if (!$this->request->data) {
+                $this->request->data = $post;
+            }
+
+            $this->set(compact( 'categoryData' , 'typeData', 'supplierData' ));
+    }
+
+
 
     public function ajax_categ($itemId = false){
 
