@@ -29,38 +29,6 @@ class PackagingHolder extends AppModel {
     
     );
 
-    /*public function bind($model = array('Group')){
-
-        $this->bindModel(array(
-            
-            'belongsTo' => array(
-                'PackagingHolder' => array(
-                    'className' => 'PackagingHolder',
-                    'foreignKey' => 'packaging_holder_id',
-                    'dependent' => true
-                ),
-            )
-        ));
-
-        $this->contain($model);
-    }
-
-    public function bindStatus($model = array('Group')){
-
-        $this->bindModel(array(
-            
-            'belongsTo' => array(
-                'StatusFieldHolder' => array(
-                    'className' => 'StatusFieldHolder',
-                    'foreignKey' => 'id',
-                    'dependent' => true
-                ),
-            )
-        ));
-
-        $this->contain($model);
-    } */
-
     public function savePackaging($packagingData = null, $auth = null){
         
         $this->create();
