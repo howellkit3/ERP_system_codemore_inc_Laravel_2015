@@ -335,7 +335,7 @@ class SettingsController extends AppController
 
         $this->loadModel('Supplier');
 
-        $limit = 5;
+        $limit = 10;
 
         $conditions = array();
 
