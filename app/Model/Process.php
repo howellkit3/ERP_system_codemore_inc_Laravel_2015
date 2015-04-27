@@ -37,6 +37,4 @@ class Process extends AppModel {
             return $this->id;
         }
     } 
-
-    
 }
