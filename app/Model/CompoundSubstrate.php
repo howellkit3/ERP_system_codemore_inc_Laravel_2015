@@ -83,9 +83,6 @@ class CompoundSubstrate extends AppModel {
 
 		if (!empty($data)) {
 
-
-			pr($data);
-
 			 $dataHolder = array();
 
 
