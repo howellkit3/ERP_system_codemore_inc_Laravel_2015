@@ -158,7 +158,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																			'type' => 'select',
 																			'label' => false,
 																			'class' => 'form-control required',
-																			'empty' => '---Select Category---',
+																			'empty' => '---Select Process---',
 																			'required' => true					                               
 																			)); 
 																			?>
