@@ -1270,7 +1270,7 @@ class SettingsController extends AppController
 
         $userData = $this->Session->read('Auth');
 
-        $limit = 5;
+        $limit = 10;
 
         $conditions = array();
 
@@ -1356,6 +1356,7 @@ class SettingsController extends AppController
         }
 
         return $this->redirect(array('action' => 'process'));
+
     }
 
      public function unit() {
