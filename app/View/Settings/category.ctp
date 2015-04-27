@@ -1,6 +1,4 @@
-<?php echo $this->Html->script('category'); ?>
-<?php echo $this->Html->script(array('ajax_pagination','tabs')); ?>
-
+<?php echo $this->Html->script(array('ajax_pagination','tabs', 'category')); ?>
 <?php echo $this->element('setting_option');?><br><br>
 <?php 
 
@@ -44,14 +42,14 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 													<div class="form-horizontal">
 														<div class="form-group"> <br>
 															<label class="col-lg-2 control-label"><span style="color:red">*</span>Name Category</label>
-																<div class="col-lg-8">
-																	<?php 
-																	echo $this->Form->input('ItemCategoryHolder.name', array(
-																								'class' => 'form-control item_type',
-																	                            'label' => false,
-																	                            'placeholder' => 'Name Category'));
-																	?>
-																</div>
+															<div class="col-lg-8">
+																<?php 
+																echo $this->Form->input('ItemCategoryHolder.name', array(
+																							'class' => 'form-control item_type',
+																                            'label' => false,
+																                            'placeholder' => 'Name Category'));
+																?>
+															</div>
 														</div>
 
 														<div class="form-group"> 
