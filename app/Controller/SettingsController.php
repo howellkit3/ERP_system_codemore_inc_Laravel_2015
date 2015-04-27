@@ -1268,7 +1268,11 @@ class SettingsController extends AppController
 
         $this->loadModel('Process');
 
+        $this->loadModel('SubProcess');
+
         $userData = $this->Session->read('Auth');
+
+        $processDataDropList = $this->Process->find('list',  array('order' => 'Process.id DESC'));
 
         $limit = 10;
 
@@ -1299,7 +1303,7 @@ class SettingsController extends AppController
                 }
             }
 
-        $this->set(compact('processData'));
+        $this->set(compact('processData', 'processDataDropList'));
     }
 
      public function process_edit($id = null) {
@@ -1357,6 +1361,35 @@ class SettingsController extends AppController
 
         return $this->redirect(array('action' => 'process'));
 
+    }
+
+        public function sub_process() {
+
+        $this->loadModel('SubProcess');
+
+        $userData = $this->Session->read('Auth');
+
+        $processDataDropList = $this->ItemCategoryHolder->find('list',  array('order' => 'ItemCategoryHolder.id DESC'));
+
+        $subProcessData = $this->SubProcess->find('all',  array('order' => 'SubProcess.id DESC'));
+
+        $categoryTable = $this->ItemCategoryHolder->find('list', array('ItemCategoryHolder.name'));
+
+            if ($this->request->is('post')) {
+                
+                if (!empty($this->request->data)) {
+
+                    $this->ItemTypeHolder->save($this->request->data);
+
+                    $this->ItemTypeHolder->save($this->request->data);
+                
+                    $this->Session->setFlash(__('Add Name Type Complete.'));
+
+                    return $this->redirect(array('action' => 'category#tab-type'));
+                }
+            }
+
+            $this->set(compact('processDataDropList'));
     }
 
      public function unit() {
