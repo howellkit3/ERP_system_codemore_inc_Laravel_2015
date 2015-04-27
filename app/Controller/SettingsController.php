@@ -1314,7 +1314,7 @@ class SettingsController extends AppController
                     $this->Session->setFlash(__('Add Process Complete.'));
 
                     $this->redirect(
-                        array('controller' => 'settings', 'action' => 'process')
+                        array('controller' => 'settings', 'action' => 'process','tab' => 'tab-process')
                     );
                 }
             }
@@ -1344,7 +1344,7 @@ class SettingsController extends AppController
 
                     $this->Session->setFlash(__('Process has been updated.'));
 
-                    return $this->redirect(array('action' => 'process'));
+                    return $this->redirect(array('action' => 'process','tab' => 'tab-process'));
                 }
 
                 $this->Session->setFlash(__('Unable to update your post.'));
@@ -1375,7 +1375,7 @@ class SettingsController extends AppController
             );
         }
 
-        return $this->redirect(array('action' => 'process'));
+        return $this->redirect(array('action' => 'process','tab' => 'tab-process'));
 
     }
 
@@ -1402,7 +1402,7 @@ class SettingsController extends AppController
                     $this->Session->setFlash(__('Add Sub Process Complete.'));
 
                     $this->redirect(
-                        array('controller' => 'settings', 'action' => 'process')
+                        array('controller' => 'settings', 'action' => 'process','tab' => 'tab-sub_process')
                     );
                 }
             }
@@ -1415,7 +1415,7 @@ class SettingsController extends AppController
         $this->loadModel('SubProcess');
 
         $this->loadModel('Process');
-        
+
         $this->SubProcess->bind(array('Process',));
 
         $subProcessDropList = $this->Process->find('list',  array('order' => 'Process.id DESC'));
@@ -1438,7 +1438,7 @@ class SettingsController extends AppController
 
                     $this->Session->setFlash(__('Sub Process has been updated.'));
 
-                    return $this->redirect(array('action' => 'process'));
+                    return $this->redirect(array('action' => 'process','tab' => 'tab-sub_process'));
                 }
 
                 $this->Session->setFlash(__('Unable to update your post.'));
@@ -1471,7 +1471,7 @@ class SettingsController extends AppController
             );
         }
 
-        return $this->redirect(array('action' => 'process'));
+        return $this->redirect(array('action' => 'process' ,'tab' => 'tab-sub_process'));
 
     }
 
