@@ -385,14 +385,14 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 															</table>
 															<hr>
 
-															<div class="paging" id="substrate_pagination">
-														 <?php
-										               
-										                echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'Substrate','model' => 'Substrate'), null, array('class' => 'disable','model' => 'Substrate'));
-										                echo $this->Paginator->numbers(array('separator' => '','paginate' => 'Substrate'), array('paginate' => 'Substrate'));
-										                echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'Substrate','model' => 'Substrate'), null, array('class' => 'disable'));
+														<div class="paging" id="substrate_pagination">
+															 <?php
+											               
+											                echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'Substrate','model' => 'Substrate'), null, array('class' => 'disable','model' => 'Substrate'));
+											                echo $this->Paginator->numbers(array('separator' => '','paginate' => 'Substrate'), array('paginate' => 'Substrate'));
+											                echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'Substrate','model' => 'Substrate'), null, array('class' => 'disable'));
 
-										                ?>
+											                ?>
 										                </div>
 
 														</div>
@@ -540,7 +540,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 									</div>
 										<?php echo $this->Form->end(); ?>
 
-									<div class="row" id="compound-substrate-table">
+									<div class="row" >
 										<div class="col-lg-12">
 											<div class="main-box">
 											<header class="main-box-header clearfix">
@@ -748,7 +748,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 									</div>
 										<?php echo $this->Form->end(); ?>
 
-									<div class="row">
+									<div class="row" id="corrugated-paper-table">
 										<div class="col-lg-12">
 											<div class="main-box">
 											<header class="main-box-header clearfix">
@@ -773,12 +773,12 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 
 													</table>
 													<hr>
-													  <div class="paging" id="">
-														<?php
+													 	<div class="paging" id="corrugated_paper_pagination">
+															 <?php
 											               
-											                echo $this->Paginator->prev('< ' . __('previous'), null , null, array('class' => 'disable'));
-											                echo $this->Paginator->numbers(array('separator' => '',null, array('paginate' => 'ItemTypeHolder')));
-											                echo $this->Paginator->next(__('next') . ' >',null, null, array('class' => 'disable'));
+											                echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'CorrugatedPaper','model' => 'CorrugatedPaper'), null, array('class' => 'disable','model' => 'CorrugatedPaper'));
+											                echo $this->Paginator->numbers(array('separator' => '','paginate' => 'CorrugatedPaper'), array('paginate' => 'CorrugatedPaper'));
+											                echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'CorrugatedPaper','model' => 'CorrugatedPaper'), null, array('class' => 'disable'));
 
 											                ?>
 										                </div>
@@ -800,9 +800,9 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 
 <script>
 
-$('#SubstrateCategoryId').change(function(){
+	var option = $(this).val();$('#SubstrateCategoryId').change(function(){
 			$('.option-append').remove();
-			var option = $(this).val();
+		
 			 var selected = $('#SubstrateCategoryId').val();
 			$.ajax({
 				url: serverPath + "settings/ajax_categ/"+option,

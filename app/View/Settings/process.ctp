@@ -71,7 +71,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 								</div>
 							</div>
 
-					<div class="row">
+					<div class="row" id="process-table">
 								<div class="col-lg-12">
 									<div class="main-box">
 									  	<header class="main-box-header clearfix">
@@ -94,14 +94,14 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 
 							                    </table>
 							                    <hr>
-
-							                    <ul class="pagination pull-right">
-														<?php 
-														echo $this->Paginator->prev('< ' . __('previous'), array('before' => 'a','tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'prev disabled'));
-														echo $this->Paginator->numbers(array('separator' => '','tag' => 'li'));
-														echo $this->Paginator->next(__('next') . ' >', array('tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'next disabled')); ?>
-												</ul>
-
+												<div class="paging" id="process_pagination">
+									                <?php
+									               
+									                echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'Process','model' => 'Process'), null, array('class' => 'disable','model' => 'Process'));
+									                echo $this->Paginator->numbers(array('separator' => '','paginate' => 'Process'), array('paginate' => 'Process'));
+									                echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'Process','model' => 'Process'), null, array('class' => 'disable'));
+									                ?>
+                    							</div>
 							                </div>
 							            </div>
 									</div>
@@ -158,7 +158,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																			'type' => 'select',
 																			'label' => false,
 																			'class' => 'form-control required',
-																			'empty' => '---Select Process---',
+																			'empty' => '---Select Category---',
 																			'required' => true					                               
 																			)); 
 																			?>
@@ -181,12 +181,12 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 									</div>
 								</div>
 								<?php echo $this->Form->end(); ?>
-									<div class="row" id="itemTypeTables">
+									<div class="row" id="sub-process-table">
 										<div class="row">
 											<div class="col-lg-12">
 												<div class="main-box">
 												<header class="main-box-header clearfix">
-												<h1>Type List</h1>
+												<h1>Sub Process List</h1>
 												</header>
 													<div class="main-box-body clearfix">
 														<div class="table-responsive">
@@ -206,13 +206,12 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 
 														<hr>
 															 
-											           <div class="paging" id="item_type_pagination">
+											           <div class="paging" id="sub_process_pagination">
 										                <?php
 										               
-										                echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'ItemTypeHolder','model' => 'ItemTypeHolder'), null, array('class' => 'disable','model' => 'ItemTypeHolder'));
-										                echo $this->Paginator->numbers(array('separator' => '','paginate' => 'ItemTypeHolder'), array('paginate' => 'ItemTypeHolder'));
-										                echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'ItemTypeHolder','model' => 'ItemTypeHolder'), null, array('class' => 'disable'));
-
+										                echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'SubProcess','model' => 'SubProcess'), null, array('class' => 'disable','model' => 'SubProcess'));
+										                echo $this->Paginator->numbers(array('separator' => '','paginate' => 'SubProcess'), array('paginate' => 'SubProcess'));
+										                echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'SubProcess','model' => 'SubProcess'), null, array('class' => 'disable'));
 										                ?>
 	                    								</div>
 														</div>

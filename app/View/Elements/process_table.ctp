@@ -5,7 +5,6 @@
         <tr class="">
 
             <td>
-
          
                <?php  echo ucfirst($ProcessDataDataList['Process']['name']) ?>
                
@@ -32,9 +31,6 @@
                     </span>', array('controller' => 'settings', 'action' => 'deleteProcess',$ProcessDataDataList['Process']['id']),array('class' =>' table-link','escape' => false,'title'=>'Delete Information','confirm' => 'Do you want to delete this Process ?'));
                 ?>
 
-                 
-
-    
             </td>    
         </tr>
 

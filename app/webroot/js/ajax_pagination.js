@@ -64,4 +64,31 @@ $(function(){
 		
 	});
 
+	$('body').on('click','#corrugated_paper_pagination span > a',function(e) {
+		e.preventDefault();
+		$url = $(this).attr('href');
+
+		getNextItem($url,'#corrugated-paper-table','.main-box-body');
+		
+		
+	});
+
+	$('body').on('click','#process_pagination span > a',function(e) {
+		e.preventDefault();
+		$url = $(this).attr('href');
+
+		getNextItem($url,'#process-table','.main-box-body');
+		
+		
+	});
+
+	$('body').on('click','#sub_process_pagination span > a',function(e) {
+		e.preventDefault();
+		$url = $(this).attr('href');
+
+		getNextItem($url,'#sub-process-table','.main-box-body');
+		
+		
+	});
+
 });

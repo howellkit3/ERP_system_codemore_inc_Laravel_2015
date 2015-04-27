@@ -40,7 +40,19 @@ class SettingsController extends AppController
             'limit' => 10,
             //'fields' => array('id', 'name', 'created'),
             'order' => 'CorrugatedPaper.id DESC'
-         )   
+         ),
+
+        'Process' => array( 
+            'limit' => 10,
+            //'fields' => array('id', 'name', 'created'),
+            'order' => 'Process.id DESC'
+         ),
+       'SubProcess' => array( 
+                'limit' => 10,
+                //'fields' => array('id', 'name', 'created'),
+                'order' => 'SubProcess.id DESC'
+        ) 
+
 
     ); 
     
@@ -1275,11 +1287,17 @@ class SettingsController extends AppController
 
         $this->SubProcess->bind(array('Process',));
 
+
         $limit = 10;
 
         $conditions = array();
 
-        if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'Process' ) {
+
+        if ($this->RequestHandler->isAjax()) {
+                $this->layout = "";
+        }
+
+  if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'Process' ) {
             
             $this->paginate['Process'] = array(
                 'conditions' => $conditions,
@@ -1291,7 +1309,7 @@ class SettingsController extends AppController
 
         }
 
-        if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'SubProcess' ) {
+    if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'SubProcess' ) {
             $this->paginate['SubProcess'] = array(
                 'conditions' => $conditions,
                 'limit' => $limit,
@@ -1300,8 +1318,7 @@ class SettingsController extends AppController
 
             $SubProcessData = $this->paginate('SubProcess');
 
-        }   
-
+        }    
 
             if ($this->request->is('post')) {
                 
@@ -1586,6 +1603,8 @@ class SettingsController extends AppController
 
        echo json_encode($itemdata);
     }
+
+    
 
 
 }
