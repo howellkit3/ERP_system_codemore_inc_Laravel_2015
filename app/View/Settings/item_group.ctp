@@ -540,7 +540,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 									</div>
 										<?php echo $this->Form->end(); ?>
 
-									<div class="row" >
+									<div class="row" id="compound-substrate">
 										<div class="col-lg-12">
 											<div class="main-box">
 											<header class="main-box-header clearfix">
@@ -566,17 +566,15 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 													</table>
 													<hr>
 
-													<div class="paging" id="compound_substrate_pagination">
-														 <?php
-										               
-										                echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'CompoundSubstrate','model' => 'CompoundSubstrate'), null, array('class' => 'disable','model' => 'CompoundSubstrate'));
-										                echo $this->Paginator->numbers(array('separator' => '','paginate' => 'CompoundSubstrate'), array('paginate' => 'CompoundSubstrate'));
-										                echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'CompoundSubstrate','model' => 'CompoundSubstrate'), null, array('class' => 'disable'));
+												<div class="paging" id="compound_substrate_pagination">
+															 <?php
+											               
+											                echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'CompoundSubstrate','model' => 'CompoundSubstrate'), null, array('class' => 'disable','model' => 'CompoundSubstrate'));
+											                echo $this->Paginator->numbers(array('separator' => '','paginate' => 'CompoundSubstrate'), array('paginate' => 'CompoundSubstrate'));
+											                echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'CompoundSubstrate','model' => 'CompoundSubstrate'), null, array('class' => 'disable'));
 
-										                ?>
+											                ?>
 										                </div>
-
-
 													</div>
 												</div>
 											</div>

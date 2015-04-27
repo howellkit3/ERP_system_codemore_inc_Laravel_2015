@@ -59,7 +59,7 @@ $(function(){
 		e.preventDefault();
 		$url = $(this).attr('href');
 
-		getNextItem($url,'#compound-substrate-table','.main-box-body');
+		getNextItem($url,'#compound-substrate','.main-box-body');
 		
 		
 	});
