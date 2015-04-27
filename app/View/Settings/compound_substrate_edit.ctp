@@ -29,15 +29,16 @@
 						<div class="main-box-body clearfix">
 							<div class="main-box-body clearfix">
 								<div class="form-horizontal">
+
 									<div class="form-group">
 										<label class="col-lg-2 control-label"><span style="color:red">*</span>Name</label>
 										<div class="col-lg-8">
 											<?php 
 	                                            echo $this->Form->input('CompoundSubstrate.name', array(
-                        								'class' => 'form-control item_type',
-	                                                    'label' => false,
-	                                                    'required' => 'required',
-	                                                    'placeholder' => 'Substrate Name'));
+																		'class' => 'form-control item_type',
+								                                         'label' => false,
+								                                         'placeholder' => 'Compoundn Substrate name'
+																		)); 
                                             ?>
 
 										</div>

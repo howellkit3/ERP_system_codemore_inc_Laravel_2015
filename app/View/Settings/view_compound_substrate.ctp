@@ -45,11 +45,15 @@
 										<label class="col-lg-2 control-label">Name</label>
 										<div class="col-lg-8">
 											<?php 
+
+
 	                                            echo $this->Form->input('CompoundSubstrate.name', array(
-	                                            								'class' => 'form-control item_type',
-							                                                    'label' => false,
-							                                                    'disabled' => true
-																		));
+																		'class' => 'form-control item_type',
+								                                         'label' => false,
+								                                         'disabled' => true
+																		)); 
+                                            
+	                                            
                                             ?>
 										</div>
 									</div>

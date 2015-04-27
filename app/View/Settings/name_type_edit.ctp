@@ -46,17 +46,17 @@
 										</div>
 										<div class="form-group">
 											<label class="col-lg-2 control-label">Category</label>
-												<div class="col-lg-8">
-													<?php echo $this->Form->input('ItemTypeHolder.item_category_holder_id', array(
-													'options' => array($categoryDataDropList),
-													'type' => 'select',
-													'label' => false,
-													'class' => 'form-control required',
-													'required' => true			                               
-													)); 
-													?>
-												</div>
+											<div class="col-lg-8">
+												<?php echo $this->Form->input('ItemTypeHolder.item_category_holder_id', array(
+												'options' => array($categoryDataDropList),
+												'type' => 'select',
+												'label' => false,
+												'class' => 'form-control required',
+												'required' => true			                               
+												)); 
+												?>
 											</div>
+										</div>
 
 										<div class="form-group">
 										<div class="col-lg-2"></div>

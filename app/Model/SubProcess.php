@@ -44,4 +44,16 @@ class SubProcess extends AppModel {
         $this->contain($model);
     } 
 
+    public function saveSubProcess($processData = null, $auth = null){
+        
+        $this->create();
+
+        $processData['created_by'] = $auth;
+        $processData['modified_by'] = $auth;
+
+        if($this->save($processData)){
+            return $this->id;
+        }
+    } 
+
 }

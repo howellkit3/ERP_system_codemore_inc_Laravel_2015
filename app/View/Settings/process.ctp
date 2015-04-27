@@ -2,7 +2,7 @@
 <?php echo $this->element('setting_option');?><br><br>
 <?php 
 
-$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : 'tab-category';
+$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : 'tab-process';
 ?>
 
 <div class="row">
@@ -11,11 +11,11 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 			<div class="main-box-body clearfix">
 				<div class="tabs-wrapper">
 					<ul class="nav nav-tabs">
-						<li class="<?php echo ($active_tab == 'tab-category') ? 'active' : '' ?>" alt="tab-category"><a href="#tab-category" data-toggle="tab">Process</a></li>
-						<li class="<?php echo ($active_tab == 'tab-type') ? 'active' : '' ?>" alt="tab-type"><a href="#tab-type" id = 'itemType' data-toggle="tab">Sub Process</a></li>
+						<li class="<?php echo ($active_tab == 'tab-process') ? 'active' : '' ?>" alt="tab-process"><a href="#tab-process" data-toggle="tab">Process</a></li>
+						<li class="<?php echo ($active_tab == 'tab-sub_process') ? 'active' : '' ?>" alt="tab-sub_process"><a href="#tab-sub_process" id = 'itemType' data-toggle="tab">Sub Process</a></li>
 					</ul>
 					<div class="tab-content">
-						<div class="tab-pane fade  <?php echo ($active_tab == 'tab-category') ? 'in active' : '' ?>" id="tab-category">
+						<div class="tab-pane fade  <?php echo ($active_tab == 'tab-process') ? 'in active' : '' ?>" id="tab-process">
 							<div class="row">
 								<div class="col-lg-12">
 									
@@ -109,7 +109,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 							</div>
 						</div>
 
-						<div class="tab-pane fade  <?php echo ($active_tab == 'tab-type') ? 'in active' : '' ?>" id="tab-type">
+						<div class="tab-pane fade  <?php echo ($active_tab == 'tab-sub_process') ? 'in active' : '' ?>" id="tab-sub_process">
 							<div class="row">
 								<div class="col-lg-12">
 									<div class="row">
@@ -129,7 +129,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 										</div>
 									</div>
 
-								<?php echo $this->Form->create('ItemCategoryHolder',array('url'=>(array('controller' => 'settings','action' => 'sub_process'))));?>
+								<?php echo $this->Form->create('SubProcess',array('url'=>(array('controller' => 'settings','action' => 'sub_process'))));?>
 
 								<div class="row">
 									<div class="col-lg-12">
@@ -142,7 +142,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																<label class="col-lg-2 control-label"><span style="color:red">*</span>Sub Process</label>
 																<div class="col-lg-8">
 																	<?php 
-																	echo $this->Form->input('ItemTypeHolder.name', array(
+																	echo $this->Form->input('SubProcess.name', array(
 																				'class' => 'form-control item_type',
 																	            'label' => false,
 																	            'placeholder' => 'Type Name'));
@@ -153,7 +153,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 															<div class="form-group">
 																<label class="col-lg-2 control-label"><span style="color:red">*</span>Process</label>
 																<div class="col-lg-8">
-																			<?php echo $this->Form->input('ItemTypeHolder.item_category_holder_id', array(
+																			<?php echo $this->Form->input('SubProcess.process_id', array(
 																			'options' => array($processDataDropList),
 																			'type' => 'select',
 																			'label' => false,
@@ -168,7 +168,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 															<div class="form-group">
 																<div class="col-lg-2"></div>
 																	<div class="col-lg-8">
-																		<button type="submit" class="btn btn-primary pull-left">Submit Type</button>&nbsp;
+																		<button type="submit" class="btn btn-primary pull-left">Submit Sub Process</button>&nbsp;
 																		<?php 
 																		echo $this->Html->link('Cancel', array('controller' => 'settings', 'action' => 'index'),array('class' =>'btn btn-default','escape' => false));
 																		?>
@@ -193,14 +193,14 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 															<table class="table table-striped table-hover">
 																<thead>
 																	<tr>		                              
-																		<th><a href="#"><span>Item Type</span></a></th>
-																		<th><a href="#"><span>Category</span></a></th>
+																		<th><a href="#"><span>Sub Process</span></a></th>
+																		<th><a href="#"><span>Process</span></a></th>
 																		<th class="text-center"><a href="#"><span>Created</span></a></th>
 																		<th>Action</th>
 																	</tr>
 																</thead>
 
-															<?php echo $this->element('name_type_table'); ?>
+															<?php echo $this->element('sub_process_table'); ?>
 												  
 															</table>
 

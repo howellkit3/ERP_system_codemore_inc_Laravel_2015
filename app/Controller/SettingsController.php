@@ -1169,7 +1169,6 @@ class SettingsController extends AppController
 
      public function corrugated_paper_edit($id = null) {
 
-
         $this->loadModel('Supplier');
 
         $this->loadModel('CorrugatedPaper');
@@ -1274,18 +1273,35 @@ class SettingsController extends AppController
 
         $processDataDropList = $this->Process->find('list',  array('order' => 'Process.id DESC'));
 
+        $this->SubProcess->bind(array('Process',));
+
         $limit = 10;
 
         $conditions = array();
 
-        $this->paginate = array(
-            'conditions' => $conditions,
-            'limit' => $limit,
-            'fields' => array('id', 'name','created'),
-            'order' => 'Process.id DESC',
-        );
+        if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'Process' ) {
+            
+            $this->paginate['Process'] = array(
+                'conditions' => $conditions,
+                'limit' => $limit,
+                'fields' => array('id', 'name', 'created','modified'),
+            );
 
-        $processData = $this->paginate('Process');
+            $processData = $this->paginate('Process');
+
+        }
+
+        if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'SubProcess' ) {
+            $this->paginate['SubProcess'] = array(
+                'conditions' => $conditions,
+                'limit' => $limit,
+                'fields' => array('id', 'name', 'created','Process.name'),
+            );
+
+            $SubProcessData = $this->paginate('SubProcess');
+
+        }   
+
 
             if ($this->request->is('post')) {
                 
@@ -1303,7 +1319,7 @@ class SettingsController extends AppController
                 }
             }
 
-        $this->set(compact('processData', 'processDataDropList'));
+        $this->set(compact('processData', 'processDataDropList', 'SubProcessData'));
     }
 
      public function process_edit($id = null) {
@@ -1375,21 +1391,88 @@ class SettingsController extends AppController
 
         $categoryTable = $this->ItemCategoryHolder->find('list', array('ItemCategoryHolder.name'));
 
-            if ($this->request->is('post')) {
+         if ($this->request->is('post')) {
                 
                 if (!empty($this->request->data)) {
+                   
+                    $this->SubProcess->create();
 
-                    $this->ItemTypeHolder->save($this->request->data);
+                    $this->id = $this->SubProcess->saveSubProcess($this->request->data['SubProcess'], $userData['User']['id']);
+           
+                    $this->Session->setFlash(__('Add Sub Process Complete.'));
 
-                    $this->ItemTypeHolder->save($this->request->data);
-                
-                    $this->Session->setFlash(__('Add Name Type Complete.'));
-
-                    return $this->redirect(array('action' => 'category#tab-type'));
+                    $this->redirect(
+                        array('controller' => 'settings', 'action' => 'process')
+                    );
                 }
             }
 
             $this->set(compact('processDataDropList'));
+    }
+
+    public function sub_process_edit($id = null) {
+
+        $this->loadModel('SubProcess');
+
+        $this->loadModel('Process');
+        
+        $this->SubProcess->bind(array('Process',));
+
+        $subProcessDropList = $this->Process->find('list',  array('order' => 'Process.id DESC'));
+
+            if (!$id) {
+                throw new NotFoundException(__('Invalid post'));
+            }
+
+            $post = $this->SubProcess->findById($id);
+            if (!$post) {
+                throw new NotFoundException(__('Invalid post'));
+            }
+
+            if ($this->request->is(array('post', 'put'))) {
+                $this->SubProcess->id = $id;
+
+                if ($this->SubProcess->save($this->request->data)) {
+
+                    $this->SubProcess->save($this->request->data);
+
+                    $this->Session->setFlash(__('Sub Process has been updated.'));
+
+                    return $this->redirect(array('action' => 'process'));
+                }
+
+                $this->Session->setFlash(__('Unable to update your post.'));
+            }
+
+            if (!$this->request->data) {
+
+                $this->request->data = $post;
+            }
+
+        $this->set(compact('subProcessDropList'));
+    }
+
+    public function deleteSubProcess($id) {
+
+        $this->loadModel('SubProcess');
+      
+        if ($this->SubProcess->delete($id)) {
+
+            $this->Session->setFlash(
+
+                __('Successfully deleted.', h($id))
+            );
+
+        } else {
+
+            $this->Session->setFlash(
+
+                __('The post cannot be deleted.', h($id))
+            );
+        }
+
+        return $this->redirect(array('action' => 'process'));
+
     }
 
      public function unit() {
