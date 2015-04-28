@@ -25,6 +25,14 @@ MySQL - 5.6.21 : Database - koufu_accounting
 
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`koufu_accounting` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+
+
+USE `koufu_accounting`;
+
+
+
 /*Table structure for table `sales_invoices` */
 
 
@@ -81,6 +89,14 @@ MySQL - 5.6.21 : Database - koufu_delivery
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`koufu_delivery` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+
+
+USE `koufu_delivery`;
+
+
 
 /*Table structure for table `deliveries` */
 
@@ -234,6 +250,14 @@ MySQL - 5.6.21 : Database - koufu_production
 
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`koufu_production` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+
+
+USE `koufu_production`;
+
+
+
 /*Table structure for table `schedules` */
 
 
@@ -291,6 +315,14 @@ MySQL - 5.6.21 : Database - koufu_purchasing
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`koufu_purchasing` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+
+
+USE `koufu_purchasing`;
+
+
 
 /*Table structure for table `addresses` */
 
@@ -483,6 +515,14 @@ MySQL - 5.6.21 : Database - koufu_sale
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`koufu_sale` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+
+
+USE `koufu_sale`;
+
+
 
 /*Table structure for table `addresses` */
 
@@ -965,6 +1005,19 @@ CREATE TABLE `quotations` (
   CONSTRAINT `fk_quotations_companies1` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=latin1;
 
+/*Table structure for table `processes` */
+
+DROP TABLE IF EXISTS `processes`;
+
+CREATE TABLE `processes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(60) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` timestamp NULL DEFAULT NULL,
+  `modified` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 /*Table structure for table `status_field_holders` */
@@ -1040,6 +1093,14 @@ MySQL - 5.6.21 : Database - koufu_system
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`koufu_system` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+
+
+USE `koufu_system`;
+
+
 
 /*Table structure for table `addresses` */
 
@@ -1272,20 +1333,6 @@ CREATE TABLE `phones` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-/*Table structure for table `processes` */
-
-DROP TABLE IF EXISTS `processes`;
-
-CREATE TABLE `processes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(60) DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
-  `modified_by` int(11) DEFAULT NULL,
-  `created` timestamp NULL DEFAULT NULL,
-  `modified` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 
 /*Table structure for table `status_field_holders` */
 
@@ -1436,6 +1483,14 @@ MySQL - 5.6.21 : Database - koufu_ticketing
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`koufu_ticketing` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+
+
+USE `koufu_ticketing`;
+
+
 
 /*Table structure for table `job_ticket_descriptions` */
 

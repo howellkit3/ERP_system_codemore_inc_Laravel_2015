@@ -25,3 +25,17 @@ CREATE TABLE IF NOT EXISTS `sub_processes` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1
 COLLATE = latin1_swedish_ci;
+
+
+/** jRr added this 04/28/2015 05:26AM */
+ALTER TABLE `koufu_sale`.`addresses` 
+CHANGE COLUMN `type` `type` VARCHAR(60) NULL DEFAULT NULL;
+
+ALTER TABLE `koufu_sale`.`contacts` 
+CHANGE COLUMN `type` `type` VARCHAR(60) NULL DEFAULT NULL;
+
+ALTER TABLE `koufu_sale`.`emails` 
+CHANGE COLUMN `type` `type` VARCHAR(60) NULL DEFAULT NULL;
+
+DROP TABLE `item_category_holders`;
+DROP TABLE `item_type_holders`;
