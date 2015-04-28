@@ -443,22 +443,33 @@ class ProductsController extends SalesAppController {
 
     	$this->ItemCategoryHolder->bind(array('ItemTypeHolder'));
 
+    	$productData = array();
+
     	if($dropdownId == 0){
+
     		$generalData = $this->GeneralItem->find('list',array(
 											'fields' => array(
 											'id', 'category_id')));
     		
 
-    		$categoryData = $this->ItemCategoryHolder->find('all');
-											// 'fields' => array(
-											// 'id', 'name')
-											// )
-    							// 		);
-    		pr($categoryData);exit();
+    		$categoryData = $this->ItemCategoryHolder->find('all',
+    											array('fields' => 
+    												array('ItemCategoryHolder.id',
+    												 	'ItemCategoryHolder.name',
+    												 	'ItemTypeHolder.id',
+    												 	'ItemTypeHolder.name'
+    												 ),
+													'conditions' => array(
+														'ItemCategoryHolder.id' => $generalData
+													),
+													'contains' => array('ItemTypeHolder')
+													));
+
+    		foreach ($categoryData as $key => $itemtypes) {
+    			$productData['ItemTypeHolder'][] = 	$itemtypes['ItemTypeHolder'];
+    		}
     	}
 
-    	
-    	
     	$this->layout = false;
 
 		echo json_encode($productData);

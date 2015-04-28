@@ -4,8 +4,7 @@
 <div style="clear:both"></div>
 
 <?php echo $this->element('sales_option'); ?><br><br>
-<?php echo $this->Html->script('Sales.company_quotation');?>
-
+    <?php echo $this->Form->create('Company',array('url'=>(array('controller' => 'customer_sales','action' => 'add')),'class' => 'form-horizontal'));?>
 <div class="row">
     <div class="col-lg-12">
         
@@ -15,7 +14,7 @@
                     
                     <center>
                         <h1 class="pull-left">
-                            Customer Information
+                         Customer Information
                         </h1>
                     </center>
                     <?php 
@@ -25,9 +24,7 @@
 
             </div>
         </div>
-        <?php echo $this->Form->create('Company',array('url'=>(array('controller' => 'customer_sales','action' => 'add')),'class' => 'form-horizontal'));?>
-            
-            <div class="row">
+       <div class="row">
                 <div class="col-lg-12">
                     <div class="main-box">
                         <h1>Company</h1>
@@ -122,6 +119,7 @@
                                                         'data-name' => 'Address'
                                                     ));
                                                 ?>
+
                                             </div>
                                             <div class="col-lg-7">
                                                 <?php 

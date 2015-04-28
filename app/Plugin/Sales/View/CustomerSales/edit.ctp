@@ -5,7 +5,7 @@
 
 <?php echo $this->element('sales_option'); ?><br><br>
 <?php echo $this->Html->script('Sales.company_quotation');?>
-
+<?php  echo $this->Form->create('Customer',array('url'=>(array('controller' => 'customer_sales','action' => 'update')),'class' => 'form-horizontal')); ?>
 <div class="row">
     <div class="col-lg-12">
         
@@ -25,9 +25,7 @@
 
             </div>
         </div>
-        <?php echo $this->Form->create('Customer',array('url'=>(array('controller' => 'customer_sales','action' => 'update')),'class' => 'form-horizontal')); 
-                   
-                    echo $this->Form->input('Company.id', array('class' => 'form-control item_type',
+        <?php echo $this->Form->input('Company.id', array('class' => 'form-control item_type',
                         'type' => 'hidden',
                         'value' => !empty($this->request->data['Company']['id']) ? $this->request->data['Company']['id'] : '' ,
                         'label' => false)); 
@@ -105,7 +103,7 @@
             </div>
             <?php foreach ($this->request->data['Address'] as $key => $value) { 
                                
-                    echo $this->Form->input('Address.0.id', array('class' => 'form-control item_type',
+                    echo $this->Form->input('Address.'.$key.'.id', array('class' => 'form-control item_type',
                         'type' => 'hidden',
                         'value' => !empty($value['id']) ? $value['id'] : '' ,
                         'label' => false));
@@ -113,8 +111,8 @@
                 <section class="cloneMe addressSection">
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="main-box">
-                                <h1>Company Address</h1>
+                            <div class="main-box"> 
+                                  <h1><?php echo ($key == 0) ? 'Company Address' : '';  ?></h1>
                                 <!-- <div class="top-space"></div> -->
                                 <div class="main-box-body clearfix">
                                     <div class="main-box-body clearfix">
@@ -124,7 +122,7 @@
                                                 <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Address(1)</label>
                                                 <div class="col-lg-2">
                                                     <?php 
-                                                        echo $this->Form->input('Address.0.type', array(
+                                                        echo $this->Form->input('Address.'.$key.'.type', array(
                                                             'options' => array('Work', 'Home', 'Business','Plant'),
                                                             'alt' => 'type',
                                                             'label' => false,
@@ -137,7 +135,7 @@
                                                 </div>
                                                 <div class="col-lg-7">
                                                     <?php 
-                                                        echo $this->Form->input('Address.0.address1', array('class' => 'form-control item_type required',
+                                                        echo $this->Form->input('Address.'.$key.'.address1', array('class' => 'form-control item_type required',
                                                             'alt' => 'address1',
                                                             'label' => false));
                                                     ?>
@@ -148,7 +146,7 @@
                                                 <label for="inputPassword1" class="col-lg-2 control-label">Address(2)</label>
                                                 <div class="col-lg-9">
                                                     <?php 
-                                                        echo $this->Form->input('Address.0.address2', array('class' => 'form-control item_type',
+                                                        echo $this->Form->input('Address.'.$key.'.address2', array('class' => 'form-control item_type',
                                                             'alt' => 'address2',
                                                             'label' => false));
                                                     ?>
@@ -159,7 +157,7 @@
                                                 <label for="inputPassword1" class="col-lg-2 control-label"> City</label>
                                                 <div class="col-lg-9">
                                                     <?php 
-                                                        echo $this->Form->input('Address.0.city', array('class' => 'form-control ',
+                                                        echo $this->Form->input('Address.'.$key.'.city', array('class' => 'form-control ',
                                                             'alt' => 'city',
                                                             'label' => false));
                                                     ?>
@@ -170,7 +168,7 @@
                                                 <label for="inputPassword1" class="col-lg-2 control-label">State Province</label>
                                                 <div class="col-lg-9">
                                                     <?php 
-                                                        echo $this->Form->input('Address.0.state_province', array('class' => 'form-control ',
+                                                        echo $this->Form->input('Address.'.$key.'.state_province', array('class' => 'form-control ',
                                                             'alt' => 'state_province',
                                                             'label' => false));
                                                     ?>
@@ -181,7 +179,7 @@
                                                 <label for="inputPassword1" class="col-lg-2 control-label"> Zip Code</label>
                                                 <div class="col-lg-9">
                                                     <?php 
-                                                        echo $this->Form->input('Address.0.zip_code', array('class' => 'form-control number',
+                                                        echo $this->Form->input('Address.'.$key.'.zip_code', array('class' => 'form-control number',
                                                             'alt' => 'zip_code',
                                                             'label' => false,'type' => 'text'));
                                                     ?>
@@ -191,7 +189,7 @@
                                             <div class="form-group">
                                                 <label for="inputPassword1" class="col-lg-2 control-label">Country</label>
                                                 <div class="col-lg-9">
-                                                     <?php echo( $this->Country->select('Address.0.country',null,array('class' => 'form-control required','default' => !empty($value['country']) ? $value['country'] : '')));?>  
+                                                     <?php echo( $this->Country->select('Address.'.$key.'.country',null,array('class' => 'form-control required','default' => !empty($value['country']) ? $value['country'] : '')));?>  
                                                 </div>
                                             </div>
                                             <hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
@@ -200,8 +198,11 @@
                                             <div class="form-group">
                                                 <label for="inputPassword1" class="col-lg-2 control-label"></label>
                                                 <div class="col-lg-10">
+                                               
                                                     <button type="button" data-model='Address' class="add-field table-link danger btn btn-success" onclick="cloneData('addressSection',this)"> <i class="fa fa-plus"></i></button>
+                                                 <?php if ($key > 0) : ?>
                                                     <button type="button" class="remove-field btn btn-danger remove" onclick="removeClone('addressSection')"><i class="fa fa-minus"></i> </button>
+                                                  <?php endif; ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -213,8 +214,8 @@
                 </section>
             <?php } ?>
 
-            <?php foreach ($this->request->data['Contact'] as $key => $value) {
-                    echo $this->Form->input('Contact.0.id', array('class' => 'form-control item_type',
+            <?php $count = 1; foreach ($this->request->data['Contact'] as $key => $value) {
+                    echo $this->Form->input('Contact.'.$key.'.id', array('class' => 'form-control item_type',
                         'type' => 'hidden',
                         'value' => !empty($value['id']) ? $value['id'] : '' ,
                         'label' => false));
@@ -223,18 +224,19 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="main-box">
-                                <h1>Company Number</h1>
+                                <h1><?php echo ($key == 0) ? 'Company Number' : '';  ?></h1>
                                 <!-- <div class="top-space"></div> -->
                                 <div class="main-box-body clearfix">
                                     <div class="main-box-body clearfix">
                                         <div class="form-horizontal">
                                 
                                             <div class="form-group">
-                                                <label for="inputPassword1" class="col-lg-2 control-label">Contact Number</label>
+                                                <label for="inputPassword1" class="col-lg-2 control-label">Contact Number 
+                                                <span><?php //echo $count; ?></span></label>
                                                 <div class="col-lg-2">
                                                     <?php 
-                                                        echo $this->Form->input('Contact.0.type', array(
-                                                            'options' => array('Work', 'Home', 'Business'),
+                                                        echo $this->Form->input('Contact.'.$key.'.type', array(
+                                                            'options' => array('Tel', 'Fax', 'Mobile'),
                                                             'label' => false,
                                                             'alt' => 'type',
                                                             'class' => 'form-control',
@@ -248,7 +250,7 @@
                                                 
                                                 <div class="col-lg-6">
                                                     <?php 
-                                                        echo $this->Form->input('Contact.0.number', array('class' => 'form-control',
+                                                        echo $this->Form->input('Contact.'.$key.'.number', array('class' => 'form-control',
                                                             'alt' => 'number',
                                                             'label' => false,
                                                             ));
@@ -258,7 +260,9 @@
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneData('contact_section',this)"><i class="fa fa-plus"></i></button>
+                                                    <?php if ($key > 0) : ?>
                                                     <button type="button" class="remove-field btn btn-danger remove" onclick="removeClone('contact_section')"><i class="fa fa-minus"></i> </button>
+                                                    <?php endif;?>
                                                 </div>
                                             </div>
 
@@ -269,10 +273,10 @@
                         </div>
                     </div>
                 </section>
-            <?php } ?>
+            <?php $count++; }  ?>
 
             <?php foreach ($this->request->data['Email'] as $key => $value) {
-                echo $this->Form->input('Email.0.id', array('class' => 'form-control item_type',
+                echo $this->Form->input('Email.'.$key.'.id', array('class' => 'form-control item_type',
                     'type' => 'hidden',
                     'value' => !empty($value['id']) ? $value['id'] : '' ,
                     'label' => false));
@@ -281,7 +285,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="main-box">
-                                <h1>Company Email</h1>
+                                <h1><?php echo ($key == 0) ? 'Company Email' : '';  ?></h1>
                                 <!-- <div class="top-space"></div> -->
                                 <div class="main-box-body clearfix">
                                     <div class="main-box-body clearfix">
@@ -291,7 +295,7 @@
                                                 <label for="inputPassword1" class="col-lg-2 control-label"> Email Address</label>
                                                 <div class="col-lg-2">
                                                     <?php 
-                                                        echo $this->Form->input('Email.0.type', array(
+                                                        echo $this->Form->input('Email.'.$key.'.type', array(
                                                             'options' => array('Work', 'Home', 'Business'),
                                                             'label' => false,
                                                             'class' => 'form-control',
@@ -301,7 +305,7 @@
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <?php 
-                                                        echo $this->Form->input('Email.0.email', array('class' => 'form-control email','label' => false));
+                                                        echo $this->Form->input('Email.'.$key.'.email', array('class' => 'form-control email','label' => false));
                                                     ?>
                                                     <span class="lighter-color2">Ex. example@email.com</span>
                                                 </div>
@@ -322,7 +326,7 @@
 
             <?php foreach ($this->request->data['ContactPersonData'] as $key => $value) { 
                                 
-                echo $this->Form->input('ContactPersonData.0.ContactPerson.0.id', array('class' => 'form-control item_type',
+                echo $this->Form->input('ContactPersonData.'.$key.'.ContactPerson.'.$key.'.id', array('class' => 'form-control item_type',
                     'type' => 'hidden',
                     'value' => !empty($value['ContactPerson']['id']) ? $value['ContactPerson']['id'] : '' ,
                     'label' => false));
@@ -330,7 +334,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="main-box">
-                            <h1>Contact person</h1>
+                            <h1><?php echo ($key == 0) ? 'Contact Person' : '';  ?></h1>
                             <!-- <div class="top-space"></div> -->
                             <div class="main-box-body clearfix">
                                 <div class="main-box-body clearfix">
@@ -363,7 +367,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span> Position</label>
+                                            <label for="inputPassword1" class="col-lg-2 control-label">Position</label>
                                             <div class="col-lg-9">
                                                 <?php 
                                                     echo $this->Form->input('ContactPersonData.0.ContactPerson.0.position', array('class' => 'form-control required','label' => false,'value' => !empty($value['ContactPerson']['position']) ? $value['ContactPerson']['position'] : ''));
@@ -382,7 +386,7 @@
                 foreach ($value['Contact'] as $indexkey => $indexvalue) {
                   
                   
-                    echo $this->Form->input('ContactPersonData.0.Contact.0.id', array('class' => 'form-control item_type',
+                    echo $this->Form->input('ContactPersonData.'.$key.'.Contact.'.$indexkey.'.id', array('class' => 'form-control item_type',
                         'type' => 'hidden',
                         'value' => !empty($indexvalue['id']) ? $indexvalue['id'] : '' ,
                         'label' => false));
@@ -392,7 +396,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="main-box">
-                                <h1>Contact Person Number</h1>
+                                <h1><?php echo ($indexkey == 0) ? 'Contact Person Number' : '';  ?></h1>
                                 <!-- <div class="top-space"></div> -->
                                 <div class="main-box-body clearfix">
                                     <div class="main-box-body clearfix">
@@ -402,8 +406,8 @@
                                                 <label for="inputPassword1" class="col-lg-2 control-label"> Contact Number</label>
                                                 <div class="col-lg-2">
                                                     <?php 
-                                                        echo $this->Form->input('ContactPersonData.0.Contact.0.type', array(
-                                                            'options' => array('Work', 'Home', 'Business'),
+                                                        echo $this->Form->input('ContactPersonData.'.$key.'.Contact.'.$indexkey.'.type', array(
+                                                            'options' => array('Tel', 'Fax', 'Mobile'),
                                                             'label' => false,
                                                             'class' => 'form-control',
                                                             'default' => !empty($indexvalue['type']) ? $indexvalue['type'] : ''
@@ -413,7 +417,7 @@
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <?php 
-                                                        echo $this->Form->input('ContactPersonData.0.Contact.0.number', array('class' => 'form-control','label' => false, ));
+                                                        echo $this->Form->input('ContactPersonData.'.$key.'.Contact.'.$indexkey.'.number', array('class' => 'form-control','label' => false, ));
                                                     ?>
                                                     <!-- <span class="lighter-color">Ex. (02)-565-2056</span> -->
                                                 </div>
@@ -434,7 +438,7 @@
 
             <?php foreach ($this->request->data['ContactPersonData'] as $key => $value) {
                 foreach ($value['Email'] as $indexkey => $indexvalue) {
-                    echo $this->Form->input('ContactPersonData.0.Email.0.id', array('class' => 'form-control item_type',
+                    echo $this->Form->input('ContactPersonData.'.$key.'.Email.'.$indexkey.'.id', array('class' => 'form-control item_type',
                         'type' => 'hidden',
                         'value' => !empty($indexvalue['id']) ? $indexvalue['id'] : '' ,
                         'label' => false));
@@ -443,7 +447,8 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="main-box">
-                                <h1>Contact Person Email</h1>
+                               <h1><?php echo ($indexkey == 0) ? 'Contact Person Email' : '';  ?></h1>
+
                                 <!-- <div class="top-space"></div> -->
                                 <div class="main-box-body clearfix">
                                     <div class="main-box-body clearfix">
@@ -453,7 +458,7 @@
                                                 <label for="inputPassword1" class="col-lg-2 control-label">Email</label>
                                                 <div class="col-lg-2">
                                                     <?php 
-                                                        echo $this->Form->input('ContactPersonData.0.Email.0.type', array(
+                                                        echo $this->Form->input('ContactPersonData.'.$key.'.Email.'.$indexkey.'.type', array(
                                                             'options' => array('Work', 'Home', 'Business'),
                                                             'label' => false,
                                                             'class' => 'form-control',
@@ -465,7 +470,7 @@
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <?php 
-                                                        echo $this->Form->input('ContactPersonData.0.Email.0.email', array('class' => 'form-control email','label' => false));
+                                                        echo $this->Form->input('ContactPersonData.'.$key.'.Email.'.$indexkey.'.email', array('class' => 'form-control email','label' => false));
                                                     ?>
                                                     <span class="lighter-color2">Ex. example@email.com</span>
                                                 </div>
@@ -514,10 +519,10 @@
                     </div>
                 </div>
             </div>
-        <?php echo $this->Form->end(); ?>
+       
     </div>
 </div>
-
+ <?php echo $this->Form->end(); ?>
 <script>
     $("#CompanyAddForm").validate();
 </script>

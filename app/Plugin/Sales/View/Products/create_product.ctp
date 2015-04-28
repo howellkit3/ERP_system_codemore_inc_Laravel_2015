@@ -193,7 +193,12 @@
 																		<label class="col-lg-2 control-label my-pad">Item</label>
 																		<div class="col-lg-8">
 																			<?php echo $this->Form->input('Product.item', array(
-																				'options' => array('General Items', 'Substrates', 'Compound Substrates','Corrugated Papers'),
+																				'options' => array(
+																					'General Items', 
+																					'Substrates',
+																					'Compound Substrates',
+																					'Corrugated Papers'
+																				),
 												                                'type' => 'select',
 												                                'label' => false,
 												                                //'readonly' => 'readonly',
