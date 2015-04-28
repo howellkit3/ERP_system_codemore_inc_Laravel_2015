@@ -75,15 +75,14 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span> Payment Term</label>
+                                        <label for="inputPassword1" class="col-lg-2 control-label">Payment Term</label>
                                         <div class="col-lg-9">
                                             <?php 
                                                 echo $this->Form->input('Company.payment_term', array(
                                                     'options' => array($paymentTermData),
                                                     'label' => false,
                                                     'style' => 'text-transform:capitalize',
-                                                     'readonly' => 'readonly',
-                                                    'class' => 'form-control required',
+                                                    'class' => 'form-control',
                                                     'empty' => '--Please Select Payment Term--'
                                                 ));
 
@@ -216,7 +215,7 @@
                                             <div class="col-lg-2">
                                                 <?php 
                                                     echo $this->Form->input('Contact.0.type', array(
-                                                        'options' => array('Work', 'Home', 'Business'),
+                                                        'options' => array('Tel', 'Fax', 'Mobile'),
                                                         'label' => false,
                                                         'alt' => 'type',
                                                         'class' => 'form-control',
@@ -328,7 +327,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span> Position</label>
+                                        <label for="inputPassword1" class="col-lg-2 control-label">Position</label>
                                         <div class="col-lg-9">
                                             <?php 
                                                 echo $this->Form->input('ContactPersonData.0.ContactPerson.0.position', array('class' => 'form-control required','label' => false));
@@ -357,7 +356,7 @@
                                             <div class="col-lg-2">
                                                 <?php 
                                                     echo $this->Form->input('ContactPersonData.0.Contact.0.type', array(
-                                                        'options' => array('Work', 'Home', 'Business'),
+                                                        'options' => array('Tel', 'Fax', 'Mobile'),
                                                         'label' => false,
                                                         'class' => 'form-control',
                                                         'empty' => false
@@ -462,6 +461,9 @@
 
 
 <script>
-    jQuery('.remove').hide();
-    $("#CompanyAddForm").validate();
+    jQuery(document).ready(function($){
+        jQuery('.remove').hide();
+        jQuery("#CompanyAddForm").validate();
+
+    });
 </script>

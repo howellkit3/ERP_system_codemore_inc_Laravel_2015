@@ -105,12 +105,12 @@ class Company extends AppModel {
 	 //            'message'=> 'Zip Code should be numeric'
 	 //        ),
 		// ),
-		'payment_term' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				'message' => 'Required fields.',
-			),
-		),
+		// 'payment_term' => array(
+		// 	'notEmpty' => array(
+		// 		'rule' => array('notEmpty'),
+		// 		'message' => 'Required fields.',
+		// 	),
+		// ),
 
 		'address1' => array(
 			'notEmpty' => array(

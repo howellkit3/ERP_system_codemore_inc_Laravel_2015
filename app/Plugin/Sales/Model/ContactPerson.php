@@ -75,12 +75,12 @@ class ContactPerson extends AppModel {
 	  //           'message'=> 'Please enter a valid name'
 	  //       ),
 		),	
-		'position' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				'message' => 'Required fields.',
-			),
-		)	
+		// 'position' => array(
+		// 	'notEmpty' => array(
+		// 		'rule' => array('notEmpty'),
+		// 		'message' => 'Required fields.',
+		// 	),
+		// )	
 	
 	);
 

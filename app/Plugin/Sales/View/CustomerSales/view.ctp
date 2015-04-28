@@ -345,4 +345,5 @@
 		<!-- </div> -->
 	</div>
 </div>
-<? php echo $this->element('modals'); ?>
+
+<?php echo $this->element('modals'); ?>
