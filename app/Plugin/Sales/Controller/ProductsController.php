@@ -418,6 +418,24 @@ class ProductsController extends SalesAppController {
 		$this->autoRender = false;
     	
     }
+     public function find_contact($itemId = null){
+
+    	$this->layout = false;
+    	$this->loadModel('ContactPerson');
+
+		$itemdata =$this->ContactPerson->find('all', array(
+										'conditions' => array(
+											'ContactPerson.company_id' => $itemId), 
+										'fields' => array(
+											'id', 'firstname','lastname')
+										));
+
+		
+		echo json_encode($itemdata);
+
+		$this->autoRender = false;
+    	
+    }
     public function find_product($itemtypeid = null){
 
     	$this->autoRender = false;
