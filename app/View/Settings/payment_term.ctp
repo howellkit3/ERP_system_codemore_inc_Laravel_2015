@@ -80,12 +80,15 @@
 		                    </table>
 		                    <hr>
 
-		                    <ul class="pagination pull-right">
-									<?php 
-									echo $this->Paginator->prev('< ' . __('previous'), array('before' => 'a','tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'prev disabled'));
-									echo $this->Paginator->numbers(array('separator' => '','tag' => 'li'));
-									echo $this->Paginator->next(__('next') . ' >', array('tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'next disabled')); ?>
-							</ul>
+		                    <div class="paging" id="unit_pagination">
+						                <?php
+						               
+						                echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'ItemTypeHolder','model' => 'ItemTypeHolder'), null, array('class' => 'disable','model' => 'ItemTypeHolder'));
+						                echo $this->Paginator->numbers(array('separator' => '','paginate' => 'ItemTypeHolder'), array('paginate' => 'ItemTypeHolder'));
+						                echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'ItemTypeHolder','model' => 'ItemTypeHolder'), null, array('class' => 'disable'));
+
+						                ?>
+	                </div>
 
 		                </div>
 		            </div>

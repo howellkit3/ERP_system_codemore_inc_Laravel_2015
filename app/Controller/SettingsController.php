@@ -51,7 +51,7 @@ class SettingsController extends AppController
                 'limit' => 10,
                 //'fields' => array('id', 'name', 'created'),
                 'order' => 'SubProcess.id DESC'
-        ) 
+        )
 
 
     ); 
@@ -252,7 +252,7 @@ class SettingsController extends AppController
         
         $this->loadModel('StatusFieldHolder');
 
-        $limit = 5;
+        $limit = 10;
 
         $conditions = array();
 
@@ -469,7 +469,7 @@ class SettingsController extends AppController
 
         $userData = $this->Session->read('Auth');
 
-        $limit = 5;
+        $limit = 10;
 
         $conditions = array();
 
@@ -562,7 +562,7 @@ class SettingsController extends AppController
 
                 $userData = $this->Session->read('Auth');
 
-                $limit = 5;
+                $limit = 10;
 
                 $conditions = array();
 
@@ -1498,7 +1498,7 @@ class SettingsController extends AppController
 
         $userData = $this->Session->read('Auth');
 
-        $limit = 5;
+        $limit = 10;
 
         $conditions = array();
 

@@ -7,7 +7,6 @@
 									'AddLayerCompoundSubstrate',
 									'AddLayerCorrugatedPaper',	
 									'ajax_pagination'
-
 							)); ?>
 
 <?php 
