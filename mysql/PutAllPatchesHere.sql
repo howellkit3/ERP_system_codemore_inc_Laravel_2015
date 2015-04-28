@@ -12,6 +12,8 @@
 # NOTE: PLEASE FOLLOW THE FORMAT
 # ************************************************************
 
+#NOTE: SELECT KOUFU_SYSTEM DATABASE ----
+
 /** jRr added this 04/27/2015 11:22AM */
 CREATE TABLE IF NOT EXISTS `sub_processes` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -25,3 +27,19 @@ CREATE TABLE IF NOT EXISTS `sub_processes` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1
 COLLATE = latin1_swedish_ci;
+
+
+#NOTE: SELECT KOUFU_SALE DATABASE ----
+
+/** jRr added this 04/28/2015 05:26AM */
+ALTER TABLE `addresses` 
+CHANGE COLUMN `type` `type` VARCHAR(60) NULL DEFAULT NULL;
+
+ALTER TABLE `contacts` 
+CHANGE COLUMN `type` `type` VARCHAR(60) NULL DEFAULT NULL;
+
+ALTER TABLE `emails` 
+CHANGE COLUMN `type` `type` VARCHAR(60) NULL DEFAULT NULL;
+
+DROP TABLE `item_category_holders`;
+DROP TABLE `item_type_holders`;

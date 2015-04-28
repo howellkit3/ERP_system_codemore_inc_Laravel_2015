@@ -49,7 +49,7 @@ class CustomerSalesController extends SalesAppController {
 												);
 	
 		if ($this->request->is('post')) {
-			//pr($this->request->data);die;
+
             if (!empty($this->request->data)) {
 
             	$this->Company->bind(array('Address','Contact','Email','ContactPerson'));
@@ -57,33 +57,39 @@ class CustomerSalesController extends SalesAppController {
             	$this->request->data = $this->Company->formatData($this->request->data, $userData['User']['id']);
 
             	$this->request->data['Company']['uuid'] = time();
-            	//pr($this->request->data['Company']['uuid']);exit();rand(100,999).
+            	
             	$this->request->data['Company']['created_by'] = $userData['User']['id'];
+            	
             	$this->request->data['Company']['modified_by'] = $userData['User']['id'];
-            	//pr($this->request->data);exit();
+            	
             	if ($this->Company->saveAssociated($this->request->data)) {
-  
+					
 					$contactPersonId = $this->Company->ContactPerson->saveContact($this->request->data['ContactPersonData'], $this->Company->id);
-					
-					
+            		
             		$this->Company->Contact->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
+            	
             		$this->Company->Email->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
 
 					if($this->request->is('ajax')){
+ 							
  							echo $this->Company->getLastInsertID();
+ 							
  							exit();
+					
 					}
+            		
             		$this->Session->setFlash(__('New Customer Information Added.'));
 
 	            	$this->redirect(
 	                    array('controller' => 'customer_sales', 'action' => 'index')
 	                );
                   
-	            }else{
+	            } else {
 
 	            	$this->Session->setFlash(
                         __('The invalid data. Please, try again.')
                     );
+	           
 	            }
             	
             }
@@ -192,6 +198,8 @@ class CustomerSalesController extends SalesAppController {
 
 	public function edit($companyId = null){
 
+		$this->loadModel('PaymentTermHolder');
+
 		$this->Company->bind(array(
 									'Address',
 									'Contact',
@@ -209,6 +217,12 @@ class CustomerSalesController extends SalesAppController {
 	        'conditions' => array('ContactPerson.company_id' => $companyId)
 	    ));
 
+	    $paymentTermData = $this->PaymentTermHolder->find('list', array(
+													'fields' => array(
+													'id','name'),
+												  		)
+												);
+
 		if (!$this->request->data) {
 
 			$holder = array();
@@ -222,6 +236,8 @@ class CustomerSalesController extends SalesAppController {
 
 
 	    }
+	    $this->set(compact('paymentTermData'));
+		
 		
 	}
 
