@@ -83,9 +83,6 @@ class CompoundSubstrate extends AppModel {
 
 		if (!empty($data)) {
 
-
-			pr($data);
-
 			 $dataHolder = array();
 
 
@@ -100,7 +97,7 @@ class CompoundSubstrate extends AppModel {
 				
 				$dataHolder['ItemGroupLayer']['id']  = '';
 				if (is_array($dataHolder['ItemGroupLayer']['substrate'])) {
-					echo "true";
+					//echo "true";
 					$dataHolder['ItemGroupLayer']['substrate'] = $data['ItemGroupLayer']['substrate'][$groupLayerCount]['substrate'];
 					$dataHolder['ItemGroupLayer']['id'] = !empty($data['ItemGroupLayer']['substrate'][$groupLayerCount]['id']) ? $data['ItemGroupLayer']['substrate'][$groupLayerCount]['id'] : '';
 				

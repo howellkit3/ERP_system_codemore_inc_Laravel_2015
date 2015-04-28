@@ -7,7 +7,7 @@
             <td>
 
          
-               <?php  echo ucfirst($UnitDataDataList['Unit']['unit']) ?>
+               <?php  echo strtolower($UnitDataDataList['Unit']['unit']) ?>
                
             </td>
             <td class="text-center">

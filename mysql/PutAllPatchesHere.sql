@@ -11,3 +11,17 @@
 #
 # NOTE: PLEASE FOLLOW THE FORMAT
 # ************************************************************
+
+/** jRr added this 04/27/2015 11:22AM */
+CREATE TABLE IF NOT EXISTS `sub_processes` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `process_id` INT(11) NULL DEFAULT NULL,
+  `name` VARCHAR(80) NULL DEFAULT NULL,
+  `created_by` INT(11) NULL DEFAULT NULL COMMENT '	',
+  `modified_by` INT(11) NULL DEFAULT NULL,
+  `created` TIMESTAMP NULL DEFAULT NULL,
+  `modified` TIMESTAMP NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
