@@ -135,8 +135,8 @@ class ProductsController extends SalesAppController {
 		
 
 		if ($this->request->is('post')) {
-				pr($this->request->data);
-				exit();
+				//pr($this->request->data);
+				//exit();
 				$userData = $this->Session->read('Auth');
 			 	$productDetails = $this->request->data;
 	        	$this->loadModel('Sales.Product');
@@ -298,7 +298,7 @@ class ProductsController extends SalesAppController {
 			
 		$this->paginate = array(
             'conditions' => $conditions,
-            'limit' => 3,
+            'limit' => 10,
             //'fields' => array('id', 'name', 'created','modified'),
             'order' => 'Product.id DESC',
         );
@@ -411,6 +411,24 @@ class ProductsController extends SalesAppController {
 										));
 
 	
+
+		
+		echo json_encode($itemdata);
+
+		$this->autoRender = false;
+    	
+    }
+     public function find_contact($itemId = null){
+
+    	$this->layout = false;
+    	$this->loadModel('ContactPerson');
+
+		$itemdata =$this->ContactPerson->find('all', array(
+										'conditions' => array(
+											'ContactPerson.company_id' => $itemId), 
+										'fields' => array(
+											'id', 'firstname','lastname')
+										));
 
 		
 		echo json_encode($itemdata);

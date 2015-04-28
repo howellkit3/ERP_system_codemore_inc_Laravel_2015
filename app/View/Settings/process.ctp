@@ -1,4 +1,4 @@
-<?php echo $this->Html->script(array('ajax_pagination','tabs', 'category')); ?>
+<?php echo $this->Html->script(array('ajax_pagination')); ?>
 <?php echo $this->element('setting_option');?><br><br>
 <?php 
 

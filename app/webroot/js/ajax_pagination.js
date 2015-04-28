@@ -91,4 +91,11 @@ $(function(){
 		
 	});
 
+		$('body').on('click','#unit_pagination span > a',function(e) {
+		e.preventDefault();
+		$url = $(this).attr('href');
+
+		getNextItem($url,'#unit-table','.main-box-body');				
+	});
+
 });

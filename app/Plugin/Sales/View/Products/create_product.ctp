@@ -112,118 +112,13 @@
 				</div>
 			</div>
 
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="main-box">
-						<header class="main-box-header clearfix">
-	                	<h1>Specification</h1>
-	           		 	</header>
-						<div class="main-box-body clearfix">
-							<div class="main-box-body clearfix">
-								<div class="form-horizontal">	
-
-									<div class="form-group">
-										<div class="col-lg-2"></div>
-										<div class="col-lg-1">
-											<button data="0"class="add_field_button btn btn-primary pull-left">Label &nbsp;&nbsp;&nbsp;</button>
-										</div>
-										<div class="col-lg-1">
-											<button type="button" class="btn btn-primary pull-left add_part_button">Part</button>
-										</div>
-										<div class="col-lg-1">
-											<button type="submit" class="btn btn-primary pull-left">Process&nbsp;</button>
-										</div>
-									</div>	
-
-									<!--text fields -->
-									<section class="label-draggable-section">
-										<div class="row">
-											<div class="col-lg-12">
-												<div class="main-box label-section">
-													<div class="top-space"></div>
-													<ul id="sortable">
-								 						<!--list of draggable text fields -->
-													</ul>
-													
-												</div>
-											</div>
-										</div>
-									</section>
-									<!--parts fields -->
-									<section class="part-draggable-section">
-										<div class="row">
-											<div class="col-lg-12">
-												<div class="main-box">
-													<div class="top-space"></div>
-													<div class="main-box-body clearfix">
-														<div class="main-box-body clearfix">
-															<div class="form-horizontal">	
-																<div class="form-group">
-																	<label class="col-lg-2 control-label my-pad">Item Group</label>
-																	<div class="col-lg-8">
-																		<?php echo $this->Form->input('Product.itemGroup', array(
-																			'options' => array('General Items', 'Substrates', 'Compound Substrates','Corrugated Papers'),
-											                                'type' => 'select',
-											                                'label' => false,
-											                                //'readonly' => 'readonly',
-											                                'class' => 'form-control required categorylist',
-											                                'empty' => '---Select Item Group---',
-											                               	'required' => 'required'
-											                                 )); 
-											                            ?>
-																	</div>
-																</div>
-																<section class="dropItem">
-																	<div class="form-group">
-																		<label class="col-lg-2 control-label my-pad">Category</label>
-																		<div class="col-lg-8">
-																			<?php echo $this->Form->input('Product.category', array(
-																				'options' => array('General Items', 'Substrates', 'Compound Substrates','Corrugated Papers'),
-												                                'type' => 'select',
-												                                'label' => false,
-												                                //'readonly' => 'readonly',
-												                                'class' => 'form-control required categorylist',
-												                                'empty' => '---Select Item Group---',
-												                               	'required' => 'required'
-												                                 )); 
-												                            ?>
-																		</div>
-																	</div>
-																	<div class="form-group">
-																		<label class="col-lg-2 control-label my-pad">Item</label>
-																		<div class="col-lg-8">
-																			<?php echo $this->Form->input('Product.item', array(
 																				'options' => array(
 																					'General Items', 
 																					'Substrates',
 																					'Compound Substrates',
 																					'Corrugated Papers'
 																				),
-												                                'type' => 'select',
-												                                'label' => false,
-												                                //'readonly' => 'readonly',
-												                                'class' => 'form-control required categorylist',
-												                                'empty' => '---Select Item Group---',
-												                               	'required' => 'required'
-												                                 )); 
-												                            ?>
-																		</div>
-																	</div>
-																</section>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</section>							
-									
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+		
 
 			<div class="row">
 				<div class="col-lg-12">

@@ -30,7 +30,7 @@ class Product extends AppModel {
 					'foreignKey' => 'company_id',
 					'dependent' => true
 				),
-				'ItemCategoryData' => array( /** DITO KAMI HULING TUMIGIL NI HOWELL */
+				'ItemCategoryData' => array( 
 					'className' => 'Sales.ItemCategory',
 					'foreignKey' => 'item_category_holder_id',
 					'dependent' => true
