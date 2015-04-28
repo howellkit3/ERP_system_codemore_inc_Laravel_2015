@@ -56,7 +56,7 @@
 					                                'options' => array($companyData),
 					                                'type' => 'select',
 					                                'label' => false,
-					                                'class' => 'form-control required',
+					                                'class' => 'form-control required contacpersonlist',
 					                                'empty' => '---Select Company---',
 					                                'id' => 'select_company'
 					                                 )); 
@@ -70,10 +70,13 @@
 											<div class="col-lg-8">
 												<?php 
 		                                            echo $this->Form->input('Quotation.attention_details', array(
+		                                            								'type' => 'select',
 		                                            								'class' => 'form-control item_type',
 								                                                    'label' => false,
-								                                                    'placeholder' => 'Attention'));
+								                                                    'placeholder' => 'Attention',
+								                                                    'empty' => '--Select Contact Person--'));
 	                                            ?>
+
 											</div>
 										</div>
 
@@ -395,9 +398,10 @@
 	</div>
 
 	<script>
-		$("#QuotationCreateForm").validate();
+		
 		
 		jQuery(document).ready(function($){
+			$("#QuotationCreateForm").validate();
 			//datepicker
 			$('.datepick').datepicker({
 				format: 'yyyy-mm-dd'
