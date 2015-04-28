@@ -44,10 +44,10 @@ class Contact extends AppModel {
 				'rule' => array('notEmpty'),
 				'message' => 'Required fields.',
 			),
-			'numeric'=> array(
-	            'rule' => 'numeric',
-	            'message'=> 'It should be numeric'
-	        ),
+			// 'numeric'=> array(
+	  //           'rule' => 'numeric',
+	  //           'message'=> 'It should be numeric'
+	  //       ),
 		),
 	
 	);

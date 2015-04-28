@@ -82,22 +82,16 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span> Payment Term</label>
+                                        <label for="inputPassword1" class="col-lg-2 control-label">Payment Term</label>
                                         <div class="col-lg-9">
-                                            <?php 
+                                       
+                                              <?php 
                                                 echo $this->Form->input('Company.payment_term', array(
-                                                    'options' => array(
-                                                        'PIA - Payment in advance' => 'PIA - Payment in advance',
-                                                        'COD – Cash on Delivery',
-                                                        'Net 7 - Payment seven days after invoice date' => 'Net 7 - Payment seven days after invoice date',
-                                                        'Net 10 - Payment ten days after invoice date' =>'Net 10 - Payment ten days after invoice date'
-                                                        ,
-                                                        'Net 30 - Payment 30 days after invoice date' => 'Net 30 - Payment 30 days after invoice date',
-                                                        'Net 60 - Payment 60 days after invoice date' => 'Net 60 - Payment 60 days after invoice date',
-                                                        'Net 90 - Payment 90 days after invoice date' => 'Net 90 - Payment 90 days after invoice date'),
+                                                    'options' => array($paymentTermData),
                                                     'label' => false,
-                                                    'class' => 'form-control required',
-                                                   'default' => !empty($this->request->data['Company']['payment_term']) ? $this->request->data['Company']['payment_term'] : ''
+                                                    'style' => 'text-transform:capitalize',
+                                                    'class' => 'form-control',
+                                                    'default' => !empty($this->request->data['Company']['payment_term']) ? $this->request->data['Company']['payment_term'] : '--Please Select Payment Term--'
                                                 ));
 
                                             ?>
@@ -449,7 +443,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="main-box">
-                                <h1>Contact Person Number</h1>
+                                <h1>Contact Person Email</h1>
                                 <!-- <div class="top-space"></div> -->
                                 <div class="main-box-body clearfix">
                                     <div class="main-box-body clearfix">
