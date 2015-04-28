@@ -112,14 +112,6 @@
 				</div>
 			</div>
 
-																				'options' => array(
-																					'General Items', 
-																					'Substrates',
-																					'Compound Substrates',
-																					'Corrugated Papers'
-																				),
-		
-
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="main-box">
