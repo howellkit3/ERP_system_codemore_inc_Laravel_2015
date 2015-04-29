@@ -198,7 +198,9 @@ class Company extends AppModel {
 	public function formatData($data = null,$auth= null){
 
 		foreach ($data['Address'] as $key => $value) {
+
 			$data['Address'][$key] = $value;
+			$data['Address'][$key]['id'] = !empty($data['Address'][$key]['id']) ? $data['Address'][$key]['id'] : '';
 			$data['Address'][$key]['model'] = 'Company';
 			$data['Address'][$key]['created_by'] =$auth;
 			$data['Address'][$key]['modified_by'] =$auth;
@@ -206,6 +208,7 @@ class Company extends AppModel {
 
 		foreach ($data['Contact'] as $key => $value) {
 			$data['Contact'][$key] = $value;
+			$data['Contact'][$key]['id'] = !empty($data['Contact'][$key]['id']) ? $data['Contact'][$key]['id'] : '';
 			$data['Contact'][$key]['model'] = 'Company';
 			$data['Contact'][$key]['created_by'] =$auth;
 			$data['Contact'][$key]['modified_by'] =$auth;
@@ -213,6 +216,7 @@ class Company extends AppModel {
 
 		foreach ($data['Email'] as $key => $value) {
 			$data['Email'][$key] = $value;
+			$data['Email'][$key]['id'] = !empty($data['Email'][$key]['id']) ? $data['Email'][$key]['id'] : '';
 			$data['Email'][$key]['model'] = 'Company';
 			$data['Email'][$key]['created_by'] =$auth;
 			$data['Email'][$key]['modified_by'] =$auth;

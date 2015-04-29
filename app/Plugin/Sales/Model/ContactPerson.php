@@ -57,7 +57,7 @@ class ContactPerson extends AppModel {
 		
 		'firstname' => array(
 			'notEmpty' => array(
-				'rule' => array('notEmpty'," "),
+				'rule' => array('notEmpty'),
 				'message' => 'Required fields.',
 			),
 			// 'alphaNumeric'=> array(
@@ -94,22 +94,28 @@ class ContactPerson extends AppModel {
 
 	public function saveContact($data, $company_id)
 	{
-		
+	
 		foreach ($data as $key => $contactPersonData)
 		{
 
 			$this->create();
-			foreach ($contactPersonData[$this->name] as $key => $contactPersonValue) 
-			{
-				//pr($contactPersonData[$this->name]);pr($company_id);die;
-				$contactPersonValue['model'] = "Company";
-				$contactPersonValue['company_id'] = $company_id;
+			if (!empty($contactPersonData['ContactPerson'])) {
+
+			
+				foreach ($contactPersonData[$this->name] as $key => $contactPersonValue) 
+				{
+					//pr($contactPersonData[$this->name]);pr($company_id);die;
+					$contactPersonValue['id'] = !empty($contactPersonData[$this->name][$key]['id']) ? $contactPersonData[$this->name][$key]['id'] : '';
+					$contactPersonValue['model'] = "Company";
+					$contactPersonValue['company_id'] = $company_id;
+						
 					
-				
+				}
 			}
-			$this->saveAll($contactPersonValue);
-			return $this->id;
+			
 		}
+		$this->saveAll($contactPersonValue);
+		return $this->id;
 		
 	}
 

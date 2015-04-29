@@ -1,4 +1,6 @@
-<?php foreach ($company as $customerlist): ?>
+<?php 
+
+foreach ($company as $customerlist): ?>
     <tbody aria-relevant="all" aria-live="polite" role="alert">
         <tr class="">
             <td class="">
@@ -12,9 +14,17 @@
             </td>
             <td class="">
                 <div>
-                    <?php  echo ucfirst($customerlist['ContactPerson'][0]['lastname']); ?>, 
-                    <?php echo ucfirst($customerlist['ContactPerson'][0]['firstname']); ?> &nbsp;
-                    <?php echo ucfirst($customerlist['ContactPerson'][0]['middlename']); ?>
+                <?php 
+                    if(!empty($customerlist['ContactPerson'])) { 
+                            echo ucfirst($customerlist['ContactPerson'][0]['lastname']); 
+                            echo ','; 
+                            echo ucfirst($customerlist['ContactPerson'][0]['firstname']);  
+                            echo '&nbsp';
+                            echo ucfirst($customerlist['ContactPerson'][0]['middlename']); 
+                        }  else {
+                        echo '';
+                    }  
+                ?>
                 </div>
             </td>
             <td>

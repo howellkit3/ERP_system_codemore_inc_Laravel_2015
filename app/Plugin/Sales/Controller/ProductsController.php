@@ -135,8 +135,8 @@ class ProductsController extends SalesAppController {
 		
 
 		if ($this->request->is('post')) {
-				//pr($this->request->data);
-				//exit();
+				pr($this->request->data);
+				exit();
 				$userData = $this->Session->read('Auth');
 			 	$productDetails = $this->request->data;
 	        	$this->loadModel('Sales.Product');
@@ -298,7 +298,7 @@ class ProductsController extends SalesAppController {
 			
 		$this->paginate = array(
             'conditions' => $conditions,
-            'limit' => 10,
+            'limit' => 3,
             //'fields' => array('id', 'name', 'created','modified'),
             'order' => 'Product.id DESC',
         );
@@ -461,22 +461,33 @@ class ProductsController extends SalesAppController {
 
     	$this->ItemCategoryHolder->bind(array('ItemTypeHolder'));
 
+    	$productData = array();
+
     	if($dropdownId == 0){
+
     		$generalData = $this->GeneralItem->find('list',array(
 											'fields' => array(
 											'id', 'category_id')));
     		
 
-    		$categoryData = $this->ItemCategoryHolder->find('all');
-											// 'fields' => array(
-											// 'id', 'name')
-											// )
-    							// 		);
-    		pr($categoryData);exit();
+    		$categoryData = $this->ItemCategoryHolder->find('all',
+    											array('fields' => 
+    												array('ItemCategoryHolder.id',
+    												 	'ItemCategoryHolder.name',
+    												 	'ItemTypeHolder.id',
+    												 	'ItemTypeHolder.name'
+    												 ),
+													'conditions' => array(
+														'ItemCategoryHolder.id' => $generalData
+													),
+													'contains' => array('ItemTypeHolder')
+													));
+
+    		foreach ($categoryData as $key => $itemtypes) {
+    			$productData['ItemTypeHolder'][] = 	$itemtypes['ItemTypeHolder'];
+    		}
     	}
 
-    	
-    	
     	$this->layout = false;
 
 		echo json_encode($productData);
