@@ -22,19 +22,11 @@ class QuotationsController extends SalesAppController {
 	    	    
 	public function index() {
 
-		$this->loadModel('Sales.Product');
-
-		$this->loadModel('Sales.QuotationDetail');
-
 		$userData = $this->Session->read('Auth');
 
-		$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail','ProductDetail', 'Product'));
-
-		//$this->QuotationDetail->bind(array('Product'));
+		$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail','ProductDetail'));
 
 		$quotationData = $this->Quotation->find('all', array('order' => 'Quotation.id DESC','group' => 'Quotation.id'));
-
-		$productData = $this->QuotationDetail->find('all', array('order' => 'QuotationDetail.id DESC','group' => 'QuotationDetail.id'));
 
 		$this->Company->bind(array('Inquiry'));
 
@@ -50,7 +42,7 @@ class QuotationsController extends SalesAppController {
 
 
 
-		$this->set(compact('companyData','quotationData','inquiryId','salesStatus','productData'));
+		$this->set(compact('companyData','quotationData','inquiryId','salesStatus'));
 
 	}
 
@@ -75,7 +67,8 @@ class QuotationsController extends SalesAppController {
 
 		}else{
 
-			
+		
+		
 			$this->loadModel('ItemCategoryHolder');
 			
 			$itemCategoryData = $this->ItemCategoryHolder->find('list');
