@@ -57,7 +57,7 @@ class ContactPerson extends AppModel {
 		
 		'firstname' => array(
 			'notEmpty' => array(
-				'rule' => array('notEmpty'," "),
+				'rule' => array('notEmpty'),
 				'message' => 'Required fields.',
 			),
 			// 'alphaNumeric'=> array(

@@ -215,19 +215,20 @@ class QuotationsController extends SalesAppController {
 
 		$this->layout = 'pdf';
 
-		Configure::write('debug',2);
+		// Configure::write('debug',2);
 
 		$userData = $this->Session->read('Auth');
 
-		$userData = $this->Session->read('Auth');
+		// $userData = $this->Session->read('Auth');
 
+		
 		$this->Quotation->bind(array('Product'));
 		$productName = $this->Quotation->find('first', array(
 													'conditions' => array(
 														'Quotation.id' => $quotationId
 														)
 													));
-
+		
 		$this->Company->bind(array('Address','Contact','Email','Inquiry','ContactPerson','Quotation'));
 
 		$quotation = $this->Company->Quotation->find('first', array(

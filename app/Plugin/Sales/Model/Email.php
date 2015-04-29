@@ -36,15 +36,15 @@ class Email extends AppModel {
 		$this->contain($model);
 	}
 
-	public $validate = array(
+	// public $validate = array(
 
-		'email' => array(
-			'email' => array(
-				'rule' => array('email'),
-			),
-		),
+	// 	'email' => array(
+	// 		'email' => array(
+	// 			'rule' => array('email'),
+	// 		),
+	// 	),
 	
-	);
+	// );
 
 	public function beforeSave($options = array())
 	{
