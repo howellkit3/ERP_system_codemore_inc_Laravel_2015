@@ -102,6 +102,7 @@
 															<table class="table table-striped table-hover">
 										                        <thead>
 										                            <tr>
+										                            	<br><br>
 										                                <th><a href="#"><span>Address</span></a></th>
 										                                <th><a href="#"><span>City</span></a></th>
 										                                <th><a href="#"><span>State Province</span></a></th>
@@ -198,6 +199,7 @@
 										
 										<table class="table table-striped table-hover">
 					                        <thead>
+					                        	<br><br>
 					                            <tr>
 					                                <th><a href="#"><span>Name</span></a></th>
 					                                <th><a href="#"><span>Position</span></a></th>
