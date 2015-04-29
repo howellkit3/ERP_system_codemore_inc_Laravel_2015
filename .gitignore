@@ -9,6 +9,7 @@
 /dist
 /tags
 /app/webroot/css/font-awesome
+/app/webroot/css/font-awesome/
 *.mo
 
 # IDE and editor specific files #
