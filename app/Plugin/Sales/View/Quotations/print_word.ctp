@@ -7,145 +7,266 @@
 		<div class="main-box">
 			<center>
 				<header class="main-box-header clearfix">
-					<h3>Kou Fu Packaging Corp.</h3>
-					<h6 style="font-family: Calibri;">Lot 4-5, Blk 3 Phase 2, Mountview Industrial Complex, Carmona, Cavite</h6>
+					<h1>Kou Fu Packaging Corp.</h1>
+					<h5>Lot 4-5, Blk 3 Phase 2, Mountview Industrial Complex, Bancal, Carmona, Cavite</h5>
 					<h6>Tel#: (046) 972-1111 to 13 Fax#: (046) 972-0120</h6><br>
-					<h3>Price Quotation</h3><br>
+					<h2>Price Quotation</h2><br>
 				</header>
 			</center>
-			<table class="layout">
-				<thead>
-					<tr>
-						<td style="width:123px;font-family: Calibri;">Attention</td>
-						<td style="width:20px;">:</td>
-						<td style="width:400px;">
-							<?php echo !empty($quotation['Quotation']['company_id']) ? $companyData[$quotation['Quotation']['company_id']] : $companyData[$inquiryId[$quotation['Quotation']['inquiry_id']]] 
+			
+			<div class="main-box-body clearfix">
+				<form class="form-horizontal" role="form">
+					<div class="form-group">
+						<div class="col-lg-1"></div>
+						<div class="col-lg-2">
+							Attention
+						</div>
+						<div class="col-lg-5">
+							:&emsp;
+							<?php 
+							// 	echo $quotation['Quotation']['attention_details']
+								echo !empty($quotation['Quotation']['company_id']) ? ucfirst($companyData[$quotation['Quotation']['company_id']]) : ucfirst($companyData[$inquiryId[$quotation['Quotation']['inquiry_id']]]) 
 							?>
-						</td>
-						<td>No:</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td style="width:20px;"></td>
-						<td>
+						</div>
+						<div class="col-lg-4">&emsp;&emsp;&nbsp;&nbsp;&nbsp;
+							No : <u>PQ-<?php echo $quotation['Quotation']['uuid'] ?></u>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-lg-3"></div>
+						<div class="col-lg-5">
 							___________________________________________________
-						</td>
-						<td>Date:
-							<?php echo !empty($quotation['Quotation']['created']) ? date('M d, Y', strtotime($quotation['Quotation']['created'])) : '' 
-							?>
-						</td>
-					</tr>
-				</thead>
-			</table>
-			<table class="layout">
-				<thead>
-					<tr>
-						<td style="width:20px;">
-							Dear 
-						</td>
-						<td>
-							<?php echo $contactInfo['ContactPerson']['firstname'] ?>
-							<?php echo $contactInfo['ContactPerson']['lastname'] ?>,
-						</td>
-					</tr>
-				</thead>
-			</table>
-			<table class="layout">
-				<thead>
-					<tr>
-						<td style="padding-left: 126px;">
-							We are pleased to submit our price quotation on your printing requirement under the following <br>specifications:
-						</td>
-					</tr>
+						</div>
+						<div class="col-lg-4">&emsp;&emsp;&emsp;
+							Date :&nbsp;<?php echo !empty($quotation['Quotation']['created']) ? date('Y/m/d', strtotime($quotation['Quotation']['created'])) : '' ?>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-lg-1"></div>
+						<div class="col-lg-10">
+							Dear :&nbsp; <?php echo ucfirst($quotation['Quotation']['attention_details']) ?>&nbsp;
+							<?php //echo ucfirst($contactInfo['ContactPerson']['lastname']) ?>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-lg-3"></div>
+						<div class="col-lg-8">
+							We are pleased to submit our price quotation on your printing requirement under the following specifications:
+						</div>
+					</div><br>
+					<div class="form-group">
 
-				</thead>
-			</table>
-			<table class="layout">
-		
+							<div class="col-lg-1"></div>
+							<div class="col-lg-2">
+								Item
+							</div>
+							<div class="col-lg-8">
+								<?php echo $quotation['ProductDetail']['name']?>
+							</div>
 
-					<?php foreach ($quotationFieldInfo as $key => $value) { ?>
-						<tr>
-							<td style="width:123px;">
-								<?php echo $field[$value['QuotationField']['custom_fields_id']] ?>
-							</td>
-							<td style="width:20px;">:</td>
-							<td>
-								<?php echo $value['QuotationField']['description'] ?>
-							</td>
-						</tr>
-					<?php } ?>
-				
-			</table><br>
-			<table class="layout">
-				<thead>
-					<tr>
-						<td>Respectfully,</td>
-					</tr>
-					<tr>
-						<td style="width:335px;">
-							<?php echo $user['User']['first_name']?>
-							<?php echo $user['User']['last_name']?>
+					</div>
+					<div class="form-group">
+
+							<div class="col-lg-1"></div>
+							<div class="col-lg-2">
+								Size
+							</div>
+							<div class="col-lg-8">
+								:&emsp;<?php echo $quotation['QuotationDetail']['size']?>
+							</div>
+
+					</div>
+					<div>
+					<!-- <div class ="boxed2"> -->
+					<div class="form-group">
+							<div class="col-lg-1"></div>
+							<div class="col-lg-2">
+								Qty<br><br>
+								Unit Price<br><br>
+								Vat Price<br><br>
+								Material
+							</div>
+							<div class="col-lg-8"><div class="pull-left"></div>
+								<?php foreach ($quotation['QuotationItemDetail'] as $itemDetail){ ?>
+									<table  class = "tbl">
+										<tr>
+											
+											<td height ="35px" valign ="top" class ="column3 col-md-8"> 
+												<div class="col-lg-12">
+													<?php echo $itemDetail['quantity'];?> 
+												</div>
+											</td>	
+											
+										</tr>
+
+										<tr >
+											
+											<td height ="35px" valign ="top" class = "column4 col-md-8">
+												<div class="col-lg-12">
+													<?php echo $itemDetail['unit_price'];?> 
+												</div>
+											</td>
+											
+										</tr>
+
+										<tr>
+											
+											<td height ="40px" class ="column2 col-md-8">
+												<div class="col-lg-12">
+													<?php echo $itemDetail['vat_price'];?> 
+												</div>
+											</td>
+											
+										</tr>
+
+										<tr>
+											
+											<td height ="30px" class ="column2 col-md-8">
+												<div class="col-lg-12">
+													<?php echo $itemDetail['material'];?> 
+												</div>
+											</td>
+											
+										</tr>
+
+									</table>
+								<?php } ?>
+
+							</div>
+
+						</div>
+
+						<div class="form-group">
+
+							<div class="col-lg-1"></div>
+							<div class="col-lg-2">
+								Color
+							</div>
+							<div class="col-lg-8">
+								:&emsp;<?php echo $quotation['QuotationDetail']['color']?>
+							</div>
+
+						</div>
+
+						<div class="form-group">
+
+							<div class="col-lg-1"></div>
+							<div class="col-lg-2">
+								Process
+							</div>
+							<div class="col-lg-8">
+								:&emsp;<?php echo $quotation['QuotationDetail']['process']?>
+							</div>
+
+						</div>
+
+						<div class="form-group">
+
+							<div class="col-lg-1"></div>
+							<div class="col-lg-2">
+								Packaging
+							</div>
+							<div class="col-lg-8">
+								:&emsp;<?php echo $quotation['QuotationDetail']['packaging']?>
+							</div>
+
+						</div>
+
+						<div class="form-group">
+
+							<div class="col-lg-1"></div>
+							<div class="col-lg-2">
+								Other Specs
+							</div>
+							<div class="col-lg-8">
+								:&emsp;<?php echo $quotation['QuotationDetail']['other_specs']?>
+							</div>
+
+						</div>
+
+						<div class="form-group">
+
+							<div class="col-lg-1"></div>
+							<div class="col-lg-2">
+								Terms
+							</div>
+							<div class="col-lg-8">
+								:&emsp;<?php echo $quotation['Quotation']['payment_terms']?>
+							</div>
+
+						</div>
+
+						<div class="form-group">
+
+							<div class="col-lg-1"></div>
+							<div class="col-lg-2">
+								Validity
+							</div>
+							<div class="col-lg-8">
+								:&emsp;<?php echo date('M d, Y', strtotime($quotation['Quotation']['validity'])); ?>
+							</div>
+
+						</div>
+
+						<div class="form-group">
+
+							<div class="col-lg-1"></div>
+							<div class="col-lg-2">
+								Remarks
+							</div>
+							<div class="col-lg-8">
+								:&emsp;<?php echo $quotation['QuotationDetail']['remarks']?>
+							</div>
+
+						</div>
+			
+						
+					
+
+					
+					<br><br>
+					<div class="form-group">
+						<div class="col-lg-1"></div>
+						<div class="col-lg-10">
+							Respectfully,
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-lg-1"></div>
+						<div class="col-lg-5">
+							<?php echo ucfirst($user['User']['first_name']) ?>&nbsp;
+							<?php echo ucfirst($user['User']['last_name'])?>
 							<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
-						</td>
-					</tr>
-				</thead>
-			</table>
-			<table class="layout">
-				<thead>
-					<tr>
-						<td>Approved by</td>
-					</tr>
-					<tr>
-						<td style="width:335px;">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-lg-1"></div>
+						<div class="col-lg-10">
+							Approved by
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-lg-1"></div>
+						<div class="col-lg-5" style="display:inline-block !important;">
+
 							Ms. Carryll Yu
 							<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
-						</td>
-					</tr>
-				</thead>
-			</table>
-			<br>
-			<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
-			<center>
-				<header class="main-box-header clearfix">
-					<h4>Acceptance Slip</h4><br>
-				</header>
-			</center>
-			<table class="layout">
-				<thead>
-					<tr>
-						<td style="width:335px;text-align:center;">Send to manager</td>
-						<td style="padding-left: 150px;">Date:_____________________</td>
-					</tr>
-				</thead>
-			</table>
-			<center>
-				<header class="main-box-header clearfix">
-					<p>I do hereby accept the price and other details submitted on your price quotation no.CQO1408129<br> Also, I do hereby authorize your company to proceed with and supply the work described above.</p><br>
-				</header>
-			</center>
-			<table class="layout">
-				<thead>
-					<tr>
-						<td>Athorized by:_________________</td>
-						<td style="padding-left: 270px;">Position:_________________</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td style="padding-left: 285px;">Date:_________________</td>
-					</tr>
-				</thead>
-			</table>
-			<br><br>
-			<table class="layout">
-				<thead>
-					<tr>
-						<td><?php echo (new \DateTime())->format('l, F d, Y '); ?></td>
-						
-					</tr>
-				</thead>
-			</table>
-			
-									
+
+						</div>
+						<br><br>
+						<div class=" pull-right col-lg-3" style="display:inline-block !important;">
+							<p class = "doc">
+								<font size ="1">
+									Doc No.: KFP-FR-MKT-07<br>
+									REV. No.: 01
+								</font>
+							</p>
+						</div>
+					</div>
+					<div style ="clear:both">
+					</div>
+				</form>
+			</div>								
 		</div>
 	</div>	
 </div>
