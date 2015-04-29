@@ -38,8 +38,15 @@ class PaymentTermHolder extends AppModel {
                     'foreignKey' => 'packaging_holder_id',
                     'dependent' => true
                 ),
+            ),
+
+                'Company' => array(
+                    'className' => 'Company',
+                    'foreignKey' => 'payment_term',
+                    'dependent' => true
+                ),
             )
-        ));
+        );
 
         $this->contain($model);
     }

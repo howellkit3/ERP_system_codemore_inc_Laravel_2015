@@ -24,6 +24,7 @@ class Company extends AppModel {
 					'foreignKey' => 'company_id',
 					'dependent' => true
 				),
+				
 				'Address' => array(
 					'className' => 'Sales.Address',
 					'foreignKey' => 'foreign_key',
@@ -64,6 +65,12 @@ class Company extends AppModel {
 					'className' => 'Sales.ClientOrder',
 					'foreignKey' => 'company_id',
 					'conditions' => '',
+					'dependent' => true
+				),
+				'PaymentTermHolder' => array(
+					'className' => 'PaymentTermHolder',
+					'foreignKey' => 'id',
+					'conditions' =>'',
 					'dependent' => true
 				)
 			)

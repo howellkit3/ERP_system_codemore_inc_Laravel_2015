@@ -157,8 +157,9 @@ class CustomerSalesController extends SalesAppController {
 
 	public function view($companyId = null){
 
+		$this->loadModel('PaymentTermHolder');
 		
-		$this->Company->bind(array('Address','Contact','Email','ContactPerson','Product'));
+		$this->Company->bind(array('Address','Contact','Email','ContactPerson','Product', 'PaymentTermHolder'));
 
 		$this->Company->recursive = 1;
 
