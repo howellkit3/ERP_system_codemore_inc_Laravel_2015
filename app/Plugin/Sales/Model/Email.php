@@ -59,14 +59,19 @@ class Email extends AppModel {
 		foreach ($data as $key => $emailData)
 		{
 			$this->create();
-			foreach ($emailData[$this->name] as $key => $emailValue) 
-			{
-				$emailValue['model'] = "ContactPerson";
-				$emailValue['foreign_key'] = $contact_id;	
-				
+			if (!empty($emailData[$this->name])) {
+				foreach ($emailData[$this->name] as $key => $emailValue) 
+					{
+						$emailValue['id'] = !empty($emailValue['id']) ? $emailValue['id'] : '';
+						$emailValue['model'] = "ContactPerson";
+						$emailValue['foreign_key'] = $contact_id;	
+
+						
+						$this->save($emailValue);
+					}
 			}
-			$this->saveAll($emailValue);
-			return $this->id;
+		
+			
 		}
 		
 	}

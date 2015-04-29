@@ -4,8 +4,7 @@
 <div style="clear:both"></div>
 
 <?php echo $this->element('sales_option'); ?><br><br>
-<?php echo $this->Html->script('Sales.company_quotation');?>
-   <?php echo $this->Form->create('Company',array('url'=>(array('controller' => 'customer_sales','action' => 'add')),'class' => 'form-horizontal'));?>
+    <?php echo $this->Form->create('Company',array('url'=>(array('controller' => 'customer_sales','action' => 'add')),'class' => 'form-horizontal'));?>
 <div class="row">
     <div class="col-lg-12">
         
@@ -15,7 +14,7 @@
                     
                     <center>
                         <h1 class="pull-left">
-                            Customer Information
+                         Customer Information
                         </h1>
                     </center>
                     <?php 
@@ -25,9 +24,7 @@
 
             </div>
         </div>
-     
-            
-            <div class="row">
+       <div class="row">
                 <div class="col-lg-12">
                     <div class="main-box">
                         <h1>Company</h1>
@@ -71,7 +68,6 @@
                                             <?php
                                                 echo $this->Form->input('Company.tin', array('class' => 'form-control col-lg-6','label' => false,'type' => 'text'));
                                             ?>
-
                                 
                                         </div>
                                     </div>
@@ -123,6 +119,7 @@
                                                         'data-name' => 'Address'
                                                     ));
                                                 ?>
+
                                             </div>
                                             <div class="col-lg-7">
                                                 <?php 
@@ -295,7 +292,7 @@
              <div class="row">
                 <div class="col-lg-12">
                     <div class="main-box">
-                        <h1>Contact Person</h1>
+                        <h1>Contact person</h1>
                         <!-- <div class="top-space"></div> -->
                         <div class="main-box-body clearfix">
                             <div class="main-box-body clearfix">
@@ -462,7 +459,7 @@
 
 
 <script>
-    jQuery(document).ready(function($){
+ jQuery(document).ready(function($){
 
         //masked inputs
         $("#CompanyTin").mask("999-999-999-999");

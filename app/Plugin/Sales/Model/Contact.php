@@ -55,23 +55,32 @@ class Contact extends AppModel {
 	public function saveContact($data, $contact_id)
 
 	{
-		
+		$contactValue = array();
+
+
+
 		foreach ($data as $key => $contactData)
 		{
-			
-			
+			unset($contactData['ContactPerson']);
 			$this->create();
-			foreach ($contactData[$this->name] as $key => $contactValue) 
-			{
-				$contactValue['model'] = "ContactPerson";
-				$contactValue['foreign_key'] = $contact_id;	
+			if (!empty($contactData['Contact'])) {
+
+
+				foreach ($contactData[$this->name] as $key => $contactValue) 
+				{
+					//pr($contactData['Contact']);
+					$contactValue['id'] = !empty($contactValue['id']) ? $contactValue['id'] : '';
+					$contactValue['model'] = "ContactPerson";
+					$contactValue['foreign_key'] = $contact_id;
+					$this->save($contactValue);
+				}
 				
 			}
-			$this->saveAll($contactValue);
-			return $this->id;
+			//return $this->id;
 
 		}
-		$this->id;
+		
+		
 		
 	}
 
