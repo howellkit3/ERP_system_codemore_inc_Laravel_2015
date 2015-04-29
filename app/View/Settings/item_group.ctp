@@ -16,14 +16,14 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 <div class="row">
 	<div class="col-lg-12">
 		<div class="main-box clearfix">
+			<ul class="nav nav-tabs">
+				<li class="<?php echo ($active_tab == 'tab-general-items') ? 'active' : '' ?>" alt="tab-general-items"><a href="#tab-general-items" data-toggle="tab">General Items</a></li>
+				<li class="<?php echo ($active_tab == 'tab-substrates') ? 'active' : '' ?>" alt="tab-type"><a href="#tab-substrates" id = 'subtrates' data-toggle="tab">Substrates</a></li>
+				<li class="<?php echo ($active_tab == 'tab-compound_substrates') ? 'active' : '' ?>" alt="tab-compound_substrates"><a href="#tab-compound_substrates" id = 'compound_substrates' data-toggle="tab">Compound Substrates</a></li>
+				<li class="<?php echo ($active_tab == 'tab-corrugated_papers') ? 'active' : '' ?>" alt="tab-corrugated_papers"><a href="#tab-corrugated_papers" id = 'corrugated_papers' data-toggle="tab">Corrugated Papers</a></li>
+			</ul>
 			<div class="main-box-body clearfix">
 				<div class="tabs-wrapper">
-					<ul class="nav nav-tabs">
-						<li class="<?php echo ($active_tab == 'tab-general-items') ? 'active' : '' ?>" alt="tab-general-items"><a href="#tab-general-items" data-toggle="tab">General Items</a></li>
-						<li class="<?php echo ($active_tab == 'tab-substrates') ? 'active' : '' ?>" alt="tab-type"><a href="#tab-substrates" id = 'subtrates' data-toggle="tab">Substrates</a></li>
-						<li class="<?php echo ($active_tab == 'tab-compound_substrates') ? 'active' : '' ?>" alt="tab-compound_substrates"><a href="#tab-compound_substrates" id = 'compound_substrates' data-toggle="tab">Compound Substrates</a></li>
-						<li class="<?php echo ($active_tab == 'tab-corrugated_papers') ? 'active' : '' ?>" alt="tab-corrugated_papers"><a href="#tab-corrugated_papers" id = 'corrugated_papers' data-toggle="tab">Corrugated Papers</a></li>
-					</ul>
 					<div class="tab-content">
 							<div class="tab-pane fade  <?php echo ($active_tab == 'tab-general-items') ? 'in active' : '' ?>" id="tab-general-items">
 								<div class="row">

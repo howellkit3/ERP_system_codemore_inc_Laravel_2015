@@ -8,12 +8,12 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 <div class="row">
 	<div class="col-lg-12">
 		<div class="main-box clearfix">
-			<div class="main-box-body clearfix">
-				<div class="tabs-wrapper">
-					<ul class="nav nav-tabs">
+			<ul class="nav nav-tabs">
 						<li class="<?php echo ($active_tab == 'tab-category') ? 'active' : '' ?>" alt="tab-category"><a href="#tab-category" data-toggle="tab">Category</a></li>
 						<li class="<?php echo ($active_tab == 'tab-type') ? 'active' : '' ?>" alt="tab-type"><a href="#tab-type" id = 'itemType' data-toggle="tab">Type</a></li>
 					</ul>
+			<div class="main-box-body clearfix">
+				<div class="tabs-wrapper">					
 					<div class="tab-content">
 						<div class="tab-pane fade  <?php echo ($active_tab == 'tab-category') ? 'in active' : '' ?>" id="tab-category">
 							<div class="row" >
