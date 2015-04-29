@@ -1,7 +1,7 @@
 <?php $this->Html->addCrumb('Sales', array('controller' => 'customer_sales', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('View', array('controller' => 'customer_sales', 'action' => 'view',$company['Company']['id'])); ?>
 
-
+<?php echo $this->Html->script('Sales.inquiry');?>
 <div style="clear:both"></div>
 
 <?php echo $this->element('sales_option'); ?><br><br>
@@ -282,15 +282,18 @@
 								<div class="tab-pane fade" id="tab-products">
 									<div class="table-responsive">
 										<?php 
-			                       			 echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg">
+			                       			/* echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg">
 			                       			 						</i> Add Product ', array( 
 			                       			 						'controller' => 'products', 
 			                       			 						'action' => 'create', 
 			                       			 						$company['Company']['id']), array(
 			                       			 						'class' =>'btn btn-primary pull-right',
 			                       			 						'escape' => false
-			                       			 						));
+			                       			 						)); */
 			                    		?>
+
+			                    		<a data-toggle="modal" href="#myModalProduct" class="btn btn-primary mrg-b-lg pull-right"><i class="fa fa-plus-circle fa-lg"></i> Add Product</a>
+
 										<table class="table table-striped table-hover">
 					                        <thead>
 					                            <tr>
@@ -300,29 +303,28 @@
 					                   
 					                            </tr>
 					                        </thead>
-					                       <!--  <?php
-						                		//foreach($company['Product'] as $companyProduct) { ?>
+					                         <?php
+						                		foreach($company['Product'] as $companyProduct) { ?>
 							                        <tbody aria-relevant="all" aria-live="polite" role="alert">
 						                         		<tr>
 						                         			
 						                         			<td>
-						                         				<?php //echo $companyProduct['product_name']; ?>
+						                         				<?php echo $companyProduct['name']; ?>
 						                         			</td>
 						                         			<td>
 						                         				<i class="fa fa-clock-o">
-						                         				<?php //echo date('M d, Y', strtotime($companyProduct['created'])); 
+						                         				<?php echo date('M d, Y', strtotime($companyProduct['created'])); 
 						                         				?>
 						                         			</td>
 						                         			<td>
-						                         				<?php
-												                    echo $this->Html->link('<span class="fa-stack">
+						                         				<?php echo $this->Html->link('<span class="fa-stack">
 																		                    <i class="fa fa-square fa-stack-2x"></i>
-																		                    <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit </font></span>
+																		                    <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> View </font></span>
 																		                    </span> ', 
 																		                    		array( 
 																		                    'controller' => 'products', 
 																		                    'action' => 'view',
-																		                    //$company['Company']['id'],
+																		                    $company['Company']['id'],
 																		                    //$companyProduct['id']
 																		                    ), 
 																		                    		array( 
@@ -333,7 +335,7 @@
 
 						                         		</tr>
 							                        </tbody>
-					                        <?php //} ?> -->
+					                        <?php } ?> 
 					                    </table>
 									</div>
 								</div>
