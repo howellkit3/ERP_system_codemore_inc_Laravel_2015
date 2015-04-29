@@ -227,55 +227,43 @@ class QuotationsController extends SalesAppController {
 		$userData = $this->Session->read('Auth');
 
 		// $userData = $this->Session->read('Auth');
-
-		
-		$this->Quotation->bind(array('Product'));
-		$productName = $this->Quotation->find('first', array(
-													'conditions' => array(
-														'Quotation.id' => $quotationId
-														)
-													));
-		
 		$this->Company->bind(array('Address','Contact','Email','Inquiry','ContactPerson','Quotation'));
 
-		$quotation = $this->Company->Quotation->find('first', array(
-														'conditions' => array('
-																Quotation.id' => $quotationId)
-														));
-
-		$companyData = $this->Company->find('list',array(
-     											'fields' => array('id','company_name')
+		$companyData = $this->Company->find('list', array(
+     											'fields' => array( 
+     												'id','company_name')
      										));
 
-		$inquiryId = $this->Company->Inquiry->find('list',array(
-     													'fields' => array('company_id')
-     												));
+		$inquiryId = $this->Company->Inquiry->find('list', array(
+     													'fields' => array(
+     														'company_id')
+     													));
 
-		$contactInfo = $this->Company->ContactPerson->find('first',array(
-																'conditions' => array(
-																	'ContactPerson.company_id' => $companyId )
+		$contactInfo = $this->Company->ContactPerson->find('first', array(
+																'conditions' => array( 
+																	'ContactPerson.company_id' => $companyId 
+																)
 															));
+		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder','ProductDetail'));
 
-		$this->Quotation->bind(array('QuotationField'));
+		$quotation = $this->Quotation->find('first', array(
+														'conditions' => array( 
+															'Quotation.id' => $quotationId)
+													));
 
-		$quotationFieldInfo = $this->Quotation->QuotationField->find('all',array(
-																		'conditions' => array(
-																			'QuotationField.quotation_id' => $quotationId )
-																	));
+	
+		$quotationDetailData = $this->Quotation->ClientOrder->find('first', array(
+														'conditions' => array( 
+															'ClientOrder.quotation_id' => $quotationId)
+													));
 
-		$this->Quotation->QuotationField->bind(array('CustomField'));
+		$user = ClassRegistry::init('User')->find('first', array(
+									'conditions' => array(
+										'User.id' => $userData['User']['id'] )
+								));
 
-		$field = $this->Quotation->QuotationField->CustomField->find('list',array(
-																		'fields' => array('id','fieldlabel')
-																	));
 		
-		$this->loadModel('User');
-		$user = $this->User->find('first',array(
-										'conditions' => array(
-											'User.id' => $userData['User']['id'] )
-									));
-
-		$this->set(compact('companyData','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','productName'));
+		$this->set(compact('companyData','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','productName','user','quotationDetailData'));
 	
 
 	}
