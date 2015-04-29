@@ -158,7 +158,7 @@
             <div class="modal-content">
          <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Add Contact Number</h4>
+                    <h4 class="modal-title">Add Product</h4>
                 </div>
         <?php echo $this->Form->create('Product',array('url'=>(array('controller' => 'products','action' => 'create_product','redirect_uri' => array(
             'controller' => $this->params['controller'],
