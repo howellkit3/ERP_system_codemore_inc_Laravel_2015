@@ -26,8 +26,14 @@ class QuotationDetail extends AppModel {
 					'foreignKey' => 'quotation_id',
 					'dependent' => true
 				),
-			)
-			
+
+				'Product' => array(
+					'className' => 'Sales.Product',
+					'foreignKey' => 'product_id',
+					'dependent' => true
+				),
+			),
+					 			
 		));
 
 		$this->contain($model);

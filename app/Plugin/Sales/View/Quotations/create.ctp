@@ -146,7 +146,7 @@
 											<label class="col-lg-2 control-label">Item</label>
 											<div class="col-lg-8">
 												<?php 
-	                                                echo $this->Form->input('Quotation.name', 
+	                                                echo $this->Form->input('QuotationDetail.product_id', 
 	                                                									array( 
 	                                                						'type' => 'select',
 	                                                						'class' => 'form-control item_type required', 

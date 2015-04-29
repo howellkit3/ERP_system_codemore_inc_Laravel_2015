@@ -7,7 +7,7 @@
                 PQ-<?php echo $quotationList['Quotation']['uuid'] ?>  
             </td>
             <td class="">
-                <?php echo ucfirst($quotationList['ProductDetail']['name']) ?>  
+                <?php echo ucfirst($quotationList['Product']['name']) ?>  
             </td>
             <td class="">
                

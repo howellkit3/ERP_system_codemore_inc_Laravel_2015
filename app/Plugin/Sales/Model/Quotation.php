@@ -55,11 +55,7 @@ class Quotation extends AppModel {
 
 			),
 			'hasOne' => array(
-				'Product' => array(
-					'className' => 'Sales.Product',
-					'foreignKey' => false,
-					'conditions' => 'Product.id = Quotation.product_id'
-				),
+				
 				'ProductDetail'  => array(
 					'className' => 'Sales.Product',
 					'foreignKey' => false,
@@ -70,6 +66,13 @@ class Quotation extends AppModel {
 					'className' => 'Sales.QuotationDetail',
 					'foreignKey' => 'quotation_id',
 					'dependent' => true
+				),
+
+				'Product' => array(
+					'className' => 'Sales.Product',
+					'foreignKey' => false,
+					'conditions' => array('QuotationDetail.product_id = Product.id'),
+					'dependent' => false
 				)
 			 )
 			
