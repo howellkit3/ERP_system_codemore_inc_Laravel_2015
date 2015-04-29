@@ -143,11 +143,26 @@ class ProductsController extends SalesAppController {
 
 	           if ($this->Product->save($productDetails)) {
 
+
 	           	 $this->Session->setFlash(__('Products Successfully Added'));
-	             $this->redirect( array(
+
+	           	 if (!empty($this->params['named']['redirect_uri'])) {
+
+	           	 		 //$this->redirect(Router::url('/', true).$this->params['url']);
+
+	           	 		 	$this->redirect( array(
+	                                     'controller' => $this->params['named']['redirect_uri']['controller'], 
+	                                     'action' => $this->params['named']['redirect_uri']['action'],
+	                                     !empty( $this->params['named']['redirect_uri']['id'] )	?  $this->params['named']['redirect_uri']['id'] : ''                              
+	                             ));
+	           	 } else {
+	           	 	 $this->redirect( array(
 	                                     'controller' => 'products', 
 	                                     'action' => 'index',	                              
 	                             ));
+
+	           	 }
+	            
 	            } else {
 
 	            		 $this->Session->setFlash(__('There\'s an error saving your product'));	             	

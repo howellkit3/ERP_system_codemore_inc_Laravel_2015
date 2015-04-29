@@ -172,9 +172,16 @@ class CustomerSalesController extends SalesAppController {
 	    $contactPerson = $this->Company->ContactPerson->find('all', array(
 	        'conditions' => array('ContactPerson.company_id' => $companyId)
 	    ));
-		
+		 	
+		$this->loadModel('ItemCategoryHolder');
+		$this->ItemCategoryHolder->bind(array('ItemTypeHolder'));
+		$itemCategoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name')));
+		$itemTypeData = $this->ItemCategoryHolder->ItemTypeHolder->find('list', array('fields' => array('id', 'name')));
+		$productData = $this->ItemCategoryHolder->ItemTypeHolder->find('list', array('fields' => array('id', 'name')));
+		$companyData = $this->Company->getList(array('id','company_name'),array('Company.id' => $company['Company']['id']));
+
 	    //pr($company['Email']);exit();
-		$this->set(compact('company','contactPerson'));
+		$this->set(compact('company','contactPerson','itemCategoryData','itemTypeData', 'companyData'));
 		
 	}
 
