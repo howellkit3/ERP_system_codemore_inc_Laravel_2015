@@ -8,6 +8,8 @@ class ProductsController extends SalesAppController {
 	
 	function beforeFilter() {
   		$this->myRandomNumber = rand(1,4);
+  		$userDetails = $this->Session->read('Auth');
+		$this->set(compact('userDetails'));
 	}
 
 	public function add($companyId = null){

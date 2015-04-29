@@ -88,9 +88,7 @@
 					</div>
 				</div>
 			</div>
-		<?php echo $this->Form->end(); ?>
-
-		<?php echo $this->Form->create('Product',array('url'=>(array('controller' => 'products','action' => 'view'))));?>			
+		
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="main-box">
@@ -106,11 +104,12 @@
 
 										<div class="col-lg-8">
 											<?php 
-	                                            echo $this->Form->input('Company.name', array(
+	                                            echo $this->Form->input('Company.company_name', array(
 
 	                                            								'class' => 'form-control item_type',
 							                                                    'label' => false,
 							                                                    'disabled' => true,
+							                                                    'style' => 'text-transform:capitalize',
 							                                                    'placeholder' => 'Customer Name'));
                                             ?>
 										</div>
