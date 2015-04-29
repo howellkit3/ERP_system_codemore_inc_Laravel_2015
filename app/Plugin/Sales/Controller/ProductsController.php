@@ -8,6 +8,8 @@ class ProductsController extends SalesAppController {
 	
 	function beforeFilter() {
   		$this->myRandomNumber = rand(1,4);
+  		$userDetails = $this->Session->read('Auth');
+		$this->set(compact('userDetails'));
 	}
 
 	public function add($companyId = null){
@@ -143,11 +145,26 @@ class ProductsController extends SalesAppController {
 
 	           if ($this->Product->save($productDetails)) {
 
+
 	           	 $this->Session->setFlash(__('Products Successfully Added'));
-	             $this->redirect( array(
+
+	           	 if (!empty($this->params['named']['redirect_uri'])) {
+
+	           	 		 //$this->redirect(Router::url('/', true).$this->params['url']);
+
+	           	 		 	$this->redirect( array(
+	                                     'controller' => $this->params['named']['redirect_uri']['controller'], 
+	                                     'action' => $this->params['named']['redirect_uri']['action'],
+	                                     !empty( $this->params['named']['redirect_uri']['id'] )	?  $this->params['named']['redirect_uri']['id'] : ''                              
+	                             ));
+	           	 } else {
+	           	 	 $this->redirect( array(
 	                                     'controller' => 'products', 
 	                                     'action' => 'index',	                              
 	                             ));
+
+	           	 }
+	            
 	            } else {
 
 	            		 $this->Session->setFlash(__('There\'s an error saving your product'));	             	
@@ -298,7 +315,7 @@ class ProductsController extends SalesAppController {
 			
 		$this->paginate = array(
             'conditions' => $conditions,
-            'limit' => 3,
+            'limit' => $limit,
             //'fields' => array('id', 'name', 'created','modified'),
             'order' => 'Product.id DESC',
         );

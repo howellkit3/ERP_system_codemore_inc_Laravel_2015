@@ -22,19 +22,11 @@ class QuotationsController extends SalesAppController {
 	    	    
 	public function index() {
 
-		$this->loadModel('Sales.Product');
-
-		$this->loadModel('Sales.QuotationDetail');
-
 		$userData = $this->Session->read('Auth');
 
-		$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail','ProductDetail', 'Product'));
-
-		//$this->QuotationDetail->bind(array('Product'));
+		$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail','ProductDetail'));
 
 		$quotationData = $this->Quotation->find('all', array('order' => 'Quotation.id DESC','group' => 'Quotation.id'));
-
-		$productData = $this->QuotationDetail->find('all', array('order' => 'QuotationDetail.id DESC','group' => 'QuotationDetail.id'));
 
 		$this->Company->bind(array('Inquiry'));
 
@@ -50,7 +42,7 @@ class QuotationsController extends SalesAppController {
 
 
 
-		$this->set(compact('companyData','quotationData','inquiryId','salesStatus','productData'));
+		$this->set(compact('companyData','quotationData','inquiryId','salesStatus'));
 
 	}
 
@@ -75,7 +67,8 @@ class QuotationsController extends SalesAppController {
 
 		}else{
 
-			
+		
+		
 			$this->loadModel('ItemCategoryHolder');
 			
 			$itemCategoryData = $this->ItemCategoryHolder->find('list');
@@ -99,10 +92,11 @@ class QuotationsController extends SalesAppController {
 		
 		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail'));
 
-		if ($this->request->is('post')) {
+		if ($this->request->is(array('post','put'))) {
 
             if (!empty($this->request->data)) {
-            	
+           
+
             	if(!empty($this->request->data['Inquiry']['id'])){
             		
             		$this->Company->bind(array('Inquiry'));
@@ -130,15 +124,22 @@ class QuotationsController extends SalesAppController {
             	}else{
 
 
+            			$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail','ProductDetail'));
+
             			$companyId = $this->request->data['Company']['id'];
 
             			$this->request->data['Quotation']['company_id'] = $companyId;
 
             			$this->id = $this->Quotation->addQuotation($this->request->data, $userData['User']['id']);
 
-            			$this->Quotation->QuotationDetail->addQuotationDetail($this->request->data, $userData['User']['id'], $this->id);
+            			$QuotationDetail = ClassRegistry::init('Sales.QuotationDetail');
+            			$QuotationItemDetail = ClassRegistry::init('Sales.QuotationItemDetail');
 
-            			$this->Quotation->QuotationItemDetail->addQuotationItemDetail($this->request->data, $this->id);
+
+            			$QuotationDetail->addQuotationDetail($this->request->data, $userData['User']['id'], $this->id);
+
+            			$QuotationItemDetail->addQuotationItemDetail($this->request->data, $this->id);
+            		
 
             	}
             	
@@ -227,55 +228,43 @@ class QuotationsController extends SalesAppController {
 		$userData = $this->Session->read('Auth');
 
 		// $userData = $this->Session->read('Auth');
-
-		
-		$this->Quotation->bind(array('Product'));
-		$productName = $this->Quotation->find('first', array(
-													'conditions' => array(
-														'Quotation.id' => $quotationId
-														)
-													));
-		
 		$this->Company->bind(array('Address','Contact','Email','Inquiry','ContactPerson','Quotation'));
 
-		$quotation = $this->Company->Quotation->find('first', array(
-														'conditions' => array('
-																Quotation.id' => $quotationId)
-														));
-
-		$companyData = $this->Company->find('list',array(
-     											'fields' => array('id','company_name')
+		$companyData = $this->Company->find('list', array(
+     											'fields' => array( 
+     												'id','company_name')
      										));
 
-		$inquiryId = $this->Company->Inquiry->find('list',array(
-     													'fields' => array('company_id')
-     												));
+		$inquiryId = $this->Company->Inquiry->find('list', array(
+     													'fields' => array(
+     														'company_id')
+     													));
 
-		$contactInfo = $this->Company->ContactPerson->find('first',array(
-																'conditions' => array(
-																	'ContactPerson.company_id' => $companyId )
+		$contactInfo = $this->Company->ContactPerson->find('first', array(
+																'conditions' => array( 
+																	'ContactPerson.company_id' => $companyId 
+																)
 															));
+		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder','ProductDetail'));
 
-		$this->Quotation->bind(array('QuotationField'));
+		$quotation = $this->Quotation->find('first', array(
+														'conditions' => array( 
+															'Quotation.id' => $quotationId)
+													));
 
-		$quotationFieldInfo = $this->Quotation->QuotationField->find('all',array(
-																		'conditions' => array(
-																			'QuotationField.quotation_id' => $quotationId )
-																	));
+	
+		$quotationDetailData = $this->Quotation->ClientOrder->find('first', array(
+														'conditions' => array( 
+															'ClientOrder.quotation_id' => $quotationId)
+													));
 
-		$this->Quotation->QuotationField->bind(array('CustomField'));
+		$user = ClassRegistry::init('User')->find('first', array(
+									'conditions' => array(
+										'User.id' => $userData['User']['id'] )
+								));
 
-		$field = $this->Quotation->QuotationField->CustomField->find('list',array(
-																		'fields' => array('id','fieldlabel')
-																	));
 		
-		$this->loadModel('User');
-		$user = $this->User->find('first',array(
-										'conditions' => array(
-											'User.id' => $userData['User']['id'] )
-									));
-
-		$this->set(compact('companyData','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','productName'));
+		$this->set(compact('companyData','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','productName','user','quotationDetailData'));
 	
 
 	}
@@ -321,47 +310,35 @@ class QuotationsController extends SalesAppController {
 	}
 
 	public function edit($quotationId = null , $companyId){
+		
 		if($this->request->is('post')){
 			$this->Quotation->edit($this->request->data,$quotationId);
 			$this->redirect(array('controller' => 'quotations', 'action' => 'view',$quotationId,$companyId)
         	);
 		}
 		
-		$this->Company->bind(array(
-			'Address',
-			'Contact',
-			'Email'
-		));
+		$userData = $this->Session->read('Auth');
 
-		$company = $this->Company->find('first', array(
-	        								'conditions' => array(
-	        									'Company.id' => $companyId)
-	    								));
+		if(!empty($quotationId)){
+			$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail'));
+			$this->request->data = $this->Quotation->read(null,$quotationId);
+			
+			$this->loadModel('ItemCategoryHolder');
+			
+			$itemCategoryData = $this->ItemCategoryHolder->find('list');
 
-	    $this->Quotation->bind(array('QuotationField'));
+			$userData = $this->Session->read('Auth');
 
-	    $quotation = $this->Quotation->find('first', array(
-	        									'conditions' => array(
-	        										'Quotation.id' => $quotationId)
-	   										 ));
+			$this->Company->bind(array('Contact','Email','Address','ContactPerson'));
 
-	    $this->Quotation->bind(array('Product'));
-		$productName = $this->Quotation->find('first', array(
-													'conditions' => array(
-														'Quotation.id' => $quotationId
-														)
-													));
-		//pr($productName);die;
+			$companyData = $this->Company->getList(array('id', 'company_name'));
 
-	   	$this->loadModel('Sales.CustomField');
-		$customField = $this->CustomField->find('list', array('fields' => array('id', 'fieldlabel')));
-	   
-		if (!$this->request->data) {
+			
+		}
 
-	        $this->request->data = am($company,$quotation);
-	        
-	    }
-	    $this->set(compact('customField','quotationId','companyId','productName'));
+		//pr($this->request->data);
+
+		$this->set(compact('companyData','customField','itemCategoryData'));
 	}
 
 	// public function auto_complete() {

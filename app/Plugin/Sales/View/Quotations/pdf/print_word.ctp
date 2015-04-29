@@ -19,11 +19,13 @@
 						<td style="width:123px;font-family: Calibri;">Attention</td>
 						<td style="width:20px;">:</td>
 						<td style="width:400px;">
-							<?php echo !empty($quotation['Quotation']['company_id']) ? ucfirst($companyData[$quotation['Quotation']['company_id']]) : ucfirst($companyData[$inquiryId[$quotation['Quotation']['inquiry_id']]]) 
+							<?php 
+							// 	echo $quotation['Quotation']['attention_details']
+								echo !empty($quotation['Quotation']['company_id']) ? ucfirst($companyData[$quotation['Quotation']['company_id']]) : ucfirst($companyData[$inquiryId[$quotation['Quotation']['inquiry_id']]]) 
 							?>
 						</td>
 						<td>
-							No : <u><?php echo $quotation['Quotation']['unique_id'] ?></u>
+							No : <u>PQ-<?php echo $quotation['Quotation']['uuid'] ?></u>
 						</td>
 					</tr>
 					<tr>
@@ -46,8 +48,8 @@
 							Dear 
 						</td>
 						<td>
-							<?php echo ucfirst($contactInfo['ContactPerson']['firstname']) ?>
-							<?php echo ucfirst($contactInfo['ContactPerson']['lastname']) ?>,
+							<?php //echo ucfirst($contactInfo['ContactPerson']['firstname']) ?>
+							<?php //echo ucfirst($contactInfo['ContactPerson']['lastname']) ?>,
 						</td>
 					</tr>
 				</thead>
@@ -65,26 +67,111 @@
 				<thead>
 					<tr>
 						<td style="width:123px;">
-							Product Name
+							Item
 						</td>
 						<td style="width:20px;">:</td>
 						<td>
-							<?php
-								echo $productName['Product']['product_name'];
-							?>
+						 <?php echo $quotation['ProductDetail']['name']?>
 						</td>
 					</tr>
-					<?php foreach ($quotationFieldInfo as $key => $value) { ?>
-						<tr>
-							<td style="width:123px;">
-								<?php echo $field[$value['QuotationField']['custom_fields_id']] ?>
-							</td>
-							<td style="width:20px;">:</td>
-							<td>
-								<?php echo $value['QuotationField']['description'] ?>
-							</td>
-						</tr>
-					<?php } ?>
+					<tr>
+						<td style="width:123px;">
+							Size
+						</td>
+						<td style="width:20px;">:</td>
+						<td>
+							<?php echo $quotation['QuotationDetail']['size'] ?>
+						</td>
+					</tr>
+					
+					
+				</thead>
+			</table>
+
+
+								<table  class = "layout">
+								<?php foreach ($quotation['QuotationItemDetail'] as $itemDetail){ ?>
+								
+										<tr>
+											<td height ="35px" valign ="top" class ="column3 col-md-8"> 
+												<div class="col-lg-12">QTY 
+												</div>
+											</td>	
+											<td height ="35px" valign ="top" class ="column3 col-md-8" style="border:1px solid #000;  text-align:center"> 
+												<div class="col-lg-12">
+													<?php echo $itemDetail['quantity'];?> 
+												</div>
+											</td>	
+											
+										</tr>
+
+										<tr >
+											<td height ="35px" valign ="top" class ="column3 col-md-8"> 
+												<div class="col-lg-12">Unit Price 
+												</div>
+											</td>
+											<td height ="35px" valign ="top" class = "column4 col-md-8" style="border:1px solid #000;  text-align:center">
+												<div class="col-lg-12" >
+													<?php echo $itemDetail['unit_price'];?> 
+												</div>
+											</td>
+											
+										</tr>
+
+										<tr>
+											<td height ="35px" valign ="top" class ="column3 col-md-8"> 
+												<div class="col-lg-12">Vat Price
+												</div>
+											</td>
+											<td height ="40px" class ="column2 col-md-8" style="border:1px solid #000;  text-align:center">
+												<div class="col-lg-12">
+													<?php echo $itemDetail['vat_price'];?> 
+												</div>
+											</td>
+											
+										</tr>
+
+										<tr>
+											<td height ="35px" valign ="top" class ="column3 col-md-8"> 
+												<div class="col-lg-12">Material
+
+												</div>
+											</td>
+											<td height ="30px" class ="column2 col-md-8" style="border:1px solid #000; text-align:center">
+												<div class="col-lg-12">
+													<?php echo $itemDetail['material'];?> 
+												</div>
+											</td>
+											
+										</tr>
+
+									
+								<?php } ?>
+								</table>
+
+
+			<table class="layout">
+				<thead>
+					<tr>
+						<td style="width:123px;">
+							Validity
+						</td>
+						<td style="width:20px;">:</td>
+						<td>
+							<?php echo date('M d, Y', strtotime($quotation['Quotation']['validity'])); ?>
+						</td>
+					</tr>
+					<tr>
+						<td style="width:123px;">
+							Remarks
+						</td>
+						<td style="width:20px;">:</td>
+						<td>
+							<?php echo $quotation['QuotationDetail']['remarks']?>
+						</td>
+					</tr>
+					
+					
 				</thead>
 			</table>
 			

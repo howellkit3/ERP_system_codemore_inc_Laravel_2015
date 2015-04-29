@@ -126,7 +126,7 @@
 				</div>
 			</div>
 		</div>
-
+		<?php echo $this->Html->image('loader.gif',array('id' => 'loading','style' => 'display:none')); ?>
 
 		<?php //echo $this->element('sql_dump'); ?>
 

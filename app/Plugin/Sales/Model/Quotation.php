@@ -103,7 +103,7 @@ class Quotation extends AppModel {
 
 	//new function for saving quotation
 	public function addQuotation($quotationData = null,$auth){
-		
+
 		$this->create();
 			
 		$quotationData['Quotation']['created_by'] = $auth;
