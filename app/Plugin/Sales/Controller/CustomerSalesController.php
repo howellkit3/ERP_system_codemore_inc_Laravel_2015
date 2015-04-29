@@ -230,7 +230,7 @@ class CustomerSalesController extends SalesAppController {
 													'id','name'),
 												  		)
 												);
-
+	 
 		if (!$this->request->data) {
 
 			$holder = array();
@@ -242,7 +242,7 @@ class CustomerSalesController extends SalesAppController {
 
 	        $this->request->data = am($company, $holder);
 		}
-
+ 
 		$this->set(compact('paymentTermData'));
 		
 		
