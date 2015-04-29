@@ -55,26 +55,26 @@ class ContactPerson extends AppModel {
 	public $validate = array(
 
 		
-		'firstname' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				'message' => 'Required fields.',
-			),
+		// 'firstname' => array(
+		// 	'notEmpty' => array(
+		// 		'rule' => array('notEmpty'),
+		// 		'message' => 'Required fields.',
+		// 	),
 			// 'alphaNumeric'=> array(
 	  //           'rule' => 'alphaNumeric',
 	  //           'message'=> 'Please enter a valid name'
 	  //       ),
-		),
-		'lastname' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				'message' => 'Required fields.',
-			),
+		// ),
+		// 'lastname' => array(
+		// 	'notEmpty' => array(
+		// 		'rule' => array('notEmpty'),
+		// 		'message' => 'Required fields.',
+		// 	),
 			// 'alphaNumeric'=> array(
 	  //           'rule' => 'alphaNumeric',
 	  //           'message'=> 'Please enter a valid name'
 	  //       ),
-		),	
+		// ),	
 		// 'position' => array(
 		// 	'notEmpty' => array(
 		// 		'rule' => array('notEmpty'),
