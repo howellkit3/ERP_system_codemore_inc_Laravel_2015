@@ -180,11 +180,22 @@ class ProductsController extends SalesAppController {
 		
 		$this->loadModel('ItemCategoryHolder');
 		$this->ItemCategoryHolder->bind(array('ItemTypeHolder'));
-		$itemCategoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name'),'order' => array('ItemCategoryHolder.name' => 'asc'
-        )));
-		$itemTypeData = $this->ItemCategoryHolder->ItemTypeHolder->find('list', array('fields' => array('id', 'name')));
-		$productData = $this->ItemCategoryHolder->ItemTypeHolder->find('list', array('fields' => array('id', 'name')));
-		$companyData = $this->Company->getList(array('id','company_name'));
+		$itemCategoryData = $this->ItemCategoryHolder->find('list', array(
+															'fields' => array('id', 'name'),
+															'order' => array('ItemCategoryHolder.name' => 'ASC')
+															));
+		$itemTypeData = $this->ItemCategoryHolder->ItemTypeHolder->find('list', array(
+															'fields' => array('id', 'name'),
+															'order' => array('ItemTypeHolder.name' => 'ASC')
+															));
+		$productData = $this->ItemCategoryHolder->ItemTypeHolder->find('list', array(
+															'fields' => array('id', 'name'),
+															'order' => array('ItemTypeHolder.name' => 'ASC')
+															));
+		$companyData = $this->Company->find('list', array(
+															'fields' => array('id', 'company_name'),
+															'order' => array('Company.company_name' => 'ASC')
+															));
 		$this->set(compact('itemCategoryData','itemTypeData', 'companyData'));
 	}
 
