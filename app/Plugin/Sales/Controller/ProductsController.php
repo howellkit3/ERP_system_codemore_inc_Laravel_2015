@@ -314,7 +314,7 @@ class ProductsController extends SalesAppController {
 			
 		$this->paginate = array(
             'conditions' => $conditions,
-            'limit' => 3,
+            'limit' => $limit,
             //'fields' => array('id', 'name', 'created','modified'),
             'order' => 'Product.id DESC',
         );
