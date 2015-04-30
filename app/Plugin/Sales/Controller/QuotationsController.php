@@ -24,7 +24,7 @@ class QuotationsController extends SalesAppController {
 
 		$userData = $this->Session->read('Auth');
 
-		$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail','ProductDetail'));
+		$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail','ProductDetail', 'Product'));
 
 		$quotationData = $this->Quotation->find('all', array('order' => 'Quotation.id DESC','group' => 'Quotation.id'));
 
@@ -325,14 +325,19 @@ class QuotationsController extends SalesAppController {
 			
 			$this->loadModel('ItemCategoryHolder');
 			
-			$itemCategoryData = $this->ItemCategoryHolder->find('list');
+			$itemCategoryData = $this->ItemCategoryHolder->find('list', array(
+															'fields' => array('id', 'name'),
+															'order' => array('ItemCategoryHolder.name' => 'ASC')
+															));
 
 			$userData = $this->Session->read('Auth');
 
 			$this->Company->bind(array('Contact','Email','Address','ContactPerson'));
 
-			$companyData = $this->Company->getList(array('id', 'company_name'));
-
+			$companyData = $this->Company->find('list', array(
+															'fields' => array('id', 'company_name'),
+															'order' => array('Company.company_name' => 'ASC')
+															));
 			
 		}
 
