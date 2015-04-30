@@ -174,7 +174,7 @@ class QuotationsController extends SalesAppController {
 																	'ContactPerson.company_id' => $companyId 
 																)
 															));
-		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder','ProductDetail'));
+		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder','ProductDetail', 'Product'));
 
 		$quotation = $this->Quotation->find('first', array(
 														'conditions' => array( 

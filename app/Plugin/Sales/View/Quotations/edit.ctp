@@ -485,7 +485,6 @@
 												<?php 
 		                                            echo $this->Form->input('Quotation.validity_field', array(
 		                                            								'class' => 'form-control item_type datepick',
-		                                            								'readonly' => 'readonly',
 								                                                    'label' => false,
 								                                                    'placeholder' => 'Validity'));
 	                                            ?>

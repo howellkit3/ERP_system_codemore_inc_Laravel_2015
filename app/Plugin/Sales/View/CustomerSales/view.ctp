@@ -110,7 +110,7 @@
 										                                <th><a href="#"><span>Created</span></a></th>
 										                            </tr>
 										                        </thead>
-										                        <?php
+										                        <?ph                                  p
 											                		foreach($company['Address'] as $contactAddress) { ?>
 												                        <tbody aria-relevant="all" aria-live="polite" role="alert">
 												                         		<tr>

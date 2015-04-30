@@ -100,7 +100,7 @@
 								Item
 							</div>
 							<div class="col-lg-8">
-								<?php echo $quotation['ProductDetail']['name']?>
+								<?php echo $quotation['Product']['name']?>
 							</div>
 
 					</div>
