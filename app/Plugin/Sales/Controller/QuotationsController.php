@@ -50,6 +50,8 @@ class QuotationsController extends SalesAppController {
 
 		$userData = $this->Session->read('Auth');
 
+		$this->loadModel('PaymentTermHolder');
+
 		if(!empty($inquiryId)){
 
 			$this->Company->bind(array('Address','Contact','Email','Inquiry'));
@@ -68,7 +70,6 @@ class QuotationsController extends SalesAppController {
 		}else{
 
 		
-		
 			$this->loadModel('ItemCategoryHolder');
 			
 			$itemCategoryData = $this->ItemCategoryHolder->find('list', array(
@@ -84,11 +85,13 @@ class QuotationsController extends SalesAppController {
 															'fields' => array('id', 'company_name'),
 															'order' => array('Company.company_name' => 'ASC')
 															));
-
-			$this->set(compact('companyData','customField','itemCategoryData'));
+			$paymentTermData = $this->PaymentTermHolder->find('list', array(
+															'fields' => array('id', 'name'),
+															'order' => array('PaymentTermHolder.name' => 'ASC')
+															));
 		}
 
-		$this->set(compact('category','inquiryId'));
+		$this->set(compact('category','inquiryId','companyData','customField','itemCategoryData','paymentTermData'));
 		
 	}
 
@@ -313,6 +316,20 @@ class QuotationsController extends SalesAppController {
 	}
 
 	public function edit($quotationId = null , $companyId){
+
+		$this->loadModel('PaymentTermHolder');
+
+		$this->loadModel('ItemCategoryHolder');
+			
+			$itemCategoryData = $this->ItemCategoryHolder->find('list', array(
+															'fields' => array('id', 'name'),
+															'order' => array('ItemCategoryHolder.name' => 'ASC')
+															));
+
+		$paymentTermData = $this->PaymentTermHolder->find('list', array(
+															'fields' => array('id', 'name'),
+															'order' => array('PaymentTermHolder.name' => 'ASC')
+															));
 		
 		if($this->request->is('post')){
 			$this->Quotation->edit($this->request->data,$quotationId);
@@ -326,12 +343,7 @@ class QuotationsController extends SalesAppController {
 			$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail'));
 			$this->request->data = $this->Quotation->read(null,$quotationId);
 			
-			$this->loadModel('ItemCategoryHolder');
 			
-			$itemCategoryData = $this->ItemCategoryHolder->find('list', array(
-															'fields' => array('id', 'name'),
-															'order' => array('ItemCategoryHolder.name' => 'ASC')
-															));
 
 			$userData = $this->Session->read('Auth');
 
@@ -346,7 +358,7 @@ class QuotationsController extends SalesAppController {
 
 		//pr($this->request->data);
 
-		$this->set(compact('companyData','customField','itemCategoryData'));
+		$this->set(compact('companyData','customField','itemCategoryData', 'paymentTermData'));
 	}
 
 	// public function auto_complete() {

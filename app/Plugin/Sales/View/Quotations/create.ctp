@@ -48,8 +48,21 @@
 						                        'label' => false,
 						                        'id' => 'id'));
 	                                    ?>
-	                                    
 
+	                                    <div class="form-group">
+	                                		<label class="col-lg-2 control-label">Name</label>
+											<div class="col-lg-8">
+												<?php 
+		                                            echo $this->Form->input('QuotationDetail.name', array(
+		                                            								'class' => 'form-control item_type',
+								                                                    'type' => 'text',
+								                                                    'label' => false,
+								                                                    'placeholder' => 'Quotation Name'));
+	                                            ?>
+												  
+											</div>
+										</div>
+	                                    
 	                                     <div class="form-group">
 	                                    	<label class="col-lg-2 control-label">Company</label>
 											<div class="col-lg-8">
@@ -343,14 +356,17 @@
 										</div>
 
 										<div class="form-group">
-											<label class="col-lg-2 control-label">Terms</label>
+	                                    	<label class="col-lg-2 control-label">Terms</label>
 											<div class="col-lg-8">
-												<?php 
-		                                            echo $this->Form->input('Quotation.payment_terms', array(
-		                                            								'class' => 'form-control item_type',
-								                                                    'label' => false,
-								                                                    'placeholder' => 'Terms'));
-	                                            ?>
+												<?php echo $this->Form->input('Quotation.payment_terms', array(
+					                                'options' => array($paymentTermData),
+					                                'type' => 'select',
+					                                'label' => false,
+					                                'class' => 'form-control required contacpersonlist2',
+					                                'empty' => '---Select Payment Term---',
+					                                 )); 
+
+					                            ?>
 											</div>
 										</div>
 
@@ -360,7 +376,6 @@
 												<?php 
 		                                            echo $this->Form->input('Quotation.validity_field', array(
 		                                            								'class' => 'form-control item_type datepick',
-		                                            								'readonly' => 'readonly',
 								                                                    'label' => false,
 								                                                    'placeholder' => 'Validity'));
 	                                            ?>

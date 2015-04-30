@@ -31,12 +31,11 @@ class Quotation extends AppModel {
 					'foreignKey' => 'quotation_id',
 					'dependent' => true
 				),
-
 				'PaymentTermHolder' => array(
-					'className' => 'Sales.PaymentTermHolder',
-					'foreignKey' => 'payment_terms',
-					'dependent' => true
-					)
+					'className' => 'PaymentTermHolder',
+					'foreignKey' => 'payment_term',
+					'dependent' => false
+					),
 
 			),
 			'hasMany' => array(
@@ -51,7 +50,9 @@ class Quotation extends AppModel {
 					'className' => 'Sales.ClientOrder',
 					'foreignKey' => 'quotation_id',
 					'dependent' => true
-				)
+				),
+				
+
 
 			),
 			'hasOne' => array(

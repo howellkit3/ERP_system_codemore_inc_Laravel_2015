@@ -33,12 +33,15 @@ class ClientOrder extends AppModel {
 				),
 
 				'Sales.PaymentTermHolder' => array(
-					'className' => 'PaymentTerms',
+					'className' => 'PaymentTermHolder',
 					'foreignKey' => 'payment_terms',
 					'dependent' => true
 				),
-
-				
+				'PaymentTermHolder' => array(
+					'className' => 'PaymentTermHolder',
+					'foreignKey' => 'id',
+					'dependent' => true
+				),	
 			),
 			'hasMany' => array(
 				
@@ -46,9 +49,12 @@ class ClientOrder extends AppModel {
 					'className' => 'Sales.ClientOrderDeliverySchedule',
 					'foreignKey' => 'client_order_id',
 					'dependent' => true
-				)
+				),
 
+				
 			),
+
+
 			
 		));
 
@@ -56,13 +62,21 @@ class ClientOrder extends AppModel {
 	}
 
 	public function saveClientOrder($clientOrderData = null, $auth = null){
+
+	$month = date("m"); 
+    $year = date("y");
+    $hour = date("H");
+    $minute = date("i");
+    $seconds = date("s");
+        
+	$code =  $year. $month .$minute . $hour . $seconds;
 		
 		$this->create();
 
 		$clientOrderData['ClientOrder']['client_order_item_details_id'] = $clientOrderData['QuotationItemDetail']['id'];
 		$clientOrderData['ClientOrder']['created_by'] = $auth;
 		$clientOrderData['ClientOrder']['modified_by'] = $auth;
-		$clientOrderData['ClientOrder']['uuid'] = time();
+		$clientOrderData['ClientOrder']['uuid'] = $code;
 		$clientOrderData['ClientOrder']['company_id'] = $clientOrderData['Company']['id'];
 		$clientOrderData['ClientOrder']['quotation_id'] = $clientOrderData['Quotation']['id'];
 		

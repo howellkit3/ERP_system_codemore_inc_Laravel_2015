@@ -468,14 +468,20 @@
 										</div>
 
 										<div class="form-group">
-											<label class="col-lg-2 control-label">Terms</label>
+	                                    	<label class="col-lg-2 control-label">Terms</label>
 											<div class="col-lg-8">
-												<?php 
-		                                            echo $this->Form->input('Quotation.payment_terms', array(
-		                                            								'class' => 'form-control item_type',
-								                                                    'label' => false,
-								                                                    'placeholder' => 'Terms'));
-	                                            ?>
+												<?php echo $this->Form->input('Quotation.payment_terms', 
+	                                                									array( 
+	                                                						'options' => array($paymentTermData),		
+	                                                						'type' => 'select',
+	                                                						'class' => 'form-control item_type categorylist required', 
+	                                                    					'label' => false, 
+	                                                    					'placeholder' => 'Item',
+	                                                    					'empty' => '--Select Payment_Term--',
+	                                                    					'default' => $this->request->data['Quotation']['item_category_holder_id']
+	                                                    					));
+
+					                            ?>
 											</div>
 										</div>
 
