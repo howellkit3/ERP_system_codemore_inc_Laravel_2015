@@ -71,13 +71,19 @@ class QuotationsController extends SalesAppController {
 		
 			$this->loadModel('ItemCategoryHolder');
 			
-			$itemCategoryData = $this->ItemCategoryHolder->find('list');
+			$itemCategoryData = $this->ItemCategoryHolder->find('list', array(
+															'fields' => array('id', 'name'),
+															'order' => array('ItemCategoryHolder.name' => 'ASC')
+															));
 
 			$userData = $this->Session->read('Auth');
 
 			$this->Company->bind(array('Contact','Email','Address','ContactPerson'));
 
-			$companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')));
+			$companyData = $this->Company->find('list', array(
+															'fields' => array('id', 'company_name'),
+															'order' => array('Company.company_name' => 'ASC')
+															));
 
 			$this->set(compact('companyData','customField','itemCategoryData'));
 		}
@@ -117,10 +123,7 @@ class QuotationsController extends SalesAppController {
             			$this->Quotation->QuotationDetail->addQuotationDetail($this->request->data, $userData['User']['id'], $this->id);
 
             			$this->Quotation->QuotationItemDetail->addQuotationItemDetail($this->request->data, $this->id);
-
-            		
-
-            		
+         		
             	}else{
 
 

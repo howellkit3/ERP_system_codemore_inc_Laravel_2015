@@ -66,7 +66,6 @@
 										<div class="col-lg-8">
 											<?php echo $this->Form->input('Quotation.name', array(
 												'type' => 'text',
-				                                'readonly' => 'readonly',
 				                                'label' => false,
 				                                'class' => 'form-control',
 				                                'value' => ucfirst($quotationData['Quotation']['name'])

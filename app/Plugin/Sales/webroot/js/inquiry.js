@@ -120,9 +120,48 @@ jQuery(function($){
 	// generate PO number
 	$('.generate-poNumber').change(function(){
 
+	var currentTime = new Date()
+	var month = currentTime.getMonth() + 1
+	var year = currentTime.getFullYear()
+	var hour = currentTime.getHours()
+	var minute = currentTime.getMinutes()
+	var seconds = currentTime.getSeconds()
+
+	year = year.toString().substr(2,2);
+
+    month = month + "";
+
+    hour = hour + "";
+
+    minute = minute + "";
+
+    seconds = seconds + "";
+
+    if (month.length == 1)
+    {
+        month = "0" + month;
+    }
+
+    if (hour.length == 1)
+    {
+        hour = "0" + hour;
+    }
+
+    if (minute.length == 1)
+    {
+        minute = "0" + minute;
+    }
+
+    if (seconds.length == 1)
+    {
+        seconds = "0" + seconds;
+    }
+
+    var code = year.concat(month,hour,minute,seconds);
+
 		if($(this).is( ":checked" ) == true){
 			
-            var data = "PO-" + new Date().getTime();
+            var data = "PO-" + code;
            	// data.substr(0,-3);
 			$('#generate-poNumber').val(data);
 			

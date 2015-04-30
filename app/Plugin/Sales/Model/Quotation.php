@@ -103,12 +103,20 @@ class Quotation extends AppModel {
 
 	//new function for saving quotation
 	public function addQuotation($quotationData = null,$auth){
-
+		
+    $month = date("m"); 
+    $year = date("y");
+    $hour = date("H");
+    $minute = date("i");
+    $seconds = date("s");
+        
+	$code =  $year. $month .$minute . $hour . $seconds;
+									
 		$this->create();
 			
 		$quotationData['Quotation']['created_by'] = $auth;
 		$quotationData['Quotation']['modified_by'] = $auth;
-		$quotationData['Quotation']['uuid'] = time();
+		$quotationData['Quotation']['uuid'] = $code;
 		$quotationData['Quotation']['validity'] = $quotationData['Quotation']['validity_field'];
 		
 		$this->save($quotationData);
