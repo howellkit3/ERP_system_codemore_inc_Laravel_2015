@@ -50,18 +50,17 @@
 	                                    ?>
 
 	                                    <div class="form-group">
-	                                		<label class="col-lg-2 control-label">Name</label>
+											<label class="col-lg-2 control-label">Name</label>
 											<div class="col-lg-8">
 												<?php 
-		                                            echo $this->Form->input('QuotationDetail.name', array(
+		                                            echo $this->Form->input('Quotation.name', array(
 		                                            								'class' => 'form-control item_type',
-								                                                    'type' => 'text',
 								                                                    'label' => false,
 								                                                    'placeholder' => 'Quotation Name'));
 	                                            ?>
-												  
 											</div>
 										</div>
+
 	                                    
 	                                     <div class="form-group">
 	                                    	<label class="col-lg-2 control-label">Company</label>
