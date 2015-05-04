@@ -110,7 +110,7 @@
 										                                <th><a href="#"><span>Created</span></a></th>
 										                            </tr>
 										                        </thead>
-										                        <?ph                                  p
+										                        <?php
 											                		foreach($company['Address'] as $contactAddress) { ?>
 												                        <tbody aria-relevant="all" aria-live="polite" role="alert">
 												                         		<tr>
@@ -142,7 +142,7 @@
 												                         			</td>
 												                         		</tr>
 												                         </tbody>
-										                        <?php }?>
+										                        <?php } ?>
 										                    </table>
 														
 														</div>

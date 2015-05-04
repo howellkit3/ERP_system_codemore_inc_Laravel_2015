@@ -4,7 +4,7 @@ App::uses('SessionComponent', 'Controller/Component');
 
 class ProductsController extends SalesAppController {
 
-	public $uses = array('Sales.Company','ItemCategoryHolder','Sales.ItemCategoryHolder','Sales.ItemType','Sales.ProcessField','GeneralItem');
+	public $uses = array('Sales.Company','ItemCategoryHolder','Process','Sales.ItemCategoryHolder','Sales.ItemType','Sales.ProcessField','GeneralItem','Substrate','CompoundSubstrate','CorrugatedPaper');
 	
 	function beforeFilter() {
   		$this->myRandomNumber = rand(1,4);
@@ -498,37 +498,92 @@ class ProductsController extends SalesAppController {
 
     	$this->ItemCategoryHolder->bind(array('ItemTypeHolder'));
 
-    	$productData = array();
+    	//$productData = array();
 
-    	if($dropdownId == 0){
-
-    		$generalData = $this->GeneralItem->find('list',array(
+    	if($dropdownId == 1) {
+    		$allData = $this->GeneralItem->find('list',array(
 											'fields' => array(
 											'id', 'category_id')));
     		
-
-    		$categoryData = $this->ItemCategoryHolder->find('all',
-    											array('fields' => 
-    												array('ItemCategoryHolder.id',
-    												 	'ItemCategoryHolder.name',
-    												 	'ItemTypeHolder.id',
-    												 	'ItemTypeHolder.name'
-    												 ),
-													'conditions' => array(
-														'ItemCategoryHolder.id' => $generalData
-													),
-													'contains' => array('ItemTypeHolder')
-													));
-
-    		foreach ($categoryData as $key => $itemtypes) {
-    			$productData['ItemTypeHolder'][] = 	$itemtypes['ItemTypeHolder'];
-    		}
     	}
+    	if($dropdownId == 2) {
+    		$allData = $this->Substrate->find('list',array(
+											'fields' => array(
+											'id', 'category_id')));
+    		
+    	}
+    	if($dropdownId == 3) {
+    		$allData = $this->CompoundSubstrate->find('list',array(
+											'fields' => array(
+											'id', 'category_id')));
+    		
+    	}
+    	if($dropdownId == 4) {
+    		$allData = $this->CorrugatedPaper->find('list',array(
+											'fields' => array(
+											'id', 'category_id')));
+    		
+    	}
+    	
+		$categoryData = $this->ItemCategoryHolder->find('all',
+											array('fields' => 
+												array('ItemCategoryHolder.id',
+												 	'ItemCategoryHolder.name',
+												 	'ItemTypeHolder.id',
+												 	'ItemTypeHolder.name'
+												 ),
+												'conditions' => array(
+													'ItemCategoryHolder.id' => $allData
+												),
+												'contains' => array('ItemTypeHolder')
+												));
+
+		// foreach ($categoryData as $key => $itemtypes) {
+		// 	$productData['ItemTypeHolder'][] = 	$itemtypes['ItemTypeHolder'];
+
+		// }
+
+    	//pr($categoryData);exit();
+    	$this->layout = false;
+
+		echo json_encode($categoryData);
+
+    }
+
+    public function find_process(){
+
+    	$this->autoRender = false;
+
+    	$processData = $this->Process->find('all',
+											array('fields' => 
+												array('Process.id',
+												 	'Process.name'
+												 )
+												));
 
     	$this->layout = false;
 
-		echo json_encode($productData);
+		echo json_encode($processData);
+    }
 
-    	
+    public function find_checkbox($processId = null){
+
+    	$this->autoRender = false;
+
+    	$this->Process->bind(array('SubProcess'));
+
+    	$checkData = $this->Process->SubProcess->find('all',
+											array('fields' => 
+												array('SubProcess.id',
+												 	'SubProcess.name'
+												 ),
+												'conditions' => array(
+													'SubProcess.process_id' => $processId
+												),
+												));
+  
+    	$this->layout = false;
+
+		echo json_encode($checkData);
     }
 }
