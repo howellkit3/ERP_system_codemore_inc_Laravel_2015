@@ -171,9 +171,9 @@ class CustomerSalesController extends SalesAppController {
 
 		$this->Company->ContactPerson->bind(array('Contact','Email'));
 
-	    // $contactPerson = $this->Company->ContactPerson->find('all', array(
-	    //     'conditions' => array('ContactPerson.company_id' => $companyId)
-	    // ));
+	    $contactPerson = $this->Company->ContactPerson->find('all', array(
+	        'conditions' => array('ContactPerson.company_id' => $companyId)
+	    ));
 		 	
 		$this->loadModel('ItemCategoryHolder');
 		$this->ItemCategoryHolder->bind(array('ItemTypeHolder'));
@@ -190,10 +190,10 @@ class CustomerSalesController extends SalesAppController {
 															'order' => array('ItemTypeHolder.name' => 'ASC')
 															));
 
-		$contactPerson = $this->ContactPerson->find('list', array(
-															'fields' => array('id',  'lastname', 'position')
-															// 'order' => array('ContactPerson.lastname' => 'ASC')
-															));
+		// $contactPerson = $this->ContactPerson->find('list', array(
+		// 													'fields' => array('id', 'lastname')
+		// 													// 'order' => array('ContactPerson.lastname' => 'ASC')
+		// 													));
 
 		$companyData = $this->Company->getList(array('id','company_name'),array('Company.id' => $company['Company']['id']));
 
