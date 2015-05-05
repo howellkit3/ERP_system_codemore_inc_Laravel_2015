@@ -129,7 +129,7 @@
 											<button type="button" data="0" class="add_field_button btn btn-primary pull-left">Label &nbsp;&nbsp;&nbsp;</button>
 										</div>
 										<div class="col-lg-1">
-											<button type="button" data="0" class="btn btn-primary pull-left add_part_button">Part</button>
+											<button type="button" data="0" class="btn btn-primary pull-left add_part_button">Part &emsp;&nbsp;&nbsp;</button>
 										</div>
 										<div class="col-lg-1">
 											<button type="button" data="0" class="btn btn-primary pull-left add_process_button">Process&nbsp;</button>

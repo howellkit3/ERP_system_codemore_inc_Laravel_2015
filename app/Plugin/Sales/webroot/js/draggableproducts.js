@@ -51,7 +51,7 @@ $(document).ready(function() {
                                         <div class="col-lg-7">\
                                             <div class="input-group">\
                                                 <span class="input-group-addon"><i class="fa fa-reorder"></i></span>\
-                                                <select class="form-control select-group productItemGroup" id="'+dynamicId+'">\
+                                                <select name="itemgroupName" class="form-control select-group productItemGroup" id="'+dynamicId+'">\
                                                     <option value="0">--Select Item Group--</option>\
                                                     <option value="1">General Items</option>\
                                                     <option value="2">Substrates</option>\
@@ -70,7 +70,7 @@ $(document).ready(function() {
                                             <div class="col-lg-4">\
                                                 <div class="input-group">\
                                                     <span class="input-group-addon"><i class="fa fa-reorder"></i></span>\
-                                                    <select class="form-control selectProductcategory'+dynamicId+'">\
+                                                    <select name="cateogry" class="form-control selectProductcategory'+dynamicId+'">\
                                                         <option value="">--Select Category--</option>\
                                                     </select>\
                                                 </div>\
@@ -81,7 +81,7 @@ $(document).ready(function() {
                                             <div class="col-lg-4">\
                                                 <div class="input-group">\
                                                     <span class="input-group-addon"><i class="fa fa-reorder"></i></span>\
-                                                    <select class="form-control selectProductItem'+dynamicId+'">\
+                                                    <select name="item" class="form-control selectProductItem'+dynamicId+'">\
                                                         <option value="">--Select Item--</option>\
                                                     </select>\
                                                 </div>\
@@ -143,7 +143,7 @@ $(document).ready(function() {
                                         <div class="col-lg-7">\
                                             <div class="input-group">\
                                                 <span class="input-group-addon"><i class="fa fa-reorder"></i></span>\
-                                                <select class="form-control select-group" id="'+dynamicId+'">\
+                                                <select name="process" class="form-control select-group" id="'+dynamicId+'">\
                                                     <option value="">--Select Process--</option>\
                                                 </select>\
                                             </div>\
@@ -160,19 +160,21 @@ $(document).ready(function() {
                                                 </section>\
                                             </div>\
                                             <div class="col-lg-4">\
-                                                <ul id="sortableData" class="ui-sortable">\
-                                                    <li class="ui-state-default ui-sortable-handle">\
-                                                        <span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 1\
-                                                    </li>\
-                                                    <li class="ui-state-default ui-sortable-handle">\
-                                                        <span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 2\
-                                                    </li>\
-                                                </ul>\
+                                                <div class="row grid span8 check-fields-sort">\
+                                                </div>\
                                             </div>\
                                         </div>\
                                     </section>\
                                 </section>\
                               </li>'); //add input box
+
+                //for sortable fields from checkbox
+                $(".grid").sortable({
+                    tolerance: 'pointer',
+                    revert: 'invalid',
+                    placeholder: 'span2 well placeholder tile',
+                    forceHelperSize: true
+                });
 
                 //processes data
                 $.ajax({
@@ -201,20 +203,45 @@ $(document).ready(function() {
                         type: "get",
                         dataType: "json",
                         success: function(data) {
-
+                           
                             $.each(data, function(key, value) {
-                               
+                                 
                                 $('.check-item').append('<div class="checkbox-nice1">\
-                                                        <input id="checkbox-inl-1" type="checkbox">\
+                                                        <input id="checkbox-inl-1" class="check-fields" data-name="'+value.SubProcess.name+'" type="checkbox">\
                                                         <label for="checkbox-inl-1"> "'+value.SubProcess.name+'" </label>\
                                                     </div>');
-                                    
-                               
+
                             }); 
+
+                            //checkbox trigger
+                            $("body").on('change','.check-fields', function(e){
+                                var checkFieldName = $(this).attr('data-name');
+                                checkFieldNameNoSpace = checkFieldName.replace(/\s+/g, "-");
+                                if ($(this).is(":checked")) {
+
+                                    $('.check-fields-sort').append('<div class="well span2 tile" id="'+checkFieldNameNoSpace+'">\
+                                                                        <div class="input-group">\
+                                                                            <span class="input-group-addon">\
+                                                                                <i class="fa fa-reorder"></i>\
+                                                                            </span>\
+                                                                            <input type="text" name="'+checkFieldName+'" value="'+checkFieldName+'" class="form-control" readonly />\
+                                                                        </div>\
+                                                                    </div>');
+                                }
+
+                                if ($(this).is(":unchecked")) {
+
+                                    $('#'+checkFieldNameNoSpace).remove();
+                                    
+                                }
+                                
+                            });
                               
                         }
                     });
-                }); 
+
+                });   
+
         }
     });
 
