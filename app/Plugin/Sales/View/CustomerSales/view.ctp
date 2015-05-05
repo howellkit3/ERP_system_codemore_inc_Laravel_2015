@@ -110,7 +110,12 @@
 										                                <th><a href="#"><span>Created</span></a></th>
 										                            </tr>
 										                        </thead>
-										                        <?php foreach($company['Address'] as $contactAddress) { ?>
+
+										                        <?php
+
+										                        pr($contactPerson);
+											                		foreach($company['Address'] as $contactAddress) { ?>
+
 												                        <tbody aria-relevant="all" aria-live="polite" role="alert">
 												                         		<tr>
 												                         			<td>
@@ -208,6 +213,7 @@
 					                            </tr>
 					                        </thead>
 					                        <?php 
+					                        
 						                		foreach($contactPerson as $contactPersonData) { $key= 0;?>
 						                			
 							                        <tbody aria-relevant="all" aria-live="polite" role="alert">

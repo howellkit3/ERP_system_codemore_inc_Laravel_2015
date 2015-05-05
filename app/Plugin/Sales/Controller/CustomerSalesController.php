@@ -191,7 +191,7 @@ class CustomerSalesController extends SalesAppController {
 															));
 
 		$contactPerson = $this->ContactPerson->find('list', array(
-															'fields' => array('id', 'firstname', 'middlename', 'lastname', 'position')
+															'fields' => array('id',  'lastname', 'position')
 															// 'order' => array('ContactPerson.lastname' => 'ASC')
 															));
 

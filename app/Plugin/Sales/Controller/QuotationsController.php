@@ -136,7 +136,7 @@ class QuotationsController extends SalesAppController {
 
             			$this->request->data['Quotation']['company_id'] = $companyId;
 
-            			pr($companyId); exit;
+            			
 
             			$this->id = $this->Quotation->addQuotation($this->request->data, $userData['User']['id']);
 

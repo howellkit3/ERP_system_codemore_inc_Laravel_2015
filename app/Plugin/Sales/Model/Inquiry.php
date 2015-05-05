@@ -39,22 +39,22 @@ class Inquiry extends AppModel {
 		$this->contain($model);
 	}
 
-	// public $validate = array(
+	public $validate = array(
 
-	// 	'quotes' => array(
-	// 		'notEmpty' => array(
-	// 			'rule' => array('notEmpty'),
+		'quotes' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
 				
-	// 		),
-	// 	),
-	// 	'remarks' => array(
-	// 		'notEmpty' => array(
-	// 			'rule' => array('notEmpty'),
+			),
+		),
+		// 'remarks' => array(
+		// 	'notEmpty' => array(
+		// 		'rule' => array('notEmpty'),
 				
-	// 		),
-	// 	),
+		// 	),
+		// ),
 
-	// );
+	);
 
 	public function saveInquiry($data,$auth){
 
