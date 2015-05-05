@@ -93,10 +93,11 @@
 								<?php foreach ($quotation['QuotationItemDetail'] as $itemDetail){ ?>
 								
 										<tr>
-											<td height ="35px" valign ="top" class ="column3 col-md-8"> 
+											<td width ="123px" height ="35px" valign ="top" class ="column3 col-md-8"> 
 												<div class="col-lg-12">QTY 
 												</div>
-											</td>	
+											</td>
+											<td style="width:20px;">:</td>	
 											<td height ="35px" valign ="top" class ="column3 col-md-8" style="border:1px solid #000;  text-align:center"> 
 												<div class="col-lg-12">
 													<?php echo $itemDetail['quantity'];?> 
@@ -110,6 +111,7 @@
 												<div class="col-lg-12">Unit Price 
 												</div>
 											</td>
+											<td style="width:20px;">:</td>
 											<td height ="35px" valign ="top" class = "column4 col-md-8" style="border:1px solid #000;  text-align:center">
 												<div class="col-lg-12" >
 													<?php echo $itemDetail['unit_price'];?> 
@@ -123,6 +125,7 @@
 												<div class="col-lg-12">Vat Price
 												</div>
 											</td>
+											<td style="width:20px;">:</td>
 											<td height ="40px" class ="column2 col-md-8" style="border:1px solid #000;  text-align:center">
 												<div class="col-lg-12">
 													<?php echo $itemDetail['vat_price'];?> 
@@ -137,6 +140,7 @@
 
 												</div>
 											</td>
+											<td style="width:20px;">:</td>
 											<td height ="30px" class ="column2 col-md-8" style="border:1px solid #000; text-align:center">
 												<div class="col-lg-12">
 													<?php echo $itemDetail['material'];?> 
