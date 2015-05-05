@@ -14,6 +14,8 @@
 
 	echo $this->element('inquiry_quotation');
 
+
+
 } else { ?>
 	
 	<div class="row">
@@ -70,8 +72,7 @@
 	                                    	<label class="col-lg-2 control-label">Company</label>
 											<div class="col-lg-8">
 												<?php echo $this->Form->input('Company.id', array(
-					                                'options' => array($companyData),
-					                                'type' => 'select',
+					                                'options' => array($companyData),  
 					                                'label' => false,
 					                                'class' => 'form-control required contacpersonlist',
 					                                'empty' => '---Select Company---',

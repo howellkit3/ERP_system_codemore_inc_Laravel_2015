@@ -92,7 +92,7 @@
 						</div>
 
 						<div class="form-group">
-							<label for="inputPassword1" class="col-lg-2 control-label"> Request Inquiry</label>
+							<label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span> Request Inquiry</label>
 							<div class="col-lg-8">
 								<?php 
 	                                echo $this->Form->textarea('Inquiry.quotes', array('class' => 'form-control item_type',

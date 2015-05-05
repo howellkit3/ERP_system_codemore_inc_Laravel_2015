@@ -131,7 +131,7 @@
 	                                                echo $this->Form->input('Quotation.item_type_holder_id', 
 	                                                									array( 
 	                                                						//'value' => array($itemTypeData),
-	                                                					//	'options' => array($itemTypeData),				
+	                                                						//'options' => array($itemTypeData),				
 	                                                						'type' => 'select',
 	                                                						'class' => 'form-control item_type jsoncat required', 
 	                                                    					'label' => false, 
