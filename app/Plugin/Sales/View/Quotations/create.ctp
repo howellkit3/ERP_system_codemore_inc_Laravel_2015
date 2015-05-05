@@ -14,8 +14,6 @@
 
 	echo $this->element('inquiry_quotation');
 
-
-
 } else { ?>
 	
 	<div class="row">
