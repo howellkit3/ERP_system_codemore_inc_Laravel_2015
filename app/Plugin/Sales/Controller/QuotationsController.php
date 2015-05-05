@@ -1,6 +1,8 @@
 <?php
 App::uses('AppController', 'Controller');
 App::uses('SessionComponent', 'Controller/Component');
+App::uses('CakeEmail', 'Network/Email');
+App::import('Vendor', 'DOMPDF', true, array(), 'dompdf'.DS.'dompdf_config.inc.php', false);
 
 class QuotationsController extends SalesAppController {
 
@@ -500,4 +502,105 @@ class QuotationsController extends SalesAppController {
             array('controller' => 'quotations', 'action' => 'index')
         );
 	}
+
+	public function send_email($dest=null,$qouteId,$companyId){
+
+		$quoteName = $this->Quotation->find('first',array('conditions' => array('Quotation.id' => $qouteId)));
+
+		$email = new CakeEmail('mandrill');
+
+		$email->to(Configure::read('defaultEmail'));
+
+		$email->subject('Quotation form for'.$quoteName['Quotation']['name']);
+
+		$attachment = $this->_createPdf($qouteId,$companyId);
+		
+		if ($attachment ) {
+
+			$email->attachments(array($attachment));
+			$email->send('Quotation send from koufucolorprinting.com');
+
+			$file = new File(WWW_ROOT . DS . $attachment);
+			$file->delete();
+			$this->Session->setFlash(__('Quotation Successfully send.'));
+			} else {
+
+			$this->Session->setFlash(__('Error Sending.'));
+		}
+
+		return $this->redirect(array('controller' => 'quotations','action' => 'view',$qouteId,$companyId));
+		
+	}
+
+	private function _createPdf($quotationId = null,$companyId = null) {
+
+        $view = new View(null, false);
+
+       // $this->layout = 'pdf';
+
+		// Configure::write('debug',2);
+
+		$userData = $this->Session->read('Auth');
+
+		// $userData = $this->Session->read('Auth');
+		$this->Company->bind(array('Address','Contact','Email','Inquiry','ContactPerson','Quotation'));
+
+		$companyData = $this->Company->find('list', array(
+     											'fields' => array( 
+     												'id','company_name')
+     										));
+
+		$inquiryId = $this->Company->Inquiry->find('list', array(
+     													'fields' => array(
+     														'company_id')
+     													));
+
+		$contactInfo = $this->Company->ContactPerson->find('first', array(
+																'conditions' => array( 
+																	'ContactPerson.company_id' => $companyId 
+																)
+															));
+		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder','ProductDetail'));
+
+		$quotation = $this->Quotation->find('first', array(
+														'conditions' => array( 
+															'Quotation.id' => $quotationId)
+													));
+
+	
+		$quotationDetailData = $this->Quotation->ClientOrder->find('first', array(
+														'conditions' => array( 
+															'ClientOrder.quotation_id' => $quotationId)
+													));
+
+		$user = ClassRegistry::init('User')->find('first', array(
+									'conditions' => array(
+										'User.id' => $userData['User']['id'] )
+								));
+	
+
+ 		$view->set(compact('companyData','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','productName','user','quotationDetailData'));
+        
+       	$view->viewPath = 'Quotations'.DS.'pdf';	
+
+        $output = $view->render('print_word', false);
+   
+        $dompdf = new DOMPDF();
+        $dompdf->set_paper("A4");
+        $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));
+        $dompdf->render();
+        $canvas = $dompdf->get_canvas();
+        $font = Font_Metrics::get_font("helvetica", "bold");
+        $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
+
+        $output = $dompdf->output();
+        $random = rand(0, 1000000) . '-' . time();
+        $filePath = 'pdf/'.$quotation['Quotation']['name'].'-'.time().'.pdf';
+        $file_to_save = WWW_ROOT .'/'. $filePath;
+        
+        file_put_contents($file_to_save, $output);
+
+        return $filePath;
+
+    }
 }

@@ -137,7 +137,7 @@ class ProductsController extends SalesAppController {
 		
 
 		if ($this->request->is('post')) {
-				//pr($this->request->data);exit();
+				pr($this->request->data);exit();
 				$userData = $this->Session->read('Auth');
 			 	$productDetails = $this->request->data;
 	        	$this->loadModel('Sales.Product');

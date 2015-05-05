@@ -17,7 +17,7 @@ $(document).ready(function() {
         $(this).attr('data',parseInt(varCounter));
         var nameArray = $(this).parents('ul.sortable').find('li.ui-state-default').size();
         
-        var realName = "speclabel["+countername+"]";
+        var realName = "data[Specification][speclabel]["+countername+"]";
         e.preventDefault();
 
         if(x < max_fields){ //max input box allowed
@@ -37,21 +37,23 @@ $(document).ready(function() {
         $(this).attr('data',parseInt(varCounter));
         var nameArray = $(this).parents('ul.sortable').find('li.ui-state-default').size();
         var dynamicId = "ItemGroup"+countername;
-        var realName = "speclabel["+countername+"]";
+        var itemgroupName = "data[Specification][itemgroupName]["+countername+"]";
+        var cateogry = "data[Specification][cateogry]["+countername+"]";
+        var item = "data[Specification][item]["+countername+"]";
         e.preventDefault();
 
         if(x < max_fields){ //max input box allowed
 
             x++; //text box increment
 
-           $(wrapper).append('<li class="ui-state-default">\
+            $(wrapper).append('<li class="ui-state-default">\
                                 <section class="dragField">\
                                     <div class="form-group">\
                                         <div class="col-lg-2"></div>\
                                         <div class="col-lg-7">\
                                             <div class="input-group">\
                                                 <span class="input-group-addon"><i class="fa fa-reorder"></i></span>\
-                                                <select name="itemgroupName" class="form-control select-group productItemGroup" id="'+dynamicId+'">\
+                                                <select name="'+itemgroupName+'" class="form-control select-group productItemGroup" id="'+dynamicId+'">\
                                                     <option value="0">--Select Item Group--</option>\
                                                     <option value="1">General Items</option>\
                                                     <option value="2">Substrates</option>\
@@ -70,7 +72,7 @@ $(document).ready(function() {
                                             <div class="col-lg-4">\
                                                 <div class="input-group">\
                                                     <span class="input-group-addon"><i class="fa fa-reorder"></i></span>\
-                                                    <select name="cateogry" class="form-control selectProductcategory'+dynamicId+'">\
+                                                    <select name="'+cateogry+'" class="form-control selectProductcategory'+dynamicId+'">\
                                                         <option value="">--Select Category--</option>\
                                                     </select>\
                                                 </div>\
@@ -81,7 +83,7 @@ $(document).ready(function() {
                                             <div class="col-lg-4">\
                                                 <div class="input-group">\
                                                     <span class="input-group-addon"><i class="fa fa-reorder"></i></span>\
-                                                    <select name="item" class="form-control selectProductItem'+dynamicId+'">\
+                                                    <select name="'+item+'" class="form-control selectProductItem'+dynamicId+'">\
                                                         <option value="">--Select Item--</option>\
                                                     </select>\
                                                 </div>\
@@ -89,13 +91,15 @@ $(document).ready(function() {
                                         </div>\
                                     </section>\
                                 </section>\
-                              </li>'); //add input box
-            //$(".dropItem").hide();
+                               </li>'); //add input box
+
             $("#"+dynamicId).change(function(e){
+
                 var itemGroup = $(this).val();
                 
                 $('.selectProductcategory option[value!=""]').remove();
                 $('.selectProductItem option[value!=""]').remove();
+
                 $.ajax({
                     url: serverPath + "sales/products/find_dropdown/"+itemGroup,
                     type: "get",
@@ -130,20 +134,21 @@ $(document).ready(function() {
         var nameArray = $(this).parents('ul.sortable').find('li.ui-state-default').size();
         var dynamicId = "Process"+countername;
         var realName = "speclabel["+countername+"]";
+        var process = "data[Specification][process]["+countername+"]";
         e.preventDefault();
 
         if(x < max_fields){ //max input box allowed
 
             x++; //text box increment
 
-           $(wrapper).append('<li class="ui-state-default">\
+            $(wrapper).append('<li class="ui-state-default">\
                                 <section class="dragField">\
                                     <div class="form-group">\
                                         <div class="col-lg-2"></div>\
                                         <div class="col-lg-7">\
                                             <div class="input-group">\
                                                 <span class="input-group-addon"><i class="fa fa-reorder"></i></span>\
-                                                <select name="process" class="form-control select-group" id="'+dynamicId+'">\
+                                                <select name="'+process+'" class="form-control select-group" id="'+dynamicId+'">\
                                                     <option value="">--Select Process--</option>\
                                                 </select>\
                                             </div>\
@@ -166,7 +171,7 @@ $(document).ready(function() {
                                         </div>\
                                     </section>\
                                 </section>\
-                              </li>'); //add input box
+                               </li>'); //add input box
 
                 //for sortable fields from checkbox
                 $(".grid").sortable({
@@ -215,8 +220,11 @@ $(document).ready(function() {
 
                             //checkbox trigger
                             $("body").on('change','.check-fields', function(e){
-                                var checkFieldName = $(this).attr('data-name');
+
+                                var checkFieldName = "data[Specification]["+$(this).attr('data-name')+"]";
+                                var checkFieldNameval = $(this).attr('data-name');
                                 checkFieldNameNoSpace = checkFieldName.replace(/\s+/g, "-");
+
                                 if ($(this).is(":checked")) {
 
                                     $('.check-fields-sort').append('<div class="well span2 tile" id="'+checkFieldNameNoSpace+'">\
@@ -224,7 +232,7 @@ $(document).ready(function() {
                                                                             <span class="input-group-addon">\
                                                                                 <i class="fa fa-reorder"></i>\
                                                                             </span>\
-                                                                            <input type="text" name="'+checkFieldName+'" value="'+checkFieldName+'" class="form-control" readonly />\
+                                                                            <input type="text" name="'+checkFieldName+'" value="'+checkFieldNameval+'" class="form-control" readonly />\
                                                                         </div>\
                                                                     </div>');
                                 }
@@ -247,6 +255,7 @@ $(document).ready(function() {
 
     //remove fields
     $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
+
         var countername = parseInt($(".add_field_button").attr('data'));
        
         var varCounter = countername - 1;
@@ -254,7 +263,9 @@ $(document).ready(function() {
 
         e.preventDefault(); $(this).parents('li.ui-state-default').remove(); x--;
     });
+
     $(wrapper).on("click",".remove_part", function(e){ //user click on remove text
+
         var countername = parseInt($(".add_part_button").attr('data'));
        
         var varCounter = countername - 1;
@@ -262,7 +273,9 @@ $(document).ready(function() {
         
         e.preventDefault(); $(this).parents('li.ui-state-default').remove(); x--;
     });
+
     $(wrapper).on("click",".remove_process", function(e){ //user click on remove text
+
         var countername = parseInt($(".add_process_button").attr('data'));
        
         var varCounter = countername - 1;
@@ -273,36 +286,6 @@ $(document).ready(function() {
 
     //sorting fields
     $( "#sortable" ).sortable();
-    $( "#sortableData" ).sortable();
     //$( "#sortable" ).disableSelection();
 
-    
-    $(".productItemGroup").change(function(e){
-        var itemGroup = $(this).val();
-        console.log('teadfsd');
-        alert(itemGroup);
-
-        // if(itemGroup != undefined ){
-        //     $(".dropItem").show();
-        // }
-        // if (!itemGroup) {
-        //     $(".dropItem").hide();
-        // };
-         
-        // $.ajax({
-        //     url: serverPath + "sales/products/find_dropdown/"+itemGroup,
-        //     type: "get",
-        //     dataType: "json",
-        //     success: function(data) {
-
-        //         $.each(data, function(key, value) {
-        //              $('#itemType')
-        //                  .append($("<option></option>")
-        //                  .attr("value",key)
-        //                  .text(value));
-        //         });     
-        //     }
-        // }); 
-      
-    });
 });
