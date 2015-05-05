@@ -110,15 +110,18 @@ class Quotation extends AppModel {
     $hour = date("H");
     $minute = date("i");
     $seconds = date("s");
+    $random = rand(0, 10000);
         
-	$code =  $year. $month .$minute . $hour . $seconds;
+	$code =  $year. $month .$random;
+
+	pr($code);exit;
 									
 		$this->create();
 			
 		$quotationData['Quotation']['created_by'] = $auth;
 		$quotationData['Quotation']['modified_by'] = $auth;
 		$quotationData['Quotation']['uuid'] = $code;
-		$quotationData['Quotation']['validity'] = $quotationData['Quotation']['validity_field'];
+	//	$quotationData['Quotation']['validity'] = $quotationData['Quotation']['validity_field'];
 		
 		$this->save($quotationData);
 

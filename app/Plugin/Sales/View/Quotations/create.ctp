@@ -1,7 +1,7 @@
 <?php $this->Html->addCrumb('Sales', array('controller' => 'customer_sales', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Quotation', array('controller' => 'quotation', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Create', array('controller' => 'quotation', 'action' => 'create')); ?>
-<?php echo $this->Html->script('Sales.company_quotation');?>
+<?php  echo $this->Html->script('Sales.company_quotation');?>
 <?php echo $this->Html->script('Sales.checkvat');?>
 <style type="text/css">#QuotationField12Description{background-color:#fff;}</style>
 <div style="clear:both"></div>
@@ -41,6 +41,8 @@
 							<div class="main-box-body clearfix">
 								<div class="main-box-body clearfix">
 									<div class="form-horizontal">
+
+
 										<?php 
 	                                        echo $this->Form->input('Company.id', array('class' => 'form-control item_type',
 						                        'hidden' => 'hidden',
@@ -48,6 +50,8 @@
 						                        'label' => false,
 						                        'id' => 'id'));
 	                                    ?>
+
+
 
 	                                    <div class="form-group">
 											<label class="col-lg-2 control-label">Name</label>
@@ -93,34 +97,6 @@
 											</div>
 										</div>
 
-									<!-- 	<div class="form-group" id="existing_items">
-											<label class="col-lg-2 control-label">Item</label>
-											<div class="col-lg-8">
-												<?php 
-	                                                echo $this->Form->input('Quotation.name', 
-	                                                									array( 
-	                                                						'class' => 'form-control item_type', 
-	                                                    					'label' => false, 
-	                                                    					'id' => 'txtProduct',
-	                                                    					'placeholder' => 'Item'
-	                                                    					));
-	                                            ?>
-												<?php 
-	                                                // echo $this->Form->input('product', 
-	                                                // 									array( 
-	                                                // 						'type' => 'select',
-	                                                // 						'class' => 'form-control item_type', 
-	                                                //     					//'alt' => 'address1',
-	                                                //     					'label' => false, 
-	                                                //     					'id' => 'selectProduct',
-	                                                //     					'empty' => '--Select Product--'
-	                                                //     					));
-	                                           	 	?>
-											</div>
-											
-										</div>
- -->
-
 										<div class="form-group" id="existing_items">
 											<label class="col-lg-2 control-label">Category</label>
 											<div class="col-lg-8">
@@ -144,6 +120,7 @@
 												<?php 
 	                                                echo $this->Form->input('Quotation.item_type_holder_id', 
 	                                                									array( 
+	                                                										
 	                                                						'type' => 'select',
 	                                                						'class' => 'form-control item_type jsoncat required', 
 	                                                    					'label' => false, 
@@ -373,7 +350,8 @@
 											<label class="col-lg-2 control-label">Validity</label>
 											<div class="col-lg-8">
 												<?php 
-		                                            echo $this->Form->input('Quotation.validity_field', array(
+		                                            echo $this->Form->input('Quotation.validity', array(
+		                                            								'type' => 'text',
 		                                            								'class' => 'form-control item_type datepick',
 								                                                    'label' => false,
 								                                                    'placeholder' => 'Validity'));

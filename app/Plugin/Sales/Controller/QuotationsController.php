@@ -136,6 +136,8 @@ class QuotationsController extends SalesAppController {
 
             			$this->request->data['Quotation']['company_id'] = $companyId;
 
+            			pr($companyId); exit;
+
             			$this->id = $this->Quotation->addQuotation($this->request->data, $userData['User']['id']);
 
             			$QuotationDetail = ClassRegistry::init('Sales.QuotationDetail');
@@ -315,35 +317,42 @@ class QuotationsController extends SalesAppController {
         );
 	}
 
-	public function edit($quotationId = null , $companyId){
+	public function edit($quotationId = null,$companyId = null){
 
 		$this->loadModel('PaymentTermHolder');
 
 		$this->loadModel('ItemCategoryHolder');
+
+		$this->loadModel('ItemTypeHolder');
+
+		$this->loadModel('Sales.Product');
+
+		$userData = $this->Session->read('Auth');
 			
-			$itemCategoryData = $this->ItemCategoryHolder->find('list', array(
+		$itemCategoryData = $this->ItemCategoryHolder->find('list', array(
 															'fields' => array('id', 'name'),
 															'order' => array('ItemCategoryHolder.name' => 'ASC')
+															));
+
+		$itemTypeData = $this->ItemTypeHolder->find('first', array(
+															//'conditions' => array('ItemTypeHolder.item_category_holder_id' => 'ItemCategoryHolder.id'),
+															'fields' => array('id', 'name'),
+															'order' => array('ItemTypeHolder.name' => 'ASC')
 															));
 
 		$paymentTermData = $this->PaymentTermHolder->find('list', array(
 															'fields' => array('id', 'name'),
 															'order' => array('PaymentTermHolder.name' => 'ASC')
 															));
-		
-		if($this->request->is('post')){
-			$this->Quotation->edit($this->request->data,$quotationId);
-			$this->redirect(array('controller' => 'quotations', 'action' => 'view',$quotationId,$companyId)
-        	);
-		}
-		
-		$userData = $this->Session->read('Auth');
+
+		$productData = $this->Product->find('list', array(
+															'fields' => array('id', 'name'),
+															'order' => array('Product.name' => 'ASC')
+															));
 
 		if(!empty($quotationId)){
 			$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail'));
-			$this->request->data = $this->Quotation->read(null,$quotationId);
-			
-			
+			//$this->request->data = $this->Quotation->read(null,$quotationId);
 
 			$userData = $this->Session->read('Auth');
 
@@ -353,13 +362,42 @@ class QuotationsController extends SalesAppController {
 															'fields' => array('id', 'company_name'),
 															'order' => array('Company.company_name' => 'ASC')
 															));
-			
-		}
+
+			$post = $this->Quotation->findById($quotationId);
+
+		            if (!$post) {
+		                throw new NotFoundException(__('Invalid post'));
+		            }
+
+		            
+		            if ($this->request->is(array('post', 'put'))) {
+		                $this->Quotation->id = $quotationId;
+		                $this->Quotation->QuotationDetail->quotation_id = $quotationId;
+		                $this->Quotation->QuotationItemDetail->quotation_id = $quotationId;
+
+		               // pr($this->request->data); exit;
+
+		                if ($this->Quotation->save($this->request->data)) {
+		                    $this->Quotation->save($this->request->data);
+		              		$this->Quotation->QuotationDetail->save($this->request->data, $userData['User']['id'], $this->id);
+            				$this->Quotation->QuotationItemDetail->save($this->request->data, $this->id);	
+		                    $this->Session->setFlash(__('Quotation has been updated.'));
+		                    return $this->redirect(array('action' => 'view'));
+		                }
+		                $this->Session->setFlash(__('Unable to update your post.'));
+		            }
+
+		            if (!$this->request->data) {
+		                $this->request->data = $post;
+		            }
+		
+		     }
+		$this->set(compact('companyData','customField','itemCategoryData', 'paymentTermData','itemTypeData','productData'));
+	}
 
 		//pr($this->request->data);
 
-		$this->set(compact('companyData','customField','itemCategoryData', 'paymentTermData'));
-	}
+	
 
 	// public function auto_complete() {
 	// 	$this->Quotation->bind(array('QuotationField'));
