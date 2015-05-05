@@ -54,6 +54,37 @@ class QuotationsController extends SalesAppController {
 
 		$this->loadModel('PaymentTermHolder');
 
+		$this->loadModel('ItemCategoryHolder');
+
+		$this->loadModel('ContactPerson');
+
+		$this->loadModel('Unit');
+
+		$this->loadModel('Currency');
+
+		$itemCategoryData = $this->ItemCategoryHolder->find('list', array(
+															'fields' => array('id', 'name'),
+															'order' => array('ItemCategoryHolder.name' => 'ASC')
+															));
+
+		$this->Company->bind(array('Contact','Email','Address','ContactPerson'));
+
+		$companyData = $this->Company->find('list', array(
+															'fields' => array('id', 'company_name'),
+															'order' => array('Company.company_name' => 'ASC')
+															));
+
+		$unitData = $this->Unit->find('list', array(
+															'fields' => array('id', 'unit'),
+															'order' => array('Unit.unit' => 'ASC')
+															));
+
+		$currencyData = $this->Currency->find('list', array(
+															'fields' => array('id', 'name'),
+															'order' => array('Currency.name' => 'ASC')
+															));
+
+
 		if(!empty($inquiryId)){
 
 			$this->Company->bind(array('Address','Contact','Email','Inquiry'));
@@ -71,14 +102,6 @@ class QuotationsController extends SalesAppController {
 
 		}else{
 
-		
-			$this->loadModel('ItemCategoryHolder');
-			
-			$itemCategoryData = $this->ItemCategoryHolder->find('list', array(
-															'fields' => array('id', 'name'),
-															'order' => array('ItemCategoryHolder.name' => 'ASC')
-															));
-
 			$userData = $this->Session->read('Auth');
 
 			$this->Company->bind(array('Contact','Email','Address','ContactPerson'));
@@ -93,7 +116,7 @@ class QuotationsController extends SalesAppController {
 															));
 		}
 
-		$this->set(compact('category','inquiryId','companyData','customField','itemCategoryData','paymentTermData'));
+		$this->set(compact('category','inquiryId','companyData','customField','itemCategoryData','paymentTermData','unitData','currencyData'));
 		
 	}
 
@@ -136,9 +159,9 @@ class QuotationsController extends SalesAppController {
 
             			$companyId = $this->request->data['Company']['id'];
 
-            			$this->request->data['Quotation']['company_id'] = $companyId;
+            			//pr($companyId);
 
-            			
+            			//$this->request->data['Quotation']['company_id'] = $companyId;
 
             			$this->id = $this->Quotation->addQuotation($this->request->data, $userData['User']['id']);
 

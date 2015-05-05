@@ -43,3 +43,24 @@ CHANGE COLUMN `type` `type` VARCHAR(60) NULL DEFAULT NULL;
 
 DROP TABLE `item_category_holders`;
 DROP TABLE `item_type_holders`;
+
+
+#NOTE: SELECT KOUFU SYSTEM DATABASE ----
+/** jRr added this 05/05/2015 03:58PM */
+CREATE TABLE IF NOT EXISTS `currencies` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(60) NULL DEFAULT NULL,
+  `created_by` INT(11) NULL DEFAULT NULL COMMENT '	',
+  `modified_by` INT(11) NULL DEFAULT NULL,
+  `created` TIMESTAMP NULL DEFAULT NULL,
+  `modified` TIMESTAMP NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+
+#NOTE: SELECT KOUFU SALE DATABASE ----
+ALTER TABLE `quotation_item_details` 
+ADD COLUMN `quantity_unit_id` INT(11) NULL DEFAULT NULL AFTER `quantity`,
+ADD COLUMN `unit_price_currency_id` INT(11) NULL DEFAULT NULL AFTER `unit_price`
+

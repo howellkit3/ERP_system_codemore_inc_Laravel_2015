@@ -1586,7 +1586,101 @@ class SettingsController extends AppController
         return $this->redirect(array('action' => 'unit'));
     }
 
-    public function ajax_categ($itemId = false){
+     public function currency() {
+
+        $this->loadModel('Currency');
+
+        $userData = $this->Session->read('Auth');
+
+        $limit = 10;
+
+        $conditions = array();
+
+        $this->paginate = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            'fields' => array('id', 'name','created'),
+            'order' => 'Currency.id DESC',
+        );
+
+        $currencyData = $this->paginate('Currency');
+
+            if ($this->request->is('post')) {
+                
+                if (!empty($this->request->data)) {
+                   
+                    $this->Currency->create();
+
+                    $this->id = $this->Currency->saveCurrency($this->request->data['Currency'], $userData['User']['id']);
+           
+                    $this->Session->setFlash(__('Add Currency Complete.'));
+
+                    $this->redirect(
+                        array('controller' => 'settings', 'action' => 'currency')
+                    );
+                }
+            }
+
+        $this->set(compact('currencyData'));
+    }
+
+    public function currency_edit($id = null) {
+
+            $this->loadModel('Currency');
+
+                if (!$id) {
+                    throw new NotFoundException(__('Invalid post'));
+                }
+
+                $post = $this->Currency->findById($id);
+                if (!$post) {
+                    throw new NotFoundException(__('Invalid post'));
+                }
+
+                if ($this->request->is(array('post', 'put'))) {
+                    $this->Currency->id = $id;
+
+                    if ($this->Currency->save($this->request->data)) {
+
+                        $this->Currency->save($this->request->data);
+
+                        $this->Session->setFlash(__('Currency has been updated.'));
+
+                        return $this->redirect(array('action' => 'currency'));
+                    }
+
+                    $this->Session->setFlash(__('Unable to update your post.'));
+                }
+
+                if (!$this->request->data) {
+
+                    $this->request->data = $post;
+                }
+        }    
+
+    public function deleteCurrency($id) {
+
+        $this->loadModel('Currency');
+      
+        if ($this->Currency->delete($id)) {
+
+            $this->Session->setFlash(
+
+                __('Successfully deleted.', h($id))
+            );
+
+        } else {
+
+            $this->Session->setFlash(
+
+                __('The post cannot be deleted.', h($id))
+            );
+        }
+
+        return $this->redirect(array('action' => 'currency'));
+    }
+
+  public function ajax_categ($itemId = false){
 
 
         $this->autoRender = false;
@@ -1603,9 +1697,6 @@ class SettingsController extends AppController
 
        echo json_encode($itemdata);
     }
-
-    
-
 
 }
             

@@ -113,7 +113,6 @@
 
 										                        <?php
 
-										                        pr($contactPerson);
 											                		foreach($company['Address'] as $contactAddress) { ?>
 
 												                        <tbody aria-relevant="all" aria-live="polite" role="alert">
@@ -213,8 +212,8 @@
 					                            </tr>
 					                        </thead>
 					                        <?php 
-					                        
-						                		foreach($contactPerson as $contactPersonData) { $key= 0;?>
+					                        	$key= 0;
+						                		foreach($contactPerson as $contactPersonData) { ?>
 						                			
 							                        <tbody aria-relevant="all" aria-live="polite" role="alert">
 						                         		<tr>

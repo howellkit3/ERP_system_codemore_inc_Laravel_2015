@@ -12,6 +12,51 @@ class ProductsController extends SalesAppController {
 		$this->set(compact('userDetails'));
 	}
 
+
+	public function index() {
+		
+		$this->loadModel('ItemCategoryHolder');
+
+        $this->loadModel('ItemTypeHolder');
+
+        $this->loadModel('Company');
+
+		$this->loadModel('Sales.Product');
+
+		$this->Product->recursive = 1;
+		
+		$itemCategoryData = $this->ItemCategoryHolder->find('list', array('fields' => array(
+			'id', 'name')));
+
+		$itemTypeData = $this->ItemTypeHolder->find('list', array('fields' => array(
+			'id', 'name')));
+
+		$nameTypeData = $this->ItemTypeHolder->find('all',  array(
+			'order' => 'ItemTypeHolder.id DESC'));
+
+		$categoryData = $this->ItemCategoryHolder->find('all',  array(
+			'order' => 'ItemCategoryHolder.id DESC'));
+
+		$companyData = $this->Company->getList(array('id','company_name'));
+
+		$limit = 5;
+
+		$conditions = array();
+			
+		$this->paginate = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            //'fields' => array('id', 'name', 'created','modified'),
+            'order' => 'Product.id DESC',
+        );
+
+        $productData = $this->paginate('Product');
+
+
+		$this->set(compact('productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData', 'companyData'));
+
+	}
+
 	public function add($companyId = null){
 		
 		$userData = $this->Session->read('Auth');
@@ -301,51 +346,6 @@ class ProductsController extends SalesAppController {
 	}
 
 	
-
-	public function index() {
-
-		
-		$this->loadModel('ItemCategoryHolder');
-
-        $this->loadModel('ItemTypeHolder');
-
-        $this->loadModel('Company');
-
-		$this->loadModel('Sales.Product');
-
-		$this->Product->recursive = 1;
-		
-		$itemCategoryData = $this->ItemCategoryHolder->find('list', array('fields' => array(
-			'id', 'name')));
-
-		$itemTypeData = $this->ItemTypeHolder->find('list', array('fields' => array(
-			'id', 'name')));
-
-		$nameTypeData = $this->ItemTypeHolder->find('all',  array(
-			'order' => 'ItemTypeHolder.id DESC'));
-
-		$categoryData = $this->ItemCategoryHolder->find('all',  array(
-			'order' => 'ItemCategoryHolder.id DESC'));
-
-		$companyData = $this->Company->getList(array('id','company_name'));
-
-		$limit = 5;
-
-		$conditions = array();
-			
-		$this->paginate = array(
-            'conditions' => $conditions,
-            'limit' => $limit,
-            //'fields' => array('id', 'name', 'created','modified'),
-            'order' => 'Product.id DESC',
-        );
-
-        $productData = $this->paginate('Product');
-
-
-		$this->set(compact('productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData', 'companyData'));
-
-	}
 
 	public function review_product($productId = null){
 
