@@ -114,7 +114,6 @@ class Quotation extends AppModel {
         
 	$code =  $year. $month .$random;
 
-	pr($code);exit;
 									
 		$this->create();
 			
