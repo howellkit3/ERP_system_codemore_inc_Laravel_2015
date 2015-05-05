@@ -53,6 +53,11 @@ class ItemCategoryHolder extends AppModel {
 					'foreignKey' => 'item_category_holder_id',
 					'dependent' => true
 				),
+				'GeneralItem' => array(
+					'className' => 'GeneralItem',
+					'foreignKey' => 'item_category_holder_id',
+					'dependent' => true
+				),
 			)
 		));
 

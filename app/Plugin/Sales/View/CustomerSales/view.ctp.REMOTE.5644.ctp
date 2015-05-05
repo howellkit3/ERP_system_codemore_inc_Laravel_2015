@@ -110,7 +110,8 @@
 										                                <th><a href="#"><span>Created</span></a></th>
 										                            </tr>
 										                        </thead>
-										                        <?php foreach($company['Address'] as $contactAddress) { ?>
+										                        <?php
+											                		foreach($company['Address'] as $contactAddress) { ?>
 												                        <tbody aria-relevant="all" aria-live="polite" role="alert">
 												                         		<tr>
 												                         			<td>
@@ -169,8 +170,8 @@
 					                                <th><a href="#"><span>Created</span></a></th>
 					                            </tr>
 					                        </thead>
-
-					                        <?php foreach($company['Contact'] as $contactNumber) { ?>
+					                        <?php
+						                		foreach($company['Contact'] as $contactNumber) { ?>
 							                        <tbody aria-relevant="all" aria-live="polite" role="alert">
 						                         		<tr>
 						                         			<td>

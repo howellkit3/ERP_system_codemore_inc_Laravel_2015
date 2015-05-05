@@ -141,7 +141,7 @@
 												                         			</td>
 												                         		</tr>
 												                         </tbody>
-										                        <?php } ?>
+										                        <?php }?>
 										                    </table>
 														
 														</div>
@@ -208,6 +208,7 @@
 					                            </tr>
 					                        </thead>
 					                        <?php 
+					                        pr($contactPerson);
 						                		foreach($contactPerson as $contactPersonData) { $key= 0;?>
 						                			
 							                        <tbody aria-relevant="all" aria-live="polite" role="alert">
