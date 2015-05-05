@@ -56,6 +56,9 @@ class QuotationsController extends SalesAppController {
 
 		$this->loadModel('ContactPerson');
 
+		$this->loadModel('Unit');
+
+		$this->loadModel('Currency');
 
 		$itemCategoryData = $this->ItemCategoryHolder->find('list', array(
 															'fields' => array('id', 'name'),
@@ -69,15 +72,16 @@ class QuotationsController extends SalesAppController {
 															'order' => array('Company.company_name' => 'ASC')
 															));
 
+		$unitData = $this->Unit->find('list', array(
+															'fields' => array('id', 'unit'),
+															'order' => array('Unit.unit' => 'ASC')
+															));
 
-		//pr($this->request->data);
+		$currencyData = $this->Currency->find('list', array(
+															'fields' => array('id', 'name'),
+															'order' => array('Currency.name' => 'ASC')
+															));
 
-		// $contactPersonData = $this->ContactPerson->find('all' ,
-		// 														array(
-		// 														'conditions' => array( 
-		// 														'ContactPerson.company_id' => $inquiryId 
-		// 														))
-		// 														);
 
 		if(!empty($inquiryId)){
 
@@ -110,7 +114,7 @@ class QuotationsController extends SalesAppController {
 															));
 		}
 
-		$this->set(compact('category','inquiryId','companyData','customField','itemCategoryData','paymentTermData', 'contactPersonData'));
+		$this->set(compact('category','inquiryId','companyData','customField','itemCategoryData','paymentTermData','unitData','currencyData'));
 		
 	}
 
