@@ -485,6 +485,20 @@ class QuotationsController extends SalesAppController {
 
 		$this->loadModel('Sales.Product');
 
+		$this->loadModel('Unit');
+
+		$this->loadModel('Currency');
+
+		$unitData = $this->Unit->find('list', array(
+												'fields' => array('id', 'unit'),
+												'order' => array('Unit.unit' => 'ASC')
+												));
+
+		$currencyData = $this->Currency->find('list', array(
+												'fields' => array('id', 'name'),
+												'order' => array('Currency.name' => 'ASC')
+												));
+
 		$userData = $this->Session->read('Auth');
 			
 		$itemCategoryData = $this->ItemCategoryHolder->find('list', array(
@@ -550,7 +564,7 @@ class QuotationsController extends SalesAppController {
 		            }
 		
 		     }
-		$this->set(compact('companyData','customField','itemCategoryData', 'paymentTermData','itemTypeData','productData'));
+		$this->set(compact('unitData','currencyData','companyData','customField','itemCategoryData', 'paymentTermData','itemTypeData','productData'));
 	}
 
 		//pr($this->request->data);
