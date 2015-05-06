@@ -64,3 +64,7 @@ ALTER TABLE `quotation_item_details`
 ADD COLUMN `quantity_unit_id` INT(11) NULL DEFAULT NULL AFTER `quantity`,
 ADD COLUMN `unit_price_currency_id` INT(11) NULL DEFAULT NULL AFTER `unit_price`
 
+
+#NOTE: SELECT KOUFU SALE DATABASE ----
+/** Aldrin added this 05/06/2015 11:13AM */
+ALTER TABLE `quotations`  ADD `status` TEXT NULL  AFTER `currency`;
