@@ -518,8 +518,6 @@ class QuotationsController extends SalesAppController {
 														array('conditions' => 
 														array('QuotationItemDetail.quotation_id' => $quotationId)));
 
-		pr($itemDetailData);exit();
-
 		$unitData = $this->Unit->find('list', array(
 												'fields' => array('id', 'unit'),
 												'order' => array('Unit.unit' => 'ASC')
