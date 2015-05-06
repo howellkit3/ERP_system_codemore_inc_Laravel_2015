@@ -314,6 +314,11 @@ class QuotationsController extends SalesAppController {
      													'fields' => array(
      														'company_id')
      													));
+		$this->loadModel('Currency');
+		$currencies = $this->Currency->getList();
+
+		$this->loadModel('Unit');
+		$units = $this->Unit->getList();
 
 		$this->ContactPerson->bind(array('Email'));
 
@@ -325,12 +330,13 @@ class QuotationsController extends SalesAppController {
 		
 		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder','ProductDetail', 'Product'));
 
+
 		$quotation = $this->Quotation->find('first', array(
 														'conditions' => array( 
 															'Quotation.id' => $quotationId)
 													));
-
 	
+
 		$quotationDetailData = $this->Quotation->ClientOrder->find('first', array(
 														'conditions' => array( 
 															'ClientOrder.quotation_id' => $quotationId)
@@ -352,8 +358,9 @@ class QuotationsController extends SalesAppController {
 									'conditions' => array(
 										'User.id' => $userData['User']['id'] )
 								));
+
 		
-		$this->set(compact('paymentTerm','companyData','companyId', 'quotationSize', 'quotationOption','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','salesStatus', 'productName','clientOrderCount','quotationDetailData'));
+		$this->set(compact('units','currencies','paymentTerm','companyData','companyId', 'quotationSize', 'quotationOption','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','salesStatus', 'productName','clientOrderCount','quotationDetailData'));
 		
 	}
 
@@ -394,6 +401,16 @@ class QuotationsController extends SalesAppController {
 																	'ContactPerson.company_id' => $companyId 
 																)
 															));
+
+
+		$this->loadModel('Currency');
+		$currencies = $this->Currency->getList();
+
+		$this->loadModel('Unit');
+		$units = $this->Unit->getList();
+
+
+
 		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder','ProductDetail'));
 
 		$quotation = $this->Quotation->find('first', array(
@@ -413,7 +430,7 @@ class QuotationsController extends SalesAppController {
 								));
 
 		
-		$this->set(compact('companyData','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','productName','user','quotationDetailData'));
+		$this->set(compact('companyData','currencies','units','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','productName','user','quotationDetailData'));
 	
 
 	}
@@ -467,6 +484,20 @@ class QuotationsController extends SalesAppController {
 		$this->loadModel('ItemTypeHolder');
 
 		$this->loadModel('Sales.Product');
+
+		$this->loadModel('Unit');
+
+		$this->loadModel('Currency');
+
+		$unitData = $this->Unit->find('list', array(
+												'fields' => array('id', 'unit'),
+												'order' => array('Unit.unit' => 'ASC')
+												));
+
+		$currencyData = $this->Currency->find('list', array(
+												'fields' => array('id', 'name'),
+												'order' => array('Currency.name' => 'ASC')
+												));
 
 		$userData = $this->Session->read('Auth');
 			
@@ -533,7 +564,7 @@ class QuotationsController extends SalesAppController {
 		            }
 		
 		     }
-		$this->set(compact('companyData','customField','itemCategoryData', 'paymentTermData','itemTypeData','productData'));
+		$this->set(compact('unitData','currencyData','companyData','customField','itemCategoryData', 'paymentTermData','itemTypeData','productData'));
 	}
 
 		//pr($this->request->data);
@@ -720,6 +751,14 @@ class QuotationsController extends SalesAppController {
 																	'ContactPerson.company_id' => $companyId 
 																)
 															));
+
+
+		$this->loadModel('Currency');
+		$currencies = $this->Currency->getList();
+
+		$this->loadModel('Unit');
+		$units = $this->Unit->getList();
+
 		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder','ProductDetail'));
 
 		$quotation = $this->Quotation->find('first', array(
@@ -739,7 +778,7 @@ class QuotationsController extends SalesAppController {
 								));
 	
 
- 		$view->set(compact('companyData','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','productName','user','quotationDetailData'));
+ 		$view->set(compact('companyData','units','currencies','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','productName','user','quotationDetailData'));
         
        	$view->viewPath = 'Quotations'.DS.'pdf';	
 

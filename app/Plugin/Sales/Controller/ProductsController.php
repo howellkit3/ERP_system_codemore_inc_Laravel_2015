@@ -460,9 +460,12 @@ class ProductsController extends SalesAppController {
     	$this->layout = false;
     	$this->loadModel('ContactPerson');
 
-		$itemdata =$this->ContactPerson->find('all', array(
+		$itemdata = $this->ContactPerson->find('all', array(
 										'conditions' => array(
-											'ContactPerson.company_id' => $itemId), 
+										'ContactPerson.company_id' => $itemId,
+										'ContactPerson.firstname NOT' => NULL,
+										'ContactPerson.lastname NOT' => NULL,
+										), 
 										'fields' => array(
 											'id', 'firstname','lastname')
 										));

@@ -38,5 +38,13 @@ class Currency extends AppModel {
         }
     }
 
+    public function getList($conditions = array(),$fields = array('id','name')) {
+
+        return $this->find('list',array(
+            'conditions' => $conditions,
+            'fields'    => $fields
+            ));
+    }
+
 
 }

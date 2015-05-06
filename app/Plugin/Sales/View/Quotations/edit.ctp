@@ -201,7 +201,7 @@
 										<div class="form-horizontal">
 											<div class="form-group">
 												<label class="col-lg-2 control-label">Quantity</label>
-												<div class="col-lg-8">
+												<div class="col-lg-2">
 													<?php 
 			                                            echo $this->Form->input('QuotationItemDetail.0.quantity', array(
 			                                            								'class' => 'form-control item_type',
@@ -211,11 +211,21 @@
 		                                            ?>
 													 
 												</div>
+												<div class="col-lg-6">
+												<?php echo $this->Form->input('QuotationItemDetail.0.quantity_unit_id', array(
+					                                'options' => array($unitData),  
+					                                'label' => false,
+					                                'class' => 'form-control required',
+					                                'empty' => '---Select Unit---'
+					                                 )); 
+
+					                            ?>
+												</div>
 											</div>
 
 											<div class="form-group">
 												<label class="col-lg-2 control-label">Unit Price</label>
-												<div class="col-lg-8">
+												<div class="col-lg-2">
 													<?php 
 			                                            echo $this->Form->input('QuotationItemDetail.0.unit_price', array(
 			                                            								'class' => 'form-control item_type unitprice',
@@ -225,6 +235,17 @@
 									                                                    'placeholder' => 'Unit Price'));
 		                                            ?>
 													
+												</div>
+
+												<div class="col-lg-6">
+												<?php echo $this->Form->input('QuotationItemDetail.0.unit_price_currency_id', array(
+														                                'options' => array($currencyData),  
+														                                'label' => false,
+														                                'class' => 'form-control',
+														                                'empty' => '---Select Currency---'
+														                                 )); 
+
+					                            ?>
 												</div>
 											</div>
 

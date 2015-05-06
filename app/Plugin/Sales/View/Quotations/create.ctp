@@ -73,10 +73,9 @@
 					                                'type' => 'select',
 					                                'label' => false,
 					                                'class' => 'form-control required contacpersonlist',
-					                                'options' => array($companyData),  
-					                             
-
-					                                 )); 
+					                                'options' => array($companyData),
+					                                'empty' => '--Select Company--'  
+					                             )); 
 
 					                            ?>
 											</div>
@@ -224,7 +223,7 @@
 												<?php echo $this->Form->input('QuotationItemDetail.0.unit_price_currency_id', array(
 														                                'options' => array($currencyData),  
 														                                'label' => false,
-														                                'class' => 'form-control required',
+														                                'class' => 'form-control',
 														                                'empty' => '---Select Currency---'
 														                                 )); 
 

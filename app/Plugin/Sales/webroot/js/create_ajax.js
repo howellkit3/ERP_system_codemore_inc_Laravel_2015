@@ -13,7 +13,7 @@
 						if (value.id == contactID) {
 							$option = "<option class='option-append-contact' selected value="+ value.ContactPerson.firstname+' '+value.ContactPerson.lastname + ">"+ value.ContactPerson.firstname+' '+value.ContactPerson.lastname +"</option>";	
 						} else {
-							$option = "<option class='option-append-contact' selected value="+ value.ContactPerson.firstname+' '+value.ContactPerson.lastname + ">"+ value.ContactPerson.firstname+' '+value.ContactPerson.lastname +"</option>";
+							$option = "<option class='option-append-contact' value="+ value.ContactPerson.firstname+' '+value.ContactPerson.lastname + ">"+ value.ContactPerson.firstname+' '+value.ContactPerson.lastname +"</option>";
 							// $option = "<option class='option-append-contact'  value="+value.ItemTypeHolder.id+">"+value.ItemTypeHolder.name+"</option>";
 						}
 					     $('#QuotationAttentionDetails').append($option);
@@ -69,7 +69,7 @@ $('#item_type_holder_id').change(function(){
 					if (value.id == itemtypeid) {
 					$option = "<option class='option-append2' selected value="+value.Product.id+">"+value.Product.name+"</option>";	
 					} else {
-					$option = "<option class='option-append2'  value="+value.Product.id+">"+value.Product.name+"</option>";
+					$option = "<option class='option-append2' value="+value.Product.id+">"+value.Product.name+"</option>";
 					}
 					$('#product_holder_id').append($option);
 					

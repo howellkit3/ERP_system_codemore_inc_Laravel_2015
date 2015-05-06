@@ -31,13 +31,30 @@ class CustomerSalesController extends SalesAppController {
 
 		$userData = $this->Session->read('Auth');
 
-		$this->Company->bind(array('ContactPerson'));
+		$this->Company->bind(array('ContactPerson' => array('fields' => array('firstname','middlename','lastname'))));
 
 		$this->Company->recursive = 1;
 
-		$company = $this->Company->find('all',array(
-    		'order' => array('Company.id DESC')));
+		$limit = 10;
 
+		$conditions = array();
+			
+		$this->paginate = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            'fields' => array(
+            	'Company.id', 
+            	'Company.uuid', 
+            	'Company.company_name',
+            	'Company.modified',
+            	'Company.website',
+            	'Company.tin',
+            	'Company.created',
+            	),
+            'order' => 'Company.id DESC',
+        );
+
+        $company = $this->paginate('Company');
 
 		$this->set(compact('company','paymentTermData'));
 		

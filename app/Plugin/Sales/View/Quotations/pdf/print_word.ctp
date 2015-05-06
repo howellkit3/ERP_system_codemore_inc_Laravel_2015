@@ -101,6 +101,10 @@
 											<td height ="35px" valign ="top" class ="column3 col-md-8" style="border:1px solid #000;  text-align:center"> 
 												<div class="col-lg-12">
 													<?php echo $itemDetail['quantity'];?> 
+
+													<?php
+													 echo !empty($units[$itemDetail['quantity_unit_id']]) ? $units[$itemDetail['quantity_unit_id']] : '' ?> 
+
 												</div>
 											</td>	
 											
@@ -115,6 +119,9 @@
 											<td height ="35px" valign ="top" class = "column4 col-md-8" style="border:1px solid #000;  text-align:center">
 												<div class="col-lg-12" >
 													<?php echo $itemDetail['unit_price'];?> 
+
+													<?php
+													 echo !empty($currencies[$itemDetail['unit_price_currency_id']]) ? $currencies[$itemDetail['unit_price_currency_id']] : '' ?> 
 												</div>
 											</td>
 											
