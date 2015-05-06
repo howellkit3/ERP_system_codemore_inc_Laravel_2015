@@ -25,9 +25,9 @@ class Email extends AppModel {
 					'foreignKey' => 'foreign_key',
 					'dependent' => true
 				),
-				'Contactperson' => array(
-					'className' => 'Company',
-					'foreignKey' => 'Contactperson',
+				'ContactPerson' => array(
+					'className' => 'ContactPerson',
+					'foreignKey' => 'foreign_key',
 					'dependent' => true
 				)
 			)

@@ -40,11 +40,17 @@
 		        	'ext' => 'pdf',
 		        	$quotation['Quotation']['id'],$companyId),
 		        	array('class' =>'btn btn-info pull-right','escape' => false,'target' => '_blank'));
-    	echo $this->Html->link('<i class="fa fa-envelope-o fa-lg"></i> Send Via Email ', array(
+
+    	if(!empty($contactInfo['Email'][0]['email'])){
+    		
+    		echo $this->Html->link('<i class="fa fa-envelope-o fa-lg"></i> Send Via Email ', array(
 		        	'controller' => 'quotations', 
-		        	'action' => 'send_email','bienrelampagos@gmail.com',
+		        	'action' => 'send_email',$contactInfo['Email'][0]['email'],
 		        	$quotation['Quotation']['id'],$companyId),
 		        	array('class' =>'btn btn-info pull-right','escape' => false,'target' => '_blank'));
+    	
+    	}
+    	
 
     	 // echo $this->Html->link('<i class="fa fa-times fa-lg"></i> Terminate ', array('controller' => 'quotations', 'action' => 'status',3,$quotation['Quotation']['id']),array('class' =>'btn btn-danger pull-right','escape' => false));
 
