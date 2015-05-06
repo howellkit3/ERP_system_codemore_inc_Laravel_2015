@@ -14,7 +14,7 @@
                 <?php echo !empty($quotationList['Quotation']['company_id']) ? ucfirst($companyData[$quotationList['Quotation']['company_id']]) : ucfirst($companyData[$inquiryId[$quotationList['Quotation']['inquiry_id']]]) ?>
             </td>
             <td class="text-center">
-                  <?php echo date('M d, Y', strtotime($quotationList['Quotation']['validity'])); ?>
+                  <?php echo !empty($quotationList['Quotation']['validity']) ? date('M d, Y', strtotime($quotationList['Quotation']['validity'])) : 'No Validity date'; ?>
             </td>
             <td class="text-center">
             <?php 
@@ -40,7 +40,14 @@
                 //      //echo $salesStatus[$quotationList['Quotation']['id']];
                 // }
 
-            echo !empty($quotationList['Quotation']['status']) ? ucwords($quotationList['Quotation']['status']) : ''; 
+            if ( !empty($quotationList['Quotation']['status']) ) {
+
+                if ($quotationList['Quotation']['status'] == '1') {
+                    echo "Approved";
+                } else {
+                    echo ucwords($quotationList['Quotation']['status']);
+                }
+            }
                
             ?>
             </td>

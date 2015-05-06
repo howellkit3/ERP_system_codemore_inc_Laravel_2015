@@ -162,7 +162,7 @@
 						</td>
 						<td style="width:20px;">:</td>
 						<td>
-							<?php echo date('M d, Y', strtotime($quotation['Quotation']['validity'])); ?>
+						 <?php echo !empty($quotation['Quotation']['validity']) ? date('M d, Y', strtotime($quotation['Quotation']['validity'])) : 'No Validity date'; ?>
 						</td>
 					</tr>
 					<tr>

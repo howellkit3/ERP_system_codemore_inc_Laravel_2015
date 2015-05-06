@@ -250,7 +250,8 @@
 								Validity
 							</div>
 							<div class="col-lg-8">
-								:&emsp;<?php echo date('M d, Y', strtotime($quotation['Quotation']['validity'])); ?>
+								:&emsp;
+								   <?php echo !empty($quotation['Quotation']['validity']) ? date('M d, Y', strtotime($quotation['Quotation']['validity'])) : 'No Validity date'; ?>
 							</div>
 
 						</div>
