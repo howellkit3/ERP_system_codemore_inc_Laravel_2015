@@ -39,6 +39,8 @@
                 //     echo "<span class='label label-success'>Sales Order</span>";
                 //      //echo $salesStatus[$quotationList['Quotation']['id']];
                 // }
+
+            echo !empty($quotationList['Quotation']['status']) ? ucwords($quotationList['Quotation']['status']) : ''; 
                
             ?>
             </td>
