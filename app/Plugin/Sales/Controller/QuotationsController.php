@@ -159,7 +159,8 @@ class QuotationsController extends SalesAppController {
 		if ($this->request->is(array('post','put'))) {
 
             if (!empty($this->request->data)) {
-           
+           		
+
 
             	if(!empty($this->request->data['Inquiry']['id'])){
             		
@@ -186,13 +187,15 @@ class QuotationsController extends SalesAppController {
 
 
             			$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail','ProductDetail'));
-
-            			$companyId = $this->request->data['Company']['id'];
-
-            			//pr($companyId);
-
+            			
+            			if(!empty($this->request->data['Company']['id'])){
+            				$companyId = $this->request->data['Company']['id'];
+            			}else{
+            				$companyId = $this->request->data['Quotation']['company_id'];
+            			}
+            			
             			$this->request->data['Quotation']['company_id'] = $companyId;
-
+            		
             			$this->id = $this->Quotation->addQuotation($this->request->data, $userData['User']['id']);
 
             			$QuotationDetail = ClassRegistry::init('Sales.QuotationDetail');

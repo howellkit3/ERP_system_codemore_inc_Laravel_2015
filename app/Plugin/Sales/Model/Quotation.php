@@ -128,7 +128,7 @@ class Quotation extends AppModel {
 
 	//new function for saving quotation
 	public function addQuotation($quotationData = null,$auth){
-
+		
     $month = date("m"); 
     $year = date("y");
     $hour = date("H");
@@ -143,9 +143,7 @@ class Quotation extends AppModel {
 			
 		$quotationData['Quotation']['created_by'] = $auth;
 		$quotationData['Quotation']['modified_by'] = $auth;
-		$quotationData['Quotation']['id'] = $quotationData['Quotation']['id'];
-	
-
+		
 		if (empty($quotationData['Quotation']['id'])) {
 
 			$quotationData['Quotation']['uuid'] = $code;
