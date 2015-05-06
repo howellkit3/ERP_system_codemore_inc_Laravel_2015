@@ -47,6 +47,8 @@
                 } else {
                     echo ucwords($quotationList['Quotation']['status']);
                 }
+            } else  {
+                echo "Pending";
             }
                
             ?>

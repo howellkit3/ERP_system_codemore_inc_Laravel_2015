@@ -125,12 +125,14 @@
 										<div class="col-lg-8">
 											<?php 
 
-			                                    
+			                                    $paymentTerm = !empty($clientOrderData['PaymentTermHolder']['name']) ? $clientOrderData['PaymentTermHolder']['name'] : '';	
 			                                    echo $this->Form->input('PaymentTermHolder.name', array(
 			                                    								'class' => 'form-control item_type',
 							                                                    'label' => false,
 							                                                    'readonly' => 'readonly',
-							                                                    'value' => $clientOrderData['PaymentTermHolder']['name']));
+							                                                    'value' => $paymentTerm
+
+							                                                    	));
 			                                ?>	
 										</div>
 									</div>
@@ -251,11 +253,12 @@
 											<label class="col-lg-2 control-label">Payment Terms</label>
 											<div class="col-lg-8">
 												<?php 
+												  $paymentTerm = !empty($clientOrderData['PaymentTermHolder']['name']) ? $clientOrderData['PaymentTermHolder']['name'] : '';
 		                                            echo $this->Form->input('PaymentTermHolder.name', array(
 		                                            								'class' => 'form-control item_type',
 								                                                    'label' => false,
 								                                                    'readonly' => 'readonly',
-								                                                    'value' =>  $quotationData['PaymentTermHolder']['name']));
+								                                                    'value' =>  $paymentTerm));
 		                                        ?>
 											</div>									
 										</div>
