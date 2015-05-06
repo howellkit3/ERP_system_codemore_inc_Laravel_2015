@@ -263,6 +263,10 @@ class QuotationsController extends SalesAppController {
 
 		$userData = $this->Session->read('Auth');
 
+		$this->loadModel('PaymentTermHolder');
+
+		$paymentTerm = $this->PaymentTermHolder->find('list',array('fields' => array('id','name')));
+
 		$this->Company->bind(array('Address','Contact','Email','Inquiry','ContactPerson','Quotation'));
 
 		$companyData = $this->Company->find('list', array(
@@ -310,7 +314,7 @@ class QuotationsController extends SalesAppController {
 										'User.id' => $userData['User']['id'] )
 								));
 		
-		$this->set(compact('companyData','companyId', 'quotationSize', 'quotationOption','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','salesStatus', 'productName','clientOrderCount','quotationDetailData'));
+		$this->set(compact('paymentTerm','companyData','companyId', 'quotationSize', 'quotationOption','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','salesStatus', 'productName','clientOrderCount','quotationDetailData'));
 		
 	}
 
