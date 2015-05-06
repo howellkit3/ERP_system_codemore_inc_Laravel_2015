@@ -4,7 +4,7 @@ App::uses('SessionComponent', 'Controller/Component');
 
 class QuotationsController extends SalesAppController {
 
-	public $uses = array('Sales.Company','Sales.Quotation','Sales.Inquiry','Sales.Product');
+	public $uses = array('Sales.Company','Sales.Quotation','Sales.Inquiry','Sales.Product','ContactPerson');
 	public $helper = array('Sales.Country');
 	public $useDbConfig = array('koufu_system');
 
@@ -301,6 +301,8 @@ class QuotationsController extends SalesAppController {
 
 		$this->Company->bind(array('Address','Contact','Email','Inquiry','ContactPerson','Quotation'));
 
+
+
 		$companyData = $this->Company->find('list', array(
      											'fields' => array( 
      												'id','company_name')
@@ -311,11 +313,14 @@ class QuotationsController extends SalesAppController {
      														'company_id')
      													));
 
-		$contactInfo = $this->Company->ContactPerson->find('first', array(
+		$this->ContactPerson->bind(array('Email'));
+
+		$contactInfo = $this->ContactPerson->find('first', array(
 																'conditions' => array( 
 																	'ContactPerson.company_id' => $companyId 
 																)
 															));
+		
 		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder','ProductDetail', 'Product'));
 
 		$quotation = $this->Quotation->find('first', array(
