@@ -1,6 +1,7 @@
 <?php $this->Html->addCrumb('Sales', array('controller' => 'customer_sales', 'action' => 'index')); ?>
 <?php echo $this->Html->script('Sales.inquiry');?>
 <?php echo $this->Html->script('Sales.draggableproducts');?>
+<?php echo $this->Html->script('Sales.jquery-sortable');?>
 <?php echo $this->element('sales_option'); ?><br><br>
 
 <div class="row">
@@ -105,6 +106,44 @@
 										</div>
 									</div>
 
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="main-box">
+						<header class="main-box-header clearfix">
+	                	<h1>Specification</h1>
+	           		 	</header>
+						<div class="main-box-body clearfix">
+							<div class="main-box-body clearfix">
+								<div class="form-horizontal">	
+
+									<div class="form-group">
+										<div class="col-lg-2"></div>
+										<div class="col-lg-1">
+											<button type="button" data="0" class="add_field_button btn btn-primary pull-left">Label &nbsp;&nbsp;&nbsp;</button>
+										</div>
+										<div class="col-lg-1">
+											<button type="button" data="0" class="btn btn-primary pull-left add_part_button">Part &emsp;&nbsp;&nbsp;</button>
+										</div>
+										<div class="col-lg-1">
+											<button type="button" data="0" class="btn btn-primary pull-left add_process_button">Process&nbsp;</button>
+										</div>
+									</div>	
+
+									<!--text fields -->
+									<section class="label-draggable-section">
+										<div class="top-space"></div>
+										<ul id="sortable">
+					 						<!--list of draggable text fields -->
+										</ul>
+									</section>
+									
 								</div>
 							</div>
 						</div>

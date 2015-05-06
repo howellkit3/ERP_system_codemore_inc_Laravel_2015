@@ -75,6 +75,16 @@
 
         <li class="dropdown hidden-xs">
            
+            <?php echo $this->Html->link("<span class='count'>Currency</span>", array('controller' => 'settings', 'action' => 'currency'),array('escape' => false,'class' => 'btn')); ?>
+           
+        </li>
+        
+    </ul>
+
+    <ul style="margin-left:0" class="nav navbar-nav pull-left">
+
+        <li class="dropdown hidden-xs">
+           
             <?php echo $this->Html->link("<span class='count'>Unit</span>", array('controller' => 'settings', 'action' => 'unit'),array('escape' => false,'class' => 'btn')); ?>
            
         </li>

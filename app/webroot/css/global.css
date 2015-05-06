@@ -228,13 +228,28 @@ body.dragging, body.dragging * {
   cursor: all-scroll;
 }
 
-.ui-state-default > section {
-  margin-left: 24px !important;
-}
-
-#sortable { list-style-type: none; margin: 0 0 0 176px; padding: 0; width: 87%; }
+#sortable { list-style-type: none; margin: auto; padding: 0; width: 100%; }
   /*#sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
   #sortable li span { position: absolute; margin-left: -1.3em; }*/
 .col-lg-2.control-label.my-pad {
   width: 161px;
 }
+
+.dragField:hover{
+  background-color: #F2F2F2;
+}
+
+.dragField {
+  padding: 15px 1px 1px;
+}
+
+.well {
+  background-color: #f5f5f5;
+  border: 1px solid #e3e3e3;
+  border-radius: 4px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
+  margin-bottom: 4px;
+  min-height: 20px;
+  padding: 6px;
+}
+

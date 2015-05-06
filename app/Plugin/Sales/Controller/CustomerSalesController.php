@@ -43,11 +43,9 @@ class CustomerSalesController extends SalesAppController {
 		$userData = $this->Session->read('Auth');
 
 		$paymentTermData = $this->PaymentTermHolder->find('list', array(
-													'fields' => array(
-													'id','name'),
-												  		)
-												);
-	
+															'fields' => array('id', 'name'),
+															'order' => array('PaymentTermHolder.name' => 'ASC')
+															));
 		if ($this->request->is('post')) {
 
 
@@ -158,6 +156,10 @@ class CustomerSalesController extends SalesAppController {
 	public function view($companyId = null){
 
 		$this->loadModel('PaymentTermHolder');
+
+		$this->loadModel('Sales.Product');
+
+		$this->loadModel('ContactPerson');
 		
 		$this->Company->bind(array('Address','Contact','Email','ContactPerson','Product', 'PaymentTermHolder'));
 
@@ -175,9 +177,24 @@ class CustomerSalesController extends SalesAppController {
 		 	
 		$this->loadModel('ItemCategoryHolder');
 		$this->ItemCategoryHolder->bind(array('ItemTypeHolder'));
-		$itemCategoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name')));
-		$itemTypeData = $this->ItemCategoryHolder->ItemTypeHolder->find('list', array('fields' => array('id', 'name')));
-		$productData = $this->ItemCategoryHolder->ItemTypeHolder->find('list', array('fields' => array('id', 'name')));
+		$itemCategoryData = $this->ItemCategoryHolder->find('list', array(
+															'fields' => array('id', 'name'),
+															'order' => array('ItemCategoryHolder.name' => 'ASC')
+															));
+		$itemTypeData = $this->ItemCategoryHolder->ItemTypeHolder->find('list', array(
+															'fields' => array('id', 'name'),
+															'order' => array('ItemTypeHolder.name' => 'ASC')
+															));
+		$productData = $this->ItemCategoryHolder->ItemTypeHolder->find('list', array(
+															'fields' => array('id', 'name'),
+															'order' => array('ItemTypeHolder.name' => 'ASC')
+															));
+
+		// $contactPerson = $this->ContactPerson->find('list', array(
+		// 													'fields' => array('id', 'lastname')
+		// 													// 'order' => array('ContactPerson.lastname' => 'ASC')
+		// 													));
+
 		$companyData = $this->Company->getList(array('id','company_name'),array('Company.id' => $company['Company']['id']));
 
 	    //pr($company['Email']);exit();

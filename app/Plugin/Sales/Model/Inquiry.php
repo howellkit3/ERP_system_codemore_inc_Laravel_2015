@@ -47,24 +47,31 @@ class Inquiry extends AppModel {
 				
 			),
 		),
-		'remarks' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
+		// 'remarks' => array(
+		// 	'notEmpty' => array(
+		// 		'rule' => array('notEmpty'),
 				
-			),
-		),
+		// 	),
+		// ),
 
 	);
 
-	public function saveInquiry($data,$auth)
-	{
+	public function saveInquiry($data,$auth){
+
+	$month = date("m"); 
+    $year = date("y");
+    $hour = date("H");
+    $minute = date("i");
+    $seconds = date("s");
+        
+	$code =  $year. $month .$minute . $hour . $seconds;
 			
 		$this->create();
 		
 			$data['Inquiry']['company_id'] = $data['Company']['id'];
 			$data['Inquiry']['created_by'] = $auth;
 			$data['Inquiry']['modified_by'] = $auth;
-			$data['Inquiry']['uuid'] = time();
+			$data['Inquiry']['uuid'] = $code;
 		
 		$this->saveAll($data);
 		return $this->id;

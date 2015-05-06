@@ -124,12 +124,14 @@
 										<label class="col-lg-2 control-label">Payment Terms</label>
 										<div class="col-lg-8">
 											<?php 
-			                                    echo $this->Form->input('ClientOrder.payment_terms', array(
+
+			                                    
+			                                    echo $this->Form->input('PaymentTermHolder.name', array(
 			                                    								'class' => 'form-control item_type',
 							                                                    'label' => false,
 							                                                    'readonly' => 'readonly',
-							                                                    'value' => $clientOrderData['ClientOrder']['payment_terms']));
-			                                ?>
+							                                                    'value' => $clientOrderData['PaymentTermHolder']['name']));
+			                                ?>	
 										</div>
 									</div>
 								
@@ -249,8 +251,7 @@
 											<label class="col-lg-2 control-label">Payment Terms</label>
 											<div class="col-lg-8">
 												<?php 
-												//($clientOrderData);
-		                                            echo $this->Form->input('Quotation.payment_terms_field', array(
+		                                            echo $this->Form->input('PaymentTermHolder.name', array(
 		                                            								'class' => 'form-control item_type',
 								                                                    'label' => false,
 								                                                    'readonly' => 'readonly',

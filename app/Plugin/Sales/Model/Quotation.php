@@ -31,12 +31,11 @@ class Quotation extends AppModel {
 					'foreignKey' => 'quotation_id',
 					'dependent' => true
 				),
-
 				'PaymentTermHolder' => array(
-					'className' => 'Sales.PaymentTermHolder',
-					'foreignKey' => 'payment_terms',
-					'dependent' => true
-					)
+					'className' => 'PaymentTermHolder',
+					'foreignKey' => 'payment_term',
+					'dependent' => false
+					),
 
 			),
 			'hasMany' => array(
@@ -51,7 +50,9 @@ class Quotation extends AppModel {
 					'className' => 'Sales.ClientOrder',
 					'foreignKey' => 'quotation_id',
 					'dependent' => true
-				)
+				),
+				
+
 
 			),
 			'hasOne' => array(
@@ -91,7 +92,31 @@ class Quotation extends AppModel {
 			),
 		),
 
-		'description' => array(
+		'item_type_holder_id' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'message' => 'Required fields.',
+				
+			),
+		),
+
+		'item_type_holder_id' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'message' => 'Required fields.',
+				
+			),
+		),
+
+		'attention_details' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'message' => 'Required fields.',
+				
+			),
+		),
+
+		'company_id' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				'message' => 'Required fields.',
@@ -104,12 +129,30 @@ class Quotation extends AppModel {
 	//new function for saving quotation
 	public function addQuotation($quotationData = null,$auth){
 
+		
+		
+    $month = date("m"); 
+    $year = date("y");
+    $hour = date("H");
+    $minute = date("i");
+    $seconds = date("s");
+    $random = rand(1000, 10000);
+        
+	$code =  $year. $month .$random;
+
+									
 		$this->create();
 			
 		$quotationData['Quotation']['created_by'] = $auth;
 		$quotationData['Quotation']['modified_by'] = $auth;
-		$quotationData['Quotation']['uuid'] = time();
-		$quotationData['Quotation']['validity'] = $quotationData['Quotation']['validity_field'];
+
+		if (empty($data['Quotation']['uuid'])) {
+
+			$quotationData['Quotation']['uuid'] = $code;
+
+		}	
+
+	//	$quotationData['Quotation']['validity'] = $quotationData['Quotation']['validity_field'];
 		
 		$this->save($quotationData);
 

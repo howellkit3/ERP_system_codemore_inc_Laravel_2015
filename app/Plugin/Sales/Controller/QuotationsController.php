@@ -24,7 +24,7 @@ class QuotationsController extends SalesAppController {
 
 		$userData = $this->Session->read('Auth');
 
-		$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail','ProductDetail'));
+		$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail','ProductDetail', 'Product'));
 
 		$quotationData = $this->Quotation->find('all', array('order' => 'Quotation.id DESC','group' => 'Quotation.id'));
 
@@ -50,6 +50,44 @@ class QuotationsController extends SalesAppController {
 
 		$userData = $this->Session->read('Auth');
 
+		$this->loadModel('PaymentTermHolder');
+
+		$this->loadModel('ItemCategoryHolder');
+
+		$this->loadModel('ContactPerson');
+
+		$this->loadModel('Unit');
+
+		$this->loadModel('Currency');
+
+		$itemCategoryData = $this->ItemCategoryHolder->find('list', array(
+															'fields' => array('id', 'name'),
+															'order' => array('ItemCategoryHolder.name' => 'ASC')
+															));
+
+		$this->Company->bind(array('Contact','Email','Address','ContactPerson'));
+
+		$companyData = $this->Company->find('list', array(
+															'fields' => array('id', 'company_name'),
+															'order' => array('Company.company_name' => 'ASC')
+															));
+
+		$unitData = $this->Unit->find('list', array(
+															'fields' => array('id', 'unit'),
+															'order' => array('Unit.unit' => 'ASC')
+															));
+
+		$currencyData = $this->Currency->find('list', array(
+															'fields' => array('id', 'name'),
+															'order' => array('Currency.name' => 'ASC')
+															));
+
+		$paymentTermData = $this->PaymentTermHolder->find('list', array(
+															'fields' => array('id', 'name'),
+															'order' => array('PaymentTermHolder.name' => 'ASC')
+															));
+
+
 		if(!empty($inquiryId)){
 
 			$this->Company->bind(array('Address','Contact','Email','Inquiry'));
@@ -67,22 +105,21 @@ class QuotationsController extends SalesAppController {
 
 		}else{
 
-		
-		
-			$this->loadModel('ItemCategoryHolder');
-			
-			$itemCategoryData = $this->ItemCategoryHolder->find('list');
-
 			$userData = $this->Session->read('Auth');
 
 			$this->Company->bind(array('Contact','Email','Address','ContactPerson'));
 
-			$companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')));
-
-			$this->set(compact('companyData','customField','itemCategoryData'));
+			$companyData = $this->Company->find('list', array(
+															'fields' => array('id', 'company_name'),
+															'order' => array('Company.company_name' => 'ASC')
+															));
+			$paymentTermData = $this->PaymentTermHolder->find('list', array(
+															'fields' => array('id', 'name'),
+															'order' => array('PaymentTermHolder.name' => 'ASC')
+															));
 		}
 
-		$this->set(compact('category','inquiryId'));
+		$this->set(compact('category','inquiryId','companyData','customField','itemCategoryData','paymentTermData','unitData','currencyData'));
 		
 	}
 
@@ -117,10 +154,7 @@ class QuotationsController extends SalesAppController {
             			$this->Quotation->QuotationDetail->addQuotationDetail($this->request->data, $userData['User']['id'], $this->id);
 
             			$this->Quotation->QuotationItemDetail->addQuotationItemDetail($this->request->data, $this->id);
-
-            		
-
-            		
+         		
             	}else{
 
 
@@ -128,8 +162,80 @@ class QuotationsController extends SalesAppController {
 
             			$companyId = $this->request->data['Company']['id'];
 
+            			//pr($companyId);
+
             			$this->request->data['Quotation']['company_id'] = $companyId;
 
+            			$this->id = $this->Quotation->addQuotation($this->request->data, $userData['User']['id']);
+
+            			$QuotationDetail = ClassRegistry::init('Sales.QuotationDetail');
+            			$QuotationItemDetail = ClassRegistry::init('Sales.QuotationItemDetail');
+
+
+            			$QuotationDetail->addQuotationDetail($this->request->data, $userData['User']['id'], $this->id);
+
+            			$QuotationItemDetail->addQuotationItemDetail($this->request->data, $this->id);
+            		
+
+            	}
+            	
+            	$this->Session->setFlash(__('Quotation Complete.'));
+
+            	$this->redirect(
+                    array('controller' => 'quotations', 'action' => 'index')
+                );
+            	
+            }
+        }
+	}
+
+	public function add2() {
+
+		$userData = $this->Session->read('Auth');
+		
+		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail'));
+
+		if ($this->request->is(array('post','put'))) {
+
+            if (!empty($this->request->data)) {
+           
+
+            	if(!empty($this->request->data['Inquiry']['id'])){
+            		
+            		$this->Company->bind(array('Inquiry'));
+
+            			$inquiryId = $this->request->data['Inquiry']['id'];
+
+            			$inquiryCompanyId = $this->Company->Inquiry->find('first', array(
+														  		  		'conditions' => array(
+														  		  			'Inquiry.id' => $this->request->data['Inquiry']['id'])
+																));
+            			
+            			$this->request->data['Quotation']['inquiry_id'] = $inquiryId;
+
+            			$this->request->data['Quotation']['company_id'] = $inquiryCompanyId['Inquiry']['company_id'];
+
+            			$this->id = $this->Quotation->addQuotation($this->request->data, $userData['User']['id']);
+
+            			$this->Quotation->QuotationDetail->addQuotationDetail($this->request->data, $userData['User']['id'], $this->id);
+
+            			$this->Quotation->QuotationItemDetail->addQuotationItemDetail($this->request->data, $this->id);
+         		
+            	}else{
+
+            			$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail','ProductDetail'));
+
+            			
+
+            			//pr($this->request->data); exit;
+
+            			$companyId = $this->request->data['Company']['id'];
+
+            			//pr($companyId);
+
+            			//$this->request->data['Quotation']['company_id'] = $companyId;
+
+            			echo 'before the method clal';
             			$this->id = $this->Quotation->addQuotation($this->request->data, $userData['User']['id']);
 
             			$QuotationDetail = ClassRegistry::init('Sales.QuotationDetail');
@@ -174,7 +280,7 @@ class QuotationsController extends SalesAppController {
 																	'ContactPerson.company_id' => $companyId 
 																)
 															));
-		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder','ProductDetail'));
+		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder','ProductDetail', 'Product'));
 
 		$quotation = $this->Quotation->find('first', array(
 														'conditions' => array( 
@@ -309,37 +415,87 @@ class QuotationsController extends SalesAppController {
         );
 	}
 
-	public function edit($quotationId = null , $companyId){
-		
-		if($this->request->is('post')){
-			$this->Quotation->edit($this->request->data,$quotationId);
-			$this->redirect(array('controller' => 'quotations', 'action' => 'view',$quotationId,$companyId)
-        	);
-		}
-		
+	public function edit($quotationId = null,$companyId = null){
+
+		$this->loadModel('PaymentTermHolder');
+
+		$this->loadModel('ItemCategoryHolder');
+
+		$this->loadModel('ItemTypeHolder');
+
+		$this->loadModel('Sales.Product');
+
 		$userData = $this->Session->read('Auth');
+			
+		$itemCategoryData = $this->ItemCategoryHolder->find('list', array(
+															'fields' => array('id', 'name'),
+															'order' => array('ItemCategoryHolder.name' => 'ASC')
+															));
+
+		$itemTypeData = $this->ItemTypeHolder->find('first', array(
+															//'conditions' => array('ItemTypeHolder.item_category_holder_id' => 'ItemCategoryHolder.id'),
+															'fields' => array('id', 'name'),
+															'order' => array('ItemTypeHolder.name' => 'ASC')
+															));
+
+		$paymentTermData = $this->PaymentTermHolder->find('list', array(
+															'fields' => array('id', 'name'),
+															'order' => array('PaymentTermHolder.name' => 'ASC')
+															));
+
+		$productData = $this->Product->find('list', array(
+															'fields' => array('id', 'name'),
+															'order' => array('Product.name' => 'ASC')
+															));
 
 		if(!empty($quotationId)){
 			$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail'));
-			$this->request->data = $this->Quotation->read(null,$quotationId);
-			
-			$this->loadModel('ItemCategoryHolder');
-			
-			$itemCategoryData = $this->ItemCategoryHolder->find('list');
+			//$this->request->data = $this->Quotation->read(null,$quotationId);
 
 			$userData = $this->Session->read('Auth');
 
 			$this->Company->bind(array('Contact','Email','Address','ContactPerson'));
 
-			$companyData = $this->Company->getList(array('id', 'company_name'));
+			$companyData = $this->Company->find('list', array(
+															'fields' => array('id', 'company_name'),
+															'order' => array('Company.company_name' => 'ASC')
+															));
 
-			
-		}
+			$post = $this->Quotation->findById($quotationId);
+
+		            if (!$post) {
+		                throw new NotFoundException(__('Invalid post'));
+		            }
+
+		            
+		            if ($this->request->is(array('post', 'put'))) {
+		                $this->Quotation->id = $quotationId;
+		                $this->Quotation->QuotationDetail->quotation_id = $quotationId;
+		                $this->Quotation->QuotationItemDetail->quotation_id = $quotationId;
+
+		               // pr($this->request->data); exit;
+
+		                if ($this->Quotation->save($this->request->data)) {
+		                    $this->Quotation->save($this->request->data);
+		              		$this->Quotation->QuotationDetail->save($this->request->data, $userData['User']['id'], $this->id);
+            				$this->Quotation->QuotationItemDetail->save($this->request->data, $this->id);	
+		                    $this->Session->setFlash(__('Quotation has been updated.'));
+		                    return $this->redirect(array('action' => 'view'));
+		                }
+		                $this->Session->setFlash(__('Unable to update your post.'));
+		            }
+
+		            if (!$this->request->data) {
+		                $this->request->data = $post;
+		            }
+		
+		     }
+		$this->set(compact('companyData','customField','itemCategoryData', 'paymentTermData','itemTypeData','productData'));
+	}
 
 		//pr($this->request->data);
 
-		$this->set(compact('companyData','customField','itemCategoryData'));
-	}
+	
 
 	// public function auto_complete() {
 	// 	$this->Quotation->bind(array('QuotationField'));

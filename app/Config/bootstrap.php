@@ -98,6 +98,9 @@ CakePlugin::loadAll(); // Loads all plugins at once
  *
  * ));
  */
+/* madrill */
+Configure::write('defaultEmail','bienrelampagos@gmail.com');
+
 Configure::write('Dispatcher.filters', array(
 	'AssetDispatcher',
 	'CacheDispatcher'

@@ -4,9 +4,7 @@
 
         <tr class="">
 
-
-           
-            <td>
+        <td>
 
          
                <?php  echo ucfirst($StatusDataList['StatusFieldHolder']['status']) ?>

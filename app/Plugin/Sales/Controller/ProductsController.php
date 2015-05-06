@@ -4,12 +4,57 @@ App::uses('SessionComponent', 'Controller/Component');
 
 class ProductsController extends SalesAppController {
 
-	public $uses = array('Sales.Company','ItemCategoryHolder','Sales.ItemCategoryHolder','Sales.ItemType','Sales.ProcessField','GeneralItem');
+	public $uses = array('Sales.Company','ItemCategoryHolder','Process','Sales.ItemCategoryHolder','Sales.ItemType','Sales.ProcessField','GeneralItem','Substrate','CompoundSubstrate','CorrugatedPaper');
 	
 	function beforeFilter() {
   		$this->myRandomNumber = rand(1,4);
   		$userDetails = $this->Session->read('Auth');
 		$this->set(compact('userDetails'));
+	}
+
+
+	public function index() {
+		
+		$this->loadModel('ItemCategoryHolder');
+
+        $this->loadModel('ItemTypeHolder');
+
+        $this->loadModel('Company');
+
+		$this->loadModel('Sales.Product');
+
+		$this->Product->recursive = 1;
+		
+		$itemCategoryData = $this->ItemCategoryHolder->find('list', array('fields' => array(
+			'id', 'name')));
+
+		$itemTypeData = $this->ItemTypeHolder->find('list', array('fields' => array(
+			'id', 'name')));
+
+		$nameTypeData = $this->ItemTypeHolder->find('all',  array(
+			'order' => 'ItemTypeHolder.id DESC'));
+
+		$categoryData = $this->ItemCategoryHolder->find('all',  array(
+			'order' => 'ItemCategoryHolder.id DESC'));
+
+		$companyData = $this->Company->getList(array('id','company_name'));
+
+		$limit = 5;
+
+		$conditions = array();
+			
+		$this->paginate = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            //'fields' => array('id', 'name', 'created','modified'),
+            'order' => 'Product.id DESC',
+        );
+
+        $productData = $this->paginate('Product');
+
+
+		$this->set(compact('productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData', 'companyData'));
+
 	}
 
 	public function add($companyId = null){
@@ -137,7 +182,7 @@ class ProductsController extends SalesAppController {
 		
 
 		if ($this->request->is('post')) {
-			
+				pr($this->request->data);exit();
 				$userData = $this->Session->read('Auth');
 			 	$productDetails = $this->request->data;
 	        	$this->loadModel('Sales.Product');
@@ -180,10 +225,22 @@ class ProductsController extends SalesAppController {
 		
 		$this->loadModel('ItemCategoryHolder');
 		$this->ItemCategoryHolder->bind(array('ItemTypeHolder'));
-		$itemCategoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name')));
-		$itemTypeData = $this->ItemCategoryHolder->ItemTypeHolder->find('list', array('fields' => array('id', 'name')));
-		$productData = $this->ItemCategoryHolder->ItemTypeHolder->find('list', array('fields' => array('id', 'name')));
-		$companyData = $this->Company->getList(array('id','company_name'));
+		$itemCategoryData = $this->ItemCategoryHolder->find('list', array(
+															'fields' => array('id', 'name'),
+															'order' => array('ItemCategoryHolder.name' => 'ASC')
+															));
+		$itemTypeData = $this->ItemCategoryHolder->ItemTypeHolder->find('list', array(
+															'fields' => array('id', 'name'),
+															'order' => array('ItemTypeHolder.name' => 'ASC')
+															));
+		$productData = $this->ItemCategoryHolder->ItemTypeHolder->find('list', array(
+															'fields' => array('id', 'name'),
+															'order' => array('ItemTypeHolder.name' => 'ASC')
+															));
+		$companyData = $this->Company->find('list', array(
+															'fields' => array('id', 'company_name'),
+															'order' => array('Company.company_name' => 'ASC')
+															));
 		$this->set(compact('itemCategoryData','itemTypeData', 'companyData'));
 	}
 
@@ -250,9 +307,18 @@ class ProductsController extends SalesAppController {
             }
 
 		$this->ItemCategoryHolder->bind(array('ItemTypeHolder'));
-		$itemCategoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name')));
-		$itemTypeData = $this->ItemCategoryHolder->ItemTypeHolder->find('list', array('fields' => array('id', 'name')));
-		$companyData = $this->Company->getList(array('id','company_name'));
+		$itemCategoryData = $this->ItemCategoryHolder->find('list', array(
+															'fields' => array('id', 'name'),
+															'order' => array('ItemCategoryHolder.name' => 'ASC')
+															));
+		$itemTypeData = $this->ItemCategoryHolder->ItemTypeHolder->find('list', array(
+															'fields' => array('id', 'name'),
+															'order' => array('ItemTypeHolder.name' => 'ASC')
+															));
+		$companyData = $this->Company->find('list', array(
+															'fields' => array('id', 'company_name'),
+															'order' => array('Company.company_name' => 'ASC')
+															));
 		$this->set(compact('itemCategoryData','itemTypeData','productData','productDetails','companyData'));
 		$this->set(compact('companyName','itemCategoryData','itemTypeData', 'companyData'));
 
@@ -280,51 +346,6 @@ class ProductsController extends SalesAppController {
 	}
 
 	
-
-	public function index() {
-
-		
-		$this->loadModel('ItemCategoryHolder');
-
-        $this->loadModel('ItemTypeHolder');
-
-        $this->loadModel('Company');
-
-		$this->loadModel('Sales.Product');
-
-		$this->Product->recursive = 1;
-		
-		$itemCategoryData = $this->ItemCategoryHolder->find('list', array('fields' => array(
-			'id', 'name')));
-
-		$itemTypeData = $this->ItemTypeHolder->find('list', array('fields' => array(
-			'id', 'name')));
-
-		$nameTypeData = $this->ItemTypeHolder->find('all',  array(
-			'order' => 'ItemTypeHolder.id DESC'));
-
-		$categoryData = $this->ItemCategoryHolder->find('all',  array(
-			'order' => 'ItemCategoryHolder.id DESC'));
-
-		$companyData = $this->Company->getList(array('id','company_name'));
-
-		$limit = 5;
-
-		$conditions = array();
-			
-		$this->paginate = array(
-            'conditions' => $conditions,
-            'limit' => $limit,
-            //'fields' => array('id', 'name', 'created','modified'),
-            'order' => 'Product.id DESC',
-        );
-
-        $productData = $this->paginate('Product');
-
-
-		$this->set(compact('productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData', 'companyData'));
-
-	}
 
 	public function review_product($productId = null){
 
@@ -477,37 +498,92 @@ class ProductsController extends SalesAppController {
 
     	$this->ItemCategoryHolder->bind(array('ItemTypeHolder'));
 
-    	$productData = array();
+    	//$productData = array();
 
-    	if($dropdownId == 0){
-
-    		$generalData = $this->GeneralItem->find('list',array(
+    	if($dropdownId == 1) {
+    		$allData = $this->GeneralItem->find('list',array(
 											'fields' => array(
 											'id', 'category_id')));
     		
-
-    		$categoryData = $this->ItemCategoryHolder->find('all',
-    											array('fields' => 
-    												array('ItemCategoryHolder.id',
-    												 	'ItemCategoryHolder.name',
-    												 	'ItemTypeHolder.id',
-    												 	'ItemTypeHolder.name'
-    												 ),
-													'conditions' => array(
-														'ItemCategoryHolder.id' => $generalData
-													),
-													'contains' => array('ItemTypeHolder')
-													));
-
-    		foreach ($categoryData as $key => $itemtypes) {
-    			$productData['ItemTypeHolder'][] = 	$itemtypes['ItemTypeHolder'];
-    		}
     	}
+    	if($dropdownId == 2) {
+    		$allData = $this->Substrate->find('list',array(
+											'fields' => array(
+											'id', 'category_id')));
+    		
+    	}
+    	if($dropdownId == 3) {
+    		$allData = $this->CompoundSubstrate->find('list',array(
+											'fields' => array(
+											'id', 'category_id')));
+    		
+    	}
+    	if($dropdownId == 4) {
+    		$allData = $this->CorrugatedPaper->find('list',array(
+											'fields' => array(
+											'id', 'category_id')));
+    		
+    	}
+    	
+		$categoryData = $this->ItemCategoryHolder->find('all',
+											array('fields' => 
+												array('ItemCategoryHolder.id',
+												 	'ItemCategoryHolder.name',
+												 	'ItemTypeHolder.id',
+												 	'ItemTypeHolder.name'
+												 ),
+												'conditions' => array(
+													'ItemCategoryHolder.id' => $allData
+												),
+												'contains' => array('ItemTypeHolder')
+												));
+
+		// foreach ($categoryData as $key => $itemtypes) {
+		// 	$productData['ItemTypeHolder'][] = 	$itemtypes['ItemTypeHolder'];
+
+		// }
+
+    	//pr($categoryData);exit();
+    	$this->layout = false;
+
+		echo json_encode($categoryData);
+
+    }
+
+    public function find_process(){
+
+    	$this->autoRender = false;
+
+    	$processData = $this->Process->find('all',
+											array('fields' => 
+												array('Process.id',
+												 	'Process.name'
+												 )
+												));
 
     	$this->layout = false;
 
-		echo json_encode($productData);
+		echo json_encode($processData);
+    }
 
-    	
+    public function find_checkbox($processId = null){
+
+    	$this->autoRender = false;
+
+    	$this->Process->bind(array('SubProcess'));
+
+    	$checkData = $this->Process->SubProcess->find('all',
+											array('fields' => 
+												array('SubProcess.id',
+												 	'SubProcess.name'
+												 ),
+												'conditions' => array(
+													'SubProcess.process_id' => $processId
+												),
+												));
+  
+    	$this->layout = false;
+
+		echo json_encode($checkData);
     }
 }

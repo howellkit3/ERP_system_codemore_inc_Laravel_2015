@@ -32,6 +32,11 @@
 		        	'ext' => 'pdf',
 		        	$quotation['Quotation']['id'],$companyId),
 		        	array('class' =>'btn btn-info pull-right','escape' => false,'target' => '_blank'));
+    	echo $this->Html->link('<i class="fa fa-envelope-o fa-lg"></i> Send Via Email ', array(
+		        	'controller' => 'quotations', 
+		        	'action' => 'send_email','bienrelampagos@gmail.com',
+		        	$quotation['Quotation']['id'],$companyId),
+		        	array('class' =>'btn btn-info pull-right','escape' => false,'target' => '_blank'));
 
     	 // echo $this->Html->link('<i class="fa fa-times fa-lg"></i> Terminate ', array('controller' => 'quotations', 'action' => 'status',3,$quotation['Quotation']['id']),array('class' =>'btn btn-danger pull-right','escape' => false));
 
@@ -45,7 +50,7 @@
 	<div class="col-lg-12">
 		<div class="main-box">
 			<center>
-				<header class="main-box-header clearfix">
+				<header class="main-box-header clearfix"><?php //echo pr($contactInfo);die; ?>
 					<h1>Kou Fu Packaging Corp.</h1>
 					<h5>Lot 4-5, Blk 3 Phase 2, Mountview Industrial Complex, Bancal, Carmona, Cavite</h5>
 					<h6>Tel#: (046) 972-1111 to 13 Fax#: (046) 972-0120</h6><br>
@@ -84,7 +89,7 @@
 						<div class="col-lg-1"></div>
 						<div class="col-lg-10">
 							Dear :&nbsp; <?php echo ucfirst($quotation['Quotation']['attention_details']) ?>&nbsp;
-							<?php //echo ucfirst($contactInfo['ContactPerson']['lastname']) ?>
+							
 						</div>
 					</div>
 					<div class="form-group">
@@ -100,7 +105,7 @@
 								Item
 							</div>
 							<div class="col-lg-8">
-								<?php echo $quotation['ProductDetail']['name']?>
+								<?php echo $quotation['Product']['name']?>
 							</div>
 
 					</div>
