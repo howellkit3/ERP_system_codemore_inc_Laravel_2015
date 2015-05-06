@@ -511,7 +511,7 @@ class QuotationsController extends SalesAppController {
 		foreach ($quotationUniqueId as $json) {
 			$data[] = array(
 						'value' => $json['Quotation']['uuid'],
-						 'label' => $json['Quotation']['uuid']
+						'label' => $json['Quotation']['uuid']
 					);
 		}
 

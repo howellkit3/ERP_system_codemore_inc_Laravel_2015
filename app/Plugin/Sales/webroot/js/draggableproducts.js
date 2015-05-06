@@ -223,7 +223,7 @@ $(document).ready(function() {
 
                                 var checkFieldName = "data[Specification]["+$(this).attr('data-name')+"]";
                                 var checkFieldNameval = $(this).attr('data-name');
-                                checkFieldNameNoSpace = checkFieldName.replace(/\s+/g, "-");
+                                checkFieldNameNoSpace = checkFieldNameval.replace(/\s+/g, "-");
 
                                 if ($(this).is(":checked")) {
 
@@ -235,9 +235,7 @@ $(document).ready(function() {
                                                                             <input type="text" name="'+checkFieldName+'" value="'+checkFieldNameval+'" class="form-control" readonly />\
                                                                         </div>\
                                                                     </div>');
-                                }
-
-                                if ($(this).is(":unchecked")) {
+                                } else {  
 
                                     $('#'+checkFieldNameNoSpace).remove();
                                     
