@@ -296,7 +296,7 @@
 			                       			 						)); */
 			                    		?>
 
-			                    		<a data-toggle="modal" href="#myModalProduct" class="btn btn-primary mrg-b-lg pull-right"><i class="fa fa-plus-circle fa-lg"></i> Add Product</a>
+			                    		<a data-toggle="modal" href="#myModalProduct" class="btn btn-primary mrg-b-lg pull-right"><i class="fa fa-plus-circle fa-lg"></i> Add Product</a><br><br>
 
 										<table class="table table-striped table-hover">
 					                        <thead>
@@ -333,6 +333,11 @@
 																		                    		array( 
 																		                    'class' =>' table-link', 
 																		                    'escape' => false,'title'=>'View Information'));
+						                         					echo $this->Html->link('<span class="fa-stack">
+													                    <i class="fa fa-square fa-stack-2x"></i>
+													                    <i class="fa fa-plus-square fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Specs </font></span>
+													                    </span>', array('controller' => 'products', 'action' => 'specification',$companyProduct['id']),array('class' =>' table-link','escape' => false,'title'=>'Add Specifications'
+													                        ));
 												                ?>
 						                         			</td>
 

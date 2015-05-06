@@ -238,7 +238,7 @@
 								Terms
 							</div>
 							<div class="col-lg-8">
-								:&emsp;<?php echo $quotation['Quotation']['payment_terms']?>
+								:&emsp;<?php echo $paymentTerm[$quotation['Quotation']['payment_terms']]?>
 							</div>
 
 						</div>

@@ -33,7 +33,7 @@
 
 				</div>
 			</div>
-			<?php echo $this->Form->create('Quotation',array('url'=>(array('controller' => 'quotations','action' => 'add2'))));?>
+			<?php echo $this->Form->create('Quotation',array('url'=>(array('controller' => 'quotations','action' => 'add'))));?>
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="main-box">
@@ -51,6 +51,14 @@
 
 	                                    <?php 
 	                                        echo $this->Form->input('Quotation.id', array('class' => 'form-control item_type',
+						                        'hidden' => 'hidden',
+						                        'readonly' => 'readonly',
+						                        'label' => false,
+						                        'id' => 'id'));
+	                                    ?>
+
+	                                     <?php 
+	                                        echo $this->Form->input('Company.id', array('class' => 'form-control item_type',
 						                        'hidden' => 'hidden',
 						                        'readonly' => 'readonly',
 						                        'label' => false,

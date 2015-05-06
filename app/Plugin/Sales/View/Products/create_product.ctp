@@ -113,7 +113,7 @@
 				</div>
 			</div>
 
-			<div class="row">
+			<!-- <div class="row">
 				<div class="col-lg-12">
 					<div class="main-box">
 						<header class="main-box-header clearfix">
@@ -134,14 +134,14 @@
 										<div class="col-lg-1">
 											<button type="button" data="0" class="btn btn-primary pull-left add_process_button">Process&nbsp;</button>
 										</div>
-									</div>	
+									</div>	 -->
 
 									<!--text fields -->
-									<section class="label-draggable-section">
+									<!-- <section class="label-draggable-section">
 										<div class="top-space"></div>
-										<ul id="sortable">
+										<ul id="sortable"> -->
 					 						<!--list of draggable text fields -->
-										</ul>
+										<!-- </ul>
 									</section>
 									
 								</div>
@@ -149,7 +149,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> -->
 
 			<div class="row">
 				<div class="col-lg-12">

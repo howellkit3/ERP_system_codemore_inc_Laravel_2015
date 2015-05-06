@@ -228,6 +228,8 @@ class QuotationsController extends SalesAppController {
            
 
             	if(!empty($this->request->data['Inquiry']['id'])){
+
+            		echo "ddd";
             		
             		$this->Company->bind(array('Inquiry'));
 
@@ -250,19 +252,19 @@ class QuotationsController extends SalesAppController {
          		
             	}else{
 
-            			$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail','ProductDetail'));
+            			echo "tt";
 
-            			
+            			$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail','ProductDetail'));
 
             			//pr($this->request->data); exit;
 
-            			$companyId = $this->request->data['Company']['id'];
+            			//$companyId = $this->request->data['Company']['id'];
 
             			//pr($companyId);
 
             			//$this->request->data['Quotation']['company_id'] = $companyId;
 
-            			echo 'before the method clal';
+            			//echo 'before the method clal';
             			$this->id = $this->Quotation->addQuotation($this->request->data, $userData['User']['id']);
 
             			$QuotationDetail = ClassRegistry::init('Sales.QuotationDetail');
@@ -289,6 +291,10 @@ class QuotationsController extends SalesAppController {
 	public function view($quotationId,$companyId){
 
 		$userData = $this->Session->read('Auth');
+
+		$this->loadModel('PaymentTermHolder');
+
+		$paymentTerm = $this->PaymentTermHolder->find('list',array('fields' => array('id','name')));
 
 		$this->Company->bind(array('Address','Contact','Email','Inquiry','ContactPerson','Quotation'));
 
@@ -337,7 +343,7 @@ class QuotationsController extends SalesAppController {
 										'User.id' => $userData['User']['id'] )
 								));
 		
-		$this->set(compact('companyData','companyId', 'quotationSize', 'quotationOption','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','salesStatus', 'productName','clientOrderCount','quotationDetailData'));
+		$this->set(compact('paymentTerm','companyData','companyId', 'quotationSize', 'quotationOption','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','salesStatus', 'productName','clientOrderCount','quotationDetailData'));
 		
 	}
 
