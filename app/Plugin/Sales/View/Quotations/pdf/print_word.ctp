@@ -45,11 +45,11 @@
 				<thead>
 					<tr>
 						<td style="width:20px;">
-							Dear 
+							Dear :&nbsp; <?php echo ucfirst($quotation['Quotation']['attention_details']) ?>&nbsp;
 						</td>
 						<td>
 							<?php //echo ucfirst($contactInfo['ContactPerson']['firstname']) ?>
-							<?php //echo ucfirst($contactInfo['ContactPerson']['lastname']) ?>,
+							<?php //echo ucfirst($contactInfo['ContactPerson']['lastname']) ?>
 						</td>
 					</tr>
 				</thead>
@@ -169,7 +169,7 @@
 						</td>
 						<td style="width:20px;">:</td>
 						<td>
-							 <?php echo !empty($quotation['Quotation']['validity']) ? date('M d, Y', strtotime($quotation['Quotation']['validity'])) : 'No Validity date'; ?>
+							 <?php echo !empty($quotation['Quotation']['validity']) ? date('M d, Y', strtotime($quotation['Quotation']['validity'])) : 'No validity date'; ?>
 						</td>
 					</tr>
 					<tr>

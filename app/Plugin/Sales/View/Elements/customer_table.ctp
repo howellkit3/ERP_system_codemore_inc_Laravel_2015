@@ -17,13 +17,14 @@ foreach ($company as $customerlist): ?>
                 <?php 
                     if(!empty($customerlist['ContactPerson'])) { 
                             echo ucfirst($customerlist['ContactPerson'][0]['lastname']); 
+
+                        if(!empty($customerlist['ContactPerson'][0]['firstname'])) { 
                             echo ','; 
+                        }
                             echo ucfirst($customerlist['ContactPerson'][0]['firstname']);  
                             echo '&nbsp';
                             echo ucfirst($customerlist['ContactPerson'][0]['middlename']); 
-                        }  else {
-                        echo '';
-                    }  
+                    } 
                 ?>
                 </div>
             </td>

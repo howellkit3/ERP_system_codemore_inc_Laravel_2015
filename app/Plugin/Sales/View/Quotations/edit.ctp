@@ -190,7 +190,11 @@
 					</div>
 				</div>
 
-
+			<?php
+			foreach ($itemDetailData as $key => $itemDetailDetails) {
+				pr($itemDetailData);exit();
+			}
+			 ?>
 				<section class="cloneMe quotationItemDetail">
 					<div class="row">
 						<div class="col-lg-12">

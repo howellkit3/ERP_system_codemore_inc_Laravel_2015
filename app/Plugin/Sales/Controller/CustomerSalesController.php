@@ -184,6 +184,11 @@ class CustomerSalesController extends SalesAppController {
 		$this->loadModel('Sales.Product');
 
 		$this->loadModel('ContactPerson');
+
+		$paymentTermData = $this->PaymentTermHolder->find('list', array(
+															'fields' => array('id', 'name'),
+															'order' => array('PaymentTermHolder.name' => 'ASC')
+															));
 		
 		$this->Company->bind(array('Address','Contact','Email','ContactPerson','Product', 'PaymentTermHolder'));
 
@@ -222,7 +227,7 @@ class CustomerSalesController extends SalesAppController {
 		$companyData = $this->Company->getList(array('id','company_name'),array('Company.id' => $company['Company']['id']));
 
 	    //pr($company['Email']);exit();
-		$this->set(compact('company','contactPerson','itemCategoryData','itemTypeData', 'companyData'));
+		$this->set(compact('paymentTermData','company','contactPerson','itemCategoryData','itemTypeData', 'companyData'));
 		
 	}
 

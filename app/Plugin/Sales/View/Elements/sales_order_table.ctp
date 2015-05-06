@@ -3,9 +3,11 @@
         <tbody aria-relevant="all" aria-live="polite" role="alert">
 
             <tr class="">
-
                 <td class="">
-                    <?php echo ucfirst($clientOderData['ClientOrder']['po_number']) ?>  
+                    <?php echo "CO"."-".$clientOderData['ClientOrder']['uuid'] ?>  
+                </td>
+                <td class="">
+                    <?php echo $clientOderData['ClientOrder']['po_number'] ?>  
                 </td>
                 <td class="">
                     <?php echo $companyData[$clientOderData['ClientOrder']['company_id']] ?>

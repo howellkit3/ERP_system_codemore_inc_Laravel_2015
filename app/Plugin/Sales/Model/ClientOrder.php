@@ -63,13 +63,14 @@ class ClientOrder extends AppModel {
 
 	public function saveClientOrder($clientOrderData = null, $auth = null){
 
-	$month = date("m"); 
+	 $month = date("m"); 
     $year = date("y");
     $hour = date("H");
     $minute = date("i");
     $seconds = date("s");
+    $random = rand(1000, 10000);
         
-	$code =  $year. $month .$minute . $hour . $seconds;
+	$code =  $year. $month .$random;
 		
 		$this->create();
 

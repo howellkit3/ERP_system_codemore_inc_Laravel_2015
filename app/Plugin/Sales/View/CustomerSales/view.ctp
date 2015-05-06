@@ -31,40 +31,51 @@
 							<div class="profile-since">
 								<?php echo date('M d, Y', strtotime($company['Company']['created'])); ?>
 							</div>
-							
-							<div class="profile-details">
-								<ul class="fa-ul">
-								<i class="fa fa-dedent"></i>
-									<?php echo ucfirst($company['Company']['description']); ?>
-								</ul>
-							</div>
-							<div class="profile-details">
-								<ul class="fa-ul">
-								<i class="fa fa-external-link-square"></i>
-									<?php echo $company['Company']['website']; ?>
-								</ul>
-							</div>
 
-							<div class="profile-details">
-								<ul class="fa-ul">
-									<i class="fa fa-phone"></i>
-									<?php echo $company['Contact'][0]['number']; ?>
-								</ul>
-							</div>
+							<?php if(!empty($company['Company']['description'])){ ?>
+								<div class="profile-details">
+									<ul class="fa-ul">
+									<i class="fa fa-dedent"></i>
+										<?php echo ucfirst($company['Company']['description']); ?>
+									</ul>
+								</div>
+							<?php } ?>
 							
-							<div class="profile-details">
-								<ul class="fa-ul">
-								<i class="fa fa-book"></i>
-									<?php echo $company['Company']['tin']; ?>
-								</ul>
-							</div>
+							<?php if(!empty($company['Company']['website'])){ ?>
+								<div class="profile-details">
+									<ul class="fa-ul">
+									<i class="fa fa-external-link-square"></i>
+										<?php echo $company['Company']['website']; ?>
+									</ul>
+								</div>
+							<?php } ?>
+
+							<?php if(!empty($company['Contact'][0]['number'])){ ?>
+								<div class="profile-details">
+									<ul class="fa-ul">
+										<i class="fa fa-phone"></i>
+										<?php echo $company['Contact'][0]['number']; ?>
+									</ul>
+								</div>
+							<?php } ?>
 							
-							<div class="profile-details">
-								<ul class="fa-ul">
-								<i class="fa fa-calendar"></i>
-									<?php echo $company['Company']['payment_term']; ?>
-								</ul>
-							</div>
+							<?php if(!empty($company['Company']['tin'])){ ?>
+								<div class="profile-details">
+									<ul class="fa-ul">
+									<i class="fa fa-book"></i>
+										<?php echo $company['Company']['tin']; ?>
+									</ul>
+								</div>
+							<?php } ?>
+							
+							<?php if(!empty($company['Company']['payment_term'])){ ?>
+								<div class="profile-details">
+									<ul class="fa-ul">
+									<i class="fa fa-calendar"></i>
+										<?php echo $paymentTermData[$company['Company']['payment_term']]; ?>
+									</ul>
+								</div>
+							<?php } ?>
 
 						</div>
 						

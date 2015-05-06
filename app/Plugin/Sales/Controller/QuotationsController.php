@@ -489,6 +489,14 @@ class QuotationsController extends SalesAppController {
 
 		$this->loadModel('Currency');
 
+		$this->Quotation->bind(array('QuotationItemDetail'));
+
+		$itemDetailData = $this->Quotation->QuotationItemDetail->find('all',
+														array('conditions' => 
+														array('QuotationItemDetail.quotation_id' => $quotationId)));
+
+		pr($itemDetailData);exit();
+
 		$unitData = $this->Unit->find('list', array(
 												'fields' => array('id', 'unit'),
 												'order' => array('Unit.unit' => 'ASC')
@@ -564,7 +572,7 @@ class QuotationsController extends SalesAppController {
 		            }
 		
 		     }
-		$this->set(compact('unitData','currencyData','companyData','customField','itemCategoryData', 'paymentTermData','itemTypeData','productData'));
+		$this->set(compact('itemDetailData','unitData','currencyData','companyData','customField','itemCategoryData', 'paymentTermData','itemTypeData','productData'));
 	}
 
 		//pr($this->request->data);
