@@ -152,7 +152,6 @@ class Quotation extends AppModel {
 
 		}	
 
-		
 	//	$quotationData['Quotation']['validity'] = $quotationData['Quotation']['validity_field'];
 		
 		$this->save($quotationData);

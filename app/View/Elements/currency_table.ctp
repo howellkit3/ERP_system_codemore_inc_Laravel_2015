@@ -5,11 +5,11 @@
         <tr class="">
 
             <td>
-
          
-               <?php  echo strtolower($CurrencyDataList['Currency']['name']) ?>
+               <?php echo $CurrencyDataList['Currency']['name'] ?>
                
             </td>
+
             <td class="text-center">
                 
             
