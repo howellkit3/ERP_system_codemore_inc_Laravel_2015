@@ -24,6 +24,9 @@
 
     	echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i>Approved ', array('controller' => 'quotations', 'action' => 'approved',$quotation['Quotation']['id']),array('class' =>'btn btn-success pull-right','escape' => false)) ;
 
+    	echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i>Save As Draft ', array('controller' => 'quotations', 'action' => 'drafts',$quotation['Quotation']['id']),array('class' =>'btn btn-success pull-right','escape' => false)) ;
+
+
     	echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit ', array('controller' => 'quotations', 'action' => 'edit',$quotation['Quotation']['id'],$companyId),array('class' =>'btn btn-info pull-right','escape' => false)) ;
     	
     	echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array(
@@ -235,7 +238,7 @@
 								Terms
 							</div>
 							<div class="col-lg-8">
-								:&emsp;<?php echo $quotation['Quotation']['payment_terms']?>
+								:&emsp;<?php echo $paymentTerm[$quotation['Quotation']['payment_terms']]?>
 							</div>
 
 						</div>

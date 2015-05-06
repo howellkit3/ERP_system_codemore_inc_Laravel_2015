@@ -348,7 +348,7 @@
                             <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span> Firstname</label>
                             <div class="col-lg-9">
                                 <?php 
-                                    echo $this->Form->input('ContactPerson.firstname', array('class' => 'form-control required','label' => false));
+                                    echo $this->Form->input('ContactPerson.firstname', array('class' => 'form-control required','label' => false,'required' => true));
                                 ?>
                             </div>
                         </div>
@@ -357,7 +357,8 @@
                             <label for="inputPassword1" class="col-lg-2 control-label">Middlename</label>
                             <div class="col-lg-9">
                                 <?php 
-                                    echo $this->Form->input('ContactPerson.middlename', array('class' => 'form-control','label' => false));
+                                    echo $this->Form->input('ContactPerson.middlename', array('class' => 'form-control',
+                                        'label' => false));
                                 ?>
                             </div>
                         </div>
@@ -366,7 +367,7 @@
                             <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span> Lastname</label>
                             <div class="col-lg-9">
                                 <?php 
-                                    echo $this->Form->input('ContactPerson.lastname', array('class' => 'form-control required','label' => false));
+                                    echo $this->Form->input('ContactPerson.lastname', array('class' => 'form-control required','label' => false,'required' => true));
                                 ?>
                             </div>
                         </div>
@@ -375,7 +376,7 @@
                             <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span> Position</label>
                             <div class="col-lg-9">
                                 <?php 
-                                    echo $this->Form->input('ContactPerson.position', array('class' => 'form-control required','label' => false));
+                                    echo $this->Form->input('ContactPerson.position', array('class' => 'form-control required','label' => false,'required' => true));
                                 ?>
                             </div>
                         </div>

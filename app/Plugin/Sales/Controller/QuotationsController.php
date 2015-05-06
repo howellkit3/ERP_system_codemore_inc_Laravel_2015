@@ -26,7 +26,34 @@ class QuotationsController extends SalesAppController {
 
 		$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail','ProductDetail', 'Product'));
 
-		$quotationData = $this->Quotation->find('all', array('order' => 'Quotation.id DESC','group' => 'Quotation.id'));
+		$limit = 10;
+
+		$conditions = array("OR" => array('Quotation.status NOT' => 'draft','Quotation.status' => NULL));
+
+		if (!empty($this->params['named']['status'])) {
+
+			$conditions = array('Quotation.status' => $this->params['named']['status']);
+		}
+	
+		$this->paginate = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            'fields' => array(
+            	'Quotation.id',
+            	'Quotation.uuid', 
+            	'Quotation.name',
+            	'Quotation.inquiry_id',
+            	'Quotation.validity',
+            	'Quotation.status',
+            	'Quotation.company_id',
+            	'Product.name'
+
+            ),
+            'order' => 'Quotation.id DESC',
+            'group' => 'Quotation.id'
+        );
+
+        $quotationData = $this->paginate('Quotation');
 
 		$this->Company->bind(array('Inquiry'));
 
@@ -132,7 +159,8 @@ class QuotationsController extends SalesAppController {
 		if ($this->request->is(array('post','put'))) {
 
             if (!empty($this->request->data)) {
-           
+           		
+
 
             	if(!empty($this->request->data['Inquiry']['id'])){
             		
@@ -158,13 +186,15 @@ class QuotationsController extends SalesAppController {
             	}else{
 
             			$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail','ProductDetail'));
-
-            			$companyId = $this->request->data['Company']['id'];
-
-            			//pr($companyId);
-
+            			
+            			if(!empty($this->request->data['Company']['id'])){
+            				$companyId = $this->request->data['Company']['id'];
+            			}else{
+            				$companyId = $this->request->data['Quotation']['company_id'];
+            			}
+            			
             			$this->request->data['Quotation']['company_id'] = $companyId;
-
+            		
             			$this->id = $this->Quotation->addQuotation($this->request->data, $userData['User']['id']);
 
             			$QuotationDetail = ClassRegistry::init('Sales.QuotationDetail');
@@ -264,6 +294,10 @@ class QuotationsController extends SalesAppController {
 
 		$userData = $this->Session->read('Auth');
 
+		$this->loadModel('PaymentTermHolder');
+
+		$paymentTerm = $this->PaymentTermHolder->find('list',array('fields' => array('id','name')));
+
 		$this->Company->bind(array('Address','Contact','Email','Inquiry','ContactPerson','Quotation'));
 
 		$companyData = $this->Company->find('list', array(
@@ -311,7 +345,7 @@ class QuotationsController extends SalesAppController {
 										'User.id' => $userData['User']['id'] )
 								));
 		
-		$this->set(compact('companyData','companyId', 'quotationSize', 'quotationOption','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','salesStatus', 'productName','clientOrderCount','quotationDetailData'));
+		$this->set(compact('paymentTerm','companyData','companyId', 'quotationSize', 'quotationOption','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','salesStatus', 'productName','clientOrderCount','quotationDetailData'));
 		
 	}
 
@@ -598,5 +632,26 @@ class QuotationsController extends SalesAppController {
 		$this->redirect(
             array('controller' => 'quotations', 'action' => 'index')
         );
+	}
+
+	public function drafts($id = null) {
+
+		  if (!$id) {
+		                throw new NotFoundException(__('Quotation Not Found'));
+		 } else {
+		 	$this->Quotation->id = $id;
+		 	if( $this->Quotation->saveField('status', 'draft') ) {
+		 		$this->Session->setFlash(__('Quotation Save as Draft.'));
+
+		 	} else {
+		 		$this->Session->setFlash(__('Error updating Quotation.'));
+
+		 	}
+		 	$this->redirect(
+            array('controller' => 'quotations', 'action' => 'index')
+        	);
+			//$this->Quotation->update()
+		 }
+
 	}
 }
