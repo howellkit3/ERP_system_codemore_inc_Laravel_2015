@@ -3,7 +3,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                <div class="modal-header">
-                    <button class="md-close close">×</button>
+                    <button class="md-close close"  data-dismiss="modal">×</button>
                     <h1 class="modal-title" style="font-size: 1.6em;">Customer Information</h1>
                 </div>
                 <div class="modal-body">
