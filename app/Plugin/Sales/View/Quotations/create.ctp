@@ -54,7 +54,7 @@
 
 
 	                                    <div class="form-group">
-											<label class="col-lg-2 control-label">Name</label>
+											<label class="col-lg-2 control-label"><span style="color:red">*</span>Name</label>
 											<div class="col-lg-8">
 												<?php 
 		                                            echo $this->Form->input('Quotation.name', array(
@@ -67,22 +67,25 @@
 
 	                                    
 	                                     <div class="form-group">
-	                                    	<label class="col-lg-2 control-label">Company</label>
+	                                    	<label class="col-lg-2 control-label"><span style="color:red">*</span>Company</label>
 											<div class="col-lg-8">
 												<?php echo $this->Form->input('Company.id', array(
-					                                'options' => array($companyData),  
+					                                'type' => 'select',
 					                                'label' => false,
 					                                'class' => 'form-control required contacpersonlist',
-					                                'empty' => '---Select Company---',
-					                                'id' => 'select_company'
+					                                'options' => array($companyData),  
+					                             
+
 					                                 )); 
 
 					                            ?>
 											</div>
 										</div>
 
+
+
 	                                    <div class="form-group">
-	                                    	<label class="col-lg-2 control-label">Attention</label>
+	                                    	<label class="col-lg-2 control-label"><span style="color:red">*</span>Attention</label>
 											<div class="col-lg-8">
 												<?php 
 		                                            echo $this->Form->input('Quotation.attention_details', array(
@@ -97,7 +100,7 @@
 										</div>
 
 										<div class="form-group" id="existing_items">
-											<label class="col-lg-2 control-label">Category</label>
+											<label class="col-lg-2 control-label"><span style="color:red">*</span>Category</label>
 											<div class="col-lg-8">
 												<?php 
 	                                                echo $this->Form->input('Quotation.item_category_holder_id', 
@@ -114,7 +117,7 @@
 										</div>
 
 										<div class="form-group" id="existing_items">
-											<label class="col-lg-2 control-label">Type</label>
+											<label class="col-lg-2 control-label"><span style="color:red">*</span>Type</label>
 											<div class="col-lg-8">
 												<?php 
 	                                                echo $this->Form->input('Quotation.item_type_holder_id', 
@@ -132,7 +135,7 @@
 										</div>
 
 										<div class="form-group" id="existing_items">
-											<label class="col-lg-2 control-label">Item</label>
+											<label class="col-lg-2 control-label"><span style="color:red">*</span>Item</label>
 											<div class="col-lg-8">
 												<?php 
 	                                                echo $this->Form->input('QuotationDetail.product_id', 

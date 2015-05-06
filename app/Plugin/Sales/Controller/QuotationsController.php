@@ -82,6 +82,11 @@ class QuotationsController extends SalesAppController {
 															'order' => array('Currency.name' => 'ASC')
 															));
 
+		$paymentTermData = $this->PaymentTermHolder->find('list', array(
+															'fields' => array('id', 'name'),
+															'order' => array('PaymentTermHolder.name' => 'ASC')
+															));
+
 
 		if(!empty($inquiryId)){
 
@@ -159,8 +164,76 @@ class QuotationsController extends SalesAppController {
 
             			//pr($companyId);
 
+            			$this->request->data['Quotation']['company_id'] = $companyId;
+
+            			$this->id = $this->Quotation->addQuotation($this->request->data, $userData['User']['id']);
+
+            			$QuotationDetail = ClassRegistry::init('Sales.QuotationDetail');
+            			$QuotationItemDetail = ClassRegistry::init('Sales.QuotationItemDetail');
+
+
+            			$QuotationDetail->addQuotationDetail($this->request->data, $userData['User']['id'], $this->id);
+
+            			$QuotationItemDetail->addQuotationItemDetail($this->request->data, $this->id);
+            		
+
+            	}
+            	
+            	$this->Session->setFlash(__('Quotation Complete.'));
+
+            	$this->redirect(
+                    array('controller' => 'quotations', 'action' => 'index')
+                );
+            	
+            }
+        }
+	}
+
+	public function add2() {
+
+		$userData = $this->Session->read('Auth');
+		
+		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail'));
+
+		if ($this->request->is(array('post','put'))) {
+
+            if (!empty($this->request->data)) {
+           
+
+            	if(!empty($this->request->data['Inquiry']['id'])){
+            		
+            		$this->Company->bind(array('Inquiry'));
+
+            			$inquiryId = $this->request->data['Inquiry']['id'];
+
+            			$inquiryCompanyId = $this->Company->Inquiry->find('first', array(
+														  		  		'conditions' => array(
+														  		  			'Inquiry.id' => $this->request->data['Inquiry']['id'])
+																));
+            			
+            			$this->request->data['Quotation']['inquiry_id'] = $inquiryId;
+
+            			$this->request->data['Quotation']['company_id'] = $inquiryCompanyId['Inquiry']['company_id'];
+
+            			$this->id = $this->Quotation->addQuotation($this->request->data, $userData['User']['id']);
+
+            			$this->Quotation->QuotationDetail->addQuotationDetail($this->request->data, $userData['User']['id'], $this->id);
+
+            			$this->Quotation->QuotationItemDetail->addQuotationItemDetail($this->request->data, $this->id);
+         		
+            	}else{
+
+            			$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail','ProductDetail'));
+
+            			pr($this->request->data); exit;
+
+            			$companyId = $this->request->data['Company']['id'];
+
+            			//pr($companyId);
+
             			//$this->request->data['Quotation']['company_id'] = $companyId;
 
+            			echo 'before the method clal';
             			$this->id = $this->Quotation->addQuotation($this->request->data, $userData['User']['id']);
 
             			$QuotationDetail = ClassRegistry::init('Sales.QuotationDetail');

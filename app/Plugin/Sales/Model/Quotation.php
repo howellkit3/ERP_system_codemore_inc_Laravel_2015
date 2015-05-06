@@ -92,7 +92,31 @@ class Quotation extends AppModel {
 			),
 		),
 
-		'description' => array(
+		'item_type_holder_id' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'message' => 'Required fields.',
+				
+			),
+		),
+
+		'item_type_holder_id' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'message' => 'Required fields.',
+				
+			),
+		),
+
+		'attention_details' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'message' => 'Required fields.',
+				
+			),
+		),
+
+		'company_id' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				'message' => 'Required fields.',
@@ -104,6 +128,8 @@ class Quotation extends AppModel {
 
 	//new function for saving quotation
 	public function addQuotation($quotationData = null,$auth){
+
+		
 		
     $month = date("m"); 
     $year = date("y");
