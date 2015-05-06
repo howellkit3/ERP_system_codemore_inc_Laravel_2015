@@ -2,7 +2,18 @@
 <?php $this->Html->addCrumb('Quotation', array('controller' => 'quotations', 'action' => 'index')); ?>
 
 <div style="clear:both"></div>
+<?php 
+   echo $this->Html->script('jquery');
+   $this->Paginator->options(array(
+      'update' => '#QuotationsTable',
+      'before' => $this->Js->get("#loader")->effect('fadeIn', array('buffer' => false)),
+      'complete' => $this->Js->get("#loader")->effect('fadeOut', array('buffer' => false)),
+   )); 
+?>
 
+<div id="QuotationsTable">
+
+<?php echo $this->Html->image('loader.gif', array('class' => 'hide', 'id' => 'loader')); ?>
 <?php echo $this->element('sales_option');?><br><br>
 
 <div class="row">
@@ -20,6 +31,20 @@
                             <i class="fa fa-search search-icon"></i>
                          <?php echo $this->Form->end(); ?>
                     </div> -->
+
+                     <?php
+                             $text = 'View Drafts Quotations';
+                             $link =  array('controller' => 'quotations', 'action' => 'index','status' => 'draft');
+                            if (!empty($this->params['named']['status']) && $this->params['named']['status'] == 'draft') {
+
+                                $text = 'View Quotations';
+                                $link =  array('controller' => 'quotations', 'action' => 'index',);
+
+                            } 
+                            echo $this->Html->link('<i class="fa fa-file-text fa-lg"></i> '. $text,$link,array('class' =>'btn btn-primary pull-right','escape' => false));
+                        ?>
+
+
                     <?php
                             echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Make Quotation ', array('controller' => 'quotations', 'action' => 'create'),array('class' =>'btn btn-primary pull-right','escape' => false));
                         ?>
@@ -45,6 +70,19 @@
 
                     </table>
                     <hr>
+
+                    <div class="paging">
+                    <?php
+
+                    echo $this->Paginator->prev('< ' . __('previous'), null, null, array('class' => 'disable'));
+                    echo $this->Paginator->numbers(array('separator' => ''));
+                    echo $this->Paginator->next(__('next') . ' >', null, null, array('class' => 'disable'));
+                    ?>
+                    </div>
+
+                    <?php echo $this->Js->writeBuffer(); ?>
+
+
                 </div>
                 <!-- <ul class="pagination pull-right">
                     <li><a href="#"><i class="fa fa-chevron-left"></i></a></li>
@@ -59,4 +97,5 @@
     
         </div>
     </div>
+</div>
 </div>

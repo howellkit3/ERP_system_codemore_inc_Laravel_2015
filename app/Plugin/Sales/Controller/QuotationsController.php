@@ -26,7 +26,34 @@ class QuotationsController extends SalesAppController {
 
 		$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail','ProductDetail', 'Product'));
 
-		$quotationData = $this->Quotation->find('all', array('order' => 'Quotation.id DESC','group' => 'Quotation.id'));
+		$limit = 10;
+
+		$conditions = array("OR" => array('Quotation.status NOT' => 'draft','Quotation.status' => NULL));
+
+		if (!empty($this->params['named']['status'])) {
+
+			$conditions = array('Quotation.status' => $this->params['named']['status']);
+		}
+	
+		$this->paginate = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            'fields' => array(
+            	'Quotation.id',
+            	'Quotation.uuid', 
+            	'Quotation.name',
+            	'Quotation.inquiry_id',
+            	'Quotation.validity',
+            	'Quotation.status',
+            	'Quotation.company_id',
+            	'Product.name'
+
+            ),
+            'order' => 'Quotation.id DESC',
+            'group' => 'Quotation.id'
+        );
+
+        $quotationData = $this->paginate('Quotation');
 
 		$this->Company->bind(array('Inquiry'));
 
@@ -597,5 +624,26 @@ class QuotationsController extends SalesAppController {
 		$this->redirect(
             array('controller' => 'quotations', 'action' => 'index')
         );
+	}
+
+	public function drafts($id = null) {
+
+		  if (!$id) {
+		                throw new NotFoundException(__('Quotation Not Found'));
+		 } else {
+		 	$this->Quotation->id = $id;
+		 	if( $this->Quotation->saveField('status', 'draft') ) {
+		 		$this->Session->setFlash(__('Quotation Save as Draft.'));
+
+		 	} else {
+		 		$this->Session->setFlash(__('Error updating Quotation.'));
+
+		 	}
+		 	$this->redirect(
+            array('controller' => 'quotations', 'action' => 'index')
+        	);
+			//$this->Quotation->update()
+		 }
+
 	}
 }

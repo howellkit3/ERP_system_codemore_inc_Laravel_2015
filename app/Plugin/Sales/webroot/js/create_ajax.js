@@ -17,9 +17,9 @@
 							// $option = "<option class='option-append-contact'  value="+value.ItemTypeHolder.id+">"+value.ItemTypeHolder.name+"</option>";
 						}
 					     $('#QuotationAttentionDetails').append($option);
-					     $('.loading_event').remove();
+					    
 					});	
-					
+					 $('.loading_event').remove();
 					//$('.categorylist').change();	
 				}
 			});			

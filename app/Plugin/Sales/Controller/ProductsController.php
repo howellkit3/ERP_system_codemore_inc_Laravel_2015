@@ -39,7 +39,7 @@ class ProductsController extends SalesAppController {
 
 		$companyData = $this->Company->getList(array('id','company_name'));
 
-		$limit = 5;
+		$limit = 10;
 
 		$conditions = array();
 			
