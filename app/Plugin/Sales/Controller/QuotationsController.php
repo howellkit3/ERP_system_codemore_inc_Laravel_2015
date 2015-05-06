@@ -185,7 +185,6 @@ class QuotationsController extends SalesAppController {
          		
             	}else{
 
-
             			$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail','ProductDetail'));
             			
             			if(!empty($this->request->data['Company']['id'])){
