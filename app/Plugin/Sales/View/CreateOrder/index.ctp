@@ -161,13 +161,13 @@
 									</div>
 
                                     <div class="form-group">
-                                    	<label class="col-lg-2 control-label">Name</label>
+                                    	<label class="col-lg-2 control-label">Order Name</label>
 										<div class="col-lg-8">
 											<?php 
                                                 echo $this->Form->input('ClientOrder.name',array( 
                                                 						'class' => 'form-control item_type ', 
                                                     					'label' => false,
-                                                    					'placeholder' => 'Name' 
+                                                    					'placeholder' => 'Order Name' 
                                                     					));
                                             ?>
 										</div>
