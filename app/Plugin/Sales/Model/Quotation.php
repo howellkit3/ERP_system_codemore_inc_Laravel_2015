@@ -150,10 +150,9 @@ class Quotation extends AppModel {
 
 			$quotationData['Quotation']['uuid'] = $code;
 
-		}else{
-			pr('you made it wrong'); exit;
+		}	
 
-		}
+		
 	//	$quotationData['Quotation']['validity'] = $quotationData['Quotation']['validity_field'];
 		
 		$this->save($quotationData);
