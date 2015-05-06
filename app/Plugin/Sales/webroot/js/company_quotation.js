@@ -34,7 +34,7 @@ jQuery(function($){
 		$("#txtProduct").prop('disabled', false);
 		$("#message").css("color", "white");
 		
-
+		
 		var option = $(this).val();
 		
 		$.ajax({
@@ -80,7 +80,7 @@ jQuery(function($){
 
 		var option = $(this).val();
 		
-		
+		$("#loading").clone().show().addClass("loading_event").insertAfter($(this)); //ajax loader
 		$.ajax({
 			url: serverPath + "sales/products/get_type/"+option,
 			type: "GET",
@@ -97,6 +97,8 @@ jQuery(function($){
 				
 				}
 		}).done(function(){
+
+				$("#loading").clone().show().addClass("loading_event").insertAfter($('#product')); //ajax loader
 				$.ajax({
 				url: serverPath + "sales/products/get_product/"+$('#itemType').val()+"/"+$('#select_company').val(),
 				type: "GET",
@@ -117,11 +119,7 @@ jQuery(function($){
 	});
 
 	$('#itemType').change(function(){
-	
-
-		var option = $(this).val();
-		
-		
+			var option = $(this).val();
 			$.ajax({
 			url: serverPath + "sales/products/get_product/"+$('#itemType').val()+"/"+$('#select_company').val(),
 			type: "GET",
@@ -138,6 +136,7 @@ jQuery(function($){
 			});
 
 		});
+
 	$('#selectProduct').change(function(){
 		
 
@@ -148,8 +147,6 @@ jQuery(function($){
 			type: "GET",
 			dataType: "json",
 			success: function(data) {
-
-					console.log(data);
 					if (data.length == 0){
 						$('#QuotationField2Description').val('');
 						$('#QuotationField4Description').val('');	
