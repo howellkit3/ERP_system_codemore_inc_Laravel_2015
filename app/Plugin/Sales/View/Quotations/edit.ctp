@@ -195,8 +195,8 @@
 				</div>
 
 			<?php
-			foreach ($itemDetailData as $key => $itemDetailDetails) {
-				pr($itemDetailData);exit();
+			// foreach ($itemDetailData as $key => $itemDetailDetails) {
+			// 	pr($itemDetailData);exit();
 			}
 			 ?>
 				<section class="cloneMe quotationItemDetail">

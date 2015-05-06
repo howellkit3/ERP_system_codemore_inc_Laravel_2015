@@ -45,10 +45,12 @@
                 if ($quotationList['Quotation']['status'] == '1') {
                     echo "<span class='label label-success'>Approved</span>";
                 } else {
-                    echo ucwords($quotationList['Quotation']['status']);
+                    echo "<span class='label label-default'>";
+                        echo ucwords($quotationList['Quotation']['status']);
+                    echo "</span>";
                 }
             } else  {
-                echo "<span class='label label-default'>Pending</span>";
+                echo "<span class='label label-warning'>Pending</span>";
             }
                
             ?>
