@@ -77,5 +77,11 @@ class Inquiry extends AppModel {
 		return $this->id;
 		
 	}
+
+	public function afterSave($data,$options = array() ) {
+
+		Cache::delete('inquiryId');
+		
+	}
 	
 }

@@ -31,13 +31,8 @@ class QuotationsController extends SalesAppController {
 
 		$limit = 10;
 
-		$conditions = array("OR" => array('Quotation.status NOT' => 'draft','Quotation.status' => NULL));
+		$conditions = array();
 
-		if (!empty($this->params['named']['status'])) {
-
-			$conditions = array('Quotation.status' => $this->params['named']['status']);
-		}
-	
 		$this->paginate = array(
             'conditions' => $conditions,
             'limit' => $limit,
@@ -67,7 +62,7 @@ class QuotationsController extends SalesAppController {
 
 		$inquiryId = $this->Company->Inquiry->find('list', array(
      													'fields' => array(
-     														'company_id')
+     													'company_id')
      												));
 
 
@@ -161,11 +156,14 @@ class QuotationsController extends SalesAppController {
 
 		if ($this->request->is(array('post','put'))) {
 
+
             if (!empty($this->request->data)) {
+
+            	if (!empty($this->request->data['submit']) && $this->request->data['submit'] == 'Save as Draft') {
+            			$this->request->data['Quotation']['status'] = 'draft';	
+            			}
            		
-
-
-            	if(!empty($this->request->data['Inquiry']['id'])){
+				if(!empty($this->request->data['Inquiry']['id'])){
             		
             		$this->Company->bind(array('Inquiry'));
 
@@ -179,16 +177,17 @@ class QuotationsController extends SalesAppController {
             			$this->request->data['Quotation']['inquiry_id'] = $inquiryId;
 
             			$this->request->data['Quotation']['company_id'] = $inquiryCompanyId['Inquiry']['company_id'];
+						
+						$this->id = $this->Quotation->addQuotation($this->request->data, $userData['User']['id']);
 
-            			$this->id = $this->Quotation->addQuotation($this->request->data, $userData['User']['id']);
-
+            			$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail','ProductDetail'));
+            			
             			$this->Quotation->QuotationDetail->addQuotationDetail($this->request->data, $userData['User']['id'], $this->id);
 
             			$this->Quotation->QuotationItemDetail->addQuotationItemDetail($this->request->data, $this->id);
          		
             	}else{
 
-            			$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail','ProductDetail'));
             			
             			if(!empty($this->request->data['Company']['id'])){
             				$companyId = $this->request->data['Company']['id'];
@@ -197,17 +196,15 @@ class QuotationsController extends SalesAppController {
             			}
             			
             			$this->request->data['Quotation']['company_id'] = $companyId;
+
             		
             			$this->id = $this->Quotation->addQuotation($this->request->data, $userData['User']['id']);
 
-            			$QuotationDetail = ClassRegistry::init('Sales.QuotationDetail');
-            			$QuotationItemDetail = ClassRegistry::init('Sales.QuotationItemDetail');
+            			$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail','ProductDetail'));
+            			
+            			$this->Quotation->QuotationDetail->addQuotationDetail($this->request->data, $userData['User']['id'], $this->id);
 
-
-            			$QuotationDetail->addQuotationDetail($this->request->data, $userData['User']['id'], $this->id);
-
-            			$QuotationItemDetail->addQuotationItemDetail($this->request->data, $this->id);
-            		
+            			$this->Quotation->QuotationItemDetail->addQuotationItemDetail($this->request->data, $this->id);
 
             	}
             	
@@ -297,23 +294,49 @@ class QuotationsController extends SalesAppController {
 
 		$userData = $this->Session->read('Auth');
 
-		$this->loadModel('PaymentTermHolder');
+		$this->loadModel('Sales.PaymentTermHolder');
 
-		$paymentTerm = $this->PaymentTermHolder->find('list',array('fields' => array('id','name')));
+		//$paymentTerm = $this->PaymentTermHolder->find('list',array('fields' => array('id','name')));
+
+		//set to cache in first load
+		$paymentTerm = Cache::read('paymentTerms');
+		
+		if (!$paymentTerm) {
+            $paymentTerm = $this->PaymentTermHolder->getList(null,array('id','name'));
+            Cache::write('paymentTerms', $paymentTerm);
+        }
 
 		$this->Company->bind(array('Address','Contact','Email','Inquiry','ContactPerson','Quotation'));
 
 
-
-		$companyData = $this->Company->find('list', array(
+		//set to cache in first load
+		$companyData = Cache::read('companyData');
+		
+		if (!$companyData) {
+			
+			$companyData = $this->Company->find('list', array(
      											'fields' => array( 
      												'id','company_name')
      										));
 
-		$inquiryId = $this->Company->Inquiry->find('list', array(
+            Cache::write('companyData', $companyData);
+        }
+
+
+        //set to cache in first load
+		$inquiryId = Cache::read('companyData');
+		
+		if (!$companyData) {
+			
+			$inquiryId = $this->Company->Inquiry->find('list', array(
      													'fields' => array(
      														'company_id')
      													));
+
+            Cache::write('inquiryId', $inquiryId);
+        }
+
+		
 		$this->loadModel('Currency');
 		$currencies = $this->Currency->getList();
 

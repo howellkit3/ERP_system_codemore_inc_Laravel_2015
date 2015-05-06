@@ -38,7 +38,7 @@ class CustomerSalesController extends SalesAppController {
 		$limit = 10;
 
 		$conditions = array();
-			
+	
 		$this->paginate = array(
             'conditions' => $conditions,
             'limit' => $limit,
@@ -54,7 +54,9 @@ class CustomerSalesController extends SalesAppController {
             'order' => 'Company.id DESC',
         );
 
-        $company = $this->paginate('Company');
+			$company = $this->paginate('Company');
+	
+
 
 		$this->set(compact('company','paymentTermData'));
 		
@@ -62,14 +64,18 @@ class CustomerSalesController extends SalesAppController {
 
 	public function add(){
 
-		$this->loadModel('PaymentTermHolder');
+		$this->loadModel('Sales.PaymentTermHolder');
 
 		$userData = $this->Session->read('Auth');
 
-		$paymentTermData = $this->PaymentTermHolder->find('list', array(
-															'fields' => array('id', 'name'),
-															'order' => array('PaymentTermHolder.name' => 'ASC')
-															));
+		//set to cache in first load
+		$paymentTermData = Cache::read('paymentTerms');
+		
+		if (!$paymentTermData) {
+            $paymentTermData = $this->PaymentTermHolder->getList();
+            Cache::write('paymentTerms', $paymentTermData);
+        }
+
 		if ($this->request->is('post')) {
 
 

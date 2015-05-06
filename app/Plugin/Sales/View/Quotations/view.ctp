@@ -27,10 +27,9 @@
 	
 
     	echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i>Approved ', array('controller' => 'quotations', 'action' => 'approved',$quotation['Quotation']['id']),array('class' =>'btn btn-success pull-right','escape' => false)) ;
-    	if ($quotation['Quotation']['status'] != 'draft') {
-
-    		echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i>Save As Draft ', array('controller' => 'quotations', 'action' => 'drafts',$quotation['Quotation']['id']),array('class' =>'btn btn-success pull-right','escape' => false)) ;
-		} 			
+    	
+		echo $this->Html->link('<i class="fa fa-share fa-lg"></i> Submit Quotation', array('controller' => 'quotations', 'action' => 'drafts',$quotation['Quotation']['id']),array('class' =>'btn btn-success pull-right','escape' => false)) ;
+				
     	
 		echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit ', array('controller' => 'quotations', 'action' => 'edit',$quotation['Quotation']['id'],$companyId),array('class' =>'btn btn-info pull-right','escape' => false)) ;
     	
@@ -166,8 +165,6 @@
 											<td height ="35px" valign ="top" class = "column4 col-md-8">
 												<div class="col-lg-12">
 													<?php echo $itemDetail['unit_price'];?> 
-
-
 													<?php
 													 echo !empty($currencies[$itemDetail['unit_price_currency_id']]) ? $currencies[$itemDetail['unit_price_currency_id']] : '' ?> 
 												</div>
