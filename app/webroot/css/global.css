@@ -253,3 +253,9 @@ body.dragging, body.dragging * {
   padding: 6px;
 }
 
+
+/*small icon*/
+
+.table-link.small-link-icon {
+  margin: 0 !important;
+}

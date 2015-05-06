@@ -48,7 +48,7 @@
                     echo ucwords($quotationList['Quotation']['status']);
                 }
             } else  {
-                echo "<span class='label label-warning'>Pending</span>";
+                echo "<span class='label label-default'>Pending</span>";
             }
                
             ?>
