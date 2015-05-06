@@ -182,7 +182,7 @@ class ProductsController extends SalesAppController {
 		
 
 		if ($this->request->is('post')) {
-				pr($this->request->data);exit();
+				//pr($this->request->data);exit();
 				$userData = $this->Session->read('Auth');
 			 	$productDetails = $this->request->data;
 	        	$this->loadModel('Sales.Product');
@@ -585,5 +585,30 @@ class ProductsController extends SalesAppController {
     	$this->layout = false;
 
 		echo json_encode($checkData);
+    }
+
+    public function specification($productId = null ){
+
+    	$this->loadModel('ItemCategoryHolder');
+
+        $this->loadModel('ItemTypeHolder');
+
+        $this->loadModel('Company');
+
+		$this->loadModel('Sales.Product');
+
+		$this->Product->recursive = 1;
+
+		$product = $this->request->data =  $this->Product->findById($productId);
+
+		$this->request->data['Company'] = $this->Company->read(null,$product['Product']['company_id'])['Company'];
+
+		$productData = $this->Product->find('all',array(
+    		'order' => array('Product.id DESC')));	
+
+		$this->set(compact('product','productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData', 'companyData'));
+
+
+
     }
 }

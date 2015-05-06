@@ -203,6 +203,7 @@ $(document).ready(function() {
                 $("#"+dynamicId).change(function(e){
                     var processVal = $(this).val();
                     $('.checkbox-nice1').remove();
+                    $('.appendField').remove();
                     $.ajax({
                         url: serverPath + "sales/products/find_checkbox/"+processVal,
                         type: "get",
@@ -213,7 +214,7 @@ $(document).ready(function() {
                                  
                                 $('.check-item').append('<div class="checkbox-nice1">\
                                                         <input id="checkbox-inl-1" class="check-fields" data-name="'+value.SubProcess.name+'" type="checkbox">\
-                                                        <label for="checkbox-inl-1"> "'+value.SubProcess.name+'" </label>\
+                                                        <label for="checkbox-inl-1"> '+value.SubProcess.name+' </label>\
                                                     </div>');
 
                             }); 
@@ -224,10 +225,10 @@ $(document).ready(function() {
                                 var checkFieldName = "data[Specification]["+$(this).attr('data-name')+"]";
                                 var checkFieldNameval = $(this).attr('data-name');
                                 checkFieldNameNoSpace = checkFieldNameval.replace(/\s+/g, "-");
-
+                                $('.appendField').remove();
                                 if ($(this).is(":checked")) {
-
-                                    $('.check-fields-sort').append('<div class="well span2 tile" id="'+checkFieldNameNoSpace+'">\
+                                    console.log(checkFieldNameval);
+                                    $('.check-fields-sort').append('<div class="well span2 tile" class="appendField" id="'+checkFieldNameNoSpace+'">\
                                                                         <div class="input-group">\
                                                                             <span class="input-group-addon">\
                                                                                 <i class="fa fa-reorder"></i>\
