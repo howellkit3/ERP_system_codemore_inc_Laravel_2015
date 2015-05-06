@@ -22,6 +22,13 @@ class CustomerSalesController extends SalesAppController {
 	    	    
 	public function index() {
 
+		$this->loadModel('PaymentTermHolder');
+
+		$paymentTermData = $this->PaymentTermHolder->find('list', array(
+															'fields' => array('id', 'name'),
+															'order' => array('PaymentTermHolder.name' => 'ASC')
+															));
+
 		$userData = $this->Session->read('Auth');
 
 		$this->Company->bind(array('ContactPerson'));
@@ -32,7 +39,7 @@ class CustomerSalesController extends SalesAppController {
     		'order' => array('Company.id DESC')));
 
 
-		$this->set(compact('company'));
+		$this->set(compact('company','paymentTermData'));
 		
 	}
 

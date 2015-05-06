@@ -14,7 +14,11 @@
 
 		if($clientOrderCount == 0){
 
+			if ($quotation['Quotation']['status'] == 1) {
+				
 			echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Create Order ', array('controller' => 'create_order', 'action' => 'index',$quotation['Quotation']['id'],$quotation['Quotation']['uuid']),array('class' =>'btn btn-primary pull-right','escape' => false)) ;
+			}
+
 			
 		}else{
 
@@ -23,11 +27,12 @@
 	
 
     	echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i>Approved ', array('controller' => 'quotations', 'action' => 'approved',$quotation['Quotation']['id']),array('class' =>'btn btn-success pull-right','escape' => false)) ;
+    	if ($quotation['Quotation']['status'] != 'draft') {
 
-    	echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i>Save As Draft ', array('controller' => 'quotations', 'action' => 'drafts',$quotation['Quotation']['id']),array('class' =>'btn btn-success pull-right','escape' => false)) ;
-
-
-    	echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit ', array('controller' => 'quotations', 'action' => 'edit',$quotation['Quotation']['id'],$companyId),array('class' =>'btn btn-info pull-right','escape' => false)) ;
+    		echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i>Save As Draft ', array('controller' => 'quotations', 'action' => 'drafts',$quotation['Quotation']['id']),array('class' =>'btn btn-success pull-right','escape' => false)) ;
+		} 			
+    	
+		echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit ', array('controller' => 'quotations', 'action' => 'edit',$quotation['Quotation']['id'],$companyId),array('class' =>'btn btn-info pull-right','escape' => false)) ;
     	
     	echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array(
 		        	'controller' => 'quotations', 
@@ -243,7 +248,7 @@
 								Terms
 							</div>
 							<div class="col-lg-8">
-								:&emsp;<?php echo $paymentTerm[$quotation['Quotation']['payment_terms']]?>
+								:&emsp;<?php echo !empty($quotation['Quotation']['payment_terms']) ? $paymentTerm[$quotation['Quotation']['payment_terms']]: '' ?>
 							</div>
 
 						</div>
