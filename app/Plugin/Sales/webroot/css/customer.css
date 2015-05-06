@@ -1,0 +1,14 @@
+.md-modal.md-effect-1 .main-box > h1 {
+	font-size: 1.6em;
+}
+.md-modal.md-effect-1 label {
+	font-size: 0.7em;
+}
+.md-close.close {
+	position: absolute;
+	right: 20px;
+	top: 23px;
+}
+.md-modal.md-effect-1 .lighter-color2 {
+	font-size: 0.7em;
+}

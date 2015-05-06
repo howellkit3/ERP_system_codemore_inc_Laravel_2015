@@ -27,7 +27,7 @@
 					<button style="margin-right:10px;" class="md-trigger btn btn-primary mrg-b-lg pull-right" data-modal="modal-1"><i class="fa fa-plus-circle fa-lg"></i> Add Customer</button>
 					<?php 
 						echo $this->element('customer_info');
-						echo $this->html->css(array('libs/nifty-component'));
+						echo $this->html->css(array('libs/nifty-component','Sales.customer'));
 						echo $this->Html->script(array('modernizr.custom','classie','modalEffects'));
 					?>
 					<div class="md-overlay"></div>
@@ -129,8 +129,14 @@
 				</div>	
 			<?php echo $this->Form->end(); ?>
 			<script>
-                $("#CompanyInquiryFormForm").validate();
-            </script>							
+				jQuery(document).ready(function($){
+				    //masked inputs
+				    $("#CompanyTin").mask("999-999-999-999");
+				    jQuery('.remove').hide();
+				   $("#CompanyInquiryFormForm").validate();
+
+				});
+			</script>	
 		</div>
 	</div>	
 </div>

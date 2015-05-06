@@ -318,14 +318,22 @@ class CustomerSalesController extends SalesAppController {
 
 	public function inquiry_form(){
 
+
+		$this->loadModel('PaymentTermHolder');
+
 		$userData = $this->Session->read('Auth');
+
+		$paymentTermData = $this->PaymentTermHolder->find('list', array(
+															'fields' => array('id', 'name'),
+															'order' => array('PaymentTermHolder.name' => 'ASC')
+															));
 
 		$this->Company->bind(array('Contact','Email','Address','ContactPerson'));
 
 		$companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')));
 
-		$this->set('companyData', $companyData);
-
+		$this->set(compact('paymentTermData','companyData')); 
+		
 		if ($this->request->is('post')) {
 
             if (!empty($this->request->data)) {
