@@ -2,7 +2,16 @@
 
 <div style="clear:both"></div>
 
-<?php echo $this->element('sales_option'); ?><br><br>
+<?php 
+   echo $this->Html->script('jquery');
+   $this->Paginator->options(array(
+      'update' => '#CompanyTable',
+      'before' => $this->Js->get("#loader")->effect('fadeIn', array('buffer' => false)),
+      'complete' => $this->Js->get("#loader")->effect('fadeOut', array('buffer' => false)),
+   )); 
+?>
+<div id="CompanyTable">
+<?php echo $this->element('sales_option');?><br><br>
         
 <div class="row">
     <div class="col-lg-12">
@@ -38,6 +47,17 @@
  
                     </table>
                     <hr>
+
+                <div class="paging">
+                <?php
+
+                echo $this->Paginator->prev('< ' . __('previous'), null, null, array('class' => 'disable'));
+                echo $this->Paginator->numbers(array('separator' => ''));
+                echo $this->Paginator->next(__('next') . ' >', null, null, array('class' => 'disable'));
+                ?>
+                </div>
+                <?php echo $this->Html->image('loader.gif', array('class' => 'hide', 'id' => 'loader')); ?>
+                <?php echo $this->Js->writeBuffer(); ?>
                 </div>
                 <div hidden>
                     <ul class="pagination pull-right" >
@@ -54,4 +74,5 @@
     
         </div>
     </div>
+</div>
 </div>
