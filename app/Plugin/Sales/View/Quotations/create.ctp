@@ -399,9 +399,13 @@
 										<div class="form-group">
 											<div class="col-lg-2"></div>
 											<div class="col-lg-8">
-												<button type="submit" class="btn btn-primary pull-left">Submit Quotation</button>&nbsp;
-												<?php 
-							                        echo $this->Html->link('Cancel', array('controller' => 'quotations', 'action' => 'index'),array('class' =>'btn btn-default','escape' => false));
+												<?php echo $this->Form->submit('Submit Quotation',array('class' => 'btn btn-primary','div' => false,'name' => 'submit','value' => 'pending')); ?>
+
+												&nbsp;
+												
+												<?php echo $this->Form->submit('Save as Draft',array('class' => 'btn btn-warning','div' => false,'name' => 'submit','value' => 'draft')); ?>
+												&nbsp;
+												<?php echo $this->Html->link('<button type="submit" class="btn btn-default">Cancel</button>', array('controller' => 'quotations', 'action' => 'index'),array('escape' => false));
 							                    ?>
 											</div>
 										</div>
@@ -417,16 +421,15 @@
 
 	<script>
 		
+jQuery(document).ready(function($){
+		$("#QuotationCreateForm").validate();
+		//datepicker
+		$('.datepick').datepicker({
+			format: 'yyyy-mm-dd'
+		});
 		
-		jQuery(document).ready(function($){
-			$("#QuotationCreateForm").validate();
-			//datepicker
-			$('.datepick').datepicker({
-				format: 'yyyy-mm-dd'
-			});
-			
 
-	});
+});
 
 	 </script>
 

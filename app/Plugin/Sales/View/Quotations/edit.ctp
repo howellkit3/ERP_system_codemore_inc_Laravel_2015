@@ -104,12 +104,16 @@
 	                                    	<label class="col-lg-2 control-label">Attention</label>
 											<div class="col-lg-8">
 												<?php 
+													 echo $this->Form->input('Quotation.attention_details',array('id' => 'quotations_attention_details','type' => 'hidden'));
+	                                           
 		                                            echo $this->Form->input('Quotation.attention_details', array(
 		                                            								'type' => 'select',
 		                                            								'class' => 'form-control item_type',
 								                                                    'label' => false,
 								                                                    'placeholder' => 'Attention',
-								                                                    'empty' => '--Select Contact Person--'));
+								                                                    'empty' => '--Select Contact Person--',
+								                                                    'default' => $this->request->data['Quotation']['attention_details']
+								                                                    ));
 	                                            ?>
 
 											</div>
@@ -136,7 +140,7 @@
 											<label class="col-lg-2 control-label">Type</label>
 											<div class="col-lg-8">
 												<?php 
-	                                                echo $this->Form->input('Quotation.item_type_holder_id', 
+													 echo $this->Form->input('Quotation.item_type_holder_id', 
 	                                                									array( 
 	                                                						//'value' => array($itemTypeData),
 	                                                						//'options' => array($itemTypeData),				
@@ -419,9 +423,13 @@
 										<div class="form-group">
 											<div class="col-lg-2"></div>
 											<div class="col-lg-8">
-												<button type="submit" class="btn btn-primary pull-left">Submit Quotation</button>&nbsp;
-												<?php 
-							                        echo $this->Html->link('Cancel', array('controller' => 'quotations', 'action' => 'index'),array('class' =>'btn btn-default','escape' => false));
+												<?php echo $this->Form->submit('Submit Quotation',array('class' => 'btn btn-primary','div' => false,'name' => 'submit','value' => 'pending')); ?>
+
+												&nbsp;
+												
+												<?php echo $this->Form->submit('Save as Draft',array('class' => 'btn btn-warning','div' => false,'name' => 'submit','value' => 'draft')); ?>
+												&nbsp;
+												<?php echo $this->Html->link('<button type="submit" class="btn btn-default">Cancel</button>', array('controller' => 'quotations', 'action' => 'index'),array('escape' => false));
 							                    ?>
 											</div>
 										</div>

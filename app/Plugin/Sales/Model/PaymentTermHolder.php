@@ -55,4 +55,14 @@ class PaymentTermHolder extends AppModel {
             return $this->id;
         }
     } 
+
+     public function getList($conditions = array(),$fields = array('id','name')) {
+
+        return $this->find('list',array(
+            'conditions' => $conditions,
+            'fields'    => $fields,
+            'order' => array('PaymentTermHolder.name' => 'ASC')
+            ));
+    }
+
 }

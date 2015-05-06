@@ -1,6 +1,9 @@
 	$('.contacpersonlist').change(function(){
 			$('.option-append-contact').remove();
 			var contactID = $(this).val();
+
+			var selected = $('#quotations_attention_details').val();
+
 			$("#loading").clone().show().addClass("loading_event").insertAfter($(this)); //ajax loader
 
 			$.ajax({
@@ -10,10 +13,11 @@
 				dataType: "json",
 				success: function(data) {
 					$.each(data, function(key, value) {
-						if (value.id == contactID) {
-							$option = "<option class='option-append-contact' selected value="+ value.ContactPerson.firstname+' '+value.ContactPerson.lastname + ">"+ value.ContactPerson.firstname+' '+value.ContactPerson.lastname +"</option>";	
+						
+						if (value.ContactPerson.id == selected) {
+							$option = "<option class='option-append-contact' selected value="+ value.ContactPerson.id + ">"+ value.ContactPerson.firstname+' '+value.ContactPerson.lastname +"</option>";	
 						} else {
-							$option = "<option class='option-append-contact' value="+ value.ContactPerson.firstname+' '+value.ContactPerson.lastname + ">"+ value.ContactPerson.firstname+' '+value.ContactPerson.lastname +"</option>";
+							$option = "<option class='option-append-contact' value="+ value.ContactPerson.id + ">"+ value.ContactPerson.firstname+' '+value.ContactPerson.lastname +"</option>";
 							// $option = "<option class='option-append-contact'  value="+value.ItemTypeHolder.id+">"+value.ItemTypeHolder.name+"</option>";
 						}
 					     $('#QuotationAttentionDetails').append($option);

@@ -135,8 +135,8 @@ class ProductsController extends SalesAppController {
 		$this->loadModel('Sales.Product');
 		$data = $this->Product->find('list', array(
 										'fields' => array(
-									  		'id','product_name'),
-									  	'conditions' => array( 
+									  		'id','name'),
+									  		'conditions' => array( 
 											'company_id' => $companyId)
 										));	
 		echo json_encode($data);

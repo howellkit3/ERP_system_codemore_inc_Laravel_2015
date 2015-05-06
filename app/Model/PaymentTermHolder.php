@@ -70,6 +70,7 @@ class PaymentTermHolder extends AppModel {
         $paymentTermData['modified_by'] = $auth;
 
         if($this->save($paymentTermData)){
+            Cache::delete('paymentTerms');
             return $this->id;
         }
     } 

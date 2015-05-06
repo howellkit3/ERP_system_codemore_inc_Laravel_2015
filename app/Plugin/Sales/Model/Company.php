@@ -239,6 +239,13 @@ class Company extends AppModel {
 
 		$this->data[$this->name]['created_by'] = $userId;
 		$this->data[$this->name]['modified_by'] = $userId;
+
+	}
+
+	public function afterSave($data,$options = array()) {
+
+		Cache::delete('companyData');
+
 	}
 
 	public function getList($fields = array(),$conditions = array()) {
