@@ -45,9 +45,10 @@
     		
     		echo $this->Html->link('<i class="fa fa-envelope-o fa-lg"></i> Send Via Email ', array(
 		        	'controller' => 'quotations', 
-		        	'action' => 'send_email',$contactInfo['Email'][0]['email'],
+		        	'action' => 'send_email','bienrelampagos@gmail.com',
 		        	$quotation['Quotation']['id'],$companyId),
 		        	array('class' =>'btn btn-info pull-right','escape' => false,'target' => '_blank'));
+    		//$contactInfo['Email'][0]['email']
     	}
     	
 
