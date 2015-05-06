@@ -35,9 +35,6 @@ class CustomerSalesController extends SalesAppController {
 
 		$this->Company->recursive = 1;
 
-		// $company = $this->Company->find('all',array(
-  //   		'order' => array('Company.id DESC')));
-
 		$limit = 10;
 
 		$conditions = array();

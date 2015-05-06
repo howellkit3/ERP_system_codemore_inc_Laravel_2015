@@ -64,7 +64,7 @@ jQuery(function($){
 				success: function(data) {
 					$('.option_append_item').remove();
 						$.each(data,function(i,name) {
-							console.log(name);
+
 							$('#selectProduct').append($('<option class="option_append_item">').text(name).attr('value',i));
 
 						});
@@ -106,7 +106,7 @@ jQuery(function($){
 				success: function(data) {
 					$('.option_append_item').remove();
 						$.each(data,function(i,name) {
-							console.log(name);
+
 							$('#product').append($('<option class="option_append_item">').text(name).attr('value',i));
 
 						});
@@ -127,7 +127,7 @@ jQuery(function($){
 			success: function(data) {
 				$('.option_append_item').remove();
 					$.each(data,function(i,name) {
-						console.log(name);
+						
 						$('#product').append($('<option class="option_append_item">').text(name).attr('value',i));
 
 					});

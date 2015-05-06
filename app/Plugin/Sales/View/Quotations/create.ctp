@@ -73,10 +73,9 @@
 					                                'type' => 'select',
 					                                'label' => false,
 					                                'class' => 'form-control required contacpersonlist',
-					                                'options' => array($companyData),  
-					                             
-
-					                                 )); 
+					                                'options' => array($companyData),
+					                                'empty' => '--Select Company--'  
+					                             )); 
 
 					                            ?>
 											</div>
