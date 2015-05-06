@@ -67,6 +67,7 @@
 											<?php echo $this->Form->input('Quotation.name', array(
 												'type' => 'text',
 				                                'label' => false,
+				                                'readonly' => 'readonly',
 				                                'class' => 'form-control',
 				                                'value' => ucfirst($quotationData['Quotation']['name'])
 				                                 )); 
@@ -140,7 +141,7 @@
 										<div class="col-lg-8">
 											<?php 
                                                 echo $this->Form->input('ClientOrder.po_number',array( 
-                                                						'class' => 'form-control item_type ', 
+                                                						'class' => 'form-control item_type required', 
                                                     					'label' => false,
                                                     					'placeholder' => 'PO Number',
                                                     					'id' => 'generate-poNumber' 
@@ -301,7 +302,7 @@
 														<td height ="50px" class ="column2 col-md-10">
 															<div class="col-lg-10">
 																 
-											                    	<input name="itemDetail" class="select-item" type="radio" value="<?php echo $itemDetail['id']?>"/> 
+											                    	<input name="itemDetail" class="select-item" type="radio" value="<?php echo $itemDetail['id']?>" required/> 
 											                    	<font size="1">Select Item</font>
 											                	
 															</div>
@@ -449,14 +450,14 @@
 	</div>
 </div>
 <script>
-		$("#QuotationCreateForm").validate();
+		
 		
 		jQuery(document).ready(function($){
 			//datepicker
 			$('.datepick').datepicker({
 				format: 'yyyy-mm-dd'
 			});
-			
+			$("#QuotationIndexForm").validate();
 		});
 		
 	 </script>
