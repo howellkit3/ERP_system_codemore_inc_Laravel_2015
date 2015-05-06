@@ -58,16 +58,16 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="inputPassword1" class="col-lg-2 control-label">Payment Term</label>
-                                                        <div class="col-lg-9">
-                                                            <?php 
-                                                                echo $this->Form->textarea('Company.payment_term', array(
-                                                                    'label' => false,
-                                                                    'class' => 'form-control required',
-                                                                    'empty' => '--Please Select Payment Term--'
-                                                                ));
-
-                                                            ?>
+                                                        <label class="col-lg-2 control-label">Terms</label>
+                                                            <div class="col-lg-8">
+                                                            <?php echo $this->Form->input('Quotation.payment_terms', array(
+                                                            'options' => array($paymentTermData),
+                                                            'type' => 'select',
+                                                            'label' => false,
+                                                            'class' => 'form-control required contacpersonlist2',
+                                                            'empty' => '---Select Payment Term---',
+                                                            )); 
+                                                        ?>
                                                         </div>
                                                     </div>
                                                    
