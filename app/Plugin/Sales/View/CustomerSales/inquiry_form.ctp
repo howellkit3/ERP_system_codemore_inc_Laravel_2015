@@ -10,7 +10,7 @@
 <script type="text/javascript">
 	    $("#CompanyInquiryFormForm").validate();
 </script>
-<?php echo $this->element('sales_option');?>
+<?php echo $this->element('sales_option');?> 
 
 <div class="row">
 	<div class="col-lg-12">
@@ -24,7 +24,8 @@
                         echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'customer_sales', 'action' => 'inquiry'),array('class' =>'btn btn-primary pull-right','escape' => false));
                     ?>
 					
-					<button style="margin-right:10px;" class="md-trigger btn btn-primary mrg-b-lg pull-right" data-modal="modal-1"><i class="fa fa-plus-circle fa-lg"></i> Add Customer</button>
+					<!-- <button style="margin-right:10px;" class="md-trigger btn btn-primary mrg-b-lg pull-right" data-modal="modal-1"><i class="fa fa-plus-circle fa-lg"></i> Add Customer</button> -->
+					<a data-toggle="modal" style="margin-right:10px;"  href="#myModal" class="btn btn-primary mrg-b-lg pull-right"><i class="fa fa-plus-circle fa-lg"></i> Add Customer</a>
 					<?php 
 						echo $this->element('customer_info');
 						echo $this->html->css(array('libs/nifty-component','Sales.customer'));

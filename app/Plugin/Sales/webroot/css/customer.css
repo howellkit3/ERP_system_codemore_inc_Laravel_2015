@@ -1,7 +1,7 @@
-.md-modal.md-effect-1 .main-box > h1 {
+.modal.fade.pop-oi .main-box > h1 {
 	font-size: 1.6em;
 }
-.md-modal.md-effect-1 label {
+.modal.fade.pop-oi label {
 	font-size: 0.7em;
 }
 .md-close.close {
@@ -9,6 +9,12 @@
 	right: 20px;
 	top: 23px;
 }
-.md-modal.md-effect-1 .lighter-color2 {
+.modal.fade.pop-oi .lighter-color2 {
 	font-size: 0.7em;
+}
+.modal-dialog {
+    width: 900px;
+    border-radius: 3px;
+     -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
 }

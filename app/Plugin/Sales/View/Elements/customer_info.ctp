@@ -1,7 +1,8 @@
-<div class="md-modal md-effect-1" id="modal-1" style="left: 40%;">
-        <div class="modal-dialog"  style="width:1000px;max-height: 500px;overflow-y: auto;">
+<!-- Standard Bootstrap Modal -->
+    <div class="modal fade pop-oi" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
+               <div class="modal-header">
                     <button class="md-close close">×</button>
                     <h1 class="modal-title" style="font-size: 1.6em;">Customer Information</h1>
                 </div>
@@ -434,7 +435,7 @@
                                                                 </div>
                                                                 <div class="col-xs-2 col-md-2 2">
                                                                     <?php 
-                                                                        echo $this->Html->link('Cancel ', array('controller' => 'customer_sales', 'action' => 'index'),array('class' =>'btn btn-primary','escape' => false));
+                                                                        echo $this->Html->link('Cancel ', array('controller' => 'customer_sales', 'action' => 'add'),array('class' =>'btn btn-primary','escape' => false));
                                                                     ?>
                                                                 </div>
                                                             </div>
@@ -451,6 +452,6 @@
                         </div>
                     </div>
                 </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->  
