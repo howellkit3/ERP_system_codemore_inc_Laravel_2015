@@ -113,9 +113,9 @@
 				                                'readonly' => 'readonly',
 				                                'label' => false,
 				                                'class' => 'form-control',
-				                                'value' => $companyData['Company']['payment_term']
+				                                'value' => $paymentTerm[$companyData['Company']['payment_term']]
 				                                 )); 
-
+											
 				                            ?>
 										</div>
 									</div>
