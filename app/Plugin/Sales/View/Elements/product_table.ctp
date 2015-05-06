@@ -63,6 +63,12 @@
                     <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Delete </font></span>
                     </span>', array('controller' => 'products', 'action' => 'deleteProduct',$ProductDataList['Product']['id']),array('class' =>' table-link','escape' => false,'title'=>'Delete Information','confirm' => 'Do you want to delete this Product ?'
                         ));
+
+                    echo $this->Html->link('<span class="fa-stack">
+                    <i class="fa fa-square fa-stack-2x"></i>
+                    <i class="fa fa-plus-square fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Specs </font></span>
+                    </span>', array('controller' => 'products', 'action' => 'specification',$ProductDataList['Product']['id']),array('class' =>' table-link','escape' => false,'title'=>'Add Specifications'
+                        ));
                 ?>
             </td>    
         </tr>

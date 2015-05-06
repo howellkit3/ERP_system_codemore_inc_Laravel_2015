@@ -156,9 +156,9 @@ jQuery(function($){
     {
         seconds = "0" + seconds;
     }
-
-    var code = year.concat(month,hour,minute,seconds);
-
+    var ranDom = Math.floor(Math.random()*9000) + 10000;
+    var code = year.concat(month,ranDom);
+    console.log(code);
 		if($(this).is( ":checked" ) == true){
 			
             var data = "PO-" + code;
