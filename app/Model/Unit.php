@@ -52,5 +52,14 @@ class Unit extends AppModel {
         if($this->save($unitData)){
             return $this->id;
         }
-    } 
+    }
+
+   public function getList($conditions = array(),$fields = array('id','unit')) {
+
+        return $this->find('list',array(
+            'conditions' => $conditions,
+            'fields'    => $fields
+            ));
+    }
+
 }
