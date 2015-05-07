@@ -59,7 +59,7 @@ class CreateOrderController extends SalesAppController {
 
 		$paymentTerm = $this->PaymentTermHolder->find('list',array('fields' => array('id','name')));
 
-		$this->Quotation->bind(array('QuotationItemDetail'));
+		$this->Quotation->bind(array('QuotationItemDetail','QuotationDetailOrder'));
 
 		$quotationData = $this->Quotation->find('first', array(
 												'conditions' => array(
@@ -67,14 +67,17 @@ class CreateOrderController extends SalesAppController {
 												)
 											));
 
-		$this->Company->bind(array('Address' => array('fields' => array('id','address1','address2'))));
+		$this->Company->bind(array('Address' => array('fields' => array('id','address1','address2'),'Product')));
+
 		$companyData = $this->Company->find('first', array(
 												'conditions' => array('Company.id' => $quotationData['Quotation']['company_id'])
 											));
 
 
-
-		$this->set(compact('quotationData','companyData','paymentTerm'));
+		$productData = $this->Company->Product->find('first',array('fields' => array('id','name'),
+										'conditions' => array('id' => $quotationData['QuotationDetailOrder'][0]['product_id'])));
+		
+		$this->set(compact('quotationData','companyData','paymentTerm','productData'));
 	}
 
 	public function find_item_detail($itemDetailId = null){
@@ -95,7 +98,7 @@ class CreateOrderController extends SalesAppController {
 		if ($this->request->is('post')) {
 
             if (!empty($this->request->data)) {
-            	//pr($this->request->data);die;
+            	
             	$this->ClientOrder->bind(array('ClientOrderDeliverySchedule','ClientOrderItemDetail'));
 
             	$this->id = $this->ClientOrder->saveClientOrder($this->request->data, $userData['User']['id']);

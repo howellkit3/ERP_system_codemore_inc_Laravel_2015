@@ -2,6 +2,7 @@
 <?php $this->Html->addCrumb('Quotation', array('controller' => 'quotation', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Create Order', array('controller' => 'quotation', 'action' => 'index',$quotationData['Quotation']['id'],$quotationData['Quotation']['uuid'])); ?>
 <?php echo $this->Html->script('Sales.inquiry');?>
+
 <?php echo $this->element('sales_option');?><br><br>
 
 <div class="row">
@@ -61,7 +62,7 @@
 										</div>
 									</div>
 
-									<div class="form-group">
+									<!-- <div class="form-group">
                                     	<label class="col-lg-2 control-label">Quotation Name</label>
 										<div class="col-lg-8">
 											<?php echo $this->Form->input('Quotation.name', array(
@@ -70,6 +71,21 @@
 				                                'readonly' => 'readonly',
 				                                'class' => 'form-control',
 				                                'value' => ucfirst($quotationData['Quotation']['name'])
+				                                 )); 
+
+				                            ?>
+										</div>
+									</div> -->
+
+									<div class="form-group">
+                                    	<label class="col-lg-2 control-label">Item Name</label>
+										<div class="col-lg-8">
+											<?php echo $this->Form->input('Product.name', array(
+												'type' => 'text',
+				                                'label' => false,
+				                                'readonly' => 'readonly',
+				                                'class' => 'form-control',
+				                                'value' => ucfirst($productData['Product']['name'])
 				                                 )); 
 
 				                            ?>
@@ -109,13 +125,20 @@
 									<div class="form-group">
                                     	<label class="col-lg-2 control-label">Payment Terms</label>
 										<div class="col-lg-8">
-											<?php echo $this->Form->input('ClientOrder.payment_terms', array(
+											<?php echo $this->Form->input('ClientOrder.payment_terms_field', array(
 												'type' => 'text',
 				                                'readonly' => 'readonly',
 				                                'label' => false,
 				                                'class' => 'form-control',
 				                                'value' => $paymentTerm[$companyData['Company']['payment_term']]
 				                                 )); 
+
+										 		echo $this->Form->input('ClientOrder.payment_terms', array(
+												'type' => 'text',
+				                                'hidden' => 'hidden',
+				                                'label' => false,
+				                                'value' => $companyData['Company']['payment_term']
+				                                 ));
 											
 				                            ?>
 										</div>
@@ -172,61 +195,6 @@
                                             ?>
 										</div>
 									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="main-box">
-						<div class="top-space"></div>
-						<div class="main-box-body clearfix">
-							<div class="main-box-body clearfix">
-								<div class="form-horizontal">
-								
-									<div class="form-group">
-                                    	<label class="col-lg-2 control-label">Schedule</label>
-										<div class="col-lg-8">
-											<?php 
-                                                echo $this->Form->input('ClientOrderDeliverySchedule.schedule',array( 
-                                                						'class' => 'form-control item_type datepick', 
-                                                    					'label' => false,
-                                                    					'readonly' => 'readonly',
-                                                    					'placeholder' => 'Schedule'  
-                                                    					));
-                                            ?>
-										</div>
-									</div>
-
-									<div class="form-group">
-                                    	<label class="col-lg-2 control-label">Location</label>
-										<div class="col-lg-8">
-											<?php 
-                                                echo $this->Form->input('ClientOrderDeliverySchedule.location',array( 
-                                                						'class' => 'form-control item_type ', 
-                                                    					'label' => false, 
-                                                    					'placeholder' => 'Location'
-                                                    					));
-                                            ?>
-										</div>
-									</div>
-
-                                    <div class="form-group">
-                                    	<label class="col-lg-2 control-label">Quantity</label>
-										<div class="col-lg-8">
-											<?php 
-                                                echo $this->Form->input('ClientOrderDeliverySchedule.quantity',array( 
-                                                						'class' => 'form-control item_type ', 
-                                                    					'label' => false, 
-                                                    					'placeholder' => 'Quantity'
-                                                    					));
-                                            ?>
-										</div>
-									</div>
-
 								</div>
 							</div>
 						</div>
@@ -408,6 +376,75 @@
 				</div>
 			</div>
 
+			<section class="cloneMe scheduleSection">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="main-box">
+							<div class="top-space"></div>
+							<div class="main-box-body clearfix">
+								<div class="main-box-body clearfix">
+									<div class="form-horizontal">
+									
+										<div class="form-group">
+	                                    	<label class="col-lg-2 control-label">Schedule</label>
+											<div class="col-lg-8">
+												<?php 
+	                                                echo $this->Form->input('ClientOrderDeliverySchedule.0.schedule',array( 
+	                                                						'class' => 'form-control item_type datepick', 
+	                                                    					'label' => false,
+	                                                    					'readonly' => 'readonly',
+	                                                    					'placeholder' => 'Schedule'  
+	                                                    					));
+	                                            ?>
+											</div>
+										</div>
+
+										<div class="form-group">
+	                                    	<label class="col-lg-2 control-label">Location</label>
+											<div class="col-lg-8">
+												<?php 
+	                                                echo $this->Form->input('ClientOrderDeliverySchedule.0.location',array( 
+	                                                						'class' => 'form-control item_type ', 
+	                                                    					'label' => false, 
+	                                                    					'placeholder' => 'Location'
+	                                                    					));
+	                                            ?>
+											</div>
+										</div>
+
+	                                    <div class="form-group">
+	                                    	<label class="col-lg-2 control-label">Quantity</label>
+											<div class="col-lg-8">
+												<?php 
+	                                                echo $this->Form->input('ClientOrderDeliverySchedule.0.quantity',array( 
+	                                                						'class' => 'form-control item_type ', 
+	                                                    					'label' => false, 
+	                                                    					'placeholder' => 'Quantity'
+	                                                    					));
+	                                            ?>
+											</div>
+										</div>
+
+										<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
+                                    
+
+                                        <div class="form-group">
+                                            <label for="inputPassword1" class="col-lg-2 control-label"></label>
+                                            <div class="col-lg-10">
+                                                <button type="button" data-model='Address' class="add-field table-link danger btn btn-success" onclick="cloneData('scheduleSection',this)"> <i class="fa fa-plus"></i></button>
+                                                <button type="button" class="remove-field btn btn-danger remove" onclick="removeClone('scheduleSection')"><i class="fa fa-minus"></i> </button>
+                                            </div>
+                                        </div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</section>
+
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="main-box">
@@ -450,14 +487,14 @@
 	</div>
 </div>
 <script>
-		
-		
-		jQuery(document).ready(function($){
-			//datepicker
-			$('.datepick').datepicker({
-				format: 'yyyy-mm-dd'
-			});
-			$("#QuotationIndexForm").validate();
+			
+	jQuery(document).ready(function($){
+		//datepicker
+		$('.datepick').datepicker({
+			format: 'yyyy-mm-dd'
 		});
-		
-	 </script>
+		jQuery('.remove').hide();
+		$("#QuotationIndexForm").validate();
+	});
+	
+ </script>

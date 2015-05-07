@@ -79,7 +79,65 @@
 											</div>
 	                                    <?php } ?>
 	                                    
-	                                     <div class="form-group">
+	                                    <div class="form-group" id="existing_items">
+											<label class="col-lg-2 control-label">Category</label>
+											<div class="col-lg-8">
+												<?php 
+	                                                echo $this->Form->input('Quotation.item_category_holder_id', 
+	                                                									array( 
+	                                                						'options' => array($itemCategoryData),		
+	                                                						'type' => 'select',
+	                                                						'class' => 'form-control item_type categorylist required', 
+	                                                    					'label' => false, 
+	                                                    					'placeholder' => 'Item',
+	                                                    					'empty' => '--Select Category--'
+	                                                    					));
+	                                            ?>
+											</div>
+										</div>
+
+										<div class="form-group" id="existing_items">
+											<label class="col-lg-2 control-label">Type</label>
+											<div class="col-lg-8">
+												<?php 
+												//pr($this->request->data);exit();
+													 echo $this->Form->input('Quotation.item_type_holder_id', 
+	                                                									array( 
+	                                                						//'value' => array($itemTypeData),
+	                                                						//'options' => array($itemTypeData),				
+	                                                						'type' => 'select',
+	                                                						'class' => 'form-control item_type jsoncat required', 
+	                                                    					'label' => false, 
+	                                                    					'id' => 'item_type_holder_id',
+	                                                    					'placeholder' => 'Item',
+	                                                    					'empty' => '--Select Type--'
+	                                                    					));
+	                                            ?>
+											</div>
+										</div>
+
+										<div class="form-group" id="existing_items">
+											<label class="col-lg-2 control-label">Item</label>
+											<div class="col-lg-8">
+												<?php 
+	                                                echo $this->Form->input('QuotationDetail.product_id', 
+	                                                									array( 
+	                                                						'options' => array($productData),				
+	                                                						'type' => 'select',
+	                                                						'class' => 'form-control item_type required', 
+	                                                    					'label' => false,
+	                                                    					//'id' => 'txtProduct',
+	                                                    					'id' => 'product_holder_id',
+	                                                    					'placeholder' => 'Item',
+	                                                    					'empty' => '--Select Item--'
+
+
+	                                                    					));
+	                                            ?>
+											</div>
+										</div>
+
+	                                    <div class="form-group">
 	                                    	<label class="col-lg-2 control-label">Company</label>
 											<div class="col-lg-8">
 												<?php echo $this->Form->input('Quotation.company_id', array(
@@ -115,61 +173,8 @@
 											</div>
 										</div>
 
-										<div class="form-group" id="existing_items">
-											<label class="col-lg-2 control-label">Category</label>
-											<div class="col-lg-8">
-												<?php 
-	                                                echo $this->Form->input('Quotation.item_category_holder_id', 
-	                                                									array( 
-	                                                						'options' => array($itemCategoryData),		
-	                                                						'type' => 'select',
-	                                                						'class' => 'form-control item_type categorylist required', 
-	                                                    					'label' => false, 
-	                                                    					'placeholder' => 'Item',
-	                                                    					'empty' => '--Select Category--'
-	                                                    					));
-	                                            ?>
-											</div>
-										</div>
 
-										<div class="form-group" id="existing_items">
-											<label class="col-lg-2 control-label">Type</label>
-											<div class="col-lg-8">
-												<?php 
-													 echo $this->Form->input('Quotation.item_type_holder_id', 
-	                                                									array( 
-	                                                						//'value' => array($itemTypeData),
-	                                                						//'options' => array($itemTypeData),				
-	                                                						'type' => 'select',
-	                                                						'class' => 'form-control item_type jsoncat required', 
-	                                                    					'label' => false, 
-	                                                    					'id' => 'item_type_holder_id',
-	                                                    					'placeholder' => 'Item',
-	                                                    					'empty' => '--Select Type--'
-	                                                    					));
-	                                            ?>
-											</div>
-										</div>
-
-										<div class="form-group" id="existing_items">
-											<label class="col-lg-2 control-label">Item</label>
-											<div class="col-lg-8">
-												<?php 
-	                                                echo $this->Form->input('QuotationDetail.product_id', 
-	                                                									array( 
-	                                                						'options' => array($productData),				
-	                                                						'type' => 'select',
-	                                                						'class' => 'form-control item_type required', 
-	                                                    					'label' => false,
-	                                                    					'id' => 'txtProduct',
-	                                                    					'id' => 'product_holder_id',
-	                                                    					'placeholder' => 'Item',
-	                                                    					'empty' => '--Select Item--'
-	                                                    					));
-	                                            ?>
-											</div>
-										</div>
-
+										
 	                                	<div class="form-group">
 	                                		<label class="col-lg-2 control-label">Size</label>
 											<div class="col-lg-8">
@@ -417,11 +422,13 @@
 											<label class="col-lg-2 control-label">Validity</label>
 											<div class="col-lg-8">
 												<?php 
+												
 		                                            echo $this->Form->input('Quotation.validity', array(
 		                                            								'type' => 'text',
 		                                            								'class' => 'form-control item_type datepick',
 								                                                    'label' => false,
-								                                                    'placeholder' => 'Validity'));
+								                                                    'placeholder' => 'Validity',
+								                                                    'value' => date("Y-m-d", strtotime($this->request->data['Quotation']['validity']))));
 	                                            ?>
 											</div>
 										</div>

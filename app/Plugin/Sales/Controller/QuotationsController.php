@@ -432,8 +432,8 @@ class QuotationsController extends SalesAppController {
 									'conditions' => array(
 										'User.id' => $userData['User']['id'] )
 								));
-		
 
+		
 		$this->set(compact('units','currencies','paymentTerm','companyData','companyId', 'quotationSize', 'quotationOption','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','salesStatus', 'productName','clientOrderCount','quotationDetailData'));
 		
 	}
@@ -453,10 +453,11 @@ class QuotationsController extends SalesAppController {
 
 		$this->layout = 'pdf';
 
-		$this->loadModel('Company');
+		// Configure::write('debug',2);
 
 		$userData = $this->Session->read('Auth');
 
+		// $userData = $this->Session->read('Auth');
 		$this->Company->bind(array('Address','Contact','Email','Inquiry','ContactPerson','Quotation'));
 
 		$companyData = $this->Company->find('list', array(
@@ -484,7 +485,7 @@ class QuotationsController extends SalesAppController {
 
 
 
-		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder','ProductDetail','ContactPerson'));
+		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder','ProductDetail'));
 
 		$quotation = $this->Quotation->find('first', array(
 														'conditions' => array( 
@@ -600,6 +601,7 @@ class QuotationsController extends SalesAppController {
 
 		$productData = $this->Product->find('list', array(
 															'fields' => array('id', 'name'),
+															//'conditions' => array('Product.id' => 'QuotationDetail.product_id'),
 															'order' => array('Product.name' => 'ASC')
 															));
 
@@ -645,6 +647,8 @@ class QuotationsController extends SalesAppController {
 		            }
 		
 		     }
+
+		    // pr($productData); exit;
 		$this->set(compact('itemDetailData','unitData','currencyData','companyData','customField','itemCategoryData', 'paymentTermData','itemTypeData','productData'));
 	}
 
@@ -804,7 +808,6 @@ class QuotationsController extends SalesAppController {
 			$email->from(Configure::read('defaultEmail'));
 
 			$email->to($to);
-
 			if (!empty($valid_email_cc)) {
 
 				$email->cc($valid_email_cc);
@@ -869,7 +872,7 @@ class QuotationsController extends SalesAppController {
 		$this->loadModel('Unit');
 		$units = $this->Unit->getList();
 
-		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder','ProductDetail','ContactPerson'));
+		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder','ProductDetail'));
 
 		$quotation = $this->Quotation->find('first', array(
 														'conditions' => array( 

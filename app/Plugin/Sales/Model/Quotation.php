@@ -64,6 +64,11 @@ class Quotation extends AppModel {
 					'dependent' => true
 				),
 				
+				'QuotationDetailOrder' => array(
+					'className' => 'Sales.QuotationDetail',
+					'foreignKey' => 'quotation_id',
+					'dependent' => true
+				),
 
 
 			),
@@ -80,7 +85,6 @@ class Quotation extends AppModel {
 					'foreignKey' => 'quotation_id',
 					'dependent' => true
 				),
-
 				'Product' => array(
 					'className' => 'Sales.Product',
 					'foreignKey' => false,
@@ -120,13 +124,13 @@ class Quotation extends AppModel {
 			),
 		),
 
-		'attention_details' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				'message' => 'Required fields.',
+		// 'attention_details' => array(
+		// 	'notEmpty' => array(
+		// 		'rule' => array('notEmpty'),
+		// 		'message' => 'Required fields.',
 				
-			),
-		),
+		// 	),
+		// ),
 
 		'company_id' => array(
 			'notEmpty' => array(
