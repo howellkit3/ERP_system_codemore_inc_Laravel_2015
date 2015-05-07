@@ -5,7 +5,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title">Send Via Email</h4>
                 </div>
-                   <?php echo $this->Form->create('Quotation',array('url'=>(array('controller' => 'quotations','action' => 'send_email')),'class' => 'form-horizontal'));?>
+                   <?php echo $this->Form->create('Quotation',array('url'=>(array('controller' => 'quotations','action' => 'send_email')),'class' => 'form-horizontal','id' => 'QuotationSendEmail'));?>
                 <div class="modal-body">
               
                      <?php echo $this->Form->input('id',array('type' => 'hidden','value' => $quotation['Quotation']['id'])); ?>
@@ -33,7 +33,7 @@
                              Emails are separated by comma </label>
                                 <?php 
                                     echo $this->Form->input('emails', array('type' => 'textarea',
-                                        'class' => 'form-control item_type required email-tag',
+                                        'class' => 'form-control item_type email-tag',
                                         'data-role' => 'tagsinput',
                                         'placeholder' => 'cc',
                                         'required' => true,

@@ -1,5 +1,35 @@
 jQuery(function($) {
+    function validateEmail(email) { 
+        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    }
 
+    $('body').on('submit','#QuotationSendEmail',function(e){
+        $('.form-group').removeClass('has-error');
+        $('.error.help-block').remove();
+        $error = false;
+        $error_message = '<span class="error help-block"><i class="icon-remove-sign"></i>This field is required</span>';
+        $error_message_email = '<span class="error help-block"><i class="icon-remove-sign"></i>Email is invalid</span>';
+        
+        $(this).find('.required').each(function(){
+
+            if ($(this).val() == '') {
+                $error = true;
+               
+                $(this).after( $error_message );
+                $(this).parents('.form-group').addClass('has-error');
+            } else if ($(this).hasClass('email') && validateEmail($(this).val()) != true) {
+                    $(this).after( $error_message_email );
+            }
+            else {
+                $(this).parents('.form-group').removeClass('has-error');
+            }
+
+        });
+
+        return false;
+
+    })
     $('#generatedPoNumber').hide();
     $('#back').hide();
     $('#checkBack').hide();
