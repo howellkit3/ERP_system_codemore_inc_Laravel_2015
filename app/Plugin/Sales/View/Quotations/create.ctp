@@ -432,7 +432,7 @@ jQuery(document).ready(function($){
 
 	 </script>
 
-<?php echo $this->Html->script('Sales.create_ajax');?>
+<?php  echo $this->Html->script('Sales.create_ajax');?>
 
 
 <?php } ?>
