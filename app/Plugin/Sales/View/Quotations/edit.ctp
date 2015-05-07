@@ -100,6 +100,7 @@
 											<label class="col-lg-2 control-label">Type</label>
 											<div class="col-lg-8">
 												<?php 
+												//pr($this->request->data);exit();
 													 echo $this->Form->input('Quotation.item_type_holder_id', 
 	                                                									array( 
 	                                                						//'value' => array($itemTypeData),
@@ -421,11 +422,13 @@
 											<label class="col-lg-2 control-label">Validity</label>
 											<div class="col-lg-8">
 												<?php 
+												
 		                                            echo $this->Form->input('Quotation.validity', array(
 		                                            								'type' => 'text',
 		                                            								'class' => 'form-control item_type datepick',
 								                                                    'label' => false,
-								                                                    'placeholder' => 'Validity'));
+								                                                    'placeholder' => 'Validity',
+								                                                    'value' => date("Y-m-d", strtotime($this->request->data['Quotation']['validity']))));
 	                                            ?>
 											</div>
 										</div>
