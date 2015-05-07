@@ -59,7 +59,7 @@ class CreateOrderController extends SalesAppController {
 
 		$paymentTerm = $this->PaymentTermHolder->find('list',array('fields' => array('id','name')));
 
-		$this->Quotation->bind(array('QuotationItemDetail'));
+		$this->Quotation->bind(array('QuotationItemDetail','QuotationDetail'));
 
 		$quotationData = $this->Quotation->find('first', array(
 												'conditions' => array(
@@ -67,13 +67,16 @@ class CreateOrderController extends SalesAppController {
 												)
 											));
 
+		$this->Company->bind(array('Product'));
+
 		$companyData = $this->Company->find('first', array(
 												'conditions' => array('Company.id' => $quotationData['Quotation']['company_id'])
 											));
-		//pr($quotationData);exit();
 
-
-		$this->set(compact('quotationData','companyData','paymentTerm'));
+		$productData = $this->Company->Product->find('first',array('fields' => array('id','name'),
+										'conditions' => array('id' => $quotationData['QuotationDetail'][0]['product_id'])));
+		
+		$this->set(compact('quotationData','companyData','paymentTerm','productData'));
 	}
 
 	public function find_item_detail($itemDetailId = null){

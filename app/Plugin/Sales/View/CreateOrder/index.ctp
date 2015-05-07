@@ -61,7 +61,7 @@
 										</div>
 									</div>
 
-									<div class="form-group">
+									<!-- <div class="form-group">
                                     	<label class="col-lg-2 control-label">Quotation Name</label>
 										<div class="col-lg-8">
 											<?php echo $this->Form->input('Quotation.name', array(
@@ -70,6 +70,21 @@
 				                                'readonly' => 'readonly',
 				                                'class' => 'form-control',
 				                                'value' => ucfirst($quotationData['Quotation']['name'])
+				                                 )); 
+
+				                            ?>
+										</div>
+									</div> -->
+
+									<div class="form-group">
+                                    	<label class="col-lg-2 control-label">Item Name</label>
+										<div class="col-lg-8">
+											<?php echo $this->Form->input('Product.name', array(
+												'type' => 'text',
+				                                'label' => false,
+				                                'readonly' => 'readonly',
+				                                'class' => 'form-control',
+				                                'value' => ucfirst($productData['Product']['name'])
 				                                 )); 
 
 				                            ?>

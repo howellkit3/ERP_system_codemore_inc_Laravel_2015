@@ -57,7 +57,12 @@ class Quotation extends AppModel {
 					'foreignKey' => 'quotation_id',
 					'dependent' => true
 				),
-				
+				'QuotationDetail' => array(
+					'className' => 'Sales.QuotationDetail',
+					'foreignKey' => 'quotation_id',
+					'dependent' => true
+				),
+
 
 
 			),
@@ -69,12 +74,7 @@ class Quotation extends AppModel {
 					'conditions' => array('Quotation.item_category_holder_id = ProductDetail.item_category_holder_id'),
 					'dependent' => false
 				),
-				'QuotationDetail' => array(
-					'className' => 'Sales.QuotationDetail',
-					'foreignKey' => 'quotation_id',
-					'dependent' => true
-				),
-
+				
 				'Product' => array(
 					'className' => 'Sales.Product',
 					'foreignKey' => false,
