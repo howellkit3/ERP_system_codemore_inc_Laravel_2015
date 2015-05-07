@@ -1,7 +1,7 @@
 	$('.contacpersonlist').change(function(){
 			$('.option-append-contact').remove();
 			var contactID = $(this).val();
-
+			//alert(contactID);
 			var selected = $('#quotations_attention_details').val();
 
 			$("#loading").clone().show().addClass("loading_event").insertAfter($(this)); //ajax loader
@@ -71,6 +71,7 @@ $('#item_type_holder_id').change(function(){
 		$.ajax({
 			url: serverPath + "sales/products/find_product/"+itemtypeid,
 			type: "get",
+			async: false,
 			dataType: "json",
 			success: function(data) {
 				
@@ -87,7 +88,8 @@ $('#item_type_holder_id').change(function(){
 					
 				});
 				 $('.loading_event').remove();
+				 $('#product_holder_id').change();	
 			
 		}
 		});		
-	});
+	}).trigger('change');

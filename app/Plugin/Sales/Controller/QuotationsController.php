@@ -594,6 +594,7 @@ class QuotationsController extends SalesAppController {
 
 		$productData = $this->Product->find('list', array(
 															'fields' => array('id', 'name'),
+															//'conditions' => array('Product.id' => 'QuotationDetail.product_id'),
 															'order' => array('Product.name' => 'ASC')
 															));
 
@@ -640,7 +641,7 @@ class QuotationsController extends SalesAppController {
 		
 		     }
 
-		   //  pr($productData); exit;
+		    // pr($productData); exit;
 		$this->set(compact('itemDetailData','unitData','currencyData','companyData','customField','itemCategoryData', 'paymentTermData','itemTypeData','productData'));
 	}
 

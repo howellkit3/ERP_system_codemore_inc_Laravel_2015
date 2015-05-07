@@ -121,14 +121,16 @@
 												<?php 
 	                                                echo $this->Form->input('QuotationDetail.product_id', 
 	                                                									array( 
-	                                                										
+	                                                						'options' => array($productData),				
 	                                                						'type' => 'select',
 	                                                						'class' => 'form-control item_type required', 
 	                                                    					'label' => false,
-	                                                    					'id' => 'txtProduct',
+	                                                    					//'id' => 'txtProduct',
 	                                                    					'id' => 'product_holder_id',
 	                                                    					'placeholder' => 'Item',
 	                                                    					'empty' => '--Select Item--'
+
+
 	                                                    					));
 	                                            ?>
 											</div>
