@@ -5,9 +5,7 @@
 <?php echo $this->Html->script('Sales.checkvat');?>
 <style type="text/css">#QuotationField12Description{background-color:#fff;}</style>
 <div style="clear:both"></div>
-
-
-        
+      
 <?php echo $this->element('sales_option');?><br><br>
 
 <?php if(!empty($inquiry['Inquiry']['id'])) {
