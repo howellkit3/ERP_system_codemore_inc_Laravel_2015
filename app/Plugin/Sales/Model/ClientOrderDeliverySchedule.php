@@ -36,14 +36,21 @@ class ClientOrderDeliverySchedule extends AppModel {
 
 	public function saveClientOrderDeliverySchedule($clientOrderData = null, $auth = null, $clientOrderId = null){
 		
-		$this->create();
+		foreach ($clientOrderData[$this->name] as $key => $clientOrderDetails)
+		{
+			$this->create();
 			
-		$clientOrderData['ClientOrderDeliverySchedule']['created_by'] = $auth;
-		$clientOrderData['ClientOrderDeliverySchedule']['modified_by'] = $auth;
-		$clientOrderData['ClientOrderDeliverySchedule']['client_order_id'] = $clientOrderId;
-		
-		$this->save($clientOrderData);
+			if (!empty($clientOrderData[$this->name])) {
+				
+				$clientOrderDetails['created_by'] = $auth;
+				$clientOrderDetails['modified_by'] = $auth;
+				$clientOrderDetails['client_order_id'] = $clientOrderId;	
+			
+				$this->save($clientOrderDetails);
+	
+			}
+				
+		}
 
-		return $this->id;
 	}
 }
