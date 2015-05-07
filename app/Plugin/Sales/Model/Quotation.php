@@ -36,6 +36,12 @@ class Quotation extends AppModel {
 					'foreignKey' => 'payment_term',
 					'dependent' => false
 					),
+				'ContactPerson' => array(
+					'className' => 'ContactPerson',
+					'foreignKey' => false,
+					'conditions' => array('ContactPerson.id = Quotation.attention_details'),
+					'dependent' => false
+					),
 
 			),
 			'hasMany' => array(
@@ -84,13 +90,13 @@ class Quotation extends AppModel {
 
 	public $validate = array(
 
-		'name' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				'message' => 'Required fields.',
+		// 'name' => array(
+		// 	'notEmpty' => array(
+		// 		'rule' => array('notEmpty'),
+		// 		'message' => 'Required fields.',
 				
-			),
-		),
+		// 	),
+		// ),
 
 		'item_type_holder_id' => array(
 			'notEmpty' => array(
