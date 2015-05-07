@@ -55,6 +55,8 @@ class QuotationsController extends SalesAppController {
 
         $quotationData = $this->paginate('Quotation');
 
+        pr($quotationData);exit();
+
 		$this->Company->bind(array('Inquiry'));
 
 		//set to cache in first load
