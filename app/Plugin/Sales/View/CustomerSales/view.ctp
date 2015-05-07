@@ -19,15 +19,7 @@
 						</header>
 						
 						<div class="main-box-body clearfix">
-							
-							<!-- <div class="profile-stars">
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star-o"></i>
-							</div> -->
-							
+
 							<div class="profile-since">
 								<?php echo date('M d, Y', strtotime($company['Company']['created'])); ?>
 							</div>
@@ -45,7 +37,7 @@
 								<div class="profile-details">
 									<ul class="fa-ul">
 									<i class="fa fa-external-link-square"></i>
-										<?php echo $company['Company']['website']; ?>
+										<?php echo $this->Html->link($company['Company']['website'],$company['Company']['website']); ?>
 									</ul>
 								</div>
 							<?php } ?>
@@ -54,7 +46,9 @@
 								<div class="profile-details">
 									<ul class="fa-ul">
 										<i class="fa fa-phone"></i>
-										<?php echo $company['Contact'][0]['number']; ?>
+										<?php foreach ($company['Contact'] as $key => $number) {
+											echo $number['number'];
+										}?>
 									</ul>
 								</div>
 							<?php } ?>
@@ -237,14 +231,18 @@
 						                         				<?php echo ucfirst($contactPersonData['ContactPerson']['position']); ?>
 						                         			</td>
 						                         			<td>
-						                         				<?php echo $contactPersonData['Email'][$key]['email'];?>
-						                         				<?php
-											                        // echo $this->Html->link(' View Details ', array('controller' => 'customer_sales', 'action' => 'person',$contactPerson['id']),array('class' =>'btn btn-primary','escape' => false));
-											                    ?>
+						                         			<?php foreach ($contactPersonData['Email'] as $key => $email) {
+						                         				
+						                         					echo $this->Text->autoLinkEmails($email['email']).'<br>';
+						                         			}?>
+						                         				
 						                         			</td>
 
 						                         			<td>
-						                         				<?php echo $contactPersonData['Contact'][$key]['number'];?>
+						                         				<?php foreach ($contactPersonData['Contact'] as $key => $number) {
+						                         					echo '<p>'.$number['number'].'<p>';
+						                         				}?>
+						                         				
 						                         			</td>
 
 						                         			<td>

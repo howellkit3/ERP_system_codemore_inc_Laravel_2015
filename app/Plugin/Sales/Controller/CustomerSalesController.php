@@ -191,6 +191,8 @@ class CustomerSalesController extends SalesAppController {
 
 		$this->loadModel('ContactPerson');
 
+		$this->loadModel('ItemCategoryHolder');
+
 		$paymentTermData = $this->PaymentTermHolder->find('list', array(
 															'fields' => array('id', 'name'),
 															'order' => array('PaymentTermHolder.name' => 'ASC')
@@ -210,7 +212,6 @@ class CustomerSalesController extends SalesAppController {
 	        'conditions' => array('ContactPerson.company_id' => $companyId)
 	    ));
 		 	
-		$this->loadModel('ItemCategoryHolder');
 		$this->ItemCategoryHolder->bind(array('ItemTypeHolder'));
 		$itemCategoryData = $this->ItemCategoryHolder->find('list', array(
 															'fields' => array('id', 'name'),
@@ -230,9 +231,9 @@ class CustomerSalesController extends SalesAppController {
 		// 													// 'order' => array('ContactPerson.lastname' => 'ASC')
 		// 													));
 
+		$this->loadModel('ItemCategoryHolder');
 		$companyData = $this->Company->getList(array('id','company_name'),array('Company.id' => $company['Company']['id']));
 
-	    //pr($company['Email']);exit();
 		$this->set(compact('paymentTermData','company','contactPerson','itemCategoryData','itemTypeData', 'companyData'));
 		
 	}

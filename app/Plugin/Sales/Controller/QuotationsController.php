@@ -89,11 +89,11 @@ class QuotationsController extends SalesAppController {
 
 		$userData = $this->Session->read('Auth');
 
-		$this->loadModel('PaymentTermHolder');
+		$this->loadModel('Sales.PaymentTermHolder');
 
 		$this->loadModel('ItemCategoryHolder');
 
-		$this->loadModel('ContactPerson');
+		$this->loadModel('Sales.ContactPerson');
 
 		$this->loadModel('Unit');
 
