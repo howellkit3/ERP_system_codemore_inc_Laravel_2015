@@ -62,4 +62,15 @@ class Unit extends AppModel {
             ));
     }
 
+    public function afterSave($data,$options = array()) {
+
+        Cache::delete('unitData');
+
+    }
+    public function afterDelete() {
+
+        Cache::delete('unitData');
+
+    }
+
 }

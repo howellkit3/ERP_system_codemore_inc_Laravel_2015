@@ -46,5 +46,17 @@ class Currency extends AppModel {
             ));
     }
 
+     public function afterSave($data,$options = array()) {
+
+        Cache::delete('currencyData');
+
+    }
+    public function afterDelete() {
+
+        Cache::delete('currencyData');
+
+    }
+
+
 
 }

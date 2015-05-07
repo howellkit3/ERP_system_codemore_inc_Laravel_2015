@@ -25,6 +25,8 @@ class QuotationsController extends SalesAppController {
 	    	    
 	public function index() {
 
+		$this->loadModel('Sales.Company');
+
 		$userData = $this->Session->read('Auth');
 
 		$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail','ProductDetail', 'Product'));
@@ -52,8 +54,6 @@ class QuotationsController extends SalesAppController {
         );
 
         $quotationData = $this->paginate('Quotation');
-
-        $this->loadModel('Sales.Company');
 
 		$this->Company->bind(array('Inquiry'));
 
@@ -101,33 +101,65 @@ class QuotationsController extends SalesAppController {
 
 		$this->loadModel('Sales.Company');
 
-		$itemCategoryData = $this->ItemCategoryHolder->find('list', array(
+		//set to cache in first load
+		$itemCategoryData = Cache::read('itemCategoryData');
+
+		if (!$itemCategoryData) {
+
+			$itemCategoryData = $this->ItemCategoryHolder->find('list', array(
 															'fields' => array('id', 'name'),
 															'order' => array('ItemCategoryHolder.name' => 'ASC')
 															));
 
+            Cache::write('itemCategoryData', $itemCategoryData);
+        }
+
 		$this->Company->bind(array('Contact','Email','Address','ContactPerson'));
 
-		$companyData = $this->Company->find('list', array(
-															'fields' => array('id', 'company_name'),
-															'order' => array('Company.company_name' => 'ASC')
-															));
+		//set to cache in first load
+		$companyData = Cache::read('companyData');
+		
+		if (!$companyData) {
+			
+			$companyData = $this->Company->find('list', array(
+     											'fields' => array( 
+     												'id','company_name')
+     										));
 
-		$unitData = $this->Unit->find('list', array(
-															'fields' => array('id', 'unit'),
+            Cache::write('companyData', $companyData);
+        }
+
+
+        //set to cache in first load
+		$unitData = Cache::read('unitData');
+		
+		if (!$unitData) {
+			
+			$unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
 															'order' => array('Unit.unit' => 'ASC')
 															));
 
-		$currencyData = $this->Currency->find('list', array(
-															'fields' => array('id', 'name'),
-															'order' => array('Currency.name' => 'ASC')
-															));
+            Cache::write('unitData', $unitData);
+        }
 
-		$paymentTermData = $this->PaymentTermHolder->find('list', array(
-															'fields' => array('id', 'name'),
-															'order' => array('PaymentTermHolder.name' => 'ASC')
-															));
 
+		   //set to cache in first load
+		$currencyData = Cache::read('currencyData');
+		
+		if (!$currencyData) {
+			
+			$currencyData =  $this->Currency->getList();
+
+            Cache::write('currencyData', $currencyData);
+        }
+
+        //set to cache in first load
+		$paymentTermData = Cache::read('paymentTerms');
+		
+		if (!$paymentTermData) {
+            $paymentTermData = $this->PaymentTermHolder->getList(null,array('id','name'));
+            Cache::write('paymentTerms', $paymentTermData);
+        }
 
 		if(!empty($inquiryId)){
 
@@ -146,18 +178,7 @@ class QuotationsController extends SalesAppController {
 
 		}else{
 
-			$userData = $this->Session->read('Auth');
-
-			$this->Company->bind(array('Contact','Email','Address','ContactPerson'));
-
-			$companyData = $this->Company->find('list', array(
-															'fields' => array('id', 'company_name'),
-															'order' => array('Company.company_name' => 'ASC')
-															));
-			$paymentTermData = $this->PaymentTermHolder->find('list', array(
-															'fields' => array('id', 'name'),
-															'order' => array('PaymentTermHolder.name' => 'ASC')
-															));
+			 $userData = $this->Session->read('Auth');
 		}
 
 		$this->set(compact('category','inquiryId','companyData','customField','itemCategoryData','paymentTermData','unitData','currencyData'));

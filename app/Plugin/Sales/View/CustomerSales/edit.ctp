@@ -74,7 +74,7 @@
                                         <label for="inputPassword1" class="col-lg-2 control-label">TIN</label>
                                         <div class="col-lg-9">
                                             <?php
-                                                echo $this->Form->input('Company.tin', array('class' => 'form-control col-lg-6  number','label' => false,'type' => 'text'));
+                                                echo $this->Form->input('Company.tin', array('class' => 'form-control col-lg-6 ','label' => false,'type' => 'text'));
                                             ?>
                                 
                                         </div>

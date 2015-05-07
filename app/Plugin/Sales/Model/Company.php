@@ -247,6 +247,11 @@ class Company extends AppModel {
 		Cache::delete('companyData');
 
 	}
+	public function afterDelete() {
+
+		Cache::delete('companyData');
+
+	}
 
 	public function getList($fields = array(),$conditions = array()) {
 
