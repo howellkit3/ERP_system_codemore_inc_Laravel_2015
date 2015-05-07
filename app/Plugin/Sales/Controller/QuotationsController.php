@@ -640,7 +640,7 @@ class QuotationsController extends SalesAppController {
 		
 		     }
 
-		     pr($productData); exit;
+		   //  pr($productData); exit;
 		$this->set(compact('itemDetailData','unitData','currencyData','companyData','customField','itemCategoryData', 'paymentTermData','itemTypeData','productData'));
 	}
 
