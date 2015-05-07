@@ -97,16 +97,17 @@
 	                                    	<label class="col-lg-2 control-label">Attention</label>
 											<div class="col-lg-8">
 												<?php 
-													 echo $this->Form->input('Quotation.attention_details',array('id' => 'quotations_attention_details','type' => 'hidden'));
+													echo $this->Form->input('Quotation.attention_details',array('id' => 'quotations_attention_details','type' => 'hidden'));
 	                                           
 		                                            echo $this->Form->input('Quotation.attention_details', array(
 		                                            								'type' => 'select',
 		                                            								'class' => 'form-control item_type',
 								                                                    'label' => false,
-								                                                    'placeholder' => 'Attention',
-								                                                    'empty' => '--Select Contact Person--',
 								                                                    'default' => $this->request->data['Quotation']['attention_details']
+								                                                    //'empty' => '--Select Contact Person--'
+								                                                    
 								                                                    ));
+		                                            //pr($this->request->data['Quotation']['attention_details']);exit();
 	                                            ?>
 
 											</div>
