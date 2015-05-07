@@ -65,18 +65,20 @@
 						                        'label' => false,
 						                        'id' => 'id'));
 	                                    ?>
-
-	                                    <div class="form-group">
-											<label class="col-lg-2 control-label">Name</label>
-											<div class="col-lg-8">
-												<?php 
-		                                            echo $this->Form->input('Quotation.name', array(
-		                                            								'class' => 'form-control item_type',
-								                                                    'label' => false,
-								                                                    'placeholder' => 'Quotation Name'));
-	                                            ?>
+	                                    <?php if(!empty($this->request->data['Quotation']['name'])){  ?>
+	                                    	<div class="form-group">
+												<label class="col-lg-2 control-label">Name</label>
+												<div class="col-lg-8">
+													<?php 
+			                                            echo $this->Form->input('Quotation.name', array(
+			                                            								'class' => 'form-control item_type',
+									                                                    'label' => false,
+									                                                    'placeholder' => 'Quotation Name'));
+		                                            ?>
+												</div>
 											</div>
-										</div>
+	                                    <?php } ?>
+	                                    
 	                                     <div class="form-group">
 	                                    	<label class="col-lg-2 control-label">Company</label>
 											<div class="col-lg-8">
