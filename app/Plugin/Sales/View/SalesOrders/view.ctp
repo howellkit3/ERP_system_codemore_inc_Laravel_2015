@@ -16,7 +16,7 @@
 					<h1 class="pull-left">
 						<?php
 							echo ucfirst($companyName[$clientOrderData['ClientOrder']['company_id']]);
-							
+							//pr($PaymentTermClientData); die;
 						?>
 					</h1>
 					<?php 
@@ -154,7 +154,6 @@
 					</div>
 				</div>
 			</div>
-
 			<?php echo $this->Form->create('ClientOrderDeliverySchedule',array('url'=>(array('controller' => 'sales_orders','action' => 'edit'))));?>
 
 			<div class="row">
@@ -168,7 +167,8 @@
 								<div class="form-horizontal">
 									<?php foreach ($clientOrderData['ClientOrderDeliverySchedule'] as $schedule):  ?>
 
-												<?php 
+
+									<?php 
 		                                            echo $this->Form->input('ClientOrderDeliverySchedule.id', array(
 		                                            								'class' => 'form-control item_type',
 		                                            								'id' => 'toBeEdited',
@@ -183,17 +183,9 @@
 		                                	<label class="col-lg-2 control-label">Schedule</label>
 											<div class="col-lg-8">
 												<?php 
-<<<<<<< HEAD
-		                                            echo $this->Form->input('ClientOrderDeliverySchedule.schedule', array(
-		                                            								'class' => 'form-control item_type',
-								                                                    'label' => false,
-								                                                    'type' => 'text',
-								                                                    'id' => 'toBeEdited',
-=======
 		                                              echo $this->Form->input('ClientOrder.schedule', array(
 		                                            								'class' => 'form-control item_type',
 								                                                    'label' => false,
->>>>>>> a0172d239bd14984f070d89231c7f9f89176ae41
 								                                                    'readonly' => 'readonly',
 								                                                    'value' => !empty($schedule['schedule']) ?
 								                                                    date('Y-m-d',strtotime($schedule['schedule'])) : ''	
@@ -208,11 +200,10 @@
 											<label class="col-lg-2 control-label">Location</label>
 											<div class="col-lg-8">
 												<?php 
-		                                            echo $this->Form->input('ClientOrderDeliverySchedule.location', array(
+		                                            echo $this->Form->input('ClientOrder.location', array(
 		                                            								'class' => 'form-control item_type',
 								                                                    'label' => false,
-								                                                    'id' => 'toBeEdited',
-								                                                  	'readonly' => 'readonly',
+								                                                    'readonly' => 'readonly',
 								                                                    'value' => $schedule['location']));
 		                                        ?>
 											</div>
@@ -223,24 +214,23 @@
 		                            		<label class="col-lg-2 control-label">Quantity</label>
 											<div class="col-lg-8">
 												<?php 
-		                                            echo $this->Form->input('ClientOrderDeliverySchedule.quantity', array(
+		                                            echo $this->Form->input('ClientOrder.quantity', array(
 		                                            								'class' => 'form-control item_type',
 								                                                    'label' => false,
-								                                                   // 'readonly' => 'readonly',
+								                                                    'readonly' => 'readonly',
 								                                                    'value' => $schedule['quantity']));
-		                                        ?> <br>
+		                                        ?>
+		                                        <br>
 
-		                                        <button type="button" class="btn btn-primary pull-left" style="margin-right:30px;" onclick = >Edit</button> 
+		                                        <button type="button" class="btn btn-primary pull-left" style="margin-right:13px;" onclick = >Edit</button> 
 
 												<button type="submit" class="btn btn-primary pull-left">Submit</button>
-
-											</div>	
+												  
+											</div>
 										</div>
-<<<<<<< HEAD
 
-=======
+									
 										<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
->>>>>>> a0172d239bd14984f070d89231c7f9f89176ae41
 									<?php endforeach; ?> 
 
 								</div>
@@ -249,75 +239,74 @@
 					</div>
 				</div>
 			</div>
-
-			<?php echo $this->Form->end(); ?>
+	<?php echo $this->Form->end(); ?>
 
 			 <div class="row">
 				<div class="col-lg-12">
-					<div class="main-box">
-						<header class="main-box-header clearfix">
-							<h2 class="pull-left">Quotation Details
-							
-							</h2>
-						</header>
-						<div class="main-box-body clearfix">
+						<div class="main-box">
+							<header class="main-box-header clearfix">
+								<h2 class="pull-left">Quotation Details
+								
+								</h2>
+							</header>
 							<div class="main-box-body clearfix">
-								<div class="form-horizontal">
-									<?php 
-	                                    echo $this->Form->input('Company.id', array('class' => 'form-control item_type',
-					                        'hidden' => 'hidden',
-					                        'readonly' => 'readonly',
-					                        'label' => false,
-					                        'id' => 'id'));
-	                                ?>
+								<div class="main-box-body clearfix">
+									<div class="form-horizontal">
+										<?php 
+		                                    echo $this->Form->input('Company.id', array('class' => 'form-control item_type',
+						                        'hidden' => 'hidden',
+						                        'readonly' => 'readonly',
+						                        'label' => false,
+						                        'id' => 'id'));
+		                                ?>
 
-	                                <div class="form-group">
-	                                	<label class="col-lg-2 control-label">Attention</label>
-										<div class="col-lg-8">
-											<?php 
-	                                            echo $this->Form->input('Quotation.name', array(
-	                                            								'class' => 'form-control item_type',
-							                                                    'label' => false,
-							                                                    'readonly' => 'readonly',
-							                                                    'value' => $quotationData['Quotation']['attention_details']));
-	                                        ?>
+		                                <div class="form-group">
+		                                	<label class="col-lg-2 control-label">Attention</label>
+											<div class="col-lg-8">
+												<?php 
+		                                            echo $this->Form->input('Quotation.name', array(
+		                                            								'class' => 'form-control item_type',
+								                                                    'label' => false,
+								                                                    'readonly' => 'readonly',
+								                                                    'value' => $quotationData['Quotation']['attention_details']));
+		                                        ?>
+											</div>
 										</div>
-									</div>
 
-									<div class="form-group" id="existing_items">
-										<label class="col-lg-2 control-label">Payment Terms</label>
-										<div class="col-lg-8">
-											<?php 
-											 
-	                                            echo $this->Form->input('PaymentTermHolder.name', array(
-	                                            								'class' => 'form-control item_type',
-							                                                    'label' => false,
-							                                                    'readonly' => 'readonly',
-							                                                    'value' =>  $paymentTermData[$quotationData['Quotation']['payment_terms']]));
-	                                        ?>
-										</div>									
-									</div>
-
-	                            	<div class="form-group">
-	                            		<label class="col-lg-2 control-label">Validity</label>
-										<div class="col-lg-8">
-											<?php 
-	                                            echo $this->Form->input('Quotation.validity_field', array(
-	                                            								'class' => 'form-control item_type',
-							                                                    'label' => false,
-							                                                    'readonly' => 'readonly',
-							                                                    'value' => date("Y-m-d", strtotime($quotationData['Quotation']['validity']))));
-
-
-	                                        ?>
-											  
+										<div class="form-group" id="existing_items">
+											<label class="col-lg-2 control-label">Payment Terms</label>
+											<div class="col-lg-8">
+												<?php 
+												 
+		                                            echo $this->Form->input('PaymentTermHolder.name', array(
+		                                            								'class' => 'form-control item_type',
+								                                                    'label' => false,
+								                                                    'readonly' => 'readonly',
+								                                                    'value' =>  $paymentTermData[$quotationData['Quotation']['payment_terms']]));
+		                                        ?>
+											</div>									
 										</div>
+
+		                            	<div class="form-group">
+		                            		<label class="col-lg-2 control-label">Validity</label>
+											<div class="col-lg-8">
+												<?php 
+		                                            echo $this->Form->input('Quotation.validity_field', array(
+		                                            								'class' => 'form-control item_type',
+								                                                    'label' => false,
+								                                                    'readonly' => 'readonly',
+								                                                    'value' => date("Y-m-d", strtotime($quotationData['Quotation']['validity']))));
+
+
+		                                        ?>
+												  
+											</div>
+										</div>
+										
 									</div>
-									
 								</div>
 							</div>
 						</div>
-					</div>
 				</div>
 			</div>
 
@@ -494,6 +483,8 @@
 							                                                    'readonly' => 'readonly',
 							                                                    'value' => $quotationItemDetail['QuotationItemDetail']['material']));
 	                                        ?>
+
+	                                        
 											  
 										</div>
 									</div>
@@ -515,13 +506,4 @@
 		
 	});
 
-</script>
-
-
-<script>
-$(document).ready(function(){
-    $("button").click(function(){
-        $(#toBeEdited).removeAttr("readonly");
-    });
-});
 </script>
