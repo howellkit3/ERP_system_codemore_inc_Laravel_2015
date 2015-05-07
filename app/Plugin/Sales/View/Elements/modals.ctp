@@ -168,7 +168,7 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="">
+                    <div class="main" style="padding:5px">
                         <div class="top-space"></div>
                         <div class="main-box-body clearfix">
                             <div class="main-box-body clearfix">
