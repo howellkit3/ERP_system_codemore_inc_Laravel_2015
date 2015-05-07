@@ -397,7 +397,7 @@ class QuotationsController extends SalesAppController {
 																)
 															));
 		
-		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder','ProductDetail', 'Product','ContactPerson'));
+		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder','ProductDetail', 'Product'));
 
 
 		$quotation = $this->Quotation->find('first', array(
@@ -425,6 +425,7 @@ class QuotationsController extends SalesAppController {
 									'conditions' => array(
 										'User.id' => $userData['User']['id'] )
 								));
+
 		
 		$this->set(compact('units','currencies','paymentTerm','companyData','companyId', 'quotationSize', 'quotationOption','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','salesStatus', 'productName','clientOrderCount','quotationDetailData'));
 		
@@ -445,10 +446,11 @@ class QuotationsController extends SalesAppController {
 
 		$this->layout = 'pdf';
 
-		$this->loadModel('Company');
+		// Configure::write('debug',2);
 
 		$userData = $this->Session->read('Auth');
 
+		// $userData = $this->Session->read('Auth');
 		$this->Company->bind(array('Address','Contact','Email','Inquiry','ContactPerson','Quotation'));
 
 		$companyData = $this->Company->find('list', array(
@@ -476,7 +478,7 @@ class QuotationsController extends SalesAppController {
 
 
 
-		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder','ProductDetail','ContactPerson'));
+		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder','ProductDetail'));
 
 		$quotation = $this->Quotation->find('first', array(
 														'conditions' => array( 
@@ -773,9 +775,7 @@ class QuotationsController extends SalesAppController {
 
 		$email = new CakeEmail('mandrill');
 
-		$email->from(Configure::read('defaultEmail'));
-
-		$email->to($dest);
+		$email->to(Configure::read('defaultEmail'));
 
 		$email->subject('Quotation form for'.$quoteName['Quotation']['name']);
 
@@ -834,7 +834,7 @@ class QuotationsController extends SalesAppController {
 		$this->loadModel('Unit');
 		$units = $this->Unit->getList();
 
-		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder','ProductDetail','ContactPerson'));
+		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder','ProductDetail'));
 
 		$quotation = $this->Quotation->find('first', array(
 														'conditions' => array( 
