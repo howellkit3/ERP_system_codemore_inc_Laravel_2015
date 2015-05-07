@@ -208,7 +208,9 @@
 												  
 											</div>
 										</div>
+										<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
 									<?php endforeach; ?> 
+
 								</div>
 							</div>
 						</div>
