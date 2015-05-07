@@ -274,6 +274,7 @@
 									                                                    'type' => 'text',
 									                                                    'label' => false,
 									                                                    'value' => $itemDetailDetails['QuotationItemDetail']['vat_price'],
+									                                                    'id' => 'QuotationItemDetail'.$key.'VatPrice',
 									                                                    'name' => 'data[QuotationDetail]['.$key.'][vat_price]',
 									                                                    'readonly' => 'readonly',
 									                                                    'placeholder' => 'Vat Price'));
@@ -285,9 +286,11 @@
 											<div class="form-group">
 												<label class="col-lg-2 control-label"></label>
 												<div class="col-lg-8">
-												<?php if(!empty($itemDetailDetails['QuotationItemDetail']['vat_price'])){ ?>
+												<?php if(!empty($itemDetailDetails['QuotationItemDetail']['vat_price'])){ 
+													$ckeckName = 'data[QuotationDetail]['.$key.'][vat_price]';
+													?>
 
-													<input id="checkbox-1" class="checkvat checkbox-nice" type="checkbox" name="'[QuotationItemDetail][0][vat_price]'" rel=".12" onclick="vatprice('quotationItemDetail',this)" checked="checked">
+													<input id="checkbox-1" class="checkvat checkbox-nice" type="checkbox" name="<?php echo $ckeckName; ?>" rel=".12" onclick="vatprice('quotationItemDetail',this)" checked="checked">
 
 												<?php } else { ?>
 

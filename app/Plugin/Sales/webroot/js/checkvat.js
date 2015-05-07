@@ -1,5 +1,5 @@
 function vatprice(whatsection, thisElement){
-   
+   console.log(thisElement);
     var value = $('.' + whatsection);
 
     value = findValue(value, whatsection);
@@ -29,7 +29,7 @@ function vatprice(whatsection, thisElement){
 } 
 
 function findValue($form, thisElement){
-    
+    console.log(thisElement);
     var $value = $form.find('.unitprice').val();
         
     if ($form.find('.unitprice').val() == ''){
@@ -44,21 +44,38 @@ function findValue($form, thisElement){
         var index = 0;
         var total = 0;
 
-        if($form.find('.checkvat').is( ":checked" ) == true){
-            console.log('checked');    
-            sum = $value * .12;
-            total = (sum + parseFloat($value));
+        $("body").on('change','.checkvat', function(e){
 
-            $form.find('.vatprice').val(total);
+             if ($(this).is(":checked")) {
+
+                sum = $value * .12;
+                total = (sum + parseFloat($value));
+                //console.log($(this).parents('.row').find('.vatprice').attr('id'));
+                $(this).parents('.row').find('.vatprice').val(total);
+
+             } else {
+                total = (parseFloat($value) - sum);
+                //console.log($(this).parents('.row').find('.vatprice').attr('id'));
+                $(this).parents('.row').find('.vatprice').val(''); 
+             }
+
+        });
+
+        // if($form.find('.checkvat').is( ":checked" ) == true){
+        //     console.log('checked');    
+        //     sum = $value * .12;
+        //     total = (sum + parseFloat($value));
+
+        //     $form.find('.vatprice').val(total);
            
-        }
-        if($form.find('.checkvat').is( ":checked" ) == false){
-             console.log('not checked');     
-            total = (parseFloat($value) - sum);
+        // }
+        // if($form.find('.checkvat').is( ":checked" ) == false){
+        //      console.log('not checked');     
+        //     total = (parseFloat($value) - sum);
             
-            $form.find('.vatprice').val('');
+        //     $form.find('.vatprice').val('');
            
-        }
+        // }
     }
 
      
