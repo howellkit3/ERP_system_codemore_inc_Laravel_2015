@@ -183,13 +183,22 @@
 		                                	<label class="col-lg-2 control-label">Schedule</label>
 											<div class="col-lg-8">
 												<?php 
+<<<<<<< HEAD
 		                                            echo $this->Form->input('ClientOrderDeliverySchedule.schedule', array(
 		                                            								'class' => 'form-control item_type',
 								                                                    'label' => false,
 								                                                    'type' => 'text',
 								                                                    'id' => 'toBeEdited',
+=======
+		                                              echo $this->Form->input('ClientOrder.schedule', array(
+		                                            								'class' => 'form-control item_type',
+								                                                    'label' => false,
+>>>>>>> a0172d239bd14984f070d89231c7f9f89176ae41
 								                                                    'readonly' => 'readonly',
-								                                                    'value' => date("Y-m-d", strtotime($schedule['schedule']))));
+								                                                    'value' => !empty($schedule['schedule']) ?
+								                                                    date('Y-m-d',strtotime($schedule['schedule'])) : ''	
+
+								                                                   ));
 		                                        ?>
 		                                        
 											</div>
@@ -227,8 +236,13 @@
 
 											</div>	
 										</div>
+<<<<<<< HEAD
 
+=======
+										<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
+>>>>>>> a0172d239bd14984f070d89231c7f9f89176ae41
 									<?php endforeach; ?> 
+
 								</div>
 							</div>
 						</div>

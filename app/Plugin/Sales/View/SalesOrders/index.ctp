@@ -11,11 +11,8 @@
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
             <header class="main-box-header clearfix">
-
                 <h2 class="pull-left"><b>Client Order List</b></h2>
-                
             </header>
-            
             <div class="main-box-body clearfix">
                 <div class="table-responsive">
                     <table class="table table-striped table-hover">

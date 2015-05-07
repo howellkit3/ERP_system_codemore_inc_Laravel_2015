@@ -66,8 +66,7 @@ class CreateOrderController extends SalesAppController {
 													'id' => $quotationId
 												)
 											));
-
-		$this->Company->bind(array('Product'));
+		$this->Company->bind(array('Address' => array('fields' => array('id','address1','address2'))));
 
 		$companyData = $this->Company->find('first', array(
 												'conditions' => array('Company.id' => $quotationData['Quotation']['company_id'])

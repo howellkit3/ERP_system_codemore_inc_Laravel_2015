@@ -1,7 +1,10 @@
 <?php $this->Html->addCrumb('Sales', array('controller' => 'customer_sales', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Quotation', array('controller' => 'quotations', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('View', array('controller' => 'quotations', 'action' => 'view',$quotation['Quotation']['id'])); ?>
-<?php //echo $this->Html->script('Sales.inquiry');?>
+<?php echo $this->Html->script('Sales.custom');?>
+<?php echo $this->Html->css('redactor.css?v='.filemtime('css/redactor.css')); ?>
+<?php echo $this->Html->script('redactor/redactor/redactor_new.js?v='.filemtime('js/redactor/redactor/redactor_new.js'));?>
+
 <div style="clear:both"></div>
 
 
@@ -14,10 +17,10 @@
 
 		if($clientOrderCount == 0){
 
-			if ($quotation['Quotation']['status'] == 1) {
-				
-			echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Create Order ', array('controller' => 'create_order', 'action' => 'index',$quotation['Quotation']['id'],$quotation['Quotation']['uuid']),array('class' =>'btn btn-primary pull-right','escape' => false)) ;
-			}
+			$status = (!$this->Status->isQuotationApproved($quotation['Quotation']['status'])) ? 'disabled' : '';
+	
+			echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Create Order ', array('controller' => 'create_order', 'action' => 'index',$quotation['Quotation']['id'],$quotation['Quotation']['uuid']),array('class' =>'btn btn-primary pull-right '.$status,'escape' => false)) ;
+		
 
 			
 		}else{
@@ -30,8 +33,9 @@
     	
 		echo $this->Html->link('<i class="fa fa-share fa-lg"></i> Submit Quotation', array('controller' => 'quotations', 'action' => 'drafts',$quotation['Quotation']['id']),array('class' =>'btn btn-success pull-right','escape' => false)) ;
 				
-    	
-		echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit ', array('controller' => 'quotations', 'action' => 'edit',$quotation['Quotation']['id'],$companyId),array('class' =>'btn btn-info pull-right','escape' => false)) ;
+    	$status = ($this->Status->isQuotationApproved($quotation['Quotation']['status'])) ? 'disabled' : '';
+
+		echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit ', array('controller' => 'quotations', 'action' => 'edit',$quotation['Quotation']['id'],$companyId),array('class' =>'btn btn-info pull-right '. $status ,'escape' => false)) ;
     	
     	echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array(
 		        	'controller' => 'quotations', 
@@ -40,15 +44,12 @@
 		        	$quotation['Quotation']['id'],$companyId),
 		        	array('class' =>'btn btn-info pull-right','escape' => false,'target' => '_blank'));
 
-    	if(!empty($contactInfo['Email'][0]['email'])){
-    		
-    		echo $this->Html->link('<i class="fa fa-envelope-o fa-lg"></i> Send Via Email ', array(
-		        	'controller' => 'quotations', 
-		        	'action' => 'send_email',$contactInfo['Email'][0]['email'],
-		        	$quotation['Quotation']['id'],$companyId),
-		        	array('class' =>'btn btn-info pull-right','escape' => false,'target' => '_blank'));
-    	
-    	}
+    	$status = (!$this->Status->isQuotationApproved($quotation['Quotation']['status'])) ? 'disabled' : '';
+
+    	echo $this->Html->link('<i class="fa fa-envelope-o fa-lg"></i> Send Via Email ','#QuotationEmail',
+		        	array('data-toggle' => 'modal', 'class' =>'btn btn-info pull-right '.$status,'escape' => false,'target' => '_blank'));
+    				
+    
     	
 
     	 // echo $this->Html->link('<i class="fa fa-times fa-lg"></i> Terminate ', array('controller' => 'quotations', 'action' => 'status',3,$quotation['Quotation']['id']),array('class' =>'btn btn-danger pull-right','escape' => false));
@@ -155,31 +156,24 @@
 													<?php
 													 echo !empty($units[$itemDetail['quantity_unit_id']]) ? $units[$itemDetail['quantity_unit_id']] : '' ?> 
 												</div>
-
 											</td>	
 											
 										</tr>
-
-										<tr >
-											
+										<tr>
 											<td height ="35px" valign ="top" class = "column4 col-md-8">
 												<div class="col-lg-12">
-													<?php echo $itemDetail['unit_price'];?> 
+													<?php echo (!empty($itemDetail['unit_price']) && is_numeric($itemDetail['unit_price'])) ? number_format($itemDetail['unit_price'],4) : '';?> 
 													<?php
 													 echo !empty($currencies[$itemDetail['unit_price_currency_id']]) ? $currencies[$itemDetail['unit_price_currency_id']] : '' ?> 
 												</div>
 											</td>
-											
 										</tr>
-
 										<tr>
-											
 											<td height ="40px" class ="column2 col-md-8">
 												<div class="col-lg-12">
 													<?php echo $itemDetail['vat_price'];?> 
 												</div>
 											</td>
-											
 										</tr>
 
 										<tr>
@@ -334,3 +328,4 @@
 		</div>
 	</div>	
 </div>
+<?php echo $this->element('send_email',array('quotation' => $quotation,'user' => $user )); ?>

@@ -130,7 +130,7 @@
 				                                'readonly' => 'readonly',
 				                                'label' => false,
 				                                'class' => 'form-control',
-				                                'value' => $paymentTerm[$companyData['Company']['payment_term']]
+				                                'value' => $paymentTerm[$quotationData['Quotation']['payment_terms']]
 				                                 )); 
 
 										 		echo $this->Form->input('ClientOrder.payment_terms', array(
@@ -406,7 +406,8 @@
 	                                                echo $this->Form->input('ClientOrderDeliverySchedule.0.location',array( 
 	                                                						'class' => 'form-control item_type ', 
 	                                                    					'label' => false, 
-	                                                    					'placeholder' => 'Location'
+	                                                    					'placeholder' => 'Location',
+	                                                    					'value' => !empty($companyData['Address'][0]['address1']) ? $companyData['Address'][0]['address1'] : ''
 	                                                    					));
 	                                            ?>
 											</div>
@@ -417,7 +418,7 @@
 											<div class="col-lg-8">
 												<?php 
 	                                                echo $this->Form->input('ClientOrderDeliverySchedule.0.quantity',array( 
-	                                                						'class' => 'form-control item_type ', 
+	                                                						'class' => 'form-control item_type quantityLimit', 
 	                                                    					'label' => false, 
 	                                                    					'placeholder' => 'Quantity'
 	                                                    					));
