@@ -453,12 +453,14 @@ class QuotationsController extends SalesAppController {
 
 		$this->layout = 'pdf';
 
+		$this->loadModel('Sale.Company');
+
 		// Configure::write('debug',2);
 
 		$userData = $this->Session->read('Auth');
 
 		// $userData = $this->Session->read('Auth');
-		$this->Company->bind(array('Address','Contact','Email','Inquiry','ContactPerson','Quotation'));
+		$this->Company->bind(array('Address','Contact','Email','Inquiry','Quotation'));
 
 		$companyData = $this->Company->find('list', array(
      											'fields' => array( 
@@ -485,7 +487,7 @@ class QuotationsController extends SalesAppController {
 
 
 
-		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder','ProductDetail'));
+		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder','ProductDetail','ContactPerson'));
 
 		$quotation = $this->Quotation->find('first', array(
 														'conditions' => array( 
@@ -815,6 +817,8 @@ class QuotationsController extends SalesAppController {
 			
 			$email->subject($this->request->data['Quotation']['subject']);
 
+			$email->message($this->request->data['Quotation']['message']);
+
 			$filename =  $this->request->data['Quotation']['pdf'];
 			$attachment = $this->_createPdf($qouteId,$companyId,$filename);
 
@@ -848,7 +852,7 @@ class QuotationsController extends SalesAppController {
 		$this->loadModel('Sales.Company');
 
 		// $userData = $this->Session->read('Auth');
-		$this->Company->bind(array('Address','Contact','Email','Inquiry','ContactPerson','Quotation'));
+		$this->Company->bind(array('Address','Contact','Email','Inquiry','Quotation'));
 
 		$companyData = $this->Company->find('list', array(
      											'fields' => array( 
@@ -872,7 +876,7 @@ class QuotationsController extends SalesAppController {
 		$this->loadModel('Unit');
 		$units = $this->Unit->getList();
 
-		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder','ProductDetail'));
+		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder','ProductDetail','ContactPerson'));
 
 		$quotation = $this->Quotation->find('first', array(
 														'conditions' => array( 

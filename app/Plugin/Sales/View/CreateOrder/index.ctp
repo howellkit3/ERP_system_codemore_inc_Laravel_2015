@@ -130,7 +130,7 @@
 				                                'readonly' => 'readonly',
 				                                'label' => false,
 				                                'class' => 'form-control',
-				                                'value' => $paymentTerm[$companyData['Company']['payment_term']]
+				                                'value' => $paymentTerm[$quotationData['Quotation']['payment_terms']]
 				                                 )); 
 
 										 		echo $this->Form->input('ClientOrder.payment_terms', array(
