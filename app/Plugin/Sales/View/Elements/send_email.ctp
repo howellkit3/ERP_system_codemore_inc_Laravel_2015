@@ -64,7 +64,7 @@
                                 <?php 
                                     $message = '';
                                     echo $this->Form->input('message', array('type' => 'textarea',
-                                        'class' => 'form-control item_type required number',
+                                        'class' => 'form-control item_type required redactor',
                                         'placeholder' => 'Message', 
                                         'required' => true,
                                         'label' => false));
