@@ -118,13 +118,13 @@ class Quotation extends AppModel {
 			),
 		),
 
-		'attention_details' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				'message' => 'Required fields.',
+		// 'attention_details' => array(
+		// 	'notEmpty' => array(
+		// 		'rule' => array('notEmpty'),
+		// 		'message' => 'Required fields.',
 				
-			),
-		),
+		// 	),
+		// ),
 
 		'company_id' => array(
 			'notEmpty' => array(

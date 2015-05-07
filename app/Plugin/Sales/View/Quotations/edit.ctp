@@ -121,7 +121,7 @@
 												<?php 
 	                                                echo $this->Form->input('QuotationDetail.product_id', 
 	                                                									array( 
-	                                                						'options' => array($productData),				
+	                                                										
 	                                                						'type' => 'select',
 	                                                						'class' => 'form-control item_type required', 
 	                                                    					'label' => false,

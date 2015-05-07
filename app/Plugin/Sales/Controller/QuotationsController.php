@@ -397,7 +397,7 @@ class QuotationsController extends SalesAppController {
 																)
 															));
 		
-		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder','ProductDetail', 'Product'));
+		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder','ProductDetail', 'Product','ContactPerson'));
 
 
 		$quotation = $this->Quotation->find('first', array(
@@ -639,6 +639,8 @@ class QuotationsController extends SalesAppController {
 		            }
 		
 		     }
+
+		   //  pr($productData); exit;
 		$this->set(compact('itemDetailData','unitData','currencyData','companyData','customField','itemCategoryData', 'paymentTermData','itemTypeData','productData'));
 	}
 

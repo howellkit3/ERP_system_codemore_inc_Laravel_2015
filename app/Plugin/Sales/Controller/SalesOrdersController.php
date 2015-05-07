@@ -45,11 +45,11 @@ class SalesOrdersController extends SalesAppController {
 
 	public function view($clientOrderId = null){
 
+		$this->loadModel('PaymentTermHolder');
+
 		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail'));
 
 		$this->ClientOrder->bind(array('ClientOrderDeliverySchedule'));
-
-		$this->loadModel('PaymentTermHolder');
 
 		$clientOrderData = $this->ClientOrder->find('first',array('conditions' => array('ClientOrder.id' => $clientOrderId)));
 
