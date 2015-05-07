@@ -19,7 +19,8 @@ jQuery(function($) {
                 $(this).after( $error_message );
                 $(this).parents('.form-group').addClass('has-error');
             } else if ($(this).hasClass('email') && validateEmail($(this).val()) != true) {
-                    $(this).after( $error_message_email );
+                $error = true;
+                $(this).after( $error_message_email );
             }
             else {
                 $(this).parents('.form-group').removeClass('has-error');
@@ -27,8 +28,10 @@ jQuery(function($) {
 
         });
 
-        return false;
-
+        if ($error) {
+                e.preventDefault();
+                return false;
+        }
     })
     $('#generatedPoNumber').hide();
     $('#back').hide();
