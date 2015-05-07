@@ -359,7 +359,9 @@ class CustomerSalesController extends SalesAppController {
 
 		$this->Company->bind(array('Contact','Email','Address','ContactPerson'));
 
-		$companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')));
+		$companyData = $this->Company->find('list', array('fields' => array('id', 'company_name'),
+															'order' => array('Company.company_name' => 'ASC')
+															));
 
 		$this->set(compact('paymentTermData','companyData')); 
 		

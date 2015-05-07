@@ -212,6 +212,7 @@
 									                                                    'data' => 'unitprice',
 									                                                    'type' => 'text',
 									                                                    'label' => false,
+									                                                    'data-section' => 'quotationItemDetail',
 									                                                    'placeholder' => 'Unit Price'));
 		                                            ?>
 													
@@ -250,7 +251,7 @@
 												<div class="col-lg-8">
 													<!-- <div class="checkbox-nice"> -->
 														
-														<input id="checkbox-1" class="checkvat checkbox-nice" type="checkbox" name="[QuotationItemDetail][0][vat_price]" rel=".12" onclick="vatprice('quotationItemDetail',this)">
+														<input id="checkbox-1" class="checkvat checkbox-nice vat-price" type="checkbox" data-section='quotationItemDetail' name="[QuotationItemDetail][0][vat_price]" rel=".12">
 														<font color="gray"> Click to Compute the Unit Price with VAT </font>
 														<!-- <label><font color="gray"> Click to Compute the Unit Price with VAT </font></label> -->
 													<!-- </div> -->
