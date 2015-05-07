@@ -84,13 +84,13 @@ class Quotation extends AppModel {
 
 	public $validate = array(
 
-		'name' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				'message' => 'Required fields.',
+		// 'name' => array(
+		// 	'notEmpty' => array(
+		// 		'rule' => array('notEmpty'),
+		// 		'message' => 'Required fields.',
 				
-			),
-		),
+		// 	),
+		// ),
 
 		'item_type_holder_id' => array(
 			'notEmpty' => array(

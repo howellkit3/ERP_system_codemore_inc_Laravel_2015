@@ -771,7 +771,9 @@ class QuotationsController extends SalesAppController {
 
 		$email = new CakeEmail('mandrill');
 
-		$email->to(Configure::read('defaultEmail'));
+		$email->from(Configure::read('defaultEmail'));
+
+		$email->to($dest);
 
 		$email->subject('Quotation form for'.$quoteName['Quotation']['name']);
 
