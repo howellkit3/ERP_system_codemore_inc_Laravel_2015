@@ -101,7 +101,7 @@
 					<div class="form-group">
 						<div class="col-lg-1"></div>
 						<div class="col-lg-10">
-							Dear :&nbsp; <?php echo ucfirst($quotation['Quotation']['attention_details']) ?>&nbsp;
+							Dear :&nbsp; <?php echo ucfirst($quotation['ContactPerson']['firstname']).' '.ucfirst($quotation['ContactPerson']['lastname']) ?>&nbsp;
 							
 						</div>
 					</div>

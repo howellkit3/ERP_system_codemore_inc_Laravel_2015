@@ -36,6 +36,12 @@ class Quotation extends AppModel {
 					'foreignKey' => 'payment_term',
 					'dependent' => false
 					),
+				'ContactPerson' => array(
+					'className' => 'ContactPerson',
+					'foreignKey' => false,
+					'conditions' => array('ContactPerson.id = Quotation.attention_details'),
+					'dependent' => false
+					),
 
 			),
 			'hasMany' => array(
