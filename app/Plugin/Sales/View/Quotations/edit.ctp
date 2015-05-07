@@ -246,6 +246,7 @@
 									                                                    'label' => false,
 									                                                    'value' => $itemDetailDetails['QuotationItemDetail']['unit_price'],
 									                                                    'name' => 'data[QuotationDetail]['.$key.'][unit_price]',
+									                                                    'data-section' => 'quotationItemDetail',
 									                                                    'placeholder' => 'Unit Price'));
 		                                            ?>
 													
@@ -277,6 +278,7 @@
 									                                                    'id' => 'QuotationItemDetail'.$key.'VatPrice',
 									                                                    'name' => 'data[QuotationDetail]['.$key.'][vat_price]',
 									                                                    'readonly' => 'readonly',
+									                                                    
 									                                                    'placeholder' => 'Vat Price'));
 		                                            ?>
 													
@@ -290,11 +292,11 @@
 													$ckeckName = 'data[QuotationDetail]['.$key.'][vat_price]';
 													?>
 
-													<input id="checkbox-1" class="checkvat checkbox-nice" type="checkbox" name="<?php echo $ckeckName; ?>" rel=".12" onclick="vatprice('quotationItemDetail',this)" checked="checked">
+													<input id="checkbox-1" class="checkvat checkbox-nice vat-price" type="checkbox" name="<?php echo $ckeckName; ?>" rel=".12" data-section='quotationItemDetail' checked="checked">
 
 												<?php } else { ?>
 
-													<input id="checkbox-1" class="checkvat checkbox-nice" type="checkbox" name="[QuotationItemDetail][0][vat_price]" rel=".12" onclick="vatprice('quotationItemDetail',this)">
+													<input id="checkbox-1" class="checkvat checkbox-nice vat-price" type="checkbox" name="[QuotationItemDetail][0][vat_price]" data-section='quotationItemDetail' rel=".12" >
 
 												<?php } ?>	
 													<font color="gray"> Click to Compute the Unit Price with VAT </font>

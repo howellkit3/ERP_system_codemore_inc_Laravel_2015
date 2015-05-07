@@ -1,38 +1,15 @@
 function vatprice(whatsection, thisElement){
-   console.log(thisElement);
     var value = $('.' + whatsection);
 
-    value = findValue(value, whatsection);
-
-
-    //alert($(whatsection).val());
-
-    // $(whatsection).find(':input').each(function() {
-    //      var $this = $(whatsection),
-    //         nameProp = $this.prop('name'),
-    //         vatprice = $this.prop('class');
-
-    //     if(vatprice == "unitprice")
-    //     {
-    //         alert($this.val());
-    //     }else{
-    //         alert('error');
-    //     }
-       
-    // });
-    // alert('asdfasad');
-    // console.log(whatsection);
-    // console.log(thisElement);
-
-   
+    value = findValue(value, thisElement);
 
 } 
 
 function findValue($form, thisElement){
-    console.log(thisElement);
-    var $value = $form.find('.unitprice').val();
-        
-    if ($form.find('.unitprice').val() == ''){
+ 
+    var $unit_value = thisElement.parents('.'+$form).find('.unitprice').val();
+
+    if ($unit_value == ''){
          
         alert('Unit Price is Required.');
         $form.find('.unitprice').focus();
@@ -48,34 +25,22 @@ function findValue($form, thisElement){
 
              if ($(this).is(":checked")) {
 
-                sum = $value * .12;
-                total = (sum + parseFloat($value));
-                //console.log($(this).parents('.row').find('.vatprice').attr('id'));
-                $(this).parents('.row').find('.vatprice').val(total);
+                sum = $unit_value * .12;
+                total = (sum + parseFloat($unit_value));
+                $(this).parents('.quotationItemDetail').find('.vatprice').val(total);
 
              } else {
-                total = (parseFloat($value) - sum);
-                //console.log($(this).parents('.row').find('.vatprice').attr('id'));
-                $(this).parents('.row').find('.vatprice').val(''); 
+                total = (parseFloat($unit_value) - sum);
+                $(this).parents('.quotationItemDetail').find('.vatprice').val(''); 
              }
 
         });
 
-        // if($form.find('.checkvat').is( ":checked" ) == true){
-        //     console.log('checked');    
-        //     sum = $value * .12;
-        //     total = (sum + parseFloat($value));
+        sum = $unit_value * .12;
+        total = (sum + parseFloat($unit_value));
+        thisElement.parents('.'+$form).find('.vatprice').val(total);
 
-        //     $form.find('.vatprice').val(total);
-           
-        // }
-        // if($form.find('.checkvat').is( ":checked" ) == false){
-        //      console.log('not checked');     
-        //     total = (parseFloat($value) - sum);
-            
-        //     $form.find('.vatprice').val('');
-           
-        // }
+       
     }
 
      
@@ -92,16 +57,34 @@ function recalculate($thisElement) {
         }else{
            alert('not'); 
         }
-        
-        // if(input.is( ":checked" ) == false){
-        //       alert('not');
-        //     $total = (parseFloat($("#QuotationField4Description").val()) - sum);
-            
-        //     $("#QuotationField4Description").val($total);
-           
-        // }
-        
+      
 }
+
+
+$('body').on('click','.vat-price',function(){
+
+    thisElement = $(this);
+
+    whatSection = $(this).data('section');
+
+    findValue(whatSection,thisElement);
+
+});
+
+$('.unitprice').keypress(function(){
+    console.log($(this).val());
+});
+
+$('body').on('keyup','.unitprice',function(){
+    
+    $parents = $(this).parents('.quotationItemDetail');
+    
+    if ($parents.find('.vatprice').val() != '' && $(this).val() != '') {
+         findValue($(this).data('section'),$parents.find('.vat-price'));
+    }
+
+    //console.log($(this).val());
+});
 
      // $whatsection.find('input').each(function() {
      //    alert('test');
