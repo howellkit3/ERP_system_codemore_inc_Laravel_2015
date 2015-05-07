@@ -175,8 +175,9 @@
 								                                                    'label' => false,
 								                                                    'id' => 'Irvin',
 								                                                    'readonly' => 'readonly',
-								                                                    'value' => $schedule['schedule']));
+								                                                    'value' => date("Y-m-d", strtotime($schedule['schedule']))));
 		                                        ?>
+		                                        
 											</div>
 										</div>
 
