@@ -92,6 +92,18 @@ class ContactPerson extends AppModel {
 		$this->data[$this->name]['modified_by'] = $userId;
 	}
 
+	public function afterSave($data,$options = array()) {
+
+		//Cache::delete('companyData');
+
+	}
+
+	public function afterDelete() {
+
+		//Cache::delete('inquiryId');
+
+	}
+
 	public function saveContact($data, $company_id)
 	{
 	

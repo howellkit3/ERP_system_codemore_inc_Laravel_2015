@@ -83,5 +83,10 @@ class Inquiry extends AppModel {
 		Cache::delete('inquiryId');
 		
 	}
+	public function afterDelete() {
+
+		Cache::delete('inquiryId');
+
+	}
 	
 }

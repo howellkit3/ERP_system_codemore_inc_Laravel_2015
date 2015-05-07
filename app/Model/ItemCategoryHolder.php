@@ -75,4 +75,15 @@ class ItemCategoryHolder extends AppModel {
     		return $this->id;
     	}
 	}
+
+	public function afterSave($data,$options = array()) {
+
+		Cache::delete('itemCategoryData');
+
+	}
+	public function afterDelete() {
+
+		Cache::delete('itemCategoryData');
+
+	}
 }
