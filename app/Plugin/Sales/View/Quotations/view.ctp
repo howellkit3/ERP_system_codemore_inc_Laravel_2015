@@ -254,7 +254,7 @@
 								Terms
 							</div>
 							<div class="col-lg-8">
-								:&emsp;<?php echo !empty($quotation['Quotation']['payment_terms']) ? $paymentTerm[$quotation['Quotation']['payment_terms']]: '' ?>
+								:&emsp;<?php echo !empty($paymentTerm[$quotation['Quotation']['payment_terms']]) ? $paymentTerm[$quotation['Quotation']['payment_terms']]: '' ?>
 							</div>
 
 						</div>
