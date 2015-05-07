@@ -7,7 +7,7 @@ App::import('Vendor', 'DOMPDF', true, array(), 'dompdf'.DS.'dompdf_config.inc.ph
 
 class QuotationsController extends SalesAppController {
 
-	public $uses = array('Sales.Company','Sales.Quotation','Sales.Inquiry','Sales.Product','ContactPerson');
+	public $uses = array('Sales.Quotation');
 	public $helper = array('Sales.Country');
 	public $useDbConfig = array('koufu_system');
 
@@ -53,20 +53,34 @@ class QuotationsController extends SalesAppController {
 
         $quotationData = $this->paginate('Quotation');
 
+        $this->loadModel('Sales.Company');
+
 		$this->Company->bind(array('Inquiry'));
 
-		$companyData = $this->Company->find('list',array(
-     											'fields' => array(
+		//set to cache in first load
+		$companyData = Cache::read('companyData');
+		
+		if (!$companyData) {
+			$companyData = $this->Company->find('list', array(
+     											'fields' => array( 
      												'id','company_name')
      										));
 
-		$inquiryId = $this->Company->Inquiry->find('list', array(
+            Cache::write('companyData', $companyData);
+        }
+
+        //set to cache in first load
+		$inquiryId = Cache::read('inquiryId');
+
+		if (!$inquiryId) {
+			$inquiryId = $this->Company->Inquiry->find('list', array(
      													'fields' => array(
-     													'company_id')
-     												));
+     														'id','company_id')
+     													));
 
-
-
+            Cache::write('inquiryId', $inquiryId);
+        }
+		
 		$this->set(compact('companyData','quotationData','inquiryId','salesStatus'));
 
 	}
@@ -84,6 +98,8 @@ class QuotationsController extends SalesAppController {
 		$this->loadModel('Unit');
 
 		$this->loadModel('Currency');
+
+		$this->loadModel('Sales.Company');
 
 		$itemCategoryData = $this->ItemCategoryHolder->find('list', array(
 															'fields' => array('id', 'name'),
@@ -165,7 +181,7 @@ class QuotationsController extends SalesAppController {
            		
 				if(!empty($this->request->data['Inquiry']['id'])){
             		
-            		$this->Company->bind(array('Inquiry'));
+            			$this->Company->bind(array('Inquiry'));
 
             			$inquiryId = $this->request->data['Inquiry']['id'];
 
@@ -292,13 +308,21 @@ class QuotationsController extends SalesAppController {
 
 	public function view($quotationId,$companyId){
 
+		
+		$this->loadModel('Sales.PaymentTermHolder');
+		
+		$this->loadModel('Sales.Company');
+		
+		$this->loadModel('Currency');
+		
+		$this->loadModel('Unit');
+		
+		$this->loadModel('Sales.ContactPerson');
+		
+		$this->loadModel('User');
+
 		$userData = $this->Session->read('Auth');
 
-		$this->loadModel('Sales.PaymentTermHolder');
-
-		//$paymentTerm = $this->PaymentTermHolder->find('list',array('fields' => array('id','name')));
-
-		//set to cache in first load
 		$paymentTerm = Cache::read('paymentTerms');
 		
 		if (!$paymentTerm) {
@@ -307,7 +331,6 @@ class QuotationsController extends SalesAppController {
         }
 
 		$this->Company->bind(array('Address','Contact','Email','Inquiry','ContactPerson','Quotation'));
-
 
 		//set to cache in first load
 		$companyData = Cache::read('companyData');
@@ -324,9 +347,9 @@ class QuotationsController extends SalesAppController {
 
 
         //set to cache in first load
-		$inquiryId = Cache::read('companyData');
+		$inquiryId = Cache::read('inquiryId');
 		
-		if (!$companyData) {
+		if (!$inquiryId) {
 			
 			$inquiryId = $this->Company->Inquiry->find('list', array(
      													'fields' => array(
@@ -337,12 +360,10 @@ class QuotationsController extends SalesAppController {
         }
 
 		
-		$this->loadModel('Currency');
 		$currencies = $this->Currency->getList();
 
-		$this->loadModel('Unit');
 		$units = $this->Unit->getList();
-
+	
 		$this->ContactPerson->bind(array('Email'));
 
 		$contactInfo = $this->ContactPerson->find('first', array(
@@ -375,8 +396,6 @@ class QuotationsController extends SalesAppController {
 			$clientOrderCount = 0;
 		} 
 
-		
-		$this->loadModel('User');
 		$user = $this->User->find('first', array(
 									'conditions' => array(
 										'User.id' => $userData['User']['id'] )
@@ -511,6 +530,8 @@ class QuotationsController extends SalesAppController {
 		$this->loadModel('Unit');
 
 		$this->loadModel('Currency');
+		
+		$this->loadModel('Sales.Company');
 
 		$this->Quotation->bind(array('QuotationItemDetail'));
 

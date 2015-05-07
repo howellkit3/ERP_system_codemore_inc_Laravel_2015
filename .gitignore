@@ -11,6 +11,7 @@
 /tags
 /app/webroot/css/font-awesome
 /app/webroot/css/font-awesome/
+/app/Vendor/dompdf/fonts/*
 *.mo
 
 # IDE and editor specific files #

@@ -184,7 +184,7 @@
 												<div class="col-lg-2">
 													<?php 
 			                                            echo $this->Form->input('QuotationItemDetail.0.quantity', array(
-			                                            								'class' => 'form-control item_type',
+			                                            								'class' => 'form-control item_type number',
 									                                                    'type' => 'text',
 									                                                    'label' => false,
 									                                                    'placeholder' => 'Quantity'));
@@ -210,7 +210,7 @@
 												<div class="col-lg-2">
 													<?php 
 			                                            echo $this->Form->input('QuotationItemDetail.0.unit_price', array(
-			                                            								'class' => 'form-control item_type unitprice',
+			                                            								'class' => 'form-control item_type unitprice number',
 									                                                    'data' => 'unitprice',
 									                                                    'type' => 'text',
 									                                                    'label' => false,

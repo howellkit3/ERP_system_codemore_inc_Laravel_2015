@@ -1,9 +1,16 @@
-// function validateForm($form)
-// {
-//     var validator = $( "#CompanyAddForm" ).validate();
-//     validator.form();
-// }
 
+//automatically validate email and numbers
+$("form").validate({
+                rules: {
+                    'number': {
+                        number: true
+                    },
+                    'email' : {
+                        email: true
+                    }
+                }
+
+        });
 
 function fieldReset($form, section)
 {
@@ -111,9 +118,11 @@ function cloneContactData(whatSection, thisElement)
     var parentSection = $(thisElement).parents('.' + whatSection);
 
     var data = $(parentSection).first().clone();
-     data.find('.remove-field.btn.btn-danger.remove').show();
+    data.find('.remove-field.btn.btn-danger.remove').show();
     data.find('.remove-field.btn.btn-danger').show();
     data = fieldResetContact(data, whatSection);
+    console.log(data);
+    
     $('.' + whatSection).last().after(data);
 }
 function cloneInquiry(whatSection, thisElement)
