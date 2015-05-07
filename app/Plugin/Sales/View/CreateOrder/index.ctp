@@ -202,74 +202,6 @@
 				</div>
 			</div>
 
-			<section class="cloneMe scheduleSection">
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="main-box">
-							<div class="top-space"></div>
-							<div class="main-box-body clearfix">
-								<div class="main-box-body clearfix">
-									<div class="form-horizontal">
-									
-										<div class="form-group">
-	                                    	<label class="col-lg-2 control-label">Schedule</label>
-											<div class="col-lg-8">
-												<?php 
-	                                                echo $this->Form->input('ClientOrderDeliverySchedule.0.schedule',array( 
-	                                                						'class' => 'form-control item_type datepick', 
-	                                                    					'label' => false,
-	                                                    					'readonly' => 'readonly',
-	                                                    					'placeholder' => 'Schedule'  
-	                                                    					));
-	                                            ?>
-											</div>
-										</div>
-
-										<div class="form-group">
-	                                    	<label class="col-lg-2 control-label">Location</label>
-											<div class="col-lg-8">
-												<?php 
-	                                                echo $this->Form->input('ClientOrderDeliverySchedule.0.location',array( 
-	                                                						'class' => 'form-control item_type ', 
-	                                                    					'label' => false, 
-	                                                    					'placeholder' => 'Location'
-	                                                    					));
-	                                            ?>
-											</div>
-										</div>
-
-	                                    <div class="form-group">
-	                                    	<label class="col-lg-2 control-label">Quantity</label>
-											<div class="col-lg-8">
-												<?php 
-	                                                echo $this->Form->input('ClientOrderDeliverySchedule.0.quantity',array( 
-	                                                						'class' => 'form-control item_type ', 
-	                                                    					'label' => false, 
-	                                                    					'placeholder' => 'Quantity'
-	                                                    					));
-	                                            ?>
-											</div>
-										</div>
-
-										<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
-                                    
-
-                                        <div class="form-group">
-                                            <label for="inputPassword1" class="col-lg-2 control-label"></label>
-                                            <div class="col-lg-10">
-                                                <button type="button" data-model='Address' class="add-field table-link danger btn btn-success" onclick="cloneData('scheduleSection',this)"> <i class="fa fa-plus"></i></button>
-                                                <button type="button" class="remove-field btn btn-danger remove" onclick="removeClone('scheduleSection')"><i class="fa fa-minus"></i> </button>
-                                            </div>
-                                        </div>
-
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-			</section>
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="main-box">
@@ -443,6 +375,75 @@
 					</div>
 				</div>
 			</div>
+
+			<section class="cloneMe scheduleSection">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="main-box">
+							<div class="top-space"></div>
+							<div class="main-box-body clearfix">
+								<div class="main-box-body clearfix">
+									<div class="form-horizontal">
+									
+										<div class="form-group">
+	                                    	<label class="col-lg-2 control-label">Schedule</label>
+											<div class="col-lg-8">
+												<?php 
+	                                                echo $this->Form->input('ClientOrderDeliverySchedule.0.schedule',array( 
+	                                                						'class' => 'form-control item_type datepick', 
+	                                                    					'label' => false,
+	                                                    					'readonly' => 'readonly',
+	                                                    					'placeholder' => 'Schedule'  
+	                                                    					));
+	                                            ?>
+											</div>
+										</div>
+
+										<div class="form-group">
+	                                    	<label class="col-lg-2 control-label">Location</label>
+											<div class="col-lg-8">
+												<?php 
+	                                                echo $this->Form->input('ClientOrderDeliverySchedule.0.location',array( 
+	                                                						'class' => 'form-control item_type ', 
+	                                                    					'label' => false, 
+	                                                    					'placeholder' => 'Location'
+	                                                    					));
+	                                            ?>
+											</div>
+										</div>
+
+	                                    <div class="form-group">
+	                                    	<label class="col-lg-2 control-label">Quantity</label>
+											<div class="col-lg-8">
+												<?php 
+	                                                echo $this->Form->input('ClientOrderDeliverySchedule.0.quantity',array( 
+	                                                						'class' => 'form-control item_type ', 
+	                                                    					'label' => false, 
+	                                                    					'placeholder' => 'Quantity'
+	                                                    					));
+	                                            ?>
+											</div>
+										</div>
+
+										<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
+                                    
+
+                                        <div class="form-group">
+                                            <label for="inputPassword1" class="col-lg-2 control-label"></label>
+                                            <div class="col-lg-10">
+                                                <button type="button" data-model='Address' class="add-field table-link danger btn btn-success" onclick="cloneData('scheduleSection',this)"> <i class="fa fa-plus"></i></button>
+                                                <button type="button" class="remove-field btn btn-danger remove" onclick="removeClone('scheduleSection')"><i class="fa fa-minus"></i> </button>
+                                            </div>
+                                        </div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</section>
 
 			<div class="row">
 				<div class="col-lg-12">
