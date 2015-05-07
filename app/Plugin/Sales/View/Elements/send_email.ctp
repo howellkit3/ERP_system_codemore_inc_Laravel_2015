@@ -26,7 +26,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                             <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> CC : </label>
+                             <label for="inputEmail1" class="col-lg-2 control-label"> CC : </label>
 
                             <div class="col-lg-10">
                                  <label for="inputEmail1" class="control-label"><span style="color:black">*</span> Note :
