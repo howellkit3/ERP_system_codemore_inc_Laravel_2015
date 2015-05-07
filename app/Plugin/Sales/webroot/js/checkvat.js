@@ -1,5 +1,5 @@
 function vatprice(whatsection, thisElement){
-
+   
     var value = $('.' + whatsection);
 
     value = findValue(value, whatsection);
@@ -33,19 +33,19 @@ function findValue($form, thisElement){
     var $value = $form.find('.unitprice').val();
         
     if ($form.find('.unitprice').val() == ''){
-
+         
         alert('Unit Price is Required.');
         $form.find('.unitprice').focus();
         $('input[type=checkbox]:checked').attr('checked',false);
 
     }else{
-
+         
         var sum = 0;
         var index = 0;
         var total = 0;
 
         if($form.find('.checkvat').is( ":checked" ) == true){
-                  
+            console.log('checked');    
             sum = $value * .12;
             total = (sum + parseFloat($value));
 
@@ -53,7 +53,7 @@ function findValue($form, thisElement){
            
         }
         if($form.find('.checkvat').is( ":checked" ) == false){
-                  
+             console.log('not checked');     
             total = (parseFloat($value) - sum);
             
             $form.find('.vatprice').val('');
