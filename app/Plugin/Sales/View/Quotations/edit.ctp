@@ -79,43 +79,7 @@
 											</div>
 	                                    <?php } ?>
 	                                    
-	                                     <div class="form-group">
-	                                    	<label class="col-lg-2 control-label">Company</label>
-											<div class="col-lg-8">
-												<?php echo $this->Form->input('Quotation.company_id', array(
-					                                'options' => array($companyData),
-					                                'type' => 'select',
-					                                'label' => false,
-					                                'class' => 'form-control required contacpersonlist',
-					                                'empty' => '---Select Company---',
-					                                'id' => 'select_company'
-					                                 )); 
-
-					                            ?>
-											</div>
-										</div>
-
-	                                    <div class="form-group">
-	                                    	<label class="col-lg-2 control-label">Attention</label>
-											<div class="col-lg-8">
-												<?php 
-													echo $this->Form->input('Quotation.attention_details',array('id' => 'quotations_attention_details','type' => 'hidden'));
-	                                           
-		                                            echo $this->Form->input('Quotation.attention_details', array(
-		                                            								'type' => 'select',
-		                                            								'class' => 'form-control item_type',
-								                                                    'label' => false,
-								                                                    'default' => $this->request->data['Quotation']['attention_details']
-								                                                    //'empty' => '--Select Contact Person--'
-								                                                    
-								                                                    ));
-		                                            //pr($this->request->data['Quotation']['attention_details']);exit();
-	                                            ?>
-
-											</div>
-										</div>
-
-										<div class="form-group" id="existing_items">
+	                                    <div class="form-group" id="existing_items">
 											<label class="col-lg-2 control-label">Category</label>
 											<div class="col-lg-8">
 												<?php 
@@ -170,6 +134,44 @@
 											</div>
 										</div>
 
+	                                    <div class="form-group">
+	                                    	<label class="col-lg-2 control-label">Company</label>
+											<div class="col-lg-8">
+												<?php echo $this->Form->input('Quotation.company_id', array(
+					                                'options' => array($companyData),
+					                                'type' => 'select',
+					                                'label' => false,
+					                                'class' => 'form-control required contacpersonlist',
+					                                'empty' => '---Select Company---',
+					                                'id' => 'select_company'
+					                                 )); 
+
+					                            ?>
+											</div>
+										</div>
+
+	                                    <div class="form-group">
+	                                    	<label class="col-lg-2 control-label">Attention</label>
+											<div class="col-lg-8">
+												<?php 
+													echo $this->Form->input('Quotation.attention_details',array('id' => 'quotations_attention_details','type' => 'hidden'));
+	                                           
+		                                            echo $this->Form->input('Quotation.attention_details', array(
+		                                            								'type' => 'select',
+		                                            								'class' => 'form-control item_type',
+								                                                    'label' => false,
+								                                                    'default' => $this->request->data['Quotation']['attention_details']
+								                                                    //'empty' => '--Select Contact Person--'
+								                                                    
+								                                                    ));
+		                                            //pr($this->request->data['Quotation']['attention_details']);exit();
+	                                            ?>
+
+											</div>
+										</div>
+
+
+										
 	                                	<div class="form-group">
 	                                		<label class="col-lg-2 control-label">Size</label>
 											<div class="col-lg-8">
