@@ -79,13 +79,22 @@ class Product extends AppModel {
 
 	public function addProduct($data,$auth){
 		
+		$month = date("m"); 
+	    $year = date("y");
+	    $hour = date("H");
+	    $minute = date("i");
+	    $seconds = date("s");
+	    $random = rand(1000, 10000);
+
+	    $code =  $year. $month .$random;
+	    
 		$this->create();
 		$data['Product']['type_id'] = $data['Product']['item_type'];
 		$data['Product']['company_id'] = $data['Product']['companyId'];
 		$data['Product']['product_name'] = $data['Product']['productName'];
 		$data['Product']['created_by'] = $auth;
 		$data['Product']['modified_by'] = $auth;
-		$data['Product']['uuid'] = rand(999,999).time();
+		$data['Product']['uuid'] = $code;
 
 		$this->save($data);
 

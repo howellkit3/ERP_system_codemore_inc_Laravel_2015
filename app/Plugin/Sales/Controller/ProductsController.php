@@ -186,7 +186,16 @@ class ProductsController extends SalesAppController {
 				$userData = $this->Session->read('Auth');
 			 	$productDetails = $this->request->data;
 	        	$this->loadModel('Sales.Product');
-	        	$productDetails['Product']['uuid'] = time();
+
+	        	$month = date("m"); 
+			    $year = date("y");
+			    $hour = date("H");
+			    $minute = date("i");
+			    $seconds = date("s");
+			    $random = rand(1000, 10000);
+
+			    $code =  $year. $month .$random;
+	        	$productDetails['Product']['uuid'] = $code;
 
 	           if ($this->Product->save($productDetails)) {
 
