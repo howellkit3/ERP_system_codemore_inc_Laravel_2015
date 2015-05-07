@@ -55,6 +55,9 @@ function cloneData(whatSection, thisElement)
     // $('.remove').show();
 
     if ($('.remove').length == 1) $('.remove').hide();
+    $('.datepick').datepicker({
+        format: 'yyyy-mm-dd'
+    });
     
 }
 

@@ -487,15 +487,14 @@
 	</div>
 </div>
 <script>
-		
-		
-		jQuery(document).ready(function($){
-			//datepicker
-			$('.datepick').datepicker({
-				format: 'yyyy-mm-dd'
-			});
-			jQuery('.remove').hide();
-			$("#QuotationIndexForm").validate();
+			
+	jQuery(document).ready(function($){
+		//datepicker
+		$('.datepick').datepicker({
+			format: 'yyyy-mm-dd'
 		});
-		
-	 </script>
+		jQuery('.remove').hide();
+		$("#QuotationIndexForm").validate();
+	});
+	
+ </script>
