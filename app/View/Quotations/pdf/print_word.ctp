@@ -45,12 +45,9 @@
 				<thead>
 					<tr>
 						<td style="width:20px;">
-							Dear 
+							Dear :&nbsp; <?php echo ucfirst($quotation['ContactPerson']['firstname']).' '.ucfirst($quotation['ContactPerson']['lastname']) ?> &nbsp;
 						</td>
-						<td>
-							<?php //echo ucfirst($contactInfo['ContactPerson']['firstname']) ?>
-							<?php //echo ucfirst($contactInfo['ContactPerson']['lastname']) ?>,
-						</td>
+						
 					</tr>
 				</thead>
 			</table>
