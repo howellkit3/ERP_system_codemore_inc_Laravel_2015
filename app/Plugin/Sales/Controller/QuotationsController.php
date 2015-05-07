@@ -117,19 +117,21 @@ class QuotationsController extends SalesAppController {
 		$this->Company->bind(array('Contact','Email','Address','ContactPerson'));
 
 		//set to cache in first load
+
+
 		$companyData = Cache::read('companyData');
-		
-		if (!$companyData) {
-			
+
+		// if (!$companyData) {
+
 			$companyData = $this->Company->find('list', array(
-     											'fields' => array( 
-     												'id','company_name')
+     											'fields' => array( 'id','company_name'),
+     											'order' => array('Company.company_name' => 'ASC')
      										));
 
-            Cache::write('companyData', $companyData);
-        }
+           Cache::write('companyData', $companyData);
+        // }
 
-
+      
         //set to cache in first load
 		$unitData = Cache::read('unitData');
 		
@@ -146,12 +148,14 @@ class QuotationsController extends SalesAppController {
 		   //set to cache in first load
 		$currencyData = Cache::read('currencyData');
 		
-		if (!$currencyData) {
-			
-			$currencyData =  $this->Currency->getList();
+		//if (!$currencyData) {
+
+			$currencyData = $this->Currency->find('list', array('fields' => array('id', 'name'),
+															'order' => array('Currency.name' => 'ASC')
+															));
 
             Cache::write('currencyData', $currencyData);
-        }
+       // }
 
         //set to cache in first load
 		$paymentTermData = Cache::read('paymentTerms');
@@ -171,7 +175,7 @@ class QuotationsController extends SalesAppController {
 		    										));
 			
 		    $company = $this->Company->find('first', array(
-		        'conditions' => array('Company.id' => $inquiry['Inquiry']['company_id'])
+									        'conditions' => array('Company.id' => $inquiry['Inquiry']['company_id'])
 		    ));
 			
 			$this->set(compact('company','inquiry'));
