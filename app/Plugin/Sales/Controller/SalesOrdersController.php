@@ -21,7 +21,7 @@ class SalesOrdersController extends SalesAppController {
 	public function index() {
 
 		$userData = $this->Session->read('Auth');
-
+		
 		$this->Quotation->bind(array('ClientOrder'));
 
 		$clientOrder = $this->Quotation->ClientOrder->find('all', array('order' => 'ClientOrder.id DESC'));

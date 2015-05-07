@@ -130,6 +130,7 @@
 							                                                    'value' => $paymentTermData[$clientOrderData['ClientOrder']['payment_terms']]
 
 							                                                    	));
+			                                   
 			                                ?>	
 										</div>
 									</div>
