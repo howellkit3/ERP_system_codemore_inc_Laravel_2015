@@ -172,12 +172,14 @@
 		                                	<label class="col-lg-2 control-label">Schedule</label>
 											<div class="col-lg-8">
 												<?php 
-		                                            echo $this->Form->input('ClientOrder.schedule', array(
+		                                              echo $this->Form->input('ClientOrder.schedule', array(
 		                                            								'class' => 'form-control item_type',
 								                                                    'label' => false,
-								                                                    'id' => 'Irvin',
 								                                                    'readonly' => 'readonly',
-								                                                    'value' => $schedule['schedule']));
+								                                                    'value' => !empty($schedule['schedule']) ?
+								                                                    date('Y-m-d',strtotime($schedule['schedule'])) : ''	
+
+								                                                   ));
 		                                        ?>
 											</div>
 										</div>

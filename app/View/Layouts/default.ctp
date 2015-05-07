@@ -41,7 +41,8 @@
 	            'jquery-ui',
 	            'libs/nifty-component',
 				'/css/font-awesome/css/font-awesome',
-	        ));
+				'bootstrap-tagsinput/bootstrap-tagsinput'
+			));
 
 		 	echo $this->Html->script('jquery');
 		?>
@@ -162,6 +163,11 @@
 	        echo $this->Html->script('flot/jquery.flot.axislabels');
 	        echo $this->Html->script('jquery.sparkline.min');
 	        echo $this->Html->script('skycons');
+
+
+	        echo $this->Html->script('bootstrap-tagsinput/bootstrap-tagsinput.min');
+
+
 	        //theme scripts
 	        echo $this->Html->script('scripts');
 	        echo $this->Html->script('pace.min');

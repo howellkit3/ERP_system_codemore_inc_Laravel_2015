@@ -8,7 +8,7 @@ App::import('Vendor', 'DOMPDF', true, array(), 'dompdf'.DS.'dompdf_config.inc.ph
 class QuotationsController extends SalesAppController {
 
 	public $uses = array('Sales.Quotation');
-	public $helper = array('Sales.Country');
+	public $helper = array('Sales.Country','Sales.Status');
 	public $useDbConfig = array('koufu_system');
 
 	public function beforeFilter() {
@@ -60,26 +60,26 @@ class QuotationsController extends SalesAppController {
 		//set to cache in first load
 		$companyData = Cache::read('companyData');
 		
-		if (!$companyData) {
+		//if (!$companyData) {
 			$companyData = $this->Company->find('list', array(
      											'fields' => array( 
      												'id','company_name')
      										));
 
             Cache::write('companyData', $companyData);
-        }
+       // }
 
         //set to cache in first load
 		$inquiryId = Cache::read('inquiryId');
 
-		if (!$inquiryId) {
+		//if (!$inquiryId) {
 			$inquiryId = $this->Company->Inquiry->find('list', array(
      													'fields' => array(
      														'id','company_id')
      													));
 
             Cache::write('inquiryId', $inquiryId);
-        }
+       // }
 		
 		$this->set(compact('companyData','quotationData','inquiryId','salesStatus'));
 
@@ -397,7 +397,14 @@ class QuotationsController extends SalesAppController {
 																)
 															));
 		
-		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder','ProductDetail', 'Product','ContactPerson'));
+		$this->Quotation->bind(array('QuotationDetail',
+			'QuotationItemDetail',
+			'ClientOrder',
+			'ProductDetail', 
+			'Product',
+			'ContactPerson',
+			'ContactPersonEmail' => array('fields' => array('email'))
+			));
 
 
 		$quotation = $this->Quotation->find('first', array(
@@ -426,6 +433,7 @@ class QuotationsController extends SalesAppController {
 										'User.id' => $userData['User']['id'] )
 								));
 		
+
 		$this->set(compact('units','currencies','paymentTerm','companyData','companyId', 'quotationSize', 'quotationOption','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','salesStatus', 'productName','clientOrderCount','quotationDetailData'));
 		
 	}
@@ -767,46 +775,74 @@ class QuotationsController extends SalesAppController {
 
 	}
 
-	public function send_email($dest=null,$qouteId,$companyId){
+	public function send_email($dest=null,$qouteId = null,$companyId = null){
 
-		$quoteName = $this->Quotation->find('first',array('conditions' => array('Quotation.id' => $qouteId)));
+		if (!empty($this->request->data)) {
 
-		$email = new CakeEmail('mandrill');
+			$qouteId = $this->request->data['Quotation']['id'];
+			$companyId = $this->request->data['Quotation']['company_id'];
 
-		$email->from(Configure::read('defaultEmail'));
+			if (!empty($this->request->data['Quotation']['emails'])) {
 
-		$email->to($dest);
+				$email_cc = explode(',',$this->request->data['Quotation']['emails']);
 
-		$email->subject('Quotation form for'.$quoteName['Quotation']['name']);
+				$valid_email_cc = array();
 
-		$attachment = $this->_createPdf($qouteId,$companyId);
-		
-		if ($attachment ) {
+				foreach ($email_cc as $key => $email) {
+					if (!filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+						$valid_email_cc[] = $email;
+					}
 
-			$email->attachments(array($attachment));
-			$email->send('Quotation send from koufucolorprinting.com');
-
-			$file = new File(WWW_ROOT . DS . $attachment);
-			$file->delete();
-			$this->Session->setFlash(__('Quotation Successfully send.'));
-			} else {
-
-			$this->Session->setFlash(__('Error Sending.'));
+				}
 		}
+		$to = $this->request->data['Quotation']['to'];
+	
+		if (!empty($this->request->data['Quotation']['to']) && !filter_var($to, FILTER_VALIDATE_EMAIL) === false)  {
+			
+			$email = new CakeEmail('mandrill');
 
+			$email->from(Configure::read('defaultEmail'));
+
+			$email->to($to);
+
+			if (!empty($valid_email_cc)) {
+
+				$email->cc($valid_email_cc);
+			}
+			
+			$email->subject($this->request->data['Quotation']['subject']);
+
+			$filename =  $this->request->data['Quotation']['pdf'];
+			$attachment = $this->_createPdf($qouteId,$companyId,$filename);
+
+			if ($attachment ) {
+
+				$email->attachments(array($attachment));
+					$email->send('Quotation send from koufucolorprinting.com');
+
+					$file = new File(WWW_ROOT . DS . $attachment);
+					$file->delete();
+					$this->Session->setFlash(__('Quotation Successfully send.'),'success');
+					} else {
+
+					$this->Session->setFlash(__('Sending emails failed, Please try again'),'error');
+				}
+			}
+			else {
+				$this->Session->setFlash(__('Sending emails failed, Please use valid email address'),'error');
+			}
+		}
 		return $this->redirect(array('controller' => 'quotations','action' => 'view',$qouteId,$companyId));
 		
 	}
 
-	private function _createPdf($quotationId = null,$companyId = null) {
+	private function _createPdf($quotationId = null,$companyId = null, $filename = null) {
 
         $view = new View(null, false);
 
-       // $this->layout = 'pdf';
-
-		// Configure::write('debug',2);
-
 		$userData = $this->Session->read('Auth');
+
+		$this->loadModel('Sales.Company');
 
 		// $userData = $this->Session->read('Auth');
 		$this->Company->bind(array('Address','Contact','Email','Inquiry','ContactPerson','Quotation'));
@@ -827,10 +863,9 @@ class QuotationsController extends SalesAppController {
 																)
 															));
 
-
 		$this->loadModel('Currency');
 		$currencies = $this->Currency->getList();
-
+	
 		$this->loadModel('Unit');
 		$units = $this->Unit->getList();
 
@@ -841,7 +876,6 @@ class QuotationsController extends SalesAppController {
 															'Quotation.id' => $quotationId)
 													));
 
-	
 		$quotationDetailData = $this->Quotation->ClientOrder->find('first', array(
 														'conditions' => array( 
 															'ClientOrder.quotation_id' => $quotationId)
@@ -856,9 +890,9 @@ class QuotationsController extends SalesAppController {
  		$view->set(compact('companyData','units','currencies','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','productName','user','quotationDetailData'));
         
        	$view->viewPath = 'Quotations'.DS.'pdf';	
-
-        $output = $view->render('print_word', false);
    
+        $output = $view->render('print_word', false);
+   	
         $dompdf = new DOMPDF();
         $dompdf->set_paper("A4");
         $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));
@@ -869,7 +903,10 @@ class QuotationsController extends SalesAppController {
 
         $output = $dompdf->output();
         $random = rand(0, 1000000) . '-' . time();
-        $filePath = 'pdf/'.$quotation['Quotation']['name'].'-'.time().'.pdf';
+        if (empty($filename)) {
+        	$filename = 'product-'.$quotation['ProductDetail']['name'].'-quotation'.time();
+        }
+      	$filePath = 'pdf/'.strtolower(Inflector::slug( $filename , '-')).'.pdf';
         $file_to_save = WWW_ROOT .'/'. $filePath;
         
         file_put_contents($file_to_save, $output);

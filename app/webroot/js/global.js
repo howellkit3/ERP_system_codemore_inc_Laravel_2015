@@ -1,17 +1,23 @@
-
-//automatically validate email and numbers
+$( document ).ready(function() {//automatically validate
 $("form").validate({
-                rules: {
-                    'number': {
-                        number: true
-                    },
-                    'email' : {
-                        email: true
-                    }
-                }
+     field: {
+      required: true
+    },
+    rules: {
+        'number': {
+            number: true
+        },
+        'email' : {
+            email: true
+        },
+        'required' : {
+            require : true
+        }
+    }
 
-        });
-
+});
+});
+ $('.email-tag').tagsinput('items');
 function fieldReset($form, section)
 {
 

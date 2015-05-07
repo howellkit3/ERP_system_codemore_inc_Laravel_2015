@@ -259,3 +259,9 @@ body.dragging, body.dragging * {
 .table-link.small-link-icon {
   margin: 0 !important;
 }
+.modal.fade.in {
+  background: none repeat scroll 0 0 rgba(0, 0, 0, 0.5);
+}
+.tag.label.label-info {
+  background: none repeat scroll 0 0 #03a9f4;
+}
