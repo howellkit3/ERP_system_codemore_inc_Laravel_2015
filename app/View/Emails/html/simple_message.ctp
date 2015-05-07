@@ -5,7 +5,7 @@
 <body bgcolor="#FFFFFF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 
 <div style="position: relative; margin: 0 auto;width:100%;font-family: 'Helvetica', Arial, sans-serif; font-size: 15px; background-image:url(<?php echo $this->Html->url('/', true) ?>img/whitey.png); background-color: #f7f7f7;">
-    <div style="margin:0 auto;text-align:left;width:600px;padding:18px 0;background:#fff; ">
+    <div style="margin:0 auto;text-align:left;width:582px;padding:18px 9px;background:#fff; ">
     <a href="<?php echo $this->Html->url('/', true) ?>" style="display:inline-block;vertical-align:middle;">
         <img src="<?php echo $this->Html->url('/', true) ?>img/koufu.png" width="100" style="width:100px;">
         </a> <span style="font-size:34px; font-weight:bold">Koufu Color Printing.</span>
