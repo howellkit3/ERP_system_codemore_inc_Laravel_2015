@@ -43,7 +43,7 @@
 				dataType: "json",
 				success: function(data) {
 
-					// var typeOption = [];
+					var typeOption = [];
 			
 					$.each(data, function(key, value) {
 						if (value.id == selected) {
@@ -53,14 +53,6 @@
 
 							$option = "<option class='option-append'  value="+value.ItemTypeHolder.id+">"+value.ItemTypeHolder.name+"</option>";
 						}
-
-						// typeOption.push($option);
-
-						// // alert(typeOption);
-
-						// typeOption.sort(); 
-
-						// alert(typeOption);
 
 					     $('#item_type_holder_id').append($option);
 					});	

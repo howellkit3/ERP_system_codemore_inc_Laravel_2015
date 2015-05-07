@@ -123,8 +123,7 @@
 									<div class="form-group" id="existing_items">
 										<label class="col-lg-2 control-label">Payment Terms</label>
 										<div class="col-lg-8">
-											<?php 
-			                                    echo $this->Form->input('PaymentTermHolder.name', array(
+											<?php  echo $this->Form->input('PaymentTermHolder.name', array(
 			                                    								'class' => 'form-control item_type',
 							                                                    'label' => false,
 							                                                    'readonly' => 'readonly',
