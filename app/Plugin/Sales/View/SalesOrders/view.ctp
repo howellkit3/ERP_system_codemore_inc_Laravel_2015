@@ -162,6 +162,7 @@
 					<div class="main-box">
 						<header class="main-box-header clearfix">
 							<h2 class="pull-left">Client Order Delivery Schedule</h2>
+							<a data-toggle="modal" href="#myModalContactPerson" class="btn btn-primary mrg-b-lg pull-right"><i class="fa fa-plus-circle fa-lg"></i> Add Delivery Schedule</a>
 						</header>
 						<div class="main-box-body clearfix">
 							<div class="main-box-body clearfix">
@@ -228,7 +229,7 @@
 		                                        ?>
 		                                        <br>
 
-		                                        <button type="button" class="btn btn-primary pull-left" id = "buttonEdit" style="margin-right:13px;" onclick="removeAttr()" >Edit</button> 
+		                                        <button type="button" class="btn btn-primary pull-left" id = "buttonEdit" style="margin-right:13px;" >Edit</button> 
 
 												<button type="submit" class="btn btn-primary pull-left" id = "submit" disabled onclick="AddAttr()">Submit</button>
 												  
@@ -244,6 +245,7 @@
 					</div>
 				</div>
 			</div>
+
 	<?php echo $this->Form->end(); ?>
 
 			 <div class="row">
@@ -517,17 +519,11 @@
 
 var x = 0;
 
-function removeAttr() {
-
     $("#buttonEdit").click(function(){
 
-    	//alert('entered');
-
-    	if (x == 0) {
+    	if ($('#textField1').is(':disabled')) {
 	    	//alert('zero value ko'); 
 	    	$('#submit, #textField1, #textField2, #textField3' ).removeAttr('disabled');
-
-	    	x = 1;
 	    }else{
 	    	//alert('one value ko'); 
 	    	$('#submit, #textField1, #textField2, #textField3' ).attr('disabled','disabled');
@@ -535,7 +531,6 @@ function removeAttr() {
 	    }
 
     });
-}
 </script>
 
 <script>
