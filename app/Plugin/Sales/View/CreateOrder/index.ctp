@@ -2,6 +2,7 @@
 <?php $this->Html->addCrumb('Quotation', array('controller' => 'quotation', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Create Order', array('controller' => 'quotation', 'action' => 'index',$quotationData['Quotation']['id'],$quotationData['Quotation']['uuid'])); ?>
 <?php echo $this->Html->script('Sales.inquiry');?>
+<?php echo $this->Html->script('Sales.quantityLimit');?>
 
 <?php echo $this->element('sales_option');?><br><br>
 
@@ -315,6 +316,7 @@
                                                     					));
 
                                             ?>
+                                            <input type="text" id="limitQuantity" data="0" value="0" />
 										</div>
 									</div>
 
