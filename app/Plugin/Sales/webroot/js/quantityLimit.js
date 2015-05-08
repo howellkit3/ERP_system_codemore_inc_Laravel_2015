@@ -17,23 +17,20 @@ $( document ).ready(function() {
 		var allVal = 0;
 	
 	    $(fields).each(function() {
-	     	allVal = $('.quantityLimit').val();
-	        var num = parseInt(this.value);
+	     	allVal += parseInt($(this).val());
+	       /* var num = parseInt(this.value);
 	          
 			if (!isNaN(this.value)) {
 
 				total = Number(total) + num;
 
 			}
-	         
+
 			if ( total > quantityValue ){
 
 				// for max value
 				var totalDeduction = parseInt(quantityValue) - parseInt(allVal);
 
-				console.log(quantityValue);
-				console.log(allVal);
-				console.log(totalDeduction);
 
 				alert('Max Quantity');
 				isText.val(totalDeduction);
@@ -42,13 +39,31 @@ $( document ).ready(function() {
 
 				$('.add-field , .remove-field').prop("disabled", false);
 				
-			}
-			if(total == quantityValue){
+			} 
+			if(allVal == quantityValue){
 
 				$('.add-field , .remove-field').prop("disabled", true);
 				
-			}
+			} */
 
 		});
+
+		 if ( allVal > quantityValue ){
+
+				var totalDeduction = parseInt(allVal) - parseInt(quantityValue);
+
+
+				alert('Max Quantity');
+				isText.val(totalDeduction);
+				
+		}
+		if(allVal == quantityValue){
+
+				$('.add-field , .remove-field').prop("disabled", true);
+				
+		}  else {
+			$('.add-field , .remove-field').prop("disabled", false)
+		}
+
 	});
 });
