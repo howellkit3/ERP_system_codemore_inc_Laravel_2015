@@ -31,7 +31,9 @@ class CustomerSalesController extends SalesAppController {
 
 		$userData = $this->Session->read('Auth');
 
-		$this->Company->bind(array('ContactPerson' => array('fields' => array('firstname','middlename','lastname'))));
+		$this->Company->bind(array(
+			'ContactPerson' => array('fields' => array('firstname','middlename','lastname'))
+			));
 
 		$this->Company->recursive = 1;
 
@@ -54,10 +56,8 @@ class CustomerSalesController extends SalesAppController {
             'order' => 'Company.id DESC',
         );
 
-			$company = $this->paginate('Company');
+		$company = $this->paginate('Company');
 	
-
-
 		$this->set(compact('company','paymentTermData'));
 		
 	}
@@ -147,7 +147,6 @@ class CustomerSalesController extends SalesAppController {
             	$this->request->data = $this->Company->formatData($this->request->data, $userData['User']['id']);
 
             	$this->request->data['Company']['uuid'] = time();
-            	//pr($this->request->data['Company']['uuid']);exit();rand(100,999).
             	$this->request->data['Company']['created_by'] = $userData['User']['id'];
             	$this->request->data['Company']['modified_by'] = $userData['User']['id'];
 
@@ -213,6 +212,7 @@ class CustomerSalesController extends SalesAppController {
 	    ));
 		 	
 		$this->ItemCategoryHolder->bind(array('ItemTypeHolder'));
+
 		$itemCategoryData = $this->ItemCategoryHolder->find('list', array(
 															'fields' => array('id', 'name'),
 															'order' => array('ItemCategoryHolder.name' => 'ASC')
@@ -226,12 +226,7 @@ class CustomerSalesController extends SalesAppController {
 															'order' => array('ItemTypeHolder.name' => 'ASC')
 															));
 
-		// $contactPerson = $this->ContactPerson->find('list', array(
-		// 													'fields' => array('id', 'lastname')
-		// 													// 'order' => array('ContactPerson.lastname' => 'ASC')
-		// 													));
 
-		$this->loadModel('ItemCategoryHolder');
 		$companyData = $this->Company->getList(array('id','company_name'),array('Company.id' => $company['Company']['id']));
 
 		$this->set(compact('paymentTermData','company','contactPerson','itemCategoryData','itemTypeData', 'companyData'));

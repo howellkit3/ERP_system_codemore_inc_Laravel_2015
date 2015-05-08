@@ -18,33 +18,6 @@ $( document ).ready(function() {
 	
 	    $(fields).each(function() {
 	     	allVal += parseInt($(this).val());
-	       /* var num = parseInt(this.value);
-	          
-			if (!isNaN(this.value)) {
-
-				total = Number(total) + num;
-
-			}
-
-			if ( total > quantityValue ){
-
-				// for max value
-				var totalDeduction = parseInt(quantityValue) - parseInt(allVal);
-
-
-				alert('Max Quantity');
-				isText.val(totalDeduction);
-				
-			} else {
-
-				$('.add-field , .remove-field').prop("disabled", false);
-				
-			} 
-			if(allVal == quantityValue){
-
-				$('.add-field , .remove-field').prop("disabled", true);
-				
-			} */
 
 		});
 
@@ -52,7 +25,9 @@ $( document ).ready(function() {
 
 				var totalDeduction = parseInt(allVal) - parseInt(quantityValue);
 				alert('Max Quantity');
-				isText.val(isText.val() - totalDeduction);
+				total = isText.val() - totalDeduction;
+				isText.val(total);
+				allVal = total;
 				
 		}
 		if(allVal == quantityValue){

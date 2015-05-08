@@ -8,11 +8,11 @@ App::import('Vendor', 'DOMPDF', true, array(), 'dompdf'.DS.'dompdf_config.inc.ph
 class QuotationsController extends SalesAppController {
 
 	public $uses = array('Sales.Quotation');
-	public $helpers = array('Sales.Country','Sales.Status','Cache');
+	public $helpers = array('Sales.Country','Sales.Status','Cache','Sales.DateFormat');
 	public $useDbConfig = array('koufu_system');
 
 	public $cacheAction = array(
-        'index' => '1 hour',
+        //'index' => '1 hour',
         //'view'	=> '1 hour'
     );
 

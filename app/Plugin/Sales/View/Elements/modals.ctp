@@ -436,4 +436,73 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal --> 
+
+    <div class="modal fade" id="myModalDelivery" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Add Delivery Schedule</h4>
+                </div>
+                <div class="modal-body">
+                 <?php echo $this->Form->create('ClientOrderDeliverySchedule',array('url'=>(array('controller' => 'sales_orders','action' => 'add_sched')),'class' => 'form-horizontal'));?>
+                    <?php 
+                        echo $this->Form->input('ClientOrderDeliverySchedule.client_order_id', array('class' => 'form-control item_type required',
+                            'type' => 'hidden',
+                            'value' => $clientOrderData['ClientOrder']['id']
+                            ));
+                    ?>
+
+                        <div class="form-group">
+                            <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span> Schedule</label>
+                            <div class="col-lg-9">
+                                <?php 
+                                    echo $this->Form->input('ClientOrderDeliverySchedule.schedule', array(
+                                                                                                            'class' => 'form-control required',
+                                                                                                            'label' => false,
+                                                                                                            'required' => 'required',
+                                                                                                            'class' => 'form-control item_type datepick',
+                                                                                                            'type' => 'text'
+                                                                                                        ));
+                                ?>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span>Location</label>
+                            <div class="col-lg-9">
+                                <?php 
+                                    echo $this->Form->input('ClientOrderDeliverySchedule.location', array('class' => 'form-control',
+                                                                                                           'required' => 'required', 
+                                                                                                            'label' => false));
+                                ?>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span> Quantity</label>
+                            <div class="col-lg-9">
+                                <?php 
+                                    echo $this->Form->input('ClientOrderDeliverySchedule.quantity', array('class' => 'form-control required',
+                                                                                                        'label' => false,
+                                                                                                        'required' => 'required'));
+                                ?>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                             <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i> Submit</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            
+                        </div>
+                    </form>
+                    
+                </div>
+                
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal --> 
+
+
+
     <div class="md-overlay"></div>

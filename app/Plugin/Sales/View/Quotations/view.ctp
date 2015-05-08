@@ -17,7 +17,7 @@
 
 		if($clientOrderCount == 0){
 
-			$status = ($this->Status->isQuotationApproved($quotation['Quotation']['status'])) ? 'disabled' : '';
+			$status = (!$this->Status->isQuotationApproved($quotation['Quotation']['status'])) ? 'disabled' : '';
 	
 			echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Create Order ', array('controller' => 'create_order', 'action' => 'index',$quotation['Quotation']['id'],$quotation['Quotation']['uuid']),array('class' =>'btn btn-primary pull-right '.$status,'escape' => false)) ;
 		
@@ -50,8 +50,6 @@
 
     	echo $this->Html->link('<i class="fa fa-envelope-o fa-lg"></i> Send Via Email ','#QuotationEmail',
 		        	array('data-toggle' => 'modal', 'class' =>'btn btn-info pull-right '.$status,'escape' => false,'target' => '_blank'));
-    				
-    
     	
 
     	 // echo $this->Html->link('<i class="fa fa-times fa-lg"></i> Terminate ', array('controller' => 'quotations', 'action' => 'status',3,$quotation['Quotation']['id']),array('class' =>'btn btn-danger pull-right','escape' => false));
@@ -262,8 +260,15 @@
 								Validity
 							</div>
 							<div class="col-lg-8">
-								:&emsp;
-								   <?php echo !empty($quotation['Quotation']['validity']) ? date('M d, Y', strtotime($quotation['Quotation']['validity'])) : 'No validity date'; ?>
+								:&emsp;<?php 
+								   if (!empty($quotation['Quotation']['validity']) 
+								   	&& $this->DateFormat->isValidDateTimeString($quotation['Quotation']['validity'])){
+								   	
+								   		echo date('M d, Y', strtotime($quotation['Quotation']['validity']));
+								   } else {
+
+								   		echo 'No validity date';
+								   } ?>
 							</div>
 
 						</div>
