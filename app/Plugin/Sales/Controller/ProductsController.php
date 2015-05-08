@@ -453,7 +453,8 @@ class ProductsController extends SalesAppController {
 										'conditions' => array(
 											'ItemTypeHolder.Item_category_holder_id' => $itemId), 
 										'fields' => array(
-											'id', 'name')
+											'id', 'name'),
+										'order' => array('ItemTypeHolder.name' => 'ASC')
 										));
 
 	
@@ -495,7 +496,9 @@ class ProductsController extends SalesAppController {
     										'conditions' => array(
 											'Product.item_type_holder_id' => $itemtypeid),
 											'fields' => array(
-											'id', 'name')));
+											'id', 'name'),
+											'order' => array('Product.name' => 'ASC')
+											));
     	
     	$this->layout = false;
 
@@ -547,7 +550,7 @@ class ProductsController extends SalesAppController {
 												'conditions' => array(
 													'ItemCategoryHolder.id' => $allData
 												),
-												'contains' => array('ItemTypeHolder')
+												'contains' => array('ItemTypeHolder'),
 												));
 
 		// foreach ($categoryData as $key => $itemtypes) {

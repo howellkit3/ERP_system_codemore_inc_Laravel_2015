@@ -46,6 +46,12 @@ class ContactPerson extends AppModel {
 					'dependent' => true,
 					'conditions' => "Email.model = 'ContactPerson'"
 				),
+				'Quotation' => array(
+					'className' => 'Sales.Quotation',
+					'foreignKey' => false,
+					'conditions' => array('Quotation.attention_details = ContactPerson.id'),
+					'dependent' => false
+				),
 			)
 		));
 

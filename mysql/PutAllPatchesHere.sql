@@ -68,3 +68,7 @@ ADD COLUMN `unit_price_currency_id` INT(11) NULL DEFAULT NULL AFTER `unit_price`
 #NOTE: SELECT KOUFU SALE DATABASE ----
 /** Aldrin added this 05/06/2015 11:13AM */
 ALTER TABLE `quotations`  ADD `status` TEXT NULL  AFTER `currency`;
+
+#NOTE: SELECT KOUFU SYSTEM DATABASE ----
+/** bien added this 05/08/2015  */
+ALTER TABLE `koufu_system`.`payment_term_holders`     CHANGE `name` `name` VARCHAR(250) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL ;

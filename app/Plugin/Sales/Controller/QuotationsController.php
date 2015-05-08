@@ -417,7 +417,6 @@ class QuotationsController extends SalesAppController {
 															'Quotation.id' => $quotationId)
 													));
 	
-
 		$quotationDetailData = $this->Quotation->ClientOrder->find('first', array(
 														'conditions' => array( 
 															'ClientOrder.quotation_id' => $quotationId)
@@ -438,7 +437,6 @@ class QuotationsController extends SalesAppController {
 										'User.id' => $userData['User']['id'] )
 								));
 
-		
 		$this->set(compact('units','currencies','paymentTerm','companyData','companyId', 'quotationSize', 'quotationOption','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','salesStatus', 'productName','clientOrderCount','quotationDetailData'));
 		
 	}

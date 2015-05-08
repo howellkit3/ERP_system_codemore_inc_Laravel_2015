@@ -109,14 +109,14 @@
 			                        
 
 			                        <div class="form-group">
-			                        	<label class="col-lg-2 control-label">Name</label>
+			                        	<label class="col-lg-2 control-label">Item Name</label>
 										<div class="col-lg-8">
 											<?php 
 			                                    echo $this->Form->input('ClientOrder.name', array(
 			                                    								'class' => 'form-control item_type',
 							                                                    'label' => false,
 							                                                    'readonly' => 'readonly',
-							                                                    'value' => $clientOrderData['ClientOrder']['name']));
+							                                                    'value' => $quotationData['Product']['name']));
 			                                ?>
 										</div>
 									</div>
@@ -124,13 +124,14 @@
 									<div class="form-group" id="existing_items">
 										<label class="col-lg-2 control-label">Payment Terms</label>
 										<div class="col-lg-8">
-											<?php  echo $this->Form->input('PaymentTermHolder.name', array(
+											<?php 
+											$paymentClientTerms = !empty($paymentTermData[$clientOrderData['ClientOrder']['payment_terms']]) ? $paymentTermData[$clientOrderData['ClientOrder']['payment_terms']] : '';
+
+											 echo $this->Form->input('PaymentTermHolder.name', array(
 			                                    								'class' => 'form-control item_type',
 							                                                    'label' => false,
 							                                                    'readonly' => 'readonly',
-							                                                    'value' => $paymentTermData[$clientOrderData['ClientOrder']['payment_terms']]
-
-							                                                    	));
+							                                                    'value' => $paymentClientTerms));
 			                                   
 			                                ?>	
 										</div>
@@ -270,13 +271,28 @@
 	                                <div class="form-group">
 	                                	<label class="col-lg-2 control-label">Attention</label>
 										<div class="col-lg-8">
-											<?php 
-	                                            echo $this->Form->input('Quotation.name', array(
-	                                            								'class' => 'form-control item_type',
-							                                                    'label' => false,
-							                                                    'readonly' => 'readonly',
-							                                                    'value' => $quotationData['Quotation']['attention_details']));
-	                                        ?>
+											
+
+		                                        <?php echo $this->Form->input('Quotation.attention_details', array(
+												'type' => 'hidden',
+				                                'readonly' => 'readonly',
+				                                'label' => false,
+				                                'class' => 'form-control',
+				                                'value' => ucfirst($quotationData['Quotation']['attention_details'])
+				                                 )); 
+
+				                            ?>
+											<?php echo $this->Form->input('Quotation.attention_details_name', array(
+												'type' => 'text',
+				                                'readonly' => 'readonly',
+				                                'label' => false,
+				                                'class' => 'form-control',
+				                                'value' => 
+				                                ucfirst($quotationData['ContactPerson']['firstname']).' '.
+				                                ucfirst($quotationData['ContactPerson']['lastname'])
+				                                 )); 
+
+				                            ?>
 										</div>
 									</div>
 
@@ -284,12 +300,17 @@
 										<label class="col-lg-2 control-label">Payment Terms</label>
 										<div class="col-lg-8">
 											<?php 
-											 
+											 	$paymentTerms = !empty($paymentTermData[$quotationData['Quotation']['payment_terms']]) ? $paymentTermData[$quotationData['Quotation']['payment_terms']] : '';
+
 	                                            echo $this->Form->input('PaymentTermHolder.name', array(
 	                                            								'class' => 'form-control item_type',
 							                                                    'label' => false,
 							                                                    'readonly' => 'readonly',
-							                                                    'value' =>  $paymentTermData[$quotationData['Quotation']['payment_terms']]));
+							                                                    'value' => $paymentTerms
+
+							                                                   
+
+							                                                     ));
 	                                        ?>
 										</div>									
 									</div>
@@ -298,11 +319,19 @@
 	                            		<label class="col-lg-2 control-label">Validity</label>
 										<div class="col-lg-8">
 											<?php 
+											if (!empty($quotation['Quotation']['validity']) 
+											&& $this->DateFormat->isValidDateTimeString($quotation['Quotation']['validity'])){
+
+											$validty =  date('M d, Y', strtotime($quotation['Quotation']['validity']));
+											} else {
+
+											$validty = 'No validity date';
+											} 
 	                                            echo $this->Form->input('Quotation.validity_field', array(
 	                                            								'class' => 'form-control item_type',
 							                                                    'label' => false,
 							                                                    'readonly' => 'readonly',
-							                                                    'value' => date("Y-m-d", strtotime($quotationData['Quotation']['validity']))));
+							                                                    'value' => $validty));
 
 
 	                                        ?>
