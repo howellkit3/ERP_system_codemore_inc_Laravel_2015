@@ -52,9 +52,9 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
-
+                        <!--nocache-->
                         <?php echo $this->element('quotation_table'); ?>
-
+                        <!--/nocache-->
                     </table>
                     <hr>
 

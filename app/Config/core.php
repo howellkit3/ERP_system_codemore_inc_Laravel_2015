@@ -56,6 +56,7 @@
 		'trace' => true
 	));
 
+
 /**
  * Configure the Exception handler used for uncaught exceptions. By default,
  * ErrorHandler::handleException() is used. It will display a HTML page for the exception, and
@@ -168,7 +169,7 @@
  * or in each action using $this->cacheAction = true.
  *
  */
-	//Configure::write('Cache.check', true);
+	Configure::write('Cache.check', true);
 
 /**
  * Enable cache view prefixes.
@@ -387,9 +388,11 @@ Cache::config('_cake_model_', array(
 	'duration' => $duration
 ));
 
-Cache::config('short', array(
-    'engine' =>  $engine,
-    'duration' => '+1 hours',
-    'path' => CACHE,
-    'prefix' => 'cake_short_'
+/* store view cache */
+Cache::config('_cake_view_', array(
+    'engine' => $engine,
+    'prefix' => 'cake_view_',
+    'path' => CACHE . 'views' . DS,
+    'serialize' => ($engine === 'File'),
+    'duration' => $duration
 ));

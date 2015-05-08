@@ -8,8 +8,13 @@ App::import('Vendor', 'DOMPDF', true, array(), 'dompdf'.DS.'dompdf_config.inc.ph
 class QuotationsController extends SalesAppController {
 
 	public $uses = array('Sales.Quotation');
-	public $helper = array('Sales.Country','Sales.Status');
+	public $helpers = array('Sales.Country','Sales.Status','Cache');
 	public $useDbConfig = array('koufu_system');
+
+	public $cacheAction = array(
+        'index' => '1 hour',
+        //'view'	=> '1 hour'
+    );
 
 	public function beforeFilter() {
 
@@ -22,7 +27,7 @@ class QuotationsController extends SalesAppController {
         $this->set(compact('userData'));
 
     }
-	    	    
+	
 	public function index() {
 
 		$this->loadModel('Sales.Company');
