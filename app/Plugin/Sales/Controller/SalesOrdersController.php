@@ -67,9 +67,49 @@ class SalesOrdersController extends SalesAppController {
 
 	}
 
+  public function add_sched(){
+
+    $this->loadModel('Sales.ClientOrderDeliverySchedule');
+
+    $post = $this->request->data['ClientOrderDeliverySchedule'];
+
+    $userData = $this->Session->read('Auth');
+
+    // $post = $this->request->data['ClientOrderDeliverySchedule']['id']; 
+
+    //         if (!$post) {
+    //             throw new NotFoundException(__('Invalid post'));
+    //         }
+
+            // if ($this->request->is(array('post', 'put'))) {
+            //     $this->ClientOrderDeliverySchedule->id = $post;
+
+                if ($this->ClientOrderDeliverySchedule->save($this->request->data)) {
+
+                    $this->ClientOrderDeliverySchedule->save($this->request->data);
+                    $this->Session->setFlash(__('Client order delivery details has been added to the system.'));
+                    return $this->redirect(array('action' => 'index'));
+                }
+                $this->Session->setFlash(__('Unable to update your post.'));
+           // }
+
+            if (!$this->request->data) {
+                $this->request->data = $post;
+    
+      } 
+
+    //$deliveryData = $this->ClientOrder->find('all');
+
+    //pr($clientOrderData); exit;
+
+    pr($this->request->data); exit;
+  
+    
+  }
+
 	public function edit() {
 
-    
+
 		$this->loadModel('Sales.ClientOrderDeliverySchedule');
 
 		$userData = $this->Session->read('Auth');

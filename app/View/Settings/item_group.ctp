@@ -365,7 +365,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 															<table class="table table-striped table-hover">
 																<thead>
 																<tr>
-																	<th class="text-center"><a href="#"><span>Substrate ID</span></a></th>
+																	<th class="text-center" width="153px"><a href="#"><span>Substrate ID</span></a></th>
 																	<th class="text-center"><a href="#"><span>Name</span></a></th>
 																	<th class="text-center"><a href="#"><span>Category</span></a></th>
 																	<th class="text-center"><a href="#"><span>Type</span></a></th>
@@ -373,7 +373,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																	<th class="text-center"><a href="#"><span>Type</span></a></th>
 																	<th class="text-center"><a href="#"><span>Thickness</span></a></th>
 																	<th class="text-center"><a href="#"><span>Created</span></a></th>
-																	<th>Action</th>
+																	<th style="width:135px">Action</th>
 																</tr>
 																</thead>
 
@@ -550,13 +550,13 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 													<table class="table table-striped table-hover">
 													<thead>
 													<tr>
-													<th class="text-center"><a href="#"><span>Compound Substrate ID</span></a></th>
+													<th class="text-center" width="215px"><a href="#"><span>Compound Substrate ID</span></a></th>
 													<th class="text-center"><a href="#"><span>Name</span></a></th>
 													<th class="text-center"><a href="#"><span>Category</span></a></th>
 													<th class="text-center"><a href="#"><span>Type</span></a></th>
 													<th class="text-center"><a href="#"><span>Manufacturer</span></a></th>
 													<th class="text-center"><a href="#"><span>Created</span></a></th>
-													<th>Action</th>
+													<th style="width:135px">Action</th>
 													</tr>
 													</thead>
 
@@ -756,13 +756,13 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 													<table class="table table-striped table-hover">
 													<thead>
 													<tr>
-													<th class="text-center"><a href="#"><span>Corrugated Paper ID</span></a></th>
+													<th class="text-center" width="215px"><a href="#"><span>Corrugated Paper ID</span></a></th>
 													<th class="text-center"><a href="#"><span>Name</span></a></th>
 													<th class="text-center"><a href="#"><span>Category</span></a></th>
 													<th class="text-center"><a href="#"><span>Type</span></a></th>
 													<th class="text-center"><a href="#"><span>Manufacturer</span></a></th>
 													<th class="text-center"><a href="#"><span>Created</span></a></th>
-													<th>Action</th>
+													<th style="width:135px">Action</th>
 													</tr>
 													</thead>
 
