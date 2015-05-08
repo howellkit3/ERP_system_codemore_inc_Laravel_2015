@@ -162,7 +162,7 @@
 					<div class="main-box">
 						<header class="main-box-header clearfix">
 							<h2 class="pull-left">Client Order Delivery Schedule</h2>
-							<a data-toggle="modal" href="#myModalContactPerson" class="btn btn-primary mrg-b-lg pull-right"><i class="fa fa-plus-circle fa-lg"></i> Add Delivery Schedule</a>
+							<a data-toggle="modal" href="#myModalDelivery" class="btn btn-primary mrg-b-lg pull-right"><i class="fa fa-plus-circle fa-lg"></i> Add Delivery Schedule</a>
 						</header>
 						<div class="main-box-body clearfix">
 							<div class="main-box-body clearfix">
@@ -250,70 +250,70 @@
 
 			 <div class="row">
 				<div class="col-lg-12">
-						<div class="main-box">
-							<header class="main-box-header clearfix">
-								<h2 class="pull-left">Quotation Details
-								
-								</h2>
-							</header>
+					<div class="main-box">
+						<header class="main-box-header clearfix">
+							<h2 class="pull-left">Quotation Details
+							
+							</h2>
+						</header>
+						<div class="main-box-body clearfix">
 							<div class="main-box-body clearfix">
-								<div class="main-box-body clearfix">
-									<div class="form-horizontal">
-										<?php 
-		                                    echo $this->Form->input('Company.id', array('class' => 'form-control item_type',
-						                        'hidden' => 'hidden',
-						                        'readonly' => 'readonly',
-						                        'label' => false,
-						                        'id' => 'id'));
-		                                ?>
+								<div class="form-horizontal">
+									<?php 
+	                                    echo $this->Form->input('Company.id', array('class' => 'form-control item_type',
+					                        'hidden' => 'hidden',
+					                        'readonly' => 'readonly',
+					                        'label' => false,
+					                        'id' => 'id'));
+	                                ?>
 
-		                                <div class="form-group">
-		                                	<label class="col-lg-2 control-label">Attention</label>
-											<div class="col-lg-8">
-												<?php 
-		                                            echo $this->Form->input('Quotation.name', array(
-		                                            								'class' => 'form-control item_type',
-								                                                    'label' => false,
-								                                                    'readonly' => 'readonly',
-								                                                    'value' => $quotationData['Quotation']['attention_details']));
-		                                        ?>
-											</div>
+	                                <div class="form-group">
+	                                	<label class="col-lg-2 control-label">Attention</label>
+										<div class="col-lg-8">
+											<?php 
+	                                            echo $this->Form->input('Quotation.name', array(
+	                                            								'class' => 'form-control item_type',
+							                                                    'label' => false,
+							                                                    'readonly' => 'readonly',
+							                                                    'value' => $quotationData['Quotation']['attention_details']));
+	                                        ?>
 										</div>
-
-										<div class="form-group" id="existing_items">
-											<label class="col-lg-2 control-label">Payment Terms</label>
-											<div class="col-lg-8">
-												<?php 
-												 
-		                                            echo $this->Form->input('PaymentTermHolder.name', array(
-		                                            								'class' => 'form-control item_type',
-								                                                    'label' => false,
-								                                                    'readonly' => 'readonly',
-								                                                    'value' =>  $paymentTermData[$quotationData['Quotation']['payment_terms']]));
-		                                        ?>
-											</div>									
-										</div>
-
-		                            	<div class="form-group">
-		                            		<label class="col-lg-2 control-label">Validity</label>
-											<div class="col-lg-8">
-												<?php 
-		                                            echo $this->Form->input('Quotation.validity_field', array(
-		                                            								'class' => 'form-control item_type',
-								                                                    'label' => false,
-								                                                    'readonly' => 'readonly',
-								                                                    'value' => date("Y-m-d", strtotime($quotationData['Quotation']['validity']))));
-
-
-		                                        ?>
-												  
-											</div>
-										</div>
-										
 									</div>
+
+									<div class="form-group" id="existing_items">
+										<label class="col-lg-2 control-label">Payment Terms</label>
+										<div class="col-lg-8">
+											<?php 
+											 
+	                                            echo $this->Form->input('PaymentTermHolder.name', array(
+	                                            								'class' => 'form-control item_type',
+							                                                    'label' => false,
+							                                                    'readonly' => 'readonly',
+							                                                    'value' =>  $paymentTermData[$quotationData['Quotation']['payment_terms']]));
+	                                        ?>
+										</div>									
+									</div>
+
+	                            	<div class="form-group">
+	                            		<label class="col-lg-2 control-label">Validity</label>
+										<div class="col-lg-8">
+											<?php 
+	                                            echo $this->Form->input('Quotation.validity_field', array(
+	                                            								'class' => 'form-control item_type',
+							                                                    'label' => false,
+							                                                    'readonly' => 'readonly',
+							                                                    'value' => date("Y-m-d", strtotime($quotationData['Quotation']['validity']))));
+
+
+	                                        ?>
+											  
+										</div>
+									</div>
+									
 								</div>
 							</div>
 						</div>
+					</div>
 				</div>
 			</div>
 
@@ -503,6 +503,10 @@
 			</div> 
 	</div>
 </div>
+
+
+<?php echo $this->element('modals'); ?>
+
 <script>
 
 	jQuery(document).ready(function($){
