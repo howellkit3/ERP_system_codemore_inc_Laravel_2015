@@ -2,6 +2,9 @@
 <?php $this->Html->addCrumb('Quotation', array('controller' => 'quotations', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('View', array('controller' => 'quotations', 'action' => 'view',$quotation['Quotation']['id'])); ?>
 <?php echo $this->Html->script('Sales.custom');?>
+<?php echo $this->Html->css('redactor.css?v='.filemtime('css/redactor.css')); ?>
+<?php echo $this->Html->script('redactor/redactor/redactor_new.js?v='.filemtime('js/redactor/redactor/redactor_new.js'));?>
+
 <div style="clear:both"></div>
 
 

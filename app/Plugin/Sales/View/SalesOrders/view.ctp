@@ -154,6 +154,7 @@
 					</div>
 				</div>
 			</div>
+			<?php echo $this->Form->create('ClientOrderDeliverySchedule',array('url'=>(array('controller' => 'sales_orders','action' => 'edit'))));?>
 
 			<div class="row">
 				<div class="col-lg-12">
@@ -165,6 +166,18 @@
 							<div class="main-box-body clearfix">
 								<div class="form-horizontal">
 									<?php foreach ($clientOrderData['ClientOrderDeliverySchedule'] as $schedule):  ?>
+
+
+									<?php 
+		                                            echo $this->Form->input('ClientOrderDeliverySchedule.id', array(
+		                                            								'class' => 'form-control item_type',
+		                                            								'id' => 'toBeEdited',
+								                                                    'label' => false,
+								                                                    'hidden' => 'hidden',
+						                        									'readonly' => 'readonly',
+								                                                	'value' => $schedule['id']));
+	                            
+		                                        ?>
 
 		                                <div class="form-group">
 		                                	<label class="col-lg-2 control-label">Schedule</label>
@@ -207,9 +220,16 @@
 								                                                    'readonly' => 'readonly',
 								                                                    'value' => $schedule['quantity']));
 		                                        ?>
+		                                        <br>
+
+		                                        <button type="button" class="btn btn-primary pull-left" style="margin-right:13px;" onclick = >Edit</button> 
+
+												<button type="submit" class="btn btn-primary pull-left">Submit</button>
 												  
 											</div>
 										</div>
+
+									
 										<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
 									<?php endforeach; ?> 
 
@@ -219,6 +239,7 @@
 					</div>
 				</div>
 			</div>
+	<?php echo $this->Form->end(); ?>
 
 			 <div class="row">
 				<div class="col-lg-12">
@@ -462,6 +483,8 @@
 							                                                    'readonly' => 'readonly',
 							                                                    'value' => $quotationItemDetail['QuotationItemDetail']['material']));
 	                                        ?>
+
+	                                        
 											  
 										</div>
 									</div>

@@ -5,7 +5,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title">Send Via Email</h4>
                 </div>
-                   <?php echo $this->Form->create('Quotation',array('url'=>(array('controller' => 'quotations','action' => 'send_email')),'class' => 'form-horizontal'));?>
+                   <?php echo $this->Form->create('Quotation',array('url'=>(array('controller' => 'quotations','action' => 'send_email')),'class' => 'form-horizontal','id' => 'QuotationSendEmail'));?>
                 <div class="modal-body">
               
                      <?php echo $this->Form->input('id',array('type' => 'hidden','value' => $quotation['Quotation']['id'])); ?>
@@ -26,14 +26,14 @@
                             </div>
                         </div>
                         <div class="form-group">
-                             <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> CC : </label>
+                             <label for="inputEmail1" class="col-lg-2 control-label"> CC : </label>
 
                             <div class="col-lg-10">
                                  <label for="inputEmail1" class="control-label"><span style="color:black">*</span> Note :
                              Emails are separated by comma </label>
                                 <?php 
                                     echo $this->Form->input('emails', array('type' => 'textarea',
-                                        'class' => 'form-control item_type required email-tag',
+                                        'class' => 'form-control item_type email-tag',
                                         'data-role' => 'tagsinput',
                                         'placeholder' => 'cc',
                                         'required' => true,
@@ -64,7 +64,7 @@
                                 <?php 
                                     $message = '';
                                     echo $this->Form->input('message', array('type' => 'textarea',
-                                        'class' => 'form-control item_type required number',
+                                        'class' => 'form-control item_type required redactor',
                                         'placeholder' => 'Message', 
                                         'required' => true,
                                         'label' => false));

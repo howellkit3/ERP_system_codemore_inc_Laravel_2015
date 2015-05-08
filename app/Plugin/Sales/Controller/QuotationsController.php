@@ -817,23 +817,38 @@ class QuotationsController extends SalesAppController {
 			
 			$email->subject($this->request->data['Quotation']['subject']);
 
-			$email->message($this->request->data['Quotation']['message']);
-
+		
 			$filename =  $this->request->data['Quotation']['pdf'];
 			$attachment = $this->_createPdf($qouteId,$companyId,$filename);
 
 			if ($attachment ) {
 
-				$email->attachments(array($attachment));
-					$email->send('Quotation send from koufucolorprinting.com');
+					$email->attachments(array($attachment));
+					
+					$message = $this->request->data['Quotation']['message'];
+					 
+					$email->viewVars(compact('message'));
+
+                    $email->template('simple_message');
+
+                    if (isset($template)) {
+                         $Email->template($template);
+                    }
+
+                    $email->emailFormat('html');
+					
+					$email->send();
 
 					$file = new File(WWW_ROOT . DS . $attachment);
+					
 					$file->delete();
+					
 					$this->Session->setFlash(__('Quotation Successfully send.'),'success');
+					
 					} else {
 
-					$this->Session->setFlash(__('Sending emails failed, Please try again'),'error');
-				}
+						$this->Session->setFlash(__('Sending emails failed, Please try again'),'error');
+					}
 			}
 			else {
 				$this->Session->setFlash(__('Sending emails failed, Please use valid email address'),'error');

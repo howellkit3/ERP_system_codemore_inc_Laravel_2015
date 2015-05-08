@@ -408,7 +408,8 @@
 	                                                echo $this->Form->input('ClientOrderDeliverySchedule.0.location',array( 
 	                                                						'class' => 'form-control item_type ', 
 	                                                    					'label' => false, 
-	                                                    					'placeholder' => 'Location'
+	                                                    					'placeholder' => 'Location',
+	                                                    					'value' => !empty($companyData['Address'][0]['address1']) ? $companyData['Address'][0]['address1'] : ''
 	                                                    					));
 	                                            ?>
 											</div>

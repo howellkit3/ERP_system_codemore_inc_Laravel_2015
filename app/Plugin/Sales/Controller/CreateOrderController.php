@@ -72,7 +72,6 @@ class CreateOrderController extends SalesAppController {
 												'conditions' => array('Company.id' => $quotationData['Quotation']['company_id'])
 											));
 
-
 		$productData = $this->Company->Product->find('first',array('fields' => array('id','name'),
 										'conditions' => array('id' => $quotationData['QuotationDetailOrder'][0]['product_id'])));
 		

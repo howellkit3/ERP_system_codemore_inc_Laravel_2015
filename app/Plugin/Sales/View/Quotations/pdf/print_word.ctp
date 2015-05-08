@@ -118,8 +118,7 @@
 											<td style="width:20px;">:</td>
 											<td height ="35px" valign ="top" class = "column4 col-md-8" style="border:1px solid #000;  text-align:center">
 												<div class="col-lg-12" >
-													<?php echo $itemDetail['unit_price'];?> 
-
+													<?php echo (!empty($itemDetail['unit_price']) && is_numeric($itemDetail['unit_price'])) ? number_format($itemDetail['unit_price'],4) : ''; ?>
 													<?php
 													 echo !empty($currencies[$itemDetail['unit_price_currency_id']]) ? $currencies[$itemDetail['unit_price_currency_id']] : '' ?> 
 												</div>
