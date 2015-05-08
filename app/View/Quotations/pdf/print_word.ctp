@@ -164,7 +164,14 @@
 						</td>
 						<td style="width:20px;">:</td>
 						<td>
-						 <?php echo !empty($quotation['Quotation']['validity']) ? date('M d, Y', strtotime($quotation['Quotation']['validity'])) : 'No Validity date'; ?>
+						 <?php 
+								   if (!empty($quotation['Quotation']['validity']) 
+								   	&& $this->DateFormat->isValidDateTimeString($quotation['Quotation']['validity'])){
+								   	
+								   		echo date('M d, Y', strtotime($quotation['Quotation']['validity']));
+								   } else {
+
+						} ?>
 						</td>
 					</tr>
 					<tr>

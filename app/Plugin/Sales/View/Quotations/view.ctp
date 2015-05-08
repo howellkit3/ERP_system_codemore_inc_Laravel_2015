@@ -262,8 +262,15 @@
 								Validity
 							</div>
 							<div class="col-lg-8">
-								:&emsp;
-								   <?php echo !empty($quotation['Quotation']['validity']) ? date('M d, Y', strtotime($quotation['Quotation']['validity'])) : 'No validity date'; ?>
+								:&emsp;<?php 
+								   if (!empty($quotation['Quotation']['validity']) 
+								   	&& $this->DateFormat->isValidDateTimeString($quotation['Quotation']['validity'])){
+								   	
+								   		echo date('M d, Y', strtotime($quotation['Quotation']['validity']));
+								   } else {
+
+								   		echo 'No validity date';
+								   } ?>
 							</div>
 
 						</div>
