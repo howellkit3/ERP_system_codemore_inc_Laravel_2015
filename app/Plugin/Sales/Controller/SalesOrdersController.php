@@ -69,6 +69,7 @@ class SalesOrdersController extends SalesAppController {
 
 	public function edit() {
 
+    
 		$this->loadModel('Sales.ClientOrderDeliverySchedule');
 
 		$userData = $this->Session->read('Auth');

@@ -426,13 +426,11 @@ jQuery(document).ready(function($){
 			format: 'yyyy-mm-dd'
 		});
 		
-
 });
 
 	 </script>
-
-<?php  echo $this->Html->script('Sales.create_ajax');?>
-
+		
+		<?php  echo $this->Html->script('Sales.create_ajax');?>
 
 <?php } ?>
 
