@@ -37,12 +37,14 @@
 
 		echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit ', array('controller' => 'quotations', 'action' => 'edit',$quotation['Quotation']['id'],$companyId),array('class' =>'btn btn-info pull-right '. $status ,'escape' => false)) ;
     	
+    	$status = (!$this->Status->isQuotationApproved($quotation['Quotation']['status'])) ? 'disabled' : '';
+
     	echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array(
 		        	'controller' => 'quotations', 
 		        	'action' => 'print_word',
 		        	'ext' => 'pdf',
 		        	$quotation['Quotation']['id'],$companyId),
-		        	array('class' =>'btn btn-info pull-right','escape' => false,'target' => '_blank'));
+		        	array('class' =>'btn btn-info pull-right '.$status,'escape' => false,'target' => '_blank'));
 
     	$status = (!$this->Status->isQuotationApproved($quotation['Quotation']['status'])) ? 'disabled' : '';
 

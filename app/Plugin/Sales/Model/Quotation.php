@@ -98,6 +98,17 @@ class Quotation extends AppModel {
 		$this->contain($model);
 	}
 
+
+	public function afterSave($data,$options = array() ) {
+
+		Cache::clear();	
+	}
+	public function afterDelete() {
+
+		Cache::clear();
+	}
+
+
 	public $validate = array(
 
 		// 'name' => array(
