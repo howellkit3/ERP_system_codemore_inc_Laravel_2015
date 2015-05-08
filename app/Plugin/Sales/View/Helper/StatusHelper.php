@@ -13,7 +13,9 @@ class StatusHelper extends HtmlHelper {
             $return = true;
         }
        
-    }			
+       return $return;
+
+      }			
     
 }
 ?>

@@ -4,7 +4,7 @@ App::uses('HtmlHelper', 'View/Helper');
 class StatusHelper extends HtmlHelper {
     
     
-    function isQuotationApproved($status = null) {
+      function isQuotationApproved($status = null) {
         
         $return = false;
 
@@ -12,10 +12,12 @@ class StatusHelper extends HtmlHelper {
 
             $return = true;
         }
-
-        return $return;
        
-    }
+       return $return;
+
+      }         
+          
+    
     function isQuotationDraft($status = null) {
         
         $return = false;

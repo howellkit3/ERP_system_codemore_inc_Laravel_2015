@@ -165,7 +165,7 @@
 	        echo $this->Html->script('skycons');
 
 
-	        echo $this->Html->script('bootstrap-tagsinput/bootstrap-tagsinput.min');
+	        echo $this->Html->script('bootstrap-tagsinput/bootstrap-tagsinput');
 
 
 	        //theme scripts
