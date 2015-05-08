@@ -2,6 +2,7 @@
 <?php $this->Html->addCrumb('Clients Order', array('controller' => 'sales_orders', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('View', array('controller' => 'sales_orders', 'action' => 'view',$clientOrderData['ClientOrder']['id'])); ?>
 <?php echo $this->Html->script('Sales.inquiry');?>
+
 <div style="clear:both"></div>
 
 <?php echo $this->element('sales_option');?><br><br>
@@ -183,10 +184,13 @@
 		                                	<label class="col-lg-2 control-label">Schedule</label>
 											<div class="col-lg-8">
 												<?php 
-		                                              echo $this->Form->input('ClientOrder.schedule', array(
+		                                              echo $this->Form->input('ClientOrderDeliverySchedule.schedule', array(
 		                                            								'class' => 'form-control item_type',
 								                                                    'label' => false,
-								                                                    'readonly' => 'readonly',
+								                                                    'type' => 'text',
+								                                                    'id' => 'textField1',
+								                                                    'class' => 'form-control item_type datepick',
+								                                                    'disabled' => 'disabled',
 								                                                    'value' => !empty($schedule['schedule']) ?
 								                                                    date('Y-m-d',strtotime($schedule['schedule'])) : ''	
 
@@ -200,10 +204,11 @@
 											<label class="col-lg-2 control-label">Location</label>
 											<div class="col-lg-8">
 												<?php 
-		                                            echo $this->Form->input('ClientOrder.location', array(
+		                                            echo $this->Form->input('ClientOrderDeliverySchedule.location', array(
 		                                            								'class' => 'form-control item_type',
 								                                                    'label' => false,
-								                                                    'readonly' => 'readonly',
+								                                                    'id' => 'textField2',
+								                                                   	'disabled' => 'disabled',
 								                                                    'value' => $schedule['location']));
 		                                        ?>
 											</div>
@@ -214,22 +219,22 @@
 		                            		<label class="col-lg-2 control-label">Quantity</label>
 											<div class="col-lg-8">
 												<?php 
-		                                            echo $this->Form->input('ClientOrder.quantity', array(
+		                                            echo $this->Form->input('ClientOrderDeliverySchedule.quantity', array(
 		                                            								'class' => 'form-control item_type',
 								                                                    'label' => false,
-								                                                    'readonly' => 'readonly',
+								                                                    'id' => 'textField3',
+								                                                    'disabled' => 'disabled',
 								                                                    'value' => $schedule['quantity']));
 		                                        ?>
 		                                        <br>
 
-		                                        <button type="button" class="btn btn-primary pull-left" style="margin-right:13px;" onclick = >Edit</button> 
+		                                        <button type="button" class="btn btn-primary pull-left" id = "buttonEdit" style="margin-right:13px;" onclick="removeAttr()" >Edit</button> 
 
-												<button type="submit" class="btn btn-primary pull-left">Submit</button>
+												<button type="submit" class="btn btn-primary pull-left" id = "submit" disabled onclick="AddAttr()">Submit</button>
 												  
 											</div>
 										</div>
 
-									
 										<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
 									<?php endforeach; ?> 
 
@@ -506,4 +511,37 @@
 		
 	});
 
+</script>
+
+<script>
+
+var x = 0;
+
+function removeAttr() {
+
+    $("#buttonEdit").click(function(){
+
+    	//alert('entered');
+
+    	if (x == 0) {
+	    	//alert('zero value ko'); 
+	    	$('#submit, #textField1, #textField2, #textField3' ).removeAttr('disabled');
+
+	    	x = 1;
+	    }else{
+	    	//alert('one value ko'); 
+	    	$('#submit, #textField1, #textField2, #textField3' ).attr('disabled','disabled');
+		    x = 0;
+	    }
+
+    });
+}
+</script>
+
+<script>
+function AddAttr() {
+    $("button").click(function(){
+   $('#submit, #textField1, #textField2, #textField3' ).attr('disabled','disabled');
+    });
+}
 </script>
