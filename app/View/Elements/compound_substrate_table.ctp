@@ -38,7 +38,7 @@
                                         'controller' => 'settings', 
                                         'action' => 'view_compound_substrate',
                                         $compoundSubstrateDataList['CompoundSubstrate']['id']), array(
-                                                                            'class' =>' table-link',
+                                                                            'class' =>' table-link small-link-icon',
                                                                             'escape' => false, 
                                                                             'title'=>'View Information'));
                 ?>
@@ -47,14 +47,14 @@
                     echo $this->Html->link('<span class="fa-stack">
                     <i class="fa fa-square fa-stack-2x"></i>
                     <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit </font></span>
-                    </span> ', array('controller' => 'settings', 'action' => 'compound_substrate_edit',$compoundSubstrateDataList['CompoundSubstrate']['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Information'));
+                    </span> ', array('controller' => 'settings', 'action' => 'compound_substrate_edit',$compoundSubstrateDataList['CompoundSubstrate']['id']),array('class' =>' table-link small-link-icon','escape' => false,'title'=>'Edit Information'));
                 ?>
 
                  <?php
                     echo $this->Html->link('<span class="fa-stack">
                     <i class="fa fa-square fa-stack-2x"></i>
                     <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Delete </font></span>
-                    </span>', array('controller' => 'settings', 'action' => 'deleteCompoundSubstrate',$compoundSubstrateDataList['CompoundSubstrate']['id']),array('class' =>' table-link','escape' => false,'title'=>'Delete Information','confirm' => 'Do you want to delete this Compound Substrate?'));
+                    </span>', array('controller' => 'settings', 'action' => 'deleteCompoundSubstrate',$compoundSubstrateDataList['CompoundSubstrate']['id']),array('class' =>' table-link small-link-icon','escape' => false,'title'=>'Delete Information','confirm' => 'Do you want to delete this Compound Substrate?'));
                 ?>
 
             </td>    
