@@ -316,7 +316,7 @@
                                                     					));
 
                                             ?>
-                                            <input type="text" id="limitQuantity" data="0" value="0" />
+                                          
 										</div>
 									</div>
 
@@ -489,15 +489,3 @@
 		<?php echo $this->Form->end(); ?>
 	</div>
 </div>
-<script>
-			
-	jQuery(document).ready(function($){
-		//datepicker
-		$('.datepick').datepicker({
-			format: 'yyyy-mm-dd'
-		});
-		jQuery('.remove').hide();
-		$("#QuotationIndexForm").validate();
-	});
-	
- </script>
