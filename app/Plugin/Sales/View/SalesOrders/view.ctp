@@ -109,14 +109,14 @@
 			                        
 
 			                        <div class="form-group">
-			                        	<label class="col-lg-2 control-label">Name</label>
+			                        	<label class="col-lg-2 control-label">Item Name</label>
 										<div class="col-lg-8">
 											<?php 
 			                                    echo $this->Form->input('ClientOrder.name', array(
 			                                    								'class' => 'form-control item_type',
 							                                                    'label' => false,
 							                                                    'readonly' => 'readonly',
-							                                                    'value' => $clientOrderData['ClientOrder']['name']));
+							                                                    'value' => $quotationData['Product']['name']));
 			                                ?>
 										</div>
 									</div>
