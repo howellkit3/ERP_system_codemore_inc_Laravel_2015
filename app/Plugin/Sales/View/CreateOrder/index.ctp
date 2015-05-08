@@ -112,11 +112,22 @@
                                     	<label class="col-lg-2 control-label">Attention</label>
 										<div class="col-lg-8">
 											<?php echo $this->Form->input('Quotation.attention_details', array(
-												'type' => 'text',
+												'type' => 'hidden',
 				                                'readonly' => 'readonly',
 				                                'label' => false,
 				                                'class' => 'form-control',
 				                                'value' => ucfirst($quotationData['Quotation']['attention_details'])
+				                                 )); 
+
+				                            ?>
+											<?php echo $this->Form->input('Quotation.attention_details_name', array(
+												'type' => 'text',
+				                                'readonly' => 'readonly',
+				                                'label' => false,
+				                                'class' => 'form-control',
+				                                'value' => 
+				                                ucfirst($quotationData['ContactPerson']['firstname']).' '.
+				                                ucfirst($quotationData['ContactPerson']['lastname'])
 				                                 )); 
 
 				                            ?>

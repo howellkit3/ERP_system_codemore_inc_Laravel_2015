@@ -57,15 +57,14 @@ class CreateOrderController extends SalesAppController {
 
 		$this->loadModel('PaymentTermHolder');
 
+		$this->loadModel('Sales.ContactPerson');
+
 		$paymentTerm = $this->PaymentTermHolder->find('list',array('fields' => array('id','name')));
 
-		$this->Quotation->bind(array('QuotationItemDetail','QuotationDetailOrder'));
+		$this->Quotation->bind(array('QuotationItemDetail','QuotationDetailOrder','ContactPerson'));
 
-		$quotationData = $this->Quotation->find('first', array(
-												'conditions' => array(
-													'id' => $quotationId
-												)
-											));
+		$quotationData = $this->Quotation->findById($quotationId);
+
 		$this->Company->bind(array('Address' => array('fields' => array('id','address1','address2'))));
 
 		$companyData = $this->Company->find('first', array(
