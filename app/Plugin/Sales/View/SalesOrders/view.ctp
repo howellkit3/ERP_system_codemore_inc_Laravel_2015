@@ -170,10 +170,10 @@
 								<div class="form-horizontal">
 									<?php foreach ($clientOrderData['ClientOrderDeliverySchedule'] as $schedule):  ?>
 
-
+									<div class="tab-container">
 									<?php 
 		                                            echo $this->Form->input('ClientOrderDeliverySchedule.id', array(
-		                                            								'class' => 'form-control item_type',
+		                                            								'class' => 'form-control item_type editable',
 		                                            								'id' => 'toBeEdited',
 								                                                    'label' => false,
 								                                                    'hidden' => 'hidden',
@@ -191,7 +191,7 @@
 								                                                    'label' => false,
 								                                                    'type' => 'text',
 								                                                    'id' => 'textField1',
-								                                                    'class' => 'form-control item_type datepick',
+								                                                    'class' => 'form-control item_type datepick editable',
 								                                                    'disabled' => 'disabled',
 								                                                    'value' => !empty($schedule['schedule']) ?
 								                                                    date('Y-m-d',strtotime($schedule['schedule'])) : ''	
@@ -207,7 +207,7 @@
 											<div class="col-lg-8">
 												<?php 
 		                                            echo $this->Form->input('ClientOrderDeliverySchedule.location', array(
-		                                            								'class' => 'form-control item_type',
+		                                            								'class' => 'form-control item_type editable',
 								                                                    'label' => false,
 								                                                    'id' => 'textField2',
 								                                                   	'disabled' => 'disabled',
@@ -222,7 +222,7 @@
 											<div class="col-lg-8">
 												<?php 
 		                                            echo $this->Form->input('ClientOrderDeliverySchedule.quantity', array(
-		                                            								'class' => 'form-control item_type',
+		                                            								'class' => 'form-control item_type editable',
 								                                                    'label' => false,
 								                                                    'id' => 'textField3',
 								                                                    'disabled' => 'disabled',
@@ -230,14 +230,15 @@
 		                                        ?>
 		                                        <br>
 
-		                                        <button type="button" class="btn btn-primary pull-left" id = "buttonEdit" style="margin-right:13px;" >Edit</button> 
+		                                        <button type="button" class="btn btn-primary pull-left buttonEdit" style="margin-right:13px;" >Edit</button> 
 
-												<button type="submit" class="btn btn-primary pull-left" id = "submit" disabled onclick="AddAttr()">Submit</button>
+												<button type="submit" class="btn btn-primary pull-left editable" id = "submit" disabled onclick="AddAttr()">Submit</button>
 												  
 											</div>
 										</div>
 
 										<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
+										</div>
 									<?php endforeach; ?> 
 
 								</div>
@@ -552,14 +553,14 @@
 
 var x = 0;
 
-    $("#buttonEdit").click(function(){
+    $(".buttonEdit").click(function(){
 
     	if ($('#textField1').is(':disabled')) {
 	    	//alert('zero value ko'); 
-	    	$('#submit, #textField1, #textField2, #textField3' ).removeAttr('disabled');
+	    	$(this).parents('.tab-container').find('.editable').removeAttr('disabled');
 	    }else{
 	    	//alert('one value ko'); 
-	    	$('#submit, #textField1, #textField2, #textField3' ).attr('disabled','disabled');
+	    	$(this).parents('.tab-container').find('.editable').attr('disabled','disabled');
 		    x = 0;
 	    }
 
