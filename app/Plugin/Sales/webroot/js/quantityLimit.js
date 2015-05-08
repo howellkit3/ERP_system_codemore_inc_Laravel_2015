@@ -5,7 +5,7 @@ $( document ).ready(function() {
 		});
 	jQuery('.remove').hide();
 	$("#QuotationIndexForm").validate();
-		
+
 	$("body").on('keyup','.quantityLimit', function(e){
 
 		var quantityValue = $('#quantity').val();
@@ -14,9 +14,10 @@ $( document ).ready(function() {
 		var total = '';
 		var limit = '';
 		var isText = $(this);
-		     
+		var allVal = 0;
+	
 	    $(fields).each(function() {
-	     
+	     	allVal = $('.quantityLimit').val();
 	        var num = parseInt(this.value);
 	          
 			if (!isNaN(this.value)) {
@@ -26,19 +27,21 @@ $( document ).ready(function() {
 			}
 	         
 			if ( total > quantityValue ){
-				
-				console.log(total);
+
+				// for max value
+				var totalDeduction = parseInt(quantityValue) - parseInt(allVal);
+
+				console.log(quantityValue);
+				console.log(allVal);
+				console.log(totalDeduction);
+
 				alert('Max Quantity');
-				isText.val('');
-				exceed = total - quantityValue;
-
-				console.log('max reached');
-
+				isText.val(totalDeduction);
+				
 			} else {
 
 				$('.add-field , .remove-field').prop("disabled", false);
-				console.log('max not reached');
-
+				
 			}
 			if(total == quantityValue){
 
