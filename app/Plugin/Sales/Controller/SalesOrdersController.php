@@ -67,6 +67,37 @@ class SalesOrdersController extends SalesAppController {
 
 	}
 
+	public function edit() {
+
+		$this->loadModel('Sales.ClientOrderDeliverySchedule');
+
+		$userData = $this->Session->read('Auth');
+
+		$post = $this->request->data['ClientOrderDeliverySchedule']['id']; 
+
+            if (!$post) {
+                throw new NotFoundException(__('Invalid post'));
+            }
+
+            if ($this->request->is(array('post', 'put'))) {
+                $this->ClientOrderDeliverySchedule->id = $post;
+
+                if ($this->ClientOrderDeliverySchedule->save($this->request->data)) {
+
+                    $this->ClientOrderDeliverySchedule->save($this->request->data);
+                    $this->Session->setFlash(__('Client order delivery details has been updated.'));
+                    return $this->redirect(array('action' => 'index'));
+                }
+                $this->Session->setFlash(__('Unable to update your post.'));
+            }
+
+            if (!$this->request->data) {
+                $this->request->data = $post;
+    
+			}	
+	}
+
+
 	  public function status() {
 
         $userData = $this->Session->read('Auth');
