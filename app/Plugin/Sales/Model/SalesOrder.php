@@ -49,6 +49,7 @@ class SalesOrder extends AppModel {
 		
 	}
 
+
 	public function deleteSalesOrder($quotationId = null){
 
 		$salesData = $this->find('all',array('conditions' => array('SalesOrder.quotation_id' => $quotationId)));

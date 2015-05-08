@@ -75,23 +75,28 @@ class SalesOrdersController extends SalesAppController {
 
     $userData = $this->Session->read('Auth');
 
-    // $post = $this->request->data['ClientOrderDeliverySchedule']['id']; 
+    $deliveryData = $this->ClientOrderDeliverySchedule->find('list');
 
-    //         if (!$post) {
+  
+    $post = $this->request->data['ClientOrderDeliverySchedule']['client_order_id']; 
+
+   //         if (!$post) {
     //             throw new NotFoundException(__('Invalid post'));
     //         }
 
-            // if ($this->request->is(array('post', 'put'))) {
-            //     $this->ClientOrderDeliverySchedule->id = $post;
+             if ($this->request->is(array('post', 'put'))) {
+                 $this->ClientOrderDeliverySchedule->id = $post;
 
-                if ($this->ClientOrderDeliverySchedule->save($this->request->data)) {
+                 $data['ClientOrderDeliverySchedule'][] = $this->request->data['ClientOrderDeliverySchedule'];
 
-                    $this->ClientOrderDeliverySchedule->save($this->request->data);
-                    $this->Session->setFlash(__('Client order delivery details has been added to the system.'));
-                    return $this->redirect(array('action' => 'index'));
-                }
-                $this->Session->setFlash(__('Unable to update your post.'));
-           // }
+
+                        $this->ClientOrderDeliverySchedule->saveClientOrderDeliverySchedule( $data,$userData['User']['id'],$post);
+
+                    $this->Session->setFlash(__('Client order delivery details has been added to the system.'),'success');
+                    return $this->redirect(array('action' => 'view',$post));
+                
+                $this->Session->setFlash(__('Unable to update your post.'),'error');
+            }
 
             if (!$this->request->data) {
                 $this->request->data = $post;

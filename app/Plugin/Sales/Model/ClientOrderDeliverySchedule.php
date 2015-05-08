@@ -36,6 +36,7 @@ class ClientOrderDeliverySchedule extends AppModel {
 
 	public function saveClientOrderDeliverySchedule($clientOrderData = null, $auth = null, $clientOrderId = null){
 		
+	
 		foreach ($clientOrderData[$this->name] as $key => $clientOrderDetails)
 		{
 			$this->create();
@@ -45,7 +46,6 @@ class ClientOrderDeliverySchedule extends AppModel {
 				$clientOrderDetails['created_by'] = $auth;
 				$clientOrderDetails['modified_by'] = $auth;
 				$clientOrderDetails['client_order_id'] = $clientOrderId;	
-			
 				$this->save($clientOrderDetails);
 	
 			}
@@ -53,4 +53,25 @@ class ClientOrderDeliverySchedule extends AppModel {
 		}
 
 	}
+
+
+
+
+	public function saveDelivery($clientOrderData = null, $auth = null){
+		
+		
+			$this->create();
+			
+				
+				$data['created_by'] = $auth;
+				$data['modified_by'] = $auth;
+					
+				$this->save($data);
+
+
+	}
+
+
+
+
 }

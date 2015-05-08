@@ -103,7 +103,7 @@ class CreateOrderController extends SalesAppController {
             	
             	$this->ClientOrder->ClientOrderDeliverySchedule->saveClientOrderDeliverySchedule($this->request->data, $userData['User']['id'], $this->id);
 
-            	$this->Session->setFlash(__('Create Order was successfully added in the system.'));
+            	$this->Session->setFlash(__('Client Order was successfully added in the system.'));
     			$this->redirect(
             		array('controller' => 'sales_orders', 'action' => 'index')
        			 );
