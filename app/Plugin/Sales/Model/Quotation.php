@@ -48,7 +48,7 @@ class Quotation extends AppModel {
 					'conditions' => array('ContactPersonEmail.foreign_key = ContactPerson.id'),
 					'dependent' => false
 					),
-
+				
 			),
 			'hasMany' => array(
 				
