@@ -47,13 +47,13 @@ class SalesOrdersController extends SalesAppController {
 
 		$this->loadModel('PaymentTermHolder');
 
-		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail'));
+		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ContactPerson'));
 
 		$this->ClientOrder->bind(array('ClientOrderDeliverySchedule'));
 
 		$clientOrderData = $this->ClientOrder->find('first',array('conditions' => array('ClientOrder.id' => $clientOrderId)));
 
-		$quotationData = $this->Quotation->find('first',array('conditions' => array('Quotation.id' => $clientOrderData['ClientOrder']['quotation_id'])));
+		$quotationData = $this->Quotation->findById($clientOrderData['ClientOrder']['quotation_id']);
 
 		$companyName = $this->Company->find('list',array(
      													'fields' => array('id','company_name')
