@@ -51,10 +51,8 @@ $( document ).ready(function() {
 		 if ( allVal > quantityValue ){
 
 				var totalDeduction = parseInt(allVal) - parseInt(quantityValue);
-
-
 				alert('Max Quantity');
-				isText.val(totalDeduction);
+				isText.val(isText.val() - totalDeduction);
 				
 		}
 		if(allVal == quantityValue){
