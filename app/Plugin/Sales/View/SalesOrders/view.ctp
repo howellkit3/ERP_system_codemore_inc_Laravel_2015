@@ -227,7 +227,7 @@
 													<div class="col-lg-8">
 														<?php 
 				                                            echo $this->Form->input('ClientOrderDeliverySchedule.quantity', array(
-				                                            								'class' => 'form-control item_type editable quantityLimit',
+				                                            								'class' => 'form-control item_type editable quantityLimit number',
 										                                                    'label' => false,
 										                                                    'readonly' => 'readonly',
 										                                                    'value' => $schedule['quantity']));

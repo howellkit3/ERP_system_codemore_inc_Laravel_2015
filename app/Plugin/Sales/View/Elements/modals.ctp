@@ -483,7 +483,7 @@
                             <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span> Quantity</label>
                             <div class="col-lg-9">
                                 <?php 
-                                    echo $this->Form->input('ClientOrderDeliverySchedule.quantity', array('class' => 'form-control required addquantityLimit',
+                                    echo $this->Form->input('ClientOrderDeliverySchedule.quantity', array('class' => 'form-control required addquantityLimit number',
                                                                                                         'label' => false,
                                                                                                         'required' => 'required'));
                                 ?>

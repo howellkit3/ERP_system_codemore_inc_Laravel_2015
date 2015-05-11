@@ -431,7 +431,7 @@
 											<div class="col-lg-8">
 												<?php 
 	                                                echo $this->Form->input('ClientOrderDeliverySchedule.0.quantity',array( 
-	                                                						'class' => 'form-control item_type quantityLimit', 
+	                                                						'class' => 'form-control item_type quantityLimit number', 
 	                                                    					'label' => false, 
 	                                                    					'placeholder' => 'Quantity'
 	                                                    					));
