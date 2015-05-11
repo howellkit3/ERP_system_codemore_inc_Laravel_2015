@@ -445,7 +445,7 @@
                     <h4 class="modal-title">Add Delivery Schedule</h4>
                 </div>
                 <div class="modal-body">
-                 <?php echo $this->Form->create('ClientOrderDeliverySchedule',array('url'=>(array('controller' => 'sales_orders','action' => 'add_sched')),'class' => 'form-horizontal'));?>
+                 <?php echo $this->Form->create('ClientOrderDeliverySchedule',array('url'=>(array('controller' => 'sales_orders','action' => 'add_schedule')),'class' => 'form-horizontal'));?>
                     <?php 
                         echo $this->Form->input('ClientOrderDeliverySchedule.client_order_id', array('class' => 'form-control item_type required',
                             'type' => 'hidden',
@@ -483,7 +483,7 @@
                             <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span> Quantity</label>
                             <div class="col-lg-9">
                                 <?php 
-                                    echo $this->Form->input('ClientOrderDeliverySchedule.quantity', array('class' => 'form-control required',
+                                    echo $this->Form->input('ClientOrderDeliverySchedule.quantity', array('class' => 'form-control required addquantityLimit',
                                                                                                         'label' => false,
                                                                                                         'required' => 'required'));
                                 ?>

@@ -428,7 +428,9 @@
 		                                            								'class' => 'form-control item_type datepick',
 								                                                    'label' => false,
 								                                                    'placeholder' => 'Validity',
-								                                                    'value' => date("Y-m-d", strtotime($this->request->data['Quotation']['validity']))));
+								                                                    'value' => !empty($this->request->data['Quotation']['validity']) ? date("Y-m-d", strtotime($this->request->data['Quotation']['validity'])) : 'No validity date'
+								                                                    ));
+		                                            
 	                                            ?>
 											</div>
 										</div>

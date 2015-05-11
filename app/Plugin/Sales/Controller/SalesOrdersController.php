@@ -67,80 +67,28 @@ class SalesOrdersController extends SalesAppController {
 
 	}
 
-  public function add_sched(){
+	public function add_schedule() {
 
-    $this->loadModel('Sales.ClientOrderDeliverySchedule');
+      //new code bienskie noted:all adding schedule can use this controller
+      $this->ClientOrder->bind(array('ClientOrderDeliverySchedule'));
 
-    $post = $this->request->data['ClientOrderDeliverySchedule'];
+      $userData = $this->Session->read('Auth');
 
-    $userData = $this->Session->read('Auth');
+      if ($this->request->is('post')) {
+     
+        if (!empty($this->request->data)) {
 
-    $deliveryData = $this->ClientOrderDeliverySchedule->find('list');
+          $result['ClientOrderDeliverySchedule'] = Set::classicExtract($this->request->data,'{s}');
+         
+          $this->ClientOrder->ClientOrderDeliverySchedule->saveClientOrderDeliverySchedule($result,$userData['User']['id'],$this->request->data['ClientOrderDeliverySchedule']['client_order_id']);
+        
+          $this->Session->setFlash(__('Client order delivery details has been updated.'));
 
-  
-    $post = $this->request->data['ClientOrderDeliverySchedule']['client_order_id']; 
+          return $this->redirect(array('controller' => 'sales_orders','action' => 'view',$this->request->data['ClientOrderDeliverySchedule']['client_order_id']));
+        }
 
-   //         if (!$post) {
-    //             throw new NotFoundException(__('Invalid post'));
-    //         }
-
-             if ($this->request->is(array('post', 'put'))) {
-                 $this->ClientOrderDeliverySchedule->id = $post;
-
-                 $data['ClientOrderDeliverySchedule'][] = $this->request->data['ClientOrderDeliverySchedule'];
-
-
-                        $this->ClientOrderDeliverySchedule->saveClientOrderDeliverySchedule( $data,$userData['User']['id'],$post);
-
-                    $this->Session->setFlash(__('Client order delivery details has been added to the system.'),'success');
-                    return $this->redirect(array('action' => 'view',$post));
-                
-                $this->Session->setFlash(__('Unable to update your post.'),'error');
-            }
-
-            if (!$this->request->data) {
-                $this->request->data = $post;
-    
-      } 
-
-    //$deliveryData = $this->ClientOrder->find('all');
-
-    //pr($clientOrderData); exit;
-
-    pr($this->request->data); exit;
-  
-    
-  }
-
-	public function edit() {
-
-
-		$this->loadModel('Sales.ClientOrderDeliverySchedule');
-
-		$userData = $this->Session->read('Auth');
-
-		$post = $this->request->data['ClientOrderDeliverySchedule']['id']; 
-
-            if (!$post) {
-                throw new NotFoundException(__('Invalid post'));
-            }
-
-            if ($this->request->is(array('post', 'put'))) {
-                $this->ClientOrderDeliverySchedule->id = $post;
-
-                if ($this->ClientOrderDeliverySchedule->save($this->request->data)) {
-
-                    $this->ClientOrderDeliverySchedule->save($this->request->data);
-                    $this->Session->setFlash(__('Client order delivery details has been updated.'));
-                    return $this->redirect(array('action' => 'index'));
-                }
-                $this->Session->setFlash(__('Unable to update your post.'));
-            }
-
-            if (!$this->request->data) {
-                $this->request->data = $post;
-    
-			}	
+      }
+		
 	}
 
 

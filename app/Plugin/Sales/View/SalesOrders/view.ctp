@@ -2,7 +2,7 @@
 <?php $this->Html->addCrumb('Clients Order', array('controller' => 'sales_orders', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('View', array('controller' => 'sales_orders', 'action' => 'view',$clientOrderData['ClientOrder']['id'])); ?>
 <?php echo $this->Html->script('Sales.inquiry');?>
-
+<?php echo $this->Html->script('Sales.quantityLimitview');?>
 <div style="clear:both"></div>
 
 <?php echo $this->element('sales_option');?><br><br>
@@ -156,89 +156,96 @@
 					</div>
 				</div>
 			</div>
-			<?php echo $this->Form->create('ClientOrderDeliverySchedule',array('url'=>(array('controller' => 'sales_orders','action' => 'edit'))));?>
-
+			
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="main-box">
 						<header class="main-box-header clearfix">
 							<h2 class="pull-left">Client Order Delivery Schedule</h2>
-							<a data-toggle="modal" href="#myModalDelivery" class="btn btn-primary mrg-b-lg pull-right"><i class="fa fa-plus-circle fa-lg"></i> Add Delivery Schedule</a>
+							<a data-toggle="modal" href="#myModalDelivery" class="btn btn-primary mrg-b-lg pull-right addSchedButton"><i class="fa fa-plus-circle fa-lg"></i> Add Delivery Schedule</a>
 						</header>
 						<div class="main-box-body clearfix">
 							<div class="main-box-body clearfix">
 								<div class="form-horizontal">
 									<?php foreach ($clientOrderData['ClientOrderDeliverySchedule'] as $schedule):  ?>
 
-									<div class="tab-container">
-									<?php 
-		                                            echo $this->Form->input('ClientOrderDeliverySchedule.id', array(
-		                                            								'class' => 'form-control item_type editable',
-		                                            								'id' => 'toBeEdited',
+										<?php echo $this->Form->create('ClientOrderDeliverySchedule',array('id' => 'form'.$schedule['id'],'url'=>(array('controller' => 'sales_orders','action' => 'add_schedule'))));?>
+
+											<div class="tab-container">
+												<?php 
+			                                        echo $this->Form->input('ClientOrderDeliverySchedule.id', array(
+			                                        								'class' => 'form-control item_type editable',
+			                                        								'id' => 'toBeEdited',
 								                                                    'label' => false,
 								                                                    'hidden' => 'hidden',
 						                        									'readonly' => 'readonly',
 								                                                	'value' => $schedule['id']));
-	                            
-		                                        ?>
 
-		                                <div class="form-group">
-		                                	<label class="col-lg-2 control-label">Schedule</label>
-											<div class="col-lg-8">
-												<?php 
-		                                              echo $this->Form->input('ClientOrderDeliverySchedule.schedule', array(
-		                                            								'class' => 'form-control item_type',
+			                                        echo $this->Form->input('ClientOrderDeliverySchedule.client_order_id', array(
+			                                        								'type' => 'text',
 								                                                    'label' => false,
-								                                                    'type' => 'text',
-								                                                    'id' => 'textField1',
-								                                                    'class' => 'form-control item_type datepick editable',
-								                                                    'disabled' => 'disabled',
-								                                                    'value' => !empty($schedule['schedule']) ?
-								                                                    date('Y-m-d',strtotime($schedule['schedule'])) : ''	
+								                                                    'hidden' => 'hidden',
+								                                                	'value' => $schedule['client_order_id']));
+			                                       
+			                                    ?>
 
-								                                                   ));
-		                                        ?>
-		                                        
+		                                		<div class="form-group">
+		                                			<label class="col-lg-2 control-label">Schedule</label>
+													<div class="col-lg-8">
+														<?php 
+				                                              echo $this->Form->input('ClientOrderDeliverySchedule.schedule', array(
+				                                            								'class' => 'form-control item_type',
+										                                                    'label' => false,
+										                                                    'type' => 'text',
+										                                                    'class' => 'form-control item_type datepick editable',
+										                                                    'readonly' => 'readonly',
+										                                                    'value' => !empty($schedule['schedule']) ?
+										                                                    date('Y-m-d',strtotime($schedule['schedule'])) : ''	
+
+										                                                   ));
+				                                        ?>
+	                                        
+													</div>
+												</div>
+
+												<div class="form-group" id="existing_items">
+													<label class="col-lg-2 control-label">Location</label>
+													<div class="col-lg-8">
+														<?php 
+				                                            echo $this->Form->input('ClientOrderDeliverySchedule.location', array(
+				                                            								'class' => 'form-control item_type editable',
+										                                                    'label' => false,
+										                                                   	'readonly' => 'readonly',
+										                                                    'value' => $schedule['location']));
+				                                        ?>
+													</div>
+													
+												</div>
+
+				                            	<div class="form-group">
+				                            		<label class="col-lg-2 control-label">Quantity</label>
+													<div class="col-lg-8">
+														<?php 
+				                                            echo $this->Form->input('ClientOrderDeliverySchedule.quantity', array(
+				                                            								'class' => 'form-control item_type editable quantityLimit',
+										                                                    'label' => false,
+										                                                    'readonly' => 'readonly',
+										                                                    'value' => $schedule['quantity']));
+				                                        ?>
+				                                        <br>
+
+				                                        <button type="button" class="btn btn-primary pull-left buttonEdit" style="margin-right:13px;" >Edit</button> 
+
+														<button type="submit" class="btn btn-primary pull-left editable" id = "submit" disabled onclick="AddAttr()">Submit</button>
+														  
+													</div>
+												</div>
+
+												<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
 											</div>
-										</div>
 
-										<div class="form-group" id="existing_items">
-											<label class="col-lg-2 control-label">Location</label>
-											<div class="col-lg-8">
-												<?php 
-		                                            echo $this->Form->input('ClientOrderDeliverySchedule.location', array(
-		                                            								'class' => 'form-control item_type editable',
-								                                                    'label' => false,
-								                                                    'id' => 'textField2',
-								                                                   	'disabled' => 'disabled',
-								                                                    'value' => $schedule['location']));
-		                                        ?>
-											</div>
-											
-										</div>
+										<?php echo $this->Form->end(); ?>
 
-		                            	<div class="form-group">
-		                            		<label class="col-lg-2 control-label">Quantity</label>
-											<div class="col-lg-8">
-												<?php 
-		                                            echo $this->Form->input('ClientOrderDeliverySchedule.quantity', array(
-		                                            								'class' => 'form-control item_type editable',
-								                                                    'label' => false,
-								                                                    'id' => 'textField3',
-								                                                    'disabled' => 'disabled',
-								                                                    'value' => $schedule['quantity']));
-		                                        ?>
-		                                        <br>
-
-		                                        <button type="button" class="btn btn-primary pull-left buttonEdit" style="margin-right:13px;" >Edit</button> 
-
-												<button type="submit" class="btn btn-primary pull-left editable" id = "submit" disabled onclick="AddAttr()">Submit</button>
-												  
-											</div>
-										</div>
-
-										<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
-										</div>
 									<?php endforeach; ?> 
 
 								</div>
@@ -248,7 +255,7 @@
 				</div>
 			</div>
 
-	<?php echo $this->Form->end(); ?>
+	
 
 			 <div class="row">
 				<div class="col-lg-12">
@@ -477,7 +484,8 @@
 	                                            								'class' => 'form-control item_type',
 							                                                    'label' => false,
 							                                                    'readonly' => 'readonly',
-							                                                    'value' => $quotationItemDetail['QuotationItemDetail']['quantity']));
+							                                                    'value' => $quotationItemDetail['QuotationItemDetail']['quantity'],
+							                                                    'id' => 'quantity'));
 	                                        ?>
 										</div>
 									</div>
@@ -534,7 +542,6 @@
 	</div>
 </div>
 
-
 <?php echo $this->element('modals'); ?>
 
 <script>
@@ -551,26 +558,31 @@
 
 <script>
 
-var x = 0;
+    $("body").on('click','.buttonEdit', function(e){
 
-    $(".buttonEdit").click(function(){
-
-    	if ($('#textField1').is(':disabled')) {
-	    	//alert('zero value ko'); 
-	    	$(this).parents('.tab-container').find('.editable').removeAttr('disabled');
-	    }else{
-	    	//alert('one value ko'); 
-	    	$(this).parents('.tab-container').find('.editable').attr('disabled','disabled');
-		    x = 0;
-	    }
+		$(this).parents('.tab-container').find('.editable').attr('readonly', false);
+    	$(this).parents('.tab-container').find('button.editable').attr('disabled', false);
+    	$(this).html('Cancel');
+    	$(this).addClass('Cancel');
+    
+    	
+    	$("body").on('click','.Cancel', function(e){
+	    	$(this).parents('.tab-container').find('.editable').attr('readonly', true);
+	    	$(this).parents('.tab-container').find('button.editable').attr('disabled', true);
+	    	$(this).html('Edit');
+	    	$(this).removeClass('Cancel');
+	    });
+    	// if ($('#textField1').is(':readonly')) {
+	    // 	//alert('zero value ko'); 
+	    // 	$(this).parents('.tab-container').find('.editable').attr('readonly', false);
+	    	
+	    // }else{
+	    // 	//alert('one value ko'); 
+	    // 	$(this).parents('.tab-container').find('.editable').attr('readonly', true);
+		   //  x = 0;
+	    // }
 
     });
-</script>
 
-<script>
-function AddAttr() {
-    $("button").click(function(){
-   $('#submit, #textField1, #textField2, #textField3' ).attr('disabled','disabled');
-    });
-}
+    
 </script>
