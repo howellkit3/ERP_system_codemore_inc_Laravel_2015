@@ -64,7 +64,6 @@ ALTER TABLE `quotation_item_details`
 ADD COLUMN `quantity_unit_id` INT(11) NULL DEFAULT NULL AFTER `quantity`,
 ADD COLUMN `unit_price_currency_id` INT(11) NULL DEFAULT NULL AFTER `unit_price`
 
-
 #NOTE: SELECT KOUFU SALE DATABASE ----
 /** Aldrin added this 05/06/2015 11:13AM */
 ALTER TABLE `quotations`  ADD `status` TEXT NULL  AFTER `currency`;
@@ -72,3 +71,34 @@ ALTER TABLE `quotations`  ADD `status` TEXT NULL  AFTER `currency`;
 #NOTE: SELECT KOUFU SYSTEM DATABASE ----
 /** bien added this 05/08/2015  */
 ALTER TABLE `koufu_system`.`payment_term_holders`     CHANGE `name` `name` VARCHAR(250) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL ;
+
+#NOTE: SELECT KOUFU SYSTEM DATABASE ----
+/** jRr added this 05/11/2015  */
+ALTER TABLE `koufu_system`.`users` ADD COLUMN `role_id` INT NULL AFTER `uuid`;
+
+CREATE TABLE `roles` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(120) DEFAULT NULL,
+  `created_by` INT(11) DEFAULT NULL,
+  `updated_by` INT(11) DEFAULT NULL,
+  `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `permissions` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(120) DEFAULT NULL,
+  `created_by` INT(11) DEFAULT NULL,
+  `updated_by` INT(11) DEFAULT NULL,
+  `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `roles_permissions` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `role_id` INT(11) DEFAULT NULL,
+  `permission_id` INT(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
