@@ -363,6 +363,10 @@
 		                                            								'class' => 'form-control item_type',
 								                                                    'label' => false,
 								                                                    'placeholder' => 'Color'));
+		                                            echo $this->Form->input('QuotationDetail.id', array(
+		                                            								'class' => 'form-control item_type',
+								                                                    'label' => false,
+								                                                    'placeholder' => 'Color'));
 	                                            ?>
 											</div>
 										</div>
