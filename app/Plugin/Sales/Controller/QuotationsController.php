@@ -758,6 +758,7 @@ class QuotationsController extends SalesAppController {
 	public function status($id = null ,$quotationId = null){
 
 		$this->Quotation->updateStatus($id,$quotationId);
+		
 		$this->redirect(
             array('controller' => 'quotations', 'action' => 'index')
         );

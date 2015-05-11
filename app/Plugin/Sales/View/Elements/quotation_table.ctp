@@ -41,7 +41,7 @@
                 // }
 
             if ( !empty($quotationList['Quotation']['status']) ) {
-
+                
                 if ($quotationList['Quotation']['status'] == '1') {
                     echo "<span class='label label-success'>Approved</span>";
                 } else {
@@ -50,6 +50,7 @@
                     echo "</span>";
                 }
             } else  {
+                
                 echo "<span class='label label-warning'>Pending</span>";
             }
                

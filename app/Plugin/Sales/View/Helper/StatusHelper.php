@@ -15,7 +15,20 @@ class StatusHelper extends HtmlHelper {
        
        return $return;
 
-      }			
+    }	
+
+    function isQuotationDraft($status = null) {
+        
+        $return = false;
+
+        if ($status == 'draft') {
+
+            $return = true;
+        }
+        
+        return $return;
+       
+    }  		
     
 }
 ?>

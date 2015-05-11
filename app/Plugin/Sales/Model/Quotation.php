@@ -155,21 +155,23 @@ class Quotation extends AppModel {
 
 	//new function for saving quotation
 	public function addQuotation($quotationData = null,$auth){
-		
-    $month = date("m"); 
-    $year = date("y");
-    $hour = date("H");
-    $minute = date("i");
-    $seconds = date("s");
-    $random = rand(1000, 10000);
-        
-	$code =  $year. $month .$random;
+	
+	    $month = date("m"); 
+	    $year = date("y");
+	    $hour = date("H");
+	    $minute = date("i");
+	    $seconds = date("s");
+	    $random = rand(1000, 10000);
+	        
+		$code =  $year. $month .$random;
+
 
 									
 		$this->create();
 			
 		$quotationData['Quotation']['created_by'] = $auth;
 		$quotationData['Quotation']['modified_by'] = $auth;
+		$quotationData['Quotation']['status'] = !empty($quotationData['Quotation']['status'])? $quotationData['Quotation']['status'] : 0 ;
 		
 		if (empty($quotationData['Quotation']['id'])) {
 
@@ -306,7 +308,9 @@ class Quotation extends AppModel {
 	}
 
 	public function updateStatus($id = null ,$quotationId = null){
+
 		$this->id = $this->find('first',array('conditions' => array('Quotation.id' => $quotationId)));
+
 		if ($this->id) {
 		    $this->saveField('status', $id);
 		}else{
