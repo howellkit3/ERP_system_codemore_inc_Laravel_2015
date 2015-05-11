@@ -33,7 +33,7 @@
                             </div>
                             <div class="col-lg-7">
                                 <?php 
-                                    echo $this->Form->input('Address.address1', array('class' => 'form-control item_type required',
+                                    echo $this->Form->input('Address.address1', array('class' => 'form-control item_type',
                                         'alt' => 'address1',
                                         'label' => false));
                                 ?>
@@ -257,10 +257,10 @@
                     </div>
                 </div>
             </div>
-             <div class="modal-footer">
+            <div class="modal-footer">
 
-                             <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i> Submit Product</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i> Submit Product</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                             
             </div>
                   
@@ -296,13 +296,13 @@
                                     echo $this->Form->input('Email.type', array(
                                         'options' => array('Work', 'Home', 'Business'),
                                         'label' => false,
-                                        'class' => 'form-control',
+                                        'class' => 'form-control ',
                                         'empty' => false
                                     )); ?>
                             </div>
                             <div class="col-lg-7">
                                 <?php 
-                                    echo $this->Form->input('Email.email', array('class' => 'form-control email','label' => false));
+                                    echo $this->Form->input('Email.email', array('class' => 'form-control email required','label' => false));
                                 ?>
                                 <span class="lighter-color2">Ex. example@email.com</span>
                             </div>
@@ -348,7 +348,7 @@
                             <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span> Firstname</label>
                             <div class="col-lg-9">
                                 <?php 
-                                    echo $this->Form->input('ContactPerson.firstname', array('class' => 'form-control required','label' => false,'required' => true));
+                                    echo $this->Form->input('ContactPerson.firstname', array('class' => 'form-control','label' => false,'required' => true));
                                 ?>
                             </div>
                         </div>
@@ -367,22 +367,22 @@
                             <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span> Lastname</label>
                             <div class="col-lg-9">
                                 <?php 
-                                    echo $this->Form->input('ContactPerson.lastname', array('class' => 'form-control required','label' => false,'required' => true));
+                                    echo $this->Form->input('ContactPerson.lastname', array('class' => 'form-control','label' => false,'required' => true));
                                 ?>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span> Position</label>
+                            <label for="inputPassword1" class="col-lg-2 control-label">Position</label>
                             <div class="col-lg-9">
                                 <?php 
-                                    echo $this->Form->input('ContactPerson.position', array('class' => 'form-control required','label' => false,'required' => true));
+                                    echo $this->Form->input('ContactPerson.position', array('class' => 'form-control required','label' => false));
                                 ?>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span> Contact Number</label>
+                            <label for="inputPassword1" class="col-lg-2 control-label">Contact Number</label>
                             <div class="col-lg-3">
                                 <?php 
                                     echo $this->Form->input('Contact.type', array(
@@ -425,7 +425,7 @@
                         </div>
 
                         <div class="modal-footer">
-                             <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i> Add Email</button>
+                             <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i> Add Contact Person</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                             
                         </div>
@@ -506,3 +506,13 @@
 
 
     <div class="md-overlay"></div>
+
+    <script>
+        
+        
+        jQuery(document).ready(function($){
+            $("#CustomerSaleViewForm").validate();
+          
+        });
+
+     </script>
