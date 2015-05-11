@@ -39,16 +39,16 @@ class Contact extends AppModel {
 
 	public $validate = array(
 
-		'number' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				'message' => 'Required fields.',
-			),
+		// 'number' => array(
+		// 	'notEmpty' => array(
+		// 		'rule' => array('notEmpty'),
+		// 		'message' => 'Required fields.',
+		// 	),
 			// 'numeric'=> array(
 	  //           'rule' => 'numeric',
 	  //           'message'=> 'It should be numeric'
 	  //       ),
-		),
+		//),
 	
 	);
 	
