@@ -49,38 +49,7 @@
 											</div>
 									</div>
 
-                                     <div class="form-group">
-                                    	<label class="col-lg-2 control-label"><span style="color:red">*</span>Company</label>
-										<div class="col-lg-8">
-											<?php echo $this->Form->input('Company.id', array(
-				                                'type' => 'select',
-				                                'label' => false,
-				                                'class' => 'form-control required contacpersonlist',
-				                                'options' => array($companyData),  
-				                                'value' => $company['Company']['company_name'],
-
-				                                 )); 
-
-				                            ?>
-										</div>
-									</div>
-
-                                   		<div class="form-group">
-	                                    	<label class="col-lg-2 control-label"><span style="color:red">*</span>Attention</label>
-											<div class="col-lg-8">
-												<?php 
-		                                            echo $this->Form->input('Quotation.attention_details', array(
-		                                            								'type' => 'select',
-		                                            								'class' => 'form-control item_type',
-								                                                    'label' => false,
-								                                                    'placeholder' => 'Attention',
-								                                                    'empty' => '--Select Contact Person--'));
-	                                            ?>
-
-											</div>
-										</div>
-
-										<div class="form-group" id="existing_items">
+									<div class="form-group" id="existing_items">
 											<label class="col-lg-2 control-label"><span style="color:red">*</span>Category</label>
 											<div class="col-lg-8">
 												<?php 
@@ -132,6 +101,39 @@
 	                                            ?>
 											</div>
 										</div>
+
+	                                    <div class="form-group">
+	                                    	<label class="col-lg-2 control-label"><span style="color:red">*</span>Company</label>
+											<div class="col-lg-8">
+												<?php echo $this->Form->input('Company.id', array(
+					                                'type' => 'select',
+					                                'label' => false,
+					                                'class' => 'form-control required contacpersonlist',
+					                                'options' => array($companyData),  
+					                                'value' => $company['Company']['company_name'],
+
+					                                 )); 
+
+					                            ?>
+											</div>
+										</div>
+
+                                   		<div class="form-group">
+	                                    	<label class="col-lg-2 control-label"><span style="color:red">*</span>Attention</label>
+											<div class="col-lg-8">
+												<?php 
+		                                            echo $this->Form->input('Quotation.attention_details', array(
+		                                            								'type' => 'select',
+		                                            								'class' => 'form-control item_type',
+								                                                    'label' => false,
+								                                                    'placeholder' => 'Attention',
+								                                                    'empty' => '--Select Contact Person--'));
+	                                            ?>
+
+											</div>
+										</div>
+
+										
 
                                 	<div class="form-group">
                                 		<label class="col-lg-2 control-label">Size</label>
