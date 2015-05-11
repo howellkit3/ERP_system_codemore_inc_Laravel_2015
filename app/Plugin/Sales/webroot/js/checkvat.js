@@ -6,13 +6,13 @@ function vatprice(whatsection, thisElement){
 } 
 
 function findValue($form, thisElement){
- 
+   
     var $unit_value = thisElement.parents('.'+$form).find('.unitprice').val();
-
+   
     if ($unit_value == ''){
          
         alert('Unit Price is Required.');
-        $form.find('.unitprice').focus();
+        thisElement.parents('.'+$form).find('.unitprice').focus();
         $('input[type=checkbox]:checked').attr('checked',false);
 
     }else{
