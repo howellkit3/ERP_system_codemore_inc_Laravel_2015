@@ -453,7 +453,7 @@ class QuotationsController extends SalesAppController {
 	}
 
 	public function print_word($quotationId = null,$companyId = null) {
-
+		
 		$this->layout = 'pdf';
 
 		$this->loadModel('Sale.Company');
