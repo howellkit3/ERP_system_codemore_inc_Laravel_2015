@@ -2,7 +2,7 @@
 App::uses('AppController', 'Controller');
 App::uses('SessionComponent', 'Controller/Component');
 App::uses('CakeEmail', 'Network/Email');
-//App::import('Vendor', 'DOMPDF', true, array(), 'dompdf'.DS.'dompdf_config.inc.php', false);
+App::import('Vendor', 'DOMPDF', true, array(), 'dompdf'.DS.'dompdf_config.inc.php', false);
 
 
 class QuotationsController extends SalesAppController {
