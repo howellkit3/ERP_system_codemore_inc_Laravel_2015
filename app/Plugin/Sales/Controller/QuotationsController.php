@@ -209,9 +209,9 @@ class QuotationsController extends SalesAppController {
             			}
            		
 				if(!empty($this->request->data['Inquiry']['id'])){
-            		
+            			$this->loadModel('Sales.Company');
             			$this->Company->bind(array('Inquiry'));
-
+            			
             			$inquiryId = $this->request->data['Inquiry']['id'];
 
             			$inquiryCompanyId = $this->Company->Inquiry->find('first', array(

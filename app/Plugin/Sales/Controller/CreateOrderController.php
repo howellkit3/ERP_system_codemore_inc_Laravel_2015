@@ -59,6 +59,14 @@ class CreateOrderController extends SalesAppController {
 
 		$this->loadModel('Sales.ContactPerson');
 
+		$this->loadModel('Currency');
+		
+		$this->loadModel('Unit');
+
+		$currencies = $this->Currency->getList();
+
+		$units = $this->Unit->getList();
+
 		$paymentTerm = $this->PaymentTermHolder->find('list',array('fields' => array('id','name')));
 
 		$this->Quotation->bind(array('QuotationItemDetail','QuotationDetailOrder','ContactPerson'));
@@ -74,7 +82,7 @@ class CreateOrderController extends SalesAppController {
 		$productData = $this->Company->Product->find('first',array('fields' => array('id','name'),
 										'conditions' => array('id' => $quotationData['QuotationDetailOrder'][0]['product_id'])));
 		
-		$this->set(compact('quotationData','companyData','paymentTerm','productData'));
+		$this->set(compact('quotationData','companyData','paymentTerm','productData','currencies','units'));
 	}
 
 	public function find_item_detail($itemDetailId = null){
