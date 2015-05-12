@@ -370,7 +370,7 @@ class QuotationsController extends SalesAppController {
 		
 		if($confirm == 0){
 
-			$this->Session->setFlash(__('You dont have permission to access this module.'));
+			$this->Session->setFlash(__('You dont have permission to access this module.'),'error');
 
 	    	$this->redirect(
 	            array('controller' => 'quotations', 'action' => 'index')
@@ -467,7 +467,7 @@ class QuotationsController extends SalesAppController {
 	}
 
 	public function approved($quotationId = null){
-		
+
 		$userData = $this->Session->read('Auth');
 
 		$test = new Role();

@@ -12,9 +12,9 @@
 	    public static function getRolePerms($role_id) {
 
 	        $userModel = ClassRegistry::init('RolesPermission');
-	        
+	        //pr($role_id);
 	        $userData = $userModel->find('list',array('conditions' => array('RolesPermission.role_id' => $role_id)));
-	       
+	       	//pr($userData);
 	        $permModel = ClassRegistry::init('Permission');
 
 	        $permData = $permModel->find('all',array('conditions' => array('Permission.id' => $userData)));
@@ -25,7 +25,7 @@
 
 	        	array_push($arrayPerm, $perm);
 	        }
-	        
+	        //pr($arrayPerm);exit();
 	       	return $arrayPerm;
 
 	    }

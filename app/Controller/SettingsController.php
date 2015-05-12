@@ -1720,7 +1720,7 @@ class SettingsController extends AppController
         if ($this->request->is('post')) {
             
             if (!empty($this->request->data)) {
-                pr($this->request->data);exit();
+               
                 if(!empty($this->request->data['Role'])){
                     
                     $this->Role->saveRole($this->request->data,$userData['User']['id']);
@@ -1857,8 +1857,47 @@ class SettingsController extends AppController
         $userDatList = $this->User->find('list',array('fields' => array('id','fullname')));
         $roleDatList = $this->Role->find('list',array('fields' => array('id','name')));
         $permissionDataList = $this->Permission->find('all',array('fields' => array('id','name')));
-        //pr($permissionDataList);exit();
+        
+        if (!empty($this->request->data)) {
+           
+            if(!empty($this->request->data)){
+                pr();exit();
+            }
+        }
+
         $this->set(compact('userDatList','roleDatList','permissionDataList'));
+    }
+
+    public function permissionData($roleId = null){
+
+        $this->autoRender = false;
+
+        $this->loadModel('RolesPermission');
+        $this->loadModel('Permission');
+        
+        $rolepermdata = $this->RolesPermission->find('list',
+                                            array('fields' => 
+                                                array('RolesPermission.id',
+                                                    'RolesPermission.permission_id'
+                                                 ),
+                                                'conditions' => array(
+                                                    'RolesPermission.role_id' => $roleId
+                                                ),
+                                               
+                                                ));
+
+        $perdata = $this->Permission->find('all',
+                                            array('fields' => 
+                                                array('Permission.id',
+                                                    'Permission.name'
+                                                 ),
+                                                'conditions' => array(
+                                                    'Permission.id' => $rolepermdata
+                                                ),
+                                               
+                                                ));
+       
+       echo json_encode($perdata);
     }
 
 }

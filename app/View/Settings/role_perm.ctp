@@ -57,19 +57,20 @@
 
 									</div>
 
-									<div class="form-group permissionCheck">
+									<div class="form-group permissionCheck" style="display:none;">
 										<label>Permissions</label>
+										<section class="checkpermission">
+										</section>
+										<?php //foreach ($permissionDataList as $key => $permission) { ?>
 
-										<?php foreach ($permissionDataList as $key => $permission) { ?>
-
-											<div class="checkbox-nice">
+											<!-- <div class="checkbox-nice">
 												<input type="checkbox" id="<?php echo $permission['Permission']['name'] ?>" >
 												<label for="<?php echo $permission['Permission']['name'] ?>">
-													<?php echo ucfirst($permission['Permission']['name']);?>
+													<?php //echo ucfirst($permission['Permission']['name']);?>
 												</label>
-											</div>
+											</div> -->
 
-										<?php } ?>
+										<?php //} ?>
 
 									</div>
 									<br>
@@ -100,17 +101,27 @@
 			type: "get",
 			dataType: "json",
 			success: function(data) {
-				
+
+				if(data != ''){
+					$('.permissionCheck').show();
+				}else{
+					$('.permissionCheck').hide();
+				}
+
 				$.each(data, function(key, value) {
-					if (value.id == itemtypeid) {
-					$option = "<option class='option-append2' selected value="+value.Product.id+">"+value.Product.name+"</option>";	
-					} else {
-					$option = "<option class='option-append2' value="+value.Product.id+">"+value.Product.name+"</option>";
-					}
-					$('#product_holder_id').append($option);
+					console.log(value);
+					// $option = "<option class='option-append2' selected value="+value.Product.id+">"+value.Product.name+"</option>";	
+					$option = "<div class='checkbox-nice'>\
+									<input type='checkbox' id="+value.Permission.name+" checked='checked' onclick='return false' >\
+									<label for="+value.Permission.name+">\
+										"+value.Permission.name+"\
+									</label>\
+								</div>";	
+					
+					$('.checkpermission').append($option);
 					
 				});
-				 $('.loading_event').remove();
+				
 			
 			}
 		});
