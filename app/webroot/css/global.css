@@ -265,3 +265,7 @@ body.dragging, body.dragging * {
 .tag.label.label-info {
   background: none repeat scroll 0 0 #03a9f4;
 }
+
+.form-group.permissionCheck {
+  margin: auto auto auto 195px;
+}

@@ -54,6 +54,28 @@ class User extends AppModel {
         ) 	
 	
 	);
+
+	// public function bind($model = array('Group')){
+
+	// 	$this->bindModel(array(
+			
+	// 		'belongsTo' => array(
+	// 			'Role' => array(
+	// 				'className' => 'Role',
+	// 				'foreignKey' => 'role_id',
+	// 				'dependent' => true
+	// 			),
+	// 		),
+
+
+	// 	));
+
+	// 	$this->contain($model);
+	// }
+
+	public $virtualFields = array(
+		'fullname' => 'CONCAT(User.last_name,",", User.first_name)'
+	);
 	
 	public function identicalFieldValues( $field=array(), $compare_field=null ) { 
         foreach( $field as $key => $value ){ 

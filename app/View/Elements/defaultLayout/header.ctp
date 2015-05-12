@@ -225,6 +225,11 @@
 		 						echo $this->Html->link( "<i class='fa fa-cog'></i> Settings ",   array('controller' =>'settings','action'=>'category','plugin' => null),array('escape' => false) );
 		 					?>
 		 				</li>
+		 				<li>
+							<?php
+		 						echo $this->Html->link( "<i class='fa fa-cog'></i> Role and Permission ",   array('controller' =>'settings','action'=>'role_perm','plugin' => null),array('escape' => false) );
+		 					?>
+		 				</li>
 						<!-- <li><a href="#"><i class="fa fa-envelope-o"></i>Messages</a></li> -->
 						<li>
 							<?php

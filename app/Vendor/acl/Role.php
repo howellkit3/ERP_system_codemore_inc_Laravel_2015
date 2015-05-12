@@ -4,27 +4,30 @@
 
 		protected $permissions;
 
-		protected function __construct() {
-
-	        $this->permissions = array();
-
-	    }
+		// protected function __construct() {
+		// $this->permissions = array();
+		// }
 
 	    // return a role object with associated permissions
 	    public static function getRolePerms($role_id) {
 
-	        $role = new Role();
+	        $userModel = ClassRegistry::init('RolesPermission');
 	        
-	        $sql = "SELECT t2.perm_desc FROM role_perm as t1
-	                JOIN permissions as t2 ON t1.perm_id = t2.perm_id
-	                WHERE t1.role_id = :role_id";
-	        $sth = $GLOBALS["DB"]->prepare($sql);
-	        $sth->execute(array(":role_id" => $role_id));
-	 
-	        while($row = $sth->fetch(PDO::FETCH_ASSOC)) {
-	            $role->permissions[$row["perm_desc"]] = true;
+	        $userData = $userModel->find('list',array('conditions' => array('RolesPermission.role_id' => $role_id)));
+	       
+	        $permModel = ClassRegistry::init('Permission');
+
+	        $permData = $permModel->find('all',array('conditions' => array('Permission.id' => $userData)));
+	        
+	        $arrayPerm = array();
+	        foreach ($permData as $key => $permDataList) {
+	        	$perm = $permDataList['Permission']['name'];
+
+	        	array_push($arrayPerm, $perm);
 	        }
-	        return $role;
+	        
+	       	return $arrayPerm;
+
 	    }
 	 
 	    // check if a permission is set

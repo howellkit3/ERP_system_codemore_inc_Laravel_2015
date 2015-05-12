@@ -1848,6 +1848,19 @@ class SettingsController extends AppController
 
     }
 
+    public function role_perm(){
+
+        $this->loadModel('User');
+        $this->loadModel('Role');
+        $this->loadModel('Permission');
+
+        $userDatList = $this->User->find('list',array('fields' => array('id','fullname')));
+        $roleDatList = $this->Role->find('list',array('fields' => array('id','name')));
+        $permissionDataList = $this->Permission->find('all',array('fields' => array('id','name')));
+        //pr($permissionDataList);exit();
+        $this->set(compact('userDatList','roleDatList','permissionDataList'));
+    }
+
 }
             
 

@@ -48,6 +48,7 @@
 										<i class="fa fa-phone"></i>
 										<?php foreach ($company['Contact'] as $key => $number) {
 											echo $number['number'];
+											echo ",";
 										}?>
 									</ul>
 								</div>

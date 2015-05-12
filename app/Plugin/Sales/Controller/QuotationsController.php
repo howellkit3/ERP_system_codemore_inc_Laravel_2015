@@ -3,6 +3,9 @@ App::uses('AppController', 'Controller');
 App::uses('SessionComponent', 'Controller/Component');
 App::uses('CakeEmail', 'Network/Email');
 App::import('Vendor', 'DOMPDF', true, array(), 'dompdf'.DS.'dompdf_config.inc.php', false);
+App::import('Vendor','acl/Role');
+
+
 
 
 class QuotationsController extends SalesAppController {
@@ -352,6 +355,29 @@ class QuotationsController extends SalesAppController {
 
 		$userData = $this->Session->read('Auth');
 
+		$test = new Role();
+		
+		$boom = $test->getRolePerms($userData['User']['role_id']);
+		
+		$confirm = 0;
+		foreach ($boom as $key => $pagePerm) {
+			
+			if($pagePerm == 'View Quotation'){
+				//array_push($confirm, 1);
+				$confirm=1;
+			}
+		}
+		
+		if($confirm == 0){
+
+			$this->Session->setFlash(__('You dont have permission to access this module.'));
+
+	    	$this->redirect(
+	            array('controller' => 'quotations', 'action' => 'index')
+	        );
+		}
+		
+
 		$paymentTerm = Cache::read('paymentTerms');
 		
 		if (!$paymentTerm) {
@@ -441,7 +467,30 @@ class QuotationsController extends SalesAppController {
 	}
 
 	public function approved($quotationId = null){
+		
+		$userData = $this->Session->read('Auth');
 
+		$test = new Role();
+		
+		$boom = $test->getRolePerms($userData['User']['role_id']);
+		
+		$confirm = 0;
+		foreach ($boom as $key => $pagePerm) {
+			
+			if($pagePerm == 'Approve Quotation'){
+				//array_push($confirm, 1);
+				$confirm=1;
+			}
+		}
+		
+		if($confirm == 0){
+
+			$this->Session->setFlash(__('You dont have permission to access this module.'));
+
+	    	$this->redirect(
+	            array('controller' => 'quotations', 'action' => 'index')
+	        );
+		}
 		$this->Quotation->approvedData($quotationId);
 
 		$this->Session->setFlash(__('Quotation Approved.'));
@@ -554,6 +603,30 @@ class QuotationsController extends SalesAppController {
 	}
 
 	public function edit($quotationId = null,$companyId = null){
+
+		$userData = $this->Session->read('Auth');
+
+		$test = new Role();
+		
+		$boom = $test->getRolePerms($userData['User']['role_id']);
+		
+		$confirm = 0;
+		foreach ($boom as $key => $pagePerm) {
+			
+			if($pagePerm == 'Edit Quotation'){
+				//array_push($confirm, 1);
+				$confirm=1;
+			}
+		}
+		
+		if($confirm == 0){
+
+			$this->Session->setFlash(__('You dont have permission to access this module.'));
+
+	    	$this->redirect(
+	            array('controller' => 'quotations', 'action' => 'index')
+	        );
+		}
 
 		$this->loadModel('PaymentTermHolder');
 

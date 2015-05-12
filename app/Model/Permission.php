@@ -26,21 +26,21 @@ class Permission extends AppModel {
         )    
     );
 
-    // public function bind($model = array('Group')){
+     public function bind($model = array('Group')){
 
-    //     $this->bindModel(array(
+        $this->bindModel(array(
             
-    //         'hasMany' => array(
-    //             'SubProcess' => array(
-    //                 'className' => 'SubProcess',
-    //                 'foreignKey' => 'process_id',
-    //                 'dependent' => true
-    //             ),
-    //         )
-    //     ));
+            'belongsTo' => array(
+                'RolePermission' => array(
+                    'className' => 'RolePermission',
+                    'foreignKey' => 'permission_id',
+                    'dependent' => true
+                ),
+            )
+        ));
 
-    //     $this->contain($model);
-    // }
+        $this->contain($model);
+    }
 
      public function savePermission($roleData = null , $auth = null){
        

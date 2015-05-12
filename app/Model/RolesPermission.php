@@ -7,33 +7,30 @@ App::uses('AuthComponent', 'Controller/Component');
  * User Model
  *
  */
-class Role extends AppModel {
+class RolesPermission extends AppModel {
 
 	public $useDbConfig = 'default';
 
-    public $name = 'Role';
+    public $name = 'RolesPermission';
 
     public $recursive = -1;
     
 	public $actsAs = array('Containable');
 
-    public $validate = array(
-
-        'name' => array(
-            'notEmpty' => array(
-                'rule' => array('notEmpty'),
-            ),
-        )    
-    );
 
     public function bind($model = array('Group')){
 
         $this->bindModel(array(
             
             'hasMany' => array(
-                'RolePermission' => array(
-                    'className' => 'RolePermission',
+                'Role' => array(
+                    'className' => 'Role',
                     'foreignKey' => 'role_id',
+                    'dependent' => true
+                ),
+                'Permission' => array(
+                    'className' => 'Permission',
+                    'foreignKey' => 'permission_id',
                     'dependent' => true
                 ),
             )
@@ -42,16 +39,5 @@ class Role extends AppModel {
         $this->contain($model);
     }
 
-    public function saveRole($roleData = null , $auth = null){
-       
-        $this->create();
-
-        $roleData[$this->name]['created_by'] = $auth;
-        $roleData[$this->name]['updated_by'] = $auth;
-
-        if($this->save($roleData)){
-            return $this->id;
-        }
-    }
 
 }
