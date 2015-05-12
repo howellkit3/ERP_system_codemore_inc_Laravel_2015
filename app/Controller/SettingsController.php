@@ -1680,7 +1680,7 @@ class SettingsController extends AppController
         return $this->redirect(array('action' => 'currency'));
     }
 
-  public function ajax_categ($itemId = false){
+    public function ajax_categ($itemId = false){
 
 
         $this->autoRender = false;
@@ -1696,6 +1696,156 @@ class SettingsController extends AppController
                                         ));
 
        echo json_encode($itemdata);
+    }
+
+    public function acl(){
+
+        $this->loadModel('Role');
+        $this->loadModel('Permission');
+
+        $userData = $this->Session->read('Auth');
+
+        $roleTable = $this->Role->find('all', array(
+                                        'fields' => array(
+                                            'id', 'name','created'),
+                                        'order' => 'Role.id DESC'
+                                        ));
+
+         $permissionTable = $this->Permission->find('all', array(
+                                        'fields' => array(
+                                            'id', 'name','created'),
+                                        'order' => 'Permission.id DESC'
+                                        ));
+       
+        if ($this->request->is('post')) {
+            
+            if (!empty($this->request->data)) {
+                pr($this->request->data);exit();
+                if(!empty($this->request->data['Role'])){
+                    
+                    $this->Role->saveRole($this->request->data,$userData['User']['id']);
+
+                    $this->Session->setFlash(__('Role Successfully added..'));
+
+                    $this->redirect(
+                        array('controller' => 'settings', 'action' => 'acl')
+                    );
+                }
+
+                if(!empty($this->request->data['Permission'])){
+                    
+                    $this->Permission->savePermission($this->request->data,$userData['User']['id']);
+
+                    $this->Session->setFlash(__('Permission Successfully added..'));
+
+                    $this->redirect(
+                        array('controller' => 'settings', 'action' => 'acl')
+                    );
+                }
+                
+            } 
+        }
+
+        $this->set(compact('roleTable','permissionTable'));
+
+    }
+
+    public function role_edit($roleId = null){
+
+        $userData = $this->Session->read('Auth');
+
+        $this->loadModel('Role');
+
+        $roleData = $this->Role->findById($roleId);
+
+        if (!$roleData) {
+            throw new NotFoundException(__('Invalid post'));
+        }
+
+        if ($this->request->is(array('post', 'put'))) {
+
+            $this->Role->id = $roleId;
+           
+            $this->Role->saveRole($this->request->data,$userData['User']['id']);
+
+            $this->Session->setFlash(__('Role Successfully updated..'));
+
+            $this->redirect(
+                array('controller' => 'settings', 'action' => 'acl')
+            );
+        }
+
+        if (!$this->request->data) {
+            $this->request->data = $roleData;
+        }
+
+        $this->set(compact('roleId'));
+
+    }
+
+    public function permission_edit($permissionId = null){
+
+        $userData = $this->Session->read('Auth');
+
+        $this->loadModel('Permission');
+
+        $permissionData = $this->Permission->findById($permissionId);
+
+        if (!$permissionData) {
+            throw new NotFoundException(__('Invalid post'));
+        }
+
+        if ($this->request->is(array('post', 'put'))) {
+
+            $this->Permission->id = $permissionId;
+
+            $this->Permission->savePermission($this->request->data,$userData['User']['id']);
+
+            $this->Session->setFlash(__('Permission Successfully updated..'));
+
+            $this->redirect(
+                array('controller' => 'settings', 'action' => 'acl')
+            );
+        }
+
+        if (!$this->request->data) {
+            $this->request->data = $permissionData;
+        }
+
+         $this->set(compact('permissionId'));
+
+    }
+
+    public function deleteAcl($aclname = null,$aclId = null){
+
+        $this->loadModel('Role');
+        $this->loadModel('Permission');
+
+        if($aclname == 'Role'){
+
+            $this->Role->delete($aclId);
+
+            $this->Session->setFlash(__('Role Successfully deleted..'));
+
+            $this->redirect(
+                array('controller' => 'settings', 'action' => 'acl')
+            );
+
+        }
+
+        if($aclname == 'Permission'){
+
+            $this->Permission->delete($aclId);
+
+            $this->Session->setFlash(__('Permission Successfully deleted..'));
+
+            $this->redirect(
+                array('controller' => 'settings', 'action' => 'acl')
+            );
+
+        }
+        
+
     }
 
 }

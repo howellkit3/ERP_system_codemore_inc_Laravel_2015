@@ -91,6 +91,16 @@
         
     </ul>
 
+     <ul style="margin-left:0" class="nav navbar-nav pull-left">
+
+        <li class="dropdown hidden-xs">
+           
+            <?php echo $this->Html->link("<span class='count'>ACL</span>", array('controller' => 'settings', 'action' => 'acl'),array('escape' => false,'class' => 'btn')); ?>
+           
+        </li>
+        
+    </ul>
+
 
 </div>
 <br><br>
