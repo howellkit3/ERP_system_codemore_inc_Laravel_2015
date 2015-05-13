@@ -467,6 +467,7 @@ class QuotationsController extends SalesAppController {
 
 	public function approved($quotationId = null){
 
+		$this->loadModel('User');
 		$userData = $this->User->read(null,$this->Session->read('Auth.User.id'));
 
 		$checkRole = new Role();
