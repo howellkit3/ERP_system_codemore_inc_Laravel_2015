@@ -367,16 +367,14 @@ class QuotationsController extends SalesAppController {
 				$confirm=1;
 			}
 		}
-		
-		if($confirm == 0){
+		 if($confirm == 0){
 
 			$this->Session->setFlash(__('You dont have permission to access this module.'),'error');
 
 	    	$this->redirect(
 	            array('controller' => 'quotations', 'action' => 'index')
 	        );
-		}
-		
+		} 
 
 		$paymentTerm = Cache::read('paymentTerms');
 		
@@ -502,7 +500,7 @@ class QuotationsController extends SalesAppController {
 
 	public function print_word($quotationId = null,$companyId = null) {
 		
-		$this->layout = 'pdf';
+		//$this->layout = 'pdf';
 
 		$this->loadModel('Sale.Company');
 
@@ -555,10 +553,38 @@ class QuotationsController extends SalesAppController {
 									'conditions' => array(
 										'User.id' => $userData['User']['id'] )
 								));
-
+		$view = new View(null, false);
+		//$this->set(compact('companyData','currencies','units','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','productName','user','quotationDetailData'));
 		
-		$this->set(compact('companyData','currencies','units','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','productName','user','quotationDetailData'));
-	
+		$view->set(compact('companyData','units','currencies','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','productName','user','quotationDetailData'));
+        
+		
+		$view->viewPath = 'Quotations'.DS.'pdf';	
+   
+        $output = $view->render('print_word', false);
+   	
+        $dompdf = new DOMPDF();
+        $dompdf->set_paper("A4");
+        $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));
+        $dompdf->render();
+        $canvas = $dompdf->get_canvas();
+        $font = Font_Metrics::get_font("helvetica", "bold");
+        $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
+
+        $output = $dompdf->output();
+        $random = rand(0, 1000000) . '-' . time();
+        if (empty($filename)) {
+        	$filename = 'product-'.$quotation['ProductDetail']['name'].'-quotation'.time();
+        }
+      	$filePath = 'view_pdf/'.strtolower(Inflector::slug( $filename , '-')).'.pdf';
+        $file_to_save = WWW_ROOT .DS. $filePath;
+        	
+        if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
+        		unlink($file_to_save);
+        }
+        
+        exit();
+        
 
 	}
 
