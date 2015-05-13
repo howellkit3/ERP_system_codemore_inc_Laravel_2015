@@ -645,14 +645,14 @@ class QuotationsController extends SalesAppController {
 			}
 		}
 		
-		if($confirm == 0){
+		// if($confirm == 0){
 
-			$this->Session->setFlash(__('You dont have permission to access this module.'));
+		// 	$this->Session->setFlash(__('You dont have permission to access this module.'));
 
-	    	$this->redirect(
-	            array('controller' => 'quotations', 'action' => 'index')
-	        );
-		}
+	 //    	$this->redirect(
+	 //            array('controller' => 'quotations', 'action' => 'index')
+	 //        );
+		// }
 
 		$this->loadModel('PaymentTermHolder');
 
