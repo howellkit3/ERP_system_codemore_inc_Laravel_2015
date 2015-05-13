@@ -340,7 +340,6 @@ class QuotationsController extends SalesAppController {
 
 	public function view($quotationId,$companyId){
 
-		
 		$this->loadModel('Sales.PaymentTermHolder');
 		
 		$this->loadModel('Sales.Company');
@@ -355,27 +354,10 @@ class QuotationsController extends SalesAppController {
 
 		$userData = $this->User->read(null,$this->Session->read('Auth.User.id'));
 
-		$checkRole = new Role();
-		
-		$hasPermission = $checkRole->getRolePerms($userData['User']['role_id']);
-
-		
-		$confirm = 0;
-		foreach ($hasPermission as $key => $pagePerm) {
-			
-			if($pagePerm == 'View Quotation'){
-				//array_push($confirm, 1);
-				$confirm=1;
-			}
-		}
-		 if($confirm == 0){
-
-			$this->Session->setFlash(__('You dont have permission to access this module.'),'error');
-
-	    	$this->redirect(
-	            array('controller' => 'quotations', 'action' => 'index')
-	        );
-		} 
+		//start///call Role permission
+		$actionName = 'View Quotation';
+		$this->_rolePermission($actionName);
+		//end///call Role permission
 
 		$paymentTerm = Cache::read('paymentTerms');
 		
@@ -467,30 +449,11 @@ class QuotationsController extends SalesAppController {
 
 	public function approved($quotationId = null){
 
-		$this->loadModel('User');
-		$userData = $this->User->read(null,$this->Session->read('Auth.User.id'));
+		//start///call Role permission
+		$actionName = 'Approved Quotation';
+		$this->_rolePermission($actionName);
+		//end///call Role permission
 
-		$checkRole = new Role();
-		
-		$hasPermission = $checkRole->getRolePerms($userData['User']['role_id']);
-		
-		$confirm = 0;
-		foreach ($hasPermission as $key => $pagePerm) {
-			
-			if($pagePerm == 'Approve Quotation'){
-				//array_push($confirm, 1);
-				$confirm=1;
-			}
-		}
-		
-		if($confirm == 0){
-
-			$this->Session->setFlash(__('You dont have permission to access this module.'),'error');
-
-	    	$this->redirect(
-	            array('controller' => 'quotations', 'action' => 'index')
-	        );
-		}
 		$this->Quotation->approvedData($quotationId);
 
 		$this->Session->setFlash(__('Quotation Approved.'));
@@ -635,27 +598,10 @@ class QuotationsController extends SalesAppController {
 		$this->loadModel('User');
 		$userData = $this->User->read(null,$this->Session->read('Auth.User.id'));
 
-		$checkRole = new Role();
-		
-		$hasPermission = $checkRole->getRolePerms($userData['User']['role_id']);
-		
-		$confirm = 0;
-		foreach ($hasPermission as $key => $pagePerm) {
-			
-			if($pagePerm == 'Edit Quotation'){
-				//array_push($confirm, 1);
-				$confirm=1;
-			}
-		}
-		
-		if($confirm == 0){
-
-			$this->Session->setFlash(__('You dont have permission to access this module.'),'error');
-
-	    	$this->redirect(
-	            array('controller' => 'quotations', 'action' => 'index')
-	        );
-		}
+		//start///call Role permission
+		$actionName = 'Edit Quotation';
+		$this->_rolePermission($actionName);
+		//end///call Role permission
 
 		$this->loadModel('PaymentTermHolder');
 
@@ -1039,6 +985,53 @@ class QuotationsController extends SalesAppController {
         file_put_contents($file_to_save, $output);
 
         return $filePath;
+
+    }
+
+    private function _rolePermission($pagePermissionName = null){
+
+    	//start// this method is for the permission of all user.. bienskie//
+    	$this->loadModel('User');
+
+		$userData = $this->User->read(null,$this->Session->read('Auth.User.id'));
+
+		$this->loadModel('Permission');
+
+		//***if ever needed****
+		// $permissionData = $this->Permission->find('list',array('fields' => array('id','name')));
+		// $permissionArray = array();
+		// foreach ($permissionData as $key => $permName) {
+		// 	array_push($permissionArray, $permName);
+		// }
+		// if (in_array($pagePerm, $permissionArray)) {
+		//     $confirm=1;
+		// }
+		//*********************bienskie
+
+		$checkRole = new Role();
+		
+		$hasPermission = $checkRole->getRolePerms($userData['User']['role_id']);
+
+		$confirm = 0;
+		
+		foreach ($hasPermission as $key => $pagePerm) {
+			
+			if($pagePerm == $pagePermissionName){
+				
+				$confirm=1;
+			}
+
+		}
+		
+		if($confirm == 0){
+
+			$this->Session->setFlash(__('You dont have permission to access this module.'),'error');
+
+	    	$this->redirect(
+	            array('controller' => 'quotations', 'action' => 'index')
+	        );
+		} 
+		//end// this method is for the permission of all user.. bienskie//
 
     }
 }
