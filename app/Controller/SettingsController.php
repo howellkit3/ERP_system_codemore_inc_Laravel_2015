@@ -1861,7 +1861,14 @@ class SettingsController extends AppController
         if (!empty($this->request->data)) {
            
             if(!empty($this->request->data)){
-                pr();exit();
+                //pr($this->request->data);exit();
+                $this->User->id = $this->request->data['User']['id'];
+                $this->User->saveField('role_id', $this->request->data['Role']['id']);
+                $this->Session->setFlash(__('Permission Successfully deleted..'));
+
+                $this->redirect(
+                    array('controller' => 'settings', 'action' => 'role_perm')
+                );
             }
         }
 
@@ -1900,6 +1907,51 @@ class SettingsController extends AppController
        echo json_encode($perdata);
     }
 
+    public function editPermission($roleId = null){
+
+        $this->autoRender = false;
+
+        $this->loadModel('RolesPermission');
+        $this->loadModel('Permission');
+        
+        $rolepermdata = $this->RolesPermission->find('list',
+                                            array('fields' => 
+                                                array('RolesPermission.id',
+                                                    'RolesPermission.permission_id'
+                                                 ),
+                                                'conditions' => array(
+                                                    'RolesPermission.role_id' => $roleId
+                                                ),
+                                               
+                                                ));
+       
+       echo json_encode($rolepermdata);
+    }
+
+    public function role_perm_edit(){
+
+        $this->loadModel('RolesPermission');
+        $this->loadModel('Permission');
+
+        if (!empty($this->request->data)) {
+           
+            if(!empty($this->request->data)){
+
+                pr($this->request->data);
+                $userDatList = $this->RolesPermission->find('all',array('conditions' => array('RolesPermission.role_id' => $this->request->data['Role']['id'])));
+                pr($userDatList);exit();
+
+                foreach ($userDatList as $key => $value) {
+                    # code...
+                }
+                $this->Session->setFlash(__('Permission Successfully updated..'));
+
+                $this->redirect(
+                    array('controller' => 'settings', 'action' => 'role_perm')
+                );
+            }
+        }
+    }
 }
             
 

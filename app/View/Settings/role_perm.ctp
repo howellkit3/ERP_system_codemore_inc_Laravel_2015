@@ -17,20 +17,25 @@
 			</div>
 		</div>
 
-		<?php echo $this->Form->create('Role',array('url'=>(array('controller' => 'settings','action' => 'role_perm'))));?>
+		
 			
-			<div class="row">
-				<div class="col-lg-12">
+		<div class="row">
+			<?php echo $this->Form->create('Role',array('url'=>(array('controller' => 'settings','action' => 'role_perm'))));?>
+				<div class="col-lg-6">
 					<div class="main-box">
 						<div class="top-space"></div>
+						<h1 class="pull-left">
+							Assign Role and permission
+						</h1>
+						<br><br><br>
 						<div class="main-box-body clearfix">
 							<div class="main-box-body clearfix">
 								<div class="form-horizontal">
 									<div class="form-group">
-										<label class="col-lg-2 control-label">Users</label>
+										<label class="col-lg-3 control-label">Users</label>
 										<div class="col-lg-8">
 											<?php 
-	                                            echo $this->Form->input('User.name', array(
+	                                            echo $this->Form->input('User.id', array(
                                                     'options' => array($userDatList),
                                                     'label' => false,
                                                     'style' => 'text-transform:capitalize',
@@ -42,10 +47,10 @@
 									</div>
 
 									<div class="form-group">
-										<label class="col-lg-2 control-label">Role Description</label>
+										<label class="col-lg-3 control-label">Role Description</label>
 										<div class="col-lg-8">
 											<?php 
-	                                            echo $this->Form->input('Role.name', array(
+	                                            echo $this->Form->input('Role.id', array(
                                                     'options' => array($roleDatList),
                                                     'label' => false,
                                                     'style' => 'text-transform:capitalize',
@@ -88,8 +93,68 @@
 						</div>
 					</div>
 				</div>
+			<?php echo $this->Form->end(); ?>
+			<div class="col-lg-6">
+				<div class="main-box">
+					<div class="top-space"></div>
+					<h1 class="pull-left">
+						Edit Role and permission
+					</h1>
+					<br><br><br>
+					<div class="main-box-body clearfix">
+						<div class="main-box-body clearfix">
+							<div class="form-horizontal">
+								<?php echo $this->Form->create('Role',array('url'=>(array('controller' => 'settings','action' => 'role_perm_edit'))));?>
+									<div class="form-group">
+										<label class="col-lg-3 control-label">Role Description</label>
+										<div class="col-lg-8">
+											<?php 
+	                                            echo $this->Form->input('Role.id', array(
+	                                                'options' => array($roleDatList),
+	                                                'label' => false,
+	                                                'style' => 'text-transform:capitalize',
+	                                                'class' => 'form-control editRole',
+	                                                'empty' => '--Please Select Role Description--'));
+	                            
+	                                        ?>
+										</div>
+
+									</div>
+
+									<div class="form-group permissionCheck1">
+										<label>Permissions</label>
+										<?php foreach ($permissionDataList as $key => $permission) { 
+											//$permName = "data[Permission][RolePerm]["+$permission['Permission']['id']+"]";
+
+											?>
+
+											<div class="checkbox-nice">
+												<input type="checkbox" name="Permission[<?php echo $permission['Permission']['id']?>]" id="<?php echo $permission['Permission']['name'] ?>" data-id="<?php echo $permission['Permission']['id'] ?>" >
+												<label for="<?php echo $permission['Permission']['name'] ?>">
+													<?php echo ucfirst($permission['Permission']['name']);?>
+												</label>
+											</div>
+
+										<?php } ?>
+
+									</div>
+									<br><br>
+									<div class="form-group">
+										<div class="col-lg-2"></div>
+										<div class="col-lg-8">
+											<button type="submit" class="btn btn-primary pull-left">Edit Role</button>&nbsp;
+											<?php 
+						                        echo $this->Html->link('Cancel', array('controller' => 'settings', 'action' => 'index'),array('class' =>'btn btn-default','escape' => false));
+						                    ?>
+										</div>
+									</div>
+								<?php echo $this->Form->end(); ?>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
-		<?php echo $this->Form->end(); ?>
+		</div>
 	</div>
 </div>
 <script>
@@ -126,4 +191,39 @@
 			}
 		});
 	});
+
+	$('.editRole').change(function(){
+		var roleId = $(this).val();
+
+		$.ajax({
+			url: serverPath + "settings/editPermission/"+roleId,
+			type: "get",
+			dataType: "json",
+			success: function(data) {
+
+				$('.permissionCheck1 .checkbox-nice > input').prop('checked',false);
+
+				$array = [];
+				$.each(data, function(key, value) {
+
+					$array.push(value);
+
+				});
+
+				$('.permissionCheck1 .checkbox-nice > input').each(function(){
+
+					$this = $(this);
+
+					var number = $this.attr('data-id');
+
+						if ($.inArray(number,$array) >= 0) {
+							$this.prop('checked',true);
+						}
+				});
+				
+		
+			}
+		});
+	});
+
 </script>

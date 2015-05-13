@@ -267,5 +267,8 @@ body.dragging, body.dragging * {
 }
 
 .form-group.permissionCheck {
-  margin: auto auto auto 195px;
+  margin: auto auto auto 135px;
+}
+.form-group.permissionCheck1 {
+  margin: auto auto auto 135px;
 }
