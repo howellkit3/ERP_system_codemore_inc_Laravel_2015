@@ -367,14 +367,14 @@ class QuotationsController extends SalesAppController {
 				$confirm=1;
 			}
 		}
-		 if($confirm == 0){
+		/* if($confirm == 0){
 
 			$this->Session->setFlash(__('You dont have permission to access this module.'),'error');
 
 	    	$this->redirect(
 	            array('controller' => 'quotations', 'action' => 'index')
 	        );
-		} 
+		} */
 
 		$paymentTerm = Cache::read('paymentTerms');
 		
