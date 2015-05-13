@@ -87,7 +87,7 @@
 						                                <th><a href="#"><span>Name</span></a></th>
 						                                <th><a href="#"><span>Name Type</span></a></th>
 						                                <th class="text-center"><a href="#"><span>Created</span></a></th>
-						                                <th>Action</th>
+						                                <th style="width:135px">Action</th>
 						                            </tr>
 						                        </thead>
 

@@ -78,7 +78,7 @@
 		                                <th><a href="#"><span>Supplier</span></a></th>
 		                                <th><a href="#"><span>Description</span></a></th>
 		                                <th class="text-center"><a href="#"><span>Created</span></a></th>
-		                                <th>Action</th>
+		                                <th style="width:135px">Action</th>
 		                            </tr>
 		                        </thead>
 

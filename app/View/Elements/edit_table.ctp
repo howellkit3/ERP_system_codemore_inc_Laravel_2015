@@ -20,7 +20,7 @@
                     echo $this->Html->link('<span class="fa-stack">
                     <i class="fa fa-square fa-stack-2x"></i>
                     <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit </font></span>
-                    </span> ', array('controller' => 'settings', 'action' => 'category_edit',$CategoryDataList['ItemCategoryHolder']['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Information'));
+                    </span> ', array('controller' => 'settings', 'action' => 'category_edit',$CategoryDataList['ItemCategoryHolder']['id']),array('class' =>' table-link small-link-icon','escape' => false,'title'=>'Edit Information'));
                 ?>
 
             </td>    
