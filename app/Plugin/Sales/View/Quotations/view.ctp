@@ -45,7 +45,7 @@
     	echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array(
 		        	'controller' => 'quotations', 
 		        	'action' => 'print_word',
-		        	'ext' => 'pdf',
+		        	//'ext' => 'pdf',
 		        	$quotation['Quotation']['id'],$companyId),
 		        	array('class' =>'btn btn-info pull-right '.$status,'escape' => false,'target' => '_blank'));
 
