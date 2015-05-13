@@ -537,7 +537,7 @@ class QuotationsController extends SalesAppController {
 
 
 
-		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder','ProductDetail','ContactPerson'));
+		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder','ProductDetail','ContactPerson','Product'));
 
 		$quotation = $this->Quotation->find('first', array(
 														'conditions' => array( 
@@ -995,7 +995,7 @@ class QuotationsController extends SalesAppController {
 		$this->loadModel('Unit');
 		$units = $this->Unit->getList();
 
-		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder','ProductDetail','ContactPerson'));
+		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder','ProductDetail','ContactPerson','Product'));
 
 		$quotation = $this->Quotation->find('first', array(
 														'conditions' => array( 

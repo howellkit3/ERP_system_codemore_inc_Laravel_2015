@@ -71,7 +71,7 @@
 						</td>
 						<td style="width:20px;">:</td>
 						<td>
-						 <?php echo $quotation['ProductDetail']['name']?>
+						 <?php echo $quotation['Product']['name']?>
 						</td>
 					</tr>
 					<tr>
