@@ -353,11 +353,12 @@ class QuotationsController extends SalesAppController {
 		
 		$this->loadModel('User');
 
-		$userData = $this->Session->read('Auth');
+		$userData = $this->User->read(null,$this->Session->read('Auth.User.id'));
 
 		$test = new Role();
 		
 		$boom = $test->getRolePerms($userData['User']['role_id']);
+
 		
 		$confirm = 0;
 		foreach ($boom as $key => $pagePerm) {
