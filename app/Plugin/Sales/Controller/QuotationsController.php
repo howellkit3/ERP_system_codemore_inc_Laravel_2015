@@ -367,14 +367,14 @@ class QuotationsController extends SalesAppController {
 				$confirm=1;
 			}
 		}
-		/* if($confirm == 0){
+		 if($confirm == 0){
 
 			$this->Session->setFlash(__('You dont have permission to access this module.'),'error');
 
 	    	$this->redirect(
 	            array('controller' => 'quotations', 'action' => 'index')
 	        );
-		} */
+		} 
 
 		$paymentTerm = Cache::read('paymentTerms');
 		
@@ -468,27 +468,27 @@ class QuotationsController extends SalesAppController {
 
 		$userData = $this->Session->read('Auth');
 
-		// $test = new Role();
+		$test = new Role();
 		
-		// $boom = $test->getRolePerms($userData['User']['role_id']);
+		$boom = $test->getRolePerms($userData['User']['role_id']);
 		
-		// $confirm = 0;
-		// foreach ($boom as $key => $pagePerm) {
+		$confirm = 0;
+		foreach ($boom as $key => $pagePerm) {
 			
-		// 	if($pagePerm == 'Approve Quotation'){
-		// 		//array_push($confirm, 1);
-		// 		$confirm=1;
-		// 	}
-		// }
+			if($pagePerm == 'Approve Quotation'){
+				//array_push($confirm, 1);
+				$confirm=1;
+			}
+		}
 		
-		// if($confirm == 0){
+		if($confirm == 0){
 
-		// 	$this->Session->setFlash(__('You dont have permission to access this module.'),'error');
+			$this->Session->setFlash(__('You dont have permission to access this module.'),'error');
 
-	 //    	$this->redirect(
-	 //            array('controller' => 'quotations', 'action' => 'index')
-	 //        );
-		// }
+	    	$this->redirect(
+	            array('controller' => 'quotations', 'action' => 'index')
+	        );
+		}
 		$this->Quotation->approvedData($quotationId);
 
 		$this->Session->setFlash(__('Quotation Approved.'));
@@ -645,14 +645,14 @@ class QuotationsController extends SalesAppController {
 			}
 		}
 		
-		// if($confirm == 0){
+		if($confirm == 0){
 
-		// 	$this->Session->setFlash(__('You dont have permission to access this module.'),'error');
+			$this->Session->setFlash(__('You dont have permission to access this module.'),'error');
 
-	 //    	$this->redirect(
-	 //            array('controller' => 'quotations', 'action' => 'index')
-	 //        );
-		// }
+	    	$this->redirect(
+	            array('controller' => 'quotations', 'action' => 'index')
+	        );
+		}
 
 		$this->loadModel('PaymentTermHolder');
 

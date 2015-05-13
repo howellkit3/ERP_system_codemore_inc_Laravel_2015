@@ -45,6 +45,18 @@
                                          echo $this->Form->input('repassword', array('label' => 'Confirm Password ', 'maxLength' => 255, 'title' => 'Password', 'type'=>'password','class' => 'form-control col-lg-6','label' => false,'placeholder' => 'Confirm Password'));
                                     ?>
                                 </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                    <?php 
+                                        echo $this->Form->input('Role.id', array(
+                                            'options' => array($roleDatList),
+                                            'label' => false,
+                                            'style' => 'text-transform:capitalize',
+                                            'class' => 'form-control editRole',
+                                            'empty' => '--Select Role Description--'));
+                        
+                                    ?>
+                                </div>
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <?php
@@ -52,6 +64,7 @@
                                         ?>
                                     </div>
                                 </div>
+
                             <?php echo $this->Form->end(); ?>
                             
                         </div>

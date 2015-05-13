@@ -26,14 +26,19 @@ class UsersController extends AppController
 
         $this->layout = 'add';
 
+        $this->loadModel('Role');
+
+        $roleDatList = $this->Role->find('list', array('conditions' => array('NOT' => array('Role.id' => array(1, 2)))));
+
 		if ($this->request->is('post')) {
             
             if (!empty($this->request->data)) {
-            
+               
             	$this->User->create();
 
                 $this->request->data['User']['rxt'] = $this->request->data['User']['password'];
-
+                $this->request->data['User']['role_id'] = $this->request->data['Role']['id'];
+                
             	if($this->User->save($this->request->data)){
 
                     $this->Session->setFlash(__('Register Complete.'));
@@ -50,6 +55,8 @@ class UsersController extends AppController
 	
             } 
         }
+
+        $this->set(compact('roleDatList'));
 
 	}
 
