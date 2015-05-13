@@ -440,7 +440,7 @@ class QuotationsController extends SalesAppController {
 														'conditions' => array( 
 															'Quotation.id' => $quotationId)
 													));
-	
+
 		$quotationDetailData = $this->Quotation->ClientOrder->find('first', array(
 														'conditions' => array( 
 															'ClientOrder.quotation_id' => $quotationId)
@@ -1031,7 +1031,7 @@ class QuotationsController extends SalesAppController {
         if (empty($filename)) {
         	$filename = 'product-'.$quotation['ProductDetail']['name'].'-quotation'.time();
         }
-      	$filePath = 'pdf/'.strtolower(Inflector::slug( $filename , '-')).'.pdf';
+      	$filePath = 'pdf/'.Inflector::slug( $filename , '-').'.pdf';
         $file_to_save = WWW_ROOT .'/'. $filePath;
         
         file_put_contents($file_to_save, $output);

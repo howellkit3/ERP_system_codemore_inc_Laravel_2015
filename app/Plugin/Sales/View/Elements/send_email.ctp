@@ -77,7 +77,9 @@
                                 <div class="col-lg-10">
                               <i class="fa fa-file-pdf-o"></i>
                                <?php 
-                               $name = 'product-'.$quotation['ProductDetail']['name'].'-quotation'.time();
+                              $productName = strtolower(Inflector::slug($quotation['Product']['name'] , '-'));
+
+                               $name = 'Quotation-'. $productName .'-'.time();
 
                                echo $this->Form->input('pdf',array('type' => 'hidden','value' => $name));  ?>
 
