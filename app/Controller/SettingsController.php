@@ -1937,13 +1937,27 @@ class SettingsController extends AppController
            
             if(!empty($this->request->data)){
 
-                pr($this->request->data);
-                $userDatList = $this->RolesPermission->find('all',array('conditions' => array('RolesPermission.role_id' => $this->request->data['Role']['id'])));
-                pr($userDatList);exit();
+                $array = $this->request->data['Permission'];
 
-                foreach ($userDatList as $key => $value) {
-                    # code...
+                $userData = $this->RolesPermission->find('list',array(
+                                        'conditions' => array('RolesPermission.role_id' => $this->request->data['Role']['id']),
+                                        'fields' => array('id','permission_id')));
+                $arrayflip = array();
+                foreach ($array as $key => $arrayList) {
+                    $arrayflip[] = $key;
                 }
+              
+                $ids = array();
+
+                foreach ($userData as $key => $userDataList) {
+                     if(in_array($userDataList, $arrayflip)){
+                        $ids['Permission']['approved'][] = $userDataList; 
+                     }else{
+                        $ids['Permission']['delete'][] = $userDataList;
+                     }
+                }
+                $this->RolesPermission->saveRoleperm($ids,$this->request->data);
+          
                 $this->Session->setFlash(__('Permission Successfully updated..'));
 
                 $this->redirect(

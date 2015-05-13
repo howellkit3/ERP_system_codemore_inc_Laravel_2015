@@ -39,5 +39,31 @@ class RolesPermission extends AppModel {
         $this->contain($model);
     }
 
+    public function saveRoleperm($ids = null , $data = null){
+       
+        $approved = !empty($ids['Permission']['approved']) ? $ids['Permission']['approved'] : array() ;
+        
+        $saveData = [];
+
+        foreach ($data['Permission'] as $key => $dataList) {
+
+            if (!in_array($key, $approved)) {
+
+                 $saveData['role_id'] = $data['Role']['id'];
+                 $saveData['permission_id'] = $key;
+                 $this->save($saveData);
+            }
+           
+        }
+
+        $delete = !empty($ids['Permission']['delete']) ? $ids['Permission']['delete'] : array() ;
+
+        if(!empty($delete)){
+            $this->deleteAll(array('RolesPermission.role_id' => $data['Role']['id'],'RolesPermission.permission_id' => $delete), false);
+        }
+       
+        
+    }
+
 
 }
