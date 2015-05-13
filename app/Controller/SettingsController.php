@@ -1864,7 +1864,7 @@ class SettingsController extends AppController
                 //pr($this->request->data);exit();
                 $this->User->id = $this->request->data['User']['id'];
                 $this->User->saveField('role_id', $this->request->data['Role']['id']);
-                $this->Session->setFlash(__('Permission Successfully deleted..'));
+                $this->Session->setFlash(__('Permission Successfully added..'));
 
                 $this->redirect(
                     array('controller' => 'settings', 'action' => 'role_perm')
