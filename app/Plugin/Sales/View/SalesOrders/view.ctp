@@ -125,14 +125,24 @@
 										<label class="col-lg-2 control-label">Payment Terms</label>
 										<div class="col-lg-8">
 											<?php 
-											$paymentClientTerms = !empty($paymentTermData[$clientOrderData['ClientOrder']['payment_terms']]) ? $paymentTermData[$clientOrderData['ClientOrder']['payment_terms']] : '';
+											// $paymentClientTerms = !empty($paymentTermData[$clientOrderData['ClientOrder']['payment_terms']]) ? $paymentTermData[$clientOrderData['ClientOrder']['payment_terms']] : '';
 
-											 echo $this->Form->input('PaymentTermHolder.name', array(
-			                                    								'class' => 'form-control item_type',
+											//  echo $this->Form->input('PaymentTermHolder.name', array(
+			        //                             								'class' => 'form-control item_type',
+							    //                                                 'label' => false,
+							    //                                                 'readonly' => 'readonly',
+							    //                                                 'value' => $paymentClientTerms));
+			                                   $paymentTerms = !empty($paymentTermData[$quotationData['Quotation']['payment_terms']]) ? $paymentTermData[$quotationData['Quotation']['payment_terms']] : '';
+
+	                                            echo $this->Form->input('PaymentTermHolder.name', array(
+	                                            								'class' => 'form-control item_type',
 							                                                    'label' => false,
 							                                                    'readonly' => 'readonly',
-							                                                    'value' => $paymentClientTerms));
-			                                   
+							                                                    'value' => $paymentTerms
+
+							                                                   
+
+							                                                     ));
 			                                ?>	
 										</div>
 									</div>
