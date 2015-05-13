@@ -355,13 +355,13 @@ class QuotationsController extends SalesAppController {
 
 		$userData = $this->User->read(null,$this->Session->read('Auth.User.id'));
 
-		$test = new Role();
+		$checkRole = new Role();
 		
-		$boom = $test->getRolePerms($userData['User']['role_id']);
+		$hasPermission = $checkRole->getRolePerms($userData['User']['role_id']);
 
 		
 		$confirm = 0;
-		foreach ($boom as $key => $pagePerm) {
+		foreach ($hasPermission as $key => $pagePerm) {
 			
 			if($pagePerm == 'View Quotation'){
 				//array_push($confirm, 1);
@@ -467,14 +467,14 @@ class QuotationsController extends SalesAppController {
 
 	public function approved($quotationId = null){
 
-		$userData = $this->Session->read('Auth');
+		$userData = $this->User->read(null,$this->Session->read('Auth.User.id'));
 
-		$test = new Role();
+		$checkRole = new Role();
 		
-		$boom = $test->getRolePerms($userData['User']['role_id']);
+		$hasPermission = $checkRole->getRolePerms($userData['User']['role_id']);
 		
 		$confirm = 0;
-		foreach ($boom as $key => $pagePerm) {
+		foreach ($hasPermission as $key => $pagePerm) {
 			
 			if($pagePerm == 'Approve Quotation'){
 				//array_push($confirm, 1);
@@ -631,14 +631,14 @@ class QuotationsController extends SalesAppController {
 
 	public function edit($quotationId = null,$companyId = null){
 
-		$userData = $this->Session->read('Auth');
+		$userData = $this->User->read(null,$this->Session->read('Auth.User.id'));
 
-		$test = new Role();
+		$checkRole = new Role();
 		
-		$boom = $test->getRolePerms($userData['User']['role_id']);
+		$hasPermission = $checkRole->getRolePerms($userData['User']['role_id']);
 		
 		$confirm = 0;
-		foreach ($boom as $key => $pagePerm) {
+		foreach ($hasPermission as $key => $pagePerm) {
 			
 			if($pagePerm == 'Edit Quotation'){
 				//array_push($confirm, 1);
