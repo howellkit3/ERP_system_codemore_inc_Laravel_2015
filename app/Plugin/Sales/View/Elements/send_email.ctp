@@ -50,7 +50,7 @@
                                     echo $this->Form->input('subject', array('type' => 'text',
                                         'class' => 'form-control item_type required',
                                         'placeholder' => 'subject',
-                                        'value' => 'Quotation: '. $quotation['ProductDetail']['name'] ,
+                                        'value' => 'Quotation: '. $quotation['Product']['name'] ,
                                         'required' => true, 
                                         'label' => false));
                                 ?>
