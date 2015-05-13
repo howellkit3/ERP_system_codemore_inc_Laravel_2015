@@ -630,7 +630,8 @@ class QuotationsController extends SalesAppController {
 	}
 
 	public function edit($quotationId = null,$companyId = null){
-
+		
+		$this->loadModel('User');
 		$userData = $this->User->read(null,$this->Session->read('Auth.User.id'));
 
 		$checkRole = new Role();
