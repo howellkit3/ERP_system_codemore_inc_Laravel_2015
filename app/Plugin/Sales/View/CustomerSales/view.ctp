@@ -47,8 +47,14 @@
 									<ul class="fa-ul">
 										<i class="fa fa-phone"></i>
 										<?php foreach ($company['Contact'] as $key => $number) {
+
+											if($key != 0){
+												if(!empty($number['number'])){
+													echo ",";
+												}
+											}
 											echo $number['number'];
-											echo ",";
+											
 										}?>
 									</ul>
 								</div>

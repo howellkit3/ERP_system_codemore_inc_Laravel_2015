@@ -50,13 +50,19 @@
 								</div>
 							<?php } ?>
 
-							<?php if(!empty($company['Contact'][0]['number'])) { ?>
+							<?php if(!empty($company['Contact'][0]['number'])){ ?>
 								<div class="profile-details">
 									<ul class="fa-ul">
 										<i class="fa fa-phone"></i>
 										<?php foreach ($company['Contact'] as $key => $number) {
+
+											if($key != 0){
+												if(!empty($number['number'])){
+													echo ",";
+												}
+											}
 											echo $number['number'];
-											echo ",";
+											
 										}?>
 									</ul>
 								</div>
