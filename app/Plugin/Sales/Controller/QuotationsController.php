@@ -453,7 +453,7 @@ class QuotationsController extends SalesAppController {
 		$userData = $this->User->read(null,$this->Session->read('Auth.User.id'));
 
 		//start///call Role permission
-		$actionName = 'Approved Quotation';
+		$actionName = 'Approve Quotation';
 		$this->_rolePermission($actionName);
 		//end///call Role permission
 
