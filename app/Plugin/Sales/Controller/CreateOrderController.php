@@ -63,6 +63,15 @@ class CreateOrderController extends SalesAppController {
 		
 		$this->loadModel('Unit');
 
+		$month = date("m"); 
+	    $year = date("y");
+	    $hour = date("H");
+	    $minute = date("i");
+	    $seconds = date("s");
+	    $random = rand(1000, 10000);
+	        
+		$code =  $year. $month .$random;
+
 		$currencies = $this->Currency->getList();
 
 		$units = $this->Unit->getList();
@@ -82,7 +91,7 @@ class CreateOrderController extends SalesAppController {
 		$productData = $this->Company->Product->find('first',array('fields' => array('id','name'),
 										'conditions' => array('id' => $quotationData['QuotationDetailOrder'][0]['product_id'])));
 		
-		$this->set(compact('quotationData','companyData','paymentTerm','productData','currencies','units'));
+		$this->set(compact('quotationData','companyData','paymentTerm','productData','currencies','units','code'));
 	}
 
 	public function find_item_detail($itemDetailId = null){

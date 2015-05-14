@@ -225,11 +225,13 @@
 		 						echo $this->Html->link( "<i class='fa fa-cog'></i> Settings ",   array('controller' =>'settings','action'=>'category','plugin' => null),array('escape' => false) );
 		 					?>
 		 				</li>
-		 				<li>
-							<?php
-		 						echo $this->Html->link( "<i class='fa fa-cog'></i> Role and Permission ",   array('controller' =>'settings','action'=>'role_perm','plugin' => null),array('escape' => false) );
-		 					?>
-		 				</li>
+		 				<?php if($userData['User']['role_id'] == 1 || $userData['User']['role_id'] == 2){ ?>
+			 				<li>
+								<?php
+			 						echo $this->Html->link( "<i class='fa fa-cog'></i> Role and Permission ",   array('controller' =>'settings','action'=>'role_perm','plugin' => null),array('escape' => false) );
+			 					?>
+			 				</li>
+			 			<?php } ?>
 						<!-- <li><a href="#"><i class="fa fa-envelope-o"></i>Messages</a></li> -->
 						<li>
 							<?php

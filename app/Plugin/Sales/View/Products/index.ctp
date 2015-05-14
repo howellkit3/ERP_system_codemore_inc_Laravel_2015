@@ -37,7 +37,7 @@
                                     <th><a href="#"><span>Item Type</span></a></th>
                                     <th><a href="#"><span>Remarks</span></a></th>
                                     <th><a href="#"><span>Created</span></a></th>
-                                    <th>Action</th>
+                                    <th style="width:200px">Action</th>
                                 </tr>
                             </thead>
 

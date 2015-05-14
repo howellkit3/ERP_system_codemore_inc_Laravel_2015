@@ -63,21 +63,11 @@ class ClientOrder extends AppModel {
 
 	public function saveClientOrder($clientOrderData = null, $auth = null){
 
-	 $month = date("m"); 
-    $year = date("y");
-    $hour = date("H");
-    $minute = date("i");
-    $seconds = date("s");
-    $random = rand(1000, 10000);
-        
-	$code =  $year. $month .$random;
-		
 		$this->create();
 
 		$clientOrderData['ClientOrder']['client_order_item_details_id'] = $clientOrderData['QuotationItemDetail']['id'];
 		$clientOrderData['ClientOrder']['created_by'] = $auth;
 		$clientOrderData['ClientOrder']['modified_by'] = $auth;
-		$clientOrderData['ClientOrder']['uuid'] = $code;
 		$clientOrderData['ClientOrder']['company_id'] = $clientOrderData['Company']['id'];
 		$clientOrderData['ClientOrder']['quotation_id'] = $clientOrderData['Quotation']['id'];
 		
