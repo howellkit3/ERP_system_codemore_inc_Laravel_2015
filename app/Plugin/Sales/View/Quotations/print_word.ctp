@@ -208,7 +208,7 @@
 								Validity
 							</div>
 							<div class="col-lg-8">
-								 <?php echo !empty($quotation['Quotation']['validity']) ? date('M d, Y', strtotime($quotation['Quotation']['validity'])) : 'No validity date'; ?>
+								<?php echo !empty($paymentTerm[$quotation['Quotation']['payment_terms']]) ? $paymentTerm[$quotation['Quotation']['payment_terms']]: '' ?>
 							</div>
 
 						</div>
@@ -225,10 +225,6 @@
 
 						</div>
 			
-						
-					
-
-					
 					<br><br>
 					<div class="form-group">
 						<div class="col-lg-1"></div>

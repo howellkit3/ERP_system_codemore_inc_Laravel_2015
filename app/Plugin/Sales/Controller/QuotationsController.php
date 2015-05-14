@@ -206,7 +206,7 @@ class QuotationsController extends SalesAppController {
 		if ($this->request->is(array('post','put'))) {
 
             if (!empty($this->request->data)) {
-            	
+
             	if (!empty($this->request->data['submit']) && $this->request->data['submit'] == 'Save as Draft') {
             			$this->request->data['Quotation']['status'] = 'draft';	
             			}
@@ -955,9 +955,16 @@ class QuotationsController extends SalesAppController {
 		$userData = $this->Session->read('Auth');
 
 		$this->loadModel('Sales.Company');
-
+		$this->loadModel('Sales.PaymentTermHolder');
 		// $userData = $this->Session->read('Auth');
 		$this->Company->bind(array('Address','Contact','Email','Inquiry','Quotation'));
+
+		$paymentTerm = Cache::read('paymentTerms');
+		
+		if (!$paymentTerm) {
+            $paymentTerm = $this->PaymentTermHolder->getList(null,array('id','name'));
+            Cache::write('paymentTerms', $paymentTerm);
+        }
 
 		$companyData = $this->Company->find('list', array(
      											'fields' => array( 
@@ -1017,7 +1024,7 @@ class QuotationsController extends SalesAppController {
 								));
 	
 
- 		$view->set(compact('approvedUser','companyData','units','currencies','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','productName','user','quotationDetailData'));
+ 		$view->set(compact('paymentTerm','approvedUser','companyData','units','currencies','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','productName','user','quotationDetailData'));
         
        	$view->viewPath = 'Quotations'.DS.'pdf';	
    
