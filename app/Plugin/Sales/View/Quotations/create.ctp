@@ -210,7 +210,7 @@
 														                                'options' => array($currencyData),  
 														                                'label' => false,
 														                                'class' => 'form-control',
-														                                'empty' => '---Select Currency---'
+														                                'empty' => '-Select Currency-'
 														                                 )); 
 
 					                            ?>
