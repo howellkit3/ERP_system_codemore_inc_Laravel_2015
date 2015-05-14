@@ -449,10 +449,17 @@ class QuotationsController extends SalesAppController {
 
 	public function approved($quotationId = null){
 
+		$this->loadModel('User');
+		$userData = $this->User->read(null,$this->Session->read('Auth.User.id'));
+
 		//start///call Role permission
 		$actionName = 'Approved Quotation';
 		$this->_rolePermission($actionName);
 		//end///call Role permission
+
+		// $this->loadModel('Sales.Approver');
+
+		// $this->Approver->approverData($quotationId,$userData['User']['id']);
 
 		$this->Quotation->approvedData($quotationId);
 
