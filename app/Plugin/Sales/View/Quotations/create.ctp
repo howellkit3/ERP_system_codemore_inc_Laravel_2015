@@ -230,7 +230,7 @@
 												</div>
 
 												<div class="col-lg-3">
-													<?php echo $this->Form->input('QuotationItemDetail.0.unit_price_unit_id', array(
+													<?php echo $this->Form->input('QuotationItemDetail.0.unit_price_unit_id', array( 
 						                                'options' => array($unitData),  
 						                                'label' => false,
 						                                'class' => 'form-control required',
