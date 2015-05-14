@@ -70,6 +70,12 @@ class Quotation extends AppModel {
 					'dependent' => true
 				),
 
+				'Approver' => array(
+					'className' => 'Sales.Approver',
+					'foreignKey' => 'foreign_key',
+					'dependent' => true
+				),
+
 
 			),
 			'hasOne' => array(

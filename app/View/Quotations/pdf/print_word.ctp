@@ -68,7 +68,7 @@
 						</td>
 						<td style="width:20px;">:</td>
 						<td>
-						 <?php echo $quotation['ProductDetail']['name']?>
+						 <?php echo $quotation['Product']['name']?>
 						</td>
 					</tr>
 					<tr>
@@ -86,74 +86,130 @@
 			</table>
 
 
-								<table  class = "layout">
-								<?php foreach ($quotation['QuotationItemDetail'] as $itemDetail){ ?>
-								
-										<tr>
-											<td width ="123px" height ="35px" valign ="top" class ="column3 col-md-8"> 
-												<div class="col-lg-12">QTY 
-												</div>
-											</td>
-											<td style="width:20px;">:</td>	
-											<td height ="35px" valign ="top" class ="column3 col-md-8" style="border:1px solid #000;  text-align:center"> 
-												<div class="col-lg-12">
-													<?php echo $itemDetail['quantity'];?> 
+			<table  class = "layout">
+				
+				<tr>
+					<td width ="123px" height ="15px" valign ="top" class ="column3 col-md-8"> 
+						<div class="col-lg-12">QTY 
+						</div>
+					</td>
+					<td style="width:20px;">:</td>
+					<?php foreach ($quotation['QuotationItemDetail'] as $itemDetail){ ?>	
+						<td height ="15px" valign ="top" class ="column3 col-md-8" style="border:1px solid #000;  text-align:center"> 
+							<div class="col-lg-12">
+								<?php echo (!empty($itemDetail['quantity']) && is_numeric($itemDetail['quantity'])) ? number_format($itemDetail['quantity']) : '';
+								?>
+								<?php
+								 echo !empty($units[$itemDetail['quantity_unit_id']]) ? $units[$itemDetail['quantity_unit_id']] : '' ?> 
+							</div>
+						</td>
+					<?php } ?>	
+					
+				</tr>
 
-													<?php
-													 echo !empty($units[$itemDetail['quantity_unit_id']]) ? $units[$itemDetail['quantity_unit_id']] : '' ?> 
-												</div>
-											</td>	
-											
-										</tr>
+				<tr >
+					<td height ="15px" valign ="top" class ="column3 col-md-8"> 
+						<div class="col-lg-12">Unit Price 
+						</div>
+					</td>
+					<td style="width:20px;">:</td>
+					<?php foreach ($quotation['QuotationItemDetail'] as $itemDetail){ ?>
+						<td height ="15px" valign ="top" class = "column4 col-md-8" style="border:1px solid #000;  text-align:center">
+							<div class="col-lg-12" >
+								<?php
+								 echo !empty($currencies[$itemDetail['unit_price_currency_id']]) ? $currencies[$itemDetail['unit_price_currency_id']] : '' ?>
+								<?php echo (!empty($itemDetail['unit_price']) && is_numeric($itemDetail['unit_price'])) ? number_format($itemDetail['unit_price'],4) : '';?> 
+								/
+								<?php
+								 echo !empty($units[$itemDetail['unit_price_unit_id']]) ? $units[$itemDetail['unit_price_unit_id']] : '' ?>
+							</div>
+						</td>
+					<?php } ?>	
+				</tr>
 
-										<tr >
-											<td height ="35px" valign ="top" class ="column3 col-md-8"> 
-												<div class="col-lg-12">Unit Price 
-												</div>
-											</td>
-											<td style="width:20px;">:</td>
-											<td height ="35px" valign ="top" class = "column4 col-md-8" style="border:1px solid #000;  text-align:center">
-												<div class="col-lg-12" >
-													<?php echo (!empty($itemDetail['unit_price']) && is_numeric($itemDetail['unit_price'])) ? number_format($itemDetail['unit_price'],4) : '';?> 
-													<?php
-													 echo !empty($currencies[$itemDetail['unit_price_currency_id']]) ? $currencies[$itemDetail['unit_price_currency_id']] : '' ?> 
-												</div>
-											</td>
-											
-										</tr>
+				<tr>
+					<td height ="15px" valign ="top" class ="column3 col-md-8"> 
+						<div class="col-lg-12">Vat Price
+						</div>
+					</td>
+					<td style="width:20px;">:</td>
+					<?php foreach ($quotation['QuotationItemDetail'] as $itemDetail){ ?>
+						<td height ="15px" class ="column2 col-md-8" style="border:1px solid #000;  text-align:center">
+							<div class="col-lg-12">
+								<?php echo (!empty($itemDetail['vat_price']) && is_numeric($itemDetail['vat_price'])) ? number_format($itemDetail['vat_price'],4) : '';
+								?>
+							</div>
+						</td>
+					<?php } ?>
+				</tr>
 
-										<tr>
-											<td height ="35px" valign ="top" class ="column3 col-md-8"> 
-												<div class="col-lg-12">Vat Price
-												</div>
-											</td>
-											<td style="width:20px;">:</td>
-											<td height ="40px" class ="column2 col-md-8" style="border:1px solid #000;  text-align:center">
-												<div class="col-lg-12">
-													<?php echo $itemDetail['vat_price'];?> 
-												</div>
-											</td>
-											
-										</tr>
+				<tr>
+					<td height ="15px" valign ="top" class ="column3 col-md-8"> 
+						<div class="col-lg-12">Material
 
-										<tr>
-											<td height ="35px" valign ="top" class ="column3 col-md-8"> 
-												<div class="col-lg-12">Material
+						</div>
+					</td>
+					<td style="width:20px;">:</td>
+					<?php foreach ($quotation['QuotationItemDetail'] as $itemDetail){ ?>
+						<td height ="15px" class ="column2 col-md-8" style="border:1px solid #000; text-align:center">
+							<div class="col-lg-12">
+								<?php echo $itemDetail['material'];?> 
+							</div>
+						</td>
+					<?php } ?>
+				</tr>
 
-												</div>
-											</td>
-											<td style="width:20px;">:</td>
-											<td height ="30px" class ="column2 col-md-8" style="border:1px solid #000; text-align:center">
-												<div class="col-lg-12">
-													<?php echo $itemDetail['material'];?> 
-												</div>
-											</td>
-											
-										</tr>
-
-									
-								<?php } ?>
-								</table>
+			</table>
+			<table class="layout">
+				<thead>
+					<tr>
+						<td style="width:123px;">
+							Color
+						</td>
+						<td style="width:20px;">:</td>
+						<td>
+						 <?php echo $quotation['QuotationDetail']['color']?> 
+						</td>
+					</tr>
+					<tr>
+						<td style="width:123px;">
+							Process
+						</td>
+						<td style="width:20px;">:</td>
+						<td>
+						 <?php echo $quotation['QuotationDetail']['process']?>
+						</td>
+					</tr>
+					<tr>
+						<td style="width:123px;">
+							Packaging
+						</td>
+						<td style="width:20px;">:</td>
+						<td>
+						 <?php echo $quotation['QuotationDetail']['packaging']?>
+						</td>
+					</tr>
+					<tr>
+						<td style="width:123px;">
+							Other Specs
+						</td>
+						<td style="width:20px;">:</td>
+						<td>
+						 <?php echo $quotation['QuotationDetail']['other_specs']?>
+						</td>
+					</tr>
+					<tr>
+						<td style="width:123px;">
+							Terms
+						</td>
+						<td style="width:20px;">:</td>
+						<td>
+						 <?php echo !empty($paymentTerm[$quotation['Quotation']['payment_terms']]) ? $paymentTerm[$quotation['Quotation']['payment_terms']]: '' ?>
+						</td>
+					</tr>
+					
+				</thead>
+			</table>
 
 
 			<table class="layout">
@@ -164,14 +220,16 @@
 						</td>
 						<td style="width:20px;">:</td>
 						<td>
-						 <?php 
-								   if (!empty($quotation['Quotation']['validity']) 
-								   	&& $this->DateFormat->isValidDateTimeString($quotation['Quotation']['validity'])){
-								   	
-								   		echo date('M d, Y', strtotime($quotation['Quotation']['validity']));
-								   } else {
+							<?php 
+							   	if (!empty($quotation['Quotation']['validity']) 
+							   		&& $this->DateFormat->isValidDateTimeString($quotation['Quotation']['validity'])){
+							   	
+							   		echo date('M d, Y', strtotime($quotation['Quotation']['validity']));
+							   	} else {
 
-						} ?>
+							   		echo 'No validity date';
+							   	} 
+							?>
 						</td>
 					</tr>
 					<tr>
@@ -187,11 +245,17 @@
 					
 				</thead>
 			</table>
-			
+			<br><br>
 			<table class="layout">
 				<thead>
 					<tr>
 						<td>Respectfully,</td>
+					</tr>
+					<tr>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
 					</tr>
 					<tr>
 						<td style="width:335px;">
@@ -203,26 +267,38 @@
 				</thead>
 			</table>
 			<table class="layout">
-				<thead>
-					<tr>
-						<td style="width:500px;">
-							<div style="display:inline-block; vertical-align:top; border-bottom: 1px solid #b2b2b2;width:335px">
-								Approved by <br/><br>
-								Ms. Carryll Yu
-								<!-- <hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;"> -->
-							</div>
-							<div style="display:inline-block; vertical-align:top; border-bottom: 1px solid #b2b2b2;width:335px">
-							</div>
-							<div style="display:inline-block; vertical-align: bottom;text-align:right; margin-right:150px;">
-								<font size ="9px">
-									Doc No.: KFP-FR-MKT-07<br>
-									REV. No.: 01	
-								</font>				
-							</div>
-						</td>
+				<?php if(!empty($approvedUser)){ ?>
+					<thead>
+						<tr>
+							<td style="width:500px;">
+								<div style="display:inline-block; vertical-align:top; border-bottom: 1px solid #b2b2b2;width:335px">
+									Approved by <br/><br><br><br>
+									<?php
+								
+										echo ucfirst($approvedUser['User']['first_name']);
+										echo ' ';
+									 	echo ucfirst($approvedUser['User']['last_name']);
+										
+									?>
+									<!-- <hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;"> -->
+								</div>
+								<div style="display:inline-block; vertical-align:top; border-bottom: 1px solid #b2b2b2;width:335px">
+								</div>
+								<div style="display:inline-block; vertical-align: bottom;text-align:right; margin-right:150px;">
+									<font size ="9px">
+										Doc No.: KFP-FR-MKT-07<br>
+										REV. No.: 01	
+									</font>				
+								</div>
+							</td>
 
-					</tr>
-				</thead>
+						</tr>
+					</thead>
+				<?php 
+					}else{
+						echo "Note: Not yet approved. ";
+					}
+				?>
 			</table >
 			
 			<!-- <hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">

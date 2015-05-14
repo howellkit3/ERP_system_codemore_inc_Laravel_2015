@@ -239,12 +239,11 @@
 														
 														<td height ="37px" valign ="top" class ="column3 col-md-10"> 
 															<div class="col-lg-12">
-																<?php 
-
-																	echo $itemDetail['quantity'];
+																
+																<?php echo (!empty($itemDetail['quantity']) && is_numeric($itemDetail['quantity'])) ? number_format($itemDetail['quantity']) : '';
 																?>
 																<?php
-													 				echo !empty($units[$itemDetail['quantity_unit_id']]) ? $units[$itemDetail['quantity_unit_id']] : 'asf' 
+													 				echo !empty($units[$itemDetail['quantity_unit_id']]) ? $units[$itemDetail['quantity_unit_id']] : '' 
 													 			?> 
 															</div>
 														</td>	
@@ -255,8 +254,7 @@
 														
 														<td height ="37px" valign ="top" class = "column4 col-md-10">
 															<div class="col-lg-12">
-																<?php 
-																	echo $itemDetail['unit_price'];
+																<?php echo (!empty($itemDetail['unit_price']) && is_numeric($itemDetail['unit_price'])) ? number_format($itemDetail['unit_price'],4) : '';
 																?>
 																<?php
 																	echo !empty($currencies[$itemDetail['unit_price_currency_id']]) ? $currencies[$itemDetail['unit_price_currency_id']] : ''
@@ -270,7 +268,9 @@
 														
 														<td height ="35px" class ="column2 col-md-10">
 															<div class="col-lg-12">
-																<?php echo $itemDetail['vat_price'];?> 
+																<?php echo (!empty($itemDetail['vat_price']) && is_numeric($itemDetail['vat_price'])) ? number_format($itemDetail['vat_price'],4) : '';
+																?>
+																
 															</div>
 														</td>
 														

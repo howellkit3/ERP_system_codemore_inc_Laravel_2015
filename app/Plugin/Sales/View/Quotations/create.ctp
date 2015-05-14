@@ -204,7 +204,19 @@
 
 											<div class="form-group">
 												<label class="col-lg-2 control-label">Unit Price</label>
+
 												<div class="col-lg-2">
+												<?php echo $this->Form->input('QuotationItemDetail.0.unit_price_currency_id', array(
+														                                'options' => array($currencyData),  
+														                                'label' => false,
+														                                'class' => 'form-control',
+														                                'empty' => '---Select Currency---'
+														                                 )); 
+
+					                            ?>
+												</div>
+
+												<div class="col-lg-3">
 													<?php 
 			                                            echo $this->Form->input('QuotationItemDetail.0.unit_price', array(
 			                                            								'class' => 'form-control item_type unitprice number',
@@ -217,15 +229,15 @@
 													
 												</div>
 
-												<div class="col-lg-6">
-												<?php echo $this->Form->input('QuotationItemDetail.0.unit_price_currency_id', array(
-														                                'options' => array($currencyData),  
-														                                'label' => false,
-														                                'class' => 'form-control',
-														                                'empty' => '---Select Currency---'
-														                                 )); 
+												<div class="col-lg-3">
+													<?php echo $this->Form->input('QuotationItemDetail.0.unit_price_unit_id', array(
+						                                'options' => array($unitData),  
+						                                'label' => false,
+						                                'class' => 'form-control required',
+						                                'empty' => '---Select Unit---'
+						                                 )); 
 
-					                            ?>
+						                            ?>
 												</div>
 
 											</div>
@@ -248,22 +260,10 @@
 											<div class="form-group">
 												<label class="col-lg-2 control-label"></label>
 												<div class="col-lg-8">
-													<!-- <div class="checkbox-nice"> -->
+													
+													<input id="checkbox-1" class="checkvat checkbox-nice vat-price" type="checkbox" data-section='quotationItemDetail' name="[QuotationItemDetail][0][vat_price]" rel=".12">
+													<font color="gray"> Click to Compute the Unit Price with VAT </font>
 														
-														<input id="checkbox-1" class="checkvat checkbox-nice vat-price" type="checkbox" data-section='quotationItemDetail' name="[QuotationItemDetail][0][vat_price]" rel=".12">
-														<font color="gray"> Click to Compute the Unit Price with VAT </font>
-														<!-- <label><font color="gray"> Click to Compute the Unit Price with VAT </font></label> -->
-													<!-- </div> -->
-													<?php 
-			                                            // echo $this->Form->input('QuotationItemDetail.0.vat_price', array(
-			                                            // 								'class' => 'item_type Vat-check',
-									                                      //               'alt' => 'address1',
-									                                      //               'type' => 'checkbox',
-									                                      //               'rel' => .12,
-									                                      //               'value' => 'VAT Exempted',
-									                                      //               'label' => false,
-									                                      //               'placeholder' => 'Vat Price'))."<font color='gray' style='position: relative;top: -2px;' >Click to Compute the Unit Price with VAT</font>";
-		                                            ?>
 												</div>
 											</div>
 

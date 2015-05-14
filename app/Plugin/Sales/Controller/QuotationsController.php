@@ -206,7 +206,7 @@ class QuotationsController extends SalesAppController {
 		if ($this->request->is(array('post','put'))) {
 
             if (!empty($this->request->data)) {
-
+            	
             	if (!empty($this->request->data['submit']) && $this->request->data['submit'] == 'Save as Draft') {
             			$this->request->data['Quotation']['status'] = 'draft';	
             			}
@@ -414,10 +414,10 @@ class QuotationsController extends SalesAppController {
 			'ProductDetail', 
 			'Product',
 			'ContactPerson',
+			'Approver' => array('fields' => array('user_id')),
 			'ContactPersonEmail' => array('fields' => array('email'))
 			));
-
-
+		
 		$quotation = $this->Quotation->find('first', array(
 														'conditions' => array( 
 															'Quotation.id' => $quotationId)
@@ -437,13 +437,21 @@ class QuotationsController extends SalesAppController {
 
 			$clientOrderCount = 0;
 		} 
+		$approverId = $this->Quotation->Approver->find('list',array('conditions' => array('Approver.foreign_key' => $quotationId),'fields' => array('id','user_id')));
+		
+		$approvedUser = $this->User->find('first', array(
+									'conditions' => array(
+										'User.id' => $approverId ),
+									'fields' => array(
+										'User.id','User.first_name','User.last_name')
+								));
 
 		$user = $this->User->find('first', array(
 									'conditions' => array(
 										'User.id' => $userData['User']['id'] )
 								));
-
-		$this->set(compact('units','currencies','paymentTerm','companyData','companyId', 'quotationSize', 'quotationOption','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','salesStatus', 'productName','clientOrderCount','quotationDetailData'));
+		
+		$this->set(compact('approvedUser','units','currencies','paymentTerm','companyData','companyId', 'quotationSize', 'quotationOption','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','salesStatus', 'productName','clientOrderCount','quotationDetailData'));
 		
 	}
 
@@ -457,9 +465,9 @@ class QuotationsController extends SalesAppController {
 		$this->_rolePermission($actionName);
 		//end///call Role permission
 
-		// $this->loadModel('Sales.Approver');
+		$this->loadModel('Sales.Approver');
 
-		// $this->Approver->approverData($quotationId,$userData['User']['id']);
+		$this->Approver->approverData($quotationId,$userData['User']['id']);
 
 		$this->Quotation->approvedData($quotationId);
 
@@ -474,7 +482,9 @@ class QuotationsController extends SalesAppController {
 		
 		//$this->layout = 'pdf';
 
-		$this->loadModel('Sale.Company');
+		$this->loadModel('Sales.Company');
+
+		$this->loadModel('Sales.PaymentTermHolder');
 
 		// Configure::write('debug',2);
 
@@ -499,6 +509,12 @@ class QuotationsController extends SalesAppController {
 																)
 															));
 
+		$paymentTerm = Cache::read('paymentTerms');
+		
+		if (!$paymentTerm) {
+            $paymentTerm = $this->PaymentTermHolder->getList(null,array('id','name'));
+            Cache::write('paymentTerms', $paymentTerm);
+        }
 
 		$this->loadModel('Currency');
 		$currencies = $this->Currency->getList();
@@ -508,7 +524,14 @@ class QuotationsController extends SalesAppController {
 
 
 
-		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder','ProductDetail','ContactPerson','Product'));
+		$this->Quotation->bind(array('QuotationDetail',
+							'QuotationItemDetail',
+							'ClientOrder',
+							'ProductDetail',
+							'ContactPerson',
+							'Product',
+							'Approver' => array('fields' => array('user_id'))
+							));
 
 		$quotation = $this->Quotation->find('first', array(
 														'conditions' => array( 
@@ -520,6 +543,15 @@ class QuotationsController extends SalesAppController {
 														'conditions' => array( 
 															'ClientOrder.quotation_id' => $quotationId)
 													));
+		$this->loadModel('User');
+		$approverId = $this->Quotation->Approver->find('list',array('conditions' => array('Approver.foreign_key' => $quotationId),'fields' => array('id','user_id')));
+		
+		$approvedUser = $this->User->find('first', array(
+									'conditions' => array(
+										'User.id' => $approverId ),
+									'fields' => array(
+										'User.id','User.first_name','User.last_name')
+								));
 
 		$user = ClassRegistry::init('User')->find('first', array(
 									'conditions' => array(
@@ -528,7 +560,7 @@ class QuotationsController extends SalesAppController {
 		$view = new View(null, false);
 		//$this->set(compact('companyData','currencies','units','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','productName','user','quotationDetailData'));
 		
-		$view->set(compact('companyData','units','currencies','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','productName','user','quotationDetailData'));
+		$view->set(compact('paymentTerm','approvedUser','companyData','units','currencies','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','productName','user','quotationDetailData'));
         
 		
 		$view->viewPath = 'Quotations'.DS.'pdf';	
@@ -949,7 +981,14 @@ class QuotationsController extends SalesAppController {
 		$this->loadModel('Unit');
 		$units = $this->Unit->getList();
 
-		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','ClientOrder','ProductDetail','ContactPerson','Product'));
+		$this->Quotation->bind(array('QuotationDetail',
+					'QuotationItemDetail',
+					'ClientOrder',
+					'ProductDetail',
+					'ContactPerson',
+					'Product',
+					'Approver' => array('fields' => array('user_id'))
+					));
 
 		$quotation = $this->Quotation->find('first', array(
 														'conditions' => array( 
@@ -961,13 +1000,24 @@ class QuotationsController extends SalesAppController {
 															'ClientOrder.quotation_id' => $quotationId)
 													));
 
+		$this->loadModel('User');
+
+		$approverId = $this->Quotation->Approver->find('list',array('conditions' => array('Approver.foreign_key' => $quotationId),'fields' => array('id','user_id')));
+		
+		$approvedUser = $this->User->find('first', array(
+									'conditions' => array(
+										'User.id' => $approverId ),
+									'fields' => array(
+										'User.id','User.first_name','User.last_name')
+								));
+
 		$user = ClassRegistry::init('User')->find('first', array(
 									'conditions' => array(
 										'User.id' => $userData['User']['id'] )
 								));
 	
 
- 		$view->set(compact('companyData','units','currencies','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','productName','user','quotationDetailData'));
+ 		$view->set(compact('approvedUser','companyData','units','currencies','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','productName','user','quotationDetailData'));
         
        	$view->viewPath = 'Quotations'.DS.'pdf';	
    

@@ -153,10 +153,10 @@
 									<table  class = "tbl">
 										<tr>
 											
-											<td height ="35px" valign ="top" class ="column3 col-md-8"> 
+											<td height ="35px" valign ="top" class ="column2 col-md-12"> 
 												<div class="col-lg-12">
-													<?php echo $itemDetail['quantity'];?> 
-
+													<?php echo (!empty($itemDetail['quantity']) && is_numeric($itemDetail['quantity'])) ? number_format($itemDetail['quantity']) : '';
+													?>
 													<?php
 													 echo !empty($units[$itemDetail['quantity_unit_id']]) ? $units[$itemDetail['quantity_unit_id']] : '' ?> 
 												</div>
@@ -164,25 +164,30 @@
 											
 										</tr>
 										<tr>
-											<td height ="35px" valign ="top" class = "column4 col-md-8">
+											<td height ="35px" valign ="top" class = "column2 col-md-12">
 												<div class="col-lg-12">
-													<?php echo (!empty($itemDetail['unit_price']) && is_numeric($itemDetail['unit_price'])) ? number_format($itemDetail['unit_price'],4) : '';?> 
 													<?php
-													 echo !empty($currencies[$itemDetail['unit_price_currency_id']]) ? $currencies[$itemDetail['unit_price_currency_id']] : '' ?> 
+													 echo !empty($currencies[$itemDetail['unit_price_currency_id']]) ? $currencies[$itemDetail['unit_price_currency_id']] : '' ?>
+													<?php echo (!empty($itemDetail['unit_price']) && is_numeric($itemDetail['unit_price'])) ? number_format($itemDetail['unit_price'],4) : '';?>
+													/
+													<?php
+													 echo !empty($units[$itemDetail['unit_price_unit_id']]) ? $units[$itemDetail['unit_price_unit_id']] : '' ?> 
+													 
 												</div>
 											</td>
 										</tr>
 										<tr>
-											<td height ="40px" class ="column2 col-md-8">
+											<td height ="40px" class ="column2 col-md-12">
 												<div class="col-lg-12">
-													<?php echo $itemDetail['vat_price'];?> 
+													<?php echo (!empty($itemDetail['vat_price']) && is_numeric($itemDetail['vat_price'])) ? number_format($itemDetail['vat_price'],4) : '';
+													?> 
 												</div>
 											</td>
 										</tr>
 
 										<tr>
 											
-											<td height ="30px" class ="column2 col-md-8">
+											<td height ="30px" class ="column2 col-md-12">
 												<div class="col-lg-12">
 													<?php echo $itemDetail['material'];?> 
 												</div>
@@ -300,6 +305,7 @@
 							Respectfully,
 						</div>
 					</div>
+					<br><br>
 					<div class="form-group">
 						<div class="col-lg-1"></div>
 						<div class="col-lg-5">
@@ -308,30 +314,44 @@
 							<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
 						</div>
 					</div>
-					<div class="form-group">
-						<div class="col-lg-1"></div>
-						<div class="col-lg-10">
-							Approved by
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-lg-1"></div>
-						<div class="col-lg-5" style="display:inline-block !important;">
 
-							Ms. Carryll Yu
-							<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
-
+					<?php if(!empty($approvedUser)){ ?>
+						<div class="form-group">
+							<div class="col-lg-1"></div>
+							<div class="col-lg-10">
+								Approved by
+							</div>
 						</div>
 						<br><br>
-						<div class=" pull-right col-lg-3" style="display:inline-block !important;">
-							<p class = "doc">
-								<font size ="1">
-									Doc No.: KFP-FR-MKT-07<br>
-									REV. No.: 01
-								</font>
-							</p>
+						<div class="form-group">
+							<div class="col-lg-1"></div>
+							<div class="col-lg-5" style="display:inline-block !important;">
+							<?php
+								
+								echo ucfirst($approvedUser['User']['first_name']);
+								echo '&nbsp';
+							 	echo ucfirst($approvedUser['User']['last_name']);
+								
+							?>
+								
+								<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
+
+							</div>
+							<br><br>
+							<div class=" pull-right col-lg-3" style="display:inline-block !important;">
+								<p class = "doc">
+									<font size ="1">
+										Doc No.: KFP-FR-MKT-07<br>
+										REV. No.: 01
+									</font>
+								</p>
+							</div>
 						</div>
-					</div>
+					<?php 
+						}else{
+							echo "Note: Not yet approved. ";
+						}
+					?>
 					<div style ="clear:both">
 					</div>
 				</form>
