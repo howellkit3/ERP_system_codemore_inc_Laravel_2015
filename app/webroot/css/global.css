@@ -272,3 +272,13 @@ body.dragging, body.dragging * {
 .form-group.permissionCheck1 {
   margin: auto auto auto 135px;
 }
+.col-lg-1.sizeWith {
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 6px;
+  width: 60px;
+}
+.modal-dialog.specModal {
+  width: 60%;
+  cursor: auto;
+}

@@ -35,7 +35,19 @@
 						<div class="top-space"></div>
 						<div class="main-box-body clearfix">
 							<div class="main-box-body clearfix">
-								<div class="form-horizontal">									
+								<div class="form-horizontal">
+
+									<div class="form-group">
+										<label class="col-lg-2 control-label">Customer</label>
+										<div class="col-lg-8">
+											<?php 
+	                                            echo $this->Form->input('Company.company_name', array(
+	                                            								'class' => 'form-control item_type',
+							                                                    'label' => false,
+							                                                    'disabled' => true));
+                                            ?>
+										</div>
+									</div>									
 									<div class="form-group">
 										<label class="col-lg-2 control-label">Item Number</label>
 										<input type="hidden" id="selected_type" value="<?php // echo $this->request->data['Product']['id']; ?>">
@@ -64,19 +76,60 @@
                                             ?>
 										</div>
 									</div>
-
-									<!-- <div class="form-group">
-										<label class="col-lg-2 control-label">Remarks</label>
-										<div class="col-lg-8">
+									<div class="form-group">
+										<label class="col-lg-2 control-label">Size</label>
+										<div class="col-lg-2">
 											<?php 
-	                                            echo $this->Form->input('Product.remarks', array(
+	                                            echo $this->Form->input('Product.size', array(
 	                                            								'class' => 'form-control item_type',
 							                                                    'label' => false,
-							                                                    'disabled' => true,
-							                                                    'placeholder' => 'Remarks'));
+							                                                    'placeholder' => 'Size'));
                                             ?>
 										</div>
-									</div> -->
+										<label class="col-lg-1 sizeWith">mm x</label>
+										<div class="col-lg-2">
+											<?php 
+	                                            echo $this->Form->input('Product.size', array(
+	                                            								'class' => 'form-control item_type',
+							                                                    'label' => false,
+							                                                    'placeholder' => 'Size'));
+                                            ?>
+										</div>
+										<label class="col-lg-1 sizeWith">mm x</label>
+										<div class="col-lg-2">
+											<?php 
+	                                            echo $this->Form->input('Product.size', array(
+	                                            								'class' => 'form-control item_type',
+							                                                    'label' => false,
+							                                                    'placeholder' => 'Size'));
+                                            ?>
+										</div>
+										<label class="col-lg-1 sizeWith">mm</label>
+									</div>
+
+									<div class="form-group">
+										<label class="col-lg-2 control-label">Quantity</label>
+										<div class="col-lg-4">
+											<?php 
+												echo $this->Form->input('Product.quantity', array(
+	                                            								'class' => 'form-control item_type',
+							                                                    'label' => false,
+							                                                    'placeholder' => 'Quantity'));
+
+					                            ?>
+										</div>
+										<div class="col-lg-4">
+											<?php 
+												echo $this->Form->input('Product.quantity_unit_id', array(
+					                                'options' => array($unitData),  
+					                                'label' => false,
+					                                'class' => 'form-control required',
+					                                'empty' => '---Select Unit---'
+					                                 )); 
+
+					                            ?>
+										</div>
+									</div>
 
 								</div>
 							</div>

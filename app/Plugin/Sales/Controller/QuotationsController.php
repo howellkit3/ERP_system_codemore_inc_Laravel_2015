@@ -32,7 +32,7 @@ class QuotationsController extends SalesAppController {
     }
 	
 	public function index() {
-
+		
 		$this->loadModel('Sales.Company');
 
 		$userData = $this->Session->read('Auth');

@@ -4,12 +4,12 @@ App::uses('SessionComponent', 'Controller/Component');
 
 class ProductsController extends SalesAppController {
 
-	public $uses = array('Sales.Company','ItemCategoryHolder','Process','Sales.ItemCategoryHolder','Sales.ItemType','Sales.ProcessField','GeneralItem','Substrate','CompoundSubstrate','CorrugatedPaper');
+	public $uses = array('Sales.Company','Process','GeneralItem','Substrate','CompoundSubstrate','CorrugatedPaper');
 	
 	function beforeFilter() {
   		$this->myRandomNumber = rand(1,4);
-  		$userDetails = $this->Session->read('Auth');
-		$this->set(compact('userDetails'));
+  		$userData = $this->Session->read('Auth');
+        $this->set(compact('userData'));
 	}
 
 
@@ -510,58 +510,74 @@ class ProductsController extends SalesAppController {
     public function find_dropdown($dropdownId = null){
 
     	$this->autoRender = false;
-
-    	$this->ItemCategoryHolder->bind(array('ItemTypeHolder'));
-
-    	//$productData = array();
+    	$this->loadModel('ItemCategoryHolder');
+    	$this->loadModel('ItemTypeHolder');
 
     	if($dropdownId == 1) {
-    		$allData = $this->GeneralItem->find('list',array(
+    		$categoryData = $this->GeneralItem->find('list',array(
 											'fields' => array(
 											'id', 'category_id')));
+    		$typeData = $this->GeneralItem->find('list',array(
+											'fields' => array(
+											'id', 'type_id')));
     		
     	}
     	if($dropdownId == 2) {
-    		$allData = $this->Substrate->find('list',array(
+    		$categoryData = $this->Substrate->find('list',array(
 											'fields' => array(
 											'id', 'category_id')));
+    		$typeData = $this->Substrate->find('list',array(
+											'fields' => array(
+											'id', 'type_id')));
     		
     	}
     	if($dropdownId == 3) {
-    		$allData = $this->CompoundSubstrate->find('list',array(
+    		$categoryData = $this->CompoundSubstrate->find('list',array(
 											'fields' => array(
 											'id', 'category_id')));
+    		$typeData = $this->Substrate->find('list',array(
+											'fields' => array(
+											'id', 'type_id')));
     		
     	}
     	if($dropdownId == 4) {
-    		$allData = $this->CorrugatedPaper->find('list',array(
+    		$categoryData = $this->CorrugatedPaper->find('list',array(
 											'fields' => array(
 											'id', 'category_id')));
+    		$typeData = $this->Substrate->find('list',array(
+											'fields' => array(
+											'id', 'type_id')));
     		
     	}
     	
-		$categoryData = $this->ItemCategoryHolder->find('all',
+    	$categData =  array_flip($categoryData);
+    	$typData =  array_flip($typeData);
+
+		$flipCategData = array_flip($categData);
+		$flipTypData = array_flip($typData);
+
+		$categoryName = $this->ItemCategoryHolder->find('all',
 											array('fields' => 
 												array('ItemCategoryHolder.id',
-												 	'ItemCategoryHolder.name',
-												 	'ItemTypeHolder.id',
-												 	'ItemTypeHolder.name'
-												 ),
+												 	'ItemCategoryHolder.name'),
 												'conditions' => array(
-													'ItemCategoryHolder.id' => $allData
-												),
-												'contains' => array('ItemTypeHolder'),
+													'ItemCategoryHolder.id' => $flipCategData)
+												));
+		$TypeName = $this->ItemTypeHolder->find('all',
+											array('fields' => 
+												array('ItemTypeHolder.id',
+												 	'ItemTypeHolder.name'),
+												'conditions' => array(
+													'ItemTypeHolder.id' => $flipCategData)
 												));
 
-		// foreach ($categoryData as $key => $itemtypes) {
-		// 	$productData['ItemTypeHolder'][] = 	$itemtypes['ItemTypeHolder'];
-
-		// }
-
-    	//pr($categoryData);exit();
+		$cat['CategoryName'] = $categoryName;
+		$typ['TypeName'] = $TypeName;
+		$allData = array_merge($cat,$typ);
+    	// pr($allData);exit();
     	$this->layout = false;
 
-		echo json_encode($categoryData);
+		echo json_encode($allData);
 
     }
 
@@ -612,6 +628,20 @@ class ProductsController extends SalesAppController {
 
 		$this->loadModel('Sales.Product');
 
+		$this->loadModel('Unit');
+
+		 //set to cache in first load
+		$unitData = Cache::read('unitData');
+		
+		if (!$unitData) {
+			
+			$unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
+															'order' => array('Unit.unit' => 'ASC')
+															));
+
+            Cache::write('unitData', $unitData);
+        }
+
 		$this->Product->recursive = 1;
 
 		$product = $this->request->data =  $this->Product->findById($productId);
@@ -621,7 +651,7 @@ class ProductsController extends SalesAppController {
 		$productData = $this->Product->find('all',array(
     		'order' => array('Product.id DESC')));	
 
-		$this->set(compact('product','productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData', 'companyData'));
+		$this->set(compact('unitData','product','productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData', 'companyData'));
 
 
 

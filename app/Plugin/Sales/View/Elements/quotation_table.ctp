@@ -59,6 +59,9 @@
             
             <td>
                 <?php
+
+                    //$myUrl =str_replace(array('/'), '-', $this->params->url); 
+                   
                     echo $this->Html->link('<span class="fa-stack">
                         <i class="fa fa-square fa-stack-2x"></i>
                         <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Review </font></span>

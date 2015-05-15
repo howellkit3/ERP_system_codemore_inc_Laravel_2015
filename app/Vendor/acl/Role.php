@@ -31,9 +31,9 @@
 	    }
 	 
 	    // check if a permission is set
-	    public function hasPerm($permission) {
-	        return isset($this->permissions[$permission]);
-	    }
+	    // public function hasPerm($permission) {
+	    //     return isset($this->permissions[$permission]);
+	    // }
 	}
 
 ?>

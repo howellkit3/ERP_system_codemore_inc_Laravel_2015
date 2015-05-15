@@ -59,6 +59,8 @@ class SettingsController extends AppController
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('index','category');
+        $userData = $this->Session->read('Auth');
+        $this->set(compact('userData'));
     }
 	
 	public function index() {

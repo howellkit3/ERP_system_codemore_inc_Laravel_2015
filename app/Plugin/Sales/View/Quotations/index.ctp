@@ -9,6 +9,7 @@
       'before' => $this->Js->get("#loader")->effect('fadeIn', array('buffer' => false)),
       'complete' => $this->Js->get("#loader")->effect('fadeOut', array('buffer' => false)),
    )); */
+
 ?>
 
 <div id="QuotationsTable">
