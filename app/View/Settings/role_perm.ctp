@@ -167,8 +167,12 @@
 			dataType: "json",
 			success: function(data) {
 
+				$(".checkbox-nice").empty();
+
 				if(data != ''){
+
 					$('.permissionCheck').show();
+
 				}else{
 					$('.permissionCheck').hide();
 				}
@@ -186,7 +190,6 @@
 					$('.checkpermission').append($option);
 					
 				});
-				
 			
 			}
 		});
