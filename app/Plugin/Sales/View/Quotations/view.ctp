@@ -8,7 +8,7 @@
 <div style="clear:both"></div>
 
 
-<?php echo $this->element('sales_option');?>
+<?php pr($rolesPermissionData); exit; echo $this->element('sales_option');?>
 
 <div class="filter-block pull-right">
     <?php
@@ -39,7 +39,25 @@
 				
     	$status = ($this->Status->isQuotationApproved($quotation['Quotation']['status'])) ? 'disabled' : '';
 
-		echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit ', array('controller' => 'quotations', 'action' => 'edit',$quotation['Quotation']['id'],$companyId),array('class' =>'btn btn-info pull-right '. $status ,'escape' => false)) ;
+    	 if ( !empty($rolesPermissionData['RolesPermission']['permission_id']) ) {
+                     if ($rolesPermissionData['RolesPermission']['permission_id'] == 2  ) {
+
+                        
+						echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit ', array('controller' => 'quotations', 'action' => 'edit',$quotation['Quotation']['id'],$companyId),array('class' =>'btn btn-info pull-right '. $status ,'escape' => false)) ;
+
+                    }else{
+
+                         
+						echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit ', array('controller' => 'quotations', 'action' => 'edit',$quotation['Quotation']['id'],$companyId),array('class' =>'btn btn-info pull-right not-active'. $status ,'escape' => false)) ;
+                    }
+                }else  {
+                
+                  
+						echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit ', array('controller' => 'quotations', 'action' => 'edit',$quotation['Quotation']['id'],$companyId),array('class' =>'btn btn-info pull-right not-active'. $status ,'escape' => false)) ;
+                }    
+
+
+
     	
     	$status = (!$this->Status->isQuotationApproved($quotation['Quotation']['status'])) ? 'disabled' : '';
 
@@ -360,3 +378,12 @@
 	</div>	
 </div>
 <?php echo $this->element('send_email',array('quotation' => $quotation,'user' => $user )); ?>
+
+<style>
+
+.not-active {
+   pointer-events: none;
+   cursor: default;
+}
+
+</style>

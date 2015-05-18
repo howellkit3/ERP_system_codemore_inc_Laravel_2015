@@ -1,4 +1,4 @@
-<?php foreach ($quotationData as $quotationList): ?>
+<?php pr($rolesPermissionData); foreach ($quotationData as $quotationList): ?>
    
     <tbody aria-relevant="all" aria-live="polite" role="alert">
 
@@ -60,12 +60,39 @@
             <td>
                 <?php
 
-                    //$myUrl =str_replace(array('/'), '-', $this->params->url); 
-                   
-                    echo $this->Html->link('<span class="fa-stack">
-                        <i class="fa fa-square fa-stack-2x"></i>
-                        <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Review </font></span>
-                        </span> ', array('controller' => 'quotations', 'action' => 'view',$quotationList['Quotation']['id'],!empty($quotationList['Quotation']['company_id']) ? $quotationList['Quotation']['company_id'] : $inquiryId[$quotationList['Quotation']['inquiry_id']]),array('class' =>' table-link','escape' => false,'title'=>'Review Quotation'));
+               // pr($rolesPermissionData);
+                // if ($quotationList['Quotation']['status'] == '1') {
+                //     echo "<span class='label label-success'>Approved</span>";
+                // } else {
+                //     echo "<span class='label label-default'>";
+                //         echo ucwords($quotationList['Quotation']['status']);
+                //     echo "</span>";
+                // }
+
+
+                if ( !empty($rolesPermissionData['RolesPermission']['permission_id']) ) {
+                     if ($rolesPermissionData['RolesPermission']['permission_id'] == 1  ) {
+
+                        echo $this->Html->link('<span class="fa-stack">
+                            <i class="fa fa-square fa-stack-2x"></i>
+                            <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Review </font></span>
+                            </span> ', array('controller' => 'quotations', 'action' => 'view',$quotationList['Quotation']['id'],!empty($quotationList['Quotation']['company_id']) ? $quotationList['Quotation']['company_id'] : $inquiryId[$quotationList['Quotation']['inquiry_id']]),array('class' =>' table-link','escape' => false,'title'=>'Review Quotation'));
+
+                    }else{
+
+                          echo $this->Html->link('<span class="fa-stack">
+                            <i class="fa fa-square fa-stack-2x"></i>
+                            <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Review </font></span>
+                            </span> ', array('controller' => 'quotations', 'action' => 'view',$quotationList['Quotation']['id'],!empty($quotationList['Quotation']['company_id']) ? $quotationList['Quotation']['company_id'] : $inquiryId[$quotationList['Quotation']['inquiry_id']]),array('class' =>' table-link not-active','escape' => false,'title'=>'Review Quotation'));
+                    }
+                }else  {
+                
+                   echo $this->Html->link('<span class="fa-stack">
+                            <i class="fa fa-square fa-stack-2x"></i>
+                            <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Review </font></span>
+                            </span> ', array('controller' => 'quotations', 'action' => 'view',$quotationList['Quotation']['id'],!empty($quotationList['Quotation']['company_id']) ? $quotationList['Quotation']['company_id'] : $inquiryId[$quotationList['Quotation']['inquiry_id']]),array('class' =>' table-link not-active','escape' => false,'title'=>'Review Quotation'));
+                }    
+               
                 ?>
 
                 <?php
@@ -91,3 +118,13 @@
 
     </tbody>
 <?php endforeach; ?> 
+
+<style>
+
+.not-active {
+   pointer-events: none;
+   cursor: default;
+}
+
+</style>
+
