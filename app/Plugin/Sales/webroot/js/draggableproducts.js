@@ -1,4 +1,7 @@
 //add and sorting js bienskie
+function test(){
+
+}
 
 $(document).ready(function() {
 
@@ -9,7 +12,10 @@ $(document).ready(function() {
     var process_button      = $(".add_process_button");
   
     var x = 1; //initlal text box count
-        
+    
+
+   
+
     $(label_button).click(function(e){ //on add input button click
 
         var countername = parseInt($(this).attr('data'));
@@ -32,6 +38,13 @@ $(document).ready(function() {
 
     $(part_button).click(function(e){ //on add input button click
 
+        var quantitySpec = $('#ProductQuantity').val();
+        if(!$.isNumeric(quantitySpec)) {
+            alert('Quantity is requred');
+            $('#ProductQuantity').focus();
+            return false;
+        }
+
         var countername = parseInt($(this).attr('data'));
         var varCounter = countername + 1;
         $(this).attr('data',parseInt(varCounter));
@@ -41,6 +54,9 @@ $(document).ready(function() {
         var cateogry = "data[Specification][cateogry]["+countername+"]";
         var item = "data[Specification][item]["+countername+"]";
         e.preventDefault();
+        var itemG = 0;
+        var itemC = 0;
+        var itemT = 0;
 
         if(x < max_fields){ //max input box allowed
 
@@ -57,6 +73,72 @@ $(document).ready(function() {
                                         </div>\
                                         <div class="col-lg-2">\
                                             <a href="#" class="remove_part">Remove</a>\
+                                        </div>\
+                                    </div>\
+                                    <div class="form-group">\
+                                        <div class="col-lg-2"></div>\
+                                        <div class="col-lg-1">Part</div>\
+                                        <div class="col-lg-6">\
+                                            <input type="text" class="form-control" name="part'+varCounter+'" />\
+                                        </div>\
+                                    </div>\
+                                    <div class="form-group">\
+                                        <div class="col-lg-2"></div>\
+                                        <div class="col-lg-1">Part Name</div>\
+                                        <div class="col-lg-6">\
+                                            <input type="text" class="form-control part_name'+varCounter+'" name="part_name" />\
+                                        </div>\
+                                    </div>\
+                                    <div class="form-group">\
+                                        <div class="col-lg-2"></div>\
+                                        <div class="col-lg-1">Rate</div>\
+                                        <div class="col-lg-6">\
+                                            <input type="text" class="form-control" name="rate'+varCounter+'" />\
+                                        </div>\
+                                    </div>\
+                                    <div class="form-group">\
+                                        <div class="col-lg-2"></div>\
+                                        <div class="col-lg-1">Size</div>\
+                                        <div class="col-lg-2">\
+                                            <input type="text" class="form-control" name="size'+varCounter+'" />\
+                                        </div>\
+                                        <div class="col-lg-1 sizeWith">mm x</div>\
+                                        <div class="col-lg-2">\
+                                            <input type="text" class="form-control" name="size_1'+varCounter+'" />\
+                                        </div>\
+                                    </div>\
+                                    <div class="form-group">\
+                                        <div class="col-lg-2"></div>\
+                                        <div class="col-lg-1">Quantity</div>\
+                                        <div class="col-lg-2">\
+                                            <input type="text" value="'+quantitySpec+'" class="form-control quantity'+varCounter+'" name="quantity'+varCounter+'" readonly />\
+                                        </div>\
+                                        <div class="col-lg-2">\
+                                            <select class="form-control dropUnit" name="quantity_unit'+varCounter+'" />\
+                                                <option value=""></option>\
+                                            </select>\
+                                        </div>\
+                                        <div class="col-lg-1">Paper Qty</div>\
+                                        <div class="col-lg-1">\
+                                            <input type="text" value="'+quantitySpec+'" class="form-control paper_qty'+varCounter+'" name="paper_qty'+varCounter+'" readonly />\
+                                        </div>\
+                                    </div>\
+                                    <div class="form-group">\
+                                        <div class="col-lg-2"></div>\
+                                        <div class="col-lg-1">Color</div>\
+                                        <div class="col-lg-6">\
+                                            <input type="text" class="form-control" name="color'+varCounter+'" />\
+                                        </div>\
+                                    </div>\
+                                    <div class="form-group">\
+                                        <div class="col-lg-2"></div>\
+                                        <div class="col-lg-1">Outs</div>\
+                                        <div class="col-lg-2">\
+                                            <input type="text" value="1" class="form-control number outs'+varCounter+'" name="outs'+varCounter+'"/>\
+                                        </div>\
+                                        <div class="col-lg-1 sizeWith">x</div>\
+                                        <div class="col-lg-2">\
+                                            <input type="text" value="1" class="form-control" name="outs_1'+varCounter+'" />\
                                         </div>\
                                     </div>\
                                     <div class="modal fade" id="myModal'+varCounter+'" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">\
@@ -106,7 +188,7 @@ $(document).ready(function() {
                                                             </div>\
                                                         </div>\
                                                     </section>\
-                                                    <section id="productTableInModal" style="display:none;">\
+                                                    <section id="productTableInModal'+dynamicId+'" style="display:none;">\
                                                         <div class="table-responsive">\
                                                             <header class="main-box-header clearfix">\
                                                                 <h1 class="pull-left">Product List</h1>\
@@ -122,19 +204,10 @@ $(document).ready(function() {
                                                                     <tr>\
                                                                         <th><a href="#"><span>Select</span></a></th>\
                                                                         <th><a href="#"><span>Item Number</span></a></th>\
-                                                                        <th><a href="#"><span>Item Category</span></a></th>\
-                                                                        <th><a href="#"><span>Item Type</span></a></th>\
-                                                                        <th><a href="#"><span>Created</span></a></th>\
+                                                                        <th><a href="#"><span>Name</span></a></th>\
                                                                     </tr>\
                                                                 </thead>\
-                                                                <tbody aria-relevant="all" aria-live="polite" role="alert" >\
-                                                                    <tr>\
-                                                                        <td>radio button</td>\
-                                                                        <td>fasdfadf</td>\
-                                                                        <td>fasdfsdf</td>\
-                                                                        <td>fsdfsdaf</td>\
-                                                                        <td>fsdfsd</td>\
-                                                                    </tr>\
+                                                                <tbody class="tableProduct'+dynamicId+'" aria-relevant="all" aria-live="polite" role="alert" >\
                                                                 </tbody>\
                                                             </table>\
                                                         </div>\
@@ -153,13 +226,53 @@ $(document).ready(function() {
                                     </div>\
                                 </section>\
                                </li>'); //add input box
+            
+             //quantity unit data
+            $.ajax({
+                url: serverPath + "sales/products/unit_dropdown",
+                type: "get",
+                dataType: "json",
+                success: function(data) {
+
+                    $('.dropUnit').append($("<option></option>").attr("value",0).text("-Select Unit-"));
+
+                    $.each(data, function(key, value) {
+                                  
+                        $('.dropUnit')
+                             .append($("<option></option>")
+                             .attr("value",value.Unit.id)
+                             .text(value.Unit.unit));
+                       
+                    });
+                }
+            });
+
+            //computation for outs and paper quantity
+            $("body").on('keyup','.outs'+varCounter, function(e){
+
+                var outsval = $(this).val();
+                var paperVal = $('.quantity'+varCounter).val();
+                if($.isNumeric(outsval)) {
+                    var paperQtyVal =  parseInt($('.quantity'+varCounter).val()) / parseInt(outsval);
+                    $('.paper_qty'+varCounter).val(paperQtyVal);
+                }
+                 
+            });
+            $("body").on('blur','.outs'+varCounter, function(e){
+                var outsval = $(this).val();
+                if(!$.isNumeric(outsval)) {
+                    alert('You must enter a valid number');
+                    $('.paper_qty'+varCounter).val('empty');
+                    $(this).focus();
+                }
+            });
 
             $("#"+dynamicId).change(function(e){
 
                 var itemGroup = $(this).val();
                 $('#itemGroup'+dynamicId).attr('value',itemGroup);
-                if (itemGroup == 0){ $('#productTableInModal').hide(); } else{ $('#productTableInModal').show(); }
-
+                itemG = itemGroup;
+                
                 $('.selectProductcategory'+dynamicId+' option[value!=""]').remove();
                 $('.selectProductItem'+dynamicId+' option[value!=""]').remove();
 
@@ -189,14 +302,122 @@ $(document).ready(function() {
                 }); 
                
             });
-            console.log();
-            if($('#'+dynamicId) != 0){
-                if($('.selectProductcategory'+dynamicId)){
-                    if(){
+            $('.selectProductcategory'+dynamicId).change(function(e){
+                var cat = $(this).val();
+                $('#itemGroupCategory'+dynamicId).attr('value',cat);
+                itemC = cat; 
+            });
+            $('.selectProductItem'+dynamicId).change(function(e){
+                var type = $(this).val(); 
+                $('#itemGroupType'+dynamicId).attr('value',type);
+                itemT = type; 
+            });
 
+            //FILTER FIELD
+            $('body').on('change', '.selectProductcategory'+dynamicId+',.selectProductItem'+dynamicId, function(){
+               e.preventDefault();
+                if(itemG != 0){
+                    
+                    if(itemC != 0){
+                       
+                        if(itemT != 0){
+                            $('.optionValue'+dynamicId).remove();
+                            $('#productTableInModal'+dynamicId).show(); 
+                            //search product with itemGroup,itemCategory and iteType
+                            $.ajax({
+                                url: serverPath + "sales/products/find_product_details/"+itemG+"/"+itemC+"/"+itemT,
+                                type: "get",
+                                dataType: "json",
+                                contentType: "application/json; charset=utf-8",
+                                success: function(data) {
+                                    // console.log(data);
+                                    
+                                    if(data == ''){
+                                        
+                                        $('.tableProduct'+dynamicId)
+                                                 .append($("<p class='noresult"+dynamicId+"'>No Result..</p>"));
+                                        
+                                    } else {
+                                        $('.noresult'+dynamicId).hide();
+                                        $.each(data, function(key, value) {
+                                            //console.log(value);
+                                            
+                                            if(itemG == 1){
+                                                $('.noresult'+dynamicId).hide();
+                                                $('.tableProduct'+dynamicId)
+                                                    .append($("<tr class='optionValue"+dynamicId+"'>\
+                                                                <td>\
+                                                                    <input type='radio' value='"+value.GeneralItem.name+"' class='selectSpecProduct"+dynamicId+"' name='optionsRadios'>\
+                                                                </td>\
+                                                                <td>'"+value.GeneralItem.uuid+"'</td>\
+                                                                <td>'"+value.GeneralItem.name+"'</td>\
+                                                               </tr>"));
+                                             
+                                            }
+                                            if(itemG == 2){
+                                                $('.noresult'+dynamicId).hide();
+                                                $('.tableProduct'+dynamicId)
+                                                    .append($("<tr class='optionValue"+dynamicId+"'>\
+                                                                <td>\
+                                                                    <input type='radio' value='"+value.Substrate.name+"' class='selectSpecProduct"+dynamicId+"' name='optionsRadios'>\
+                                                                </td>\
+                                                                <td>'"+value.Substrate.uuid+"'</td>\
+                                                                <td>'"+value.Substrate.name+"'</td>\
+                                                               </tr>"));
+                                             
+                                            }
+                                            if(itemG == 3){
+                                                $('.noresult'+dynamicId).hide();
+                                                $('.tableProduct'+dynamicId)
+                                                    .append($("<tr class='optionValue"+dynamicId+"'>\
+                                                                <td>\
+                                                                    <input type='radio' value='"+value.CompoundSubstrate.name+"' class='selectSpecProduct"+dynamicId+"' name='optionsRadios'>\
+                                                                </td>\
+                                                                <td>'"+value.CompoundSubstrate.uuid+"'</td>\
+                                                                <td>'"+value.CompoundSubstrate.name+"'</td>\
+                                                                </tr>"));
+                                             
+                                            }
+                                            if(itemG == 4){
+                                                $('.noresult'+dynamicId).hide();
+                                                $('.tableProduct'+dynamicId)
+                                                    .append($("<tr class='optionValue"+dynamicId+"'>\
+                                                                <td>\
+                                                                    <input type='radio' value='"+value.CorrugatedPaper.name+"' class='selectSpecProduct"+dynamicId+"' name='optionsRadios'>\
+                                                                </td>\
+                                                                <td>'"+value.CorrugatedPaper.uuid+"'</td>\
+                                                                <td>'"+value.CorrugatedPaper.name+"'</td>\
+                                                              </tr>"));
+                                             
+                                            }
+                                            
+                                        });
+
+                                        //method for clicking radio trigger
+                                        $("body").on('change','.selectSpecProduct'+dynamicId, function(e){
+                                            var partName = $(this).val();
+                                            if ($(this).is(":checked")) {
+                                                $('.part_name'+varCounter).val(partName);
+                                                $( '.close' ).trigger( 'click' );
+                                                //console.log(partName);
+                                            }
+                                            
+                                        });
+
+                                    }
+                                   
+                                      
+                                }
+                            });
+                        }
                     }
                 }
-            }
+                if(itemG == 0){
+                    $('.optionValue'+dynamicId).remove();
+                }
+               
+            });
+
         }
 
     });
@@ -302,7 +523,7 @@ $(document).ready(function() {
                                 checkFieldNameNoSpace = checkFieldNameval.replace(/\s+/g, "-");
                                 $('.appendField').remove();
                                 if ($(this).is(":checked")) {
-                                    console.log(checkFieldNameval);
+                                    //console.log(checkFieldNameval);
                                     $('.check-fields-sort').append('<div class="well span2 tile" class="appendField" id="'+checkFieldNameNoSpace+'">\
                                                                         <div class="input-group">\
                                                                             <span class="input-group-addon">\
@@ -363,3 +584,8 @@ $(document).ready(function() {
     //$( "#sortable" ).disableSelection();
 
 });
+
+//backup
+// <input type="text" name="itemGroup" value="0" id="itemGroup'+dynamicId+'" />\
+// <input type="text" name="itemGroupCategory" value="0" id="itemGroupCategory'+dynamicId+'" />\
+// <input type="text" name="itemGroupType" value="0" id="itemGroupType'+dynamicId+'" />\

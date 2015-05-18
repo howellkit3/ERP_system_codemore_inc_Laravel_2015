@@ -109,16 +109,16 @@
 
 									<div class="form-group">
 										<label class="col-lg-2 control-label">Quantity</label>
-										<div class="col-lg-4">
+										<div class="col-lg-2">
 											<?php 
 												echo $this->Form->input('Product.quantity', array(
-	                                            								'class' => 'form-control item_type',
+	                                            								'class' => 'form-control item_type number required',
 							                                                    'label' => false,
 							                                                    'placeholder' => 'Quantity'));
 
 					                            ?>
 										</div>
-										<div class="col-lg-4">
+										<div class="col-lg-3">
 											<?php 
 												echo $this->Form->input('Product.quantity_unit_id', array(
 					                                'options' => array($unitData),  
@@ -130,6 +130,7 @@
 					                            ?>
 										</div>
 									</div>
+
 
 								</div>
 							</div>
