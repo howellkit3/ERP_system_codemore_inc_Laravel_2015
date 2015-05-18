@@ -549,12 +549,13 @@ class ProductsController extends SalesAppController {
 											'id', 'type_id')));
     		
     	}
-    	
+    
     	$categData =  array_flip($categoryData);
     	$typData =  array_flip($typeData);
 
 		$flipCategData = array_flip($categData);
 		$flipTypData = array_flip($typData);
+
 
 		$categoryName = $this->ItemCategoryHolder->find('all',
 											array('fields' => 
@@ -568,7 +569,7 @@ class ProductsController extends SalesAppController {
 												array('ItemTypeHolder.id',
 												 	'ItemTypeHolder.name'),
 												'conditions' => array(
-													'ItemTypeHolder.id' => $flipCategData)
+													'ItemTypeHolder.id' => $flipTypData)
 												));
 
 		$cat['CategoryName'] = $categoryName;
@@ -655,5 +656,83 @@ class ProductsController extends SalesAppController {
 
 
 
+    }
+
+    public function find_product_details($itemGroupId = null, $itemCategoryId = null, $itemtypeId = null){
+    	
+    	$this->autoRender = false;
+    	
+    	if($itemGroupId == 1) {
+    		$ModelName = 'GeneralItem';
+    		$searchedProduct = $this->GeneralItem->find('all',array(
+											'conditions' => array('AND' => array(
+												array('GeneralItem.category_id' => $itemCategoryId),
+												array('GeneralItem.type_id' => $itemtypeId)
+												)),
+											'fields' => array('GeneralItem.id','GeneralItem.name','GeneralItem.uuid'),
+											'limit' => 10,
+											'order' => 'GeneralItem.name ASC'
+											));
+    		
+    	}
+    	if($itemGroupId == 2) {
+    		$ModelName = 'Substrate';
+    		$searchedProduct = $this->Substrate->find('all',array(
+											'conditions' => array('AND' => array(
+												array('Substrate.category_id' => $itemCategoryId),
+												array('Substrate.type_id' => $itemtypeId)
+												)),
+											'fields' => array('Substrate.id','Substrate.name','Substrate.uuid'),
+											'limit' => 10,
+											'order' => 'Substrate.name ASC'
+											));
+    		
+    	}
+    	if($itemGroupId == 3) {
+    		$ModelName = 'CompoundSubstrate';
+    		$searchedProduct = $this->CompoundSubstrate->find('all',array(
+											'conditions' => array('AND' => array(
+												array('CompoundSubstrate.category_id' => $itemCategoryId),
+												array('CompoundSubstrate.type_id' => $itemtypeId)
+												)),
+											'fields' => array('CompoundSubstrate.id','CompoundSubstrate.name','CompoundSubstrate.uuid'),
+											'limit' => 10,
+											'order' => 'CompoundSubstrate.name ASC'
+											));
+    		
+    	}
+    	if($itemGroupId == 4) {
+    		$ModelName = 'CorrugatedPaper';
+    		$searchedProduct = $this->CorrugatedPaper->find('all',array(
+											'conditions' => array('AND' => array(
+												array('CorrugatedPaper.category_id' => $itemCategoryId),
+												array('CorrugatedPaper.type_id' => $itemtypeId)
+												)),
+											'fields' => array('CorrugatedPaper.id','CorrugatedPaper.name','CorrugatedPaper.uuid'),
+											'limit' => 10,
+											'order' => 'CorrugatedPaper.name ASC'
+											));
+    		
+    	}
+    	
+    	foreach ($searchedProduct as $key => $list) {    		
+    		$searchedProduct[$key][$ModelName]['name'] = utf8_encode($list[$ModelName]['name']);    		
+    	}
+   
+		echo json_encode($searchedProduct);
+		
+    }
+
+    public function unit_dropdown(){
+
+    	$this->autoRender = false;
+
+    	$this->loadModel('Unit');
+
+    	$unitData = $this->Unit->find('all',array('fields' => array('id','unit')));
+
+    	$this->layout = false;
+
+		echo json_encode($unitData);
     }
 }
