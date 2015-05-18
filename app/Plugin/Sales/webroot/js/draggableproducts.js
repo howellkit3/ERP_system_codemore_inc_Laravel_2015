@@ -75,72 +75,74 @@ $(document).ready(function() {
                                             <a href="#" class="remove_part">Remove</a>\
                                         </div>\
                                     </div>\
-                                    <div class="form-group">\
-                                        <div class="col-lg-2"></div>\
-                                        <div class="col-lg-1">Part</div>\
-                                        <div class="col-lg-6">\
-                                            <input type="text" class="form-control" name="part'+varCounter+'" />\
+                                    <section class="allFieldPart'+varCounter+'" style="display:none;">\
+                                        <div class="form-group">\
+                                            <div class="col-lg-2"></div>\
+                                            <div class="col-lg-1">Part</div>\
+                                            <div class="col-lg-6">\
+                                                <input type="text" class="form-control" name="part'+varCounter+'" />\
+                                            </div>\
                                         </div>\
-                                    </div>\
-                                    <div class="form-group">\
-                                        <div class="col-lg-2"></div>\
-                                        <div class="col-lg-1">Part Name</div>\
-                                        <div class="col-lg-6">\
-                                            <input type="text" class="form-control part_name'+varCounter+'" name="part_name" />\
+                                        <div class="form-group">\
+                                            <div class="col-lg-2"></div>\
+                                            <div class="col-lg-1">Part Name</div>\
+                                            <div class="col-lg-6">\
+                                                <input type="text" class="form-control part_name'+varCounter+'" name="part_name" />\
+                                            </div>\
                                         </div>\
-                                    </div>\
-                                    <div class="form-group">\
-                                        <div class="col-lg-2"></div>\
-                                        <div class="col-lg-1">Rate</div>\
-                                        <div class="col-lg-6">\
-                                            <input type="text" class="form-control" name="rate'+varCounter+'" />\
+                                        <div class="form-group">\
+                                            <div class="col-lg-2"></div>\
+                                            <div class="col-lg-1">Rate</div>\
+                                            <div class="col-lg-6">\
+                                                <input type="text" class="form-control" name="rate'+varCounter+'" />\
+                                            </div>\
                                         </div>\
-                                    </div>\
-                                    <div class="form-group">\
-                                        <div class="col-lg-2"></div>\
-                                        <div class="col-lg-1">Size</div>\
-                                        <div class="col-lg-2">\
-                                            <input type="text" class="form-control" name="size'+varCounter+'" />\
+                                        <div class="form-group">\
+                                            <div class="col-lg-2"></div>\
+                                            <div class="col-lg-1">Size</div>\
+                                            <div class="col-lg-2">\
+                                                <input type="text" class="form-control" name="size'+varCounter+'" />\
+                                            </div>\
+                                            <div class="col-lg-1 sizeWith">mm x</div>\
+                                            <div class="col-lg-2">\
+                                                <input type="text" class="form-control" name="size_1'+varCounter+'" />\
+                                            </div>\
                                         </div>\
-                                        <div class="col-lg-1 sizeWith">mm x</div>\
-                                        <div class="col-lg-2">\
-                                            <input type="text" class="form-control" name="size_1'+varCounter+'" />\
+                                        <div class="form-group">\
+                                            <div class="col-lg-2"></div>\
+                                            <div class="col-lg-1">Quantity</div>\
+                                            <div class="col-lg-2">\
+                                                <input type="text" value="'+quantitySpec+'" class="form-control quantity'+varCounter+'" name="quantity'+varCounter+'" readonly />\
+                                            </div>\
+                                            <div class="col-lg-2">\
+                                                <select class="form-control dropUnit" name="quantity_unit'+varCounter+'" />\
+                                                    <option value=""></option>\
+                                                </select>\
+                                            </div>\
+                                            <div class="col-lg-1">Paper Qty</div>\
+                                            <div class="col-lg-1">\
+                                                <input type="text" value="'+quantitySpec+'" class="form-control paper_qty'+varCounter+'" name="paper_qty'+varCounter+'" readonly />\
+                                            </div>\
                                         </div>\
-                                    </div>\
-                                    <div class="form-group">\
-                                        <div class="col-lg-2"></div>\
-                                        <div class="col-lg-1">Quantity</div>\
-                                        <div class="col-lg-2">\
-                                            <input type="text" value="'+quantitySpec+'" class="form-control quantity'+varCounter+'" name="quantity'+varCounter+'" readonly />\
+                                        <div class="form-group">\
+                                            <div class="col-lg-2"></div>\
+                                            <div class="col-lg-1">Color</div>\
+                                            <div class="col-lg-6">\
+                                                <input type="text" class="form-control" name="color'+varCounter+'" />\
+                                            </div>\
                                         </div>\
-                                        <div class="col-lg-2">\
-                                            <select class="form-control dropUnit" name="quantity_unit'+varCounter+'" />\
-                                                <option value=""></option>\
-                                            </select>\
+                                        <div class="form-group">\
+                                            <div class="col-lg-2"></div>\
+                                            <div class="col-lg-1">Outs</div>\
+                                            <div class="col-lg-2">\
+                                                <input type="text" value="1" class="form-control number outs'+varCounter+'" name="outs'+varCounter+'"/>\
+                                            </div>\
+                                            <div class="col-lg-1 sizeWith">x</div>\
+                                            <div class="col-lg-2">\
+                                                <input type="text" value="1" class="form-control" name="outs_1'+varCounter+'" />\
+                                            </div>\
                                         </div>\
-                                        <div class="col-lg-1">Paper Qty</div>\
-                                        <div class="col-lg-1">\
-                                            <input type="text" value="'+quantitySpec+'" class="form-control paper_qty'+varCounter+'" name="paper_qty'+varCounter+'" readonly />\
-                                        </div>\
-                                    </div>\
-                                    <div class="form-group">\
-                                        <div class="col-lg-2"></div>\
-                                        <div class="col-lg-1">Color</div>\
-                                        <div class="col-lg-6">\
-                                            <input type="text" class="form-control" name="color'+varCounter+'" />\
-                                        </div>\
-                                    </div>\
-                                    <div class="form-group">\
-                                        <div class="col-lg-2"></div>\
-                                        <div class="col-lg-1">Outs</div>\
-                                        <div class="col-lg-2">\
-                                            <input type="text" value="1" class="form-control number outs'+varCounter+'" name="outs'+varCounter+'"/>\
-                                        </div>\
-                                        <div class="col-lg-1 sizeWith">x</div>\
-                                        <div class="col-lg-2">\
-                                            <input type="text" value="1" class="form-control" name="outs_1'+varCounter+'" />\
-                                        </div>\
-                                    </div>\
+                                    </section>\
                                     <div class="modal fade" id="myModal'+varCounter+'" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">\
                                         <div class="modal-dialog specModal">\
                                             <div class="modal-content">\
@@ -227,7 +229,7 @@ $(document).ready(function() {
                                 </section>\
                                </li>'); //add input box
             
-             //quantity unit data
+            //start//quantity unit data
             $.ajax({
                 url: serverPath + "sales/products/unit_dropdown",
                 type: "get",
@@ -246,8 +248,9 @@ $(document).ready(function() {
                     });
                 }
             });
+            //end//quantity unit data
 
-            //computation for outs and paper quantity
+            //start//computation for outs and paper quantity
             $("body").on('keyup','.outs'+varCounter, function(e){
 
                 var outsval = $(this).val();
@@ -266,7 +269,9 @@ $(document).ready(function() {
                     $(this).focus();
                 }
             });
+            //end//computation for outs and paper quantity
 
+            //start //triger of itemGroup,category and type dropdown
             $("#"+dynamicId).change(function(e){
 
                 var itemGroup = $(this).val();
@@ -312,8 +317,9 @@ $(document).ready(function() {
                 $('#itemGroupType'+dynamicId).attr('value',type);
                 itemT = type; 
             });
+            //end //triger of itemGroup,category and type dropdown
 
-            //FILTER FIELD
+            //start//FILTER FIELD from all dropdown
             $('body').on('change', '.selectProductcategory'+dynamicId+',.selectProductItem'+dynamicId, function(){
                e.preventDefault();
                 if(itemG != 0){
@@ -399,6 +405,7 @@ $(document).ready(function() {
                                             if ($(this).is(":checked")) {
                                                 $('.part_name'+varCounter).val(partName);
                                                 $( '.close' ).trigger( 'click' );
+                                                $('.allFieldPart'+varCounter).show();
                                                 //console.log(partName);
                                             }
                                             
@@ -417,6 +424,7 @@ $(document).ready(function() {
                 }
                
             });
+            //end//FILTER FIELD from all dropdown
 
         }
 
