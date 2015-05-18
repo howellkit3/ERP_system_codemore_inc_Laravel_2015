@@ -177,8 +177,6 @@
 					$('.permissionCheck').hide();
 				}
 
-				
-
 				$.each(data, function(key, value) {
 					console.log(value);
 					// $option = "<option class='option-append2' selected value="+value.Product.id+">"+value.Product.name+"</option>";	
@@ -193,7 +191,6 @@
 					
 				});
 			
-
 			}
 		});
 	});
