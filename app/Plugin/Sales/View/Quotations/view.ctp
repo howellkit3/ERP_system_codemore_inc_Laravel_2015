@@ -8,7 +8,7 @@
 <div style="clear:both"></div>
 
 
-<?php pr($rolesPermissionData); exit; echo $this->element('sales_option');?>
+<?php  echo $this->element('sales_option');?>
 
 <div class="filter-block pull-right">
     <?php

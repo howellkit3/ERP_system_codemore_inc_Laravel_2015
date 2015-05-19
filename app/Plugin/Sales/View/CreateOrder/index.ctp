@@ -305,7 +305,7 @@
 														<td height ="50px" class ="column2 col-md-10">
 															<div class="col-lg-10">			 
 											                    	<input name="itemDetail" class="select-item" type="radio"  style="vertical-align: middle; margin: 0px;" value="<?php echo $itemDetail['id']?>" required/> 
-											                    	<font size="1" >Select Item</font>
+											                    	<font size="2" >Select Item</font>
 															</div>
 														</td>
 														
