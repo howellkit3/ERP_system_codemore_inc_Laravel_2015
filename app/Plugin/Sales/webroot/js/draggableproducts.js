@@ -406,7 +406,6 @@ $(document).ready(function() {
                                                 $('.part_name'+varCounter).val(partName);
                                                 $( '.close' ).trigger( 'click' );
                                                 $('.allFieldPart'+varCounter).show();
-                                                //console.log(partName);
                                             }
                                             
                                         });
