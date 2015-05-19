@@ -632,9 +632,9 @@ $(document).ready(function() {
                     }
                 });
 
-                $("#"+dynamicId).change(function(e){
+                //$("#"+dynamicId).change(function(e){
+                $("body").on('change','#'+dynamicId, function(e){
                     var processVal = $(this).val();
-                    console.log();
                     
                     $.ajax({
                         url: serverPath + "sales/products/find_checkbox/"+processVal,
@@ -643,6 +643,7 @@ $(document).ready(function() {
                         success: function(data) {
                             $('.checkbox-nice1').remove();
                             $('.appendField').remove();
+
                             $.each(data, function(key, value) {
                                  
                                 $('.check-item').append('<div class="checkbox-nice1">\
@@ -651,36 +652,36 @@ $(document).ready(function() {
                                                     </div>');
 
                             }); 
-
-                            //checkbox trigger
-                            $("body").on('change','.check-fields', function(e){
-
-                                var checkFieldName = "data[Specification]["+$(this).attr('data-name')+"]";
-                                var checkFieldNameval = $(this).attr('data-name');
-                                checkFieldNameNoSpace = checkFieldNameval.replace(/\s+/g, "-");
-                                //$('.appendField').remove();
-                                if ($(this).is(":checked")) {
-                                    console.log(checkFieldNameval);
-                                    // $('.check-fields-sort').append('<div class="well span2 tile appendField" id="'+checkFieldNameNoSpace+'">\
-                                    //                                     <div class="input-group">\
-                                    //                                         <span class="input-group-addon">\
-                                    //                                             <i class="fa fa-reorder"></i>\
-                                    //                                         </span>\
-                                    //                                         <input type="text" name="'+checkFieldName+'" value="'+checkFieldNameval+'" class="form-control" readonly />\
-                                    //                                     </div>\
-                                    //                                 </div>');
-                                } else {  
-
-                                    $('#'+checkFieldNameNoSpace).remove();
-                                    
-                                }
-                                
-                            });
-                              
+ 
                         }
                     });
 
-                });   
+                });  
+
+                //checkbox trigger
+                $("body").on('change','.check-fields', function(e){
+
+                    var checkFieldName = "data[Specification]["+$(this).attr('data-name')+"]";
+                    var checkFieldNameval = $(this).attr('data-name');
+                    checkFieldNameNoSpace = checkFieldNameval.replace(/\s+/g, "-");
+                    //$('.appendField').remove();
+                    if ($(this).is(":checked")) {
+                        
+                        $('.check-fields-sort').append('<div class="well span2 tile appendField" id="'+checkFieldNameNoSpace+'">\
+                                                            <div class="input-group">\
+                                                                <span class="input-group-addon">\
+                                                                    <i class="fa fa-reorder"></i>\
+                                                                </span>\
+                                                                <input type="text" name="'+checkFieldName+'" value="'+checkFieldNameval+'" class="form-control" readonly />\
+                                                            </div>\
+                                                        </div>');
+                    } else {  
+
+                        $('#'+checkFieldNameNoSpace).remove();
+                        
+                    }
+                    
+                }); 
 
         }
     });
