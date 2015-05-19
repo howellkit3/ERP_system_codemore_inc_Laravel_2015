@@ -618,7 +618,7 @@ class ProductsController extends SalesAppController {
 
 		echo json_encode($checkData);
     }
-
+    public function test(){}
     public function specification($productId = null ){
 
     	$this->loadModel('ItemCategoryHolder');
@@ -670,7 +670,7 @@ class ProductsController extends SalesAppController {
 												array('GeneralItem.type_id' => $itemtypeId)
 												)),
 											'fields' => array('GeneralItem.id','GeneralItem.name','GeneralItem.uuid'),
-											'limit' => 10,
+											//'limit' => 20,
 											'order' => 'GeneralItem.name ASC'
 											));
     		
@@ -683,7 +683,7 @@ class ProductsController extends SalesAppController {
 												array('Substrate.type_id' => $itemtypeId)
 												)),
 											'fields' => array('Substrate.id','Substrate.name','Substrate.uuid'),
-											'limit' => 10,
+											//'limit' => 10,
 											'order' => 'Substrate.name ASC'
 											));
     		
@@ -696,7 +696,7 @@ class ProductsController extends SalesAppController {
 												array('CompoundSubstrate.type_id' => $itemtypeId)
 												)),
 											'fields' => array('CompoundSubstrate.id','CompoundSubstrate.name','CompoundSubstrate.uuid'),
-											'limit' => 10,
+											//'limit' => 10,
 											'order' => 'CompoundSubstrate.name ASC'
 											));
     		
@@ -709,7 +709,7 @@ class ProductsController extends SalesAppController {
 												array('CorrugatedPaper.type_id' => $itemtypeId)
 												)),
 											'fields' => array('CorrugatedPaper.id','CorrugatedPaper.name','CorrugatedPaper.uuid'),
-											'limit' => 10,
+											//'limit' => 10,
 											'order' => 'CorrugatedPaper.name ASC'
 											));
     		
