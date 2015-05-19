@@ -133,5 +133,10 @@
         border: none;
 }
 
+.fa-stack {
+  
+        width: 1.75em;
+}
+
 </style>
 
