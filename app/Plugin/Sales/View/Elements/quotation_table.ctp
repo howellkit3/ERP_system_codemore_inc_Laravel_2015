@@ -124,8 +124,13 @@
 <style>
 
 .not-active {
-   pointer-events: none;
-   cursor: default;
+        pointer-events: none;
+        background-color: #5bc0de;
+        border-color: none;
+        cursor: not-allowed;
+        opacity: 0.65;
+        pointer-events: none;
+        border: none;
 }
 
 </style>

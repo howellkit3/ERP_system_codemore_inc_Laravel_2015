@@ -39,12 +39,12 @@
                     }else{
 
                          
-						echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i>Approved ', array('controller' => 'quotations', 'action' => 'approved',$quotation['Quotation']['id']),array('class' =>'btn btn-success pull-right not-active'.$status.' '.$status1,'escape' => false)) ;
+						echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i>Approved ', array('controller' => 'quotations', 'action' => 'approved',$quotation['Quotation']['id']),array('class' =>'not-active btn btn-info pull-right '.$status.' '.$status1,'escape' => false)) ;
                     }
                 }else{
                 
                   
-						echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i>Approved ', array('controller' => 'quotations', 'action' => 'approved',$quotation['Quotation']['id']),array('class' =>'btn btn-success pull-right not-active'.$status.' '.$status1,'escape' => false)) ;
+						echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i>Approved ', array('controller' => 'quotations', 'action' => 'approved',$quotation['Quotation']['id']),array('class' =>'not-active btn btn-info pull-right '.$status.' '.$status1,'escape' => false)) ;
                 }    
 	
     	
@@ -71,10 +71,7 @@
                   
 						echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit ', array('controller' => 'quotations', 'action' => 'edit',$quotation['Quotation']['id'],$companyId),array('class' =>'btn btn-info pull-right not-active'. $status ,'escape' => false)) ;
                 }    
-
-
-
-    	
+	
     	$status = (!$this->Status->isQuotationApproved($quotation['Quotation']['status'])) ? 'disabled' : '';
 
     	echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array(
@@ -400,6 +397,14 @@
 .not-active {
    pointer-events: none;
    cursor: default;
+    background-color: #5bc0de;
+    border-color: #46b8da;
+    box-shadow: none;
+    cursor: not-allowed;
+    opacity: 0.65;
+    pointer-events: none;
+  
+
 }
 
 </style>

@@ -31,9 +31,6 @@
                     </span>', array('controller' => 'settings', 'action' => 'deleteAcl','Role',$roleTableList['Role']['id']),array('class' =>' table-link small-link-icon','escape' => false,'title'=>'Delete Role','confirm' => 'Do you want to delete this Role ?'));
                 ?>
 
-                 
-
-    
             </td>    
         </tr>
 
