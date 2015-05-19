@@ -1,4 +1,4 @@
-<?php pr($rolesPermissionData); foreach ($quotationData as $quotationList): ?>
+<?php foreach ($quotationData as $quotationList): ?>
    
     <tbody aria-relevant="all" aria-live="polite" role="alert">
 
@@ -70,8 +70,10 @@
                 // }
 
 
-                if ( !empty($rolesPermissionData['RolesPermission']['permission_id']) ) {
-                     if ($rolesPermissionData['RolesPermission']['permission_id'] == 1  ) {
+                if ( !empty($rolesPermissionData) ) {
+                  //if (isset($rolesPermissionData ['1'])) {
+                     if(in_array('1', $rolesPermissionData)){
+                   //  if ($rolesPermissionData['RolesPermission']['permission_id'] == 1  ) {
 
                         echo $this->Html->link('<span class="fa-stack">
                             <i class="fa fa-square fa-stack-2x"></i>
