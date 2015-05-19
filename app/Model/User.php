@@ -55,23 +55,23 @@ class User extends AppModel {
 	
 	);
 
-	// public function bind($model = array('Group')){
+	public function bind($model = array('Group')){
 
-	// 	$this->bindModel(array(
+		$this->bindModel(array(
 			
-	// 		'belongsTo' => array(
-	// 			'Role' => array(
-	// 				'className' => 'Role',
-	// 				'foreignKey' => 'role_id',
-	// 				'dependent' => true
-	// 			),
-	// 		),
+			'hasOne' => array(
+				'Role' => array(
+					'className' => 'Role',
+					'foreignKey' => 'role_id',
+					'dependent' => true
+				),
+			), 
 
 
-	// 	));
+		));
 
-	// 	$this->contain($model);
-	// }
+		$this->contain($model);
+	}
 
 	public $virtualFields = array(
 		'fullname' => 'CONCAT(User.last_name,",", User.first_name)'

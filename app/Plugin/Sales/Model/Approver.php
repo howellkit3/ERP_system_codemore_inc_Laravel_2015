@@ -34,7 +34,7 @@ class Approver extends AppModel {
 	}
 	
 	public function approverData($quotationId = null, $auth = null){
-		
+
 		$this->create();
 			$approverData['Approver']['model'] = 'Quotation';
 			$approverData['Approver']['foreign_key'] = $quotationId;

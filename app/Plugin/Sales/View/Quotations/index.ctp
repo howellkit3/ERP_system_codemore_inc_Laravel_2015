@@ -26,6 +26,9 @@
                  
                 
                 <div class="filter-block pull-right">
+
+
+
                    <!--  <div class="form-group pull-left">
                         <?php echo $this->Form->create('Quotation',array('controller' => 'quotations','action' => 'search', 'type'=> 'get')); ?>
                             <input placeholder="Search..." id="hint" name="q" class="form-control" type="search" />
@@ -83,7 +86,16 @@
                 </ul> -->
             </div>
     
-        </div>
+        </div>  
     </div>
 </div>
 </div>
+
+
+<script>
+
+
+// $(document).ready(function(){
+//         $(".not-active").css({"pointer-events: none", "cursor: default;"});
+// });
+// </script>

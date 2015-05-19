@@ -35,7 +35,23 @@ class QuotationsController extends SalesAppController {
 		
 		$this->loadModel('Sales.Company');
 
+		$this->loadModel('RolesPermission');
+
+		$this->loadModel('Permission');
+
+		$this->loadModel('Role');
+
+		$this->loadModel('User');
+
 		$userData = $this->Session->read('Auth');
+
+		// $this->RolesPermission->bind(array('Role', 'Permission'));
+
+		
+		$rolesPermissionData = $this->RolesPermission->find('first', array(
+														'conditions' => array( 
+															'RolesPermission.role_id' => $userData['User']['role_id'])
+													));
 
 		$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail','ProductDetail', 'Product'));
 
@@ -89,7 +105,7 @@ class QuotationsController extends SalesAppController {
             Cache::write('inquiryId', $inquiryId);
        // }
 		
-		$this->set(compact('companyData','quotationData','inquiryId','salesStatus'));
+		$this->set(compact('companyData','quotationData','inquiryId','salesStatus','rolesPermissionData'));
 
 	}
 
@@ -349,8 +365,12 @@ class QuotationsController extends SalesAppController {
 		$this->loadModel('Unit');
 		
 		$this->loadModel('Sales.ContactPerson');
-		
+
+		$this->loadModel('RolesPermission');
+
 		$this->loadModel('User');
+
+		
 
 		$userData = $this->User->read(null,$this->Session->read('Auth.User.id'));
 
@@ -358,6 +378,16 @@ class QuotationsController extends SalesAppController {
 		$actionName = 'View Quotation';
 		$this->_rolePermission($actionName);
 		//end///call Role permission
+
+		$this->loadModel('User');
+
+		
+
+		$rolesPermissionData = $this->RolesPermission->find('list', array(
+														'conditions' => array( 
+															'RolesPermission.role_id' => $userData['User']['role_id'])
+													));
+		
 
 		$paymentTerm = Cache::read('paymentTerms');
 		
@@ -451,7 +481,7 @@ class QuotationsController extends SalesAppController {
 										'User.id' => $userData['User']['id'] )
 								));
 		
-		$this->set(compact('approvedUser','units','currencies','paymentTerm','companyData','companyId', 'quotationSize', 'quotationOption','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','salesStatus', 'productName','clientOrderCount','quotationDetailData'));
+		$this->set(compact('approvedUser','units','currencies','paymentTerm','companyData','companyId', 'quotationSize', 'quotationOption','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','salesStatus', 'productName','clientOrderCount','quotationDetailData', 'rolesPermissionData'));
 		
 	}
 

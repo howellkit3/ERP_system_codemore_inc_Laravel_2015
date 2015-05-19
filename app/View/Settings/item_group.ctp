@@ -122,7 +122,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																								'class' => 'form-control item_type',
 																	                            'label' => false,
 																	                             //'required' => 'required',
-																	                            'placeholder' => 'Name Category'));
+																	                            'placeholder' => 'Measure'));
 																	?>
 																</div>
 															</div>
@@ -305,7 +305,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																									'class' => 'form-control item_type',
 																		                            'label' => false,
 																		                            'required' => 'required',
-																		                            'placeholder' => 'Name Category'));
+																		                            'placeholder' => 'Type'));
 																		?>
 																	</div>
 																</div>
@@ -318,7 +318,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																									'class' => 'form-control item_type',
 																		                            'label' => false,
 																		                            'required' => 'required',
-																		                            'placeholder' => 'Name Category'));
+																		                            'placeholder' => 'Thickness'));
 																		?>
 																	</div>
 																</div>

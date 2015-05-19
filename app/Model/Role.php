@@ -36,7 +36,17 @@ class Role extends AppModel {
                     'foreignKey' => 'role_id',
                     'dependent' => true
                 ),
+            ),
+
+            'belongsTo' => array(
+                'User' => array(
+                    'className' => 'User',
+                    'foreignKey' => 'role_id',
+                    'dependent' => true
+                ), 
             )
+
+
         ));
 
         $this->contain($model);
