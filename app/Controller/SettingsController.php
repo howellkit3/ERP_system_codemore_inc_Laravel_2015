@@ -42,15 +42,16 @@ class SettingsController extends AppController
             'order' => 'CorrugatedPaper.id DESC'
          ),
 
-        'Process' => array( 
-            'limit' => 10,
-            //'fields' => array('id', 'name', 'created'),
-            'order' => 'Process.id DESC'
-         ),
        'SubProcess' => array( 
                 'limit' => 10,
                 //'fields' => array('id', 'name', 'created'),
                 'order' => 'SubProcess.id DESC'
+        ),
+
+       'Process' => array( 
+                'limit' => 10,
+                //'fields' => array('id', 'name', 'created'),
+                'order' => 'Process.id DESC'
         )
 
 
@@ -1289,7 +1290,6 @@ class SettingsController extends AppController
 
         $this->SubProcess->bind(array('Process',));
 
-
         $limit = 10;
 
         $conditions = array();
@@ -1305,6 +1305,7 @@ class SettingsController extends AppController
                 'conditions' => $conditions,
                 'limit' => $limit,
                 'fields' => array('id', 'name', 'created','modified'),
+                'order' => 'Process.id DESC'
             );
 
             $processData = $this->paginate('Process');
@@ -1866,7 +1867,7 @@ class SettingsController extends AppController
                 //pr($this->request->data);exit();
                 $this->User->id = $this->request->data['User']['id'];
                 $this->User->saveField('role_id', $this->request->data['Role']['id']);
-                $this->Session->setFlash(__('Permission Successfully added..'));
+                $this->Session->setFlash(__('Permission Successfully added..'),'success');
 
                 $this->redirect(
                     array('controller' => 'settings', 'action' => 'role_perm')
@@ -1933,38 +1934,68 @@ class SettingsController extends AppController
     public function role_perm_edit(){
 
         $this->loadModel('RolesPermission');
+
         $this->loadModel('Permission');
 
-        if (!empty($this->request->data)) {
-           
-            if(!empty($this->request->data)){
+        if(!empty($this->request->data)){
 
-                $array = $this->request->data['Permission'];
+            if(!empty($this->request->data['Role']['id'])){
 
-                $userData = $this->RolesPermission->find('list',array(
-                                        'conditions' => array('RolesPermission.role_id' => $this->request->data['Role']['id']),
-                                        'fields' => array('id','permission_id')));
-                $arrayflip = array();
-                foreach ($array as $key => $arrayList) {
-                    $arrayflip[] = $key;
-                }
-              
-                $ids = array();
+                $RoleId = $this->request->data['Role'];
 
-                foreach ($userData as $key => $userDataList) {
-                     if(in_array($userDataList, $arrayflip)){
-                        $ids['Permission']['approved'][] = $userDataList; 
-                     }else{
-                        $ids['Permission']['delete'][] = $userDataList;
-                     }
-                }
-                $this->RolesPermission->saveRoleperm($ids,$this->request->data);
-          
-                $this->Session->setFlash(__('Permission Successfully updated..'));
+                $PermissionRoleId = $this->RolesPermission->find('list',array(
+                                                'conditions' => array('RolesPermission.role_id' => $this->request->data['Role']['id'])));
 
-                $this->redirect(
-                    array('controller' => 'settings', 'action' => 'role_perm')
-                );
+                if (array_key_exists('Permission', $this->request->data)) { 
+
+                         // pr($this->request->data); exit;
+
+                        $array = $this->request->data['Permission'];
+
+                        $userData = $this->RolesPermission->find('list',array(
+                                                'conditions' => array('RolesPermission.role_id' => $this->request->data['Role']['id'])));
+                        $arrayflip = array();
+                        foreach ($array as $key => $arrayList) {
+                            //array_push($arrayflip[],$key);
+                            $arrayflip[] = $key;
+                           // pr($arrayflip); exit;
+                        }
+                      
+                        $ids = array();
+
+                        foreach ($userData as $key => $userDataList) {
+                             if(in_array($userDataList, $arrayflip)){
+                                $ids['Permission']['approved'][] = $userDataList; 
+                             }else{
+                                $ids['Permission']['delete'][] = $userDataList;
+                             }
+                        }
+                        $this->RolesPermission->saveRoleperm($ids,$this->request->data);
+                  
+                        $this->Session->setFlash(__('Permission Successfully updated..'),'success');
+
+                        $this->redirect(
+                            array('controller' => 'settings', 'action' => 'role_perm')
+                        );
+                 }else{
+
+                     $this->RolesPermission->delete($PermissionRoleId);
+
+                     $this->Session->setFlash(__('Permission Successfully updated..'),'success');
+                    
+                    $this->redirect(
+                        array('controller' => 'settings', 'action' => 'role_perm')
+            );
+
+                 }
+            } else{
+
+        $this->Session->setFlash(__('You must select a role description'),'error');
+
+        $this->redirect(
+                array('controller' => 'settings', 'action' => 'role_perm')
+            );
+
             }
         }
     }
