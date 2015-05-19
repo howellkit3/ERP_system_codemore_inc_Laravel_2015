@@ -1948,17 +1948,14 @@ class SettingsController extends AppController
 
                 if (array_key_exists('Permission', $this->request->data)) { 
 
-                         // pr($this->request->data); exit;
-
                         $array = $this->request->data['Permission'];
 
                         $userData = $this->RolesPermission->find('list',array(
                                                 'conditions' => array('RolesPermission.role_id' => $this->request->data['Role']['id'])));
                         $arrayflip = array();
                         foreach ($array as $key => $arrayList) {
-                            //array_push($arrayflip[],$key);
+
                             $arrayflip[] = $key;
-                           // pr($arrayflip); exit;
                         }
                       
                         $ids = array();
