@@ -333,6 +333,7 @@
 			                                            								'class' => 'form-control item_type',
 									                                                    'label' => false,
 									                                                    'type' => 'text',
+									                                                    'required' => 'required',
 									                                                    'class' => 'form-control item_type datepick editable',
 									                                                    'readonly' => 'readonly',
 									                                                    'value' => !empty($schedule['schedule']) ?
@@ -351,6 +352,7 @@
 			                                            echo $this->Form->input('ClientOrderDeliverySchedule.location', array(
 			                                            								'class' => 'form-control item_type editable',
 									                                                    'label' => false,
+									                                                    'required' => 'required',
 									                                                   	'readonly' => 'readonly',
 									                                                    'value' => $schedule['location']));
 			                                        ?>
@@ -365,6 +367,7 @@
 			                                            echo $this->Form->input('ClientOrderDeliverySchedule.quantity', array(
 			                                            								'class' => 'form-control item_type editable quantityLimit number',
 									                                                    'label' => false,
+									                                                    'required' => 'required',
 									                                                    'readonly' => 'readonly',
 									                                                    'value' => $schedule['quantity']));
 			                                        ?>

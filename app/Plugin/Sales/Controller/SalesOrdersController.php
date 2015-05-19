@@ -75,16 +75,29 @@ class SalesOrdersController extends SalesAppController {
       $userData = $this->Session->read('Auth');
 
       if ($this->request->is('post')) {
+
+        //pr($this->request->data['ClientOrderDeliverySchedule']['schedule']); exit;
      
         if (!empty($this->request->data)) {
 
-          $result['ClientOrderDeliverySchedule'] = Set::classicExtract($this->request->data,'{s}');
-         
-          $this->ClientOrder->ClientOrderDeliverySchedule->saveClientOrderDeliverySchedule($result,$userData['User']['id'],$this->request->data['ClientOrderDeliverySchedule']['client_order_id']);
-        
-          $this->Session->setFlash(__('Client order delivery details has been updated.'));
+               if (!empty($this->request->data['ClientOrderDeliverySchedule']['location']) && ($this->request->data['ClientOrderDeliverySchedule']['quantity']) && ($this->request->data['ClientOrderDeliverySchedule']['schedule'])) {
 
-          return $this->redirect(array('controller' => 'sales_orders','action' => 'view',$this->request->data['ClientOrderDeliverySchedule']['client_order_id']));
+                      $result['ClientOrderDeliverySchedule'] = Set::classicExtract($this->request->data,'{s}');
+                     
+                      $this->ClientOrder->ClientOrderDeliverySchedule->saveClientOrderDeliverySchedule($result,$userData['User']['id'],$this->request->data['ClientOrderDeliverySchedule']['client_order_id']);
+                    
+                      $this->Session->setFlash(__('Client order delivery details has been updated.'));
+
+                      return $this->redirect(array('controller' => 'sales_orders','action' => 'view',$this->request->data['ClientOrderDeliverySchedule']['client_order_id']));
+
+                }else{
+
+            $this->Session->setFlash(__('Delivery details must be complete'),'error');
+
+            return $this->redirect(array('controller' => 'sales_orders','action' => 'view',$this->request->data['ClientOrderDeliverySchedule']['client_order_id']));
+
+          }
+
         }
 
       }
