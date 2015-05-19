@@ -86,7 +86,7 @@
 							                                                    'placeholder' => 'Size'));
                                             ?>
 										</div>
-										<label class="col-lg-1 sizeWith">mm x</label>
+										<label class="col-lg-1 sizeWith">mm &emsp; x</label>
 										<div class="col-lg-2">
 											<?php 
 	                                            echo $this->Form->input('Product.size', array(
@@ -95,7 +95,7 @@
 							                                                    'placeholder' => 'Size'));
                                             ?>
 										</div>
-										<label class="col-lg-1 sizeWith">mm x</label>
+										<label class="col-lg-1 sizeWith">mm &emsp; x</label>
 										<div class="col-lg-2">
 											<?php 
 	                                            echo $this->Form->input('Product.size', array(
@@ -113,6 +113,7 @@
 											<?php 
 												echo $this->Form->input('Product.quantity', array(
 	                                            								'class' => 'form-control item_type number required',
+	                                            								'type' => 'number',
 							                                                    'label' => false,
 							                                                    'placeholder' => 'Quantity'));
 
@@ -150,21 +151,20 @@
 								<div class="form-horizontal">	
 
 									<div class="form-group">
-										<div class="col-lg-2"></div>
-										<div class="col-lg-1">
-											<button type="button" data="0" class="add_field_button btn btn-primary pull-left">Label &nbsp;&nbsp;&nbsp;</button>
+										<div class="col-lg-4"></div>
+										<div class="col-lg-2 button-spec">
+											<button type="button" data="0" class="add_field_button btn btn-primary pull-rigth">Label &nbsp;&nbsp;&nbsp;</button>
 										</div>
-										<div class="col-lg-1">
-											<button type="button" data="0" class="btn btn-primary pull-left add_part_button">Part &emsp;&nbsp;&nbsp;</button>
+										<div class="col-lg-2 button-spec">
+											<button type="button" data="0" class="btn btn-primary pull-rigth add_part_button">Part &emsp;&nbsp;&nbsp;</button>
 										</div>
-										<div class="col-lg-1">
-											<button type="button" data="0" class="btn btn-primary pull-left add_process_button">Process&nbsp;</button>
+										<div class="col-lg-2 button-spec">
+											<button type="button" data="0" class="btn btn-primary pull-rigth add_process_button">Process&nbsp;</button>
 										</div>
 									</div>	
 
 									<!--text fields -->
 									<section class="label-draggable-section">
-										<div class="top-space"></div>
 										<ul id="sortable">
 					 						<!--list of draggable text fields -->
 										</ul>

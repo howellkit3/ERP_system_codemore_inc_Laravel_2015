@@ -1,6 +1,22 @@
 
 $(document).ready(function() {
 
+     $("body").on('keyup','#ProductQuantity', function(e){
+        var quantitySpec = $(this).val();
+        if(!$.isNumeric(quantitySpec)) {
+            alert('Quantity is requred');
+            $('#ProductQuantity').focus();
+            return false;
+        }
+        if(quantitySpec <= 0){
+
+            alert('You must enter a positive number');
+            $('#ProductQuantity').val('');
+            return false;
+
+        }
+    });
+
     var max_fields      = 100; //maximum input boxes allowed
     var wrapper         = $("#sortable"); //Fields wrapper
     var label_button      = $(".add_field_button"); //Add button ID
@@ -23,7 +39,26 @@ $(document).ready(function() {
 
             x++; //text box increment
 
-           $(wrapper).append('<li class="ui-state-default"><section class="dragField"><div class="form-group"><div class="col-lg-2"></div><div class="col-lg-7"><div class="input-group"><span class="input-group-addon"><i class="fa fa-reorder"></i></span><input name="'+realName+'" class="form-control" type="text"></div></div><div class="col-lg-2"><a href="#" class="remove_field">Remove</a></div></div></section></li>'); //add input box
+            $(wrapper).append('<li class="ui-state-default">\
+                                <section class="dragField">\
+                                    <header class="main-box-header dragHeader clearfix">\
+                                        <h2 class="pull-left">Label</h2>\
+                                        <a href="#" class="remove_field pull-right">\
+                                            <i class="fa fa-times-circle fa-fw fa-lg"></i>\
+                                        </a>\
+                                    </header>\
+                                    <div class="form-group">\
+                                        <div class="col-lg-2"></div>\
+                                        <div class="col-lg-8">\
+                                            <div class="input-group">\
+                                                <span class="input-group-addon"><i class="fa fa-reorder"></i></span>\
+                                                <input name="'+realName+'" class="form-control label'+varCounter+'" type="text">\
+                                            </div>\
+                                        </div>\
+                                    </div>\
+                                </section>\
+                            </li>'); //add input box
+            $('.label'+varCounter).focus();
            
         }
 
@@ -57,82 +92,73 @@ $(document).ready(function() {
 
             $(wrapper).append('<li class="ui-state-default">\
                                 <section class="dragField">\
+                                    <header class="main-box-header dragHeader clearfix">\
+                                        <h2 class="pull-left">Part</h2>\
+                                        <a href="#" class="remove_part pull-right">\
+                                            <i class="fa fa-times-circle fa-fw fa-lg"></i>\
+                                        </a>\
+                                    </header>\
                                     <div class="form-group">\
-                                        <div class="col-lg-2"></div>\
-                                        <div class="col-lg-1">Material</div>\
-                                        <div class="col-lg-6">\
-                                            <button type="button"data-toggle="modal" href="#myModal'+varCounter+'" class="btn btn-primary">\
+                                        <label class="col-lg-2 control-label">Material</label>\
+                                        <div class="col-lg-6 materialName'+varCounter+'" style="display:none;">\
+                                                <input type="text" class="form-control part_name'+varCounter+'" name="material_name" readonly />\
+                                            </div>\
+                                        <div class="col-lg-3">\
+                                            <button type="button" data-toggle="modal" href="#myModal'+varCounter+'" class="btn btn-primary edit-button'+varCounter+'">\
                                             <i class="fa fa-plus-circle fa-lg"></i> Select Material</button>\
-                                        </div>\
-                                        <div class="col-lg-2">\
-                                            <a href="#" class="remove_part">Remove</a>\
                                         </div>\
                                     </div>\
                                     <section class="allFieldPart'+varCounter+'" style="display:none;">\
                                         <div class="form-group">\
-                                            <div class="col-lg-2"></div>\
-                                            <div class="col-lg-1">Part</div>\
-                                            <div class="col-lg-6">\
-                                                <input type="text" class="form-control" name="part'+varCounter+'" />\
+                                            <label class="col-lg-2 control-label">Part</label>\
+                                            <div class="col-lg-3">\
+                                                <input type="text" value="'+varCounter+'" class="form-control" name="part'+varCounter+'" readonly />\
+                                            </div>\
+                                            <label class="col-lg-2 control-label">Rate</label>\
+                                            <div class="col-lg-3">\
+                                                <input type="number" value="'+varCounter+'" class="form-control rate'+varCounter+'" name="rate'+varCounter+'" />\
                                             </div>\
                                         </div>\
                                         <div class="form-group">\
-                                            <div class="col-lg-2"></div>\
-                                            <div class="col-lg-1">Part Name</div>\
-                                            <div class="col-lg-6">\
-                                                <input type="text" class="form-control part_name'+varCounter+'" name="part_name" />\
-                                            </div>\
-                                        </div>\
-                                        <div class="form-group">\
-                                            <div class="col-lg-2"></div>\
-                                            <div class="col-lg-1">Rate</div>\
-                                            <div class="col-lg-6">\
-                                                <input type="text" class="form-control" name="rate'+varCounter+'" />\
-                                            </div>\
-                                        </div>\
-                                        <div class="form-group">\
-                                            <div class="col-lg-2"></div>\
-                                            <div class="col-lg-1">Size</div>\
-                                            <div class="col-lg-2">\
+                                            <label class="col-lg-2 control-label">Size</label>\
+                                            <div class="col-lg-3">\
                                                 <input type="text" class="form-control" name="size'+varCounter+'" />\
                                             </div>\
-                                            <div class="col-lg-1 sizeWith">mm x</div>\
-                                            <div class="col-lg-2">\
+                                            <label class="col-lg-1 control-label left-text">mm &emsp;&emsp; x</label>\
+                                            <div class="col-lg-3">\
                                                 <input type="number" class="form-control" name="size_1'+varCounter+'" />\
                                             </div>\
+                                            <label class="col-lg-1 control-label left-text">mm</label>\
                                         </div>\
                                         <div class="form-group">\
-                                            <div class="col-lg-2"></div>\
-                                            <div class="col-lg-1">Quantity</div>\
+                                            <label class="col-lg-2 control-label">Quantity</label>\
                                             <div class="col-lg-2">\
                                                 <input type="number" value="'+quantitySpec+'" class="form-control quantity'+varCounter+'" name="quantity'+varCounter+'" readonly />\
                                             </div>\
-                                            <div class="col-lg-2">\
+                                            <div class="col-lg-3">\
                                                 <select class="form-control dropUnit" name="quantity_unit'+varCounter+'" />\
                                                     <option value=""></option>\
                                                 </select>\
                                             </div>\
-                                            <div class="col-lg-1">Paper Qty</div>\
-                                            <div class="col-lg-1">\
+                                            <label class="col-lg-1 control-label">Paper Qty</label>\
+                                            <div class="col-lg-2">\
                                                 <input type="text" value="'+quantitySpec+'" class="form-control paper_qty'+varCounter+'" name="paper_qty'+varCounter+'" readonly />\
                                             </div>\
                                         </div>\
                                         <div class="form-group">\
-                                            <div class="col-lg-2"></div>\
-                                            <div class="col-lg-1">Color</div>\
-                                            <div class="col-lg-6">\
+                                            <label class="col-lg-2 control-label">Color</label>\
+                                            <div class="col-lg-8">\
                                                 <input type="text" class="form-control" name="color'+varCounter+'" />\
                                             </div>\
                                         </div>\
                                         <div class="form-group">\
-                                            <div class="col-lg-2"></div>\
-                                            <div class="col-lg-1">Outs</div>\
+                                            <label class="col-lg-2 control-label">Outs</label>\
                                             <div class="col-lg-2">\
                                                 <input type="number" value="1" class="form-control number outs'+varCounter+'" name="outs'+varCounter+'"/>\
                                             </div>\
-                                            <div class="col-lg-1 sizeWith">x</div>\
+                                            <label class="col-lg-1 control-label">x</label>\
                                             <div class="col-lg-2">\
-                                                <input type="number" value="1" class="form-control" name="outs_1'+varCounter+'" />\
+                                                <input type="number" value="1" class="form-control outs_1'+varCounter+'" name="outs_1'+varCounter+'" />\
                                             </div>\
                                         </div>\
                                     </section>\
@@ -222,13 +248,8 @@ $(document).ready(function() {
                                     </div>\
                                 </section>\
                                </li>'); //add input box
+                $('.edit-button'+varCounter).focus();
                
-                // 
-                // <hr>\
-                // <button type="button" class="btn btn-primary">\
-                // <i class="fa fa-thumbs-o-up"></i> Pick Item</button>\
-                
-            
             //start//quantity unit data
             $.ajax({
                 url: serverPath + "sales/products/unit_dropdown",
@@ -236,7 +257,7 @@ $(document).ready(function() {
                 dataType: "json",
                 success: function(data) {
 
-                    $('.dropUnit').append($("<option></option>").attr("value",0).text("-Select Unit-"));
+                    $('.dropUnit').append($("<option></option>").attr("value",0).text("---Select Unit---"));
 
                     $.each(data, function(key, value) {
                                   
@@ -248,28 +269,86 @@ $(document).ready(function() {
                     });
                 }
             });
-            //end//quantity unit data
+            //end//quantity unit data 
 
-            //start//computation for outs and paper quantity
+            // url: serverPath + "sales/products/unit_dropdown",
+            //     method: 'GET', $this->request->data('id');
+            //     data: "?id=" + idHolder + "&item=434534",
+            //     type: "get",
+
+            //start//computation for outs,paper quantity and rate
             $("body").on('keyup','.outs'+varCounter, function(e){
 
                 var outsval = $(this).val();
+
+                if(outsval <= 0){
+
+                    alert('You must enter a positive number');
+                    $(this).val(1);
+                    return false;
+
+                }
+                
                 var paperVal = $('.quantity'+varCounter).val();
+
                 if($.isNumeric(outsval)) {
+
                     var paperQtyVal =  parseInt($('.quantity'+varCounter).val()) / parseInt(outsval);
                     $('.paper_qty'+varCounter).val(paperQtyVal);
+
                 }
-                 
+
             });
             $("body").on('blur','.outs'+varCounter, function(e){
+
                 var outsval = $(this).val();
+
                 if(!$.isNumeric(outsval)) {
+
                     alert('You must enter a valid number');
                     $('.paper_qty'+varCounter).val('empty');
                     $(this).focus();
+
                 }
             });
-            //end//computation for outs and paper quantity
+            $("body").on('keyup','.rate'+varCounter, function(e){
+
+                var rateval = $(this).val();
+
+                if(rateval <= 0){
+                    alert('You must enter a positive number');
+                    $(this).val(1);
+                    return false;
+                }
+                var paperQtyVal = parseInt(quantitySpec) * parseInt(rateval);
+                $('.quantity'+varCounter).val(paperQtyVal);
+                var outs = $('.outs'+varCounter).val();
+               
+                var paperqty = parseInt(paperQtyVal) / parseInt(outs);
+                $('.paper_qty'+varCounter).val(paperqty);
+                
+
+            });
+            $("body").on('keyup','.outs_1'+varCounter, function(e){
+
+                var outs_1val = $(this).val();
+
+                if(outs_1val <= 0){
+
+                    alert('You must enter a positive number');
+                    $(this).val(1);
+                    return false;
+
+                }
+                
+                var outs = $('.outs'+varCounter).val();
+                var fullOuts = outs_1val * outs;
+                var qty = $('.quantity'+varCounter).val();
+                var paperqty = parseInt(qty) / parseInt(fullOuts);
+                $('.paper_qty'+varCounter).val(paperqty);
+
+            });
+            //end//computation for outs,paper quantity and rate
 
             //start //triger of itemGroup,category and type dropdown
             $("#"+dynamicId).change(function(e){
@@ -406,6 +485,12 @@ $(document).ready(function() {
                                                 $('.part_name'+varCounter).val(partName);
                                                 $( '.close' ).trigger( 'click' );
                                                 $('.allFieldPart'+varCounter).show();
+                                                $('.materialName'+varCounter).show();
+                                                $('.edit-button'+varCounter).html('<i class="fa fa-pencil fa-lg"></i>&emsp; Edit Material &nbsp;</button>');
+
+                                                
+
+                                                
                                             }
                                             
                                         });
@@ -486,6 +571,12 @@ $(document).ready(function() {
 
             $(wrapper).append('<li class="ui-state-default">\
                                 <section class="dragField">\
+                                    <header class="main-box-header dragHeader clearfix">\
+                                        <h2 class="pull-left">Process</h2>\
+                                        <a href="#" class="remove_process pull-right">\
+                                            <i class="fa fa-times-circle fa-fw fa-lg"></i>\
+                                        </a>\
+                                    </header>\
                                     <div class="form-group">\
                                         <div class="col-lg-2"></div>\
                                         <div class="col-lg-7">\
@@ -495,9 +586,6 @@ $(document).ready(function() {
                                                     <option value="">--Select Process--</option>\
                                                 </select>\
                                             </div>\
-                                        </div>\
-                                        <div class="col-lg-2">\
-                                            <a href="#" class="remove_process">Remove</a>\
                                         </div>\
                                     </div>\
                                     <section class="dropItem">\
@@ -515,6 +603,7 @@ $(document).ready(function() {
                                     </section>\
                                 </section>\
                                </li>'); //add input box
+                $('#'+dynamicId).focus();
 
                 //for sortable fields from checkbox
                 $(".grid").sortable({
@@ -545,14 +634,15 @@ $(document).ready(function() {
 
                 $("#"+dynamicId).change(function(e){
                     var processVal = $(this).val();
-                    $('.checkbox-nice1').remove();
-                    $('.appendField').remove();
+                    console.log();
+                    
                     $.ajax({
                         url: serverPath + "sales/products/find_checkbox/"+processVal,
                         type: "get",
                         dataType: "json",
                         success: function(data) {
-                           
+                            $('.checkbox-nice1').remove();
+                            $('.appendField').remove();
                             $.each(data, function(key, value) {
                                  
                                 $('.check-item').append('<div class="checkbox-nice1">\
@@ -568,17 +658,17 @@ $(document).ready(function() {
                                 var checkFieldName = "data[Specification]["+$(this).attr('data-name')+"]";
                                 var checkFieldNameval = $(this).attr('data-name');
                                 checkFieldNameNoSpace = checkFieldNameval.replace(/\s+/g, "-");
-                                $('.appendField').remove();
+                                //$('.appendField').remove();
                                 if ($(this).is(":checked")) {
-                                    //console.log(checkFieldNameval);
-                                    $('.check-fields-sort').append('<div class="well span2 tile" class="appendField" id="'+checkFieldNameNoSpace+'">\
-                                                                        <div class="input-group">\
-                                                                            <span class="input-group-addon">\
-                                                                                <i class="fa fa-reorder"></i>\
-                                                                            </span>\
-                                                                            <input type="text" name="'+checkFieldName+'" value="'+checkFieldNameval+'" class="form-control" readonly />\
-                                                                        </div>\
-                                                                    </div>');
+                                    console.log(checkFieldNameval);
+                                    // $('.check-fields-sort').append('<div class="well span2 tile appendField" id="'+checkFieldNameNoSpace+'">\
+                                    //                                     <div class="input-group">\
+                                    //                                         <span class="input-group-addon">\
+                                    //                                             <i class="fa fa-reorder"></i>\
+                                    //                                         </span>\
+                                    //                                         <input type="text" name="'+checkFieldName+'" value="'+checkFieldNameval+'" class="form-control" readonly />\
+                                    //                                     </div>\
+                                    //                                 </div>');
                                 } else {  
 
                                     $('#'+checkFieldNameNoSpace).remove();
@@ -632,10 +722,6 @@ $(document).ready(function() {
 
 });
 
-//backup
-// <input type="text" name="itemGroup" value="0" id="itemGroup'+dynamicId+'" />\
-// <input type="text" name="itemGroupCategory" value="0" id="itemGroupCategory'+dynamicId+'" />\
-// <input type="text" name="itemGroupType" value="0" id="itemGroupType'+dynamicId+'" />\
 
 function previous(){  
   

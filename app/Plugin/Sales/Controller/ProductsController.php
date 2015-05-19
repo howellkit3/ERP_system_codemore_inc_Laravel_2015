@@ -618,7 +618,17 @@ class ProductsController extends SalesAppController {
 
 		echo json_encode($checkData);
     }
-    public function test(){}
+    public function test(){
+
+    	// $this->request->onlyAllow('ajax');
+    	// $this->viewClass = 'Tools.Ajax';
+  //   	$this->layout = 'ajax';
+  //   	$this->render('view');
+  //   	//$this->layout = false;
+
+		// echo json_encode($checkData);
+
+    }
     public function specification($productId = null ){
 
     	$this->loadModel('ItemCategoryHolder');
@@ -714,11 +724,11 @@ class ProductsController extends SalesAppController {
 											));
     		
     	}
-    	
+    
     	foreach ($searchedProduct as $key => $list) {    		
     		$searchedProduct[$key][$ModelName]['name'] = utf8_encode($list[$ModelName]['name']);    		
     	}
-   
+   		//pr($searchedProduct);exit();
 		echo json_encode($searchedProduct);
 		
     }
