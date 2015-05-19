@@ -384,6 +384,7 @@ class QuotationsController extends SalesAppController {
 		
 
 		$rolesPermissionData = $this->RolesPermission->find('list', array(
+														'fields' => array('RolesPermission.id', 'RolesPermission.permission_id'),
 														'conditions' => array( 
 															'RolesPermission.role_id' => $userData['User']['role_id'])
 													));

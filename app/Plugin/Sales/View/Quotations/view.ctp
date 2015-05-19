@@ -30,8 +30,24 @@
 	
 		$status = ($this->Status->isQuotationApproved($quotation['Quotation']['status'])) ? 'disabled' : '';
 		$status1 = ($this->Status->isQuotationDraft($quotation['Quotation']['status'])) ? 'disabled' : '';
+
+		if ( !empty($rolesPermissionData) ) {
+                     if(in_array('4', $rolesPermissionData)){
+
+                        
+						echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i>Approved ', array('controller' => 'quotations', 'action' => 'approved',$quotation['Quotation']['id']),array('class' =>'btn btn-success pull-right '.$status.' '.$status1,'escape' => false)) ;
+                    }else{
+
+                         
+						echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i>Approved ', array('controller' => 'quotations', 'action' => 'approved',$quotation['Quotation']['id']),array('class' =>'btn btn-success pull-right not-active'.$status.' '.$status1,'escape' => false)) ;
+                    }
+                }else{
+                
+                  
+						echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i>Approved ', array('controller' => 'quotations', 'action' => 'approved',$quotation['Quotation']['id']),array('class' =>'btn btn-success pull-right not-active'.$status.' '.$status1,'escape' => false)) ;
+                }    
 	
-    	echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i>Approved ', array('controller' => 'quotations', 'action' => 'approved',$quotation['Quotation']['id']),array('class' =>'btn btn-success pull-right '.$status.' '.$status1,'escape' => false)) ;
+    	
     	
     	$status = (!$this->Status->isQuotationDraft($quotation['Quotation']['status'])) ? 'disabled' : '';
 
@@ -39,8 +55,8 @@
 				
     	$status = ($this->Status->isQuotationApproved($quotation['Quotation']['status'])) ? 'disabled' : '';
 
-    	 if ( !empty($rolesPermissionData['RolesPermission']['permission_id']) ) {
-                     if ($rolesPermissionData['RolesPermission']['permission_id'] == 2  ) {
+    	  if ( !empty($rolesPermissionData) ) {
+                     if(in_array('2', $rolesPermissionData)){
 
                         
 						echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit ', array('controller' => 'quotations', 'action' => 'edit',$quotation['Quotation']['id'],$companyId),array('class' =>'btn btn-info pull-right '. $status ,'escape' => false)) ;
