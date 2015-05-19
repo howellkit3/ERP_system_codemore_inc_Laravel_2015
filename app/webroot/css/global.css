@@ -282,3 +282,12 @@ body.dragging, body.dragging * {
   width: 60%;
   cursor: auto;
 }
+
+.scrollsection:hover{
+  overflow: auto;
+  height: 500px;
+}
+.scrollsection{
+  max-height: 500px;
+  overflow: hidden;
+}
