@@ -233,11 +233,14 @@
                                 	<label class="col-lg-2 control-label">Quantity</label>
 									<div class="col-lg-8">
 										<?php 
+											$fullQuantity = number_format($quotationItemDetail['QuotationItemDetail']['quantity']).' '.$units[$quotationItemDetail['QuotationItemDetail']['quantity_unit_id']];
+											
                                             echo $this->Form->input('QuotationItemDetail.quantity', array(
+                                            								'type' => 'text',
                                             								'class' => 'form-control item_type',
 						                                                    'label' => false,
 						                                                    'readonly' => 'readonly',
-						                                                    'value' => $quotationItemDetail['QuotationItemDetail']['quantity'],
+						                                                   'value' => $fullQuantity,
 						                                                    'id' => 'quantity'));
                                         ?>
 									</div>
@@ -247,11 +250,14 @@
 									<label class="col-lg-2 control-label">Unit Price</label>
 									<div class="col-lg-8">
 										<?php 
+											$fullPrice = $currencies[$quotationItemDetail['QuotationItemDetail']['unit_price_currency_id']].' '.number_format($quotationItemDetail['QuotationItemDetail']['unit_price'],4).' '.$units[$quotationItemDetail['QuotationItemDetail']['unit_price_unit_id']];
+
                                             echo $this->Form->input('QuotationItemDetail.unit_price', array(
+                                            								'type' => 'text',
                                             								'class' => 'form-control item_type',
 						                                                    'label' => false,
 						                                                    'readonly' => 'readonly',
-						                                                    'value' => $quotationItemDetail['QuotationItemDetail']['unit_price']));
+						                                                    'value' => $fullPrice));
                                         ?>
 									</div>
 									
@@ -265,7 +271,7 @@
                                             								'class' => 'form-control item_type',
 						                                                    'label' => false,
 						                                                    'readonly' => 'readonly',
-						                                                    'value' => $quotationItemDetail['QuotationItemDetail']['vat_price']));
+						                                                    'value' => number_format($quotationItemDetail['QuotationItemDetail']['vat_price'],4)));
                                         ?>
 										  
 									</div>
