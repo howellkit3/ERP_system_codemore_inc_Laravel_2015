@@ -43,7 +43,7 @@ class QuotationsController extends SalesAppController {
 
 		$this->loadModel('User');
 
-		$userData = $this->Session->read('Auth');
+		$userData = $this->User->read(null,$this->Session->read('Auth.User.id'));
 
 		// $this->RolesPermission->bind(array('Role', 'Permission'));
 		
@@ -369,8 +369,6 @@ class QuotationsController extends SalesAppController {
 		$this->loadModel('RolesPermission');
 
 		$this->loadModel('User');
-
-		
 
 		$userData = $this->User->read(null,$this->Session->read('Auth.User.id'));
 
