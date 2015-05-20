@@ -240,7 +240,7 @@
                                             								'class' => 'form-control item_type',
 						                                                    'label' => false,
 						                                                    'readonly' => 'readonly',
-						                                                   'value' => $fullQuantity,
+						                                                   'value' => $quotationItemDetail['QuotationItemDetail']['quantity'],
 						                                                    'id' => 'quantity'));
                                         ?>
 									</div>
@@ -257,7 +257,7 @@
                                             								'class' => 'form-control item_type',
 						                                                    'label' => false,
 						                                                    'readonly' => 'readonly',
-						                                                    'value' => $fullPrice));
+						                                                    'value' => $quotationItemDetail['QuotationItemDetail']['unit_price']));
                                         ?>
 									</div>
 									
