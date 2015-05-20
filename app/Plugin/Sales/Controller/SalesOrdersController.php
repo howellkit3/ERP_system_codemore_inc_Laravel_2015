@@ -45,6 +45,14 @@ class SalesOrdersController extends SalesAppController {
 
 	public function view($clientOrderId = null){
 
+    $this->loadModel('Currency');
+    
+    $this->loadModel('Unit');
+
+    $currencies = $this->Currency->getList();
+
+    $units = $this->Unit->getList();
+
 		$this->loadModel('PaymentTermHolder');
        
 		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','Product','ContactPerson'));
@@ -63,7 +71,7 @@ class SalesOrdersController extends SalesAppController {
       
 		$paymentTermData = $this->PaymentTermHolder->find('list',array('fields' => array('id','name')));
 												
-		$this->set(compact('clientOrderData','quotationData','companyName','quotationItemDetail','paymentTermData'));
+		$this->set(compact('clientOrderData','quotationData','companyName','quotationItemDetail','paymentTermData','currencies','units'));
 
 	}
 
