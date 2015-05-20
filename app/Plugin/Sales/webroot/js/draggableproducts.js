@@ -453,45 +453,46 @@ $(document).ready(function() {
 
                     });  
 
+                    //checkbox trigger
+                    $("body").on('change','.check-fields', function(e){
+
+                        var checkFieldName = "data[Specification]["+$(this).attr('data-name')+"]";
+                        var checkFieldNameval = $(this).attr('data-name');
+                        checkFieldNameNoSpace = checkFieldNameval.replace(/\s+/g, "-");
+                        //$('.appendField').remove();
+                        if ($(this).is(":checked")) {
+                            console.log($(this));
+                            
+                            $('.check-fields-sort'+dynamicId).append('<div class="well span2 tile appendField appendField'+dynamicId+'" id="'+checkFieldNameNoSpace+'">\
+                                                                <a href="#" data-field="'+checkFieldNameNoSpace+'" class="remove_sort_field pull-right">\
+                                                                    <i class="fa fa-times-circle fa-lg"></i>\
+                                                                </a>\
+                                                                <div class="input-group">\
+                                                                    <span class="input-group-addon">\
+                                                                        <i class="fa fa-reorder"></i>\
+                                                                    </span>\
+                                                                    <input type="text" name="'+checkFieldName+'" value="'+checkFieldNameval+'" class="form-control" readonly />\
+                                                                </div>\
+                                                            </div>');
+
+                            $("body").on('click','.remove_sort_field', function(e){
+                       
+                                var removeField = $(this).attr('data-field');
+                                
+                                $('#'+removeField).remove();
+                                $('.'+removeField).prop('checked', false);
+                                 e.preventDefault();
+                            });
+                        } else {  
+
+                            $('#'+checkFieldNameNoSpace).remove();
+                            
+                        }
+                        
+                    }); 
+
                 } 
                 
-            });
-
-            //checkbox trigger
-            $("body").on('change','.check-fields', function(e){
-
-                var checkFieldName = "data[Specification]["+$(this).attr('data-name')+"]";
-                var checkFieldNameval = $(this).attr('data-name');
-                checkFieldNameNoSpace = checkFieldNameval.replace(/\s+/g, "-");
-                //$('.appendField').remove();
-                if ($(this).is(":checked")) {
-                    console.log($(this));
-                    
-                    $('.check-fields-sort'+dynamicId).append('<div class="well span2 tile appendField appendField'+dynamicId+'" id="'+checkFieldNameNoSpace+dynamicId+'">\
-                                                        <a href="#" data-field="'+checkFieldNameNoSpace+'" class="remove_sort_field pull-right">\
-                                                            <i class="fa fa-times-circle fa-lg"></i>\
-                                                        </a>\
-                                                        <div class="input-group">\
-                                                            <span class="input-group-addon">\
-                                                                <i class="fa fa-reorder"></i>\
-                                                            </span>\
-                                                            <input type="text" name="'+checkFieldName+'" value="'+checkFieldNameval+'" class="form-control" readonly />\
-                                                        </div>\
-                                                    </div>');
-                } else {  
-
-                    $('#'+checkFieldNameNoSpace+dynamicId).remove();
-                    
-                }
-                
-            }); 
-
-            $("body").on('click','.remove_sort_field', function(e){
-                e.preventDefault();
-                var removeField = $(this).attr('data-field');
-                
-                $('#'+removeField).remove();
-                $('.'+removeField).prop('checked', false);
             });
             
             //for sortable fields from checkbox
