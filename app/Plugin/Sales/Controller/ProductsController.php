@@ -7,8 +7,13 @@ class ProductsController extends SalesAppController {
 	public $uses = array('Sales.Company','Process','GeneralItem','Substrate','CompoundSubstrate','CorrugatedPaper');
 	
 	function beforeFilter() {
+
+		$userData = $this->Session->read('Auth');
+
+        $this->Auth->allow('add','index');
+
   		$this->myRandomNumber = rand(1,4);
-  		$userData = $this->Session->read('Auth');
+
         $this->set(compact('userData'));
 	}
 

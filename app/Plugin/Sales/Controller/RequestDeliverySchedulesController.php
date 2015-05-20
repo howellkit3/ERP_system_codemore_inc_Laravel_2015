@@ -4,6 +4,18 @@ App::uses('SessionComponent', 'Controller/Component');
 
 class RequestDeliverySchedulesController extends SalesAppController {
 
+    public function beforeFilter() {
+
+        parent::beforeFilter();
+
+        $userData = $this->Session->read('Auth');
+
+        $this->Auth->allow('add','index');
+
+        $this->set(compact('userData'));
+
+    }
+
 	public function add($id = null, $location = null) {
         $path = $location;
 
