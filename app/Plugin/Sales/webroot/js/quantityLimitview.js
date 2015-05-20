@@ -13,11 +13,12 @@ $( document ).ready(function() {
 		var isText = $(this);
 		var allVal = 0;
 		
-	    $(isText).each(function() {
-	     	allVal += parseInt(isText.val());
-	     
+	    $($('.quantityLimit')).each(function() {
+	     	allVal += parseInt($(this).val());
+	     	//console.log(isText.val());
 		});
 		
+		console.log(allVal);
 		if ( allVal > quantityValue ){
 
 			alert('Max Quantity');
@@ -38,7 +39,7 @@ $( document ).ready(function() {
 	     	allVal += parseInt($(this).val());
 	     
 		});
-	    
+	   
 	    allVal += parseInt(isText.val());
 	    
 		if ( allVal > quantityValue ){
