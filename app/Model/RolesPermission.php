@@ -40,7 +40,7 @@ class RolesPermission extends AppModel {
     }
 
     public function saveRoleperm($ids = null , $data = null){
-        
+
         $approved = !empty($ids['Permission']['approved']) ? $ids['Permission']['approved'] : array() ;
         
         $saveData = [];
@@ -48,11 +48,11 @@ class RolesPermission extends AppModel {
         foreach ($data['Permission'] as $key => $dataList) {
 
             if (!in_array($key, $approved)) {
-                $saveData[$key]['id'] = '';  
+                 $saveData[$key]['id'] = '';  
                  $saveData[$key]['role_id'] = $data['Role']['id'];
                  $saveData[$key]['permission_id'] = $key; 
             }
-           
+           //pr($approved); exit;
         }
         $this->saveAll($saveData);
 
@@ -60,6 +60,8 @@ class RolesPermission extends AppModel {
 
         if(!empty($delete)){
             $this->deleteAll(array('RolesPermission.role_id' => $data['Role']['id'],'RolesPermission.permission_id' => $delete), false);
+
+
         }
        
         
