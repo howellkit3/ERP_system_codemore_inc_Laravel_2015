@@ -304,3 +304,9 @@ body.dragging, body.dragging * {
 .button-spec{
   width: 100px;
 }
+
+.fontSame{
+  font-family: Verdana,Helvetica,Arial,sans-serif;
+}
+    
+
