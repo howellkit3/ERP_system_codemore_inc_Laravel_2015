@@ -304,9 +304,17 @@ body.dragging, body.dragging * {
 .button-spec{
   width: 100px;
 }
-
 .fontSame{
   font-family: Verdana,Helvetica,Arial,sans-serif;
+}
+.remove_sort_field{
+  z-index: 99999;
+  position: absolute;
+  left: 333px;
+  top: -7px;
+}
+.appendField{
+  position: relative;   
 }
     
 

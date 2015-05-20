@@ -623,19 +623,28 @@ class ProductsController extends SalesAppController {
 
 		echo json_encode($checkData);
     }
-    public function test(){
-    	echo "string";
-    	// pr('test');exit();
-  		$this->pageTitle = 'Test Post';
-		// if($this->RequestHandler->isAjax()) {
-		// 	pr('test');exit();
-		// // $post = $this->Post->findById($id);
-		// // $this->set('post', $post);
-		$this->layout = 'ajax';
-		$this->render('test');
-		// }
-		// pr('error');exit();
+
+    public function label($varCounter,$realName){
+
+    	$this->set(compact('varCounter','realName'));
+		$this->render('label');
+
     }
+
+    public function part($varCounter,$quantitySpec,$itemgroupName,$dynamicId,$category,$item){
+
+    	$this->set(compact('varCounter','quantitySpec','itemgroupName','dynamicId','category','item'));
+		$this->render('part');
+		
+    }
+
+    public function process($process,$dynamicId){
+
+    	$this->set(compact('process','dynamicId'));
+		$this->render('process');
+
+    }
+
     public function specification($productId = null ){
 
     	$this->loadModel('ItemCategoryHolder');
