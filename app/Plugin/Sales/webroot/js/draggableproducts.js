@@ -467,7 +467,7 @@ $(document).ready(function() {
                 if ($(this).is(":checked")) {
                     console.log($(this));
                     
-                    $('.check-fields-sort'+dynamicId).append('<div class="well span2 tile appendField'+dynamicId+'" id="'+checkFieldNameNoSpace+dynamicId+'">\
+                    $('.check-fields-sort'+dynamicId).append('<div class="well span2 tile appendField appendField'+dynamicId+'" id="'+checkFieldNameNoSpace+dynamicId+'">\
                                                         <a href="#" data-field="'+checkFieldNameNoSpace+'" class="remove_sort_field pull-right">\
                                                             <i class="fa fa-times-circle fa-lg"></i>\
                                                         </a>\
