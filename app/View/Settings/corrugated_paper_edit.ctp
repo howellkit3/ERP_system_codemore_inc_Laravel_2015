@@ -103,6 +103,65 @@
 										</div>
 									</div>
 
+
+								<?php 
+									
+									foreach ($this->request->data['ItemGroupLayer'] as $key => $itemGroupData): 
+
+									$this->request->data['ItemGroupLayer'][$key] = $itemGroupData;
+
+								 ?>
+	
+											<?php
+		                                        echo $this->Form->input('ItemGroupLayer.'.$key.'.id', array(
+		                                        								'class' => 'form-control item_type editable',
+		                                        								'id' => 'toBeEdited',
+							                                                    'label' => false,
+							                                                    'type' => 'hidden',
+					                        									'readonly' => 'readonly'
+					                        									));
+
+		                                        // echo $this->Form->input('ItemGroupLayer.client_order_id', array(
+		                                        // 								'type' => 'text',
+							                                   //                  'label' => false,
+							                                   //                  'hidden' => 'hidden',
+							                                   //              	'value' => $schedule['client_order_id']));
+		                                       
+		                                    ?>
+
+	                                		<div class="form-group">
+	                                			<label class="col-lg-3 control-label">Substrate</label>
+												<div class="col-lg-7">
+													<?php 
+
+			                                            echo $this->Form->input('ItemGroupLayer.'.$key.'.substrate', array(
+			                                            								'class' => 'form-control layer',
+																						'label' => false,
+																						'rule' => 'numeric',
+																						'style'=>'width: 150px',
+																						'placeholder' => 'Layer'));
+			                                        ?>
+                                        
+												</div>
+											</div>
+
+											<div class="form-group" id="existing_items">
+												<label class="col-lg-3 control-label">Flute </label> 
+												<div class="col-lg-7">
+													<?php 
+			                                            echo $this->Form->input('ItemGroupLayer.'.$key.'.flute', array(
+			                                            								'class' => 'form-control layer',
+																						'label' => false,
+																						'rule' => 'numeric',
+																						'style'=>'width: 150px',
+																						'placeholder' => 'Layer'));
+			                                        
+			                                        ?>
+												</div>
+											</div>
+
+								<?php endforeach; ?> 
+
 									<div class="form-group"> <br>
 										<label class="col-lg-2 control-label">Brust</label>
 										<div class="col-lg-8">

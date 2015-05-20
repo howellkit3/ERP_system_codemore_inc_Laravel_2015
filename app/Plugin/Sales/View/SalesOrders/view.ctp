@@ -303,6 +303,7 @@
 					<div class="main-box-body clearfix">
 						<div class="main-box-body clearfix">
 							<div class="form-horizontal">
+								
 								<?php foreach ($clientOrderData['ClientOrderDeliverySchedule'] as $schedule):  ?>
 
 									<?php echo $this->Form->create('ClientOrderDeliverySchedule',array('id' => 'form'.$schedule['id'],'url'=>(array('controller' => 'sales_orders','action' => 'add_schedule'))));?>
