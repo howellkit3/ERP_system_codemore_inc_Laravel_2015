@@ -1,7 +1,7 @@
 <?php echo $this->element('setting_option');?><br><br>
 <?php echo $this->Html->script(array(
-									'corrugated_paper',
-									'EditLayerCorrugatedPaper'
+									'corrugated_paper'
+									//'EditLayerCorrugatedPaper'
 							)); ?>
 <div class="row">
 	<div class="col-lg-12">
@@ -161,6 +161,10 @@
 											</div>
 
 								<?php endforeach; ?> 
+
+													<?php 
+                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Add Layer ', array('controller' => 'settings', 'action' => 'item_group','tab' => 'tab-corrugated_papers'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                    ?>
 
 									<div class="form-group"> <br>
 										<label class="col-lg-2 control-label">Brust</label>
