@@ -619,15 +619,17 @@ class ProductsController extends SalesAppController {
 		echo json_encode($checkData);
     }
     public function test(){
-
-    	// $this->request->onlyAllow('ajax');
-    	// $this->viewClass = 'Tools.Ajax';
-  //   	$this->layout = 'ajax';
-  //   	$this->render('view');
-  //   	//$this->layout = false;
-
-		// echo json_encode($checkData);
-
+    	echo "string";
+    	// pr('test');exit();
+  		$this->pageTitle = 'Test Post';
+		// if($this->RequestHandler->isAjax()) {
+		// 	pr('test');exit();
+		// // $post = $this->Post->findById($id);
+		// // $this->set('post', $post);
+		$this->layout = 'ajax';
+		$this->render('test');
+		// }
+		// pr('error');exit();
     }
     public function specification($productId = null ){
 

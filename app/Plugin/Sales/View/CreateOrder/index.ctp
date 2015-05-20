@@ -266,10 +266,15 @@
 														
 														<td height ="37px" valign ="top" class = "column4 col-md-10">
 															<div class="col-lg-12">
-																<?php echo (!empty($itemDetail['unit_price']) && is_numeric($itemDetail['unit_price'])) ? number_format($itemDetail['unit_price'],4) : '';
-																?>
 																<?php
 																	echo !empty($currencies[$itemDetail['unit_price_currency_id']]) ? $currencies[$itemDetail['unit_price_currency_id']] : ''
+																?>
+																<?php echo (!empty($itemDetail['unit_price']) && is_numeric($itemDetail['unit_price'])) ? number_format($itemDetail['unit_price'],4) : '';
+																?>
+																/
+																<?php
+																
+																	echo !empty($units[$itemDetail['unit_price_unit_id']]) ? $units[$itemDetail['unit_price_unit_id']] : ''
 																?> 
 															</div>
 														</td>
