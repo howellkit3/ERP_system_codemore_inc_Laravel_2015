@@ -442,7 +442,7 @@ $(document).ready(function() {
                                     var removeSpace = value.SubProcess.name;
                                     var checkFieldNameNoSpace = removeSpace.replace(/\s+/g, "-");
                                     $('.check-item'+dynamicId).append('<div class="checkbox-nice1'+dynamicId+'">\
-                                                            <input id="checkbox-inl-1" class="check-fields '+checkFieldNameNoSpace+'" data-name="'+value.SubProcess.name+'" type="checkbox">\
+                                                            <input id="checkbox-inl-1" class="check-fields'+dynamicId+' '+checkFieldNameNoSpace+'" data-name="'+value.SubProcess.name+'" type="checkbox">\
                                                             <label for="checkbox-inl-1"> '+value.SubProcess.name+' </label>\
                                                         </div>');
 
@@ -454,17 +454,16 @@ $(document).ready(function() {
                     });  
 
                     //checkbox trigger
-                    $("body").on('change','.check-fields', function(e){
+                    $("body").on('change','.check-fields'+dynamicId, function(e){
 
                         var checkFieldName = "data[Specification]["+$(this).attr('data-name')+"]";
                         var checkFieldNameval = $(this).attr('data-name');
                         checkFieldNameNoSpace = checkFieldNameval.replace(/\s+/g, "-");
                         //$('.appendField').remove();
                         if ($(this).is(":checked")) {
-                            console.log($(this));
-                            
+                           
                             $('.check-fields-sort'+dynamicId).append('<div class="well span2 tile appendField appendField'+dynamicId+'" id="'+checkFieldNameNoSpace+'">\
-                                                                <a href="#" data-field="'+checkFieldNameNoSpace+'" class="remove_sort_field pull-right">\
+                                                                <a href="#" data-field="'+checkFieldNameNoSpace+'" class="remove_sort_field'+dynamicId+' remove_sort_field pull-right">\
                                                                     <i class="fa fa-times-circle fa-lg"></i>\
                                                                 </a>\
                                                                 <div class="input-group">\
@@ -475,7 +474,7 @@ $(document).ready(function() {
                                                                 </div>\
                                                             </div>');
 
-                            $("body").on('click','.remove_sort_field', function(e){
+                            $("body").on('click','.remove_sort_field'+dynamicId, function(e){
                        
                                 var removeField = $(this).attr('data-field');
                                 
