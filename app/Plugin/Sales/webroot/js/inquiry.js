@@ -120,6 +120,9 @@ jQuery(function($){
 				var fullVatP = vatP+'.'+vat[1];
 				$('#vat_price_proxy').val(fullVatP);
 
+				var quantity = numberWithCommas(data.QuotationItemDetail.quantity);
+				$('#quantity_proxy').val(quantity);
+
 				$('#quantity').val(data.QuotationItemDetail.quantity);
 				$('#unit_price').val(data.QuotationItemDetail.unit_price);	
 				$('#vat_price').val(data.QuotationItemDetail.vat_price);

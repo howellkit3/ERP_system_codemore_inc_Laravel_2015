@@ -345,18 +345,20 @@
 										<div class="col-lg-8">
 											<?php 
                                                 echo $this->Form->input('QuotationItemDetail.quantity',array( 
+                                                						'type' => 'hidden',
                                                 						'class' => 'form-control item_type ', 
                                                     					'label' => false, 
                                                     					'placeholder' => 'Quantity',
                                                     					'readonly' => 'readonly',
                                                     					'id' => 'quantity'
                                                     					));
-                                                // echo $this->Form->input('QuotationItemDetail.quantity_proxy',array( 
-                                                // 						'class' => 'form-control item_type ', 
-                                                //     					'label' => false, 
-                                                //     					'placeholder' => 'Quantity',
-                                                //     					'readonly' => 'readonly',
-                                                //     					));
+                                                echo $this->Form->input('QuotationItemDetail.quantity_proxy',array( 
+                                                						'class' => 'form-control item_type ', 
+                                                    					'label' => false, 
+                                                    					'placeholder' => 'Quantity',
+                                                    					'disabled' => 'disabled',
+                                                    					'id' => 'quantity_proxy'
+                                                    					));
 
                                             ?>
                                           
@@ -375,7 +377,7 @@
                                                     					'readonly' => 'readonly',
                                                     					'id' => 'unit_price'
                                                     					));
-                                                echo $this->Form->input('QuotationItemDetail.unit_price',array( 
+                                                echo $this->Form->input('QuotationItemDetail.unit_price_proxy',array( 
                                                 						'type' => 'text',
                                                 						'class' => 'form-control item_type ', 
                                                     					'label' => false, 
