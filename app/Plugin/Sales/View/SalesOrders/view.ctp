@@ -580,40 +580,29 @@
 			format: 'yyyy-mm-dd'
 		});
 		jQuery("#ClientOrderDeliveryScheduleViewForm").validate();
+
+		$("body").on('click','.buttonEdit', function(e){
+			var myval = $(this).parents('.tab-container').find('.quantityLimit').val();
+			console.log(test);
+			$(this).parents('.tab-container').find('.editable').attr('readonly', false);
+	    	$(this).parents('.tab-container').find('button.editable').attr('disabled', false);
+	    	$(this).html('Cancel');
+	    	$(this).addClass('Cancel');
+	    
+	    	
+	    	$("body").on('click','.Cancel', function(e){
+
+	    		$(this).parents('.tab-container').find('.quantityLimit').val(test);
+		    	$(this).parents('.tab-container').find('.editable').attr('readonly', true);
+		    	$(this).parents('.tab-container').find('button.editable').attr('disabled', true);
+		    	$(this).html('Edit');
+		    	$(this).removeClass('Cancel');
+		    });
+
+	    });
 		
 	});
 
 </script>
 
-
-<script>
-
-    $("body").on('click','.buttonEdit', function(e){
-
-		$(this).parents('.tab-container').find('.editable').attr('readonly', false);
-    	$(this).parents('.tab-container').find('button.editable').attr('disabled', false);
-    	$(this).html('Cancel');
-    	$(this).addClass('Cancel');
-    
-    	
-    	$("body").on('click','.Cancel', function(e){
-	    	$(this).parents('.tab-container').find('.editable').attr('readonly', true);
-	    	$(this).parents('.tab-container').find('button.editable').attr('disabled', true);
-	    	$(this).html('Edit');
-	    	$(this).removeClass('Cancel');
-	    });
-    	// if ($('#textField1').is(':readonly')) {
-	    // 	//alert('zero value ko'); 
-	    // 	$(this).parents('.tab-container').find('.editable').attr('readonly', false);
-	    	
-	    // }else{
-	    // 	//alert('one value ko'); 
-	    // 	$(this).parents('.tab-container').find('.editable').attr('readonly', true);
-		   //  x = 0;
-	    // }
-
-    });
-
-    
-</script>
 
