@@ -328,7 +328,7 @@
 										<div class="tab-container">
 											<?php 
 		                                        echo $this->Form->input('ClientOrderDeliverySchedule.id', array(
-		                                        								'class' => 'form-control item_type editable',
+		                                        								'class' => 'form-control item_type editable ',
 		                                        								'id' => 'toBeEdited',
 							                                                    'label' => false,
 							                                                    'hidden' => 'hidden',
@@ -352,7 +352,7 @@
 									                                                    'label' => false,
 									                                                    'type' => 'text',
 									                                                    'required' => 'required',
-									                                                    'class' => 'form-control item_type datepick editable',
+									                                                    'class' => 'form-control item_type datepick editable required',
 									                                                    'readonly' => 'readonly',
 									                                                    'value' => !empty($schedule['schedule']) ?
 									                                                    date('Y-m-d',strtotime($schedule['schedule'])) : ''	
@@ -368,7 +368,7 @@
 												<div class="col-lg-8">
 													<?php 
 			                                            echo $this->Form->input('ClientOrderDeliverySchedule.location', array(
-			                                            								'class' => 'form-control item_type editable',
+			                                            								'class' => 'form-control item_type editable required',
 									                                                    'label' => false,
 									                                                    'required' => 'required',
 									                                                   	'readonly' => 'readonly',
@@ -383,7 +383,7 @@
 												<div class="col-lg-8">
 													<?php 
 			                                            echo $this->Form->input('ClientOrderDeliverySchedule.quantity', array(
-			                                            								'class' => 'form-control item_type editable quantityLimit number',
+			                                            								'class' => 'form-control item_type editable quantityLimit number required',
 									                                                    'label' => false,
 									                                                    'required' => 'required',
 									                                                    'readonly' => 'readonly',
@@ -579,10 +579,12 @@
 		$('.datepick').datepicker({
 			format: 'yyyy-mm-dd'
 		});
+		jQuery("#ClientOrderDeliveryScheduleViewForm").validate();
 		
 	});
 
 </script>
+
 
 <script>
 
@@ -614,3 +616,4 @@
 
     
 </script>
+
