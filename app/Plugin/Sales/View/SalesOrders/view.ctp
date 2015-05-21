@@ -347,12 +347,12 @@
 	                                			<label class="col-lg-2 control-label">Schedule</label>
 												<div class="col-lg-8">
 													<?php 
-			                                              echo $this->Form->input('ClientOrderDeliverySchedule.schedule', array(
+			                                              echo $this->Form->input('ClientOrderDeliverySchedule.schedule_field', array(
 			                                            								'class' => 'form-control item_type',
 									                                                    'label' => false,
 									                                                    'type' => 'text',
 									                                                    'required' => 'required',
-									                                                    'class' => 'form-control item_type datepick editable required',
+									                                                    'class' => 'form-control item_type datepik editable required',
 									                                                    'readonly' => 'readonly',
 									                                                    'value' => !empty($schedule['schedule']) ?
 									                                                    date('Y-m-d',strtotime($schedule['schedule'])) : ''	
@@ -575,10 +575,7 @@
 <script>
 
 	jQuery(document).ready(function($){
-		//datepicker
-		$('.datepick').datepicker({
-			format: 'yyyy-mm-dd'
-		});
+		
 		jQuery("#ClientOrderDeliveryScheduleViewForm").validate();
 
 		$("body").on('click','.buttonEdit', function(e){
@@ -586,12 +583,17 @@
 			
 			$(this).parents('.tab-container').find('.editable').attr('readonly', false);
 	    	$(this).parents('.tab-container').find('button.editable').attr('disabled', false);
+	    	$(this).parents('.tab-container').find('.datepik').addClass('datepick');
 	    	$(this).html('Cancel');
 	    	$(this).addClass('Cancel');
+
+	    	$(this).parents('.tab-container').find('.datepick').datepicker({
+				format: 'yyyy-mm-dd'
+			});
 	    
 	    	$("body").on('click','.Cancel', function(e){
-
-	    		$(this).parents('.tab-container').find('.quantityLimit').val(test);
+	    		$(this).parents('.tab-container').find('.datepik').removeClass('datepick');
+	    		$(this).parents('.tab-container').find('.quantityLimit').val(myval);
 		    	$(this).parents('.tab-container').find('.editable').attr('readonly', true);
 		    	$(this).parents('.tab-container').find('button.editable').attr('disabled', true);
 		    	$(this).html('Edit');
@@ -599,6 +601,7 @@
 		    });
 
 	    });
+	    
 		
 	});
 

@@ -462,7 +462,8 @@
                                                                                                             'label' => false,
                                                                                                             'required' => 'required',
                                                                                                             'class' => 'form-control item_type datepick required',
-                                                                                                            'type' => 'text'
+                                                                                                            'type' => 'text',
+                                                                                                            'id' => 'date'
                                                                                                         ));
                                 ?>
                             </div>
@@ -512,6 +513,9 @@
         
         jQuery(document).ready(function($){
             $("#CustomerSaleViewForm").validate();
+            $('#date').datepicker({
+            format: 'yyyy-mm-dd'
+        });
           
         });
 

@@ -456,13 +456,13 @@ $(document).ready(function() {
 
                     //checkbox trigger
                     $("body").on('change','.check-fields'+dynamicId, function(e){
-
+                      
                         var checkFieldName = "data[Specification]["+$(this).attr('data-name')+"]";
                         var checkFieldNameval = $(this).attr('data-name');
                         checkFieldNameNoSpace = checkFieldNameval.replace(/\s+/g, "-");
                         //$('.appendField').remove();
                         if ($(this).is(":checked")) {
-                           
+                           console.log($(this));
                             $('.check-fields-sort'+dynamicId).append('<div class="well span2 tile appendField appendField'+dynamicId+'" id="field'+checkFieldNameNoSpace+dynamicId+'">\
                                                                 <a href="#" data-field="'+checkFieldNameNoSpace+'" class="remove_sort_field'+dynamicId+' remove_sort_field pull-right">\
                                                                     <i class="fa fa-times-circle fa-lg"></i>\

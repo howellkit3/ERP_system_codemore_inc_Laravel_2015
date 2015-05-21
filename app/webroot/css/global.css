@@ -319,5 +319,7 @@ body.dragging, body.dragging * {
 .process_btn{
   width: 87px;
 }
-    
+#myModalDelivery{
+  z-index: 1;
+}   
 

@@ -108,6 +108,18 @@ jQuery(function($){
 				$('#itemDetailId').val('');
 			}else{
 
+				var uPrice = Number(data.QuotationItemDetail.unit_price).toFixed(4);
+				var unit = uPrice.split('.');
+				var unitP = numberWithCommas(unit[0]);
+				var fullUnitP = unitP+'.'+unit[1];
+				$('#unit_price_proxy').val(fullUnitP);
+
+				var vPrice = Number(data.QuotationItemDetail.vat_price).toFixed(4);
+				var vat = vPrice.split('.');
+				var vatP = numberWithCommas(vat[0]);
+				var fullVatP = vatP+'.'+vat[1];
+				$('#vat_price_proxy').val(fullVatP);
+
 				$('#quantity').val(data.QuotationItemDetail.quantity);
 				$('#unit_price').val(data.QuotationItemDetail.unit_price);	
 				$('#vat_price').val(data.QuotationItemDetail.vat_price);
@@ -292,6 +304,10 @@ jQuery(function($){
 	
 
 });
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
 
 	
