@@ -90,9 +90,10 @@ jQuery(function($){
 		});
 			
 	});
+
 	//this function is for item detail
 	$('.select-item').change(function(){
-
+		
 		var option = $(this).val();
 		$.ajax({
 		url: serverPath + "sales/create_order/find_item_detail/"+option,
@@ -106,6 +107,22 @@ jQuery(function($){
 				$('#material').val('');	
 				$('#itemDetailId').val('');
 			}else{
+
+				var uPrice = Number(data.QuotationItemDetail.unit_price).toFixed(4);
+				var unit = uPrice.split('.');
+				var unitP = numberWithCommas(unit[0]);
+				var fullUnitP = unitP+'.'+unit[1];
+				$('#unit_price_proxy').val(fullUnitP);
+
+				var vPrice = Number(data.QuotationItemDetail.vat_price).toFixed(4);
+				var vat = vPrice.split('.');
+				var vatP = numberWithCommas(vat[0]);
+				var fullVatP = vatP+'.'+vat[1];
+				$('#vat_price_proxy').val(fullVatP);
+
+				var quantity = numberWithCommas(data.QuotationItemDetail.quantity);
+				$('#quantity_proxy').val(quantity);
+
 				$('#quantity').val(data.QuotationItemDetail.quantity);
 				$('#unit_price').val(data.QuotationItemDetail.unit_price);	
 				$('#vat_price').val(data.QuotationItemDetail.vat_price);
@@ -290,6 +307,10 @@ jQuery(function($){
 	
 
 });
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
 
 	

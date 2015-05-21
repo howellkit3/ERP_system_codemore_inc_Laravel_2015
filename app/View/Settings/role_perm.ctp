@@ -51,7 +51,7 @@
 										<div class="col-lg-8">
 											<?php 
 	                                            echo $this->Form->input('Role.id', array(
-                                                    'options' => array($roleDatList),
+                                                    'options' => array($roleDataListAll),
                                                     'label' => false,
                                                     'style' => 'text-transform:capitalize',
                                                     'class' => 'form-control myRole',
@@ -110,7 +110,7 @@
 										<div class="col-lg-8">
 											<?php 
 	                                            echo $this->Form->input('Role.id', array(
-	                                                'options' => array($roleDatList),
+	                                                'options' => array($roleDataListLimit),
 	                                                'label' => false,
 	                                                'style' => 'text-transform:capitalize',
 	                                                'class' => 'form-control editRole',
@@ -167,7 +167,7 @@
 			dataType: "json",
 			success: function(data) {
 
-				$(".checkbox-nice").empty();
+				$(".check").remove();
 
 				if(data != ''){
 
@@ -178,9 +178,9 @@
 				}
 
 				$.each(data, function(key, value) {
-					console.log(value);
+					
 					// $option = "<option class='option-append2' selected value="+value.Product.id+">"+value.Product.name+"</option>";	
-					$option = "<div class='checkbox-nice'>\
+					$option = "<div class='checkbox-nice check' >\
 									<input type='checkbox' id="+value.Permission.name+" checked='checked' onclick='return false' >\
 									<label for="+value.Permission.name+">\
 										"+value.Permission.name+"\

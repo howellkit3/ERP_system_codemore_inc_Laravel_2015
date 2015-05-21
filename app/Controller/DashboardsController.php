@@ -16,7 +16,8 @@ class DashboardsController extends AppController
         parent::beforeFilter();
         // $this->response->disableCache();
         $this->Auth->allow('index');
-        $userData = $this->Session->read('Auth');
+        $this->loadModel('User');
+        $userData = $this->User->read(null,$this->Session->read('Auth.User.id'));//$this->Session->read('Auth');
         $this->set(compact('userData'));
     }
 	

@@ -7,7 +7,7 @@ $(document).ready(function() {
 
         if(!$.isNumeric(quantitySpec)) {
 
-            alert('Quantity is requred');
+            alert('Quantity is required');
             $('#ProductQuantity').focus();
             return false;
 
@@ -363,8 +363,8 @@ $(document).ready(function() {
             var show_per_page = 5;  
             //getting the amount of elements inside content div optionValue"+dynamicId
             var number_of_items = $('.optionValue'+dynamicId).size(); 
-            console.log(number_of_items);
-            console.log('test'); 
+            // console.log(number_of_items);
+            // console.log('test'); 
             //calculate the number of pages we are going to have  
             var number_of_pages = Math.ceil(number_of_items/show_per_page);  
           
@@ -402,6 +402,7 @@ $(document).ready(function() {
 
     });
 
+    //$("body").on('change','#'+dynamicId, function(e){
     $(process_button).click(function(e){ //on add input button click
 
         var countername = parseInt($(this).attr('data'));
@@ -413,11 +414,6 @@ $(document).ready(function() {
         var process = "data[Specification][process]["+countername+"]";
         e.preventDefault();
 
-        if(x < max_fields){ //max input box allowed
-
-            x++; //text box increment
-
-            //call process.ctp
             $.ajax({ 
                 type: "GET", 
                 url: serverPath + "sales/products/process/"+process+"/"+dynamicId, 
@@ -436,14 +432,14 @@ $(document).ready(function() {
                             dataType: "json",
                             success: function(data) {
                                 $('.checkbox-nice1'+dynamicId).remove();
-                                $('.appendField'+dynamicId).remove();
+                                //$('.appendField'+dynamicId).remove();
 
                                 $.each(data, function(key, value) {
                                     var removeSpace = value.SubProcess.name;
                                     var checkFieldNameNoSpace = removeSpace.replace(/\s+/g, "-");
-                                    $('.check-item'+dynamicId).append('<div class="checkbox-nice1'+dynamicId+'">\
-                                                            <input id="checkbox-inl-1" class="check-fields'+dynamicId+' '+checkFieldNameNoSpace+'" data-name="'+value.SubProcess.name+'" type="checkbox">\
-                                                            <label for="checkbox-inl-1"> '+value.SubProcess.name+' </label>\
+                                    $('.check-item'+dynamicId).append('<div class="checkbox-nice1'+dynamicId+' checking" id="'+checkFieldNameNoSpace+dynamicId+'">\
+                                                            <input id="checkbox-inl-1" class="check-fields'+dynamicId+' '+checkFieldNameNoSpace+' check'+checkFieldNameNoSpace+dynamicId+'" data-name="'+removeSpace+'" type="checkbox">\
+                                                            <label> '+value.SubProcess.name+' </label>\
                                                         </div>');
 
                                 }); 
@@ -455,14 +451,15 @@ $(document).ready(function() {
 
                     //checkbox trigger
                     $("body").on('change','.check-fields'+dynamicId, function(e){
-
-                        var checkFieldName = "data[Specification]["+$(this).attr('data-name')+"]";
-                        var checkFieldNameval = $(this).attr('data-name');
-                        checkFieldNameNoSpace = checkFieldNameval.replace(/\s+/g, "-");
+                    //$('.check-fields'+dynamicId+' input[type=checkbox]').change(function(e) {
+                        
                         //$('.appendField').remove();
                         if ($(this).is(":checked")) {
-                           
-                            $('.check-fields-sort'+dynamicId).append('<div class="well span2 tile appendField appendField'+dynamicId+'" id="'+checkFieldNameNoSpace+'">\
+                            var checkFieldName = "data[Specification]["+$(this).attr('data-name')+"]";
+                            var checkFieldNameval = $(this).attr('data-name');
+                            checkFieldNameNoSpace = checkFieldNameval.replace(/\s+/g, "-");
+                            console.log($(this));
+                            $('.check-fields-sort'+dynamicId).append('<div class="well span2 tile appendField appendField'+dynamicId+'" id="field'+checkFieldNameNoSpace+dynamicId+'">\
                                                                 <a href="#" data-field="'+checkFieldNameNoSpace+'" class="remove_sort_field'+dynamicId+' remove_sort_field pull-right">\
                                                                     <i class="fa fa-times-circle fa-lg"></i>\
                                                                 </a>\
@@ -476,17 +473,28 @@ $(document).ready(function() {
 
                             $("body").on('click','.remove_sort_field'+dynamicId, function(e){
                        
-                                var removeField = $(this).attr('data-field');
-                                
-                                $('#'+removeField).remove();
-                                $('.'+removeField).prop('checked', false);
-                                 e.preventDefault();
+                                var removeField = $(this).parents('.appendField').find('.remove_sort_field'+dynamicId).attr('data-field');
+                               // var removeCheck = $(this).parents('section .dropItem').find('#check'+removeField+dynamicId).attr('data-name');
+                                $('#field'+removeField+dynamicId).remove();
+                                $('.check'+removeField+dynamicId).prop('checked', false);
+                                e.preventDefault();
+
                             });
+
+                         e.preventDefault();
                         } else {  
 
-                            $('#'+checkFieldNameNoSpace).remove();
+                            $('#field'+checkFieldNameNoSpace+dynamicId).remove();
                             
                         }
+
+                         //for sortable fields from checkbox
+                        $(".grid").sortable({
+                            tolerance: 'pointer',
+                            revert: 'invalid',
+                            placeholder: 'span2 well placeholder tile',
+                            forceHelperSize: true
+                        });
                         
                     }); 
 
@@ -494,14 +502,6 @@ $(document).ready(function() {
                 
             });
             
-            //for sortable fields from checkbox
-            $(".grid").sortable({
-                tolerance: 'pointer',
-                revert: 'invalid',
-                placeholder: 'span2 well placeholder tile',
-                forceHelperSize: true
-            });
-
             //processes data
             $.ajax({
                 url: serverPath + "sales/products/find_process",
@@ -522,7 +522,7 @@ $(document).ready(function() {
             });
 
             
-        }
+        //}
     });
 
     //remove fields
