@@ -433,6 +433,7 @@
 	                                                echo $this->Form->input('ClientOrderDeliverySchedule.0.schedule',array( 
 	                                                						'class' => 'form-control item_type datepick', 
 	                                                    					'label' => false,
+	                                                    					'required' => 'required',
 	                                                    					'readonly' => 'readonly',
 	                                                    					'placeholder' => 'Schedule'  
 	                                                    					));
@@ -447,6 +448,7 @@
 	                                                echo $this->Form->input('ClientOrderDeliverySchedule.0.location',array( 
 	                                                						'class' => 'form-control item_type ', 
 	                                                    					'label' => false, 
+	                                                    					'required' => 'required',
 	                                                    					'placeholder' => 'Location',
 	                                                    					'value' => !empty($companyData['Address'][0]['address1']) ? $companyData['Address'][0]['address1'] : ''
 	                                                    					));
@@ -461,6 +463,7 @@
 	                                                echo $this->Form->input('ClientOrderDeliverySchedule.0.quantity',array( 
 	                                                						'class' => 'form-control item_type quantityLimit number', 
 	                                                    					'label' => false, 
+	                                                    					'required' => 'required',
 	                                                    					'placeholder' => 'Quantity'
 	                                                    					));
 	                                            ?>

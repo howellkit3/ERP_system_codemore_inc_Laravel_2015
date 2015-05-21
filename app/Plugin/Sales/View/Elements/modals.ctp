@@ -461,7 +461,7 @@
                                                                                                             'class' => 'form-control required',
                                                                                                             'label' => false,
                                                                                                             'required' => 'required',
-                                                                                                            'class' => 'form-control item_type datepick',
+                                                                                                            'class' => 'form-control item_type datepick required',
                                                                                                             'type' => 'text'
                                                                                                         ));
                                 ?>
@@ -472,7 +472,7 @@
                             <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span>Location</label>
                             <div class="col-lg-9">
                                 <?php 
-                                    echo $this->Form->input('ClientOrderDeliverySchedule.location', array('class' => 'form-control',
+                                    echo $this->Form->input('ClientOrderDeliverySchedule.location', array('class' => 'form-control required',
                                                                                                            'required' => 'required', 
                                                                                                             'label' => false));
                                 ?>
@@ -483,7 +483,7 @@
                             <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span> Quantity</label>
                             <div class="col-lg-9">
                                 <?php 
-                                    echo $this->Form->input('ClientOrderDeliverySchedule.quantity', array('class' => 'form-control required addquantityLimit number',
+                                    echo $this->Form->input('ClientOrderDeliverySchedule.quantity', array('class' => 'form-control required addquantityLimit number required',
                                                                                                         'label' => false,
                                                                                                         'required' => 'required'));
                                 ?>
