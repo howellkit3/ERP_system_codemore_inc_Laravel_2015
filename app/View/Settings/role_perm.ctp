@@ -51,7 +51,7 @@
 										<div class="col-lg-8">
 											<?php 
 	                                            echo $this->Form->input('Role.id', array(
-                                                    'options' => array($roleDatList),
+                                                    'options' => array($roleDataListAll),
                                                     'label' => false,
                                                     'style' => 'text-transform:capitalize',
                                                     'class' => 'form-control myRole',
@@ -110,7 +110,7 @@
 										<div class="col-lg-8">
 											<?php 
 	                                            echo $this->Form->input('Role.id', array(
-	                                                'options' => array($roleDatList),
+	                                                'options' => array($roleDataListLimit),
 	                                                'label' => false,
 	                                                'style' => 'text-transform:capitalize',
 	                                                'class' => 'form-control editRole',
@@ -168,7 +168,7 @@
 			success: function(data) {
 
 				$(".check").remove();
-				
+
 				if(data != ''){
 
 					$('.permissionCheck').show();

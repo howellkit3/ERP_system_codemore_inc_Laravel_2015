@@ -7,7 +7,7 @@ $(document).ready(function() {
 
         if(!$.isNumeric(quantitySpec)) {
 
-            alert('Quantity is requred');
+            alert('Quantity is required');
             $('#ProductQuantity').focus();
             return false;
 

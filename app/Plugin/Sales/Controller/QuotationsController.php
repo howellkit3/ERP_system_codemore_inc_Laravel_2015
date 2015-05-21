@@ -374,7 +374,8 @@ class QuotationsController extends SalesAppController {
 
 		//start///call Role permission
 		$actionName = 'View Quotation';
-		$this->_rolePermission($actionName);
+		$myPermission = $this->_rolePermission($actionName);
+		//pr($myPermission);exit();
 		//end///call Role permission
 
 		$this->loadModel('User');
@@ -385,7 +386,7 @@ class QuotationsController extends SalesAppController {
 															'RolesPermission.role_id' => $userData['User']['role_id'])
 													));
 		
-
+		//pr($rolesPermissionData);exit();
 		$paymentTerm = Cache::read('paymentTerms');
 		
 		if (!$paymentTerm) {
@@ -478,7 +479,7 @@ class QuotationsController extends SalesAppController {
 										'User.id' => $userData['User']['id'] )
 								));
 		
-		$this->set(compact('approvedUser','units','currencies','paymentTerm','companyData','companyId', 'quotationSize', 'quotationOption','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','salesStatus', 'productName','clientOrderCount','quotationDetailData', 'rolesPermissionData'));
+		$this->set(compact('userData','myPermission','approvedUser','units','currencies','paymentTerm','companyData','companyId', 'quotationSize', 'quotationOption','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','salesStatus', 'productName','clientOrderCount','quotationDetailData', 'rolesPermissionData'));
 		
 	}
 
@@ -1104,16 +1105,17 @@ class QuotationsController extends SalesAppController {
 		$hasPermission = $checkRole->getRolePerms($userData['User']['role_id']);
 
 		$confirm = 0;
-		
+		$roles = array();
 		foreach ($hasPermission as $key => $pagePerm) {
 			
 			if($pagePerm == $pagePermissionName){
 				
 				$confirm=1;
 			}
+			array_push($roles, $pagePerm);
 
-		}
-		
+		}//exit();
+		return $roles;
 		if($confirm == 0){
 
 			$this->Session->setFlash(__('You dont have permission to access this module.'),'error');

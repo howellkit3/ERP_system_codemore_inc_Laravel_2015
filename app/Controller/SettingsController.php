@@ -1877,9 +1877,13 @@ class SettingsController extends AppController
         $this->loadModel('Permission');
 
         $userDatList = $this->User->find('list',array('fields' => array('id','fullname')));
-        $roleDatList = $this->Role->find('list',array('fields' => array('id','name')));
+        $roleDataListAll = $this->Role->find('list',array('fields' => array('id','name')));
         $permissionDataList = $this->Permission->find('all',array('fields' => array('id','name')));
-        
+        $roleDataListLimit = $this->Role->find('list', array(
+                                            'fields' => array('id','name'),
+                                            'conditions' => array('Role.id NOT' => array(1,2))
+                                            ));
+       
         if (!empty($this->request->data)) {
 
             if(!empty($this->request->data['Role']['id']) && ($this->request->data['User']['id'])){
@@ -1910,7 +1914,7 @@ class SettingsController extends AppController
             }   
         }
 
-        $this->set(compact('userDatList','roleDatList','permissionDataList'));
+        $this->set(compact('userDatList','roleDataListAll','permissionDataList','roleDataListLimit'));
     }
 
     public function permissionData($roleId = null){
