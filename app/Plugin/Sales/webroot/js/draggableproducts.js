@@ -487,7 +487,7 @@ $(document).ready(function() {
 
                         } else {  
 
-                            $('#'+checkFieldNameNoSpace).remove();
+                            $('#field'+checkFieldNameNoSpace+dynamicId).remove();
                             
                         }
 
