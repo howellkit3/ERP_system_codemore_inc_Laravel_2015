@@ -444,7 +444,7 @@ $(document).ready(function() {
                                     var checkFieldNameNoSpace = removeSpace.replace(/\s+/g, "-");
                                     $('.check-item'+dynamicId).append('<div class="checkbox-nice1'+dynamicId+' checking" id="'+checkFieldNameNoSpace+dynamicId+'">\
                                                             <input id="checkbox-inl-1" class="check-fields'+dynamicId+' '+checkFieldNameNoSpace+' check'+checkFieldNameNoSpace+dynamicId+'" data-name="'+removeSpace+'" type="checkbox">\
-                                                            <label for="checkbox-inl-1"> '+value.SubProcess.name+' </label>\
+                                                            <label> '+value.SubProcess.name+' </label>\
                                                         </div>');
 
                                 }); 
@@ -456,13 +456,14 @@ $(document).ready(function() {
 
                     //checkbox trigger
                     $("body").on('change','.check-fields'+dynamicId, function(e){
-                      
-                        var checkFieldName = "data[Specification]["+$(this).attr('data-name')+"]";
-                        var checkFieldNameval = $(this).attr('data-name');
-                        checkFieldNameNoSpace = checkFieldNameval.replace(/\s+/g, "-");
+                    //$('.check-fields'+dynamicId+' input[type=checkbox]').change(function(e) {
+                        
                         //$('.appendField').remove();
                         if ($(this).is(":checked")) {
-                           console.log($(this));
+                            var checkFieldName = "data[Specification]["+$(this).attr('data-name')+"]";
+                            var checkFieldNameval = $(this).attr('data-name');
+                            checkFieldNameNoSpace = checkFieldNameval.replace(/\s+/g, "-");
+                            console.log($(this));
                             $('.check-fields-sort'+dynamicId).append('<div class="well span2 tile appendField appendField'+dynamicId+'" id="field'+checkFieldNameNoSpace+dynamicId+'">\
                                                                 <a href="#" data-field="'+checkFieldNameNoSpace+'" class="remove_sort_field'+dynamicId+' remove_sort_field pull-right">\
                                                                     <i class="fa fa-times-circle fa-lg"></i>\
@@ -485,6 +486,7 @@ $(document).ready(function() {
 
                             });
 
+                         e.preventDefault();
                         } else {  
 
                             $('#field'+checkFieldNameNoSpace+dynamicId).remove();

@@ -353,7 +353,7 @@
 									                                                    'type' => 'text',
 									                                                    'required' => 'required',
 									                                                    'class' => 'form-control item_type datepik editable required',
-									                                                    'readonly' => 'readonly',
+									                                                    'disabled' => 'disabled',
 									                                                    'value' => !empty($schedule['schedule']) ?
 									                                                    date('Y-m-d',strtotime($schedule['schedule'])) : ''	
 
@@ -581,7 +581,7 @@
 		$("body").on('click','.buttonEdit', function(e){
 			var myval = $(this).parents('.tab-container').find('.quantityLimit').val();
 			
-			$(this).parents('.tab-container').find('.editable').attr('readonly', false);
+			$(this).parents('.tab-container').find('.editable').attr('disabled', false);
 	    	$(this).parents('.tab-container').find('button.editable').attr('disabled', false);
 	    	$(this).parents('.tab-container').find('.datepik').addClass('datepick');
 	    	$(this).html('Cancel');
@@ -594,7 +594,7 @@
 	    	$("body").on('click','.Cancel', function(e){
 	    		$(this).parents('.tab-container').find('.datepik').removeClass('datepick');
 	    		$(this).parents('.tab-container').find('.quantityLimit').val(myval);
-		    	$(this).parents('.tab-container').find('.editable').attr('readonly', true);
+		    	$(this).parents('.tab-container').find('.editable').attr('disabled', true);
 		    	$(this).parents('.tab-container').find('button.editable').attr('disabled', true);
 		    	$(this).html('Edit');
 		    	$(this).removeClass('Cancel');
