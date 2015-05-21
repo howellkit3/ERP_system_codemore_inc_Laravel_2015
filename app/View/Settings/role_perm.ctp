@@ -167,8 +167,8 @@
 			dataType: "json",
 			success: function(data) {
 
-				$(".checkbox-nice").empty();
-
+				$(".check").remove();
+				
 				if(data != ''){
 
 					$('.permissionCheck').show();
@@ -178,9 +178,9 @@
 				}
 
 				$.each(data, function(key, value) {
-					console.log(value);
+					
 					// $option = "<option class='option-append2' selected value="+value.Product.id+">"+value.Product.name+"</option>";	
-					$option = "<div class='checkbox-nice'>\
+					$option = "<div class='checkbox-nice check' >\
 									<input type='checkbox' id="+value.Permission.name+" checked='checked' onclick='return false' >\
 									<label for="+value.Permission.name+">\
 										"+value.Permission.name+"\
