@@ -236,12 +236,17 @@
 											$fullQuantity = number_format($quotationItemDetail['QuotationItemDetail']['quantity']).' '.$units[$quotationItemDetail['QuotationItemDetail']['quantity_unit_id']];
 											
                                             echo $this->Form->input('QuotationItemDetail.quantity', array(
+                                            								'type' => 'hidden',
+                                            								'class' => 'form-control item_type',
+						                                                    'label' => false,
+						                                                   	'value' => $quotationItemDetail['QuotationItemDetail']['quantity'],
+						                                                    'id' => 'quantity'));
+                                            echo $this->Form->input('QuotationItemDetail.quantity_proxy', array(
                                             								'type' => 'text',
                                             								'class' => 'form-control item_type',
 						                                                    'label' => false,
 						                                                    'readonly' => 'readonly',
-						                                                   'value' => $quotationItemDetail['QuotationItemDetail']['quantity'],
-						                                                    'id' => 'quantity'));
+						                                                   'value' => $fullQuantity));
                                         ?>
 									</div>
 								</div>
@@ -253,11 +258,17 @@
 											$fullPrice = $currencies[$quotationItemDetail['QuotationItemDetail']['unit_price_currency_id']].' '.number_format($quotationItemDetail['QuotationItemDetail']['unit_price'],4).' '.$units[$quotationItemDetail['QuotationItemDetail']['unit_price_unit_id']];
 
                                             echo $this->Form->input('QuotationItemDetail.unit_price', array(
-                                            								'type' => 'text',
+                                            								'type' => 'hidden',
                                             								'class' => 'form-control item_type',
 						                                                    'label' => false,
 						                                                    'readonly' => 'readonly',
 						                                                    'value' => $quotationItemDetail['QuotationItemDetail']['unit_price']));
+                                            echo $this->Form->input('QuotationItemDetail.unit_price_proxy', array(
+                                            								'type' => 'text',
+                                            								'class' => 'form-control item_type',
+						                                                    'label' => false,
+						                                                    'readonly' => 'readonly',
+						                                                    'value' => $fullPrice));
                                         ?>
 									</div>
 									
