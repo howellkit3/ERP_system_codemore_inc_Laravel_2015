@@ -16,7 +16,7 @@
     	//start//for enable and disabled button//permission
     	$userRole = $userData['User']['role_id'];
     	if( $userRole != 1   ) {
-    		pr($userData['User']['role_id']);exit();
+    		//pr($userData['User']['role_id']);exit();
 	    	!in_array('Print Quotation', $myPermission) ? $printQuotation = 'disabled' : $printQuotation = '' ;
 	    	
 	    	!in_array('Edit Quotation', $myPermission) ? $editQuotation = 'disabled' : $editQuotation = '' ;

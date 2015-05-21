@@ -414,11 +414,6 @@ $(document).ready(function() {
         var process = "data[Specification][process]["+countername+"]";
         e.preventDefault();
 
-        // if(x < max_fields){ //max input box allowed
-
-        //     x++; //text box increment
-
-            //call process.ctp
             $.ajax({ 
                 type: "GET", 
                 url: serverPath + "sales/products/process/"+process+"/"+dynamicId, 
@@ -437,7 +432,7 @@ $(document).ready(function() {
                             dataType: "json",
                             success: function(data) {
                                 $('.checkbox-nice1'+dynamicId).remove();
-                                $('.appendField'+dynamicId).remove();
+                                //$('.appendField'+dynamicId).remove();
 
                                 $.each(data, function(key, value) {
                                     var removeSpace = value.SubProcess.name;
