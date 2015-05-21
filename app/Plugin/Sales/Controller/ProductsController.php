@@ -8,12 +8,12 @@ class ProductsController extends SalesAppController {
 	
 	function beforeFilter() {
 
-		$userData = $this->Session->read('Auth');
-
         $this->Auth->allow('add','index');
 
   		$this->myRandomNumber = rand(1,4);
 
+        $this->loadModel('User');
+        $userData = $this->User->read(null,$this->Session->read('Auth.User.id'));//$this->Session->read('Auth');
         $this->set(compact('userData'));
 	}
 

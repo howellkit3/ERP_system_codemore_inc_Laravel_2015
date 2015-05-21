@@ -10,10 +10,10 @@ class SalesOrdersController extends SalesAppController {
 
         parent::beforeFilter();
 
-        $userData = $this->Session->read('Auth');
-
         $this->Auth->allow('index');
 
+        $this->loadModel('User');
+        $userData = $this->User->read(null,$this->Session->read('Auth.User.id'));//$this->Session->read('Auth');
         $this->set(compact('userData'));
 
     }
