@@ -153,13 +153,13 @@
 									<div class="form-group">
 										<div class="col-lg-4"></div>
 										<div class="col-lg-2 button-spec">
-											<button type="button" data="0" class="add_field_button btn btn-primary pull-rigth">Label &nbsp;&nbsp;&nbsp;</button>
+											<button type="button" data="0" class=" process_btn add_field_button btn btn-primary pull-rigth">Label </button>
 										</div>
 										<div class="col-lg-2 button-spec">
-											<button type="button" data="0" class="btn btn-primary pull-rigth add_part_button">Part &emsp;&nbsp;&nbsp;</button>
+											<button type="button" data="0" class="process_btn btn btn-primary pull-rigth add_part_button">Part</button>
 										</div>
 										<div class="col-lg-2 button-spec">
-											<button type="button" data="0" class="btn btn-primary pull-rigth add_process_button">Process&nbsp;</button>
+											<button type="button" data="0" class=" process_btn btn btn-primary pull-rigth add_process_button">Process</button>
 										</div>
 									</div>	
 

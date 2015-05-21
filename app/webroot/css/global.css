@@ -316,5 +316,8 @@ body.dragging, body.dragging * {
 .appendField{
   position: relative;   
 }
+.process_btn{
+  width: 87px;
+}
     
 

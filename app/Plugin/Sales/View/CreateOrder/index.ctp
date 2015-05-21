@@ -351,6 +351,12 @@
                                                     					'readonly' => 'readonly',
                                                     					'id' => 'quantity'
                                                     					));
+                                                echo $this->Form->input('QuotationItemDetail.quantity_proxy',array( 
+                                                						'class' => 'form-control item_type ', 
+                                                    					'label' => false, 
+                                                    					'placeholder' => 'Quantity',
+                                                    					'readonly' => 'readonly',
+                                                    					));
 
                                             ?>
                                           

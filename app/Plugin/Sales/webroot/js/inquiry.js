@@ -90,9 +90,10 @@ jQuery(function($){
 		});
 			
 	});
+
 	//this function is for item detail
 	$('.select-item').change(function(){
-
+		
 		var option = $(this).val();
 		$.ajax({
 		url: serverPath + "sales/create_order/find_item_detail/"+option,
@@ -106,6 +107,7 @@ jQuery(function($){
 				$('#material').val('');	
 				$('#itemDetailId').val('');
 			}else{
+
 				$('#quantity').val(data.QuotationItemDetail.quantity);
 				$('#unit_price').val(data.QuotationItemDetail.unit_price);	
 				$('#vat_price').val(data.QuotationItemDetail.vat_price);

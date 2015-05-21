@@ -111,7 +111,7 @@ class CreateOrderController extends SalesAppController {
 		$this->Quotation->bind(array('QuotationItemDetail'));
 
 		$itemDetail = $this->Quotation->QuotationItemDetail->find('first',array('conditions' => array('QuotationItemDetail.id' => $itemDetailId)));
-
+		
 		echo json_encode($itemDetail);
 
 		$this->autoRender = false;
