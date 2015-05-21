@@ -62,7 +62,8 @@ class SettingsController extends AppController
 
         parent::beforeFilter();
         $this->Auth->allow('index','category');
-        $userData = $this->Session->read('Auth');
+        $this->loadModel('User');
+        $userData = $this->User->read(null,$this->Session->read('Auth.User.id'));//$this->Session->read('Auth');
         $this->set(compact('userData'));
     }
 	
@@ -1891,7 +1892,7 @@ class SettingsController extends AppController
                     $this->User->saveField('role_id', $this->request->data['Role']['id']);
             
                     $this->Session->write('Auth',$this->User->read(null,$this->request->data['User']['id']));
-                    
+
                     $this->Session->setFlash(__('Permission Successfully added'),'success');
 
                     $this->redirect(
