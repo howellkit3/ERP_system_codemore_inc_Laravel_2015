@@ -111,23 +111,27 @@
 
 								<?php $countLayers = 1; foreach($this->request->data['ItemGroupLayer'] as $key => $layers) : ?>
 							<div class="form-group substrate-layers">
-							<label class="col-lg-2 control-label">
-							<span style="color:red">*</span>Substrate <?php echo $countLayers ?></label>
+
+								<label class="col-lg-2 control-label">
+									<span style="color:red">*</span>Substrate <?php echo $countLayers ?>
+								</label>
+
 							<div class="col-lg-8">
-							<input type="hidden" maxlength="120"  class="form-control layer" name="data[ItemGroupLayer][no][]" value="<?php echo $key; ?>"></div>
-							<div class="col-lg-8">
-							<input type="text" maxlength="120" required = "required" placeholder = "Substrate name" class="form-control layer" name="data[ItemGroupLayer][substrate][<?php echo $key ?>][substrate]" value="<?php echo $layers['substrate']?>">
-								<input type="hidden" required = "required" placeholder = "Substrate name" class="form-control layer" name="data[ItemGroupLayer][substrate][<?php echo $key ?>][id]" value="<?php echo $layers['id']?>">
-								<input type="hidden" class="form-control layer remove-field" name="data[ItemGroupLayer][substrate][<?php echo $key ?>][remove]" value="false">
+								<input type="hidden" maxlength="120"  class="form-control layer" name="data[ItemGroupLayer][no][]" value="<?php echo $key; ?>">
 							</div>
 
-							  <div class="form-group">
-                                            <label for="inputPassword1" class="col-lg-2 control-label"></label>
-                                            <div class="col-lg-1">
-                                             
-                                                <button type="button" class="remove-field remove-layers btn btn-danger" ><i class="fa fa-minus"></i> </button>
-                                            </div>
-                              </div>
+							<div class="col-lg-8">
+								<input type="text" maxlength="120" required = "required" placeholder = "Substrate name" class="form-control layer" name="data[ItemGroupLayer][substrate][<?php echo $key ?>][substrate]" value="<?php echo $layers['substrate']?>">
+									<input type="hidden" required = "required" placeholder = "Substrate name" class="form-control layer" name="data[ItemGroupLayer][substrate][<?php echo $key ?>][id]" value="<?php echo $layers['id']?>">
+									<input type="hidden" class="form-control layer remove-field" name="data[ItemGroupLayer][substrate][<?php echo $key ?>][remove]" value="false">
+							</div>
+
+							<div class="form-group">
+                                <label for="inputPassword1" class="col-lg-2 control-label"></label>
+                                <div class="col-lg-1">        
+                                    <button type="button" class="remove-field remove-layers btn btn-danger" ><i class="fa fa-minus"></i> </button>
+                                </div>
+                            </div>
 
 
 							</div>
