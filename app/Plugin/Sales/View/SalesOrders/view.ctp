@@ -240,7 +240,7 @@
                                             								'class' => 'form-control item_type',
 						                                                    'label' => false,
 						                                                    'readonly' => 'readonly',
-						                                                   'value' => $fullQuantity,
+						                                                   'value' => $quotationItemDetail['QuotationItemDetail']['quantity'],
 						                                                    'id' => 'quantity'));
                                         ?>
 									</div>
@@ -257,7 +257,7 @@
                                             								'class' => 'form-control item_type',
 						                                                    'label' => false,
 						                                                    'readonly' => 'readonly',
-						                                                    'value' => $fullPrice));
+						                                                    'value' => $quotationItemDetail['QuotationItemDetail']['unit_price']));
                                         ?>
 									</div>
 									
@@ -309,6 +309,7 @@
 					<div class="main-box-body clearfix">
 						<div class="main-box-body clearfix">
 							<div class="form-horizontal">
+								
 								<?php foreach ($clientOrderData['ClientOrderDeliverySchedule'] as $schedule):  ?>
 
 									<?php echo $this->Form->create('ClientOrderDeliverySchedule',array('id' => 'form'.$schedule['id'],'url'=>(array('controller' => 'sales_orders','action' => 'add_schedule'))));?>

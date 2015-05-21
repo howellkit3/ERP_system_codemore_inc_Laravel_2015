@@ -40,4 +40,26 @@ class ItemGroupLayer extends AppModel {
 		$this->contain($model);
 	}
 	
+
+	public function saveItemGroupLayer($data = null){
+		//pr($data);exit();
+		foreach ($data as $key => $itemData)
+		{
+			
+			$this->create();
+			if (!empty($data[$this->name])) {
+
+
+				foreach ($data[$this->name] as $key => $ItemGroupLayer) 
+				{
+				
+					$this->save($ItemGroupLayer);
+				}
+				
+			}
+			//return $this->id;
+
+		}
+
+	}
 }
