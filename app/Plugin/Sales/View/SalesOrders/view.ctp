@@ -583,13 +583,12 @@
 
 		$("body").on('click','.buttonEdit', function(e){
 			var myval = $(this).parents('.tab-container').find('.quantityLimit').val();
-			console.log(test);
+			
 			$(this).parents('.tab-container').find('.editable').attr('readonly', false);
 	    	$(this).parents('.tab-container').find('button.editable').attr('disabled', false);
 	    	$(this).html('Cancel');
 	    	$(this).addClass('Cancel');
 	    
-	    	
 	    	$("body").on('click','.Cancel', function(e){
 
 	    		$(this).parents('.tab-container').find('.quantityLimit').val(test);
