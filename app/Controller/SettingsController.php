@@ -2075,7 +2075,20 @@ class SettingsController extends AppController
 
             $userData = $this->Session->read('Auth');
 
-            $itemGroupLayerData = $this->ItemGroupLayer->find('all', array('conditions' => array('ItemGroupLayer.foreign_key' => 'CorrugatedPaper.id')));
+            $itemGroupLayerData = $this->ItemGroupLayer->find('all', array('conditions' => array('ItemGroupLayer.foreign_key' => $this->request->data['CorrugatedPaper']['id'])));
+
+             //pr($itemGroupLayerData);exit;
+
+             foreach ($itemGroupLayerData as $key => $userDataList) {
+
+                $this->request->data['ItemGroupLayer']['foreign_key'] = $itemGroupLayerData[$key]['ItemGroupLayer']['foreign_key'];
+                 $this->request->data['ItemGroupLayer']['model'] = $itemGroupLayerData[$key]['ItemGroupLayer']['model'];
+                 $this->request->data['ItemGroupLayer']['no'] = intval($itemGroupLayerData[$key]['ItemGroupLayer']['no' ]) + 1;
+                             
+                        }
+
+           
+
 
             if ($this->request->is('post')) {
                 
