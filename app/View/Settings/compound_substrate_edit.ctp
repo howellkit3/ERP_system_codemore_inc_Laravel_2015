@@ -1,7 +1,7 @@
 <?php echo $this->element('setting_option');?><br><br>
 <?php echo $this->Html->script(array(
 									'jquery',
-									//'compound_substrate',
+									'compound_substrate',
 									'AddLayerCompoundSubstrate'
 							)); ?>
 <div class="row">
