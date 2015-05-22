@@ -811,9 +811,13 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 					$.each(data, function(key, value) {
 
 						if (value.id == selected) {
+
 							$option = "<option class='option-append' selected value="+value.ItemTypeHolder.id+">"+value.ItemTypeHolder.name+"</option>";	
+
 						} else {
+
 							$option = "<option class='option-append'  value="+value.ItemTypeHolder.id+">"+value.ItemTypeHolder.name+"</option>";
+							
 						}
 					     $('#SubstrateTypeId').append($option);
 					});			

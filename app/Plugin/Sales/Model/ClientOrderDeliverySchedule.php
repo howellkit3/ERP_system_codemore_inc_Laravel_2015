@@ -17,6 +17,34 @@ class ClientOrderDeliverySchedule extends AppModel {
 
 	public $actsAs = array('Containable');
 
+	public $validate = array(
+
+		'schedule' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'message' => 'Required fields.',
+				
+			),
+		),
+
+		'location' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'message' => 'Required fields.',
+				
+			),
+		),
+
+		'quantity' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'message' => 'Required fields.',
+				
+			),
+		),
+
+	);
+
 	public function bind($model = array('Group')){
 
 		$this->bindModel(array(

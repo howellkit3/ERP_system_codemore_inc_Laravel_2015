@@ -1,6 +1,28 @@
 
 $(document).ready(function() {
 
+    $("body").on('keyup','#ProductQuantity', function(e){
+
+        var quantitySpec = $(this).val();
+
+        if(!$.isNumeric(quantitySpec)) {
+
+            alert('Quantity is required');
+            $('#ProductQuantity').focus();
+            return false;
+
+        }
+
+        if(quantitySpec <= 0){
+
+            alert('You must enter a positive number');
+            $('#ProductQuantity').val('');
+            return false;
+
+        }
+
+    });
+
     var max_fields      = 100; //maximum input boxes allowed
     var wrapper         = $("#sortable"); //Fields wrapper
     var label_button      = $(".add_field_button"); //Add button ID
@@ -22,9 +44,20 @@ $(document).ready(function() {
         if(x < max_fields){ //max input box allowed
 
             x++; //text box increment
+            //call label.ctp
+            $.ajax({ 
+                type: "GET", 
+                url: serverPath + "sales/products/label/"+varCounter+"/"+realName, 
+                dataType: "html", 
+                success: function(labelDataField){ 
 
-           $(wrapper).append('<li class="ui-state-default"><section class="dragField"><div class="form-group"><div class="col-lg-2"></div><div class="col-lg-7"><div class="input-group"><span class="input-group-addon"><i class="fa fa-reorder"></i></span><input name="'+realName+'" class="form-control" type="text"></div></div><div class="col-lg-2"><a href="#" class="remove_field">Remove</a></div></div></section></li>'); //add input box
-           
+                    $(wrapper).append(labelDataField); 
+                    $('.label'+varCounter).focus();
+
+                } 
+                
+            });
+            
         }
 
     });
@@ -32,10 +65,13 @@ $(document).ready(function() {
     $(part_button).click(function(e){ //on add input button click
 
         var quantitySpec = $('#ProductQuantity').val();
+
         if(!$.isNumeric(quantitySpec)) {
-            alert('Quantity is requred');
+
+            alert('Quantity is required');
             $('#ProductQuantity').focus();
             return false;
+
         }
 
         var countername = parseInt($(this).attr('data'));
@@ -44,7 +80,7 @@ $(document).ready(function() {
         var nameArray = $(this).parents('ul.sortable').find('li.ui-state-default').size();
         var dynamicId = "ItemGroup"+countername;
         var itemgroupName = "data[Specification][itemgroupName]["+countername+"]";
-        var cateogry = "data[Specification][cateogry]["+countername+"]";
+        var category = "data[Specification][cateogry]["+countername+"]";
         var item = "data[Specification][item]["+countername+"]";
         e.preventDefault();
         var itemG = 0;
@@ -55,180 +91,67 @@ $(document).ready(function() {
 
             x++; //text box increment
 
-            $(wrapper).append('<li class="ui-state-default">\
-                                <section class="dragField">\
-                                    <div class="form-group">\
-                                        <div class="col-lg-2"></div>\
-                                        <div class="col-lg-1">Material</div>\
-                                        <div class="col-lg-6">\
-                                            <button type="button"data-toggle="modal" href="#myModal'+varCounter+'" class="btn btn-primary">\
-                                            <i class="fa fa-plus-circle fa-lg"></i> Select Material</button>\
-                                        </div>\
-                                        <div class="col-lg-2">\
-                                            <a href="#" class="remove_part">Remove</a>\
-                                        </div>\
-                                    </div>\
-                                    <section class="allFieldPart'+varCounter+'" style="display:none;">\
-                                        <div class="form-group">\
-                                            <div class="col-lg-2"></div>\
-                                            <div class="col-lg-1">Part</div>\
-                                            <div class="col-lg-6">\
-                                                <input type="text" class="form-control" name="part'+varCounter+'" />\
-                                            </div>\
-                                        </div>\
-                                        <div class="form-group">\
-                                            <div class="col-lg-2"></div>\
-                                            <div class="col-lg-1">Part Name</div>\
-                                            <div class="col-lg-6">\
-                                                <input type="text" class="form-control part_name'+varCounter+'" name="part_name" />\
-                                            </div>\
-                                        </div>\
-                                        <div class="form-group">\
-                                            <div class="col-lg-2"></div>\
-                                            <div class="col-lg-1">Rate</div>\
-                                            <div class="col-lg-6">\
-                                                <input type="text" class="form-control" name="rate'+varCounter+'" />\
-                                            </div>\
-                                        </div>\
-                                        <div class="form-group">\
-                                            <div class="col-lg-2"></div>\
-                                            <div class="col-lg-1">Size</div>\
-                                            <div class="col-lg-2">\
-                                                <input type="text" class="form-control" name="size'+varCounter+'" />\
-                                            </div>\
-                                            <div class="col-lg-1 sizeWith">mm x</div>\
-                                            <div class="col-lg-2">\
-                                                <input type="number" class="form-control" name="size_1'+varCounter+'" />\
-                                            </div>\
-                                        </div>\
-                                        <div class="form-group">\
-                                            <div class="col-lg-2"></div>\
-                                            <div class="col-lg-1">Quantity</div>\
-                                            <div class="col-lg-2">\
-                                                <input type="number" value="'+quantitySpec+'" class="form-control quantity'+varCounter+'" name="quantity'+varCounter+'" readonly />\
-                                            </div>\
-                                            <div class="col-lg-2">\
-                                                <select class="form-control dropUnit" name="quantity_unit'+varCounter+'" />\
-                                                    <option value=""></option>\
-                                                </select>\
-                                            </div>\
-                                            <div class="col-lg-1">Paper Qty</div>\
-                                            <div class="col-lg-1">\
-                                                <input type="text" value="'+quantitySpec+'" class="form-control paper_qty'+varCounter+'" name="paper_qty'+varCounter+'" readonly />\
-                                            </div>\
-                                        </div>\
-                                        <div class="form-group">\
-                                            <div class="col-lg-2"></div>\
-                                            <div class="col-lg-1">Color</div>\
-                                            <div class="col-lg-6">\
-                                                <input type="text" class="form-control" name="color'+varCounter+'" />\
-                                            </div>\
-                                        </div>\
-                                        <div class="form-group">\
-                                            <div class="col-lg-2"></div>\
-                                            <div class="col-lg-1">Outs</div>\
-                                            <div class="col-lg-2">\
-                                                <input type="number" value="1" class="form-control number outs'+varCounter+'" name="outs'+varCounter+'"/>\
-                                            </div>\
-                                            <div class="col-lg-1 sizeWith">x</div>\
-                                            <div class="col-lg-2">\
-                                                <input type="number" value="1" class="form-control" name="outs_1'+varCounter+'" />\
-                                            </div>\
-                                        </div>\
-                                    </section>\
-                                    <div class="modal fade" id="myModal'+varCounter+'" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">\
-                                        <div class="modal-dialog specModal">\
-                                            <div class="modal-content">\
-                                                <div class="modal-header">\
-                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>\
-                                                    <h4 class="modal-title">Material</h4>\
-                                                </div>\
-                                                <div class="modal-body">\
-                                                    <div class="form-group">\
-                                                        <div class="col-lg-2"></div>\
-                                                        <div class="col-lg-7">\
-                                                            <div class="input-group">\
-                                                                <span class="input-group-addon"><i class="fa fa-reorder"></i></span>\
-                                                                <select name="'+itemgroupName+'" class="form-control select-group productItemGroup" id="'+dynamicId+'">\
-                                                                    <option value="0">--Select Item Group--</option>\
-                                                                    <option value="1">General Items</option>\
-                                                                    <option value="2">Substrates</option>\
-                                                                    <option value="3">Compound Substrates</option>\
-                                                                    <option value="4">Corrugated Papers</option>\
-                                                                </select>\
-                                                            </div>\
-                                                        </div>\
-                                                    </div>\
-                                                    <section class="dropItem">\
-                                                        <div class="form-group">\
-                                                            <div class="col-lg-2"></div>\
-                                                            <div class="col-lg-7">\
-                                                                <div class="input-group">\
-                                                                    <span class="input-group-addon"><i class="fa fa-reorder"></i></span>\
-                                                                    <select name="'+cateogry+'" class="form-control selectProductcategory'+dynamicId+'">\
-                                                                        <option value="">--Select Category--</option>\
-                                                                    </select>\
-                                                                </div>\
-                                                            </div>\
-                                                        </div>\
-                                                        <div class="form-group">\
-                                                            <div class="col-lg-2"></div>\
-                                                            <div class="col-lg-7">\
-                                                                <div class="input-group">\
-                                                                    <span class="input-group-addon"><i class="fa fa-reorder"></i></span>\
-                                                                    <select name="'+item+'" class="form-control selectProductItem'+dynamicId+'">\
-                                                                        <option value="">--Select Item--</option>\
-                                                                    </select>\
-                                                                </div>\
-                                                            </div>\
-                                                        </div>\
-                                                    </section>\
-                                                    <section id="productTableInModal'+dynamicId+'" style="display:none;">\
-                                                        <div class="table-responsive">\
-                                                            <header class="main-box-header clearfix">\
-                                                                <h1 class="pull-left">Product List</h1>\
-                                                                <div class="filter-block pull-right">\
-                                                                    <div class="form-group pull-left">\
-                                                                        <input placeholder="Search..." id="hint" name="q" class="form-control" type="search" />\
-                                                                        <i class="fa fa-search search-icon"></i>\
-                                                                    </div>\
-                                                                </div>\
-                                                            </header>\
-                                                            <section class="scrollsection">\
-                                                                <input type="hidden" class="current_page" />\
-                                                                <input type="hidden" class="show_per_page" />\
-                                                                <table class="table table-striped table-hover">\
-                                                                    <thead>\
-                                                                        <tr>\
-                                                                            <th><a href="#"><span>Select</span></a></th>\
-                                                                            <th><a href="#"><span>Item Number</span></a></th>\
-                                                                            <th><a href="#"><span>Name</span></a></th>\
-                                                                        </tr>\
-                                                                    </thead>\
-                                                                    <tbody class="tableProduct'+dynamicId+'" aria-relevant="all" id="scrollTable" aria-live="polite" role="alert" >\
-                                                                    </tbody>\
-                                                                </table>\
-                                                            </section>\
-                                                        </div>\
-                                                    </section>\
-                                                    <div class="form-group">\
-                                                        <div class="col-lg-10"></div>\
-                                                        <div class="col-lg-2">\
-                                                        </div>\
-                                                    </div>\
-                                                </div>\
-                                            </div>\
-                                        </div>\
-                                    </div>\
-                                </section>\
-                               </li>'); //add input box
-               
-                // 
-                // <hr>\
-                // <button type="button" class="btn btn-primary">\
-                // <i class="fa fa-thumbs-o-up"></i> Pick Item</button>\
+            //call part.ctp
+            $.ajax({ 
+                type: "GET", 
+                url: serverPath + "sales/products/part/"+varCounter+"/"+quantitySpec+"/"+itemgroupName+"/"+dynamicId+"/"+category+"/"+item, 
+                dataType: "html", 
+                success: function(partDataField){ 
+
+                    $(wrapper).append(partDataField); 
+                    $('.edit-button'+varCounter).focus();
+
+                    //start //triger of itemGroup,category and type dropdown
+                    $("#"+dynamicId).change(function(e){
+
+                        var itemGroup = $(this).val();
+                        $('#itemGroup'+dynamicId).attr('value',itemGroup);
+                        itemG = itemGroup;
+                        
+                        $('.selectProductcategory'+dynamicId+' option[value!=""]').remove();
+                        $('.selectProductItem'+dynamicId+' option[value!=""]').remove();
+
+                        $.ajax({
+                            url: serverPath + "sales/products/find_dropdown/"+itemGroup,
+                            type: "get",
+                            dataType: "json",
+                            success: function(data) {
+                                
+                                $.each(data.CategoryName, function(key, value) {
+                                  
+                                    $('.selectProductcategory'+dynamicId)
+                                         .append($("<option></option>")
+                                         .attr("value",value.ItemCategoryHolder.id)
+                                         .text(value.ItemCategoryHolder.name));
+                                   
+                                });
+                                $.each(data.TypeName, function(key, value) {
+                                  
+                                    $('.selectProductItem'+dynamicId)
+                                         .append($("<option></option>")
+                                         .attr("value",value.ItemTypeHolder.id)
+                                         .text(value.ItemTypeHolder.name));
+                                }); 
+                                  
+                            }
+                        }); 
+                       
+                    });
+                    $('.selectProductcategory'+dynamicId).change(function(e){
+                        var cat = $(this).val();
+                        $('#itemGroupCategory'+dynamicId).attr('value',cat);
+                        itemC = cat; 
+                    });
+                    $('.selectProductItem'+dynamicId).change(function(e){
+                        var type = $(this).val(); 
+                        $('#itemGroupType'+dynamicId).attr('value',type);
+                        itemT = type; 
+                    });
+                    //end //triger of itemGroup,category and type dropdown
+                } 
                 
-            
+            });
+
             //start//quantity unit data
             $.ajax({
                 url: serverPath + "sales/products/unit_dropdown",
@@ -236,7 +159,7 @@ $(document).ready(function() {
                 dataType: "json",
                 success: function(data) {
 
-                    $('.dropUnit').append($("<option></option>").attr("value",0).text("-Select Unit-"));
+                    $('.dropUnit').append($("<option></option>").attr("value",0).text("---Select Unit---"));
 
                     $.each(data, function(key, value) {
                                   
@@ -248,76 +171,80 @@ $(document).ready(function() {
                     });
                 }
             });
-            //end//quantity unit data
-
-            //start//computation for outs and paper quantity
+           
+            //start//computation for outs,paper quantity and rate
             $("body").on('keyup','.outs'+varCounter, function(e){
 
                 var outsval = $(this).val();
+
+                if(outsval <= 0){
+
+                    alert('You must enter a positive number');
+                    $(this).val(1);
+                    return false;
+
+                }
+                
                 var paperVal = $('.quantity'+varCounter).val();
+
                 if($.isNumeric(outsval)) {
+
                     var paperQtyVal =  parseInt($('.quantity'+varCounter).val()) / parseInt(outsval);
                     $('.paper_qty'+varCounter).val(paperQtyVal);
+
                 }
-                 
+
             });
             $("body").on('blur','.outs'+varCounter, function(e){
+
                 var outsval = $(this).val();
+
                 if(!$.isNumeric(outsval)) {
+
                     alert('You must enter a valid number');
                     $('.paper_qty'+varCounter).val('empty');
                     $(this).focus();
+
                 }
             });
-            //end//computation for outs and paper quantity
+            $("body").on('keyup','.rate'+varCounter, function(e){
 
-            //start //triger of itemGroup,category and type dropdown
-            $("#"+dynamicId).change(function(e){
+                var rateval = $(this).val();
 
-                var itemGroup = $(this).val();
-                $('#itemGroup'+dynamicId).attr('value',itemGroup);
-                itemG = itemGroup;
-                
-                $('.selectProductcategory'+dynamicId+' option[value!=""]').remove();
-                $('.selectProductItem'+dynamicId+' option[value!=""]').remove();
-
-                $.ajax({
-                    url: serverPath + "sales/products/find_dropdown/"+itemGroup,
-                    type: "get",
-                    dataType: "json",
-                    success: function(data) {
-                        
-                        $.each(data.CategoryName, function(key, value) {
-                          
-                            $('.selectProductcategory'+dynamicId)
-                                 .append($("<option></option>")
-                                 .attr("value",value.ItemCategoryHolder.id)
-                                 .text(value.ItemCategoryHolder.name));
-                           
-                        });
-                        $.each(data.TypeName, function(key, value) {
-                          
-                            $('.selectProductItem'+dynamicId)
-                                 .append($("<option></option>")
-                                 .attr("value",value.ItemTypeHolder.id)
-                                 .text(value.ItemTypeHolder.name));
-                        }); 
-                          
-                    }
-                }); 
+                if(rateval <= 0){
+                    alert('You must enter a positive number');
+                    $(this).val(1);
+                    return false;
+                }
+                var paperQtyVal = parseInt(quantitySpec) * parseInt(rateval);
+                $('.quantity'+varCounter).val(paperQtyVal);
+                var outs = $('.outs'+varCounter).val();
                
+                var paperqty = parseInt(paperQtyVal) / parseInt(outs);
+                $('.paper_qty'+varCounter).val(paperqty);
+                
+
             });
-            $('.selectProductcategory'+dynamicId).change(function(e){
-                var cat = $(this).val();
-                $('#itemGroupCategory'+dynamicId).attr('value',cat);
-                itemC = cat; 
+            $("body").on('keyup','.outs_1'+varCounter, function(e){
+
+                var outs_1val = $(this).val();
+
+                if(outs_1val <= 0){
+
+                    alert('You must enter a positive number');
+                    $(this).val(1);
+                    return false;
+
+                }
+                
+                var outs = $('.outs'+varCounter).val();
+                var fullOuts = outs_1val * outs;
+                var qty = $('.quantity'+varCounter).val();
+                var paperqty = parseInt(qty) / parseInt(fullOuts);
+                $('.paper_qty'+varCounter).val(paperqty);
+
             });
-            $('.selectProductItem'+dynamicId).change(function(e){
-                var type = $(this).val(); 
-                $('#itemGroupType'+dynamicId).attr('value',type);
-                itemT = type; 
-            });
-            //end //triger of itemGroup,category and type dropdown
+            //end//computation for outs,paper quantity and rate
 
             //start//FILTER FIELD from all dropdown
             $('body').on('change', '.selectProductcategory'+dynamicId+',.selectProductItem'+dynamicId, function(){
@@ -403,9 +330,19 @@ $(document).ready(function() {
                                         $("body").on('change','.selectSpecProduct'+dynamicId, function(e){
                                             var partName = $(this).val();
                                             if ($(this).is(":checked")) {
+                                                // part = encode_utf8(partName);
+                                                // part1 = decode_utf8(part);
+                                                // console.log(part);
+                                                // console.log(part1);
                                                 $('.part_name'+varCounter).val(partName);
                                                 $( '.close' ).trigger( 'click' );
                                                 $('.allFieldPart'+varCounter).show();
+                                                $('.materialName'+varCounter).show();
+                                                $('.edit-button'+varCounter).html('<i class="fa fa-pencil fa-lg"></i>&emsp; Edit Material &nbsp;</button>');
+
+                                                
+
+                                                
                                             }
                                             
                                         });
@@ -430,8 +367,8 @@ $(document).ready(function() {
             var show_per_page = 5;  
             //getting the amount of elements inside content div optionValue"+dynamicId
             var number_of_items = $('.optionValue'+dynamicId).size(); 
-            console.log(number_of_items);
-            console.log('test'); 
+            // console.log(number_of_items);
+            // console.log('test'); 
             //calculate the number of pages we are going to have  
             var number_of_pages = Math.ceil(number_of_items/show_per_page);  
           
@@ -469,6 +406,7 @@ $(document).ready(function() {
 
     });
 
+    //$("body").on('change','#'+dynamicId, function(e){
     $(process_button).click(function(e){ //on add input button click
 
         var countername = parseInt($(this).attr('data'));
@@ -480,119 +418,115 @@ $(document).ready(function() {
         var process = "data[Specification][process]["+countername+"]";
         e.preventDefault();
 
-        if(x < max_fields){ //max input box allowed
+            $.ajax({ 
+                type: "GET", 
+                url: serverPath + "sales/products/process/"+process+"/"+dynamicId, 
+                dataType: "html", 
+                success: function(processDataField){ 
+                    $(wrapper).append(processDataField); 
+                    $('#'+dynamicId).focus();
 
-            x++; //text box increment
+                    //checkbox fields
+                    $("body").on('change','#'+dynamicId, function(e){
+                        var processVal = $(this).val();
+                        
+                        $.ajax({
+                            url: serverPath + "sales/products/find_checkbox/"+processVal,
+                            type: "get",
+                            dataType: "json",
+                            success: function(data) {
+                                $('.checkbox-nice1'+dynamicId).remove();
+                                //$('.appendField'+dynamicId).remove();
 
-            $(wrapper).append('<li class="ui-state-default">\
-                                <section class="dragField">\
-                                    <div class="form-group">\
-                                        <div class="col-lg-2"></div>\
-                                        <div class="col-lg-7">\
-                                            <div class="input-group">\
-                                                <span class="input-group-addon"><i class="fa fa-reorder"></i></span>\
-                                                <select name="'+process+'" class="form-control select-group" id="'+dynamicId+'">\
-                                                    <option value="">--Select Process--</option>\
-                                                </select>\
-                                            </div>\
-                                        </div>\
-                                        <div class="col-lg-2">\
-                                            <a href="#" class="remove_process">Remove</a>\
-                                        </div>\
-                                    </div>\
-                                    <section class="dropItem">\
-                                        <div class="form-group">\
-                                            <div class="col-lg-2"></div>\
-                                            <div class="col-lg-4">\
-                                                <section class="check-item">\
-                                                </section>\
-                                            </div>\
-                                            <div class="col-lg-4">\
-                                                <div class="row grid span8 check-fields-sort">\
-                                                </div>\
-                                            </div>\
-                                        </div>\
-                                    </section>\
-                                </section>\
-                               </li>'); //add input box
+                                $.each(data, function(key, value) {
+                                    var removeSpace = value.SubProcess.name;
+                                    var checkFieldNameNoSpace = removeSpace.replace(/\s+/g, "-");
+                                    $('.check-item'+dynamicId).append('<div class="checkbox-nice1'+dynamicId+' checking" id="'+checkFieldNameNoSpace+dynamicId+'">\
+                                                            <input id="checkbox-inl-1" class="check-fields'+dynamicId+' '+checkFieldNameNoSpace+' check'+checkFieldNameNoSpace+dynamicId+'" data-name="'+removeSpace+'" type="checkbox">\
+                                                            <label> '+value.SubProcess.name+' </label>\
+                                                        </div>');
 
-                //for sortable fields from checkbox
-                $(".grid").sortable({
-                    tolerance: 'pointer',
-                    revert: 'invalid',
-                    placeholder: 'span2 well placeholder tile',
-                    forceHelperSize: true
-                });
+                                }); 
 
-                //processes data
-                $.ajax({
-                    url: serverPath + "sales/products/find_process",
-                    type: "get",
-                    dataType: "json",
-                    success: function(data) {
+                            }
+                        });
 
-                        $.each(data, function(key, value) {
-                            //console.log(value);
-                            $('#'+dynamicId)
-                                 .append($("<option></option>")
-                                 .attr("value",value.Process.id)
-                                 .text(value.Process.name));
-                           
-                        }); 
-                          
-                    }
-                });
+                    });  
 
-                $("#"+dynamicId).change(function(e){
-                    var processVal = $(this).val();
-                    $('.checkbox-nice1').remove();
-                    $('.appendField').remove();
-                    $.ajax({
-                        url: serverPath + "sales/products/find_checkbox/"+processVal,
-                        type: "get",
-                        dataType: "json",
-                        success: function(data) {
-                           
-                            $.each(data, function(key, value) {
-                                 
-                                $('.check-item').append('<div class="checkbox-nice1">\
-                                                        <input id="checkbox-inl-1" class="check-fields" data-name="'+value.SubProcess.name+'" type="checkbox">\
-                                                        <label for="checkbox-inl-1"> '+value.SubProcess.name+' </label>\
-                                                    </div>');
+                    //checkbox trigger
+                    $("body").on('change','.check-fields'+dynamicId, function(e){
+                    //$('.check-fields'+dynamicId+' input[type=checkbox]').change(function(e) {
+                        
+                        //$('.appendField').remove();
+                        if ($(this).is(":checked")) {
+                            var checkFieldName = "data[Specification]["+$(this).attr('data-name')+"]";
+                            var checkFieldNameval = $(this).attr('data-name');
+                            checkFieldNameNoSpace = checkFieldNameval.replace(/\s+/g, "-");
+                            console.log($(this));
+                            $('.check-fields-sort'+dynamicId).append('<div class="well span2 tile appendField appendField'+dynamicId+'" id="field'+checkFieldNameNoSpace+dynamicId+'">\
+                                                                <a href="#" data-field="'+checkFieldNameNoSpace+'" class="remove_sort_field'+dynamicId+' remove_sort_field pull-right">\
+                                                                    <i class="fa fa-times-circle fa-lg"></i>\
+                                                                </a>\
+                                                                <div class="input-group">\
+                                                                    <span class="input-group-addon">\
+                                                                        <i class="fa fa-reorder"></i>\
+                                                                    </span>\
+                                                                    <input type="text" name="'+checkFieldName+'" value="'+checkFieldNameval+'" class="form-control" readonly />\
+                                                                </div>\
+                                                            </div>');
 
-                            }); 
+                            $("body").on('click','.remove_sort_field'+dynamicId, function(e){
+                       
+                                var removeField = $(this).parents('.appendField').find('.remove_sort_field'+dynamicId).attr('data-field');
+                               // var removeCheck = $(this).parents('section .dropItem').find('#check'+removeField+dynamicId).attr('data-name');
+                                $('#field'+removeField+dynamicId).remove();
+                                $('.check'+removeField+dynamicId).prop('checked', false);
+                                e.preventDefault();
 
-                            //checkbox trigger
-                            $("body").on('change','.check-fields', function(e){
-
-                                var checkFieldName = "data[Specification]["+$(this).attr('data-name')+"]";
-                                var checkFieldNameval = $(this).attr('data-name');
-                                checkFieldNameNoSpace = checkFieldNameval.replace(/\s+/g, "-");
-                                $('.appendField').remove();
-                                if ($(this).is(":checked")) {
-                                    //console.log(checkFieldNameval);
-                                    $('.check-fields-sort').append('<div class="well span2 tile" class="appendField" id="'+checkFieldNameNoSpace+'">\
-                                                                        <div class="input-group">\
-                                                                            <span class="input-group-addon">\
-                                                                                <i class="fa fa-reorder"></i>\
-                                                                            </span>\
-                                                                            <input type="text" name="'+checkFieldName+'" value="'+checkFieldNameval+'" class="form-control" readonly />\
-                                                                        </div>\
-                                                                    </div>');
-                                } else {  
-
-                                    $('#'+checkFieldNameNoSpace).remove();
-                                    
-                                }
-                                
                             });
-                              
+
+                         e.preventDefault();
+                        } else {  
+
+                            $('#field'+checkFieldNameNoSpace+dynamicId).remove();
+                            
                         }
-                    });
 
-                });   
+                         //for sortable fields from checkbox
+                        $(".grid").sortable({
+                            tolerance: 'pointer',
+                            revert: 'invalid',
+                            placeholder: 'span2 well placeholder tile',
+                            forceHelperSize: true
+                        });
+                        
+                    }); 
 
-        }
+                } 
+                
+            });
+            
+            //processes data
+            $.ajax({
+                url: serverPath + "sales/products/find_process",
+                type: "get",
+                dataType: "json",
+                success: function(data) {
+
+                    $.each(data, function(key, value) {
+                        //console.log(value);
+                        $('#'+dynamicId)
+                             .append($("<option></option>")
+                             .attr("value",value.Process.id)
+                             .text(value.Process.name));
+                       
+                    }); 
+                      
+                }
+            });
+
+            
+        //}
     });
 
     //remove fields
@@ -632,48 +566,13 @@ $(document).ready(function() {
 
 });
 
-//backup
-// <input type="text" name="itemGroup" value="0" id="itemGroup'+dynamicId+'" />\
-// <input type="text" name="itemGroupCategory" value="0" id="itemGroupCategory'+dynamicId+'" />\
-// <input type="text" name="itemGroupType" value="0" id="itemGroupType'+dynamicId+'" />\
+function encode_utf8(s) { 
 
-function previous(){  
-  
-    var new_page = parseInt($('.current_page').val()) - 1;  
-    //if there is an item before the current active link run the function  
-    if($('.active_page').prev('.page_link').length==true){  
-        go_to_page(new_page);  
-    }  
-  
-}  
-  
-function next(){  
-    
-    var new_page = parseInt($('.current_page').val()) + 1; 
-   
-    //if there is an item after the current active link run the function  
-    if($('.active_page').next('.page_link').length==true){  
-        go_to_page(new_page);  
-    }  
-  
-}  
-function go_to_page(page_num){  
-    //get the number of items shown per page  
-    var show_per_page = parseInt($('.show_per_page').val());  
-  
-    //get the element number where to start the slice from  
-    start_from = page_num * show_per_page;  
-  
-    //get the element number where to end the slice  
-    end_on = start_from + show_per_page;  
-  
-    //hide all children elements of content div, get specific items and show them  
-    $('.tableProduct'+dynamicId).children().css('display', 'none').slice(start_from, end_on).css('display', 'block');  
-  
-    /*get the page link that has longdesc attribute of the current page and add active_page class to it 
-    and remove that class from previously active page link*/  
-    $('.page_link[longdesc=' + page_num +']').addClass('active_page').siblings('.active_page').removeClass('active_page');  
-  
-    //update the current page input field  
-    $('.current_page').val(page_num);  
-} 
+ return unescape(encodeURIComponent(s)); 
+
+}
+function decode_utf8(s) { 
+
+    return decodeURIComponent(escape(s)); 
+
+}

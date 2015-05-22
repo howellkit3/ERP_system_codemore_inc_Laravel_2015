@@ -266,10 +266,15 @@
 														
 														<td height ="37px" valign ="top" class = "column4 col-md-10">
 															<div class="col-lg-12">
-																<?php echo (!empty($itemDetail['unit_price']) && is_numeric($itemDetail['unit_price'])) ? number_format($itemDetail['unit_price'],4) : '';
-																?>
 																<?php
 																	echo !empty($currencies[$itemDetail['unit_price_currency_id']]) ? $currencies[$itemDetail['unit_price_currency_id']] : ''
+																?>
+																<?php echo (!empty($itemDetail['unit_price']) && is_numeric($itemDetail['unit_price'])) ? number_format($itemDetail['unit_price'],4) : '';
+																?>
+																/
+																<?php
+																
+																	echo !empty($units[$itemDetail['unit_price_unit_id']]) ? $units[$itemDetail['unit_price_unit_id']] : ''
 																?> 
 															</div>
 														</td>
@@ -340,11 +345,19 @@
 										<div class="col-lg-8">
 											<?php 
                                                 echo $this->Form->input('QuotationItemDetail.quantity',array( 
+                                                						'type' => 'hidden',
                                                 						'class' => 'form-control item_type ', 
                                                     					'label' => false, 
                                                     					'placeholder' => 'Quantity',
                                                     					'readonly' => 'readonly',
                                                     					'id' => 'quantity'
+                                                    					));
+                                                echo $this->Form->input('QuotationItemDetail.quantity_proxy',array( 
+                                                						'class' => 'form-control item_type ', 
+                                                    					'label' => false, 
+                                                    					'placeholder' => 'Quantity',
+                                                    					'disabled' => 'disabled',
+                                                    					'id' => 'quantity_proxy'
                                                     					));
 
                                             ?>
@@ -357,11 +370,20 @@
 										<div class="col-lg-8">
 											<?php 
                                                 echo $this->Form->input('QuotationItemDetail.unit_price',array( 
+                                                						'type' => 'hidden',
                                                 						'class' => 'form-control item_type ', 
                                                     					'label' => false, 
                                                     					'placeholder' => 'Unit Price',
                                                     					'readonly' => 'readonly',
                                                     					'id' => 'unit_price'
+                                                    					));
+                                                echo $this->Form->input('QuotationItemDetail.unit_price_proxy',array( 
+                                                						'type' => 'text',
+                                                						'class' => 'form-control item_type ', 
+                                                    					'label' => false, 
+                                                    					'placeholder' => 'Unit Price',
+                                                    					'disabled' => 'disabled',
+                                                    					'id' => 'unit_price_proxy'
                                                     					));
                                             ?>
 										</div>
@@ -372,11 +394,20 @@
 										<div class="col-lg-8">
 											<?php 
                                                 echo $this->Form->input('QuotationItemDetail.vat_price',array( 
+                                                						'type' => 'hidden',
                                                 						'class' => 'form-control item_type ', 
                                                     					'label' => false, 
                                                     					'placeholder' => 'Vat Price',
                                                     					'readonly' => 'readonly',
                                                     					'id' => 'vat_price'
+                                                    					));
+                                                echo $this->Form->input('QuotationItemDetail.vat_price_proxy',array( 
+                                                						'type' => 'text',
+                                                						'class' => 'form-control item_type ', 
+                                                    					'label' => false, 
+                                                    					'placeholder' => 'Vat Price',
+                                                    					'disabled' => 'disabled',
+                                                    					'id' => 'vat_price_proxy'
                                                     					));
                                             ?>
 										</div>
@@ -428,6 +459,7 @@
 	                                                echo $this->Form->input('ClientOrderDeliverySchedule.0.schedule',array( 
 	                                                						'class' => 'form-control item_type datepick', 
 	                                                    					'label' => false,
+	                                                    					'required' => 'required',
 	                                                    					'readonly' => 'readonly',
 	                                                    					'placeholder' => 'Schedule'  
 	                                                    					));
@@ -442,6 +474,7 @@
 	                                                echo $this->Form->input('ClientOrderDeliverySchedule.0.location',array( 
 	                                                						'class' => 'form-control item_type ', 
 	                                                    					'label' => false, 
+	                                                    					'required' => 'required',
 	                                                    					'placeholder' => 'Location',
 	                                                    					'value' => !empty($companyData['Address'][0]['address1']) ? $companyData['Address'][0]['address1'] : ''
 	                                                    					));
@@ -456,6 +489,7 @@
 	                                                echo $this->Form->input('ClientOrderDeliverySchedule.0.quantity',array( 
 	                                                						'class' => 'form-control item_type quantityLimit number', 
 	                                                    					'label' => false, 
+	                                                    					'required' => 'required',
 	                                                    					'placeholder' => 'Quantity'
 	                                                    					));
 	                                            ?>
@@ -492,8 +526,8 @@
 								<div class="panel panel-default">
 									<div class="panel-heading">
 										<h4 class="panel-title">
-											<a href="#collapseTwo" data-parent="#accordion" data-toggle="collapse" class="accordion-toggle collapsed fa fa-chevron-circle-down">
-												View Quotation Details
+											<a href="#collapseTwo" data-parent="#accordion" data-toggle="collapse" class="accordion-toggle collapsed fa fa-chevron-circle-down ">
+												<font class="fontSame">View Quotation Details</font>
 											</a>
 										</h4>
 									</div>

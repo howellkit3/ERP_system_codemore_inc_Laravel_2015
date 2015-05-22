@@ -10,10 +10,10 @@ class SalesOrdersController extends SalesAppController {
 
         parent::beforeFilter();
 
-        $userData = $this->Session->read('Auth');
-
         $this->Auth->allow('index');
 
+        $this->loadModel('User');
+        $userData = $this->User->read(null,$this->Session->read('Auth.User.id'));//$this->Session->read('Auth');
         $this->set(compact('userData'));
 
     }
@@ -45,6 +45,14 @@ class SalesOrdersController extends SalesAppController {
 
 	public function view($clientOrderId = null){
 
+    $this->loadModel('Currency');
+    
+    $this->loadModel('Unit');
+
+    $currencies = $this->Currency->getList();
+
+    $units = $this->Unit->getList();
+
 		$this->loadModel('PaymentTermHolder');
        
 		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','Product','ContactPerson'));
@@ -63,7 +71,7 @@ class SalesOrdersController extends SalesAppController {
       
 		$paymentTermData = $this->PaymentTermHolder->find('list',array('fields' => array('id','name')));
 												
-		$this->set(compact('clientOrderData','quotationData','companyName','quotationItemDetail','paymentTermData'));
+		$this->set(compact('clientOrderData','quotationData','companyName','quotationItemDetail','paymentTermData','currencies','units'));
 
 	}
 
@@ -75,16 +83,29 @@ class SalesOrdersController extends SalesAppController {
       $userData = $this->Session->read('Auth');
 
       if ($this->request->is('post')) {
+
+        //pr($this->request->data['ClientOrderDeliverySchedule']['schedule']); exit;
      
         if (!empty($this->request->data)) {
 
-          $result['ClientOrderDeliverySchedule'] = Set::classicExtract($this->request->data,'{s}');
-         
-          $this->ClientOrder->ClientOrderDeliverySchedule->saveClientOrderDeliverySchedule($result,$userData['User']['id'],$this->request->data['ClientOrderDeliverySchedule']['client_order_id']);
-        
-          $this->Session->setFlash(__('Client order delivery details has been updated.'));
+               if (!empty($this->request->data['ClientOrderDeliverySchedule']['location']) && ($this->request->data['ClientOrderDeliverySchedule']['quantity']) && ($this->request->data['ClientOrderDeliverySchedule']['schedule'])) {
 
-          return $this->redirect(array('controller' => 'sales_orders','action' => 'view',$this->request->data['ClientOrderDeliverySchedule']['client_order_id']));
+                      $result['ClientOrderDeliverySchedule'] = Set::classicExtract($this->request->data,'{s}');
+                     
+                      $this->ClientOrder->ClientOrderDeliverySchedule->saveClientOrderDeliverySchedule($result,$userData['User']['id'],$this->request->data['ClientOrderDeliverySchedule']['client_order_id']);
+                    
+                      $this->Session->setFlash(__('Client order delivery details has been updated.'));
+
+                      return $this->redirect(array('controller' => 'sales_orders','action' => 'view',$this->request->data['ClientOrderDeliverySchedule']['client_order_id']));
+
+                }else{
+
+            $this->Session->setFlash(__('Delivery details must be complete'),'error');
+
+            return $this->redirect(array('controller' => 'sales_orders','action' => 'view',$this->request->data['ClientOrderDeliverySchedule']['client_order_id']));
+
+          }
+
         }
 
       }

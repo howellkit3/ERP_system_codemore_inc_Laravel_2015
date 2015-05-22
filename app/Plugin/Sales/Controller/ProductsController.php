@@ -7,8 +7,13 @@ class ProductsController extends SalesAppController {
 	public $uses = array('Sales.Company','Process','GeneralItem','Substrate','CompoundSubstrate','CorrugatedPaper');
 	
 	function beforeFilter() {
+
+        $this->Auth->allow('add','index');
+
   		$this->myRandomNumber = rand(1,4);
-  		$userData = $this->Session->read('Auth');
+
+        $this->loadModel('User');
+        $userData = $this->User->read(null,$this->Session->read('Auth.User.id'));//$this->Session->read('Auth');
         $this->set(compact('userData'));
 	}
 
@@ -618,7 +623,28 @@ class ProductsController extends SalesAppController {
 
 		echo json_encode($checkData);
     }
-    public function test(){}
+
+    public function label($varCounter,$realName){
+
+    	$this->set(compact('varCounter','realName'));
+		$this->render('label');
+
+    }
+
+    public function part($varCounter,$quantitySpec,$itemgroupName,$dynamicId,$category,$item){
+
+    	$this->set(compact('varCounter','quantitySpec','itemgroupName','dynamicId','category','item'));
+		$this->render('part');
+		
+    }
+
+    public function process($process,$dynamicId){
+
+    	$this->set(compact('process','dynamicId'));
+		$this->render('process');
+
+    }
+
     public function specification($productId = null ){
 
     	$this->loadModel('ItemCategoryHolder');
@@ -714,11 +740,11 @@ class ProductsController extends SalesAppController {
 											));
     		
     	}
-    	
+    
     	foreach ($searchedProduct as $key => $list) {    		
     		$searchedProduct[$key][$ModelName]['name'] = utf8_encode($list[$ModelName]['name']);    		
     	}
-   
+   		//pr($searchedProduct);exit();
 		echo json_encode($searchedProduct);
 		
     }

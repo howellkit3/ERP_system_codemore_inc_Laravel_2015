@@ -291,3 +291,35 @@ body.dragging, body.dragging * {
   max-height: 500px;
   overflow: hidden;
 }
+.dragHeader {
+  border-bottom: solid 1px;
+  border-bottom-color: #EAEAEA;
+  margin-bottom: 11px;
+  color: #03a9f4;
+  font-size: 15px;
+}
+.left-text{
+  text-align: left !important;
+}
+.button-spec{
+  width: 100px;
+}
+.fontSame{
+  font-family: Verdana,Helvetica,Arial,sans-serif;
+}
+.remove_sort_field{
+  z-index: 99999;
+  position: absolute;
+  left: 333px;
+  top: -7px;
+}
+.appendField{
+  position: relative;   
+}
+.process_btn{
+  width: 87px;
+}
+#myModalDelivery{
+  z-index: 1;
+}   
+

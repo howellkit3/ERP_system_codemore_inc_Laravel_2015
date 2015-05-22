@@ -13,13 +13,47 @@
 <div class="filter-block pull-right">
     <?php
     	// buttons
+    	//start//for enable and disabled button//permission
+    	$userRole = $userData['User']['role_id'];
+    	if( $userRole != 1   ) {
+    		//pr($userData['User']['role_id']);exit();
+	    	!in_array('Print Quotation', $myPermission) ? $printQuotation = 'disabled' : $printQuotation = '' ;
+	    	
+	    	!in_array('Edit Quotation', $myPermission) ? $editQuotation = 'disabled' : $editQuotation = '' ;
+
+	    	!in_array('Send Quotation', $myPermission) ? $sendQuotation = 'disabled' : $sendQuotation = '' ;
+	    	
+	    	!in_array('Create Order', $myPermission) ? $createOrder = 'disabled' : $createOrder = '' ;
+	    } else {
+	    	$printQuotation = '' ;
+	    	$editQuotation = '' ;
+	    	$sendQuotation = '' ;
+	    	$createOrder = '' ;
+	    }
+	    if( $userRole != 2   ) {
+    		//pr($userData['User']['role_id']);exit();
+	    	!in_array('Print Quotation', $myPermission) ? $printQuotation = 'disabled' : $printQuotation = '' ;
+	    	
+	    	!in_array('Edit Quotation', $myPermission) ? $editQuotation = 'disabled' : $editQuotation = '' ;
+
+	    	!in_array('Send Quotation', $myPermission) ? $sendQuotation = 'disabled' : $sendQuotation = '' ;
+	    	
+	    	!in_array('Create Order', $myPermission) ? $createOrder = 'disabled' : $createOrder = '' ;
+	    } else {
+	    	$printQuotation = '' ;
+	    	$editQuotation = '' ;
+	    	$sendQuotation = '' ;
+	    	$createOrder = '' ;
+	    }	
+    	//start//for enable and disabled button//permission
+    	
         echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'quotations', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
 
 		if($clientOrderCount == 0){
 
 			$status = (!$this->Status->isQuotationApproved($quotation['Quotation']['status'])) ? 'disabled' : '';
 	
-			echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Create Order ', array('controller' => 'create_order', 'action' => 'index',$quotation['Quotation']['id'],$quotation['Quotation']['uuid']),array('class' =>'btn btn-primary pull-right '.$status,'escape' => false)) ;
+			echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Create Order ', array('controller' => 'create_order', 'action' => 'index',$quotation['Quotation']['id'],$quotation['Quotation']['uuid']),array('class' =>'btn btn-primary pull-right '.$status.' '.$createOrder,'escape' => false)) ;
 		
 
 			
@@ -32,6 +66,7 @@
 		$status1 = ($this->Status->isQuotationDraft($quotation['Quotation']['status'])) ? 'disabled' : '';
 
 		if ( !empty($rolesPermissionData) ) {
+			//pr($rolesPermissionData);exit();
                      if(in_array('4', $rolesPermissionData)){
 
                         
@@ -51,7 +86,7 @@
     	
     	$status = (!$this->Status->isQuotationDraft($quotation['Quotation']['status'])) ? 'disabled' : '';
 
-		echo $this->Html->link('<i class="fa fa-share fa-lg"></i> Submit Quotation', array('controller' => 'quotations', 'action' => 'status',0,$quotation['Quotation']['id']),array('class' =>'btn btn-success pull-right '. $status,'escape' => false)) ;
+		echo $this->Html->link('<i class="fa fa-share fa-lg"></i> Submit Quotation', array('controller' => 'quotations', 'action' => 'status',0,$quotation['Quotation']['id']),array('class' =>'btn btn-info pull-right '. $status,'escape' => false)) ;
 				
     	$status = ($this->Status->isQuotationApproved($quotation['Quotation']['status'])) ? 'disabled' : '';
 
@@ -59,17 +94,17 @@
                      if(in_array('2', $rolesPermissionData)){
 
                         
-						echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit ', array('controller' => 'quotations', 'action' => 'edit',$quotation['Quotation']['id'],$companyId),array('class' =>'btn btn-info pull-right '. $status ,'escape' => false)) ;
+						echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit ', array('controller' => 'quotations', 'action' => 'edit',$quotation['Quotation']['id'],$companyId),array('class' =>'btn btn-info pull-right '. $status.' '.$editQuotation ,'escape' => false)) ;
 
                     }else{
 
                          
-						echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit ', array('controller' => 'quotations', 'action' => 'edit',$quotation['Quotation']['id'],$companyId),array('class' =>'btn btn-info pull-right not-active'. $status ,'escape' => false)) ;
+						echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit ', array('controller' => 'quotations', 'action' => 'edit',$quotation['Quotation']['id'],$companyId),array('class' =>'btn btn-info pull-right not-active'. $status.' '.$editQuotation ,'escape' => false)) ;
                     }
                 }else  {
                 
                   
-						echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit ', array('controller' => 'quotations', 'action' => 'edit',$quotation['Quotation']['id'],$companyId),array('class' =>'btn btn-info pull-right not-active'. $status ,'escape' => false)) ;
+						echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit ', array('controller' => 'quotations', 'action' => 'edit',$quotation['Quotation']['id'],$companyId),array('class' =>'btn btn-info pull-right not-active'. $status.' '.$editQuotation ,'escape' => false)) ;
                 }    
 	
     	$status = (!$this->Status->isQuotationApproved($quotation['Quotation']['status'])) ? 'disabled' : '';
@@ -79,12 +114,12 @@
 		        	'action' => 'print_word',
 		        	//'ext' => 'pdf',
 		        	$quotation['Quotation']['id'],$companyId),
-		        	array('class' =>'btn btn-info pull-right '.$status,'escape' => false,'target' => '_blank'));
+		        	array('class' =>'btn btn-info pull-right '.$status.' '.$printQuotation,'escape' => false,'target' => '_blank'));
 
     	$status = (!$this->Status->isQuotationApproved($quotation['Quotation']['status'])) ? 'disabled' : '';
 
     	echo $this->Html->link('<i class="fa fa-envelope-o fa-lg"></i> Send Via Email ','#QuotationEmail',
-		        	array('data-toggle' => 'modal', 'class' =>'btn btn-info pull-right '.$status,'escape' => false,'target' => '_blank'));
+		        	array('data-toggle' => 'modal', 'class' =>'btn btn-info pull-right '.$status.' '.$sendQuotation,'escape' => false,'target' => '_blank'));
     	
 
     	 // echo $this->Html->link('<i class="fa fa-times fa-lg"></i> Terminate ', array('controller' => 'quotations', 'action' => 'status',3,$quotation['Quotation']['id']),array('class' =>'btn btn-danger pull-right','escape' => false));

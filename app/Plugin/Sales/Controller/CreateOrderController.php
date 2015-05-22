@@ -4,6 +4,18 @@ App::uses('SessionComponent', 'Controller/Component');
 
 class CreateOrderController extends SalesAppController {
 
+	public function beforeFilter() {
+
+        parent::beforeFilter();
+
+        $this->Auth->allow('add','index');
+
+        $this->loadModel('User');
+        $userData = $this->User->read(null,$this->Session->read('Auth.User.id'));//$this->Session->read('Auth');
+        $this->set(compact('userData'));
+
+    }
+    
 	public $uses = array('Sales.QuotationOption','Sales.Quotation','Sales.Company','Sales.CreateOrder','Sales.SalesOrder','Sales.ClientOrder');
 
 	public function add($quotationId = null, $salesOrderId = null){

@@ -233,12 +233,20 @@
                                 	<label class="col-lg-2 control-label">Quantity</label>
 									<div class="col-lg-8">
 										<?php 
+											$fullQuantity = number_format($quotationItemDetail['QuotationItemDetail']['quantity']).' '.$units[$quotationItemDetail['QuotationItemDetail']['quantity_unit_id']];
+											
                                             echo $this->Form->input('QuotationItemDetail.quantity', array(
+                                            								'type' => 'hidden',
+                                            								'class' => 'form-control item_type',
+						                                                    'label' => false,
+						                                                   	'value' => $quotationItemDetail['QuotationItemDetail']['quantity'],
+						                                                    'id' => 'quantity'));
+                                            echo $this->Form->input('QuotationItemDetail.quantity_proxy', array(
+                                            								'type' => 'text',
                                             								'class' => 'form-control item_type',
 						                                                    'label' => false,
 						                                                    'readonly' => 'readonly',
-						                                                    'value' => $quotationItemDetail['QuotationItemDetail']['quantity'],
-						                                                    'id' => 'quantity'));
+						                                                   'value' => $fullQuantity));
                                         ?>
 									</div>
 								</div>
@@ -247,11 +255,20 @@
 									<label class="col-lg-2 control-label">Unit Price</label>
 									<div class="col-lg-8">
 										<?php 
+											$fullPrice = $currencies[$quotationItemDetail['QuotationItemDetail']['unit_price_currency_id']].' '.number_format($quotationItemDetail['QuotationItemDetail']['unit_price'],4).' '.$units[$quotationItemDetail['QuotationItemDetail']['unit_price_unit_id']];
+
                                             echo $this->Form->input('QuotationItemDetail.unit_price', array(
+                                            								'type' => 'hidden',
                                             								'class' => 'form-control item_type',
 						                                                    'label' => false,
 						                                                    'readonly' => 'readonly',
 						                                                    'value' => $quotationItemDetail['QuotationItemDetail']['unit_price']));
+                                            echo $this->Form->input('QuotationItemDetail.unit_price_proxy', array(
+                                            								'type' => 'text',
+                                            								'class' => 'form-control item_type',
+						                                                    'label' => false,
+						                                                    'readonly' => 'readonly',
+						                                                    'value' => $fullPrice));
                                         ?>
 									</div>
 									
@@ -265,7 +282,7 @@
                                             								'class' => 'form-control item_type',
 						                                                    'label' => false,
 						                                                    'readonly' => 'readonly',
-						                                                    'value' => $quotationItemDetail['QuotationItemDetail']['vat_price']));
+						                                                    'value' => number_format($quotationItemDetail['QuotationItemDetail']['vat_price'],4)));
                                         ?>
 										  
 									</div>
@@ -303,6 +320,7 @@
 					<div class="main-box-body clearfix">
 						<div class="main-box-body clearfix">
 							<div class="form-horizontal">
+								
 								<?php foreach ($clientOrderData['ClientOrderDeliverySchedule'] as $schedule):  ?>
 
 									<?php echo $this->Form->create('ClientOrderDeliverySchedule',array('id' => 'form'.$schedule['id'],'url'=>(array('controller' => 'sales_orders','action' => 'add_schedule'))));?>
@@ -310,7 +328,7 @@
 										<div class="tab-container">
 											<?php 
 		                                        echo $this->Form->input('ClientOrderDeliverySchedule.id', array(
-		                                        								'class' => 'form-control item_type editable',
+		                                        								'class' => 'form-control item_type editable ',
 		                                        								'id' => 'toBeEdited',
 							                                                    'label' => false,
 							                                                    'hidden' => 'hidden',
@@ -329,12 +347,13 @@
 	                                			<label class="col-lg-2 control-label">Schedule</label>
 												<div class="col-lg-8">
 													<?php 
-			                                              echo $this->Form->input('ClientOrderDeliverySchedule.schedule', array(
+			                                              echo $this->Form->input('ClientOrderDeliverySchedule.schedule_field', array(
 			                                            								'class' => 'form-control item_type',
 									                                                    'label' => false,
 									                                                    'type' => 'text',
-									                                                    'class' => 'form-control item_type datepick editable',
-									                                                    'readonly' => 'readonly',
+									                                                    'required' => 'required',
+									                                                    'class' => 'form-control item_type datepik editable required',
+									                                                    'disabled' => 'disabled',
 									                                                    'value' => !empty($schedule['schedule']) ?
 									                                                    date('Y-m-d',strtotime($schedule['schedule'])) : ''	
 
@@ -349,8 +368,9 @@
 												<div class="col-lg-8">
 													<?php 
 			                                            echo $this->Form->input('ClientOrderDeliverySchedule.location', array(
-			                                            								'class' => 'form-control item_type editable',
+			                                            								'class' => 'form-control item_type editable required',
 									                                                    'label' => false,
+									                                                    'required' => 'required',
 									                                                   	'readonly' => 'readonly',
 									                                                    'value' => $schedule['location']));
 			                                        ?>
@@ -363,8 +383,9 @@
 												<div class="col-lg-8">
 													<?php 
 			                                            echo $this->Form->input('ClientOrderDeliverySchedule.quantity', array(
-			                                            								'class' => 'form-control item_type editable quantityLimit number',
+			                                            								'class' => 'form-control item_type editable quantityLimit number required',
 									                                                    'label' => false,
+									                                                    'required' => 'required',
 									                                                    'readonly' => 'readonly',
 									                                                    'value' => $schedule['quantity']));
 			                                        ?>
@@ -402,7 +423,7 @@
 								<div class="panel-heading">
 									<h4 class="panel-title">
 										<a href="#collapseTwo" data-parent="#accordion" data-toggle="collapse" class="accordion-toggle collapsed fa fa-chevron-circle-down">
-											View Quotation Details
+											<font class="fontSame">View Quotation Details</font>
 										</a>
 									</h4>
 								</div>
@@ -554,42 +575,36 @@
 <script>
 
 	jQuery(document).ready(function($){
-		//datepicker
-		$('.datepick').datepicker({
-			format: 'yyyy-mm-dd'
-		});
+		
+		jQuery("#ClientOrderDeliveryScheduleViewForm").validate();
+
+		$("body").on('click','.buttonEdit', function(e){
+			var myval = $(this).parents('.tab-container').find('.quantityLimit').val();
+			
+			$(this).parents('.tab-container').find('.editable').attr('disabled', false);
+	    	$(this).parents('.tab-container').find('button.editable').attr('disabled', false);
+	    	$(this).parents('.tab-container').find('.datepik').addClass('datepick');
+	    	$(this).html('Cancel');
+	    	$(this).addClass('Cancel');
+
+	    	$(this).parents('.tab-container').find('.datepick').datepicker({
+				format: 'yyyy-mm-dd'
+			});
+	    
+	    	$("body").on('click','.Cancel', function(e){
+	    		$(this).parents('.tab-container').find('.datepik').removeClass('datepick');
+	    		$(this).parents('.tab-container').find('.quantityLimit').val(myval);
+		    	$(this).parents('.tab-container').find('.editable').attr('disabled', true);
+		    	$(this).parents('.tab-container').find('button.editable').attr('disabled', true);
+		    	$(this).html('Edit');
+		    	$(this).removeClass('Cancel');
+		    });
+
+	    });
+	    
 		
 	});
 
 </script>
 
-<script>
 
-    $("body").on('click','.buttonEdit', function(e){
-
-		$(this).parents('.tab-container').find('.editable').attr('readonly', false);
-    	$(this).parents('.tab-container').find('button.editable').attr('disabled', false);
-    	$(this).html('Cancel');
-    	$(this).addClass('Cancel');
-    
-    	
-    	$("body").on('click','.Cancel', function(e){
-	    	$(this).parents('.tab-container').find('.editable').attr('readonly', true);
-	    	$(this).parents('.tab-container').find('button.editable').attr('disabled', true);
-	    	$(this).html('Edit');
-	    	$(this).removeClass('Cancel');
-	    });
-    	// if ($('#textField1').is(':readonly')) {
-	    // 	//alert('zero value ko'); 
-	    // 	$(this).parents('.tab-container').find('.editable').attr('readonly', false);
-	    	
-	    // }else{
-	    // 	//alert('one value ko'); 
-	    // 	$(this).parents('.tab-container').find('.editable').attr('readonly', true);
-		   //  x = 0;
-	    // }
-
-    });
-
-    
-</script>
