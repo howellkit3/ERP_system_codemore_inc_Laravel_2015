@@ -7,7 +7,7 @@
 				<header class="main-box-header clearfix">
 					                    
 					<h1 class="pull-left">
-						Role and permission
+						Roles and Permissions
 					</h1>
 
 					<?php 
@@ -16,16 +16,14 @@
 				</header>
 			</div>
 		</div>
-
-		
-			
+	
 		<div class="row">
 			<?php echo $this->Form->create('Role',array('url'=>(array('controller' => 'settings','action' => 'role_perm'))));?>
 				<div class="col-lg-6">
 					<div class="main-box">
 						<div class="top-space"></div>
 						<h1 class="pull-left">
-							Assign Role and permission
+							Assign role
 						</h1>
 						<br><br><br>
 						<div class="main-box-body clearfix">
@@ -47,7 +45,7 @@
 									</div>
 
 									<div class="form-group">
-										<label class="col-lg-3 control-label">Role Description</label>
+										<label class="col-lg-3 control-label">Role description</label>
 										<div class="col-lg-8">
 											<?php 
 	                                            echo $this->Form->input('Role.id', array(
@@ -98,7 +96,7 @@
 				<div class="main-box">
 					<div class="top-space"></div>
 					<h1 class="pull-left">
-						Edit Role and permission
+						Assign permissions
 					</h1>
 					<br><br><br>
 					<div class="main-box-body clearfix">

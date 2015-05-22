@@ -42,7 +42,7 @@ class EmailConfig {
 	public $mandrill = array(
         'transport' => 'Mandrill.Mandrill',
         'from' => 'bienrelampagos@gmail.com',
-        'fromName' => 'Koufu Color Packaging',
+        'fromName' => 'Koufu Color Printing',
         'timeout' => 30,
         'api_key' => '9Ub0V3kopPRqb18wvDJHbQ',
         'emailFormat' => 'both',

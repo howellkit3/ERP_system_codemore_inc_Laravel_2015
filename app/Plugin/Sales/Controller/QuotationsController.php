@@ -901,6 +901,9 @@ class QuotationsController extends SalesAppController {
 
 	public function send_email($dest=null,$qouteId = null,$companyId = null){
 
+		$this->loadModel('User');
+		$userData = $this->User->read(null,$this->Session->read('Auth.User.id'));
+		
 		if (!empty($this->request->data)) {
 
 			$qouteId = $this->request->data['Quotation']['id'];
@@ -925,7 +928,8 @@ class QuotationsController extends SalesAppController {
 			
 			$email = new CakeEmail('mandrill');
 
-			$email->from(Configure::read('defaultEmail'));
+			// //$email->from(Configure::read('defaultEmail'));
+			// $email->from($userData['User']['email']);
 
 			$email->to($to);
 			if (!empty($valid_email_cc)) {
@@ -935,7 +939,6 @@ class QuotationsController extends SalesAppController {
 			
 			$email->subject($this->request->data['Quotation']['subject']);
 
-		
 			$filename =  $this->request->data['Quotation']['pdf'];
 			$attachment = $this->_createPdf($qouteId,$companyId,$filename);
 
@@ -954,7 +957,6 @@ class QuotationsController extends SalesAppController {
                     }
 
                     $email->emailFormat('html');
-					
 					$email->send();
 
 					$file = new File(WWW_ROOT . DS . $attachment);
