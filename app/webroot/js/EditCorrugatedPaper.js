@@ -42,12 +42,12 @@ $('body').on('click','.remove-layers',function(){
 
 		if (parent.find('.remove-field').length > 1) {
 
-			alert('i entered if');
+			//alert('i entered if');
 				parent.attr('style','display:none');
 				parent.remove();
 		} else {
 
-			alert('i entered else');
+			//alert('i entered else');
 			parent.remove();
 		}
 		
