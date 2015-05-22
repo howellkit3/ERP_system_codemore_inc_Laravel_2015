@@ -107,6 +107,8 @@
 										</div>
 									</div>
 
+									<a data-toggle="modal" href="#myModalLayer" class="btn btn-primary mrg-b-lg pull-right addSchedButton"><i class="fa fa-plus-circle fa-lg"></i> Add Layer</a>
+
 								<?php if (!empty($this->request->data['CorrugatedPaper']['layers'])) : ?>	
 
 								<?php $countLayers = 1; foreach($this->request->data['ItemGroupLayer'] as $key => $layers) : ?>
@@ -179,7 +181,7 @@
 
 							<?php endif; ?>
 
-									<a data-toggle="modal" href="#myModalLayer" class="btn btn-primary mrg-b-lg pull-right addSchedButton"><i class="fa fa-plus-circle fa-lg"></i> Add Layer</a>
+									
 
 									<div class="form-group "> <br>
 										<label class="col-lg-2 control-label">Brust</label>
