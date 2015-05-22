@@ -1,7 +1,7 @@
 <?php echo $this->element('setting_option');?><br><br>
 <?php echo $this->Html->script(array(
 									'jquery',
-									'compound_substrate',
+									//'compound_substrate',
 									'AddLayerCompoundSubstrate'
 							)); ?>
 <div class="row">
@@ -92,7 +92,7 @@
 									</div>
 
 
-									<div class="form-group"> <br>
+									<div class="form-group substrate-layers"> <br>
 																<label class="col-lg-2 control-label"><span style="color:red">*</span>Layer</label>
 										<div class="col-lg-8">
 													<?php 
@@ -110,7 +110,7 @@
 							<?php if (!empty($this->request->data['CompoundSubstrate']['layers'])) : ?>	
 
 								<?php $countLayers = 1; foreach($this->request->data['ItemGroupLayer'] as $key => $layers) : ?>
-							<div class="form-group substrate-layers">
+							<div class="form-group ">
 
 								<label class="col-lg-2 control-label">
 									<span style="color:red">*</span>Substrate <?php echo $countLayers ?>

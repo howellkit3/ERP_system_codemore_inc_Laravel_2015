@@ -1,7 +1,6 @@
 $(function(){
 	
-
-$('#CompoundSubstrateLayers').blur(function(){
+$("body").on('keyup','#CompoundSubstrateLayers', function(e){
 
 	var option = $(this).val();
 	var selected = $(this).val();

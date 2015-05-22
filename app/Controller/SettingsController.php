@@ -1055,9 +1055,7 @@ class SettingsController extends AppController
 
         $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.id DESC'));
 
-
-
-            if (!$id) {
+                    if (!$id) {
                 throw new NotFoundException(__('Invalid post'));
             }
 
@@ -1190,6 +1188,8 @@ class SettingsController extends AppController
 
      public function corrugated_paper_edit($id = null) {
 
+        //pr($id); exit;
+
         $this->loadModel('Supplier');
 
         $this->loadModel('CorrugatedPaper');
@@ -1205,12 +1205,16 @@ class SettingsController extends AppController
      
         $typeData = $this->ItemTypeHolder->find('list', array('fields' => array('id', 'name'),
                                                                 'conditions' => array('ItemCategoryHolder.category_type' => '1')));
-
         $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.id DESC'));
 
         $itemGroupLayerData = $this->ItemGroupLayer->find('all', array('conditions' => array('ItemGroupLayer.foreign_key' => 'CorrugatedPaper.id')));
 
         //foreach ($this->request->data['ItemGroupLayer'] as $key => $itemGroupData): 
+
+        
+
+       // pr($alldatapaper); exit;
+
 
             if (!$id) {
                 throw new NotFoundException(__('Invalid post'));
@@ -1224,11 +1228,35 @@ class SettingsController extends AppController
 
             if ($this->request->is(array('post', 'put'))) {
 
+                $paperHolderId = array();
+
+                foreach ($this->request->data['ItemGroupLayer'] as $key => $idList) {
+                    array_push($paperHolderId, $idList['id']);
+                }
+
                 $this->CorrugatedPaper->id = $id;
    
                 $dataHolder = array();
 
-                if ($this->CorrugatedPaper->save($this->request->data)) {
+                 //   if ($this->CorrugatedPaper->save($this->request->data)) {
+
+                $alldatapaper = $this->ItemGroupLayer->find('all', array('conditions' => array('ItemGroupLayer.foreign_key' => $id),
+                                                                            'fields' => array('id' ,'foreign_key')
+                                                                          ));
+
+                         foreach ($alldatapaper as $key => $paper) {
+                       
+                        if(in_array($paper['ItemGroupLayer']['id'], $paperHolderId)){
+                            // echo "save";
+                            // pr($paper['ItemGroupLayer']['id']);
+                            $this->ItemGroupLayer->save($this->request->data['ItemGroupLayer']);
+                            //code mo n save by id
+                        }else{
+                             // echo "delete";
+                             // pr($paper['ItemGroupLayer']['id']);
+                            $this->ItemGroupLayer->delete($paper['ItemGroupLayer']['id']);
+                        }
+                    }
 
                     $this->CorrugatedPaper->save($this->request->data);
 
@@ -1238,8 +1266,8 @@ class SettingsController extends AppController
 
                     return $this->redirect(array('action' => 'item_group','tab' => 'tab-corrugated_papers'));
 
-                    
-                }
+              //  exit;    
+               // }
 
                 $this->Session->setFlash(__('Unable to update your post.'));
             }
@@ -2040,6 +2068,37 @@ class SettingsController extends AppController
             }
         }
     }
+
+    public function corrugated_layer($Id = null) {
+
+            $this->loadModel('ItemGroupLayer');
+
+            $userData = $this->Session->read('Auth');
+
+            $itemGroupLayerData = $this->ItemGroupLayer->find('all', array('conditions' => array('ItemGroupLayer.foreign_key' => 'CorrugatedPaper.id')));
+
+            if ($this->request->is('post')) {
+                
+                if (!empty($this->request->data)) {
+
+                    $this->ItemGroupLayer->create();
+
+                    $this->id = $this->ItemGroupLayer->save($this->request->data);
+
+                    $this->Session->setFlash(__('Add Layer Complete.'));
+
+                    $this->redirect(
+
+                        array('controller' => 'settings', 'action' => 'item_group','tab' => 'tab-corrugated_papers')
+
+                    );
+                }
+            }
+
+            $this->set(compact('statusData'));
+
+        }
+
 }
             
 

@@ -6,6 +6,8 @@ $('#CorrugatedPaperLayers').blur(function(){
 	var option = $(this).val();
 	var selected = $(this).val();
 
+	//alert ();
+
 	$inputs = '';
 	var count = 1;
 	for (i = 0; i < selected; i++) { 
@@ -13,7 +15,7 @@ $('#CorrugatedPaperLayers').blur(function(){
 		if (count > 1){		
 
 			$inputs += '<div class="form-group corrugatedPaper-layers"><label class="col-lg-2 control-label"></label>';
-			$inputs += '<div class="col-lg-8"><hr style="color:#99CC99"></div></div>';
+			$inputs += '<div class="col-lg-8 "><hr style="color:#99CC99"></div></div>';
 
 		}
 
@@ -28,21 +30,26 @@ $('#CorrugatedPaperLayers').blur(function(){
 		count++;
 	}
 
-	
-
 	$(this).parents('.form-group').after($inputs);
     return false;
 });
 
 $('body').on('click','.remove-layers',function(){
 
-		var parent = $(this).parent().parent().parent();
+		var parent = $(this).parent().parent().parent().parent();
+
+		//console.log(parent.attr('class'));
 		
 		parent.find('.remove-field').val('true');
 
 		if (parent.find('.remove-field').length > 1) {
+
+			alert('i entered if');
 				parent.attr('style','display:none');
+				parent.remove();
 		} else {
+
+			alert('i entered else');
 			parent.remove();
 		}
 		

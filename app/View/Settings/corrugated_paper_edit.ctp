@@ -1,9 +1,8 @@
 <?php echo $this->element('setting_option');?><br><br>
 <?php echo $this->Html->script(array(
 									'corrugated_paper',
-									'EditLayerCorrugatedPaper',
-									'AddLayerCorrugatedPaper'
-
+									//'EditLayerCorrugatedPaper',
+									'EditCorrugatedPaper'
 							)); ?>
 <div class="row">
 	<div class="col-lg-12">
@@ -33,12 +32,14 @@
 									<div class="form-group">
 										<label class="col-lg-2 control-label"><span style="color:red">*</span>Name</label>
 										<div class="col-lg-8">
+										
 											<?php 
 	                                            echo $this->Form->input('CorrugatedPaper.name', array(
                         								'class' => 'form-control item_type',
 	                                                    'label' => false,
 	                                                    'required' => 'required',
 	                                                    'placeholder' => 'Corrugated Paper Name'));
+
                                             ?>
 
 										</div>
@@ -91,7 +92,7 @@
 										</div>
 									</div>
 
-									<div class="form-group"> <br>
+									<div class="form-group substrate-layers"> <br>
 										<label class="col-lg-2 control-label">Layer</label>
 										<div class="col-lg-8">
 											<?php 
@@ -111,7 +112,7 @@
 								<?php $countLayers = 1; foreach($this->request->data['ItemGroupLayer'] as $key => $layers) : ?>
 
 
-							<div class="form-group substrate-layers">
+							<div class="form-group ">
 
 									<?php
 
@@ -178,9 +179,9 @@
 
 							<?php endif; ?>
 
-													
+									<a data-toggle="modal" href="#myModalLayer" class="btn btn-primary mrg-b-lg pull-right addSchedButton"><i class="fa fa-plus-circle fa-lg"></i> Add Layer</a>
 
-									<div class="form-group"> <br>
+									<div class="form-group "> <br>
 										<label class="col-lg-2 control-label">Brust</label>
 										<div class="col-lg-8">
 											<?php 
@@ -237,7 +238,61 @@
 				</div>
 			</div>
 		<?php echo $this->Form->end(); ?>
-
 		
 	</div>
 </div>
+
+ <div class="modal fade" id="myModalLayer" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Add Layer</h4>
+                </div>
+                <div class="modal-body">
+                 <?php echo $this->Form->create('ItemGroupLayer',array('url'=>(array('controller' => 'settings','action' => 'corrugated_layer')),'class' => 'form-horizontal'));?>
+               			  <?php 
+                                echo $this->Form->input('CorrugatedPaper.id', array(
+        								'class' => 'form-control item_type',
+                                        'label' => false,
+                                        'type' => 'hidden'
+                                        ));
+
+                            ?>
+               
+
+                   
+                        <div class="form-group">
+                            <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span>Substrate</label>
+                            <div class="col-lg-9">
+                                <?php 
+                                    echo $this->Form->input('ItemGroupLayer.substrate', array('class' => 'form-control required',
+                                                                                                           'required' => 'required', 
+                                                                                                            'label' => false));
+                                ?>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span> Flute</label>
+                            <div class="col-lg-9">
+                                <?php 
+                                    echo $this->Form->input('ItemGroupLayer.flute', array('class' => 'form-control required addquantityLimit number required',
+                                                                                                        'label' => false,
+                                                                                                        'required' => 'required'));
+                                ?>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                             <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i> Submit</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            
+                        </div>
+                    </form>
+                    
+                </div>
+                
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal --> 
