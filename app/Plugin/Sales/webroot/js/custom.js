@@ -114,6 +114,7 @@ jQuery(function($) {
 });
 function cloneData(whatSection, thisElement)
 {
+    
     var parentSection = $(thisElement).parents('.' + whatSection);
 
     var data = $(parentSection).first().clone();

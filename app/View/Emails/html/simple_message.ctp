@@ -6,9 +6,9 @@
 
 <div style="position: relative; margin: 0 auto;width:100%;font-family: 'Helvetica', Arial, sans-serif; font-size: 15px; background-image:url(<?php echo $this->Html->url('/', true) ?>img/whitey.png); background-color: #f7f7f7;">
     <div style="margin:0 auto;text-align:left;width:582px;padding:18px 9px;background:#fff; ">
-    <a href="<?php echo $this->Html->url('/', true) ?>" style="display:inline-block;vertical-align:middle;">
+   <!--  <a href="<?php echo $this->Html->url('/', true) ?>" style="display:inline-block;vertical-align:middle;">
         <img src="<?php echo $this->Html->url('/', true) ?>img/koufu.png" width="100" style="width:100px;">
-        </a> <span style="font-size:34px; font-weight:bold">Kou Fu Color Packaging</span>
+        </a> <span style="font-size:34px; font-weight:bold">Koufu Color Printing</span> -->
     </div>
 
     <div style="width:600px;margin:0 auto;background:#fff; padding:10px 0;">                                

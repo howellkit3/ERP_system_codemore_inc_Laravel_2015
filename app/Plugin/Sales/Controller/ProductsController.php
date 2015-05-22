@@ -761,4 +761,37 @@ class ProductsController extends SalesAppController {
 
 		echo json_encode($unitData);
     }
+    public function product_search($itemGroupId = null, $searchHint = null) {
+
+    	//$this->bind->GeneralItem('ItemCategoryHolder','ItemTypeHolder');
+
+    	if($itemGroupId == 1) {
+    		$categoryData = $this->GeneralItem->find('all',array(
+												'conditions' => array(
+        										'GeneralItem.name LIKE' => '%' . $searchHint . '%',
+        										 )));
+    	}
+    	if($itemGroupId == 2) {
+    		$categoryData = $this->Substrate->find('all',array(
+												'conditions' => array(
+        										'Substrate.name LIKE' => '%' . $searchHint . '%',
+        										 )));
+    	}
+    	if($itemGroupId == 3) {
+    		$categoryData = $this->CompoundSubstrate->find('all',array(
+												'conditions' => array(
+        										'CompoundSubstrate.name LIKE' => '%' . $searchHint . '%',
+        										 )));
+    	}
+    	if($itemGroupId == 4) {
+    		$categoryData = $this->CorrugatedPaper->find('all',array(
+												'conditions' => array(
+        										'CorrugatedPaper.name LIKE' => '%' . $searchHint . '%',
+        										 )));
+    	}
+    	
+    	$this->set(compact('categoryData'));
+		$this->render('product_search');
+
+    }
 }

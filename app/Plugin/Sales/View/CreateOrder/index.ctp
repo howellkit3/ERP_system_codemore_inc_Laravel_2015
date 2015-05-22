@@ -457,7 +457,7 @@
 											<div class="col-lg-8">
 												<?php 
 	                                                echo $this->Form->input('ClientOrderDeliverySchedule.0.schedule',array( 
-	                                                						'class' => 'form-control item_type datepick', 
+	                                                						'class' => 'form-control item_type datepick schedClone', 
 	                                                    					'label' => false,
 	                                                    					'required' => 'required',
 	                                                    					'readonly' => 'readonly',
@@ -472,7 +472,7 @@
 											<div class="col-lg-8">
 												<?php 
 	                                                echo $this->Form->input('ClientOrderDeliverySchedule.0.location',array( 
-	                                                						'class' => 'form-control item_type ', 
+	                                                						'class' => 'form-control item_type schedClone', 
 	                                                    					'label' => false, 
 	                                                    					'required' => 'required',
 	                                                    					'placeholder' => 'Location',
@@ -487,7 +487,7 @@
 											<div class="col-lg-8">
 												<?php 
 	                                                echo $this->Form->input('ClientOrderDeliverySchedule.0.quantity',array( 
-	                                                						'class' => 'form-control item_type quantityLimit number', 
+	                                                						'class' => 'form-control item_type quantityLimit number schedClone', 
 	                                                    					'label' => false, 
 	                                                    					'required' => 'required',
 	                                                    					'placeholder' => 'Quantity'
@@ -502,7 +502,7 @@
                                         <div class="form-group">
                                             <label for="inputPassword1" class="col-lg-2 control-label"></label>
                                             <div class="col-lg-10">
-                                                <button type="button" data-model='Address' class="add-field table-link danger btn btn-success" onclick="cloneData('scheduleSection',this)"> <i class="fa fa-plus"></i></button>
+                                                <button type="button" data-model='Address' class="add-field table-link danger btn btn-success" onclick="cloneDataSchedule('scheduleSection',this)"> <i class="fa fa-plus"></i></button>
                                                 <button type="button" class="remove-field btn btn-danger remove" onclick="removeClone('scheduleSection')"><i class="fa fa-minus"></i> </button>
                                             </div>
                                         </div>

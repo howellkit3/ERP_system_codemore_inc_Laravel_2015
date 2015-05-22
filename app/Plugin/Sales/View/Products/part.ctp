@@ -78,6 +78,14 @@
                         <h4 class="modal-title">Material</h4>
                     </div>
                     <div class="modal-body">
+                        <div class="filter-block pull-right">
+                            <div class="form-group pull-left">
+
+                                <input placeholder="Search..." id="product_search<?php echo $dynamicId ;?>" name="product_name" class="form-control" type="search" />
+                                <i class="fa fa-search search-icon"></i>
+                             
+                            </div>  
+                        </div><br><br><br><br>
                         <div class="form-group">
                             <div class="col-lg-2"></div>
                             <div class="col-lg-7">
@@ -93,7 +101,7 @@
                                 </div>
                             </div>
                         </div>
-                        <section class="dropItem">
+                        <!-- <section class="dropItem">
                             <div class="form-group">
                                 <div class="col-lg-2"></div>
                                 <div class="col-lg-7">
@@ -116,6 +124,24 @@
                                     </div>
                                 </div>
                             </div>
+                        </section> -->
+                        <section class="scrollsection">
+                            <header class="main-box-header clearfix">
+                                <h1 class="pull-left">Product List</h1>
+                            </header>
+                            <input type="hidden" class="current_page" />
+                            <input type="hidden" class="show_per_page" />
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th><a href="#"><span>Select</span></a></th>
+                                        <th><a href="#"><span>Item Number</span></a></th>
+                                        <th><a href="#"><span>Name</span></a></th>
+                                    </tr>
+                                </thead>
+                                <tbody class="tableProduct<?php echo $dynamicId ;?>" aria-relevant="all" id="scrollTable" aria-live="polite" role="alert" >
+                                </tbody>
+                            </table>
                         </section>
                         <section id="productTableInModal<?php echo $dynamicId ;?>" style="display:none;">
                             <div class="table-responsive">
@@ -123,26 +149,10 @@
                                     <h1 class="pull-left">Product List</h1>
                                     <div class="filter-block pull-right">
                                         <div class="form-group pull-left">
-                                            <input placeholder="Search..." id="hint" name="q" class="form-control" type="search" />
-                                            <i class="fa fa-search search-icon"></i>
+
                                         </div>
                                     </div>
                                 </header>
-                                <section class="scrollsection">
-                                    <input type="hidden" class="current_page" />
-                                    <input type="hidden" class="show_per_page" />
-                                    <table class="table table-striped table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th><a href="#"><span>Select</span></a></th>
-                                                <th><a href="#"><span>Item Number</span></a></th>
-                                                <th><a href="#"><span>Name</span></a></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="tableProduct<?php echo $dynamicId ;?>" aria-relevant="all" id="scrollTable" aria-live="polite" role="alert" >
-                                        </tbody>
-                                    </table>
-                                </section>
                             </div>
                         </section>
                         <div class="form-group">

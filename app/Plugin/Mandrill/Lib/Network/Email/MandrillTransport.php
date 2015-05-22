@@ -37,7 +37,7 @@ class MandrillTransport extends AbstractTransport {
      * @return array
      */
     public function send(CakeEmail $email) {
-
+       
         // CakeEmail
         $this->_cakeEmail = $email;
 

@@ -101,13 +101,14 @@ $(document).ready(function() {
                     $(wrapper).append(partDataField); 
                     $('.edit-button'+varCounter).focus();
 
+                    var itemGroup = '';
                     //start //triger of itemGroup,category and type dropdown
                     $("#"+dynamicId).change(function(e){
 
-                        var itemGroup = $(this).val();
+                        itemGroup = $(this).val();
                         $('#itemGroup'+dynamicId).attr('value',itemGroup);
                         itemG = itemGroup;
-                        
+
                         $('.selectProductcategory'+dynamicId+' option[value!=""]').remove();
                         $('.selectProductItem'+dynamicId+' option[value!=""]').remove();
 
@@ -137,6 +138,27 @@ $(document).ready(function() {
                         }); 
                        
                     });
+
+                    $("body").on('keyup','#product_search'+dynamicId, function(e){
+                            var searchInput = $(this).val();
+                            console.log(searchInput);
+                            //aurocomplete search product
+                            $.ajax({
+                                type: "GET",
+                                url: serverPath + "sales/products/product_search/"+itemGroup+"/"+searchInput,
+                                dataType: "html",
+                                success: function(data) {
+                                    console.log(data);
+                                    if(data){
+                                        $('.tableProduct'+dynamicId).html(data); 
+                                    }else{
+                                        $('.tableProduct'+dynamicId).html('<font color="red"><b>No result..</b></font>'); 
+                                    }
+                                    
+                                }
+                            });
+                        });
+
                     $('.selectProductcategory'+dynamicId).change(function(e){
                         var cat = $(this).val();
                         $('#itemGroupCategory'+dynamicId).attr('value',cat);
@@ -261,7 +283,7 @@ $(document).ready(function() {
                                 url: serverPath + "sales/products/find_product_details/"+itemG+"/"+itemC+"/"+itemT,
                                 type: "get",
                                 dataType: "json",
-                                contentType: "application/json; charset=utf-8",
+                                contentType: "application/html; charset=utf-8",
                                 success: function(data) {
                                     // console.log(data);
                                     
@@ -282,8 +304,8 @@ $(document).ready(function() {
                                                                 <td>\
                                                                     <input type='radio' value='"+value.GeneralItem.name+"' class='selectSpecProduct"+dynamicId+"' name='optionsRadios'>\
                                                                 </td>\
-                                                                <td>'"+value.GeneralItem.uuid+"'</td>\
-                                                                <td>'"+value.GeneralItem.name+"'</td>\
+                                                                <td>"+value.GeneralItem.uuid+"</td>\
+                                                                <td>"+value.GeneralItem.name+"</td>\
                                                                </tr>"));
                                              
                                             }
@@ -294,8 +316,8 @@ $(document).ready(function() {
                                                                 <td>\
                                                                     <input type='radio' value='"+value.Substrate.name+"' class='selectSpecProduct"+dynamicId+"' name='optionsRadios'>\
                                                                 </td>\
-                                                                <td>'"+value.Substrate.uuid+"'</td>\
-                                                                <td>'"+value.Substrate.name+"'</td>\
+                                                                <td>"+value.Substrate.uuid+"</td>\
+                                                                <td>"+value.Substrate.name+"</td>\
                                                                </tr>"));
                                              
                                             }
@@ -306,8 +328,8 @@ $(document).ready(function() {
                                                                 <td>\
                                                                     <input type='radio' value='"+value.CompoundSubstrate.name+"' class='selectSpecProduct"+dynamicId+"' name='optionsRadios'>\
                                                                 </td>\
-                                                                <td>'"+value.CompoundSubstrate.uuid+"'</td>\
-                                                                <td>'"+value.CompoundSubstrate.name+"'</td>\
+                                                                <td>"+value.CompoundSubstrate.uuid+"</td>\
+                                                                <td>"+value.CompoundSubstrate.name+"</td>\
                                                                 </tr>"));
                                              
                                             }
@@ -318,8 +340,8 @@ $(document).ready(function() {
                                                                 <td>\
                                                                     <input type='radio' value='"+value.CorrugatedPaper.name+"' class='selectSpecProduct"+dynamicId+"' name='optionsRadios'>\
                                                                 </td>\
-                                                                <td>'"+value.CorrugatedPaper.uuid+"'</td>\
-                                                                <td>'"+value.CorrugatedPaper.name+"'</td>\
+                                                                <td>"+value.CorrugatedPaper.uuid+"</td>\
+                                                                <td>"+value.CorrugatedPaper.name+"</td>\
                                                               </tr>"));
                                              
                                             }
@@ -330,6 +352,11 @@ $(document).ready(function() {
                                         $("body").on('change','.selectSpecProduct'+dynamicId, function(e){
                                             var partName = $(this).val();
                                             if ($(this).is(":checked")) {
+                                              
+                                                // part1 = decode_utf8(partName);
+                                                // part = encode_utf8(part1);
+                                                //console.log(part);
+                                                console.log(part);
                                                 $('.part_name'+varCounter).val(partName);
                                                 $( '.close' ).trigger( 'click' );
                                                 $('.allFieldPart'+varCounter).show();
@@ -562,13 +589,13 @@ $(document).ready(function() {
 
 });
 
-// function encode_utf8(s) { 
+function encode_utf8(s) { 
 
-//  return unescape(encodeURIComponent(s)); 
+ return unescape(encodeURIComponent(s)); 
 
-// }
-// function decode_utf8(s) { 
+}
+function decode_utf8(s) { 
 
-//     return decodeURIComponent(escape(s)); 
+    return decodeURIComponent((s)); 
 
-// }
+}
