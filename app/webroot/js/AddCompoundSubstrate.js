@@ -25,5 +25,4 @@ $('#CompoundSubstrateCategoryId').change(function(){
 
 	}).trigger('change');
 
-
 });

@@ -1,7 +1,9 @@
 <?php echo $this->element('setting_option');?><br><br>
 <?php echo $this->Html->script(array(
 									'corrugated_paper',
-									'EditLayerCorrugatedPaper'
+									'EditLayerCorrugatedPaper',
+									'AddLayerCorrugatedPaper'
+
 							)); ?>
 <div class="row">
 	<div class="col-lg-12">
@@ -138,7 +140,7 @@
 									</div>
 	                            </div>
    
-	                            <div class="form-group">	
+	                            <div class="form-group remove-field">	
 
 		                            <label class="col-lg-3 control-label">
 											Flute <?php echo $countLayers ?>

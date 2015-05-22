@@ -34,4 +34,26 @@ $('#CorrugatedPaperLayers').blur(function(){
     return false;
 });
 
+$('body').on('click','.remove-layers',function(){
+
+		var parent = $(this).parent().parent().parent();
+		
+		parent.find('.remove-field').val('true');
+
+		if (parent.find('.remove-field').length > 1) {
+				parent.attr('style','display:none');
+		} else {
+			parent.remove();
+		}
+		
+		var layer = 1;
+
+		$('.substrate-layers:visible').each(function(){
+
+				$(this).find('.control-label').first().html('<span style="color:red">*</span>Substrate '+layer++);
+		});
+
+		$('#CorrugatedPaperLayers').val($('.substrate-layers:visible').length);
+});
+
 });
