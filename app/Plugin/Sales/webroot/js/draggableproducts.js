@@ -330,7 +330,10 @@ $(document).ready(function() {
                                         $("body").on('change','.selectSpecProduct'+dynamicId, function(e){
                                             var partName = $(this).val();
                                             if ($(this).is(":checked")) {
-                                                partName = encode_utf8(partName);
+                                                // part = encode_utf8(partName);
+                                                // part1 = decode_utf8(part);
+                                                // console.log(part);
+                                                // console.log(part1);
                                                 $('.part_name'+varCounter).val(partName);
                                                 $( '.close' ).trigger( 'click' );
                                                 $('.allFieldPart'+varCounter).show();
@@ -568,8 +571,8 @@ function encode_utf8(s) {
  return unescape(encodeURIComponent(s)); 
 
 }
-// function decode_utf8(s) { 
+function decode_utf8(s) { 
 
-//     return decodeURIComponent(escape(s)); 
+    return decodeURIComponent(escape(s)); 
 
-// }
+}
