@@ -35,8 +35,8 @@ class AppController extends Controller {
 
 
 public function beforeFilter(){
-	$userDetails = $this->Session->read('Auth');
-	$this->set(compact('userDetails'));
+	$userData = $this->Session->read('Auth');
+	$this->set(compact('userData'));
 	}
 	
 	public $components = array(

@@ -14,12 +14,12 @@
                     <!-- <select name="<?php echo $process ;?>" class="form-control select-group<?php echo $dynamicId ;?>" id="<?php echo $dynamicId ;?>">
                         <option value="">--Select Process--</option> -->
                         <?php 
-                            echo $this->Form->input('Company.payment_term', array(
+                            echo $this->Form->input('Specification.process', array(
                                 'options' => array($processData),
                                 'label' => false,
                                 'style' => 'text-transform:capitalize',
                                 'class' => 'form-control select-group"'.$dynamicId.'"',
-                                'name' => $process,
+                                //'name' => $process,
                                 'id' => $dynamicId,
                                 'empty' => '--Select Process--'
                             ));
@@ -43,4 +43,5 @@
             </div>
         </section>
     </section>
+    <input type="hidden" name="data[Specification][]" value="Process">
 </li>
