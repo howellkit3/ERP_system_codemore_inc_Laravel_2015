@@ -38,7 +38,7 @@ $(document).ready(function() {
         $(this).attr('data',parseInt(varCounter));
         var nameArray = $(this).parents('ul.sortable').find('li.ui-state-default').size();
         
-        var realName = "data[Specification][speclabel]["+countername+"]";
+        var realName = "data[ProductSpecificationLabel]["+countername+"][name]";
         e.preventDefault();
 
         if(x < max_fields){ //max input box allowed
@@ -64,24 +64,25 @@ $(document).ready(function() {
 
     $(part_button).click(function(e){ //on add input button click
 
-        var quantitySpec = $('#ProductQuantity').val();
+        var quantitySpec = $('#ProductSpecificationQuantity').val();
 
         if(!$.isNumeric(quantitySpec)) {
 
             alert('Quantity is required');
-            $('#ProductQuantity').focus();
+            $('#ProductSpecificationQuantity').focus();
             return false;
 
         }
 
-        var countername = parseInt($(this).attr('data'));
-        var varCounter = countername + 1;
+        var counterData = parseInt($(this).attr('data'));
+
+        var varCounter = counterData + 1;
         $(this).attr('data',parseInt(varCounter));
         var nameArray = $(this).parents('ul.sortable').find('li.ui-state-default').size();
-        var dynamicId = "ItemGroup"+countername;
-        var itemgroupName = "data[Specification][itemgroupName]["+countername+"]";
-        var category = "data[Specification][cateogry]["+countername+"]";
-        var item = "data[Specification][item]["+countername+"]";
+        var dynamicId = "ItemGroup"+counterData;
+        var itemgroupName = "data[Specification][itemgroupName]["+counterData+"]";
+        var category = "data[Specification][cateogry]["+counterData+"]";
+        var item = "data[Specification][item]["+counterData+"]";
         e.preventDefault();
         var itemG = 0;
         var itemC = 0;
@@ -94,7 +95,7 @@ $(document).ready(function() {
             //call part.ctp
             $.ajax({ 
                 type: "GET", 
-                url: serverPath + "sales/products/part/"+varCounter+"/"+quantitySpec+"/"+itemgroupName+"/"+dynamicId+"/"+category+"/"+item, 
+                url: serverPath + "sales/products/part/"+varCounter+"/"+quantitySpec+"/"+itemgroupName+"/"+dynamicId+"/"+category+"/"+item+"/"+counterData, 
                 dataType: "html", 
                 success: function(partDataField){ 
 
@@ -109,13 +110,28 @@ $(document).ready(function() {
                         $('#itemGroup'+dynamicId).attr('value',itemGroup);
                         itemG = itemGroup;
                         if(itemG  == 0){
-                            console.log(itemG);
+                            
                             $('#product_search'+dynamicId).attr('disabled','true');
                         }else{
-                            console.log(itemG);
+                            
                             $('#product_search'+dynamicId).attr('disabled',false);
                             $('#product_search'+dynamicId).focus();
+                            $.ajax({
+                                type: "GET",
+                                url: serverPath + "sales/products/find_product_details/"+itemG,
+                                dataType: "html",
+                                success: function(groupdata) {
+                                    //console.log(data);
+                                    if(data){
+                                        $('.tableProduct'+dynamicId).html(groupdata); 
+                                    }else{
+                                        $('.tableProduct'+dynamicId).html('<font color="red"><b>No result..</b></font>'); 
+                                    }
+                                    
+                                }
+                            });
                         }
+                        
 
                     });
 
@@ -165,26 +181,6 @@ $(document).ready(function() {
                 
             });
 
-            //start//quantity unit data
-            $.ajax({
-                url: serverPath + "sales/products/unit_dropdown",
-                type: "get",
-                dataType: "json",
-                success: function(data) {
-
-                    $('.dropUnit').append($("<option></option>").attr("value",0).text("---Select Unit---"));
-
-                    $.each(data, function(key, value) {
-                                  
-                        $('.dropUnit')
-                             .append($("<option></option>")
-                             .attr("value",value.Unit.id)
-                             .text(value.Unit.unit));
-                       
-                    });
-                }
-            });
-           
             //start//computation for outs,paper quantity and rate
             $("body").on('keyup','.outs'+varCounter, function(e){
 
@@ -259,134 +255,138 @@ $(document).ready(function() {
             });
             //end//computation for outs,paper quantity and rate
 
-           
         }
 
     });
 
-    //$("body").on('change','#'+dynamicId, function(e){
     $(process_button).click(function(e){ //on add input button click
         e.preventDefault();
         var countername = parseInt($(this).attr('data'));
+
         var varCounter = countername + 1;
         $(this).attr('data',parseInt(varCounter));
         var nameArray = $(this).parents('ul.sortable').find('li.ui-state-default').size();
         var dynamicId = "Process"+countername;
         var realName = "speclabel["+countername+"]";
-        var process = "data[Specification][process]["+countername+"]";
-        
+        var process = "data[ProductSpecificationProcess]["+countername+"][process]";
+       
+        $.ajax({ 
+            type: "GET", 
+            url: serverPath + "sales/products/process/"+process+"/"+dynamicId, 
+            dataType: "html", 
+            success: function(processDataField){ 
+                $(wrapper).append(processDataField); 
+                $('#'+dynamicId).focus();
 
-            $.ajax({ 
-                type: "GET", 
-                url: serverPath + "sales/products/process/"+process+"/"+dynamicId, 
-                dataType: "html", 
-                success: function(processDataField){ 
-                    $(wrapper).append(processDataField); 
-                    $('#'+dynamicId).focus();
+                //checkbox fields
+                $("body").on('change','#'+dynamicId, function(e){
+                    var processVal = $(this).val();
+                    
+                    $.ajax({
+                        url: serverPath + "sales/products/find_checkbox/"+processVal,
+                        type: "get",
+                        dataType: "json",
+                        success: function(data) {
+                            $('.checkbox-nice1'+dynamicId).remove();
+                            
+                            $.each(data, function(key, value) {
+                                var removeSpace = value.SubProcess.name;
+                                var checkFieldNameNoSpace = removeSpace.replace(/\s+/g, "-");
+                                $('.check-item'+dynamicId).append('<div class="checkbox-nice1'+dynamicId+' checking" id="'+checkFieldNameNoSpace+dynamicId+'">\
+                                                        <input id="checkbox-inl-1" class="check-fields'+dynamicId+' '+checkFieldNameNoSpace+' check'+checkFieldNameNoSpace+dynamicId+'" data-processId="'+processVal+'" data-id="'+value.SubProcess.id+'" data-name="'+removeSpace+'" type="checkbox">\
+                                                        <label> '+value.SubProcess.name+' </label>\
+                                                    </div>');
 
-                    //checkbox fields
-                    $("body").on('change','#'+dynamicId, function(e){
-                        var processVal = $(this).val();
+                            }); 
+
+                        }
+                    });
+
+                });  
+
+                //checkbox trigger
+                var stepProcess = 0;
+                $("body").on('change','.check-fields'+dynamicId, function(e){
+                    
+                    if ($(this).is(":checked")) {
+                        stepProcess+=1;
+                        var checkFieldName = "data[ProductSpecificationProcess]["+countername+"]["+$(this).attr('data-name')+"]";
+                        var checkFieldNameval = $(this).attr('data-name');
+                        var subProcessId = $(this).attr('data-id');
+                        var processId = $(this).attr('data-processId');
+                        checkFieldNameNoSpace = checkFieldNameval.replace(/\s+/g, "-");
                         
-                        $.ajax({
-                            url: serverPath + "sales/products/find_checkbox/"+processVal,
-                            type: "get",
-                            dataType: "json",
-                            success: function(data) {
-                                $('.checkbox-nice1'+dynamicId).remove();
-                                //$('.appendField'+dynamicId).remove();
-
-                                $.each(data, function(key, value) {
-                                    var removeSpace = value.SubProcess.name;
-                                    var checkFieldNameNoSpace = removeSpace.replace(/\s+/g, "-");
-                                    $('.check-item'+dynamicId).append('<div class="checkbox-nice1'+dynamicId+' checking" id="'+checkFieldNameNoSpace+dynamicId+'">\
-                                                            <input id="checkbox-inl-1" class="check-fields'+dynamicId+' '+checkFieldNameNoSpace+' check'+checkFieldNameNoSpace+dynamicId+'" data-name="'+removeSpace+'" type="checkbox">\
-                                                            <label> '+value.SubProcess.name+' </label>\
+                        $('.check-fields-sort'+dynamicId).append('<div class="well span2 tile appendField appendField'+dynamicId+'" id="field'+checkFieldNameNoSpace+dynamicId+'">\
+                                                            <div class="input-group">\
+                                                                <span class="input-group-addon">\
+                                                                    <i class="fa fa-reorder"></i>\
+                                                                </span>\
+                                                                <input type="text" name="'+stepProcess+'" value="'+checkFieldNameval+'" class="form-control" disabled="disabled" />\
+                                                                <input type="hidden" name="data[ProductSpecificationProcess][]" value="'+subProcessId+'-'+processId+'" class="form-control dragFieldsName" />\
+                                                            </div>\
+                                                            <div class="input-group xbtn">\
+                                                                <a href="#" data-field="'+checkFieldNameNoSpace+'" class="remove_sort_field'+dynamicId+' remove_sort_field pull-right">\
+                                                                    <i class="fa fa-times-circle fa-lg"></i>\
+                                                                </a>\
+                                                            </div>\
                                                         </div>');
 
-                                }); 
+                        $("body").on('click','.remove_sort_field'+dynamicId, function(e){
+                   
+                            var removeField = $(this).parents('.appendField').find('.remove_sort_field'+dynamicId).attr('data-field');
+                           // var removeCheck = $(this).parents('section .dropItem').find('#check'+removeField+dynamicId).attr('data-name');
+                            $('#field'+removeField+dynamicId).remove();
+                            $('.check'+removeField+dynamicId).prop('checked', false);
+                            e.preventDefault();
 
-                            }
                         });
 
-                    });  
+                    e.preventDefault();
+                    } else {  
 
-                    //checkbox trigger
-                    $("body").on('change','.check-fields'+dynamicId, function(e){
-                    //$('.check-fields'+dynamicId+' input[type=checkbox]').change(function(e) {
+                        $('#field'+checkFieldNameNoSpace+dynamicId).remove();
                         
-                        //$('.appendField').remove();
-                        if ($(this).is(":checked")) {
-                            var checkFieldName = "data[Specification]["+$(this).attr('data-name')+"]";
-                            var checkFieldNameval = $(this).attr('data-name');
-                            checkFieldNameNoSpace = checkFieldNameval.replace(/\s+/g, "-");
-                            console.log($(this));
-                            $('.check-fields-sort'+dynamicId).append('<div class="well span2 tile appendField appendField'+dynamicId+'" id="field'+checkFieldNameNoSpace+dynamicId+'">\
-                                                                <div class="input-group">\
-                                                                    <span class="input-group-addon">\
-                                                                        <i class="fa fa-reorder"></i>\
-                                                                    </span>\
-                                                                    <input type="text" name="'+checkFieldName+'" value="'+checkFieldNameval+'" class="form-control" readonly />\
-                                                                </div>\
-                                                                <div class="input-group xbtn">\
-                                                                    <a href="#" data-field="'+checkFieldNameNoSpace+'" class="remove_sort_field'+dynamicId+' remove_sort_field pull-right">\
-                                                                        <i class="fa fa-times-circle fa-lg"></i>\
-                                                                    </a>\
-                                                                </div>\
-                                                            </div>');
+                    }
 
-                            $("body").on('click','.remove_sort_field'+dynamicId, function(e){
-                       
-                                var removeField = $(this).parents('.appendField').find('.remove_sort_field'+dynamicId).attr('data-field');
-                               // var removeCheck = $(this).parents('section .dropItem').find('#check'+removeField+dynamicId).attr('data-name');
-                                $('#field'+removeField+dynamicId).remove();
-                                $('.check'+removeField+dynamicId).prop('checked', false);
-                                e.preventDefault();
+                   
 
-                            });
+                    //for sortable fields from checkbox
+                    $(".grid").sortable({
+                        tolerance: 'pointer',
+                        revert: 'invalid',
+                        placeholder: 'span2 well placeholder tile',
+                        forceHelperSize: true
+                        // ,
+                        // start: function(event, ui) {
+                        //     var start_pos = ui.item.index();
+                        //     ui.item.data('name', start_pos);
+                        //     //$(this).attr('name',dragfieldposition);
+                        //     //console.log(start_pos);
 
-                         e.preventDefault();
-                        } else {  
+                        //     },
+                        // update: function (event, ui) {
+                        //     var start_pos = ui.item.data('start_pos');
+                        //     var end_pos = ui.item.index();
+                        //     ui.item.data('name', end_pos);
+                          
+                        //     var dragfieldposition = 0;
+                        //     $('.dragFieldsName').each(function(){
+                        //         var fieldName = "data[ProductSpecificationProcess]["+dragfieldposition+"]";
+                        //         $(this).attr('name',fieldName);
+                        //         dragfieldposition++;
 
-                            $('#field'+checkFieldNameNoSpace+dynamicId).remove();
-                            
-                        }
+                        //     });
+                        //     //$('#sortable li').removeClass('highlights');
+                        // }
+                    });
+                    
+                }); 
 
-                         //for sortable fields from checkbox
-                        $(".grid").sortable({
-                            tolerance: 'pointer',
-                            revert: 'invalid',
-                            placeholder: 'span2 well placeholder tile',
-                            forceHelperSize: true
-                        });
-                        
-                    }); 
 
-                } 
-                
-            });
+            } 
             
-            //processes data
-            // $.ajax({
-            //     url: serverPath + "sales/products/find_process",
-            //     type: "get",
-            //     dataType: "json",
-            //     success: function(data) {
-
-            //         $.each(data, function(key, value) {
-            //             //console.log(value);
-            //             $('#'+dynamicId)
-            //                  .append($("<option></option>")
-            //                  .attr("value",value.Process.id)
-            //                  .text(value.Process.name));
-                       
-            //         }); 
-                      
-            //     }
-            // });
-
+        });
             
-        //}
     });
 
     //remove fields
@@ -421,7 +421,12 @@ $(document).ready(function() {
     });
 
     //sorting fields
-    $( "#sortable" ).sortable();
+    $( "#sortable" ).sortable(function(e){
+        console.log('test');
+
+       
+
+    });
     //$( "#sortable" ).disableSelection();
 
 });

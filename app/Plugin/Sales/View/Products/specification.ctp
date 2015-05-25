@@ -25,7 +25,7 @@
 			</div>
 		</div>
 
-		<?php echo $this->Form->create('Product',array('url'=>(array('controller' => 'products','action' => 'specification'))));?>			
+		<?php echo $this->Form->create('Product',array('url'=>(array('controller' => 'products', 'action' => 'create_specification')),'class' => 'test','method' => 'post'));?>			
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="main-box">
@@ -60,6 +60,12 @@
 							                                                    'placeholder' => 'Item Number',
 							                                                    'fields' =>array('name')));
                                             ?>
+                                            <?php 
+	                                            echo $this->Form->input('Product.id', array(
+	                                            								'type' => 'hidden',
+	                                            								'class' => 'form-control item_type',
+							                                                    'label' => false));
+                                            ?>
 										</div>
 									</div>
 
@@ -80,7 +86,7 @@
 										<label class="col-lg-2 control-label">Size</label>
 										<div class="col-lg-2">
 											<?php 
-	                                            echo $this->Form->input('Product.size', array(
+	                                            echo $this->Form->input('ProductSpecification.size1', array(
 	                                            								'class' => 'form-control item_type',
 							                                                    'label' => false,
 							                                                    'placeholder' => 'Size'));
@@ -89,7 +95,7 @@
 										<label class="col-lg-1 sizeWith">mm &emsp; x</label>
 										<div class="col-lg-2">
 											<?php 
-	                                            echo $this->Form->input('Product.size', array(
+	                                            echo $this->Form->input('ProductSpecification.size2', array(
 	                                            								'class' => 'form-control item_type',
 							                                                    'label' => false,
 							                                                    'placeholder' => 'Size'));
@@ -98,7 +104,7 @@
 										<label class="col-lg-1 sizeWith">mm &emsp; x</label>
 										<div class="col-lg-2">
 											<?php 
-	                                            echo $this->Form->input('Product.size', array(
+	                                            echo $this->Form->input('ProductSpecification.size3', array(
 	                                            								'class' => 'form-control item_type',
 							                                                    'label' => false,
 							                                                    'placeholder' => 'Size'));
@@ -111,28 +117,26 @@
 										<label class="col-lg-2 control-label">Quantity</label>
 										<div class="col-lg-2">
 											<?php 
-												echo $this->Form->input('Product.quantity', array(
+												echo $this->Form->input('ProductSpecification.quantity', array(
 	                                            								'class' => 'form-control item_type number required',
 	                                            								'type' => 'number',
 							                                                    'label' => false,
 							                                                    'placeholder' => 'Quantity'));
 
-					                            ?>
+					                        ?>
 										</div>
 										<div class="col-lg-3">
 											<?php 
-												echo $this->Form->input('Product.quantity_unit_id', array(
+												echo $this->Form->input('ProductSpecification.quantity_unit_id', array(
 					                                'options' => array($unitData),  
 					                                'label' => false,
 					                                'class' => 'form-control required',
 					                                'empty' => '---Select Unit---'
 					                                 )); 
 
-					                            ?>
+					                        ?>
 										</div>
 									</div>
-
-
 								</div>
 							</div>
 						</div>

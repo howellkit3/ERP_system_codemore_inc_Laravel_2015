@@ -633,9 +633,22 @@ class ProductsController extends SalesAppController {
 
     }
 
-    public function part($varCounter,$quantitySpec,$itemgroupName,$dynamicId,$category,$item){
+    public function part($varCounter,$quantitySpec,$itemgroupName,$dynamicId,$category,$item,$counterData){
 
-    	$this->set(compact('varCounter','quantitySpec','itemgroupName','dynamicId','category','item'));
+    	$this->loadModel('Unit');
+
+		 //set to cache in first load
+		$unitData = Cache::read('unitData');
+		
+		if (!$unitData) {
+			
+			$unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
+															'order' => array('Unit.unit' => 'ASC')
+															));
+
+            Cache::write('unitData', $unitData);
+        }
+    	$this->set(compact('unitData','varCounter','quantitySpec','itemgroupName','dynamicId','category','item','counterData'));
 		$this->render('part');
 		
     }
@@ -688,23 +701,15 @@ class ProductsController extends SalesAppController {
 
 		$this->set(compact('unitData','product','productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData', 'companyData'));
 
-
-
     }
 
-    public function find_product_details($itemGroupId = null, $itemCategoryId = null, $itemtypeId = null){
+    public function find_product_details($itemGroupId = null){
     	
-    	$this->autoRender = false;
+    	//$this->autoRender = false;
     	
     	if($itemGroupId == 1) {
     		$ModelName = 'GeneralItem';
     		$searchedProduct = $this->GeneralItem->find('all',array(
-											'conditions' => array('AND' => array(
-												array('GeneralItem.category_id' => $itemCategoryId),
-												array('GeneralItem.type_id' => $itemtypeId)
-												)),
-											'fields' => array('GeneralItem.id','GeneralItem.name','GeneralItem.uuid'),
-											//'limit' => 20,
 											'order' => 'GeneralItem.name ASC'
 											));
     		
@@ -712,25 +717,13 @@ class ProductsController extends SalesAppController {
     	if($itemGroupId == 2) {
     		$ModelName = 'Substrate';
     		$searchedProduct = $this->Substrate->find('all',array(
-											'conditions' => array('AND' => array(
-												array('Substrate.category_id' => $itemCategoryId),
-												array('Substrate.type_id' => $itemtypeId)
-												)),
-											'fields' => array('Substrate.id','Substrate.name','Substrate.uuid'),
-											//'limit' => 10,
-											'order' => 'Substrate.name ASC'
+    										'order' => 'Substrate.name ASC'
 											));
     		
     	}
     	if($itemGroupId == 3) {
     		$ModelName = 'CompoundSubstrate';
     		$searchedProduct = $this->CompoundSubstrate->find('all',array(
-											'conditions' => array('AND' => array(
-												array('CompoundSubstrate.category_id' => $itemCategoryId),
-												array('CompoundSubstrate.type_id' => $itemtypeId)
-												)),
-											'fields' => array('CompoundSubstrate.id','CompoundSubstrate.name','CompoundSubstrate.uuid'),
-											//'limit' => 10,
 											'order' => 'CompoundSubstrate.name ASC'
 											));
     		
@@ -738,22 +731,12 @@ class ProductsController extends SalesAppController {
     	if($itemGroupId == 4) {
     		$ModelName = 'CorrugatedPaper';
     		$searchedProduct = $this->CorrugatedPaper->find('all',array(
-											'conditions' => array('AND' => array(
-												array('CorrugatedPaper.category_id' => $itemCategoryId),
-												array('CorrugatedPaper.type_id' => $itemtypeId)
-												)),
-											'fields' => array('CorrugatedPaper.id','CorrugatedPaper.name','CorrugatedPaper.uuid'),
-											//'limit' => 10,
 											'order' => 'CorrugatedPaper.name ASC'
 											));
     		
     	}
-    
-    	foreach ($searchedProduct as $key => $list) {    		
-    		$searchedProduct[$key][$ModelName]['name'] = utf8_encode($list[$ModelName]['name']);    		
-    	}
-   		//pr($searchedProduct);exit();
-		echo json_encode($searchedProduct);
+    	$this->set(compact('searchedProduct','ModelName'));
+    	$this->render('find_product_details');
 		
     }
 
@@ -810,4 +793,16 @@ class ProductsController extends SalesAppController {
 		$this->render('product_search');
 
     }
+
+    public function create_specification($productId){
+
+    	$userData = $this->Session->read('Auth');
+
+		if (!empty($this->request->data)) {
+			pr($this->request->data);exit();
+		}
+
+    }
+
+    
 }
