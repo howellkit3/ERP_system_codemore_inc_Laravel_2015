@@ -77,7 +77,7 @@
 										</div>
 									</div>
 
-									<div class="form-group">
+									<div class="form-group abc ">
 										<label class="col-lg-2 control-label"><span style="color:red">*</span>Manufacturer</label>
 										<div class="col-lg-8">
 											<?php echo $this->Form->input('CorrugatedPaper.manufacturer_id', array(
@@ -114,7 +114,7 @@
 								<?php $countLayers = 1; foreach($this->request->data['ItemGroupLayer'] as $key => $layers) : ?>
 
 
-							<div class="form-group ">
+							<div class="form-group layercount ">
 
 									<?php
 
@@ -145,8 +145,7 @@
    
 	                            <div class="form-group remove-field">	
 
-		                            <label class="col-lg-3 control-label">
-											Flute <?php echo $countLayers ?>
+		                            <label class="col-lg-3 control-label">Flute <?php echo $countLayers ?>
 									</label>		
 									<div class="col-lg-7">
 										<?php 

@@ -106,6 +106,8 @@
 										</div>
 									</div>
 
+									<a data-toggle="modal" href="#myModalLayer" class="btn btn-primary mrg-b-lg pull-right addSchedButton"><i class="fa fa-plus-circle fa-lg"></i> Add Layer</a>
+
 									<!--layers -->
 							<?php if (!empty($this->request->data['CompoundSubstrate']['layers'])) : ?>	
 

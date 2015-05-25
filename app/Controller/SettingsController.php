@@ -2073,6 +2073,8 @@ class SettingsController extends AppController
 
             $this->loadModel('ItemGroupLayer');
 
+            $this->loadModel('CorrugatedPaper');
+
             $userData = $this->Session->read('Auth');
 
             $itemGroupLayerData = $this->ItemGroupLayer->find('all', array('conditions' => array('ItemGroupLayer.foreign_key' => $this->request->data['CorrugatedPaper']['id'])));
@@ -2082,11 +2084,14 @@ class SettingsController extends AppController
              foreach ($itemGroupLayerData as $key => $userDataList) {
 
                 $this->request->data['ItemGroupLayer']['foreign_key'] = $itemGroupLayerData[$key]['ItemGroupLayer']['foreign_key'];
-                 $this->request->data['ItemGroupLayer']['model'] = $itemGroupLayerData[$key]['ItemGroupLayer']['model'];
-                 $this->request->data['ItemGroupLayer']['no'] = intval($itemGroupLayerData[$key]['ItemGroupLayer']['no' ]) + 1;
-                             
+                $this->request->data['ItemGroupLayer']['model'] = $itemGroupLayerData[$key]['ItemGroupLayer']['model'];
+                $this->request->data['ItemGroupLayer']['no'] = intval($itemGroupLayerData[$key]['ItemGroupLayer']['no' ]) + 1;
+                $this->request->data['CorrugatedPaper']['layers'] = intval($itemGroupLayerData[$key]['ItemGroupLayer']['no' ]);
+                            
                         }
 
+                       // pr($this->request->data); exit;
+        
             if ($this->request->is('post')) {
                 
                 if (!empty($this->request->data)) {
@@ -2094,6 +2099,8 @@ class SettingsController extends AppController
                     $this->ItemGroupLayer->create();
 
                     $this->id = $this->ItemGroupLayer->save($this->request->data);
+
+                    $this->id = $this->CorrugatedPaper->save($this->request->data);
 
                     $this->Session->setFlash(__('Add Layer Complete.'));
 
@@ -2105,7 +2112,7 @@ class SettingsController extends AppController
                 }
             }
 
-            $this->set(compact('statusData'));
+          
 
         }
 
