@@ -19,6 +19,8 @@ class ProductsController extends SalesAppController {
 
 
 	public function index() {
+
+		$userData = $this->Session->read('Auth');
 		
 		$this->loadModel('ItemCategoryHolder');
 

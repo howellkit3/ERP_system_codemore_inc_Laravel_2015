@@ -7,10 +7,9 @@
 					<span class="name">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 							<?php 
-							if(isset($userDetails)){
-								echo $userDetails['User']['first_name'].' '.$userDetails['User']['last_name'];
-							}
-							
+								if(isset($userData)){
+									echo $userData['User']['first_name'].' '.$userData['User']['last_name'];
+								}
 							?>
 							<!-- <i class="fa fa-angle-down"></i> -->
 						</a>
