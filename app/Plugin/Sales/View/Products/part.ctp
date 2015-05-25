@@ -9,7 +9,7 @@
         <div class="form-group">
             <label class="col-lg-2 control-label">Material</label>
             <div class="col-lg-6 materialName<?php echo $varCounter ;?>" style="display:none;">
-                <input type="text" class="form-control part_name<?php echo $varCounter ;?>" name="material_name" readonly />
+                <input type="text" class="form-control part_name<?php echo $varCounter ;?>" maxlenght="500" name="material_name" readonly />
             </div>
             <div class="col-lg-3">
                 <button type="button" data-toggle="modal" href="#myModal<?php echo $varCounter ;?>" class="btn btn-primary edit-button<?php echo $varCounter ;?>">
@@ -79,7 +79,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <div class="col-lg-2"></div>
+                            <div class="col-lg-3"></div>
                             <div class="col-lg-6">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-reorder"></i></span>
@@ -124,7 +124,7 @@
                                 <div class="filter-block pull-right">
                                     <div class="form-group">
 
-                                        <input placeholder="Search..." id="product_search<?php echo $dynamicId ;?>" name="product_name" class="form-control" type="search" />
+                                        <input placeholder="Search..." id="product_search<?php echo $dynamicId ;?>" name="product_name" class="form-control searchProduct" type="search" disabled="disabled" />
                                         <i class="fa fa-search search-icon"></i>
                                      
                                     </div>  
@@ -136,7 +136,7 @@
                                 <thead>
                                     <tr>
                                         <th><a href="#"><span>Select</span></a></th>
-                                        <th><a href="#"><span>Item Number</span></a></th>
+                                        <th style="width:200px;"><a href="#"><span>Item Number</span></a></th>
                                         <th><a href="#"><span>Name</span></a></th>
                                     </tr>
                                 </thead>
