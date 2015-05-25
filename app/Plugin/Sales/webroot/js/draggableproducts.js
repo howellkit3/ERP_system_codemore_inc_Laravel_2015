@@ -108,47 +108,26 @@ $(document).ready(function() {
                         itemGroup = $(this).val();
                         $('#itemGroup'+dynamicId).attr('value',itemGroup);
                         itemG = itemGroup;
+                        if(itemG  == 0){
+                            console.log(itemG);
+                            $('#product_search'+dynamicId).attr('disabled','true');
+                        }else{
+                            console.log(itemG);
+                            $('#product_search'+dynamicId).attr('disabled',false);
+                            $('#product_search'+dynamicId).focus();
+                        }
 
-                        $('.selectProductcategory'+dynamicId+' option[value!=""]').remove();
-                        $('.selectProductItem'+dynamicId+' option[value!=""]').remove();
-
-                        $.ajax({
-                            url: serverPath + "sales/products/find_dropdown/"+itemGroup,
-                            type: "get",
-                            dataType: "json",
-                            success: function(data) {
-                                
-                                $.each(data.CategoryName, function(key, value) {
-                                  
-                                    $('.selectProductcategory'+dynamicId)
-                                         .append($("<option></option>")
-                                         .attr("value",value.ItemCategoryHolder.id)
-                                         .text(value.ItemCategoryHolder.name));
-                                   
-                                });
-                                $.each(data.TypeName, function(key, value) {
-                                  
-                                    $('.selectProductItem'+dynamicId)
-                                         .append($("<option></option>")
-                                         .attr("value",value.ItemTypeHolder.id)
-                                         .text(value.ItemTypeHolder.name));
-                                }); 
-                                  
-                            }
-                        }); 
-                       
                     });
 
                     $("body").on('keyup','#product_search'+dynamicId, function(e){
-                            var searchInput = $(this).val();
-                            console.log(searchInput);
-                            //aurocomplete search product
+                        var searchInput = $(this).val();
+                        if(searchInput){
                             $.ajax({
                                 type: "GET",
-                                url: serverPath + "sales/products/product_search/"+itemGroup+"/"+searchInput,
+                                url: serverPath + "sales/products/product_search/"+itemGroup+"/"+searchInput+"/"+dynamicId,
                                 dataType: "html",
                                 success: function(data) {
-                                    console.log(data);
+                                    //console.log(data);
                                     if(data){
                                         $('.tableProduct'+dynamicId).html(data); 
                                     }else{
@@ -157,19 +136,31 @@ $(document).ready(function() {
                                     
                                 }
                             });
-                        });
 
-                    $('.selectProductcategory'+dynamicId).change(function(e){
-                        var cat = $(this).val();
-                        $('#itemGroupCategory'+dynamicId).attr('value',cat);
-                        itemC = cat; 
+                        }else{
+                            $('.tableProduct'+dynamicId).html('');
+                        }
+                        
                     });
-                    $('.selectProductItem'+dynamicId).change(function(e){
-                        var type = $(this).val(); 
-                        $('#itemGroupType'+dynamicId).attr('value',type);
-                        itemT = type; 
+                    
+                    //method for clicking radio trigger
+                    $("body").on('change','.selectSpecProduct'+dynamicId, function(e){
+                        var partName = $(this).val();
+                        console.log(partName);
+                        if ($(this).is(":checked")) {
+                            //part1 = decode_utf8(partName);
+                            //part = encode_utf8(partName);
+                            //console.log(part);
+                            $('.part_name'+varCounter).val(partName);
+                            $( '.close' ).trigger( 'click' );
+                            $('.allFieldPart'+varCounter).show();
+                            $('.materialName'+varCounter).show();
+                            $('.edit-button'+varCounter).html('<i class="fa fa-pencil fa-lg"></i>&emsp; Edit Material &nbsp;</button>');
+    
+                        }
+                        
                     });
-                    //end //triger of itemGroup,category and type dropdown
+
                 } 
                 
             });
@@ -268,163 +259,7 @@ $(document).ready(function() {
             });
             //end//computation for outs,paper quantity and rate
 
-            //start//FILTER FIELD from all dropdown
-            $('body').on('change', '.selectProductcategory'+dynamicId+',.selectProductItem'+dynamicId, function(){
-               e.preventDefault();
-                if(itemG != 0){
-                    
-                    if(itemC != 0){
-                       
-                        if(itemT != 0){
-                            $('.optionValue'+dynamicId).remove();
-                            $('#productTableInModal'+dynamicId).show(); 
-                            //search product with itemGroup,itemCategory and iteType
-                            $.ajax({
-                                url: serverPath + "sales/products/find_product_details/"+itemG+"/"+itemC+"/"+itemT,
-                                type: "get",
-                                dataType: "json",
-                                contentType: "application/html; charset=utf-8",
-                                success: function(data) {
-                                    // console.log(data);
-                                    
-                                    if(data == ''){
-                                        
-                                        $('.tableProduct'+dynamicId)
-                                                 .append($("<p class='noresult"+dynamicId+"'>No Result..</p>"));
-                                        
-                                    } else {
-                                        $('.noresult'+dynamicId).hide();
-                                        $.each(data, function(key, value) {
-                                            //console.log(value);
-                                            
-                                            if(itemG == 1){
-                                                $('.noresult'+dynamicId).hide();
-                                                $('.tableProduct'+dynamicId)
-                                                    .append($("<tr class='optionValue"+dynamicId+"'>\
-                                                                <td>\
-                                                                    <input type='radio' value='"+value.GeneralItem.name+"' class='selectSpecProduct"+dynamicId+"' name='optionsRadios'>\
-                                                                </td>\
-                                                                <td>"+value.GeneralItem.uuid+"</td>\
-                                                                <td>"+value.GeneralItem.name+"</td>\
-                                                               </tr>"));
-                                             
-                                            }
-                                            if(itemG == 2){
-                                                $('.noresult'+dynamicId).hide();
-                                                $('.tableProduct'+dynamicId)
-                                                    .append($("<tr class='optionValue"+dynamicId+"'>\
-                                                                <td>\
-                                                                    <input type='radio' value='"+value.Substrate.name+"' class='selectSpecProduct"+dynamicId+"' name='optionsRadios'>\
-                                                                </td>\
-                                                                <td>"+value.Substrate.uuid+"</td>\
-                                                                <td>"+value.Substrate.name+"</td>\
-                                                               </tr>"));
-                                             
-                                            }
-                                            if(itemG == 3){
-                                                $('.noresult'+dynamicId).hide();
-                                                $('.tableProduct'+dynamicId)
-                                                    .append($("<tr class='optionValue"+dynamicId+"'>\
-                                                                <td>\
-                                                                    <input type='radio' value='"+value.CompoundSubstrate.name+"' class='selectSpecProduct"+dynamicId+"' name='optionsRadios'>\
-                                                                </td>\
-                                                                <td>"+value.CompoundSubstrate.uuid+"</td>\
-                                                                <td>"+value.CompoundSubstrate.name+"</td>\
-                                                                </tr>"));
-                                             
-                                            }
-                                            if(itemG == 4){
-                                                $('.noresult'+dynamicId).hide();
-                                                $('.tableProduct'+dynamicId)
-                                                    .append($("<tr class='optionValue"+dynamicId+"'>\
-                                                                <td>\
-                                                                    <input type='radio' value='"+value.CorrugatedPaper.name+"' class='selectSpecProduct"+dynamicId+"' name='optionsRadios'>\
-                                                                </td>\
-                                                                <td>"+value.CorrugatedPaper.uuid+"</td>\
-                                                                <td>"+value.CorrugatedPaper.name+"</td>\
-                                                              </tr>"));
-                                             
-                                            }
-                                            
-                                        });
-
-                                        //method for clicking radio trigger
-                                        $("body").on('change','.selectSpecProduct'+dynamicId, function(e){
-                                            var partName = $(this).val();
-                                            if ($(this).is(":checked")) {
-                                              
-                                                // part1 = decode_utf8(partName);
-                                                // part = encode_utf8(part1);
-                                                //console.log(part);
-                                                console.log(part);
-                                                $('.part_name'+varCounter).val(partName);
-                                                $( '.close' ).trigger( 'click' );
-                                                $('.allFieldPart'+varCounter).show();
-                                                $('.materialName'+varCounter).show();
-                                                $('.edit-button'+varCounter).html('<i class="fa fa-pencil fa-lg"></i>&emsp; Edit Material &nbsp;</button>');
-
-                                                
-
-                                                
-                                            }
-                                            
-                                        });
-
-                                    }
-                                   
-                                      
-                                }
-                            });
-                        }
-                    }
-                }
-                if(itemG == 0){
-                    $('.optionValue'+dynamicId).remove();
-                }
-               
-            });
-            //end//FILTER FIELD from all dropdown
-
-            //pagination
-            //how much items per page to show  
-            var show_per_page = 5;  
-            //getting the amount of elements inside content div optionValue"+dynamicId
-            var number_of_items = $('.optionValue'+dynamicId).size(); 
-            // console.log(number_of_items);
-            // console.log('test'); 
-            //calculate the number of pages we are going to have  
-            var number_of_pages = Math.ceil(number_of_items/show_per_page);  
-          
-            //set the value of our hidden input fields  
-            $('.current_page').val(0);  
-            $('.show_per_page').val(show_per_page);  
-          
-            //now when we got all we need for the navigation let's make it '  
-          
-            /* 
-            what are we going to have in the navigation? 
-                - link to previous page 
-                - links to specific pages 
-                - link to next page 
-            */  
-            var navigation_html = '<a class="previous_link" href="javascript:previous();">Prev</a>';  
-            var current_link = 0;  
-            while(number_of_pages > current_link){  
-                navigation_html += '<a class="page_link" href="javascript:go_to_page(' + current_link +')" longdesc="' + current_link +'">'+ (current_link + 1) +'</a>';  
-                current_link++;  
-            }  
-            navigation_html += '<a class="next_link" href="javascript:next();">Next</a>';  
-          
-            $('.page_navigation').html(navigation_html);  
-          
-            //add active_page class to the first page link  
-            $('.page_navigation .page_link:first').addClass('active_page');  
-          
-            //hide all the elements inside content div  
-            $('.tableProduct'+dynamicId).children().css('display', 'none');  
-          
-            //and show the first n (show_per_page) elements  
-            $('.tableProduct'+dynamicId).children().slice(0, show_per_page).css('display', 'block'); 
+           
         }
 
     });
@@ -487,14 +322,14 @@ $(document).ready(function() {
                             checkFieldNameNoSpace = checkFieldNameval.replace(/\s+/g, "-");
                             console.log($(this));
                             $('.check-fields-sort'+dynamicId).append('<div class="well span2 tile appendField appendField'+dynamicId+'" id="field'+checkFieldNameNoSpace+dynamicId+'">\
-                                                                <a href="#" data-field="'+checkFieldNameNoSpace+'" class="remove_sort_field'+dynamicId+' remove_sort_field pull-right">\
-                                                                    <i class="fa fa-times-circle fa-lg"></i>\
-                                                                </a>\
                                                                 <div class="input-group">\
                                                                     <span class="input-group-addon">\
                                                                         <i class="fa fa-reorder"></i>\
                                                                     </span>\
                                                                     <input type="text" name="'+checkFieldName+'" value="'+checkFieldNameval+'" class="form-control" readonly />\
+                                                                    <a href="#" data-field="'+checkFieldNameNoSpace+'" class="remove_sort_field'+dynamicId+' remove_sort_field pull-right">\
+                                                                        <i class="fa fa-times-circle fa-lg"></i>\
+                                                                    </a>\
                                                                 </div>\
                                                             </div>');
 

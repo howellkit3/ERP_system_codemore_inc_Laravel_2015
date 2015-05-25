@@ -1,10 +1,10 @@
 <?php foreach ($categoryData as $key => $value) { ?>
 
-	<tr class='optionValue"+dynamicId+"'>
+	<tr class="optionValue<?php echo $dynamicId ?>">
     <td>
-        <input type="radio" value="" class="selectSpecProduct" name="optionsRadios">
+        <input type="radio" value="<?php echo $value[$ModelName]['name'] ?>" class="selectSpecProduct<?php echo $dynamicId ?>" name="optionsRadios">
     </td>
-    <td><?php echo $value['GeneralItem']['uuid'] ?></td>
-    <td><?php echo $value['GeneralItem']['name'] ?></td>
+    <td><?php echo $value[$ModelName]['uuid'] ?></td>
+    <td><?php echo $value[$ModelName]['name'] ?></td>
    </tr>
 <?php } ?>

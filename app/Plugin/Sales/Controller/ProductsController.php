@@ -761,7 +761,7 @@ class ProductsController extends SalesAppController {
 
 		echo json_encode($unitData);
     }
-    public function product_search($itemGroupId = null, $searchHint = null) {
+    public function product_search($itemGroupId = null, $searchHint = null ,$dynamicId) {
 
     	//$this->bind->GeneralItem('ItemCategoryHolder','ItemTypeHolder');
 
@@ -798,7 +798,7 @@ class ProductsController extends SalesAppController {
     	// 	$categoryData[$key][$ModelName]['name'] = utf8_encode($list[$ModelName]['name']);    		
     	// }
     	//pr($categoryData);exit();
-    	$this->set(compact('categoryData'));
+    	$this->set(compact('categoryData','ModelName','dynamicId'));
 		$this->render('product_search');
 
     }

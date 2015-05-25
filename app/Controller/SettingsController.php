@@ -1916,15 +1916,17 @@ class SettingsController extends AppController
 
             if(!empty($this->request->data['Role']['id']) && ($this->request->data['User']['id'])){
 
-               // pr($this->request->data); exit;
-               
                 if(!empty($this->request->data)){
-                    //pr($this->request->data);exit();
+                    
                     $this->User->id = $this->request->data['User']['id'];
                     $this->User->saveField('role_id', $this->request->data['Role']['id']);
-            
-                    $this->Session->write('Auth',$this->User->read(null,$this->request->data['User']['id']));
+                    
+                    $userData = $this->Session->read('Auth');
 
+                    if ($userData['User']['id'] == $this->request->data['User']['id'] ){
+                        $this->Session->write('Auth',$this->User->read(null,$this->request->data['User']['id']));
+                    }
+                   
                     $this->Session->setFlash(__('Permission Successfully added'),'success');
 
                     $this->redirect(
