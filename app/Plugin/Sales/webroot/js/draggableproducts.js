@@ -328,7 +328,7 @@ $(document).ready(function() {
                                                                     </span>\
                                                                     <input type="text" name="'+checkFieldName+'" value="'+checkFieldNameval+'" class="form-control" readonly />\
                                                                 </div>\
-                                                                <div class="input-group">\
+                                                                <div class="input-group xbtn">\
                                                                     <a href="#" data-field="'+checkFieldNameNoSpace+'" class="remove_sort_field'+dynamicId+' remove_sort_field pull-right">\
                                                                         <i class="fa fa-times-circle fa-lg"></i>\
                                                                     </a>\

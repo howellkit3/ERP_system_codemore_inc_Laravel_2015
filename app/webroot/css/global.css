@@ -310,8 +310,8 @@ body.dragging, body.dragging * {
 .remove_sort_field{
   z-index: 99999;
   position: absolute;
-  left: 333px;
-  top: -7px;
+  left: 0px;
+  top: -52px;
 }
 .appendField{
   position: relative;   
@@ -322,4 +322,7 @@ body.dragging, body.dragging * {
 #myModalDelivery{
   z-index: 1;
 }   
+.xbtn{
+  float: right;
+}
 
