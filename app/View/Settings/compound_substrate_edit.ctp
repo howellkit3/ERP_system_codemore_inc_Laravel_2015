@@ -91,6 +91,8 @@
 										</div>
 									</div>
 
+									<a data-toggle="modal" href="#myModalLayer" class="btn btn-primary mrg-b-lg pull-right addSchedButton align"><i class="fa fa-plus-circle fa-lg"></i> Add Layer</a>
+
 
 									<div class="form-group substrate-layers"> <br>
 																<label class="col-lg-2 control-label"><span style="color:red">*</span>Layer</label>
@@ -106,35 +108,37 @@
 										</div>
 									</div>
 
-									<a data-toggle="modal" href="#myModalLayer" class="btn btn-primary mrg-b-lg pull-right addSchedButton"><i class="fa fa-plus-circle fa-lg"></i> Add Layer</a>
-
+									
 									<!--layers -->
 							<?php if (!empty($this->request->data['CompoundSubstrate']['layers'])) : ?>	
 
 								<?php $countLayers = 1; foreach($this->request->data['ItemGroupLayer'] as $key => $layers) : ?>
-							<div class="form-group ">
+							<div class="form-group layercount">
 
-								<label class="col-lg-2 control-label">
+								<label class="col-lg-3 control-label">
 									<span style="color:red">*</span>Substrate <?php echo $countLayers ?>
 								</label>
 
-							<div class="col-lg-8">
+							<div class="col-lg-7">
 								<input type="hidden" maxlength="120"  class="form-control layer" name="data[ItemGroupLayer][no][]" value="<?php echo $key; ?>">
 							</div>
 
-							<div class="col-lg-8">
+							<div class="col-lg-7">
 								<input type="text" maxlength="120" required = "required" placeholder = "Substrate name" class="form-control layer" name="data[ItemGroupLayer][substrate][<?php echo $key ?>][substrate]" value="<?php echo $layers['substrate']?>">
 									<input type="hidden" required = "required" placeholder = "Substrate name" class="form-control layer" name="data[ItemGroupLayer][substrate][<?php echo $key ?>][id]" value="<?php echo $layers['id']?>">
 									<input type="hidden" class="form-control layer remove-field" name="data[ItemGroupLayer][substrate][<?php echo $key ?>][remove]" value="false">
 							</div>
 
-							<div class="form-group">
-                                <label for="inputPassword1" class="col-lg-2 control-label"></label>
-                                <div class="col-lg-1">        
-                                    <button type="button" class="remove-field remove-layers btn btn-danger" ><i class="fa fa-minus"></i> </button>
-                                </div>
-                            </div>
+							<?php	if( $key != 0) { ?>
 
+									<div class="form-group">
+												<label for="inputPassword1" class=" control-label"></label>
+										<div class="col-lg-1"> 
+											<button type="button" class="remove-field remove-layers btn btn-danger" ><i class="fa fa-minus" ></i> </button>
+										</div>
+									</div>
+
+									<?php } ?>
 
 							</div>
 								<?php $countLayers++; endforeach; ?>
@@ -169,8 +173,50 @@
 					</div>
 				</div>
 			</div>
-		<?php echo $this->Form->end(); ?>
-
-		
+		<?php echo $this->Form->end(); ?>	
 	</div>
 </div>
+
+<div class="modal fade" id="myModalLayer" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Add Layer</h4>
+                </div>
+                <div class="modal-body">
+                 <?php echo $this->Form->create('ItemGroupLayer',array('url'=>(array('controller' => 'settings','action' => 'substrate_layer')),'class' => 'form-horizontal'));?>
+               			  <?php 
+                                echo $this->Form->input('CompoundSubstrate.id', array(
+        								'class' => 'form-control item_type',
+                                        'label' => false,
+                                        'type' => 'hidden'
+                                        ));
+
+                            ?>
+               
+
+                   
+                        <div class="form-group">
+                            <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span>Substrate</label>
+                            <div class="col-lg-9">
+                                <?php 
+                                    echo $this->Form->input('ItemGroupLayer.substrate', array('class' => 'form-control required',
+                                                                                                           'required' => 'required', 
+                                                                                                            'label' => false));
+                                ?>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                             <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i> Submit</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            
+                        </div>
+                    </form>
+                    
+                </div>
+                
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal --> 
