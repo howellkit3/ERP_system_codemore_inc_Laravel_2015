@@ -23,7 +23,7 @@
 
 	    	!in_array('Send Quotation', $myPermission) ? $sendQuotation = 'disabled' : $sendQuotation = '' ;
 	    	
-	    	!in_array('Create Order', $myPermission) ? $createOrder = 'disabled' : $createOrder = '' ;
+	    	//!in_array('Create Order', $myPermission) ? $createOrder = 'disabled' : $createOrder = '' ;
 	    } else {
 	    	$printQuotation = '' ;
 	    	$editQuotation = '' ;
@@ -38,7 +38,7 @@
 
 	    	!in_array('Send Quotation', $myPermission) ? $sendQuotation = 'disabled' : $sendQuotation = '' ;
 	    	
-	    	!in_array('Create Order', $myPermission) ? $createOrder = 'disabled' : $createOrder = '' ;
+	    	//!in_array('Create Order', $myPermission) ? $createOrder = 'disabled' : $createOrder = '' ;
 	    } else {
 	    	$printQuotation = '' ;
 	    	$editQuotation = '' ;
@@ -55,8 +55,6 @@
 	
 			echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Create Order ', array('controller' => 'create_order', 'action' => 'index',$quotation['Quotation']['id'],$quotation['Quotation']['uuid']),array('class' =>'btn btn-primary pull-right '.$status.' '.$createOrder,'escape' => false)) ;
 		
-
-			
 		}else{
 
 			echo $this->Html->link('<font color="white"><i class="fa fa-gift fa-lg"></i> Sales Order</font> ', array('controller' => 'quotations', 'action' => 'create_order',$quotation['Quotation']['id']),array('class' =>'btn btn-success pull-right','escape' => false,'disabled' => 'disabled')) ;
