@@ -766,30 +766,38 @@ class ProductsController extends SalesAppController {
     	//$this->bind->GeneralItem('ItemCategoryHolder','ItemTypeHolder');
 
     	if($itemGroupId == 1) {
+    		$ModelName = 'GeneralItem';
     		$categoryData = $this->GeneralItem->find('all',array(
 												'conditions' => array(
         										'GeneralItem.name LIKE' => '%' . $searchHint . '%',
         										 )));
     	}
     	if($itemGroupId == 2) {
+    		$ModelName = 'Substrate';
     		$categoryData = $this->Substrate->find('all',array(
 												'conditions' => array(
         										'Substrate.name LIKE' => '%' . $searchHint . '%',
         										 )));
     	}
     	if($itemGroupId == 3) {
+    		$ModelName = 'CompoundSubstrate';
     		$categoryData = $this->CompoundSubstrate->find('all',array(
 												'conditions' => array(
         										'CompoundSubstrate.name LIKE' => '%' . $searchHint . '%',
         										 )));
     	}
     	if($itemGroupId == 4) {
+    		$ModelName = 'CorrugatedPaper';
     		$categoryData = $this->CorrugatedPaper->find('all',array(
 												'conditions' => array(
         										'CorrugatedPaper.name LIKE' => '%' . $searchHint . '%',
         										 )));
     	}
-    	
+
+    	// foreach ($categoryData as $key => $list) {    		
+    	// 	$categoryData[$key][$ModelName]['name'] = utf8_encode($list[$ModelName]['name']);    		
+    	// }
+    	//pr($categoryData);exit();
     	$this->set(compact('categoryData'));
 		$this->render('product_search');
 

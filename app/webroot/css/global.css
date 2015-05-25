@@ -283,13 +283,13 @@ body.dragging, body.dragging * {
   cursor: auto;
 }
 
-.scrollsection:hover{
+/*.scrollsection:hover{
   overflow: auto;
   height: 500px;
-}
+}*/
 .scrollsection{
   max-height: 500px;
-  overflow: hidden;
+  overflow: auto;
 }
 .dragHeader {
   border-bottom: solid 1px;
