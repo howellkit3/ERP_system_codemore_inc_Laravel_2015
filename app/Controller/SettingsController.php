@@ -2087,9 +2087,6 @@ class SettingsController extends AppController
                              
                         }
 
-           
-
-
             if ($this->request->is('post')) {
                 
                 if (!empty($this->request->data)) {
