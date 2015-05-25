@@ -11,8 +11,20 @@
             <div class="col-lg-8">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-reorder"></i></span>
-                    <select name="<?php echo $process ;?>" class="form-control select-group<?php echo $dynamicId ;?>" id="<?php echo $dynamicId ;?>">
-                        <option value="">--Select Process--</option>
+                    <!-- <select name="<?php echo $process ;?>" class="form-control select-group<?php echo $dynamicId ;?>" id="<?php echo $dynamicId ;?>">
+                        <option value="">--Select Process--</option> -->
+                        <?php 
+                            echo $this->Form->input('Company.payment_term', array(
+                                'options' => array($processData),
+                                'label' => false,
+                                'style' => 'text-transform:capitalize',
+                                'class' => 'form-control select-group"'.$dynamicId.'"',
+                                'name' => $process,
+                                'id' => $dynamicId,
+                                'empty' => '--Select Process--'
+                            ));
+
+                        ?>
                     </select>
                 </div>
             </div>

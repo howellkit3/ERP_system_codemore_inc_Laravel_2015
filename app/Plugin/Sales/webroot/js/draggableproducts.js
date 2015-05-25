@@ -266,7 +266,7 @@ $(document).ready(function() {
 
     //$("body").on('change','#'+dynamicId, function(e){
     $(process_button).click(function(e){ //on add input button click
-
+        e.preventDefault();
         var countername = parseInt($(this).attr('data'));
         var varCounter = countername + 1;
         $(this).attr('data',parseInt(varCounter));
@@ -274,7 +274,7 @@ $(document).ready(function() {
         var dynamicId = "Process"+countername;
         var realName = "speclabel["+countername+"]";
         var process = "data[Specification][process]["+countername+"]";
-        e.preventDefault();
+        
 
             $.ajax({ 
                 type: "GET", 
@@ -367,23 +367,23 @@ $(document).ready(function() {
             });
             
             //processes data
-            $.ajax({
-                url: serverPath + "sales/products/find_process",
-                type: "get",
-                dataType: "json",
-                success: function(data) {
+            // $.ajax({
+            //     url: serverPath + "sales/products/find_process",
+            //     type: "get",
+            //     dataType: "json",
+            //     success: function(data) {
 
-                    $.each(data, function(key, value) {
-                        //console.log(value);
-                        $('#'+dynamicId)
-                             .append($("<option></option>")
-                             .attr("value",value.Process.id)
-                             .text(value.Process.name));
+            //         $.each(data, function(key, value) {
+            //             //console.log(value);
+            //             $('#'+dynamicId)
+            //                  .append($("<option></option>")
+            //                  .attr("value",value.Process.id)
+            //                  .text(value.Process.name));
                        
-                    }); 
+            //         }); 
                       
-                }
-            });
+            //     }
+            // });
 
             
         //}

@@ -640,7 +640,13 @@ class ProductsController extends SalesAppController {
 
     public function process($process,$dynamicId){
 
-    	$this->set(compact('process','dynamicId'));
+    	$processData = $this->Process->find('list',
+											array('fields' => 
+												array('Process.id',
+												 	'Process.name'
+												 )
+												));
+    	$this->set(compact('process','dynamicId','processData'));
 		$this->render('process');
 
     }
