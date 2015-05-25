@@ -347,7 +347,7 @@
 	                                			<label class="col-lg-2 control-label">Schedule</label>
 												<div class="col-lg-8">
 													<?php 
-			                                              echo $this->Form->input('ClientOrderDeliverySchedule.schedule_field', array(
+			                                              echo $this->Form->input('ClientOrderDeliverySchedule.schedule', array(
 			                                            								'class' => 'form-control item_type',
 									                                                    'label' => false,
 									                                                    'type' => 'text',
