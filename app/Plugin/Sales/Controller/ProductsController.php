@@ -4,7 +4,7 @@ App::uses('SessionComponent', 'Controller/Component');
 
 class ProductsController extends SalesAppController {
 
-	public $uses = array('Sales.Company','Process','GeneralItem','Substrate','CompoundSubstrate','CorrugatedPaper');
+	public $uses = array('Sales.Company','Sales.Product','Process','GeneralItem','Substrate','CompoundSubstrate','CorrugatedPaper');
 	
 	function beforeFilter() {
 
@@ -45,6 +45,9 @@ class ProductsController extends SalesAppController {
 			'order' => 'ItemCategoryHolder.id DESC'));
 
 		$companyData = $this->Company->getList(array('id','company_name'));
+
+		$specs = $this->Product->find('first',  array(
+			'order' => 'ItemCategoryHolder.id DESC'));
 
 		$limit = 10;
 
@@ -817,6 +820,34 @@ class ProductsController extends SalesAppController {
 		if (!empty($this->request->data)) {
 
 			$specId = $this->Product->ProductSpecification->saveSpec($this->request->data,$userData['User']['id']);
+			
+			$labelArray = array();
+			$partArray = array();
+			$processArray = array();
+			foreach ($this->request->data['ProductSpecificationDetail'] as $key => $value) {
+				
+				if($value == 'Label'){
+					array_push($labelArray, $key);
+				}
+				if($value == 'Part'){
+					array_push($partArray, $key);
+				}
+				if($value == 'Process'){
+					array_push($processArray, $key);
+				}
+			}
+
+			foreach ($this->request->data['ProductSpecificationLabel'] as $key => $value) {
+				$this->request->data['ProductSpecificationLabel'][$key]['order'] = $labelArray[$key];
+			}
+
+			foreach ($this->request->data['ProductSpecificationPart'] as $key => $value) {
+				$this->request->data['ProductSpecificationPart'][$key]['order'] = $partArray[$key];
+			}
+
+			foreach ($this->request->data['ProductSpecificationProcess'] as $key => $value) {
+				$this->request->data['ProductSpecificationProcess'][$key]['order'] = $processArray[$key];
+			}
 
 			$getIds = [];
 
@@ -832,18 +863,14 @@ class ProductsController extends SalesAppController {
 			$saveArray = array();
 
 			foreach ($this->request->data['ProductSpecificationDetail'] as $key => $data) {
+				$newdata = split('-', $getIds[$key]);
 				
-				$saveArray[$key]['ProductSpecificationDetail']['model'] = $data;
-				$saveArray[$key]['ProductSpecificationDetail']['order'] = $key;
-				$saveArray[$key]['ProductSpecificationDetail']['foreign_key'] = $getIds[$key];
+				$saveArray[$key]['ProductSpecificationDetail']['model'] = $newdata[2];
+				$saveArray[$key]['ProductSpecificationDetail']['order'] = $newdata[1];
+				$saveArray[$key]['ProductSpecificationDetail']['foreign_key'] = $newdata[0];
 
 			}
-			pr($this->request->data);
-			pr($thisLabelIds);
-			pr($thisPartIds);
-			pr($thisProcessIds);
-			pr($getIds);
-			pr($saveArray);exit();
+			
 			$this->ProductSpecificationDetail->saveSpecDetail($saveArray,$userData['User']['id'],$this->request->data['Product']['uuid']);
 			
 			return $this->redirect(array('controller' => 'products', 'action' => 'index'));

@@ -37,21 +37,21 @@ class ProductSpecificationProcess extends AppModel {
 		
 		foreach ($processdata[$this->name] as $key => $processList) {
 			$this->create();
+
 			$processList['created_by'] = $auth;
 			$processList['modified_by'] = $auth;
 			$processList['product_specification_id'] = $specId;
 			$processList['product_id'] = $processdata['Product']['id'];
-			$processList['order'] = $processdata['Product']['id'];
 			$this->save($processList);
 
-			array_push($Ids, $this->id);
-
+			array_push($Ids, $this->id.'-'.$processList['order'].'-'.'Process');
+			
 			$this->ProductSpecificationProcessHolder->saveProcessHolder($processdata,$this->id,$auth);
 			
 			
 			
 		}
-
+		
 		return $Ids;
 
 	}

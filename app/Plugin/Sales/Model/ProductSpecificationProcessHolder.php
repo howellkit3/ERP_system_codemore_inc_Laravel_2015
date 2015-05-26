@@ -30,7 +30,9 @@ class ProductSpecificationProcessHolder extends AppModel {
 
 		$this->create();
 		foreach ($processData['ProductSpecificationProcess'] as $key => $processList) {
-
+			
+			unset($processList['order']);
+			
 			foreach ($processList as $key => $list) {
 				
 				$processSplit = split('-', $list);

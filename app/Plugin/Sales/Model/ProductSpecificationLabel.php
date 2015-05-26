@@ -32,13 +32,14 @@ class ProductSpecificationLabel extends AppModel {
 		
 		foreach ($labeldata[$this->name] as $key => $labelList) {
 			$this->create();
+			
 			$labelList['created_by'] = $auth;
 			$labelList['modified_by'] = $auth;
 			$labelList['product_specification_id'] = $specId;
 			$labelList['product_id'] = $labeldata['Product']['id'];
 			
 			$this->save($labelList);
-			array_push($Ids, $this->id);
+			array_push($Ids, $this->id.'-'.$labelList['order'].'-'.'Label');
 		}
 		
 		return $Ids;
