@@ -33,7 +33,7 @@ $('#CorrugatedPaperLayers').load(function(){
 
 $('body').on('click','.remove-layers',function(){
 
-		var parent = $(this).parent().parent().parent().parent();
+		var parent = $(this).parent();
 		
 		parent.find('.remove-field').val('true');
 

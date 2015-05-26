@@ -109,7 +109,7 @@
 									</div>
 
 									
-									<!--layers -->
+							<div class="form-group">		<!--layers -->
 							<?php if (!empty($this->request->data['CompoundSubstrate']['layers'])) : ?>	
 
 								<?php $countLayers = 1; foreach($this->request->data['ItemGroupLayer'] as $key => $layers) : ?>
@@ -131,12 +131,9 @@
 
 							<?php	if( $key != 0) { ?>
 
-									<div class="form-group">
-												<label for="inputPassword1" class=" control-label"></label>
-										<div class="col-lg-1"> 
+									
 											<button type="button" class="remove-field remove-layers btn btn-danger" ><i class="fa fa-minus" ></i> </button>
-										</div>
-									</div>
+										
 
 									<?php } ?>
 
@@ -144,6 +141,8 @@
 								<?php $countLayers++; endforeach; ?>
 
 							<?php endif; ?>
+
+							</div>
 
 									<div class="form-group">
 										<label class="col-lg-2 control-label">Remarks</label>

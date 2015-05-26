@@ -114,7 +114,7 @@
 								<?php $countLayers = 1; foreach($this->request->data['ItemGroupLayer'] as $key => $layers) : ?>
 
 
-							<div class="form-group layercount form-layer">
+							<div class="form-group layercount form-layer " >
 
 									<?php
 
@@ -125,63 +125,62 @@
 								                                                    'type' => 'hidden',
 						                        									'readonly' => 'readonly'
 						                        									));  
-						             ?>                
+						             ?>        
 
-								<div class="form-group">
-										<label class="col-lg-3 control-label">
-											<span style="color:red">*</span>Substrate <?php echo $countLayers ?>
-										</label>            			
-									<div class="col-lg-7">
-										<?php 
+						          
+										<label class="col-lg-3 control-label"><span style="color:red">*</span>Substrate <?php echo $countLayers ?>
+										</label>
+										<div class="col-lg-3">
+
+											<?php 
 	                                        echo $this->Form->input('ItemGroupLayer.'.$key.'.substrate', array(
 	                                        								'class' => 'form-control layer',
 																			'label' => false,
 																			'rule' => 'numeric',
+																			//'style'=>'width: 380px',
 																			'placeholder' => 'Layer'));
 	                                    ?>
-	                            			
-									</div>
-	                            </div>
-   
-	                            <div class="form-group remove-field ">	
+										</div>
 
-		                            <label class="col-lg-3 control-label">
-											Flute <?php echo $countLayers ?>
-									</label>		
-									<div class="col-lg-7">
-										<?php 
+										<label class="col-lg-1 control-label">Flute <?php echo $countLayers ?>
+										</label>
 
+										<div class="col-lg-3">
+											<?php 
 		                                    echo $this->Form->input('ItemGroupLayer.'.$key.'.flute', array(
 		                                    								'class' => 'form-control layer',
 																			'label' => false,
 																			'rule' => 'numeric',
+																			//'style'=>'width: 380px',
 																			'placeholder' => 'Layer'));
 		                                ?>
-		                    			
-									</div>
-
-									<?php	if( $key != 0) { ?>
-
-									<div class="form-group">
-												<label for="inputPassword1" class=" control-label"></label>
-										<div class="col-lg-1"> 
-											<button type="button" class="remove-field remove-layers btn btn-danger" ><i class="fa fa-minus" ></i> </button>
 										</div>
-									</div>
+
+										<?php
+
+									 	$keyHolderId = array();
+										array_push($keyHolderId, $key); 
+
+										if( $key != 0) { ?>
+
+										<button type="button" class="remove-field remove-layers btn btn-danger" ><i class="fa fa-minus" ></i> </button>
+
+										<!-- <div class="form-group">
+												<label for="inputPassword1" class=" control-label"></label>
+											<div class="col-lg-1"> 
+												
+											</div>
+										</div> -->
 
 									<?php } ?>
-					
-									<div class="form-group corrugatedPaper-layers"><label class="col-lg-3 control-label"></label>
-									<div class="col-lg-7"><hr style="color:#99CC99"></div></div>
 
-	                            </div>                         
+									      
+						                        
 							</div>
 
-								<?php $countLayers++; endforeach; ?>
+								<?php  $countLayers++; endforeach; ?>
 
 							<?php endif; ?>
-
-									
 
 									<div class="form-group "> <br>
 										<label class="col-lg-2 control-label">Brust</label>
@@ -301,7 +300,10 @@
 
     <style>
 
-    .form-layer {
+   /* .form-layer {
+    margin-bottom: 2px;*/
+
+     .abc {
     margin-bottom: 2px;
 }
 
