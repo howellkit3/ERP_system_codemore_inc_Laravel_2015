@@ -317,7 +317,7 @@ $(document).ready(function() {
                                                                     <i class="fa fa-reorder"></i>\
                                                                 </span>\
                                                                 <input type="text" name="'+stepProcess+'" value="'+checkFieldNameval+'" class="form-control" disabled="disabled" />\
-                                                                <input type="hidden" name="data[ProductSpecificationProcess][]" value="'+subProcessId+'-'+processId+'" class="form-control dragFieldsName" />\
+                                                                <input type="hidden" name="data[ProductSpecificationProcess]['+countername+'][]" value="'+subProcessId+'-'+processId+'" class="form-control dragFieldsName" />\
                                                             </div>\
                                                             <div class="input-group xbtn">\
                                                                 <a href="#" data-field="'+checkFieldNameNoSpace+'" class="remove_sort_field'+dynamicId+' remove_sort_field pull-right">\

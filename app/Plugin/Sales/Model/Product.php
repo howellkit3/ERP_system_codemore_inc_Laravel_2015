@@ -35,7 +35,6 @@ class Product extends AppModel {
 					'foreignKey' => 'item_category_holder_id',
 					'dependent' => true
 				),
-
 				'ItemTypeData' => array(
 					'className' => 'Sales.ItemType',
 					'foreignKey' => 'item_type_holder_id',
@@ -44,8 +43,19 @@ class Product extends AppModel {
 			),
 
 			'hasMany' => array(
+				
 				'ProductSpec' => array(
 				'className' => 'Sales.ProductSpec',
+				'foreignKey' => 'product_id',
+				'dependent' => true
+				),
+				'ProductSpecification' => array(
+				'className' => 'Sales.ProductSpecification',
+				'foreignKey' => 'product_id',
+				'dependent' => true
+				),
+				'ProductSpecificationDetail' => array(
+				'className' => 'Sales.ProductSpecificationDetail',
 				'foreignKey' => 'product_id',
 				'dependent' => true
 				)
