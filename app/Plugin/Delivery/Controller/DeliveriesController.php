@@ -5,12 +5,26 @@ App::uses('SessionComponent', 'Controller/Component');
 class DeliveriesController extends DeliveryAppController {
 
   public function index() {
-        $this->loadModel('Delivery.Schedule');
-        $scheduleData = $this->Schedule->find('all', array(
-                                                  'order' => array(
-                                                        'schedule DESC'
+
+        $this->loadModel('Sales.ClientOrderDeliverySchedule');
+
+        $this->loadModel('Sales.Company');
+
+        $this->loadModel('Sales.Quotation');
+
+        $this->loadModel('Sales.QuotationDetail');
+
+        $this->loadModel('Sales.ClientOrder');
+
+        $this->loadModel('Sales.Product');
+
+         $this->QuotationDetail->bind(array('Quotation', 'Product' ));
+
+        $this->ClientOrder->bind(array('ClientOrderDeliverySchedule' , 'Company'));
+
+        $scheduleData = $this->ClientOrder->find('all'
                                                   )
-                                            ));
+                                            ;
        
         $this->set(compact('scheduleData'));
    }
@@ -18,6 +32,7 @@ class DeliveriesController extends DeliveryAppController {
    public function delivery_info($id = null, $location = null){
       $url = $location;
       $this->loadModel('Delivery.Schedule');
+
       $scheduleInfo = $this->Schedule->find('first', array(
                               'condtions' => array(
                                 'sales_order_id' => $id
