@@ -46,8 +46,8 @@ class ProductsController extends SalesAppController {
 
 		$companyData = $this->Company->getList(array('id','company_name'));
 
-		$specs = $this->Product->find('first',  array(
-			'order' => 'ItemCategoryHolder.id DESC'));
+		// $specs = $this->Product->find('first',  array(
+		// 	'order' => 'ItemCategoryHolder.id DESC'));
 
 		$limit = 10;
 
