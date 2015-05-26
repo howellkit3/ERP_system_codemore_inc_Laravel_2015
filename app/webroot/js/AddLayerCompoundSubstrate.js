@@ -48,7 +48,7 @@ $(function(){
 
 $('body').on('click','.remove-layers',function(){
 
-		var parent = $(this).parent().parent().parent();
+		var parent = $(this).parent();
 
 		//console.log(parent.attr('class'));
 

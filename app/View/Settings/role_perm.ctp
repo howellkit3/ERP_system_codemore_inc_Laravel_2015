@@ -172,7 +172,9 @@
 					$('.permissionCheck').show();
 
 				}else{
+
 					$('.permissionCheck').hide();
+					
 				}
 
 				$.each(data, function(key, value) {

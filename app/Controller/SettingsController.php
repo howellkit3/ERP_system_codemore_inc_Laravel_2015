@@ -1930,7 +1930,7 @@ class SettingsController extends AppController
         $permissionDataList = $this->Permission->find('all',array('fields' => array('id','name')));
         $roleDataListLimit = $this->Role->find('list', array(
                                             'fields' => array('id','name'),
-                                            'conditions' => array('Role.id NOT' => array(1,2))
+                                            'conditions' => array('Role.id NOT' => array(1))
                                             ));
        
         if (!empty($this->request->data)) {
