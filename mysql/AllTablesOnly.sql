@@ -1579,3 +1579,77 @@ CREATE TABLE IF NOT EXISTS `sub_processes` (
 ENGINE = INNODB
 DEFAULT CHARACTER SET = latin1
 COLLATE = latin1_swedish_ci;
+
+
+-- bien 05-26-15 koufu_sale
+
+CREATE TABLE `product_specification_details` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) DEFAULT NULL,
+  `model` varchar(50) DEFAULT NULL,
+  `foreign_key` int(11) DEFAULT NULL,
+  `order` int(5) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` TIMESTAMP NULL DEFAULT NULL,
+  `modified` TIMESTAMP NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `product_specification_labels` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_specification_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `name` varchar(80) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` TIMESTAMP NULL DEFAULT NULL,
+  `modified` TIMESTAMP NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `product_specification_parts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_specification_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `material` varchar(80) DEFAULT NULL,
+  `part` varchar(80) DEFAULT NULL,
+  `rate` varchar(80) DEFAULT NULL,
+  `size1` varchar(80) DEFAULT NULL,
+  `size2` varchar(80) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `quantity_unit_id` int(11) DEFAULT NULL,
+  `paper_quantity` int(11) DEFAULT NULL,
+  `color` varchar(80) DEFAULT NULL,
+  `outs1` int(11) DEFAULT NULL,
+  `outs2` int(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` TIMESTAMP NULL DEFAULT NULL,
+  `modified` TIMESTAMP NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `product_specification_processes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_specification_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` TIMESTAMP NULL DEFAULT NULL,
+  `modified` TIMESTAMP NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `product_specification_process_holders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_specification_process_id` int(11) DEFAULT NULL,
+  `process_id` int(11) DEFAULT NULL,
+  `sub_process_id` int(11) DEFAULT NULL,
+  `order` int(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` TIMESTAMP NULL DEFAULT NULL,
+  `modified` TIMESTAMP NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;

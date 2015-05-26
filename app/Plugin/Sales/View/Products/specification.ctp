@@ -55,7 +55,7 @@
 											<?php 
 	                                            echo $this->Form->input('Product.uuid', array(
 	                                            								'class' => 'form-control item_type',
-	                                            								'disabled' => true,
+	                                            								'readonly' => true,
 							                                                    'label' => false,       
 							                                                    'placeholder' => 'Item Number',
 							                                                    'fields' =>array('name')));

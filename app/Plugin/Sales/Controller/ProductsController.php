@@ -804,11 +804,53 @@ class ProductsController extends SalesAppController {
 
     	$userData = $this->Session->read('Auth');
 
+    	$this->loadModel('Sales.ProductSpecificationDetail');
+
+    	$this->loadModel('Sales.Product');
+
+    	$this->loadModel('Sales.ProductSpecificationProcessHolder');
+
+    	$this->Product->bind(array('Sales.ProductSpecificationDetail','Sales.ProductSpecification'));
+
+    	$this->ProductSpecificationDetail->bind(array('Sales.ProductSpecificationLabel','Sales.ProductSpecificationPart','Sales.ProductSpecificationProcess'));
+		
 		if (!empty($this->request->data)) {
-			pr($this->request->data);exit();
+
+			$specId = $this->Product->ProductSpecification->saveSpec($this->request->data,$userData['User']['id']);
+
+			$getIds = [];
+
+			$thisLabelIds = $this->ProductSpecificationDetail->ProductSpecificationLabel->saveLabel($this->request->data,$userData['User']['id'],$specId);
+			$getIds = array_merge($getIds,$thisLabelIds);
+			
+			$thisPartIds = $this->ProductSpecificationDetail->ProductSpecificationPart->savePart($this->request->data,$userData['User']['id'],$specId);
+			$getIds = array_merge($getIds,$thisPartIds);
+			
+			$thisProcessIds = $this->ProductSpecificationDetail->ProductSpecificationProcess->saveProcess($this->request->data,$userData['User']['id'],$specId);
+			$getIds = array_merge($getIds,$thisProcessIds);
+
+			$saveArray = array();
+
+			foreach ($this->request->data['ProductSpecificationDetail'] as $key => $data) {
+				
+				$saveArray[$key]['ProductSpecificationDetail']['model'] = $data;
+				$saveArray[$key]['ProductSpecificationDetail']['order'] = $key;
+				$saveArray[$key]['ProductSpecificationDetail']['foreign_key'] = $getIds[$key];
+
+			}
+			pr($this->request->data);
+			pr($thisLabelIds);
+			pr($thisPartIds);
+			pr($thisProcessIds);
+			pr($getIds);
+			pr($saveArray);exit();
+			$this->ProductSpecificationDetail->saveSpecDetail($saveArray,$userData['User']['id'],$this->request->data['Product']['uuid']);
+			
+			return $this->redirect(array('controller' => 'products', 'action' => 'index'));
+			
+			
 		}
 
     }
 
-    
 }
