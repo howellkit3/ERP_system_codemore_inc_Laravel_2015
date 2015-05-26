@@ -77,7 +77,7 @@
 										</div>
 									</div>
 
-									<div class="form-group abc ">
+									<div class="form-group">
 										<label class="col-lg-2 control-label"><span style="color:red">*</span>Manufacturer</label>
 										<div class="col-lg-8">
 											<?php echo $this->Form->input('CorrugatedPaper.manufacturer_id', array(
@@ -92,7 +92,9 @@
 										</div>
 									</div>
 
-									<div class="form-group substrate-layers"> <br>
+									<a data-toggle="modal" href="#myModalLayer" class="btn btn-primary mrg-b-lg pull-right addSchedButton"><i class="fa fa-plus-circle fa-lg"></i> Add Layer</a>
+
+									<div class="form-group substrate-layers "> <br>
 										<label class="col-lg-2 control-label">Layer</label>
 										<div class="col-lg-8">
 											<?php 
@@ -107,14 +109,12 @@
 										</div>
 									</div>
 
-									<a data-toggle="modal" href="#myModalLayer" class="btn btn-primary mrg-b-lg pull-right addSchedButton"><i class="fa fa-plus-circle fa-lg"></i> Add Layer</a>
-
 								<?php if (!empty($this->request->data['CorrugatedPaper']['layers'])) : ?>	
 
 								<?php $countLayers = 1; foreach($this->request->data['ItemGroupLayer'] as $key => $layers) : ?>
 
 
-							<div class="form-group layercount ">
+							<div class="form-group layercount form-layer">
 
 									<?php
 
@@ -143,9 +143,10 @@
 									</div>
 	                            </div>
    
-	                            <div class="form-group remove-field">	
+	                            <div class="form-group remove-field ">	
 
-		                            <label class="col-lg-3 control-label">Flute <?php echo $countLayers ?>
+		                            <label class="col-lg-3 control-label">
+											Flute <?php echo $countLayers ?>
 									</label>		
 									<div class="col-lg-7">
 										<?php 
@@ -159,19 +160,19 @@
 		                    			
 									</div>
 
+									<?php	if( $key != 0) { ?>
+
 									<div class="form-group">
-
 												<label for="inputPassword1" class=" control-label"></label>
-
 										<div class="col-lg-1"> 
-
-											<button type="button" class="remove-field remove-layers btn btn-danger" ><i class="fa fa-minus"></i> </button>
-
+											<button type="button" class="remove-field remove-layers btn btn-danger" ><i class="fa fa-minus" ></i> </button>
 										</div>
 									</div>
 
-									<div class="form-group corrugatedPaper-layers"><label class="col-lg-2 control-label"></label>
-									<div class="col-lg-8"><hr style="color:#99CC99"></div></div>
+									<?php } ?>
+					
+									<div class="form-group corrugatedPaper-layers"><label class="col-lg-3 control-label"></label>
+									<div class="col-lg-7"><hr style="color:#99CC99"></div></div>
 
 	                            </div>                         
 							</div>
@@ -267,7 +268,7 @@
                             <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span>Substrate</label>
                             <div class="col-lg-9">
                                 <?php 
-                                    echo $this->Form->input('ItemGroupLayer.substrate', array('class' => 'form-control required',
+                                    echo $this->Form->input('ItemGroupLayer.substrate', array('class' => 'form-control required required',
                                                                                                            'required' => 'required', 
                                                                                                             'label' => false));
                                 ?>
@@ -275,7 +276,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span> Flute</label>
+                            <label for="inputPassword1" class="col-lg-2 control-label">Flute</label>
                             <div class="col-lg-9">
                                 <?php 
                                     echo $this->Form->input('ItemGroupLayer.flute', array('class' => 'form-control required addquantityLimit number required',
@@ -297,3 +298,11 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal --> 
+
+    <style>
+
+    .form-layer {
+    margin-bottom: 2px;
+}
+
+    </style>

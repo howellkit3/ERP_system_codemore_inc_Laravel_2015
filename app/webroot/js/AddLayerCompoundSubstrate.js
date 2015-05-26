@@ -1,6 +1,6 @@
 $(function(){
-	
-$("body").on('keyup','#CompoundSubstrateLayers', function(e){
+
+ $("body").on('keyup','#CompoundSubstrateLayers', function(e){
 
 	var option = $(this).val();
 	var selected = $(this).val();
@@ -49,12 +49,23 @@ $("body").on('keyup','#CompoundSubstrateLayers', function(e){
 $('body').on('click','.remove-layers',function(){
 
 		var parent = $(this).parent().parent().parent();
+
+		//console.log(parent.attr('class'));
+
+		 //var count  = $('.abc').length;
+
+		// alert(count);
 		
 		parent.find('.remove-field').val('true');
 
 		if (parent.find('.remove-field').length > 1) {
+
+			//alert('i entered if');
 				parent.attr('style','display:none');
+				parent.remove();
 		} else {
+
+			//alert('i entered else');
 			parent.remove();
 		}
 		
@@ -65,7 +76,7 @@ $('body').on('click','.remove-layers',function(){
 				$(this).find('.control-label').first().html('<span style="color:red">*</span>Substrate '+layer++);
 		});
 
-		$('#CompoundSubstrateLayers').val($('.substrate-layers:visible').length);
+		$('#CompoundSubstrateLayers').val($('.layercount').length);
 });
 
 });
