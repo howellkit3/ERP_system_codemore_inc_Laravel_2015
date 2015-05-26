@@ -703,39 +703,45 @@ class ProductsController extends SalesAppController {
 
     }
 
-    public function find_product_details($itemGroupId = null){
+    public function find_product_details($itemGroupId = null,$dynamicId){
     	
     	//$this->autoRender = false;
     	
     	if($itemGroupId == 1) {
     		$ModelName = 'GeneralItem';
     		$searchedProduct = $this->GeneralItem->find('all',array(
-											'order' => 'GeneralItem.name ASC'
+											'order' => 'GeneralItem.name ASC',
+											'limit' => 10
 											));
     		
     	}
     	if($itemGroupId == 2) {
     		$ModelName = 'Substrate';
     		$searchedProduct = $this->Substrate->find('all',array(
-    										'order' => 'Substrate.name ASC'
+    										'order' => 'Substrate.name ASC',
+    										'limit' => 10
 											));
     		
     	}
     	if($itemGroupId == 3) {
     		$ModelName = 'CompoundSubstrate';
     		$searchedProduct = $this->CompoundSubstrate->find('all',array(
-											'order' => 'CompoundSubstrate.name ASC'
+											'order' => 'CompoundSubstrate.name ASC',
+											'limit' => 10
 											));
     		
     	}
     	if($itemGroupId == 4) {
     		$ModelName = 'CorrugatedPaper';
     		$searchedProduct = $this->CorrugatedPaper->find('all',array(
-											'order' => 'CorrugatedPaper.name ASC'
+											'order' => 'CorrugatedPaper.name ASC',
+											'limit' => 10
 											));
     		
     	}
-    	$this->set(compact('searchedProduct','ModelName'));
+    	//pr($searchedProduct);
+    	$this->set(compact('searchedProduct','ModelName','dynamicId'));
+
     	$this->render('find_product_details');
 		
     }

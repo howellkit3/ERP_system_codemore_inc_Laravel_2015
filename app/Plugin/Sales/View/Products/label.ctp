@@ -16,5 +16,5 @@
           </div>
       </div>
   </section>
-  <input type="hidden" name="data[Specification][]" value="Label">
+  <input type="hidden" name="data[ProductSpecificationDetail][]" value="Label">
 </li>

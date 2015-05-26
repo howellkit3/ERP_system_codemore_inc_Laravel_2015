@@ -43,5 +43,5 @@
             </div>
         </section>
     </section>
-    <input type="hidden" name="data[Specification][]" value="Process">
+    <input type="hidden" name="data[ProductSpecificationDetail][]" value="Process">
 </li>

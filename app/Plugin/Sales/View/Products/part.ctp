@@ -56,7 +56,7 @@
                             //'name' => $process,
                             //'id' => $dynamicId,
                             'name' => 'data[ProductSpecificationPart]['.$counterData.'][quantity_unit_id]',
-                            'empty' => '--Select Process--'
+                            'empty' => '--Select Unit--'
                         ));
 
                     ?>
@@ -179,5 +179,5 @@
             </div>
         </div>
     </section>
-    <input type="hidden" name="data[Specification][]" value="Part">
+    <input type="hidden" name="data[ProductSpecificationDetail][]" value="Part">
 </li>
