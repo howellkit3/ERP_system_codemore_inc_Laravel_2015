@@ -15,8 +15,7 @@ class SchedulesController extends DeliveryAppController {
     public function view($id = null) {
 
         $salesOrderId = $id;
-       
-        
+               
         $scheduleInfo = $this->Schedule->find('first', array(
                                                   'conditions' => array(
                                                         'sales_order_id' => $salesOrderId

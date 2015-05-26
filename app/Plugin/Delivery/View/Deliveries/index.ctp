@@ -14,6 +14,7 @@
                         <thead>
                             <tr>
                                 <th><a href="#"><span>Sales Order</span></a></th>
+                             
                                 <th><a href="#"><span>Schedule</span></a></th>
                                 <th><a href="#"><span>Location</span></a></th>
                                 <th><a href="#"><span>Status</span></a></th>
@@ -21,70 +22,8 @@
                             </tr>
                         </thead>
 
-                        <?php 
-                        if(!empty($scheduleData)){
-                            foreach ($scheduleData as $scheduleDataList): ?>
-
-                                <tbody aria-relevant="all" aria-live="polite" role="alert">
-
-                                    <tr class="">
-
-                                        <td class="">
-                                            <?php echo $scheduleDataList['Schedule']['sales_order_id']; ?>  
-                                        </td>
-
-                                        <td class="">
-                                            
-                                             <?php echo $scheduleDataList['Schedule']['schedule'];?>  
-                                        </td>
-
-                                        <td>
-                                           <?php echo $scheduleDataList['Schedule']['location']; ?>  
-                                           
-                                        </td>
-
-                                        <td>
-                                           <?php echo $scheduleDataList['Schedule']['status']; ?>    
-                                        </td>
-                                        <td>
-                                            <?php
-                                                echo $this->Html->link('<span class="fa-stack">
-                                                                        <i class="fa fa-square fa-stack-2x"></i>
-                                                                        <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-                                                                        </span> ', array(
-                                                                        'controller' => 'Schedules', 
-                                                                        'action' => 'view',
-                                                                        $scheduleDataList['Schedule']['sales_order_id'] 
-                                                                                    ), array(
-                                                                        'class' =>' table-link',
-                                                                        'escape' => false,
-                                                                        'title'=>'View Information'
-                                                                    ));
-
-                                            ?>
-                                            <?php
-                                                echo $this->Html->link('<span class="fa-stack">
-                                                                        <i class="fa fa-square fa-stack-2x"></i>
-                                                                        <i class="fa fa fa-check-square fa-lg fa-stack-1x fa-inverse"></i>
-                                                                        </span> ', array( 
-                                                                        'controller' => 'deliveries', 
-                                                                        'action' => 'add',
-                                                                         $scheduleDataList['Schedule']['sales_order_id'], 
-                                                                         'schedule' 
-                                                                                ), array(
-                                                                        'class' =>' table-link',
-                                                                        'escape' => false,
-                                                                        'title'=>'Create Delivery Information'
-                                                        ));
-
-                                            ?>
-                                        </td>
-                                    </tr>
-
-                                </tbody>
-                        <?php 
-                            endforeach; 
-                        } ?> 
+                        <?php echo $this->element('schedule_requests_table'); ?>
+                      
                     </table>
                     <hr>
                 </div>
