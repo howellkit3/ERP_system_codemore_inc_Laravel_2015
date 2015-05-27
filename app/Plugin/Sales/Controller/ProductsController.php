@@ -28,8 +28,7 @@ class ProductsController extends SalesAppController {
 
         $this->loadModel('Company');
 
-		$this->loadModel('Sales.Product');
-
+		
 		$this->Product->recursive = 1;
 		
 		$itemCategoryData = $this->ItemCategoryHolder->find('list', array('fields' => array(
@@ -45,9 +44,6 @@ class ProductsController extends SalesAppController {
 			'order' => 'ItemCategoryHolder.id DESC'));
 
 		$companyData = $this->Company->getList(array('id','company_name'));
-
-		$specs = $this->Product->find('first',  array(
-			'order' => 'ItemCategoryHolder.id DESC'));
 
 		$limit = 10;
 
@@ -695,12 +691,16 @@ class ProductsController extends SalesAppController {
 
 		$this->Product->recursive = 1;
 
+		$this->Product->bind(array('Sales.ProductSpecification'));
+
 		$product = $this->request->data =  $this->Product->findById($productId);
 
 		$this->request->data['Company'] = $this->Company->read(null,$product['Product']['company_id'])['Company'];
 
 		$productData = $this->Product->find('all',array(
     		'order' => array('Product.id DESC')));	
+
+		$specsData = $this->Product->ProductSpecification->find('all');
 
 		$this->set(compact('unitData','product','productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData', 'companyData'));
 
