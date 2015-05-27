@@ -1,7 +1,7 @@
   <?php 
                         if(!empty($scheduleData)){
 
-                           // pr($scheduleData); exit;
+                            //pr($scheduleData); exit;
 
                             foreach ($scheduleData as $scheduleDataList): ?>
 
@@ -13,18 +13,29 @@
                                             <?php echo $scheduleDataList['ClientOrder']['uuid']; ?>  
                                         </td>
 
-                                        <td class="">
+                                       
+                                            <td  class="align">
+                                                
+                                                 <?php foreach($scheduleDataList['ClientOrderDeliverySchedule'] as $key => $layers) : ?>
 
-                                          <?php  foreach ($scheduleDataList['ClientOrderDeliverySchedule']['schedule'] as $key): 
-                                            
-                                              echo date('M d, Y', strtotime($key['schedule']));
-                                               endforeach; ?>  
-                                        </td>
+                                                 <?php echo date('M d, Y', strtotime($scheduleDataList['ClientOrderDeliverySchedule'][$key]['schedule']));?> 
 
-                                        <td>
-                                           <?php echo $scheduleDataList['ClientOrderDeliverySchedule']['location']; ?>  
-                                           
-                                        </td>
+                                                    <br>
+
+                                                   <?php endforeach; ?>
+                                            </td class = "align">
+
+                                            <td>
+                                                <?php foreach($scheduleDataList['ClientOrderDeliverySchedule'] as $key => $layers) : ?>
+
+                                               <?php echo $scheduleDataList['ClientOrderDeliverySchedule'][$key]['location']; ?>  
+
+                                               <br>
+                                                
+                                                <?php endforeach; ?>
+                                            </td>
+
+                                          
 
                                         <td>
                                            <?php //echo $scheduleDataList['ClientOrderDeliverySchedule']['status']; ?>    
