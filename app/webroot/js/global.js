@@ -119,6 +119,7 @@ function cloneInputTable(whatSection, thisElement) {
     $('.datepick').datepicker({'refresh' : true , format: 'yyyy-mm-dd'});
 
 }
+
 function removeCloneInputTable(whatSection)
 {   
      $('.' + whatSection).last().remove();

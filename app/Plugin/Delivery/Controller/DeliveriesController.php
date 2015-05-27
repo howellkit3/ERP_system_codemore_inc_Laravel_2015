@@ -4,6 +4,14 @@ App::uses('SessionComponent', 'Controller/Component');
 
 class DeliveriesController extends DeliveryAppController {
 
+    var $paginate = array( 
+        'ClientOrder' => array( 
+                 //'fields' => array('ClientOrder.uuid', 'Company.company_name', 'created','ItemCategoryHolder.name'),
+                'limit' => 10, 
+                'order' => 'ItemCategoryHolder.id DESC'
+            ),
+  ); 
+
   public function index() {
 
         $this->loadModel('Sales.ClientOrderDeliverySchedule');
@@ -18,15 +26,22 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->loadModel('Sales.Product');
 
-         $this->QuotationDetail->bind(array('Quotation', 'Product' ));
+         $this->ClientOrder->bind(array('ClientOrderDeliverySchedule' , 'Company', 'QuotationDetail','Product'));
 
-        $this->ClientOrder->bind(array('ClientOrderDeliverySchedule' , 'Company'));
+        $limit = 10;
 
-        $scheduleData = $this->ClientOrder->find('all'
-                                                  )
-                                            ;
+        $conditions = array();
+
+        $this->paginate = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            'fields' => array('ClientOrder.uuid', 'Company.company_name',  'Product.name', 'ClientOrder.po_number'),
+            'order' => 'ClientOrder.id DESC',
+        );
+
+        $scheduleData = $this->paginate('ClientOrder');
        
-        $this->set(compact('scheduleData'));
+        $this->set(compact('scheduleData', 'quotationData'));
    }
 
    public function delivery_info($id = null, $location = null){

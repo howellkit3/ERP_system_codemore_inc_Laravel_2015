@@ -1,8 +1,8 @@
 <?php $this->Html->addCrumb('Sales', array('controller' => 'customer_sales', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Quotation', array('controller' => 'quotation', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Create Order', array('controller' => 'quotation', 'action' => 'index',$quotationData['Quotation']['id'],$quotationData['Quotation']['uuid'])); ?>
-<?php echo $this->Html->script('Sales.inquiry');?>
-<?php echo $this->Html->script('Sales.quantityLimit');?>
+<?php  echo $this->Html->script('Sales.inquiry');?>
+<?php  echo $this->Html->script('Sales.quantityLimit');?>
 
 <?php echo $this->element('sales_option');?><br><br>
 
@@ -443,7 +443,7 @@
 
 			<section class="cloneMe scheduleSection">
 				<div class="row">
-					<div class="col-lg-12">
+					<div class="col-lg-12 disableClass">
 						<div class="main-box">
 							<header class="main-box-header clearfix">
 								<h2 class="pull-left">Client Order Delivery Schedule</h2>
@@ -451,6 +451,22 @@
 							<div class="main-box-body clearfix">
 								<div class="main-box-body clearfix">
 									<div class="form-horizontal">
+
+										<div class="form-group plusDisable">
+                                            <label for="inputEmail1" class="col-lg-2 control-label ">Delivery Type</label>
+                                            <div class="col-lg-2">
+                                                <?php 
+                                                    echo $this->Form->input('ClientOrderDeliverySchedule.0.delivery_type', array(
+                                                        'options' => array('Once', 'Partial'),
+                                                        'label' => false,
+                                                        'class' => 'form-control col-lg-4 required OnceSelected ',
+                                                        'empty' => '---Select Delivery Type---'
+                                                        
+                                                    ));
+                                                ?>
+
+                                            </div>
+                                    	</div>
 									
 										<div class="form-group">
 	                                    	<label class="col-lg-2 control-label">Schedule</label>
@@ -472,7 +488,7 @@
 											<div class="col-lg-8">
 												<?php 
 	                                                echo $this->Form->input('ClientOrderDeliverySchedule.0.location',array( 
-	                                                						'class' => 'form-control item_type schedClone', 
+	                                                						'class' => 'form-control item_type schedClone ', 
 	                                                    					'label' => false, 
 	                                                    					'required' => 'required',
 	                                                    					'placeholder' => 'Location',
@@ -487,8 +503,9 @@
 											<div class="col-lg-8">
 												<?php 
 	                                                echo $this->Form->input('ClientOrderDeliverySchedule.0.quantity',array( 
-	                                                						'class' => 'form-control item_type quantityLimit number schedClone', 
-	                                                    					'label' => false, 
+	                                                						'class' => 'form-control item_type quantityLimit number schedClone ', 
+	                                                    					'label' => false,
+	                                                    					'id' => 'totalQuantity',  
 	                                                    					'required' => 'required',
 	                                                    					'placeholder' => 'Quantity'
 	                                                    					));
@@ -496,13 +513,28 @@
 											</div>
 										</div>
 
-										<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
-                                    
+										<div class="form-group">
+                                            <label for="inputEmail1" class="col-lg-2 control-label">Allowance</label>
+                                            <div class="col-lg-2">
+                                                <?php 
+                                                    echo $this->Form->input('ClientOrderDeliverySchedule.0.allowance', array(
+                                                        'options' => array('With charge', 'Without Charge'),
+                                                        'label' => false,
+                                                        'class' => 'form-control col-lg-4 required',
+                                                        'empty' => '---Select Allowance---'
+                                                        
+                                                    ));
+                                                ?>
 
+                                            </div>
+                                    	</div>
+
+										<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
+                                
                                         <div class="form-group">
                                             <label for="inputPassword1" class="col-lg-2 control-label"></label>
                                             <div class="col-lg-10">
-                                                <button type="button" data-model='Address' class="add-field table-link danger btn btn-success" onclick="cloneDataSchedule('scheduleSection',this)"> <i class="fa fa-plus"></i></button>
+                                                <button type="button" data-model='Address' class="add-field table-link danger btn btn-success onceDisable" onclick="cloneDataSchedule('scheduleSection',this)"> <i class="fa fa-plus"></i></button>
                                                 <button type="button" class="remove-field btn btn-danger remove" onclick="removeClone('scheduleSection')"><i class="fa fa-minus"></i> </button>
                                             </div>
                                         </div>
@@ -692,3 +724,36 @@
 		<?php echo $this->Form->end(); ?>
 	</div>
 </div>
+
+
+<script>
+$(document).ready(function(){
+
+    $(".OnceSelected").change(function(){
+    if ($(".OnceSelected option:selected").text() == "Once") {
+    	var quantityValue = $('#quantity').val();
+    	$("#totalQuantity").val(quantityValue);
+    	 $(".onceDisable").hide();
+    	 $( ".disableClass" ).prop( "disabled", true );
+    	 //$(".disableClass").remove(); 
+    }else{
+    	$(".onceDisable").show();
+    	$( ".disableClass" ).prop( "disabled", false );
+    	$("#totalQuantity").val("");
+    }
+      
+    });
+
+    // $(".onceDisable").click(function(){
+   
+   	// 	//alert("a");
+    // 	  $(".plusDisable").children().hide();
+    // 	 //$(".plusDisable").Attr('disabled');
+
+   
+      
+    // });
+
+});
+
+</script>

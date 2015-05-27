@@ -312,5 +312,21 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+$(document).ready(function(){
+
+    $(".OnceSelected").change(function(){
+    if ($(".OnceSelected option:selected").text() == "Once") {
+    	var quantityValue = $('#quantity').val();
+    	$("#totalQuantity").val(quantityValue);
+    	 $(".onceDisable").hide();
+    	 $( ".disableClass" ).prop( "disabled", true );
+    }else{
+    	$(".onceDisable").show();
+    	$( ".disableClass" ).prop( "disabled", false );
+    	$("#totalQuantity").val("");
+    }
+      
+    });
+
 
 	

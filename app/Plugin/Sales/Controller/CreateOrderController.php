@@ -127,6 +127,8 @@ class CreateOrderController extends SalesAppController {
             	
             	$this->ClientOrder->bind(array('ClientOrderDeliverySchedule','ClientOrderItemDetail'));
 
+            	//pr($this->request->data); exit;
+
             	$this->id = $this->ClientOrder->saveClientOrder($this->request->data, $userData['User']['id']);
             	
             	$this->ClientOrder->ClientOrderDeliverySchedule->saveClientOrderDeliverySchedule($this->request->data, $userData['User']['id'], $this->id);
