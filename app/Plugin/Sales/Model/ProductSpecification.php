@@ -29,10 +29,20 @@ class ProductSpecification extends AppModel {
 
 			'hasMany' => array(
 				'ProductSpec' => array(
-				'className' => 'Sales.ProductSpec',
-				'foreignKey' => 'product_id',
-				'dependent' => true
-				)
+					'className' => 'Sales.ProductSpec',
+					'foreignKey' => 'product_id',
+					'dependent' => true
+				),
+				'ProductSpecificationLabel' => array(
+					'className' => 'Sales.ProductSpecificationLabel',
+					'foreignKey' => 'product_specification_id',
+					'dependent' => true
+				),
+				'ProductSpecificationPart' => array(
+					'className' => 'Sales.ProductSpecificationPart',
+					'foreignKey' => 'product_specification_id',
+					'dependent' => true
+				),
 			)
 		));
 

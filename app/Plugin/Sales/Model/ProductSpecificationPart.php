@@ -6,7 +6,9 @@ App::uses('AuthComponent', 'Controller/Component');
 class ProductSpecificationPart extends AppModel {
 	public $useDbConfig = 'koufu_sale';
     public $name = 'ProductSpecificationPart';
+    public $recursive = -1;
     public $actsAs = array('Containable');
+    public $useTable = 'product_specification_parts';
     
     public function bind($model = array('Group')){
 
@@ -18,6 +20,15 @@ class ProductSpecificationPart extends AppModel {
 				'foreignKey' => 'foreign_key',
 				'dependent' => true
 				)
+			),
+			'belongsTo' => array(
+
+				'ProductSpecification' => array(
+					'className' => 'Sales.ProductSpecification',
+					'foreignKey' => 'product_specification_id',
+					'dependent' => true
+				)
+
 			)
 
 		));

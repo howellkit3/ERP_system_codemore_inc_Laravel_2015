@@ -19,26 +19,31 @@ class ProductSpecificationDetail extends AppModel {
 					'foreignKey' => 'product_id',
 					'dependent' => true
 				),
-
 				'ProductSpecificationLabel' => array(
 					'className' => 'Sales.ProductSpecificationLabel',
-					'foreignKey' => 'foreign_key',
+					'foreignKey' => false,
+					'conditions' => array(
+						'ProductSpecificationLabel.product_specification_id = ProductSpecificationDetail.id'),	
 					'dependent' => true
 				),
-
 				'ProductSpecificationPart' => array(
 					'className' => 'Sales.ProductSpecificationPart',
-					'foreignKey' => 'foreign_key',
+					'foreignKey' => false,
+					'conditions' => array(
+						'ProductSpecificationPart.product_specification_id = ProductSpecificationDetail.id',
+						),	
 					'dependent' => true
 				),
-
 				'ProductSpecificationProcess' => array(
 					'className' => 'Sales.ProductSpecificationProcess',
-					'foreignKey' => 'foreign_key',
+					'foreignKey' => false,
+					'conditions' => array(
+						'ProductSpecificationProcess.product_specification_id = ProductSpecificationDetail.id',
+						),	
 					'dependent' => true
-				),
-				
-			)
+				)
+
+			),
 
 		));
 
@@ -59,6 +64,61 @@ class ProductSpecificationDetail extends AppModel {
 			// array_push($Ids, $this->id);
 		}
 		return $this->id;
+	}
+
+	public function findData($productUuid = null){
+
+		$specsList = $this->find('all',array(
+						'conditions' => array(
+							'ProductSpecificationDetail.product_id' => $productUuid),
+						'order' => 'ProductSpecificationDetail.order ASC'
+						// 'contain' => ''
+						));
+
+		$dataArray = array();
+
+		$this->bind(array('Sales.ProductSpecificationLabel','Sales.ProductSpecificationPart','Sales.ProductSpecificationProcess'));
+		// $this->ProductSpecificationProcess->bind(array('ProductSpecificationProcessHolder'));
+
+		$processHolder = ClassRegistry::init('Sales.ProductSpecificationProcessHolder');
+		// $processData = $this->ProductSpecificationProcessHolder->find('all');
+		
+		foreach ($specsList as $key => $list) {
+			$dataArray[$key] = $list;
+
+			switch ($list['ProductSpecificationDetail']['model']) {
+				case 'Label':
+					$model = 'ProductSpecificationLabel';
+					break;
+				case 'Part':
+					$model = 'ProductSpecificationPart';
+					break;
+				case 'Process':
+					$model = 'ProductSpecificationProcess';
+					break;
+			}
+			
+			if ($model){
+				$data = $this->$model->find('first',
+				array('conditions' => array('id' => $list['ProductSpecificationDetail']['foreign_key'])));
+				
+				$dataArray[$key][$model] = !empty($data[$model]) ? $data[$model] : array();  
+
+				
+				if($model == 'ProductSpecificationProcess'){
+					
+					$processData = $processHolder->find('all',
+										array('conditions' => array('product_specification_process_id' => $dataArray[$key][$model]['id'])));
+					
+					$dataArray[$key][$model]['ProcessHolder'] = !empty($processData) ? $processData: array();
+					
+					
+				}
+			}
+			
+		}
+		
+		return $dataArray;
 	}
 
 

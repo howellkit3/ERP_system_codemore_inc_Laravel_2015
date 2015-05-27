@@ -6,7 +6,9 @@ App::uses('AuthComponent', 'Controller/Component');
 class ProductSpecificationProcess extends AppModel {
 	public $useDbConfig = 'koufu_sale';
     public $name = 'ProductSpecificationProcess';
+    public $recursive = -1;
     public $actsAs = array('Containable');
+
     
     public function bind($model = array('Group')){
 
@@ -14,15 +16,32 @@ class ProductSpecificationProcess extends AppModel {
 			
 			'hasMany' => array(
 				'ProductSpecificationDetail' => array(
-				'className' => 'Sales.ProductSpecificationDetail',
-				'foreignKey' => 'foreign_key',
-				'dependent' => true
+					'className' => 'Sales.ProductSpecificationDetail',
+					'foreignKey' => 'foreign_key',
+					'dependent' => true
 				),
 				'ProductSpecificationProcessHolder' => array(
-				'className' => 'Sales.ProductSpecificationProcessHolder',
-				'foreignKey' => 'product_specification_process_id',
-				'dependent' => true
+					'className' => 'Sales.ProductSpecificationProcessHolder',
+					'foreignKey' => 'product_specification_process_id',
+					'dependent' => true
 				)
+			),
+			'belongsTo' => array(
+
+				'ProductSpecification' => array(
+					'className' => 'Sales.ProductSpecification',
+					'foreignKey' => 'product_specification_id',
+					'dependent' => true
+				),
+				// 'ProductSpecificationProcessHolder' => array(
+				// 	'className' => 'Sales.ProductSpecificationProcessHolder',
+				// 	'foreignKey' => false,
+				// 	'conditions' => array(
+				// 		'ProductSpecificationProcessHolder.product_specification_process_id = ProductSpecificationProcess.id',
+				// 		),	
+				// 	'dependent' => true
+				// )
+
 			)
 
 		));

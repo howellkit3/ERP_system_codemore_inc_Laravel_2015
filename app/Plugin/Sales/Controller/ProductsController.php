@@ -275,7 +275,8 @@ class ProductsController extends SalesAppController {
 
 		$this->request->data['Company'] = $this->Company->read(null,$product['Product']['company_id'])['Company'];
 
-		$productData = $this->Product->find('all',array(
+		$productData = $this->Product->find('first',array(
+			'conditions' => array('id' => $id),
     		'order' => array('Product.id DESC')));	
 
 		$this->set(compact('product','productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData', 'companyData'));
@@ -412,7 +413,7 @@ class ProductsController extends SalesAppController {
 		}
 	}
 
-	 public function deleteProduct($id) {
+	public function deleteProduct($id) {
      
 	   $this->loadModel('Sales.Product');
         if ($this->Product->delete($id)) {
@@ -449,7 +450,8 @@ class ProductsController extends SalesAppController {
 		$this->autoRender = false;
     	
     }
-     public function find_categ($itemId = null){
+    
+    public function find_categ($itemId = null){
 
     	$this->layout = false;
     	$this->loadModel('ItemCategoryHolder');
@@ -471,7 +473,8 @@ class ProductsController extends SalesAppController {
 		$this->autoRender = false;
     	
     }
-     public function find_contact($itemId = null){
+
+    public function find_contact($itemId = null){
 
     	$this->layout = false;
     	$this->loadModel('ContactPerson');
@@ -673,11 +676,34 @@ class ProductsController extends SalesAppController {
 
         $this->loadModel('Company');
 
+        $this->loadModel('Sales.ProductSpecificationDetail');
+
+        $this->loadModel('Sales.ProductSpecificationLabel');
+
 		$this->loadModel('Sales.Product');
 
+		$this->loadModel('Sales.ProductSpecification');
+		
 		$this->loadModel('Unit');
 
-		 //set to cache in first load
+		$this->loadModel('SubProcess');
+
+		$subProcess = $this->SubProcess->find('list',
+											array('fields' => 
+												array('SubProcess.id',
+												 	'SubProcess.name'
+												 )
+												));
+		
+		$processData = $this->Process->find('list',
+											array('fields' => 
+												array('Process.id',
+												 	'Process.name'
+												 )
+												));
+
+		// $this->
+		//set to cache in first load
 		$unitData = Cache::read('unitData');
 		
 		if (!$unitData) {
@@ -688,21 +714,26 @@ class ProductsController extends SalesAppController {
 
             Cache::write('unitData', $unitData);
         }
-
+       
 		$this->Product->recursive = 1;
 
-		$this->Product->bind(array('Sales.ProductSpecification'));
-
 		$product = $this->request->data =  $this->Product->findById($productId);
+		
+		$specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productId)));
+		
+		//find if product has specs
+		$formatDataSpecs = $this->ProductSpecificationDetail->findData($product['Product']['uuid']);
 
 		$this->request->data['Company'] = $this->Company->read(null,$product['Product']['company_id'])['Company'];
 
 		$productData = $this->Product->find('all',array(
     		'order' => array('Product.id DESC')));	
 
-		$specsData = $this->Product->ProductSpecification->find('all');
+		$this->set(compact('subProcess','processData','specs','formatDataSpecs','unitData','product','productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData', 'companyData'));
 
-		$this->set(compact('unitData','product','productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData', 'companyData'));
+		if(!empty($formatDataSpecs)){
+			$this->render('specification_edit');
+		}
 
     }
 
@@ -809,6 +840,12 @@ class ProductsController extends SalesAppController {
 
     	$this->loadModel('Sales.ProductSpecificationDetail');
 
+    	$this->loadModel('Sales.ProductSpecificationLabel');
+
+    	$this->loadModel('Sales.ProductSpecificationPart');
+
+    	$this->loadModel('Sales.ProductSpecificationProcess');
+
     	$this->loadModel('Sales.Product');
 
     	$this->loadModel('Sales.ProductSpecificationProcessHolder');
@@ -851,13 +888,13 @@ class ProductsController extends SalesAppController {
 
 			$getIds = [];
 
-			$thisLabelIds = $this->ProductSpecificationDetail->ProductSpecificationLabel->saveLabel($this->request->data,$userData['User']['id'],$specId);
+			$thisLabelIds = $this->ProductSpecificationLabel->saveLabel($this->request->data,$userData['User']['id'],$specId);
 			$getIds = array_merge($getIds,$thisLabelIds);
 			
-			$thisPartIds = $this->ProductSpecificationDetail->ProductSpecificationPart->savePart($this->request->data,$userData['User']['id'],$specId);
+			$thisPartIds = $this->ProductSpecificationPart->savePart($this->request->data,$userData['User']['id'],$specId);
 			$getIds = array_merge($getIds,$thisPartIds);
 			
-			$thisProcessIds = $this->ProductSpecificationDetail->ProductSpecificationProcess->saveProcess($this->request->data,$userData['User']['id'],$specId);
+			$thisProcessIds = $this->ProductSpecificationProcess->saveProcess($this->request->data,$userData['User']['id'],$specId);
 			$getIds = array_merge($getIds,$thisProcessIds);
 
 			$saveArray = array();

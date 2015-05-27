@@ -7,18 +7,29 @@ class ProductSpecificationLabel extends AppModel {
 
 	public $useDbConfig = 'koufu_sale';
     public $name = 'ProductSpecificationLabel';
+    public $recursive = -1;
     public $actsAs = array('Containable');
     
     public function bind($model = array('Group')){
 
 		$this->bindModel(array(
 			
-			'hasMany' => array(
-				'ProductSpecificationDetail' => array(
-				'className' => 'Sales.ProductSpecificationDetail',
-				'foreignKey' => 'foreign_key',
-				'dependent' => true
-				)
+			// 'hasMany' => array(
+
+			// 	'ProductSpecificationDetail' => array(
+			// 		'className' => 'Sales.ProductSpecificationDetail',
+			// 		'foreignKey' => 'foreign_key',
+			// 		'dependent' => true
+			// 	)
+			// ),
+			'belongsTo' => array(
+
+				// 'ProductSpecificationDetail' => array(
+				// 	'className' => 'Sales.ProductSpecificationDetail',
+				// 	'foreignKey' => 'foreign_key',
+				// 	'dependent' => true
+				// )
+
 			)
 
 		));

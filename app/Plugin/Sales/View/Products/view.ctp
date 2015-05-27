@@ -1,6 +1,6 @@
-<?php //$this->Html->addCrumb('Sales', array('controller' => 'customer_sales', 'action' => 'index')); ?>
-<?php //$this->Html->addCrumb('Clients Order', array('controller' => 'sales_orders', 'action' => 'index')); ?>
-<?php // $this->Html->addCrumb('View', array('controller' => 'sales_orders', 'action' => 'view',$productData['Product']['id'])); ?>
+<?php $this->Html->addCrumb('Sales', array('controller' => 'customer_sales', 'action' => 'index')); ?>
+<?php $this->Html->addCrumb('Clients Order', array('controller' => 'sales_orders', 'action' => 'index')); ?>
+<?php $this->Html->addCrumb('View', array('controller' => 'sales_orders', 'action' => 'view',$productData['Product']['id'])); ?>
 <?php //echo $this->Html->script('Sales.Product');?>
 
 <?php //pr($itemTypeData); exit;?>

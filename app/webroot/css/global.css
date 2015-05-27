@@ -326,3 +326,9 @@ body.dragging, body.dragging * {
   float: right;
 }
 
+#sortable1 {
+  list-style-type: none;
+  margin: auto;
+  padding: 0;
+  width: 100%;
+}
