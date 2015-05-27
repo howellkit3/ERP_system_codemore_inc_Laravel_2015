@@ -155,7 +155,7 @@
 								<div class="form-horizontal">	
 
 									<div class="form-group">
-										<div class="col-lg-4"></div>
+										<div class="col-lg-2"></div>
 										<div class="col-lg-2 button-spec">
 											<button type="button" data="0" class=" process_btn add_field_button btn btn-primary pull-rigth">Label </button>
 										</div>
