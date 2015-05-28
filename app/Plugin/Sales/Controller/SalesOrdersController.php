@@ -90,41 +90,32 @@ class SalesOrdersController extends SalesAppController {
 
         if ($this->request->data['ClientOrderDeliverySchedule']['delivery_type'] == "Once") {
 
-          //pr($this->request->data['ClientOrderDeliverySchedule']['id']); exit;
-
             $schedHolderId = array();
                
                   foreach ($this->request->data as $key => $idList) {
                           array_push($schedHolderId, $idList['id']); 
                   }
 
-                   // pr($schedData[0]); exit;
                     $dataHolder = array();
 
                     foreach ($schedData[0]['ClientOrderDeliverySchedule'] as $key => $sched) { 
 
                         if(in_array($schedData[0]['ClientOrderDeliverySchedule'][$key]['id'], $schedHolderId)){
 
-                        //  pr($this->request->data); exit;
-
-                      $result['ClientOrderDeliverySchedule'] = Set::classicExtract($this->request->data,'{s}');
-                     
-                      $this->ClientOrder->ClientOrderDeliverySchedule->saveClientOrderDeliverySchedule($result,$userData['User']['id'],$this->request->data['ClientOrderDeliverySchedule']['client_order_id']);
-                    
-                                              
+                            $result['ClientOrderDeliverySchedule'] = Set::classicExtract($this->request->data,'{s}');
+                           
+                            $this->ClientOrder->ClientOrderDeliverySchedule->saveClientOrderDeliverySchedule($result,$userData['User']['id'],$this->request->data['ClientOrderDeliverySchedule']['client_order_id']);
+                                        
                         }else{
-
-                           // pr('asd');
                          
                              $this->ClientOrderDeliverySchedule->delete($schedData[0]['ClientOrderDeliverySchedule'][$key]['id']);
                         }
+                     }
 
                         $this->Session->setFlash(__('Client order delivery details has been updated'), 'success');
 
-                      return $this->redirect(array('controller' => 'sales_orders','action' => 'view',$this->request->data['ClientOrderDeliverySchedule']['client_order_id']));
-  
-                    }
-         
+                      return $this->redirect(array('controller' => 'sales_orders','action' => 'view',$this->request->data['ClientOrderDeliverySchedule']['client_order_id']));     
+        
         }else{
             
 
