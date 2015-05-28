@@ -70,8 +70,9 @@ function cloneData(whatSection, thisElement)
 //for schedule cloning
 function cloneDataSchedule(whatSection, thisElement)
 {      
+
     var parentSection = $(thisElement).parents('.' + whatSection);
-    var data = $(parentSection).first().clone();
+    var data = $(parentSection).first().clone().addClass('OnceRemove');
     data.find('.remove').show();
     data = fieldResetSchedule(data, whatSection);
     $('.' + whatSection).last().after(data);
@@ -85,16 +86,25 @@ function cloneDataSchedule(whatSection, thisElement)
 }
 function fieldResetSchedule($form, section)
 {
-
+    
     var count = $('.' + section).length;
     
-    $form.find('.schedClone').each(function() {
+    $form.find('.schedClone, .sched').each(function() {
 
         var $this = $(this),
             nameProp = $this.prop('name'),
             newIndex = count;
             type = $this.prop('type');
        
+        if(type == "select")
+        {
+            console.log('twe');
+            $this.val('Partial');
+        }else{
+            console.log('wala');
+
+        }
+
         $this.prop('name', nameProp.replace("[0]", "[" + newIndex + "]"));
         $this.prop('name', nameProp.replace(/\[(\d+)\]/, function(str,p1){
             return '[' + (count) + ']'
@@ -119,6 +129,7 @@ function cloneInputTable(whatSection, thisElement) {
     $('.datepick').datepicker({'refresh' : true , format: 'yyyy-mm-dd'});
 
 }
+
 function removeCloneInputTable(whatSection)
 {   
      $('.' + whatSection).last().remove();

@@ -3,7 +3,7 @@
 
         <li class="dropdown hidden-xs">
            
-            <?php echo $this->Html->link("<span class='count'>Schedule Request</span>", array(
+            <?php echo $this->Html->link("<span class='count'>Delivery Monitoring</span>", array(
                                                                                             'controller' => 'deliveries', 
                                                                                             'action' => 'index',
                                                                                             ),

@@ -1,7 +1,6 @@
   <?php 
                         if(!empty($scheduleData)){
 
-                            //pr($scheduleData); exit;
 
                             foreach ($scheduleData as $scheduleDataList): ?>
 
@@ -13,33 +12,53 @@
                                             <?php echo $scheduleDataList['ClientOrder']['uuid']; ?>  
                                         </td>
 
-                                       
-                                            <td  class="align">
-                                                
-                                                 <?php foreach($scheduleDataList['ClientOrderDeliverySchedule'] as $key => $layers) : ?>
+                                        <td class="">
 
-                                                 <?php echo date('M d, Y', strtotime($scheduleDataList['ClientOrderDeliverySchedule'][$key]['schedule']));?> 
+                                            <?php echo $scheduleDataList['ClientOrder']['po_number']; ?>  
+                                        
+                                        </td>
 
-                                                    <br>
+                                        <td class="">
 
-                                                   <?php endforeach; ?>
-                                            </td class = "align">
+                                        <?php echo $scheduleDataList['Company']['company_name']; ?>  </a>
+                                    
+                                        </td>
 
-                                            <td>
-                                                <?php foreach($scheduleDataList['ClientOrderDeliverySchedule'] as $key => $layers) : ?>
+                                        <td>
+                              
+                                           <?php echo $scheduleDataList['Product']['name']; ?>  
+                                           <br>
+                                           
+                                        </td>
 
-                                               <?php echo $scheduleDataList['ClientOrderDeliverySchedule'][$key]['location']; ?>  
+                                        <td  class="align">
+                                            
+                                         <?php foreach($scheduleDataList['ClientOrderDeliverySchedule'] as $key => $layers) : ?>
 
-                                               <br>
-                                                
-                                                <?php endforeach; ?>
-                                            </td>
+                                             <?php echo date('M d, Y', strtotime($scheduleDataList['ClientOrderDeliverySchedule'][$key]['schedule']));?> 
 
-                                          
+                                            <br>
+
+                                           <?php endforeach; ?>
+
+                                        </td class = "align">
+
+                                        <td>
+
+                                            <?php foreach($scheduleDataList['ClientOrderDeliverySchedule'] as $key => $layers) : ?>
+
+                                           <?php echo $scheduleDataList['ClientOrderDeliverySchedule'][$key]['location']; ?>  
+
+                                           <br>
+                                            
+                                            <?php endforeach; ?>
+
+                                        </td>
 
                                         <td>
                                            <?php //echo $scheduleDataList['ClientOrderDeliverySchedule']['status']; ?>    
                                         </td>
+                                        
                                         <td>
                                             <?php
                                                 echo $this->Html->link('<span class="fa-stack">

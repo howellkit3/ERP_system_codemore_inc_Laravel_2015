@@ -30,6 +30,7 @@ $( document ).ready(function() {
 				allVal = total;
 				
 		}
+		
 		if(allVal == quantityValue){
 
 				$('.add-field , .remove-field').prop("disabled", true);
