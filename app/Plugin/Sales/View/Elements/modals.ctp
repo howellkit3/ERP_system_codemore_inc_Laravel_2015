@@ -453,8 +453,25 @@
                             ));
                     ?>
 
+                        <div class="form-group" id="existing_items">
+                                                <label class="col-lg-2 control-label"><span style="color:red">*</span>Delivery Type</label>
+                                                <div class="col-lg-9">
+                                                    <?php 
+                                                        echo $this->Form->input('ClientOrderDeliverySchedule.delivery_type', array(
+                                                                                        'empty' => '--- Select Delivery Type ---',
+                                                                                        //'options' => array('Once' => 'Once', 'Partial' => 'Partial'),
+                                                                                        'class' => 'form-control item_type editable required',
+                                                                                        'label' => false,
+                                                                                        'value' => 'Partial',
+                                                                                        'required' => 'required',
+                                                                                        'readonly' => 'readonly'
+                                                                                        ));
+                                                    ?>
+                            </div>
+                        </div>
+
                         <div class="form-group">
-                            <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span> Schedule</label>
+                            <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span>Schedule</label>
                             <div class="col-lg-9">
                                 <?php 
                                     echo $this->Form->input('ClientOrderDeliverySchedule.schedule', array(
@@ -488,6 +505,21 @@
                                                                                                         'label' => false,
                                                                                                         'required' => 'required'));
                                 ?>
+                            </div>
+                        </div>
+
+                         <div class="form-group" id="existing_items">
+                                                <label class="col-lg-2 control-label">Allowance</label>
+                                                <div class="col-lg-9">
+                                                    <?php 
+                                                        echo $this->Form->input('ClientOrderDeliverySchedule.allowance', array(
+                                                                                        'empty' => 'None',
+                                                                                        'options' => array('With charge' => 'With charge', 'Without charge' => 'Without charge'),
+                                                                                        'class' => 'form-control item_type editable',
+                                                                                        'label' => false,
+                                                                                        'readonly' => 'readonly'
+                                                                                        ));
+                                                    ?>
                             </div>
                         </div>
 

@@ -315,7 +315,7 @@
 				<div class="main-box">
 					<header class="main-box-header clearfix">
 						<h2 class="pull-left">Client Order Delivery Schedule</h2>
-						<a data-toggle="modal" href="#myModalDelivery" class="btn btn-primary mrg-b-lg pull-right addSchedButton"><i class="fa fa-plus-circle fa-lg"></i> Add Delivery Schedule</a>
+						<a data-toggle="modal" href="#myModalDelivery" class="btn btn-primary mrg-b-lg pull-right addSchedButton "><i class="fa fa-plus-circle fa-lg"></i> Add Delivery Schedule</a>
 					</header>
 					<div class="main-box-body clearfix">
 						<div class="main-box-body clearfix">
@@ -342,6 +342,24 @@
 							                                                	'value' => $schedule['client_order_id']));
 		                                       
 		                                    ?>
+
+		                                    <div class="form-group" id="existing_items">
+												<label class="col-lg-2 control-label">Delivery Type</label>
+												<div class="col-lg-8">
+													<?php 
+			                                            echo $this->Form->input('ClientOrderDeliverySchedule.delivery_type', array(
+			                                            								'empty' => '---- Select Delivery Type ----',
+			                                            								'options' => array('Once' => 'Once', 'Partial' => 'Partial'),
+			                                            								'class' => 'form-control item_type editable required',
+									                                                    'label' => false,
+									                                                    'required' => 'required',
+									                                                   	'readonly' => 'readonly',
+									                                                   	'value' => $schedule['delivery_type']
+									                                                    ));
+			                                        ?>
+												</div>
+												
+											</div>
 
 	                                		<div class="form-group">
 	                                			<label class="col-lg-2 control-label">Schedule</label>
@@ -389,21 +407,41 @@
 									                                                    'readonly' => 'readonly',
 									                                                    'value' => $schedule['quantity']));
 			                                        ?>
-			                                        <br>
+
+												</div>
+											</div>
+
+											<div class="form-group" id="existing_items">
+												<label class="col-lg-2 control-label">Allowance</label>
+												<div class="col-lg-8">
+													<?php 
+			                                            echo $this->Form->input('ClientOrderDeliverySchedule.allowance', array(
+			                                            								'empty' => '---Select Allowance---',
+			                                            								'options' => array('With charge' => 'With charge' , 'Without charge' => 'Without charge'),
+			                                            								'class' => 'form-control item_type editable',
+									                                                    'label' => false,
+									                                                   	'readonly' => 'readonly',
+									                                                    'value' => $schedule['allowance']));
+			                                        ?>
+
+			                                         <br>
 
 			                                        <button type="button" class="btn btn-primary pull-left buttonEdit" style="margin-right:13px;" >Edit</button> 
 
 													<button type="submit" class="btn btn-primary pull-left editable" id = "submit" disabled onclick="AddAttr()">Submit</button>
-													  
+
 												</div>
+												
 											</div>
 
 											<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
 										</div>
 
-									<?php echo $this->Form->end(); ?>
+										<?php echo $this->Form->end(); ?>
 
 								<?php endforeach; ?> 
+
+								
 
 							</div>
 						</div>

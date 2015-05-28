@@ -89,23 +89,14 @@ function fieldResetSchedule($form, section)
     
     var count = $('.' + section).length;
     
-    $form.find('.schedClone, .sched').each(function() {
+    $form.find('.schedClone').each(function() {
 
         var $this = $(this),
             nameProp = $this.prop('name'),
             newIndex = count;
             type = $this.prop('type');
        
-        if(type == "select")
-        {
-            console.log('twe');
-            $this.val('Partial');
-        }else{
-            console.log('wala');
-
-        }
-
-        $this.prop('name', nameProp.replace("[0]", "[" + newIndex + "]"));
+        //$this.prop('name', nameProp.replace("[0]", "[" + newIndex + "]"));
         $this.prop('name', nameProp.replace(/\[(\d+)\]/, function(str,p1){
             return '[' + (count) + ']'
         }));
