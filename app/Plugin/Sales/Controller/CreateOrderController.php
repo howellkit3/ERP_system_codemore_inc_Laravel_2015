@@ -123,11 +123,12 @@ class CreateOrderController extends SalesAppController {
 	
 		if ($this->request->is('post')) {
 
+
             if (!empty($this->request->data)) {
             	
             	$this->ClientOrder->bind(array('ClientOrderDeliverySchedule','ClientOrderItemDetail'));
 
-            	//pr($this->request->data); exit;
+            	//pr($this->request->data); exit();
 
             	$this->id = $this->ClientOrder->saveClientOrder($this->request->data, $userData['User']['id']);
             	

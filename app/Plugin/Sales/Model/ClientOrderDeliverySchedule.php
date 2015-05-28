@@ -70,6 +70,7 @@ class ClientOrderDeliverySchedule extends AppModel {
 			
 			if (!empty($clientOrderData[$this->name])) {
 				
+				//$clientOrderDetails['delivery_type'] = 'Once';
 				$clientOrderDetails['created_by'] = $auth;
 				$clientOrderDetails['modified_by'] = $auth;
 				$clientOrderDetails['client_order_id'] = $clientOrderId;

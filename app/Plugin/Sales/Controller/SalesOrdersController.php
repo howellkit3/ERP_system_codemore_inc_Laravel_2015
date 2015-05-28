@@ -78,14 +78,56 @@ class SalesOrdersController extends SalesAppController {
 	public function add_schedule() {
 
       //new code bienskie noted:all adding schedule can use this controller
+      $this->loadModel('Sales.ClientOrderDeliverySchedule');
+
       $this->ClientOrder->bind(array('ClientOrderDeliverySchedule'));
 
       $userData = $this->Session->read('Auth');
 
+          $schedData = $this->ClientOrder->find('all', array('conditions' => array('ClientOrder.id' => $this->request->data['ClientOrderDeliverySchedule']['client_order_id'])));
+
       if ($this->request->is('post')) {
 
-        //pr($this->request->data['ClientOrderDeliverySchedule']['schedule']); exit;
-     
+        if ($this->request->data['ClientOrderDeliverySchedule']['delivery_type'] == "Once") {
+
+          //pr($this->request->data['ClientOrderDeliverySchedule']['id']); exit;
+
+            $schedHolderId = array();
+               
+                  foreach ($this->request->data as $key => $idList) {
+                          array_push($schedHolderId, $idList['id']); 
+                  }
+
+                   // pr($schedData[0]); exit;
+                    $dataHolder = array();
+
+                    foreach ($schedData[0]['ClientOrderDeliverySchedule'] as $key => $sched) { 
+
+                        if(in_array($schedData[0]['ClientOrderDeliverySchedule'][$key]['id'], $schedHolderId)){
+
+                        //  pr($this->request->data); exit;
+
+                      $result['ClientOrderDeliverySchedule'] = Set::classicExtract($this->request->data,'{s}');
+                     
+                      $this->ClientOrder->ClientOrderDeliverySchedule->saveClientOrderDeliverySchedule($result,$userData['User']['id'],$this->request->data['ClientOrderDeliverySchedule']['client_order_id']);
+                    
+                                              
+                        }else{
+
+                           // pr('asd');
+                         
+                             $this->ClientOrderDeliverySchedule->delete($schedData[0]['ClientOrderDeliverySchedule'][$key]['id']);
+                        }
+
+                        $this->Session->setFlash(__('Client order delivery details has been updated'), 'success');
+
+                      return $this->redirect(array('controller' => 'sales_orders','action' => 'view',$this->request->data['ClientOrderDeliverySchedule']['client_order_id']));
+  
+                    }
+         
+        }else{
+            
+
         if (!empty($this->request->data)) {
 
                if (!empty($this->request->data['ClientOrderDeliverySchedule']['location']) && ($this->request->data['ClientOrderDeliverySchedule']['quantity']) && ($this->request->data['ClientOrderDeliverySchedule']['schedule'])) {
@@ -94,7 +136,7 @@ class SalesOrdersController extends SalesAppController {
                      
                       $this->ClientOrder->ClientOrderDeliverySchedule->saveClientOrderDeliverySchedule($result,$userData['User']['id'],$this->request->data['ClientOrderDeliverySchedule']['client_order_id']);
                     
-                      $this->Session->setFlash(__('Client order delivery details has been updated.'));
+                      $this->Session->setFlash(__('Client order delivery details has been updated'), 'success');
 
                       return $this->redirect(array('controller' => 'sales_orders','action' => 'view',$this->request->data['ClientOrderDeliverySchedule']['client_order_id']));
 
@@ -109,7 +151,7 @@ class SalesOrdersController extends SalesAppController {
         }
 
       }
-		
+		}
 	}
 
 

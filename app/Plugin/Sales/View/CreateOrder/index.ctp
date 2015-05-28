@@ -459,7 +459,7 @@
                                                     echo $this->Form->input('ClientOrderDeliverySchedule.0.delivery_type', array(
                                                         'options' => array('Once' => 'Once', 'Partial' => 'Partial'),
                                                         'label' => false,
-                                                        'class' => 'form-control col-lg-4 required OnceSelected sched required',
+                                                        'class' => 'form-control col-lg-4 required OnceSelected sched required schedClone',
                                                         'empty' => '---Select Delivery Type---'
                                                         
                                                     ));
@@ -517,7 +517,7 @@
                                                     echo $this->Form->input('ClientOrderDeliverySchedule.0.allowance', array(
                                                         'options' => array('With charge' => 'With charge' , 'Without Charge' => 'Without charge'),
                                                         'label' => false,
-                                                        'class' => 'form-control col-lg-4 ',
+                                                        'class' => 'form-control col-lg-4 schedClone ',
                                                         'empty' => '---Select Allowance---'
                                                         
                                                     ));
