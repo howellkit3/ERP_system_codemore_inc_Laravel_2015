@@ -928,8 +928,7 @@ class QuotationsController extends SalesAppController {
 			
 			$email = new CakeEmail('mandrill');
 
-			// //$email->from(Configure::read('defaultEmail'));
-			// $email->from($userData['User']['email']);
+			$email->from($userData['User']['email']);
 
 			$email->to($to);
 			if (!empty($valid_email_cc)) {
@@ -940,6 +939,7 @@ class QuotationsController extends SalesAppController {
 			$email->subject($this->request->data['Quotation']['subject']);
 
 			$filename =  $this->request->data['Quotation']['pdf'];
+			
 			$attachment = $this->_createPdf($qouteId,$companyId,$filename);
 
 			if ($attachment ) {
