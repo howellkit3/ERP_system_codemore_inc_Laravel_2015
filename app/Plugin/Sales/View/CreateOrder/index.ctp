@@ -331,7 +331,7 @@
 			</div>
 
 			<div class="row">
-				<div class="col-lg-12">
+				<div class="col-lg-12 ">
 					<div class="main-box">
 						<header class="main-box-header clearfix">
 							<h2 class="pull-left">Selected Item Detail</h2>
@@ -443,7 +443,7 @@
 
 			<section class="cloneMe scheduleSection">
 				<div class="row">
-					<div class="col-lg-12 disableClass">
+					<div class="col-lg-12 ">
 						<div class="main-box">
 							<header class="main-box-header clearfix">
 								<h2 class="pull-left">Client Order Delivery Schedule</h2>
@@ -457,9 +457,9 @@
                                             <div class="col-lg-2">
                                                 <?php 
                                                     echo $this->Form->input('ClientOrderDeliverySchedule.0.delivery_type', array(
-                                                        'options' => array('Once', 'Partial'),
+                                                        'options' => array('Once' => 'Once', 'Partial' => 'Partial'),
                                                         'label' => false,
-                                                        'class' => 'form-control col-lg-4 required OnceSelected ',
+                                                        'class' => 'form-control col-lg-4 required OnceSelected sched required',
                                                         'empty' => '---Select Delivery Type---'
                                                         
                                                     ));
@@ -473,9 +473,8 @@
 											<div class="col-lg-8">
 												<?php 
 	                                                echo $this->Form->input('ClientOrderDeliverySchedule.0.schedule',array( 
-	                                                						'class' => 'form-control item_type datepick schedClone', 
+	                                                						'class' => 'form-control item_type datepick schedClone required', 
 	                                                    					'label' => false,
-	                                                    					'required' => 'required',
 	                                                    					'readonly' => 'readonly',
 	                                                    					'placeholder' => 'Schedule'  
 	                                                    					));
@@ -488,9 +487,8 @@
 											<div class="col-lg-8">
 												<?php 
 	                                                echo $this->Form->input('ClientOrderDeliverySchedule.0.location',array( 
-	                                                						'class' => 'form-control item_type schedClone ', 
+	                                                						'class' => 'form-control item_type schedClone disablefields required', 
 	                                                    					'label' => false, 
-	                                                    					'required' => 'required',
 	                                                    					'placeholder' => 'Location',
 	                                                    					'value' => !empty($companyData['Address'][0]['address1']) ? $companyData['Address'][0]['address1'] : ''
 	                                                    					));
@@ -503,10 +501,9 @@
 											<div class="col-lg-8">
 												<?php 
 	                                                echo $this->Form->input('ClientOrderDeliverySchedule.0.quantity',array( 
-	                                                						'class' => 'form-control item_type quantityLimit number schedClone ', 
+	                                                						'class' => 'form-control item_type quantityLimit number schedClone disablefields quantityCondition required', 
 	                                                    					'label' => false,
 	                                                    					'id' => 'totalQuantity',  
-	                                                    					'required' => 'required',
 	                                                    					'placeholder' => 'Quantity'
 	                                                    					));
 	                                            ?>
@@ -518,9 +515,9 @@
                                             <div class="col-lg-2">
                                                 <?php 
                                                     echo $this->Form->input('ClientOrderDeliverySchedule.0.allowance', array(
-                                                        'options' => array('With charge', 'Without Charge'),
+                                                        'options' => array('With charge' => 'With charge' , 'Without Charge' => 'Without charge'),
                                                         'label' => false,
-                                                        'class' => 'form-control col-lg-4 required',
+                                                        'class' => 'form-control col-lg-4 ',
                                                         'empty' => '---Select Allowance---'
                                                         
                                                     ));
@@ -729,16 +726,22 @@
 <script>
 $(document).ready(function(){
 
-    $(".OnceSelected").change(function(){
-    if ($(".OnceSelected option:selected").text() == "Once") {
+    //$(".OnceSelected").change(function(){
+    $('body').on('change', '.OnceSelected', function(){
+   // alert($("option:selected", this).text());
+    if ($("option:selected", this).text() == "Once") {
+    	//if ($(".quantityCondition").val() == "123") {
+    		//alert('quantityCondition');
+    	//alert ("asdas");
     	var quantityValue = $('#quantity').val();
     	$("#totalQuantity").val(quantityValue);
     	 $(".onceDisable").hide();
-    	 $( ".disableClass" ).prop( "disabled", true );
-    	 //$(".disableClass").remove(); 
+    	 $( ".disablefields" ).prop( "readonly", true );
+    	 $(".OnceRemove").remove(); 
+    	//}
     }else{
     	$(".onceDisable").show();
-    	$( ".disableClass" ).prop( "disabled", false );
+    	$( ".disablefields" ).prop( "readonly", false );
     	$("#totalQuantity").val("");
     }
       

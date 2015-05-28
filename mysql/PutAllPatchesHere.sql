@@ -181,3 +181,9 @@ CREATE TABLE `product_specification_process_holders` (
   `modified` TIMESTAMP NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
+
+#NOTE: SELECT KOUFU SALE DATABASE ----
+/** howell kit added this 05/28/2015  */
+
+ALTER TABLE `client_order_delivery_schedules`    ADD COLUMN `allowance` VARCHAR(30) NULL AFTER `quantity`;
+ALTER TABLE `client_order_delivery_schedules`    ADD COLUMN `delivery_type` VARCHAR(30) NULL AFTER `client_order_id`;
