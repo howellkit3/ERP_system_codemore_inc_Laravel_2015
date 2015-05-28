@@ -14,11 +14,11 @@
                         <thead>
                             <tr>
                                 <th><a href="#"><span>Client Order</span></a></th>
+                                <th><a href="#"><span>P.O. Number</span></a></th>
                                 <th><a href="#"><span>Customer Name</span></a></th>
                                 <th><a href="#"><span>Item Name</span></a></th>
                                 <th><a href="#"><span>Schedule</span></a></th>
                                 <th><a href="#"><span>Location</span></a></th>
-                                <th><a href="#"><span>P.O. Number</span></a></th>
                                 <th><a href="#"><span>Status</span></a></th>
                                 <th>Action</th>
                             </tr>
