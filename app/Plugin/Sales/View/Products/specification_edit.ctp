@@ -9,6 +9,7 @@
 
 ?><br><br>
 <?php echo $this->Html->script('Sales.editableProductSpecs'); ?>
+<?php echo $this->Html->script('Sales.draggableproducts');?>
 
 <div class="row">
 	<div class="col-lg-12">
@@ -91,6 +92,12 @@
 										<label class="col-lg-2 control-label">Size</label>
 										<div class="col-lg-2">
 											<?php 
+												//hidden id
+												echo $this->Form->input('ProductSpecification.id', array(
+                                            								'class' => 'form-control item_type editMe',
+						                                                    'label' => false,
+						                                                    'hidden' => 'hidden',
+						                                                    'value' => $specs['ProductSpecification']['id']));
 	                                            echo $this->Form->input('ProductSpecification.size1', array(
                                             								'class' => 'form-control item_type editMe',
 						                                                    'label' => false,
@@ -190,12 +197,12 @@
 											<button type="button" data="<?php echo $partCounter ?>" class="process_btn btn btn-primary pull-rigth add_part_button">Part</button>
 										</div>
 										<div class="col-lg-2 button-spec">
-											<button type="button" data="0" class=" process_btn btn btn-primary pull-rigth add_process_button">Process</button>
+											<button type="button" data="<?php echo $processCounter ?>" class=" process_btn btn btn-primary pull-rigth add_process_button">Process</button>
 										</div>
 									</div>
 									<!--text fields -->
 									<section class="label-draggable-section">
-										<ul id="sortable1" class="sortMe">
+										<ul id="sortable" class="sortMe">
 					 						<!--list of draggable text fields -->
 
 					 						<?php 
@@ -213,6 +220,7 @@
 													            <i class="fa fa-times-circle fa-fw fa-lg"></i>
 													        </a>
 													    </header>
+													    <input name="data[IdHolder][ProductSpecificationDetail][<?php echo $key ;?>][id]" value="<?php echo $specLists['ProductSpecificationDetail']['id'] ?>" class="form-control" type="hidden" />
 												      	<?php
 
 													      	if($specLists['ProductSpecificationDetail']['model'] == 'Label'){
@@ -237,7 +245,9 @@
 												  	</section>
 												  	<input type="hidden" name="data[ProductSpecificationDetail][]" value="<?php echo $specLists['ProductSpecificationDetail']['model'] ?>">
 												</li>
+												
 											<?php } ?>
+												
 										</ul>
 									</section>
 									
@@ -247,7 +257,7 @@
 					</div>
 				</div>
 			</div>
-
+			
 			<div class="row editMeBtn" style="display:none;">
 				<div class="col-lg-12">
 					<div class="main-box">

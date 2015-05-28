@@ -41,11 +41,15 @@ class EmailConfig {
 
 	public $mandrill = array(
         'transport' => 'Mandrill.Mandrill',
-        'from' => 'bienrelampagos@gmail.com',
+        // 'from' => 'bienrelampagos@gmail.com',
         'fromName' => 'Koufu Color Printing',
         'timeout' => 30,
+        'log' => true,
         'api_key' => '9Ub0V3kopPRqb18wvDJHbQ',
         'emailFormat' => 'both',
+			// 'transport' => 'Mandrill',
+			// 'uri' => 'https://mandrillapp.com/api/1.0/',
+			// 'key' => '9Ub0V3kopPRqb18wvDJHbQ'
     );
 
 	public $default = array(

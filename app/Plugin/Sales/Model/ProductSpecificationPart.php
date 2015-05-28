@@ -53,4 +53,12 @@ class ProductSpecificationPart extends AppModel {
 
 	}
 
+	public function deleteData($partData = null){
+
+		foreach ($partData['ProductSpecificationPart'] as $key => $deleteMe) {
+			$this->delete($deleteMe);
+		}
+
+	}
+
 }

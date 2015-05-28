@@ -57,4 +57,12 @@ class ProductSpecificationLabel extends AppModel {
 
 	}
 
+	public function deleteData($labelData = null){
+
+		foreach ($labelData['ProductSpecificationLabel'] as $key => $deleteMe) {
+			$this->delete($deleteMe);
+		}
+
+	}
+
 }

@@ -18,7 +18,7 @@
                                 'options' => array($processData),
                                 'label' => false,
                                 'style' => 'text-transform:capitalize',
-                                'class' => 'form-control select-group"'.$dynamicId.'"',
+                                'class' => 'form-control processMe select-group"'.$dynamicId.'"',
                                 //'name' => $process,
                                 'id' => $dynamicId,
                                 'empty' => '--Select Process--'
