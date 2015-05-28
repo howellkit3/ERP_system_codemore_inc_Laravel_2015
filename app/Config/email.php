@@ -44,7 +44,6 @@ class EmailConfig {
         // 'from' => 'bienrelampagos@gmail.com',
         'fromName' => 'Koufu Color Printing',
         'timeout' => 30,
-        'log' => true,
         'api_key' => '9Ub0V3kopPRqb18wvDJHbQ',
         'emailFormat' => 'both',
 			// 'transport' => 'Mandrill',
