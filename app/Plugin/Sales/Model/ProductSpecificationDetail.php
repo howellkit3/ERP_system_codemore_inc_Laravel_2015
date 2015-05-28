@@ -107,8 +107,10 @@ class ProductSpecificationDetail extends AppModel {
 				
 				if($model == 'ProductSpecificationProcess'){
 					
-					$processData = $processHolder->find('all',
-										array('conditions' => array('product_specification_process_id' => $dataArray[$key][$model]['id'])));
+					$processData = $processHolder->find('all',array(
+										'conditions' => array(
+											'product_specification_process_id' => $dataArray[$key][$model]['id']),
+										'order' => 'order ASC'));
 					
 					$dataArray[$key][$model]['ProcessHolder'] = !empty($processData) ? $processData: array();
 					
@@ -119,6 +121,14 @@ class ProductSpecificationDetail extends AppModel {
 		}
 		
 		return $dataArray;
+	}
+
+	public function deleteData($detailData = null){
+
+		foreach ($detailData['ProductSpecificationDetail'] as $key => $deleteMe) {
+			$this->delete($deleteMe);
+		}
+
 	}
 
 

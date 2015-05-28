@@ -1,15 +1,17 @@
 <?php $plusCounter = $counter + 1; ?>
+<input type="hidden" value="<?php echo $formatDataSpecs['ProductSpecificationPart']['id'] ?>" class="form-control part_name<?php echo $plusCounter ;?> editMe" maxlenght="500" name="data[IdHolder][ProductSpecificationPart][<?php echo $counter ;?>][id]" />
+
 <div class="form-group">
     <label class="col-lg-2 control-label">Material</label>
     <div class="col-lg-6 materialName<?php echo $plusCounter ;?>" >
-        <input type="text" value="<?php echo $formatDataSpecs['ProductSpecificationPart']['material'] ?>" class="form-control part_name<?php echo $plusCounter ;?> editMe" maxlenght="500" name="data[ProductSpecificationPart][<?php echo $counter ;?>][material]" disabled />
+        <input type="text" value="<?php echo $formatDataSpecs['ProductSpecificationPart']['material'] ?>" class="partnameMe form-control part_name<?php echo $plusCounter ;?> editMe" maxlenght="500" name="data[ProductSpecificationPart][<?php echo $counter ;?>][material]" disabled />
     </div>
     <div class="col-lg-3">
         <button type="button" data-toggle="modal" href="#myModal<?php echo $plusCounter ;?>" class="btn btn-primary edit-button<?php echo $plusCounter ;?> editMeBtn" style="display:none;">
-        <i class="fa fa-plus-circle fa-lg"></i> Select Material</button>
+        <i class="fa fa-pencil fa-lg"></i> Edit Material</button>
     </div>
 </div>
-<section class="allFieldPart<?php echo $plusCounter ;?>" >
+<section class="parentSection allFieldPart<?php echo $plusCounter ;?>" >
     <div class="form-group">
         <label class="col-lg-2 control-label">Part</label>
         <div class="col-lg-3">
@@ -17,7 +19,7 @@
         </div>
         <label class="col-lg-2 control-label">Rate</label>
         <div class="col-lg-3">
-            <input type="number" value="<?php echo $formatDataSpecs['ProductSpecificationPart']['rate'] ?>" class="form-control rate<?php echo $plusCounter ;?> editMe" name="data[ProductSpecificationPart][<?php echo $counter ;?>][rate]" disabled />
+            <input type="number" value="<?php echo $formatDataSpecs['ProductSpecificationPart']['rate'] ?>" class="rateMe form-control rate<?php echo $plusCounter ;?> editMe" name="data[ProductSpecificationPart][<?php echo $counter ;?>][rate]" disabled />
         </div>
     </div>
     <div class="form-group">
@@ -34,7 +36,7 @@
     <div class="form-group">
         <label class="col-lg-2 control-label">Quantity</label>
         <div class="col-lg-2">
-            <input type="number" value="<?php echo $formatDataSpecs['ProductSpecificationPart']['quantity'] ?>" class="form-control quantity<?php echo $plusCounter ;?>" name="data[ProductSpecificationPart][<?php echo $counter ;?>][quantity]" readonly />
+            <input type="number" value="<?php echo $formatDataSpecs['ProductSpecificationPart']['quantity'] ?>" class="quantityMe form-control quantity<?php echo $plusCounter ;?>" name="data[ProductSpecificationPart][<?php echo $counter ;?>][quantity]" readonly />
         </div>
         <div class="col-lg-3">
            
@@ -56,7 +58,7 @@
         </div>
         <label class="col-lg-1 control-label">Paper Qty</label>
         <div class="col-lg-2">
-            <input type="text" value="<?php echo $formatDataSpecs['ProductSpecificationPart']['paper_quantity'] ?>" class="form-control paper_qty<?php echo $plusCounter ;?>" name="data[ProductSpecificationPart][<?php echo $counter ;?>][paper_quantity]" readonly />
+            <input type="text" value="<?php echo $formatDataSpecs['ProductSpecificationPart']['paper_quantity'] ?>" class="paper_qtyMe form-control paper_qty<?php echo $plusCounter ;?>" name="data[ProductSpecificationPart][<?php echo $counter ;?>][paper_quantity]" readonly />
         </div>
     </div>
     <div class="form-group">
@@ -68,11 +70,11 @@
     <div class="form-group">
         <label class="col-lg-2 control-label">Outs</label>
         <div class="col-lg-2">
-            <input type="number" value="<?php echo $formatDataSpecs['ProductSpecificationPart']['outs1'] ?>" class="form-control number outs<?php echo $plusCounter ;?> editMe" name="data[ProductSpecificationPart][<?php echo $counter ;?>][outs1]" disabled/>
+            <input type="number" value="<?php echo $formatDataSpecs['ProductSpecificationPart']['outs1'] ?>" class="outsMe form-control number outs<?php echo $plusCounter ;?> editMe" name="data[ProductSpecificationPart][<?php echo $counter ;?>][outs1]" disabled/>
         </div>
         <label class="col-lg-1 control-label">x</label>
         <div class="col-lg-2">
-            <input type="number" value="<?php echo $formatDataSpecs['ProductSpecificationPart']['outs2'] ?>" class="form-control outs_1<?php echo $plusCounter ;?> editMe" name="data[ProductSpecificationPart][<?php echo $counter ;?>][outs2]" disabled/>
+            <input type="number" value="<?php echo $formatDataSpecs['ProductSpecificationPart']['outs2'] ?>" class="outs_1Me form-control outs_1<?php echo $plusCounter ;?> editMe" name="data[ProductSpecificationPart][<?php echo $counter ;?>][outs2]" disabled/>
         </div>
     </div>
 </section>
@@ -89,7 +91,7 @@
                     <div class="col-lg-6">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-reorder"></i></span>
-                            <select name="data[Specification][itemgroupName][<?php echo $counter ;?>]" class="form-control select-group productItemGroup" id="ItemGroup<?php echo $counter ;?>">
+                            <select name="data[Specification][itemgroupName][<?php echo $counter ;?>]" class="groupMe form-control select-group productItemGroup" id="ItemGroup<?php echo $counter ;?>">
                                 <option value="0">--Select Item Group--</option>
                                 <option value="1">General Items</option>
                                 <option value="2">Substrates</option>
@@ -106,7 +108,7 @@
                         <div class="filter-block pull-right">
                             <div class="form-group">
 
-                                <input placeholder="Search..." id="product_searchItemGroup<?php echo $counter ;?>" name="product_name" class="form-control searchProduct" type="search" disabled="disabled" />
+                                <input placeholder="Search..." id="product_searchItemGroup<?php echo $counter ;?>" name="product_name" class="searchProductMe form-control searchProduct" type="search" disabled="disabled" />
                                 <i class="fa fa-search search-icon"></i>
                              
                             </div>  
@@ -122,7 +124,7 @@
                                 <th><a href="#"><span>Name</span></a></th>
                             </tr>
                         </thead>
-                        <tbody class="tableProductItemGroup<?php echo $counter ;?>" aria-relevant="all" id="scrollTable" aria-live="polite" role="alert" >
+                        <tbody class="tableProductMe tableProductItemGroup<?php echo $counter ;?>" aria-relevant="all" id="scrollTable" aria-live="polite" role="alert" >
                         </tbody>
                     </table>
                 </section>
