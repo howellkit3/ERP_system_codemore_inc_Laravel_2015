@@ -54,7 +54,8 @@ class ProductSpecificationProcess extends AppModel {
 		$this->bind(array('Sales.ProductSpecificationProcessHolder'));
 		$Ids = array();
 		
-		foreach ($processdata[$this->name] as $key => $processList) {
+		foreach ($processdata[$this->name] as $key1 => $processList) {
+			
 			$this->create();
 
 			$processList['created_by'] = $auth;
@@ -64,10 +65,29 @@ class ProductSpecificationProcess extends AppModel {
 			$this->save($processList);
 
 			array_push($Ids, $this->id.'-'.$processList['order'].'-'.'Process');
+
+			unset($processdata[$this->name][$key1]['order']);
 			
-			$this->ProductSpecificationProcessHolder->saveProcessHolder($processdata,$this->id,$auth);
+			$holder = 'ProductSpecificationProcessHolder';
+
+			foreach ($processdata[$this->name][$key1] as $key => $list) {
+
+				$this->ProductSpecificationProcessHolder->create();
+				$split = split('-', $list);
+				$processId = $split[1];
+				$subProcessId = $split[0];
+				$processdata[$holder]['product_specification_process_id'] = $this->id;
+				$processdata[$holder]['created_by'] = $auth;
+				$processdata[$holder]['modified_by'] = $auth;
+				$processdata[$holder]['process_id'] = $processId;
+				$processdata[$holder]['sub_process_id'] = $subProcessId;
+				$processdata[$holder]['order'] = $key;
+				
+				$this->ProductSpecificationProcessHolder->save($processdata[$holder]);
+				
+			}
 			
-			
+			//$this->ProductSpecificationProcessHolder->saveProcessHolder($processdata,$this->id,$auth);
 			
 		}
 		
@@ -75,4 +95,11 @@ class ProductSpecificationProcess extends AppModel {
 
 	}
 
+	public function deleteData($processData = null){
+
+		foreach ($processData['ProductSpecificationProcess'] as $key => $deleteMe) {
+			$this->delete($deleteMe);
+		}
+
+	}
 }

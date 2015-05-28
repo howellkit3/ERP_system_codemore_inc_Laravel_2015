@@ -28,13 +28,13 @@ class ProductSpecificationProcessHolder extends AppModel {
 
 	public function saveProcessHolder($processData = null,$processSpecId = null,$auth = null ){
 
-		$this->create();
+		
 		foreach ($processData['ProductSpecificationProcess'] as $key => $processList) {
 			
 			unset($processList['order']);
 			
 			foreach ($processList as $key => $list) {
-				
+				//$this->create();
 				$processSplit = split('-', $list);
 				$processId = $processSplit[1];
 				$subProcessId = $processSplit[0];
@@ -46,13 +46,21 @@ class ProductSpecificationProcessHolder extends AppModel {
 				$processList[$this->name][$key]['sub_process_id'] = $subProcessId;
 				$processList[$this->name][$key]['order'] = $key;
 				$processList[$this->name][$key]['id'] = '';
-				
+				//$this->save($processList[$this->name][$key]);
 			}
 			
 		}
 
-		$this->saveAll($processList[$this->name]);
-		return $processList[$this->name];
+		
+		return $processList[$this->name][$key];
+	}
+
+	public function deleteData($processData = null){
+
+		foreach ($processData['ProcessHolder'] as $key => $deleteMe) {
+			$this->delete($deleteMe);
+		}
+
 	}
 
 

@@ -855,7 +855,17 @@ class ProductsController extends SalesAppController {
     	$this->ProductSpecificationDetail->bind(array('Sales.ProductSpecificationLabel','Sales.ProductSpecificationPart','Sales.ProductSpecificationProcess'));
 		
 		if (!empty($this->request->data)) {
-
+			
+			if(!empty($this->request->data['IdHolder'])){
+				
+				$this->Product->ProductSpecification->delete($this->request->data['ProductSpecification']['id']);
+				$this->ProductSpecificationLabel->deleteData($this->request->data['IdHolder']);
+				$this->ProductSpecificationPart->deleteData($this->request->data['IdHolder']);
+				$this->ProductSpecificationProcess->deleteData($this->request->data['IdHolder']);
+				$this->ProductSpecificationProcessHolder->deleteData($this->request->data['IdHolder']);
+				$this->ProductSpecificationDetail->deleteData($this->request->data['IdHolder']);
+			}
+			
 			$specId = $this->Product->ProductSpecification->saveSpec($this->request->data,$userData['User']['id']);
 			
 			$labelArray = array();
@@ -910,6 +920,9 @@ class ProductsController extends SalesAppController {
 			
 			$this->ProductSpecificationDetail->saveSpecDetail($saveArray,$userData['User']['id'],$this->request->data['Product']['uuid']);
 			
+			$this->Session->setFlash(
+                __('Product specification successfully completed', 'success')
+            );
 			return $this->redirect(array('controller' => 'products', 'action' => 'index'));
 			
 			

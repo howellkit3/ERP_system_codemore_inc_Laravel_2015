@@ -1,14 +1,14 @@
 
 $(document).ready(function() {
 
-    $("body").on('keyup','#ProductQuantity', function(e){
+    $("body").on('keyup','#ProductSpecificationQuantity', function(e){
 
         var quantitySpec = $(this).val();
 
         if(!$.isNumeric(quantitySpec)) {
 
             alert('Quantity is required');
-            $('#ProductQuantity').focus();
+            $('#ProductSpecificationQuantity').focus();
             return false;
 
         }
@@ -16,7 +16,7 @@ $(document).ready(function() {
         if(quantitySpec <= 0){
 
             alert('You must enter a positive number');
-            $('#ProductQuantity').val('');
+            $('#ProductSpecificationQuantity').val('');
             return false;
 
         }
@@ -34,6 +34,7 @@ $(document).ready(function() {
     $(label_button).click(function(e){ //on add input button click
 
         var countername = parseInt($(this).attr('data'));
+
         var varCounter = countername + 1;
         $(this).attr('data',parseInt(varCounter));
         var nameArray = $(this).parents('ul.sortable').find('li.ui-state-default').size();
@@ -50,7 +51,7 @@ $(document).ready(function() {
                 url: serverPath + "sales/products/label/"+varCounter+"/"+realName, 
                 dataType: "html", 
                 success: function(labelDataField){ 
-
+                    console.log(labelDataField);
                     $(wrapper).append(labelDataField); 
                     $('.label'+varCounter).focus();
 
@@ -264,7 +265,7 @@ $(document).ready(function() {
         var dynamicId = "Process"+countername;
         var realName = "speclabel["+countername+"]";
         var process = "data[ProductSpecificationProcess]["+countername+"][process]";
-       
+        console.log(countername);
         $.ajax({ 
             type: "GET", 
             url: serverPath + "sales/products/process/"+process+"/"+dynamicId, 
@@ -327,7 +328,7 @@ $(document).ready(function() {
                                                         </div>');
 
                         $("body").on('click','.remove_sort_field'+dynamicId, function(e){
-                   
+                           
                             var removeField = $(this).parents('.appendField').find('.remove_sort_field'+dynamicId).attr('data-field');
                            // var removeCheck = $(this).parents('section .dropItem').find('#check'+removeField+dynamicId).attr('data-name');
                             $('#field'+removeField+dynamicId).remove();
@@ -351,37 +352,15 @@ $(document).ready(function() {
                         revert: 'invalid',
                         placeholder: 'span2 well placeholder tile',
                         forceHelperSize: true
-                        // ,
-                        // start: function(event, ui) {
-                        //     var start_pos = ui.item.index();
-                        //     ui.item.data('name', start_pos);
-                        //     //$(this).attr('name',dragfieldposition);
-                        //     //console.log(start_pos);
-
-                        //     },
-                        // update: function (event, ui) {
-                        //     var start_pos = ui.item.data('start_pos');
-                        //     var end_pos = ui.item.index();
-                        //     ui.item.data('name', end_pos);
-                          
-                        //     var dragfieldposition = 0;
-                        //     $('.dragFieldsName').each(function(){
-                        //         var fieldName = "data[ProductSpecificationProcess]["+dragfieldposition+"]";
-                        //         $(this).attr('name',fieldName);
-                        //         dragfieldposition++;
-
-                        //     });
-                        //     //$('#sortable li').removeClass('highlights');
-                        // }
+                        
                     });
                     
                 }); 
 
-
             } 
             
         });
-            
+       
     });
 
     //remove fields

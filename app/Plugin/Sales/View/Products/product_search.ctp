@@ -2,7 +2,7 @@
 
 	<tr class="optionValue<?php echo $dynamicId ?>">
     <td>
-        <input type="radio" value="<?php echo $value[$ModelName]['name'] ?>" class="selectSpecProduct<?php echo $dynamicId ?>" name="optionsRadios">
+        <input type="radio" value="<?php echo $value[$ModelName]['name'] ?>" class="radioMe selectSpecProduct<?php echo $dynamicId ?>" name="optionsRadios">
     </td>
     <td><?php echo $value[$ModelName]['uuid'] ?></td>
     <td><?php echo $value[$ModelName]['name'] ?></td>
