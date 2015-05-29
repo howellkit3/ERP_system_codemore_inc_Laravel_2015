@@ -420,124 +420,135 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 										</div>
 									</div>
 
-										<?php
-											 echo $this->Form->create('CompoundSubstrate',array('url'=>(array('controller' => 'settings','action' =>'compound_substrate'))));
-										?>
+									<?php
+										 echo $this->Form->create('CompoundSubstrate',array('url'=>(array('controller' => 'settings','action' =>'compound_substrate'))));
+									?>
 
-									<div class="row">
-										<div class="col-lg-12">
-											<div class="main-box">
-												<div class="main-box-body clearfix">
+										<div class="row">
+											<div class="col-lg-12">
+												<div class="main-box">
 													<div class="main-box-body clearfix">
-														<div class="form-horizontal">
-															<div class="form-group"> <br>
-																<label class="col-lg-2 control-label"><span style="color:red">*</span>Name</label>
-																<div class="col-lg-8">
-																		<?php 
-																			echo $this->Form->input('CompoundSubstrate.name', array(
-																									'class' => 'form-control name',
-																		                            'label' => false,
-																		                            'required' => 'required',
-																		                            'placeholder' => 'Compound Substrate Name'));
-																		?>
-																</div>
-															</div>
-
-															<div class="form-group">
-																<label class="col-lg-2 control-label"><span style="color:red">*</span>Category</label>
-																<div class="col-lg-8">
-																	<input type="hidden" id="selected_type" value="">
-																	<?php 
-																		echo $this->Form->input('CompoundSubstrate.category_id', array(
-																									'options' => array($categoryData),
-																									'type' => 'select',
-																									'label' => false,
-																									'class' => 'form-control required categorylist',
-																									'empty' => '---Select Item Category---',
-																									'required' => 'required'
-																	)); 
-																?>
-																</div>
-															</div>
-
-															<div class="form-group">
-																<label class="col-lg-2 control-label"><span style="color:red">*</span>Type</label>
-																<div class="col-lg-8">
-																	<input type="hidden" id="selected_type" value="">
-																	<?php 
-																		echo $this->Form->input('CompoundSubstrate.type_id', array(
-																									'options' => '',
-																									'type' => 'select',
-																									'label' => false,
-																									'class' => 'form-control required typelist',
-																									'empty' => '---Select Item Type---',
-																									'required' => 'required'
-																	)); 
-																?>
-																</div>
-															</div>
-
-															<div class="form-group">
-																<label class="col-lg-2 control-label"><span style="color:red">*</span>Manufacturer</label>
-																<div class="col-lg-8">
-																	<input type="hidden" id="selected_type" value="">
-																	<?php
-																		 echo $this->Form->input('CompoundSubstrate.manufacturer_id', array(
-																									'options' => array($supplierData),
-																									'type' => 'select',
-																									'label' => false,
-																									'class' => 'form-control required supplier',
-																									'empty' => '---Select Supplier---',
-																									'required' => 'required'
-																									)); 
-																?>
-																</div>
-															</div>
-
-															<div class="form-group"> <br>
-																<label class="col-lg-2 control-label"><span style="color:red">*</span>Layer</label>
-																<div class="col-lg-8">
-																		<?php 
-																			echo $this->Form->input('CompoundSubstrate.layers', array(
-																									'class' => 'form-control layer',
-																		                            'label' => false,
-																		                            'rule' => 'numeric',
-																		                           	'style'=>'width: 150px',
-																		                            'placeholder' => 'Layer'));
-																		?>
-																</div>
-															</div>
-
-															<div class="form-group">
-																<label class="col-lg-2 control-label">Remarks</label>
-																<div class="col-lg-8">
-																	<?php 
-																	echo $this->Form->textarea('CompoundSubstrate.remarks', array(
-																								'class' => 'form-control remark',
-																								'label' => false,
-																								'placeholder' => 'Remarks'));
-																	?>
-																</div>
-															</div>
-
-															<div class="form-group">
-																<div class="col-lg-2"></div>
+														<div class="main-box-body clearfix">
+															<div class="form-horizontal">
+																<div class="form-group"> <br>
+																	<label class="col-lg-2 control-label"><span style="color:red">*</span>Name</label>
 																	<div class="col-lg-8">
+																			<?php 
+																				echo $this->Form->input('CompoundSubstrate.name', array(
+																					'class' => 'form-control required name',
+														                            'label' => false,
+														                            'placeholder' => 'Compound Substrate Name'));
+																			?>
+																	</div>
+																</div>
 
-																		<button type="submit" class="btn btn-primary pull-left">Submit Compound Substrate</button>&nbsp;
-
+																<div class="form-group">
+																	<label class="col-lg-2 control-label"><span style="color:red">*</span>Category</label>
+																	<div class="col-lg-8">
+																		<input type="hidden" id="selected_type" value="">
 																		<?php 
-																		echo $this->Html->link('Cancel', array('controller' => 'settings', 'action' => 'index'),array('class' =>'btn btn-default','escape' => false));
+																			echo $this->Form->input('CompoundSubstrate.category_id', array(
+																				'options' => array($categoryData),
+																				'type' => 'select',
+																				'label' => false,
+																				'class' => 'form-control required categorylist',
+																				'empty' => '---Select Item Category---'
+																		)); 
+																	?>
+																	</div>
+																</div>
+
+																<div class="form-group">
+																	<label class="col-lg-2 control-label"><span style="color:red">*</span>Type</label>
+																	<div class="col-lg-8">
+																		<input type="hidden" id="selected_type" value="">
+																		<?php 
+																			echo $this->Form->input('CompoundSubstrate.type_id', array(
+																				'options' => '',
+																				'type' => 'select',
+																				'label' => false,
+																				'class' => 'form-control required typelist',
+																				'empty' => '---Select Item Type---'
+																			)); 
+																	?>
+																	</div>
+																</div>
+
+																<div class="form-group">
+																	<label class="col-lg-2 control-label"><span style="color:red">*</span>Manufacturer</label>
+																	<div class="col-lg-8">
+																		<input type="hidden" id="selected_type" value="">
+																		<?php
+																			 echo $this->Form->input('CompoundSubstrate.manufacturer_id', array(
+																				'options' => array($supplierData),
+																				'type' => 'select',
+																				'label' => false,
+																				'class' => 'form-control required supplier',
+																				'empty' => '---Select Supplier---'
+																				)); 
+																	?>
+																	</div>
+																</div>
+
+																<div class="form-group compoundMe"> <br>
+																	<label class="col-lg-2 control-label"><span style="color:red">*</span>Layer</label>
+																	<div class="col-lg-7">
+																			<?php 
+																				echo $this->Form->input('CompoundSubstrate.layers', array(
+																					'class' => 'form-control layer required coumpundVal',
+														                            'label' => false,
+														                            'readonly' => true,
+														                            'rule' => 'numeric',
+														                           	'style'=>'width: 150px',
+														                            'value' => 1));
+																			?>
+																	</div>
+																	<div class="col-lg-1">
+																		<a href="#" class="btn btn-primary addCompundNow mrg-b-lg pull-right"><i class="fa fa-plus-circle fa-lg"></i> Add Layer</a>
+																	</div>
+																</div>
+
+																<section class="compoundLayer">
+																	<div class="form-group newField">
+						 												<label class="col-lg-3 control-label">
+						 													<span style="color:red">*</span>Substrate
+						 												</label>
+																		<div class="col-lg-6">
+																			<input type="text" placeholder="Substrate Name" class="form-control required" name="data[ItemGroupLayer][0][substrate]" />
+																		</div>
+			 														</div>
+																</section>
+
+																<div class="form-group">
+																	<label class="col-lg-2 control-label">Remarks</label>
+																	<div class="col-lg-8">
+																		<?php 
+																		echo $this->Form->textarea('CompoundSubstrate.remarks', array(
+																			'class' => 'form-control remark',
+																			'label' => false,
+																			'placeholder' => 'Remarks'));
 																		?>
 																	</div>
+																</div>
+
+																<div class="form-group">
+																	<div class="col-lg-2"></div>
+																		<div class="col-lg-8">
+
+																			<button type="submit" class="btn btn-primary pull-left">Submit Compound Substrate</button>&nbsp;
+
+																			<?php 
+																			echo $this->Html->link('Cancel', array('controller' => 'settings', 'action' => 'index'),array('class' =>'btn btn-default','escape' => false));
+																			?>
+																		</div>
+																</div>
 															</div>
 														</div>
-													</div>
-											    </div>
+												    </div>
+												</div>
 											</div>
 										</div>
-									</div>
-										<?php echo $this->Form->end(); ?>
+									<?php echo $this->Form->end(); ?>
 
 									<div class="row" id="compound-substrate">
 										<div class="col-lg-12">
@@ -675,12 +686,12 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																		<div class="col-lg-7">
 																				<?php 
 																					echo $this->Form->input('CorrugatedPaper.layers', array(
-																						'class' => 'form-control required',
+																						'class' => 'form-control required layersC',
 															                            'label' => false,
 															                            'rule' => 'numeric',
 															                            'readonly' => true,
 															                           	'style'=>'width: 150px',
-															                           	'id' => 'layersC',
+															                           	'id' => 'layers',
 															                            'value' => 1));
 																				?>
 																		</div>
@@ -744,7 +755,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																	<label class="col-lg-2 control-label">Remarks</label>
 																	<div class="col-lg-8">
 																		<?php 
-																			echo $this->Form->textarea('CorrugatedPaper.remarks', array(
+																			echo $this->Form->textarea('CorrugatedPaper.remark', array(
 																				'class' => 'form-control item_type',
 																				'label' => false,
 																				'placeholder' => 'Remarks'));
@@ -788,7 +799,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 													<th class="text-center"><a href="#"><span>Type</span></a></th>
 													<th class="text-center"><a href="#"><span>Manufacturer</span></a></th>
 													<th class="text-center"><a href="#"><span>Created</span></a></th>
-													<th style="width:310px">Action</th>
+													<th style="width:420px">Action</th>
 													</tr>
 													</thead>
 
@@ -824,6 +835,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 <script>
 	jQuery(document).ready(function($){
   		$("#CorrugatedPaperItemGroupForm").validate();
+  		$("#CompoundSubstrateItemGroupForm").validate();
 
 		var option = $(this).val();$('#SubstrateCategoryId').change(function(){
 				$('.option-append').remove();
