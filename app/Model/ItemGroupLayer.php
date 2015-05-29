@@ -70,7 +70,13 @@ class ItemGroupLayer extends AppModel {
 			$this->create();
 			$ItemGroupList['no'] = $key;
 			$ItemGroupList['foreign_key'] = $groupId;
-			$ItemGroupList['model'] = 'CorrugatedPaper';
+			
+			if($groupData['CompoundSubstrate']){
+				$ItemGroupList['model'] = 'CompoundSubstrate';
+			}else{
+				$ItemGroupList['model'] = 'CorrugatedPaper';
+			}
+			
 			
 			$this->save($ItemGroupList);
 		}

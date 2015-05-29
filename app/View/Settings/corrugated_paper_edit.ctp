@@ -1,7 +1,7 @@
 <?php echo $this->element('setting_option');?><br><br>
 <?php echo $this->Html->script(array(
 									'corrugated_paper',
-									//'EditLayerCorrugatedPaper',
+									'AddLayerCorrugatedPaper',
 									'EditCorrugatedPaper'
 							)); ?>
 <div class="row">
@@ -21,7 +21,7 @@
 
 			</div>
 		</div>
-		<?php echo $this->Form->create('CorrugatedPaper',array('url'=>(array('controller' => 'settings','action' => 'corrugated_paper_edit'))));?>
+		<?php echo $this->Form->create('CorrugatedPaper',array('url'=>(array('controller' => 'settings','action' =>'corrugated_paper')))); ?>
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="main-box">
@@ -36,6 +36,11 @@
 											<?php 
 	                                            echo $this->Form->input('CorrugatedPaper.name', array(
                         								'class' => 'form-control item_type required',
+	                                                    'label' => false,
+	                                                    'placeholder' => 'Corrugated Paper Name'));
+	                                            echo $this->Form->input('CorrugatedPaper.id', array(
+                        								'class' => 'form-control item_type required',
+                        								'hidden' => 'hidden',
 	                                                    'label' => false,
 	                                                    'placeholder' => 'Corrugated Paper Name'));
 
@@ -89,96 +94,83 @@
 											?>
 										</div>
 									</div>
+									<section class="layerSection">
+										<div class="form-group substrate-layers "> <br>
+											<label class="col-lg-2 control-label"><span style="color:red">*</span>Layer</label>
+											<div class="col-lg-7">
+												<?php 
+													echo $this->Form->input('CorrugatedPaper.layers', array(
+													'class' => 'form-control layer layersC',
+													'label' => false,
+													'rule' => 'numeric',
+													'readonly' => true,
+													'style'=>'width: 150px'));
+												?>	
 
-									<a data-toggle="modal" href="#myModalLayer" class="btn btn-primary mrg-b-lg pull-right addSchedButton"><i class="fa fa-plus-circle fa-lg"></i> Add Layer</a>
-
-									<div class="form-group substrate-layers "> <br>
-										<label class="col-lg-2 control-label">Layer</label>
-										<div class="col-lg-8">
-											<?php 
-												echo $this->Form->input('CorrugatedPaper.layers', array(
-												'class' => 'form-control layer',
-												'label' => false,
-												'rule' => 'numeric',
-												'readonly' => true,
-												'style'=>'width: 150px'));
-										?>	
-
-										</div>
-									</div>
-
-								<?php if (!empty($this->request->data['CorrugatedPaper']['layers'])) : ?>	
-
-								<?php $countLayers = 1; foreach($this->request->data['ItemGroupLayer'] as $key => $layers) : ?>
-
-
-							<div class="form-group layercount form-layer " >
-
-									<?php
-
-									   echo $this->Form->input('ItemGroupLayer.'.$key.'.id', array(
-			                                        								'class' => 'form-control item_type editable',
-			                                        								'id' => 'toBeEdited',
-								                                                    'label' => false,
-								                                                    'type' => 'hidden',
-						                        									'readonly' => 'readonly'
-						                        									));  
-						             ?>        
-
-						          
-										<label class="col-lg-3 control-label"><span style="color:red">*</span>Substrate <?php echo $countLayers ?>
-										</label>
-										<div class="col-lg-3">
-
-											<?php 
-	                                        echo $this->Form->input('ItemGroupLayer.'.$key.'.substrate', array(
-	                                        								'class' => 'form-control layer',
-																			'label' => false,
-																			'rule' => 'numeric',
-																			//'style'=>'width: 380px',
-																			'placeholder' => 'Layer'));
-	                                    ?>
-										</div>
-
-										<label class="col-lg-1 control-label">Flute <?php echo $countLayers ?>
-										</label>
-
-										<div class="col-lg-3">
-											<?php 
-		                                    echo $this->Form->input('ItemGroupLayer.'.$key.'.flute', array(
-		                                    								'class' => 'form-control layer',
-																			'label' => false,
-																			'rule' => 'numeric',
-																			//'style'=>'width: 380px',
-																			'placeholder' => 'Layer'));
-		                                ?>
-										</div>
-
-										<?php
-
-									 	$keyHolderId = array();
-										array_push($keyHolderId, $key); 
-
-										if( $key != 0) { ?>
-
-										<button type="button" class="remove-field remove-layers btn btn-danger" ><i class="fa fa-minus" ></i> </button>
-
-										<!-- <div class="form-group">
-												<label for="inputPassword1" class=" control-label"></label>
-											<div class="col-lg-1"> 
-												
 											</div>
-										</div> -->
+											<div class="col-lg-1">
+												<a href="#" class="btn btn-primary addLayerNow mrg-b-lg pull-right"><i class="fa fa-plus-circle fa-lg"></i> Add Layer</a>
+											</div>
+										</div>
 
-									<?php } ?>
+										<?php if (!empty($this->request->data['CorrugatedPaper']['layers'])) : ?>	
 
-									      
-						                        
-							</div>
+											<?php foreach($this->request->data['ItemGroupLayer'] as $key => $layers) : 
+												echo $this->Form->input('IdHolder.'.$key.'.id', array(
+				                    								'class' => 'form-control item_type editable',
+				                    								'value' => $layers['id'],
+				                                                    'label' => false,
+				                                                    'type' => 'hidden',
+				                									'readonly' => 'readonly'
+				                									)); 
+											?>
 
-								<?php  $countLayers++; endforeach; ?>
+												<div class="form-group layercount form-layer newField" >
 
-							<?php endif; ?>
+													<label class="col-lg-3 control-label">
+														<span style="color:red">*</span>Substrate 
+													</label>
+
+													<div class="col-lg-2">
+														<?php 
+				                                        	echo $this->Form->input('ItemGroupLayer.'.$key.'.substrate', array(
+			                        								'class' => 'form-control layer',
+																	'label' => false,
+																	'placeholder' => 'Layer'));
+				                                    	?>
+													</div>
+
+													<label class="col-lg-1 control-label">Flute</label>
+
+													<div class="col-lg-2">
+														<?php 
+					                                    	echo $this->Form->input('ItemGroupLayer.'.$key.'.flute', array(
+			                                								'class' => 'form-control layer',
+																			'label' => false,
+																			'placeholder' => 'Layer'));
+					                                	?>
+													</div>
+
+													<?php
+
+													 	$keyHolderId = array();
+														array_push($keyHolderId, $key); 
+
+														if( $key != 0) { 
+													?>
+													<div class="col-lg-2">
+														<button type="button" class="remove-field remove-layerMe btn btn-danger" ><i class="fa fa-minus" ></i> </button>
+													</div>
+
+													<?php } ?>
+
+												</div>
+
+											<?php  endforeach ; ?>
+
+										<?php endif; ?>
+										<section class="appendLayer"></section>
+									</section>
 
 									<div class="form-group "> <br>
 										<label class="col-lg-2 control-label">Brust</label>

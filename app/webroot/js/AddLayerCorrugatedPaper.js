@@ -4,9 +4,9 @@ $(function(){
 
 	 	e.preventDefault();
 	 	
-	 	var layerVal = parseInt($(this).parents('.layerSection').find('#layersC').val());
+	 	var layerVal = parseInt($(this).parents('.layerSection').find('.layersC').val());
 	 	layerNew = layerVal + 1;
-	 	$(this).parents('.layerSection').find('#layersC').val(layerNew);
+	 	$(this).parents('.layerSection').find('.layersC').val(layerNew);
 
 	 	$(this).parents('.layerSection').find('.appendLayer').append('<div class="form-group newField">\
 						 												<label class="col-lg-3 control-label">\
@@ -25,15 +25,56 @@ $(function(){
 			 														</div>');
 	 	
 	});
+
 	$("body").on('click','.remove-layerMe', function(e){
 
 	 	e.preventDefault();
-	 	var layerVal = parseInt($(this).parents('.layerSection').find('#layersC').val());
+	 	var layerVal = parseInt($(this).parents('.layerSection').find('.layersC').val());
 	 	layerNew = layerVal - 1;
-	 	$(this).parents('.layerSection').find('#layersC').val(layerNew);
+	 	$(this).parents('.layerSection').find('.layersC').val(layerNew);
 	 	$(this).parents('.newField').remove();
 	 	
 	});
+
+	$("body").on('click','.addCompundNow', function(e){
+
+	 	e.preventDefault();
+	 	
+	 	var layerVal = parseInt($(this).parents('.compoundMe').find('.coumpundVal').val());
+	 	layerNew = layerVal + 1;
+	 	$(this).parents('.compoundMe').find('.coumpundVal').val(layerNew);
+
+	 	$(this).parents('.form-horizontal').find('.compoundLayer').append('<div class="form-group newField">\
+						 												<label class="col-lg-3 control-label">\
+						 													<span style="color:red">*</span>Substrate\
+						 												</label>\
+																		<div class="col-lg-6">\
+																			<input type="text" placeholder="Substrate" class="form-control required" name="data[ItemGroupLayer]['+layerVal+'][substrate]" />\
+																		</div>\
+																		<div class="col-lg-2">\
+																			<button type="button" class="remove-field remove-CompoundMe btn btn-danger" ><i class="fa fa-minus" ></i></button>\
+																		</div>\
+			 														</div>');
+	 	
+	});
+
+	$("body").on('click','.remove-CompoundMe', function(e){
+
+	 	e.preventDefault();
+	 	var layerVal = parseInt($(this).parents('.form-horizontal').find('.coumpundVal').val());
+	 	layerNew = layerVal - 1;
+	 	$(this).parents('.form-horizontal').find('.coumpundVal').val(layerNew);
+	 	$(this).parents('.newField').remove();
+	 	
+	});
+
+
+
+
+
+
+
+
 
 $('#CorrugatedPaperLayers').blur(function(){
 	$('.corrugatedPaper-layers').remove();
@@ -79,11 +120,11 @@ $('body').on('click','.remove-layers',function(){
 		if (parent.find('.remove-field').length > 1) {
 
 			alert('i entered if');
-				parent.attr('style','display:none');
+				//parent.attr('style','display:none');
 				parent.remove();
 		} else {
 
-			alert('i entered else');
+			//alert('i entered else');
 			parent.remove();
 		}
 		

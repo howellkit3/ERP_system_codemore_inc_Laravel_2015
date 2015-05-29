@@ -1014,25 +1014,32 @@ class SettingsController extends AppController
 
         $userData = $this->Session->read('Auth');
 
-            if ($this->request->is('post')) {
+            if (!empty($this->request->data)) {
 
-                 $compoundSubstrateDetails = $this->request->data;
+                if(!empty($this->request->data['IdHolder'])){
                 
-                if (!empty($compoundSubstrateDetails)) {
+                    foreach ($this->request->data['IdHolder'] as $key => $value) {
+                        $this->ItemGroupLayer->delete($value);
+                    }
 
-                    $userData = $this->Session->read('Auth');
-                    $compoundSubstrateDetails['CompoundSubstrate']['uuid'] = time();
-                    $compoundSubstrateDetails['CompoundSubstrate']['created_by'] = $userData['User']['id'];
-                    $compoundSubstrateDetails['CompoundSubstrate']['modified_by'] = $userData['User']['id'];
-
-                    $this->CompoundSubstrate->save($compoundSubstrateDetails);
-
-                    $this->CompoundSubstrate->save_substrate($this->request->data,$this->CompoundSubstrate->id); 
-                    
-                    $this->Session->setFlash(__('Adding Compound Substrate Complete.'));
-
-                    return $this->redirect(array('action' => 'item_group','tab' => 'tab-compound_substrates'));
                 }
+
+                $this->id = $this->CompoundSubstrate->saveCompound($this->request->data,$userData['User']['id']);
+
+                $this->ItemGroupLayer->addItemgroupLayer($this->request->data,$this->id);
+
+                if(!empty($this->request->data['IdHolder'])){
+
+                    $this->Session->setFlash(__('Edit Compound Substrate Complete.'));
+
+                }else{
+
+                    $this->Session->setFlash(__('Adding Compound Substrate Complete.'),'success');
+
+                }
+            
+                return $this->redirect(array('action' => 'item_group','tab' => 'tab-compound_substrates'));
+
             }
 
             $this->set(compact('compoundSubstrateData'));
@@ -1176,14 +1183,30 @@ class SettingsController extends AppController
 
         $userData = $this->Session->read('Auth');
 
-        if ($this->request->is('post')) {
+        if (!empty($this->request->data)) {
+            
+            if(!empty($this->request->data['IdHolder'])){
+                
+                foreach ($this->request->data['IdHolder'] as $key => $value) {
+                    $this->ItemGroupLayer->delete($value);
+                }
+
+            }
 
             $this->id = $this->CorrugatedPaper->saveCorrugated($this->request->data,$userData['User']['id']);
 
             $this->ItemGroupLayer->addItemgroupLayer($this->request->data,$this->id);
 
-            $this->Session->setFlash(__('Adding Corrugated Paper Complete.'),'success');
+            if(!empty($this->request->data['IdHolder'])){
 
+                $this->Session->setFlash(__('Adding Corrugated Paper Complete.'),'success');
+
+            }else{
+
+                $this->Session->setFlash(__('Edit Corrugated Paper Complete.'),'success');
+
+            }
+            
             return $this->redirect(array('action' => 'item_group','tab' => 'tab-corrugated_papers'));
 
         }

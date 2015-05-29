@@ -123,4 +123,26 @@ class CompoundSubstrate extends AppModel {
 		}	
 	}
 
+	public function saveCompound($compoundData = null ,$auth = null){
+		
+		$month = date("m"); 
+	    $year = date("y");
+	    $hour = date("H");
+	    $minute = date("i");
+	    $seconds = date("s");
+	    $random = rand(1000, 10000);
+
+	    $code =  $year. $month .$random;
+	    
+	    $this->create();
+
+		$compoundData[$this->name]['created_by'] = $auth;
+        $compoundData[$this->name]['modified_by'] = $auth;
+        $compoundData[$this->name]['uuid'] = $code;
+        
+        if($this->save($compoundData)){
+            return $this->id;
+        }
+	}
+
 }
