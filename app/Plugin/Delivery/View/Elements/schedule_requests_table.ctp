@@ -1,37 +1,37 @@
   <?php 
                         if(!empty($scheduleData)){
 
-
+                            //pr($scheduleData); exit;
                             foreach ($scheduleData as $scheduleDataList): ?>
 
                                 <tbody aria-relevant="all" aria-live="polite" role="alert">
 
                                     <tr class="">
 
-                                        <td class="">
+                                        <td class="text-center">
                                             <?php echo $scheduleDataList['ClientOrder']['uuid']; ?>  
                                         </td>
 
-                                        <td class="">
+                                        <td class="text-center">
 
                                             <?php echo $scheduleDataList['ClientOrder']['po_number']; ?>  
                                         
                                         </td>
 
-                                        <td class="">
+                                        <td class="text-center">
 
                                         <?php echo $scheduleDataList['Company']['company_name']; ?>  </a>
                                     
                                         </td>
 
-                                        <td>
+                                        <td class="text-center">
                               
                                            <?php echo $scheduleDataList['Product']['name']; ?>  
                                            <br>
                                            
                                         </td>
 
-                                        <td  class="align">
+                                        <td class="text-center" >
                                             
                                          <?php foreach($scheduleDataList['ClientOrderDeliverySchedule'] as $key => $layers) : ?>
 
@@ -41,25 +41,19 @@
 
                                            <?php endforeach; ?>
 
-                                        </td class = "align">
+                                        </td >
 
-                                        <td>
+                                        <td class="text-center">
 
-                                            <?php foreach($scheduleDataList['ClientOrderDeliverySchedule'] as $key => $layers) : ?>
-
-                                           <?php echo $scheduleDataList['ClientOrderDeliverySchedule'][$key]['location']; ?>  
-
-                                           <br>
-                                            
-                                            <?php endforeach; ?>
+                                           <?php echo $scheduleDataList['QuotationItemDetail']['quantity']; ?>  
 
                                         </td>
 
-                                        <td>
+                                        <td class="text-center">
                                            <?php //echo $scheduleDataList['ClientOrderDeliverySchedule']['status']; ?>    
                                         </td>
                                         
-                                        <td>
+                                        <td class="text-center">
                                             <?php
                                                 echo $this->Html->link('<span class="fa-stack">
                                                                         <i class="fa fa-square fa-stack-2x"></i>

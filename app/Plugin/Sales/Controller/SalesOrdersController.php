@@ -80,12 +80,20 @@ class SalesOrdersController extends SalesAppController {
       //new code bienskie noted:all adding schedule can use this controller
       $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
-      $this->ClientOrder->bind(array('ClientOrderDeliverySchedule'));
+      $this->loadModel('Sales.QuotationItemDetail');
+
+      $this->ClientOrder->bind(array('ClientOrderDeliverySchedule', 'Quotation',  'QuotationItemDetail'));
 
       $userData = $this->Session->read('Auth');
 
-          $schedData = $this->ClientOrder->find('all', array('conditions' => array('ClientOrder.id' => $this->request->data['ClientOrderDeliverySchedule']['client_order_id'])));
+      $schedData2 = $this->QuotationItemDetail->findById('80');
 
+      $schedData = $this->ClientOrder->find('all', array('conditions' => array('ClientOrder.id' => $this->request->data['ClientOrderDeliverySchedule']['client_order_id'])));
+
+     //$abc = $schedData[0]['QuotationItemDetail']['quantity']; 
+
+      pr($this->request->data['ClientOrderDeliverySchedule']); exit;
+             
       if ($this->request->is('post')) {
 
         if ($this->request->data['ClientOrderDeliverySchedule']['delivery_type'] == "Once") {
@@ -103,6 +111,8 @@ class SalesOrdersController extends SalesAppController {
                         if(in_array($schedData[0]['ClientOrderDeliverySchedule'][$key]['id'], $schedHolderId)){
 
                             $result['ClientOrderDeliverySchedule'] = Set::classicExtract($this->request->data,'{s}');
+
+                            $this->request->data['ClientOrderDeliverySchedule']['quantity'] = $abc;
                            
                             $this->ClientOrder->ClientOrderDeliverySchedule->saveClientOrderDeliverySchedule($result,$userData['User']['id'],$this->request->data['ClientOrderDeliverySchedule']['client_order_id']);
                                         
