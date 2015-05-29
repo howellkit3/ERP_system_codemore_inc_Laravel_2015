@@ -834,7 +834,8 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 
 <script>
 	jQuery(document).ready(function($){
-  		$("#CorrugatedPaperItemGroupForm,#CompoundSubstrateItemGroupForm").validate();
+  		$("#CorrugatedPaperItemGroupForm").validate();
+  		$("#CompoundSubstrateItemGroupForm").validate();
 
 		var option = $(this).val();$('#SubstrateCategoryId').change(function(){
 				$('.option-append').remove();

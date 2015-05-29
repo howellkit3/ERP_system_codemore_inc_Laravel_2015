@@ -1199,11 +1199,11 @@ class SettingsController extends AppController
 
             if(!empty($this->request->data['IdHolder'])){
 
-                $this->Session->setFlash(__('Adding Corrugated Paper Complete.'),'success');
+                $this->Session->setFlash(__('Edit Corrugated Paper Complete.'),'success');
 
             }else{
 
-                $this->Session->setFlash(__('Edit Corrugated Paper Complete.'),'success');
+                $this->Session->setFlash(__('Adding Corrugated Paper Complete.'),'success');
 
             }
             
