@@ -454,7 +454,7 @@
                     ?>
 
                         <div class="form-group" id="existing_items">
-                                                <label class="col-lg-2 control-label"><span style="color:red">*</span>Delivery Type</label>
+                                                <label class="col-lg-2 control-label">Delivery Type</label>
                                                 <div class="col-lg-9">
                                                     <?php 
                                                         echo $this->Form->input('ClientOrderDeliverySchedule.delivery_type', array(

@@ -22,11 +22,13 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->loadModel('Sales.QuotationDetail');
 
+        $this->loadModel('Sales.QuotationItemDetail');
+
         $this->loadModel('Sales.ClientOrder');
 
         $this->loadModel('Sales.Product');
 
-         $this->ClientOrder->bind(array('ClientOrderDeliverySchedule' , 'Company', 'QuotationDetail','Product'));
+         $this->ClientOrder->bind(array('ClientOrderDeliverySchedule' , 'Company', 'QuotationDetail','Product', 'QuotationItemDetail' ));
 
         $limit = 10;
 
@@ -35,7 +37,7 @@ class DeliveriesController extends DeliveryAppController {
         $this->paginate = array(
             'conditions' => $conditions,
             'limit' => $limit,
-            'fields' => array('ClientOrder.uuid', 'Company.company_name',  'Product.name', 'ClientOrder.po_number'),
+            'fields' => array('ClientOrder.uuid', 'Company.company_name',  'Product.name', 'ClientOrder.po_number', 'QuotationItemDetail.quantity'),
             'order' => 'ClientOrder.id DESC',
         );
 
