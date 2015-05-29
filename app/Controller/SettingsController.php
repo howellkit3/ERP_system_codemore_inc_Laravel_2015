@@ -1176,44 +1176,19 @@ class SettingsController extends AppController
 
         $userData = $this->Session->read('Auth');
 
-            if ($this->request->is('post')) {
+        if ($this->request->is('post')) {
 
-                 $corrugatedDetails = $this->request->data;
+            $this->id = $this->CorrugatedPaper->saveCorrugated($this->request->data,$userData['User']['id']);
 
-                // pr($this->request->data); exit;
-                
-                if (!empty($corrugatedDetails)) {
+            $this->ItemGroupLayer->addItemgroupLayer($this->request->data,$this->id);
 
-                    $userData = $this->Session->read('Auth');
-                    $corrugatedDetails['CorrugatedPaper']['uuid'] = time();
-                    $corrugatedDetails['CorrugatedPaper']['created_by'] = $userData['User']['id'];
-                    $corrugatedDetails['CorrugatedPaper']['modified_by'] = $userData['User']['id'];
-                    $this->CorrugatedPaper->save($corrugatedDetails);
-                  //pr(count($this->request->data['ItemGroupLayer']['no']));exit();
-                    $dataHolder = array();
+            $this->Session->setFlash(__('Adding Corrugated Paper Complete.'),'success');
 
-                    for($groupLayerCount=0; $groupLayerCount < count($this->request->data['ItemGroupLayer']['no']); $groupLayerCount++) {
+            return $this->redirect(array('action' => 'item_group','tab' => 'tab-corrugated_papers'));
 
-                   
-                    $dataHolder['ItemGroupLayer']['foreign_key'] = $this->CorrugatedPaper->id;
-                    $dataHolder['ItemGroupLayer']['no'] = $this->request->data['ItemGroupLayer']['no'][$groupLayerCount];
-                    $dataHolder['ItemGroupLayer']['substrate'] = $this->request->data['ItemGroupLayer']['substrate'][$groupLayerCount];
-                    $dataHolder['ItemGroupLayer']['flute'] = $this->request->data['ItemGroupLayer']['flute'][$groupLayerCount];
-                    $dataHolder['ItemGroupLayer']['model'] = 'CorrugatedPaper';
-                    $this->ItemGroupLayer->saveAll($dataHolder);
-
-                    }
-
-                     
-           
-                    $this->Session->setFlash(__('Adding Corrugated Paper Complete.'),'success');
-
-                    return $this->redirect(array('action' => 'item_group','tab' => 'tab-corrugated_papers'));
-            } 
         }
 
-
-            $this->set(compact('corrugatedPaperData'));    
+        $this->set(compact('corrugatedPaperData'));    
         
     }
 

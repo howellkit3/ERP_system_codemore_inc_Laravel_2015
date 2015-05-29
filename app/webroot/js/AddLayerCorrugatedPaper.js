@@ -1,5 +1,39 @@
 $(function(){
-	
+
+	$("body").on('click','.addLayerNow', function(e){
+
+	 	e.preventDefault();
+	 	
+	 	var layerVal = parseInt($(this).parents('.layerSection').find('#layersC').val());
+	 	layerNew = layerVal + 1;
+	 	$(this).parents('.layerSection').find('#layersC').val(layerNew);
+
+	 	$(this).parents('.layerSection').find('.appendLayer').append('<div class="form-group newField">\
+						 												<label class="col-lg-3 control-label">\
+						 													<span style="color:red">*</span>Substrate\
+						 												</label>\
+																		<div class="col-lg-2">\
+																			<input type="text" placeholder="Substrate" class="form-control required" name="data[ItemGroupLayer]['+layerVal+'][substrate]" />\
+																		</div>\
+																		<label class="col-lg-1 control-label">Flute</label>\
+																		<div class="col-lg-2">\
+																			<input type="text" placeholder="Flute" class="form-control" name="data[ItemGroupLayer]['+layerVal+'][flute]" />\
+																		</div>\
+																		<div class="col-lg-2">\
+																			<button type="button" class="remove-field remove-layerMe btn btn-danger" ><i class="fa fa-minus" ></i></button>\
+																		</div>\
+			 														</div>');
+	 	
+	});
+	$("body").on('click','.remove-layerMe', function(e){
+
+	 	e.preventDefault();
+	 	var layerVal = parseInt($(this).parents('.layerSection').find('#layersC').val());
+	 	layerNew = layerVal - 1;
+	 	$(this).parents('.layerSection').find('#layersC').val(layerNew);
+	 	$(this).parents('.newField').remove();
+	 	
+	});
 
 $('#CorrugatedPaperLayers').blur(function(){
 	$('.corrugatedPaper-layers').remove();

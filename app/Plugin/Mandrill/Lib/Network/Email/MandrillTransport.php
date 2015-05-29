@@ -48,7 +48,6 @@ class MandrillTransport extends AbstractTransport {
 
         $this->_headers = $this->_cakeEmail->getHeaders();
         $this->_recipients = $email->to();
-
         
         $message = array(
             'html' => $this->_cakeEmail->message('html'),
@@ -74,8 +73,10 @@ class MandrillTransport extends AbstractTransport {
             'tags' => null,
             'subaccount' => null,
         );
-
+      
         $message = array_merge($message, $this->_headers);
+
+      
 
         foreach ($this->_recipients as $email => $name) {
             $message['to'][] = array(

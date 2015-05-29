@@ -241,10 +241,10 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																	<div class="col-lg-8">
 																			<?php 
 																			echo $this->Form->input('Substrate.name', array(
-																										'class' => 'form-control item_type',
-																			                            'label' => false,
-																			                            'required' => 'required',
-																			                            'placeholder' => 'Name General Item'));
+																				'class' => 'form-control item_type',
+													                            'label' => false,
+													                            'required' => 'required',
+													                            'placeholder' => 'Name General Item'));
 																			?>
 																	</div>
 																</div>
@@ -302,10 +302,10 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																	<div class="col-lg-8">
 																		<?php 
 																		echo $this->Form->input('Substrate.type', array(
-																									'class' => 'form-control item_type',
-																		                            'label' => false,
-																		                            'required' => 'required',
-																		                            'placeholder' => 'Type'));
+																			'class' => 'form-control item_type',
+												                            'label' => false,
+												                            'required' => 'required',
+												                            'placeholder' => 'Type'));
 																		?>
 																	</div>
 																</div>
@@ -565,7 +565,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 													</table>
 													<hr>
 
-												<div class="paging" id="compound_substrate_pagination">
+													<div class="paging" id="compound_substrate_pagination">
 															 <?php
 											               
 											                echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'CompoundSubstrate','model' => 'CompoundSubstrate'), null, array('class' => 'disable','model' => 'CompoundSubstrate'));
@@ -600,150 +600,176 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 										</div>
 									</div>
 
-										<?php
-											 echo $this->Form->create('CorrugatedPaper',array('url'=>(array('controller' => 'settings','action' =>'corrugated_paper'))));
-										?>
+									<?php echo $this->Form->create('CorrugatedPaper',array('url'=>(array('controller' => 'settings','action' =>'corrugated_paper')))); ?>
 
-									<div class="row">
-										<div class="col-lg-12">
-											<div class="main-box">
-												<div class="main-box-body clearfix">
+										<div class="row">
+											<div class="col-lg-12">
+												<div class="main-box">
 													<div class="main-box-body clearfix">
-														<div class="form-horizontal">
-															<div class="form-group"> <br>
-																<label class="col-lg-2 control-label"><span style="color:red">*</span>Name</label>
-																<div class="col-lg-8">
-																		<?php 
-																		echo $this->Form->input('CorrugatedPaper.name', array(
-																									'class' => 'form-control item_type',
-																		                            'label' => false,
-																		                            'required' => 'required',
-																		                            'placeholder' => 'Corrugated Paper Name'));
-																		?>
-																</div>
-															</div>
-
-															<div class="form-group">
-																<label class="col-lg-2 control-label"><span style="color:red">*</span>Category</label>
-																<div class="col-lg-8">
-																	<input type="hidden" id="selected_type" value="">
-																	<?php echo $this->Form->input('CorrugatedPaper.category_id', array(
-																	'options' => array($categoryData),
-																	'type' => 'select',
-																	'label' => false,
-																	'class' => 'form-control required categorylist',
-																	'empty' => '---Select Item Category---',
-																	'required' => 'required'
-																	)); 
-																?>
-																</div>
-															</div>
-
-															<div class="form-group">
-																<label class="col-lg-2 control-label"><span style="color:red">*</span>Type</label>
-																<div class="col-lg-8">
-																	<input type="hidden" id="selected_type" value="">
-																	<?php echo $this->Form->input('CorrugatedPaper.type_id', array(
-																	'options' => '',
-																	'type' => 'select',
-																	'label' => false,
-																	'class' => 'form-control required categorylist',
-																	'empty' => '---Select Item Type---',
-																	'required' => 'required'
-																	)); 
-																?>
-																</div>
-															</div>
-
-															<div class="form-group">
-																<label class="col-lg-2 control-label"><span style="color:red">*</span>Manufacturer</label>
-																<div class="col-lg-8">
-																	<input type="hidden" id="selected_type" value="">
-																	<?php 
-																	echo $this->Form->input('CorrugatedPaper.manufacturer_id', array(
-																								'options' => array($supplierData),
-																								'type' => 'select',
-																								'label' => false,
-																								'class' => 'form-control required categorylist',
-																								'empty' => '---Select Supplier---',
-																								'required' => 'required'
-																								)); 
-																?>
-																</div>
-															</div>
-
-															<div class="form-group"> <br>
-																<label class="col-lg-2 control-label"><span style="color:red">*</span>Layer</label>
-																<div class="col-lg-8">
-																		<?php 
-																			echo $this->Form->input('CorrugatedPaper.layers', array(
-																									'class' => 'form-control brust',
-																		                            'label' => false,
-																		                            'rule' => 'numeric',
-																		                           	'style'=>'width: 150px',
-																		                            'placeholder' => 'Layer'));
-																		?>
-																</div>
-															</div>
-
-															<div class="form-group"> <br>
-																<label class="col-lg-2 control-label">Brust</label>
-																<div class="col-lg-8">
-																		<?php 
-																			echo $this->Form->input('CorrugatedPaper.brust', array(
-																									'class' => 'form-control fct',
-																		                            'label' => false,
-																		                            'rule' => 'numeric',
-																		                           	'style'=>'width: 150px',
-																		                            'placeholder' => 'Brust'));
-																		?>
-																</div>
-															</div>
-
-															<div class="form-group"> <br>
-																<label class="col-lg-2 control-label">FCT</label>
-																<div class="col-lg-8">
-																		<?php 
-																			echo $this->Form->input('CorrugatedPaper.fct', array(
-																									'class' => 'form-control layer',
-																		                            'label' => false,
-																		                            'rule' => 'numeric',
-																		                           	'style'=>'width: 150px',
-																		                            'placeholder' => 'FCT'));
-																		?>
-																</div>
-															</div>
-
-															<div class="form-group">
-																<label class="col-lg-2 control-label">Remarks</label>
-																<div class="col-lg-8">
-																	<?php 
-																		echo $this->Form->textarea('CorrugatedPaper.remarks', array(
-																									'class' => 'form-control item_type',
-																									'label' => false,
-																									'placeholder' => 'Remarks'));
-																	?>
-																</div>
-															</div>
-
-															<div class="form-group">
-																<div class="col-lg-2"></div>
+														<div class="main-box-body clearfix">
+															<div class="form-horizontal">
+																<div class="form-group"> <br>
+																	<label class="col-lg-2 control-label"><span style="color:red">*</span>Name</label>
 																	<div class="col-lg-8">
+																			<?php 
+																			echo $this->Form->input('CorrugatedPaper.name', array(
+																				'class' => 'form-control item_type required',
+													                            'label' => false,
+													                            'placeholder' => 'Corrugated Paper Name'));
+																			?>
+																	</div>
+																</div>
 
-																		<button type="submit" class="btn btn-primary pull-left">Submit Corrugated Paper</button>&nbsp;
+																<div class="form-group">
+																	<label class="col-lg-2 control-label"><span style="color:red">*</span>Category</label>
+																	<div class="col-lg-8">
+																		<input type="hidden" id="selected_type" value="">
+																		<?php echo $this->Form->input('CorrugatedPaper.category_id', array(
+																		'options' => array($categoryData),
+																		'type' => 'select',
+																		'label' => false,
+																		'class' => 'form-control required categorylist',
+																		'empty' => '---Select Item Category---',
+																		'required' => 'required'
+																		)); 
+																	?>
+																	</div>
+																</div>
 
+																<div class="form-group">
+																	<label class="col-lg-2 control-label"><span style="color:red">*</span>Type</label>
+																	<div class="col-lg-8">
+																		<input type="hidden" id="selected_type" value="">
+																		<?php echo $this->Form->input('CorrugatedPaper.type_id', array(
+																		'options' => '',
+																		'type' => 'select',
+																		'label' => false,
+																		'class' => 'form-control required categorylist',
+																		'empty' => '---Select Item Type---',
+																		'required' => 'required'
+																		)); 
+																	?>
+																	</div>
+																</div>
+
+																<div class="form-group">
+																	<label class="col-lg-2 control-label"><span style="color:red">*</span>Manufacturer</label>
+																	<div class="col-lg-8">
+																		<input type="hidden" id="selected_type" value="">
 																		<?php 
-																		echo $this->Html->link('Cancel', array('controller' => 'settings', 'action' => 'index'),array('class' =>'btn btn-default','escape' => false));
+																		echo $this->Form->input('CorrugatedPaper.manufacturer_id', array(
+																			'options' => array($supplierData),
+																			'type' => 'select',
+																			'label' => false,
+																			'class' => 'form-control required categorylist',
+																			'empty' => '---Select Supplier---',
+																			'required' => 'required'
+																			)); 
+																	?>
+																	</div>
+																	
+																</div>
+																<section class="layerSection">
+																	<div class="form-group layerLanding"> <br>
+																		<label class="col-lg-2 control-label"><span style="color:red">*</span>Layer</label>
+																		<div class="col-lg-7">
+																				<?php 
+																					echo $this->Form->input('CorrugatedPaper.layers', array(
+																						'class' => 'form-control required',
+															                            'label' => false,
+															                            'rule' => 'numeric',
+															                            'readonly' => true,
+															                           	'style'=>'width: 150px',
+															                           	'id' => 'layersC',
+															                            'value' => 1));
+																				?>
+																		</div>
+																		<div class="col-lg-1">
+																			<a href="#" class="btn btn-primary addLayerNow mrg-b-lg pull-right"><i class="fa fa-plus-circle fa-lg"></i> Add Layer</a>
+																		</div>
+																	</div>
+																	<section class="appendLayer">
+																		<div class="form-group">
+																			<label class="col-lg-3 control-label"><span style="color:red">*</span>Substrate</label>
+																			<div class="col-lg-2">
+																					<?php 
+																						echo $this->Form->input('ItemGroupLayer.0.substrate', array(
+																							'class' => 'form-control required',
+																                            'label' => false,
+																                            'placeholder' => 'Substrate'));
+																					?>
+																			</div>
+																			<label class="col-lg-1 control-label">Flute</label>
+																			<div class="col-lg-2">
+																					<?php 
+																						echo $this->Form->input('ItemGroupLayer.0.flute', array(
+																							'class' => 'form-control',
+																                            'label' => false,
+																                            'placeholder' => 'Flute'));
+																					?>
+																			</div>
+																		</div>
+																	</section>
+																</section>
+
+																<div class="form-group"> <br>
+																	<label class="col-lg-2 control-label">Brust</label>
+																	<div class="col-lg-8">
+																			<?php 
+																				echo $this->Form->input('CorrugatedPaper.brust', array(
+																					'class' => 'form-control fct',
+														                            'label' => false,
+														                            'rule' => 'numeric',
+														                           	'style'=>'width: 150px',
+														                            'placeholder' => 'Brust'));
+																			?>
+																	</div>
+																</div>
+
+																<div class="form-group"> <br>
+																	<label class="col-lg-2 control-label">FCT</label>
+																	<div class="col-lg-8">
+																			<?php 
+																				echo $this->Form->input('CorrugatedPaper.fct', array(
+																					'class' => 'form-control layer',
+														                            'label' => false,
+														                            'rule' => 'numeric',
+														                           	'style'=>'width: 150px',
+														                            'placeholder' => 'FCT'));
+																			?>
+																	</div>
+																</div>
+
+																<div class="form-group">
+																	<label class="col-lg-2 control-label">Remarks</label>
+																	<div class="col-lg-8">
+																		<?php 
+																			echo $this->Form->textarea('CorrugatedPaper.remarks', array(
+																				'class' => 'form-control item_type',
+																				'label' => false,
+																				'placeholder' => 'Remarks'));
 																		?>
 																	</div>
+																</div>
+
+																<div class="form-group">
+																	<div class="col-lg-2"></div>
+																		<div class="col-lg-8">
+
+																			<button type="submit" class="btn btn-primary pull-left">Submit Corrugated Paper</button>&nbsp;
+
+																			<?php 
+																			echo $this->Html->link('Cancel', array('controller' => 'settings', 'action' => 'index'),array('class' =>'btn btn-default','escape' => false));
+																			?>
+																		</div>
+																</div>
 															</div>
 														</div>
-													</div>
-											    </div>
+												    </div>
+												</div>
 											</div>
 										</div>
-									</div>
-										<?php echo $this->Form->end(); ?>
+									<?php echo $this->Form->end(); ?>
 
 									<div class="row" id="corrugated-paper-table">
 										<div class="col-lg-12">
@@ -757,12 +783,12 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 													<thead>
 													<tr>
 													<th class="text-center" width="215px"><a href="#"><span>Corrugated Paper ID</span></a></th>
-													<th class="text-center"><a href="#"><span>Name</span></a></th>
+													<th style="width:310px" class="text-center"><a href="#"><span>Name</span></a></th>
 													<th class="text-center"><a href="#"><span>Category</span></a></th>
 													<th class="text-center"><a href="#"><span>Type</span></a></th>
 													<th class="text-center"><a href="#"><span>Manufacturer</span></a></th>
 													<th class="text-center"><a href="#"><span>Created</span></a></th>
-													<th style="width:275px">Action</th>
+													<th style="width:310px">Action</th>
 													</tr>
 													</thead>
 
@@ -796,35 +822,38 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 </div>
 
 <script>
+	jQuery(document).ready(function($){
+  		$("#CorrugatedPaperItemGroupForm").validate();
 
-	var option = $(this).val();$('#SubstrateCategoryId').change(function(){
-			$('.option-append').remove();
-		
-			 var selected = $('#SubstrateCategoryId').val();
-			$.ajax({
-				url: serverPath + "settings/ajax_categ/"+option,
-				type: "get",
-				async: false,
-				dataType: "json",
-				success: function(data) {
+		var option = $(this).val();$('#SubstrateCategoryId').change(function(){
+				$('.option-append').remove();
+			
+				 var selected = $('#SubstrateCategoryId').val();
+				$.ajax({
+					url: serverPath + "settings/ajax_categ/"+option,
+					type: "get",
+					async: false,
+					dataType: "json",
+					success: function(data) {
 
-					$.each(data, function(key, value) {
+						$.each(data, function(key, value) {
 
-						if (value.id == selected) {
+							if (value.id == selected) {
 
-							$option = "<option class='option-append' selected value="+value.ItemTypeHolder.id+">"+value.ItemTypeHolder.name+"</option>";	
+								$option = "<option class='option-append' selected value="+value.ItemTypeHolder.id+">"+value.ItemTypeHolder.name+"</option>";	
 
-						} else {
+							} else {
 
-							$option = "<option class='option-append'  value="+value.ItemTypeHolder.id+">"+value.ItemTypeHolder.name+"</option>";
-							
-						}
-					     $('#SubstrateTypeId').append($option);
-					});			
-				}
-			});			
+								$option = "<option class='option-append'  value="+value.ItemTypeHolder.id+">"+value.ItemTypeHolder.name+"</option>";
+								
+							}
+						     $('#SubstrateTypeId').append($option);
+						});			
+					}
+				});			
 
-	}).trigger('change');
+		}).trigger('change');
+	});
 
 
 </script>

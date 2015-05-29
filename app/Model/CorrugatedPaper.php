@@ -79,4 +79,26 @@ class CorrugatedPaper extends AppModel {
 		$this->contain($model);
 	}
 
+	public function saveCorrugated($corrugatedData = null, $auth = null){
+
+		$month = date("m"); 
+	    $year = date("y");
+	    $hour = date("H");
+	    $minute = date("i");
+	    $seconds = date("s");
+	    $random = rand(1000, 10000);
+
+	    $code =  $year. $month .$random;
+	    
+	    $this->create();
+
+		$corrugatedData[$this->name]['created_by'] = $auth;
+        $corrugatedData[$this->name]['modified_by'] = $auth;
+        $corrugatedData[$this->name]['uuid'] = $code;
+        
+        if($this->save($corrugatedData)){
+            return $this->id;
+        }
+	}
+
 }

@@ -187,3 +187,13 @@ CREATE TABLE `product_specification_process_holders` (
 
 ALTER TABLE `client_order_delivery_schedules`    ADD COLUMN `allowance` VARCHAR(30) NULL AFTER `quantity`;
 ALTER TABLE `client_order_delivery_schedules`    ADD COLUMN `delivery_type` VARCHAR(30) NULL AFTER `client_order_id`;
+
+#NOTE: SELECT KOUFU SALE DATABASE ----
+/** bien  added this 05/29/2015  */
+
+ALTER TABLE `koufu_sale`.`client_order_delivery_schedules`     ADD COLUMN `uuid` INT(11) NULL AFTER `id`;
+
+#NOTE: SELECT KOUFU DELIVERY DATABASE ----
+/** bien  added this 05/29/2015  */
+
+ALTER TABLE `koufu_delivery`.`deliveries` DROP COLUMN `description`,    CHANGE `sales_order_id` `schedule_uuid` INT(11) NULL ,     CHANGE `delivery_details_id` `clients_order_id` INT(11) NULL ,     CHANGE `modified` `modified` TIMESTAMP NULL ,     CHANGE `created` `created` TIMESTAMP NULL ;

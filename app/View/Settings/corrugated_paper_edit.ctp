@@ -35,9 +35,8 @@
 										
 											<?php 
 	                                            echo $this->Form->input('CorrugatedPaper.name', array(
-                        								'class' => 'form-control item_type',
+                        								'class' => 'form-control item_type required',
 	                                                    'label' => false,
-	                                                    'required' => 'required',
 	                                                    'placeholder' => 'Corrugated Paper Name'));
 
                                             ?>
@@ -85,8 +84,7 @@
 														'type' => 'select',
 														'label' => false,
 														'class' => 'form-control required categorylist',
-														'empty' => '---Select Supplier---',
-														'required' => 'required'
+														'empty' => '---Select Supplier---'
 											)); 
 											?>
 										</div>
@@ -102,8 +100,8 @@
 												'class' => 'form-control layer',
 												'label' => false,
 												'rule' => 'numeric',
-												'style'=>'width: 150px',
-												'placeholder' => 'Layer'));
+												'readonly' => true,
+												'style'=>'width: 150px'));
 										?>	
 
 										</div>
@@ -308,3 +306,8 @@
 }
 
     </style>
+ <script>
+	jQuery(document).ready(function($){
+  		$("#CorrugatedPaperCorrugatedPaperEditForm").validate();
+  	});
+</script>

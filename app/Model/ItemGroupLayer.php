@@ -62,4 +62,17 @@ class ItemGroupLayer extends AppModel {
 		}
 
 	}
+
+	public function addItemgroupLayer($groupData = null ,$groupId = null){
+		
+		foreach ($groupData[$this->name] as $key => $ItemGroupList) 
+		{
+			$this->create();
+			$ItemGroupList['no'] = $key;
+			$ItemGroupList['foreign_key'] = $groupId;
+			$ItemGroupList['model'] = 'CorrugatedPaper';
+			
+			$this->save($ItemGroupList);
+		}
+	}
 }
