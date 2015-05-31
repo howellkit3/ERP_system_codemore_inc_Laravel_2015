@@ -30,21 +30,21 @@
 	    	$sendQuotation = '' ;
 	    	$createOrder = '' ;
 	    }
-	    if( $userRole != 2   ) {
-    		//pr($userData['User']['role_id']);exit();
-	    	!in_array('Print Quotation', $myPermission) ? $printQuotation = 'disabled' : $printQuotation = '' ;
+	    // if( $userRole != 2   ) {
+    	// 	//pr($userData['User']['role_id']);exit();
+	    // 	!in_array('Print Quotation', $myPermission) ? $printQuotation = 'disabled' : $printQuotation = '' ;
 	    	
-	    	!in_array('Edit Quotation', $myPermission) ? $editQuotation = 'disabled' : $editQuotation = '' ;
+	    // 	!in_array('Edit Quotation', $myPermission) ? $editQuotation = 'disabled' : $editQuotation = '' ;
 
-	    	!in_array('Send Quotation', $myPermission) ? $sendQuotation = 'disabled' : $sendQuotation = '' ;
+	    // 	!in_array('Send Quotation', $myPermission) ? $sendQuotation = 'disabled' : $sendQuotation = '' ;
 	    	
-	    	//!in_array('Create Order', $myPermission) ? $createOrder = 'disabled' : $createOrder = '' ;
-	    } else {
-	    	$printQuotation = '' ;
-	    	$editQuotation = '' ;
-	    	$sendQuotation = '' ;
-	    	$createOrder = '' ;
-	    }	
+	    // 	//!in_array('Create Order', $myPermission) ? $createOrder = 'disabled' : $createOrder = '' ;
+	    // } else {
+	    // 	$printQuotation = '' ;
+	    // 	$editQuotation = '' ;
+	    // 	$sendQuotation = '' ;
+	    // 	$createOrder = '' ;
+	    // }	
     	//start//for enable and disabled button//permission
     	
         echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'quotations', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));

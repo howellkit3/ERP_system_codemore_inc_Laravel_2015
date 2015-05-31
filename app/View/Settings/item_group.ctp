@@ -561,7 +561,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 													<table class="table table-striped table-hover">
 													<thead>
 													<tr>
-													<th class="text-center" width="215px"><a href="#"><span>Compound Substrate ID</span></a></th>
+													<th class="text-center"><a href="#"><span>Compound Substrate ID</span></a></th>
 													<th class="text-center"><a href="#"><span>Name</span></a></th>
 													<th class="text-center"><a href="#"><span>Category</span></a></th>
 													<th class="text-center"><a href="#"><span>Type</span></a></th>
@@ -790,23 +790,23 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 											</header>
 												<div class="main-box-body clearfix">
 													<div class="table-responsive">
-													<table class="table table-striped table-hover">
-													<thead>
-													<tr>
-													<th class="text-center" width="215px"><a href="#"><span>Corrugated Paper ID</span></a></th>
-													<th style="width:310px" class="text-center"><a href="#"><span>Name</span></a></th>
-													<th class="text-center"><a href="#"><span>Category</span></a></th>
-													<th class="text-center"><a href="#"><span>Type</span></a></th>
-													<th class="text-center"><a href="#"><span>Manufacturer</span></a></th>
-													<th class="text-center"><a href="#"><span>Created</span></a></th>
-													<th style="width:420px">Action</th>
-													</tr>
-													</thead>
+														<table class="table table-striped table-hover">
+															<thead>
+																<tr>
+																	<th class="text-center"><a href="#"><span>Corrugated Paper ID</span></a></th>
+																	<th style="width:310px" class="text-center"><a href="#"><span>Name</span></a></th>
+																	<th class="text-center"><a href="#"><span>Category</span></a></th>
+																	<th class="text-center"><a href="#"><span>Type</span></a></th>
+																	<th class="text-center"><a href="#"><span>Manufacturer</span></a></th>
+																	<th class="text-center"><a href="#"><span>Created</span></a></th>
+																	<th style="width:420px">Action</th>
+																</tr>
+															</thead>
 
-													<?php echo $this->element('corrugated_paper_table'); ?>
+															<?php echo $this->element('corrugated_paper_table'); ?>
 
-													</table>
-													<hr>
+														</table>
+														<hr>
 													 	<div class="paging" id="corrugated_paper_pagination">
 															 <?php
 											               
