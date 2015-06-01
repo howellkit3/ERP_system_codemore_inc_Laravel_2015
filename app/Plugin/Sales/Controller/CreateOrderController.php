@@ -120,23 +120,30 @@ class CreateOrderController extends SalesAppController {
 	public function order_create(){
 
 		$userData = $this->Session->read('Auth');
+
+		$this->loadModel('Ticket.Jobticket');
 	
 		if ($this->request->is('post')) {
 
 
             if (!empty($this->request->data)) {
-            	
+            	pr($this->request->data);exit();
             	$this->ClientOrder->bind(array('ClientOrderDeliverySchedule','ClientOrderItemDetail'));
 
             	//pr($this->request->data); exit();
 
-            	$this->id = $this->ClientOrder->saveClientOrder($this->request->data, $userData['User']['id']);
+            	$clientOrderId = $this->ClientOrder->saveClientOrder($this->request->data, $userData['User']['id']);
             	
-            	$this->ClientOrder->ClientOrderDeliverySchedule->saveClientOrderDeliverySchedule($this->request->data, $userData['User']['id'], $this->id);
+            	$this->ClientOrder->ClientOrderDeliverySchedule->saveClientOrderDeliverySchedule($this->request->data, $userData['User']['id'], $clientOrderId);
+
+            	$this->Jobticket->saveTicket($this->request->data, $userData['User']['id'], $clientOrderId);
 
             	$this->Session->setFlash(__('Client Order was successfully added in the system.'));
+
+            	$this->Session->setFlash(__('Client Order was successfully added in the system.'));
+
     			$this->redirect(
-            		array('controller' => 'sales_orders', 'action' => 'index')
+            		array('controller' => 'create_orders', 'action' => 'create_specs')
        			 );
 
             }

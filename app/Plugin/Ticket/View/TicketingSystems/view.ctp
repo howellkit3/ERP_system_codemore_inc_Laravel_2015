@@ -16,7 +16,7 @@
 					<div class="clearfix">
 
 						<?php
-							if( ($ticketData['Ticket']['status'] == 0) && ($ticketData['Ticket']['job_ticket_id'] == 1)){
+							//if( ($ticketData['JobTicket']['status'] == 0) && ($ticketData['JobTicket']['job_ticket_id'] == 1)){
 						?>
 
 							<span class="label label-default label-large">Pending</span><br><br>
@@ -34,9 +34,9 @@
                        								$ticketid),array('class' =>'btn btn-info',
                        								'escape' => false));
 								
-							}
+							////}
 
-							elseif ( ($ticketData['Ticket']['status'] == 1) && ($ticketData['Ticket']['job_ticket_id'] == 1)){
+							//elseif ( ($ticketData['JobTicket']['status'] == 1) && ($ticketData['JobTicket']['job_ticket_id'] == 1)){
 							?>
 
 								<span class="label label-default label-large">Pending</span>
@@ -48,8 +48,8 @@
                        							 'action' => 'finishedJob',
                        							  $ticketid),array('class' =>'btn btn-info',
                        							  'escape' => false));
-                   			 }
-                   			 else{
+                   			// }
+                   			// else{
 
                    			 	?>
                    			 		<span class="label label-default label-large">Pending</span>
@@ -57,7 +57,7 @@
                    			 		<span class="label label-success label-large">Complete</span><br><br>
 
                    			<?php
-                   			 }
+                   			 //}
                    			?>
 						<div class="col-md-1 col-sm-6 col-xs-6 pricing-package pull-right">
 							<!-- <div class="pricing-star">Task<br>Done</div> -->
@@ -82,15 +82,15 @@
 					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde?</p>
 					<div class="clearfix">
 						<?php
-							if($ticketData['Ticket']['job_ticket_id'] == 1){
+							//if($ticketData['JobTicket']['job_ticket_id'] == 1){
 						?>
 								<span class="label label-default label-large">Waiting</span><br><br>
 							<?php
 
-							}
-							else{
+							//}
+							//else{
 
-								if( ($ticketData['Ticket']['status'] == 0) && ($ticketData['Ticket']['job_ticket_id'] == 2)){
+							//	if( ($ticketData['JobTicket']['status'] == 0) && ($ticketData['JobTicket']['job_ticket_id'] == 2)){
 						?>
 
 							<span class="label label-default label-large">Pending</span><br><br>
@@ -105,9 +105,9 @@
                        			<?php
                        				
 								
-							}
+							//}
 
-							elseif ( ($ticketData['Ticket']['status'] == 1) && ($ticketData['Ticket']['job_ticket_id'] == 2)){
+							//elseif ( ($ticketData['JobTicket']['status'] == 1) && ($ticketData['JobTicket']['job_ticket_id'] == 2)){
 							?>
 
 								<span class="label label-default label-large">Pending</span>
@@ -119,8 +119,8 @@
                        							 'action' => 'finishedJob',
                        							  $ticketid),array('class' =>'btn btn-info',
                        							  'escape' => false));
-                   			 }
-                   			 else{
+                   			 //}
+                   			 //else{
 
                    			 	?>
                    			 		<span class="label label-default label-large">Pending</span>
@@ -128,8 +128,8 @@
                    			 		<span class="label label-success label-large">Complete</span><br><br>
 
                    			<?php
-                   				 }
-                   			}
+                   				 //}
+                   			//}
                    			?>	
 					</div>
 					<span class="cd-date">15:40</span>
@@ -146,15 +146,15 @@
 					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, obcaecati, quisquam id molestias eaque asperiores voluptatibus cupiditate error assumenda delectus odit similique earum voluptatem doloremque dolorem ipsam quae rerum quis. Odit, itaque, deserunt corporis vero ipsum nisi eius odio natus ullam provident pariatur temporibus quia eos repellat consequuntur perferendis enim amet quae quasi repudiandae sed quod veniam dolore possimus rem voluptatum eveniet eligendi quis fugiat aliquam sunt similique aut adipisci.</p>
 					<div class="clearfix">
 						<?php
-							if(($ticketData['Ticket']['job_ticket_id'] == 1) || ($ticketData['Ticket']['job_ticket_id'] == 2)){
+							//if(($ticketData['JobTicket']['job_ticket_id'] == 1) || ($ticketData['JobTicket']['job_ticket_id'] == 2)){
 						?>
 								<span class="label label-default label-large">Waiting</span><br><br>
 						<?php
 
-							}
-							else{
+							//}
+							//else{
 
-									if( ($ticketData['Ticket']['status'] == 0) && ($ticketData['Ticket']['job_ticket_id'] == 3)){
+							//		if( ($ticketData['JobTicket']['status'] == 0) && ($ticketData['JobTicket']['job_ticket_id'] == 3)){
 						?>
 
 							<span class="label label-default label-large">Pending</span><br><br>
@@ -169,9 +169,9 @@
                        			<?php
                        				
 								
-							}
+							//}
 
-							elseif ( ($ticketData['Ticket']['status'] == 1) && ($ticketData['Ticket']['job_ticket_id'] == 3)){
+							//elseif ( ($ticketData['JobTicket']['status'] == 1) && ($ticketData['JobTicket']['job_ticket_id'] == 3)){
 							?>
 
 								<span class="label label-default label-large">Pending</span>
@@ -183,8 +183,8 @@
                        							 'action' => 'finishedJob',
                        							  $ticketid),array('class' =>'btn btn-info',
                        							  'escape' => false));
-                   			 }
-                   			 else{
+                   			// }
+                   			// else{
 
                    			 	?>
                    			 		<span class="label label-default label-large">Pending</span>
@@ -192,8 +192,8 @@
                    			 		<span class="label label-success label-large">Complete</span><br><br>
 
                    			<?php
-                   				 }
-                   			}
+                   			//	 }
+                   			//}
                    		?>	
 					</div>
 					<span class="cd-date">18:12</span>
@@ -211,15 +211,15 @@
 					<div class="clearfix">
 
 						<?php
-							if(($ticketData['Ticket']['job_ticket_id'] == 1) || ($ticketData['Ticket']['job_ticket_id'] == 2) || ($ticketData['Ticket']['job_ticket_id'] == 3)){
+							//if(($ticketData['JobTicket']['job_ticket_id'] == 1) || ($ticketData['JobTicket']['job_ticket_id'] == 2) || ($ticketData['Ticket']['job_ticket_id'] == 3)){
 						?>
 								<span class="label label-default label-large">Waiting</span><br><br>
 						<?php
 
-							}
-							else{
+							//}
+							//else{
 
-									if( ($ticketData['Ticket']['status'] == 0) && ($ticketData['Ticket']['job_ticket_id'] == 4)){
+							//		if( ($ticketData['JobTicket']['status'] == 0) && ($ticketData['JobTicket']['job_ticket_id'] == 4)){
 						?>
 
 							<span class="label label-default label-large">Pending</span><br><br>
@@ -234,9 +234,9 @@
                        			<?php
                        				
 								
-							}
+							//}
 
-							elseif ( ($ticketData['Ticket']['status'] == 1) && ($ticketData['Ticket']['job_ticket_id'] == 4)){
+							//elseif ( ($ticketData['JobTicket']['status'] == 1) && ($ticketData['JobTicket']['job_ticket_id'] == 4)){
 							?>
 
 								<span class="label label-default label-large">Pending</span>
@@ -248,8 +248,8 @@
                        							 'action' => 'finishedJob',
                        							  $ticketid),array('class' =>'btn btn-info',
                        							  'escape' => false));
-                   			 }
-                   			 else{
+                   			 //}
+                   			// else{
 
                    			 	?>
                    			 		<span class="label label-default label-large">Pending</span>
@@ -257,8 +257,8 @@
                    			 		<span class="label label-success label-large">Complete</span><br><br>
 
                    			<?php
-                   				 }
-                   			}
+                   				 //}
+                   			//}
                    		?>	
 					</div>
 					<span class="cd-date">20:48</span>
@@ -275,16 +275,16 @@
 					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum.</p>
 					<div class="clearfix">
 						<?php
-							if(($ticketData['Ticket']['job_ticket_id'] == 1) || ($ticketData['Ticket']['job_ticket_id'] == 2) || ($ticketData['Ticket']['job_ticket_id'] == 3) || 
-								($ticketData['Ticket']['job_ticket_id'] == 4)){
+							//if(($ticketData['JobTicket']['job_ticket_id'] == 1) || ($ticketData['JobTicket']['job_ticket_id'] == 2) || ($ticketData['Ticket']['job_ticket_id'] == 3) || 
+							//	($ticketData['JobTicket']['job_ticket_id'] == 4)){
 						?>
 								<span class="label label-default label-large">Waiting</span><br><br>
 						<?php
 
-							}
-							else{
+							//}
+							//else{
 
-									if( ($ticketData['Ticket']['status'] == 0) && ($ticketData['Ticket']['job_ticket_id'] == 5)){
+							//		if( ($ticketData['JobTicket']['status'] == 0) && ($ticketData['JobTicket']['job_ticket_id'] == 5)){
 						?>
 
 							<span class="label label-default label-large">Pending</span><br><br>
@@ -299,9 +299,9 @@
                        			<?php
                        				
 								
-							}
+							//}
 
-							elseif ( ($ticketData['Ticket']['status'] == 1) && ($ticketData['Ticket']['job_ticket_id'] == 5)){
+							//elseif ( ($ticketData['JobTicket']['status'] == 1) && ($ticketData['JobTicket']['job_ticket_id'] == 5)){
 							?>
 
 								<span class="label label-default label-large">Pending</span>
@@ -313,8 +313,8 @@
                        							 'action' => 'finishedJob',
                        							  $ticketid),array('class' =>'btn btn-info',
                        							  'escape' => false));
-                   			 }
-                   			 else{
+                   			 //}
+                   			 //else{
 
                    			 	?>
                    			 		<span class="label label-default label-large">Pending</span>
@@ -322,8 +322,8 @@
                    			 		<span class="label label-success label-large">Complete</span><br><br>
 
                    			<?php
-                   				 }
-                   			}
+                   				// }
+                   			//}
                    		?>	
 					</div>
 					<span class="cd-date">21:22</span>
@@ -339,16 +339,16 @@
 					<p>This is the content of the last section</p>
 					<div class="clearfix">
 						<?php
-							if(($ticketData['Ticket']['job_ticket_id'] == 1) || ($ticketData['Ticket']['job_ticket_id'] == 2) || ($ticketData['Ticket']['job_ticket_id'] == 3) || 
-								($ticketData['Ticket']['job_ticket_id'] == 4) || ($ticketData['Ticket']['job_ticket_id'] == 5)){
+							//if(($ticketData['JobTicket']['job_ticket_id'] == 1) || ($ticketData['JobTicket']['job_ticket_id'] == 2) || ($ticketData['JobTicket']['job_ticket_id'] == 3) || 
+							//	($ticketData['JobTicket']['job_ticket_id'] == 4) || ($ticketData['JobTicket']['job_ticket_id'] == 5)){
 						?>
 								<span class="label label-default label-large">Waiting</span><br><br>
 						<?php
 
-							}
-							else{
+							//}
+							//else{
 
-									if( ($ticketData['Ticket']['status'] == 0) && ($ticketData['Ticket']['job_ticket_id'] == 6)){
+							//		if( ($ticketData['JobTicket']['status'] == 0) && ($ticketData['JobTicket']['job_ticket_id'] == 6)){
 						?>
 
 							<span class="label label-default label-large">Pending</span><br><br>
@@ -363,9 +363,9 @@
                        			<?php
                        				
 								
-							}
+							//}
 
-							elseif ( ($ticketData['Ticket']['status'] == 1) && ($ticketData['Ticket']['job_ticket_id'] == 6)){
+							//elseif ( ($ticketData['JobTicket']['status'] == 1) && ($ticketData['JobTicket']['job_ticket_id'] == 6)){
 							?>
 
 								<span class="label label-default label-large">Pending</span>
@@ -377,8 +377,8 @@
                        							 'action' => 'finishedJob',
                        							  $ticketid),array('class' =>'btn btn-info',
                        							  'escape' => false));
-                   			 }
-                   			 else{
+                   			// }
+                   			// else{
 
                    			 	?>
                    			 		<span class="label label-default label-large">Pending</span>
@@ -386,8 +386,8 @@
                    			 		<span class="label label-success label-large">Complete</span><br><br>
 
                    			<?php
-                   				 }
-                   			}
+                   				// }
+                   			//}
                    		?>	
 
 					</div>
