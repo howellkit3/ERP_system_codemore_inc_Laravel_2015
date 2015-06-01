@@ -49,6 +49,17 @@ class SalesOrdersController extends SalesAppController {
     
     $this->loadModel('Unit');
 
+    if (!empty($this->request->data)) {
+ 
+          $this->ClientOrder->save($this->request->data);
+
+          $this->Session->setFlash(__('P.O. number was  updated'),'success');
+
+          $this->redirect(
+                    array('controller' => 'sales_orders','action' => 'view',$this->request->data['ClientOrder']['id']  )
+                );
+            }
+
     $currencies = $this->Currency->getList();
 
     $units = $this->Unit->getList();
@@ -73,6 +84,8 @@ class SalesOrdersController extends SalesAppController {
 												
 		$this->set(compact('clientOrderData','quotationData','companyName','quotationItemDetail','paymentTermData','currencies','units'));
 
+    
+
 	}
 
 	public function add_schedule() {
@@ -90,7 +103,7 @@ class SalesOrdersController extends SalesAppController {
 
       $schedData = $this->ClientOrder->find('all', array('conditions' => array('ClientOrder.id' => $this->request->data['ClientOrderDeliverySchedule']['client_order_id'])));
 
-     //$abc = $schedData[0]['QuotationItemDetail']['quantity']; 
+     $abc = $schedData[0]['QuotationItemDetail']['quantity']; 
 
       //pr($this->request->data['ClientOrderDeliverySchedule']); exit;
              
@@ -185,10 +198,18 @@ class SalesOrdersController extends SalesAppController {
         $this->set(compact('productData'));
         //$this->set(compact('categoryData'));
     }
+
+    public function edit_PO() {
+
+     // pr($this->request->data);exit;
+
+     
+
+     
+      //pr($this->request->data); exit;
+
+       // $this->set(compact('supplierData'));
+
+    }
 	
-
-
-
-	
-
 }
