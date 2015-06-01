@@ -24,6 +24,8 @@
 			</div>
 		</div>
 
+		<?php //pr($clientOrderData); exit; ?>
+
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="main-box">
@@ -109,18 +111,38 @@
 									</div>
 								</div>
 
+								<?php echo $this->Form->create('ClientOrder',array('url'=>(array('controller' => 'sales_orders','action' => 'view'))));?>
+
 								<div class="form-group" id="existing_items">
 									<label class="col-lg-2 control-label">PO no.</label>
 									<div class="col-lg-8">
+
+										<?php 
+	                                    echo $this->Form->input('ClientOrder.id', array('class' => 'form-control item_type',
+					                        'hidden' => 'hidden',
+					                        'readonly' => 'readonly',
+					                        'label' => false,
+					                        'id' => 'id',
+					                        'value' => $clientOrderData['ClientOrder']['id']));
+                              			  ?>
+
+
 										<?php 
                                             echo $this->Form->input('ClientOrder.po_number', array(
-                                            								'class' => 'form-control item_type',
+                                            								'class' => 'form-control item_type POeditable PONumEdit POBlur',
 						                                                    'label' => false,
 						                                                    'readonly' => 'readonly',
 						                                                    'value' => $clientOrderData['ClientOrder']['po_number']));
                                         ?>
 									</div>	
+
+									<button type="button" class="btn btn-primary pull-left POEdit" style="margin-right:13px;" >Edit</button> 
+
+									<button type="submit" class="btn btn-primary pull-left POeditable" id = "submit" disabled onclick="AddAttr()">Submit</button>
+
 								</div>
+
+								<?php echo $this->Form->end(); ?>
 
 								<?php if (!empty($clientOrderData['ClientOrder']['name'])) { ?>
 									<div class="form-group">
@@ -143,6 +165,8 @@
 				</div>
 			</div>
 		</div>
+
+		
 
 		<div class="row">
 			<div class="col-lg-12">
@@ -441,8 +465,6 @@
 
 								<?php endforeach; ?> 
 
-								
-
 							</div>
 						</div>
 					</div>
@@ -613,6 +635,8 @@
 <script>
 
 	jQuery(document).ready(function($){
+
+
 		
 		jQuery("#ClientOrderDeliveryScheduleViewForm").validate();
 
@@ -639,8 +663,40 @@
 		    });
 
 	    });
+
+		$("body").on('click','.POEdit', function(e){
+
+			$('.POeditable').attr('readonly', false);
+			$('button.POeditable').attr('disabled', false);
+			$(this).html('Cancel');
+	    	$(this).addClass('Cancel');
 	    
-		
+		});
+
+		$("body").on('click','.Cancel', function(e){
+	    		$('.POeditable').attr('readonly', true);
+	    		$('button.POeditable').attr('disabled', true);
+		    	$(this).html('Edit');
+		    	$(this).removeClass('Cancel');
+		    });
+
+		$("body").on('click','.PONumEdit', function(e){
+				$POval =$(this).val();
+				var someVariable = $POval;
+				someVariable = someVariable.replace('PO-', '');
+				$(this).val(someVariable);
+				$(this).addClass('POBlur')
+	    		//alert(someVariable);
+		    });
+		$("body").on('blur','.POBlur ', function(e){
+				$POval =$(this).val();
+				var POtext = "PO-";
+    			var concatPO = POtext.concat($POval);
+    			$(this).val(concatPO);
+    			$(this).removeClass('POBlur');
+	    		//alert(concatPO);
+		    });
+
 	});
 
 </script>

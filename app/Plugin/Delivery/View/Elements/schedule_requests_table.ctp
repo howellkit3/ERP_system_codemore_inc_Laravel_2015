@@ -20,13 +20,17 @@
 
                                         <td class="text-center">
 
-                                        <?php echo $scheduleDataList['Company']['company_name']; ?>  </a>
+                                         <?php foreach($scheduleDataList['ClientOrderDeliverySchedule'] as $key => $layers) : ?>   
+
+                                        <?php //echo $companyData[$scheduleDataList[$key]['ClientOrder']['company_id']]; ?> 
+
+                                         <?php endforeach; ?>
                                     
                                         </td>
 
                                         <td class="text-center">
                               
-                                           <?php echo $scheduleDataList['Product']['name']; ?>  
+                                           <?php //echo $scheduleDataList['Product']['name']; ?>  
                                            <br>
                                            
                                         </td>
@@ -35,7 +39,7 @@
                                             
                                          <?php foreach($scheduleDataList['ClientOrderDeliverySchedule'] as $key => $layers) : ?>
 
-                                             <?php echo date('M d, Y', strtotime($scheduleDataList['ClientOrderDeliverySchedule'][$key]['schedule']));?> 
+                                             <?php // echo date('M d, Y', strtotime($scheduleDataList['ClientOrderDeliverySchedule'][$key]['schedule']));?> 
 
                                             <br>
 
@@ -45,46 +49,45 @@
 
                                         <td class="text-center">
 
-                                           <?php echo $scheduleDataList['QuotationItemDetail']['quantity']; ?>  
+                                           <?php //echo $scheduleDataList['QuotationItemDetail']['quantity']; ?>  
 
                                         </td>
 
                                         <td class="text-center">
                                            <?php //echo $scheduleDataList['ClientOrderDeliverySchedule']['status']; ?>    
                                         </td>
-                                        
+
                                         <td class="text-center">
-                                            <?php
+
+                                            <?php  foreach ($scheduleDataList['ClientOrderDeliverySchedule'] as $key => $layers): 
+
                                                 echo $this->Html->link('<span class="fa-stack">
                                                                         <i class="fa fa-square fa-stack-2x"></i>
-                                                                        <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-                                                                        </span> ', array(
-                                                                        'controller' => 'Schedules', 
-                                                                        'action' => 'view',
-                                                                        $scheduleDataList['ClientOrder']['uuid'] 
-                                                                                    ), array(
-                                                                        'class' =>' table-link',
-                                                                        'escape' => false,
-                                                                        'title'=>'View Information'
-                                                                    ));
+                                                                         <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;
+                                                                         <span class ="post"><font size = "1px"> View </font></span>
+                                                                         </span> ', array('controller' => 'Deliveries', 
+                                                                                        'action' => 'view',
+                                                                        $scheduleDataList['ClientOrderDeliverySchedule'][$key]['uuid']),
+                                                                         array('class' =>' table-link small-link-icon','escape' => false,'title'=>'Edit Information'
+                                                                    )); 
+                                            ?>  
 
-                                            ?>
-                                            <?php
+                                            <?php 
                                                 echo $this->Html->link('<span class="fa-stack">
                                                                         <i class="fa fa-square fa-stack-2x"></i>
-                                                                        <i class="fa fa fa-check-square fa-lg fa-stack-1x fa-inverse"></i>
-                                                                        </span> ', array( 
-                                                                        'controller' => 'deliveries', 
-                                                                        'action' => 'add',
-                                                                         $scheduleDataList['ClientOrder']['uuid'], 
-                                                                         'schedule' 
-                                                                                ), array(
-                                                                        'class' =>' table-link',
-                                                                        'escape' => false,
-                                                                        'title'=>'Create Delivery Information'
-                                                        ));
+                                                                         <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;
+                                                                         <span class ="post"><font size = "1px"> Edit </font></span>
+                                                                         </span> ', array('controller' =>'Deliveries', 
+                                                                                            'action' => 'edit',
+                                                                        $scheduleDataList['ClientOrderDeliverySchedule'][$key]['uuid']),
+                                                                         array('class' =>' table-link small-link-icon','escape' => false,'title'=>'Edit Information'
+                                                                    )); 
+                                                ?>  
+                                                    <br>
+                                              <?php endforeach; ?>  
 
-                                            ?>
+                                            <br>
+                                             
                                         </td>
                                     </tr>
 
