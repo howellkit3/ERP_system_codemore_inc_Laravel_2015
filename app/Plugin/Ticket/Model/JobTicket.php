@@ -6,11 +6,11 @@ App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
  * User Model
  *
  */
-class Ticket extends AppModel {
+class JobTicket extends AppModel {
 
     public $useDbConfig = 'koufu_ticketing';
 
-    public $name = 'Ticket';
+    public $name = 'JobTicket';
 
 	// public $recursive = -1;
 
@@ -94,6 +94,30 @@ class Ticket extends AppModel {
 		 }
 
 		  return $this->id;
+
+	}
+
+	public function saveTicket($clientData = null,$auth = null,$clientOrderId = null){
+		
+		$month = date("m"); 
+	    $year = date("y");
+	    $hour = date("H");
+	    $minute = date("i");
+	    $seconds = date("s");
+	    $random = rand(1000, 10000);
+
+	    $code =  $year. $month .$random;
+	    $this->create();
+
+	    $data[$this->name]['uuid'] = $code;
+	    $data[$this->name]['product_id'] = $productUuid;
+	    $data[$this->name]['created_by'] = $auth;
+	    $data[$this->name]['modified_by'] = $auth;
+
+	    $this->save($data);
+
+	    return $this->id;
+
 
 	}
 

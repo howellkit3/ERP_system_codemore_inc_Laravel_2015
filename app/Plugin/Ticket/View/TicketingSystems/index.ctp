@@ -16,8 +16,10 @@
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th><a href="#"><span>Purchase No.:</span></a></th>
-                                 <th><a href="#"><span>Created</span></a></th>
+                                <th><a href="#"><span>Ticket id</span></a></th>
+                                <th><a href="#"><span>Product No. </span></a></th>
+                                <th><a href="#"><span>Product Name. </span></a></th>
+                                <th><a href="#"><span>Created</span></a></th>
                                 <th style="text-align:center">Action</th>
                             </tr>
                         </thead>

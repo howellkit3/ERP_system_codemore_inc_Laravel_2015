@@ -176,13 +176,22 @@
 									<div class="form-group">
                                     	<label class="col-lg-2 control-label">Item Name</label>
 										<div class="col-lg-8">
-											<?php echo $this->Form->input('Product.name', array(
-												'type' => 'text',
-				                                'label' => false,
-				                                'readonly' => 'readonly',
-				                                'class' => 'form-control',
-				                                'value' => ucfirst($productData['Product']['name'])
-				                                 )); 
+											<?php
+												echo $this->Form->input('Product.name', array(
+													'type' => 'text',
+					                                'label' => false,
+					                                'readonly' => 'readonly',
+					                                'class' => 'form-control',
+					                                'value' => ucfirst($productData['Product']['name'])
+					                                 )); 
+												pr($productData);exit();
+												// echo $this->Form->input('Product.name', array(
+												// 	'type' => 'hidden',
+					       //                          'label' => false,
+					       //                          'readonly' => 'readonly',
+					       //                          'class' => 'form-control',
+					       //                          'value' => ucfirst($productData['Product']['uuid'])
+					       //                           )); 
 
 				                            ?>
 										</div>

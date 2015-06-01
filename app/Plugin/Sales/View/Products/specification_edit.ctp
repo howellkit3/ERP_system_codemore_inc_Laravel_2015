@@ -26,7 +26,7 @@
 						
 		                    echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'products','action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
 
-		                    echo $this->Html->link('<i class="fa fa-ticket fa-lg"></i> Create Job Ticket ', array('controller' => 'ticketing_system','action' => 'create_ticket',$this->request->data['Product']['uuid']),array('class' =>'btn btn-primary pull-right','escape' => false));
+		                    echo $this->Html->link('<i class="fa fa-ticket fa-lg"></i> Create Job Ticket ', array('controller' => 'ticketing_systems','action' => 'create_ticket',$this->request->data['Product']['uuid'],'plugin' => 'ticket'),array('class' =>'btn btn-primary pull-right','escape' => false));
 
 		                    echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array('controller' => 'products','action' => 'print_specs',$this->request->data['Product']['uuid']),array('class' =>'btn btn-primary pull-right','escape' => false));
 		                ?>

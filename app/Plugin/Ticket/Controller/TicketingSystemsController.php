@@ -4,7 +4,7 @@ App::uses('SessionComponent', 'Controller/Component');
 
 class TicketingSystemsController extends TicketAppController {
 
-	public $uses = array('Ticket.Ticket');
+	public $uses = array('Ticket.JobTicket');
 
 	public $helpers = array('Sales.Country','Sales.Status','Cache','Sales.DateFormat');
 
@@ -24,14 +24,19 @@ class TicketingSystemsController extends TicketAppController {
 
 		$userData = $this->Session->read('Auth');
 
-		$ticketData = $this->Ticket->find('all',array('order' => array('Ticket.id DESC')));
+		$this->loadModel('Sales.Product');
 
-		$this->set(compact('ticketData'));
+		$ticketData = $this->JobTicket->find('all',array('order' => array('JobTicket.id DESC')));
+
+		$productName = $this->Product->find('list',array('fields' => array('uuid','name')));
+
+		$this->set(compact('ticketData','productName'));
 	
 	}
 
 	public function view($ticketid = null) {
-		$ticketData = $this->Ticket->find('first', array('conditions' => array('Ticket.id' =>$ticketid
+
+		$ticketData = $this->JobTicket->find('first', array('conditions' => array('JobTicket.id' =>$ticketid
 			)
 			));
 		
@@ -53,20 +58,34 @@ class TicketingSystemsController extends TicketAppController {
 
 	public function finishedJob($ticketId = null){
 
-		 $this->Ticket->finishedJob($ticketId);
+		$this->Ticket->finishedJob($ticketId);
 
-		 $this->redirect(
+		$this->redirect(
 
-         array('controller' => 'ticketing_systems', 
+        array('controller' => 'ticketing_systems', 
              	'action' => 'view',
              	 $ticketId
 
-          ));
+        ));
 
 	}
 
 	public function create_ticket($productUuid = null){
-		pr($productUuid);exit();
+		
+		$userData = $this->Session->read('Auth');
+
+		$this->loadModel('Sales.Product');
+
+		//$productData = $this->Product->find('first',array('conditions' => array('Product.uuid' => $productUuid)));
+		//pr($productData);exit();
+		$this->JobTicket->saveTicket($productUuid,$userData['User']['id']);
+
+		
+		$this->Session->setFlash(
+            __('Create Job Ticket successfully completed', 'success')
+        );
+        
+		return $this->redirect(array('controller' => 'ticketing_systems', 'action' => 'index'));
 	}
 
 }

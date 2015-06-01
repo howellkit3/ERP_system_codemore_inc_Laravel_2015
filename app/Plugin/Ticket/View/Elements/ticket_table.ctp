@@ -7,11 +7,16 @@
         <tr class="">
 
             <td class="">
-                <?php echo $ticketDataList['Ticket']['unique_id'] ?>  
+                <?php echo $ticketDataList['JobTicket']['uuid'] ?>  
             </td>
             <td class="">
-                
-                 <?php echo date('M d, Y', strtotime($ticketDataList['Ticket']['created'])); ?>
+                <?php echo $ticketDataList['JobTicket']['product_id'] ?>  
+            </td>
+            <td class="">
+                <?php echo $productName[$ticketDataList['JobTicket']['product_id']] ?> 
+            </td>
+            <td class="">
+                 <?php echo date('M d, Y', strtotime($ticketDataList['JobTicket']['created'])); ?>
             </td>
             <td style="text-align:center">
                 <?php
@@ -22,7 +27,7 @@
                                                      array(
                                             'controller' => 'ticketing_systems', 
                                             'action' => 'view', 
-                                            $ticketDataList['Ticket']['id']
+                                            $ticketDataList['JobTicket']['id']
                                                 ), array( 
                                             'class' =>' table-link','escape' => false, 
                                             'title'=>'View Timeline'
@@ -36,7 +41,7 @@
                                                 </span> ', array( 
                                                 'controller' => 'jobTicketSummaries', 
                                                 'action' => 'index', 
-                                                $ticketDataList['Ticket']['unique_id']
+                                                $ticketDataList['JobTicket']['uuid']
                                                 
                                                         ), array(
                                                 'class' =>' table-link',

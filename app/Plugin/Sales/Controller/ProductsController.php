@@ -926,7 +926,6 @@ class ProductsController extends SalesAppController {
             );
 			return $this->redirect(array('controller' => 'products', 'action' => 'index'));
 			
-			
 		}
 
     }
