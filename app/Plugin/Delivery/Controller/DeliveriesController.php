@@ -14,13 +14,24 @@ class DeliveriesController extends DeliveryAppController {
 
   public function index() {
 
-        $this->loadModel('Sales.ClientOrderDeliverySchedule');
+        $this->loadModel('Sales.ClientOrder');
+
+        $this->ClientOrder->bindDelivery();
+        $clientsOrder = $this->ClientOrder->find('all', array(
+                                        'order' => 'ClientOrderDeliverySchedule.id DESC'
+                                        ));
+        
+        //pr($clientsOrder); exit;
+
+        /*$this->loadModel('Sales.ClientOrderDeliverySchedule');
 
         $this->loadModel('Sales.Company');
 
-        $this->ClientOrderDeliverySchedule->bind(array('ClientOrder' ));
+        $this->ClientOrderDeliverySchedule->bind(array('ClientOrder' , 'QuotationItemDetail' , 'Quotation'));
 
-        $scheduleData = $this->ClientOrderDeliverySchedule->find('all');
+         $scheduleData = $this->ClientOrderDeliverySchedule->find('all', array(
+                                        'order' => 'ClientOrderDeliverySchedule.id DESC'
+                                        ));
 
         $companyData = $this->Company->find('list', array('fields' => 
                                                 array('id',
@@ -39,11 +50,12 @@ class DeliveriesController extends DeliveryAppController {
             'limit' => $limit,
            // 'fields' => array('ClientOrder.uuid', 'Company.company_name',  'Product.name', 'ClientOrder.po_number', 'QuotationItemDetail.quantity'),
             'order' => 'ClientOrderDeliverySchedule.id DESC',
-        );
+        );*/
 
        // $scheduleData = $this->paginate('ClientOrderDeliverySchedule');
        
-        $this->set(compact('scheduleData', 'companyData'));
+        //$this->set(compact('scheduleData', 'companyData'));
+        $this->set(compact('clientsOrder'));
    }
 
    public function delivery_info($id = null, $location = null){

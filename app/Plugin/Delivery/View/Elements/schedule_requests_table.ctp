@@ -1,75 +1,69 @@
   <?php 
-                        if(!empty($scheduleData)){
+                        if(!empty($clientsOrder)){
 
-                            //pr($scheduleData); exit;
-                            foreach ($scheduleData as $scheduleDataList): ?>
+                          //  pr($clientsOrder); exit;
+
+                            foreach ($clientsOrder as $scheduleDataList): ?>
 
                                 <tbody aria-relevant="all" aria-live="polite" role="alert">
 
                                     <tr class="">
 
                                         <td class="text-center">
-                                            <?php echo $scheduleDataList['ClientOrder']['uuid']; ?>  
+                                            <?php  echo $scheduleDataList['ClientOrder']['uuid']; ?>  
                                         </td>
 
                                         <td class="text-center">
 
-                                            <?php echo $scheduleDataList['ClientOrder']['po_number']; ?>  
+                                            <?php  echo $scheduleDataList['ClientOrder']['po_number']; ?>  
                                         
                                         </td>
 
                                         <td class="text-center">
 
-                                         <?php foreach($scheduleDataList['ClientOrderDeliverySchedule'] as $key => $layers) : ?>   
+                                        <?php echo $scheduleDataList['Company']['company_name'] ?> 
 
-                                        <?php //echo $companyData[$scheduleDataList[$key]['ClientOrder']['company_id']]; ?> 
-
-                                         <?php endforeach; ?>
-                                    
+                                        
                                         </td>
 
                                         <td class="text-center">
                               
-                                           <?php //echo $scheduleDataList['Product']['name']; ?>  
+                                           <?php echo $scheduleDataList['Product']['name']; ?>  
                                            <br>
                                            
                                         </td>
 
                                         <td class="text-center" >
                                             
-                                         <?php foreach($scheduleDataList['ClientOrderDeliverySchedule'] as $key => $layers) : ?>
-
-                                             <?php // echo date('M d, Y', strtotime($scheduleDataList['ClientOrderDeliverySchedule'][$key]['schedule']));?> 
+                                             <?php  echo date('M d, Y', strtotime($scheduleDataList['ClientOrderDeliverySchedule']['schedule']));?> 
 
                                             <br>
-
-                                           <?php endforeach; ?>
 
                                         </td >
 
                                         <td class="text-center">
 
-                                           <?php //echo $scheduleDataList['QuotationItemDetail']['quantity']; ?>  
+                                           <?php  echo $scheduleDataList['ClientOrderDeliverySchedule']['quantity']; ?>  
 
                                         </td>
 
                                         <td class="text-center">
-                                           <?php //echo $scheduleDataList['ClientOrderDeliverySchedule']['status']; ?>    
+                                           <?php // echo $scheduleDataList['ClientOrderDeliverySchedule']['status']; ?>    
                                         </td>
 
                                         <td class="text-center">
 
-                                            <?php  foreach ($scheduleDataList['ClientOrderDeliverySchedule'] as $key => $layers): 
+                                            <?php // foreach ($scheduleDataList['ClientOrderDeliverySchedule'] as $key => $layers): 
 
                                                 echo $this->Html->link('<span class="fa-stack">
-                                                                        <i class="fa fa-square fa-stack-2x"></i>
-                                                                         <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;
-                                                                         <span class ="post"><font size = "1px"> View </font></span>
-                                                                         </span> ', array('controller' => 'Deliveries', 
-                                                                                        'action' => 'view',
-                                                                        $scheduleDataList['ClientOrderDeliverySchedule'][$key]['uuid']),
-                                                                         array('class' =>' table-link small-link-icon','escape' => false,'title'=>'Edit Information'
-                                                                    )); 
+                                                                         <i class="fa fa-square fa-stack-2x"></i>
+                                                                      <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;
+                                                                          <span class ="post"><font size = "1px"> View </font></span>
+                                                                          </span> ', array('controller' => 'Deliveries', 
+                                                                                         'action' => 'view',
+                                                                         $scheduleDataList['ClientOrderDeliverySchedule']['uuid']),
+                                                                          array('class' =>' table-link small-link-icon','escape' => false,'title'=>'Edit Information'
+                                                                     )); 
                                             ?>  
 
                                             <?php 
@@ -79,12 +73,12 @@
                                                                          <span class ="post"><font size = "1px"> Edit </font></span>
                                                                          </span> ', array('controller' =>'Deliveries', 
                                                                                             'action' => 'edit',
-                                                                        $scheduleDataList['ClientOrderDeliverySchedule'][$key]['uuid']),
+                                                                        $scheduleDataList['ClientOrderDeliverySchedule']['uuid']),
                                                                          array('class' =>' table-link small-link-icon','escape' => false,'title'=>'Edit Information'
                                                                     )); 
                                                 ?>  
                                                     <br>
-                                              <?php endforeach; ?>  
+                                              <?php //endforeach; ?>  
 
                                             <br>
                                              

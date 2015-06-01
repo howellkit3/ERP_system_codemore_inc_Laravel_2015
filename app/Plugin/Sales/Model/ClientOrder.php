@@ -80,6 +80,29 @@ class ClientOrder extends AppModel {
 		$this->contain($model);
 	}
 
+	public function bindDelivery() {
+		$this->bindModel(array(
+			'hasOne' => array(
+				'ClientOrderDeliverySchedule' => array(
+					'className' => 'Sales.ClientOrderDeliverySchedule',
+					'foreignKey' => 'client_order_id'
+				),				
+				'Company' => array(
+					'className' => 'Sales.Company',
+					'foreignKey' => false,
+					'conditions' => 'Company.id = ClientOrder.company_id'
+				),
+				'Product' => array(
+					'className' => 'Sales.Product',
+					'foreignKey' => false,
+					'conditions' => 'Company.id = Product.company_id'
+				)
+			)
+		));
+		$this->recursive = 1;
+		//$this->contain($giveMeTheTableRelationship);
+	}
+
 	public function saveClientOrder($clientOrderData = null, $auth = null){
 
 		$this->create();

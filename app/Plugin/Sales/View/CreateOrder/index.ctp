@@ -247,8 +247,7 @@
 										<div class="col-lg-8 ">
 											<?php foreach ($quotationData['QuotationItemDetail'] as $itemDetail){ ?>
 												<table  class = "tbl">
-													<tr>
-														
+													<tr>														
 														<td height ="37px" valign ="top" class ="column3 col-md-10"> 
 															<div class="col-lg-12">
 																
@@ -308,20 +307,16 @@
 														
 														<td height ="50px" class ="column2 col-md-10">
 															<div class="col-lg-10">			 
-											                    	<input name="itemDetail" class="select-item" type="radio"  style="vertical-align: middle; margin: 0px;" value="<?php echo $itemDetail['id']?>"   required/> 
+											                    	<input name="itemDetail" class="select-item" type="radio"  style="vertical-align: middle; margin: 0px;" value="<?php echo $itemDetail['id']?>"   required selected="selected" /> 
 											                    	<font size="2" >Select Item</font>
 															</div>
 														</td>
-														
 													</tr>
-													
 												</table>
-												
 											<?php } ?>
 
 										</div>
 									</div>
-
 								</div>
 							</div>
 						</div>
@@ -423,16 +418,13 @@
                                                     					'readonly' => 'readonly',
                                                     					'id' => 'material'
                                                     					));
-                                                echo $this->Form->input('QuotationItemDetail.id', array('class' => 'form-control',
-							                        
-							                        'hidden' => 'hidden',
-							                        'label' => false,
-							                        'id' => 'itemDetailId'));
+                                                echo $this->Form->input('QuotationItemDetail.id', array('class' => 'form-control',							                        
+												                        'hidden' => 'hidden',
+												                        'label' => false,
+												                        'id' => 'itemDetailId'));
                                             ?>
 										</div>
 									</div>
-									
-
 								</div>
 							</div>
 						</div>

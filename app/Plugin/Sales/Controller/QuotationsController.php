@@ -375,7 +375,7 @@ class QuotationsController extends SalesAppController {
 		//start///call Role permission
 		$actionName = 'View Quotation';
 		$myPermission = $this->_rolePermission($actionName);
-		//pr($myPermission);exit();
+		//pr($);exit();
 		//end///call Role permission
 
 		$this->loadModel('User');
@@ -458,7 +458,7 @@ class QuotationsController extends SalesAppController {
 
 		
 		 if(!empty($clientOrder['ClientOrder'])) {
-		 	pr($clientOrder['ClientOrder']['quotation_id']);
+		 //	pr($clientOrder['ClientOrder']['quotation_id']);
 
 			$clientOrderCount = count($clientOrder['ClientOrder']['quotation_id']);
 			
