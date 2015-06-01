@@ -497,7 +497,7 @@ class QuotationsController extends SalesAppController {
 
 		$this->Approver->approverData($quotationId,$userData['User']['id']);
 
-		$this->Quotation->approvedData($quotationId);
+		$this->Quotation->approvedData($quotationId,$userData['User']['id'],$userData['User']['modified']);
 
 		$this->Session->setFlash(__('Quotation Approved.'));
     	$this->redirect(
@@ -511,6 +511,8 @@ class QuotationsController extends SalesAppController {
 		$this->loadModel('User');
 		$userData = $this->User->read(null,$this->Session->read('Auth.User.id'));
 
+		//pr($userData); exit;
+
 		//start///call Role permission
 		$actionName = 'Approve Quotation';
 		$this->_rolePermission($actionName);
@@ -520,9 +522,9 @@ class QuotationsController extends SalesAppController {
 
 		$this->Approver->approverData($quotationId,$userData['User']['id']);
 
-		$this->Quotation->terminateData($quotationId);
+		$this->Quotation->terminateData($quotationId,$userData['User']['id'],$userData['User']['modified']);
 
-		$this->Session->setFlash(__('Quotation Approved.'));
+		$this->Session->setFlash(__('Quotation Terminated.'));
     	$this->redirect(
             array('controller' => 'quotations', 'action' => 'index')
         );

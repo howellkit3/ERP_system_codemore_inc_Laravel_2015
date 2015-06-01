@@ -280,21 +280,25 @@ class Quotation extends AppModel {
 
 	}
 
-	public function approvedData($quotationId = null){
+	public function approvedData($quotationId = null, $userId = null, $modified = null){
 		
 		$this->id = $this->find('first',array('conditions' => array('Quotation.id' => $quotationId)));
 				
 		if ($this->id) {
 		    $this->saveField('status', 1);
+		    $this->saveField('modified_by', $userId);
+		    $this->saveField('modified', $modified);
 		}
 	}
 
-	public function terminateData($quotationId = null){
+	public function terminateData($quotationId = null, $userId = null, $modified = null){
 		
 		$this->id = $this->find('first',array('conditions' => array('Quotation.id' => $quotationId)));
 				
 		if ($this->id) {
 		    $this->saveField('status', 'Terminated');
+		    $this->saveField('modified_by', $userId);
+		    $this->saveField('modified', $modified);
 		}
 	}
 
