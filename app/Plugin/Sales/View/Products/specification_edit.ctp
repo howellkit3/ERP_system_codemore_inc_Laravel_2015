@@ -21,10 +21,15 @@
 					<h1 class="pull-left">
 						Product Specifications
 					</h1>
-					<?php 
-					//pr($formatDataSpecs);
-	                    echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'products','action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
-	                ?>
+					<div class="filter-block pull-right">
+						<?php 
+						
+		                    echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'products','action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+
+		                    echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array('controller' => 'products','action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+		                ?>
+
+		            </div>
 	                <br>
 				</header>
 

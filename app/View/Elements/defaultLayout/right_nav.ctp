@@ -47,13 +47,13 @@
 	 						echo $this->Html->link( " <i class='fa fa-shopping-cart'></i> <span>Sales</span> ",   array('controller' =>'customer_sales','action'=>'index','plugin' => 'sales'),array('escape' => false) );
 	 					?>
 					</li>
-<!-- 
+
 					<li class="<?php echo ($this->params['plugin'] == 'ticket') ? 'active' : '' ?>">
 						<?php
 	 						echo $this->Html->link( " <i class='fa fa-ticket'></i> <span>Ticketing System</span>",   array('controller' =>'ticketing_systems','action'=>'index','plugin' => 'ticket'),array('escape' => false) );
 	 					?>
 					</li>
-
+					<!-- 
 					<li class="<?php echo ($this->params['plugin'] == 'purchasing') ? 'active' : '' ?>">
 						<?php echo $this->Html->link( " <i class='fa fa-th-large'></i> <span>Purchasing</span>",   array('controller' =>'suppliers','action'=>'index','plugin' => 'purchasings'),array('escape' => false) );
 	 					?>

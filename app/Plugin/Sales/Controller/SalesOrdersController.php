@@ -92,7 +92,7 @@ class SalesOrdersController extends SalesAppController {
 
      //$abc = $schedData[0]['QuotationItemDetail']['quantity']; 
 
-      pr($this->request->data['ClientOrderDeliverySchedule']); exit;
+      //pr($this->request->data['ClientOrderDeliverySchedule']); exit;
              
       if ($this->request->is('post')) {
 

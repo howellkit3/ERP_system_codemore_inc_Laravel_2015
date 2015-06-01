@@ -302,7 +302,7 @@ body.dragging, body.dragging * {
   text-align: left !important;
 }
 .button-spec{
-  width: 100px;
+  width: 120px;
 }
 .fontSame{
   font-family: Verdana,Helvetica,Arial,sans-serif;
@@ -317,7 +317,7 @@ body.dragging, body.dragging * {
   position: relative;   
 }
 .process_btn{
-  width: 87px;
+  width: 110px;
 }
 #myModalDelivery{
   z-index: 1;

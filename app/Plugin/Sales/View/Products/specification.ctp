@@ -20,7 +20,8 @@
 							Product Specifications
 						</h1>
 						<?php 
-	                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'products','action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+							echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'products','action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+
 	                    ?>
 	                    <br>
 					</header>
@@ -160,7 +161,7 @@
 										<div class="form-group">
 											<div class="col-lg-2"></div>
 											<div class="col-lg-2 button-spec">
-												<button type="button" data="0" class=" process_btn add_field_button btn btn-primary pull-rigth">Label </button>
+												<button type="button" data="0" class=" process_btn add_field_button btn btn-primary pull-rigth">Component </button>
 											</div>
 											<div class="col-lg-2 button-spec">
 												<button type="button" data="0" class="process_btn btn btn-primary pull-rigth add_part_button">Part</button>
