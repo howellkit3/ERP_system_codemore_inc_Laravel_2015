@@ -6,6 +6,8 @@ class TicketingSystemsController extends TicketAppController {
 
 	public $uses = array('Ticket.Ticket');
 
+	public $helpers = array('Sales.Country','Sales.Status','Cache','Sales.DateFormat');
+
 	public function beforeFilter() {
 
         parent::beforeFilter();
@@ -61,6 +63,10 @@ class TicketingSystemsController extends TicketAppController {
 
           ));
 
+	}
+
+	public function create_ticket($productUuid = null){
+		pr($productUuid);exit();
 	}
 
 }

@@ -8,7 +8,7 @@ App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
  */
 class Ticket extends AppModel {
 
-    public $useDbConfig = 'koufu_ticketing_system';
+    public $useDbConfig = 'koufu_ticketing';
 
     public $name = 'Ticket';
 
