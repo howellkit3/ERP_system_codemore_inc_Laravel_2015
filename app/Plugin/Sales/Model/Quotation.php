@@ -288,6 +288,16 @@ class Quotation extends AppModel {
 		    $this->saveField('status', 1);
 		}
 	}
+
+	public function terminateData($quotationId = null){
+		
+		$this->id = $this->find('first',array('conditions' => array('Quotation.id' => $quotationId)));
+				
+		if ($this->id) {
+		    $this->saveField('status', 'Terminated');
+		}
+	}
+
 	public function edit($data, $quotationId = null){
 		$this->id = $this->find('first',array('conditions' => array('Quotation.id' => $quotationId)));
 		if ($this->id) {

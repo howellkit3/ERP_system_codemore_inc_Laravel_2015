@@ -506,6 +506,29 @@ class QuotationsController extends SalesAppController {
 
 	}
 
+	public function terminated($quotationId = null){
+
+		$this->loadModel('User');
+		$userData = $this->User->read(null,$this->Session->read('Auth.User.id'));
+
+		//start///call Role permission
+		$actionName = 'Approve Quotation';
+		$this->_rolePermission($actionName);
+		//end///call Role permission
+
+		$this->loadModel('Sales.Approver');
+
+		$this->Approver->approverData($quotationId,$userData['User']['id']);
+
+		$this->Quotation->terminateData($quotationId);
+
+		$this->Session->setFlash(__('Quotation Approved.'));
+    	$this->redirect(
+            array('controller' => 'quotations', 'action' => 'index')
+        );
+
+	}
+
 	public function print_word($quotationId = null,$companyId = null) {
 		
 		//$this->layout = 'pdf';

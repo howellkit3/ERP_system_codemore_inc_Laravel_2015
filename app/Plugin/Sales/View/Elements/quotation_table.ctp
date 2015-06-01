@@ -41,14 +41,23 @@
                 // }
 
             if ( !empty($quotationList['Quotation']['status']) ) {
-                
+
                 if ($quotationList['Quotation']['status'] == '1') {
                     echo "<span class='label label-success'>Approved</span>";
-                } else {
+                } 
+
+                else {
+
+                    if ($quotationList['Quotation']['status'] == 'Terminated') {
+                    echo "<span class='label label-danger'>Terminated</span>";
+
+                    }else{
                     echo "<span class='label label-default'>";
                         echo ucwords($quotationList['Quotation']['status']);
                     echo "</span>";
-                }
+                    }
+                 }
+                 
             } else  {
                 
                 echo "<span class='label label-warning'>Pending</span>";
