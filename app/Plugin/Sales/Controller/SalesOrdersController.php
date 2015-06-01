@@ -49,6 +49,8 @@ class SalesOrdersController extends SalesAppController {
     
     $this->loadModel('Unit');
 
+    $userData = $this->Session->read('Auth');
+
     if (!empty($this->request->data)) {
  
           $this->ClientOrder->save($this->request->data);
