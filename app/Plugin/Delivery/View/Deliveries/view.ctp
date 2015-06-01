@@ -10,28 +10,24 @@
                             ),
                         array('class' =>'btn btn-primary pull-right',
                             'escape' => false));
-
-
                 ?>  
 
               <?php
                 
-                  echo $this->Html->link('<i class="fa fa-check-square fa-lg"></i> Create Schedule ', 
+                  echo $this->Html->link('<i class="fa fa-check-square fa-lg"></i> Approve Schedule ', 
                         array('controller' => 'truckSchedules', 
                             'action' => 'add',
                             $scheduleInfo['Schedule']['sales_order_id']
                             ),
                         array('class' =>'btn btn-primary pull-right',
                             'escape' => false));
-
-
                 ?>  
 
                <br><br>
            </div>
             <header class="main-box-header clearfix">
 
-                <h2 class="pull-left"><b>Request Details</b></h2>
+                <h2 class="pull-left"><b>Delivery Schedule</b></h2>
                 
             </header>
             
@@ -42,24 +38,41 @@
                						<tbody>
 
                  							<tr>
-                   								<td>Purchased Number</td>
-                   								<td><?php echo  $scheduleInfo['Schedule']['sales_order_id']; ?></td>
+                   								<td>Client Order</td>
+                   								<td><?php echo  $scheduleInfo['ClientOrder']['uuid']; ?></td>
                  							</tr>
 
                  							<tr>
-                   								<td>Schedule</td>
-                   								<td><?php echo  $scheduleInfo['Schedule']['schedule']; ?></td>
+                   								<td>P.O. Number</td>
+                   								<td><?php echo  $scheduleInfo['Company']['uuid']; ?></td>
                  							</tr>
 
                  							<tr>
-                   								<td>Location</td>
-                   								<td><?php echo  $scheduleInfo['Schedule']['location']; ?></td>
+                   								<td>Customer Name</td>
+                   								<td><?php echo  $scheduleInfo['Company']['company_name']; ?></td>
                  							</tr>
 
                  							<tr>
-                   								<td>Quantity</td>
-                   								<td><?php echo  $scheduleInfo['Schedule']['quantity']; ?></td>
+                   								<td>Item Name</td>
+                   								<td><?php echo  $scheduleInfo['Product']['name']; ?></td>
                  							</tr>
+
+                              <tr>
+                                  <td>Schedule</td>
+                                  <td><?php echo date('M d, Y', strtotime($scheduleInfo['ClientOrderDeliverySchedule'][0]['schedule'])); ?></td>
+                              </tr>
+                              <tr>
+                                  <td>Quantity</td>
+                                  <td><?php echo  $scheduleInfo['ClientOrderDeliverySchedule'][0]['quantity']; ?></td>
+                              </tr>
+                              <tr>
+                                  <td>Location</td>
+                                  <td><?php echo  $scheduleInfo['ClientOrderDeliverySchedule'][0]['location']; ?></td>
+                              </tr>
+                              <tr>
+                                  <td>Status</td>
+                                  <td><?php //echo  $scheduleInfo['Schedule']['quantity']; ?></td>
+                              </tr>
 
                						</tbody>
                     </table>

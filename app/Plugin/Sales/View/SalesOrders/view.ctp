@@ -120,6 +120,11 @@
 						                                                    'value' => $clientOrderData['ClientOrder']['po_number']));
                                         ?>
 									</div>	
+
+									<button type="button" class="btn btn-primary pull-left buttonEdit" style="margin-right:13px;" >Edit</button> 
+
+									<button type="submit" class="btn btn-primary pull-left editable" id = "submit" disabled onclick="AddAttr()">Submit</button>
+
 								</div>
 
 								<?php if (!empty($clientOrderData['ClientOrder']['name'])) { ?>

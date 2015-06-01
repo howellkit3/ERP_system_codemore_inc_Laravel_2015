@@ -4,13 +4,13 @@ App::uses('SessionComponent', 'Controller/Component');
 
 class DeliveriesController extends DeliveryAppController {
 
-    var $paginate = array( 
-        'ClientOrder' => array( 
-                 //'fields' => array('ClientOrder.uuid', 'Company.company_name', 'created','ItemCategoryHolder.name'),
-                'limit' => 10, 
-                'order' => 'ItemCategoryHolder.id DESC'
-            ),
-  ); 
+  //   var $paginate = array( 
+  //       'ClientOrderDeliverySchedule' => array( 
+  //                //'fields' => array('ClientOrder.uuid', 'Company.company_name', 'created','ItemCategoryHolder.name'),
+  //               'limit' => 10//, 
+  //               //'order' => 'ItemCategoryHolder.id DESC'
+  //           ),
+  // ); 
 
   public function index() {
 
@@ -18,18 +18,18 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->loadModel('Sales.Company');
 
-        $this->loadModel('Sales.Quotation');
+        $this->ClientOrderDeliverySchedule->bind(array('ClientOrder' ));
 
-        $this->loadModel('Sales.QuotationDetail');
+        $scheduleData = $this->ClientOrderDeliverySchedule->find('all');
 
-        $this->loadModel('Sales.QuotationItemDetail');
+        $companyData = $this->Company->find('list', array('fields' => 
+                                                array('id',
+                                                     'company_name'),
+                                                    // 'conditions' => array(
+                                                    // 'Company.id' => 'ClientOrder.company_id'),
+                                                     ));
 
-        $this->loadModel('Sales.ClientOrder');
-
-        $this->loadModel('Sales.Product');
-
-         $this->ClientOrder->bind(array('ClientOrderDeliverySchedule' , 'Company', 'QuotationDetail','Product', 'QuotationItemDetail' ));
-
+        //pr($companyData);exit();conditions' => array('Company.id' => 'ClientOrder.company_id
         $limit = 10;
 
         $conditions = array();
@@ -37,13 +37,13 @@ class DeliveriesController extends DeliveryAppController {
         $this->paginate = array(
             'conditions' => $conditions,
             'limit' => $limit,
-            'fields' => array('ClientOrder.uuid', 'Company.company_name',  'Product.name', 'ClientOrder.po_number', 'QuotationItemDetail.quantity'),
-            'order' => 'ClientOrder.id DESC',
+           // 'fields' => array('ClientOrder.uuid', 'Company.company_name',  'Product.name', 'ClientOrder.po_number', 'QuotationItemDetail.quantity'),
+            'order' => 'ClientOrderDeliverySchedule.id DESC',
         );
 
-        $scheduleData = $this->paginate('ClientOrder');
+       // $scheduleData = $this->paginate('ClientOrderDeliverySchedule');
        
-        $this->set(compact('scheduleData', 'quotationData'));
+        $this->set(compact('scheduleData', 'companyData'));
    }
 
    public function delivery_info($id = null, $location = null){
@@ -185,8 +185,7 @@ class DeliveriesController extends DeliveryAppController {
                                           ));
 
     $this->set(compact('scheduleInfo'));
-
-      
+    
    }
 
     public function find_data($id = null){
@@ -204,5 +203,17 @@ class DeliveriesController extends DeliveryAppController {
       $this->autoRender = false;
 
    }
-     
+
+    public function view($id = null) {
+
+        $this->loadModel('Sales.ClientOrder');
+
+        $this->ClientOrder->bind(array('ClientOrderDeliverySchedule','Company', 'QuotationDetail','Product', 'QuotationItemDetail' ));
+
+        $scheduleInfo = $this->ClientOrder->find('first');
+
+        $this->set(compact( 'scheduleInfo' ));
+        
+}
+
 }
