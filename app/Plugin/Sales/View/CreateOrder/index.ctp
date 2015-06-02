@@ -184,7 +184,7 @@
 					                                'class' => 'form-control',
 					                                'value' => ucfirst($productData['Product']['name'])
 					                                 )); 
-												pr($productData);exit();
+												//pr($productData);exit();
 												// echo $this->Form->input('Product.name', array(
 												// 	'type' => 'hidden',
 					       //                          'label' => false,
