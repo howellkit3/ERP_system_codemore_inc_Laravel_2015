@@ -122,7 +122,7 @@
 
 			$userData = $this->Session->read('Auth');
 
-			$this->loadModel('Ticket.Jobticket');
+			$this->loadModel('Ticket.JobTicket');
 
 			$this->loadModel('Sales.ProductSpecification');
 		
@@ -148,7 +148,7 @@
 	            	}else{
 
 	            		$checkSpec = 1;
-	            		$this->Jobticket->saveTicket($this->request->data, $userData['User']['id'], $clientOrderId);
+	            		$this->JobTicket->saveTicket($this->request->data, $userData['User']['id'], $clientOrderId);
 	            		
 	            	}
 
