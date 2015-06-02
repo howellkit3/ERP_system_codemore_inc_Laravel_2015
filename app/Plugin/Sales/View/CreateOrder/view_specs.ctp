@@ -29,6 +29,8 @@
 							echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Return to Sales ', array('controller' => 'sales_orders', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
 							
 							echo $this->Html->link('<i class="fa fa-location-arrow fa-lg"></i> Proceed to Job Ticket ', array('controller' => 'ticketing_systems', 'action' => 'index','plugin' => 'ticket'),array('class' =>'btn btn-primary pull-right','escape' => false));
+
+							echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array('controller' => 'products','action' => 'print_specs',$productData['Product']['uuid']),array('class' =>'btn btn-primary pull-right','escape' => false,'target' => '_blank'));
 						?>
 					</div>
 				</header>

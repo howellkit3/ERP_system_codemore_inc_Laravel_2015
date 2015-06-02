@@ -49,18 +49,20 @@ class SalesOrdersController extends SalesAppController {
     
     $this->loadModel('Unit');
 
+    $this->loadModel('Sales.ProductSpecification');
+
     $userData = $this->Session->read('Auth');
 
     if (!empty($this->request->data)) {
  
-          $this->ClientOrder->save($this->request->data);
+      $this->ClientOrder->save($this->request->data);
 
-          $this->Session->setFlash(__('P.O. number was  updated'),'success');
+      $this->Session->setFlash(__('P.O. number was  updated'),'success');
 
-          $this->redirect(
-                    array('controller' => 'sales_orders','action' => 'view',$this->request->data['ClientOrder']['id']  )
-                );
-            }
+      $this->redirect(
+                array('controller' => 'sales_orders','action' => 'view',$this->request->data['ClientOrder']['id']  )
+            );
+    }
 
     $currencies = $this->Currency->getList();
 
@@ -76,6 +78,8 @@ class SalesOrdersController extends SalesAppController {
 
 		$quotationData = $this->Quotation->findById($clientOrderData['ClientOrder']['quotation_id']);
 
+    $checkSpec = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $quotationData['QuotationDetail']['product_id'])));
+    
 		$companyName = $this->Company->find('list',array(
      													'fields' => array('id','company_name')
      												));
@@ -84,7 +88,7 @@ class SalesOrdersController extends SalesAppController {
       
 		$paymentTermData = $this->PaymentTermHolder->find('list',array('fields' => array('id','name')));
 												
-		$this->set(compact('clientOrderData','quotationData','companyName','quotationItemDetail','paymentTermData','currencies','units'));
+		$this->set(compact('checkSpec','clientOrderData','quotationData','companyName','quotationItemDetail','paymentTermData','currencies','units'));
 
     
 
