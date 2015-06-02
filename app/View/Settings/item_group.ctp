@@ -793,7 +793,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																	<th class="text-center"><a href="#"><span>Type</span></a></th>
 																	<th class="text-center"><a href="#"><span>Manufacturer</span></a></th>
 																	<th class="text-center"><a href="#"><span>Created</span></a></th>
-																	<th style="width:250px">Action</th>
+																	<th style="width:140px">Action</th>
 																</tr>
 															</thead>
 
