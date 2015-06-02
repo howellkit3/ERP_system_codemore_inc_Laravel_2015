@@ -120,7 +120,6 @@
 				</div>
 			</div>
 
-		<?php echo $this->Form->create('Product',array('url'=>(array('controller' => 'products','action' => 'view'))));?>			
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="main-box">
@@ -131,29 +130,26 @@
 						<div class="main-box-body clearfix">
 							<div class="main-box-body clearfix">
 								<div class="form-horizontal">									
-
-									<div class="form-group">
-										<label class="col-lg-2 control-label">Substrate</label>
-										<div class="col-lg-8">
-											<?php 
-	                                            echo $this->Form->input('ItemGroupLayers.substrate', array(
-
-	                                            								'class' => 'form-control item_type',
-							                                                    'label' => false,
-							                                                    'disabled' => true,
-							                                                 	));
-                                            ?>
+									<?php foreach ($compoundData['ItemGroupLayer'] as $key => $layerList) {  $key++ ?>
+										<div class="form-group">
+											<label class="col-lg-2 control-label">Substrate <?php echo $key;?></label>
+											<div class="col-lg-8">
+												<?php 
+		                                            echo $this->Form->input('ItemGroupLayers.substrate', array(
+		                                            								'class' => 'form-control item_type',
+								                                                    'label' => false,
+								                                                    'disabled' => true,
+								                                                 	'value' => ucfirst($layerList['substrate'])));
+	                                            ?>
+											</div>
 										</div>
-									</div>
-
+									<?php } ?>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		<?php echo $this->Form->end(); ?>
-
 		
 	</div>
 </div>

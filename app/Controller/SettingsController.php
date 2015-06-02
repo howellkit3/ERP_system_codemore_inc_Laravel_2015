@@ -1163,13 +1163,13 @@ class SettingsController extends AppController
 
         $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.id DESC'));
 
-        $post = $this->CompoundSubstrate->findById($id);
+        $compoundData = $this->CompoundSubstrate->findById($id);
 
             if (!$this->request->data) {
-                $this->request->data = $post;
+                $this->request->data = $compoundData;
             }
 
-            $this->set(compact( 'categoryData' , 'typeData', 'supplierData' ));
+            $this->set(compact( 'categoryData' , 'typeData', 'supplierData','compoundData' ));
     }
 
 
@@ -1323,6 +1323,8 @@ class SettingsController extends AppController
 
         $this->loadModel('CorrugatedPaper');
 
+
+
         $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
 
         $this->CorrugatedPaper->bind(array('ItemCategoryHolder','ItemTypeHolder', 'Supplier', 'ItemGroupLayer'));
@@ -1335,13 +1337,13 @@ class SettingsController extends AppController
 
         $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.id DESC'));
 
-        $post = $this->CorrugatedPaper->findById($id);
+        $corrugatedData = $this->CorrugatedPaper->findById($id);
 
-            if (!$this->request->data) {
-                $this->request->data = $post;
-            }
+        if (!$this->request->data) {
+            $this->request->data = $corrugatedData;
+        }
 
-            $this->set(compact( 'categoryData','typeData' , 'supplierData'));
+        $this->set(compact( 'categoryData','typeData' , 'supplierData','corrugatedData'));
     }
 
     public function process() {

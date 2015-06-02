@@ -254,7 +254,7 @@
 											Material
 										</label>
 										<div class="col-lg-8 ">
-											<?php foreach ($quotationData['QuotationItemDetail'] as $itemDetail){ ?>
+											<?php foreach ($quotationData['QuotationItemDetail'] as $key => $itemDetail){ ?>
 												<table  class = "tbl">
 													<tr>														
 														<td height ="37px" valign ="top" class ="column3 col-md-10"> 
@@ -315,8 +315,11 @@
 													<tr style="border:none;">
 														
 														<td height ="50px" class ="column2 col-md-10">
-															<div class="col-lg-10">			 
-											                    	<input name="itemDetail" class="select-item" type="radio"  style="vertical-align: middle; margin: 0px;" value="<?php echo $itemDetail['id']?>"   required selected="selected" /> 
+															<div class="col-lg-10">	
+															<?php if ($key == 0) { ?>
+																<input name="itemDetail" class="select-item" type="radio" checked="checked" style="vertical-align: middle; margin: 0px;" value="<?php echo $itemDetail['id']?>" required selected="selected" /> 
+															<?php } ?>
+											                    	
 											                    	<font size="2" >Select Item</font>
 															</div>
 														</td>
@@ -353,15 +356,19 @@
                                                     					'label' => false, 
                                                     					'placeholder' => 'Quantity',
                                                     					'readonly' => 'readonly',
-                                                    					'id' => 'quantity'
+                                                    					'id' => 'quantity',
+                                                    					'value' => $quotationData['QuotationItemDetail'][0]['quantity']
                                                     					));
+                                                
                                                 echo $this->Form->input('QuotationItemDetail.quantity_proxy',array( 
                                                 						'class' => 'form-control item_type ', 
                                                     					'label' => false, 
                                                     					'placeholder' => 'Quantity',
                                                     					'disabled' => 'disabled',
-                                                    					'id' => 'quantity_proxy'
+                                                    					'id' => 'quantity_proxy',
+                                                    					'value' => number_format($quotationData['QuotationItemDetail'][0]['quantity'])
                                                     					));
+                                                    					
 
                                             ?>
                                           
@@ -378,15 +385,18 @@
                                                     					'label' => false, 
                                                     					'placeholder' => 'Unit Price',
                                                     					'readonly' => 'readonly',
-                                                    					'id' => 'unit_price'
+                                                    					'id' => 'unit_price',
+                                                    					'value' => $quotationData['QuotationItemDetail'][0]['unit_price']
                                                     					));
+                                                    					
                                                 echo $this->Form->input('QuotationItemDetail.unit_price_proxy',array( 
                                                 						'type' => 'text',
                                                 						'class' => 'form-control item_type ', 
                                                     					'label' => false, 
                                                     					'placeholder' => 'Unit Price',
                                                     					'disabled' => 'disabled',
-                                                    					'id' => 'unit_price_proxy'
+                                                    					'id' => 'unit_price_proxy',
+                                                    					'value' => number_format($quotationData['QuotationItemDetail'][0]['unit_price'],4)
                                                     					));
                                             ?>
 										</div>
@@ -402,7 +412,8 @@
                                                     					'label' => false, 
                                                     					'placeholder' => 'Vat Price',
                                                     					'readonly' => 'readonly',
-                                                    					'id' => 'vat_price'
+                                                    					'id' => 'vat_price',
+                                                    					'value' => $quotationData['QuotationItemDetail'][0]['vat_price']
                                                     					));
                                                 echo $this->Form->input('QuotationItemDetail.vat_price_proxy',array( 
                                                 						'type' => 'text',
@@ -410,7 +421,8 @@
                                                     					'label' => false, 
                                                     					'placeholder' => 'Vat Price',
                                                     					'disabled' => 'disabled',
-                                                    					'id' => 'vat_price_proxy'
+                                                    					'id' => 'vat_price_proxy',
+                                                    					'value' => number_format($quotationData['QuotationItemDetail'][0]['vat_price'],4)
                                                     					));
                                             ?>
 										</div>
@@ -425,12 +437,15 @@
                                                     					'label' => false, 
                                                     					'placeholder' => 'Material',
                                                     					'readonly' => 'readonly',
-                                                    					'id' => 'material'
+                                                    					'id' => 'material',
+                                                    					'value' => $quotationData['QuotationItemDetail'][0]['material']
                                                     					));
                                                 echo $this->Form->input('QuotationItemDetail.id', array('class' => 'form-control',							                        
 												                        'hidden' => 'hidden',
 												                        'label' => false,
-												                        'id' => 'itemDetailId'));
+												                        'id' => 'itemDetailId',
+												                        'value' => $quotationData['QuotationItemDetail'][0]['id']
+                                                    					));
                                             ?>
 										</div>
 									</div>
