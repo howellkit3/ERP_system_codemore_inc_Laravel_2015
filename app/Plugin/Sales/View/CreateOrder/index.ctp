@@ -184,14 +184,14 @@
 					                                'class' => 'form-control',
 					                                'value' => ucfirst($productData['Product']['name'])
 					                                 )); 
-												//pr($productData);exit();
-												// echo $this->Form->input('Product.name', array(
-												// 	'type' => 'hidden',
-					       //                          'label' => false,
-					       //                          'readonly' => 'readonly',
-					       //                          'class' => 'form-control',
-					       //                          'value' => ucfirst($productData['Product']['uuid'])
-					       //                           )); 
+												
+												echo $this->Form->input('Product.name', array(
+													'type' => 'hidden',
+					                                'label' => false,
+					                                'readonly' => 'readonly',
+					                                'class' => 'form-control',
+					                                'value' => ucfirst($productData['Product']['uuid'])
+					                                 )); 
 
 				                            ?>
 										</div>

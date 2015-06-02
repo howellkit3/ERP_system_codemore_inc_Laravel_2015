@@ -100,9 +100,9 @@ class CreateOrderController extends SalesAppController {
 												'conditions' => array('Company.id' => $quotationData['Quotation']['company_id'])
 											));
 
-		$productData = $this->Company->Product->find('first',array('fields' => array('id','name'),
+		$productData = $this->Company->Product->find('first',array('fields' => array('id','name','uuid'),
 										'conditions' => array('id' => $quotationData['QuotationDetailOrder'][0]['product_id'])));
-		
+		// pr($productData);exit();
 		$this->set(compact('quotationData','companyData','paymentTerm','productData','currencies','units','code'));
 	}
 
@@ -127,7 +127,7 @@ class CreateOrderController extends SalesAppController {
 
 
             if (!empty($this->request->data)) {
-            	pr($this->request->data);exit();
+            	//pr($this->request->data);exit();
             	$this->ClientOrder->bind(array('ClientOrderDeliverySchedule','ClientOrderItemDetail'));
 
             	//pr($this->request->data); exit();
