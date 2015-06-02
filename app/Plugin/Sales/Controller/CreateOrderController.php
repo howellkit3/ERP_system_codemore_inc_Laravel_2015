@@ -321,7 +321,7 @@
 
 	    	$this->loadModel('Sales.Product');
 
-	    	$this->loadModel('Ticket.Jobticket');
+	    	$this->loadModel('Ticket.JobTicket');
 
 	    	$this->loadModel('Sales.ProductSpecificationProcessHolder');
 
