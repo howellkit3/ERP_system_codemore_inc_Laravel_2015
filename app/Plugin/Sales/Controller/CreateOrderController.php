@@ -331,7 +331,7 @@
 			
 			if (!empty($this->request->data)) {
 				
-				$this->Jobticket->saveTicket($this->request->data['JobTicket'],$userData['User']['id'],$this->request->data['JobTicket']['ClientOrder']['id']);
+				$this->JobTicket->saveTicket($this->request->data['JobTicket'],$userData['User']['id'],$this->request->data['JobTicket']['ClientOrder']['id']);
 				
 				if(!empty($this->request->data['IdHolder'])){
 					
