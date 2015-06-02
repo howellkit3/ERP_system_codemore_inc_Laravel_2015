@@ -185,12 +185,12 @@
 					                                'value' => ucfirst($productData['Product']['name'])
 					                                 )); 
 												
-												echo $this->Form->input('Product.name', array(
+												echo $this->Form->input('Product.id', array(
 													'type' => 'hidden',
 					                                'label' => false,
 					                                'readonly' => 'readonly',
 					                                'class' => 'form-control',
-					                                'value' => ucfirst($productData['Product']['uuid'])
+					                                'value' => ucfirst($productData['Product']['id'])
 					                                 )); 
 
 				                            ?>

@@ -13,7 +13,7 @@ $(function(){
 						 													<span style="color:red">*</span>Substrate\
 						 												</label>\
 																		<div class="col-lg-2">\
-																			<input type="text" placeholder="Substrate" class="form-control required" name="data[ItemGroupLayer]['+layerVal+'][substrate]" />\
+																			<input type="text" placeholder="Substrate Name" class="form-control required" name="data[ItemGroupLayer]['+layerVal+'][substrate]" />\
 																		</div>\
 																		<label class="col-lg-1 control-label">Flute</label>\
 																		<div class="col-lg-2">\
@@ -49,7 +49,7 @@ $(function(){
 						 													<span style="color:red">*</span>Substrate\
 						 												</label>\
 																		<div class="col-lg-6">\
-																			<input type="text" placeholder="Substrate" class="form-control required" name="data[ItemGroupLayer]['+layerVal+'][substrate]" />\
+																			<input type="text" placeholder="Substrate Name" class="form-control required" name="data[ItemGroupLayer]['+layerVal+'][substrate]" />\
 																		</div>\
 																		<div class="col-lg-2">\
 																			<button type="button" class="remove-field remove-CompoundMe btn btn-danger" ><i class="fa fa-minus" ></i></button>\

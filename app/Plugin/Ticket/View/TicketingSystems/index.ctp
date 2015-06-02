@@ -18,7 +18,8 @@
                             <tr>
                                 <th><a href="#"><span>Ticket id</span></a></th>
                                 <th><a href="#"><span>Product No. </span></a></th>
-                                <th><a href="#"><span>Product Name. </span></a></th>
+                                <th><a href="#"><span>PO No. </span></a></th>
+                                <th><a href="#"><span>Item Name. </span></a></th>
                                 <th><a href="#"><span>Created</span></a></th>
                                 <th style="text-align:center">Action</th>
                             </tr>

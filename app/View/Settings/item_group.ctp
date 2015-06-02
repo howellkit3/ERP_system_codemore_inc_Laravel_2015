@@ -707,7 +707,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																						echo $this->Form->input('ItemGroupLayer.0.substrate', array(
 																							'class' => 'form-control required',
 																                            'label' => false,
-																                            'placeholder' => 'Substrate'));
+																                            'placeholder' => 'Substrate Name'));
 																					?>
 																			</div>
 																			<label class="col-lg-1 control-label">Flute</label>
@@ -799,7 +799,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																	<th class="text-center"><a href="#"><span>Type</span></a></th>
 																	<th class="text-center"><a href="#"><span>Manufacturer</span></a></th>
 																	<th class="text-center"><a href="#"><span>Created</span></a></th>
-																	<th style="width:420px">Action</th>
+																	<th style="width:250px">Action</th>
 																</tr>
 															</thead>
 

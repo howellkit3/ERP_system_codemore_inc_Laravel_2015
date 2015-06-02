@@ -13,7 +13,10 @@
                 <?php echo $ticketDataList['JobTicket']['product_id'] ?>  
             </td>
             <td class="">
-                <?php echo $productName[$ticketDataList['JobTicket']['product_id']] ?> 
+                <?php echo $productName[$ticketDataList['JobTicket']['po_number']] ?> 
+            </td>
+            <td class="">
+                <?php //echo $productName[$ticketDataList['JobTicket']['po_number']] ?> 
             </td>
             <td class="">
                  <?php echo date('M d, Y', strtotime($ticketDataList['JobTicket']['created'])); ?>
