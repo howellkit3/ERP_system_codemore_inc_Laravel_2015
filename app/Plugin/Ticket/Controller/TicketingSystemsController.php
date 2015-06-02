@@ -22,15 +22,17 @@ class TicketingSystemsController extends TicketAppController {
 	    	    
 	public function index() {
 
-		$userData = $this->Session->read('Auth');
+        $this->JobTicket->bindTicket();
 
-		$this->loadModel('Sales.Product');
+        $ticketData = $this->JobTicket->find('all', array(
+                                        'order' => 'JobTicket.id DESC'
+                                        ));
 
-		$ticketData = $this->JobTicket->find('all',array('order' => array('JobTicket.id DESC')));
+		$this->loadModel('Sales.Company');
 
-		$productName = $this->Product->find('list',array('fields' => array('uuid','name')));
+		$companyData = $this->Company->find('list',array('fields' => array('id','company_name')));
 
-		$this->set(compact('ticketData','productName'));
+		$this->set(compact('ticketData','companyData'));
 	
 	}
 

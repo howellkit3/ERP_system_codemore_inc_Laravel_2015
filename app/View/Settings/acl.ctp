@@ -26,7 +26,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 												</h1>
 
 												<?php 
-												echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'settings', 'action' => 'category_index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+												echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'settings', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
 												?>
 										</header>
 									</div>

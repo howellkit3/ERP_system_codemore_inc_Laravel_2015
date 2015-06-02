@@ -12,29 +12,29 @@ class JobTicket extends AppModel {
 
     public $name = 'JobTicket';
 
-	// public $recursive = -1;
+	public $recursive = -1;
 
-	// public $actsAs = array('Containable');
+	public $actsAs = array('Containable');
 
-	// public function bind($model = array('Group')){
-
-	// 	$this->bindModel(array(
-	// 		'belongsTo' => array(
-	// 			'Company' => array(
-	// 				'className' => 'Company',
-	// 				'foreignKey' => 'foreign_key',
-	// 				'dependent' => true
-	// 			),
-	// 			'Contactperson' => array(
-	// 				'className' => 'Company',
-	// 				'foreignKey' => 'Contactperson',
-	// 				'dependent' => true
-	// 			)
-	// 		)
-	// 	));
-
-	// 	$this->contain($model);
-	// }
+	public function bindTicket() {
+		$this->bindModel(array(
+			'belongsTo' => array(
+				'ClientOrder' => array(
+					'className' => 'Sales.ClientOrder',
+					'foreignKey' => 'client_order_id',
+					//'conditions' => 'JobTicket.client_order_id = ClientOrder.id'
+				),				
+				'Product' => array(
+					'className' => 'Sales.Product',
+					'foreignKey' => 'product_id',
+					//'conditions' => 'Company.id = Product.company_id'
+				)
+			)
+			
+		));
+		$this->recursive = 1;
+		//$this->contain($giveMeTheTableRelationship);
+	}
 
 	public $validate = array(
 
@@ -115,7 +115,7 @@ class JobTicket extends AppModel {
 	    $data[$this->name]['po_number'] = $clientData['ClientOrder']['po_number'];
 	    $data[$this->name]['created_by'] = $auth;
 	    $data[$this->name]['modified_by'] = $auth;
-	    
+
 	    $this->save($data[$this->name]);
 
 	    return $this->id;

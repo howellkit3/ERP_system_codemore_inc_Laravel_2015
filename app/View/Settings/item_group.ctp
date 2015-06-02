@@ -36,7 +36,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 													</h1>
 
 													<?php 
-													echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'settings', 'action' => 'category_index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+													echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'settings', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
 													?>
 
 											</header>
@@ -241,9 +241,8 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																	<div class="col-lg-8">
 																			<?php 
 																			echo $this->Form->input('Substrate.name', array(
-																				'class' => 'form-control item_type',
+																				'class' => 'form-control item_type required',
 													                            'label' => false,
-													                            'required' => 'required',
 													                            'placeholder' => 'Name General Item'));
 																			?>
 																	</div>
@@ -258,8 +257,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																		'type' => 'select',
 																		'label' => false,
 																		'class' => 'form-control required categorylist',
-																		'empty' => '---Select Item Category---',
-																		'required' => 'required'
+																		'empty' => '---Select Item Category---'
 																		)); 
 																	?>
 																	</div>
@@ -274,8 +272,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																		'type' => 'select',
 																		'label' => false,
 																		'class' => 'form-control required categorylist',
-																		'empty' => '---Select Item Type---',
-																		'required' => 'required'
+																		'empty' => '---Select Item Type---'
 																		)); 
 																	?>
 																	</div>
@@ -290,8 +287,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																		'type' => 'select',
 																		'label' => false,
 																		'class' => 'form-control required categorylist',
-																		'empty' => '---Select Supplier---',
-																		'required' => 'required'
+																		'empty' => '---Select Supplier---'
 																		)); 
 																	?>
 																	</div>
@@ -302,9 +298,8 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																	<div class="col-lg-8">
 																		<?php 
 																		echo $this->Form->input('Substrate.type', array(
-																			'class' => 'form-control item_type',
+																			'class' => 'form-control item_type required',
 												                            'label' => false,
-												                            'required' => 'required',
 												                            'placeholder' => 'Type'));
 																		?>
 																	</div>
@@ -315,9 +310,8 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																	<div class="col-lg-8">
 																		<?php 
 																		echo $this->Form->input('Substrate.thickness', array(
-																									'class' => 'form-control item_type',
+																									'class' => 'form-control item_type required',
 																		                            'label' => false,
-																		                            'required' => 'required',
 																		                            'placeholder' => 'Thickness'));
 																		?>
 																	</div>
@@ -786,7 +780,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 										<div class="col-lg-12">
 											<div class="main-box">
 											<header class="main-box-header clearfix">
-											<h1>Corrugated PaperList</h1>
+											<h1>Corrugated Paper Lists</h1>
 											</header>
 												<div class="main-box-body clearfix">
 													<div class="table-responsive">
@@ -836,6 +830,9 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 	jQuery(document).ready(function($){
   		$("#CorrugatedPaperItemGroupForm").validate();
   		$("#CompoundSubstrateItemGroupForm").validate();
+  		$("#SubstrateItemGroupForm").validate();
+
+  		
 
 		var option = $(this).val();$('#SubstrateCategoryId').change(function(){
 				$('.option-append').remove();
