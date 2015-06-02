@@ -318,6 +318,8 @@
 															<div class="col-lg-10">	
 															<?php if ($key == 0) { ?>
 																<input name="itemDetail" class="select-item" type="radio" checked="checked" style="vertical-align: middle; margin: 0px;" value="<?php echo $itemDetail['id']?>" required selected="selected" /> 
+															<?php } else {	?>
+																<input name="itemDetail" class="select-item" type="radio" style="vertical-align: middle; margin: 0px;" value="<?php echo $itemDetail['id']?>" required selected="selected" />
 															<?php } ?>
 											                    	
 											                    	<font size="2" >Select Item</font>
