@@ -23,7 +23,7 @@ class QuotationsController extends SalesAppController {
 
         parent::beforeFilter();
 
-        $this->Auth->allow('add','index');
+        $this->Auth->allow('add','index','search_quotation');
 
        	$this->loadModel('User');
         $userData = $this->User->read(null,$this->Session->read('Auth.User.id'));//$this->Session->read('Auth');
@@ -1157,8 +1157,9 @@ class QuotationsController extends SalesAppController {
 
     }
 
-    public function searchQuotation($hint = null){
-
+    public function search_quotation($hint = null){
+    	
+    	
     	$this->loadModel('Sales.Company');
 
 		$this->loadModel('RolesPermission');
@@ -1171,6 +1172,8 @@ class QuotationsController extends SalesAppController {
 
 		$userData = $this->User->read(null,$this->Session->read('Auth.User.id'));
 
+		// $this->RolesPermission->bind(array('Role', 'Permission'));
+		
 		$rolesPermissionData = $this->RolesPermission->find('list', array(
 														'fields' => array('RolesPermission.id', 'RolesPermission.permission_id'),
 														'conditions' => array( 
@@ -1185,11 +1188,11 @@ class QuotationsController extends SalesAppController {
 
 		$this->paginate = array(
             'conditions' =>  array (
-			        'OR' => array(
-			            'Quotation.uuid LIKE' => '%' . $hint . '%',
-			            'Company.company_name LIKE' => '%' . $hint . '%',
-			            'Product.name LIKE' => '%' . $hint . '%',
-			        )
+			        // 'OR' => array(
+			            'Quotation.uuid LIKE' => '%' . $hint . '%'
+			            // 'Company.company_name LIKE' => '%' . $hint . '%',
+			            // 'Product.name LIKE' => '%' . $hint . '%',
+			        //)
 			    ),
             'limit' => $limit,
             'fields' => array(
@@ -1208,7 +1211,7 @@ class QuotationsController extends SalesAppController {
         );
 
         $quotationData = $this->paginate('Quotation');
-
+        
 		$this->Company->bind(array('Inquiry'));
 
 		//set to cache in first load
@@ -1234,11 +1237,14 @@ class QuotationsController extends SalesAppController {
 
             Cache::write('inquiryId', $inquiryId);
        // }
-		//
-
+		
 		$this->set(compact('companyData','quotationData','inquiryId','salesStatus','rolesPermissionData'));
-		//pr($quotationData);exit();
-		$this->render('searchQuotation');
-
+		
+		
+		if ($hint == ' ') {
+    		$this->render('index');
+    	}else{
+    		$this->render('search_quotation');
+    	}
     }
 }
