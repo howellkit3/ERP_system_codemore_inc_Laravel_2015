@@ -102,7 +102,7 @@
 													echo $this->Form->input('CorrugatedPaper.layers', array(
 													'class' => 'form-control layersC required',
 													'label' => false,
-													'rule' => 'numeric',
+													'type' => 'text',
 													'readonly' => true,
 													'style'=>'width: 150px'));
 												?>	
