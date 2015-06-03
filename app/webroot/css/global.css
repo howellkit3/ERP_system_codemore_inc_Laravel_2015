@@ -57,6 +57,10 @@ hr {
    position: relative;
    bottom: 10px;
 } 
+.smallBtn{ 
+   position: relative;
+   bottom: 10px;
+} 
 .boxed {
     border: 1px solid black ;
     width: 470px;
@@ -335,4 +339,12 @@ body.dragging, body.dragging * {
 
 .marginDelivery{
   margin-right: 20px;
+}
+
+.indent {
+  text-indent: 45px;
+}
+
+.indent1 {
+  text-indent: 50px;
 }

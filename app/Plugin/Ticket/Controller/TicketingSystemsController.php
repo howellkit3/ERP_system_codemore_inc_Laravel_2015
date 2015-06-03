@@ -37,13 +37,63 @@ class TicketingSystemsController extends TicketAppController {
 	
 	}
 
-	public function view($ticketid = null) {
+	public function view($productUuid = null,$ticketId = null,$clientOrderId = null) {
 
-		$ticketData = $this->JobTicket->find('first', array('conditions' => array('JobTicket.id' =>$ticketid
-			)
-			));
+        $this->loadModel('Sales.ProductSpecificationDetail');
+
+        $this->loadModel('Sales.ProductSpecification');
+
+        $this->loadModel('Unit');
+
+        $this->loadModel('SubProcess');
+
+        $this->loadModel('Sales.Product');
+
+        $this->loadModel('Sales.Company');
+
+        $this->loadModel('Sales.ClientOrder');
+
+        $this->ClientOrder->bind(array('ClientOrderDeliverySchedule'));
+
+        $delData = $this->ClientOrder->find('first',array('id' => $clientOrderId));
+
+        $ticketData = $this->JobTicket->find('first',array('conditions' =>array('id' => $ticketId)));
+
+        $companyData = $this->Company->find('list',
+                                            array('fields' => 
+                                                array('Company.id',
+                                                    'Company.company_name'
+                                                 )
+                                                ));
+
+        $productData = $this->Product->find('first',array('conditions' => array('Product.uuid' => $productUuid )));
+
+        $subProcess = $this->SubProcess->find('list',
+                                            array('fields' => 
+                                                array('SubProcess.id',
+                                                    'SubProcess.name'
+                                                 )
+                                                ));
+
+        //set to cache in first load
+        $unitData = Cache::read('unitData');
+        
+        if (!$unitData) {
+            
+            $unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
+                                                            'order' => array('Unit.unit' => 'ASC')
+                                                            ));
+
+            Cache::write('unitData', $unitData);
+        }
+
+        $specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productData['Product']['id'])));
+        
+		//find if product has specs
+        $formatDataSpecs = $this->ProductSpecificationDetail->findData($productUuid);
+
 		
-		$this->set(compact('ticketid','ticketData'));
+		$this->set(compact('delData','ticketData','formatDataSpecs','specs','unitData','subProcess','productData','companyData','clientOrderId'));
 	}
 
 	public function updatePendingStatus($ticketId = null) {
@@ -91,7 +141,7 @@ class TicketingSystemsController extends TicketAppController {
 		return $this->redirect(array('controller' => 'ticketing_systems', 'action' => 'index'));
 	}
 
-	public function print_ticket($productUuid = null){
+	public function print_ticket($productUuid = null,$ticketUuid = null, $clientOrderId = null ){
 
     	$userData = $this->Session->read('Auth');
 
@@ -103,8 +153,14 @@ class TicketingSystemsController extends TicketAppController {
 
     	$this->loadModel('Sales.Product');
 
+        $this->loadModel('Sales.ClientOrder');
+
     	$this->loadModel('Unit');
 
+        $this->ClientOrder->bind(array('ClientOrderDeliverySchedule'));
+
+        $delData = $this->ClientOrder->find('first',array('id' => $clientOrderId));
+       
     	$productData = $this->Product->find('first',array(
     		'conditions' => array('Product.uuid' => $productUuid)));
 
@@ -148,7 +204,7 @@ class TicketingSystemsController extends TicketAppController {
 		
     	$view = new View(null, false);
 		//pr($formatDataSpecs);exit();
-		$view->set(compact('formatDataSpecs','productData','specs','companyData','unitData','subProcess'));
+		$view->set(compact('formatDataSpecs','productData','specs','companyData','unitData','subProcess','ticketUuid','delData'));
         
 		$view->viewPath = 'Products'.DS.'pdf';	
    

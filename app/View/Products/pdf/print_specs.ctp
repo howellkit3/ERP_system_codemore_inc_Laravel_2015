@@ -37,7 +37,7 @@
 						<td style="width:280px;">
 							<?php echo strtoupper($companyData[$productData['Product']['company_id']]) ?>
 						</td>
-						<td>Schedule No. : 99999999
+						<td>Schedule No. : <?php echo $ticketUuid; ?>
 							<?php //echo (new \DateTime())->format('l, F d, Y '); ?>
 						</td>
 					</tr>
@@ -70,7 +70,7 @@
 							<?php echo $specs['ProductSpecification']['size3'] ?>
 						</td>
 						<td>Delivery Date :
-							<?php echo (new \DateTime())->format('l, F d, Y '); ?>
+							 <?php echo date('M d, Y', strtotime($delData['ClientOrderDeliverySchedule'][0]['schedule'])); ?>
 						</td>
 					</tr>
 				</thead>

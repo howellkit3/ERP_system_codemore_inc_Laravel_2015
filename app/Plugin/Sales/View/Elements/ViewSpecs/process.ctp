@@ -4,6 +4,6 @@
         <td class="td-heigth" style="width:220px;border:1px solid #EAEAEA;">
             <?php echo $subProcess[$processList['ProductSpecificationProcessHolder']['sub_process_id']] ?>
         </td>
-        <td class="td-heigth" style="width:270px;border:1px solid #EAEAEA;">*************</td>
+        <td class="td-heigth" style="width:270px;border:1px solid #EAEAEA;"></td>
     </tr>
 <?php } ?> 

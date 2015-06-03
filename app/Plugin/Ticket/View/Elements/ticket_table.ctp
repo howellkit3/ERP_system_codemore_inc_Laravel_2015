@@ -26,8 +26,12 @@
             </td>
             <td style="text-align:center">
                 <?php
+                    // echo $this->Html->link('<span class="fa-stack">
+                    // <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-print fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> Print </font></span></span> ', array('controller' => 'ticketing_systems', 'action' => 'print_ticket',$ticketDataList['Product']['uuid']), array('class' =>' table-link','escape' => false, 'title'=>'View Information','target' => '_blank'
+                    // ));
+
                     echo $this->Html->link('<span class="fa-stack">
-                    <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-print fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> Print </font></span></span> ', array('controller' => 'ticketing_systems', 'action' => 'print_ticket',$ticketDataList['Product']['uuid']), array('class' =>' table-link','escape' => false, 'title'=>'View Information','target' => '_blank'
+                    <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;<span class ="smallBtn"><center><font size = "1px"> View </font></center></span></span> ', array('controller' => 'ticketing_systems', 'action' => 'view',$ticketDataList['Product']['uuid'],$ticketDataList['JobTicket']['id'],$ticketDataList['JobTicket']['client_order_id']), array('class' =>' table-link','escape' => false, 'title'=>'View Information'
                     ));
                     // echo $this->Html->link('<span class="fa-stack">
                     //                         <i class="fa fa-square fa-stack-2x"></i>
