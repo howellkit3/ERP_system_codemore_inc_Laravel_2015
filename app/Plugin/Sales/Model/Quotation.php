@@ -96,6 +96,12 @@ class Quotation extends AppModel {
 					'foreignKey' => false,
 					'conditions' => array('QuotationDetail.product_id = Product.id'),
 					'dependent' => false
+				),
+				'Company' => array(
+					'className' => 'Sales.Company',
+					'foreignKey' => false,
+					'conditions' => array('Quotation.company_id = Company.id'),
+					'dependent' => false
 				)
 			 )
 			
