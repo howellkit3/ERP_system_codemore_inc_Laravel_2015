@@ -1,9 +1,8 @@
   <?php 
                         if(!empty($clientsOrder)){
 
-                            pr($clientsOrder); 
+                           // pr($clientsOrder); 
 ?>
-
                                 <?php foreach ($clientsOrder as $scheduleDataList): ?>
 
                                 <tbody aria-relevant="all" aria-live="polite" role="alert">
