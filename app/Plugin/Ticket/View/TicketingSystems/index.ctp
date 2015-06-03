@@ -22,7 +22,7 @@
                                 <th><a href="#"><span>Item Name </span></a></th>
                                 <th><a href="#"><span>Company </span></a></th>
                                 <th><a href="#"><span>Created</span></a></th>
-                                <!-- <th style="text-align:center">Action</th> -->
+                                <th style="text-align:center">Action</th>
                             </tr>
                         </thead>
 

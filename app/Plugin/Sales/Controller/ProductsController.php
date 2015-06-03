@@ -629,10 +629,10 @@ class ProductsController extends SalesAppController {
 		echo json_encode($checkData);
     }
 
-    public function label($varCounter,$realName){
+    public function component($varCounter,$realName){
 
     	$this->set(compact('varCounter','realName'));
-		$this->render('label');
+		$this->render('component');
 
     }
 
@@ -679,7 +679,7 @@ class ProductsController extends SalesAppController {
 
         $this->loadModel('Sales.ProductSpecificationDetail');
 
-        $this->loadModel('Sales.ProductSpecificationLabel');
+        $this->loadModel('Sales.ProductSpecificationComponent');
 
 		$this->loadModel('Sales.Product');
 
@@ -841,7 +841,7 @@ class ProductsController extends SalesAppController {
 
     	$this->loadModel('Sales.ProductSpecificationDetail');
 
-    	$this->loadModel('Sales.ProductSpecificationLabel');
+    	$this->loadModel('Sales.ProductSpecificationComponent');
 
     	$this->loadModel('Sales.ProductSpecificationPart');
 
@@ -853,14 +853,14 @@ class ProductsController extends SalesAppController {
 
     	$this->Product->bind(array('Sales.ProductSpecificationDetail','Sales.ProductSpecification'));
 
-    	$this->ProductSpecificationDetail->bind(array('Sales.ProductSpecificationLabel','Sales.ProductSpecificationPart','Sales.ProductSpecificationProcess'));
+    	$this->ProductSpecificationDetail->bind(array('Sales.ProductSpecificationComponent','Sales.ProductSpecificationPart','Sales.ProductSpecificationProcess'));
 		
 		if (!empty($this->request->data)) {
 			
 			if(!empty($this->request->data['IdHolder'])){
 				
 				$this->Product->ProductSpecification->delete($this->request->data['ProductSpecification']['id']);
-				$this->ProductSpecificationLabel->deleteData($this->request->data['IdHolder']);
+				$this->ProductSpecificationComponent->deleteData($this->request->data['IdHolder']);
 				$this->ProductSpecificationPart->deleteData($this->request->data['IdHolder']);
 				$this->ProductSpecificationProcess->deleteData($this->request->data['IdHolder']);
 				$this->ProductSpecificationProcessHolder->deleteData($this->request->data['IdHolder']);
@@ -869,13 +869,13 @@ class ProductsController extends SalesAppController {
 			
 			$specId = $this->Product->ProductSpecification->saveSpec($this->request->data,$userData['User']['id']);
 			
-			$labelArray = array();
+			$componentArray = array();
 			$partArray = array();
 			$processArray = array();
 			foreach ($this->request->data['ProductSpecificationDetail'] as $key => $value) {
 				
-				if($value == 'Label'){
-					array_push($labelArray, $key);
+				if($value == 'Component'){
+					array_push($componentArray, $key);
 				}
 				if($value == 'Part'){
 					array_push($partArray, $key);
@@ -885,8 +885,8 @@ class ProductsController extends SalesAppController {
 				}
 			}
 
-			foreach ($this->request->data['ProductSpecificationLabel'] as $key => $value) {
-				$this->request->data['ProductSpecificationLabel'][$key]['order'] = $labelArray[$key];
+			foreach ($this->request->data['ProductSpecificationComponent'] as $key => $value) {
+				$this->request->data['ProductSpecificationComponent'][$key]['order'] = $componentArray[$key];
 			}
 
 			foreach ($this->request->data['ProductSpecificationPart'] as $key => $value) {
@@ -899,8 +899,8 @@ class ProductsController extends SalesAppController {
 
 			$getIds = [];
 
-			$thisLabelIds = $this->ProductSpecificationLabel->saveLabel($this->request->data,$userData['User']['id'],$specId);
-			$getIds = array_merge($getIds,$thisLabelIds);
+			$thisComponentIds = $this->ProductSpecificationComponent->saveComponent($this->request->data,$userData['User']['id'],$specId);
+			$getIds = array_merge($getIds,$thisComponentIds);
 			
 			$thisPartIds = $this->ProductSpecificationPart->savePart($this->request->data,$userData['User']['id'],$specId);
 			$getIds = array_merge($getIds,$thisPartIds);

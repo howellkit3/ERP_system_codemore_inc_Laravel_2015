@@ -1,7 +1,7 @@
 <li class="ui-state-default">
   <section class="dragField">
       <header class="main-box-header dragHeader clearfix">
-          <h2 class="pull-left">Label</h2>
+          <h2 class="pull-left">Component</h2>
           <a href="#" class="remove_field pull-right">
               <i class="fa fa-times-circle fa-fw fa-lg"></i>
           </a>
@@ -16,5 +16,5 @@
           </div>
       </div>
   </section>
-  <input type="hidden" name="data[ProductSpecificationDetail][]" value="Label">
+  <input type="hidden" name="data[ProductSpecificationDetail][]" value="Component">
 </li>

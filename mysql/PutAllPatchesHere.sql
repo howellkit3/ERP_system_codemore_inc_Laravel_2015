@@ -197,3 +197,7 @@ ALTER TABLE `koufu_sale`.`client_order_delivery_schedules`     ADD COLUMN `uuid`
 /** bien  added this 05/29/2015  */
 
 ALTER TABLE `koufu_delivery`.`deliveries` DROP COLUMN `description`,    CHANGE `sales_order_id` `schedule_uuid` INT(11) NULL ,     CHANGE `delivery_details_id` `clients_order_id` INT(11) NULL ,     CHANGE `modified` `modified` TIMESTAMP NULL ,     CHANGE `created` `created` TIMESTAMP NULL ;
+
+#NOTE: SELECT KOUFU SALE DATABASE ----
+/** bien  added this 06/03/2015  */
+RENAME TABLE `koufu_sale`.`product_specification_labels` TO `koufu_sale`.`product_specification_components`;

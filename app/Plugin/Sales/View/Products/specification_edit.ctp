@@ -180,12 +180,12 @@
 							<div class="main-box-body clearfix">
 								<div class="form-horizontal">	
 									<?php
-										$labelCounter = 0;
+										$componentCounter = 0;
 										$partCounter = 0;
 										$processCounter = 0;
 										foreach ($formatDataSpecs as $key => $specLists) {
-											if($specLists['ProductSpecificationDetail']['model'] == 'Label'){
-												$labelCounter += 1;
+											if($specLists['ProductSpecificationDetail']['model'] == 'Component'){
+												$componentCounter += 1;
 											} 
 											if($specLists['ProductSpecificationDetail']['model'] == 'Part'){
 												$partCounter += 1;
@@ -198,7 +198,7 @@
 									<div class="form-group buttonSpecs" style="display:none;">
 										<div class="col-lg-2"></div>
 										<div class="col-lg-2 button-spec">
-											<button type="button" data="<?php echo $labelCounter ?>" class=" process_btn add_field_button btn btn-primary pull-rigth">Label </button>
+											<button type="button" data="<?php echo $componentCounter ?>" class=" process_btn add_field_button btn btn-primary pull-rigth">Label </button>
 										</div>
 										<div class="col-lg-2 button-spec">
 											<button type="button" data="<?php echo $partCounter ?>" class="process_btn btn btn-primary pull-rigth add_part_button">Part</button>
@@ -213,7 +213,7 @@
 					 						<!--list of draggable text fields -->
 
 					 						<?php 
-					 							$labelCounter1 = 0;
+					 							$componentCounter1 = 0;
 												$partCounter1 = 0;
 												$processCounter1 = 0;
 					 							foreach ($formatDataSpecs as $key => $specLists) { 
@@ -230,10 +230,10 @@
 													    <input name="data[IdHolder][ProductSpecificationDetail][<?php echo $key ;?>][id]" value="<?php echo $specLists['ProductSpecificationDetail']['id'] ?>" class="form-control" type="hidden" />
 												      	<?php
 
-													      	if($specLists['ProductSpecificationDetail']['model'] == 'Label'){
+													      	if($specLists['ProductSpecificationDetail']['model'] == 'Component'){
 
-													      		echo $this->element('Specs/label', array('formatDataSpecs' => $formatDataSpecs[$key],'counter' => $labelCounter1));
-													      		$labelCounter1++;
+													      		echo $this->element('Specs/component', array('formatDataSpecs' => $formatDataSpecs[$key],'counter' => $componentCounter1));
+													      		$componentCounter1++;
 
 													      	}
 													      	if($specLists['ProductSpecificationDetail']['model'] == 'Part'){
