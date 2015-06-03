@@ -100,7 +100,7 @@
 											<div class="col-lg-7">
 												<?php 
 													echo $this->Form->input('CorrugatedPaper.layers', array(
-													'class' => 'form-control layer layersC',
+													'class' => 'form-control layersC required',
 													'label' => false,
 													'rule' => 'numeric',
 													'readonly' => true,
