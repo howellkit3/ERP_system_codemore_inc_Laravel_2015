@@ -332,3 +332,7 @@ body.dragging, body.dragging * {
   padding: 0;
   width: 100%;
 }
+
+.marginDelivery{
+  margin-right: 20px;
+}

@@ -48,24 +48,12 @@
                                         </td>
 
                                         <td class="text-center">
-                                           <?php // echo $scheduleDataList['ClientOrderDeliverySchedule']['status']; ?>    
+                                           <?php echo "<span class='label label-default'>Waiting</span>"; ?>    
                                         </td>
 
                                         <td class="text-center">
 
-                                            <?php // foreach ($scheduleDataList['ClientOrderDeliverySchedule'] as $key => $layers): 
-
-                                                echo $this->Html->link('<span class="fa-stack">
-                                                                         <i class="fa fa-square fa-stack-2x"></i>
-                                                                      <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;
-                                                                          <span class ="post"><font size = "1px"> View </font></span>
-                                                                          </span> ', array('controller' => 'Deliveries', 
-                                                                                         'action' => 'view',
-                                                                         $scheduleDataList['ClientOrderDeliverySchedule']['uuid']),
-                                                                          array('class' =>' table-link small-link-icon','escape' => false,'title'=>'Edit Information'
-                                                                     )); 
-                                            ?>  
-
+                                        
                                             <?php 
                                                 echo $this->Html->link('<span class="fa-stack">
                                                                         <i class="fa fa-square fa-stack-2x"></i>
@@ -77,8 +65,20 @@
                                                                          array('class' =>' table-link small-link-icon','escape' => false,'title'=>'Edit Information'
                                                                     )); 
                                                 ?>  
-                                                    <br>
-                                              <?php //endforeach; ?>  
+                                                
+                                            <?php 
+
+                                                echo $this->Html->link('<span class="fa-stack">
+                                                                         <i class="fa fa-square fa-stack-2x"></i>
+                                                                      <i class="fa fa-check-square-o fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;
+                                                                          <span class ="post"><font size = "1px">Approve</font></span>
+                                                                          </span> ', array('controller' => 'Deliveries', 
+                                                                                         'action' => 'view',
+                                                                         $scheduleDataList['ClientOrderDeliverySchedule']['id']),
+                                                                          array('class' =>' table-link small-link-icon','escape' => false,'title'=>'Edit Information'
+                                                                     )); 
+                                            ?>     
+                                             
 
                                             <br>
                                              

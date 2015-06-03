@@ -1,10 +1,10 @@
 <div class="row1">
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
-            <div class="filter-block pull-right">
-               <?php
+            <div class="filter-block pull-right marginDelivery">
+               <?php   
                 
-                  echo $this->Html->link('<i class="fa  fa-arrow-left fa-lg"></i> Back ', 
+                  echo $this->Html->link('<i class="fa  fa-arrow-left fa-lg "></i> Back ', 
                         array('controller' => 'deliveries', 
                             'action' => 'index'
                             ),
@@ -14,10 +14,9 @@
 
               <?php
                 
-                  echo $this->Html->link('<i class="fa fa-check-square fa-lg"></i> Approve Schedule ', 
-                        array('controller' => 'truckSchedules', 
-                            'action' => 'add',
-                            $scheduleInfo['Schedule']['sales_order_id']
+                  echo $this->Html->link('<i class="fa fa-check-square fa-lg "></i> Approve Schedule ', 
+                        array('controller' => 'deliveries', 
+                            'action' => 'add'
                             ),
                         array('class' =>'btn btn-primary pull-right',
                             'escape' => false));
@@ -59,19 +58,19 @@
 
                               <tr>
                                   <td>Schedule</td>
-                                  <td><?php echo date('M d, Y', strtotime($scheduleInfo['ClientOrderDeliverySchedule'][0]['schedule'])); ?></td>
+                                  <td><?php echo date('M d, Y', strtotime($scheduleInfo['ClientOrderDeliverySchedule']['schedule'])); ?></td>
                               </tr>
                               <tr>
                                   <td>Quantity</td>
-                                  <td><?php echo  $scheduleInfo['ClientOrderDeliverySchedule'][0]['quantity']; ?></td>
+                                  <td><?php echo  $scheduleInfo['ClientOrderDeliverySchedule']['quantity']; ?></td>
                               </tr>
                               <tr>
                                   <td>Location</td>
-                                  <td><?php echo  $scheduleInfo['ClientOrderDeliverySchedule'][0]['location']; ?></td>
+                                  <td><?php echo  $scheduleInfo['ClientOrderDeliverySchedule']['location']; ?></td>
                               </tr>
                               <tr>
                                   <td>Status</td>
-                                  <td><?php //echo  $scheduleInfo['Schedule']['quantity']; ?></td>
+                                  <td><?php echo "<span class='label label-default'>Waiting</span>";?></td>
                               </tr>
 
                						</tbody>
