@@ -1,3 +1,5 @@
+<?php echo $this->Html->script('Sales.quantityLimitview');?>
+
 <div class="row1">
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
@@ -34,7 +36,7 @@
 
                 <?php } ?>
 
-                 <?php
+                 <?php // pr($scheduleInfo); exit;
                 
                   // echo $this->Html->link('<i class="fa fa-edit fa-lg "></i> Edit Schedule ', 
                   //       array('controller' => 'deliveries', 
@@ -58,6 +60,7 @@
                     <table class="table table-striped table-hover">
                						<tbody>
 
+                                
                  							<tr>
                    								<td>Client Order Number</td>
                    								<td><?php echo  $scheduleInfo['ClientOrder']['uuid']; ?></td>

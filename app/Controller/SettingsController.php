@@ -166,7 +166,6 @@ class SettingsController extends AppController
             }
     }
 
-
     public function category_index() {
 
     }
