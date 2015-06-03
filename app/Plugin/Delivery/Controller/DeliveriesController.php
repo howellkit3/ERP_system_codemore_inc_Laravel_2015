@@ -25,29 +25,7 @@ class DeliveriesController extends DeliveryAppController {
         $deliveryData = $this->Delivery->find('list',array('fields' => array('schedule_uuid','status')));
 
       
-        //$deliveryStatus = $this->Delivery->find('all');
-
-       //pr($deliveryData); exit;
-        
        
-        /*$this->loadModel('Sales.ClientOrderDeliverySchedule');
-
-        $this->loadModel('Sales.Company');
-
-        $this->ClientOrderDeliverySchedule->bind(array('ClientOrder' , 'QuotationItemDetail' , 'Quotation'));
-
-         $scheduleData = $this->ClientOrderDeliverySchedule->find('all', array(
-                                        'order' => 'ClientOrderDeliverySchedule.id DESC'
-                                        ));
-
-        $companyData = $this->Company->find('list', array('fields' => 
-                                                array('id',
-                                                     'company_name'),
-                                                    // 'conditions' => array(
-                                                    // 'Company.id' => 'ClientOrder.company_id'),
-                                                     ));
-
-        //pr($companyData);exit();conditions' => array('Company.id' => 'ClientOrder.company_id*/
         $limit = 10;
 
         $conditions = array();
