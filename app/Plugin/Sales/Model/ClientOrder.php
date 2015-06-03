@@ -72,8 +72,6 @@ class ClientOrder extends AppModel {
 
 				
 			),
-
-
 			
 		));
 
@@ -86,17 +84,36 @@ class ClientOrder extends AppModel {
 				'ClientOrderDeliverySchedule' => array(
 					'className' => 'Sales.ClientOrderDeliverySchedule',
 					'foreignKey' => 'client_order_id'
-				),				
+				)
+				,				
 				'Company' => array(
 					'className' => 'Sales.Company',
 					'foreignKey' => false,
 					'conditions' => 'Company.id = ClientOrder.company_id'
 				),
+
+				'QuotationDetail' => array(
+					'className' => 'Sales.QuotationDetail',
+					'foreignKey' => false,
+					'conditions' => 'QuotationDetail.quotation_id = ClientOrder.quotation_id'
+				),
+
 				'Product' => array(
 					'className' => 'Sales.Product',
 					'foreignKey' => false,
-					'conditions' => 'Company.id = Product.company_id'
-				)
+					'conditions' => 'Product.id = QuotationDetail.product_id'
+				),
+				// 'Product' => array(
+				// 	'className' => 'Sales.Product',
+				// 	'foreignKey' => false,
+				// 	'conditions' => 'Company.id = Product.company_id'
+				// )
+				// ,
+				// 'Delivery' => array(
+				// 	'className' => 'Delivery.Delivery',
+				// 	'foreignKey' => false,
+				// 	'conditions' => 'ClientOrderDeliverySchedule.client_order_id = Delivery.client_order_id'
+				// )
 			)
 		));
 		$this->recursive = 1;
