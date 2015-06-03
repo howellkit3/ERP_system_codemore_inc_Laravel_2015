@@ -286,7 +286,7 @@
 													    <input name="data[IdHolder][ProductSpecificationDetail][<?php echo $key ;?>][id]" value="<?php echo $specLists['ProductSpecificationDetail']['id'] ?>" class="form-control" type="hidden" />
 												      	<?php
 
-													      	if($specLists['ProductSpecificationDetail']['model'] == 'Label'){
+													      	if($specLists['ProductSpecificationDetail']['model'] == 'Component'){
 
 													      		echo $this->element('Specs/component', array('formatDataSpecs' => $formatDataSpecs[$key],'counter' => $componentCounter1));
 													      		$componentCounter1++;

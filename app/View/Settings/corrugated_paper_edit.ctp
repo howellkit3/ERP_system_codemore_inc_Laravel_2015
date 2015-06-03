@@ -136,7 +136,7 @@
 				                                        	echo $this->Form->input('ItemGroupLayer.'.$key.'.substrate', array(
 			                        								'class' => 'form-control layer',
 																	'label' => false,
-																	'placeholder' => 'Layer'));
+																	'placeholder' => 'Subtrate Name'));
 				                                    	?>
 													</div>
 
@@ -147,7 +147,7 @@
 					                                    	echo $this->Form->input('ItemGroupLayer.'.$key.'.flute', array(
 			                                								'class' => 'form-control layer',
 																			'label' => false,
-																			'placeholder' => 'Layer'));
+																			'placeholder' => 'Flute'));
 					                                	?>
 													</div>
 

@@ -19,16 +19,13 @@
 				<header class="main-box-header clearfix">
 					
 					<h1 class="pull-left">
-						Product Specifications
+						Edit Product Specifications
 					</h1>
 					<div class="filter-block pull-right">
 						<?php 
 						
-		                    echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'products','action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
-
-		                    //echo $this->Html->link('<i class="fa fa-ticket fa-lg"></i> Create Job Ticket ', array('controller' => 'ticketing_systems','action' => 'create_ticket',$this->request->data['Product']['uuid'],'plugin' => 'ticket'),array('class' =>'btn btn-primary pull-right','escape' => false));
-
-		                    echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array('controller' => 'products','action' => 'print_specs',$this->request->data['Product']['uuid']),array('class' =>'btn btn-primary pull-right','escape' => false,'target' => '_blank'));
+		                    echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'products','action' => 'specification',$product['Product']['id']),array('class' =>'btn btn-primary pull-right','escape' => false));
+		                    
 		                ?>
 
 		            </div>
@@ -198,7 +195,7 @@
 									<div class="form-group buttonSpecs" style="display:none;">
 										<div class="col-lg-2"></div>
 										<div class="col-lg-2 button-spec">
-											<button type="button" data="<?php echo $componentCounter ?>" class=" process_btn add_field_button btn btn-primary pull-rigth">Label </button>
+											<button type="button" data="<?php echo $componentCounter ?>" class=" process_btn add_field_button btn btn-primary pull-rigth">Component </button>
 										</div>
 										<div class="col-lg-2 button-spec">
 											<button type="button" data="<?php echo $partCounter ?>" class="process_btn btn btn-primary pull-rigth add_part_button">Part</button>

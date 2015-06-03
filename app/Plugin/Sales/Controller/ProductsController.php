@@ -733,7 +733,7 @@ class ProductsController extends SalesAppController {
 		$this->set(compact('subProcess','processData','specs','formatDataSpecs','unitData','product','productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData', 'companyData'));
 
 		if(!empty($formatDataSpecs)){
-			$this->render('specification_edit');
+			$this->render('specification_view');
 		}
 
     }
@@ -1013,6 +1013,75 @@ class ProductsController extends SalesAppController {
         }
         
         exit();
+    }
+
+    public function specification_edit($productId = null ){
+
+    	$this->loadModel('ItemCategoryHolder');
+
+        $this->loadModel('ItemTypeHolder');
+
+        $this->loadModel('Company');
+
+        $this->loadModel('Sales.ProductSpecificationDetail');
+
+        $this->loadModel('Sales.ProductSpecificationComponent');
+
+		$this->loadModel('Sales.Product');
+
+		$this->loadModel('Sales.ProductSpecification');
+		
+		$this->loadModel('Unit');
+
+		$this->loadModel('SubProcess');
+
+		$subProcess = $this->SubProcess->find('list',
+											array('fields' => 
+												array('SubProcess.id',
+												 	'SubProcess.name'
+												 )
+												));
+		
+		$processData = $this->Process->find('list',
+											array('fields' => 
+												array('Process.id',
+												 	'Process.name'
+												 )
+												));
+
+		// $this->
+		//set to cache in first load
+		$unitData = Cache::read('unitData');
+		
+		if (!$unitData) {
+			
+			$unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
+															'order' => array('Unit.unit' => 'ASC')
+															));
+
+            Cache::write('unitData', $unitData);
+        }
+       
+		$this->Product->recursive = 1;
+
+		$product = $this->request->data =  $this->Product->findById($productId);
+		
+		$specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productId)));
+		
+		//find if product has specs
+		$formatDataSpecs = $this->ProductSpecificationDetail->findData($product['Product']['uuid']);
+
+		$this->request->data['Company'] = $this->Company->read(null,$product['Product']['company_id'])['Company'];
+
+		$productData = $this->Product->find('all',array(
+    		'order' => array('Product.id DESC')));	
+
+		$this->set(compact('subProcess','processData','specs','formatDataSpecs','unitData','product','productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData', 'companyData'));
+
+		if(!empty($formatDataSpecs)){
+			$this->render('specification_edit');
+		}
+
     }
 
 }
