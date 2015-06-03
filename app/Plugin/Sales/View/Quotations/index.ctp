@@ -31,7 +31,7 @@
 
                    <div class="form-group pull-left">
                         <?php //echo $this->Form->create('Quotation',array('controller' => 'quotations','action' => 'search', 'type'=> 'get')); ?>
-                            <input placeholder="Search..." id="hint" name="q" class="form-control searchQuotation" type="search" />
+                            <input placeholder="Search..." class="form-control searchQuotation"  />
                             <i class="fa fa-search search-icon"></i>
                          <?php //echo $this->Form->end(); ?>
                     </div>
@@ -56,13 +56,12 @@
                             </tr>
                         </thead>
                         <!--nocache-->
-                        <?php echo $this->element('quotation_table'); ?>
-                        
+                        <tbody aria-relevant="all" aria-live="polite" class="searchAppend" role="alert">
+                            <?php echo $this->element('quotation_table'); ?>
+                        </tbody>
                         <!--/nocache-->
                     </table>
-                    <section class="searchAppend">
-                        DSAD
-                    </section>
+                   
                     <hr>
 
                     <div class="paging">

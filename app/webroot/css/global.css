@@ -348,3 +348,15 @@ body.dragging, body.dragging * {
 .indent1 {
   text-indent: 50px;
 }
+.not-active {
+        pointer-events: none;
+        background-color: #5bc0de;
+        border-color: none;
+        cursor: not-allowed;
+        opacity: 0.65;
+        pointer-events: none;
+        border: none;
+}
+.fa-stack {
+        width: 1.75em;
+}
