@@ -492,7 +492,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																					'class' => 'form-control layer required coumpundVal',
 														                            'label' => false,
 														                            'readonly' => true,
-														                            'rule' => 'numeric',
+														                            'type' => 'text',
 														                           	'style'=>'width: 150px',
 														                            'value' => 1));
 																			?>
@@ -682,7 +682,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																					echo $this->Form->input('CorrugatedPaper.layers', array(
 																						'class' => 'form-control required layersC',
 															                            'label' => false,
-															                            'rule' => 'numeric',
+															                            'type' => 'text',
 															                            'readonly' => true,
 															                           	'style'=>'width: 150px',
 															                           	'id' => 'layers',
