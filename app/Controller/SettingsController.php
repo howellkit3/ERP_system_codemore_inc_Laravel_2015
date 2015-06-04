@@ -1145,7 +1145,7 @@ class SettingsController extends AppController
             );
         }
 
-        return $this->redirect(array(' controller' => 'settings', 'action' => 'item_group','tab' => 'tab-compound_substrate'));
+        return $this->redirect(array(' controller' => 'settings', 'action' => 'item_group','tab' => 'tab-compound_substrates'));
     }
 
     public function view_compound_substrate($id){
