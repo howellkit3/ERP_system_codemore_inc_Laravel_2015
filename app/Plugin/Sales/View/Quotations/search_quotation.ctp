@@ -61,4 +61,6 @@
             </tr>
         
     <?php endforeach; ?> 
-<?php } ?> 
+<?php }else{
+    echo "<font color='red'><b>No result..</b></font>";
+    } ?> 

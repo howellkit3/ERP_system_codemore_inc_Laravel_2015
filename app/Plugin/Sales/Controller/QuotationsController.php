@@ -1188,11 +1188,11 @@ class QuotationsController extends SalesAppController {
 
 		$this->paginate = array(
             'conditions' =>  array (
-			        // 'OR' => array(
-			            'Quotation.uuid LIKE' => '%' . $hint . '%'
-			            // 'Company.company_name LIKE' => '%' . $hint . '%',
-			            // 'Product.name LIKE' => '%' . $hint . '%',
-			        //)
+			        'OR' => array(
+			            'Quotation.uuid LIKE' => '%' . $hint . '%',
+			            'Company.company_name LIKE' => '%' . $hint . '%',
+			            'Product.name LIKE' => '%' . $hint . '%',
+			        )
 			    ),
             'limit' => $limit,
             'fields' => array(

@@ -56,8 +56,10 @@
                             </tr>
                         </thead>
                         <!--nocache-->
-                        <tbody aria-relevant="all" aria-live="polite" class="searchAppend" role="alert">
+                        <tbody aria-relevant="all" aria-live="polite" class="quotationFields" role="alert">
                             <?php echo $this->element('quotation_table'); ?>
+                        </tbody>
+                        <tbody aria-relevant="all" aria-live="polite" class="searchAppend" role="alert" style="display:none;">
                         </tbody>
                         <!--/nocache-->
                     </table>

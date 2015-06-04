@@ -1,7 +1,5 @@
 <?php foreach ($quotationData as $quotationList): ?>
    
-    <tbody aria-relevant="all" aria-live="polite" role="alert">
-
         <tr class="">
              <td class="">
                 PQ-<?php echo $quotationList['Quotation']['uuid'] ?>  
@@ -127,7 +125,6 @@
             </td>
         </tr>
 
-    </tbody>
 <?php endforeach; ?> 
 
 

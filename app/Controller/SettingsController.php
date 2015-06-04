@@ -61,7 +61,7 @@ class SettingsController extends AppController
 
 
         parent::beforeFilter();
-        $this->Auth->allow('index','category');
+        $this->Auth->allow('index','category','ajax_categ');
         $this->loadModel('User');
         $userData = $this->User->read(null,$this->Session->read('Auth.User.id'));//$this->Session->read('Auth');
         $this->set(compact('userData'));
@@ -1780,7 +1780,25 @@ class SettingsController extends AppController
                                         'fields' => array(
                                             'id', 'name')
                                         ));
+       
+       echo json_encode($itemdata);
+    }
 
+    public function ajax_categ_substrate($itemId = false){
+
+
+        $this->autoRender = false;
+
+        $this->loadModel('ItemCategoryHolder');
+        $this->ItemCategoryHolder->bind(array('ItemTypeHolder'));
+
+        $itemdata = $this->ItemCategoryHolder->ItemTypeHolder->find('all', array(
+                                        'conditions' => array(
+                                            'ItemTypeHolder.Item_category_holder_id' => $itemId), 
+                                        'fields' => array(
+                                            'id', 'name')
+                                        ));
+        //pr($itemdata);exit();
        echo json_encode($itemdata);
     }
 
