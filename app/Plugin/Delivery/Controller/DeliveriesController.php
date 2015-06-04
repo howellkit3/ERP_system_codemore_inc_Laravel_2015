@@ -4,14 +4,14 @@ App::uses('SessionComponent', 'Controller/Component');
 
 class DeliveriesController extends DeliveryAppController {
 
-    var $paginate = array( 
-        'ClientOrder' => array( 
-                'limit' => 10,
-                 //'fields' => array('ClientOrder.uuid', 'Company.company_name', 'created','ItemCategoryHolder.name'),
-                //, 
-                'order' => 'ClientOrderDeliverySchedule.id DESC'
-            ),
-  ); 
+  //   var $paginate = array( 
+  //       'ClientOrder' => array( 
+  //               'limit' => 10,
+  //                //'fields' => array('ClientOrder.uuid', 'Company.company_name', 'created','ItemCategoryHolder.name'),
+  //               //, 
+  //               'order' => 'ClientOrderDeliverySchedule.id DESC'
+  //           ),
+  // ); 
 
   public $uses = array('Delivery.Delivery');
 
@@ -19,27 +19,34 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->loadModel('Sales.ClientOrder');
 
-        $this->ClientOrder->bindDelivery();
-        $clientsOrder = $this->ClientOrder->find('all', array(
-                                        'order' => 'ClientOrderDeliverySchedule.id DESC'
-                                        ));
         $deliveryData = $this->Delivery->find('list',array('fields' => array('schedule_uuid','status')));
 
-      
-       
+        $this->ClientOrder->bindDelivery();
+
+        $clientsOrder = $this->ClientOrder->find('all', array(
+                                        'order' => 'ClientOrderDeliverySchedule.id DESC'
+                                        ));     
         $limit = 10;
 
         $conditions = array();
 
-        $this->paginate = array(
+        $this->ClientOrder->paginate = array(
             'conditions' => $conditions,
             'limit' => $limit,
-            //'fields' => array('ClientOrder.uuid','ClientOrder.po_number', 'Company.company_name',  'Product.name', 'ClientOrderDeliverySchedule.quantity', 'ClientOrderDeliverySchedule.location', 'ClientOrderDeliverySchedule.schedule'),
-            'order' => 'ClientOrder.id DESC',
+            'fields' => array(
+              'ClientOrder.uuid',
+              'ClientOrder.po_number',
+              'Company.company_name',  
+              'Product.name', 
+              'ClientOrderDeliverySchedule.quantity', 
+              'ClientOrderDeliverySchedule.location', 
+              'ClientOrderDeliverySchedule.schedule'
+              ),
+            'order' => 'ClientOrderDeliverySchedule.id DESC',
         );
 
         $clientsOrders = $this->paginate('ClientOrder');
-
+        
         $this->set(compact('clientsOrder','deliveryData', 'status'));
    }
 
