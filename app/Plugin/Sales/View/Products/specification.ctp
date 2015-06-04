@@ -185,7 +185,7 @@
 					</div>
 				</div>
 			
-				<div class="row">
+				<div class="row submitButton">
 					<div class="col-lg-12">
 						<div class="main-box">
 							<div class="top-space"></div>
