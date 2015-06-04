@@ -4,7 +4,7 @@
 <div class="form-group">
     <label class="col-lg-2 control-label">Material</label>
     <div class="col-lg-6 materialName<?php echo $plusCounter ;?>" >
-        <input type="text" value="<?php echo $formatDataSpecs['ProductSpecificationPart']['material'] ?>" class="partnameMe form-control part_name<?php echo $plusCounter ;?> editMe" maxlenght="500" name="data[ProductSpecificationPart][<?php echo $counter ;?>][material]" disabled />
+        <input type="text" value="<?php echo $formatDataSpecs['ProductSpecificationPart']['material'] ?>" class="required partnameMe form-control part_name<?php echo $plusCounter ;?> editMe" maxlenght="500" name="data[ProductSpecificationPart][<?php echo $counter ;?>][material]" disabled />
     </div>
     <div class="col-lg-3">
         <button type="button" data-toggle="modal" href="#myModal<?php echo $plusCounter ;?>" class="btn btn-primary edit-button<?php echo $plusCounter ;?> editMeBtn" style="display:none;">

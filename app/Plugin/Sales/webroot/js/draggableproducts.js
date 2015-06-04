@@ -30,9 +30,12 @@ $(document).ready(function() {
     var process_button      = $(".add_process_button");
   
     var x = 1; //initlal text box count
-    
-    $(component_button).click(function(e){ //on add input button click
 
+    var submitCount = 0;
+    submitButton(submitCount);
+    $(component_button).click(function(e){ //on add input button click
+        submitCount++;
+        submitButton(submitCount);
         var countername = parseInt($(this).attr('data'));
 
         var varCounter = countername + 1;
@@ -64,7 +67,8 @@ $(document).ready(function() {
     });
 
     $(part_button).click(function(e){ //on add input button click
-
+        submitCount++;
+        submitButton(submitCount);
         var quantitySpec = $('#ProductSpecificationQuantity').val();
 
         if(!$.isNumeric(quantitySpec)) {
@@ -257,6 +261,8 @@ $(document).ready(function() {
 
     $(process_button).click(function(e){ //on add input button click
         e.preventDefault();
+        submitCount++;
+        submitButton(submitCount);
         var countername = parseInt($(this).attr('data'));
 
         var varCounter = countername + 1;
@@ -362,7 +368,7 @@ $(document).ready(function() {
         });
        
     });
-
+    
     //remove fields
     $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
 
@@ -405,6 +411,16 @@ $(document).ready(function() {
 
 });
 
+function submitButton(count) { 
+
+    console.log(count);
+    if(count == 3){
+        $('.submitButton').show();
+    }else{
+        $('.submitButton').hide();
+    } 
+
+}
 function encode_utf8(s) { 
 
  return unescape(encodeURIComponent(s)); 
