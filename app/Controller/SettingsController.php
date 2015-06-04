@@ -685,14 +685,16 @@ class SettingsController extends AppController
         $this->ItemTypeHolder->bind(array('ItemCategoryHolder'));
 
         $categoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name'),
-                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1'),
+                                                                'order' => 'ItemCategoryHolder.name ASC'));
      
         $typeData = $this->ItemTypeHolder->find('list', array('fields' => array('id', 'name'),
-                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1'),
+                                                                'order' => 'ItemTypeHolder.name ASC'));
 
-        $categoryDataDropList = $this->ItemCategoryHolder->find('list',  array('order' => 'ItemCategoryHolder.id DESC'));
+        $categoryDataDropList = $this->ItemCategoryHolder->find('list',  array('order' => 'ItemCategoryHolder.name ASC'));
 
-        $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.id ASC'));
+        $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.name ASC'));
 
         //general item
          $this->GeneralItem->bind(array('ItemCategoryHolder', 'ItemTypeHolder', 'Supplier'));
