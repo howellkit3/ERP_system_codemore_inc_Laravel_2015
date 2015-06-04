@@ -16,10 +16,10 @@
 			<table class="layout">
 				<thead>
 					<tr>
-						<td style="width:40px;">&nbsp</td>
-						<td style="width:40px;">&nbsp</td>
-						<td style="width:40px;">&nbsp</td>
-						<td style="width:350px;">&nbsp</td>
+						<td style="width:40px;">&nbsp;</td>
+						<td style="width:40px;">&nbsp;</td>
+						<td style="width:40px;">&nbsp;</td>
+						<td style="width:350px;">&nbsp;</td>
 						<td>Date : 
 							<?php echo (new \DateTime())->format('l, F d, Y '); ?>
 						</td>
@@ -30,7 +30,7 @@
 				<thead>
 					<tr>
 						<td style="width:40px;">Customer</td>
-						<td style="width:40px;">&nbsp</td>
+						<td style="width:40px;">&nbsp;</td>
 						<td style="width:40px;">:</td>
 						<td style="width:280px;">
 							<?php echo strtoupper($companyData[$productData['Product']['company_id']]); ?>
@@ -45,7 +45,7 @@
 				<thead>
 					<tr>
 						<td style="width:40px;">Item</td>
-						<td style="width:47px;"> &nbsp </td>
+						<td style="width:47px;"> &nbsp; </td>
 						<td style="width:40px;">:</td>
 						<td style="width:355px;">
 							<?php echo $productData['Product']['name'] ;?>
@@ -60,7 +60,7 @@
 				<thead>
 					<tr>
 						<td style="width:40px;">Item size</td>
-						<td style="width:43px;">&nbsp</td>
+						<td style="width:43px;">&nbsp;</td>
 						<td style="width:40px;">:</td>
 						<td style="width:280px;">
 							<?php echo $specs['ProductSpecification']['size1']; ?> x
@@ -82,7 +82,7 @@
 				<thead>
 					<tr>
 						<td style="width:40px;">PO Quantity</td>
-						<td style="width:27px;">&nbsp</td>
+						<td style="width:27px;">&nbsp;</td>
 						<td style="width:40px;">:</td>
 						<td style="width:276px;">
 							<?php echo $specs['ProductSpecification']['quantity'] ;?>
