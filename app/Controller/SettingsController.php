@@ -702,6 +702,7 @@ class SettingsController extends AppController
            $this->paginate['GeneralItem'] = array(
                 'conditions' =>  array(),
                 'limit' => 10,
+                'order' => 'GeneralItem.id DESC'
             );
 
             $generalItemData = $this->paginate('GeneralItem');
@@ -716,6 +717,7 @@ class SettingsController extends AppController
             $this->paginate['Substrate'] = array(
                 'conditions' =>  array(),
                 'limit' => 10,
+                'order' => 'Substrate.id DESC'
             );
 
             $substrateData = $this->paginate('Substrate');
@@ -730,6 +732,7 @@ class SettingsController extends AppController
             $this->paginate['CompoundSubstrate'] = array(
                 'conditions' =>  array(),
                 'limit' => 10,
+                'order' => 'CompoundSubstrate.id DESC'
             );
 
             $compoundSubstrateData = $this->paginate('CompoundSubstrate');
@@ -744,6 +747,7 @@ class SettingsController extends AppController
             $this->paginate['CorrugatedPaper'] = array(
                 'conditions' =>  array(),
                 'limit' => 10,
+                'order' => 'CorrugatedPaper.id DESC'
             );
 
             $corrugatedPaperData = $this->paginate('CorrugatedPaper');
@@ -1141,7 +1145,7 @@ class SettingsController extends AppController
             );
         }
 
-        return $this->redirect(array(' controller' => 'settings', 'action' => 'item_group','tab' => 'tab-compound_substrate'));
+        return $this->redirect(array(' controller' => 'settings', 'action' => 'item_group','tab' => 'tab-compound_substrates'));
     }
 
     public function view_compound_substrate($id){
