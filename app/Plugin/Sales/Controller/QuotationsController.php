@@ -1159,26 +1159,7 @@ class QuotationsController extends SalesAppController {
 
     public function search_quotation($hint = null){
     	
-    	
     	$this->loadModel('Sales.Company');
-
-		$this->loadModel('RolesPermission');
-
-		$this->loadModel('Permission');
-
-		$this->loadModel('Role');
-
-		$this->loadModel('User');
-
-		$userData = $this->User->read(null,$this->Session->read('Auth.User.id'));
-
-		// $this->RolesPermission->bind(array('Role', 'Permission'));
-		
-		$rolesPermissionData = $this->RolesPermission->find('list', array(
-														'fields' => array('RolesPermission.id', 'RolesPermission.permission_id'),
-														'conditions' => array( 
-															'RolesPermission.role_id' => $userData['User']['role_id'])
-													));
 
 		$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail','ProductDetail', 'Product','Company'));
 
@@ -1189,9 +1170,11 @@ class QuotationsController extends SalesAppController {
 		$this->paginate = array(
             'conditions' =>  array (
 			        'OR' => array(
-			        	array('Quotation.uuid LIKE' => '%' . $hint . '%'),
-    					array('Company.company_name LIKE' => '%' . $hint . '%'),
-    					array('Product.name LIKE' => '%' . $hint . '%')
+		        		'Quotation.uuid LIKE' => '%' . $hint . '%',
+		        		// 'Company.company_name LIKE' => '%' . $hint . '%',
+		        		//'Product.name LIKE' => '%' . $hint . '%',		
+    					// array('Company.company_name LIKE' => '%' . $hint . '%'),
+    					// array('Product.name LIKE' => '%' . $hint . '%')
 			        )
 			    ),
             'limit' => $limit,
@@ -1238,7 +1221,7 @@ class QuotationsController extends SalesAppController {
             Cache::write('inquiryId', $inquiryId);
        // }
 		
-		$this->set(compact('companyData','quotationData','inquiryId','salesStatus','rolesPermissionData'));
+		$this->set(compact('companyData','quotationData','inquiryId','salesStatus'));
 		
 		
 		if ($hint == ' ') {
