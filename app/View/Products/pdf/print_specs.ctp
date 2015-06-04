@@ -35,7 +35,7 @@
 						<td style="width:40px;"> </td>
 						<td style="width:40px;">:</td>
 						<td style="width:280px;">
-							<?php echo strtoupper($companyData[$productData['Product']['company_id']]) ?>
+							<?php echo strtoupper($companyData[$productData['Product']['company_id']]); ?>
 						</td>
 						<td>Schedule No. : <?php echo $ticketUuid; ?>
 							<?php //echo (new \DateTime())->format('l, F d, Y '); ?>
@@ -50,7 +50,7 @@
 						<td style="width:47px;"> </td>
 						<td style="width:40px;">:</td>
 						<td style="width:355px;">
-							<?php echo $productData['Product']['name'] ?>
+							<?php echo $productData['Product']['name'] ;?>
 						</td>
 						<td>to follow
 							<?php //echo (new \DateTime())->format('l, F d, Y '); ?>
@@ -65,12 +65,18 @@
 						<td style="width:43px;"> </td>
 						<td style="width:40px;">:</td>
 						<td style="width:280px;">
-							<?php echo $specs['ProductSpecification']['size1'] ?> x
-							<?php echo $specs['ProductSpecification']['size2'] ?> x
-							<?php echo $specs['ProductSpecification']['size3'] ?>
+							<?php echo $specs['ProductSpecification']['size1']; ?> x
+							<?php echo $specs['ProductSpecification']['size2']; ?> x
+							<?php echo $specs['ProductSpecification']['size3']; ?>
 						</td>
 						<td>Delivery Date :
-							 <?php echo date('M d, Y', strtotime($delData['ClientOrderDeliverySchedule'][0]['schedule'])); ?>
+
+							<?php
+							 	if (!empty($delData['ClientOrderDeliverySchedule'][0]['schedule'])){
+
+							 		echo date('M d, Y', strtotime($delData['ClientOrderDeliverySchedule'][0]['schedule']));
+							 	} 
+							?>
 						</td>
 					</tr>
 				</thead>
@@ -82,8 +88,8 @@
 						<td style="width:27px;"> </td>
 						<td style="width:40px;">:</td>
 						<td style="width:276px;">
-							<?php echo $specs['ProductSpecification']['quantity'] ?>
-							<?php echo $unitData[$specs['ProductSpecification']['quantity_unit_id']] ?>
+							<?php echo $specs['ProductSpecification']['quantity'] ;?>
+							<?php echo $unitData[$specs['ProductSpecification']['quantity_unit_id']] ;?>
 						</td>
 						<td>Stock Quantity :
 							<?php //echo (new \DateTime())->format('l, F d, Y '); ?>
@@ -100,9 +106,9 @@
 				</thead>
 			</table>
 			<br>
-			<?php $componentCounter = 1?>
-			<?php $partCounter = 1?>
-			<?php $processCounter = 1?>
+			<?php $componentCounter = 1 ;?>
+			<?php $partCounter = 1 ; ?>
+			<?php $processCounter = 1 ;?>
 			<?php foreach ($formatDataSpecs as $key => $specLists) { ?>
 				<table class="layout">
 					<thead>
