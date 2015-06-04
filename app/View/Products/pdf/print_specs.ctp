@@ -110,9 +110,9 @@
 					<thead>
 						<?php
 
-					      	if($specLists['ProductSpecificationDetail']['model'] == 'Component'){
+							if($specLists['ProductSpecificationDetail']['model'] == 'Component'){
 
-					      		echo $this->element('Specs/Component', array('formatDataSpecs' => $formatDataSpecs[$key],'key' => $componentCounter));
+					      		echo $this->element('Specs/component', array('formatDataSpecs' => $formatDataSpecs[$key],'key' => $componentCounter));
 					      		$componentCounter++;
 					      	}
 					      	if($specLists['ProductSpecificationDetail']['model'] == 'Part'){
