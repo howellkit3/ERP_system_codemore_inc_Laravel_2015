@@ -692,7 +692,7 @@ class SettingsController extends AppController
 
         $categoryDataDropList = $this->ItemCategoryHolder->find('list',  array('order' => 'ItemCategoryHolder.id DESC'));
 
-        $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.id DESC'));
+        $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.id ASC'));
 
         //general item
          $this->GeneralItem->bind(array('ItemCategoryHolder', 'ItemTypeHolder', 'Supplier'));
