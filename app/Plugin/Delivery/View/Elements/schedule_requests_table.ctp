@@ -48,12 +48,12 @@
                                         </td>
 
                                         <td class="text-center">
-                                           <?php // echo $scheduleDataList['ClientOrderDeliverySchedule']['status']; ?>    
+                                           <?php echo "<span class='label label-default'>Waiting</span>"; ?>    
                                         </td>
 
                                         <td class="text-center">
 
-                                            <?php // foreach ($scheduleDataList['ClientOrderDeliverySchedule'] as $key => $layers): 
+                                           <?php 
 
                                                 echo $this->Html->link('<span class="fa-stack">
                                                                          <i class="fa fa-square fa-stack-2x"></i>
@@ -78,8 +78,6 @@
                                                                     )); 
                                                 ?>  
                                                     <br>
-                                              <?php //endforeach; ?>  
-
                                             <br>
                                              
                                         </td>

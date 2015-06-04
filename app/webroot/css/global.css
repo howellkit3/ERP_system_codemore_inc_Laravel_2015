@@ -155,6 +155,12 @@ text-align: center;
 
 .filter-block.pull-left.searchboxfieldcont {
     margin-left: 19px;
+
+}
+
+.filter-margin {
+    margin-right: 20px;
+    
 }
 
 .top-space{
@@ -331,4 +337,19 @@ body.dragging, body.dragging * {
   margin: auto;
   padding: 0;
   width: 100%;
+}
+
+.not-active {
+        pointer-events: none;
+        background-color: #5bc0de;
+        border-color: none;
+        cursor: not-allowed;
+        opacity: 0.65;
+        pointer-events: none;
+        border: none;
+}
+
+.fa-stack {
+  
+        width: 1.75em;
 }
