@@ -105,7 +105,7 @@
 			<?php $componentCounter = 1 ;?>
 			<?php $partCounter = 1 ; ?>
 			<?php $processCounter = 1 ;?>
-			<?php /*  foreach ($formatDataSpecs as $key => $specLists) { ?>
+			<?php foreach ($formatDataSpecs as $key => $specLists) { ?>
 				<table class="layout">
 					<thead>
 						<?php
@@ -130,7 +130,7 @@
 				      	?>
 			      	</thead>
 			    </table>
-			<?php } */ ?>
+			<?php } ?>
 		</div>
 	</div>
 </div>
