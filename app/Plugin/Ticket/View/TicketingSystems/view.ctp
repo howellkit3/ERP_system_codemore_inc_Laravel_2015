@@ -83,11 +83,11 @@
 								<div class="col-lg-5">
 									:&emsp;
 									<?php 
-										echo $specs['ProductSpecification']['size1']; 
+										echo !empty($specs['ProductSpecification']['size1']) ? $specs['ProductSpecification']['size1'] : '0'; 
 										echo " x ";
-										echo $specs['ProductSpecification']['size2'];
+										echo !empty($specs['ProductSpecification']['size1']) ? $specs['ProductSpecification']['size2'] : '0';
 										echo " x ";
-										echo $specs['ProductSpecification']['size3'];
+										echo !empty($specs['ProductSpecification']['size1']) ? $specs['ProductSpecification']['size3'] : '0';
 											
 									?>
 								</div>
