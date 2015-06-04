@@ -25,13 +25,13 @@ $(document).ready(function() {
 
     var max_fields      = 100; //maximum input boxes allowed
     var wrapper         = $("#sortable"); //Fields wrapper
-    var label_button      = $(".add_field_button"); //Add button ID
+    var component_button      = $(".add_field_button"); //Add button ID
     var part_button      = $(".add_part_button");
     var process_button      = $(".add_process_button");
   
     var x = 1; //initlal text box count
     
-    $(label_button).click(function(e){ //on add input button click
+    $(component_button).click(function(e){ //on add input button click
 
         var countername = parseInt($(this).attr('data'));
 
@@ -39,7 +39,7 @@ $(document).ready(function() {
         $(this).attr('data',parseInt(varCounter));
         var nameArray = $(this).parents('ul.sortable').find('li.ui-state-default').size();
         
-        var realName = "data[ProductSpecificationLabel]["+countername+"][name]";
+        var realName = "data[ProductSpecificationComponent]["+countername+"][name]";
         e.preventDefault();
 
         if(x < max_fields){ //max input box allowed
@@ -48,11 +48,11 @@ $(document).ready(function() {
             //call label.ctp
             $.ajax({ 
                 type: "GET", 
-                url: serverPath + "sales/products/label/"+varCounter+"/"+realName, 
+                url: serverPath + "sales/products/component/"+varCounter+"/"+realName, 
                 dataType: "html", 
-                success: function(labelDataField){ 
-                    console.log(labelDataField);
-                    $(wrapper).append(labelDataField); 
+                success: function(componentDataField){ 
+                    
+                    $(wrapper).append(componentDataField); 
                     $('.label'+varCounter).focus();
 
                 } 

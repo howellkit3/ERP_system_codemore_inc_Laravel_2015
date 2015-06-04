@@ -1,9 +1,9 @@
   <?php 
                         if(!empty($clientsOrder)){
 
-                          //  pr($clientsOrder); exit;
-
-                            foreach ($clientsOrder as $scheduleDataList): ?>
+                           // pr($clientsOrder); 
+?>
+                                <?php foreach ($clientsOrder as $scheduleDataList): ?>
 
                                 <tbody aria-relevant="all" aria-live="polite" role="alert">
 
@@ -48,36 +48,51 @@
                                         </td>
 
                                         <td class="text-center">
-                                           <?php echo "<span class='label label-default'>Waiting</span>"; ?>    
+
+                                       <?php    $Scheddate = $scheduleDataList['ClientOrderDeliverySchedule']['schedule'];
+                                                $Currentdate = date("Y-m-d H:i:s");
+
+                                                $Scheddate = str_replace('-', '', $Scheddate);
+                                                $Currentdate = str_replace('-', '', $Currentdate);   
+
+                                                  if (!empty($deliveryData[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']])) {   
+
+                                                            if(strtotime($Scheddate) < strtotime($Currentdate))
+                                                                {
+                                                                    echo "<span class='label label-warning'>Due</span>"; 
+                                                                }else{    
+
+                                                         if($deliveryData[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']] == 'Approved') { 
+                                                        
+                                                                  echo "<span class='label label-success'>Approved</span>";  
+
+                                                          
+                                                             }
+                                                         }
+                                                     }else{
+
+                                                                    echo "<span class='label label-default'>Waiting</span>";
+
+                                                 } ?>
+                                   
+                                       
                                         </td>
 
                                         <td class="text-center">
 
-                                           <?php 
+                                            <?php //pr( $scheduleDataList);
 
                                                 echo $this->Html->link('<span class="fa-stack">
                                                                          <i class="fa fa-square fa-stack-2x"></i>
                                                                       <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;
-                                                                          <span class ="post"><font size = "1px"> View </font></span>
+                                                                          <span class ="post"><font size = "1px">View</font></span>
                                                                           </span> ', array('controller' => 'Deliveries', 
                                                                                          'action' => 'view',
-                                                                         $scheduleDataList['ClientOrderDeliverySchedule']['uuid']),
+                                                                         $scheduleDataList['ClientOrderDeliverySchedule']['id'],$scheduleDataList['QuotationDetail']['quotation_id']),
                                                                           array('class' =>' table-link small-link-icon','escape' => false,'title'=>'Edit Information'
                                                                      )); 
-                                            ?>  
+                                            ?>     
 
-                                            <?php 
-                                                echo $this->Html->link('<span class="fa-stack">
-                                                                        <i class="fa fa-square fa-stack-2x"></i>
-                                                                         <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;
-                                                                         <span class ="post"><font size = "1px"> Edit </font></span>
-                                                                         </span> ', array('controller' =>'Deliveries', 
-                                                                                            'action' => 'edit',
-                                                                        $scheduleDataList['ClientOrderDeliverySchedule']['uuid']),
-                                                                         array('class' =>' table-link small-link-icon','escape' => false,'title'=>'Edit Information'
-                                                                    )); 
-                                                ?>  
-                                                    <br>
                                             <br>
                                              
                                         </td>

@@ -76,66 +76,66 @@ $(function(){
 
 
 
-$('#CorrugatedPaperLayers').blur(function(){
-	$('.corrugatedPaper-layers').remove();
-	var option = $(this).val();
-	var selected = $(this).val();
+// $('#CorrugatedPaperLayers').blur(function(){
+// 	$('.corrugatedPaper-layers').remove();
+// 	var option = $(this).val();
+// 	var selected = $(this).val();
 
-	//alert ();
+// 	//alert ();
 
-	$inputs = '';
-	var count = 1;
-	for (i = 0; i < selected; i++) { 
+// 	$inputs = '';
+// 	var count = 1;
+// 	for (i = 0; i < selected; i++) { 
 
-		if (count > 1){		
+// 		if (count > 1){		
 
-			$inputs += '<div class="form-group corrugatedPaper-layers"><label class="col-lg-2 control-label"></label>';
-			$inputs += '<div class="col-lg-8 "><hr style="color:#99CC99"></div></div>';
+// 			$inputs += '<div class="form-group corrugatedPaper-layers"><label class="col-lg-2 control-label"></label>';
+// 			$inputs += '<div class="col-lg-8 "><hr style="color:#99CC99"></div></div>';
 
-		}
+// 		}
 
-		$inputs += '<div class="form-group corrugatedPaper-layers"><label class="col-lg-3 control-label"><span style="color:red">*</span>Substrate  '+count+'</label>';
-		$inputs += '<div class="col-lg-8"><input type="hidden" maxlength="120"  class="form-control layer" name="data[ItemGroupLayer][no][]" value="' + i + '"></div>';
-		$inputs += '<div class="col-lg-7"><input type="text" maxlength="120" required = "required" placeholder = "Substrate name" class="form-control layer" name="data[ItemGroupLayer][substrate][]"></div></div>';
+// 		$inputs += '<div class="form-group corrugatedPaper-layers"><label class="col-lg-3 control-label"><span style="color:red">*</span>Substrate  '+count+'</label>';
+// 		$inputs += '<div class="col-lg-8"><input type="hidden" maxlength="120"  class="form-control layer" name="data[ItemGroupLayer][no][]" value="' + i + '"></div>';
+// 		$inputs += '<div class="col-lg-7"><input type="text" maxlength="120" required = "required" placeholder = "Substrate name" class="form-control layer" name="data[ItemGroupLayer][substrate][]"></div></div>';
 
-	//	$inputs += '<div class="col-lg-8"><input type="hidden" maxlength="120"  class="form-control layer" name="data[ItemGroupLayer][no][]" value="' + i + '"></div>';
-		$inputs += '<div class="form-group corrugatedPaper-layers"><label class="col-lg-3 control-label"><span style="color:red">*</span>Flute  '+count+'</label>';
-		$inputs += '<div class="col-lg-7"><input type="text" maxlength="120" required = "required" placeholder = "Flute" class="form-control layer" name="data[ItemGroupLayer][flute][]"></div></div>';
+// 	//	$inputs += '<div class="col-lg-8"><input type="hidden" maxlength="120"  class="form-control layer" name="data[ItemGroupLayer][no][]" value="' + i + '"></div>';
+// 		$inputs += '<div class="form-group corrugatedPaper-layers"><label class="col-lg-3 control-label"><span style="color:red">*</span>Flute  '+count+'</label>';
+// 		$inputs += '<div class="col-lg-7"><input type="text" maxlength="120" required = "required" placeholder = "Flute" class="form-control layer" name="data[ItemGroupLayer][flute][]"></div></div>';
 			
-		count++;
-	}
+// 		count++;
+// 	}
 
-	$(this).parents('.form-group').after($inputs);
-    return false;
-});
+// 	$(this).parents('.form-group').after($inputs);
+//     return false;
+// });
 
-$('body').on('click','.remove-layers',function(){
+// $('body').on('click','.remove-layers',function(){
 
-		var parent = $(this).parent().parent().parent().parent();
+// 		var parent = $(this).parent().parent().parent().parent();
 
-		//console.log(parent.attr('class'));
+// 		//console.log(parent.attr('class'));
 		
-		parent.find('.remove-field').val('true');
+// 		parent.find('.remove-field').val('true');
 
-		if (parent.find('.remove-field').length > 1) {
+// 		if (parent.find('.remove-field').length > 1) {
 
-			alert('i entered if');
-				//parent.attr('style','display:none');
-				parent.remove();
-		} else {
+// 			alert('i entered if');
+// 				//parent.attr('style','display:none');
+// 				parent.remove();
+// 		} else {
 
-			//alert('i entered else');
-			parent.remove();
-		}
+// 			//alert('i entered else');
+// 			parent.remove();
+// 		}
 		
-		var layer = 1;
+// 		var layer = 1;
 
-		$('.substrate-layers:visible').each(function(){
+// 		$('.substrate-layers:visible').each(function(){
 
-				$(this).find('.control-label').first().html('<span style="color:red">*</span>Substrate '+layer++);
-		});
+// 				$(this).find('.control-label').first().html('<span style="color:red">*</span>Substrate '+layer++);
+// 		});
 
-		$('#CorrugatedPaperLayers').val($('.substrate-layers:visible').length);
-});
+// 		$('#CorrugatedPaperLayers').val($('.substrate-layers:visible').length);
+// });
 
 });

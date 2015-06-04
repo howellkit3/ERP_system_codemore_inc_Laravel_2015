@@ -19,11 +19,11 @@ class ProductSpecificationDetail extends AppModel {
 					'foreignKey' => 'product_id',
 					'dependent' => true
 				),
-				'ProductSpecificationLabel' => array(
-					'className' => 'Sales.ProductSpecificationLabel',
+				'ProductSpecificationComponent' => array(
+					'className' => 'Sales.ProductSpecificationComponent',
 					'foreignKey' => false,
 					'conditions' => array(
-						'ProductSpecificationLabel.product_specification_id = ProductSpecificationDetail.id'),	
+						'ProductSpecificationComponent.product_specification_id = ProductSpecificationDetail.id'),	
 					'dependent' => true
 				),
 				'ProductSpecificationPart' => array(
@@ -77,7 +77,7 @@ class ProductSpecificationDetail extends AppModel {
 
 		$dataArray = array();
 
-		$this->bind(array('Sales.ProductSpecificationLabel','Sales.ProductSpecificationPart','Sales.ProductSpecificationProcess'));
+		$this->bind(array('Sales.ProductSpecificationComponent','Sales.ProductSpecificationPart','Sales.ProductSpecificationProcess'));
 		// $this->ProductSpecificationProcess->bind(array('ProductSpecificationProcessHolder'));
 
 		$processHolder = ClassRegistry::init('Sales.ProductSpecificationProcessHolder');
@@ -87,8 +87,8 @@ class ProductSpecificationDetail extends AppModel {
 			$dataArray[$key] = $list;
 
 			switch ($list['ProductSpecificationDetail']['model']) {
-				case 'Label':
-					$model = 'ProductSpecificationLabel';
+				case 'Component':
+					$model = 'ProductSpecificationComponent';
 					break;
 				case 'Part':
 					$model = 'ProductSpecificationPart';

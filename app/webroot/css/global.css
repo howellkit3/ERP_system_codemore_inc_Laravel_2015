@@ -57,6 +57,10 @@ hr {
    position: relative;
    bottom: 10px;
 } 
+.smallBtn{ 
+   position: relative;
+   bottom: 10px;
+} 
 .boxed {
     border: 1px solid black ;
     width: 470px;
@@ -155,12 +159,6 @@ text-align: center;
 
 .filter-block.pull-left.searchboxfieldcont {
     margin-left: 19px;
-
-}
-
-.filter-margin {
-    margin-right: 20px;
-    
 }
 
 .top-space{
@@ -339,6 +337,17 @@ body.dragging, body.dragging * {
   width: 100%;
 }
 
+.marginDelivery{
+  margin-right: 20px;
+}
+
+.indent {
+  text-indent: 45px;
+}
+
+.indent1 {
+  text-indent: 50px;
+}
 .not-active {
         pointer-events: none;
         background-color: #5bc0de;
@@ -348,8 +357,6 @@ body.dragging, body.dragging * {
         pointer-events: none;
         border: none;
 }
-
 .fa-stack {
-  
         width: 1.75em;
 }

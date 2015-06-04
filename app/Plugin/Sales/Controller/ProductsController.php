@@ -629,10 +629,10 @@ class ProductsController extends SalesAppController {
 		echo json_encode($checkData);
     }
 
-    public function label($varCounter,$realName){
+    public function component($varCounter,$realName){
 
     	$this->set(compact('varCounter','realName'));
-		$this->render('label');
+		$this->render('component');
 
     }
 
@@ -679,7 +679,7 @@ class ProductsController extends SalesAppController {
 
         $this->loadModel('Sales.ProductSpecificationDetail');
 
-        $this->loadModel('Sales.ProductSpecificationLabel');
+        $this->loadModel('Sales.ProductSpecificationComponent');
 
 		$this->loadModel('Sales.Product');
 
@@ -733,7 +733,7 @@ class ProductsController extends SalesAppController {
 		$this->set(compact('subProcess','processData','specs','formatDataSpecs','unitData','product','productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData', 'companyData'));
 
 		if(!empty($formatDataSpecs)){
-			$this->render('specification_edit');
+			$this->render('specification_view');
 		}
 
     }
@@ -841,7 +841,7 @@ class ProductsController extends SalesAppController {
 
     	$this->loadModel('Sales.ProductSpecificationDetail');
 
-    	$this->loadModel('Sales.ProductSpecificationLabel');
+    	$this->loadModel('Sales.ProductSpecificationComponent');
 
     	$this->loadModel('Sales.ProductSpecificationPart');
 
@@ -853,14 +853,14 @@ class ProductsController extends SalesAppController {
 
     	$this->Product->bind(array('Sales.ProductSpecificationDetail','Sales.ProductSpecification'));
 
-    	$this->ProductSpecificationDetail->bind(array('Sales.ProductSpecificationLabel','Sales.ProductSpecificationPart','Sales.ProductSpecificationProcess'));
+    	$this->ProductSpecificationDetail->bind(array('Sales.ProductSpecificationComponent','Sales.ProductSpecificationPart','Sales.ProductSpecificationProcess'));
 		
 		if (!empty($this->request->data)) {
 			
 			if(!empty($this->request->data['IdHolder'])){
 				
 				$this->Product->ProductSpecification->delete($this->request->data['ProductSpecification']['id']);
-				$this->ProductSpecificationLabel->deleteData($this->request->data['IdHolder']);
+				$this->ProductSpecificationComponent->deleteData($this->request->data['IdHolder']);
 				$this->ProductSpecificationPart->deleteData($this->request->data['IdHolder']);
 				$this->ProductSpecificationProcess->deleteData($this->request->data['IdHolder']);
 				$this->ProductSpecificationProcessHolder->deleteData($this->request->data['IdHolder']);
@@ -869,13 +869,13 @@ class ProductsController extends SalesAppController {
 			
 			$specId = $this->Product->ProductSpecification->saveSpec($this->request->data,$userData['User']['id']);
 			
-			$labelArray = array();
+			$componentArray = array();
 			$partArray = array();
 			$processArray = array();
 			foreach ($this->request->data['ProductSpecificationDetail'] as $key => $value) {
 				
-				if($value == 'Label'){
-					array_push($labelArray, $key);
+				if($value == 'Component'){
+					array_push($componentArray, $key);
 				}
 				if($value == 'Part'){
 					array_push($partArray, $key);
@@ -885,8 +885,8 @@ class ProductsController extends SalesAppController {
 				}
 			}
 
-			foreach ($this->request->data['ProductSpecificationLabel'] as $key => $value) {
-				$this->request->data['ProductSpecificationLabel'][$key]['order'] = $labelArray[$key];
+			foreach ($this->request->data['ProductSpecificationComponent'] as $key => $value) {
+				$this->request->data['ProductSpecificationComponent'][$key]['order'] = $componentArray[$key];
 			}
 
 			foreach ($this->request->data['ProductSpecificationPart'] as $key => $value) {
@@ -899,8 +899,8 @@ class ProductsController extends SalesAppController {
 
 			$getIds = [];
 
-			$thisLabelIds = $this->ProductSpecificationLabel->saveLabel($this->request->data,$userData['User']['id'],$specId);
-			$getIds = array_merge($getIds,$thisLabelIds);
+			$thisComponentIds = $this->ProductSpecificationComponent->saveComponent($this->request->data,$userData['User']['id'],$specId);
+			$getIds = array_merge($getIds,$thisComponentIds);
 			
 			$thisPartIds = $this->ProductSpecificationPart->savePart($this->request->data,$userData['User']['id'],$specId);
 			$getIds = array_merge($getIds,$thisPartIds);
@@ -1013,6 +1013,75 @@ class ProductsController extends SalesAppController {
         }
         
         exit();
+    }
+
+    public function specification_edit($productId = null ){
+
+    	$this->loadModel('ItemCategoryHolder');
+
+        $this->loadModel('ItemTypeHolder');
+
+        $this->loadModel('Company');
+
+        $this->loadModel('Sales.ProductSpecificationDetail');
+
+        $this->loadModel('Sales.ProductSpecificationComponent');
+
+		$this->loadModel('Sales.Product');
+
+		$this->loadModel('Sales.ProductSpecification');
+		
+		$this->loadModel('Unit');
+
+		$this->loadModel('SubProcess');
+
+		$subProcess = $this->SubProcess->find('list',
+											array('fields' => 
+												array('SubProcess.id',
+												 	'SubProcess.name'
+												 )
+												));
+		
+		$processData = $this->Process->find('list',
+											array('fields' => 
+												array('Process.id',
+												 	'Process.name'
+												 )
+												));
+
+		// $this->
+		//set to cache in first load
+		$unitData = Cache::read('unitData');
+		
+		if (!$unitData) {
+			
+			$unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
+															'order' => array('Unit.unit' => 'ASC')
+															));
+
+            Cache::write('unitData', $unitData);
+        }
+       
+		$this->Product->recursive = 1;
+
+		$product = $this->request->data =  $this->Product->findById($productId);
+		
+		$specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productId)));
+		
+		//find if product has specs
+		$formatDataSpecs = $this->ProductSpecificationDetail->findData($product['Product']['uuid']);
+
+		$this->request->data['Company'] = $this->Company->read(null,$product['Product']['company_id'])['Company'];
+
+		$productData = $this->Product->find('all',array(
+    		'order' => array('Product.id DESC')));	
+
+		$this->set(compact('subProcess','processData','specs','formatDataSpecs','unitData','product','productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData', 'companyData'));
+
+		if(!empty($formatDataSpecs)){
+			$this->render('specification_edit');
+		}
+
     }
 
 }

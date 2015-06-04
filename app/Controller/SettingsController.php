@@ -166,7 +166,6 @@ class SettingsController extends AppController
             }
     }
 
-
     public function category_index() {
 
     }
@@ -1165,11 +1164,17 @@ class SettingsController extends AppController
 
         $compoundData = $this->CompoundSubstrate->findById($id);
 
+        $compoundLayer = $this->CompoundSubstrate->ItemGroupLayer->find('all',array(
+                                    'conditions' => array('AND' => array(
+                                        array('ItemGroupLayer.foreign_key' => $compoundData['CompoundSubstrate']['id']),
+                                        array('ItemGroupLayer.model' => 'CompoundSubstrate')
+                                        ))));
+       
             if (!$this->request->data) {
                 $this->request->data = $compoundData;
             }
 
-            $this->set(compact( 'categoryData' , 'typeData', 'supplierData','compoundData' ));
+            $this->set(compact( 'categoryData' , 'typeData', 'supplierData','compoundLayer' ));
     }
 
 
@@ -1339,11 +1344,17 @@ class SettingsController extends AppController
 
         $corrugatedData = $this->CorrugatedPaper->findById($id);
 
+        $corrugatedLayer = $this->CorrugatedPaper->ItemGroupLayer->find('all',array(
+                                    'conditions' => array('AND' => array(
+                                        array('ItemGroupLayer.foreign_key' => $corrugatedData['CorrugatedPaper']['id']),
+                                        array('ItemGroupLayer.model' => 'CorrugatedPaper')
+                                        ))));
+       
         if (!$this->request->data) {
             $this->request->data = $corrugatedData;
         }
 
-        $this->set(compact( 'categoryData','typeData' , 'supplierData','corrugatedData'));
+        $this->set(compact( 'categoryData','typeData' , 'supplierData','corrugatedLayer'));
     }
 
     public function process() {

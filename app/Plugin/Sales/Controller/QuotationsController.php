@@ -23,7 +23,7 @@ class QuotationsController extends SalesAppController {
 
         parent::beforeFilter();
 
-        $this->Auth->allow('add','index');
+        $this->Auth->allow('add','index','search_quotation');
 
        	$this->loadModel('User');
         $userData = $this->User->read(null,$this->Session->read('Auth.User.id'));//$this->Session->read('Auth');
@@ -53,7 +53,7 @@ class QuotationsController extends SalesAppController {
 															'RolesPermission.role_id' => $userData['User']['role_id'])
 													));
 
-		$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail','ProductDetail', 'Product'));
+		$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail','ProductDetail', 'Product','Company'));
 
 		$limit = 10;
 
@@ -70,7 +70,8 @@ class QuotationsController extends SalesAppController {
             	'Quotation.validity',
             	'Quotation.status',
             	'Quotation.company_id',
-            	'Product.name'
+            	'Product.name',
+            	'Company.company_name'
 
             ),
             'order' => 'Quotation.id DESC',
@@ -1154,5 +1155,96 @@ class QuotationsController extends SalesAppController {
 		} 
 		//end// this method is for the permission of all user.. bienskie//
 
+    }
+
+    public function search_quotation($hint = null){
+    	
+    	
+    	$this->loadModel('Sales.Company');
+
+		$this->loadModel('RolesPermission');
+
+		$this->loadModel('Permission');
+
+		$this->loadModel('Role');
+
+		$this->loadModel('User');
+
+		$userData = $this->User->read(null,$this->Session->read('Auth.User.id'));
+
+		// $this->RolesPermission->bind(array('Role', 'Permission'));
+		
+		$rolesPermissionData = $this->RolesPermission->find('list', array(
+														'fields' => array('RolesPermission.id', 'RolesPermission.permission_id'),
+														'conditions' => array( 
+															'RolesPermission.role_id' => $userData['User']['role_id'])
+													));
+
+		$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail','ProductDetail', 'Product','Company'));
+
+		$limit = 10;
+
+		$conditions = array();
+
+		$this->paginate = array(
+            'conditions' =>  array (
+			        // 'OR' => array(
+			            'Quotation.uuid LIKE' => '%' . $hint . '%'
+			            // 'Company.company_name LIKE' => '%' . $hint . '%',
+			            // 'Product.name LIKE' => '%' . $hint . '%',
+			        //)
+			    ),
+            'limit' => $limit,
+            'fields' => array(
+            	'Quotation.id',
+            	'Quotation.uuid', 
+            	'Quotation.name',
+            	'Quotation.inquiry_id',
+            	'Quotation.validity',
+            	'Quotation.status',
+            	'Quotation.company_id',
+            	'Product.name',
+            	'Company.company_name'
+            ),
+            'order' => 'Quotation.id DESC',
+            'group' => 'Quotation.id'
+        );
+
+        $quotationData = $this->paginate('Quotation');
+        
+		$this->Company->bind(array('Inquiry'));
+
+		//set to cache in first load
+		$companyData = Cache::read('companyData');
+		
+		//if (!$companyData) {
+			$companyData = $this->Company->find('list', array(
+     											'fields' => array( 
+     												'id','company_name')
+     										));
+
+            Cache::write('companyData', $companyData);
+       // }
+
+        //set to cache in first load
+		$inquiryId = Cache::read('inquiryId');
+
+		//if (!$inquiryId) {
+			$inquiryId = $this->Company->Inquiry->find('list', array(
+     													'fields' => array(
+     														'id','company_id')
+     													));
+
+            Cache::write('inquiryId', $inquiryId);
+       // }
+		
+		$this->set(compact('companyData','quotationData','inquiryId','salesStatus','rolesPermissionData'));
+		
+		
+		if ($hint == ' ') {
+    		$this->render('index');
+    	}else{
+    		$this->render('search_quotation');
+    	}
     }
 }

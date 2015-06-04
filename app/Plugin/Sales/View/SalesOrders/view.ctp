@@ -16,15 +16,49 @@
 					<h1 class="pull-left">
 						Clients Order View
 					</h1>
-					<?php 
-                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'sales_orders', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
-                    ?>
+					<div class="filter-block pull-right">
+						<?php 
+	                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'sales_orders', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+	                        
+	                        if (!empty($checkSpec)) {
+	                        	echo $this->Html->link('<i class="fa fa-eye fa-lg"></i> View Spec ', array('controller' => 'create_order', 'action' => 'view_specs',$quotationData['QuotationDetail']['product_id'],1,$clientOrderData['ClientOrder']['id']),array('class' =>'btn btn-primary pull-right','escape' => false));
+	                        }
+	                    ?>
+                    </div>
 				</header>
-
 			</div>
 		</div>
 
-		<?php //pr($clientOrderData); exit; ?>
+		<?php  if (empty($checkSpec)) { ?>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="list-group ">
+
+						<div class="list-group-item ">
+
+							<div class="alert alert-warning">
+								<i class="fa fa-warning fa-fw fa-lg"></i>
+								<strong>Warning!</strong> This product has no specification yet.
+							</div>
+
+							<p class="list-group-item-text">Do you want to create specification for this product?</p><br>
+							
+							<?php 
+								echo $this->Html->link('<i class="fa fa-times-circle fa-fw fa-lg"></i> No ', array('controller' => 'sales_orders', 'action' => 'index'),array('class' =>'btn btn-primary','escape' => false));
+
+								echo " ";
+								
+							 	echo $this->Html->link('<i class="fa fa-check-circle fa-fw fa-lg"></i> Yes ', array('controller' => 'create_order', 'action' => 'create_specs',$quotationData['QuotationDetail']['product_id'],$clientOrderData['ClientOrder']['id']),array('class' =>'btn btn-primary','escape' => false));
+							 	
+							?>
+							<br><br>
+							<p class="list-group-item-text">Note: No Job Ticket will be released if products have no Specification.</p><br>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		<?php } ?>
 
 		<div class="row">
 			<div class="col-lg-12">

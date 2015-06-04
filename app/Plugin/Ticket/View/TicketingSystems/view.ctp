@@ -2,399 +2,159 @@
 <?php $this->Html->addCrumb('View', array('controller' => 'ticketing_systems', 'action' => 'view')); ?>
 
 <div class="row">
-	<div class="col-lg-12">
-		
-		<section id="cd-timeline" class="cd-container">
-			<div class="cd-timeline-block">
-				<div class="cd-timeline-img cd-picture">
-					<i class="glyphicon glyphicon-compressed"></i>
-				</div>
-	
-				<div class="cd-timeline-content">
-					<h2>Prepress</h2>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut.</p>
-					<div class="clearfix">
+	<div class="col-lg-12">	
 
-						<?php
-							//if( ($ticketData['JobTicket']['status'] == 0) && ($ticketData['JobTicket']['job_ticket_id'] == 1)){
-						?>
+		<div class="row">
+			<div class="col-lg-12">
+				<header class="main-box-header clearfix">
+					
+					<h1 class="pull-left">
+						Job Ticket View
+					</h1>
+					<div class="filter-block pull-right">
+						<?php 
+	                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'ticketing_systems', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
 
-							<span class="label label-default label-large">Pending</span><br><br>
-							<hr></hr>
-								<?php
-                       				echo $this->Html->link('Accept Job', array('controller' => 'ticketing_systems', 
-                       							'action' => 'updatePendingStatus', 
-                       							$ticketid),array('class' =>'btn btn-info',
-                       							'escape' => false));
-                       			?>
+	                        echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array('controller' => 'ticketing_systems', 'action' => 'print_ticket',$productData['Product']['uuid'],$ticketData['JobTicket']['uuid'],$clientOrderId),array('class' =>'btn btn-primary pull-right','escape' => false,'target' => '_blank'));
+	                    ?>
+                    </div>
+				</header>
+			</div>
+		</div>
 
-                       			<?php
-                       				echo $this->Html->link('Finished Job', array('controller' => 'ticketing_systems', 
-                       								'action' => 'finishedJob',
-                       								$ticketid),array('class' =>'btn btn-info',
-                       								'escape' => false));
-								
-							////}
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="main-box">
+					<center>
+						<header class="main-box-header clearfix"><?php //echo pr($contactInfo);die; ?>
+							<h1>Kou Fu Color Printing</h1>
+							<h5>Lot 4-5, Blk 3 Phase 2, Mountview Industrial Complex, Bancal, Carmona, Cavite</h5>
+							<h6>Tel#: (046) 972-1111 to 13 Fax#: (046) 972-0120</h6><br>
+							<h2>Main Job Ticket</h2><br>
+						</header>
+					</center>
+					
+					<div class="main-box-body clearfix">
+						<form class="form-horizontal" role="form">
+							
+							<div class="form-group">
+								<div class="col-lg-2"></div>
+								<div class="col-lg-6"></div>
+								<div class="col-lg-4">&emsp;&emsp;&nbsp;&nbsp;&nbsp;
+									Date : <?php echo (new \DateTime())->format('l, F d, Y '); ?>
+								</div>
+							</div>
 
-							//elseif ( ($ticketData['JobTicket']['status'] == 1) && ($ticketData['JobTicket']['job_ticket_id'] == 1)){
-							?>
+							<div class="form-group">
+								<div class="col-lg-2">
+									&nbsp;&nbsp;Customer
+								</div>
+								<div class="col-lg-5">
+									:&emsp;
+									<?php 
+										echo !empty($companyData[$productData['Product']['company_id']]) ? ucfirst($companyData[$productData['Product']['company_id']]) : '' ;
 
-								<span class="label label-default label-large">Pending</span>
-								<span class="label label-warning label-large">On Progress</span><br>
-								<hr></hr>
-								
-								<?php
-                       				echo $this->Html->link('Finished Job', array('controller' => 'ticketing_systems', 
-                       							 'action' => 'finishedJob',
-                       							  $ticketid),array('class' =>'btn btn-info',
-                       							  'escape' => false));
-                   			// }
-                   			// else{
+									?>
+								</div>
+								<div class="col-lg-4">&emsp;&emsp;&nbsp;&nbsp;
+									Schedule No. : <?php echo $ticketData['JobTicket']['uuid']; ?>
+								</div>
+							</div>
 
-                   			 	?>
-                   			 		<span class="label label-default label-large">Pending</span>
-									<span class="label label-warning label-large">On Progress</span>
-                   			 		<span class="label label-success label-large">Complete</span><br><br>
+							<div class="form-group">
+								<div class="col-lg-2">
+									&nbsp;&nbsp;Item
+								</div>
+								<div class="col-lg-6">
+									:&emsp;
+									<?php 
+										echo !empty($productData['Product']['name']) ? ucfirst($productData['Product']['name']) : '' ;
+									?>
+								</div>
+								<div class="col-lg-4">&emsp;&emsp;&emsp;&emsp;
+									 to follow
+								</div>
+							</div>
 
-                   			<?php
-                   			 //}
-                   			?>
-						<div class="col-md-1 col-sm-6 col-xs-6 pricing-package pull-right">
-							<!-- <div class="pricing-star">Task<br>Done</div> -->
+							<div class="form-group">
+								<div class="col-lg-2">
+									&nbsp;&nbsp;Item size
+								</div>
+								<div class="col-lg-5">
+									:&emsp;
+									<?php 
+										echo $specs['ProductSpecification']['size1']; 
+										echo " x ";
+										echo $specs['ProductSpecification']['size2'];
+										echo " x ";
+										echo $specs['ProductSpecification']['size2'];
+											
+									?>
+								</div>
+								<div class="col-lg-4">&emsp;&emsp;&nbsp;&nbsp;
+									Delivery Date : <?php echo date('M d, Y', strtotime($delData['ClientOrderDeliverySchedule'][0]['schedule'])); ?>
+								</div>
+							</div>
 
-						<!-- 	<div class="package-header yellow-bg">
-								<a class="btn yellow-bg pull-right"><font color="white">Finished</font></a>
-							</div> -->
-						</div>
-						
+							<div class="form-group">
+								<div class="col-lg-2">
+									&nbsp;&nbsp;PO Quantity 
+								</div>
+								<div class="col-lg-5">
+									:&emsp;
+									
+										<?php 
+											echo $specs['ProductSpecification']['quantity']; 
+											echo " ";
+											echo $unitData[$specs['ProductSpecification']['quantity_unit_id']];
+											
+										?>
+									
+								</div>
+								<div class="col-lg-4">&emsp;&emsp;
+									Stock Quantity : <?php //echo date('M d, Y', strtotime($delData['ClientOrderDeliverySchedule'][0]['schedule'])); ?>
+								</div>
+							</div>
+
+							<hr>
+
+							<?php $componentCounter = 1?>
+							<?php $partCounter = 1?>
+							<?php $processCounter = 1?>
+							<div class="table-responsive">
+								<table class="table table-bordered">
+									<thead>
+										<?php foreach ($formatDataSpecs as $key => $specLists) { ?>
+							
+											<?php
+
+										      	if($specLists['ProductSpecificationDetail']['model'] == 'Component'){
+
+										      		echo $this->element('Specs/component', array('formatDataSpecs' => $formatDataSpecs[$key],'key' => $componentCounter));
+										      		$componentCounter++;
+										      	}
+										      	if($specLists['ProductSpecificationDetail']['model'] == 'Part'){
+										      		
+										      		echo $this->element('Specs/part', array('formatDataSpecs' => $formatDataSpecs[$key],'key' => $partCounter));
+										      		$partCounter++;
+										      		
+										      	}
+										      	if($specLists['ProductSpecificationDetail']['model'] == 'Process'){
+										      		
+										      		echo $this->element('Specs/process', array('formatDataSpecs' => $formatDataSpecs[$key],'key' => $processCounter));
+										      		$processCounter++;
+
+										      	}
+									      	?>
+							      	
+										<?php } ?>
+									</thead>
+							    </table>
+						   	</div> 
+						</form>
 					</div>
-					<span class="cd-date">11:59</span>
 				</div>
 			</div>
-	
-			<div class="cd-timeline-block">
-				<div class="cd-timeline-img cd-movie">
-					<i class="fa fa-video-camera fa-2x"></i>
-				</div>
-	
-				<div class="cd-timeline-content">
-					<h2>Plate Making</h2>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde?</p>
-					<div class="clearfix">
-						<?php
-							//if($ticketData['JobTicket']['job_ticket_id'] == 1){
-						?>
-								<span class="label label-default label-large">Waiting</span><br><br>
-							<?php
-
-							//}
-							//else{
-
-							//	if( ($ticketData['JobTicket']['status'] == 0) && ($ticketData['JobTicket']['job_ticket_id'] == 2)){
-						?>
-
-							<span class="label label-default label-large">Pending</span><br><br>
-							<hr></hr>
-								<?php
-                       				echo $this->Html->link('Accept Job', array('controller' => 'ticketing_systems', 
-                       							'action' => 'updatePendingStatus', 
-                       							$ticketid),array('class' =>'btn btn-info',
-                       							'escape' => false));
-                       			?>
-
-                       			<?php
-                       				
-								
-							//}
-
-							//elseif ( ($ticketData['JobTicket']['status'] == 1) && ($ticketData['JobTicket']['job_ticket_id'] == 2)){
-							?>
-
-								<span class="label label-default label-large">Pending</span>
-								<span class="label label-warning label-large">On Progress</span><br>
-								<hr></hr>
-								
-								<?php
-                       				echo $this->Html->link('Finished Job', array('controller' => 'ticketing_systems', 
-                       							 'action' => 'finishedJob',
-                       							  $ticketid),array('class' =>'btn btn-info',
-                       							  'escape' => false));
-                   			 //}
-                   			 //else{
-
-                   			 	?>
-                   			 		<span class="label label-default label-large">Pending</span>
-									<span class="label label-warning label-large">On Progress</span>
-                   			 		<span class="label label-success label-large">Complete</span><br><br>
-
-                   			<?php
-                   				 //}
-                   			//}
-                   			?>	
-					</div>
-					<span class="cd-date">15:40</span>
-				</div>
-			</div>
-	
-			<div class="cd-timeline-block">
-				<div class="cd-timeline-img cd-picture">
-					<i class="glyphicon glyphicon-retweet"></i>
-				</div>
-	
-				<div class="cd-timeline-content">
-					<h2>RM Requisition</h2>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, obcaecati, quisquam id molestias eaque asperiores voluptatibus cupiditate error assumenda delectus odit similique earum voluptatem doloremque dolorem ipsam quae rerum quis. Odit, itaque, deserunt corporis vero ipsum nisi eius odio natus ullam provident pariatur temporibus quia eos repellat consequuntur perferendis enim amet quae quasi repudiandae sed quod veniam dolore possimus rem voluptatum eveniet eligendi quis fugiat aliquam sunt similique aut adipisci.</p>
-					<div class="clearfix">
-						<?php
-							//if(($ticketData['JobTicket']['job_ticket_id'] == 1) || ($ticketData['JobTicket']['job_ticket_id'] == 2)){
-						?>
-								<span class="label label-default label-large">Waiting</span><br><br>
-						<?php
-
-							//}
-							//else{
-
-							//		if( ($ticketData['JobTicket']['status'] == 0) && ($ticketData['JobTicket']['job_ticket_id'] == 3)){
-						?>
-
-							<span class="label label-default label-large">Pending</span><br><br>
-							<hr></hr>
-								<?php
-                       				echo $this->Html->link('Accept Job', array('controller' => 'ticketing_systems', 
-                       							'action' => 'updatePendingStatus', 
-                       							$ticketid),array('class' =>'btn btn-info',
-                       							'escape' => false));
-                       			?>
-
-                       			<?php
-                       				
-								
-							//}
-
-							//elseif ( ($ticketData['JobTicket']['status'] == 1) && ($ticketData['JobTicket']['job_ticket_id'] == 3)){
-							?>
-
-								<span class="label label-default label-large">Pending</span>
-								<span class="label label-warning label-large">On Progress</span><br>
-								<hr></hr>
-								
-								<?php
-                       				echo $this->Html->link('Finished Job', array('controller' => 'ticketing_systems', 
-                       							 'action' => 'finishedJob',
-                       							  $ticketid),array('class' =>'btn btn-info',
-                       							  'escape' => false));
-                   			// }
-                   			// else{
-
-                   			 	?>
-                   			 		<span class="label label-default label-large">Pending</span>
-									<span class="label label-warning label-large">On Progress</span>
-                   			 		<span class="label label-success label-large">Complete</span><br><br>
-
-                   			<?php
-                   			//	 }
-                   			//}
-                   		?>	
-					</div>
-					<span class="cd-date">18:12</span>
-				</div>
-			</div>
-	
-			<div class="cd-timeline-block">
-				<div class="cd-timeline-img cd-location">
-					<i class="fa fa-sign-in fa-2x"></i>
-				</div>
-	
-				<div class="cd-timeline-content">
-					<h2>Production</h2>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut.</p>
-					<div class="clearfix">
-
-						<?php
-							//if(($ticketData['JobTicket']['job_ticket_id'] == 1) || ($ticketData['JobTicket']['job_ticket_id'] == 2) || ($ticketData['Ticket']['job_ticket_id'] == 3)){
-						?>
-								<span class="label label-default label-large">Waiting</span><br><br>
-						<?php
-
-							//}
-							//else{
-
-							//		if( ($ticketData['JobTicket']['status'] == 0) && ($ticketData['JobTicket']['job_ticket_id'] == 4)){
-						?>
-
-							<span class="label label-default label-large">Pending</span><br><br>
-							<hr></hr>
-								<?php
-                       				echo $this->Html->link('Accept Job', array('controller' => 'ticketing_systems', 
-                       							'action' => 'updatePendingStatus', 
-                       							$ticketid),array('class' =>'btn btn-info',
-                       							'escape' => false));
-                       			?>
-
-                       			<?php
-                       				
-								
-							//}
-
-							//elseif ( ($ticketData['JobTicket']['status'] == 1) && ($ticketData['JobTicket']['job_ticket_id'] == 4)){
-							?>
-
-								<span class="label label-default label-large">Pending</span>
-								<span class="label label-warning label-large">On Progress</span><br>
-								<hr></hr>
-								
-								<?php
-                       				echo $this->Html->link('Finished Job', array('controller' => 'ticketing_systems', 
-                       							 'action' => 'finishedJob',
-                       							  $ticketid),array('class' =>'btn btn-info',
-                       							  'escape' => false));
-                   			 //}
-                   			// else{
-
-                   			 	?>
-                   			 		<span class="label label-default label-large">Pending</span>
-									<span class="label label-warning label-large">On Progress</span>
-                   			 		<span class="label label-success label-large">Complete</span><br><br>
-
-                   			<?php
-                   				 //}
-                   			//}
-                   		?>	
-					</div>
-					<span class="cd-date">20:48</span>
-				</div>
-			</div>
-	
-			<div class="cd-timeline-block">
-				<div class="cd-timeline-img cd-location">
-					<i class="fa fa-trophy fa-2x"></i>
-				</div>
-	
-				<div class="cd-timeline-content">
-					<h2>Finished Goods</h2>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum.</p>
-					<div class="clearfix">
-						<?php
-							//if(($ticketData['JobTicket']['job_ticket_id'] == 1) || ($ticketData['JobTicket']['job_ticket_id'] == 2) || ($ticketData['Ticket']['job_ticket_id'] == 3) || 
-							//	($ticketData['JobTicket']['job_ticket_id'] == 4)){
-						?>
-								<span class="label label-default label-large">Waiting</span><br><br>
-						<?php
-
-							//}
-							//else{
-
-							//		if( ($ticketData['JobTicket']['status'] == 0) && ($ticketData['JobTicket']['job_ticket_id'] == 5)){
-						?>
-
-							<span class="label label-default label-large">Pending</span><br><br>
-							<hr></hr>
-								<?php
-                       				echo $this->Html->link('Accept Job', array('controller' => 'ticketing_systems', 
-                       							'action' => 'updatePendingStatus', 
-                       							$ticketid),array('class' =>'btn btn-info',
-                       							'escape' => false));
-                       			?>
-
-                       			<?php
-                       				
-								
-							//}
-
-							//elseif ( ($ticketData['JobTicket']['status'] == 1) && ($ticketData['JobTicket']['job_ticket_id'] == 5)){
-							?>
-
-								<span class="label label-default label-large">Pending</span>
-								<span class="label label-warning label-large">On Progress</span><br>
-								<hr></hr>
-								
-								<?php
-                       				echo $this->Html->link('Finished Job', array('controller' => 'ticketing_systems', 
-                       							 'action' => 'finishedJob',
-                       							  $ticketid),array('class' =>'btn btn-info',
-                       							  'escape' => false));
-                   			 //}
-                   			 //else{
-
-                   			 	?>
-                   			 		<span class="label label-default label-large">Pending</span>
-									<span class="label label-warning label-large">On Progress</span>
-                   			 		<span class="label label-success label-large">Complete</span><br><br>
-
-                   			<?php
-                   				// }
-                   			//}
-                   		?>	
-					</div>
-					<span class="cd-date">21:22</span>
-				</div>
-			</div>
-			 <div class="cd-timeline-block">
-				<div class="cd-timeline-img cd-movie">
-					<i class="fa fa-share fa-2x"></i>
-				</div>
-	
-				<div class="cd-timeline-content">
-					<h2>Shipping</h2>
-					<p>This is the content of the last section</p>
-					<div class="clearfix">
-						<?php
-							//if(($ticketData['JobTicket']['job_ticket_id'] == 1) || ($ticketData['JobTicket']['job_ticket_id'] == 2) || ($ticketData['JobTicket']['job_ticket_id'] == 3) || 
-							//	($ticketData['JobTicket']['job_ticket_id'] == 4) || ($ticketData['JobTicket']['job_ticket_id'] == 5)){
-						?>
-								<span class="label label-default label-large">Waiting</span><br><br>
-						<?php
-
-							//}
-							//else{
-
-							//		if( ($ticketData['JobTicket']['status'] == 0) && ($ticketData['JobTicket']['job_ticket_id'] == 6)){
-						?>
-
-							<span class="label label-default label-large">Pending</span><br><br>
-							<hr></hr>
-								<?php
-                       				echo $this->Html->link('Accept Job', array('controller' => 'ticketing_systems', 
-                       							'action' => 'updatePendingStatus', 
-                       							$ticketid),array('class' =>'btn btn-info',
-                       							'escape' => false));
-                       			?>
-
-                       			<?php
-                       				
-								
-							//}
-
-							//elseif ( ($ticketData['JobTicket']['status'] == 1) && ($ticketData['JobTicket']['job_ticket_id'] == 6)){
-							?>
-
-								<span class="label label-default label-large">Pending</span>
-								<span class="label label-warning label-large">On Progress</span><br>
-								<hr></hr>
-								
-								<?php
-                       				echo $this->Html->link('Finished Job', array('controller' => 'ticketing_systems', 
-                       							 'action' => 'finishedJob',
-                       							  $ticketid),array('class' =>'btn btn-info',
-                       							  'escape' => false));
-                   			// }
-                   			// else{
-
-                   			 	?>
-                   			 		<span class="label label-default label-large">Pending</span>
-									<span class="label label-warning label-large">On Progress</span>
-                   			 		<span class="label label-success label-large">Complete</span><br><br>
-
-                   			<?php
-                   				// }
-                   			//}
-                   		?>	
-
-					</div>
-					<span class="cd-date">23:59</span>
-				</div>
-			</div>
-
-		</section>
+		</div>
 	</div>
 </div>

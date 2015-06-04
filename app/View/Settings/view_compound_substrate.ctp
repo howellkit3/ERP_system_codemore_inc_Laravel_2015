@@ -130,7 +130,7 @@
 						<div class="main-box-body clearfix">
 							<div class="main-box-body clearfix">
 								<div class="form-horizontal">									
-									<?php foreach ($compoundData['ItemGroupLayer'] as $key => $layerList) {  $key++ ?>
+									<?php foreach ($compoundLayer as $key => $layerList) {  $key++ ?>
 										<div class="form-group">
 											<label class="col-lg-2 control-label">Substrate <?php echo $key;?></label>
 											<div class="col-lg-8">
@@ -139,7 +139,7 @@
 		                                            								'class' => 'form-control item_type',
 								                                                    'label' => false,
 								                                                    'disabled' => true,
-								                                                 	'value' => ucfirst($layerList['substrate'])));
+								                                                 	'value' => ucfirst($layerList['ItemGroupLayer']['substrate'])));
 	                                            ?>
 											</div>
 										</div>

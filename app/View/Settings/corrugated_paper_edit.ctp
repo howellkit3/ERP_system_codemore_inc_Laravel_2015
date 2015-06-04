@@ -100,9 +100,9 @@
 											<div class="col-lg-7">
 												<?php 
 													echo $this->Form->input('CorrugatedPaper.layers', array(
-													'class' => 'form-control layer layersC',
+													'class' => 'form-control layersC required',
 													'label' => false,
-													'rule' => 'numeric',
+													'type' => 'text',
 													'readonly' => true,
 													'style'=>'width: 150px'));
 												?>	
@@ -136,7 +136,7 @@
 				                                        	echo $this->Form->input('ItemGroupLayer.'.$key.'.substrate', array(
 			                        								'class' => 'form-control layer',
 																	'label' => false,
-																	'placeholder' => 'Layer'));
+																	'placeholder' => 'Subtrate Name'));
 				                                    	?>
 													</div>
 
@@ -147,7 +147,7 @@
 					                                    	echo $this->Form->input('ItemGroupLayer.'.$key.'.flute', array(
 			                                								'class' => 'form-control layer',
 																			'label' => false,
-																			'placeholder' => 'Layer'));
+																			'placeholder' => 'Flute'));
 					                                	?>
 													</div>
 

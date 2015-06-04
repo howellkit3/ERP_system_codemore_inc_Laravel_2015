@@ -158,7 +158,7 @@
 						<div class="main-box-body clearfix">
 							<div class="main-box-body clearfix">
 								<div class="form-horizontal">									
-									<?php foreach ($corrugatedData['ItemGroupLayer'] as $key => $layerList) {  $key++ ?>
+									<?php foreach ($corrugatedLayer as $key => $layerList) {  $key++ ?>
 										<div class="form-group">
 											<label class="col-lg-2 control-label">Substrate <?php echo $key;?></label>
 											<div class="col-lg-3">
@@ -167,7 +167,7 @@
 		                                            								'class' => 'form-control item_type',
 								                                                    'label' => false,
 								                                                    'disabled' => true,
-								                                                 	'value' => ucfirst($layerList['substrate'])));
+								                                                 	'value' => ucfirst($layerList['ItemGroupLayer']['substrate'])));
 	                                            ?>
 											</div>
 											<label class="col-lg-1 control-label">Flute <?php echo $key;?></label>
@@ -177,7 +177,7 @@
 		                                            								'class' => 'form-control item_type',
 								                                                    'label' => false,
 								                                                    'disabled' => true,
-								                                                 	'value' => ucfirst($layerList['flute'])));
+								                                                 	'value' => ucfirst($layerList['ItemGroupLayer']['flute'])));
 	                                            ?>
 											</div>
 										</div>

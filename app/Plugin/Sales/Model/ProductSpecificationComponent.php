@@ -3,10 +3,10 @@ App::uses('AppModel', 'Model');
 App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
 App::uses('AuthComponent', 'Controller/Component');
 
-class ProductSpecificationLabel extends AppModel {
+class ProductSpecificationComponent extends AppModel {
 
 	public $useDbConfig = 'koufu_sale';
-    public $name = 'ProductSpecificationLabel';
+    public $name = 'ProductSpecificationComponent';
     public $recursive = -1;
     public $actsAs = array('Containable');
     
@@ -37,29 +37,29 @@ class ProductSpecificationLabel extends AppModel {
 		$this->contain($model);
 	}
 
-	public function saveLabel($labeldata = null , $auth = null,$specId = null){
+	public function saveComponent($componentdata = null , $auth = null,$specId = null){
 		
 		$Ids = array();
 		
-		foreach ($labeldata[$this->name] as $key => $labelList) {
+		foreach ($componentdata[$this->name] as $key => $componentList) {
 			$this->create();
 			
-			$labelList['created_by'] = $auth;
-			$labelList['modified_by'] = $auth;
-			$labelList['product_specification_id'] = $specId;
-			$labelList['product_id'] = $labeldata['Product']['id'];
+			$componentList['created_by'] = $auth;
+			$componentList['modified_by'] = $auth;
+			$componentList['product_specification_id'] = $specId;
+			$componentList['product_id'] = $componentdata['Product']['id'];
 			
-			$this->save($labelList);
-			array_push($Ids, $this->id.'-'.$labelList['order'].'-'.'Label');
+			$this->save($componentList);
+			array_push($Ids, $this->id.'-'.$componentList['order'].'-'.'Component');
 		}
 		
 		return $Ids;
 
 	}
 
-	public function deleteData($labelData = null){
+	public function deleteData($componentData = null){
 
-		foreach ($labelData['ProductSpecificationLabel'] as $key => $deleteMe) {
+		foreach ($componentData['ProductSpecificationComponent'] as $key => $deleteMe) {
 			$this->delete($deleteMe);
 		}
 

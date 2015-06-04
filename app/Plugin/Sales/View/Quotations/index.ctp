@@ -1,6 +1,6 @@
 <?php $this->Html->addCrumb('Sales', array('controller' => 'customer_sales', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Quotation', array('controller' => 'quotations', 'action' => 'index')); ?>
-
+<?php echo $this->Html->script('Sales.searchQuotation');?>
 <div style="clear:both"></div>
 <?php 
   /* echo $this->Html->script('jquery');
@@ -29,20 +29,19 @@
 
 
 
-                   <!--  <div class="form-group pull-left">
-                        <?php echo $this->Form->create('Quotation',array('controller' => 'quotations','action' => 'search', 'type'=> 'get')); ?>
-                            <input placeholder="Search..." id="hint" name="q" class="form-control" type="search" />
+                   <div class="form-group pull-left">
+                        <?php //echo $this->Form->create('Quotation',array('controller' => 'quotations','action' => 'search', 'type'=> 'get')); ?>
+                            <input placeholder="Search..." class="form-control searchQuotation"  />
                             <i class="fa fa-search search-icon"></i>
-                         <?php echo $this->Form->end(); ?>
-                    </div> -->
+                         <?php //echo $this->Form->end(); ?>
+                    </div>
 
                     <?php
                             echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Make Quotation ', array('controller' => 'quotations', 'action' => 'create'),array('class' =>'btn btn-primary pull-right','escape' => false));
                         ?>
                 </div>
             </header>
-           
-
+            
             <div class="main-box-body clearfix">
                 <div class="table-responsive">
                     <table class="table table-striped table-hover">
@@ -57,9 +56,12 @@
                             </tr>
                         </thead>
                         <!--nocache-->
-                        <?php echo $this->element('quotation_table'); ?>
+                        <tbody aria-relevant="all" aria-live="polite" class="searchAppend" role="alert">
+                            <?php echo $this->element('quotation_table'); ?>
+                        </tbody>
                         <!--/nocache-->
                     </table>
+                   
                     <hr>
 
                     <div class="paging">
