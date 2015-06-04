@@ -3,7 +3,7 @@
 </style>
 <div class="row">
 	<div class="col-lg-12">
-		<div class="main-box main-pdf" >
+		<div class="main-box main-pdf">
 			<center>
 				<header class="main-box-header clearfix">
 					<h3>Kou Fu Color Printing </h3>
