@@ -1780,7 +1780,8 @@ class SettingsController extends AppController
                                         'conditions' => array(
                                             'ItemTypeHolder.Item_category_holder_id' => $itemId), 
                                         'fields' => array(
-                                            'id', 'name')
+                                            'id', 'name'),
+                                        'order' => 'ItemTypeHolder.name ASC'
                                         ));
        
        echo json_encode($itemdata);
@@ -1798,7 +1799,8 @@ class SettingsController extends AppController
                                         'conditions' => array(
                                             'ItemTypeHolder.Item_category_holder_id' => $itemId), 
                                         'fields' => array(
-                                            'id', 'name')
+                                            'id', 'name'),
+                                        'order' => 'ItemTypeHolder.name ASC'
                                         ));
         //pr($itemdata);exit();
        echo json_encode($itemdata);
