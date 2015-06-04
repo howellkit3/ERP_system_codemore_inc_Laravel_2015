@@ -14,7 +14,16 @@
                             'escape' => false));
                 ?>  
 
-                <?php
+                
+                <?php  if (!empty($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']])) { ?> 
+
+                <?php if($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] != 'Approved') { ?>
+
+                
+
+                <?php }}else{ ?>
+
+                  <?php
                 
                   echo $this->Html->link('<i class="fa fa-check-square fa-lg "></i> Approve Schedule ', 
                         array('controller' => 'deliveries', 
@@ -24,13 +33,6 @@
                             'escape' => false));
                 ?>  
 
-                <?php  if (!empty($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']])) { ?> 
-
-                <?php if($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] != 'Approved') { ?>
-
-                
-
-                <?php }}else{ ?>
 
                   <a data-toggle="modal" href="#myModalDelivery" class="btn btn-primary mrg-b-lg pull-right addSchedButton "><i class="fa fa-edit fa-lg"></i> Edit Schedule</a>
 
