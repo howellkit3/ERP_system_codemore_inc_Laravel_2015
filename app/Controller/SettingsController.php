@@ -812,12 +812,14 @@ class SettingsController extends AppController
        $this->GeneralItem->bind(array('ItemCategoryHolder','ItemTypeHolder', 'Supplier'));
 
         $categoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name'),
-                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1'),
+                                                                'order' => 'ItemCategoryHolder.name ASC'));
      
         $typeData = $this->ItemTypeHolder->find('list', array('fields' => array('id', 'name'),
-                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1'),
+                                                                'order' => 'ItemTypeHolder.name ASC'));
 
-        $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.id DESC'));
+        $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.name ASC'));
 
 
             if (!$id) {
@@ -862,12 +864,14 @@ class SettingsController extends AppController
         $this->GeneralItem->bind(array('ItemCategoryHolder','ItemTypeHolder', 'Supplier'));
 
         $categoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name'),
-                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1'),
+                                                                'order' => 'ItemCategoryHolder.name ASC'));
      
         $typeData = $this->ItemTypeHolder->find('list', array('fields' => array('id', 'name'),
-                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1'),
+                                                                'order' => 'ItemTypeHolder.name ASC'));
 
-        $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.id DESC'));
+        $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.name ASC'));
 
         $post = $this->GeneralItem->findById($id);
 
@@ -921,12 +925,14 @@ class SettingsController extends AppController
         $this->Substrate->bind(array('ItemCategoryHolder','ItemTypeHolder', 'Supplier'));
 
         $categoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name'),
-                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1'),
+                                                                'order' => 'ItemCategoryHolder.name ASC'));
      
         $typeData = $this->ItemTypeHolder->find('list', array('fields' => array('id', 'name'),
-                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1'),
+                                                                'order' => 'ItemTypeHolder.name ASC'));
 
-        $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.id DESC'));
+        $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.name ASC'));
 
 
             if (!$id) {
@@ -991,10 +997,12 @@ class SettingsController extends AppController
         $this->Substrate->bind(array('ItemCategoryHolder','ItemTypeHolder', 'Supplier'));
 
         $categoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name'),
-                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1'),
+                                                                'order' => 'ItemCategoryHolder.name ASC'));
      
         $typeData = $this->ItemTypeHolder->find('list', array('fields' => array('id', 'name'),
-                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1'),
+                                                                'order' => 'ItemTypeHolder.name ASC'));
 
         $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.id DESC'));
 
@@ -1063,12 +1071,14 @@ class SettingsController extends AppController
         $this->CompoundSubstrate->bind(array('ItemCategoryHolder','ItemTypeHolder', 'Supplier','ItemGroupLayer'));
 
         $categoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name'),
-                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1'),
+                                                                'order' => 'ItemCategoryHolder.name ASC'));
      
         $typeData = $this->ItemTypeHolder->find('list', array('fields' => array('id', 'name'),
-                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1'),
+                                                                'order' => 'ItemTypeHolder.name ASC'));
 
-        $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.id DESC'));
+        $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.name ASC'));
 
         $compoundsubstrateData = $this->ItemGroupLayer->find('all', array('conditions' => array('ItemGroupLayer.foreign_key' => $id, 'ItemGroupLayer.model' => 'CompoundSubstrate' )
                                                                           ));
@@ -1161,12 +1171,14 @@ class SettingsController extends AppController
         $this->CompoundSubstrate->bind(array('ItemCategoryHolder','ItemTypeHolder', 'Supplier', 'ItemGroupLayer'));
 
         $categoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name'),
-                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1'),
+                                                                'order' => 'ItemCategoryHolder.name ASC'));
      
         $typeData = $this->ItemTypeHolder->find('list', array('fields' => array('id', 'name'),
-                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1'),
+                                                                'order' => 'ItemTypeHolder.name ASC'));
 
-        $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.id DESC'));
+        $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.name ASC'));
 
         $compoundData = $this->CompoundSubstrate->findById($id);
 
@@ -1242,11 +1254,13 @@ class SettingsController extends AppController
         $this->CorrugatedPaper->bind(array('ItemCategoryHolder','ItemTypeHolder', 'Supplier', 'ItemGroupLayer'));
 
         $categoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name'),
-                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1'),
+                                                                'order' => 'ItemCategoryHolder.name ASC'));
      
         $typeData = $this->ItemTypeHolder->find('list', array('fields' => array('id', 'name'),
-                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
-        $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.id DESC'));
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1'),
+                                                                'order' => 'ItemTypeHolder.name ASC'));
+        $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.name ASC'));
 
         //$itemGroupLayerData = $this->ItemGroupLayer->find('all', array('conditions' => array('ItemGroupLayer.foreign_key' => 'CorrugatedPaper.id')));
 
@@ -1341,12 +1355,14 @@ class SettingsController extends AppController
         $this->CorrugatedPaper->bind(array('ItemCategoryHolder','ItemTypeHolder', 'Supplier', 'ItemGroupLayer'));
 
         $categoryData = $this->ItemCategoryHolder->find('list', array('fields' => array('id', 'name'),
-                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1'),
+                                                                'order' => 'ItemCategoryHolder.name ASC'));
      
         $typeData = $this->ItemTypeHolder->find('list', array('fields' => array('id', 'name'),
-                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1')));
+                                                                'conditions' => array('ItemCategoryHolder.category_type' => '1'),
+                                                                'order' => 'ItemTypeHolder.name ASC'));
 
-        $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.id DESC'));
+        $supplierData = $this->Supplier->find('list',  array('order' => 'Supplier.name ASC'));
 
         $corrugatedData = $this->CorrugatedPaper->findById($id);
 
