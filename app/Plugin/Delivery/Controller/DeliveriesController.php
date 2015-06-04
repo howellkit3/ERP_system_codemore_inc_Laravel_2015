@@ -228,4 +228,16 @@ class DeliveriesController extends DeliveryAppController {
         
 }
 
+  public function edit($id = null) {
+
+          $this->loadModel('Sales.ClientOrder');
+
+          $this->ClientOrder->bind(array('ClientOrderDeliverySchedule','Company', 'QuotationDetail','Product', 'QuotationItemDetail' ));
+
+          $scheduleInfo = $this->ClientOrder->find('first');
+
+          $this->set(compact( 'scheduleInfo' ));
+          
+  }
+
 }
