@@ -22,6 +22,14 @@
                                                     ));
                                             ?>
 
+                                            <?php  echo $this->Form->input('QuotationItemDetail.quantity', array(
+                                                            'type' => 'hidden',
+                                                            'class' => 'form-control item_type',
+                                                                'label' => false,
+                                                                'value' => $quantityInfo[$scheduleInfo['QuotationDetail']['quotation_id']],
+                                                                'id' => 'quantity')); ?>
+
+
                                                     <?php 
                                                         echo $this->Form->input('ClientOrder.uuid', array(
                                                                                         'class' => 'form-control item_type editable required',
@@ -101,7 +109,7 @@
                                                 <?php 
                                                     echo $this->Form->input('ClientOrderDeliverySchedule.quantity', array(
                                                                                     'empty' => 'None',
-                                                                                    'class' => 'form-control item_type editable',
+                                                                                    'class' => 'form-control item_type editable addquantityLimit',
                                                                                     'label' => false,
                                                                                     'value' => $scheduleInfo['ClientOrderDeliverySchedule']['quantity']
                                                                                     ));
@@ -115,7 +123,7 @@
                                                 <?php 
                                                     echo $this->Form->input('ClientOrderDeliverySchedule.location', array(
                                                                                     'empty' => 'None',
-                                                                                    'class' => 'form-control item_type editable',
+                                                                                    'class' => 'form-control item_type editable addquantityLimit',
                                                                                     'label' => false,
                                                                                     'value' => $scheduleInfo['ClientOrderDeliverySchedule']['location']
                                                                                     ));

@@ -1,9 +1,8 @@
   <?php 
                         if(!empty($clientsOrder)){
 
-                            //pr($clientsOrder); 
+                           // pr($clientsOrder); 
 ?>
-
                                 <?php foreach ($clientsOrder as $scheduleDataList): ?>
 
                                 <tbody aria-relevant="all" aria-live="polite" role="alert">
@@ -89,7 +88,7 @@
                                                                           <span class ="post"><font size = "1px">View</font></span>
                                                                           </span> ', array('controller' => 'Deliveries', 
                                                                                          'action' => 'view',
-                                                                         $scheduleDataList['ClientOrderDeliverySchedule']['id']),
+                                                                         $scheduleDataList['ClientOrderDeliverySchedule']['id'],$scheduleDataList['QuotationDetail']['quotation_id']),
                                                                           array('class' =>' table-link small-link-icon','escape' => false,'title'=>'Edit Information'
                                                                      )); 
                                             ?>     

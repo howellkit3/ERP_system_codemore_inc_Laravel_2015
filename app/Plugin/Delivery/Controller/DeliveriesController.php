@@ -6,9 +6,10 @@ class DeliveriesController extends DeliveryAppController {
 
     var $paginate = array( 
         'ClientOrder' => array( 
+                'limit' => 10,
                  //'fields' => array('ClientOrder.uuid', 'Company.company_name', 'created','ItemCategoryHolder.name'),
-                'limit' => 10//, 
-                //'order' => 'ItemCategoryHolder.id DESC'
+                //, 
+                'order' => 'ClientOrderDeliverySchedule.id DESC'
             ),
   ); 
 
@@ -33,13 +34,12 @@ class DeliveriesController extends DeliveryAppController {
         $this->paginate = array(
             'conditions' => $conditions,
             'limit' => $limit,
-           // 'fields' => array('ClientOrder.uuid', 'Company.company_name',  'Product.name', 'ClientOrder.po_number', 'QuotationItemDetail.quantity'),
+            //'fields' => array('ClientOrder.uuid','ClientOrder.po_number', 'Company.company_name',  'Product.name', 'ClientOrderDeliverySchedule.quantity', 'ClientOrderDeliverySchedule.location', 'ClientOrderDeliverySchedule.schedule'),
             'order' => 'ClientOrder.id DESC',
         );
 
         $clientsOrders = $this->paginate('ClientOrder');
-       
-        //$this->set(compact('scheduleData', 'companyData'));
+
         $this->set(compact('clientsOrder','deliveryData', 'status'));
    }
 
@@ -159,7 +159,7 @@ class DeliveriesController extends DeliveryAppController {
 
    }
 
-    public function view($id = null) {
+    public function view($id = null, $quantity = null) {
 
      // pr($this->request->data ); exit;
 
@@ -167,18 +167,20 @@ class DeliveriesController extends DeliveryAppController {
 
        $this->loadModel('Sales.ClientOrder');
 
+       $this->loadModel('Sales.QuotationItemDetail');
+
         $this->ClientOrder->bindDelivery();
         $scheduleInfo = $this->ClientOrder->find('first', array(
                                          'conditions' => array(
                                           'ClientOrderDeliverySchedule.id' => $id
                                         )
                                     ));
+        $quantityInfo = $this->QuotationItemDetail->find('list',array('fields' => array('quotation_id','quantity')));
+
         $deliveryData = $this->Delivery->find('list',array('fields' => array('schedule_uuid','status')));
 
 
         if ($this->request->is(array('post', 'put'))) {
-
-             // pr($this->request->data['ClientOrderDeliverySchedule']['id']); exit; 
 
                 $this->ClientOrderDeliverySchedule->id = $this->request->data['ClientOrderDeliverySchedule']['id'];
 
@@ -195,7 +197,7 @@ class DeliveriesController extends DeliveryAppController {
             }
 
 
-        $this->set(compact('scheduleInfo',  'deliveryData'));
+        $this->set(compact('scheduleInfo',  'deliveryData', 'quantityInfo'));
         
 }
 
@@ -209,7 +211,7 @@ class DeliveriesController extends DeliveryAppController {
 
                 $this->ClientOrderDeliverySchedule->id = $id;
 
-                   // pr($this->request->data); exit;
+                   //pr($this->request->data); exit;
                
                     $this->ClientOrderDeliverySchedule->save($this->request->data);
                     $this->Session->setFlash(__('Schedule has been updated.'),'success');
