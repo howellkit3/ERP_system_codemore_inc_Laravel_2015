@@ -87,7 +87,7 @@
 										echo " x ";
 										echo $specs['ProductSpecification']['size2'];
 										echo " x ";
-										echo $specs['ProductSpecification']['size2'];
+										echo $specs['ProductSpecification']['size3'];
 											
 									?>
 								</div>
