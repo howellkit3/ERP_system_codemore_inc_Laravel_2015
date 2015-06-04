@@ -68,7 +68,6 @@
 							<?php echo $specs['ProductSpecification']['size3']; ?>
 						</td>
 						<td>Delivery Date :
-
 							<?php
 							 	if (!empty($delData['ClientOrderDeliverySchedule'][0]['schedule'])){
 
@@ -89,8 +88,7 @@
 							<?php echo $specs['ProductSpecification']['quantity'] ;?>
 							<?php echo $unitData[$specs['ProductSpecification']['quantity_unit_id']] ;?>
 						</td>
-						<td>Stock Quantity :
-							<?php //echo (new \DateTime())->format('l, F d, Y '); ?>
+						<td>Stock Quantity :<?php //echo (new \DateTime())->format('l, F d, Y '); ?>
 						</td>
 					</tr>
 				</thead>
@@ -107,7 +105,7 @@
 			<?php $componentCounter = 1 ;?>
 			<?php $partCounter = 1 ; ?>
 			<?php $processCounter = 1 ;?>
-			<?php foreach ($formatDataSpecs as $key => $specLists) { ?>
+			<?php /*  foreach ($formatDataSpecs as $key => $specLists) { ?>
 				<table class="layout">
 					<thead>
 						<?php
@@ -132,7 +130,7 @@
 				      	?>
 			      	</thead>
 			    </table>
-			<?php } ?>
+			<?php } */ ?>
 		</div>
 	</div>
 </div>
