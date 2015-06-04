@@ -342,10 +342,10 @@
                                 <div class="main-box-body clearfix">
                                     <div class="form-horizontal">
                                         <div class="form-group">
-                                            <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span> Firstname</label>
+                                            <label for="inputPassword1" class="col-lg-2 control-label">Firstname</label>
                                             <div class="col-lg-9">
                                                 <?php 
-                                                    echo $this->Form->input('ContactPersonData.0.ContactPerson.0.firstname', array('class' => 'form-control required','label' => false,'value' => !empty($value['ContactPerson']['firstname']) ? $value['ContactPerson']['firstname'] : ''));
+                                                    echo $this->Form->input('ContactPersonData.0.ContactPerson.0.firstname', array('class' => 'form-control','label' => false,'value' => !empty($value['ContactPerson']['firstname']) ? $value['ContactPerson']['firstname'] : ''));
                                                 ?>
                                             </div>
                                         </div>
@@ -360,10 +360,10 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span> Lastname</label>
+                                            <label for="inputPassword1" class="col-lg-2 control-label">Lastname</label>
                                             <div class="col-lg-9">
                                                 <?php 
-                                                    echo $this->Form->input('ContactPersonData.0.ContactPerson.0.lastname', array('class' => 'form-control required','label' => false,'value' => !empty($value['ContactPerson']['lastname']) ? $value['ContactPerson']['lastname'] : ''));
+                                                    echo $this->Form->input('ContactPersonData.0.ContactPerson.0.lastname', array('class' => 'form-control','label' => false,'value' => !empty($value['ContactPerson']['lastname']) ? $value['ContactPerson']['lastname'] : ''));
                                                 ?>
                                             </div>
                                         </div>
@@ -372,7 +372,7 @@
                                             <label for="inputPassword1" class="col-lg-2 control-label">Position</label>
                                             <div class="col-lg-9">
                                                 <?php 
-                                                    echo $this->Form->input('ContactPersonData.0.ContactPerson.0.position', array('class' => 'form-control required','label' => false,'value' => !empty($value['ContactPerson']['position']) ? $value['ContactPerson']['position'] : ''));
+                                                    echo $this->Form->input('ContactPersonData.0.ContactPerson.0.position', array('class' => 'form-control','label' => false,'value' => !empty($value['ContactPerson']['position']) ? $value['ContactPerson']['position'] : ''));
                                                 ?>
                                             </div>
                                         </div>
