@@ -856,7 +856,7 @@ class ProductsController extends SalesAppController {
     	$this->ProductSpecificationDetail->bind(array('Sales.ProductSpecificationComponent','Sales.ProductSpecificationPart','Sales.ProductSpecificationProcess'));
 		
 		if (!empty($this->request->data)) {
-			
+			pr($this->request->data);exit();
 			if(!empty($this->request->data['IdHolder'])){
 				
 				$this->Product->ProductSpecification->delete($this->request->data['ProductSpecification']['id']);

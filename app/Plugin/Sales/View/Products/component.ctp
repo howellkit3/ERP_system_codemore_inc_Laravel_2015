@@ -11,7 +11,8 @@
           <div class="col-lg-8">
               <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-reorder"></i></span>
-                  <input name="<?php echo $realName ;?>" class="form-control label<?php echo $varCounter ;?>" type="text">
+                  <input name="<?php echo $realName ;?>" class="required form-control label<?php echo $varCounter ;?>" type="text">
+                  <div class="top-pad"></div>
               </div>
           </div>
       </div>

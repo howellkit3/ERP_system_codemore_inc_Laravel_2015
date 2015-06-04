@@ -1163,40 +1163,59 @@ class QuotationsController extends SalesAppController {
 
 		$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail','ProductDetail', 'Product','Company'));
 
-		$limit = 10;
+		$quotationData = $this->Quotation->find('all',array(
+									'fields' => array(
+										'Quotation.id',
+						            	'Quotation.uuid', 
+						            	'Quotation.name',
+						            	'Quotation.inquiry_id',
+						            	'Quotation.validity',
+						            	'Quotation.status',
+						            	'Quotation.company_id',
+						            	'Product.name',
+						            	'Company.company_name'
+										),
+									'order' => 'Quotation.id DESC',
+									'conditions' => array(
+										'OR' => array(
+											array('Company.company_name LIKE' => '%' . $hint . '%'),
+											array('Quotation.uuid LIKE' => '%' . $hint . '%'),
+											array('Product.name LIKE' => '%' . $hint . '%')
+											)
+										),
+									'limit' => 10
+									));
+		// $limit = 10;
 
-		$conditions = array();
+		// $conditions = array();
 
-		$this->paginate = array(
-            'conditions' =>  array (
-			        'OR' => array(
+		// $this->paginate = array(
+  //           'conditions' =>  array (
+		// 	        'OR' => array(
 			        	
-			        	array('Company.company_name LIKE' => '%' . $hint . '%'),
-			        	array('Quotation.uuid LIKE' => '%' . $hint . '%'),
-			        	array('Product.name LIKE' => '%' . $hint . '%')
-		        		// 'Company.company_name LIKE' => '%' . $hint . '%',
-		        		//'Product.name LIKE' => '%' . $hint . '%',		
-    					// array('Company.company_name LIKE' => '%' . $hint . '%'),
-    					// array('Product.name LIKE' => '%' . $hint . '%')
-			        )
-			    ),
-            'limit' => $limit,
-            'fields' => array(
-            	'Quotation.id',
-            	'Quotation.uuid', 
-            	'Quotation.name',
-            	'Quotation.inquiry_id',
-            	'Quotation.validity',
-            	'Quotation.status',
-            	'Quotation.company_id',
-            	'Product.name',
-            	'Company.company_name'
-            ),
-            'order' => 'Quotation.id DESC',
-            'group' => 'Quotation.id'
-        );
+		// 	        	array('Company.company_name LIKE' => '%' . $hint . '%'),
+		// 	        	array('Quotation.uuid LIKE' => '%' . $hint . '%'),
+		// 	        	array('Product.name LIKE' => '%' . $hint . '%')
+		        	
+		// 	        )
+		// 	    ),
+  //           'limit' => $limit,
+  //           'fields' => array(
+  //           	'Quotation.id',
+  //           	'Quotation.uuid', 
+  //           	'Quotation.name',
+  //           	'Quotation.inquiry_id',
+  //           	'Quotation.validity',
+  //           	'Quotation.status',
+  //           	'Quotation.company_id',
+  //           	'Product.name',
+  //           	'Company.company_name'
+  //           ),
+  //           'order' => 'Quotation.id DESC',
+  //           'group' => 'Quotation.id'
+  //       );
 
-        $quotationData = $this->paginate('Quotation');
+       // $quotationData = $this->paginate('Quotation');
         
 		$this->Company->bind(array('Inquiry'));
 
@@ -1225,7 +1244,7 @@ class QuotationsController extends SalesAppController {
        // }
 		
 		$this->set(compact('companyData','quotationData','inquiryId','salesStatus'));
-		
+		//pr($quotationData);exit();
 		
 		if ($hint == ' ') {
     		$this->render('index');

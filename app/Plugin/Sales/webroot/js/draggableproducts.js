@@ -371,7 +371,8 @@ $(document).ready(function() {
     
     //remove fields
     $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
-
+        submitCount--;
+        submitButton(submitCount);
         var countername = parseInt($(".add_field_button").attr('data'));
        
         var varCounter = countername - 1;
@@ -381,7 +382,8 @@ $(document).ready(function() {
     });
 
     $(wrapper).on("click",".remove_part", function(e){ //user click on remove text
-
+        submitCount--;
+        submitButton(submitCount);
         var countername = parseInt($(".add_part_button").attr('data'));
        
         var varCounter = countername - 1;
@@ -391,7 +393,8 @@ $(document).ready(function() {
     });
 
     $(wrapper).on("click",".remove_process", function(e){ //user click on remove text
-
+        submitCount--;
+        submitButton(submitCount);
         var countername = parseInt($(".add_process_button").attr('data'));
        
         var varCounter = countername - 1;
@@ -414,7 +417,7 @@ $(document).ready(function() {
 function submitButton(count) { 
 
     console.log(count);
-    if(count == 3){
+    if(count >= 3){
         $('.submitButton').show();
     }else{
         $('.submitButton').hide();
