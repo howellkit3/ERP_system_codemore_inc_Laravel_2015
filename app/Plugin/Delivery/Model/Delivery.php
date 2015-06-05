@@ -10,15 +10,32 @@ class Delivery extends AppModel {
     public $useDbConfig = 'koufu_delivery_system';
     
     public $name = 'Delivery';
+
+    public $validate = array(
+
+		'dr_uuid' => array(
+			
+			'numeric'=> array(
+	            'rule' => 'numeric',
+	            'message'=> 'It should be numeric'
+	        ),
+	        
+	        'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'message' => 'Required fields.',
+			),	
+		)
+	);
+
     
 	public function saveDelivery($data = null, $auth = null){
 
 		$this->create();
-			
+
+						
+				$data['Delivery']['created_by'] = $auth;
+				$data['Delivery']['modified_by'] = $auth;
 				
-				$data['created_by'] = $auth;
-				$data['modified_by'] = $auth;
-					
 		$this->save($data);
 
 
