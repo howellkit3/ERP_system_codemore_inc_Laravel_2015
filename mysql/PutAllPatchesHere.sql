@@ -202,6 +202,7 @@ ALTER TABLE `koufu_delivery`.`deliveries` DROP COLUMN `description`,    CHANGE `
 /** bien  added this 06/03/2015  */
 RENAME TABLE `koufu_sale`.`product_specification_labels` TO `koufu_sale`.`product_specification_components`;
 
+
 #NOTE: SELECT KOUFU delivery_type DATABASE ----
 /** howell kit added this 06/05/2015  */
 ALTER TABLE `koufu_delivery`.`deliveries`     ADD COLUMN `dr_uuid` INT(11) NULL AFTER `id`;
