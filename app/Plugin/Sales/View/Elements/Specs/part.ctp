@@ -63,8 +63,12 @@
     </div>
     <div class="form-group">
         <label class="col-lg-2 control-label">Color</label>
-        <div class="col-lg-8">
+        <div class="col-lg-4">
             <input type="text" value="<?php echo $formatDataSpecs['ProductSpecificationPart']['color'] ?>" class="form-control editMe" name="data[ProductSpecificationPart][<?php echo $counter ;?>][color]" disabled/>
+        </div>
+        <label class="col-lg-1 control-label">Allowance</label>
+        <div class="col-lg-3">
+            <input type="text" value="<?php echo $formatDataSpecs['ProductSpecificationPart']['allowance'] ?>" class="editMe form-control allowance<?php echo $plusCounter ;?>" name="data[ProductSpecificationPart][<?php echo $counter ;?>][allowance]" disabled/>
         </div>
     </div>
     <div class="form-group">

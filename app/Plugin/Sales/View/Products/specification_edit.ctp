@@ -9,7 +9,7 @@
 
 ?><br><br>
 <?php echo $this->Html->script('Sales.editableProductSpecs'); ?>
-<?php echo $this->Html->script('Sales.draggableproducts');?>
+<?php echo $this->Html->script('Sales.draggableproducts1');?>
 
 <div class="row">
 	<div class="col-lg-12">
@@ -154,6 +154,18 @@
 					                                'empty' => '---Select Unit---',
 					                                'disabled' => true,
 							                        'default' => $specs['ProductSpecification']['quantity_unit_id']));
+
+					                        ?>
+										</div>
+										<div class="col-lg-3">
+											<?php 
+												echo $this->Form->input('ProductSpecification.stock', array(
+	                                            								'class' => 'form-control item_type number editMe required',
+	                                            								'type' => 'number',
+							                                                    'label' => false,
+							                                                    'disabled' => true,
+							                                                    'placeholder' => 'Stocks',
+							                                                    'value' => $specs['ProductSpecification']['stock']));
 
 					                        ?>
 										</div>

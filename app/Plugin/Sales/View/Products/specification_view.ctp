@@ -104,6 +104,21 @@
 						<div class="col-lg-4"></div>
 					</div>
 
+					<div class="form-group">
+						<div class="col-lg-2">
+							&nbsp;&nbsp;Stocks 
+						</div>
+						<div class="col-lg-5">
+							:&emsp;
+							
+								<?php 
+									echo $specs['ProductSpecification']['stock']; 
+								?>
+							
+						</div>
+						<div class="col-lg-4"></div>
+					</div>
+
 					<hr>
 
 					<?php $componentCounter = 1?>
