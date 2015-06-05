@@ -391,10 +391,6 @@ $(document).ready(function() {
        
     });
 
-    component_button.trigger( 'click' ); 
-    part_button.trigger( 'click' );
-    process_button.trigger( 'click' );
-    
     //remove fields
     $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
         submitCount--;

@@ -201,3 +201,8 @@ ALTER TABLE `koufu_delivery`.`deliveries` DROP COLUMN `description`,    CHANGE `
 #NOTE: SELECT KOUFU SALE DATABASE ----
 /** bien  added this 06/03/2015  */
 RENAME TABLE `koufu_sale`.`product_specification_labels` TO `koufu_sale`.`product_specification_components`;
+
+#NOTE: SELECT KOUFU SALE DATABASE ----
+/** bien  added this 06/05/2015  */
+ALTER TABLE `koufu_sale`.`product_specifications`     ADD COLUMN `stock` VARCHAR(50) NULL AFTER `quantity_unit_id`;
+ALTER TABLE `koufu_sale`.`product_specification_parts`     ADD COLUMN `allowance` VARCHAR(80) NULL AFTER `outs2`;

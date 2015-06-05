@@ -184,7 +184,8 @@
 		                                            								'class' => 'form-control item_type number required',
 		                                            								'type' => 'number',
 								                                                    'label' => false,
-								                                                    'placeholder' => 'Quantity'));
+								                                                    'placeholder' => 'Quantity',
+								                                                    'value' => 0));
 
 						                        ?>
 											</div>
@@ -196,6 +197,16 @@
 						                                'class' => 'form-control required',
 						                                'empty' => '---Select Unit---'
 						                                 )); 
+
+						                        ?>
+											</div>
+											<div class="col-lg-3">
+											<?php 
+												echo $this->Form->input('ProductSpecification.stock', array(
+	                                            								'class' => 'form-control item_type number editMe required',
+	                                            								'type' => 'number',
+							                                                    'label' => false,
+							                                                    'placeholder' => 'Stocks'));
 
 						                        ?>
 											</div>

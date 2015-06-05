@@ -9,6 +9,7 @@
 
 <?php echo $this->element('sales_option');?><br><br>
 	<?php echo $this->Html->script('Sales.draggableproducts');?>
+	<?php //echo $this->Html->script('Sales.editableProductSpecs'); ?>
 	<div class="row">
 		<div class="col-lg-12">
 			
@@ -119,17 +120,18 @@
 
 										<div class="form-group">
 											<label class="col-lg-2 control-label">Quantity</label>
-											<div class="col-lg-2">
+											<div class="col-lg-3">
 												<?php 
 													echo $this->Form->input('ProductSpecification.quantity', array(
 		                                            								'class' => 'form-control item_type number required',
 		                                            								'type' => 'number',
 								                                                    'label' => false,
-								                                                    'placeholder' => 'Quantity'));
+								                                                    'placeholder' => 'Quantity',
+								                                                    'value' => 0));
 
 						                        ?>
 											</div>
-											<div class="col-lg-3">
+											<div class="col-lg-2">
 												<?php 
 													echo $this->Form->input('ProductSpecification.quantity_unit_id', array(
 						                                'options' => array($unitData),  
@@ -137,6 +139,17 @@
 						                                'class' => 'form-control required',
 						                                'empty' => '---Select Unit---'
 						                                 )); 
+
+						                        ?>
+											</div>
+											<div class="col-lg-3">
+												<?php 
+													echo $this->Form->input('ProductSpecification.stock', array(
+		                                            								'class' => 'form-control item_type number required',
+		                                            								'type' => 'number',
+								                                                    'label' => false,
+								                                                    'placeholder' => 'Stocks',
+								                                                    'value' => ''));
 
 						                        ?>
 											</div>
@@ -175,6 +188,7 @@
 										<section class="label-draggable-section">
 											<ul id="sortable">
 						 						<!--list of draggable text fields -->
+						 						<?php //echo $this->element('specification'); ?>
 											</ul>
 										</section>
 										
@@ -185,7 +199,7 @@
 					</div>
 				</div>
 			
-				<div class="row submitButton">
+				<div class="row ">
 					<div class="col-lg-12">
 						<div class="main-box">
 							<div class="top-space"></div>
@@ -197,7 +211,7 @@
 											<div class="col-lg-2"></div>
 											<div class="col-lg-8">
 
-												<button type="submit" class="btn btn-primary pull-left">Submit Product</button>&nbsp;
+												<button type="submit" class="btn checkMaterial btn-primary pull-left">Submit Product</button>&nbsp;
 												<?php 
 							                        echo $this->Html->link('Cancel', array('controller' => 'products', 'action' => 'index'),array('class' =>'btn btn-default','escape' => false));
 							                    ?>

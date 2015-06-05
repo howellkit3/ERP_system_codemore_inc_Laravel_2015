@@ -112,7 +112,7 @@
 									
 								</div>
 								<div class="col-lg-4">&emsp;&emsp;
-									Stock Quantity : <?php //echo date('M d, Y', strtotime($delData['ClientOrderDeliverySchedule'][0]['schedule'])); ?>
+									Stock Quantity : <?php echo $specs['ProductSpecification']['stock']; ?>
 								</div>
 							</div>
 
