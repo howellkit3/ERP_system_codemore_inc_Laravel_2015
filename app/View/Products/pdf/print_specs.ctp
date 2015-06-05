@@ -1,6 +1,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <style>
-	<?php include('specs.css'); ?>
+	<?php include('specs.css'); 
+	 header('Content-Type: text/html; charset=utf-8');
+	 ?>
 </style>
 <div class="row">
 	<div class="col-lg-12">
@@ -89,7 +91,7 @@
 							<?php echo $specs['ProductSpecification']['quantity'] ;?>
 							<?php echo $unitData[$specs['ProductSpecification']['quantity_unit_id']] ;?>
 						</td>
-						<td>Stock Quantity :<?php //echo (new \DateTime())->format('l, F d, Y '); ?>
+						<td>Stock Quantity :<?php echo $specs['ProductSpecification']['stock'] ?>
 						</td>
 					</tr>
 				</thead>
