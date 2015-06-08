@@ -93,6 +93,7 @@ class SettingsController extends AppController
                 'conditions' => $conditions,
                 'limit' => $limit,
                 'fields' => array('id', 'name', 'created','modified','ItemCategoryHolder.name'),
+                'order' => 'ItemCategoryHolder.id DESC'
             );
 
             $categoryData = $this->paginate('ItemCategoryHolder');
@@ -106,6 +107,7 @@ class SettingsController extends AppController
                 'conditions' => $conditions,
                 'limit' => $limit,
                 'fields' => array('id', 'name', 'created','ItemCategoryHolder.name'),
+                'order' => 'ItemTypeHolder.id DESC'
             );
 
             $nameTypeData = $this->paginate('ItemTypeHolder');
