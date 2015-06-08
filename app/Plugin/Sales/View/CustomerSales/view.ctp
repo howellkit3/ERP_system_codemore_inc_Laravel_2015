@@ -230,7 +230,9 @@
 							                        <tbody aria-relevant="all" aria-live="polite" role="alert">
 						                         		<tr>
 						                         			<td>
-						                         				<?php echo ucfirst($contactPersonData['ContactPerson']['lastname']); ?>,
+						                         				<?php 
+						                         					echo !empty($contactPersonData['ContactPerson']['lastname']) ? ucfirst($contactPersonData['ContactPerson']['lastname']).',' : ' '
+						                         				?>
 																<?php echo ucfirst($contactPersonData['ContactPerson']['firstname']); ?> &nbsp;
 																<?php echo ucfirst($contactPersonData['ContactPerson']['middlename']); ?>
 						                         			</td>
