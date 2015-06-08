@@ -1,5 +1,10 @@
 
 $(document).ready(function() {
+    
+    $("body").on('keyup','.stockQuantity', function(e){
+        var stockVal = $(this).val();
+        console.log(stockVal);
+    });
 
     $("body").on('click','.checkMaterial', function(e){
         var nameMaterial = $('.material').val();
@@ -13,7 +18,7 @@ $(document).ready(function() {
 
         
 
-        var fieldAppend = $('.appendField').size();
+        var fieldAppend = $('.appendField').size();d
         
         if(fieldAppend == 0){
             alert('Select process for product.');
