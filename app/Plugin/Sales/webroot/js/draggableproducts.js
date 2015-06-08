@@ -10,8 +10,7 @@ $(document).ready(function() {
             $(this).val('');
             return false;
         }else{
-            //$(this).val(quantitySpec - 1);
-            //var newVal = quantitySpec - 1;
+           
             if(!stockQuantity){
                 stockQuantity = 0;
             }
