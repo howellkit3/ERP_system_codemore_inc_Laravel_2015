@@ -1,9 +1,10 @@
 
 $(document).ready(function() {
     
-    var quantitySpec = $('#ProductSpecificationQuantity').val();
+    
 
     $("body").on('keyup','.stockQuantity', function(e){
+        var quantitySpec = $('#ProductSpecificationQuantity').val();
         var stockQuantity = $(this).val();
         console.log(stockQuantity);
         if(stockQuantity < 0){
@@ -24,7 +25,7 @@ $(document).ready(function() {
 
     $("body").on('click','.checkMaterial', function(e){
         var nameMaterial = $('.material').val();
-        
+        var quantitySpec = $('#ProductSpecificationQuantity').val();
         if(quantitySpec == 0){
             alert('Quantity must be not equal to zero.');
             $('#ProductSpecificationQuantity').val('');
