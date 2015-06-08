@@ -1,14 +1,30 @@
 
 $(document).ready(function() {
     
+    var quantitySpec = $('#ProductSpecificationQuantity').val();
+
     $("body").on('keyup','.stockQuantity', function(e){
-        var stockVal = $(this).val();
-        console.log(stockVal);
+        var stockQuantity = $(this).val();
+        console.log(stockQuantity);
+        if(stockQuantity < 0){
+            alert('You must enter positive number!');
+            $(this).val('');
+        }
+
+        if(stockQuantity < quantitySpec){
+            alert('Stocks must be higher than quantity!');
+
+        }else{
+            var quantitySpec = parseInt(stockQuantity) - parseInt(quantitySpec);
+            $('#ProductSpecificationQuantity').val(quantitySpec);
+        }
+
+
     });
 
     $("body").on('click','.checkMaterial', function(e){
         var nameMaterial = $('.material').val();
-        var quantitySpec = $('#ProductSpecificationQuantity').val();
+        
         if(quantitySpec == 0){
             alert('Quantity must be not equal to zero.');
             $('#ProductSpecificationQuantity').val('');
@@ -18,7 +34,7 @@ $(document).ready(function() {
 
         
 
-        var fieldAppend = $('.appendField').size();d
+        var fieldAppend = $('.appendField').size();
         
         if(fieldAppend == 0){
             alert('Select process for product.');
