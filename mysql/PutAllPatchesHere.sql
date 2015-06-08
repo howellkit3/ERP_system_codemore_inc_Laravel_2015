@@ -205,8 +205,7 @@ RENAME TABLE `koufu_sale`.`product_specification_labels` TO `koufu_sale`.`produc
 
 #NOTE: SELECT KOUFU delivery_type DATABASE ----
 /** howell kit added this 06/05/2015  */
-ALTER TABLE `koufu_delivery`.`deliveries`     ADD COLUMN `dr_uuid` INT(11) NULL AFTER `id`;
-
+ALTER TABLE `koufu_delivery`.`deliveries` ADD COLUMN `dr_uuid` INT(11) NULL AFTER `id`;
 
 ALTER TABLE `koufu_delivery`.`delivery_details` ADD COLUMN `schedule` TIMESTAMP NULL AFTER `id`;
 ALTER TABLE `koufu_delivery`.`delivery_details` ADD COLUMN `quantity` VARCHAR(100) NULL AFTER `schedule`;
@@ -220,3 +219,22 @@ ALTER TABLE `koufu_delivery`.`delivery_details` ADD COLUMN `remarks` VARCHAR(60)
 /** bien  added this 06/03/2015  */
 ALTER TABLE `koufu_sale`.`product_specifications`     ADD COLUMN `stock` VARCHAR(50) NULL AFTER `quantity_unit_id`;
 ALTER TABLE `koufu_sale`.`product_specification_parts`     ADD COLUMN `allowance` VARCHAR(50) NULL AFTER `outs2`;
+
+#NOTE: SELECT KOUFU DELIVERY DATABASE ----
+/** HOWELL KIT added this 06/03/2015  */
+ALTER TABLE `koufu_delivery`.`delivery_details`  ADD COLUMN `delivery_type` TINYINT(1) NULL AFTER `description`;
+
+CREATE TABLE `delivery_plans` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `dr_uuid` INT(11) DEFAULT NULL,
+  `status` VARCHAR(30) DEFAULT NULL,
+  `created_by` INT(11) DEFAULT NULL,
+  `modified_by` INT(11) DEFAULT NULL,
+  `created` TIMESTAMP NULL DEFAULT NULL,
+  `modified` TIMESTAMP NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+
+ALTER TABLE `koufu_delivery`.`delivery_plans` ADD COLUMN  `schedule_uuid` INT(11) NULL AFTER `dr_uuid`;
+ALTER TABLE `koufu_delivery`.`delivery_plans` ADD COLUMN  `client_order_id` INT(11) NULL AFTER `schedule_uuid`;
+

@@ -267,6 +267,18 @@ class DeliveriesController extends DeliveryAppController {
         
 }
 
+public function delivery_plan() {
+
+       
+        
+}
+
+
+public function add_delivery() {
+
+       
+        
+}
 
 
 }

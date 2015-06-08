@@ -140,8 +140,6 @@
                                                     ));
                                             ?>
 
-
-
                                            <!--  <?php  echo $this->Form->input('QuotationItemDetail.quantity', array(
                                                             'type' => 'hidden',
                                                             'class' => 'form-control item_type',
