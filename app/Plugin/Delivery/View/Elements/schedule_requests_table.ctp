@@ -1,7 +1,7 @@
   <?php 
                         if(!empty($clientsOrder)){
 
-                           // pr($clientsOrder); 
+                            //pr($clientsOrder); 
 ?>
                                 <?php foreach ($clientsOrder as $scheduleDataList): ?>
 

@@ -202,7 +202,16 @@ ALTER TABLE `koufu_delivery`.`deliveries` DROP COLUMN `description`,    CHANGE `
 /** bien  added this 06/03/2015  */
 RENAME TABLE `koufu_sale`.`product_specification_labels` TO `koufu_sale`.`product_specification_components`;
 
-#NOTE: SELECT KOUFU SALE DATABASE ----
-/** bien  added this 06/05/2015  */
-ALTER TABLE `koufu_sale`.`product_specifications`     ADD COLUMN `stock` VARCHAR(50) NULL AFTER `quantity_unit_id`;
-ALTER TABLE `koufu_sale`.`product_specification_parts`     ADD COLUMN `allowance` VARCHAR(80) NULL AFTER `outs2`;
+
+#NOTE: SELECT KOUFU delivery_type DATABASE ----
+/** howell kit added this 06/05/2015  */
+ALTER TABLE `koufu_delivery`.`deliveries`     ADD COLUMN `dr_uuid` INT(11) NULL AFTER `id`;
+
+
+ALTER TABLE `koufu_delivery`.`delivery_details` ADD COLUMN `schedule` TIMESTAMP NULL AFTER `id`;
+ALTER TABLE `koufu_delivery`.`delivery_details` ADD COLUMN `quantity` VARCHAR(100) NULL AFTER `schedule`;
+ALTER TABLE `koufu_delivery`.`delivery_details` ADD COLUMN `location` VARCHAR(200) NULL AFTER `quantity`;
+ALTER TABLE `koufu_delivery`.`delivery_details` ADD COLUMN `delivery_uuid` int(11) AFTER `id`;
+ALTER TABLE `koufu_delivery`.`delivery_details` ADD COLUMN `created_by` INT(11) AFTER `description`;
+ALTER TABLE `koufu_delivery`.`delivery_details` ADD COLUMN `modified_by` INT(11) AFTER `description`;
+ALTER TABLE `koufu_delivery`.`delivery_details` ADD COLUMN `remarks` VARCHAR(60) NULL AFTER `description`;
