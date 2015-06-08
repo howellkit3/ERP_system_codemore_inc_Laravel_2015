@@ -126,6 +126,7 @@
 		                                            								'class' => 'form-control item_type number required',
 		                                            								'type' => 'number',
 								                                                    'label' => false,
+								                                                    'data' => 0,
 								                                                    'placeholder' => 'Quantity',
 								                                                    'value' => 0));
 
@@ -148,6 +149,8 @@
 		                                            								'class' => 'form-control item_type number stockQuantity',
 		                                            								'type' => 'number',
 								                                                    'label' => false,
+								                                                    'readonly' => true,
+								                                                    'data' => 0,
 								                                                    'placeholder' => 'Stocks',
 								                                                    'value' => ''));
 
