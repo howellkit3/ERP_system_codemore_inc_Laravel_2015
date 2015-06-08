@@ -4,20 +4,19 @@ $(document).ready(function() {
     $("body").on('keyup','.stockQuantity', function(e){
         var quantitySpec = $('#ProductSpecificationQuantity').val();
         var stockQuantity = $(this).val();
-        console.log(stockQuantity);
         if(stockQuantity < 0){
             alert('You must enter positive number!');
             $(this).val('');
         }
-
-        if(stockQuantity < quantitySpec){
-            alert('Stocks must be higher than quantity!');
+        if(stockQuantity > quantitySpec){
+            alert('Stocks must be lower than quantity!');
+            $(this).focus();
 
         }else{
-            var quantitySpec = parseInt(stockQuantity) - parseInt(quantitySpec);
-            $('#ProductSpecificationQuantity').val(quantitySpec);
+            var totalquantitySpec = parseInt(quantitySpec) - parseInt(stockQuantity);
+            $('#ProductSpecificationQuantity').val(totalquantitySpec);
+            $('.quantity1').val(totalquantitySpec);
         }
-
 
     });
 
@@ -31,13 +30,13 @@ $(document).ready(function() {
             return false;
         }
 
-        
-
         var fieldAppend = $('.appendField').size();
         
         if(fieldAppend == 0){
             alert('Select process for product.');
             $('#checkbox-inl-1').focus();
+            $('.processMe').focus();
+            
             return false;
         }
        
