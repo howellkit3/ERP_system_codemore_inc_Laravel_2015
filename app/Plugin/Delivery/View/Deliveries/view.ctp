@@ -20,34 +20,32 @@
                 <?php if($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] != 'Approved') { ?>
 
                 
-                <?php }}else{ ?>
+                  <?php }else{ ?>
 
-                  <a data-toggle="modal" href="#myModalApprove" class="btn btn-primary mrg-b-lg pull-right addSchedButton "><i class="fa fa-edit fa-lg"></i>Approve Schedule</a>
-                  <?php
-                  //echo $this->Html->link('<i class="fa fa-check-square fa-lg "></i> Approve Schedule ', 
-                        // array('controller' => 'deliveries', 
-                        //     'action' => 'add', $scheduleInfo['ClientOrderDeliverySchedule']['id']
-                        //     ),
-                        // array('class' =>'btn btn-primary pull-right',
-                        //     'escape' => false));
-                ?>  
+                     <a data-toggle="modal" href="#myModalDelivery" class="btn btn-primary mrg-b-lg pull-right addSchedButton "><i class="fa fa-edit fa-lg"></i> Edit Schedule</a>
+
+                 <?php }}else{ ?>
+
+                    <a data-toggle="modal" href="#myModalApprove" class="btn btn-primary mrg-b-lg pull-right addSchedButton "><i class="fa fa-edit fa-lg"></i>Approve Schedule</a>
+                    <?php
+                    //echo $this->Html->link('<i class="fa fa-check-square fa-lg "></i> Approve Schedule ', 
+                          // array('controller' => 'deliveries', 
+                          //     'action' => 'add', $scheduleInfo['ClientOrderDeliverySchedule']['id']
+                          //     ),
+                          // array('class' =>'btn btn-primary pull-right',
+                          //     'escape' => false));
+                  ?>  
 
 
                  
 
                 <?php } ?>
 
-                 <a data-toggle="modal" href="#myModalDelivery" class="btn btn-primary mrg-b-lg pull-right addSchedButton "><i class="fa fa-edit fa-lg"></i> Edit Schedule</a>
 
-                 <?php // pr($scheduleInfo); exit;
+
                 
-                  // echo $this->Html->link('<i class="fa fa-edit fa-lg "></i> Edit Schedule ', 
-                  //       array('controller' => 'deliveries', 
-                  //           'action' => 'add'
-                  //           ),
-                  //       array('class' =>'btn btn-primary pull-right',
-                  //           'escape' => false));
-                ?> 
+
+                
 
                <br><br>
            </div>
@@ -114,6 +112,37 @@
                                     <td>Location</td>
                                     <td><?php echo  $scheduleInfo['ClientOrderDeliverySchedule']['location']; ?></td>
                                 </tr>
+
+                                <tr>
+                                    <td>Status</td>
+                                    <td><?php           //pr($scheduleInfo['ClientOrderDeliverySchedule']['uuid']); exit;
+                                                        $Scheddate = $scheduleInfo['ClientOrderDeliverySchedule']['schedule'];
+                                                        $Currentdate = date("Y-m-d H:i:s");
+
+                                                        $Scheddate = str_replace('-', '', $Scheddate);
+                                                        $Currentdate = str_replace('-', '', $Currentdate); ?>  
+
+                                                        <?php  if (!empty($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']])) {  
+
+                                                                    if(strtotime($Scheddate) < strtotime($Currentdate))
+                                                                        {
+                                                                            echo "<span class='label label-warning'>Due</span>"; 
+                                                                        }else{   
+
+                                                                     if($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] == 'Approved') { 
+                                                                    
+                                                                              echo "<span class='label label-success'>Approved</span>";  
+
+                                                                  
+                                                                     }
+                                                                   }
+                                                                 }else{
+
+                                                                            echo "<span class='label label-default'>Waiting</span>";
+
+                                                           } ?>
+                                    </td>
+                                </tr>
              
                             </tbody>
                         
@@ -126,6 +155,8 @@
         </div>
     </div>
 </div>
+
+
 
 <div class="row1">
     <div class="col-lg-12">
@@ -142,98 +173,20 @@
             <table class="table table-striped table-hover ">
                         <thead>
                             <tr >
-                                <th class="text-center"><a href="#"><span>Delivery Receipt #</span></a></th>
-                                <th class="text-center"><a href="#"><span>Schedule</span></a></th>
-                                <th class="text-center"><a href="#"><span>Quantity</span></a></th>
-                                <th class="text-center"><a href="#"><span>Location</span></a></th>
-                                <th class="text-center"><a href="#"><span>Status</span></a></th>
+                                <th class=""><a href="#"><span>Delivery Receipt #</span></a></th>
+                                <th class=""><a href="#"><span>Schedule</span></a></th>
+                                <th class=""><a href="#"><span>Quantity</span></a></th>
+                                <th class=""><a href="#"><span>Location</span></a></th>
+                               <!--  <th class=""><a href="#"><span>Status</span></a></th> -->
                             </tr>
                         </thead>
 
-                        <?php echo $this->element('schedule_requests_table'); ?>  
+                        <?php echo $this->element('delivery_table'); ?>  
                     </table>
               </div>
         </div>
-    </div>      
-             <?php 
-                        if(!empty($deliveryData)){
-              ?>
-              <?php foreach ($deliveryData as $deliveryDataList): ?>
-   
-                          <table class="table table-hover">
+    </div>  
 
-                            <tbody aria-relevant="all" aria-live="polite" role="alert">
-
-                                    <tr class="">
-
-                                      <td>
-                                          <?php echo $deliveryDataList['DeliveryDetail']['delivery_uuid']; ?>
-                                        </td>
-
-                                        <td>
-                                          <?php echo date('M d, Y', strtotime($deliveryDataList['DeliveryDetail']['schedule'])); ?>
-                                        </td>
-
-                                        <td class="text-center">
-
-                                               <?php echo  $deliveryDataList['DeliveryDetail']['location']; ?>
-                                           
-                                        </td>
-
-                                        <td class="text-center">
-
-                                           <?php echo  $deliveryDataList['DeliveryDetail']['quantity']; ?>
-                                        
-                                        </td>
-
-                                        <td class="text-center">
-                              
-                                        
-
-                                               <!--   <?php  $Scheddate = $deliveryDataList['DeliveryDetail']['schedule'];
-                                                        $Currentdate = date("Y-m-d H:i:s");
-
-                                                        $Scheddate = str_replace('-', '', $Scheddate);
-                                                        $Currentdate = str_replace('-', '', $Currentdate); ?>  
-
-                                                        <?php  if (!empty($scheduleInfo[$deliveryDataList['ClientOrderDeliverySchedule']['uuid']])) {   
-
-                                                                    if(strtotime($Scheddate) < strtotime($Currentdate))
-                                                                        {
-                                                                            echo "<span class='label label-warning'>Due</span>"; 
-                                                                        }else{   
-
-                                                                     if($deliveryData[$deliveryDataList['ClientOrderDeliverySchedule']['uuid']] == 'Approved') { 
-                                                                    
-                                                                              echo "<span class='label label-success'>Approved</span>";  
-
-                                                                  
-                                                                     }
-                                                                   }
-                                                                 }else{
-
-                                                                            echo "<span class='label label-default'>Waiting</span>";
-
-                                                           } ?> -->
-
-                                           
-                                           <br>
-                                           
-                                        </td>
-
-                                     
-                                    </tr>
-
-                                </tbody>
-
-                            
-                        
-                            </table>
-                    
-          <?php 
-             endforeach; 
-          } ?> 
-       
     
-
+             
 <?php echo $this->element('modals'); ?>

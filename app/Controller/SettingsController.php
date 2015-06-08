@@ -2197,7 +2197,7 @@ class SettingsController extends AppController
 
             $this->loadModel('ItemGroupLayer');
 
-            $this->loadModel('CompoundSubstrate');
+            
 
             $userData = $this->Session->read('Auth');
 
