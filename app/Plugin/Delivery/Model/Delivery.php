@@ -15,15 +15,11 @@ class Delivery extends AppModel {
 
 		'dr_uuid' => array(
 			
-			'numeric'=> array(
-	            'rule' => 'numeric',
-	            'message'=> 'It should be numeric'
-	        ),
-	        
-	        'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				'message' => 'Required fields.',
-			),	
+			 'Numeric' => array(
+                'rule' => 'Numeric',
+                'required' => true,
+                'message' => 'Delivery Receipt should be numbers only'
+            )				
 		)
 	);
 
