@@ -26,7 +26,7 @@
 				</div>
 			</div>
 
-			<?php echo $this->Form->create('Product',array('url'=>(array('controller' => 'create_order', 'action' => 'create_specification')),'class' => 'test','method' => 'post'));?>	
+			<?php echo $this->Form->create('Product',array('url'=>(array('controller' => 'create_order', 'action' => 'create_specification')),'class' => 'test','method' => 'post','id' => 'ProductSpecificationForm'));?>	
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="main-box">
@@ -201,12 +201,15 @@
 						                        ?>
 											</div>
 											<div class="col-lg-3">
-											<?php 
-												echo $this->Form->input('ProductSpecification.stock', array(
-	                                            								'class' => 'form-control item_type number editMe stockQuantity',
-	                                            								'type' => 'number',
-							                                                    'label' => false,
-							                                                    'placeholder' => 'Stocks'));
+						                        <?php 
+													echo $this->Form->input('ProductSpecification.stock', array(
+                                            								'class' => 'form-control editMe item_type number stockQuantity',
+                                            								'type' => 'number',
+						                                                    'label' => false,
+						                                                    'readonly' => true,
+						                                                    'data' => 0,
+						                                                    'placeholder' => 'Stocks',
+						                                                    'value' => ''));
 
 						                        ?>
 											</div>

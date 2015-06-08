@@ -146,13 +146,13 @@
 											<div class="col-lg-3">
 												<?php 
 													echo $this->Form->input('ProductSpecification.stock', array(
-		                                            								'class' => 'form-control item_type number stockQuantity',
-		                                            								'type' => 'number',
-								                                                    'label' => false,
-								                                                    'readonly' => true,
-								                                                    'data' => 0,
-								                                                    'placeholder' => 'Stocks',
-								                                                    'value' => ''));
+                                            								'class' => 'form-control item_type number stockQuantity',
+                                            								'type' => 'number',
+						                                                    'label' => false,
+						                                                    'readonly' => true,
+						                                                    'data' => 0,
+						                                                    'placeholder' => 'Stocks',
+						                                                    'value' => ''));
 
 						                        ?>
 											</div>

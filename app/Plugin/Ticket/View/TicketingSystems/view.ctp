@@ -16,6 +16,8 @@
 	                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'ticketing_systems', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
 
 	                        echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array('controller' => 'ticketing_systems', 'action' => 'print_ticket',$productData['Product']['uuid'],$ticketData['JobTicket']['uuid'],$clientOrderId),array('class' =>'btn btn-primary pull-right','escape' => false,'target' => '_blank'));
+
+	                        echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Add Remarks ',array('class' =>'btn btn-primary pull-right','escape' => false,'target' => '_blank'));
 	                    ?>
                     </div>
 				</header>
@@ -56,7 +58,7 @@
 
 									?>
 								</div>
-								<div class="col-lg-4">&emsp;&emsp;&nbsp;&nbsp;
+								<div class="col-lg-4">
 									Schedule No. : <?php echo $ticketData['JobTicket']['uuid']; ?>
 								</div>
 							</div>
@@ -65,14 +67,14 @@
 								<div class="col-lg-2">
 									&nbsp;&nbsp;Item
 								</div>
-								<div class="col-lg-6">
+								<div class="col-lg-5">
 									:&emsp;
 									<?php 
 										echo !empty($productData['Product']['name']) ? ucfirst($productData['Product']['name']) : '' ;
 									?>
 								</div>
-								<div class="col-lg-4">&emsp;&emsp;&emsp;&emsp;
-									 to follow
+								<div class="col-lg-4">
+									PO No. : <?php echo $ticketData['JobTicket']['po_number']; ?>
 								</div>
 							</div>
 
@@ -91,7 +93,7 @@
 											
 									?>
 								</div>
-								<div class="col-lg-4">&emsp;&emsp;&nbsp;&nbsp;
+								<div class="col-lg-4">
 									Delivery Date : <?php echo date('M d, Y', strtotime($delData['ClientOrderDeliverySchedule'][0]['schedule'])); ?>
 								</div>
 							</div>
@@ -111,7 +113,7 @@
 										?>
 									
 								</div>
-								<div class="col-lg-4">&emsp;&emsp;
+								<div class="col-lg-4">
 									Stock Quantity : <?php echo $specs['ProductSpecification']['stock']; ?>
 								</div>
 							</div>
