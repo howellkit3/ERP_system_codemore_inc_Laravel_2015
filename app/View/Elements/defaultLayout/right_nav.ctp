@@ -48,11 +48,11 @@
 	 					?>
 					</li>
 
-					<!-- <li class="<?php echo ($this->params['plugin'] == 'ticket') ? 'active' : '' ?>">
+					<li class="<?php echo ($this->params['plugin'] == 'ticket') ? 'active' : '' ?>">
 						<?php
 	 						echo $this->Html->link( " <i class='fa fa-ticket'></i> <span>Ticketing System</span>",   array('controller' =>'ticketing_systems','action'=>'index','plugin' => 'ticket'),array('escape' => false) );
 	 					?>
-					</li> -->
+					</li>
 					<!-- 
 					<li class="<?php echo ($this->params['plugin'] == 'purchasing') ? 'active' : '' ?>">
 						<?php echo $this->Html->link( " <i class='fa fa-th-large'></i> <span>Purchasing</span>",   array('controller' =>'suppliers','action'=>'index','plugin' => 'purchasings'),array('escape' => false) );
@@ -74,14 +74,14 @@
 	 											// array('escape' => false) );
 	 					?>
 					<!-- </li> -->
-					<!-- <li class="<?php echo ($this->params['plugin'] == 'delivery') ? 'active' : '' ?>">
+					<li class="<?php echo ($this->params['plugin'] == 'delivery') ? 'active' : '' ?>">
 						<?php
 	 						echo $this->Html->link( " <i class='fa fa-truck'></i> <span>Delivery</span>",   array('controller' =>'deliveries',
 	 											'action'=>'index',
 	 											'plugin' => 'delivery'),
 	 											array('escape' => false) );
 	 					?>
-					</li> -->
+					</li>
 					<!--<li class="<?php echo ($this->params['plugin'] == 'accounting') ? 'active' : '' ?>">
 						<?php
 	 						echo $this->Html->link( " <i class='fa fa-money'></i> <span>Accounting</span>",   array('controller' =>'salesInvoice',
