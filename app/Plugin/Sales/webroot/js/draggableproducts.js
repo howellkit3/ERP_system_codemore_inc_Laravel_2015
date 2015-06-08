@@ -1,8 +1,6 @@
 
 $(document).ready(function() {
     
-    
-
     $("body").on('keyup','.stockQuantity', function(e){
         var quantitySpec = $('#ProductSpecificationQuantity').val();
         var stockQuantity = $(this).val();
