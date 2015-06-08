@@ -211,7 +211,7 @@
 											<div class="col-lg-2"></div>
 											<div class="col-lg-8">
 
-												<button type="submit" class="btn checkMaterial btn-primary pull-left">Submit Product</button>&nbsp;
+												<button type="button" class="btn checkMaterial btn-primary pull-left">Submit Product</button>&nbsp;
 												<?php 
 							                        echo $this->Html->link('Cancel', array('controller' => 'products', 'action' => 'index'),array('class' =>'btn btn-default','escape' => false));
 							                    ?>

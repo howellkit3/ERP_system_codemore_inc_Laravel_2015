@@ -3,7 +3,7 @@ $(document).ready(function() {
 
     $('#ProductSpecificationQuantity').focus();
     $("body").on('click','.checkMaterial', function(e){
-
+        var nameMaterial = $('.material').val();
         var quantitySpec = $('#ProductSpecificationQuantity').val();
         if(quantitySpec == 0){
             alert('Quantity must be not equal to zero.');
@@ -12,14 +12,7 @@ $(document).ready(function() {
             return false;
         }
 
-        $('.material').each(function(){
-           
-            if(!$(this).val()){
-                alert('Please select material in part section!');
-                $('.modalMaterial').focus();
-                return false;
-            }
-        });
+        
 
         var fieldAppend = $('.appendField').size();
         
@@ -28,9 +21,21 @@ $(document).ready(function() {
             $('#checkbox-inl-1').focus();
             return false;
         }
-        
-        if($('.material').val() != ' ' ){
-            $('.checkMaterial').submit();
+       
+        if(!nameMaterial){
+
+            $('.material').each(function(){
+           
+                if(!$(this).val()){
+                    alert('Please select material in part section!');
+                    $('.modalMaterial').focus();
+                    return false;
+                }
+            });
+            
+        }else{
+            //console.log('sumbit');
+            $('#ProductSpecificationForm').submit();
         }
 
     });
