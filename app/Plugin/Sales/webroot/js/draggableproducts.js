@@ -1,20 +1,35 @@
 
 $(document).ready(function() {
 
+    $('#ProductSpecificationQuantity').focus();
     $("body").on('click','.checkMaterial', function(e){
-       
+
+        var quantitySpec = $('#ProductSpecificationQuantity').val();
+        if(quantitySpec == 0){
+            alert('Quantity must be not equal to zero.');
+            $('#ProductSpecificationQuantity').focus();
+            return false;
+        }
+
+        var fieldAppend = $('.appendField').size();
+        
+        if(fieldAppend == 0){
+            alert('Select process for product.');
+            $('#checkbox-inl-1').focus();
+            return false;
+        }
         $('.material').each(function(){
            
             if(!$(this).val()){
                 alert('Please select material in part section!');
                 $('.modalMaterial').focus();
+                $('.modalMaterial').val(' ');
+                return false;
             }
         });
-        var quantitySpec = $('#ProductSpecificationQuantity').val();
+      
 
-        if(quantitySpec == 0){
-            alert('Quantity must be not equal to zero.');
-        }
+
 
         if($('.material').val() != ' ' ){
             $('.checkMaterial').submit();
@@ -394,6 +409,7 @@ $(document).ready(function() {
     component_button.trigger( 'click' ); 
     part_button.trigger( 'click' );
     process_button.trigger( 'click' );
+    
     
     //remove fields
     $(wrapper).on("click",".remove_field", function(e){ //user click on remove text

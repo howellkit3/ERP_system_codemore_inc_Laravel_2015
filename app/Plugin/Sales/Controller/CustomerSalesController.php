@@ -91,7 +91,7 @@ class CustomerSalesController extends SalesAppController {
             	$this->request->data['Company']['created_by'] = $userData['User']['id'];
             	
             	$this->request->data['Company']['modified_by'] = $userData['User']['id'];
-
+            	pr($this->request->data);exit();
             	
 
             	if ($this->Company->saveAssociated($this->request->data)) {
