@@ -7,5 +7,16 @@ class DeliveryDetail extends AppModel {
     public $useDbConfig = 'koufu_delivery_system';
     public $name = 'DeliveryDetail';
   
+
+  public function saveDelivery($data = null, $auth = null){
+
+		$this->create();
+
+				$data['DeliveryDetail']['modified_by'] = $auth;
+				
+		$this->save($data);
+
+
+	}
 	
 }

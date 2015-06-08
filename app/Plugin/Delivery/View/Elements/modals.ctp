@@ -1,4 +1,4 @@
-
+    <?php //pr($deliveryEdit); exit; ?>
     <div class="modal fade" id="myModalDelivery" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -8,17 +8,17 @@
                 </div>
                 <div class="modal-body">
                  <?php  echo $this->Form->create('ClientOrderDeliverySchedule',array('url'=>(array('controller' => 'deliveries', 
-                            'action' => 'edit', $scheduleInfo['ClientOrderDeliverySchedule']['id'])),'class' => 'form-horizontal'))//, $scheduleInfo['ClientOrderDeliverySchedule']['id']);?>
+                            'action' => 'edit', $deliveryEdit['Delivery']['id'], $deliveryEdit['DeliveryDetail']['id'])),'class' => 'form-horizontal'))//, $scheduleInfo['ClientOrderDeliverySchedule']['id']);?>
                     
 
                         <div class="form-group" id="existing_items">
-                                <label class="col-lg-2 control-label">C.O. #</label>
+                                <label class="col-lg-2 control-label">D.R. #</label>
                             <div class="col-lg-9">
 
-                                            <?php 
-                                                echo $this->Form->input('ClientOrderDeliverySchedule.id', array('class' => 'form-control item_type required',
+                                            <?php // pr($deliveryEdit);
+                                                echo $this->Form->input('DeliveryDetail.id', array('class' => 'form-control item_type required',
                                                     'type' => 'hidden',
-                                                    'value' => $scheduleInfo['ClientOrderDeliverySchedule']['id']
+                                                    'value' => $deliveryEdit['DeliveryDetail']['id']
                                                     ));
                                             ?>
 
@@ -31,73 +31,33 @@
 
 
                                                     <?php 
-                                                        echo $this->Form->input('ClientOrder.uuid', array(
+                                                        echo $this->Form->input('Delivery.dr_uuid', array(
                                                                                         'class' => 'form-control item_type editable required',
                                                                                         'label' => false,
                                                                                         'required' => 'required',
                                                                                         'readonly' => 'readonly',
-                                                                                        'value' => $scheduleInfo['ClientOrder']['uuid']
+                                                                                        'value' => $deliveryEdit['Delivery']['dr_uuid']
                                                                                         ));
                                                     ?>
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="inputPassword1" class="col-lg-2 control-label">P.O. #</label>
-                            <div class="col-lg-9">
-                                <?php 
-                                    echo $this->Form->input('ClientOrder.po_number', array(
-                                                                                        'class' => 'form-control item_type editable required',
-                                                                                        'label' => false,
-                                                                                        'required' => 'required',
-                                                                                        'readonly' => 'readonly',
-                                                                                        'value' => $scheduleInfo['ClientOrder']['po_number']
-                                                                                        ));
-                                ?>
-                            </div>
-                        </div>
+                       
 
-                        <div class="form-group">
-                            <label for="inputPassword1" class="col-lg-2 control-label">Customer</label>
-                            <div class="col-lg-9">
-                                <?php 
-                                    echo $this->Form->input('Company.company_name', array('class' => 'form-control required',
-                                                                                       'class' => 'form-control item_type editable required',
-                                                                                        'label' => false,
-                                                                                        'required' => 'required',
-                                                                                        'readonly' => 'readonly',
-                                                                                        'value' => $scheduleInfo['Company']['company_name']
-                                                                                        ));
-                                ?>
-                            </div>
-                        </div>
+                    
 
-                        <div class="form-group">
-                            <label for="inputPassword1" class="col-lg-2 control-label">Item Name</label>
-                            <div class="col-lg-9">
-                                <?php 
-                                    echo $this->Form->input('Product.name', array('class' => 'form-control required addquantityLimit number required',
-                                                                                  'class' => 'form-control item_type editable required',
-                                                                                    'label' => false,
-                                                                                    'required' => 'required',
-                                                                                    'readonly' => 'readonly',
-                                                                                    'value' => $scheduleInfo['Product']['name']
-                                                                                        ));                 
-                                ?>
-                            </div>
-                        </div>
 
                          <div class="form-group" id="existing_items">
                                                 <label class="col-lg-2 control-label"><span style="color:red">*</span>Schedule</label>
                                                 <div class="col-lg-9">
                                                     <?php 
-                                                        echo $this->Form->input('ClientOrderDeliverySchedule.schedule', array(
+                                                        echo $this->Form->input('DeliveryDetail.schedule', array(
                                                                                         'label' => false,
                                                                                         'required' => 'required',
                                                                                         'class' => 'form-control item_type datepick required',
                                                                                         'type' => 'text',
                                                                                         'id' => 'date',
-                                                                                        'value' => date('M d, Y', strtotime($scheduleInfo['ClientOrderDeliverySchedule']['schedule']))
+                                                                                        'value' => date('M d, Y', strtotime($deliveryEdit['DeliveryDetail']['schedule']))
                                                                                         ));
                                                     ?>
                             </div>
@@ -107,11 +67,11 @@
                                             <label class="col-lg-2 control-label"><span style="color:red">*</span>Quantity</label>
                                             <div class="col-lg-9">
                                                 <?php 
-                                                    echo $this->Form->input('ClientOrderDeliverySchedule.quantity', array(
+                                                    echo $this->Form->input('DeliveryDetail.quantity', array(
                                                                                     'empty' => 'None',
                                                                                     'class' => 'form-control item_type editable addquantityLimit',
                                                                                     'label' => false,
-                                                                                    'value' => $scheduleInfo['ClientOrderDeliverySchedule']['quantity']
+                                                                                    'value' => $deliveryEdit['DeliveryDetail']['quantity']
                                                                                     ));
                                                 ?>
                             </div>
@@ -121,17 +81,17 @@
                                             <label class="col-lg-2 control-label"><span style="color:red">*</span>Location</label>
                                             <div class="col-lg-9">
                                                 <?php 
-                                                    echo $this->Form->input('ClientOrderDeliverySchedule.location', array(
+                                                    echo $this->Form->input('DeliveryDetail.location', array(
                                                                                     'empty' => 'None',
                                                                                     'class' => 'form-control item_type editable addquantityLimit',
                                                                                     'label' => false,
-                                                                                    'value' => $scheduleInfo['ClientOrderDeliverySchedule']['location']
+                                                                                    'value' => $deliveryEdit['DeliveryDetail']['location']
                                                                                     ));
                                                 ?>
                             </div>
                         </div>
 
-                        <div class="form-group" id="existing_items">
+                       <!--  <div class="form-group" id="existing_items">
                                             <label class="col-lg-2 control-label">Status</label>
                                             <div class="col-lg-9">
                                                 <?php 
@@ -143,7 +103,7 @@
                                                                                     ));
                                                 ?>
                             </div>
-                        </div>
+                        </div> -->
 
 
                         <div class="modal-footer">
@@ -219,9 +179,6 @@
                                 ?>
                             </div>
                         </div>
-
-                       
-
 
                         <div class="modal-footer">
                              <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i> Submit</button>

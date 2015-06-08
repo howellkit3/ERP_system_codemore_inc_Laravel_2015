@@ -103,17 +103,13 @@ class ClientOrder extends AppModel {
 					'foreignKey' => false,
 					'conditions' => 'Product.id = QuotationDetail.product_id'
 				),
-				// 'Product' => array(
-				// 	'className' => 'Sales.Product',
-				// 	'foreignKey' => false,
-				// 	'conditions' => 'Company.id = Product.company_id'
-				// )
-				// ,
+			
 				// 'Delivery' => array(
 				// 	'className' => 'Delivery.Delivery',
 				// 	'foreignKey' => false,
-				// 	'conditions' => 'ClientOrderDeliverySchedule.client_order_id = Delivery.client_order_id'
-				// )
+				// 	'conditions' => 'Delivery.clients_order_id =  ClientOrder.uuid'
+
+				// ),
 			)
 		));
 		$this->recursive = 1;

@@ -63,5 +63,39 @@ class Delivery extends AppModel {
 		// return $this->id;
 
 	}
+
+	public function bindDelivery() {
+		$this->bindModel(array(
+			'hasOne' => array(
+				'DeliveryDetail' => array(
+					'className' => 'Delivery.DeliveryDetail',
+					'foreignKey' => false,
+					'conditions' => 'Delivery.dr_uuid = DeliveryDetail.delivery_uuid'
+				),
+				
+				
+			)
+		));
+		$this->recursive = 1;
+		//$this->contain($giveMeTheTableRelationship);
+	}
+
+	// public function bind($model = array('Group')){
+
+	// 	$this->bindModel(array(
+			
+	// 		'hasMany' => array(
+	// 			'DeliveryDetail' => array(
+	// 				'className' => 'Delivery.DeliveryDetail',
+	// 				'foreignKey' => false,
+	//  				'conditions' => 'DeliveryDetail.delivery_uuid = Delivery.dr_uuid ' 
+	// 			),
+				
+	// 		),
+	// 	),false);
+
+	// 	$this->contain($model);
+	// }
+
 	
 }

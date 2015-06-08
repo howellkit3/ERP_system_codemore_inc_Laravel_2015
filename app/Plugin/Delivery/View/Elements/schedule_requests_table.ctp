@@ -1,7 +1,6 @@
   <?php 
                         if(!empty($clientsOrder)){
-
-                            //pr($clientsOrder); 
+                         // pr($deliveryDetailsData); exit;
 ?>
                                 <?php foreach ($clientsOrder as $scheduleDataList): ?>
 
@@ -65,7 +64,6 @@
                                                          if($deliveryData[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']] == 'Approved') { 
                                                         
                                                                   echo "<span class='label label-success'>Approved</span>";  
-
                                                           
                                                              }
                                                          }
@@ -75,7 +73,6 @@
 
                                                  } ?>
                                    
-                                       
                                         </td>
 
                                         <td class="text-center">
@@ -88,7 +85,7 @@
                                                                           <span class ="post"><font size = "1px">View</font></span>
                                                                           </span> ', array('controller' => 'Deliveries', 
                                                                                          'action' => 'view',
-                                                                         $scheduleDataList['ClientOrderDeliverySchedule']['id'],$scheduleDataList['QuotationDetail']['quotation_id']),
+                                                                         $scheduleDataList['ClientOrderDeliverySchedule']['id'],$scheduleDataList['QuotationDetail']['quotation_id'],$scheduleDataList['ClientOrder']['uuid']),
                                                                           array('class' =>' table-link small-link-icon','escape' => false,'title'=>'Edit Information'
                                                                      )); 
                                             ?>     
