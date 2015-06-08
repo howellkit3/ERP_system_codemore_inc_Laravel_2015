@@ -1,5 +1,8 @@
 
 $(document).ready(function() {
+    $("body").on('keyup','.stockQuantity', function(e){
+        var $();
+    });
 
     $("body").on('click','.checkMaterial', function(e){
         var nameMaterial = $('.material').val();

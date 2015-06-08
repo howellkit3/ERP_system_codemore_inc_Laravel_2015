@@ -215,3 +215,8 @@ ALTER TABLE `koufu_delivery`.`delivery_details` ADD COLUMN `delivery_uuid` int(1
 ALTER TABLE `koufu_delivery`.`delivery_details` ADD COLUMN `created_by` INT(11) AFTER `description`;
 ALTER TABLE `koufu_delivery`.`delivery_details` ADD COLUMN `modified_by` INT(11) AFTER `description`;
 ALTER TABLE `koufu_delivery`.`delivery_details` ADD COLUMN `remarks` VARCHAR(60) NULL AFTER `description`;
+
+#NOTE: SELECT KOUFU SALE DATABASE ----
+/** bien  added this 06/03/2015  */
+ALTER TABLE `koufu_sale`.`product_specifications`     ADD COLUMN `stock` VARCHAR(50) NULL AFTER `quantity_unit_id`;
+ALTER TABLE `koufu_sale`.`product_specification_parts`     ADD COLUMN `allowance` VARCHAR(50) NULL AFTER `outs2`;
