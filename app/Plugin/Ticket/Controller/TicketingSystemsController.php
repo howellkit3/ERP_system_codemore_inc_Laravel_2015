@@ -209,10 +209,11 @@ class TicketingSystemsController extends TicketAppController {
 		$view->viewPath = 'Products'.DS.'pdf';	
    
         $output = $view->render('print_specs', false);
-   	
+   	   
         $dompdf = new DOMPDF();
         $dompdf->set_paper("A4");
-        $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));
+        $dompdf->load_html($output, Configure::read('App.encoding'));
+        //$dompdf->load_html($output, 'UTF-8');
         $dompdf->render();
         $canvas = $dompdf->get_canvas();
         $font = Font_Metrics::get_font("helvetica", "bold");
