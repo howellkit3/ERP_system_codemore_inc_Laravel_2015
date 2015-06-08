@@ -142,11 +142,11 @@
             <table class="table table-striped table-hover ">
                         <thead>
                             <tr >
-                                <th class="text-center"><a href="#"><span>Delivery Receipt #</span></a></th>
-                                <th class="text-center"><a href="#"><span>Schedule</span></a></th>
-                                <th class="text-center"><a href="#"><span>Quantity</span></a></th>
-                                <th class="text-center"><a href="#"><span>Location</span></a></th>
-                                <th class="text-center"><a href="#"><span>Status</span></a></th>
+                                <th class=""><a href="#"><span>Delivery Receipt #</span></a></th>
+                                <th class=""><a href="#"><span>Schedule</span></a></th>
+                                <th class=""><a href="#"><span>Quantity</span></a></th>
+                                <th class=""><a href="#"><span>Location</span></a></th>
+                                <th class=""><a href="#"><span>Status</span></a></th>
                             </tr>
                         </thead>
 
