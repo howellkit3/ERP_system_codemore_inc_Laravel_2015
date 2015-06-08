@@ -122,10 +122,13 @@ class ContactPerson extends AppModel {
 			
 				foreach ($contactPersonData[$this->name] as $key => $contactPersonValue) 
 				{
-					//pr($contactPersonData[$this->name]);pr($company_id);die;
-					$contactPersonValue['id'] = !empty($contactPersonData[$this->name][$key]['id']) ? $contactPersonData[$this->name][$key]['id'] : '';
-					$contactPersonValue['model'] = "Company";
-					$contactPersonValue['company_id'] = $company_id;
+					
+					if(!empty($contactPersonValue['firstname'] ) || !empty($contactPersonValue['lastname'])){
+						$contactPersonValue['id'] = !empty($contactPersonData[$this->name][$key]['id']) ? $contactPersonData[$this->name][$key]['id'] : '';
+						$contactPersonValue['model'] = "Company";
+						$contactPersonValue['company_id'] = $company_id;
+					}
+					
 						
 					
 				}

@@ -200,9 +200,9 @@
                                                 <div class="col-lg-10">
                                                
                                                     <button type="button" data-model='Address' class="add-field table-link danger btn btn-success" onclick="cloneData('addressSection',this)"> <i class="fa fa-plus"></i></button>
-                                                 <?php if ($key > 0) : ?>
+                                                 <?php //if ($key > 0) : ?>
                                                     <button type="button" class="remove-field btn btn-danger remove" onclick="removeClone('addressSection')"><i class="fa fa-minus"></i> </button>
-                                                  <?php endif; ?>
+                                                  <?php //endif; ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -664,7 +664,7 @@
 </div>
  <?php echo $this->Form->end(); ?>
 <script>
-    $("#CompanyAddForm").validate();
+    $("#CustomerEditForm").validate();
 </script>
 
 

@@ -79,7 +79,7 @@
                 <div class="col-lg-2">
                     <input type="number" value="1" class="required form-control number outs<?php echo $varCounter ;?>" name="data[ProductSpecificationPart][<?php echo $counterData ;?>][outs1]"/>
                 </div>
-                <label class="col-lg-1 control-label">x</label>
+                <label class="col-lg-1 control-label sizeWith">x</label>
                 <div class="col-lg-2">
                     <input type="number" value="1" class="required form-control outs_1<?php echo $varCounter ;?>" name="data[ProductSpecificationPart][<?php echo $counterData ;?>][outs2]" />
                 </div>
@@ -109,30 +109,6 @@
                             </div>
                         </div>
                         
-                        <!-- <section class="dropItem">
-                            <div class="form-group">
-                                <div class="col-lg-2"></div>
-                                <div class="col-lg-7">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-reorder"></i></span>
-                                        <select name="<?php echo $category ;?>" class="form-control selectProductcategory<?php echo $dynamicId ;?>">
-                                            <option value="">--Select Category--</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-lg-2"></div>
-                                <div class="col-lg-7">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-reorder"></i></span>
-                                        <select name="<?php echo $item ;?>" class="form-control selectProductItem<?php echo $dynamicId ;?>">
-                                            <option value="">--Select Item--</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </section> -->
                         <section class="scrollsection">
                             <header class="main-box-header clearfix">
                                 <h1 class="pull-left">Product List</h1>

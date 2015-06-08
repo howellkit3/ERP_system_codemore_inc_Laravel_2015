@@ -2,26 +2,43 @@
 $(document).ready(function() {
 
     $("body").on('click','.checkMaterial', function(e){
-       
-        $('.material').each(function(){
-           
-            if(!$(this).val()){
-                alert('Please select material in part section!');
-                $('.modalMaterial').focus();
-            }
-        });
+        var nameMaterial = $('.material').val();
         var quantitySpec = $('#ProductSpecificationQuantity').val();
-
         if(quantitySpec == 0){
             alert('Quantity must be not equal to zero.');
+            $('#ProductSpecificationQuantity').val('');
+            $('#ProductSpecificationQuantity').focus();
+            return false;
         }
 
-        if($('.material').val() != ' ' ){
-            $('.checkMaterial').submit();
-        }
+        
 
+        var fieldAppend = $('.appendField').size();
+        
+        if(fieldAppend == 0){
+            alert('Select process for product.');
+            $('#checkbox-inl-1').focus();
+            return false;
+        }
+       
+        if(!nameMaterial){
+
+            $('.material').each(function(){
+           
+                if(!$(this).val()){
+                    alert('Please select material in part section!');
+                    $('.modalMaterial').focus();
+                    return false;
+                }
+            });
+            
+        }else{
+            //console.log('sumbit');
+            $('#ProductSpecificationForm').submit();
+        }
 
     });
+
     $("body").on('keyup','#ProductSpecificationQuantity', function(e){
         var quantitySpec = $(this).val();
         $('.quantity1').val(quantitySpec);

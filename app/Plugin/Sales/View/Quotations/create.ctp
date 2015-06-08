@@ -181,7 +181,7 @@
 												<div class="col-lg-2">
 													<?php 
 			                                            echo $this->Form->input('QuotationItemDetail.0.quantity', array(
-			                                            								'class' => 'form-control item_type number',
+			                                            								'class' => 'form-control item_type number required',
 									                                                    'type' => 'text',
 									                                                    'label' => false,
 									                                                    'placeholder' => 'Quantity'));
@@ -209,7 +209,7 @@
 												<?php echo $this->Form->input('QuotationItemDetail.0.unit_price_currency_id', array(
 														                                'options' => array($currencyData),  
 														                                'label' => false,
-														                                'class' => 'form-control',
+														                                'class' => 'form-control required',
 														                                'empty' => '-Select Currency-'
 														                                 )); 
 
@@ -219,7 +219,7 @@
 												<div class="col-lg-3">
 													<?php 
 			                                            echo $this->Form->input('QuotationItemDetail.0.unit_price', array(
-			                                            								'class' => 'form-control item_type unitprice number',
+			                                            								'class' => 'form-control item_type unitprice number required',
 									                                                    'data' => 'unitprice',
 									                                                    'type' => 'text',
 									                                                    'label' => false,
@@ -319,13 +319,13 @@
 										</div>
 
 										<div class="form-group">
-											<label class="col-lg-2 control-label">Proccess</label>
+											<label class="col-lg-2 control-label">Process</label>
 											<div class="col-lg-8">
 												<?php 
 		                                            echo $this->Form->input('QuotationDetail.process', array(
 		                                            								'class' => 'form-control item_type',
 								                                                    'label' => false,
-								                                                    'placeholder' => 'Proccess'));
+								                                                    'placeholder' => 'Process'));
 	                                            ?>
 											</div>
 										</div>
