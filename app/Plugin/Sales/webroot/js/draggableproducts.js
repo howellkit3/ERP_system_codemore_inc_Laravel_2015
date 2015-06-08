@@ -2,23 +2,32 @@
 $(document).ready(function() {
     
     $("body").on('keyup','.stockQuantity', function(e){
-        var quantitySpec = $('#ProductSpecificationQuantity').val();
+        var quantitySpec = parseInt($('#ProductSpecificationQuantity').val());
         var stockQuantity = $(this).val();
-        console.log(stockQuantity);
-        if(stockQuantity < 0){
-            alert('You must enter positive number!');
+        if (stockQuantity < 0) {
+            alert('You must enter a positive number.!');
+            $('.stockQuantity').focus();
             $(this).val('');
-        }
-
-        if(stockQuantity < quantitySpec){
-            alert('Stocks must be higher than quantity!');
-
+            return false;
         }else{
-            var quantitySpec = parseInt(stockQuantity) - parseInt(quantitySpec);
-            $('#ProductSpecificationQuantity').val(quantitySpec);
+           
+            if(!stockQuantity){
+                stockQuantity = 0;
+            }
+            partTotal = parseInt(quantitySpec) - parseInt(stockQuantity);
+            $('.quantity1').val(partTotal);
+            $('.paper_qty1').val(partTotal);
         }
-
-
+        if(stockQuantity >= quantitySpec){
+            $(this).val(quantitySpec - 1);
+            var newVal = quantitySpec - 1;
+            partTotal = parseInt(quantitySpec) - parseInt(newVal);
+            $('.quantity1').val(partTotal);
+            $('.paper_qty1').val(partTotal);
+            alert('Stocks must be lower than quantity!');
+            
+        }
+        
     });
 
     $("body").on('click','.checkMaterial', function(e){
@@ -31,13 +40,13 @@ $(document).ready(function() {
             return false;
         }
 
-        
-
         var fieldAppend = $('.appendField').size();
         
         if(fieldAppend == 0){
             alert('Select process for product.');
             $('#checkbox-inl-1').focus();
+            $('.processMe').focus();
+            
             return false;
         }
        
@@ -61,6 +70,9 @@ $(document).ready(function() {
     
     $("body").on('keyup','#ProductSpecificationQuantity', function(e){
         var quantitySpec = $(this).val();
+        $('.stockQuantity').val('');
+        $('#ProductSpecificationQuantity').attr('value',quantitySpec);
+        $('#ProductSpecificationQuantity').attr('data',quantitySpec);
         $('.quantity1').val(quantitySpec);
         $('.paper_qty1').val(quantitySpec);
         
@@ -68,6 +80,8 @@ $(document).ready(function() {
 
             //alert('Quantity is required');
             $('#ProductSpecificationQuantity').focus();
+            
+            $('.stockQuantity').prop('readonly', true);
             //return false;
 
         }
@@ -78,6 +92,8 @@ $(document).ready(function() {
             $('#ProductSpecificationQuantity').val('');
             //return false;
 
+        }else{
+            $('.stockQuantity').prop('readonly', false);
         }
        
     });

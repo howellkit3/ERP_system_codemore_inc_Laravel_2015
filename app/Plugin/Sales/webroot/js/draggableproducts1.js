@@ -1,6 +1,25 @@
 
 $(document).ready(function() {
 
+    $("body").on('keyup','.stockQuantity', function(e){
+        var quantitySpec = $('#ProductSpecificationQuantity').val();
+        var stockQuantity = $(this).val();
+        if(stockQuantity < 0){
+            alert('You must enter positive number!');
+            $(this).val('');
+        }
+        if(stockQuantity > quantitySpec){
+            alert('Stocks must be lower than quantity!');
+            $(this).focus();
+
+        }else{
+            var totalquantitySpec = parseInt(quantitySpec) - parseInt(stockQuantity);
+            $('#ProductSpecificationQuantity').val(totalquantitySpec);
+            $('.quantity1').val(totalquantitySpec);
+        }
+
+    });
+    
     $("body").on('click','.checkMaterial', function(e){
         var nameMaterial = $('.material').val();
         var quantitySpec = $('#ProductSpecificationQuantity').val();
