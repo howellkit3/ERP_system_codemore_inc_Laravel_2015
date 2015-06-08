@@ -1,7 +1,6 @@
 
 $(document).ready(function() {
 
-    $('#ProductSpecificationQuantity').focus();
     $("body").on('click','.checkMaterial', function(e){
         var nameMaterial = $('.material').val();
         var quantitySpec = $('#ProductSpecificationQuantity').val();

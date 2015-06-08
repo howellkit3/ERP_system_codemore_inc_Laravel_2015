@@ -214,7 +214,7 @@ class Company extends AppModel {
 		}
 
 		foreach ($data['Contact'] as $key => $value) {
-			if(!empty($value['email']) == ' '){
+			if(!empty($value['number']) == ' '){
 				$data['Contact'][$key] = $value;
 				$data['Contact'][$key]['id'] = !empty($data['Contact'][$key]['id']) ? $data['Contact'][$key]['id'] : '';
 				$data['Contact'][$key]['model'] = 'Company';
