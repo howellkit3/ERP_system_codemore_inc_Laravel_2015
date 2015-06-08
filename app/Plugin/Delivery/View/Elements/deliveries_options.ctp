@@ -17,15 +17,14 @@
 
         <li class="dropdown hidden-xs">
            
-            <?php //echo $this->Html->link("<span class='count'>Delivery Information</span>", array(
-                                                                    //                'controller' => 'deliveries', 
-                                                             //                       'action' => 'delivery_detail',
-                                                           //                         
-                                                           //                         ),
-                                                            //                 array(
-                                                             //                       'escape' => false,
-                                                             //                       'class' => 'btn'
-                                                             //                       )); 
+            <?php echo $this->Html->link("<span class='count'>Delivery Planning</span>", array(
+                                                                                   'controller' => 'deliveries', 
+                                                                                    'action' => 'delivery_plan',
+                                                                                    ),
+                                                                            array(
+                                                                                   'escape' => false,
+                                                                                   'class' => 'btn'
+                                                                                   )); 
             ?>
            
         </li>
