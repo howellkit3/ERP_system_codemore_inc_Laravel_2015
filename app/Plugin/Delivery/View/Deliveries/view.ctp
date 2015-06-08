@@ -1,4 +1,4 @@
-<?php echo $this->Html->script('Sales.quantityLimitview');?>
+<?php echo $this->Html->script('Sales.quantityLimitDelivery');?>
 
 <div class="row1">
     <div class="col-lg-12">
@@ -190,3 +190,9 @@
     
              
 <?php echo $this->element('modals'); ?>
+
+<style>
+.margintop{
+    margin-top : 10%;
+
+</style>

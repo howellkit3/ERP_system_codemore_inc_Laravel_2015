@@ -191,8 +191,6 @@ class DeliveriesController extends DeliveryAppController {
 
        $this->loadModel('Sales.ClientOrder');
 
-       $this->loadModel('Sales.QuotationItemDetail');
-
         $this->ClientOrder->bindDelivery();
         $scheduleInfo = $this->ClientOrder->find('first', array(
                                          'conditions' => array(
@@ -210,7 +208,7 @@ class DeliveriesController extends DeliveryAppController {
                                         )
                                     ));
         
-        $quantityInfo = $this->QuotationItemDetail->find('list',array('fields' => array('quotation_id','quantity')));
+        $quantityInfo = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid','quantity')));
 
         $deliveryData = $this->Delivery->find('list',array('fields' => array('schedule_uuid','status')));
 

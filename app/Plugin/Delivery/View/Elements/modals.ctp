@@ -10,23 +10,22 @@
                  <?php  echo $this->Form->create('ClientOrderDeliverySchedule',array('url'=>(array('controller' => 'deliveries', 
                             'action' => 'edit', $deliveryEdit['Delivery']['id'], $deliveryEdit['DeliveryDetail']['id'])),'class' => 'form-horizontal'))//, $scheduleInfo['ClientOrderDeliverySchedule']['id']);?>
                     
-
                         <div class="form-group" id="existing_items">
                                 <label class="col-lg-2 control-label">D.R. #</label>
                             <div class="col-lg-9">
 
-                                            <?php // pr($deliveryEdit);
+                                            <?php //pr($scheduleInfo['ClientOrderDeliverySchedule']['uuid']);
                                                 echo $this->Form->input('DeliveryDetail.id', array('class' => 'form-control item_type required',
                                                     'type' => 'hidden',
                                                     'value' => $deliveryEdit['DeliveryDetail']['id']
                                                     ));
                                             ?>
 
-                                            <?php  echo $this->Form->input('QuotationItemDetail.quantity', array(
+                                            <?php  echo $this->Form->input('ClientOrderDeliverySchedule.quantity', array(
                                                             'type' => 'hidden',
                                                             'class' => 'form-control item_type',
                                                                 'label' => false,
-                                                                'value' => $quantityInfo[$scheduleInfo['QuotationDetail']['quotation_id']],
+                                                                'value' => $quantityInfo[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']],
                                                                 'id' => 'quantity')); ?>
 
 
@@ -121,7 +120,7 @@
 
     <div class="modal fade" id="myModalApprove" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content margintop">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title">Delivery Schedule</h4>
@@ -143,12 +142,12 @@
 
 
 
-                                            <?php  echo $this->Form->input('QuotationItemDetail.quantity', array(
+                                           <!--  <?php  echo $this->Form->input('QuotationItemDetail.quantity', array(
                                                             'type' => 'hidden',
                                                             'class' => 'form-control item_type',
                                                                 'label' => false,
                                                                 'value' => $quantityInfo[$scheduleInfo['QuotationDetail']['quotation_id']],
-                                                                'id' => 'quantity')); ?>
+                                                                'id' => 'quantity')); ?> -->
                             </div>
                         </div>
 
