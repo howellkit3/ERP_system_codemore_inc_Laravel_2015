@@ -8,7 +8,7 @@ class DeliveryDetail extends AppModel {
     public $name = 'DeliveryDetail';
   
 
-  public function saveDelivery($data = null, $auth = null){
+  public function saveDeliveryDetail($data = null, $auth = null){
 
 		$this->create();
 

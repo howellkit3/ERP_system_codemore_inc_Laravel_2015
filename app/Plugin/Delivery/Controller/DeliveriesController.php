@@ -254,8 +254,8 @@ class DeliveriesController extends DeliveryAppController {
                    //pr($this->request->data); exit;
                
                     //$this->ClientOrderDeliverySchedule->save($this->request->data);
-                    $this->DeliveryDetail->save($this->request->data);
-                    $this->Delivery->saveDelivery($this->request->data,$userData['User']['id']);
+                    $this->DeliveryDetail->save($this->request->data,$userData['User']['id']);
+                    //$this->Delivery->saveDelivery($this->request->data,$userData['User']['id']);
                     $this->Session->setFlash(__('Schedule has been updated.'),'success');
                     $this->redirect( array(
                                  'controller' => 'deliveries', 
