@@ -3,6 +3,7 @@
 <?php $this->Html->addCrumb('Create', array('controller' => 'quotation', 'action' => 'create')); ?>
 <?php  echo $this->Html->script('Sales.company_quotation');?>
 <?php echo $this->Html->script('Sales.checkvat');?>
+<?php  echo $this->Html->script('Sales.create_ajax');?>
 <style type="text/css">#QuotationField12Description{background-color:#fff;}</style>
 <div style="clear:both"></div>
       
@@ -68,8 +69,8 @@
 											<div class="col-lg-8">
 												<?php 
 	                                                echo $this->Form->input('Quotation.item_category_holder_id', 
-	                                                									array( 
-	                                                						'options' => array($itemCategoryData),		
+	                                                						array( 
+	                                                						'options' => array($itemCategoryData),	
 	                                                						'type' => 'select',
 	                                                						'class' => 'form-control item_type categorylist required', 
 	                                                    					'label' => false, 
@@ -85,8 +86,7 @@
 											<div class="col-lg-8">
 												<?php 
 	                                                echo $this->Form->input('Quotation.item_type_holder_id', 
-	                                                									array( 
-	                                                										
+	                                                						array( 
 	                                                						'type' => 'select',
 	                                                						'class' => 'form-control item_type jsoncat required', 
 	                                                    					'label' => false, 
@@ -419,18 +419,16 @@
 
 	<script>
 		
-jQuery(document).ready(function($){
-		$("#QuotationCreateForm").validate();
-		//datepicker
-		$('.datepick').datepicker({
-			format: 'yyyy-mm-dd'
-		});
-		
-});
+	jQuery(document).ready(function($){
+			$("#QuotationCreateForm").validate();
+			//datepicker
+			$('.datepick').datepicker({
+				format: 'yyyy-mm-dd'
+			});
+			
+	});
 
 	 </script>
 		
-		<?php  echo $this->Html->script('Sales.create_ajax');?>
-
 <?php } ?>
 

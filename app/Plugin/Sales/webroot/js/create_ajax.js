@@ -1,3 +1,5 @@
+$(document).ready(function() {	
+
 	$('.contacpersonlist').change(function(){
 			$('.option-append-contact').remove();
 			var contactID = $(this).val();
@@ -23,11 +25,11 @@
 					     $('#QuotationAttentionDetails').append($option);
 					    
 					});	
-					 $('.loading_event').remove();
-					//$('.categorylist').change();	
+					$('.loading_event').remove();
+					$('.categorylist').change();	
 				}
 			});			
-	}).trigger('change');
+	});
 
 	$('.categorylist').change(function(){
 
@@ -56,9 +58,9 @@
 					 $('#item_type_holder_id').change();	
 				}
 			});			
-	}).trigger('change');
+	});
 
-$('#item_type_holder_id').change(function(){
+	$('#item_type_holder_id').change(function(){
 		var itemtypeid = $(this).val();
 		$('.option-append2').remove();
 		$("#loading").clone().show().addClass("loading_event").insertAfter($(this)); //ajax loader
@@ -80,6 +82,7 @@ $('#item_type_holder_id').change(function(){
 				});
 				 $('.loading_event').remove();
 			
-		}
+			}
 		});		
 	});
+});

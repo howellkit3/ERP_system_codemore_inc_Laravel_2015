@@ -1,6 +1,7 @@
 <?php echo $this->Html->script('Sales.inquiry');?>
 <?php  echo $this->Html->script('Sales.company_quotation');?>
 <?php echo $this->Html->script('Sales.checkvat');?>
+<?php  echo $this->Html->script('Sales.create_ajax');?>
 
 <div class="row">
 	<div class="col-lg-12">
@@ -54,8 +55,8 @@
 											<div class="col-lg-8">
 												<?php 
 	                                                echo $this->Form->input('Quotation.item_category_holder_id', 
-	                                                									array( 
-	                                                						'options' => array($itemCategoryData),		
+	                                                						array( 
+	                                                						'options' => array($itemCategoryData),
 	                                                						'type' => 'select',
 	                                                						'class' => 'form-control item_type categorylist required', 
 	                                                    					'label' => false, 
@@ -71,8 +72,7 @@
 											<div class="col-lg-8">
 												<?php 
 	                                                echo $this->Form->input('Quotation.item_type_holder_id', 
-	                                                									array( 
-	                                                										
+	                                                						array( 
 	                                                						'type' => 'select',
 	                                                						'class' => 'form-control item_type jsoncat required', 
 	                                                    					'label' => false, 
