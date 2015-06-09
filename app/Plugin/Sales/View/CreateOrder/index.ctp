@@ -492,7 +492,7 @@
 	                                                echo $this->Form->input('ClientOrderDeliverySchedule.0.schedule',array( 
 	                                                						'class' => 'form-control item_type datepick schedClone required', 
 	                                                    					'label' => false,
-	                                                    					'readonly' => 'readonly',
+	                                                    					'readonly' => false,
 	                                                    					'placeholder' => 'Schedule'  
 	                                                    					));
 	                                            ?>
