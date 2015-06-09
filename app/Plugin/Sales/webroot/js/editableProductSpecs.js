@@ -10,6 +10,37 @@ $(document).ready(function() {
 
     });
 
+    //stocks
+        $("body").on('keyup','.stockQuantity', function(e){
+        var quantitySpec = parseInt($('#ProductSpecificationQuantity').val());
+        var stockQuantity = $(this).val();
+        if (stockQuantity < 0) {
+            alert('You must enter a positive number.!');
+            $('.stockQuantity').focus();
+            $(this).val('');
+            return false;
+        }else{
+           
+            if(!stockQuantity){
+                stockQuantity = 0;
+            }
+            partTotal = parseInt(quantitySpec) - parseInt(stockQuantity);
+            $('.allQuantity').val(partTotal);
+            $('.allPaperQuantity').val(partTotal);
+        }
+        if(stockQuantity >= quantitySpec){
+            $(this).val(quantitySpec - 1);
+            var newVal = quantitySpec - 1;
+            partTotal = parseInt(quantitySpec) - parseInt(newVal);
+            $('.allQuantity').val(partTotal);
+            $('.allPaperQuantity').val(partTotal);
+            alert('Stocks must be lower than quantity!');
+            
+        }
+        
+    });
+    //end stock script
+
 	//start//computation for outs,paper quantity and rate
 	var quantitySpec = $('#ProductSpecificationQuantity').val();
 

@@ -160,7 +160,7 @@
 										<div class="col-lg-3">
 											<?php 
 												echo $this->Form->input('ProductSpecification.stock', array(
-	                                            								'class' => 'form-control item_type number editMe required',
+	                                            								'class' => 'form-control item_type number editMe stockQuantity required',
 	                                            								'type' => 'number',
 							                                                    'label' => false,
 							                                                    'disabled' => true,

@@ -36,7 +36,7 @@
     <div class="form-group">
         <label class="col-lg-2 control-label">Quantity</label>
         <div class="col-lg-2">
-            <input type="number" value="<?php echo $formatDataSpecs['ProductSpecificationPart']['quantity'] ?>" class="quantityMe form-control quantity<?php echo $plusCounter ;?>" name="data[ProductSpecificationPart][<?php echo $counter ;?>][quantity]" readonly />
+            <input type="number" value="<?php echo $formatDataSpecs['ProductSpecificationPart']['quantity'] ?>" class="allQuantity quantityMe form-control quantity<?php echo $plusCounter ;?>" name="data[ProductSpecificationPart][<?php echo $counter ;?>][quantity]" readonly />
         </div>
         <div class="col-lg-3">
            
@@ -58,7 +58,7 @@
         </div>
         <label class="col-lg-1 control-label">Paper Qty</label>
         <div class="col-lg-2">
-            <input type="text" value="<?php echo $formatDataSpecs['ProductSpecificationPart']['paper_quantity'] ?>" class="paper_qtyMe form-control paper_qty<?php echo $plusCounter ;?>" name="data[ProductSpecificationPart][<?php echo $counter ;?>][paper_quantity]" readonly />
+            <input type="text" value="<?php echo $formatDataSpecs['ProductSpecificationPart']['paper_quantity'] ?>" class="allPaperQuantity paper_qtyMe form-control paper_qty<?php echo $plusCounter ;?>" name="data[ProductSpecificationPart][<?php echo $counter ;?>][paper_quantity]" readonly />
         </div>
     </div>
     <div class="form-group">

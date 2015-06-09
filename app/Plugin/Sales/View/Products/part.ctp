@@ -41,7 +41,7 @@
             <div class="form-group">
                 <label class="col-lg-2 control-label">Quantity</label>
                 <div class="col-lg-3">
-                    <input type="number" value="<?php echo $quantitySpec ;?>" class="form-control quantity<?php echo $varCounter ;?>" name="data[ProductSpecificationPart][<?php echo $counterData ;?>][quantity]" readonly />
+                    <input type="number" value="<?php echo $quantitySpec ;?>" class="allQuantity form-control quantity<?php echo $varCounter ;?>" name="data[ProductSpecificationPart][<?php echo $counterData ;?>][quantity]" readonly />
                 </div>
                 <div class="col-lg-2">
                     <?php 
@@ -60,7 +60,7 @@
                 </div>
                 <label class="col-lg-1 control-label">Paper Qty</label>
                 <div class="col-lg-2">
-                    <input type="text" value="<?php echo $quantitySpec ;?>" class="form-control paper_qty<?php echo $varCounter ;?>" name="data[ProductSpecificationPart][<?php echo $counterData ;?>][paper_quantity]" readonly />
+                    <input type="text" value="<?php echo $quantitySpec ;?>" class="allPaperQuantity form-control paper_qty<?php echo $varCounter ;?>" name="data[ProductSpecificationPart][<?php echo $counterData ;?>][paper_quantity]" readonly />
                 </div>
                 
             </div>

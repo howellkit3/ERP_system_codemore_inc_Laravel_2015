@@ -15,15 +15,15 @@ $(document).ready(function() {
                 stockQuantity = 0;
             }
             partTotal = parseInt(quantitySpec) - parseInt(stockQuantity);
-            $('.quantity1').val(partTotal);
-            $('.paper_qty1').val(partTotal);
+            $('.allQuantity').val(partTotal);
+            $('.allPaperQuantity').val(partTotal);
         }
         if(stockQuantity >= quantitySpec){
             $(this).val(quantitySpec - 1);
             var newVal = quantitySpec - 1;
             partTotal = parseInt(quantitySpec) - parseInt(newVal);
-            $('.quantity1').val(partTotal);
-            $('.paper_qty1').val(partTotal);
+            $('.allQuantity').val(partTotal);
+            $('.allPaperQuantity').val(partTotal);
             alert('Stocks must be lower than quantity!');
             
         }
@@ -73,8 +73,8 @@ $(document).ready(function() {
         $('.stockQuantity').val('');
         $('#ProductSpecificationQuantity').attr('value',quantitySpec);
         $('#ProductSpecificationQuantity').attr('data',quantitySpec);
-        $('.quantity1').val(quantitySpec);
-        $('.paper_qty1').val(quantitySpec);
+        $('.allQuantity').val(quantitySpec);
+        $('.allPaperQuantity').val(quantitySpec);
         
         if(!$.isNumeric(quantitySpec)) {
 
@@ -146,6 +146,8 @@ $(document).ready(function() {
         submitCount++;
         submitButton(submitCount);
         var quantitySpec = $('#ProductSpecificationQuantity').val();
+        var stockQuantity = $('.stockQuantity').val();
+        partQuantity = parseInt(quantitySpec) - parseInt(stockQuantity);
 
         //if(!$.isNumeric(quantitySpec)) {
 
@@ -175,7 +177,7 @@ $(document).ready(function() {
             //call part.ctp
             $.ajax({ 
                 type: "GET", 
-                url: serverPath + "sales/products/part/"+varCounter+"/"+quantitySpec+"/"+itemgroupName+"/"+dynamicId+"/"+category+"/"+item+"/"+counterData, 
+                url: serverPath + "sales/products/part/"+varCounter+"/"+partQuantity+"/"+itemgroupName+"/"+dynamicId+"/"+category+"/"+item+"/"+counterData, 
                 dataType: "html", 
                 success: function(partDataField){ 
 
