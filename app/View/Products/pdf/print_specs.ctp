@@ -50,11 +50,11 @@
 						<td style="width:40px;">Item</td>
 						<td style="width:47px;"> &nbsp; </td>
 						<td style="width:40px;">:</td>
-						<td style="width:355px;">
+						<td style="width:280px;">
 							<?php echo $productData['Product']['name'] ;?>
 						</td>
-						<td>to follow
-							<?php //echo (new \DateTime())->format('l, F d, Y '); ?>
+						<td>
+							PO No. : <?php echo $ticketData['JobTicket']['po_number']; ?>
 						</td>
 					</tr>
 				</thead>
@@ -87,7 +87,7 @@
 						<td style="width:40px;">PO Quantity</td>
 						<td style="width:27px;">&nbsp;</td>
 						<td style="width:40px;">:</td>
-						<td style="width:276px;">
+						<td style="width:280px;">
 							<?php echo $specs['ProductSpecification']['quantity'] ;?>
 							<?php echo $unitData[$specs['ProductSpecification']['quantity_unit_id']] ;?>
 						</td>

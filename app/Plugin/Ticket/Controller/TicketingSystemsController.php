@@ -164,6 +164,9 @@ class TicketingSystemsController extends TicketAppController {
     	$productData = $this->Product->find('first',array(
     		'conditions' => array('Product.uuid' => $productUuid)));
 
+        $ticketData = $this->JobTicket->find('first',array(
+            'conditions' => array('JobTicket.uuid' => $ticketUuid)));
+
     	$specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productData['Product']['id'])));
 
     	//find if product has specs
@@ -204,7 +207,7 @@ class TicketingSystemsController extends TicketAppController {
 		
     	$view = new View(null, false);
 		//pr($formatDataSpecs);exit();
-		$view->set(compact('formatDataSpecs','productData','specs','companyData','unitData','subProcess','ticketUuid','delData'));
+		$view->set(compact('ticketData','formatDataSpecs','productData','specs','companyData','unitData','subProcess','ticketUuid','delData'));
         
 		$view->viewPath = 'Products'.DS.'pdf';	
    

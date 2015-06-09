@@ -16,8 +16,8 @@
 	                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'ticketing_systems', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
 
 	                        echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array('controller' => 'ticketing_systems', 'action' => 'print_ticket',$productData['Product']['uuid'],$ticketData['JobTicket']['uuid'],$clientOrderId),array('class' =>'btn btn-primary pull-right','escape' => false,'target' => '_blank'));
+	                        echo $this->Html->link('<i class="fa fa-pencil fa-lg"></i> Add Remarks ', array('controller' => '', 'action' => ''),array('class' =>'btn btn-primary pull-right','escape' => false,'target' => '_blank'));
 
-	                        echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Add Remarks ',array('class' =>'btn btn-primary pull-right','escape' => false,'target' => '_blank'));
 	                    ?>
                     </div>
 				</header>
