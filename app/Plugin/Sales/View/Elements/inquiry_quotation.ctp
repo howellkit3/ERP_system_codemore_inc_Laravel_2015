@@ -105,21 +105,40 @@
 	                                    <div class="form-group">
 	                                    	<label class="col-lg-2 control-label"><span style="color:red">*</span>Company</label>
 											<div class="col-lg-8">
-												<?php echo $this->Form->input('Company.id', array(
-					                                'type' => 'select',
-					                                'label' => false,
-					                                'class' => 'form-control required contacpersonlist',
-					                                'options' => array($companyData),  
-					                                'value' => $company['Company']['company_name'],
+												<?php 
+													// echo $this->Form->input('Company.name', array(
+					        //                         'type' => 'select',
+					        //                         'label' => false,
+					        //                         'class' => 'form-control required contacpersonlist',
+					        //                         'options' => array($companyData),  
+					        //                         'default' => $company['Company']['id'],
 
-					                                 )); 
+					        //                          )); 
+
+					                            ?>
+					                            <?php 
+
+					                            	echo $this->Form->input('Company.id', array(
+						                                'type' => 'hidden',
+						                                'label' => false,
+						                                'class' => 'form-control required contacpersonlist',  
+						                                'value' => $company['Company']['id'],
+						                                 )); 
+
+					                            	echo $this->Form->input('Company.name', array(
+						                                'type' => 'text',
+						                                'label' => false,
+						                                'readonly' => true,
+						                                'class' => 'form-control required contacpersonlist', 
+						                                'value' => $company['Company']['company_name'],
+						                                 )); 
 
 					                            ?>
 											</div>
 										</div>
 
                                    		<div class="form-group">
-	                                    	<label class="col-lg-2 control-label"><span style="color:red">*</span>Attention</label>
+	                                    	<label class="col-lg-2 control-label">Attention</label>
 											<div class="col-lg-8">
 												<?php 
 		                                            echo $this->Form->input('Quotation.attention_details', array(
