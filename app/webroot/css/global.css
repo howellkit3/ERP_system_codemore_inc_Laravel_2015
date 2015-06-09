@@ -325,7 +325,10 @@ body.dragging, body.dragging * {
 }
 #myModalDelivery{
   z-index: 1;
-}   
+}
+#myModalDeliveries{
+  z-index: 1;
+}    
 .xbtn{
   float: right;
 }
@@ -360,3 +363,5 @@ body.dragging, body.dragging * {
 .fa-stack {
         width: 1.75em;
 }
+
+/*z index*/

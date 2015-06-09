@@ -22,7 +22,7 @@
                 
                   <?php }else{ ?>
 
-                     <a data-toggle="modal" href="#myModalDelivery" class="btn btn-primary mrg-b-lg pull-right addSchedButton "><i class="fa fa-edit fa-lg"></i> Edit Schedule</a>
+                     <a data-toggle="modal" href="#myModalDeliveries" class="btn btn-primary pull-right addSchedButton "><i class="fa fa-edit fa-lg"></i> Edit Schedule</a>
 
                  <?php }}else{ ?>
 
@@ -73,7 +73,8 @@
 
                                 <tr>
                                     <td>P.O. Number</td>
-                                    <td><?php echo  $scheduleInfo['Company']['uuid']; ?></td>
+                                    <td><?php echo  $scheduleInfo['ClientOrder']['po_number']; 
+                                   ?></td>
                                 </tr>
 
                                 <tr>
@@ -194,6 +195,14 @@
 <style>
 .margintop{
     margin-top : 10%; 
+  }
 
-</style    
+.navbar,.nav-col{
+  z-index: 0 !important;
+}
+#nav-col{
+  z-index: 0 !important;
+}
+
+</style>    
 
