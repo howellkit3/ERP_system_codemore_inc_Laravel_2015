@@ -65,7 +65,7 @@ jQuery(function($){
 			});			
 		}
 		});			
-	}).trigger('change');
+	});
 
 	$('#select_company').change(function(){
 
