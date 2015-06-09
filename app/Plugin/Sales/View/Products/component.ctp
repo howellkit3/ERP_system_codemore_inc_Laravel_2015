@@ -9,13 +9,14 @@
       <div class="form-group">
           <div class="col-lg-2"></div>
           <div class="col-lg-8">
-              <div class="input-group">
-                  <div class="input-group-addon"><i class="fa fa-reorder"></i></div>
-                  <input name="<?php echo $realName ;?>" class="required form-control label<?php echo $varCounter ;?>" type="text">
-                  <div class="top-pad"></div>
-              </div>
+              <!-- <div class="form-group"> -->
+                 <!--  <div class="input-group-addon"><i class="fa fa-reorder"></i></div> -->
+              <input name="<?php echo $realName ;?>" class="required form-control label<?php echo $varCounter ;?>" type="text">
+              <div class="top-pad"></div>
+             <!--  </div> -->
           </div>
       </div>
+      
   </section>
   <input type="hidden" name="data[ProductSpecificationDetail][]" value="Component">
 </li>
