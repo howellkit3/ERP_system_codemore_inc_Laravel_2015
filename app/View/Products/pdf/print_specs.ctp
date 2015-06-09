@@ -134,6 +134,55 @@
 			      	</thead>
 			    </table>
 			<?php } ?>
+			<br><br><br>
+			<?php if (!empty($ticketData['JobTicket']['remarks'])) { ?>
+				<table class="layout">
+					<thead>
+						<tr>
+							<td style="width:40px;">Remarks</td>
+							<td style="width:40px;"> </td>
+						</tr>
+						<tr>
+							<td style="width:40px;"> </td>
+							<td style="width:40px;"><?php echo ucfirst($ticketData['JobTicket']['remarks'])?></td>
+						</tr>
+					</thead>
+				</table>
+			<?php } ?>
+			<br><br>
+			<table class="layout" >
+				<thead>
+					<tr>
+						<td style="width:40px;">Issuer</td>
+						<td style="width:40px;"> </td>
+					</tr>
+					<tr>
+						<td style="width:40px;">&nbsp;</td>
+					</tr>
+					<tr>
+						<td style="width:40px;">&nbsp;</td>
+					</tr>
+				</thead>
+			</table>
+
+			<table class="layout" style="border-top:1px solid #000;margin-left:50px;">
+				<thead>
+					<tr>
+						<td style="width:100px;">&nbsp;</td>
+					</tr>
+				</thead>
+			</table>
+			<table class="layout">
+				<thead>
+					<tr>
+						<td style="width:35px;">&nbsp;</td>
+						<td style="width:0px;">
+							<?php echo ucfirst($userData['User']['first_name']); ?>&nbsp;
+							<?php echo ucfirst($userData['User']['last_name']); ?>
+						</td>
+					</tr>
+				</thead>
+			</table>
 		</div>
 	</div>
 </div>

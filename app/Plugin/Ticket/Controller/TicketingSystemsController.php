@@ -39,6 +39,8 @@ class TicketingSystemsController extends TicketAppController {
 
 	public function view($productUuid = null,$ticketId = null,$clientOrderId = null) {
 
+        $userData = $this->Session->read('Auth');
+
         $this->loadModel('Sales.ProductSpecificationDetail');
 
         $this->loadModel('Sales.ProductSpecification');
@@ -93,7 +95,7 @@ class TicketingSystemsController extends TicketAppController {
         $formatDataSpecs = $this->ProductSpecificationDetail->findData($productUuid);
 
 		
-		$this->set(compact('delData','ticketData','formatDataSpecs','specs','unitData','subProcess','productData','companyData','clientOrderId'));
+		$this->set(compact('userData','delData','ticketData','formatDataSpecs','specs','unitData','subProcess','productData','companyData','clientOrderId'));
 	}
 
 	public function updatePendingStatus($ticketId = null) {
@@ -207,7 +209,7 @@ class TicketingSystemsController extends TicketAppController {
 		
     	$view = new View(null, false);
 		//pr($formatDataSpecs);exit();
-		$view->set(compact('ticketData','formatDataSpecs','productData','specs','companyData','unitData','subProcess','ticketUuid','delData'));
+		$view->set(compact('userData','ticketData','formatDataSpecs','productData','specs','companyData','unitData','subProcess','ticketUuid','delData'));
         
 		$view->viewPath = 'Products'.DS.'pdf';	
    
@@ -236,6 +238,23 @@ class TicketingSystemsController extends TicketAppController {
         }
         
         exit();
+    }
+
+    public function add_remarks(){
+       
+        $this->JobTicket->id = $this->request->data['JobTicket']['id'];
+        $this->JobTicket->saveField('remarks', $this->request->data['JobTicket']['remarks']);
+
+        $this->Session->setFlash(
+            __('Remarks in Job Ticket successfully added', 'success')
+        );
+
+        return $this->redirect(array('controller' => 'ticketing_systems', 
+                'action' => 'view',
+                $this->request->data['JobTicket']['product_uuid'],
+                $this->request->data['JobTicket']['id'],
+                $this->request->data['JobTicket']['client_order_id']));
+
     }
 
 }

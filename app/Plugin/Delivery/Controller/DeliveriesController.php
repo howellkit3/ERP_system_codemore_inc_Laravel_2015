@@ -98,7 +98,7 @@ class DeliveriesController extends DeliveryAppController {
 
    		
    }
-   public function add($id = null){
+   public function add($deliveryScheduleId = null,$quotationId = null, $clientsOrderUuid = null){
 
    		  $userData = $this->Session->read('Auth');
       
@@ -108,7 +108,7 @@ class DeliveriesController extends DeliveryAppController {
         
         $scheduleInfo = $this->ClientOrderDeliverySchedule->find('first', array(
                                                                          'conditions' => array(
-                                                                          'ClientOrderDeliverySchedule.id' => $id
+                                                                          'ClientOrderDeliverySchedule.id' => $deliveryScheduleId
                                                                         )
                                                                     ));
 
@@ -135,7 +135,7 @@ class DeliveriesController extends DeliveryAppController {
 
                 $this->redirect(
 
-                    array('controller' => 'deliveries', 'action' => 'index')
+                    array('controller' => 'deliveries', 'action' => 'view',$deliveryScheduleId,$quotationId,$clientsOrderUuid)
 
                 );
 
@@ -183,7 +183,7 @@ class DeliveriesController extends DeliveryAppController {
 
    }
 
-    public function view($id = null, $quantity = null, $clientsOrder = null) {
+    public function view($deliveryScheduleId = null, $quotationId = null, $clientsOrderUuid = null) {
 
      // pr($this->request->data ); exit;
 
@@ -194,7 +194,7 @@ class DeliveriesController extends DeliveryAppController {
         $this->ClientOrder->bindDelivery();
         $scheduleInfo = $this->ClientOrder->find('first', array(
                                          'conditions' => array(
-                                          'ClientOrderDeliverySchedule.id' => $id
+                                          'ClientOrderDeliverySchedule.id' => $deliveryScheduleId
                                         )
                                     ));
 
@@ -204,7 +204,7 @@ class DeliveriesController extends DeliveryAppController {
         $this->Delivery->bindDelivery();
         $deliveryEdit = $this->Delivery->find('first', array(
                                          'conditions' => array(
-                                        'Delivery.clients_order_id' => $clientsOrder
+                                        'Delivery.clients_order_id' => $clientsOrderUuid
                                         )
                                     ));
         
@@ -232,11 +232,11 @@ class DeliveriesController extends DeliveryAppController {
             }
 
 
-        $this->set(compact('scheduleInfo',  'deliveryData', 'quantityInfo','deliveryDataID','deliveryDetailsData', 'deliveryEdit'));
+        $this->set(compact('deliveryScheduleId','quotationId','clientsOrderUuid','scheduleInfo',  'deliveryData', 'quantityInfo','deliveryDataID','deliveryDetailsData', 'deliveryEdit'));
         
 }
 
- public function edit($idDelivery = null,$idDeliveryDetail = null) {
+ public function edit($idDelivery = null,$idDeliveryDetail = null,$deliveryScheduleId = null, $quotationId = null, $clientsOrderUuid = null) {
 
         $userData = $this->Session->read('Auth');
 
@@ -257,7 +257,7 @@ class DeliveriesController extends DeliveryAppController {
                     $this->Session->setFlash(__('Schedule has been updated.'),'success');
                     $this->redirect( array(
                                  'controller' => 'deliveries', 
-                                 'action' => 'index'
+                                 'action' => 'view',$deliveryScheduleId,$quotationId,$clientsOrderUuid
                             ));
                 
                 $this->Session->setFlash(__('Unable to update your post.'));

@@ -16,9 +16,15 @@
 	                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'ticketing_systems', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
 
 	                        echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array('controller' => 'ticketing_systems', 'action' => 'print_ticket',$productData['Product']['uuid'],$ticketData['JobTicket']['uuid'],$clientOrderId),array('class' =>'btn btn-primary pull-right','escape' => false,'target' => '_blank'));
-	                        echo $this->Html->link('<i class="fa fa-pencil fa-lg"></i> Add Remarks ', array('controller' => '', 'action' => ''),array('class' =>'btn btn-primary pull-right','escape' => false,'target' => '_blank'));
+
+	                        if(!empty($ticketData['JobTicket']['remarks'])){
+	                        	$buttonName = 'Edit Remarks';
+	                        }else{
+	                        	$buttonName = 'Add Remarks';
+	                        }
 
 	                    ?>
+	                    <a data-toggle="modal" href="#myModalRemarks" class="btn btn-primary mrg-b-lg pull-right"><i class="fa fa-pencil fa-lg"></i> <?php echo $buttonName ;?></a>
                     </div>
 				</header>
 			</div>
@@ -158,5 +164,90 @@
 				</div>
 			</div>
 		</div>
+		<?php if (!empty($ticketData['JobTicket']['remarks'])) { ?>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="main-box">
+						
+						<header class="main-box-header clearfix">
+							<h2>Remarks</h2>
+						</header>
+						<p style="text-indent:50px;">
+							<?php echo ucfirst($ticketData['JobTicket']['remarks']); ?>
+						</p>
+						
+					</div>
+					
+				</div>
+			</div>
+		<?php } ?>
+
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="main-box">
+					
+					<header class="main-box-header clearfix">
+						<h2>Issuer</h2>
+					</header>
+					<p style="text-indent:50px;">
+						<?php echo ucfirst($userData['User']['first_name']); ?>&nbsp;
+						<?php echo ucfirst($userData['User']['last_name']); ?>
+					</p>
+					
+				</div>
+				
+			</div>
+		</div>
+
 	</div>
 </div>
+
+<div class="modal fade" id="myModalRemarks" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Add Remarks</h4>
+            </div>
+            <div class="modal-body">
+             <?php echo $this->Form->create('JobTicket',array('url'=>(array('controller' => 'ticketing_systems','action' => 'add_remarks')),'class' => 'form-horizontal'));?>
+                <?php 
+                    echo $this->Form->input('JobTicket.id', array('class' => 'form-control item_type required',
+                        'type' => 'hidden',
+                        'value' => $ticketData['JobTicket']['id'],
+                        'type' => 'hidden'));
+                    echo $this->Form->input('JobTicket.product_uuid', array('class' => 'form-control item_type required',
+                        'type' => 'hidden',
+                        'value' => $productData['Product']['uuid'],
+                        'type' => 'hidden'));
+                     echo $this->Form->input('JobTicket.client_order_id', array('class' => 'form-control item_type required',
+                        'type' => 'hidden',
+                        'value' => $ticketData['JobTicket']['client_order_id'],
+                        'type' => 'hidden'));
+                ?>
+
+                    <div class="form-group">
+                        <label for="inputPassword1" class="col-lg-2 control-label"> Remarks</label>
+                        <div class="col-lg-9">
+                            <?php 
+                                echo $this->Form->input('JobTicket.remarks', array(
+                                    'label' => false,
+                                    'class' => 'form-control ',
+                                    'empty' => false,
+                                    'value' => !empty($ticketData['JobTicket']['remarks']) ? $ticketData['JobTicket']['remarks'] : ' '
+                                )); ?>
+                        </div>
+                    </div>
+   
+                    <div class="modal-footer">
+                         <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i> Add Remarks</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        
+                    </div>
+                </form>
+                
+            </div>
+            
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

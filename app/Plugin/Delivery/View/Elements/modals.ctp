@@ -10,7 +10,8 @@
                 <div class="modal-body">
                     <?php  
                         echo $this->Form->create('ClientOrderDeliverySchedule',array(
-                                    'url'=>(array('controller' => 'deliveries','action' => 'edit', $deliveryEdit['Delivery']['id'], $deliveryEdit['DeliveryDetail']['id'])),'class' => 'form-horizontal'));
+                                    'url'=>(array('controller' => 'deliveries','action' => 'edit', $deliveryEdit['Delivery']['id'], $deliveryEdit['DeliveryDetail']['id'],$scheduleInfo['ClientOrderDeliverySchedule']['id'],$quotationId,$clientsOrderUuid)),'class' => 'form-horizontal'));
+                        //$scheduleInfo['ClientOrderDeliverySchedule']['id'],$quotationId,$clientsOrderUuid
                             //, $scheduleInfo['ClientOrderDeliverySchedule']['id']); ?>
                     
                         <div class="form-group" id="existing_items">
@@ -126,7 +127,7 @@
                 </div>
                 <div class="modal-body">
                     <?php  echo $this->Form->create('ClientOrderDeliverySchedule',array('url'=>(array('controller' => 'deliveries', 
-                            'action' => 'add', $scheduleInfo['ClientOrderDeliverySchedule']['id'])),'class' => 'form-horizontal'))//, $scheduleInfo['ClientOrderDeliverySchedule']['id']);?>
+                            'action' => 'add', $scheduleInfo['ClientOrderDeliverySchedule']['id'],$quotationId,$clientsOrderUuid)),'class' => 'form-horizontal'))//, $scheduleInfo['ClientOrderDeliverySchedule']['id']);?>
                     
 
                         <div class="form-group" id="existing_items">
