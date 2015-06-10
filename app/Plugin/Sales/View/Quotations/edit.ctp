@@ -206,7 +206,7 @@
                         'hidden' => 'hidden',
                         'readonly' => 'readonly',
                         'label' => false,
-                        'name' => 'data[QuotationDetail]['.$key.'][id]',
+                        'name' => 'data[QuotationDetail][id]',
                         'value' => $itemDetailDetails['QuotationItemDetail']['id'],
                         'id' => 'id'));
                 ?>
@@ -228,7 +228,7 @@
 									                                                    'type' => 'text',
 									                                                    'label' => false,
 									                                                    'value' => $itemDetailDetails['QuotationItemDetail']['quantity'],
-									                                                    'name' => 'data[QuotationDetail]['.$key.'][quantity]',
+									                                                    'name' => 'data[QuotationItemDetail]['.$key.'][quantity]',
 									                                                    'placeholder' => 'Quantity'));
 		                                            ?>
 													 
@@ -238,7 +238,7 @@
 					                                'options' => array($unitData),  
 					                                'label' => false,
 					                                'default' => $itemDetailDetails['QuotationItemDetail']['quantity_unit_id'],
-					                                'name' => 'data[QuotationDetail]['.$key.'][quantity_unit_id]',
+					                                'name' => 'data[QuotationItemDetail]['.$key.'][quantity_unit_id]',
 					                                'class' => 'form-control required',
 					                                'empty' => '---Select Unit---'
 					                                 )); 
@@ -257,7 +257,7 @@
 									                                                    'type' => 'text',
 									                                                    'label' => false,
 									                                                    'value' => $itemDetailDetails['QuotationItemDetail']['unit_price'],
-									                                                    'name' => 'data[QuotationDetail]['.$key.'][unit_price]',
+									                                                    'name' => 'data[QuotationItemDetail]['.$key.'][unit_price]',
 									                                                    'data-section' => 'quotationItemDetail',
 									                                                    'placeholder' => 'Unit Price'));
 		                                            ?>
@@ -270,7 +270,7 @@
 														                                'label' => false,
 														                                'default' => $itemDetailDetails['QuotationItemDetail']['unit_price_currency_id'],
 														                                'class' => 'form-control',
-														                                'name' => 'data[QuotationDetail]['.$key.'][unit_price_currency_id]',
+														                                'name' => 'data[QuotationItemDetail]['.$key.'][unit_price_currency_id]',
 														                                'empty' => '---Select Currency---'
 														                                 )); 
 
@@ -288,7 +288,7 @@
 									                                                    'label' => false,
 									                                                    'value' => $itemDetailDetails['QuotationItemDetail']['vat_price'],
 									                                                    'id' => 'QuotationItemDetail'.$key.'VatPrice',
-									                                                    'name' => 'data[QuotationDetail]['.$key.'][vat_price]',
+									                                                    'name' => 'data[QuotationItemDetail]['.$key.'][vat_price]',
 									                                                    'readonly' => 'readonly',
 									                                                    
 									                                                    'placeholder' => 'Vat Price'));
@@ -301,14 +301,14 @@
 												<label class="col-lg-2 control-label"></label>
 												<div class="col-lg-8">
 												<?php if(!empty($itemDetailDetails['QuotationItemDetail']['vat_price'])){ 
-													$ckeckName = 'data[QuotationDetail]['.$key.'][vat_price]';
+													$ckeckName = 'data[QuotationItemDetail]['.$key.'][vat_priceC]';
 													?>
 
 													<input id="checkbox-1" class="checkvat checkbox-nice vat-price" type="checkbox" name="<?php echo $ckeckName; ?>" rel=".12" data-section='quotationItemDetail' checked="checked">
 
 												<?php } else { ?>
 
-													<input id="checkbox-1" class="checkvat checkbox-nice vat-price" type="checkbox" name="[QuotationItemDetail][0][vat_price]" data-section='quotationItemDetail' rel=".12" >
+													<input id="checkbox-1" class="checkvat checkbox-nice vat-price" type="checkbox" name="[QuotationItemDetail][0][vat_priceC]" data-section='quotationItemDetail' rel=".12" >
 
 												<?php } ?>	
 													<font color="gray"> Click to Compute the Unit Price with VAT </font>
@@ -325,7 +325,7 @@
 									                                                    'alt' => 'address1',
 									                                                    'type' => 'text',
 									                                                    'label' => false,
-									                                                    'name' => 'data[QuotationDetail]['.$key.'][material]',
+									                                                    'name' => 'data[QuotationItemDetail]['.$key.'][material]',
 									                                                    'value' => $itemDetailDetails['QuotationItemDetail']['material'],
 									                                                    'placeholder' => 'Material'));
 		                                            ?>

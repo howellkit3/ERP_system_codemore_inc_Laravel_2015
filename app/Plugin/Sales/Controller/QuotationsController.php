@@ -223,7 +223,7 @@ class QuotationsController extends SalesAppController {
 		if ($this->request->is(array('post','put'))) {
 
             if (!empty($this->request->data)) {
-
+            	
             	if (!empty($this->request->data['submit']) && $this->request->data['submit'] == 'Save as Draft') {
             			$this->request->data['Quotation']['status'] = 'draft';	
             			}
