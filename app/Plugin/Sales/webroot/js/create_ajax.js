@@ -59,9 +59,10 @@ $(document).ready(function() {
 	});
 
 	$('.categorylist').change(function(){
-			console.log('test');
+			
 			$('.option-append').remove();
-			$('.option-append2').remove();	
+			$('.option-append2').remove();	item_type_holder_id
+
 			$("#loading").clone().show().addClass("loading_event").insertAfter($(this)); //ajax loader
 			var option = $(this).val();
 			var selected = $('#selected_item_type').val();
@@ -71,7 +72,8 @@ $(document).ready(function() {
 				async: false,
 				dataType: "json",
 				success: function(data) {
-			
+					$("#item_type_holder_id").find('[value]').remove();
+					$('#item_type_holder_id').append('<option value="">--Select Item--</option>');
 					$.each(data, function(key, value) {
 						if (value.id == selected) {
 							$option = "<option class='option-append' value="+value.ItemTypeHolder.id+">"+value.ItemTypeHolder.name+"</option>";	
