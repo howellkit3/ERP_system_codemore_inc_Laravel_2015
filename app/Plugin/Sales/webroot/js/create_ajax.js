@@ -14,6 +14,7 @@ $(document).ready(function() {
 				async: false,
 				dataType: "json",
 				success: function(data) {
+					
 					$.each(data, function(key, value) {
 						
 						if (value.ContactPerson.id == selected) {
@@ -23,10 +24,11 @@ $(document).ready(function() {
 							// $option = "<option class='option-append-contact'  value="+value.ItemTypeHolder.id+">"+value.ItemTypeHolder.name+"</option>";
 						}
 					     $('#QuotationAttentionDetails').append($option);
+					     //alert($option)
 					    
 					});	
 					$('.loading_event').remove();
-					$('.categorylist').change();	
+					//$('.categorylist').change();	
 				}
 			});			
 	});

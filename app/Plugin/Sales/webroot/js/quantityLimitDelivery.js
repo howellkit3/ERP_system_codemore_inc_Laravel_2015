@@ -15,7 +15,7 @@ $( document ).ready(function() {
 		
 	    $($('.quantityLimit')).each(function() {
 	     	allVal += parseInt($(this).val());
-	     	//console.log(isText.val());
+	     	//alert(quantityValue);
 		});
 		
 		console.log(allVal);
@@ -54,32 +54,32 @@ $( document ).ready(function() {
 		
 	});
 
-	// var allFieldsVal = 0;
-	// $('.quantityLimit').each(function() {
- //     	allFieldsVal += parseInt($(this).val());
+	var allFieldsVal = 0;
+	$('.quantityLimit').each(function() {
+     	allFieldsVal += parseInt($(this).val());
      
-	// });
+	});
 	
-	// if ( allFieldsVal == quantityValue ){
+	if ( allFieldsVal == quantityValue ){
 		
-	// 	$('.addSchedButton').attr('disabled','disabled');
-	// }
+		$('.addSchedButton').attr('disabled','disabled');
+	}
 
-	// $("body").on('click','.buttonEdit', function(e){
+	$("body").on('click','.buttonEdit', function(e){
 
-	// 	$(this).parents('.tab-container').find('.editable').attr('readonly', false);
- //    	$(this).parents('.tab-container').find('button.editable').attr('disabled', false);
- //    	$(this).html('Cancel');
- //    	$(this).addClass('Cancel');
+		$(this).parents('.tab-container').find('.editable').attr('readonly', false);
+    	$(this).parents('.tab-container').find('button.editable').attr('disabled', false);
+    	$(this).html('Cancel');
+    	$(this).addClass('Cancel');
     
     	
- //    	$("body").on('click','.Cancel', function(e){
-	//     	$(this).parents('.tab-container').find('.editable').attr('readonly', true);
-	//     	$(this).parents('.tab-container').find('button.editable').attr('disabled', true);
-	//     	$(this).html('Edit');
-	//     	$(this).removeClass('Cancel');
-	//     });
+    	$("body").on('click','.Cancel', function(e){
+	    	$(this).parents('.tab-container').find('.editable').attr('readonly', true);
+	    	$(this).parents('.tab-container').find('button.editable').attr('disabled', true);
+	    	$(this).html('Edit');
+	    	$(this).removeClass('Cancel');
+	    });
     	
- //    });
+    });
 
 });

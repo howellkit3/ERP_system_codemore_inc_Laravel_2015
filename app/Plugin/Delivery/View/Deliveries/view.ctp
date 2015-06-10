@@ -4,7 +4,7 @@
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
             <div class="filter-block pull-right marginDelivery">
-               <?php   
+               <?php   //pr($scheduleInfo); exit;
                 
                   echo $this->Html->link('<i class="fa  fa-arrow-left fa-lg "></i> Back ', 
                         array('controller' => 'deliveries', 
@@ -22,7 +22,7 @@
                 
                   <?php }else{ ?>
 
-                     <a data-toggle="modal" href="#myModalDeliveries" class="btn btn-primary pull-right addSchedButton "><i class="fa fa-edit fa-lg"></i> Edit Schedule</a>
+                     <!-- <a data-toggle="modal" href="#myModalDeliveries" class="btn btn-primary pull-right addSchedButton "><i class="fa fa-edit fa-lg"></i> Edit Schedule</a> -->
 
                  <?php }}else{ ?>
 
@@ -40,12 +40,6 @@
                  
 
                 <?php } ?>
-
-
-
-                
-
-                
 
                <br><br>
            </div>
@@ -158,9 +152,9 @@
 </div>
 
 
-
-<div class="row1">
-    <div class="col-lg-12">
+<div class="main-box-body clearfix">
+    <div class="row1">
+      <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
             <div class="filter-block pull-right marginDelivery">
 
@@ -168,25 +162,31 @@
             <header class="main-box-header clearfix">
 
                 <h2 class="pull-left"><b>Delivery Schedule</b></h2>
+                <a data-toggle="modal" href="#myModalDeliveries" class="btn btn-primary pull-right addSchedButton  "><i class="fa fa-edit fa-lg"></i> Add Schedule</a>
                 
             </header>
 
             <table class="table table-striped table-hover ">
                         <thead>
                             <tr >
-                                <th class=""><a href="#"><span>Delivery Receipt #</span></a></th>
+                                <th class=""><a href="#"><span>Delivery Receipt #</span></a>  </th>
                                 <th class=""><a href="#"><span>Schedule</span></a></th>
-                                <th class=""><a href="#"><span>Quantity</span></a></th>
                                 <th class=""><a href="#"><span>Location</span></a></th>
-                               <!--  <th class=""><a href="#"><span>Status</span></a></th> -->
+                                <th class=""><a href="#"><span>Quantity</span></a></th>
+                                <th class=""><a href="#"><span>Remaining</span></a></th>
+                                <th class=""><a href="#"><span>Status</span></a></th>
+                                <th class=""><a href="#"><span>Action</span></a></th>
                             </tr>
                         </thead>
+
+
 
                         <?php echo $this->element('delivery_table'); ?>  
                     </table>
               </div>
         </div>
-    </div>  
+    </div>
+  </div>    
 
     
              
