@@ -200,13 +200,13 @@
 					</div>
 				</div>
 
-			<?php foreach ($itemDetailData as $key => $itemDetailDetails) {  ?>
+			<?php foreach ($itemDetailData as $key => $itemDetailDetails) { ?>
 				<?php 
-                    echo $this->Form->input('QuotationDetail.id', array('class' => 'form-control item_type',
+                    echo $this->Form->input('QuotationItemDetail.id', array('class' => 'form-control item_type',
                         'hidden' => 'hidden',
                         'readonly' => 'readonly',
                         'label' => false,
-                        'name' => 'data[QuotationDetail][id]',
+                        'name' => 'data[QuotationItemDetail]['.$key.'][id]',
                         'value' => $itemDetailDetails['QuotationItemDetail']['id'],
                         'id' => 'id'));
                 ?>
@@ -224,12 +224,12 @@
 												<div class="col-lg-2">
 													<?php 
 			                                            echo $this->Form->input('QuotationItemDetail.0.quantity', array(
-			                                            								'class' => 'form-control item_type',
-									                                                    'type' => 'text',
-									                                                    'label' => false,
-									                                                    'value' => $itemDetailDetails['QuotationItemDetail']['quantity'],
-									                                                    'name' => 'data[QuotationItemDetail]['.$key.'][quantity]',
-									                                                    'placeholder' => 'Quantity'));
+                            								'class' => 'form-control item_type',
+		                                                    'type' => 'text',
+		                                                    'label' => false,
+		                                                    'value' => $itemDetailDetails['QuotationItemDetail']['quantity'],
+		                                                    'name' => 'data[QuotationItemDetail]['.$key.'][quantity]',
+		                                                    'placeholder' => 'Quantity'));
 		                                            ?>
 													 
 												</div>
