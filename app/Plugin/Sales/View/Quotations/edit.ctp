@@ -124,6 +124,7 @@
 											<label class="col-lg-2 control-label">Item</label>
 											<div class="col-lg-8">
 												<?php 
+													
 	                                                echo $this->Form->input('QuotationDetail.product_id', 
 	                                                									array( 
 	                                                						'options' => array($productData),				
@@ -133,8 +134,8 @@
 	                                                    					//'id' => 'txtProduct',
 	                                                    					'id' => 'product_holder_id',
 	                                                    					'placeholder' => 'Item',
-	                                                    					'empty' => '--Select Item--'
-
+	                                                    					'empty' => '--Select Item--',
+	                                                    					'default' => $quotationData['QuotationDetail']['product_id']
 
 	                                                    					));
 	                                            ?>

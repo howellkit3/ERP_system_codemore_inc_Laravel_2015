@@ -99,10 +99,11 @@ $(document).ready(function() {
 			type: "get",
 			dataType: "json",
 			success: function(data) {
-				
+				$("#product_holder_id").find('[value]').remove();
+				$('#product_holder_id').append('<option value="">--Select Item--</option>');
 				$.each(data, function(key, value) {
 					if (value.id == itemtypeid) {
-					$option = "<option class='option-append2' selected value="+value.Product.id+">"+value.Product.name+"</option>";	
+					$option = "<option class='option-append2' value="+value.Product.id+">"+value.Product.name+"</option>";	
 					} else {
 					$option = "<option class='option-append2' value="+value.Product.id+">"+value.Product.name+"</option>";
 					}
