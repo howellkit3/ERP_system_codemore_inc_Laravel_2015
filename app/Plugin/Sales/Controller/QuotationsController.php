@@ -711,7 +711,7 @@ class QuotationsController extends SalesAppController {
 		
 		$this->loadModel('Sales.Company');
 
-		$this->Quotation->bind(array('QuotationItemDetail'));
+		$this->Quotation->bind(array('QuotationItemDetail','QuotationDetail'));
 
 		$itemDetailData = $this->Quotation->QuotationItemDetail->find('all',
 														array('conditions' => 
@@ -728,18 +728,20 @@ class QuotationsController extends SalesAppController {
 												));
 
 		$userData = $this->Session->read('Auth');
-			
+
+		$quotationData = $this->Quotation->findById($quotationId);
+		
 		$itemCategoryData = $this->ItemCategoryHolder->find('list', array(
 															'fields' => array('id', 'name'),
 															'order' => array('ItemCategoryHolder.name' => 'ASC')
 															));
 
-		$itemTypeData = $this->ItemTypeHolder->find('first', array(
-															//'conditions' => array('ItemTypeHolder.item_category_holder_id' => 'ItemCategoryHolder.id'),
+		$itemTypeData = $this->ItemTypeHolder->find('list', array(
+															'conditions' => array('ItemTypeHolder.item_category_holder_id' => $quotationData['Quotation']['item_category_holder_id']),
 															'fields' => array('id', 'name'),
 															'order' => array('ItemTypeHolder.name' => 'ASC')
 															));
-
+	
 		$paymentTermData = $this->PaymentTermHolder->find('list', array(
 															'fields' => array('id', 'name'),
 															'order' => array('PaymentTermHolder.name' => 'ASC')
@@ -752,7 +754,7 @@ class QuotationsController extends SalesAppController {
 															));
 
 		if(!empty($quotationId)){
-			$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail'));
+			
 			//$this->request->data = $this->Quotation->read(null,$quotationId);
 
 			$userData = $this->Session->read('Auth');
@@ -776,7 +778,7 @@ class QuotationsController extends SalesAppController {
 		                $this->Quotation->QuotationDetail->quotation_id = $quotationId;
 		                $this->Quotation->QuotationItemDetail->quotation_id = $quotationId;
 
-		               // pr($this->request->data); exit;
+		               
 
 		                if ($this->Quotation->save($this->request->data)) {
 		                    $this->Quotation->save($this->request->data);
@@ -794,7 +796,7 @@ class QuotationsController extends SalesAppController {
 		
 		     }
 
-		    // pr($productData); exit;
+		    //pr($productData); exit;
 		$this->set(compact('itemDetailData','unitData','currencyData','companyData','customField','itemCategoryData', 'paymentTermData','itemTypeData','productData'));
 	}
 

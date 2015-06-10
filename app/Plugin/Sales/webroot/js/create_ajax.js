@@ -1,4 +1,31 @@
-$(document).ready(function() {	
+$(document).ready(function() {
+
+	var companyId = $('.contacpersonlist').val();
+	if(companyId){
+		$.ajax({
+			url: serverPath + "sales/products/find_contact/"+companyId,
+			type: "get",
+			async: false,
+			dataType: "json",
+			success: function(data) {
+				
+				$.each(data, function(key, value) {
+					//console.log(value.ContactPerson.id);
+					//if (value.ContactPerson.id == selected) {
+						$option = "<option class='option-append-contact' value="+ value.ContactPerson.id + ">"+ value.ContactPerson.firstname+' '+value.ContactPerson.lastname +"</option>";	
+					// } else {
+					// 	$option = "<option class='option-append-contact' value="+ value.ContactPerson.id + ">"+ value.ContactPerson.firstname+' '+value.ContactPerson.lastname +"</option>";
+					// 	// $option = "<option class='option-append-contact'  value="+value.ItemTypeHolder.id+">"+value.ItemTypeHolder.name+"</option>";
+					// }
+				     $('#QuotationAttentionDetails').append($option);
+				    
+				});	
+				$('.loading_event').remove();
+				//$('.categorylist').change();	
+			}
+		});
+	}
+		
 
 	$('.contacpersonlist').change(function(){
 			$('.option-append-contact').remove();
@@ -17,7 +44,7 @@ $(document).ready(function() {
 					$.each(data, function(key, value) {
 						
 						if (value.ContactPerson.id == selected) {
-							$option = "<option class='option-append-contact' selected value="+ value.ContactPerson.id + ">"+ value.ContactPerson.firstname+' '+value.ContactPerson.lastname +"</option>";	
+							$option = "<option class='option-append-contact' value="+ value.ContactPerson.id + ">"+ value.ContactPerson.firstname+' '+value.ContactPerson.lastname +"</option>";	
 						} else {
 							$option = "<option class='option-append-contact' value="+ value.ContactPerson.id + ">"+ value.ContactPerson.firstname+' '+value.ContactPerson.lastname +"</option>";
 							// $option = "<option class='option-append-contact'  value="+value.ItemTypeHolder.id+">"+value.ItemTypeHolder.name+"</option>";
@@ -26,13 +53,13 @@ $(document).ready(function() {
 					    
 					});	
 					$('.loading_event').remove();
-					$('.categorylist').change();	
+					//$('.categorylist').change();	
 				}
 			});			
 	});
 
 	$('.categorylist').change(function(){
-
+			console.log('test');
 			$('.option-append').remove();
 			$('.option-append2').remove();	
 			$("#loading").clone().show().addClass("loading_event").insertAfter($(this)); //ajax loader
@@ -47,15 +74,15 @@ $(document).ready(function() {
 			
 					$.each(data, function(key, value) {
 						if (value.id == selected) {
-							$option = "<option class='option-append' selected value="+value.ItemTypeHolder.id+">"+value.ItemTypeHolder.name+"</option>";	
+							$option = "<option class='option-append' value="+value.ItemTypeHolder.id+">"+value.ItemTypeHolder.name+"</option>";	
 						} else {
 							$option = "<option class='option-append'  value="+value.ItemTypeHolder.id+">"+value.ItemTypeHolder.name+"</option>";
 						}
-					     $('#item_type_holder_id').append($option);
+					    $('#item_type_holder_id').append($option);
 					});	
 					  $('.loading_event').remove();
 
-					 $('#item_type_holder_id').change();	
+					 //$('#item_type_holder_id').change();	
 				}
 			});			
 	});

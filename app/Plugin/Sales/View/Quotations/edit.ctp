@@ -27,6 +27,7 @@
 							Edit Quotation
 						</h1>
 						<?php 
+
 	                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'quotations', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
 	                    ?>
 					</header>
@@ -85,13 +86,15 @@
 												<?php 
 	                                                echo $this->Form->input('Quotation.item_category_holder_id', 
 	                                                									array( 
-	                                                						'options' => array($itemCategoryData),		
+	                                                						'options' => array($itemCategoryData),
 	                                                						'type' => 'select',
 	                                                						'class' => 'form-control item_type categorylist required', 
 	                                                    					'label' => false, 
 	                                                    					'placeholder' => 'Item',
-	                                                    					'empty' => '--Select Category--'
+	                                                    					'empty' => '--Select Category--',
+	                                                    					'default' => $this->request->data['Quotation']['item_category_holder_id']
 	                                                    					));
+	                                                
 	                                            ?>
 											</div>
 										</div>
@@ -100,17 +103,18 @@
 											<label class="col-lg-2 control-label">Type</label>
 											<div class="col-lg-8">
 												<?php 
-												//pr($this->request->data);exit();
+													
 													 echo $this->Form->input('Quotation.item_type_holder_id', 
 	                                                									array( 
 	                                                						//'value' => array($itemTypeData),
-	                                                						//'options' => array($itemTypeData),				
+	                                                						'options' => array($itemTypeData),	
 	                                                						'type' => 'select',
 	                                                						'class' => 'form-control item_type jsoncat required', 
 	                                                    					'label' => false, 
 	                                                    					'id' => 'item_type_holder_id',
 	                                                    					'placeholder' => 'Item',
-	                                                    					'empty' => '--Select Type--'
+	                                                    					'empty' => '--Select Type--',
+	                                                    					'default' => $this->request->data['Quotation']['item_type_holder_id']
 	                                                    					));
 	                                            ?>
 											</div>
