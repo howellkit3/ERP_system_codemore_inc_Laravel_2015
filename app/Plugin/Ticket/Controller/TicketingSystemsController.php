@@ -217,11 +217,13 @@ class TicketingSystemsController extends TicketAppController {
    	   
         $dompdf = new DOMPDF();
         $dompdf->set_paper("A4");
+        //$output = mb_convert_encoding($output, 'HTML-ENTITIES', 'UTF-8');
         $dompdf->load_html($output, Configure::read('App.encoding'));
         //$dompdf->load_html($output, 'UTF-8');
         $dompdf->render();
         $canvas = $dompdf->get_canvas();
         $font = Font_Metrics::get_font("helvetica", "bold");
+        //$pdf->SetFont('dejavusans', '', 14, '', true);
         $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
 
         $output = $dompdf->output();

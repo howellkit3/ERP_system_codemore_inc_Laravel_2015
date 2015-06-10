@@ -1,18 +1,18 @@
 jQuery(function($){
 	$.ajax({
 
-			url: serverPath + "sales/products/get_product/"+$('#company_id').val(),
-			type: "GET",
-			dataType: "json",
-			success: function(data) {
-				$('.option_append_item').remove();
-					$.each(data,function(i,name) {
-						console.log(name);
-						$('#selectProduct').append($('<option class="option_append_item">').text(name).attr('value',i));
+		url: serverPath + "sales/products/get_product/"+$('#company_id').val(),
+		type: "GET",
+		dataType: "json",
+		success: function(data) {
+			$('.option_append_item').remove();
+				$.each(data,function(i,name) {
+					console.log(name);
+					$('#selectProduct').append($('<option class="option_append_item">').text(name).attr('value',i));
 
-					});
-				
-				}
+				});
+			
+			}
 	});
 	$("#selectProduct").prop('disabled', false);
 	$("#txtProduct").prop('disabled', false);
@@ -53,7 +53,8 @@ jQuery(function($){
 		type: "get",
 		dataType: "json",
 		success: function(data) {
-
+				$("#item_type_holder_id").find('[value]').remove();
+				$('#item_type_holder_id').append('<option value="">--Select Item--</option>');
 				$.each(data, function(key, value) {	
 					
 				if (value.ItemTypeHolder.id == selected) {
