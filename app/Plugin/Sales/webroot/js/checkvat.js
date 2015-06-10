@@ -1,6 +1,26 @@
+ $(document).ready(function() {
+    // $("body").on('change','.checkvat', function(e){
+    //      var unit_value = parseFloat($(this).parents('.quotationItemDetail').find('.unitprice').val());
+    //      var thisMe = $(this);
+    //      if ($(this).is(":checked")) {
+    //         console.log('check');
+    //         sum = unit_value * .12;
+    //         total = (sum + parseFloat(unit_value));
+    //         $(this).parents('.quotationItemDetail').find('.vatprice').val(total);
+
+    //      } else {
+    //         console.log('uncheck');
+    //         sum = unit_value * .12;
+    //         total = (parseFloat(unit_value) - sum);
+    //         thisMe.parents('.quotationItemDetail').find('.vatprice').attr('value', ' '); 
+    //      }
+    // });
+});
+
+
 function vatprice(whatsection, thisElement){
     var value = $('.' + whatsection);
-
+    
     value = findValue(value, thisElement);
 
 } 
@@ -13,7 +33,7 @@ function findValue($form, thisElement){
          
         alert('Unit Price is Required.');
         thisElement.parents('.'+$form).find('.unitprice').focus();
-        $('input[type=checkbox]:checked').attr('checked',false);
+        thisElement.attr('checked',false);
 
     }else{
          
@@ -21,24 +41,26 @@ function findValue($form, thisElement){
         var index = 0;
         var total = 0;
 
-        $("body").on('change','.checkvat', function(e){
-
-             if ($(this).is(":checked")) {
-
-                sum = $unit_value * .12;
-                total = (sum + parseFloat($unit_value));
-                $(this).parents('.quotationItemDetail').find('.vatprice').val(total);
-
-             } else {
-                total = (parseFloat($unit_value) - sum);
-                $(this).parents('.quotationItemDetail').find('.vatprice').val(''); 
-             }
-
-        });
-
         sum = $unit_value * .12;
         total = (sum + parseFloat($unit_value));
         thisElement.parents('.'+$form).find('.vatprice').val(total);
+
+        //$("body").on('change','.checkvat', function(e){
+
+             if (thisElement.is(":checked")) {
+                console.log('check');
+                sum = $unit_value * .12;
+                total = (sum + parseFloat($unit_value));
+                thisElement.parents('.quotationItemDetail').find('.vatprice').val(total);
+
+             } else {
+                console.log('uncheck');
+                sum = $unit_value * .12;
+                total = (parseFloat($unit_value) - sum);
+                thisElement.parents('.quotationItemDetail').find('.vatprice').val(' '); 
+             }
+
+       // });
 
        
     }

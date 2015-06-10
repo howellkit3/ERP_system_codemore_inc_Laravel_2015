@@ -2,12 +2,14 @@
     <section class="dragField">
         <header class="main-box-header dragHeader clearfix">
             <h2 class="pull-left">Part</h2>
-            <a href="#" class="remove_part pull-right">
-                <i class="fa fa-times-circle fa-fw fa-lg"></i>
-            </a>
+            <?php if ($varCounter > 1) { ?>
+                <a href="#" class="remove_part pull-right">
+                    <i class="fa fa-times-circle fa-fw fa-lg"></i>
+                </a>
+            <?php } ?>
         </header>
         <div class="form-group">
-            <label class="col-lg-2 control-label">Material</label>
+            <label class="col-lg-2 control-label"><span style="color:red">*</span>Material</label>
             <div class="col-lg-6 materialName<?php echo $varCounter ;?>" >
                 <input type="text" class="material required form-control part_name<?php echo $varCounter ;?>" maxlenght="500" name="data[ProductSpecificationPart][<?php echo $counterData ;?>][material]" readonly="readonly" />
             </div>
@@ -22,13 +24,13 @@
                 <div class="col-lg-3">
                     <input type="text" value="<?php echo $varCounter ;?>" class="form-control" name="data[ProductSpecificationPart][<?php echo $counterData ;?>][part]" readonly />
                 </div>
-                <label class="col-lg-2 control-label">Rate</label>
+                <label class="col-lg-2 control-label"><span style="color:red">*</span>Rate</label>
                 <div class="col-lg-3">
                     <input type="number" value="<?php echo $varCounter ;?>" class="form-control rate<?php echo $varCounter ;?>" name="data[ProductSpecificationPart][<?php echo $counterData ;?>][rate]" />
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-lg-2 control-label">Size</label>
+                <label class="col-lg-2 control-label"><span style="color:red">*</span>Size</label>
                 <div class="col-lg-3">
                     <input type="text" class="required form-control" name="data[ProductSpecificationPart][<?php echo $counterData ;?>][size1]" />
                 </div>
@@ -39,7 +41,7 @@
                 <label class="col-lg-1 control-label left-text">mm</label>
             </div>
             <div class="form-group">
-                <label class="col-lg-2 control-label">Quantity</label>
+                <label class="col-lg-2 control-label"><span style="color:red">*</span>Quantity</label>
                 <div class="col-lg-3">
                     <input type="number" value="<?php echo $quantitySpec ;?>" class="allQuantity form-control quantity<?php echo $varCounter ;?>" name="data[ProductSpecificationPart][<?php echo $counterData ;?>][quantity]" readonly />
                 </div>
@@ -58,14 +60,14 @@
 
                     ?>
                 </div>
-                <label class="col-lg-1 control-label">Paper Qty</label>
+                <label class="col-lg-1 control-label"><span style="color:red">*</span>Paper Qty</label>
                 <div class="col-lg-2">
                     <input type="text" value="<?php echo $quantitySpec ;?>" class="allPaperQuantity form-control paper_qty<?php echo $varCounter ;?>" name="data[ProductSpecificationPart][<?php echo $counterData ;?>][paper_quantity]" readonly />
                 </div>
                 
             </div>
             <div class="form-group">
-                <label class="col-lg-2 control-label">Color</label>
+                <label class="col-lg-2 control-label"><span style="color:red">*</span>Color</label>
                 <div class="col-lg-4">
                     <input type="text" class="required form-control" name="data[ProductSpecificationPart][<?php echo $counterData ;?>][color]" />
                 </div>
@@ -75,7 +77,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-lg-2 control-label">Outs</label>
+                <label class="col-lg-2 control-label"><span style="color:red">*</span>Outs</label>
                 <div class="col-lg-2">
                     <input type="number" value="1" class="required form-control number outs<?php echo $varCounter ;?>" name="data[ProductSpecificationPart][<?php echo $counterData ;?>][outs1]"/>
                 </div>

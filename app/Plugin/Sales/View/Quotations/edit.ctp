@@ -27,6 +27,7 @@
 							Edit Quotation
 						</h1>
 						<?php 
+
 	                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'quotations', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
 	                    ?>
 					</header>
@@ -85,13 +86,15 @@
 												<?php 
 	                                                echo $this->Form->input('Quotation.item_category_holder_id', 
 	                                                									array( 
-	                                                						'options' => array($itemCategoryData),		
+	                                                						'options' => array($itemCategoryData),
 	                                                						'type' => 'select',
 	                                                						'class' => 'form-control item_type categorylist required', 
 	                                                    					'label' => false, 
 	                                                    					'placeholder' => 'Item',
-	                                                    					'empty' => '--Select Category--'
+	                                                    					'empty' => '--Select Category--',
+	                                                    					'default' => $this->request->data['Quotation']['item_category_holder_id']
 	                                                    					));
+	                                                
 	                                            ?>
 											</div>
 										</div>
@@ -100,17 +103,18 @@
 											<label class="col-lg-2 control-label">Type</label>
 											<div class="col-lg-8">
 												<?php 
-												//pr($this->request->data);exit();
+													
 													 echo $this->Form->input('Quotation.item_type_holder_id', 
 	                                                									array( 
 	                                                						//'value' => array($itemTypeData),
-	                                                						//'options' => array($itemTypeData),				
+	                                                						'options' => array($itemTypeData),	
 	                                                						'type' => 'select',
 	                                                						'class' => 'form-control item_type jsoncat required', 
 	                                                    					'label' => false, 
 	                                                    					'id' => 'item_type_holder_id',
 	                                                    					'placeholder' => 'Item',
-	                                                    					'empty' => '--Select Type--'
+	                                                    					'empty' => '--Select Type--',
+	                                                    					'default' => $this->request->data['Quotation']['item_type_holder_id']
 	                                                    					));
 	                                            ?>
 											</div>
@@ -120,6 +124,7 @@
 											<label class="col-lg-2 control-label">Item</label>
 											<div class="col-lg-8">
 												<?php 
+													
 	                                                echo $this->Form->input('QuotationDetail.product_id', 
 	                                                									array( 
 	                                                						'options' => array($productData),				
@@ -129,8 +134,8 @@
 	                                                    					//'id' => 'txtProduct',
 	                                                    					'id' => 'product_holder_id',
 	                                                    					'placeholder' => 'Item',
-	                                                    					'empty' => '--Select Item--'
-
+	                                                    					'empty' => '--Select Item--',
+	                                                    					'default' => $quotationData['QuotationDetail']['product_id']
 
 	                                                    					));
 	                                            ?>
@@ -195,18 +200,20 @@
 					</div>
 				</div>
 
-			<?php foreach ($itemDetailData as $key => $itemDetailDetails) {  ?>
+			<?php foreach ($itemDetailData as $key => $itemDetailDetails) { ?>
 				<?php 
-                    echo $this->Form->input('QuotationDetail.id', array('class' => 'form-control item_type',
+                    
+                    echo $this->Form->input('QuotationItemDetail.id', array('class' => 'form-control item_type',
                         'hidden' => 'hidden',
                         'readonly' => 'readonly',
                         'label' => false,
-                        'name' => 'data[QuotationDetail]['.$key.'][id]',
+                        'name' => 'data[IdHolder]['.$key.'][id]',
                         'value' => $itemDetailDetails['QuotationItemDetail']['id'],
                         'id' => 'id'));
                 ?>
 			
 				<section class="cloneMe quotationItemDetail">
+					
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="main-box">
@@ -219,12 +226,12 @@
 												<div class="col-lg-2">
 													<?php 
 			                                            echo $this->Form->input('QuotationItemDetail.0.quantity', array(
-			                                            								'class' => 'form-control item_type',
-									                                                    'type' => 'text',
-									                                                    'label' => false,
-									                                                    'value' => $itemDetailDetails['QuotationItemDetail']['quantity'],
-									                                                    'name' => 'data[QuotationDetail]['.$key.'][quantity]',
-									                                                    'placeholder' => 'Quantity'));
+                            								'class' => 'form-control item_type',
+		                                                    'type' => 'text',
+		                                                    'label' => false,
+		                                                    'value' => $itemDetailDetails['QuotationItemDetail']['quantity'],
+		                                                    'name' => 'data[QuotationItemDetail]['.$key.'][quantity]',
+		                                                    'placeholder' => 'Quantity'));
 		                                            ?>
 													 
 												</div>
@@ -233,7 +240,7 @@
 					                                'options' => array($unitData),  
 					                                'label' => false,
 					                                'default' => $itemDetailDetails['QuotationItemDetail']['quantity_unit_id'],
-					                                'name' => 'data[QuotationDetail]['.$key.'][quantity_unit_id]',
+					                                'name' => 'data[QuotationItemDetail]['.$key.'][quantity_unit_id]',
 					                                'class' => 'form-control required',
 					                                'empty' => '---Select Unit---'
 					                                 )); 
@@ -245,32 +252,46 @@
 											<div class="form-group">
 												<label class="col-lg-2 control-label">Unit Price</label>
 												<div class="col-lg-2">
-													<?php 
-			                                            echo $this->Form->input('QuotationItemDetail.0.unit_price', array(
-			                                            								'class' => 'form-control item_type unitprice',
-									                                                    'data' => 'unitprice',
-									                                                    'type' => 'text',
-									                                                    'label' => false,
-									                                                    'value' => $itemDetailDetails['QuotationItemDetail']['unit_price'],
-									                                                    'name' => 'data[QuotationDetail]['.$key.'][unit_price]',
-									                                                    'data-section' => 'quotationItemDetail',
-									                                                    'placeholder' => 'Unit Price'));
-		                                            ?>
-													
-												</div>
-
-												<div class="col-lg-6">
 												<?php echo $this->Form->input('QuotationItemDetail.0.unit_price_currency_id', array(
-														                                'options' => array($currencyData),  
-														                                'label' => false,
-														                                'default' => $itemDetailDetails['QuotationItemDetail']['unit_price_currency_id'],
-														                                'class' => 'form-control',
-														                                'name' => 'data[QuotationDetail]['.$key.'][unit_price_currency_id]',
-														                                'empty' => '---Select Currency---'
-														                                 )); 
+					                                'options' => array($currencyData),  
+					                                'label' => false,
+					                                'default' => $itemDetailDetails['QuotationItemDetail']['unit_price_currency_id'],
+					                                'class' => 'form-control',
+					                                'name' => 'data[QuotationItemDetail]['.$key.'][unit_price_currency_id]',
+					                                'empty' => '---Select Currency---'
+					                                 )); 
 
 					                            ?>
 												</div>
+												<div class="col-lg-3">
+													<?php 
+			                                            echo $this->Form->input('QuotationItemDetail.0.unit_price', array(
+                            								'class' => 'form-control item_type unitprice',
+		                                                    'data' => 'unitprice',
+		                                                    'type' => 'text',
+		                                                    'label' => false,
+		                                                    'value' => $itemDetailDetails['QuotationItemDetail']['unit_price'],
+		                                                    'name' => 'data[QuotationItemDetail]['.$key.'][unit_price]',
+		                                                    'data-section' => 'quotationItemDetail',
+		                                                    'placeholder' => 'Unit Price'));
+		                                            ?>
+													
+												</div>
+												<div class="col-lg-3">
+						                            <?php echo $this->Form->input('QuotationItemDetail.0.unit_price_unit_id', array(
+						                                'options' => array($unitData),  
+						                                'label' => false,
+						                                'default' => $itemDetailDetails['QuotationItemDetail']['unit_price_unit_id'],
+						                                'class' => 'form-control',
+						                                'name' => 'data[QuotationItemDetail]['.$key.'][unit_price_unit_id]',
+						                                'empty' => '---Select Currency---'
+						                                 )); 
+
+					                            	?>
+												</div>
+
+												
+
 											</div>
 
 											<div class="form-group">
@@ -283,7 +304,7 @@
 									                                                    'label' => false,
 									                                                    'value' => $itemDetailDetails['QuotationItemDetail']['vat_price'],
 									                                                    'id' => 'QuotationItemDetail'.$key.'VatPrice',
-									                                                    'name' => 'data[QuotationDetail]['.$key.'][vat_price]',
+									                                                    'name' => 'data[QuotationItemDetail]['.$key.'][vat_price]',
 									                                                    'readonly' => 'readonly',
 									                                                    
 									                                                    'placeholder' => 'Vat Price'));
@@ -296,14 +317,14 @@
 												<label class="col-lg-2 control-label"></label>
 												<div class="col-lg-8">
 												<?php if(!empty($itemDetailDetails['QuotationItemDetail']['vat_price'])){ 
-													$ckeckName = 'data[QuotationDetail]['.$key.'][vat_price]';
+													$ckeckName = 'data[QuotationItemDetail]['.$key.'][vat_priceC]';
 													?>
 
 													<input id="checkbox-1" class="checkvat checkbox-nice vat-price" type="checkbox" name="<?php echo $ckeckName; ?>" rel=".12" data-section='quotationItemDetail' checked="checked">
 
 												<?php } else { ?>
 
-													<input id="checkbox-1" class="checkvat checkbox-nice vat-price" type="checkbox" name="[QuotationItemDetail][0][vat_price]" data-section='quotationItemDetail' rel=".12" >
+													<input id="checkbox-1" class="checkvat checkbox-nice vat-price" type="checkbox" name="[QuotationItemDetail][0][vat_priceC]" data-section='quotationItemDetail' rel=".12" >
 
 												<?php } ?>	
 													<font color="gray"> Click to Compute the Unit Price with VAT </font>
@@ -320,7 +341,7 @@
 									                                                    'alt' => 'address1',
 									                                                    'type' => 'text',
 									                                                    'label' => false,
-									                                                    'name' => 'data[QuotationDetail]['.$key.'][material]',
+									                                                    'name' => 'data[QuotationItemDetail]['.$key.'][material]',
 									                                                    'value' => $itemDetailDetails['QuotationItemDetail']['material'],
 									                                                    'placeholder' => 'Material'));
 		                                            ?>

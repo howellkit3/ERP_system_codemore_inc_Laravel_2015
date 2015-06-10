@@ -301,9 +301,9 @@ class ProductsController extends SalesAppController {
                 throw new NotFoundException(__('Invalid post'));
             }
 
-            $post = $this->Product->findById($id);
-
-            if (!$post) {
+            $productData = $this->Product->findById($id);
+           
+            if (!$productData) {
                 throw new NotFoundException(__('Invalid post'));
             }
 
@@ -320,7 +320,7 @@ class ProductsController extends SalesAppController {
             }
 
             if (!$this->request->data) {
-                $this->request->data = $post;
+                $this->request->data = $productData;
             }
 
 		$this->ItemCategoryHolder->bind(array('ItemTypeHolder'));
@@ -329,6 +329,7 @@ class ProductsController extends SalesAppController {
 															'order' => array('ItemCategoryHolder.name' => 'ASC')
 															));
 		$itemTypeData = $this->ItemCategoryHolder->ItemTypeHolder->find('list', array(
+															'conditions' => array('ItemTypeHolder.Item_category_holder_id' => $productData['Product']['item_category_holder_id']),
 															'fields' => array('id', 'name'),
 															'order' => array('ItemTypeHolder.name' => 'ASC')
 															));
@@ -419,15 +420,15 @@ class ProductsController extends SalesAppController {
 	   $this->loadModel('Sales.Product');
         if ($this->Product->delete($id)) {
             $this->Session->setFlash(
-                __('Successfully deleted.', h($id))
+                __('Successfully deleted.' )
             );
         } else {
             $this->Session->setFlash(
-                __('The post cannot be deleted.', h($id))
+                __('The post cannot be deleted.')
             );
         }
 
-        return $this->redirect(array(' controller' => 'products', 'action' => 'index'));
+        return $this->redirect(array('controller' => 'products', 'action' => 'index'));
     }
 
     public function find_item($itemId = null){

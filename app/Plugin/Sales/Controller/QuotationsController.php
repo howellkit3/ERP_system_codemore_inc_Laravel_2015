@@ -223,10 +223,17 @@ class QuotationsController extends SalesAppController {
 		if ($this->request->is(array('post','put'))) {
 
             if (!empty($this->request->data)) {
-
+            	
+            	if(!empty($this->request->data['IdHolder'])){
+            		foreach ($this->request->data['IdHolder'] as $key => $value) {
+            			$this->Quotation->QuotationItemDetail->delete($value['id']);
+            		}
+            		
+            	}
+            	
             	if (!empty($this->request->data['submit']) && $this->request->data['submit'] == 'Save as Draft') {
-            			$this->request->data['Quotation']['status'] = 'draft';	
-            			}
+    				$this->request->data['Quotation']['status'] = 'draft';	
+    			}
            		
 				if(!empty($this->request->data['Inquiry']['id'])){
             			$this->loadModel('Sales.Company');
@@ -371,6 +378,8 @@ class QuotationsController extends SalesAppController {
 
 		$this->loadModel('User');
 
+		$this->loadModel('Sales.ClientOrder');
+
 		$userData = $this->User->read(null,$this->Session->read('Auth.User.id'));
 
 		//start///call Role permission
@@ -380,6 +389,14 @@ class QuotationsController extends SalesAppController {
 		//end///call Role permission
 
 		$this->loadModel('User');
+
+		$clientData = $this->ClientOrder->find('first',array('conditions' => array('ClientOrder.quotation_id' => $quotationId)));
+		
+		if(!empty($clientData)){
+			$disabled = 'disabled';
+		}else{
+			$disabled = ' ';
+		}
 
 		$rolesPermissionData = $this->RolesPermission->find('list', array(
 														'fields' => array('RolesPermission.id', 'RolesPermission.permission_id'),
@@ -481,7 +498,7 @@ class QuotationsController extends SalesAppController {
 										'User.id' => $userData['User']['id'] )
 								));
 		
-		$this->set(compact('userData','myPermission','approvedUser','units','currencies','paymentTerm','companyData','companyId', 'quotationSize', 'quotationOption','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','salesStatus', 'productName','clientOrderCount','quotationDetailData', 'rolesPermissionData'));
+		$this->set(compact('disabled','userData','myPermission','approvedUser','units','currencies','paymentTerm','companyData','companyId', 'quotationSize', 'quotationOption','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','salesStatus', 'productName','clientOrderCount','quotationDetailData', 'rolesPermissionData'));
 		
 	}
 
@@ -711,7 +728,7 @@ class QuotationsController extends SalesAppController {
 		
 		$this->loadModel('Sales.Company');
 
-		$this->Quotation->bind(array('QuotationItemDetail'));
+		$this->Quotation->bind(array('QuotationItemDetail','QuotationDetail'));
 
 		$itemDetailData = $this->Quotation->QuotationItemDetail->find('all',
 														array('conditions' => 
@@ -728,18 +745,20 @@ class QuotationsController extends SalesAppController {
 												));
 
 		$userData = $this->Session->read('Auth');
-			
+
+		$quotationData = $this->Quotation->findById($quotationId);
+		
 		$itemCategoryData = $this->ItemCategoryHolder->find('list', array(
 															'fields' => array('id', 'name'),
 															'order' => array('ItemCategoryHolder.name' => 'ASC')
 															));
 
-		$itemTypeData = $this->ItemTypeHolder->find('first', array(
-															//'conditions' => array('ItemTypeHolder.item_category_holder_id' => 'ItemCategoryHolder.id'),
+		$itemTypeData = $this->ItemTypeHolder->find('list', array(
+															'conditions' => array('ItemTypeHolder.item_category_holder_id' => $quotationData['Quotation']['item_category_holder_id']),
 															'fields' => array('id', 'name'),
 															'order' => array('ItemTypeHolder.name' => 'ASC')
 															));
-
+	
 		$paymentTermData = $this->PaymentTermHolder->find('list', array(
 															'fields' => array('id', 'name'),
 															'order' => array('PaymentTermHolder.name' => 'ASC')
@@ -747,12 +766,12 @@ class QuotationsController extends SalesAppController {
 
 		$productData = $this->Product->find('list', array(
 															'fields' => array('id', 'name'),
-															//'conditions' => array('Product.id' => 'QuotationDetail.product_id'),
+															'conditions' => array('Product.item_type_holder_id' => $quotationData['Quotation']['item_type_holder_id']),
 															'order' => array('Product.name' => 'ASC')
 															));
-
+		
 		if(!empty($quotationId)){
-			$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail'));
+			
 			//$this->request->data = $this->Quotation->read(null,$quotationId);
 
 			$userData = $this->Session->read('Auth');
@@ -763,7 +782,8 @@ class QuotationsController extends SalesAppController {
 															'fields' => array('id', 'company_name'),
 															'order' => array('Company.company_name' => 'ASC')
 															));
-
+			
+			$this->Quotation->bind(array('QuotationItemDetail','QuotationDetail'));
 			$post = $this->Quotation->findById($quotationId);
 
 		            if (!$post) {
@@ -776,7 +796,7 @@ class QuotationsController extends SalesAppController {
 		                $this->Quotation->QuotationDetail->quotation_id = $quotationId;
 		                $this->Quotation->QuotationItemDetail->quotation_id = $quotationId;
 
-		               // pr($this->request->data); exit;
+		               
 
 		                if ($this->Quotation->save($this->request->data)) {
 		                    $this->Quotation->save($this->request->data);
@@ -794,8 +814,8 @@ class QuotationsController extends SalesAppController {
 		
 		     }
 
-		    // pr($productData); exit;
-		$this->set(compact('itemDetailData','unitData','currencyData','companyData','customField','itemCategoryData', 'paymentTermData','itemTypeData','productData'));
+		    //pr($productData); exit;
+		$this->set(compact('quotationData','itemDetailData','unitData','currencyData','companyData','customField','itemCategoryData', 'paymentTermData','itemTypeData','productData'));
 	}
 
 		//pr($this->request->data);

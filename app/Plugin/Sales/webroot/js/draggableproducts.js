@@ -158,7 +158,6 @@ $(document).ready(function() {
         //}
 
         var counterData = parseInt($(this).attr('data'));
-
         var varCounter = counterData + 1;
         $(this).attr('data',parseInt(varCounter));
         var nameArray = $(this).parents('ul.sortable').find('li.ui-state-default').size();
@@ -257,6 +256,10 @@ $(document).ready(function() {
                 } 
                 
             });
+            
+            if (counterData != 0) {
+                process_button.trigger( 'click' );
+            }
 
             //start//computation for outs,paper quantity and rate
             $("body").on('keyup','.outs'+varCounter, function(e){

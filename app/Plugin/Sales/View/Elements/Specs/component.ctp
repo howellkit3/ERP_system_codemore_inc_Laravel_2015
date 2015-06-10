@@ -1,6 +1,6 @@
 <?php $plusCounter = $counter + 1; ?>
 <div class="form-group">
-  <div class="col-lg-2"></div>
+  <div class="col-lg-2"><span class="pull-right" style="color:red">*</span></div>
   <div class="col-lg-8">
       	<!-- <div class="input-group"> -->
 			<!-- <span class="input-group-addon"><i class="fa fa-reorder"></i></span> -->

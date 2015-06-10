@@ -326,13 +326,13 @@
 										</div>
 
 										<div class="form-group">
-											<label class="col-lg-2 control-label">Proccess</label>
+											<label class="col-lg-2 control-label">Process</label>
 											<div class="col-lg-8">
 												<?php 
 		                                            echo $this->Form->input('QuotationDetail.process', array(
 		                                            								'class' => 'form-control item_type',
 								                                                    'label' => false,
-								                                                    'placeholder' => 'Proccess'));
+								                                                    'placeholder' => 'Process'));
 	                                            ?>
 											</div>
 										</div>
