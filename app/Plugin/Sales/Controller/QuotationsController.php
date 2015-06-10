@@ -765,7 +765,8 @@ class QuotationsController extends SalesAppController {
 															'fields' => array('id', 'company_name'),
 															'order' => array('Company.company_name' => 'ASC')
 															));
-
+			
+			$this->Quotation->bind(array('QuotationItemDetail','QuotationDetail'));
 			$post = $this->Quotation->findById($quotationId);
 
 		            if (!$post) {
