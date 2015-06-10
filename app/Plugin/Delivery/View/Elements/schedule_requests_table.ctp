@@ -85,7 +85,7 @@
                                                                           <span class ="post"><font size = "1px">View</font></span>
                                                                           </span> ', array('controller' => 'Deliveries', 
                                                                                          'action' => 'view',
-                                                                         $scheduleDataList['ClientOrderDeliverySchedule']['id'],$scheduleDataList['QuotationDetail']['quotation_id'],$scheduleDataList['ClientOrder']['uuid']),
+                                                                         $scheduleDataList['ClientOrderDeliverySchedule']['id'],$scheduleDataList['QuotationDetail']['quotation_id'],$scheduleDataList['ClientOrderDeliverySchedule']['uuid']),
                                                                           array('class' =>' table-link small-link-icon','escape' => false,'title'=>'Edit Information'
                                                                      )); 
                                             ?>     

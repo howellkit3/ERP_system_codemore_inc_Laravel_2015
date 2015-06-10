@@ -14,15 +14,17 @@
 
 				<?php //foreach ($deliveryEdit as $deliveryDataList): ?>	
 
-					<?php  //pr($deliveryEdit); 
-                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'deliveries', 'action' => 'view', $clientsOrder[0]['ClientOrderDeliverySchedule']['id'],$clientsOrder[0]['QuotationDetail']['quotation_id'],$clientsOrder[0]['ClientOrder']['uuid']),array('class' =>'btn btn-primary pull-right','escape' => false));
+					<?php  //pr($clientsOrder); 
+                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'deliveries', 'action' => 'view', $clientsOrder['ClientOrderDeliverySchedule']['id'],$clientsOrder['QuotationDetail']['quotation_id'],$clientsOrder['ClientOrderDeliverySchedule']['uuid']),array('class' =>'btn btn-primary pull-right','escape' => false));
                     ?>
+
+
 					
 				</header>
 
 			</div>
 		</div>
-		<?php   echo $this->Form->create('Delivery',array('url'=>(array('controller' => 'deliveries','action' => 'delivery_edit',$clientsOrder[0]['ClientOrderDeliverySchedule']['uuid']))));?>			
+		<?php echo $this->Form->create('Delivery',array('url'=>(array('controller' => 'deliveries','action' => 'delivery_edit',$deliveryEdit['Delivery']['dr_uuid'], $clientsOrder['ClientOrderDeliverySchedule']['uuid'],$deliveryEdit['Delivery']['schedule_uuid'] ))));?>			
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="main-box">
@@ -75,7 +77,7 @@
 										                        'hidden' => 'hidden',
 										                        'class' => '',
 										                        'label' => false,
-										                        'value' => $clientsOrder[0]['ClientOrderDeliverySchedule']['quantity']
+										                        'value' => $clientsOrder['ClientOrderDeliverySchedule']['quantity']
 										                        ));
 					                                ?>
 										</div>
@@ -123,7 +125,7 @@
 										                        'class' => '',
 										                        'label' => false,
 										                        'id' => 'quantity',
-										                        'value' => $clientsOrder[0]['ClientOrderDeliverySchedule']['quantity']
+										                        'value' => $clientsOrder['ClientOrderDeliverySchedule']['quantity']
 										                        ));
 					                                ?>
                                         
@@ -177,8 +179,7 @@
 			                                            								'class' => 'form-control item_type',
 									                                                    'label' => false,
 									                                                    'type' => 'text',
-									                                                    'required' => 'required',
-									                                                    'class' => 'form-control item_type datepik editable required',
+									                                                    'class' => 'form-control item_type datepik editable ',
 									                                                    'value' => 
 									                                                    $deliveryEdit['DeliveryDetail']['remarks']
 
@@ -194,7 +195,7 @@
 											<button type="submit" class="btn btn-primary pull-left">Submit Product</button>&nbsp;
 											<?php 
 						                        echo $this->Html->link('Cancel', array('controller' => 'deliveries', 'action' => 'view',
-                                                                         $clientsOrder[0]['ClientOrderDeliverySchedule']['id'],$clientsOrder[0]['QuotationDetail']['quotation_id'],$clientsOrder[0]['ClientOrder']['uuid']),array('class' =>'btn btn-default','escape' => false));
+                                                                         $clientsOrder['ClientOrderDeliverySchedule']['id'],$clientsOrder['QuotationDetail']['quotation_id'],$clientsOrder['ClientOrder']['uuid']),array('class' =>'btn btn-default','escape' => false));
 						                    ?>
 										</div>
 									</div>
@@ -205,9 +206,7 @@
 				</div>
 			</div>
 		<?php echo $this->Form->end(); ?>
-		<?php 
-            //endforeach; 
-         ?>    
+		    
 	</div>
 </div>
 

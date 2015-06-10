@@ -5,9 +5,6 @@ App::uses('CakeEmail', 'Network/Email');
 App::import('Vendor', 'DOMPDF', true, array(), 'dompdf'.DS.'dompdf_config.inc.php', false);
 App::import('Vendor','acl/Role');
 
-
-
-
 class QuotationsController extends SalesAppController {
 
 	public $uses = array('Sales.Quotation');
