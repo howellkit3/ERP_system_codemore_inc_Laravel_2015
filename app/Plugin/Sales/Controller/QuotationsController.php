@@ -394,6 +394,8 @@ class QuotationsController extends SalesAppController {
 		
 		if(!empty($clientData)){
 			$disabled = 'disabled';
+		}else{
+			$disabled = ' ';
 		}
 
 		$rolesPermissionData = $this->RolesPermission->find('list', array(

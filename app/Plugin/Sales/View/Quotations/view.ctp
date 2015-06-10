@@ -53,7 +53,7 @@
 
 			$status = (!$this->Status->isQuotationApproved($quotation['Quotation']['status'])) ? 'disabled' : '';
 	
-			echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Create Order ', array('controller' => 'create_order', 'action' => 'index',$quotation['Quotation']['id'],$quotation['Quotation']['uuid']),array('class' =>'btn btn-primary pull-right '.$status,'escape' => false)) ;
+			echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Create Order ', array('controller' => 'create_order', 'action' => 'index',$quotation['Quotation']['id'],$quotation['Quotation']['uuid']),array('class' =>'btn btn-primary pull-right '.$status.' '.$disabled,'escape' => false)) ;
 		
 		}else{
 
@@ -149,17 +149,7 @@
 		<div class="main-box">
 			<center>
 				<header class="main-box-header clearfix"><?php //echo pr($contactInfo);die; ?>
-					<h1>Kou Fu Color Packaging Corporation</h1>
-					<h5>Lot 3-4 Blk 4 Mountview Industrial Complex Brgy. Bancal Carmona Cavite</h5>
-					<h6>
-						Tel: +63(46)4301576 / +63(46)9721111
-						+63(2)5844928 / +63(2)5844929
-						+63(2)5844947 Local: 302
-
-						Fax: +63(2)5844952 / +63(46)9720120
-						Mobile: +63(917)8922637
-						Taiwan: +886 922565185
-					</h6><br>
+					<?php echo $this->element('print_header'); ?>
 					<h2>Price Quotation</h2><br>
 				</header>
 			</center>
