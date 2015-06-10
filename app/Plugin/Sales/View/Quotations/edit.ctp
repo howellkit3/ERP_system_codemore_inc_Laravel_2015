@@ -213,15 +213,7 @@
                 ?>
 			
 				<section class="cloneMe quotationItemDetail">
-					<?php
-						echo $this->Form->input('QuotationItemDetail.id', array('class' => 'form-control item_type',
-                        'hidden' => 'hidden',
-                        'readonly' => 'readonly',
-                        'label' => false,
-                        'name' => 'data[QuotationItemDetail]['.$key.'][id]',
-                        'value' => $itemDetailDetails['QuotationItemDetail']['id'],
-                        'id' => 'id'));
-					?>
+					
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="main-box">

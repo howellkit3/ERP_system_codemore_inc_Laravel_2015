@@ -149,11 +149,16 @@
 		<div class="main-box">
 			<center>
 				<header class="main-box-header clearfix"><?php //echo pr($contactInfo);die; ?>
-					<h1>Kou Fu Color Packaging Corp.</h1>
+					<h1>Kou Fu Color Packaging Corporation</h1>
 					<h5>Lot 3-4 Blk 4 Mountview Industrial Complex Brgy. Bancal Carmona Cavite</h5>
 					<h6>
-						Tel: +63(2)5844928 &nbsp;
-						Fax: +63(2)5844952 
+						Tel: +63(46)4301576 / +63(46)9721111
+						+63(2)5844928 / +63(2)5844929
+						+63(2)5844947 Local: 302
+
+						Fax: +63(2)5844952 / +63(46)9720120
+						Mobile: +63(917)8922637
+						Taiwan: +886 922565185
 					</h6><br>
 					<h2>Price Quotation</h2><br>
 				</header>
