@@ -250,32 +250,46 @@
 											<div class="form-group">
 												<label class="col-lg-2 control-label">Unit Price</label>
 												<div class="col-lg-2">
-													<?php 
-			                                            echo $this->Form->input('QuotationItemDetail.0.unit_price', array(
-			                                            								'class' => 'form-control item_type unitprice',
-									                                                    'data' => 'unitprice',
-									                                                    'type' => 'text',
-									                                                    'label' => false,
-									                                                    'value' => $itemDetailDetails['QuotationItemDetail']['unit_price'],
-									                                                    'name' => 'data[QuotationItemDetail]['.$key.'][unit_price]',
-									                                                    'data-section' => 'quotationItemDetail',
-									                                                    'placeholder' => 'Unit Price'));
-		                                            ?>
-													
-												</div>
-
-												<div class="col-lg-6">
 												<?php echo $this->Form->input('QuotationItemDetail.0.unit_price_currency_id', array(
-														                                'options' => array($currencyData),  
-														                                'label' => false,
-														                                'default' => $itemDetailDetails['QuotationItemDetail']['unit_price_currency_id'],
-														                                'class' => 'form-control',
-														                                'name' => 'data[QuotationItemDetail]['.$key.'][unit_price_currency_id]',
-														                                'empty' => '---Select Currency---'
-														                                 )); 
+					                                'options' => array($currencyData),  
+					                                'label' => false,
+					                                'default' => $itemDetailDetails['QuotationItemDetail']['unit_price_currency_id'],
+					                                'class' => 'form-control',
+					                                'name' => 'data[QuotationItemDetail]['.$key.'][unit_price_currency_id]',
+					                                'empty' => '---Select Currency---'
+					                                 )); 
 
 					                            ?>
 												</div>
+												<div class="col-lg-3">
+													<?php 
+			                                            echo $this->Form->input('QuotationItemDetail.0.unit_price', array(
+                            								'class' => 'form-control item_type unitprice',
+		                                                    'data' => 'unitprice',
+		                                                    'type' => 'text',
+		                                                    'label' => false,
+		                                                    'value' => $itemDetailDetails['QuotationItemDetail']['unit_price'],
+		                                                    'name' => 'data[QuotationItemDetail]['.$key.'][unit_price]',
+		                                                    'data-section' => 'quotationItemDetail',
+		                                                    'placeholder' => 'Unit Price'));
+		                                            ?>
+													
+												</div>
+												<div class="col-lg-3">
+						                            <?php echo $this->Form->input('QuotationItemDetail.0.unit_price_unit_id', array(
+						                                'options' => array($unitData),  
+						                                'label' => false,
+						                                'default' => $itemDetailDetails['QuotationItemDetail']['unit_price_unit_id'],
+						                                'class' => 'form-control',
+						                                'name' => 'data[QuotationItemDetail]['.$key.'][unit_price_unit_id]',
+						                                'empty' => '---Select Currency---'
+						                                 )); 
+
+					                            	?>
+												</div>
+
+												
+
 											</div>
 
 											<div class="form-group">
