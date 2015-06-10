@@ -35,9 +35,9 @@
 				<div class="main-box">
 					<center>
 						<header class="main-box-header clearfix"><?php //echo pr($contactInfo);die; ?>
-							<h1>Kou Fu Color Printing Corp.</h1>
-							<h5>Lot 4-5, Blk 3 Phase 2, Mountview Industrial Complex, Bancal, Carmona, Cavite</h5>
-							<h6>Tel#: (046) 972-1111 to 13 Fax#: (046) 972-0120</h6><br>
+							<h1>Kou Fu Color Packaging Corp.</h1>
+							<h5>Lot 3-4 Blk 4 Mountview Industrial Complex Brgy. Bancal Carmona Cavite</h5>
+							<h6>Tel#: +63(2)5844928 Fax#: +63(2)5844952</h6><br>
 							<h2>Main Job Ticket</h2><br>
 						</header>
 					</center>

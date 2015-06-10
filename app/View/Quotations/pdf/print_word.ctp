@@ -7,9 +7,9 @@
 		<div class="main-box main-pdf" >
 			<center>
 				<header class="main-box-header clearfix">
-					<h3>Kou Fu Color Printing Corp.</h3>
-					<h6 style="font-family: Calibri;">Lot 4-5, Blk 3 Phase 2, Mountview Industrial Complex, Bancal, Carmona, Cavite</h6>
-					<h6>Tel#: (046) 972-1111 to 13 Fax#: (046) 972-0120</h6><br>
+					<h1>Kou Fu Color Packaging Corp.</h1>
+					<h5>Lot 3-4 Blk 4 Mountview Industrial Complex Brgy. Bancal Carmona Cavite</h5>
+					<h6>Tel#: +63(2)5844928 Fax#: +63(2)5844952</h6><br>
 					<h3>Price Quotation</h3>
 				</header>
 			</center>
@@ -41,16 +41,18 @@
 					</tr>
 				</thead>
 			</table>
-			<table class="layout">
-				<thead>
-					<tr>
-						<td style="width:20px;">
-							Dear :&nbsp; <?php echo ucfirst($quotation['ContactPerson']['firstname']).' '.ucfirst($quotation['ContactPerson']['lastname']) ?> &nbsp;
-						</td>
-						
-					</tr>
-				</thead>
-			</table>
+			<?php if (!empty($quotation['ContactPerson']['firstname']) || !empty($quotation['lastname']['firstname']) ) { ?>
+				<table class="layout">
+					<thead>
+						<tr>
+							<td style="width:20px;">
+								Dear :&nbsp; <?php echo ucfirst($quotation['ContactPerson']['firstname']).' '.ucfirst($quotation['ContactPerson']['lastname']) ?> &nbsp;
+							</td>
+							
+						</tr>
+					</thead>
+				</table>
+			<?php } ?>
 			<table class="layout">
 				<thead>
 					<tr>
@@ -71,16 +73,17 @@
 						 <?php echo $quotation['Product']['name']?>
 						</td>
 					</tr>
-					<tr>
-						<td style="width:123px;">
-							Size
-						</td>
-						<td style="width:20px;">:</td>
-						<td>
-							<?php echo $quotation['QuotationDetail']['size'] ?>
-						</td>
-					</tr>
-					
+					<?php if (!empty($quotation['QuotationDetail']['size']) ) { ?>
+						<tr>
+							<td style="width:123px;">
+								Size
+							</td>
+							<td style="width:20px;">:</td>
+							<td>
+								<?php echo $quotation['QuotationDetail']['size'] ?>
+							</td>
+						</tr>
+					<?php } ?>
 					
 				</thead>
 			</table>
@@ -162,24 +165,29 @@
 			</table>
 			<table class="layout">
 				<thead>
-					<tr>
-						<td style="width:123px;">
-							Color
-						</td>
-						<td style="width:20px;">:</td>
-						<td>
-						 <?php echo $quotation['QuotationDetail']['color']?> 
-						</td>
-					</tr>
-					<tr>
-						<td style="width:123px;">
-							Process
-						</td>
-						<td style="width:20px;">:</td>
-						<td>
-						 <?php echo $quotation['QuotationDetail']['process']?>
-						</td>
-					</tr>
+					<?php if (!empty($quotation['QuotationDetail']['color']) ) { ?>
+						<tr>
+							<td style="width:123px;">
+								Color
+							</td>
+							<td style="width:20px;">:</td>
+							<td>
+							 <?php echo $quotation['QuotationDetail']['color']?> 
+							</td>
+						</tr>
+					<?php } ?>
+					<?php if (!empty($quotation['QuotationDetail']['process']) ) { ?>
+						<tr>
+							<td style="width:123px;">
+								Process
+							</td>
+							<td style="width:20px;">:</td>
+							<td>
+							 <?php echo $quotation['QuotationDetail']['process']?>
+							</td>
+						</tr>
+					<?php } ?>
+					<?php if (!empty($quotation['QuotationDetail']['packaging']) ) { ?>
 					<tr>
 						<td style="width:123px;">
 							Packaging
@@ -189,15 +197,18 @@
 						 <?php echo $quotation['QuotationDetail']['packaging']?>
 						</td>
 					</tr>
-					<tr>
-						<td style="width:123px;">
-							Other Specs
-						</td>
-						<td style="width:20px;">:</td>
-						<td>
-						 <?php echo $quotation['QuotationDetail']['other_specs']?>
-						</td>
-					</tr>
+					<?php } ?>
+					<?php if (!empty($quotation['QuotationDetail']['other_specs']) ) { ?>
+						<tr>
+							<td style="width:123px;">
+								Other Specs
+							</td>
+							<td style="width:20px;">:</td>
+							<td>
+							 <?php echo $quotation['QuotationDetail']['other_specs']?>
+							</td>
+						</tr>
+					<?php } ?>
 					<tr>
 						<td style="width:123px;">
 							Terms
@@ -214,34 +225,37 @@
 
 			<table class="layout">
 				<thead>
-					<tr>
-						<td style="width:123px;">
-							Validity
-						</td>
-						<td style="width:20px;">:</td>
-						<td>
-							<?php 
-							   	if (!empty($quotation['Quotation']['validity']) 
-							   		&& $this->DateFormat->isValidDateTimeString($quotation['Quotation']['validity'])){
-							   	
-							   		echo date('M d, Y', strtotime($quotation['Quotation']['validity']));
-							   	} else {
+					<?php if (!empty($quotation['QuotationDetail']['validity']) ) { ?>
+						<tr>
+							<td style="width:123px;">
+								Validity
+							</td>
+							<td style="width:20px;">:</td>
+							<td>
+								<?php 
+								   	if (!empty($quotation['Quotation']['validity']) 
+								   		&& $this->DateFormat->isValidDateTimeString($quotation['Quotation']['validity'])){
+								   	
+								   		echo date('M d, Y', strtotime($quotation['Quotation']['validity']));
+								   	} else {
 
-							   		echo 'No validity date';
-							   	} 
-							?>
-						</td>
-					</tr>
-					<tr>
-						<td style="width:123px;">
-							Remarks
-						</td>
-						<td style="width:20px;">:</td>
-						<td>
-							<?php echo $quotation['QuotationDetail']['remarks']?>
-						</td>
-					</tr>
-					
+								   		echo 'No validity date';
+								   	} 
+								?>
+							</td>
+						</tr>
+					<?php } ?>
+					<?php if (!empty($quotation['QuotationDetail']['remarks']) ) { ?>
+						<tr>
+							<td style="width:123px;">
+								Remarks
+							</td>
+							<td style="width:20px;">:</td>
+							<td>
+								<?php echo $quotation['QuotationDetail']['remarks']?>
+							</td>
+						</tr>
+					<?php } ?>
 					
 				</thead>
 			</table>

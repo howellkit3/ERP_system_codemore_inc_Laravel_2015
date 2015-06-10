@@ -149,9 +149,12 @@
 		<div class="main-box">
 			<center>
 				<header class="main-box-header clearfix"><?php //echo pr($contactInfo);die; ?>
-					<h1>Kou Fu Color Printing Corp.</h1>
-					<h5>Lot 4-5, Blk 3 Phase 2, Mountview Industrial Complex, Bancal, Carmona, Cavite</h5>
-					<h6>Tel#: (046) 972-1111 to 13 Fax#: (046) 972-0120</h6><br>
+					<h1>Kou Fu Color Packaging Corp.</h1>
+					<h5>Lot 3-4 Blk 4 Mountview Industrial Complex Brgy. Bancal Carmona Cavite</h5>
+					<h6>
+						Tel: +63(2)5844928 &nbsp;
+						Fax: +63(2)5844952 
+					</h6><br>
 					<h2>Price Quotation</h2><br>
 				</header>
 			</center>
@@ -183,13 +186,15 @@
 							Date :&nbsp;<?php echo !empty($quotation['Quotation']['created']) ? date('Y/m/d', strtotime($quotation['Quotation']['created'])) : '' ?>
 						</div>
 					</div>
-					<div class="form-group">
-						<div class="col-lg-1"></div>
-						<div class="col-lg-10">
-							Dear :&nbsp; <?php echo ucfirst($quotation['ContactPerson']['firstname']).' '.ucfirst($quotation['ContactPerson']['lastname']) ?>&nbsp;
-							
+					<?php if (!empty($quotation['ContactPerson']['firstname']) || !empty($quotation['ContactPerson']['lastname'])) { ?>
+						<div class="form-group">
+							<div class="col-lg-1"></div>
+							<div class="col-lg-10">
+								Dear :&nbsp; <?php echo ucfirst($quotation['ContactPerson']['firstname']).' '.ucfirst($quotation['ContactPerson']['lastname']) ?>&nbsp;
+								
+							</div>
 						</div>
-					</div>
+					<?php } ?>
 					<div class="form-group">
 						<div class="col-lg-3"></div>
 						<div class="col-lg-8">
@@ -207,29 +212,37 @@
 							</div>
 
 					</div>
-					<div class="form-group">
+					<?php if (!empty($quotation['QuotationDetail']['size'])) { ?>
+						<div class="form-group">
 
-							<div class="col-lg-1"></div>
-							<div class="col-lg-2">
-								Size
-							</div>
-							<div class="col-lg-8">
-								:&emsp;<?php echo $quotation['QuotationDetail']['size']?>
-							</div>
+								<div class="col-lg-1"></div>
+								<div class="col-lg-2">
+									Size
+								</div>
+								<div class="col-lg-8">
+									:&emsp;<?php echo $quotation['QuotationDetail']['size']?>
+								</div>
 
-					</div>
-					<div>
+						</div>
+					<?php } ?>
 					<!-- <div class ="boxed2"> -->
+					
 					<div class="form-group">
 							<div class="col-lg-1"></div>
 							<div class="col-lg-2">
-								Qty<br><br>
-								Unit Price<br><br>
-								Vat Price<br><br>
+								Qty
+								<br><br>
+								Unit Price
+								
+								<br><br>
+								Vat Price
+							
+								<br><br>
 								Material
+								
 							</div>
 							<div class="col-lg-8"><div class="pull-left"></div>
-								<?php foreach ($quotation['QuotationItemDetail'] as $itemDetail){ ?>
+								<?php foreach ($quotation['QuotationItemDetail'] as $key => $itemDetail){ ?>
 									<table  class = "tbl">
 										<tr>
 											
@@ -282,53 +295,61 @@
 
 						</div>
 
-						<div class="form-group">
+						<?php if (!empty($quotation['QuotationDetail']['color'])) { ?>
+							<div class="form-group">
 
-							<div class="col-lg-1"></div>
-							<div class="col-lg-2">
-								Color
+								<div class="col-lg-1"></div>
+								<div class="col-lg-2">
+									Color
+								</div>
+								<div class="col-lg-8">
+									:&emsp;<?php echo $quotation['QuotationDetail']['color']?>
+								</div>
+
 							</div>
-							<div class="col-lg-8">
-								:&emsp;<?php echo $quotation['QuotationDetail']['color']?>
+						<?php } ?>
+
+						<?php if (!empty($quotation['QuotationDetail']['process'])) { ?>
+							<div class="form-group">
+
+								<div class="col-lg-1"></div>
+								<div class="col-lg-2">
+									Process
+								</div>
+								<div class="col-lg-8">
+									:&emsp;<?php echo $quotation['QuotationDetail']['process']?>
+								</div>
+
 							</div>
+						<?php } ?>
 
-						</div>
+						<?php if (!empty($quotation['QuotationDetail']['packaging'])) { ?>
+							<div class="form-group">
 
-						<div class="form-group">
+								<div class="col-lg-1"></div>
+								<div class="col-lg-2">
+									Packaging
+								</div>
+								<div class="col-lg-8">
+									:&emsp;<?php echo $quotation['QuotationDetail']['packaging']?>
+								</div>
 
-							<div class="col-lg-1"></div>
-							<div class="col-lg-2">
-								Process
 							</div>
-							<div class="col-lg-8">
-								:&emsp;<?php echo $quotation['QuotationDetail']['process']?>
+						<?php } ?>
+
+						<?php if (!empty($quotation['QuotationDetail']['other_specs'])) { ?>
+							<div class="form-group">
+
+								<div class="col-lg-1"></div>
+								<div class="col-lg-2">
+									Other Specs
+								</div>
+								<div class="col-lg-8">
+									:&emsp;<?php echo $quotation['QuotationDetail']['other_specs']?>
+								</div>
+
 							</div>
-
-						</div>
-
-						<div class="form-group">
-
-							<div class="col-lg-1"></div>
-							<div class="col-lg-2">
-								Packaging
-							</div>
-							<div class="col-lg-8">
-								:&emsp;<?php echo $quotation['QuotationDetail']['packaging']?>
-							</div>
-
-						</div>
-
-						<div class="form-group">
-
-							<div class="col-lg-1"></div>
-							<div class="col-lg-2">
-								Other Specs
-							</div>
-							<div class="col-lg-8">
-								:&emsp;<?php echo $quotation['QuotationDetail']['other_specs']?>
-							</div>
-
-						</div>
+						<?php } ?>
 
 						<div class="form-group">
 
@@ -342,37 +363,41 @@
 
 						</div>
 
-						<div class="form-group">
+						<?php if (!empty($quotation['Quotation']['validity'])) { ?>
+							<div class="form-group">
 
-							<div class="col-lg-1"></div>
-							<div class="col-lg-2">
-								Validity
+								<div class="col-lg-1"></div>
+								<div class="col-lg-2">
+									Validity
+								</div>
+								<div class="col-lg-8">
+									:&emsp;<?php 
+									   if (!empty($quotation['Quotation']['validity']) 
+									   	&& $this->DateFormat->isValidDateTimeString($quotation['Quotation']['validity'])){
+									   	
+									   		echo date('M d, Y', strtotime($quotation['Quotation']['validity']));
+									   } else {
+
+									   		echo 'No validity date';
+									   } ?>
+								</div>
+
 							</div>
-							<div class="col-lg-8">
-								:&emsp;<?php 
-								   if (!empty($quotation['Quotation']['validity']) 
-								   	&& $this->DateFormat->isValidDateTimeString($quotation['Quotation']['validity'])){
-								   	
-								   		echo date('M d, Y', strtotime($quotation['Quotation']['validity']));
-								   } else {
+						<?php } ?>
 
-								   		echo 'No validity date';
-								   } ?>
+						<?php if (!empty($quotation['Quotation']['remarks'])) { ?>
+							<div class="form-group">
+
+								<div class="col-lg-1"></div>
+								<div class="col-lg-2">
+									Remarks
+								</div>
+								<div class="col-lg-8">
+									:&emsp;<?php echo $quotation['QuotationDetail']['remarks']?>
+								</div>
+
 							</div>
-
-						</div>
-
-						<div class="form-group">
-
-							<div class="col-lg-1"></div>
-							<div class="col-lg-2">
-								Remarks
-							</div>
-							<div class="col-lg-8">
-								:&emsp;<?php echo $quotation['QuotationDetail']['remarks']?>
-							</div>
-
-						</div>
+						<?php } ?>
 			
 						
 					
