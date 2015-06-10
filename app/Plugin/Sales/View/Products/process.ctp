@@ -2,9 +2,11 @@
     <section class="dragField">
         <header class="main-box-header dragHeader clearfix">
             <h2 class="pull-left">Process</h2>
-            <a href="#" class="remove_process pull-right">
-                <i class="fa fa-times-circle fa-fw fa-lg"></i>
-            </a>
+            <?php if ($dynamicId != 'Process0') { ?>
+                <a href="#" class="remove_process pull-right">
+                    <i class="fa fa-times-circle fa-fw fa-lg"></i>
+                </a>
+            <?php } ?>
         </header>
         <div class="form-group">
             <div class="col-lg-2"></div>

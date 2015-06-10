@@ -2,9 +2,11 @@
     <section class="dragField">
         <header class="main-box-header dragHeader clearfix">
             <h2 class="pull-left">Part</h2>
-            <a href="#" class="remove_part pull-right">
-                <i class="fa fa-times-circle fa-fw fa-lg"></i>
-            </a>
+            <?php if ($varCounter > 1) { ?>
+                <a href="#" class="remove_part pull-right">
+                    <i class="fa fa-times-circle fa-fw fa-lg"></i>
+                </a>
+            <?php } ?>
         </header>
         <div class="form-group">
             <label class="col-lg-2 control-label">Material</label>
