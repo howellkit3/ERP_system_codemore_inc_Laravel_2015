@@ -238,3 +238,9 @@ CREATE TABLE `delivery_plans` (
 ALTER TABLE `koufu_delivery`.`delivery_plans` ADD COLUMN  `schedule_uuid` INT(11) NULL AFTER `dr_uuid`;
 ALTER TABLE `koufu_delivery`.`delivery_plans` ADD COLUMN  `client_order_id` INT(11) NULL AFTER `schedule_uuid`;
 
+
+#NOTE: SELECT KOUFU DELIVERY DATABASE ----
+/** HOWELL KIT added this 06/10/2015  */
+ALTER TABLE `koufu_delivery`.`delivery_details` DROP COLUMN `description` ;
+ALTER TABLE `koufu_delivery`.`delivery_details` ADD COLUMN  `status` VARCHAR(30) NULL AFTER `delivery_type`;
+ALTER TABLE `koufu_delivery`.`delivery_details` ADD COLUMN  `remaining_quantity` INT(11) NULL AFTER `quantity`;

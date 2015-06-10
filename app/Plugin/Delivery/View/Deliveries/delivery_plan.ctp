@@ -19,11 +19,7 @@
                <br><br>
            </div>
    
-            
 
-<div class="row1">
-    <div class="col-lg-12">
-        <div class="main-box clearfix body-pad">
             <div class="filter-block pull-right marginDelivery">
 
            </div>
@@ -35,16 +31,17 @@
                 
             </header>
 
-
-
-            <table class="table table-striped table-hover ">
+    <div class="main-box-body clearfix">
+        <div class="table-responsive">
+            <div class="main-box clearfix body-pad">        
+                 <table class="table table-striped table-hover ">
                         <thead>
                             <tr >
                                 <th class=""><a href="#"><span>Delivery Receipt #</span></a></th>
                                 <th class=""><a href="#"><span>Schedule</span></a></th>
                                 <th class=""><a href="#"><span>Quantity</span></a></th>
                                 <th class=""><a href="#"><span>Location</span></a></th>
-                               <!--  <th class=""><a href="#"><span>Status</span></a></th> -->
+                               <!--  <th class=""><a href="#"><span>Action</span></a></th> -->
                             </tr>
                         </thead>
 

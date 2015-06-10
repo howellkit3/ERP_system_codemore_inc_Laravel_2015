@@ -202,7 +202,7 @@ class DeliveriesController extends DeliveryAppController {
         $deliveryDetailsData = $this->Delivery->find('all');
 
         $this->Delivery->bindDelivery();
-        $deliveryEdit = $this->Delivery->find('first', array(
+        $deliveryEdit = $this->Delivery->find('all', array(
                                          'conditions' => array(
                                         'Delivery.clients_order_id' => $clientsOrderUuid
                                         )
@@ -236,7 +236,7 @@ class DeliveriesController extends DeliveryAppController {
         
 }
 
- public function edit($idDelivery = null,$idDeliveryDetail = null,$deliveryScheduleId = null, $quotationId = null, $clientsOrderUuid = null) {
+ public function add_schedule($idDelivery = null,$idDeliveryDetail = null,$deliveryScheduleId = null, $quotationId = null, $clientsOrderUuid = null) {
 
         $userData = $this->Session->read('Auth');
 
@@ -249,10 +249,14 @@ class DeliveriesController extends DeliveryAppController {
                 $this->Delivery->id = $idDelivery;
                 $this->DeliveryDetail->id = $idDeliveryDetail;
 
-                   //pr($this->request->data); exit;
-               
+                   $this->request->data['DeliveryDetail']['delivery_uuid'] =  $this->request->data['Delivery']['dr_uuid']; 
+                   $this->request->data['DeliveryDetail']['created_by'] =  $userData['User']['id'];    
+                   $this->request->data['Delivery']['status'] =  'Approved';   
+
+                   //pr($this->request->data);exit;        
                     //$this->ClientOrderDeliverySchedule->save($this->request->data);
-                    $this->DeliveryDetail->save($this->request->data,$userData['User']['id']);
+                    $this->Delivery->saveDelivery($this->request->data,$userData['User']['id']);
+                    $this->DeliveryDetail->saveDeliveryDetail($this->request->data,$userData['User']['id']);
                     //$this->Delivery->saveDelivery($this->request->data,$userData['User']['id']);
                     $this->Session->setFlash(__('Schedule has been updated.'),'success');
                     $this->redirect( array(
@@ -279,6 +283,64 @@ public function add_delivery() {
        
         
 }
+
+public function delivery_edit($dr_uuid = null, $clientsOrderUuid = null) {
+
+  $userData = $this->Session->read('Auth');
+
+  $this->loadModel('Sales.ClientOrder');
+
+  $this->Delivery->bindDelivery();
+
+  $deliveryEdit = $this->Delivery->find('first', array(
+                                         'conditions' => array(
+                                        'Delivery.dr_uuid' => $dr_uuid
+                                        )
+                                    ));
+
+  $clientOrderData = $this->ClientOrder->find('list',array('fields' => array('uuid','po_number')));
+
+  $this->loadModel('Sales.ClientOrder');
+  $this->ClientOrder->bindDelivery();
+
+  $clientsOrder = $this->ClientOrder->find('all', array(
+                                        'conditions' => array('ClientOrderDeliverySchedule.uuid' => $clientsOrderUuid
+                                        )));    
+  //pr($clientsOrder); exit;
+ 
+  if ($this->request->is(array('post', 'put'))) {
+
+                  $this->request->data['DeliveryDetail']['remaining_quantity'] = ($this->request->data['ClientOrderDeliverySchedule']['quantity']) - ($this->request->data['DeliveryDetail']['quantity']);
+                  //$this->Delivery->id = $idDelivery;
+                   
+
+                   //$this->request->data['DeliveryDetail']['id'] = $this->request->data['Idholder']['id'];
+                    //pr($this->request->data); exit;
+                    //$this->ClientOrderDeliverySchedule->save($this->request->data);
+                    $this->DeliveryDetail->saveDeliveryDetail($this->request->data,$userData['User']['id']);
+                    //$this->Delivery->saveDelivery($this->request->data,$userData['User']['id']);
+                    $this->Session->setFlash(__('Schedule has been updated.'),'success');
+                    $this->redirect( array(
+                                 'controller' => 'deliveries', 
+                                 'action' => 'view',$clientsOrder[0]['ClientOrderDeliverySchedule']['id'],
+                                                    $clientsOrder[0]['QuotationDetail']['quotation_id'],
+                                                    $clientsOrder[0]['ClientOrder']['uuid']
+                            ));
+                
+                $this->Session->setFlash(__('Unable to update your post.'));
+     }            
+        
+  $this->set(compact('deliveryEdit', 'clientOrderData', 'clientsOrder'));      
+}
+
+
+public function print_dr() {
+
+ 
+       
+        
+}
+
 
 
 }

@@ -122,7 +122,7 @@
 												<?php echo $this->Form->input('Company.id', array(
 					                                'type' => 'select',
 					                                'label' => false,
-					                                'class' => 'form-control required contacpersonlist',
+					                                'class' => 'form-control required contacpersonlist quotations_attention_details',
 					                                'options' => array($companyData),
 					                                'empty' => '--Select Company--'  
 					                             )); 
@@ -139,9 +139,10 @@
 												<?php 
 		                                            echo $this->Form->input('Quotation.attention_details', array(
 		                                            								'type' => 'select',
-		                                            								'class' => 'form-control item_type',
+		                                            								'class' => 'form-control item_type contacpersonlist',
 								                                                    'label' => false,
 								                                                    'placeholder' => 'Attention',
+								                                                    'id' => 'QuotationAttentionDetails',
 								                                                    'empty' => '--Select Contact Person--'));
 	                                            ?>
 
