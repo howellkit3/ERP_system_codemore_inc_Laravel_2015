@@ -378,6 +378,8 @@ class QuotationsController extends SalesAppController {
 
 		$this->loadModel('User');
 
+		$this->loadModel('Sales.ClientOrder');
+
 		$userData = $this->User->read(null,$this->Session->read('Auth.User.id'));
 
 		//start///call Role permission
@@ -387,6 +389,12 @@ class QuotationsController extends SalesAppController {
 		//end///call Role permission
 
 		$this->loadModel('User');
+
+		$clientData = $this->ClientOrder->find('first',array('conditions' => array('ClientOrder.quotation_id' => $quotationId)));
+		
+		if(!empty($clientData)){
+			$disabled = 'disabled';
+		}
 
 		$rolesPermissionData = $this->RolesPermission->find('list', array(
 														'fields' => array('RolesPermission.id', 'RolesPermission.permission_id'),
@@ -488,7 +496,7 @@ class QuotationsController extends SalesAppController {
 										'User.id' => $userData['User']['id'] )
 								));
 		
-		$this->set(compact('userData','myPermission','approvedUser','units','currencies','paymentTerm','companyData','companyId', 'quotationSize', 'quotationOption','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','salesStatus', 'productName','clientOrderCount','quotationDetailData', 'rolesPermissionData'));
+		$this->set(compact('disabled','userData','myPermission','approvedUser','units','currencies','paymentTerm','companyData','companyId', 'quotationSize', 'quotationOption','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','salesStatus', 'productName','clientOrderCount','quotationDetailData', 'rolesPermissionData'));
 		
 	}
 

@@ -2,7 +2,7 @@
 <input type="hidden" value="<?php echo $formatDataSpecs['ProductSpecificationPart']['id'] ?>" class="form-control part_name<?php echo $plusCounter ;?> editMe" maxlenght="500" name="data[IdHolder][ProductSpecificationPart][<?php echo $counter ;?>][id]" />
 
 <div class="form-group">
-    <label class="col-lg-2 control-label">Material</label>
+    <label class="col-lg-2 control-label"><span style="color:red">*</span>Material</label>
     <div class="col-lg-6 materialName<?php echo $plusCounter ;?>" >
         <input type="text" value="<?php echo $formatDataSpecs['ProductSpecificationPart']['material'] ?>" class="required partnameMe form-control part_name<?php echo $plusCounter ;?> editMe" maxlenght="500" name="data[ProductSpecificationPart][<?php echo $counter ;?>][material]" disabled />
     </div>
@@ -17,13 +17,13 @@
         <div class="col-lg-3">
             <input type="text" value="<?php echo $formatDataSpecs['ProductSpecificationPart']['part'] ?>" class="form-control" name="data[ProductSpecificationPart][<?php echo $counter ;?>][part]" readonly />
         </div>
-        <label class="col-lg-2 control-label">Rate</label>
+        <label class="col-lg-2 control-label"><span style="color:red">*</span>Rate</label>
         <div class="col-lg-3">
             <input type="number" value="<?php echo $formatDataSpecs['ProductSpecificationPart']['rate'] ?>" class="rateMe form-control rate<?php echo $plusCounter ;?> editMe" name="data[ProductSpecificationPart][<?php echo $counter ;?>][rate]" disabled />
         </div>
     </div>
     <div class="form-group">
-        <label class="col-lg-2 control-label">Size</label>
+        <label class="col-lg-2 control-label"><span style="color:red">*</span>Size</label>
         <div class="col-lg-3">
             <input type="text" value="<?php echo $formatDataSpecs['ProductSpecificationPart']['size1'] ?>" class="form-control editMe" name="data[ProductSpecificationPart][<?php echo $counter ;?>][size1]" disabled/>
         </div>
@@ -34,7 +34,7 @@
         <label class="col-lg-1 control-label left-text">mm</label>
     </div>
     <div class="form-group">
-        <label class="col-lg-2 control-label">Quantity</label>
+        <label class="col-lg-2 control-label"><span style="color:red">*</span>Quantity</label>
         <div class="col-lg-2">
             <input type="number" value="<?php echo $formatDataSpecs['ProductSpecificationPart']['quantity'] ?>" class="allQuantity quantityMe form-control quantity<?php echo $plusCounter ;?>" name="data[ProductSpecificationPart][<?php echo $counter ;?>][quantity]" readonly />
         </div>
@@ -56,13 +56,13 @@
 
             ?>
         </div>
-        <label class="col-lg-1 control-label">Paper Qty</label>
+        <label class="col-lg-1 control-label"><span style="color:red">*</span>Paper Qty</label>
         <div class="col-lg-2">
             <input type="text" value="<?php echo $formatDataSpecs['ProductSpecificationPart']['paper_quantity'] ?>" class="allPaperQuantity paper_qtyMe form-control paper_qty<?php echo $plusCounter ;?>" name="data[ProductSpecificationPart][<?php echo $counter ;?>][paper_quantity]" readonly />
         </div>
     </div>
     <div class="form-group">
-        <label class="col-lg-2 control-label">Color</label>
+        <label class="col-lg-2 control-label"><span style="color:red">*</span>Color</label>
         <div class="col-lg-4">
             <input type="text" value="<?php echo $formatDataSpecs['ProductSpecificationPart']['color'] ?>" class="form-control editMe" name="data[ProductSpecificationPart][<?php echo $counter ;?>][color]" disabled/>
         </div>
@@ -72,7 +72,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-lg-2 control-label">Outs</label>
+        <label class="col-lg-2 control-label"><span style="color:red">*</span>Outs</label>
         <div class="col-lg-2">
             <input type="number" value="<?php echo $formatDataSpecs['ProductSpecificationPart']['outs1'] ?>" class="outsMe form-control number outs<?php echo $plusCounter ;?> editMe" name="data[ProductSpecificationPart][<?php echo $counter ;?>][outs1]" disabled/>
         </div>

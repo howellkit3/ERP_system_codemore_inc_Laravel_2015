@@ -119,7 +119,7 @@
 										</div>
 
 										<div class="form-group">
-											<label class="col-lg-2 control-label">Quantity</label>
+											<label class="col-lg-2 control-label"><span style="color:red">*</span>Quantity</label>
 											<div class="col-lg-3">
 												<?php 
 													echo $this->Form->input('ProductSpecification.quantity', array(
