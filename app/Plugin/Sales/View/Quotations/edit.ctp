@@ -209,6 +209,13 @@
                         'name' => 'data[QuotationItemDetail]['.$key.'][id]',
                         'value' => $itemDetailDetails['QuotationItemDetail']['id'],
                         'id' => 'id'));
+                    echo $this->Form->input('QuotationItemDetail.id', array('class' => 'form-control item_type',
+                        'hidden' => 'hidden',
+                        'readonly' => 'readonly',
+                        'label' => false,
+                        'name' => 'data[IdHolder]['.$key.'][id]',
+                        'value' => $itemDetailDetails['QuotationItemDetail']['id'],
+                        'id' => 'id'));
                 ?>
 			
 				<section class="cloneMe quotationItemDetail">

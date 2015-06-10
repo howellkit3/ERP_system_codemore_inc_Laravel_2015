@@ -224,9 +224,16 @@ class QuotationsController extends SalesAppController {
 
             if (!empty($this->request->data)) {
             	
+            	if(!empty($this->request->data['IdHolder'])){
+            		foreach ($this->request->data['IdHolder'] as $key => $value) {
+            			$this->Quotation->QuotationItemDetail->delete($value['id']);
+            		}
+            		
+            	}
+            	
             	if (!empty($this->request->data['submit']) && $this->request->data['submit'] == 'Save as Draft') {
-            			$this->request->data['Quotation']['status'] = 'draft';	
-            			}
+    				$this->request->data['Quotation']['status'] = 'draft';	
+    			}
            		
 				if(!empty($this->request->data['Inquiry']['id'])){
             			$this->loadModel('Sales.Company');
