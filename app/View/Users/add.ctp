@@ -18,31 +18,31 @@
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
                                     <?php
-                                        echo $this->Form->input('first_name', array('class' => 'form-control col-lg-6','label' => false,'placeholder' => 'Firstname'));
+                                        echo $this->Form->input('first_name', array('class' => 'required form-control col-lg-6','label' => false,'placeholder' => 'Firstname'));
                                     ?>
                                 </div>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
                                     <?php
-                                        echo $this->Form->input('last_name', array('class' => 'form-control col-lg-6','label' => false,'placeholder' => 'Lastname'));
+                                        echo $this->Form->input('last_name', array('class' => 'required form-control col-lg-6','label' => false,'placeholder' => 'Lastname'));
                                     ?>
                                 </div>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
                                     <?php
-                                        echo $this->Form->input('email', array('class' => 'form-control col-lg-6','label' => false,'placeholder' => 'Email'));
+                                        echo $this->Form->input('email', array('class' => 'required form-control col-lg-6','label' => false,'placeholder' => 'Email'));
                                     ?>
                                 </div>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-unlock-alt"></i></span>
                                     <?php
-                                         echo $this->Form->input('password', array('label' => 'Password ', 'maxLength' => 255, 'title' => 'Password', 'type'=>'password','class' => 'form-control col-lg-6','label' => false,'placeholder' => 'Password'));
+                                         echo $this->Form->input('password', array('label' => 'Password ', 'maxLength' => 255, 'title' => 'Password', 'type'=>'password','class' => 'required form-control col-lg-6','label' => false,'placeholder' => 'Password'));
                                     ?>
                                 </div>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-unlock-alt"></i></span>
                                     <?php
-                                         echo $this->Form->input('repassword', array('label' => 'Confirm Password ', 'maxLength' => 255, 'title' => 'Password', 'type'=>'password','class' => 'form-control col-lg-6','label' => false,'placeholder' => 'Confirm Password'));
+                                         echo $this->Form->input('repassword', array('label' => 'Confirm Password ', 'maxLength' => 255, 'title' => 'Password', 'type'=>'password','class' => 'required form-control col-lg-6','label' => false,'placeholder' => 'Confirm Password'));
                                     ?>
                                 </div>
                                 <div class="input-group">
@@ -52,7 +52,7 @@
                                             'options' => array($roleDatList),
                                             'label' => false,
                                             'style' => 'text-transform:capitalize',
-                                            'class' => 'form-control editRole',
+                                            'class' => 'form-control editRole required',
                                             'empty' => '--Select Role Description--'));
                         
                                     ?>
@@ -83,5 +83,14 @@
         </div>
     </div>
 </div>
-       
+   
+<script>
     
+    jQuery(document).ready(function($){
+            $("#UserAddForm").validate();
+            //datepicker
+           
+            
+    });
+
+ </script>
