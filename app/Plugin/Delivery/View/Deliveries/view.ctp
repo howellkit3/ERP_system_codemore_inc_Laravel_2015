@@ -165,18 +165,28 @@
 
            </div>
             <header class="main-box-header clearfix">
+                <?php 
+                  $pushRemaining  = array();
+                  $totalremaining = 0;
 
-                <h2 class="pull-left"><b>Delivery Schedule</b></h2>
+                  foreach ($pushRemaining as $key => $value) {
+                    $totalremaining = $totalremaining + $value;
+                  }
+                  $toParent = $this->get('toParent');
+                  echo "string";
+                  echo $toParent;
+                ?>
+                <h2><b class="pull-left">Delivery Schedule</b></h2>
+              <?php if (!empty($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']])) { ;
 
-                  <?php if (!empty($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']])) { ;
-
-                          if(($deliveryDetailsData['DeliveryDetail']['remaining_quantity']) == 0) { 
+                         // if(($deliveryDetailsData['DeliveryDetail']['delivered_quantity']) != 0) { 
 
                              if($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] == 'Approved') { 
                         ?>
-                                <a data-toggle="modal" href="#myModalDeliveries" class="btn btn-primary pull-right addSchedButton  "><i class="fa fa-edit fa-lg"></i> Add Schedule</a>
+                                <a data-toggle="modal" href="#myModalDeliveries" class="btn btn-primary pull-right  "><i class="fa fa-edit fa-lg"></i> Add Schedule</a>
 
-                <?php }}}?>
+                <?php }}?>
+                 
             </header>
 
             <table class="table table-striped table-hover ">
@@ -186,7 +196,7 @@
                                 <th class=""><a href="#"><span>Schedule</span></a></th>
                                 <th class=""><a href="#"><span>Location</span></a></th>
                                 <th class=""><a href="#"><span>Quantity</span></a></th>
-                                <th class=""><a href="#"><span>Remaining</span></a></th>
+                                <th class=""><a href="#"><span>Delivered</span></a></th>
                                 <th class=""><a href="#"><span>Status</span></a></th>
                                 <th class=""><a href="#"><span>Action</span></a></th>
                             </tr>
@@ -195,7 +205,9 @@
 
 
                         <?php echo $this->element('delivery_table'); ?>  
+
                     </table>
+                    <h2 class ='pull-right'>Remaining Quantity : <?php echo $totalremaining; ?> &nbsp&nbsp  </h2>
               </div>
         </div>
     </div>
@@ -206,6 +218,8 @@
 <?php echo $this->element('modals'); ?>
 
 <style>
+
+
 .margintop{
     margin-top : 10%; 
   }

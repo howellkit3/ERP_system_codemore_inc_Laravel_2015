@@ -32,7 +32,7 @@
             'compiled/theme_styles',
             'global'
         ));
-
+		echo $this->Html->script('jquery');
     ?>
 
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300|Titillium+Web:200,300,400' rel='stylesheet' type='text/css'>
@@ -71,6 +71,15 @@
         
 
     ?>
+    <?php
+		 	// SCRIPTS
+
+			// echo $this->Html->script('jquery');
+			echo $this->Html->script('jquery-validation/dist/jquery.validate');
+			echo $this->Html->script('jquery-validation/dist/jquery.validate.min');
+			//echo $this->Html->script('auto_complete');
+			
+	    ?>
 	
 	<!-- this page specific inline scripts -->
 	

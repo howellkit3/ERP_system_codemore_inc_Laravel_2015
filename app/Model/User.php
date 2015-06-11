@@ -51,7 +51,7 @@ class User extends AppModel {
 				'message' => 'Between 8-20 characters'
 			),
 
-        ) 	
+        )
 	
 	);
 
