@@ -1,10 +1,9 @@
 <?php   
 
 //  pr($deliveryDetailsData);
- $pushRemaining  = array();
-  $totalremaining = 0;
-  $toParent = 'sas';
-  $this->set('toParent' , $toParent);
+$pushRemaining  = array();
+$totalremaining = 0;
+
   if(!empty($deliveryEdit)){
               ?>
       <?php  foreach ($deliveryEdit as $deliveryDataList): 
@@ -120,7 +119,7 @@
           endforeach; 
   } 
 
-  pr($pushRemaining);
+ // pr($pushRemaining);
   ?> 
 
 
