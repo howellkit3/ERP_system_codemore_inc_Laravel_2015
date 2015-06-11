@@ -15,8 +15,8 @@
 						<td style="width:60px;"> </td>
 						<td>
 							<center>
-								<h2 style="font-size:25px;">Kou Fu Packaging Corporation</h2>
-								<h4 style="font-family: Arial;">Lot 3-4 Blk 4 Mountview Industrial Complex Brgy. Bancal Carmona Cavite</h4>
+								<h2 style="font-size:25px;padding-bottom:10px;">Kou Fu Packaging Corporation</h2>
+								<h4 style="font-family: Arial;padding-bottom:8px;">Lot 3-4 Blk 4 Mountview Industrial Complex Brgy. Bancal Carmona Cavite</h4>
 								<h4>Tel#: +63(2)5844928 Fax#: +63(2)5844952</h4>
 							</center>
 						</td>

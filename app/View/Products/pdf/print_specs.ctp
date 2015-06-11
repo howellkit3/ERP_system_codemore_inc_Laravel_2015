@@ -9,10 +9,10 @@
 		<div class="main-box main-pdf">
 			<center>
 				<header class="main-box-header clearfix">
-					<h1>Kou Fu Color Packaging Corp.</h1>
-					<h5>Lot 3-4 Blk 4 Mountview Industrial Complex Brgy. Bancal Carmona Cavite</h5>
-					<h6>Tel#: +63(2)5844928 Fax#: +63(2)5844952</h6><br>
-					<h3>Main Job Ticket</h3>
+					<h1 style="padding-bottom:10px;">Kou Fu Packaging Corp.</h1>
+					<h5 style="padding-bottom:8px;">Lot 3-4 Blk 4 Mountview Industrial Complex Brgy. Bancal Carmona Cavite</h5>
+					<h6>Tel: +63(2)5844928 &nbsp; Fax: +63(2)5844952</h6><br>
+					<h2>Main Job Ticket</h2><br>
 				</header>
 			</center>
 			<br>
