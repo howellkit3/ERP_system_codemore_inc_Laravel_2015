@@ -203,7 +203,7 @@
 								Item
 							</div>
 							<div class="col-lg-8">
-								<?php echo $quotation['Product']['name']?>
+								:&emsp;<?php echo $quotation['Product']['name']?>
 							</div>
 
 					</div>
