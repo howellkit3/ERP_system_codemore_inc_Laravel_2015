@@ -5,194 +5,102 @@
 <div class="row">
 	<div class="col-lg-12">
 		<div class="main-box main-pdf" >
+
+			<table class="layout">
+				<thead>
+					<tr>
+						<td>
+							<img src="<?php echo $this->Html->url('/', true) ?>img/koufu.png" class="" width="90" style="width:90;">
+						</td>
+						<td style="width:60px;"> </td>
+						<td>
+							<center>
+								<h2 style="font-size:25px;">Kou Fu Packaging Corporation</h2>
+								<h4 style="font-family: Arial;">Lot 3-4 Blk 4 Mountview Industrial Complex Brgy. Bancal Carmona Cavite</h4>
+								<h4>Tel#: +63(2)5844928 Fax#: +63(2)5844952</h4>
+							</center>
+						</td>
+					</tr>
+				</thead>
+			</table>
 			<center>
-				<header class="main-box-header clearfix">
-					<h3>Kou Fu Packaging Corporation</h3>
-					<h6 style="font-family: Calibri;">Lot 4-5, Blk 3 Phase 2, Mountview Industrial Complex, Bancal, Carmona, Cavite</h6>
-					<h6>Tel#: (046) 972-1111 to 13 Fax#: (046) 972-0120</h6><br>
-					<h3>Price Quotationsas</h3>
-				</header>
-			</center>
+				<h3>Delivery Receipt</h3>
+			</center><br>
 			<table class="layout">
 				<thead>
 					<tr>
-						<td style="width:123px;font-family: Calibri;">Attention</td>
+						<td style="width:15px;"> </td>
+						<td style="width:80px;font-family: Calibri;"><b>CUSTOMER</b></td>
 						<td style="width:20px;">:</td>
-						<td style="width:400px;">
-							<?php 
-							// 	echo $quotation['Quotation']['attention_details']
-								//echo !empty($quotation['Quotation']['company_id']) ? ucfirst($companyData[$quotation['Quotation']['company_id']]) : ucfirst($companyData[$inquiryId[$quotation['Quotation']['inquiry_id']]]) 
-							?>
+						<td style="width:330px;">
+							CodeMore
 						</td>
 						<td>
-							No : <u>PQ-<?php //echo $quotation['Quotation']['uuid'] ?></u>
+							Delivery No. : <u>99999999999999</u>
 						</td>
 					</tr>
 					<tr>
-						<td></td>
-						<td style="width:20px;"></td>
-						<td>
-							___________________________________________________
+						<td style="width:15px;"> </td>
+						<td style="width:80px;font-family: Calibri;"><b>ADDRESS</b></td>
+						<td style="width:20px;">:</td>
+						<td style="width:330px;">
+							Pacita
 						</td>
-						<td>Date:
-							<?php //echo !empty($quotation['Quotation']['created']) ? date('Y/m/d', strtotime($quotation['Quotation']['created'])) : '' 
-							?>
+						<td>
+							Invoice No. : <u>99999999999999</u>
+						</td>
+					</tr>
+					<tr>
+						<td style="width:15px;"> </td>
+						<td style="width:80px;font-family: Calibri;"><b>TIN</b></td>
+						<td style="width:20px;">:</td>
+						<td style="width:330px;">
+							Pacita
+						</td>
+						<td>
+							Date : <?php echo (new \DateTime())->format('l, F d, Y '); ?>
 						</td>
 					</tr>
 				</thead>
 			</table>
+			<br>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<td class="td-heigth" style="width:20px;border:1px solid #FFFFFF;"> </td>
+						<td class="td-heigth" style="width:90px;border:1px solid #EAEAEA;"><center><b>P.O</b></center></td>
+						<td class="td-heigth" style="width:260px;border:1px solid #EAEAEA;"><center><b>ITEM</b></center></td>
+						<td class="td-heigth" style="width:160px;border:1px solid #EAEAEA;"><center><b>QTY</b></center></td>
+						<td class="td-heigth" style="width:100px;border:1px solid #EAEAEA;"><center><b>TOTAL QTY</b></center></td>
+					</tr>
+					<tr>
+						<td style="width:15px;"> </td>
+						<td class="td-heigth" style="width:90px;border:1px solid #EAEAEA;"><center>PO-99999999</center></td>
+						<td class="td-heigth" style="width:120px;border:1px solid #EAEAEA;">s</td>
+						<td class="td-heigth" style="width:120px;border:1px solid #EAEAEA;">s</td>
+						<td class="td-heigth" style="width:120px;border:1px solid #EAEAEA;">s</td>
+					</tr>
+				</thead>
+			</table>
+			<BR>
 			<table class="layout">
 				<thead>
 					<tr>
-						<td style="width:20px;">
-							Dear :&nbsp; <?php //echo ucfirst($quotation['ContactPerson']['firstname']).' '.ucfirst($quotation['ContactPerson']['lastname']) ?> &nbsp;
-						</td>
 						<td>
-							<?php //echo ucfirst($contactInfo['ContactPerson']['firstname']) ?>
-							<?php //echo ucfirst($contactInfo['ContactPerson']['lastname']) ?>
+							<font style="font-size:8px;">
+								White-Customer's Copy ;<br> 
+								Yellow-Accounting ; <br>
+								Blue & Pink-delivery ;
+							</font>
+						</td>
+						<td style="width:45px;"> </td>
+						<td>
+							PLEASE CHECK YOUR GOODS WITHIN 3 DAYS IF IN GOOD GOOD CONDITION <br> 
+							ANY COMPLAIN WILL NOT BE ENTERTAINED AFTER THE SAID PERIOD
 						</td>
 					</tr>
 				</thead>
 			</table>
-			<table class="layout">
-				<thead>
-					<tr>
-						<td style="padding-left: 126px;">
-							We are pleased to submit our price quotation on your printing requirement under the following <br>specifications:
-						</td>
-					</tr>
-				</thead>
-			</table>
-			<table class="layout">
-				<thead>
-					<tr>
-						<td style="width:123px;">
-							Item
-						</td>
-						<td style="width:20px;">:</td>
-						<td>
-						 <?php //echo $quotation['Product']['name']?>
-						</td>
-					</tr>
-					<tr>
-						<td style="width:123px;">
-							Size
-						</td>
-						<td style="width:20px;">:</td>
-						<td>
-							<?php //echo $quotation['QuotationDetail']['size'] ?>
-						</td>
-					</tr>
-					
-					
-				</thead>
-			</table>
-
-
-								<table  class = "layout">
-								<?php foreach ($quotation['QuotationItemDetail'] as $itemDetail){ ?>
-								
-										<tr>
-											<td width ="123px" height ="35px" valign ="top" class ="column3 col-md-8"> 
-												<div class="col-lg-12">QTY 
-												</div>
-											</td>
-											<td style="width:20px;">:</td>	
-											<td height ="35px" valign ="top" class ="column3 col-md-8" style="border:1px solid #000;  text-align:center"> 
-												<div class="col-lg-12">
-													<?php// echo $itemDetail['quantity'];?> 
-
-													<?php
-													 //echo !empty($units[$itemDetail['quantity_unit_id']]) ? $units[$itemDetail['quantity_unit_id']] : '' ?> 
-
-												</div>
-											</td>	
-											
-										</tr>
-
-										<tr >
-											<td height ="35px" valign ="top" class ="column3 col-md-8"> 
-												<div class="col-lg-12">Unit Price 
-												</div>
-											</td>
-											<td style="width:20px;">:</td>
-											<td height ="35px" valign ="top" class = "column4 col-md-8" style="border:1px solid #000;  text-align:center">
-												<div class="col-lg-12" >
-													<?php //echo (!empty($itemDetail['unit_price']) && is_numeric($itemDetail['unit_price'])) ? number_format($itemDetail['unit_price'],4) : ''; ?>
-													<?php
-													 //echo !empty($currencies[$itemDetail['unit_price_currency_id']]) ? $currencies[$itemDetail['unit_price_currency_id']] : '' ?> 
-												</div>
-											</td>
-											
-										</tr>
-
-										<tr>
-											<td height ="35px" valign ="top" class ="column3 col-md-8"> 
-												<div class="col-lg-12">Vat Price
-												</div>
-											</td>
-											<td style="width:20px;">:</td>
-											<td height ="40px" class ="column2 col-md-8" style="border:1px solid #000;  text-align:center">
-												<div class="col-lg-12">
-													<?php //echo $itemDetail['vat_price'];?> 
-												</div>
-											</td>
-											
-										</tr>
-
-										<tr>
-											<td height ="35px" valign ="top" class ="column3 col-md-8"> 
-												<div class="col-lg-12">Material
-
-												</div>
-											</td>
-											<td style="width:20px;">:</td>
-											<td height ="30px" class ="column2 col-md-8" style="border:1px solid #000; text-align:center">
-												<div class="col-lg-12">
-													<?php //echo $itemDetail['material'];?> 
-												</div>
-											</td>
-											
-										</tr>
-
-									
-								<?php } ?>
-								</table>
-
-
-			<table class="layout">
-				<thead>
-					<tr>
-						<td style="width:123px;">
-							Validity
-						</td>
-						<td style="width:20px;">:</td>
-						<td>
-							 <?php 
-								   if (!empty($quotation['Quotation']['validity']) 
-								   	&& $this->DateFormat->isValidDateTimeString($quotation['Quotation']['validity'])){
-								   	
-								   		//echo date('M d, Y', strtotime($quotation['Quotation']['validity']));
-								   } else {
-
-								   		//echo 'No validity date';
-								   } ?>
-						</td>
-					</tr>
-					<tr>
-						<td style="width:123px;">
-							Remarks
-						</td>
-						<td style="width:20px;">:</td>
-						<td>
-							<?php //echo $quotation['QuotationDetail']['remarks']?>
-						</td>
-					</tr>
-					
-					
-				</thead>
-			</table>
-			
 			<table class="layout">
 				<thead>
 					<tr>
