@@ -66,7 +66,7 @@
                                                    }
                                                  }else{
 
-                                                            echo "<span class='label label-default'>Waiting</span>";
+                                                            echo "<span class='label label-default'>Delivering</span>";
 
                                            } ?>   
                            

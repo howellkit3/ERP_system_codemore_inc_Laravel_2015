@@ -56,20 +56,21 @@
 
                                                   if (!empty($deliveryData[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']])) {   
 
-                                                            if(strtotime($Scheddate) < strtotime($Currentdate))
-                                                                {
-                                                                    echo "<span class='label label-warning'>Due</span>"; 
-                                                                }else{    
-
                                                          if($deliveryData[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']] == 'Approved') { 
                                                         
                                                                   echo "<span class='label label-success'>Approved</span>";  
                                                           
                                                              }
-                                                         }
+                                                         
                                                      }else{
 
+                                                                    if(strtotime($Scheddate) < strtotime($Currentdate))
+                                                                {
+                                                                    echo "<span class='label label-warning'>Due</span>"; 
+                                                                }  else {
+
                                                                     echo "<span class='label label-default'>Waiting</span>";
+                                                                }
 
                                                  } ?>
                                    

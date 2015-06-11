@@ -122,6 +122,8 @@ class DeliveriesController extends DeliveryAppController {
         $this->request->data['DeliveryDetail']['created_by']  = $userData['User']['id'];
         $this->request->data['DeliveryDetail']['modified_by']  = $userData['User']['id'];
         $this->request->data['DeliveryDetail']['delivery_uuid']  = $this->request->data['Delivery']['dr_uuid'];
+        $this->request->data['DeliveryDetail']['remaining_quantity'] = ($this->request->data['ClientOrderDeliverySchedule']['quantity']) - ($this->request->data['DeliveryDetail']['quantity']);
+
 
                 //pr($this->request->data); exit;
 
@@ -205,6 +207,12 @@ class DeliveriesController extends DeliveryAppController {
         $deliveryEdit = $this->Delivery->find('all', array(
                                          'conditions' => array(
                                         'Delivery.schedule_uuid' => $clientsOrderUuid
+                                        )
+                                    ));
+
+         $deliveryData = $this->Delivery->find('first', array(
+                                         'conditions' => array(
+                                        'Delivery.schedule_uuid' => $scheduleInfo['ClientOrderDeliverySchedule']['uuid']
                                         )
                                     ));
         

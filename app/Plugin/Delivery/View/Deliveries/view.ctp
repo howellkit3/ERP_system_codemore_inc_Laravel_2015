@@ -162,8 +162,14 @@
             <header class="main-box-header clearfix">
 
                 <h2 class="pull-left"><b>Delivery Schedule</b></h2>
-                <a data-toggle="modal" href="#myModalDeliveries" class="btn btn-primary pull-right addSchedButton  "><i class="fa fa-edit fa-lg"></i> Add Schedule</a>
-                
+
+                  <?php if (!empty($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']])) { ;
+
+                      if($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] == 'Approved') { 
+                        ?>
+                     <a data-toggle="modal" href="#myModalDeliveries" class="btn btn-primary pull-right addSchedButton  "><i class="fa fa-edit fa-lg"></i> Add Schedule</a>
+
+                <?php }}?>
             </header>
 
             <table class="table table-striped table-hover ">
