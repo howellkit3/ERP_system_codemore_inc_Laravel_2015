@@ -1,6 +1,7 @@
 <?php
 App::uses('AppController', 'Controller');
 App::uses('SessionComponent', 'Controller/Component');
+App::import('Vendor', 'DOMPDF', true, array(), 'dompdf'.DS.'dompdf_config.inc.php', false);
 
 class DeliveriesController extends DeliveryAppController {
 
@@ -359,10 +360,58 @@ public function delivery_edit($dr_uuid = null, $clientsOrderUuid = null) {
 
 public function print_dr($dr_uuid = null,$schedule_uuid) {
 
- 
-       
+    $this->loadModel('Sales.ClientOrder');
+    $this->ClientOrder->bind('ClientOrderDeliverySchedule');
+
+    $this->loadModel('Sales.Company');
+    $this->Company->bind('Address');
+
+    $this->Delivery->bindDelivery();
+    $drData = $this->Delivery->find('first', array(
+                                        'conditions' => array('Delivery.dr_uuid' => $dr_uuid
+                                        )));
+
+    $clientData = $this->ClientOrder->find('first', array(
+                                        'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
+                                        )));
+
+    $companyData = $this->Company->find('first', array(
+                                        'conditions' => array('Company.id' => $clientData['ClientOrder']['company_id']
+                                        )));
+
+    $userData = $this->Session->read('Auth');
+    
+    $view = new View(null, false);
+    
+    $view->set(compact('drData','clientData','companyData'));
+      
+    $view->viewPath = 'Deliveries'.DS.'pdf';  
+   
+        $output = $view->render('print_dr', false);
+     
+        $dompdf = new DOMPDF();
+        $dompdf->set_paper("A4");
+        $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));
+        $dompdf->render();
+        $canvas = $dompdf->get_canvas();
+        $font = Font_Metrics::get_font("helvetica", "bold");
+        $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
+
+        $output = $dompdf->output();
+        $random = rand(0, 1000000) . '-' . time();
+        if (empty($filename)) {
+          $filename = 'Delivery-'.$dr_uuid.'-data'.time();
+        }
+        $filePath = 'view_pdf/'.strtolower(Inflector::slug( $filename , '-')).'.pdf';
+        $file_to_save = WWW_ROOT .DS. $filePath;
+          
+        if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
+            unlink($file_to_save);
+        }
         
-}
+        exit();
+        
+  }
 
 
 
