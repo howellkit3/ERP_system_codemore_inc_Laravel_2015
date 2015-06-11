@@ -218,7 +218,7 @@
 										<div class="col-lg-8">
 											<button type="submit" class="btn btn-primary pull-left">Submit Corrugated Paper</button>&nbsp;
 											<?php 
-						                        echo $this->Html->link('Cancel', array('controller' => 'settings', 'action' => 'index'),array('class' =>'btn btn-default','escape' => false));
+						                        echo $this->Html->link('Cancel', array('controller' => 'settings', 'action' => 'item_group','tab' => 'tab-corrugated_papers'),array('class' =>'btn btn-default','escape' => false));
 						                    ?>
 										</div>
 									</div>

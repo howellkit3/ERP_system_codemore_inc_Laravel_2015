@@ -120,7 +120,7 @@
 										<div class="col-lg-8">
 											<button type="submit" class="btn btn-primary pull-left">Submit General Item</button>&nbsp;
 											<?php 
-						                        echo $this->Html->link('Cancel', array('controller' => 'settings', 'action' => 'index'),array('class' =>'btn btn-default','escape' => false));
+						                        echo $this->Html->link('Cancel', array('controller' => 'settings', 'action' => 'item_group'),array('class' =>'btn btn-default','escape' => false));
 						                    ?>
 										</div>
 									</div>

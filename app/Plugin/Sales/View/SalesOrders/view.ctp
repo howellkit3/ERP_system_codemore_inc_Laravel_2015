@@ -336,11 +336,14 @@
                             		<label class="col-lg-2 control-label">Vat Price</label>
 									<div class="col-lg-8">
 										<?php 
-                                            echo $this->Form->input('QuotationItemDetail.vat_price', array(
+											$fullvat = number_format($quotationItemDetail['QuotationItemDetail']['vat_price'],4);
+
+                                            echo $this->Form->input('QuotationItemDetail.vat_price_field', array(
                                             								'class' => 'form-control item_type',
 						                                                    'label' => false,
 						                                                    'readonly' => 'readonly',
-						                                                    'value' => number_format($quotationItemDetail['QuotationItemDetail']['vat_price'],4)));
+						                                                    'value' => $fullvat));
+                                            
                                         ?>
 										  
 									</div>
