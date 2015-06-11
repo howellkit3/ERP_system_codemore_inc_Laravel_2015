@@ -261,13 +261,13 @@ class DeliveriesController extends DeliveryAppController {
       //pr($this->request->data['DeliveryDetail']['quantity']); exit;
         if ($this->request->is(array('post', 'put'))) {
 
-            $remainingQuantity = $deliveryData['DeliveryDetail']['remaining_quantity'];
+            // $remainingQuantity = $deliveryData['DeliveryDetail']['remaining_quantity'];
 
-            $enteredQuantity =$this->request->data['DeliveryDetail']['quantity'];
+            // $enteredQuantity =$this->request->data['DeliveryDetail']['quantity'];
 
-            $difference = $remainingQuantity - $enteredQuantity;
+            // $difference = $remainingQuantity - $enteredQuantity;
 
-            $this->request->data['DeliveryDetail']['remaining_quantity'] = $difference;
+            //$this->request->data['DeliveryDetail']['delivered_quantity'] = $difference;
 
             $this->Delivery->id = $idDelivery;
             $this->DeliveryDetail->id = $idDeliveryDetail;

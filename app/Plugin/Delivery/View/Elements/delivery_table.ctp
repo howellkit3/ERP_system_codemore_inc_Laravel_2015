@@ -1,8 +1,14 @@
-<?php   //  pr($deliveryDetailsData);
+<?php   
+
+//  pr($deliveryDetailsData);
+ $pushRemaining  = array();
+  $totalremaining = 0;
+  $toParent = 'sas';
+  $this->set('toParent' , $toParent);
   if(!empty($deliveryEdit)){
               ?>
-      <?php foreach ($deliveryEdit as $deliveryDataList): ?>
-
+      <?php  foreach ($deliveryEdit as $deliveryDataList): 
+                ?>
                 <tbody aria-relevant="all" aria-live="polite" role="alert">
 
                     <tr class="">
@@ -26,18 +32,24 @@
 
                         <td class="">
 
-                            <?php echo $deliveryDataList['DeliveryDetail']['quantity']; ?>
+                            <?php 
 
+                            // $difference = $scheduleInfo['ClientOrderDeliverySchedule']['quantity'] - $deliveryDataList['DeliveryDetail']['quantity']; 
+
+                            array_push($pushRemaining, $deliveryDataList['DeliveryDetail']['quantity']);
+                    
+                            echo  $deliveryDataList['DeliveryDetail']['quantity']; ?> <br>
+                             
                         
                         </td>
 
                         <td class="">
-
-                            <?php if(empty($deliveryDataList['DeliveryDetail']['remaining_quantity'])){ 
+                            
+                            <?php if(empty($deliveryDataList['DeliveryDetail']['delivered_quantity'])){ 
 
                                  echo 0; }else{?> 
 
-                                <?php echo $deliveryDataList['DeliveryDetail']['remaining_quantity']; ?>
+                                <?php echo $deliveryDataList['DeliveryDetail']['delivered_quantity']; ?>
 
                             <?php } ?>
                         </td>
@@ -69,8 +81,7 @@
                                                             echo "<span class='label label-default'>Delivering</span>";
 
                                            } ?>   
-                           
-                           
+                            
                         </td>
 
                         <td>
@@ -88,7 +99,7 @@
                                     </span> ', array('controller' => 'deliveries', 'action' => 'delivery_edit'),array('class' =>' table-link','escape' => false,'title'=>'Review Inquiry'));
                             ?>
                      
-                            <?php
+                            <?php  
                                 echo $this->Html->link('<span class="fa-stack">
                                 <i class="fa fa-square fa-stack-2x"></i>
                                 <i class="fa fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Print </font></span>
@@ -107,4 +118,9 @@
                 </tbody>
         <?php 
           endforeach; 
-  } ?> 
+  } 
+
+  pr($pushRemaining);
+  ?> 
+
+

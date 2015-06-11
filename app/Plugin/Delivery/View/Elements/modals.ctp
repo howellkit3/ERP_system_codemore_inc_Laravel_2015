@@ -18,12 +18,13 @@
                             <label class="col-lg-2 control-label">D.R. #</label>
                             <div class="col-lg-9">
 
-                                <?php  echo $this->Form->input('DeliveryDetail.remaining_quantity', array(
+                                <?php  echo $this->Form->input('DeliveryDetail.delivered_quantity', array(
                                                 'type' => 'hidden',
                                                 'class' => 'form-control item_type',
                                                     'label' => false,
-                                                    'value' => $deliveryDetailsData['DeliveryDetail']['remaining_quantity'],
-                                                    'id' => 'quantity')); 
+                                                    'value' => $deliveryDetailsData['DeliveryDetail']['delivered_quantity']
+                                                    //'id' => 'quantity'
+                                                    )); 
                                 ?>
 
                                 <?php  echo $this->Form->input('Delivery.schedule_uuid', array(

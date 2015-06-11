@@ -244,3 +244,7 @@ ALTER TABLE `koufu_delivery`.`delivery_plans` ADD COLUMN  `client_order_id` INT(
 ALTER TABLE `koufu_delivery`.`delivery_details` DROP COLUMN `description` ;
 ALTER TABLE `koufu_delivery`.`delivery_details` ADD COLUMN  `status` VARCHAR(30) NULL AFTER `delivery_type`;
 ALTER TABLE `koufu_delivery`.`delivery_details` ADD COLUMN  `remaining_quantity` INT(11) NULL AFTER `quantity`;
+
+#NOTE: SELECT KOUFU DELIVERY DATABASE ----
+/** HOWELL KIT added this 06/11/2015  */
+ALTER TABLE `koufu_delivery`.`delivery_details`  CHANGE `remaining_quantity` `delivered_quantity` INT(11) NULL;

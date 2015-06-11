@@ -17,9 +17,7 @@
 					<?php  //pr($clientsOrder); 
                         echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'deliveries', 'action' => 'view', $clientsOrder['ClientOrderDeliverySchedule']['id'],$clientsOrder['QuotationDetail']['quotation_id'],$clientsOrder['ClientOrderDeliverySchedule']['uuid']),array('class' =>'btn btn-primary pull-right','escape' => false));
                     ?>
-
-
-					
+		
 				</header>
 
 			</div>
@@ -153,24 +151,7 @@
 										</div>
 									</div>
 
-									<div class="form-group">
-	                                			<label class="col-lg-2 control-label">Status</label>
-												<div class="col-lg-8">
-													<?php 
-			                                              echo $this->Form->input('DeliveryDetail.status', array(
-			                                            								'class' => 'form-control item_type',
-									                                                    'label' => false,
-									                                                    'type' => 'text',
-									                                                    'class' => 'form-control item_type datepik editable ',
-									                                                    'value' => 
-									                                                    $deliveryEdit['DeliveryDetail']['status']
-
-									                                                   ));
-			                                        ?>
-                                        
-										</div>
-									</div>
-
+								
 									<div class="form-group">
 	                                			<label class="col-lg-2 control-label">Remarks</label>
 												<div class="col-lg-8">
