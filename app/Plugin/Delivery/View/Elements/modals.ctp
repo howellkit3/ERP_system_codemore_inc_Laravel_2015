@@ -119,7 +119,7 @@
                     <h4 class="modal-title">Delivery Schedule</h4>
                 </div>
                 <div class="modal-body">
-                    <?php  echo $this->Form->create('ClientOrderDeliverySchedule',array('url'=>(array('controller' => 'deliveries', 
+                    <?php  echo $this->Form->create('Delivery',array('url'=>(array('controller' => 'deliveries', 
                             'action' => 'add', $scheduleInfo['ClientOrderDeliverySchedule']['id'],$quotationId,$clientsOrderUuid)),'class' => 'form-horizontal'))?>
                     
 
@@ -148,9 +148,8 @@
                             <label class="col-lg-2 control-label"><span style="color:red">*</span>D.R. #</label>
                             <div class="col-lg-9">
                                 <?php 
-                                    echo $this->Form->input('Delivery.dr_uuid', array(
-                                                                    'empty' => 'None',
-                                                                    'class' => 'form-control item_type editable',
+                                    echo $this->Form->input('dr_uuid', array(
+                                                                    'class' => 'form-control item_type editable required',
                                                                     'label' => false
                                                                     ));
                                 ?>

@@ -10,12 +10,17 @@ class DeliveryAppModel extends AppModel {
 		
 		 'Numeric' => array(
             'rule' => 'Numeric',
-            'rule' => 'isUnique',
             'required' => true,
             'message' => 'Delivery Receipt should be numbers only'
-        )				
+        ),
+			'unique' => array(
+			'rule'    => 'isUnique',
+			'message' => 'Delivery receipt should be unique.'
+			),				
 	)
 );
+
+
 
 
 }
