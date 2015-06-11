@@ -112,7 +112,7 @@ class DeliveriesController extends DeliveryAppController {
                                                                         )
                                                                     ));
 
-       // pr($this->request->data); exit;
+        //pr($this->request->data); exit;
         $this->request->data['Delivery']['schedule_uuid'] = $scheduleInfo['ClientOrderDeliverySchedule']['uuid'];
         $this->request->data['Delivery']['clients_order_id']  = $scheduleInfo['ClientOrder']['uuid'];
         $this->request->data['Delivery']['status']  = 'Approved';
