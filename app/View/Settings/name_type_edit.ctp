@@ -11,7 +11,7 @@
 						Edit Type
 					</h1>
 					<?php 
-                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'settings', 'action' => 'category'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'settings', 'action' => 'category','tab' => 'tab-type'),array('class' =>'btn btn-primary pull-right','escape' => false));
                     ?>
 				</header>
 
@@ -63,7 +63,7 @@
 										<div class="col-lg-8">
 											<button type="submit" class="btn btn-primary pull-left">Submit Item</button>&nbsp;
 											<?php 
-						                        echo $this->Html->link('Cancel', array('controller' => 'settings', 'action' => 'index'),array('class' =>'btn btn-default','escape' => false));
+						                        echo $this->Html->link('Cancel', array('controller' => 'settings', 'action' => 'category','tab' => 'tab-type'),array('class' =>'btn btn-default','escape' => false));
 						                    ?>
 						                    </div>
 										</div>

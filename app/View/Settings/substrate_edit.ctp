@@ -133,7 +133,7 @@
 										<div class="col-lg-8">
 											<button type="submit" class="btn btn-primary pull-left">Submit Substrate</button>&nbsp;
 											<?php 
-						                        echo $this->Html->link('Cancel', array('controller' => 'settings', 'action' => 'index'),array('class' =>'btn btn-default','escape' => false));
+						                        echo $this->Html->link('Cancel', array('controller' => 'settings', 'action' => 'item_group','tab' => 'tab-substrates'),array('class' =>'btn btn-default','escape' => false));
 						                    ?>
 										</div>
 									</div>
