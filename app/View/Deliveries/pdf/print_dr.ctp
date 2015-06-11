@@ -33,10 +33,10 @@
 						<td style="width:80px;font-family: Calibri;"><b>CUSTOMER</b></td>
 						<td style="width:20px;">:</td>
 						<td style="width:330px;">
-							CodeMore
+							<?php echo ucfirst($companyData['Company']['company_name'])?>
 						</td>
 						<td>
-							Delivery No. : <u>99999999999999</u>
+							Delivery No. : <u><?php echo $drData['Delivery']['dr_uuid']?></u>
 						</td>
 					</tr>
 					<tr>
@@ -44,10 +44,10 @@
 						<td style="width:80px;font-family: Calibri;"><b>ADDRESS</b></td>
 						<td style="width:20px;">:</td>
 						<td style="width:330px;">
-							Pacita
+							<?php echo ucfirst($companyData['Address'][0]['address1'])?>
 						</td>
 						<td>
-							Invoice No. : <u>99999999999999</u>
+							Invoice No. : <u></u>
 						</td>
 					</tr>
 					<tr>
@@ -55,7 +55,7 @@
 						<td style="width:80px;font-family: Calibri;"><b>TIN</b></td>
 						<td style="width:20px;">:</td>
 						<td style="width:330px;">
-							Pacita
+							<?php echo ucfirst($companyData['Company']['tin'])?>
 						</td>
 						<td>
 							Date : <?php echo (new \DateTime())->format('l, F d, Y '); ?>
@@ -75,10 +75,10 @@
 					</tr>
 					<tr>
 						<td style="width:15px;"> </td>
-						<td class="td-heigth" style="width:90px;border:1px solid #EAEAEA;"><center>PO-99999999</center></td>
-						<td class="td-heigth" style="width:120px;border:1px solid #EAEAEA;">s</td>
-						<td class="td-heigth" style="width:120px;border:1px solid #EAEAEA;">s</td>
-						<td class="td-heigth" style="width:120px;border:1px solid #EAEAEA;">s</td>
+						<td class="td-heigth" style="width:90px;border:1px solid #EAEAEA;"><center><?php echo $clientData['ClientOrder']['po_number']?></center></td>
+						<td class="td-heigth" style="width:120px;border:1px solid #EAEAEA;"> </td>
+						<td class="td-heigth" style="width:120px;border:1px solid #EAEAEA;"> </td>
+						<td class="td-heigth" style="width:120px;border:1px solid #EAEAEA;"> </td>
 					</tr>
 				</thead>
 			</table>
@@ -95,36 +95,83 @@
 						</td>
 						<td style="width:45px;"> </td>
 						<td>
-							PLEASE CHECK YOUR GOODS WITHIN 3 DAYS IF IN GOOD GOOD CONDITION <br> 
-							ANY COMPLAIN WILL NOT BE ENTERTAINED AFTER THE SAID PERIOD
+							<center>
+								PLEASE CHECK YOUR GOODS WITHIN 3 DAYS IF IN GOOD CONDITION <br> 
+								ANY COMPLAIN WILL NOT BE ENTERTAINED AFTER THE SAID PERIOD
+							</center>
 						</td>
 					</tr>
 				</thead>
 			</table>
+			<br><br><br>
 			<table class="layout">
 				<thead>
 					<tr>
-						<td>Respectfully,</td>
-					</tr>
-					<tr>
-						<td style="width:335px;">
-							<?php //echo ucfirst($user['User']['first_name']) ?>
-							<?php //echo ucfirst($user['User']['last_name'])?>
-							<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
+						<td style="width:300px;">
+							<div style="display:inline-block; vertical-align:top; border-bottom: 0px solid #b2b2b2;width:335px">
+								<center>
+									PREPARED BY: <br/><br><br>
+									
+									<hr style="width:200px;height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
+									Ms. Carryll Yu
+								</center>
+							</div>
 						</td>
+						<td style="width:300px;">
+							<div style="display:inline-block; vertical-align:top; border-bottom: 0px solid #b2b2b2;width:235px">
+								<center>
+									CHECKED BY: <br/><br><br>
+									<hr style="width:200px;height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
+									Ms. Carryll Yu
+									<!-- <hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;"> -->
+								</center>
+							</div>
+							
+							
+						</td>
+
 					</tr>
 				</thead>
-			</table>
+			</table >
+			<br>
+			<table class="layout">
+				<thead>
+					<tr>
+						<td style="width:300px;">
+							<div style="display:inline-block; vertical-align:top; border-bottom: 0px solid #b2b2b2;width:335px">
+								<center>
+									APPROVED BY: <br/><br><br>
+									
+									<hr style="width:200px;height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
+									Ms. Carryll Yu
+								</center>
+							</div>
+						</td>
+						<td style="width:300px;">
+							<div style="display:inline-block; vertical-align:top; border-bottom: 0px solid #b2b2b2;width:235px">
+								<center>
+									RECEIVED BY: <br/><br><br>
+									<hr style="width:200px;height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
+									Ms. Carryll Yu
+									<!-- <hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;"> -->
+								</center>
+							</div>
+							
+							
+						</td>
+
+					</tr>
+				</thead>
+			</table >
 			<table class="layout">
 				<thead>
 					<tr>
 						<td style="width:500px;">
-							<div style="display:inline-block; vertical-align:top; border-bottom: 1px solid #b2b2b2;width:335px">
-								Approved by <br/><br>
-								Ms. Carryll Yu
+							<div style="display:inline-block; vertical-align:top; border-bottom: 0px solid #b2b2b2;width:335px">
+								
 								<!-- <hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;"> -->
 							</div>
-							<div style="display:inline-block; vertical-align:top; border-bottom: 1px solid #b2b2b2;width:335px">
+							
 							</div>
 							<div style="display:inline-block; vertical-align: bottom;text-align:right; margin-right:150px;">
 								<font size ="9px">
