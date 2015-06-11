@@ -9,7 +9,7 @@
 
                 <div class="modal-body">
                     
-                         <?php   
+                         <?php   //pr($deliveryDetailsData['DeliveryDetail']['remaining_quantity']); exit;
 
                         echo $this->Form->create('ClientOrderDeliverySchedule',array(
                                     'url'=>(array('controller' => 'deliveries','action' => 'add_schedule', $deliveryEdit[0]['Delivery']['id'], $deliveryEdit[0]['DeliveryDetail']['id'],$scheduleInfo['ClientOrderDeliverySchedule']['id'],$quotationId,$clientsOrderUuid)),'class' => 'form-horizontal')); ?>
@@ -18,11 +18,11 @@
                             <label class="col-lg-2 control-label">D.R. #</label>
                             <div class="col-lg-9">
 
-                                <?php  echo $this->Form->input('ClientOrderDeliverySchedule.quantity', array(
+                                <?php  echo $this->Form->input('DeliveryDetail.remaining_quantity', array(
                                                 'type' => 'hidden',
                                                 'class' => 'form-control item_type',
                                                     'label' => false,
-                                                    'value' => $quantityInfo[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']],
+                                                    'value' => $deliveryDetailsData['DeliveryDetail']['remaining_quantity'],
                                                     'id' => 'quantity')); 
                                 ?>
 

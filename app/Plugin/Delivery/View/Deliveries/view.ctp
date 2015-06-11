@@ -4,7 +4,7 @@
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
             <div class="filter-block pull-right marginDelivery">
-               <?php   //pr($scheduleInfo); exit;
+               <?php   //pr($deliveryDetailsData['DeliveryDetail']['schedule']); 
                 
                   echo $this->Html->link('<i class="fa  fa-arrow-left fa-lg "></i> Back ', 
                         array('controller' => 'deliveries', 
@@ -17,29 +17,26 @@
                 
                 <?php  if (!empty($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']])) { ?> 
 
-                <?php if($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] != 'Approved') { ?>
+                  <?php if($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] != 'Approved') { ?>
 
                 
                   <?php }else{ ?>
 
                      <!-- <a data-toggle="modal" href="#myModalDeliveries" class="btn btn-primary pull-right addSchedButton "><i class="fa fa-edit fa-lg"></i> Edit Schedule</a> -->
 
-                 <?php }}else{ ?>
+                 <?php }}else{ 
 
-                    <a data-toggle="modal" href="#myModalApprove" class="btn btn-primary mrg-b-lg pull-right addSchedButton "><i class="fa fa-edit fa-lg"></i>Approve Schedule</a>
-                    <?php
-                    //echo $this->Html->link('<i class="fa fa-check-square fa-lg "></i> Approve Schedule ', 
-                          // array('controller' => 'deliveries', 
-                          //     'action' => 'add', $scheduleInfo['ClientOrderDeliverySchedule']['id']
-                          //     ),
-                          // array('class' =>'btn btn-primary pull-right',
-                          //     'escape' => false));
-                  ?>  
+                    $Scheddate = $scheduleInfo['ClientOrderDeliverySchedule']['schedule'];
+                                        $Currentdate = date("Y-m-d H:i:s");
 
+                                        $Scheddate = str_replace('-', '', $Scheddate);
+                                        $Currentdate = str_replace('-', '', $Currentdate);  
 
-                 
+                      if(strtotime($Scheddate) > strtotime($Currentdate)) { ?>
 
-                <?php } ?>
+                       <a data-toggle="modal" href="#myModalApprove" class="btn btn-primary mrg-b-lg pull-right "><i class="fa fa-edit fa-lg"></i>Approve Schedule</a>
+
+                <?php }} ?>
 
                <br><br>
            </div>
@@ -173,11 +170,13 @@
 
                   <?php if (!empty($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']])) { ;
 
-                      if($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] == 'Approved') { 
-                        ?>
-                     <a data-toggle="modal" href="#myModalDeliveries" class="btn btn-primary pull-right addSchedButton  "><i class="fa fa-edit fa-lg"></i> Add Schedule</a>
+                          if(($deliveryDetailsData['DeliveryDetail']['remaining_quantity']) == 0) { 
 
-                <?php }}?>
+                             if($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] == 'Approved') { 
+                        ?>
+                                <a data-toggle="modal" href="#myModalDeliveries" class="btn btn-primary pull-right addSchedButton  "><i class="fa fa-edit fa-lg"></i> Add Schedule</a>
+
+                <?php }}}?>
             </header>
 
             <table class="table table-striped table-hover ">
