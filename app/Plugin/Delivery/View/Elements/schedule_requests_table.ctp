@@ -58,19 +58,23 @@
 
                                                          if($deliveryData[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']] == 'Approved') { 
                                                         
-                                                                  echo "<span class='label label-success'>Approved</span>";  
+                                                                  echo "<span class='label label-success'>Approved</span>"; ?> &nbsp
+
+                                                    <?php         if(strtotime($Scheddate) < strtotime($Currentdate))
+                                                                {
+                                                                    echo "<span class='label label-warning'>Due</span>"; 
+                                                                } 
                                                           
                                                              }
                                                          
                                                      }else{
+                                                                echo "<span class='label label-default'>Waiting</span>"; ?> &nbsp
 
-                                                                    if(strtotime($Scheddate) < strtotime($Currentdate))
+
+                                                    <?php                if(strtotime($Scheddate) < strtotime($Currentdate))
                                                                 {
                                                                     echo "<span class='label label-warning'>Due</span>"; 
-                                                                }  else {
-
-                                                                    echo "<span class='label label-default'>Waiting</span>";
-                                                                }
+                                                                }  
 
                                                  } ?>
                                    
@@ -84,7 +88,7 @@
                                                                          <i class="fa fa-square fa-stack-2x"></i>
                                                                       <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;
                                                                           <span class ="post"><font size = "1px">View</font></span>
-                                                                          </span> ', array('controller' => 'Deliveries', 
+                                                                          </span> ', array('controller' => 'deliveries', 
                                                                                          'action' => 'view',
                                                                          $scheduleDataList['ClientOrderDeliverySchedule']['id'],$scheduleDataList['QuotationDetail']['quotation_id'],$scheduleDataList['ClientOrderDeliverySchedule']['uuid']),
                                                                           array('class' =>' table-link small-link-icon','escape' => false,'title'=>'Edit Information'
