@@ -117,25 +117,33 @@
                                                         $Scheddate = str_replace('-', '', $Scheddate);
                                                         $Currentdate = str_replace('-', '', $Currentdate); ?>  
 
-                                                        <?php  if (!empty($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']])) {  
+                                                        <?php
 
-                                                                    if(strtotime($Scheddate) < strtotime($Currentdate))
-                                                                        {
-                                                                            echo "<span class='label label-warning'>Due</span>"; 
-                                                                        }else{   
+                                                         if (!empty($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']])) {   
 
-                                                                     if($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] == 'Approved') { 
-                                                                    
-                                                                              echo "<span class='label label-success'>Approved</span>";  
+                                                         if($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] == 'Approved') { 
+                                                        
+                                                                  echo "<span class='label label-success'>Approved</span>"; ?> &nbsp
 
-                                                                  
-                                                                     }
-                                                                   }
-                                                                 }else{
+                                                    <?php         if(strtotime($Scheddate) < strtotime($Currentdate))
+                                                                {
+                                                                    echo "<span class='label label-warning'>Due</span>"; 
+                                                                } 
+                                                          
+                                                             }
+                                                         
+                                                     }else{
+                                                                echo "<span class='label label-default'>Waiting</span>"; ?> &nbsp
 
-                                                                            echo "<span class='label label-default'>Waiting</span>";
 
-                                                           } ?>
+                                                    <?php                if(strtotime($Scheddate) < strtotime($Currentdate))
+                                                                {
+                                                                    echo "<span class='label label-warning'>Due</span>"; 
+                                                                }  
+
+                                                    } ?>
+
+                                                        
                                     </td>
                                 </tr>
              

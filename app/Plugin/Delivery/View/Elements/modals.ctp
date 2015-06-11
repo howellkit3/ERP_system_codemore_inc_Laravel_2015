@@ -133,6 +133,8 @@
                                                     ));
                                             ?>
 
+                                            
+
                                            <!--  <?php  echo $this->Form->input('QuotationItemDetail.quantity', array(
                                                             'type' => 'hidden',
                                                             'class' => 'form-control item_type',
@@ -152,6 +154,13 @@
                                                                     'label' => false
                                                                     ));
                                 ?>
+
+                                <?php 
+                                                echo $this->Form->input('ClientOrderDeliverySchedule.quantity', array('class' => 'form-control item_type required',
+                                                    'type' => 'hidden',
+                                                    'value' => $scheduleInfo['ClientOrderDeliverySchedule']['quantity']
+                                                    ));
+                                            ?>
                             </div>
                         </div>
 
