@@ -1,4 +1,4 @@
-<?php     //pr($deliveryEdit); exit;
+<?php   //  pr($deliveryDetailsData);
   if(!empty($deliveryEdit)){
               ?>
       <?php foreach ($deliveryEdit as $deliveryDataList): ?>
