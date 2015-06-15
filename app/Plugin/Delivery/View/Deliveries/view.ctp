@@ -375,7 +375,7 @@ $totalremaining = 0;
           <label class="col-lg-2 control-label">D.R. #</label>
           <div class="col-lg-9">
 
-          <?php 
+          <?php //pr($deliveryDataList['DeliveryDetail']['quantity']);
             echo $this->Form->input('Delivery.dr_uuid', array(
                                                     'class' => 'form-control item_type editable required',
                                                     'label' => false,
@@ -393,12 +393,11 @@ $totalremaining = 0;
                                                     ));
 
              echo $this->Form->input('DeliveryDetail.quantity', array(
-                                                    'class' => 'form-control item_type editable required ',
+                                                    'class' => 'form-control item_type editable required maxQuantity',
                                                     'label' => false,
-                                                    'type' => 'hidden',
+                                                    'type' => 'text',
                                                     'readonly' => 'readonly',
-                                                    'value' => $deliveryDataList['DeliveryDetail']['quantity'],
-                                                    'id' => 'maxQuantity'
+                                                    'value' => $deliveryDataList['DeliveryDetail']['quantity']
                                                     ));
           ?>
 

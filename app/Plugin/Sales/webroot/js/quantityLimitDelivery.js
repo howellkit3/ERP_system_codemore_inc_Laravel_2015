@@ -29,18 +29,18 @@ $( document ).ready(function() {
 
 	});
 
-	var fieldValue = $('#maxQuantity').val();
+	
 
 	$("body").on('keyup','.limitQuantity', function(e){
 	
 		var myVal = $(this).attr('value');
 		var realVal = $(this).val();
-		var fields = $('.limitQuantity');
+		var fieldValue = $(this).parents('.modal-body').find('.maxQuantity').val();
 		var total = '';
 		var limit = '';
 		var isText = $(this);
 		var allVal = 0;
-		
+		//alert(fieldValue); 
 		
 		if ( realVal > fieldValue ){
 
