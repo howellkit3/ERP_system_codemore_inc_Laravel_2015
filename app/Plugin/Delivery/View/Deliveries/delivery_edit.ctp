@@ -61,11 +61,7 @@ $totalremaining = 0;
 
 
 	                          <?php 
-	                        }
-
-	                      
-	                    
-	                    
+	                        }               
 	        ?>
 
 		<?php echo $this->Form->create('Delivery',array('url'=>(array('controller' => 'deliveries','action' => 'delivery_edit',$deliveryEdit['Delivery']['dr_uuid'], $clientsOrder['ClientOrderDeliverySchedule']['uuid'],$deliveryEdit['Delivery']['schedule_uuid'] ))));?>			
@@ -80,9 +76,9 @@ $totalremaining = 0;
 										<label class="col-lg-2 control-label">Delivery Receipt Number</label>
 										<div class="col-lg-8">
 										
-	                                    
+	                                     <?php 
 
-											<?php 
+											
 	                                            echo $this->Form->input('DeliveryDetail.dr_uuid', array(
 	                                            								'class' => 'form-control item_type',
 							                                                    'label' => false,

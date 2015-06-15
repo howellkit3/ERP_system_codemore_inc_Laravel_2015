@@ -125,7 +125,7 @@ class DeliveriesController extends DeliveryAppController {
         $this->request->data['DeliveryDetail']['created_by']  = $userData['User']['id'];
         $this->request->data['DeliveryDetail']['modified_by']  = $userData['User']['id'];
         $this->request->data['DeliveryDetail']['delivery_uuid']  = $this->request->data['Delivery']['dr_uuid'];
-        $this->request->data['DeliveryDetail']['remaining_quantity'] = ($this->request->data['ClientOrderDeliverySchedule']['quantity']) - ($this->request->data['DeliveryDetail']['quantity']);
+        //$this->request->data['DeliveryDetail']['remaining_quantity'] = ($this->request->data['ClientOrderDeliverySchedule']['quantity']) - ($this->request->data['DeliveryDetail']['quantity']);
 
 
                 //pr($this->request->data); exit;
@@ -213,7 +213,20 @@ class DeliveriesController extends DeliveryAppController {
                                         )
                                     ));
 
-         $deliveryData = $this->Delivery->find('first', array(
+        // $deliveryId = $this->Company->find('first', array(
+        //                   'conditions' => array('Company.id' => $inquiry['Inquiry']['company_id'])
+        // ));
+
+         $this->Delivery->bindDelivery();
+         $deliveryDataReturn = $this->Delivery->find('first', array(
+                                       'conditions' => array(
+                                      'Delivery.schedule_uuid' => $clientsOrderUuid
+                                      )
+                                  ));
+
+
+        
+        $deliveryData = $this->Delivery->find('first', array(
                                          'conditions' => array(
                                         'Delivery.schedule_uuid' => $scheduleInfo['ClientOrderDeliverySchedule']['uuid']
                                         )
@@ -242,7 +255,7 @@ class DeliveriesController extends DeliveryAppController {
             }
 
 
-        $this->set(compact('deliveryScheduleId','quotationId','clientsOrderUuid','scheduleInfo',  'deliveryData', 'quantityInfo','deliveryDataID','deliveryDetailsData', 'deliveryEdit'));
+        $this->set(compact('deliveryScheduleId','quotationId','clientsOrderUuid','scheduleInfo',  'deliveryData', 'quantityInfo','deliveryDataID','deliveryDetailsData', 'deliveryEdit','deliveryDataReturn'));
         
 }
 
@@ -259,7 +272,7 @@ class DeliveriesController extends DeliveryAppController {
       $deliveryData = $this->Delivery->find('first', array('conditions' => array(
                                                                           'Delivery.schedule_uuid' => $this->request->data['Delivery']['schedule_uuid']),
                                                                           'order' => 'Delivery.id DESC'));
-      //pr($this->request->data['DeliveryDetail']['quantity']); exit;
+     // pr($this->request->data); exit;
         if ($this->request->is(array('post', 'put'))) {
 
             // $remainingQuantity = $deliveryData['DeliveryDetail']['remaining_quantity'];
@@ -295,9 +308,28 @@ class DeliveriesController extends DeliveryAppController {
         
 }
 
-public function delivery_plan() {
+public function delivery_return($deliveryScheduleId = null, $quotationId = null, $clientsOrderUuid = null) {
 
-       
+    $userData = $this->Session->read('Auth');
+
+    if ($this->request->is(array('post', 'put'))) {
+
+       if ($this->request->data['DeliveryDetail']['quantity'] == $this->request->data['DeliveryDetail']['delivered_quantity']) {
+
+            $this->request->data['DeliveryDetail']['status'] = "Complete";
+        }
+
+            $this->DeliveryDetail->saveDeliveryDetail($this->request->data,$userData['User']['id']);
+
+            $this->Session->setFlash(__('Schedule has been updated.'),'success');
+
+            $this->redirect( array(
+                           'controller' => 'deliveries', 
+                           'action' => 'view',$deliveryScheduleId,$quotationId,$clientsOrderUuid
+                      ));
+            
+            }
+     
         
 }
 
@@ -328,6 +360,8 @@ public function delivery_edit($dr_uuid = null, $clientsOrderUuid = null) {
                                       'Delivery.schedule_uuid' => $clientsOrderUuid
                                       )
                                   ));
+
+
 
  $this->ClientOrder->bindDelivery();
  $scheduleInfo = $this->ClientOrder->find('first', array(

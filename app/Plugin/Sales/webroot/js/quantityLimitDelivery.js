@@ -29,6 +29,29 @@ $( document ).ready(function() {
 
 	});
 
+	var fieldValue = $('#maxQuantity').val();
+
+	$("body").on('keyup','.limitQuantity', function(e){
+	
+		var myVal = $(this).attr('value');
+		var realVal = $(this).val();
+		var fields = $('.limitQuantity');
+		var total = '';
+		var limit = '';
+		var isText = $(this);
+		var allVal = 0;
+		
+		
+		if ( realVal > fieldValue ){
+
+			alert('Max Quantityd');
+			isText.val(myVal);
+			allVal = total;
+				
+		}
+
+	});
+
 	$("body").on('keyup','.addquantityLimit', function(e){
 
 		var allVal = 0;

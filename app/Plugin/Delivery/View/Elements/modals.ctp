@@ -54,7 +54,7 @@
 
                               <?php 
 
-                                    echo $this->Form->input('DeliveryDetail.delivered_quantity', array(
+                                    echo $this->Form->input('DeliveryDetail.delivered', array(
                                                 'type' => 'hidden',
                                                 'class' => 'form-control item_type',
                                                     'label' => false,
@@ -62,13 +62,6 @@
                                                     'id' => 'quantity'
                                                     )); 
                                     
-                                     echo $this->Form->input('DeliveryDetail.delivered_quantity', array(
-                                                'type' => 'hidden',
-                                                'class' => 'form-control item_type',
-                                                    'label' => false,
-                                                    'value' => $deliveryDetailsData['DeliveryDetail']['quantity']
-                                                   // 'id' => 'quantity
-                                                    )); 
                                 ?>
 
                                 <?php  echo $this->Form->input('Delivery.schedule_uuid', array(
@@ -152,10 +145,7 @@
                         </div>
                     
                     <?php echo $this->Form->end(); ?>   
-                </div>
-
-                            
-                
+                </div>   
             </div>
         </div>
     </div>
@@ -239,6 +229,8 @@
             </div>
         </div>
     </div> 
+
+  
 
         
 
