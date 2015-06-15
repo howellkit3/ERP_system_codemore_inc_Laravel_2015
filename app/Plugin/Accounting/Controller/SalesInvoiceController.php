@@ -1,63 +1,74 @@
 <?php
 App::uses('AppController', 'Controller');
 App::uses('SessionComponent', 'Controller/Component');
+App::import('Vendor', 'DOMPDF', true, array(), 'dompdf'.DS.'dompdf_config.inc.php', false);
 
 class SalesInvoiceController extends AccountingAppController {
 
-	public function index(){
-		$this->loadModel('Delivery.Delivery');
-      	$detailValue = $this->Delivery->find('list', array(
-                                          			'fields' => array(
-                                              			'sales_order_id'),
-                                        		));
-      	$this->loadModel('Delivery.Schedule');
-		$scheduleData = $this->Schedule->find('all', array(
-												'conditions' => array(
-													'sales_order_id' => $detailValue)
-											));
+	public $uses = array('Accounting.SalesInvoice');
 
-        $this->set(compact('scheduleData'));
+	public function index(){
+		
+      	$invoiceData = $this->SalesInvoice->find('all', array(
+                                          			'fields' => array(
+                                              			'id','sales_invoice_no','dr_uuid','status'),
+                                        		));
+      	
+        $this->set(compact('invoiceData'));
 	}
 
 	public function add(){
 
-
 		$userData = $this->Session->read('Auth');
+
+		$this->loadModel('Delivery.Delivery');
         if($this->request->is('post')){
 
             if(!empty($this->request->data)){
             	
-            	$this->SalesInvoice->addSalesInvoice($this->request->data, $userData['User']['id']);
-            	$this->Session->setFlash(__(' Successfully Created.'));
-	        	$this->redirect( array(
+            	$DRdata = $this->SalesInvoice->find('first', array(
+            				'conditions' => array(
+            					'SalesInvoice.dr_uuid' => $this->request->data['SalesInvoice']['dr_uuid'])
+            				));
+
+            	if (!empty($DRdata)) {
+
+            		$this->Session->setFlash(__('This Delivery No. already have a Sales Invoice No. '), 'error');
+	        		$this->redirect( array(
                                  'controller' => 'salesInvoice', 
-                                 'action' => 'create_sales_invoice'
+                                 'action' => 'add'
                             ));
+            	}
+
+            	$findDRdata = $this->Delivery->find('first', array(
+            				'conditions' => array(
+            					'Delivery.dr_uuid' => $this->request->data['SalesInvoice']['dr_uuid'])
+            				));
+          	
+            	if (!empty($findDRdata)) {
+
+            		$this->SalesInvoice->addSalesInvoice($this->request->data, $userData['User']['id']);
+
+            		$this->Session->setFlash(__(' Sales Invoice No. completed. '), 'success');
+	        		$this->redirect( array(
+                                 'controller' => 'sales_invoice', 
+                                 'action' => 'index'
+                            ));
+
+            	}else{
+
+            		$this->request->data = $this->request->data['SalesInvoice']['dr_uuid'];
+
+            		$this->Session->setFlash(__(' Delivery No. not matched in our system. '), 'error');
+	        		$this->redirect( array(
+                                 'controller' => 'salesInvoice', 
+                                 'action' => 'add'
+                            ));
+            	}
+            	
+            	
 	        }
         }
-		$salesId = $this->SalesInvoice->find('list', array(
-                                                'fields' => array(
-                                                    'sales_order_no'
-                                                  )
-                                            ));
-		$this->loadModel('Delivery.Delivery');
-      	$detailValue = $this->Delivery->find('list', array(
-                                          			'fields' => array(
-                                              			'sales_order_id'),
-                                        		));
-      	
-
-		$this->loadModel('Delivery.Schedule');
-		$deliveryNo = $this->Schedule->find('list', array(
-												'fields' => array(
-													'sales_order_id','sales_order_id'),
-												'conditions' => array(
-													'sales_order_id NOT' => $salesId, 
-													'sales_order_id' => $detailValue)
-											));
-		
-
-		$this->set(compact('deliveryNo'));
 		
 	}
 
@@ -121,4 +132,63 @@ class SalesInvoiceController extends AccountingAppController {
 	}
 	public function create_sales_invoice(){
 	}
+
+	public function print_invoice($invoiceId = null) {
+
+    // $this->loadModel('Sales.ClientOrder');
+    // $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule','QuotationItemDetail','QuotationDetail','Product'));
+    // //$this->ClientOrder->bindDelivery();
+    // $this->loadModel('Sales.Company');
+
+    // $this->loadModel('Unit');
+    // $units = $this->Unit->getList();
+
+    // $this->Company->bind('Address');
+
+    // $this->Delivery->bindDelivery();
+    // $drData = $this->Delivery->find('first', array(
+    //                                     'conditions' => array('Delivery.dr_uuid' => $dr_uuid
+    //                                     )));
+    
+    // $clientData = $this->ClientOrder->find('first', array(
+    //                                     'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
+    //                                     )));
+    
+    // $companyData = $this->Company->find('first', array(
+    //                                     'conditions' => array('Company.id' => $clientData['ClientOrder']['company_id']
+    //                                     )));
+
+    // $userData = $this->Session->read('Auth');
+    
+    $view = new View(null, false);
+    
+    $view->set(compact('drData','clientData','companyData','units'));
+      
+    $view->viewPath = 'SalesInvoice'.DS.'pdf';  
+   
+    $output = $view->render('print_invoice', false);
+ 
+    $dompdf = new DOMPDF();
+    $dompdf->set_paper("A4");
+    $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));
+    $dompdf->render();
+    $canvas = $dompdf->get_canvas();
+    $font = Font_Metrics::get_font("helvetica", "bold");
+    $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
+
+    $output = $dompdf->output();
+    $random = rand(0, 1000000) . '-' . time();
+    if (empty($filename)) {
+      $filename = 'SalesInvoice-'.$invoiceId.'-data'.time();
+    }
+    $filePath = 'view_pdf/'.strtolower(Inflector::slug( $filename , '-')).'.pdf';
+    $file_to_save = WWW_ROOT .DS. $filePath;
+      
+    if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
+        unlink($file_to_save);
+    }
+    
+    exit();
+        
+  }
 }

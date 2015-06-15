@@ -89,75 +89,75 @@
 			</table>
 
 
-								<table  class = "layout">
-								<?php // foreach ($quotation['QuotationItemDetail'] as $itemDetail){ ?>
-								
-										<tr>
-											<td width ="123px" height ="35px" valign ="top" class ="column3 col-md-8"> 
-												<div class="col-lg-12">QTY 
-												</div>
-											</td>
-											<td style="width:20px;">:</td>	
-											<td height ="35px" valign ="top" class ="column3 col-md-8" style="border:1px solid #000;  text-align:center"> 
-												<div class="col-lg-12">
-													<?php //echo $itemDetail['quantity'];?> 
+			<table  class = "layout">
+			<?php // foreach ($quotation['QuotationItemDetail'] as $itemDetail){ ?>
+			
+					<tr>
+						<td width ="123px" height ="35px" valign ="top" class ="column3 col-md-8"> 
+							<div class="col-lg-12">QTY 
+							</div>
+						</td>
+						<td style="width:20px;">:</td>	
+						<td height ="35px" valign ="top" class ="column3 col-md-8" style="border:1px solid #000;  text-align:center"> 
+							<div class="col-lg-12">
+								<?php //echo $itemDetail['quantity'];?> 
 
-													<?php
-													// echo !empty($units[$itemDetail['quantity_unit_id']]) ? $units[$itemDetail['quantity_unit_id']] : '' ?> 
+								<?php
+								// echo !empty($units[$itemDetail['quantity_unit_id']]) ? $units[$itemDetail['quantity_unit_id']] : '' ?> 
 
-												</div>
-											</td>	
-											
-										</tr>
+							</div>
+						</td>	
+						
+					</tr>
 
-										<tr >
-											<td height ="35px" valign ="top" class ="column3 col-md-8"> 
-												<div class="col-lg-12">Unit Price 
-												</div>
-											</td>
-											<td style="width:20px;">:</td>
-											<td height ="35px" valign ="top" class = "column4 col-md-8" style="border:1px solid #000;  text-align:center">
-												<div class="col-lg-12" >
-													<?php// echo (!empty($itemDetail['unit_price']) && is_numeric($itemDetail['unit_price'])) ? number_format($itemDetail['unit_price'],4) : ''; ?>
-													<?php
-													 //echo !empty($currencies[$itemDetail['unit_price_currency_id']]) ? $currencies[$itemDetail['unit_price_currency_id']] : '' ?> 
-												</div>
-											</td>
-											
-										</tr>
+					<tr >
+						<td height ="35px" valign ="top" class ="column3 col-md-8"> 
+							<div class="col-lg-12">Unit Price 
+							</div>
+						</td>
+						<td style="width:20px;">:</td>
+						<td height ="35px" valign ="top" class = "column4 col-md-8" style="border:1px solid #000;  text-align:center">
+							<div class="col-lg-12" >
+								<?php// echo (!empty($itemDetail['unit_price']) && is_numeric($itemDetail['unit_price'])) ? number_format($itemDetail['unit_price'],4) : ''; ?>
+								<?php
+								 //echo !empty($currencies[$itemDetail['unit_price_currency_id']]) ? $currencies[$itemDetail['unit_price_currency_id']] : '' ?> 
+							</div>
+						</td>
+						
+					</tr>
 
-										<tr>
-											<td height ="35px" valign ="top" class ="column3 col-md-8"> 
-												<div class="col-lg-12">Vat Price
-												</div>
-											</td>
-											<td style="width:20px;">:</td>
-											<td height ="40px" class ="column2 col-md-8" style="border:1px solid #000;  text-align:center">
-												<div class="col-lg-12">
-													<?php //echo $itemDetail['vat_price'];?> 
-												</div>
-											</td>
-											
-										</tr>
+					<tr>
+						<td height ="35px" valign ="top" class ="column3 col-md-8"> 
+							<div class="col-lg-12">Vat Price
+							</div>
+						</td>
+						<td style="width:20px;">:</td>
+						<td height ="40px" class ="column2 col-md-8" style="border:1px solid #000;  text-align:center">
+							<div class="col-lg-12">
+								<?php //echo $itemDetail['vat_price'];?> 
+							</div>
+						</td>
+						
+					</tr>
 
-										<tr>
-											<td height ="35px" valign ="top" class ="column3 col-md-8"> 
-												<div class="col-lg-12">Material
+					<tr>
+						<td height ="35px" valign ="top" class ="column3 col-md-8"> 
+							<div class="col-lg-12">Material
 
-												</div>
-											</td>
-											<td style="width:20px;">:</td>
-											<td height ="30px" class ="column2 col-md-8" style="border:1px solid #000; text-align:center">
-												<div class="col-lg-12">
-													<?php //echo $itemDetail['material'];?> 
-												</div>
-											</td>
-											
-										</tr>
+							</div>
+						</td>
+						<td style="width:20px;">:</td>
+						<td height ="30px" class ="column2 col-md-8" style="border:1px solid #000; text-align:center">
+							<div class="col-lg-12">
+								<?php //echo $itemDetail['material'];?> 
+							</div>
+						</td>
+						
+					</tr>
 
-									
-								<?php // } ?>
-								</table>
+				
+			<?php // } ?>
+			</table>
 
 
 			<table class="layout">

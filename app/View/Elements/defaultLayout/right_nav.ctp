@@ -82,14 +82,14 @@
 	 											array('escape' => false) );
 	 					?>
 					</li>
-					<!--<li class="<?php echo ($this->params['plugin'] == 'accounting') ? 'active' : '' ?>">
+					<li class="<?php echo ($this->params['plugin'] == 'accounting') ? 'active' : '' ?>">
 						<?php
-	 						echo $this->Html->link( " <i class='fa fa-money'></i> <span>Accounting</span>",   array('controller' =>'salesInvoice',
+	 						echo $this->Html->link( " <i class='fa fa-money'></i> <span>Accounting</span>",   array('controller' =>'sales_invoice',
 	 											'action'=>'index',
 	 											'plugin' => 'accounting'),
 	 											array('escape' => false) );
 	 					?>
-					</li> -->
+					</li>
 
 					<!-- <li>
 						<?php

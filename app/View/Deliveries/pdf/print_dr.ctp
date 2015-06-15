@@ -5,7 +5,6 @@
 <div class="row">
 	<div class="col-lg-12">
 		<div class="main-box main-pdf" >
-
 			<table class="layout">
 				<thead>
 					<tr>
@@ -67,22 +66,36 @@
 			<table class="table table-bordered">
 				<thead>
 					<tr>
-						<td class="td-heigth" style="width:20px;border:1px solid #FFFFFF;"> </td>
+						<td class="td-heigth" style="width:20px;border:1px solid #FFFFFF;"></td>
 						<td class="td-heigth" style="width:90px;border:1px solid #EAEAEA;"><center><b>P.O</b></center></td>
 						<td class="td-heigth" style="width:260px;border:1px solid #EAEAEA;"><center><b>ITEM</b></center></td>
 						<td class="td-heigth" style="width:160px;border:1px solid #EAEAEA;"><center><b>QTY</b></center></td>
 						<td class="td-heigth" style="width:100px;border:1px solid #EAEAEA;"><center><b>TOTAL QTY</b></center></td>
 					</tr>
-					<tr>
-						<td style="width:15px;"> </td>
-						<td class="td-heigth" style="width:90px;border:1px solid #EAEAEA;"><center><?php echo $clientData['ClientOrder']['po_number']?></center></td>
-						<td class="td-heigth" style="width:120px;border:1px solid #EAEAEA;"> </td>
-						<td class="td-heigth" style="width:120px;border:1px solid #EAEAEA;"> </td>
-						<td class="td-heigth" style="width:120px;border:1px solid #EAEAEA;"> </td>
-					</tr>
+					<?php foreach ($clientData['ClientOrderDeliverySchedule'] as $key => $scheduleList) { ?>
+						<tr>
+							<td style="width:15px;"></td>
+							<td class="td-heigth" style="width:90px;border:1px solid #EAEAEA;"><center><?php echo $clientData['ClientOrder']['po_number']?></center></td>
+							<td class="td-heigth" style="width:120px;border:1px solid #EAEAEA;"><center><?php echo ucfirst($clientData['Product']['name'])?></center></td>
+							<td class="td-heigth" style="width:120px;border:1px solid #EAEAEA;">
+								<center>
+									<?php echo $scheduleList['quantity']?> x
+									<?php echo $clientData['QuotationItemDetail']['quantity']?> /
+									<?php echo $units[$clientData['QuotationItemDetail']['quantity_unit_id']]?>
+								</center>
+							</td>
+							<td class="td-heigth" style="width:120px;border:1px solid #EAEAEA;">
+								<center>
+									<?php $totalQty = $clientData['QuotationItemDetail']['quantity'] * $scheduleList['quantity']?>
+									<?php echo $totalQty ?> /
+									<?php echo $units[$clientData['QuotationItemDetail']['quantity_unit_id']]?>
+								</center>
+							</td>
+						</tr>
+					<?php } ?>
 				</thead>
 			</table>
-			<BR>
+			<br>
 			<table class="layout">
 				<thead>
 					<tr>
@@ -110,8 +123,7 @@
 						<td style="width:300px;">
 							<div style="display:inline-block; vertical-align:top; border-bottom: 0px solid #b2b2b2;width:335px">
 								<center>
-									PREPARED BY: <br/><br><br>
-									
+									PREPARED BY: <br><br><br>
 									<hr style="width:200px;height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
 									Ms. Carryll Yu
 								</center>
@@ -120,16 +132,12 @@
 						<td style="width:300px;">
 							<div style="display:inline-block; vertical-align:top; border-bottom: 0px solid #b2b2b2;width:235px">
 								<center>
-									CHECKED BY: <br/><br><br>
+									CHECKED BY: <br><br><br>
 									<hr style="width:200px;height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
 									Ms. Carryll Yu
-									<!-- <hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;"> -->
 								</center>
 							</div>
-							
-							
 						</td>
-
 					</tr>
 				</thead>
 			</table >
@@ -140,8 +148,7 @@
 						<td style="width:300px;">
 							<div style="display:inline-block; vertical-align:top; border-bottom: 0px solid #b2b2b2;width:335px">
 								<center>
-									APPROVED BY: <br/><br><br>
-									
+									APPROVED BY: <br><br><br>
 									<hr style="width:200px;height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
 									Ms. Carryll Yu
 								</center>
@@ -150,16 +157,12 @@
 						<td style="width:300px;">
 							<div style="display:inline-block; vertical-align:top; border-bottom: 0px solid #b2b2b2;width:235px">
 								<center>
-									RECEIVED BY: <br/><br><br>
+									RECEIVED BY: <br><br><br>
 									<hr style="width:200px;height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
 									Ms. Carryll Yu
-									<!-- <hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;"> -->
 								</center>
 							</div>
-							
-							
 						</td>
-
 					</tr>
 				</thead>
 			</table >
@@ -168,10 +171,6 @@
 					<tr>
 						<td style="width:500px;">
 							<div style="display:inline-block; vertical-align:top; border-bottom: 0px solid #b2b2b2;width:335px">
-								
-								<!-- <hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;"> -->
-							</div>
-							
 							</div>
 							<div style="display:inline-block; vertical-align: bottom;text-align:right; margin-right:150px;">
 								<font size ="9px">
@@ -180,79 +179,10 @@
 								</font>				
 							</div>
 						</td>
-
 					</tr>
 				</thead>
 			</table >
-			
-			<!-- <hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
-			<center>
-				<header class="main-box-header clearfix">
-					<h4>Acceptance Slip</h4>
-				</header>
-			</center>
-			<table class="layout">
-				<thead>
-					<tr>
-						<td style="width:335px;text-align:center;">Send to manager</td>
-						<td style="padding-left: 150px;">Date:_____________________</td>
-					</tr>
-				</thead>
-			</table>
-			<center>
-				<header class="main-box-header clearfix para">
-					<center>
-					<p align ="justify">
-						<font size ="15px">I do hereby accept the price and other details submitted on your price quotation no.<?php echo $quotation['Quotation']['unique_id'] ?><br> Also, I do hereby authorize your company to proceed with and supply the work described above.
-						</font>
-					</p>
-					</center>
-				</header>
-			</center>
-			<table class="layout" >
-				<thead>
-					<tr>
-						<td>Authorized by:_________________</td>
-						<td style="padding-left: 270px;">Position:_________________</td>
-					</tr>
-					<tr>
-						<td> </td>
-						<td style="padding-left: 285px;">Date:_________________</td>
-					</tr>
-				</thead>
-			</table>
-			<footer >
-				<table class ="tables-css">
-					<tr>
-						<td class ="footer">
-
-							<font size = "12px">
-								<?php echo (new \DateTime())->format('l, F d, Y '); ?>
-							</font>
-						</td>
-						<td class ="footer">
-							&nbsp;&nbsp;&nbsp;
-						</td>
-						<td class ="footer">
-							&nbsp;&nbsp;&nbsp;
-						</td>
-						<td class = "footer2">
-							<font size = "12px">
-							
-							Page 1 of 1
-							</font>
-
-						</td>
-					</tr>
-				</table>
-								
-			</footer> -->
 			<br><br>
-
-			
-			
-									
 		</div>
-
 	</div>	
 </div>
