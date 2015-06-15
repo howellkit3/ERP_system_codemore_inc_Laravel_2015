@@ -322,6 +322,20 @@ public function delivery_edit($dr_uuid = null, $clientsOrderUuid = null) {
                                         )
                                     ));
 
+ $this->Delivery->bindDelivery();
+ $deliveryData = $this->Delivery->find('all', array(
+                                       'conditions' => array(
+                                      'Delivery.schedule_uuid' => $clientsOrderUuid
+                                      )
+                                  ));
+
+ $this->ClientOrder->bindDelivery();
+ $scheduleInfo = $this->ClientOrder->find('first', array(
+                                         'conditions' => array(
+                                          'ClientOrderDeliverySchedule.uuid' => $clientsOrderUuid
+                                        )
+                                    ));
+
   $clientOrderData = $this->ClientOrder->find('list',array('fields' => array('uuid','po_number')));
 
   $this->loadModel('Sales.ClientOrder');
@@ -354,7 +368,7 @@ public function delivery_edit($dr_uuid = null, $clientsOrderUuid = null) {
                 $this->Session->setFlash(__('Unable to update your post.'));
      }            
         
-  $this->set(compact('deliveryEdit', 'clientOrderData', 'clientsOrder'));      
+  $this->set(compact('deliveryEdit', 'clientOrderData', 'clientsOrder', 'deliveryData', 'scheduleInfo'));      
 }
 
 
