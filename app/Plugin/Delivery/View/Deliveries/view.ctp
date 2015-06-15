@@ -395,7 +395,7 @@ $totalremaining = 0;
              echo $this->Form->input('DeliveryDetail.quantity', array(
                                                     'class' => 'form-control item_type editable required maxQuantity',
                                                     'label' => false,
-                                                    'type' => 'text',
+                                                    'type' => 'hidden',
                                                     'readonly' => 'readonly',
                                                     'value' => $deliveryDataList['DeliveryDetail']['quantity']
                                                     ));
