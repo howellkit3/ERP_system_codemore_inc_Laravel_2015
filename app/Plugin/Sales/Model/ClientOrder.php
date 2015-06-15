@@ -60,7 +60,8 @@ class ClientOrder extends AppModel {
 					'className' => 'PaymentTermHolder',
 					'foreignKey' => 'id',
 					'dependent' => true
-				),	
+				),
+
 			),
 			'hasMany' => array(
 				
@@ -69,7 +70,6 @@ class ClientOrder extends AppModel {
 					'foreignKey' => 'client_order_id',
 					'dependent' => true
 				),
-
 				
 			),
 			

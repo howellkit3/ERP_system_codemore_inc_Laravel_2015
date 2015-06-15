@@ -3,6 +3,9 @@
 	<?php include('specs.css'); 
 	 header('Content-Type: text/html; charset=utf-8');
 	 ?>
+
+     *{ /*font-family: DejaVu Sans, font-size: 12px;*/}
+ 
 </style>
 <div class="row">
 	<div class="col-lg-12">

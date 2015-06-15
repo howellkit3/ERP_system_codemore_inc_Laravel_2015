@@ -248,3 +248,21 @@ ALTER TABLE `koufu_delivery`.`delivery_details` ADD COLUMN  `remaining_quantity`
 #NOTE: SELECT KOUFU DELIVERY DATABASE ----
 /** HOWELL KIT added this 06/11/2015  */
 ALTER TABLE `koufu_delivery`.`delivery_details`  CHANGE `remaining_quantity` `delivered_quantity` INT(11) NULL;
+
+
+#NOTE: SELECT KOUFU ACCOUNTING DATABASE ----
+/** bien added this 06/15/2015  */
+DROP TABLE IF EXISTS `sales_invoices`;
+
+CREATE TABLE `sales_invoices` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sales_invoice_no` varchar(100) DEFAULT NULL,
+  `dr_uuid` int(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `koufu_accounting`.`sales_invoices`     ADD COLUMN `status` INT(1) NULL AFTER `dr_uuid`;
