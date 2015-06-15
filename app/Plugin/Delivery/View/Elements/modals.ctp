@@ -1,3 +1,9 @@
+ <?php
+    $pushRemaining  = array();
+    $totaldifference = 0;
+    $totalremaining = 0;
+ ?>
+
  <div class="modal fade" id="myModalDeliveries" role="dialog" >
         <div class="modal-dialog">
             <div class="modal-content margintop">
@@ -18,12 +24,50 @@
                             <label class="col-lg-2 control-label">D.R. #</label>
                             <div class="col-lg-9">
 
-                                <?php  echo $this->Form->input('DeliveryDetail.delivered_quantity', array(
+                                <?php 
+
+                                    foreach ($deliveryEdit as $deliveryDataList): 
+
+                                          $difference = $deliveryDataList['DeliveryDetail']['quantity']; 
+
+                                          array_push($pushRemaining,$difference );
+
+                                          endforeach; 
+
+                                          foreach ($pushRemaining as $key => $value) {
+
+                                          $totaldifference = $totaldifference + $value;
+
+                                          }             
+
+                                          if($totaldifference != 0){                
+                                           
+                                          $totalremaining =  $scheduleInfo['ClientOrderDeliverySchedule']['quantity'] - $totaldifference;
+
+                                          }else{
+
+                                          $totalremaining = $scheduleInfo['ClientOrderDeliverySchedule']['quantity'];
+                                          }
+
+                                          ?>
+                                        
+
+                              <?php 
+
+                                    echo $this->Form->input('DeliveryDetail.delivered_quantity', array(
                                                 'type' => 'hidden',
                                                 'class' => 'form-control item_type',
                                                     'label' => false,
-                                                    'value' => $deliveryDetailsData['DeliveryDetail']['delivered_quantity']
-                                                    //'id' => 'quantity'
+                                                    'value' => $totalremaining,
+                                                    'id' => 'quantity'
+                                                    )); 
+                                    
+                                     echo $this->Form->input('DeliveryDetail.delivered_quantity', array(
+                                                'type' => 'hidden',
+                                                'class' => 'form-control item_type',
+                                                    'label' => false,
+                                                    'value' => $deliveryDetailsData['DeliveryDetail']['quantity']
+                                                   // 'id' => 'quantity
                                                     )); 
                                 ?>
 
@@ -51,6 +95,8 @@
                                                                     'required' => 'required'
                                                                     ));
                                 ?>
+
+
                             </div>
                         </div>
 
@@ -75,6 +121,7 @@
                                 <?php 
                                     echo $this->Form->input('DeliveryDetail.quantity', array(
                                                                     'empty' => 'None',
+                                                                    'required' => 'required',
                                                                     'class' => 'form-control item_type editable addquantityLimit',
                                                                     'label' => false
                                                                     // 'value' => $deliveryEdit['DeliveryDetail']['quantity']
@@ -90,6 +137,7 @@
                                     echo $this->Form->input('DeliveryDetail.location', array(
                                                                     'empty' => 'None',
                                                                     'class' => 'form-control item_type editable addquantityLimit',
+                                                                    'required' => 'required',
                                                                     'label' => false,
                                                                      'value' => $deliveryEdit[0]['DeliveryDetail']['location']
                                                                     ));

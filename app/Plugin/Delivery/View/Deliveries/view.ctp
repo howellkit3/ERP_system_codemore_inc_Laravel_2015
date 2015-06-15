@@ -3,7 +3,8 @@
 
 $pushRemaining  = array();
 $totaldifference = 0; 
-$totalremaining = 0;?>
+$totalremaining = 0;
+?>
 <div class="row1">
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
@@ -169,22 +170,50 @@ $totalremaining = 0;?>
 
            </div>
             <header class="main-box-header clearfix">
-                <?php 
-                  
 
-
-
-                ?>
                 <h2><b class="pull-left">Delivery Schedule</b></h2>
-              <?php if (!empty($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']])) { ;
+                
+                  <?php if (!empty($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']])) { ;
 
-                          if(($totalremaining) == 0) { 
+                    if(($totalremaining) == 0) {
 
-                             if($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] == 'Approved') { 
-                        ?>
-                                <a data-toggle="modal" href="#myModalDeliveries" class="btn btn-primary pull-right  "><i class="fa fa-edit fa-lg"></i> Add Schedule</a>
 
-                <?php }}}?>
+                      if($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] == 'Approved') { 
+
+                        foreach ($deliveryEdit as $deliveryDataList): 
+
+                          $difference = $deliveryDataList['DeliveryDetail']['quantity']; 
+
+                          array_push($pushRemaining,$difference );
+
+                          endforeach; 
+
+                          foreach ($pushRemaining as $key => $value) {
+
+                          $totaldifference = $totaldifference + $value;
+
+                          }             
+
+                          if($totaldifference != 0){                
+                           
+                          $totalremaining =  $scheduleInfo['ClientOrderDeliverySchedule']['quantity'] - $totaldifference;
+
+                          }else{
+
+                          $totalremaining = $scheduleInfo['ClientOrderDeliverySchedule']['quantity'];
+                          }
+
+
+                          if($totalremaining != 0){ ?>
+
+                          <a data-toggle="modal" href="#myModalDeliveries" class="btn btn-primary pull-right  "><i class="fa fa-edit fa-lg"></i> Add Schedule</a>
+
+                          <?php 
+                        }
+                      }
+                    }
+                  }
+                  ?>
                  
             </header>
 
@@ -237,11 +266,12 @@ $totalremaining = 0;?>
 
                             <?php 
 
-                             $difference = $scheduleInfo['ClientOrderDeliverySchedule']['quantity'] - $deliveryDataList['DeliveryDetail']['quantity']; 
+                             $difference = $deliveryDataList['DeliveryDetail']['quantity']; 
 
                             array_push($pushRemaining,$difference );
                     
-                            echo  $deliveryDataList['DeliveryDetail']['quantity']; ?> <br>
+                            echo  $deliveryDataList['DeliveryDetail']['quantity']; 
+                            ?> <br>
     
                         </td>
 
@@ -328,19 +358,11 @@ $totalremaining = 0;?>
           endforeach; 
   } 
 
-  foreach ($pushRemaining as $key => $value) {
-                    $totaldifference = $totaldifference + $value;
-                  } 
-
-  $totalremaining = $totaldifference - $scheduleInfo['ClientOrderDeliverySchedule']['quantity'];
-
   ?> 
-
-
-
-
                     </table>
-                    <h2 class ='pull-right'>Remaining Quantity : <?php echo $totalremaining; ?> &nbsp&nbsp  </h2>
+                   
+                      <h2 class ='pull-right'>Remaining Quantity : <?php echo $totalremaining; ?> &nbsp;&nbsp;  </h2>
+        
               </div>
         </div>
     </div>

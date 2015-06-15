@@ -1,6 +1,12 @@
 <?php echo $this->Html->script('Sales.quantityLimitDelivery');?>
 <?php echo $this->element('deliveries_options'); ?><br><br>
 
+<?php $pushRemaining  = array();
+$totaldifference = 0; 
+$totalremaining = 0;
+
+?>
+
 <div class="row">
 	<div class="col-lg-12">
 		
@@ -22,6 +28,46 @@
 
 			</div>
 		</div>
+
+		<?php  
+	                        foreach ($deliveryData as $deliveryDataList): 
+
+	                          $difference = $deliveryDataList['DeliveryDetail']['quantity']; 
+
+	                          array_push($pushRemaining,$difference );
+
+	                          endforeach; 
+
+	                          foreach ($pushRemaining as $key => $value) {
+
+	                          $totaldifference = $totaldifference + $value;
+
+	                          }             
+
+	                          if($totaldifference != 0){                
+	                           
+	                          $totalremaining =  $scheduleInfo['ClientOrderDeliverySchedule']['quantity'] - $totaldifference;
+
+	                          }else{
+
+	                          $totalremaining = $scheduleInfo['ClientOrderDeliverySchedule']['quantity'];
+	                          }
+
+	                          //pr($totalremaining); 
+	                          if($totalremaining != 0){ ?>
+
+	                          <a data-toggle="modal" href="#myModalDeliveries" class="btn btn-primary pull-right  "><i class="fa fa-edit fa-lg"></i> Add Schedule</a>
+
+
+
+	                          <?php 
+	                        }
+
+	                      
+	                    
+	                    
+	        ?>
+
 		<?php echo $this->Form->create('Delivery',array('url'=>(array('controller' => 'deliveries','action' => 'delivery_edit',$deliveryEdit['Delivery']['dr_uuid'], $clientsOrder['ClientOrderDeliverySchedule']['uuid'],$deliveryEdit['Delivery']['schedule_uuid'] ))));?>			
 			<div class="row">
 				<div class="col-lg-12">
@@ -50,6 +96,18 @@
 	                                            								'label' => false,
 							                                                    'hidden' => 'hidden',
 							                                                    'value' => $deliveryEdit['DeliveryDetail']['id']
+							                                                    ));
+                                            ?>
+
+                                            <?php 
+
+                                            	$limitquantity =  $totalremaining + $deliveryEdit['DeliveryDetail']['quantity'];
+
+	                                            echo $this->Form->input('DeliveryDetail.remaining_quantity', array(
+	                                            								'label' => false,
+							                                                    'hidden' => 'hidden',
+							                                                    'value' => $limitquantity,
+							                                                    'id' => 'quantity',
 							                                                    ));
                                             ?>
 
@@ -122,7 +180,6 @@
 										                        'readonly' => 'readonly',
 										                        'class' => '',
 										                        'label' => false,
-										                        'id' => 'quantity',
 										                        'value' => $clientsOrder['ClientOrderDeliverySchedule']['quantity']
 										                        ));
 					                                ?>
