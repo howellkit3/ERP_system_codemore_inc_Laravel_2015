@@ -125,7 +125,7 @@ class DeliveriesController extends DeliveryAppController {
         $this->request->data['DeliveryDetail']['created_by']  = $userData['User']['id'];
         $this->request->data['DeliveryDetail']['modified_by']  = $userData['User']['id'];
         $this->request->data['DeliveryDetail']['delivery_uuid']  = $this->request->data['Delivery']['dr_uuid'];
-        //$this->request->data['DeliveryDetail']['remaining_quantity'] = ($this->request->data['ClientOrderDeliverySchedule']['quantity']) - ($this->request->data['DeliveryDetail']['quantity']);
+        $this->request->data['DeliveryDetail']['remaining_quantity'] = ($this->request->data['ClientOrderDeliverySchedule']['quantity']) - ($this->request->data['DeliveryDetail']['quantity']);
 
 
                 //pr($this->request->data); exit;
@@ -213,20 +213,7 @@ class DeliveriesController extends DeliveryAppController {
                                         )
                                     ));
 
-        // $deliveryId = $this->Company->find('first', array(
-        //                   'conditions' => array('Company.id' => $inquiry['Inquiry']['company_id'])
-        // ));
-
-         $this->Delivery->bindDelivery();
-         $deliveryDataReturn = $this->Delivery->find('first', array(
-                                       'conditions' => array(
-                                      'Delivery.schedule_uuid' => $clientsOrderUuid
-                                      )
-                                  ));
-
-
-        
-        $deliveryData = $this->Delivery->find('first', array(
+         $deliveryData = $this->Delivery->find('first', array(
                                          'conditions' => array(
                                         'Delivery.schedule_uuid' => $scheduleInfo['ClientOrderDeliverySchedule']['uuid']
                                         )
@@ -255,7 +242,7 @@ class DeliveriesController extends DeliveryAppController {
             }
 
 
-        $this->set(compact('deliveryScheduleId','quotationId','clientsOrderUuid','scheduleInfo',  'deliveryData', 'quantityInfo','deliveryDataID','deliveryDetailsData', 'deliveryEdit','deliveryDataReturn'));
+        $this->set(compact('deliveryScheduleId','quotationId','clientsOrderUuid','scheduleInfo',  'deliveryData', 'quantityInfo','deliveryDataID','deliveryDetailsData', 'deliveryEdit'));
         
 }
 
@@ -272,7 +259,7 @@ class DeliveriesController extends DeliveryAppController {
       $deliveryData = $this->Delivery->find('first', array('conditions' => array(
                                                                           'Delivery.schedule_uuid' => $this->request->data['Delivery']['schedule_uuid']),
                                                                           'order' => 'Delivery.id DESC'));
-     // pr($this->request->data); exit;
+      //pr($this->request->data['DeliveryDetail']['quantity']); exit;
         if ($this->request->is(array('post', 'put'))) {
 
             // $remainingQuantity = $deliveryData['DeliveryDetail']['remaining_quantity'];
@@ -308,28 +295,9 @@ class DeliveriesController extends DeliveryAppController {
         
 }
 
-public function delivery_return($deliveryScheduleId = null, $quotationId = null, $clientsOrderUuid = null) {
+public function delivery_plan() {
 
-    $userData = $this->Session->read('Auth');
-
-    if ($this->request->is(array('post', 'put'))) {
-
-       if ($this->request->data['DeliveryDetail']['quantity'] == $this->request->data['DeliveryDetail']['delivered_quantity']) {
-
-            $this->request->data['DeliveryDetail']['status'] = "Complete";
-        }
-
-            $this->DeliveryDetail->saveDeliveryDetail($this->request->data,$userData['User']['id']);
-
-            $this->Session->setFlash(__('Schedule has been updated.'),'success');
-
-            $this->redirect( array(
-                           'controller' => 'deliveries', 
-                           'action' => 'view',$deliveryScheduleId,$quotationId,$clientsOrderUuid
-                      ));
-            
-            }
-     
+       
         
 }
 
@@ -360,8 +328,6 @@ public function delivery_edit($dr_uuid = null, $clientsOrderUuid = null) {
                                       'Delivery.schedule_uuid' => $clientsOrderUuid
                                       )
                                   ));
-
-
 
  $this->ClientOrder->bindDelivery();
  $scheduleInfo = $this->ClientOrder->find('first', array(
@@ -409,20 +375,24 @@ public function delivery_edit($dr_uuid = null, $clientsOrderUuid = null) {
 public function print_dr($dr_uuid = null,$schedule_uuid) {
 
     $this->loadModel('Sales.ClientOrder');
-    $this->ClientOrder->bind('ClientOrderDeliverySchedule');
-
+    $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule','QuotationItemDetail','QuotationDetail','Product'));
+    //$this->ClientOrder->bindDelivery();
     $this->loadModel('Sales.Company');
+
+    $this->loadModel('Unit');
+    $units = $this->Unit->getList();
+
     $this->Company->bind('Address');
 
     $this->Delivery->bindDelivery();
     $drData = $this->Delivery->find('first', array(
                                         'conditions' => array('Delivery.dr_uuid' => $dr_uuid
                                         )));
-
+    
     $clientData = $this->ClientOrder->find('first', array(
                                         'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
                                         )));
-
+    
     $companyData = $this->Company->find('first', array(
                                         'conditions' => array('Company.id' => $clientData['ClientOrder']['company_id']
                                         )));
@@ -431,36 +401,37 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
     
     $view = new View(null, false);
     
-    $view->set(compact('drData','clientData','companyData'));
+    $view->set(compact('drData','clientData','companyData','units'));
       
     $view->viewPath = 'Deliveries'.DS.'pdf';  
    
-        $output = $view->render('print_dr', false);
-     
-        $dompdf = new DOMPDF();
-        $dompdf->set_paper("A4");
-        $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));
-        $dompdf->render();
-        $canvas = $dompdf->get_canvas();
-        $font = Font_Metrics::get_font("helvetica", "bold");
-        $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
+    $output = $view->render('print_dr', false);
+  
+    $dompdf = new DOMPDF();
+    mb_internal_encoding('UTF-8');
+    def("DOMPDF_UNICODE_ENABLED", true);
+    $dompdf->set_paper("A4");
+    $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));
+    $dompdf->render();
+    $canvas = $dompdf->get_canvas();
+    $font = Font_Metrics::get_font("helvetica", "bold");
+    $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
 
-        $output = $dompdf->output();
-        $random = rand(0, 1000000) . '-' . time();
-        if (empty($filename)) {
-          $filename = 'Delivery-'.$dr_uuid.'-data'.time();
-        }
-        $filePath = 'view_pdf/'.strtolower(Inflector::slug( $filename , '-')).'.pdf';
-        $file_to_save = WWW_ROOT .DS. $filePath;
-          
-        if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
-            unlink($file_to_save);
-        }
-        
-        exit();
+    $output = $dompdf->output();
+    $random = rand(0, 1000000) . '-' . time();
+    if (empty($filename)) {
+      $filename = 'Delivery-'.$dr_uuid.'-data'.time();
+    }
+    $filePath = 'view_pdf/'.strtolower(Inflector::slug( $filename , '-')).'.pdf';
+    $file_to_save = WWW_ROOT .DS. $filePath;
+      
+    if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
+        unlink($file_to_save);
+    }
+    
+    exit();
         
   }
-
 
 
 }
