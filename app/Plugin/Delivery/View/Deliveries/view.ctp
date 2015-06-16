@@ -1,5 +1,5 @@
+<?php echo $this->element('deliveries_options'); ?><br><br>
 <?php echo $this->Html->script('Sales.quantityLimitDelivery');
-
 
 $pushRemaining  = array();
 $totaldifference = 0; 
@@ -285,7 +285,7 @@ $totalremaining = 0;
 
                             <?php } 
 
-                              $Quantity = $deliveryDataList['DeliveryDetail']['delivered_quantity'];  
+                             // $Quantity = $deliveryDataList['DeliveryDetail']['delivered_quantity'];  
 
 
                            ?>  
@@ -294,35 +294,30 @@ $totalremaining = 0;
 
                         <td class="">
               
-                           <?php  $Scheddate = $scheduleInfo['ClientOrderDeliverySchedule']['schedule'];
-                                        $Currentdate = date("Y-m-d H:i:s");
+                           <?php  
 
-                                        $Scheddate = str_replace('-', '', $Scheddate);
-                                        $Currentdate = str_replace('-', '', $Currentdate); ?>  
+                                         if (!empty($deliveryDataList['DeliveryDetail']['status'])) {  
 
-                                        <?php  if (!empty($deliveryDataList[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']])) {  
+                                            if($deliveryDataList['DeliveryDetail']['status'] == 'Completed'){
 
-                                                    if(strtotime($Scheddate) < strtotime($Currentdate))
-                                                        {
-                                                            echo "<span class='label label-success'>Due</span>"; 
-                                                        }else{   
+                                              echo "<span class='label label-success'>Completed</span>"; 
 
-                                                     if($deliveryDataList[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] == 'Approved') { 
-                                                    
-                                                              echo "<span class='label label-warning'>Delivering</span>";  
+                                            }else if($deliveryDataList['DeliveryDetail']['status'] == 'Incomplete'){   
 
-                                                  
-                                                     }
-                                                   }
-                                                 }else{
+                                              echo "<span class='label label-danger'>Incomplete</span>";  
 
-                                                            echo "<span class='label label-default'>Delivering</span>";
+                                            }
 
-                                           } ?>   
+                                            }else{
+
+                                              echo "<span class='label label-warning'>Delivering</span>"; 
+
+                                          }
+                                           ?>   
                             
                         </td>
 
-                        <td>
+                        <td >
                             <?php
                             
                                 echo $this->Html->link('<span class="fa-stack">
@@ -331,10 +326,6 @@ $totalremaining = 0;
                                     </span> ', array('controller' => 'deliveries', 'action' => 'delivery_edit',$deliveryDataList['Delivery']['dr_uuid'], $scheduleInfo['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link','escape' => false,'title'=>'Review Inquiry'));
                             ?>
 
-                            <a data-toggle="modal" href="#myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" class="table-link"><i class="fa fa-lg"></i><span class="fa-stack">
-                                <i class="fa fa-square fa-stack-2x"></i>
-                                <i class="fa  fa-mail-reply fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Return </font></span></a>
-                     
                             <?php  
                                 echo $this->Html->link('<span class="fa-stack">
                                 <i class="fa fa-square fa-stack-2x"></i>
@@ -343,13 +334,42 @@ $totalremaining = 0;
 
                             ?>
 
-                            <a data-toggle="modal" href="#myModalDeliveries" class="table-link"><i class="fa fa-lg"></i><span class="fa-stack">
+                            <?php if($deliveryDataList['DeliveryDetail']['status'] == 'Incomplete'){ ?>
+
+                            <a data-toggle="modal" href="#myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" class="table-link not-active"><i class="fa fa-lg "></i><span class="fa-stack">
+                                <i class="fa fa-square fa-stack-2x "></i>
+                                <i class="fa  fa-mail-reply fa-stack-1x fa-inverse "></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Return </font></span></a>
+
+                            <a data-toggle="modal" href="#myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" class="table-link"><i class="fa fa-lg"></i><span class="fa-stack">
                                 <i class="fa fa-square fa-stack-2x"></i>
                                 <i class="fa fa-mail-reply-all fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Replace </font></span></a>
+
+                            <?php }
+
+                             else if($deliveryDataList['DeliveryDetail']['status'] == 'Completed'){ ?>
+
+                                 <a data-toggle="modal" href="#myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" class="table-link not-active"><i class="fa fa-lg "></i><span class="fa-stack">
+                                <i class="fa fa-square fa-stack-2x"></i>
+                                <i class="fa  fa-mail-reply fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Return </font></span></a>
+
+                                <a data-toggle="modal" href="#myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" class="table-link not-active"><i class="fa fa-lg"></i><span class="fa-stack">
+                                <i class="fa fa-square fa-stack-2x"></i>
+                                <i class="fa fa-mail-reply-all fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Replace </font></span></a>
+
+                           <?php }else{ ?>
+
+                                <a data-toggle="modal" href="#myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" class="table-link "><i class="fa fa-lg "></i><span class="fa-stack">
+                                <i class="fa fa-square fa-stack-2x"></i>
+                                <i class="fa  fa-mail-reply fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Return </font></span></a>
+
+                                <a data-toggle="modal" href="#myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" class="table-link not-active"><i class="fa fa-lg"></i><span class="fa-stack">
+                                <i class="fa fa-square fa-stack-2x"></i>
+                                <i class="fa fa-mail-reply-all fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Replace </font></span></a>
+
+
+
+                          <?php } ?>
                        </td>
-
-                       
-
                        
                     </tr>
 
@@ -375,7 +395,7 @@ $totalremaining = 0;
           <label class="col-lg-2 control-label">D.R. #</label>
           <div class="col-lg-9">
 
-          <?php //pr($deliveryDataList['DeliveryDetail']['quantity']);
+          <?php 
             echo $this->Form->input('Delivery.dr_uuid', array(
                                                     'class' => 'form-control item_type editable required',
                                                     'label' => false,
@@ -393,11 +413,12 @@ $totalremaining = 0;
                                                     ));
 
              echo $this->Form->input('DeliveryDetail.quantity', array(
-                                                    'class' => 'form-control item_type editable required maxQuantity',
+                                                    'class' => 'form-control item_type editable required ',
                                                     'label' => false,
                                                     'type' => 'hidden',
                                                     'readonly' => 'readonly',
-                                                    'value' => $deliveryDataList['DeliveryDetail']['quantity']
+                                                    'value' => $deliveryDataList['DeliveryDetail']['quantity'],
+                                                    'id' => 'maxQuantity'
                                                     ));
           ?>
 
@@ -424,8 +445,8 @@ $totalremaining = 0;
       </div>
       <br><br>
       <div class="modal-footer">
-      <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i>Submit</button>
-      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i> Submit</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
       </div>
 
@@ -461,7 +482,6 @@ echo $this->Form->end();
 <?php echo $this->element('modals'); ?>
 
 <style>
-
 
 .margintop{
     margin-top : 10%; 

@@ -17,9 +17,9 @@
 
         <li class="dropdown hidden-xs">
            
-            <?php echo $this->Html->link("<span class='count'>Delivery Planning</span>", array(
+            <?php echo $this->Html->link("<span class='count'>Delivery Replacing</span>", array(
                                                                                    'controller' => 'deliveries', 
-                                                                                    'action' => 'delivery_plan',
+                                                                                    'action' => 'delivery_replacing',
                                                                                     ),
                                                                             array(
                                                                                    'escape' => false,

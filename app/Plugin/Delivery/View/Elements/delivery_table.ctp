@@ -6,7 +6,7 @@ $totalremaining = 0;
 
   if(!empty($deliveryEdit)){
               ?>
-      <?php  foreach ($deliveryEdit as $deliveryDataList): 
+      <?php  pr($deliveryDataList['DeliveryDetail']['status']); foreach ($deliveryEdit as $deliveryDataList): 
                 ?>
                 <tbody aria-relevant="all" aria-live="polite" role="alert">
 
@@ -61,7 +61,7 @@ $totalremaining = 0;
                                         $Scheddate = str_replace('-', '', $Scheddate);
                                         $Currentdate = str_replace('-', '', $Currentdate); ?>  
 
-                                        <?php  if (!empty($deliveryDataList[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']])) {  
+                                        <?php  if (!empty($deliveryDataList['DeliveryDetail']['status'])) {  
 
                                                     if(strtotime($Scheddate) < strtotime($Currentdate))
                                                         {

@@ -29,8 +29,6 @@ $( document ).ready(function() {
 
 	});
 
-	
-
 	$("body").on('keyup','.limitQuantity', function(e){
 	
 		var myVal = $(this).attr('value');

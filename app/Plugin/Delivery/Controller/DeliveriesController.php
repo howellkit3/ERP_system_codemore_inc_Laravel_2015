@@ -278,10 +278,10 @@ class DeliveriesController extends DeliveryAppController {
             $this->request->data['Delivery']['status'] =  'Approved';   
 
                   
-            //$this->ClientOrderDeliverySchedule->save($this->request->data);
+          
             $this->Delivery->saveDelivery($this->request->data,$userData['User']['id']);
             $this->DeliveryDetail->saveDeliveryDetail($this->request->data,$userData['User']['id']);
-            //$this->Delivery->saveDelivery($this->request->data,$userData['User']['id']);
+  
             $this->Session->setFlash(__('Schedule has been updated.'),'success');
             $this->redirect( array(
                            'controller' => 'deliveries', 
@@ -295,16 +295,55 @@ class DeliveriesController extends DeliveryAppController {
         
 }
 
-public function delivery_plan() {
+public function delivery_return($deliveryScheduleId = null,$quotationId = null,$clientsOrderUuid =null) {
 
+  if ($this->request->is(array('post', 'put'))) {
+
+        if($this->request->data['DeliveryDetail']['quantity'] == $this->request->data['DeliveryDetail']['delivered_quantity']){
+
+            $this->request->data['DeliveryDetail']['status'] =  'Completed'; 
+
+        }else{
+
+            $this->request->data['DeliveryDetail']['status'] =  'Incomplete';
+
+        }
+
+            $this->DeliveryDetail->saveDeliveryDetail($this->request->data,$userData['User']['id']);
+
+            $this->Session->setFlash(__('Schedule has been updated.'),'success');
+
+            $this->redirect( array(
+                           'controller' => 'deliveries', 
+                           'action' => 'view',$deliveryScheduleId,$quotationId,$clientsOrderUuid
+                      ));
+            
+           
+            }
        
-        
 }
 
 
-public function add_delivery() {
+public function delivery_replacing() {
 
-       
+  $this->loadModel('Sales.ClientOrderDeliverySchedule');
+
+  $this->loadModel('Sales.ClientOrder');
+
+  $this->Delivery->bindDelivery();
+  
+  $deliveryEdit = $this->Delivery->find('all', array(
+                                         'conditions' => array(
+                                        'DeliveryDetail.status' => 'Incomplete'
+                                        )
+                                    ));
+
+  $this->ClientOrder->bindDelivery();
+
+  $scheduleInfo = $this->ClientOrder->find('all');
+
+
+  $this->set(compact('deliveryEdit', 'scheduleInfo'));     
         
 }
 
