@@ -318,13 +318,20 @@ $totalremaining = 0;
                         </td>
 
                         <td >
-                            <?php
+                            <?php if($deliveryDataList['DeliveryDetail']['status'] == 'Completed' || $deliveryDataList['DeliveryDetail']['status'] == 'Incomplete'){ 
                             
                                 echo $this->Html->link('<span class="fa-stack">
                                     <i class="fa fa-square fa-stack-2x"></i>
                                     <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit</font></span>
+                                    </span> ', array('controller' => 'deliveries', 'action' => 'delivery_edit',$deliveryDataList['Delivery']['dr_uuid'], $scheduleInfo['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link not-active','escape' => false,'title'=>'Review Inquiry'));
+                            }else{
+
+                                 echo $this->Html->link('<span class="fa-stack">
+                                    <i class="fa fa-square fa-stack-2x"></i>
+                                    <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit</font></span>
                                     </span> ', array('controller' => 'deliveries', 'action' => 'delivery_edit',$deliveryDataList['Delivery']['dr_uuid'], $scheduleInfo['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link','escape' => false,'title'=>'Review Inquiry'));
-                            ?>
+
+                            }?>
 
                             <?php  
                                 echo $this->Html->link('<span class="fa-stack">
@@ -340,10 +347,6 @@ $totalremaining = 0;
                                 <i class="fa fa-square fa-stack-2x "></i>
                                 <i class="fa  fa-mail-reply fa-stack-1x fa-inverse "></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Return </font></span></a>
 
-                            <a data-toggle="modal" href="#myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" class="table-link"><i class="fa fa-lg"></i><span class="fa-stack">
-                                <i class="fa fa-square fa-stack-2x"></i>
-                                <i class="fa fa-mail-reply-all fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Replace </font></span></a>
-
                             <?php }
 
                              else if($deliveryDataList['DeliveryDetail']['status'] == 'Completed'){ ?>
@@ -352,22 +355,13 @@ $totalremaining = 0;
                                 <i class="fa fa-square fa-stack-2x"></i>
                                 <i class="fa  fa-mail-reply fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Return </font></span></a>
 
-                                <a data-toggle="modal" href="#myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" class="table-link not-active"><i class="fa fa-lg"></i><span class="fa-stack">
-                                <i class="fa fa-square fa-stack-2x"></i>
-                                <i class="fa fa-mail-reply-all fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Replace </font></span></a>
-
                            <?php }else{ ?>
 
                                 <a data-toggle="modal" href="#myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" class="table-link "><i class="fa fa-lg "></i><span class="fa-stack">
                                 <i class="fa fa-square fa-stack-2x"></i>
                                 <i class="fa  fa-mail-reply fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Return </font></span></a>
 
-                                <a data-toggle="modal" href="#myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" class="table-link not-active"><i class="fa fa-lg"></i><span class="fa-stack">
-                                <i class="fa fa-square fa-stack-2x"></i>
-                                <i class="fa fa-mail-reply-all fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Replace </font></span></a>
-
-
-
+ 
                           <?php } ?>
                        </td>
                        
@@ -482,6 +476,12 @@ echo $this->Form->end();
 <?php echo $this->element('modals'); ?>
 
 <style>
+
+.not-active {
+
+ background-color: transparent;
+
+}
 
 .margintop{
     margin-top : 10%; 

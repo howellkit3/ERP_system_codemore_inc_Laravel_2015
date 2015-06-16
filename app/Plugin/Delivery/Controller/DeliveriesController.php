@@ -323,7 +323,6 @@ public function delivery_return($deliveryScheduleId = null,$quotationId = null,$
        
 }
 
-
 public function delivery_replacing() {
 
   $this->loadModel('Sales.ClientOrderDeliverySchedule');

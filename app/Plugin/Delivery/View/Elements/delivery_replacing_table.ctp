@@ -77,11 +77,18 @@ $totalremaining = 0;
                         </td>
 
                         <td>
-                            <?php //pr($scheduleInfo);
+                            <?php 
                                 echo $this->Html->link('<span class="fa-stack">
                                     <i class="fa fa-square fa-stack-2x"></i>
                                     <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit</font></span>
                                     </span> ', array('controller' => 'deliveries', 'action' => 'delivery_edit',$deliveryDataList['Delivery']['dr_uuid'], $deliveryDataList['Delivery']['schedule_uuid']),array('class' =>' table-link','escape' => false,'title'=>'Review Inquiry'));
+                            ?>
+
+                            <?php  
+                                echo $this->Html->link('<span class="fa-stack">
+                                <i class="fa fa-square fa-stack-2x"></i>
+                                <i class="fa fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Print </font></span>
+                                </span>', array('controller' => 'deliveries', 'action' => 'print_dr',$deliveryDataList['Delivery']['dr_uuid'],$deliveryDataList['Delivery']['schedule_uuid']),array('class' =>' table-link','escape' => false,'title'=>'Print Delivery Receipt','target' => '_blank'));
                             ?>
 
                             <a data-toggle="modal" href="#myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" class="table-link "><i class="fa fa-lg "></i><span class="fa-stack">
@@ -89,15 +96,12 @@ $totalremaining = 0;
                                 <i class="fa  fa-mail-reply fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Replace </font></span></a>
                      
                        </td>
-
-                       
-
-                       
+          
                     </tr>
 
                 </tbody>
 
-                <div class="modal fade" id="myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" role="dialog" >
+<div class="modal fade" id="myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" role="dialog" >
   <div class="modal-dialog">
     <div class="modal-content margintop">
 
@@ -108,10 +112,10 @@ $totalremaining = 0;
 
       <div class="modal-body">
 
-      <?php //pr($scheduleInfo); 
+      <?php  
 
         echo $this->Form->create('ClientOrderDeliverySchedule',array(
-          'url'=>(array('controller' => 'deliveries','action' => 'delivery_return',$scheduleInfo['ClientOrderDeliverySchedule']['id'],$scheduleInfo['QuotationDetail']['quotation_id'], $scheduleInfo['ClientOrderDeliverySchedule']['uuid']) ),'class' => 'form-horizontal')); ?>
+          'url'=>(array('controller' => 'deliveries','action' => 'delivery_return') ),'class' => 'form-horizontal')); ?>
 
         <div class="form-group" id="existing_items">
           <label class="col-lg-2 control-label">D.R. #</label>
@@ -189,7 +193,6 @@ echo $this->Form->end();
           endforeach; 
   } 
 
- // pr($pushRemaining);
   ?> 
 
 
