@@ -4,7 +4,7 @@
 	 header('Content-Type: text/html; charset=utf-8');
 	 ?>
 
-     *{ /*font-family: DejaVu Sans, font-size: 12px;*/}
+      /*body { font-family: DejaVu Sans, sans-serif; }*/
  
 </style>
 <div class="row">
