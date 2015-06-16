@@ -38,7 +38,7 @@
 													<th><a href="#"><span>DR No.</span></a></th>
 													<th><a href="#"><span>SI No.</span></a></th>
 													<th><a href="#"><span>SA No.</span></a></th>
-													<th><a href="#"><span>CM/DM#</span></a></th>
+													<th><a href="#"><span>CM/DM</span></a></th>
 													<th><a href="#"><span>Total Amount(PHP)</span></a></th>
 													<th><a href="#"><span>Date</span></a></th>
 													<th><a href="#"><span>Action</span></a></th>
