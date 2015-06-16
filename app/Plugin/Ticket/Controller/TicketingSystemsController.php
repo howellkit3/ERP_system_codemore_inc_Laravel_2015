@@ -222,7 +222,8 @@ class TicketingSystemsController extends TicketAppController {
         //$dompdf->load_html($output, 'UTF-8');
         $dompdf->render();
         $canvas = $dompdf->get_canvas();
-        $font = Font_Metrics::get_font("helvetica", "bold");
+        $font = Font_Metrics::get_font("DejaVu Sans", "sans-serif");
+        //body { font-family: DejaVu Sans, sans-serif; }
         //$pdf->SetFont('dejavusans', '', 14, '', true);
         $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
 
