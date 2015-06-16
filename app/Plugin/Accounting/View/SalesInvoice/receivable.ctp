@@ -38,12 +38,17 @@
 													<th><a href="#"><span>DR No.</span></a></th>
 													<th><a href="#"><span>SI No.</span></a></th>
 													<th><a href="#"><span>SA No.</span></a></th>
-													<th class="text-center"><a href="#"><span>Status</span></a></th>
+													<th><a href="#"><span>CM/DM</span></a></th>
+													<th><a href="#"><span>Total Amount(PHP)</span></a></th>
+													<th><a href="#"><span>Date</span></a></th>
 													<th><a href="#"><span>Action</span></a></th>
 												</tr>
 											</thead>
 											<tbody aria-relevant="all" aria-live="polite" role="alert">
 												<tr class="">
+													<td></td>
+													<td></td>
+													<td></td>
 													<td></td>
 													<td></td>
 													<td></td>
@@ -60,12 +65,19 @@
 												<tr>
 													<th><a href="#"><span>Customer</span></a></th>
 													<th><a href="#"><span>DR No.</span></a></th>
-													<th class="text-center"><a href="#"><span>Status</span></a></th>
+													<th><a href="#"><span>SI No.</span></a></th>
+													<th><a href="#"><span>SA No.</span></a></th>
+													<th><a href="#"><span>CM/DM</span></a></th>
+													<th><a href="#"><span>Total Amount(USD)</span></a></th>
+													<th><a href="#"><span>Date</span></a></th>
 													<th><a href="#"><span>Action</span></a></th>
 												</tr>
 											</thead>
 											<tbody aria-relevant="all" aria-live="polite" role="alert">
 												<tr class="">
+													<td></td>
+													<td></td>
+													<td></td>
 													<td></td>
 													<td></td>
 													<td></td>
@@ -81,13 +93,22 @@
 											<thead>
 												<tr>
 													<th><a href="#"><span>Customer</span></a></th>
-													<th><a href="#"><span>DR No.</span></a></th>
-													<th class="text-center"><a href="#"><span>Status</span></a></th>
+													<th><a href="#"><span>PHP</span></a></th>
+													<th><a href="#"><span>AVE. Conversion Rate(USD in PHP)</span></a></th>
+													<th><a href="#"><span>Total Sales</span></a></th>
+													<th><a href="#"><span>%</span></a></th>
+													<th><a href="#"><span>Target</span></a></th>
+													<th><a href="#"><span>No. of Days</span></a></th>
+													<th><a href="#"><span>Terms</span></a></th>
 													<th><a href="#"><span>Action</span></a></th>
 												</tr>
 											</thead>
 											<tbody aria-relevant="all" aria-live="polite" role="alert">
 												<tr class="">
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
 													<td></td>
 													<td></td>
 													<td></td>
@@ -104,12 +125,18 @@
 												<tr>
 													<th><a href="#"><span>Customer</span></a></th>
 													<th><a href="#"><span>DR No.</span></a></th>
-													<th class="text-center"><a href="#"><span>Status</span></a></th>
+													<th><a href="#"><span>SI No. et of</span></a></th>
+													<th><a href="#"><span>12% Vat</span></a></th>
+													<th><a href="#"><span>Gross Amount</span></a></th>
+													<th><a href="#"><span>Date</span></a></th>
 													<th><a href="#"><span>Action</span></a></th>
 												</tr>
 											</thead>
 											<tbody aria-relevant="all" aria-live="polite" role="alert">
 												<tr class="">
+													<td></td>
+													<td></td>
+													<td></td>
 													<td></td>
 													<td></td>
 													<td></td>

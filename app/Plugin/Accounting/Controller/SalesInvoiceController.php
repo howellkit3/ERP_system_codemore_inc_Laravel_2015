@@ -193,6 +193,6 @@ class SalesInvoiceController extends AccountingAppController {
   }
 
   public function receivable(){
-    
+
   }
 }
