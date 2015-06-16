@@ -285,7 +285,7 @@ $totalremaining = 0;
 
                             <?php } 
 
-                              $Quantity = $deliveryDataList['DeliveryDetail']['delivered_quantity'];  
+                             // $Quantity = $deliveryDataList['DeliveryDetail']['delivered_quantity'];  
 
 
                            ?>  
