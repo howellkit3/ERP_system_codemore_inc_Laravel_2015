@@ -52,16 +52,7 @@ $totalremaining = 0;
 
 	                          $totalremaining = $scheduleInfo['ClientOrderDeliverySchedule']['quantity'];
 	                          }
-
-	                          //pr($totalremaining); 
-	                          if($totalremaining != 0){ ?>
-
-	                          <a data-toggle="modal" href="#myModalDeliveries" class="btn btn-primary pull-right  "><i class="fa fa-edit fa-lg"></i> Add Schedule</a>
-
-
-
-	                          <?php 
-	                        }               
+        
 	        ?>
 
 		<?php echo $this->Form->create('Delivery',array('url'=>(array('controller' => 'deliveries','action' => 'delivery_edit',$deliveryEdit['Delivery']['dr_uuid'], $clientsOrder['ClientOrderDeliverySchedule']['uuid'],$deliveryEdit['Delivery']['schedule_uuid'] ))));?>			
@@ -239,8 +230,7 @@ $totalremaining = 0;
 					</div>
 				</div>
 			</div>
-		<?php echo $this->Form->end(); ?>
-		    
+		<?php echo $this->Form->end(); ?>		    
 	</div>
 </div>
 
