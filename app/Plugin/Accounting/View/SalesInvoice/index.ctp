@@ -1,4 +1,4 @@
-<?php //echo $this->element('account_option'); ?>
+<?php echo $this->element('account_option'); ?>
 <div class="row">
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
@@ -6,21 +6,21 @@
             <header class="main-box-header clearfix">
                 <h2 class="pull-left"><b>Sales Invoice List</b></h2>
                 <div class="filter-block pull-right">
-               <?php
-                //pr($truckAvailability);
-                //pr($truckId);
-                  echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Create Sales Invoice ', 
-                        array('controller' => 'sales_invoice', 
-                                'action' => 'add',),
-                        array('class' =>'btn btn-primary pull-right',
-                            'escape' => false));
+                   <?php
+                    //pr($truckAvailability);
+                    //pr($truckId);
+                      echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Create Sales Invoice ', 
+                            array('controller' => 'sales_invoice', 
+                                    'action' => 'add',),
+                            array('class' =>'btn btn-primary pull-right',
+                                'escape' => false));
 
 
-                ?> 
-                <!-- <a data-toggle="modal" href="#myModalInvoice" class="btn btn-primary mrg-b-lg pull-right"><i class="fa fa-plus-circle fa-lg"></i> Create Sales Invoice</a> --> 
+                    ?> 
+                    <!-- <a data-toggle="modal" href="#myModalInvoice" class="btn btn-primary mrg-b-lg pull-right"><i class="fa fa-plus-circle fa-lg"></i> Create Sales Invoice</a> --> 
 
-               <br><br>
-           </div>
+                   <br><br>
+               </div>
             </header>
              
 			<div class="main-box-body clearfix">

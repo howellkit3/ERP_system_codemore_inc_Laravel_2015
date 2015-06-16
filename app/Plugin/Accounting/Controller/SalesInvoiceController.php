@@ -191,4 +191,8 @@ class SalesInvoiceController extends AccountingAppController {
     exit();
         
   }
+
+  public function receivable(){
+    
+  }
 }

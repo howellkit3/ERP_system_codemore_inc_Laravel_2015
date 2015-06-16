@@ -21,10 +21,10 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
         </li>
 
         <li class="">
-            <?php $page =($active_page == 'sales_invoice' && $active_action == 'pre_invoice') ? 'active' : '' ?>
-            <?php echo $this->Html->link("<span class='count'>Pre Invoice</span>",
+            <?php $page =($active_page == 'sales_invoice' && $active_action == 'receivable') ? 'active' : '' ?>
+            <?php echo $this->Html->link("<span class='count'>Receivable</span>",
              array('controller' => 'sales_invoice',
-              'action' => 'index'),
+              'action' => 'receivable'),
               array('escape' => false,
                 'class' => 'btn '.$page 
               )); ?>
