@@ -82,7 +82,7 @@ $( document ).ready(function() {
 
     var Value = $(this).parents('.modal-body').find('.quantity').val();
 
-    alert(quantityValue);
+    //alert(quantityValue);
 
     console.log(Value);
 

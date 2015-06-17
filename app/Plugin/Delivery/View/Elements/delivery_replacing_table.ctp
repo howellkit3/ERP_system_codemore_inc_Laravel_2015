@@ -180,10 +180,11 @@ $totalremaining = 0;
 
         <div class="modal-body">
 
-        <?php  
+        <?php 
 
           echo $this->Form->create('ClientOrderDeliverySchedule',array(
-            'url'=>(array('controller' => 'deliveries','action' => 'delivery_return') ),'class' => 'form-horizontal')); ?>
+            'url'=>(array('controller' => 'deliveries','action' => 'delivery_return',$clientOrderData[$deliveryDataList['Delivery']['schedule_uuid']], $deliveryDataList['DeliveryDetail']['delivery_uuid'], $deliveryDataList['Delivery']['schedule_uuid']
+ ) ),'class' => 'form-horizontal')); ?>
 
           <div class="form-group" id="existing_items">
               <label class="col-lg-2 control-label">D.R. #</label>
@@ -206,13 +207,12 @@ $totalremaining = 0;
                                                       'value' => $deliveryDataList['DeliveryDetail']['id']
                                                       ));
 
-               echo $this->Form->input('DeliveryDetail.quantity', array(
+               echo $this->Form->input('DeliveryDetail.from_replacing', array(
                                                       'class' => 'form-control item_type editable required ',
                                                       'label' => false,
                                                       'type' => 'hidden',
                                                       'readonly' => 'readonly',
-                                                      'value' => $deliveryDataList['DeliveryDetail']['quantity'],
-                                                      'id' => 'quantity'
+                                                      'value' => 'replacing'
                                                       ));
             ?>
 
@@ -226,16 +226,24 @@ $totalremaining = 0;
 
           <?php 
 
+            echo $this->Form->input('DeliveryDetail.delivered', array(
+                                                      'empty' => 'None',
+                                                      'type' => 'hidden',
+                                                      'required' => 'required',
+                                                      'class' => 'form-control item_type editable  ',
+                                                      'label' => false,
+                                                      'value' => $deliveryDataList['DeliveryDetail']['delivered_quantity'] 
+                                                      ));
+
             echo $this->Form->input('DeliveryDetail.delivered_quantity', array(
                                                       'empty' => 'None',
                                                       'required' => 'required',
                                                       'class' => 'form-control item_type editable quantity ',
                                                       'label' => false,
                                                       'value' => $deliveryDataList['DeliveryDetail']['quantity'] - $deliveryDataList['DeliveryDetail']['delivered_quantity'] 
-                                                      //'id' => 'MaximumQuantity'
                                                       ));
 
-            echo $this->Form->input('DeliveryDetail.limit', array(
+            echo $this->Form->input('DeliveryDetail.quantity', array(
                                                       'empty' => 'None',
                                                       'type' => 'hidden',
                                                       'required' => 'required',
@@ -244,6 +252,8 @@ $totalremaining = 0;
                                                       'value' => $deliveryDataList['DeliveryDetail']['quantity'] - $deliveryDataList['DeliveryDetail']['delivered_quantity'] 
                                                       
                                                       ));
+
+
 
           ?>
           </div>
