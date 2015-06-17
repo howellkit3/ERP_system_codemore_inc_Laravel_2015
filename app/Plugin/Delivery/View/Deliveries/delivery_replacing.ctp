@@ -71,7 +71,7 @@
           <label class="col-lg-2 control-label">D.R. #</label>
           <div class="col-lg-9">
 
-          <?php pr( $deliveryDataList);
+          <?php 
             echo $this->Form->input('Delivery.dr_uuid', array(
                                                     'class' => 'form-control item_type editable required',
                                                     'label' => false,
@@ -88,10 +88,18 @@
                                                     'value' => $deliveryDataList['DeliveryDetail']['id']
                                                     ));
 
+            echo $this->Form->input('DeliveryDetail.limit', array(
+                                                    'class' => 'form-control item_type editable required MaximumQuantity',
+                                                    'label' => false,
+                                                    'required' => 'required',
+                                                    'readonly' => 'readonly',
+                                                    'value' => $deliveryDataList['DeliveryDetail']['quantity'] - $deliveryDataList['DeliveryDetail']['delivered_quantity'] 
+                                                    ));
+
              echo $this->Form->input('DeliveryDetail.delivered_quantity', array(
                                                     'empty' => 'None',
                                                     'required' => 'required',
-                                                    'class' => 'form-control item_type editable quan MaximumQuantity',
+                                                    'class' => 'form-control item_type editable quan ',
                                                     'label' => false,
                                                     'value' => $deliveryDataList['DeliveryDetail']['quantity'] - $deliveryDataList['DeliveryDetail']['delivered_quantity'] 
                                                     //'id' => 'MaximumQuantity'
@@ -144,15 +152,15 @@ echo $this->Form->end();
 <?php echo $this->element('modals'); ?>
 
 <script >
-      
-    $(".quan").keyup(function(){
+    
+    $("body").on('keyup','.quan', function(e){
 
     var quantityValue = $(this).parents('.modal-body').find('.MaximumQuantity').val();
 
     console.log(quantityValue); 
     var myVal = $(this).val();
 
-    alert(quantityValue); 
+    alert(myVal); 
 
     var realVal = $(this).val();
     var fields = $('.quan');
@@ -166,7 +174,7 @@ echo $this->Form->end();
     });
     
     console.log(allVal);
-    if ( myVal > quantityValue ){
+    if ( allVal > quantityValue ){
 
       alert('Max Quantity');
       isText.val(myVal);

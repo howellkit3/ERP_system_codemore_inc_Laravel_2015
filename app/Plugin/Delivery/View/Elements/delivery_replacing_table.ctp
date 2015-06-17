@@ -157,7 +157,16 @@ $totalremaining = 0;
           echo $this->Form->input('DeliveryDetail.delivered_quantity', array(
                                                     'empty' => 'None',
                                                     'required' => 'required',
-                                                    'class' => 'form-control item_type editable quan MaximumQuantity',
+                                                    'class' => 'form-control item_type editable quan ',
+                                                    'label' => false,
+                                                    'value' => $deliveryDataList['DeliveryDetail']['quantity'] - $deliveryDataList['DeliveryDetail']['delivered_quantity'] 
+                                                    //'id' => 'MaximumQuantity'
+                                                    ));
+
+          echo $this->Form->input('DeliveryDetail.delivered_quantity', array(
+                                                    'empty' => 'None',
+                                                    'required' => 'required',
+                                                    'class' => 'form-control item_type editable MaximumQuantity',
                                                     'label' => false,
                                                     'value' => $deliveryDataList['DeliveryDetail']['quantity'] - $deliveryDataList['DeliveryDetail']['delivered_quantity'] 
                                                     //'id' => 'MaximumQuantity'
