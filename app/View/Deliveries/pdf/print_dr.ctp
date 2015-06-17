@@ -55,16 +55,15 @@
 				<thead>
 					<tr>
 						<td class="td-heigth" style="width:20px;border:1px solid #FFFFFF;"></td>
-						<td class="td-heigth" style="width:90px;border:1px solid #FFFFFF;"><center><b> </b></center></td>
+						<td class="td-heigth" style="width:140px;border:1px solid #FFFFFF;"><center><b> </b></center></td>
 						<td class="td-heigth" style="width:280px;border:1px solid #FFFFFF;"><center><b> </b></center></td>
 						<td class="td-heigth" style="width:180px;border:1px solid #FFFFFF;"><center><b> </b></center></td>
 						<td class="td-heigth" style="width:110px;border:1px solid #FFFFFF;"><center><b> </b></center></td>
 					</tr>
 					<?php //foreach ($clientData['ClientOrderDeliverySchedule'] as $key => $scheduleList) { ?>
 						<tr>
-							<td style="width:15px;"></td>
 							<td class="td-heigth" style="width:90px;border:1px solid #FFFFFF;"><center><?php echo $clientData['ClientOrder']['po_number']?></center></td>
-							<td class="td-heigth" style="width:120px;border:1px solid #FFFFFF;"><center><?php echo ucfirst($clientData['Product']['name'])?></center></td>
+							<td class="td-heigth" style="width:140px;border:1px solid #FFFFFF;"><center><?php echo ucfirst($clientData['Product']['name'])?></center></td>
 							<td class="td-heigth" style="width:120px;border:1px solid #FFFFFF;">
 								<center>
 									<?php echo $drData['DeliveryDetail']['quantity']?> x
@@ -83,15 +82,15 @@
 					<?php //} ?>
 				</thead>
 			</table>
-			<br><br><br><br><br>
+			<br><br><br><br><br><br><br>
+			<br><br><br><br>
 			<table class="table table-bordered" style="line-height:20px;">
 				<thead>
 					<tr>
-						<td class="td-heigth" style="width:20px;border:1px solid #FFFFFF;"></td>
-						<td class="td-heigth" style="width:100px;border:1px solid #FFFFFF;"><center><b>Mary Ann C. Boria</b></center></td>
-						<td class="td-heigth" style="width:180px;border:1px solid #FFFFFF;"><center><b> </b></center></td>
-						<td class="td-heigth" style="width:120px;border:1px solid #FFFFFF;"><center><b>Amer C. Espanto</b></center></td>
-						<td class="td-heigth" style="width:300px;border:1px solid #FFFFFF;"><center><b> </b></center></td>
+						<td class="td-heigth" style="width:120px;border:1px solid #FFFFFF;">Mary Ann C. Boria</td>
+						<td class="td-heigth" style="width:120px;border:1px solid #FFFFFF;"> </td>
+						<td class="td-heigth" style="width:120px;border:1px solid #FFFFFF;text-align:left;">Amer C. Espanto</td>
+						<td class="td-heigth" style="width:300px;border:1px solid #FFFFFF;"> </td>
 					</tr>
 				</thead>
 			</table> 

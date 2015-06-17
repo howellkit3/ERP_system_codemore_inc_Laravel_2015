@@ -20,17 +20,17 @@
 					</tr>
 					<tr>
 						<td style="width:50px;"> </td>
-						<td style="width:450px;"><?php echo ucfirst($companyData['Company']['company_name'])?></td>
+						<td style="width:470px;"><?php echo ucfirst($companyData['Company']['company_name'])?></td>
 						<td style="width:100px;text-align:right;"><?php echo (new \DateTime())->format('m/d/Y'); ?></td>
 					</tr>
 					<tr>
 						<td style="width:50px;"> </td>
-						<td style="width:450px;"> </td>
+						<td style="width:470px;"> </td>
 						<td style="width:100px;text-align:right;"><?php echo ucfirst($companyData['Company']['tin'])?></td>
 					</tr>
 					<tr>
 						<td style="width:50px;"> </td>
-						<td style="width:450px;"><?php echo ucfirst($companyData['Address'][0]['address1'])?></td>
+						<td style="width:470px;"><?php echo ucfirst($companyData['Address'][0]['address1'])?></td>
 						<td style="width:100px;text-align:right;"><?php echo ucfirst($paymentTermData[$clientData['Quotation']['payment_terms']])?></td>
 					</tr>
 				</thead>
@@ -47,7 +47,7 @@
 							<?php echo number_format($clientData['QuotationItemDetail']['unit_price'],2)?> 
 							
 						</td>
-						<td class="td-heigth" style="width:110px;border:1px solid #FFFFFF;text-align:right;">
+						<td class="td-heigth" style="width:130px;border:1px solid #FFFFFF;text-align:right;">
 							
 							<?php $totalQty = $drData['DeliveryDetail']['quantity'] * $clientData['QuotationItemDetail']['unit_price']?>
 							<?php echo number_format($totalQty,2) ?> 

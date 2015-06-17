@@ -2,11 +2,14 @@ body{
   font-family: "Arial";
   font-weight: normal;
   max-width: 750px;
+  margin: 8px;
+  margin-top: 8px;
 }
+@page { margin: 8px;margin-top: 15px; }
 
 .padd,td{
   padding: 6px 0px;
-  font-size: 12px;
+  font-size: 15px;
   height: 1px;
 
 }
