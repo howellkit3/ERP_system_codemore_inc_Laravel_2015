@@ -32,22 +32,22 @@ $( document ).ready(function() {
 
 	$("body").on('keyup','.limitQuantity', function(e){
 	
-		var myVal = $(this).attr('value');
-		var realVal = $(this).val();
-		var fieldValue = $(this).parents('.modal-body').find('.maxQuantity').val();
-		var total = '';
-		var limit = '';
-		var isText = $(this);
-		var allVal = 0;
-		//alert(fieldValue); 
-		
-		if ( realVal > fieldValue ){
+	var quantityValue = $(this).parents('.modal-body').find('.maxQuantity').val();
 
-			alert('Max Quantityd');
-			isText.val(myVal);
-			allVal = total;
-				
-		}
+    var Value = $(this).parents('.modal-body').find('.limitQuantity').val();
+
+    console.log(quantityValue); 
+
+    var myVal = $(this).val();
+
+    var isText = $(this);
+   
+      if ( parseInt(Value) > parseInt(quantityValue) ){
+
+        alert('Max Quantity');
+        isText.val(quantityValue);      
+          
+      }
 
 	});
 
@@ -75,6 +75,32 @@ $( document ).ready(function() {
 		}
 		
 	});
+
+	$("body").on('blur','.quantity', function(e){
+
+    var quantityValue = $(this).parents('.modal-body').find('.MaximumQuantity').val();
+
+    var Value = $(this).parents('.modal-body').find('.quantity').val();
+
+    alert(quantityValue);
+
+    console.log(Value);
+
+    console.log(quantityValue); 
+
+    var myVal = $(this).val();
+
+    var isText = $(this);
+    
+   
+      if ( parseInt(Value) > parseInt(quantityValue) ){
+
+        alert('Max Quantity');
+        isText.val(quantityValue);      
+          
+      }
+      
+    });
 
 	var allFieldsVal = 0;
 	$('.quantityLimit').each(function() {

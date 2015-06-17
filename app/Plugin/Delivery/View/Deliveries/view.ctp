@@ -306,7 +306,7 @@ $totalremaining = 0;
 
                                             }else{
 
-                                              echo "<span class='label label-warning'>Delivering</span>"; 
+                                              echo "<span class='label label-warning'>Pending</span>"; 
 
                                           }
                                            ?>   
@@ -403,12 +403,12 @@ $totalremaining = 0;
                                                     ));
 
              echo $this->Form->input('DeliveryDetail.quantity', array(
-                                                    'class' => 'form-control item_type editable required ',
+                                                    'class' => 'form-control item_type editable required maxQuantity',
                                                     'label' => false,
                                                     'type' => 'hidden',
                                                     'readonly' => 'readonly',
-                                                    'value' => $deliveryDataList['DeliveryDetail']['quantity'],
-                                                    'id' => 'maxQuantity'
+                                                    'value' => $deliveryDataList['DeliveryDetail']['quantity']
+                                                    
                                                     ));
           ?>
 
@@ -466,9 +466,7 @@ echo $this->Form->end();
         </div>
     </div>
   </div>    
-
-    
-             
+            
 <?php echo $this->element('modals'); ?>
 
 <style>
