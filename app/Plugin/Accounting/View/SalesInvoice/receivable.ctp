@@ -1,3 +1,5 @@
+<?php $this->Html->addCrumb('Receivable', array('controller' => 'sales_invoice', 'action' => 'receivable')); ?>
+
 <?php echo $this->element('account_option'); ?>
 
 <div class="row">
@@ -41,19 +43,19 @@
 													<th><a href="#"><span>CM/DM</span></a></th>
 													<th><a href="#"><span>Total Amount(PHP)</span></a></th>
 													<th><a href="#"><span>Date</span></a></th>
-													<th><a href="#"><span>Action</span></a></th>
 												</tr>
 											</thead>
 											<tbody aria-relevant="all" aria-live="polite" role="alert">
-												<tr class="">
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-												</tr>
+												<?php foreach ($invoiceData as $key => $invoiceList) { ?>
+													<tr class="">
+														<td></td>
+														<td><?php echo $invoiceList['SalesInvoice']['dr_uuid']?></td>
+														<td><?php echo $invoiceList['SalesInvoice']['sales_invoice_no']?></td>
+														<td><?php echo $invoiceList['SalesInvoice']['statement_no']?></td>
+														<td></td>
+														<td></td>
+													</tr>
+												<?php } ?>
 											</tbody>
 										</table>
 									</div>
@@ -154,3 +156,5 @@
 		</div>
 	</div>
 </div>
+<?php 
+//echo $this->element('sql_dump') ?>

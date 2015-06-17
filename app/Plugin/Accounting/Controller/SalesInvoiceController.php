@@ -11,7 +11,7 @@ class SalesInvoiceController extends AccountingAppController {
 		
       	$invoiceData = $this->SalesInvoice->find('all', array(
                                           			'fields' => array(
-                                              			'id','sales_invoice_no','dr_uuid','status'),
+                                              			'id','sales_invoice_no','dr_uuid','statement_no'),
                                         		));
       	
         $this->set(compact('invoiceData'));
@@ -145,11 +145,11 @@ class SalesInvoiceController extends AccountingAppController {
 
     // $this->Company->bind('Address');
 
-    // $this->Delivery->bindDelivery();
-    // $drData = $this->Delivery->find('first', array(
-    //                                     'conditions' => array('Delivery.dr_uuid' => $dr_uuid
-    //                                     )));
-    
+    $this->SalesInvoice->bindInvoice();
+    $drData = $this->SalesInvoice->find('first', array(
+                                        'conditions' => array('SalesInvoice.id' => $invoiceId
+                                        )));
+    //pr($drData);exit();
     // $clientData = $this->ClientOrder->find('first', array(
     //                                     'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
     //                                     )));
@@ -194,5 +194,22 @@ class SalesInvoiceController extends AccountingAppController {
 
   public function receivable(){
 
+    $this->loadModel('Accounting','SalesInvoice');
+
+    $this->SalesInvoice->bindInvoice();
+
+    $invoiceData = $this->SalesInvoice->find('all', array(
+                                                    'fields' => array(
+                                                        'id','sales_invoice_no','dr_uuid','statement_no'),
+                                                    //'conditions' => array('SalesInvoice.id' => 'Delivery.dr_uuid'),
+                                                ));
+    //pr($invoiceData);
+    $this->set(compact('invoiceData'));
+
   }
+
+  public function statement(){
+
+  }
+
 }
