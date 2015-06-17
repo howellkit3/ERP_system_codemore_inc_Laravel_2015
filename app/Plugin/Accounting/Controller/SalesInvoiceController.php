@@ -132,7 +132,7 @@ class SalesInvoiceController extends AccountingAppController {
 	}
 	public function create_sales_invoice(){
 	}
-
+ 
 	public function print_invoice($invoiceId = null) {
 
     // $this->loadModel('Sales.ClientOrder');

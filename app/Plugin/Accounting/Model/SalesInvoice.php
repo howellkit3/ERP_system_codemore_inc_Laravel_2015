@@ -20,7 +20,7 @@ class SalesInvoice extends AppModel {
 					'className' => 'Delivery.Delivery',
 					'foreignKey' => false,
 					'conditions' => array('Delivery.dr_uuid = SalesInvoice.dr_uuid')
-				),
+				), 
 				// 'ClientOrder' => array(
 				// 	'className' => 'Sales.ClientOrder',
 				// 	'foreignKey' => false,

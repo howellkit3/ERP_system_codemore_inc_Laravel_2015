@@ -94,7 +94,7 @@
 						<td class="td-heigth" style="width:300px;border:1px solid #FFFFFF;"><center><b>RECEIVED BY:</b></center></td>
 					</tr>
 				</thead>
-			</table>
+			</table> 
 		</div>
 	</div>	
 </div>
