@@ -30,7 +30,11 @@ class DeliveriesController extends DeliveryAppController {
 
         $clientsOrder = $this->ClientOrder->find('all', array(
                                         'order' => 'ClientOrderDeliverySchedule.id DESC'
-                                        ));     
+                                        ));   
+
+        $deliveryList = $this->Delivery->find('list',array('fields' => array('schedule_uuid', 'dr_uuid')));
+
+        $deliveryDetailList = $this->DeliveryDetail->find('list',array('fields' => array('delivery_uuid', 'delivered_quantity')));
 
         $limit = 10;
 
@@ -60,7 +64,7 @@ class DeliveriesController extends DeliveryAppController {
         //                                 )
         //                             ));
    
-        $this->set(compact('clientsOrder','deliveryData', 'status', 'deliveryDetailsData'));
+        $this->set(compact('clientsOrder','deliveryData', 'deliveryList', 'deliveryDetailList'));
    }
 
    public function delivery_info($id = null, $location = null){
@@ -134,7 +138,7 @@ class DeliveriesController extends DeliveryAppController {
 
                 $this->id = $this->Delivery->saveDelivery($this->request->data,$userData['User']['id']);
 
-                $this->DeliveryDetail->save($this->request->data);
+                $this->DeliveryDetail->saveDeliveryDetail($this->request->data,$userData['User']['id']);
 
                 $this->Session->setFlash(__('Delivery receipt was issued'));
 
@@ -218,7 +222,11 @@ class DeliveriesController extends DeliveryAppController {
                                         'Delivery.schedule_uuid' => $scheduleInfo['ClientOrderDeliverySchedule']['uuid']
                                         )
                                     ));
+
+        $deliveryDetailList = $this->DeliveryDetail->find('list',array('fields' => array('delivery_uuid', 'delivered_quantity')));
         
+        $deliveryList = $this->Delivery->find('list',array('fields' => array('schedule_uuid', 'dr_uuid')));  
+
         $quantityInfo = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid','quantity')));
 
         $deliveryData = $this->Delivery->find('list',array('fields' => array('schedule_uuid','status')));
@@ -242,7 +250,7 @@ class DeliveriesController extends DeliveryAppController {
             }
 
 
-        $this->set(compact('deliveryScheduleId','quotationId','clientsOrderUuid','scheduleInfo',  'deliveryData', 'quantityInfo','deliveryDataID','deliveryDetailsData', 'deliveryEdit'));
+        $this->set(compact('deliveryScheduleId','quotationId','clientsOrderUuid','scheduleInfo','deliveryData', 'quantityInfo','deliveryDataID','deliveryDetailsData', 'deliveryEdit', 'deliveryDetailList','deliveryList'));
         
 }
 
@@ -322,7 +330,6 @@ public function delivery_return($deliveryScheduleId = null,$quotationId = null,$
             }
        
 }
-
 
 public function delivery_replacing() {
 

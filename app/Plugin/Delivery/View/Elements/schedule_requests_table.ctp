@@ -42,41 +42,42 @@
 
                                         <td class="text-center">
 
-                                           <?php  echo $scheduleDataList['ClientOrderDeliverySchedule']['quantity']; ?>  
+                                           <?php echo $scheduleDataList['ClientOrderDeliverySchedule']['quantity']; ?>  
 
                                         </td>
 
                                         <td class="text-center">
 
-                                       <?php    $Scheddate = $scheduleDataList['ClientOrderDeliverySchedule']['schedule'];
+                                                <?php $Scheddate = $scheduleDataList['ClientOrderDeliverySchedule']['schedule'];
                                                 $Currentdate = date("Y-m-d H:i:s");
 
                                                 $Scheddate = str_replace('-', '', $Scheddate);
+                                                
                                                 $Currentdate = str_replace('-', '', $Currentdate);   
 
-                                                  if (!empty($deliveryData[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']])) {   
+                                                  if (!empty($deliveryData[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']]) || !empty($deliveryList[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']])) {   
 
-                                                         if($deliveryData[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']] == 'Approved') { 
+                                                    if ($deliveryDetailList[$deliveryList[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']]] == $scheduleDataList['ClientOrderDeliverySchedule']['quantity']){ 
+
+                                                            echo "<span class='label label-success'>Delivered</span>";
+
+                                                    }elseif ($deliveryData[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']] == 'Approved') { 
                                                         
-                                                                  echo "<span class='label label-success'>Approved</span>"; ?> &nbsp
-
-                                                    <?php         if(strtotime($Scheddate) < strtotime($Currentdate))
-                                                                {
-                                                                    echo "<span class='label label-warning'>Due</span>"; 
-                                                                } 
-                                                          
-                                                             }
-                                                         
-                                                     }else{
-                                                                echo "<span class='label label-default'>Waiting</span>"; ?> &nbsp
+                                                             echo "<span class='label label-warning'>Approved</span>"; ?> &nbsp<?php
+                                                    } 
+      
+                                                    }else{
+                                                               echo "<span class='label label-default'>Waiting</span>"; ?> &nbsp
 
 
                                                     <?php                if(strtotime($Scheddate) < strtotime($Currentdate))
                                                                 {
-                                                                    echo "<span class='label label-warning'>Due</span>"; 
+                                                                    echo "<span class='label label-danger'>Due</span>"; 
                                                                 }  
 
                                                  } ?>
+
+                                                
                                    
                                         </td>
 

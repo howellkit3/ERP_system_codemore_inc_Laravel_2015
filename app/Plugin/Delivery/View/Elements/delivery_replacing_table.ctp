@@ -1,6 +1,4 @@
-<?php   //pr($deliveryEdit);
-
-//  pr($deliveryDetailsData);
+<?php 
 $pushRemaining  = array();
 $totalremaining = 0;
 
@@ -32,9 +30,7 @@ $totalremaining = 0;
                         <td class="">
 
                             <?php 
-
-                            // $difference = $scheduleInfo['ClientOrderDeliverySchedule']['quantity'] - $deliveryDataList['DeliveryDetail']['quantity']; 
-
+    
                             array_push($pushRemaining, $deliveryDataList['DeliveryDetail']['quantity']);
                     
                             echo  $deliveryDataList['DeliveryDetail']['quantity']; ?> <br>
@@ -77,27 +73,31 @@ $totalremaining = 0;
                         </td>
 
                         <td>
-                            <?php //pr($scheduleInfo);
+                            <?php 
                                 echo $this->Html->link('<span class="fa-stack">
                                     <i class="fa fa-square fa-stack-2x"></i>
                                     <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit</font></span>
                                     </span> ', array('controller' => 'deliveries', 'action' => 'delivery_edit',$deliveryDataList['Delivery']['dr_uuid'], $deliveryDataList['Delivery']['schedule_uuid']),array('class' =>' table-link','escape' => false,'title'=>'Review Inquiry'));
                             ?>
 
+                            <?php  
+                                echo $this->Html->link('<span class="fa-stack">
+                                <i class="fa fa-square fa-stack-2x"></i>
+                                <i class="fa fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Print </font></span>
+                                </span>', array('controller' => 'deliveries', 'action' => 'print_dr',$deliveryDataList['Delivery']['dr_uuid'],$deliveryDataList['Delivery']['schedule_uuid']),array('class' =>' table-link','escape' => false,'title'=>'Print Delivery Receipt','target' => '_blank'));
+                            ?>
+
                             <a data-toggle="modal" href="#myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" class="table-link "><i class="fa fa-lg "></i><span class="fa-stack">
                                 <i class="fa fa-square fa-stack-2x"></i>
-                                <i class="fa  fa-mail-reply fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Replace </font></span></a>
+                                <i class="fa  fa-mail-reply fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Return </font></span></a>
                      
                        </td>
-
-                       
-
-                       
+          
                     </tr>
 
                 </tbody>
 
-                <div class="modal fade" id="myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" role="dialog" >
+<div class="modal fade" id="myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" role="dialog" >
   <div class="modal-dialog">
     <div class="modal-content margintop">
 
@@ -108,13 +108,13 @@ $totalremaining = 0;
 
       <div class="modal-body">
 
-      <?php //pr($scheduleInfo); 
+      <?php  
 
         echo $this->Form->create('ClientOrderDeliverySchedule',array(
-          'url'=>(array('controller' => 'deliveries','action' => 'delivery_return',$scheduleInfo['ClientOrderDeliverySchedule']['id'],$scheduleInfo['QuotationDetail']['quotation_id'], $scheduleInfo['ClientOrderDeliverySchedule']['uuid']) ),'class' => 'form-horizontal')); ?>
+          'url'=>(array('controller' => 'deliveries','action' => 'delivery_return') ),'class' => 'form-horizontal')); ?>
 
         <div class="form-group" id="existing_items">
-          <label class="col-lg-2 control-label">D.R. #</label>
+            <label class="col-lg-2 control-label">D.R. #</label>
           <div class="col-lg-9">
 
           <?php 
@@ -140,7 +140,7 @@ $totalremaining = 0;
                                                     'type' => 'hidden',
                                                     'readonly' => 'readonly',
                                                     'value' => $deliveryDataList['DeliveryDetail']['quantity'],
-                                                    'id' => 'maxQuantity'
+                                                    'id' => 'quantity'
                                                     ));
           ?>
 
@@ -157,9 +157,19 @@ $totalremaining = 0;
           echo $this->Form->input('DeliveryDetail.delivered_quantity', array(
                                                     'empty' => 'None',
                                                     'required' => 'required',
-                                                    'class' => 'form-control item_type editable limitQuantity',
+                                                    'class' => 'form-control item_type editable quan ',
                                                     'label' => false,
-                                                    'value' => $deliveryDataList['DeliveryDetail']['quantity']
+                                                    'value' => $deliveryDataList['DeliveryDetail']['quantity'] - $deliveryDataList['DeliveryDetail']['delivered_quantity'] 
+                                                    //'id' => 'MaximumQuantity'
+                                                    ));
+
+          echo $this->Form->input('DeliveryDetail.delivered_quantity', array(
+                                                    'empty' => 'None',
+                                                    'required' => 'required',
+                                                    'class' => 'form-control item_type editable MaximumQuantity',
+                                                    'label' => false,
+                                                    'value' => $deliveryDataList['DeliveryDetail']['quantity'] - $deliveryDataList['DeliveryDetail']['delivered_quantity'] 
+                                                    //'id' => 'MaximumQuantity'
                                                     ));
 
         ?>
@@ -183,13 +193,10 @@ $totalremaining = 0;
 echo $this->Form->end();  
 ?> 
 </div>
-                
-                
+                             
         <?php 
           endforeach; 
   } 
 
- // pr($pushRemaining);
   ?> 
-
 

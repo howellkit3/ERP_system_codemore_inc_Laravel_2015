@@ -1,6 +1,5 @@
+<?php echo $this->Html->script('Sales.quantityLimitDelivery'); ?>
 <?php echo $this->element('deliveries_options'); ?><br><br>
-
-<?php echo $this->Html->script('Sales.quantityLimitDelivery');?>
 
 <div class="row1">
     <div class="col-lg-12">
@@ -63,7 +62,7 @@
 
       <div class="modal-body">
 
-      <?php //pr($scheduleInfo); 
+      <?php 
 
         echo $this->Form->create('ClientOrderDeliverySchedule',array(
           'url'=>(array('controller' => 'deliveries','action' => 'delivery_return',$scheduleInfo['ClientOrderDeliverySchedule']['id'],$scheduleInfo['QuotationDetail']['quotation_id'], $scheduleInfo['ClientOrderDeliverySchedule']['uuid']) ),'class' => 'form-horizontal')); ?>
@@ -89,13 +88,21 @@
                                                     'value' => $deliveryDataList['DeliveryDetail']['id']
                                                     ));
 
-             echo $this->Form->input('DeliveryDetail.quantity', array(
-                                                    'class' => 'form-control item_type editable required ',
+            echo $this->Form->input('DeliveryDetail.limit', array(
+                                                    'class' => 'form-control item_type editable required MaximumQuantity',
                                                     'label' => false,
-                                                    'type' => 'hidden',
+                                                    'required' => 'required',
                                                     'readonly' => 'readonly',
-                                                    'value' => $deliveryDataList['DeliveryDetail']['quantity'],
-                                                    'id' => 'maxQuantity'
+                                                    'value' => $deliveryDataList['DeliveryDetail']['quantity'] - $deliveryDataList['DeliveryDetail']['delivered_quantity'] 
+                                                    ));
+
+             echo $this->Form->input('DeliveryDetail.delivered_quantity', array(
+                                                    'empty' => 'None',
+                                                    'required' => 'required',
+                                                    'class' => 'form-control item_type editable quan ',
+                                                    'label' => false,
+                                                    'value' => $deliveryDataList['DeliveryDetail']['quantity'] - $deliveryDataList['DeliveryDetail']['delivered_quantity'] 
+                                                    //'id' => 'MaximumQuantity'
                                                     ));
           ?>
 
@@ -112,7 +119,7 @@
           echo $this->Form->input('DeliveryDetail.delivered_quantity', array(
                                                     'empty' => 'None',
                                                     'required' => 'required',
-                                                    'class' => 'form-control item_type editable limitQuantity',
+                                                    'class' => 'form-control item_type editable quan',
                                                     'label' => false,
                                                     'value' => $deliveryDataList['DeliveryDetail']['quantity']
                                                     ));
@@ -138,14 +145,43 @@
 echo $this->Form->end();  
 ?> 
 </div>
+</div>
+</div>
 
-    
-             
+            
 <?php echo $this->element('modals'); ?>
 
-<style>
-.margintop{
-    margin-top : 10%; 
+<script >
+    
+    $("body").on('keyup','.quan', function(e){
 
-</style    
+    var quantityValue = $(this).parents('.modal-body').find('.MaximumQuantity').val();
+
+    console.log(quantityValue); 
+    var myVal = $(this).val();
+
+    alert(myVal); 
+
+    var realVal = $(this).val();
+    var fields = $('.quan');
+    var total = '';
+    var limit = '';
+    var isText = $(this);
+    
+      $($('.quan')).each(function() {
+        allVal += parseInt($(this).val());
+        
+    });
+    
+    console.log(allVal);
+    if ( allVal > quantityValue ){
+
+      alert('Max Quantity');
+      isText.val(myVal);
+      allVal = total;
+        
+    }
+    });
+ 
+</script>
 
