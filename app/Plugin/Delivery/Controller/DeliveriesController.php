@@ -434,7 +434,7 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
     $drData = $this->Delivery->find('first', array(
                                         'conditions' => array('Delivery.dr_uuid' => $dr_uuid
                                         )));
-    
+    //pr($drData);exit();
     $clientData = $this->ClientOrder->find('first', array(
                                         'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
                                         )));

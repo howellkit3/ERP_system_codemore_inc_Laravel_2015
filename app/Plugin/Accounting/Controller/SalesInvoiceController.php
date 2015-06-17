@@ -135,81 +135,108 @@ class SalesInvoiceController extends AccountingAppController {
  
 	public function print_invoice($invoiceId = null) {
 
-    // $this->loadModel('Sales.ClientOrder');
-    // $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule','QuotationItemDetail','QuotationDetail','Product'));
-    // //$this->ClientOrder->bindDelivery();
-    // $this->loadModel('Sales.Company');
+        $this->loadModel('Sales.ClientOrder');
 
-    // $this->loadModel('Unit');
-    // $units = $this->Unit->getList();
-
-    // $this->Company->bind('Address');
-
-    $this->SalesInvoice->bindInvoice();
-    $drData = $this->SalesInvoice->find('first', array(
-                                        'conditions' => array('SalesInvoice.id' => $invoiceId
-                                        )));
-    //pr($drData);exit();
-    // $clientData = $this->ClientOrder->find('first', array(
-    //                                     'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
-    //                                     )));
-    
-    // $companyData = $this->Company->find('first', array(
-    //                                     'conditions' => array('Company.id' => $clientData['ClientOrder']['company_id']
-    //                                     )));
-
-    // $userData = $this->Session->read('Auth');
-    
-    $view = new View(null, false);
-    
-    $view->set(compact('drData','clientData','companyData','units'));
-      
-    $view->viewPath = 'SalesInvoice'.DS.'pdf';  
-   
-    $output = $view->render('print_invoice', false);
- 
-    $dompdf = new DOMPDF();
-    $dompdf->set_paper("A4");
-    $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));
-    $dompdf->render();
-    $canvas = $dompdf->get_canvas();
-    $font = Font_Metrics::get_font("helvetica", "bold");
-    $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
-
-    $output = $dompdf->output();
-    $random = rand(0, 1000000) . '-' . time();
-    if (empty($filename)) {
-      $filename = 'SalesInvoice-'.$invoiceId.'-data'.time();
-    }
-    $filePath = 'view_pdf/'.strtolower(Inflector::slug( $filename , '-')).'.pdf';
-    $file_to_save = WWW_ROOT .DS. $filePath;
-      
-    if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
-        unlink($file_to_save);
-    }
-    
-    exit();
+        $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule','QuotationItemDetail','QuotationDetail','Product'));
         
-  }
+        $this->loadModel('Delivery.Delivery');
 
-  public function receivable(){
+        $this->loadModel('Sales.Company');
 
-    $this->loadModel('Accounting','SalesInvoice');
+        $this->loadModel('Sales.PaymentTermHolder');
 
-    $this->SalesInvoice->bindInvoice();
+        $this->loadModel('Unit');
+        $this->loadModel('Currency');
+        $units = $this->Unit->getList();
 
-    $invoiceData = $this->SalesInvoice->find('all', array(
-                                                    'fields' => array(
-                                                        'id','sales_invoice_no','dr_uuid','statement_no'),
-                                                    //'conditions' => array('SalesInvoice.id' => 'Delivery.dr_uuid'),
-                                                ));
-    //pr($invoiceData);
-    $this->set(compact('invoiceData'));
+        $paymentTermData = Cache::read('paymentTerms');
+        
+        if (!$paymentTermData) {
+            $paymentTermData = $this->PaymentTermHolder->getList(null,array('id','name'));
+            Cache::write('paymentTerms', $paymentTermData);
+        }
+        $currencyData = Cache::read('currencyData');
+        
+        //if (!$currencyData) {
 
-  }
+            $currencyData = $this->Currency->find('list', array('fields' => array('id', 'name'),
+                                                            'order' => array('Currency.name' => 'ASC')
+                                                            ));
 
-  public function statement(){
+            Cache::write('currencyData', $currencyData);
+       // }
 
-  }
+        $this->Company->bind('Address');
+
+        $invoiceData = $this->SalesInvoice->find('first', array(
+                                            'conditions' => array('SalesInvoice.id' => $invoiceId
+                                            )));
+        
+        $this->Delivery->bindDelivery();
+        $drData = $this->Delivery->find('first', array(
+                                            'conditions' => array('Delivery.dr_uuid' => $invoiceData['SalesInvoice']['dr_uuid']
+                                            )));
+       
+        $clientData = $this->ClientOrder->find('first', array(
+                                            'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
+                                            )));
+        
+        $companyData = $this->Company->find('first', array(
+                                            'conditions' => array('Company.id' => $clientData['ClientOrder']['company_id']
+                                            )));
+
+        $userData = $this->Session->read('Auth');
+        
+        $view = new View(null, false);
+        
+        $view->set(compact('drData','clientData','companyData','units','invoiceData','paymentTermData','currencyData'));
+          
+        $view->viewPath = 'SalesInvoice'.DS.'pdf';  
+       
+        $output = $view->render('print_invoice', false);
+     
+        $dompdf = new DOMPDF();
+        $dompdf->set_paper("A4");
+        $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));
+        $dompdf->render();
+        $canvas = $dompdf->get_canvas();
+        $font = Font_Metrics::get_font("helvetica", "bold");
+        $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
+
+        $output = $dompdf->output();
+        $random = rand(0, 1000000) . '-' . time();
+        if (empty($filename)) {
+          $filename = 'SalesInvoice-'.$invoiceId.'-data'.time();
+        }
+        $filePath = 'view_pdf/'.strtolower(Inflector::slug( $filename , '-')).'.pdf';
+        $file_to_save = WWW_ROOT .DS. $filePath;
+          
+        if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
+            unlink($file_to_save);
+        }
+        
+        exit();
+            
+    }
+
+    public function receivable(){
+
+        $this->loadModel('Accounting','SalesInvoice');
+
+        $this->SalesInvoice->bindInvoice();
+
+        $invoiceData = $this->SalesInvoice->find('all', array(
+                                                        'fields' => array(
+                                                            'id','sales_invoice_no','dr_uuid','statement_no'),
+                                                        //'conditions' => array('SalesInvoice.id' => 'Delivery.dr_uuid'),
+                                                    ));
+        //pr($invoiceData);
+        $this->set(compact('invoiceData'));
+
+    }
+
+    public function statement(){
+
+    }
 
 }

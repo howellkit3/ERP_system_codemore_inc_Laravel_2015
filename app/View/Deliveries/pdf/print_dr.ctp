@@ -60,27 +60,27 @@
 						<td class="td-heigth" style="width:180px;border:1px solid #FFFFFF;"><center><b> </b></center></td>
 						<td class="td-heigth" style="width:110px;border:1px solid #FFFFFF;"><center><b> </b></center></td>
 					</tr>
-					<?php foreach ($clientData['ClientOrderDeliverySchedule'] as $key => $scheduleList) { ?>
+					<?php //foreach ($clientData['ClientOrderDeliverySchedule'] as $key => $scheduleList) { ?>
 						<tr>
 							<td style="width:15px;"></td>
 							<td class="td-heigth" style="width:90px;border:1px solid #FFFFFF;"><center><?php echo $clientData['ClientOrder']['po_number']?></center></td>
 							<td class="td-heigth" style="width:120px;border:1px solid #FFFFFF;"><center><?php echo ucfirst($clientData['Product']['name'])?></center></td>
 							<td class="td-heigth" style="width:120px;border:1px solid #FFFFFF;">
 								<center>
-									<?php echo $scheduleList['quantity']?> x
+									<?php echo $drData['DeliveryDetail']['quantity']?> x
 									<?php echo $clientData['QuotationItemDetail']['quantity']?> /
 									<?php echo $units[$clientData['QuotationItemDetail']['quantity_unit_id']]?>
 								</center>
 							</td>
 							<td class="td-heigth" style="width:120px;border:1px solid #FFFFFF;">
 								<center>
-									<?php $totalQty = $clientData['QuotationItemDetail']['quantity'] * $scheduleList['quantity']?>
+									<?php $totalQty = $clientData['QuotationItemDetail']['quantity'] * $drData['DeliveryDetail']['quantity']?>
 									<?php echo $totalQty ?> /
 									<?php echo $units[$clientData['QuotationItemDetail']['quantity_unit_id']]?>
 								</center>
 							</td>
 						</tr>
-					<?php } ?>
+					<?php //} ?>
 				</thead>
 			</table>
 			<br><br><br><br><br>
@@ -88,10 +88,10 @@
 				<thead>
 					<tr>
 						<td class="td-heigth" style="width:20px;border:1px solid #FFFFFF;"></td>
-						<td class="td-heigth" style="width:100px;border:1px solid #FFFFFF;"><center><b>PREPARED BY:</b></center></td>
-						<td class="td-heigth" style="width:180px;border:1px solid #FFFFFF;"><center><b>CHECKED BY:</b></center></td>
-						<td class="td-heigth" style="width:120px;border:1px solid #FFFFFF;"><center><b>APPROVED BY:</b></center></td>
-						<td class="td-heigth" style="width:300px;border:1px solid #FFFFFF;"><center><b>RECEIVED BY:</b></center></td>
+						<td class="td-heigth" style="width:100px;border:1px solid #FFFFFF;"><center><b>Mary Ann C. Boria</b></center></td>
+						<td class="td-heigth" style="width:180px;border:1px solid #FFFFFF;"><center><b> </b></center></td>
+						<td class="td-heigth" style="width:120px;border:1px solid #FFFFFF;"><center><b>Amer C. Espanto</b></center></td>
+						<td class="td-heigth" style="width:300px;border:1px solid #FFFFFF;"><center><b> </b></center></td>
 					</tr>
 				</thead>
 			</table> 
