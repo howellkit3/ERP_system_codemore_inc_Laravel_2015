@@ -341,8 +341,8 @@ public function delivery_replacing() {
   
   $deliveryEdit = $this->Delivery->find('all', array(
                                          'conditions' => array(
-                                        'DeliveryDetail.status' => 'Incomplete'
-                                        )
+                                        'DeliveryDetail.status' => 'Incomplete'),
+                                        'order' => 'DeliveryDetail.modified DESC'
                                     ));
 
   $this->ClientOrder->bindDelivery();
