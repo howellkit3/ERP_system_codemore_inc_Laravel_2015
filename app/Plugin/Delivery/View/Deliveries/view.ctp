@@ -113,37 +113,35 @@ $totalremaining = 0;
                                 <tr>
                                     <td>Status</td>
                                     <td><?php           //pr($scheduleInfo['ClientOrderDeliverySchedule']['uuid']); exit;
-                                                        $Scheddate = $scheduleInfo['ClientOrderDeliverySchedule']['schedule'];
-                                                        $Currentdate = date("Y-m-d H:i:s");
+                                                $Scheddate = $scheduleInfo['ClientOrderDeliverySchedule']['schedule'];
+                                                
+                                                $Currentdate = date("Y-m-d H:i:s");
 
-                                                        $Scheddate = str_replace('-', '', $Scheddate);
-                                                        $Currentdate = str_replace('-', '', $Currentdate); ?>  
+                                                $Scheddate = str_replace('-', '', $Scheddate);
+                                                
+                                                $Currentdate = str_replace('-', '', $Currentdate);   
 
-                                                        <?php
+                                                  if (!empty($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']]) || !empty($deliveryList[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']])) {   
 
-                                                         if (!empty($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']])) {   
+                                                    if ($deliveryDetailList[$deliveryList[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']]] == $scheduleInfo['ClientOrderDeliverySchedule']['quantity']){ 
 
-                                                         if($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] == 'Approved') { 
+                                                            echo "<span class='label label-success'>Delivered</span>";
+
+                                                    }elseif ($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] == 'Approved') { 
                                                         
-                                                                  echo "<span class='label label-success'>Approved</span>"; ?> &nbsp
-
-                                                    <?php         if(strtotime($Scheddate) < strtotime($Currentdate))
-                                                                {
-                                                                    echo "<span class='label label-warning'>Due</span>"; 
-                                                                } 
-                                                          
-                                                             }
-                                                         
-                                                     }else{
-                                                                echo "<span class='label label-default'>Waiting</span>"; ?> &nbsp
+                                                             echo "<span class='label label-warning'>Approved</span>"; ?> &nbsp<?php
+                                                    } 
+      
+                                                    }else{
+                                                               echo "<span class='label label-default'>Waiting</span>"; ?> &nbsp
 
 
                                                     <?php                if(strtotime($Scheddate) < strtotime($Currentdate))
                                                                 {
-                                                                    echo "<span class='label label-warning'>Due</span>"; 
+                                                                    echo "<span class='label label-danger'>Due</span>"; 
                                                                 }  
 
-                                                    } ?>
+                                                 } ?>
 
                                                         
                                     </td>
@@ -229,8 +227,6 @@ $totalremaining = 0;
                                 <th class=""><a href="#"><span>Action</span></a></th>
                             </tr>
                         </thead>
-
-
 
                         <?php   
 

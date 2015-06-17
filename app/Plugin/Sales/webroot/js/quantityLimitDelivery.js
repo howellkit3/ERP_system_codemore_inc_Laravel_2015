@@ -4,6 +4,7 @@ $( document ).ready(function() {
 
 	$("body").on('keyup','.quantityLimit', function(e){
 
+
 		var myVal = $(this).attr('value');
 
 		var realVal = $(this).val();
@@ -15,7 +16,7 @@ $( document ).ready(function() {
 		
 	    $($('.quantityLimit')).each(function() {
 	     	allVal += parseInt($(this).val());
-	     	//alert(quantityValue);
+	     	
 		});
 		
 		console.log(allVal);

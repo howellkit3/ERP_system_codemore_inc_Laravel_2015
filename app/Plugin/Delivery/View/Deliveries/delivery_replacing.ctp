@@ -1,6 +1,5 @@
+<?php echo $this->Html->script('Sales.quantityLimitDelivery'); ?>
 <?php echo $this->element('deliveries_options'); ?><br><br>
-
-<?php echo $this->Html->script('Sales.quantityLimitDelivery');?>
 
 <div class="row1">
     <div class="col-lg-12">
@@ -63,7 +62,7 @@
 
       <div class="modal-body">
 
-      <?php  
+      <?php 
 
         echo $this->Form->create('ClientOrderDeliverySchedule',array(
           'url'=>(array('controller' => 'deliveries','action' => 'delivery_return',$scheduleInfo['ClientOrderDeliverySchedule']['id'],$scheduleInfo['QuotationDetail']['quotation_id'], $scheduleInfo['ClientOrderDeliverySchedule']['uuid']) ),'class' => 'form-horizontal')); ?>
@@ -72,7 +71,7 @@
           <label class="col-lg-2 control-label">D.R. #</label>
           <div class="col-lg-9">
 
-          <?php 
+          <?php pr( $deliveryDataList);
             echo $this->Form->input('Delivery.dr_uuid', array(
                                                     'class' => 'form-control item_type editable required',
                                                     'label' => false,
@@ -89,13 +88,13 @@
                                                     'value' => $deliveryDataList['DeliveryDetail']['id']
                                                     ));
 
-             echo $this->Form->input('DeliveryDetail.quantity', array(
-                                                    'class' => 'form-control item_type editable required ',
+             echo $this->Form->input('DeliveryDetail.delivered_quantity', array(
+                                                    'empty' => 'None',
+                                                    'required' => 'required',
+                                                    'class' => 'form-control item_type editable quan MaximumQuantity',
                                                     'label' => false,
-                                                    'type' => 'hidden',
-                                                    'readonly' => 'readonly',
-                                                    'value' => $deliveryDataList['DeliveryDetail']['quantity'],
-                                                    'id' => 'maxQuantity'
+                                                    'value' => $deliveryDataList['DeliveryDetail']['quantity'] - $deliveryDataList['DeliveryDetail']['delivered_quantity'] 
+                                                    //'id' => 'MaximumQuantity'
                                                     ));
           ?>
 
@@ -112,7 +111,7 @@
           echo $this->Form->input('DeliveryDetail.delivered_quantity', array(
                                                     'empty' => 'None',
                                                     'required' => 'required',
-                                                    'class' => 'form-control item_type editable limitQuantity',
+                                                    'class' => 'form-control item_type editable quan',
                                                     'label' => false,
                                                     'value' => $deliveryDataList['DeliveryDetail']['quantity']
                                                     ));
@@ -138,14 +137,43 @@
 echo $this->Form->end();  
 ?> 
 </div>
+</div>
+</div>
 
-    
-             
+            
 <?php echo $this->element('modals'); ?>
 
-<style>
-.margintop{
-    margin-top : 10%; 
+<script >
+      
+    $(".quan").keyup(function(){
 
-</style    
+    var quantityValue = $(this).parents('.modal-body').find('.MaximumQuantity').val();
+
+    console.log(quantityValue); 
+    var myVal = $(this).val();
+
+    alert(quantityValue); 
+
+    var realVal = $(this).val();
+    var fields = $('.quan');
+    var total = '';
+    var limit = '';
+    var isText = $(this);
+    
+      $($('.quan')).each(function() {
+        allVal += parseInt($(this).val());
+        
+    });
+    
+    console.log(allVal);
+    if ( myVal > quantityValue ){
+
+      alert('Max Quantity');
+      isText.val(myVal);
+      allVal = total;
+        
+    }
+    });
+ 
+</script>
 
