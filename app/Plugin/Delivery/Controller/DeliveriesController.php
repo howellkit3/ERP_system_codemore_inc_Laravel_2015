@@ -270,13 +270,21 @@ class DeliveriesController extends DeliveryAppController {
       //pr($this->request->data['DeliveryDetail']['quantity']); exit;
         if ($this->request->is(array('post', 'put'))) {
 
-            // $remainingQuantity = $deliveryData['DeliveryDetail']['remaining_quantity'];
+            $DRdata = $this->Delivery->find('first', array(
+                    'conditions' => array(
+                      'Delivery.dr_uuid' => $this->request->data['Delivery']['dr_uuid'])
+                    ));
 
-            // $enteredQuantity =$this->request->data['DeliveryDetail']['quantity'];
+             // pr($DRdata); exit;
 
-            // $difference = $remainingQuantity - $enteredQuantity;
+              if (!empty($DRdata)) {
 
-            //$this->request->data['DeliveryDetail']['delivered_quantity'] = $difference;
+              $this->Session->setFlash(__('The Delivery No. already exists'), 'error');
+              $this->redirect( array(
+                           'controller' => 'deliveries', 
+                           'action' => 'view',$deliveryScheduleId,$quotationId,$clientsOrderUuid
+                      ));
+              }
 
             $this->Delivery->id = $idDelivery;
             $this->DeliveryDetail->id = $idDeliveryDetail;
@@ -299,7 +307,7 @@ class DeliveriesController extends DeliveryAppController {
             $this->Session->setFlash(__('Unable to update your post.'));
             }
 
-        $this->set(compact('scheduleInfo',  'deliveryData'));
+        $this->set(compact('scheduleInfo',  'deliveryData', 'userData'));
         
 }
 

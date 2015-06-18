@@ -21,7 +21,7 @@
                                     'url'=>(array('controller' => 'deliveries','action' => 'add_schedule', $deliveryEdit[0]['Delivery']['id'], $deliveryEdit[0]['DeliveryDetail']['id'],$scheduleInfo['ClientOrderDeliverySchedule']['id'],$quotationId,$clientsOrderUuid)),'class' => 'form-horizontal')); ?>
                     
                         <div class="form-group" id="existing_items">
-                            <label class="col-lg-2 control-label">D.R. #</label>
+                            <label class="col-lg-2 control-label"><span style="color:red">*</span>D.R. #</label>
                             <div class="col-lg-9">
 
                                 <?php 
@@ -85,6 +85,7 @@
                                     echo $this->Form->input('Delivery.dr_uuid', array(
                                                                     'class' => 'form-control item_type editable required',
                                                                     'label' => false,
+                                                                    'rule' => 'isUnique',
                                                                     'required' => 'required'
                                                                     ));
                                 ?>
@@ -327,6 +328,7 @@
         });
 
         jQuery("#ClientOrderDeliveryScheduleViewForm").validate();
+        
 
     </script>
 
