@@ -317,6 +317,18 @@ public function delivery_return($deliveryScheduleId = null,$quotationId = null,$
 
         }
 
+        if(!empty($this->request->data['DeliveryDetail']['from_replacing'])){
+
+          if($this->request->data['DeliveryDetail']['from_replacing'] = 'replacing'){
+
+            $this->request->data['DeliveryDetail']['delivered_quantity'] =  $this->request->data['DeliveryDetail']['delivered'] + $this->request->data['DeliveryDetail']['delivered_quantity'];
+
+          }
+        }
+
+          
+            //pr($this->request->data); exit;
+
             $this->DeliveryDetail->saveDeliveryDetail($this->request->data,$userData['User']['id']);
 
             $this->Session->setFlash(__('Schedule has been updated.'),'success');
@@ -347,10 +359,12 @@ public function delivery_replacing() {
 
   $this->ClientOrder->bindDelivery();
 
+  $clientOrderData = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid','id')));
+
   $scheduleInfo = $this->ClientOrder->find('all');
 
 
-  $this->set(compact('deliveryEdit', 'scheduleInfo'));     
+  $this->set(compact('deliveryEdit', 'scheduleInfo', 'clientOrderData'));     
         
 }
 
@@ -390,7 +404,7 @@ public function delivery_edit($dr_uuid = null, $clientsOrderUuid = null) {
   $clientsOrder = $this->ClientOrder->find('first', array(
                                         'conditions' => array('ClientOrderDeliverySchedule.uuid' => $clientsOrderUuid
                                         )));    
-  //pr($clientsOrder); exit;
+ 
  
   if ($this->request->is(array('post', 'put'))) {
 

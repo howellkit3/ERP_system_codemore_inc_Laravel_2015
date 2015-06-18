@@ -174,14 +174,16 @@
                                                     ));
                                             ?>
 
-                                            
+                                            <?php  if(!empty($quantityInfo[$scheduleInfo['QuotationDetail']['quotation_id']])){
 
-                                            <?php  echo $this->Form->input('QuotationItemDetail.quantity', array(
+                                                echo $this->Form->input('QuotationItemDetail.quantity', array(
                                                             'type' => 'select',
                                                             'class' => 'form-control item_type',
                                                             'label' => false,
                                                             'value' => $quantityInfo[$scheduleInfo['QuotationDetail']['quotation_id']],
-                                                            'id' => 'quantity')); ?> 
+                                                            'id' => 'quantity'));
+
+                                                } ?> 
                             </div>
                         </div>
 
