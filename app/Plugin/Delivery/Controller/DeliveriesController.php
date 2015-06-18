@@ -280,10 +280,11 @@ class DeliveriesController extends DeliveryAppController {
               if (!empty($DRdata)) {
 
               $this->Session->setFlash(__('The Delivery No. already exists'), 'error');
+              
               $this->redirect( array(
-                           'controller' => 'deliveries', 
+                           'controller' => 'deliveries',   
                            'action' => 'view',$deliveryScheduleId,$quotationId,$clientsOrderUuid
-                      ));
+                      ));  
               }
 
             $this->Delivery->id = $idDelivery;
