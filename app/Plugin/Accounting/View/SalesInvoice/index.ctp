@@ -49,7 +49,7 @@
 					                        </td>
 
                                             <td class="">
-                                               <?php echo $invoiceDataList['SalesInvoice']['sales_invoice_no'];?>
+                                               <?php echo $invoiceDataList['SalesInvoice']['statement_no'];?>
                                             </td>
 
 					                        <td class="">

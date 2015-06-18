@@ -1,77 +1,65 @@
 <style>
+
 <?php include('word.css'); ?>
 
 </style>
-<div class="row">
+
+<div class="row" style="background:url('http://localhost/koufu_system/img/pr.pngs');background-size: 768px;
+  height: 100%;background-repeat:no-repeat;">
 	<div class="col-lg-12">
 		<div class="main-box main-pdf" >
-			<table class="layout" style="line-height:5px;">
-				<thead>
-					<tr>
-						<td style="width:550px;"> </td>
-						<td style="width:360px;"> </td>
-					</tr>
-					<tr>
-						<td style="width:550px;"> </td>
-						<td style="width:360px;"><?php echo $drData['Delivery']['dr_uuid']?></td>
-					</tr>
-					<tr>
-						<td style="width:550px;"> </td>
-						<td style="width:360px;"> </td>
-					</tr>
-					<tr>
-						<td style="width:550px;"> </td>
-						<td style="width:360px;"><?php echo (new \DateTime())->format('m/d/Y'); ?></td>
-					</tr>
-				</thead>
-			</table>
-			<table class="layout" style="line-height:5px;">
+			<br><br><br>
+			<table class="layout" style="line-height:7px;padding-top:25px;">
 				<thead>
 					<tr>
 						<td style="width:15px;"> </td>
 						<td style="width:80px;font-family: Calibri;"><b> </b></td>
 						<td style="width:20px;"> </td>
-						<td style="width:430px;">
+						<td style="width:480px;">
+						</td>
+						<td style="text-align:right;">
+							<?php echo (new \DateTime())->format('m/d/Y'); ?>
+						</td>
+					</tr>
+					<tr>
+						<td style="width:15px;"> </td>
+						<td style="width:80px;font-family: Calibri;"><b> </b></td>
+						<td style="width:20px;"> </td>
+						<td style="width:480px;">
 							<?php echo ucfirst($companyData['Company']['company_name'])?>
 						</td>
-						<td>
-							DR# <?php echo $drData['Delivery']['id']?>
+						<td style="text-align:right;">
+							DR# <?php echo $drData['Delivery']['dr_uuid']?>
 						</td>
 					</tr>
 					<tr>
 						<td style="width:15px;"> </td>
 						<td style="width:80px;font-family: Calibri;"><b> </b></td>
 						<td style="width:20px;"> </td>
-						<td style="width:330px;">
+						<td style="width:480px;">
 							<?php echo ucfirst($companyData['Address'][0]['address1'])?>
 						</td>
-						<td>
+						<td style="text-align:right;">
 							<?php echo ucfirst($companyData['Company']['tin'])?>
 						</td>
 					</tr>
 				</thead>
 			</table>
-			<table class="table table-bordered" style="line-height:20px;">
+			<table class="table table-bordered" style="line-height:20px;padding-top:5px;">
 				<thead>
-					<tr>
-						<td class="td-heigth" style="width:20px;border:1px solid #FFFFFF;"></td>
-						<td class="td-heigth" style="width:140px;border:1px solid #FFFFFF;"><center><b> </b></center></td>
-						<td class="td-heigth" style="width:280px;border:1px solid #FFFFFF;"><center><b> </b></center></td>
-						<td class="td-heigth" style="width:180px;border:1px solid #FFFFFF;"><center><b> </b></center></td>
-						<td class="td-heigth" style="width:110px;border:1px solid #FFFFFF;"><center><b> </b></center></td>
-					</tr>
 					<?php //foreach ($clientData['ClientOrderDeliverySchedule'] as $key => $scheduleList) { ?>
 						<tr>
-							<td class="td-heigth" style="width:90px;border:1px solid #FFFFFF;"><center><?php echo $clientData['ClientOrder']['po_number']?></center></td>
-							<td class="td-heigth" style="width:140px;border:1px solid #FFFFFF;"><center><?php echo ucfirst($clientData['Product']['name'])?></center></td>
-							<td class="td-heigth" style="width:120px;border:1px solid #FFFFFF;">
+							<td class="td-heigth" style="width:20px;border:1px solid #FFFFFF;"> </td>
+							<td class="td-heigth" style="width:95px;border:1px solid #FFFFFF;"><?php echo $clientData['ClientOrder']['po_number']?></td>
+							<td class="td-heigth" style="width:300px;border:1px solid #FFFFFF;"><center><?php echo ucfirst($clientData['Product']['name'])?></center></td>
+							<td class="td-heigth" style="width:220px;border:1px solid #FFFFFF;">
 								<center>
 									<?php echo $drData['DeliveryDetail']['quantity']?> x
 									<?php echo $clientData['QuotationItemDetail']['quantity']?> /
 									<?php echo $units[$clientData['QuotationItemDetail']['quantity_unit_id']]?>
 								</center>
 							</td>
-							<td class="td-heigth" style="width:120px;border:1px solid #FFFFFF;">
+							<td class="td-heigth" style="width:130px;border:1px solid #FFFFFF;">
 								<center>
 									<?php $totalQty = $clientData['QuotationItemDetail']['quantity'] * $drData['DeliveryDetail']['quantity']?>
 									<?php echo $totalQty ?> /
@@ -82,14 +70,14 @@
 					<?php //} ?>
 				</thead>
 			</table>
-			<br><br><br><br><br><br><br>
-			<br><br><br><br>
-			<table class="table table-bordered" style="line-height:20px;">
+			<br><br><br><br><br>
+			<br><br><br>
+			<table class="table table-bordered" style="line-height:20px;padding-top:45px;">
 				<thead>
 					<tr>
-						<td class="td-heigth" style="width:120px;border:1px solid #FFFFFF;">Mary Ann C. Boria</td>
-						<td class="td-heigth" style="width:120px;border:1px solid #FFFFFF;"> </td>
-						<td class="td-heigth" style="width:120px;border:1px solid #FFFFFF;text-align:left;">Amer C. Espanto</td>
+						<td class="td-heigth" style="width:170px;border:1px solid #FFFFFF;"><center>Mary Ann C. Boria</center></td>
+						<td class="td-heigth" style="width:150px;border:1px solid #FFFFFF;"> </td>
+						<td class="td-heigth" style="width:120px;border:1px solid #FFFFFF;text-align:left;"><center>Amer C. Espanto</center></td>
 						<td class="td-heigth" style="width:300px;border:1px solid #FFFFFF;"> </td>
 					</tr>
 				</thead>

@@ -268,3 +268,5 @@ CREATE TABLE `sales_invoices` (
 ALTER TABLE `koufu_accounting`.`sales_invoices`     ADD COLUMN `status` INT(1) NULL AFTER `dr_uuid`;
 
 ALTER TABLE `koufu_accounting`.`sales_invoices`     CHANGE `status` `statement_no` varchar(100) NULL ;
+
+ALTER TABLE `koufu_accounting`.`sales_invoices`     ADD COLUMN `status` INT(1) NULL AFTER `statement_no`;
