@@ -30,7 +30,7 @@
 					<table class="table table-striped table-hover">
 						<thead>
 							<tr>
-								<th><a href="#"><span>Sales Invoicce No.</span></a></th>
+								<th><a href="#"><span>Sales Invoice No.</span></a></th>
                                 <th><a href="#"><span>Statement of Account No.</span></a></th>
 								<th><a href="#"><span>Delivery No.</span></a></th>
 								<th><a href="#"><span>Action</span></a></th>
