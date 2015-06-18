@@ -75,9 +75,9 @@
 			<table class="table table-bordered" style="line-height:20px;padding-top:45px;">
 				<thead>
 					<tr>
-						<td class="td-heigth" style="width:170px;border:1px solid #FFFFFF;"><center>Mary Ann C. Boria</center></td>
+						<td class="td-heigth" style="width:170px;border:1px solid #FFFFFF;"><center><?php echo ucfirst($prepared['User']['first_name'])?> <?php echo ucfirst($prepared['User']['last_name'])?></center></td>
 						<td class="td-heigth" style="width:150px;border:1px solid #FFFFFF;"> </td>
-						<td class="td-heigth" style="width:120px;border:1px solid #FFFFFF;text-align:left;"><center>Amer C. Espanto</center></td>
+						<td class="td-heigth" style="width:120px;border:1px solid #FFFFFF;text-align:left;"><center><?php echo ucfirst($approved['User']['first_name'])?> <?php echo ucfirst($approved['User']['last_name'])?></center></td>
 						<td class="td-heigth" style="width:300px;border:1px solid #FFFFFF;"> </td>
 					</tr>
 				</thead>

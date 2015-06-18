@@ -130,11 +130,11 @@
 			<table class="layout" style="line-height:12px;padding-top:8px;">
 				<thead>
 					<tr>	
-						<td style="width:240px;">
-							<center>Bien Relampagos </center>
-						</td>
 						<td style="width:250px;">
-							<center>Honeylou De Los Reyes </center>
+							<center><?php echo ucfirst($prepared['User']['first_name'])?> <?php echo ucfirst($prepared['User']['last_name'])?></center>
+						</td>
+						<td style="width:240px;">
+							<center><?php echo ucfirst($approved['User']['first_name'])?> <?php echo ucfirst($approved['User']['last_name'])?></center>
 						</td>
 					</tr>
 

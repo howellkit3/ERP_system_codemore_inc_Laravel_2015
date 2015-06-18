@@ -135,6 +135,8 @@ class SalesInvoiceController extends AccountingAppController {
  
 	public function print_invoice($invoiceId = null) {
 
+        $userData = $this->Session->read('Auth');
+
         $this->loadModel('Sales.ClientOrder');
 
         $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule','QuotationItemDetail','QuotationDetail','Product'));
@@ -149,6 +151,12 @@ class SalesInvoiceController extends AccountingAppController {
         $this->loadModel('Currency');
         $units = $this->Unit->getList();
 
+        $this->loadModel('User');
+
+        $approved = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
+                                                            'conditions' => array('User.id' => $userData['User']['id'])
+                                                            )); 
+         
         $paymentTermData = Cache::read('paymentTerms');
         
         if (!$paymentTermData) {
@@ -171,6 +179,10 @@ class SalesInvoiceController extends AccountingAppController {
         $invoiceData = $this->SalesInvoice->find('first', array(
                                             'conditions' => array('SalesInvoice.id' => $invoiceId
                                             )));
+
+        $prepared = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
+                                                            'conditions' => array('User.id' => $invoiceData['SalesInvoice']['created_by'])
+                                                            )); 
         
         $this->Delivery->bindDelivery();
         $drData = $this->Delivery->find('first', array(
@@ -189,7 +201,7 @@ class SalesInvoiceController extends AccountingAppController {
         
         $view = new View(null, false);
         
-        $view->set(compact('drData','clientData','companyData','units','invoiceData','paymentTermData','currencyData'));
+        $view->set(compact('prepared','approved','drData','clientData','companyData','units','invoiceData','paymentTermData','currencyData'));
           
         $view->viewPath = 'SalesInvoice'.DS.'pdf';  
        

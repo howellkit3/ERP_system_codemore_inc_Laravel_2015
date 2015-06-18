@@ -443,21 +443,32 @@ public function delivery_edit($dr_uuid = null, $clientsOrderUuid = null) {
 
 public function print_dr($dr_uuid = null,$schedule_uuid) {
 
+    $userData = $this->Session->read('Auth');
+
     $this->loadModel('Sales.ClientOrder');
     $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule','QuotationItemDetail','QuotationDetail','Product'));
     //$this->ClientOrder->bindDelivery();
     $this->loadModel('Sales.Company');
 
     $this->loadModel('Unit');
+    $this->loadModel('User');
     $units = $this->Unit->getList();
 
     $this->Company->bind('Address');
+
+    $approved = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
+                                                            'conditions' => array('User.id' => $userData['User']['id'])
+                                                            )); 
 
     $this->Delivery->bindDelivery();
     $drData = $this->Delivery->find('first', array(
                                         'conditions' => array('Delivery.dr_uuid' => $dr_uuid
                                         )));
-    //pr($drData);exit();
+
+    $prepared = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
+                                                            'conditions' => array('User.id' => $drData['DeliveryDetail']['created_by'])
+                                                            )); 
+    
     $clientData = $this->ClientOrder->find('first', array(
                                         'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
                                         )));
@@ -470,7 +481,7 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
     
     $view = new View(null, false);
     
-    $view->set(compact('drData','clientData','companyData','units'));
+    $view->set(compact('drData','clientData','companyData','units','approved','prepared'));
       
     $view->viewPath = 'Deliveries'.DS.'pdf';  
    
