@@ -327,7 +327,7 @@ public function delivery_return($deliveryScheduleId = null,$quotationId = null,$
 
   if ($this->request->is(array('post', 'put'))) {
 
-        if($this->request->data['DeliveryDetail']['quantity'] == $this->request->data['DeliveryDetail']['delivered_quantity']){
+        if($this->request->data['DeliveryDetail']['quantityMax'] == $this->request->data['DeliveryDetail']['delivered_quantity']){
 
             $this->request->data['DeliveryDetail']['status'] =  'Completed'; 
 
@@ -339,15 +339,14 @@ public function delivery_return($deliveryScheduleId = null,$quotationId = null,$
 
         if(!empty($this->request->data['DeliveryDetail']['from_replacing'])){
 
+            //pr($this->request->data); exit;
+
           if($this->request->data['DeliveryDetail']['from_replacing'] = 'replacing'){
 
             $this->request->data['DeliveryDetail']['delivered_quantity'] =  $this->request->data['DeliveryDetail']['delivered'] + $this->request->data['DeliveryDetail']['delivered_quantity'];
 
           }
         }
-
-          
-            //pr($this->request->data); exit;
 
             $this->DeliveryDetail->saveDeliveryDetail($this->request->data,$userData['User']['id']);
 

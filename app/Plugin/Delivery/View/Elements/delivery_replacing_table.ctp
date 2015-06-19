@@ -243,7 +243,7 @@ $totalremaining = 0;
                                                       'value' => $deliveryDataList['DeliveryDetail']['quantity'] - $deliveryDataList['DeliveryDetail']['delivered_quantity'] 
                                                       ));
 
-            echo $this->Form->input('DeliveryDetail.quantity', array(
+            echo $this->Form->input('DeliveryDetail.quantityMax', array(
                                                       'empty' => 'None',
                                                       'type' => 'hidden',
                                                       'required' => 'required',
