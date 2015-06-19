@@ -237,6 +237,18 @@ class SalesInvoiceController extends AccountingAppController {
         $this->loadModel('Delivery.DeliveryDetail');
         $this->loadModel('Sales.ClientOrder');
         $this->loadModel('Sales.QuotationItemDetail');
+        $this->loadModel('Sales.Company');
+        $this->loadModel('Sales.PaymentTermHolder');
+
+        $paymentTermData = Cache::read('paymentTerms');
+        
+        if (!$paymentTermData) {
+            $paymentTermData = $this->PaymentTermHolder->getList(null,array('id','name'));
+            Cache::write('paymentTerms', $paymentTermData);
+        }
+
+        $companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')
+                                                            ));
        
         $invoiceList = $this->SalesInvoice->find('list',array('fields' => array('id','dr_uuid'),
             'conditions' => array('SalesInvoice.status' => 1)
@@ -258,7 +270,7 @@ class SalesInvoiceController extends AccountingAppController {
             $invoiceData[$key]['SalesInvoice']['schedule_uuid'] = $value['Delivery']['schedule_uuid'];
             $invoiceData[$key]['SalesInvoice']['clients_order_id'] = $value['Delivery']['clients_order_id'];
             array_push($clientsId, $value['Delivery']['clients_order_id']);
-            //$invoiceData[$key]['SalesInvoice']['bb'] = $value['Delivery']['dr_uuid'];
+           
         }
 
         $deliveryDetails = $this->DeliveryDetail->find('all',array(
@@ -281,7 +293,6 @@ class SalesInvoiceController extends AccountingAppController {
             $invoiceData[$key]['SalesInvoice']['company_id'] = $value['ClientOrder']['company_id'];
             $invoiceData[$key]['SalesInvoice']['payment_terms'] = $value['ClientOrder']['payment_terms'];
             array_push($detailsId, $value['ClientOrder']['client_order_item_details_id']);
-            //$invoiceData[$key]['SalesInvoice']['unit_price_currency_id'] = $value['QuotationItemDetail']['unit_price_currency_id'];
            
         }
 
@@ -294,10 +305,8 @@ class SalesInvoiceController extends AccountingAppController {
             $invoiceData[$key]['SalesInvoice']['unit_price'] = $value['QuotationItemDetail']['unit_price'];
             $invoiceData[$key]['SalesInvoice']['unit_price_currency_id'] = $value['QuotationItemDetail']['unit_price_currency_id'];
         }
-        
-        //pr($invoiceData);
-
-        $this->set(compact('invoiceData'));
+        //pr($invoiceData);exit();
+        $this->set(compact('invoiceData','companyData','paymentTermData'));
 
     }
 

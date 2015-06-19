@@ -33,6 +33,13 @@
 							<div class="tab-content">
 								<div class="tab-pane fade in active" id="tab-summary">
 									<div class="table-responsive">
+										<?php
+			                               echo $this->Html->link('<span class="fa-stack">
+						                    <i class="fa fa-square fa-stack-2x"></i>
+						                    <i class="fa fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;&nbsp;<span class ="post"></span>
+						                    </span> ', array('controller' => 'sales_invoice', 'action' => 'print_report'),array('class' =>' table-link pull-right','escape' => false,'title'=>'Print Information','target' => '_blank'));
+
+			                            ?>
 										<table class="table table-striped table-hover">
 											<thead>
 												<tr>
@@ -65,7 +72,7 @@
 																}
 															?>
 														</td>
-														<td><?php echo $invoiceList['SalesInvoice']['company_id']?></td>
+														<td><?php echo $companyData[$invoiceList['SalesInvoice']['company_id']]?></td>
 														<td><?php echo $invoiceList['SalesInvoice']['quantity']?></td>
 														<td><?php echo $invoiceList['SalesInvoice']['sales_invoice_no']?></td>
 														<td><?php echo $invoiceList['SalesInvoice']['statement_no']?></td>
@@ -95,10 +102,10 @@
 												</tr>
 											</thead>
 											<tbody aria-relevant="all" aria-live="polite" role="alert">
-												<?php if ($invoiceList['SalesInvoice']['company_id'] == 1) {?>
-													<?php foreach ($invoiceData as $key => $invoiceList) { ?>
+												<?php foreach ($invoiceData as $key => $invoiceList) { ?>
+													<?php if ($invoiceList['SalesInvoice']['unit_price_currency_id'] == 1) { ?>
 														<tr class="">
-															<td><?php echo $invoiceList['SalesInvoice']['company_id'] ?></td>
+															<td><?php echo $companyData[$invoiceList['SalesInvoice']['company_id']]?></td>
 															<td><?php echo $invoiceList['SalesInvoice']['dr_uuid'] ?></td>
 															<td><?php echo $invoiceList['SalesInvoice']['sales_invoice_no'] ?></td>
 															<td><?php echo $invoiceList['SalesInvoice']['statement_no'] ?></td>
@@ -129,14 +136,13 @@
 													<th><a href="#"><span>CM/DM</span></a></th>
 													<th><a href="#"><span>Total Amount(USD)</span></a></th>
 													<th><a href="#"><span>Date</span></a></th>
-													<th><a href="#"><span>Action</span></a></th>
 												</tr>
 											</thead>
 											<tbody aria-relevant="all" aria-live="polite" role="alert">
-												<?php if ($invoiceList['SalesInvoice']['company_id'] == 2) {?>
-													<?php foreach ($invoiceData as $key => $invoiceList) { ?>
+												<?php foreach ($invoiceData as $key => $invoiceList) { ?>
+													<?php if ($invoiceList['SalesInvoice']['unit_price_currency_id'] == 2) {?>
 														<tr class="">
-															<td><?php echo $invoiceList['SalesInvoice']['company_id'] ?></td>
+															<td><?php echo $companyData[$invoiceList['SalesInvoice']['company_id']]?></td>
 															<td><?php echo $invoiceList['SalesInvoice']['dr_uuid']?></td>
 															<td><?php echo $invoiceList['SalesInvoice']['sales_invoice_no']?></td>
 															<td><?php echo $invoiceList['SalesInvoice']['statement_no']?></td>
@@ -144,11 +150,10 @@
 															<td>
 																<?php 
 																	$php = $invoiceList['SalesInvoice']['quantity'] * $invoiceList['SalesInvoice']['unit_price'];
-																	echo number_format($php);
+																	echo number_format($php,2);
 																?>
 															</td>
 															<td><?php echo date('m/d/Y', strtotime($invoiceList['SalesInvoice']['created'])); ?></td>
-															<td></td>
 														</tr>
 													<?php } ?>
 												<?php } ?>
@@ -163,26 +168,103 @@
 												<tr>
 													<th><a href="#"><span>Customer</span></a></th>
 													<th><a href="#"><span>PHP</span></a></th>
-													<th><a href="#"><span>AVE. Conversion Rate(USD in PHP)</span></a></th>
+													<th>
+														<a href="#">
+															<center>
+																<font size="1">AVE. Conversion Rate<br>(USD in PHP)</font>
+																<font size="1">44.221 = $1</font>
+															</center>
+														</a>
+													</th>
 													<th><a href="#"><span>Total Sales</span></a></th>
 													<th><a href="#"><span>%</span></a></th>
 													<th><a href="#"><span>Target</span></a></th>
-													<th><a href="#"><span>No. of Days</span></a></th>
 													<th><a href="#"><span>Terms</span></a></th>
-													<th><a href="#"><span>Action</span></a></th>
+													<th><a href="#"><span>Due Date</span></a></th>
 												</tr>
 											</thead>
 											<tbody aria-relevant="all" aria-live="polite" role="alert">
-												<tr class="">
-													<td><?php echo $invoiceList['SalesInvoice']['company_id'] ?></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-												</tr>
+												<?php foreach ($invoiceData as $key => $invoiceList) { ?>
+
+													<tr class="">
+														<td><?php echo $companyData[$invoiceList['SalesInvoice']['company_id']]?></td>
+														<td>
+															<?php 
+																if ($invoiceList['SalesInvoice']['unit_price_currency_id'] == 1) {
+																	echo number_format($invoiceList['SalesInvoice']['unit_price'],2);
+																}
+															?>
+														</td>
+														<td>
+														<?php if ($invoiceList['SalesInvoice']['unit_price_currency_id'] == 2) { ?>
+																<center>
+																	<table>
+																		<tr>
+																			<td class="text-center">
+																				<?php 
+																					echo '$';
+																					echo number_format($invoiceList['SalesInvoice']['unit_price'],2);
+																				?>
+																			</td>
+																			<td class="text-center">
+																				<?php 
+																					$phpTotal = 44.221 * $invoiceList['SalesInvoice']['unit_price'];
+																					echo 'PHP';
+																					echo number_format($phpTotal,2);
+																				?>
+																			</td>
+																		</tr>
+																	</table>
+																</center>
+															<?php } ?>
+														</td>
+														<td>
+															<?php 
+																if ($invoiceList['SalesInvoice']['unit_price_currency_id'] == 1) {
+																	echo 'PHP';
+																	echo number_format($invoiceList['SalesInvoice']['unit_price'],2);
+																	
+																}else{
+																	$phpTotal = 44.221 * $invoiceList['SalesInvoice']['unit_price'];
+																	echo 'PHP';
+																	echo number_format($phpTotal,2);
+																	$totalSale = $totalSale + $phpTotal;
+																} 
+															?>
+														</td>
+														<td>
+															<?php 
+																$totalSale = 0;
+																
+																foreach ($invoiceData as $key => $invoice) { 
+																	if ($invoice['SalesInvoice']['unit_price_currency_id'] == 1) {
+																		$totalSale = $totalSale + $invoice['SalesInvoice']['unit_price'];
+																		
+																	}else{
+																		$phpTotal = 44.221 * $invoice['SalesInvoice']['unit_price'];
+																		$totalSale = $totalSale + $phpTotal;
+																		
+																	}
+																}
+																
+																if ($invoiceList['SalesInvoice']['unit_price_currency_id'] == 1) {
+																		$fulltotalSale = $totalSale /  $invoiceList['SalesInvoice']['unit_price'];
+																		echo number_format($fulltotalSale,2);
+																		
+																}else{
+																	$phpTotal = 44.221 * $invoiceList['SalesInvoice']['unit_price'];
+																	$fulltotalSale = $totalSale /  $phpTotal;
+																	echo number_format($fulltotalSale,2);
+																	
+																}
+																
+															?>
+														</td>
+														<td></td>
+														<td><?php echo $paymentTermData[$invoiceList['SalesInvoice']['payment_terms']]?></td>
+														<td></td>
+													</tr>
+												<?php  } ?>
 											</tbody>
 										</table>
 									</div>
