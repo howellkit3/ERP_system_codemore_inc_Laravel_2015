@@ -31,18 +31,17 @@
 								<li><a href="#tab-chat" data-toggle="tab">With Terms</a></li>
 							</ul>
 							<div class="tab-content">
-								<div class="tab-pane fade in active" id="tab-summary">
-									<div class="table-responsive">
-										<?php
-			                               echo $this->Html->link('<span class="fa-stack">
-						                    <i class="fa fa-square fa-stack-2x"></i>
-						                    <i class="fa fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;&nbsp;<span class ="post"></span>
-						                    </span> ', array('controller' => 'sales_invoice', 'action' => 'print_report'),array('class' =>' table-link pull-right','escape' => false,'title'=>'Print Information','target' => '_blank'));
 
-			                            ?>
+								<div class="tab-pane fade in active" id="tab-summary">
+									<?php
+		                               echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array('controller' => 'sales_invoice', 'action' => 'dr_summary',1),array('class' =>'btn btn-primary pull-right','escape' => false));
+		                            ?><br><br><br>
+									<div class="table-responsive">
+										
 										<table class="table table-striped table-hover">
 											<thead>
 												<tr>
+													<th><a href="#"><span>Date</span></a></th>
 													<th><a href="#"><span>DR#</span></a></th>
 													<th><a href="#"><span>USD</span></a></th>
 													<th><a href="#"><span>PHP</span></a></th>
@@ -51,12 +50,14 @@
 													<th><a href="#"><span>SI#</span></a></th>
 													<th><a href="#"><span>SA#</span></a></th>
 													<th><a href="#"><span>Remarks</span></a></th>
-													<th><a href="#"><span>Date</span></a></th>
 												</tr>
 											</thead>
 											<tbody aria-relevant="all" aria-live="polite" role="alert">
 												<?php foreach ($invoiceData as $key => $invoiceList) { ?>
 													<tr class="">
+														<td>
+															<?php echo date('m/d/Y', strtotime($invoiceList['SalesInvoice']['created'])); ?>
+														</td>
 														<td><?php echo $invoiceList['SalesInvoice']['dr_uuid']?></td>
 														<td>
 															<?php 
@@ -77,9 +78,6 @@
 														<td><?php echo $invoiceList['SalesInvoice']['sales_invoice_no']?></td>
 														<td><?php echo $invoiceList['SalesInvoice']['statement_no']?></td>
 														<td></td>
-														<td>
-															<?php echo date('m/d/Y', strtotime($invoiceList['SalesInvoice']['created'])); ?>
-														</td>
 													</tr>
 												<?php } ?>
 											</tbody>
@@ -88,6 +86,9 @@
 								</div>
 
 								<div class="tab-pane fade " id="tab-newsfeed">
+									<?php
+		                               echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array('controller' => 'sales_invoice', 'action' => 'dr_summary',2),array('class' =>'btn btn-primary pull-right','escape' => false));
+		                            ?><br><br><br>
 									<div class="table-responsive">
 										<table class="table table-striped table-hover">
 											<thead>
@@ -125,6 +126,9 @@
 									</div>
 								</div>
 								<div class="tab-pane fade" id="tab-activity">
+									<?php
+		                               echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array('controller' => 'sales_invoice', 'action' => 'dr_summary',3),array('class' =>'btn btn-primary pull-right','escape' => false));
+		                            ?><br><br><br>
 									<div class="table-responsive">
 										<table class="table table-striped table-hover">
 											<thead>
@@ -149,8 +153,8 @@
 															<td>-</td>
 															<td>
 																<?php 
-																	$php = $invoiceList['SalesInvoice']['quantity'] * $invoiceList['SalesInvoice']['unit_price'];
-																	echo number_format($php,2);
+																	$usd = $invoiceList['SalesInvoice']['quantity'] * $invoiceList['SalesInvoice']['unit_price'];
+																	echo number_format($usd,2);
 																?>
 															</td>
 															<td><?php echo date('m/d/Y', strtotime($invoiceList['SalesInvoice']['created'])); ?></td>
@@ -162,6 +166,9 @@
 									</div>
 								</div>
 								<div class="tab-pane fade" id="tab-chat">
+									<?php
+		                               echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array('controller' => 'sales_invoice', 'action' => 'dr_summary',4),array('class' =>'btn btn-primary pull-right','escape' => false));
+		                            ?><br><br><br>
 									<div class="table-responsive">
 										<table class="table table-striped table-hover">
 											<thead>
@@ -228,14 +235,12 @@
 																	$phpTotal = 44.221 * $invoiceList['SalesInvoice']['unit_price'];
 																	echo 'PHP';
 																	echo number_format($phpTotal,2);
-																	$totalSale = $totalSale + $phpTotal;
 																} 
 															?>
 														</td>
 														<td>
 															<?php 
 																$totalSale = 0;
-																
 																foreach ($invoiceData as $key => $invoice) { 
 																	if ($invoice['SalesInvoice']['unit_price_currency_id'] == 1) {
 																		$totalSale = $totalSale + $invoice['SalesInvoice']['unit_price'];
@@ -262,7 +267,7 @@
 														</td>
 														<td></td>
 														<td><?php echo $paymentTermData[$invoiceList['SalesInvoice']['payment_terms']]?></td>
-														<td></td>
+														<td><?php echo date('m/d/Y', strtotime($invoiceList['SalesInvoice']['schedule'])); ?></td>
 													</tr>
 												<?php  } ?>
 											</tbody>
@@ -277,6 +282,8 @@
 		</div>
 	</div>
 </div>
-<?php 
-// echo "string";
-// echo $this->element('sql_dump') ?>
+<style>
+	.tabs-wrapper .nav-tabs {
+	  margin-bottom: -20px;
+	}
+</style>
