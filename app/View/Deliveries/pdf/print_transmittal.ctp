@@ -2,7 +2,8 @@
 <?php include('word.css'); ?>
 
 </style>
-<div class="row">
+<div class="row" style="background:url('http://localhost/koufunet/img/transmittal.jpg');background-size: 768px;
+  height: 100%;background-repeat:no-repeat;">
 	<div class="col-lg-12">
 		<div class="main-box main-pdf" >
 			<table class="layout" style="line-height:5px;">
@@ -22,15 +23,14 @@
 					</tr>
 				</thead>
 			</table>
-			<table class="layout" style="line-height:5px;">
+			<table class="layout" style="line-height:50px; width:430px;" >
 				<thead>
-					<tr>
+					<tr >
 						<td style="width:15px;"> </td>
-						<td style="width:80px;font-family: Calibri;"><b> </b></td>
-						<td style="width:20px;"> </td>
-						<td style="width:430px;">
-							<?php echo ucfirst($companyData['Company']['company_name'])?>
-						</td>
+						<td style="width:240px;"></td>
+						<td style="width:430px;"></td>
+						<td style="width:300px;"></td>	
+						
 						<td>
 							<?php echo (new \DateTime())->format('m/d/Y');?>
 						</td>
@@ -81,12 +81,13 @@
 			</table>
 			<br><br><br><br><br><br><br>
 			<br><br><br><br>
-			<table class="table table-bordered" style="line-height:20px;">
+			<table class="table table-bordered" style="line-height:105px; ">
 				<thead>
 					<tr>
-						<td class="td-heigth" style="width:120px;border:1px solid #FFFFFF;">Mary Ann C. Boria</td>
+						<td class="td-heigth" style="width:110px;border:1px solid #FFFFFF;"> </td>
+						<td class="td-heigth" style="width:115px;border:1px solid #FFFFFF;"><center><?php echo ucfirst($prepared['User']['first_name'])?> <?php echo ucfirst($prepared['User']['last_name'])?></center></td>
 						<td class="td-heigth" style="width:120px;border:1px solid #FFFFFF;"> </td>
-						<td class="td-heigth" style="width:120px;border:1px solid #FFFFFF;text-align:left;">Amer C. Espanto</td>
+						<td class="td-heigth" style="width:115px;border:1px solid #FFFFFF;"><center><?php echo ucfirst($approved['User']['first_name'])?> <?php echo ucfirst($approved['User']['last_name'])?></center></td>
 						<td class="td-heigth" style="width:300px;border:1px solid #FFFFFF;"> </td>
 					</tr>
 				</thead>
