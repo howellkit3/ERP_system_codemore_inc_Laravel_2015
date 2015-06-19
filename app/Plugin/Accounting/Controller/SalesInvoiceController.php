@@ -307,7 +307,7 @@ class SalesInvoiceController extends AccountingAppController {
             $invoiceData[$key]['SalesInvoice']['unit_price'] = $value['QuotationItemDetail']['unit_price'];
             $invoiceData[$key]['SalesInvoice']['unit_price_currency_id'] = $value['QuotationItemDetail']['unit_price_currency_id'];
         }
-        //pr($invoiceData);exit();
+        
         $this->set(compact('invoiceData','companyData','paymentTermData'));
 
     }
