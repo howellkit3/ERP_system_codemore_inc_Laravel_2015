@@ -325,6 +325,8 @@ class DeliveriesController extends DeliveryAppController {
 
 public function delivery_return($deliveryScheduleId = null,$quotationId = null,$clientsOrderUuid =null) {
 
+$userData = $this->Session->read('Auth');
+
   if ($this->request->is(array('post', 'put'))) {
 
         if($this->request->data['DeliveryDetail']['quantityMax'] == $this->request->data['DeliveryDetail']['delivered_quantity']){
