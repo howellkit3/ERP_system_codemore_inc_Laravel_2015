@@ -261,9 +261,7 @@ $totalremaining = 0;
                                                       'value' => $deliveryDataList['DeliveryDetail']['quantity']
                                                       
                                                       ));
-
-
-
+            
           ?>
           </div>
         </div>
