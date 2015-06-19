@@ -132,7 +132,24 @@ class DeliveriesController extends DeliveryAppController {
         $this->request->data['DeliveryDetail']['remaining_quantity'] = ($this->request->data['ClientOrderDeliverySchedule']['quantity']) - ($this->request->data['DeliveryDetail']['quantity']);
 
 
-                //pr($this->request->data); exit;
+                
+
+                $DRdata = $this->Delivery->find('first', array(
+                    'conditions' => array(
+                      'Delivery.dr_uuid' => $this->request->data['Delivery']['dr_uuid'])
+                    ));
+
+             // pr($DRdata); exit;
+
+              if (!empty($DRdata)) {
+
+              $this->Session->setFlash(__('The Delivery Receipt No. already exists'), 'error');
+              
+              $this->redirect( array(
+                           'controller' => 'deliveries',   
+                           'action' => 'view',$deliveryScheduleId,$quotationId,$clientsOrderUuid
+                      ));  
+              }
 
                 $this->Delivery->create();
 
@@ -267,7 +284,7 @@ class DeliveriesController extends DeliveryAppController {
       $deliveryData = $this->Delivery->find('first', array('conditions' => array(
                                                                           'Delivery.schedule_uuid' => $this->request->data['Delivery']['schedule_uuid']),
                                                                           'order' => 'Delivery.id DESC'));
-      //pr($this->request->data['DeliveryDetail']['quantity']); exit;
+      
         if ($this->request->is(array('post', 'put'))) {
 
             $DRdata = $this->Delivery->find('first', array(
@@ -275,11 +292,9 @@ class DeliveriesController extends DeliveryAppController {
                       'Delivery.dr_uuid' => $this->request->data['Delivery']['dr_uuid'])
                     ));
 
-             // pr($DRdata); exit;
-
               if (!empty($DRdata)) {
 
-              $this->Session->setFlash(__('The Delivery No. already exists'), 'error');
+              $this->Session->setFlash(__('The Delivery Receipt No. already exists'), 'error');
               
               $this->redirect( array(
                            'controller' => 'deliveries',   
@@ -464,54 +479,109 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
     $drData = $this->Delivery->find('first', array(
                                         'conditions' => array('Delivery.dr_uuid' => $dr_uuid
                                         )));
+<<<<<<< HEAD
+   
+=======
 
     $prepared = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
                                                             'conditions' => array('User.id' => $drData['DeliveryDetail']['created_by'])
                                                             )); 
     
+>>>>>>> 5a6cb1f2164e8393f246df07ad159a0f60714f2c
     $clientData = $this->ClientOrder->find('first', array(
                                         'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
                                         )));
-    
+     
+    $this->Company->bind(array('ContactPerson'));
+     
     $companyData = $this->Company->find('first', array(
                                         'conditions' => array('Company.id' => $clientData['ClientOrder']['company_id']
                                         )));
 
+<<<<<<< HEAD
+      $userData = $this->Session->read('Auth');
+
+      $view = new View(null, false);
+ 
+      $view->set(compact('drData','clientData','companyData','units'));
+
+       //pr($companyData); exit;
+
+      if(!empty($this->request->data['Delivery']['print'])){
+
+      if ($this->request->data['Delivery']['print'] == 1 ){
+
+        $view->viewPath = 'Deliveries'.DS.'pdf';  
+     
+        $output = $view->render('print_transmittal', false);
+=======
     $userData = $this->Session->read('Auth');
     
     $view = new View(null, false);
     
     $view->set(compact('drData','clientData','companyData','units','approved','prepared'));
+>>>>>>> 5a6cb1f2164e8393f246df07ad159a0f60714f2c
       
-    $view->viewPath = 'Deliveries'.DS.'pdf';  
-   
-    $output = $view->render('print_dr', false);
-  
-    $dompdf = new DOMPDF();
-    mb_internal_encoding('UTF-8');
-    def("DOMPDF_UNICODE_ENABLED", true);
-    $dompdf->set_paper("A4");
-    $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));
-    $dompdf->render();
-    $canvas = $dompdf->get_canvas();
-    $font = Font_Metrics::get_font("helvetica", "bold");
-    $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
+        $dompdf = new DOMPDF();
+        mb_internal_encoding('UTF-8');
+        def("DOMPDF_UNICODE_ENABLED", true);
+        $dompdf->set_paper("A4");
+        $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));
+        $dompdf->render();
+        $canvas = $dompdf->get_canvas();
+        $font = Font_Metrics::get_font("helvetica", "bold");
+        $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
 
-    $output = $dompdf->output();
-    $random = rand(0, 1000000) . '-' . time();
-    if (empty($filename)) {
-      $filename = 'Delivery-'.$dr_uuid.'-data'.time();
-    }
-    $filePath = 'view_pdf/'.strtolower(Inflector::slug( $filename , '-')).'.pdf';
-    $file_to_save = WWW_ROOT .DS. $filePath;
+        $output = $dompdf->output();
+        $random = rand(0, 1000000) . '-' . time();
+        if (empty($filename)) {
+          $filename = 'Delivery-'.'transmittal-data'.time();
+        }
+        $filePath = 'view_pdf/'.strtolower(Inflector::slug( $filename , '-')).'.pdf';
+        $file_to_save = WWW_ROOT .DS. $filePath;
+          
+        if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
+            unlink($file_to_save);
+        }
       
-    if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
-        unlink($file_to_save);
-    }
-    
-    exit();
+      exit();
+           
+      }
+
+      }else{
         
+        $view->viewPath = 'Deliveries'.DS.'pdf';  
+       
+        $output = $view->render('print_dr', false);
+      
+        $dompdf = new DOMPDF();
+        mb_internal_encoding('UTF-8');
+        def("DOMPDF_UNICODE_ENABLED", true);
+        $dompdf->set_paper("A4");
+        $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));
+        $dompdf->render();
+        $canvas = $dompdf->get_canvas();
+        $font = Font_Metrics::get_font("helvetica", "bold");
+        $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
+
+        $output = $dompdf->output();
+        $random = rand(0, 1000000) . '-' . time();
+        if (empty($filename)) {
+          $filename = 'Delivery-'.$dr_uuid.'-data'.time();
+        }
+        $filePath = 'view_pdf/'.strtolower(Inflector::slug( $filename , '-')).'.pdf';
+        $file_to_save = WWW_ROOT .DS. $filePath;
+          
+        if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
+            unlink($file_to_save);
+        }
+        
+        exit();
+        
+    }
   }
+
+
 
 
 }

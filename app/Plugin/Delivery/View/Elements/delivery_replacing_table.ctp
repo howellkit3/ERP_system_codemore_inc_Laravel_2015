@@ -116,7 +116,7 @@ $totalremaining = 0;
               <label class="col-lg-2 control-label">Delivery Form</label>
             <div class="col-lg-9">
 
-            <?php //pr($deliveryDataList);
+            <?php 
               echo $this->Form->input('Delivery.id', array(
                                                       'class' => 'form-control item_type editable required',
                                                       'label' => false,
@@ -133,7 +133,7 @@ $totalremaining = 0;
                                                       'value' => $deliveryDataList['DeliveryDetail']['id']
                                                       ));  
 
-              echo $this->Form->input('Product.company_id', array(
+              echo $this->Form->input('Delivery.print', array(
                                                     'options' => array('Delivery Receipt','Transmittal'),
                                                     'type' => 'select',
                                                     'label' => false,
@@ -280,8 +280,7 @@ $totalremaining = 0;
   ?> 
   </div>
 
-
-                             
+                            
         <?php 
           endforeach; 
   } 
@@ -289,3 +288,14 @@ $totalremaining = 0;
   ?> 
 
 <?php echo $this->element('modals');
+ ?>
+
+ <script>
+
+    $(.hh).click(function(){
+
+        $(this).hide();
+
+    });
+
+ </script>
