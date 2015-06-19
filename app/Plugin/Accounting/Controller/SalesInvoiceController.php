@@ -312,7 +312,7 @@ class SalesInvoiceController extends AccountingAppController {
 
     }
 
-    public function dr_summary($reportname = null){
+    public function dr_summary($reportname = null) {
 
         $this->loadModel('Delivery.Delivery');
         $this->loadModel('Delivery.DeliveryDetail');
