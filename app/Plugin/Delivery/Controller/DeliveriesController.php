@@ -329,14 +329,17 @@ $userData = $this->Session->read('Auth');
 
   if ($this->request->is(array('post', 'put'))) {
 
-        if($this->request->data['DeliveryDetail']['quantityMax'] == $this->request->data['DeliveryDetail']['delivered_quantity']){
+        if(!empty($this->request->data['DeliveryDetail']['quantityMax'])){
 
-            $this->request->data['DeliveryDetail']['status'] =  'Completed'; 
+            if($this->request->data['DeliveryDetail']['quantityMax'] == $this->request->data['DeliveryDetail']['delivered_quantity']){
 
-        }else{
+                $this->request->data['DeliveryDetail']['status'] =  'Completed'; 
 
-            $this->request->data['DeliveryDetail']['status'] =  'Incomplete';
+            }else{
 
+                $this->request->data['DeliveryDetail']['status'] =  'Incomplete';
+
+            }
         }
 
         if(!empty($this->request->data['DeliveryDetail']['from_replacing'])){
