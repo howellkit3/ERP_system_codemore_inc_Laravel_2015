@@ -307,12 +307,12 @@ class SalesInvoiceController extends AccountingAppController {
             $invoiceData[$key]['SalesInvoice']['unit_price'] = $value['QuotationItemDetail']['unit_price'];
             $invoiceData[$key]['SalesInvoice']['unit_price_currency_id'] = $value['QuotationItemDetail']['unit_price_currency_id'];
         }
-        //pr($invoiceData);exit();
+        
         $this->set(compact('invoiceData','companyData','paymentTermData'));
 
     }
 
-    public function dr_summary($reportname = null){
+    public function dr_summary($reportname = null) {
 
         $this->loadModel('Delivery.Delivery');
         $this->loadModel('Delivery.DeliveryDetail');

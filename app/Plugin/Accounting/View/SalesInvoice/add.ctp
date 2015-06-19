@@ -15,20 +15,20 @@
 					<div class="main-box-body clearfix">
 						<div class="form-horizontal">
 
-							<!-- <div class="form-group">
+							<div class="form-group">
 								<label class="col-lg-2 control-label"><span style="color:red">*</span>Status</label>
-								<div class="col-lg-8"> -->
+								<div class="col-lg-8">
 									<?php 
-                                        // echo $this->Form->input('SalesInvoice.status', array(
-                                        //                 'options' => array('Pre-Invoice', 'Invoice'),
-                                        //                 'alt' => 'Status',
-                                        //                 'label' => false,
-                                        //                 'class' => 'form-control col-lg-4 required',
-                                        //                 'empty' => '--Select Status--'
-                                        //             ));
+                                        echo $this->Form->input('SalesInvoice.status', array(
+                                                        'options' => array('Pre-Invoice', 'Invoice'),
+                                                        'alt' => 'Status',
+                                                        'label' => false,
+                                                        'class' => 'form-control col-lg-4 required',
+                                                        'empty' => '--Select Status--'
+                                                    ));
                                     ?>
-								<!-- </div>
-							</div> -->
+								</div>
+							</div>
 
                             <div class="form-group">
 								<label class="col-lg-2 control-label"><span style="color:red">*</span>Invoice No.</label>
