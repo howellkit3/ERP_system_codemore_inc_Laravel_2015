@@ -365,6 +365,8 @@ public function delivery_return($deliveryScheduleId = null,$quotationId = null,$
 
 public function delivery_replacing() {
 
+$userData = $this->Session->read('Auth');
+
   $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
   $this->loadModel('Sales.ClientOrder');
@@ -516,8 +518,9 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
   public function print_replacing($dr_uuid = null,$schedule_uuid,$paper = null) {
 
     $this->loadModel('Sales.ClientOrder');
+
     $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule','QuotationItemDetail','QuotationDetail','Product'));
-    //$this->ClientOrder->bindDelivery();
+    
     $this->loadModel('Sales.Company');
 
     $this->loadModel('Unit');
@@ -545,7 +548,7 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
     $approved = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
                                                             'conditions' => array('User.id' => $drData['DeliveryDetail']['created_by'])
                                                             ));
-    //pr($approved); exit;
+    //pr($clientData); exit;
     $userData = $this->Session->read('Auth');
     
     $view = new View(null, false);

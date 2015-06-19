@@ -26,11 +26,7 @@
 			<table class="layout" style="line-height:50px; width:430px;" >
 				<thead>
 					<tr >
-						<td style="width:15px;"> </td>
-						<td style="width:240px;"></td>
-						<td style="width:430px;"></td>
-						<td style="width:300px;"></td>	
-						
+						<td class="td-heigth" style="width:6115px;border:1px solid #FFFFFF;"> </td>
 						<td>
 							<?php echo (new \DateTime())->format('m/d/Y');?>
 						</td>
@@ -59,7 +55,6 @@
 					</tr>
 					<?php //foreach ($clientData['ClientOrderDeliverySchedule'] as $key => $scheduleList) { ?>
 						<tr>
-							<td class="td-heigth" style="width:90px;border:1px solid #FFFFFF;"><center><?php echo $clientData['ClientOrder']['po_number']?></center></td>
 							<td class="td-heigth" style="width:140px;border:1px solid #FFFFFF;"><center><?php echo ucfirst($clientData['Product']['name'])?></center></td>
 							<td class="td-heigth" style="width:120px;border:1px solid #FFFFFF;">
 								<center>
