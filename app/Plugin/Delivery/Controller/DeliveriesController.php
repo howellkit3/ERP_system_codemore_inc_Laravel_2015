@@ -32,6 +32,13 @@ class DeliveriesController extends DeliveryAppController {
                                         'order' => 'ClientOrderDeliverySchedule.id DESC'
                                         ));   
 
+        
+        $this->ClientOrder->bindDelivery();
+
+        $clientsStatus = $this->ClientOrder->find('all',array( 'conditions' => array(
+                                        'ClientOrderDeliverySchedule.client_order_id' => 86
+                                        )));
+
         $deliveryList = $this->Delivery->find('list',array('fields' => array('schedule_uuid', 'dr_uuid')));
 
         $deliveryDetailList = $this->DeliveryDetail->find('list',array('fields' => array('delivery_uuid', 'delivered_quantity')));
@@ -57,14 +64,7 @@ class DeliveriesController extends DeliveryAppController {
 
         $clientsOrders = $this->paginate('ClientOrder');
 
-        // $this->Delivery->bindDelivery();
-        // $deliveryDetailsData = $this->Delivery->find('all', array(
-        //                                  'conditions' => array(
-        //                                   'Delivery.clients_order_id' => 'ClientOrder.uuid'
-        //                                 )
-        //                             ));
-   
-        $this->set(compact('clientsOrder','deliveryData', 'deliveryList', 'deliveryDetailList'));
+        $this->set(compact('clientsOrder','deliveryData', 'deliveryList', 'deliveryDetailList', 'clientsStatus'));
    }
 
    public function delivery_info($id = null, $location = null){
@@ -329,23 +329,18 @@ $userData = $this->Session->read('Auth');
 
   if ($this->request->is(array('post', 'put'))) {
 
-        if(!empty($this->request->data['DeliveryDetail']['quantityMax'])){
-
-            if($this->request->data['DeliveryDetail']['quantityMax'] == $this->request->data['DeliveryDetail']['delivered_quantity']){
+            if($this->request->data['DeliveryDetail']['quantity'] == $this->request->data['DeliveryDetail']['delivered_quantity']){
 
                 $this->request->data['DeliveryDetail']['status'] =  'Completed'; 
-            }
 
-        }else{
+            }else{
 
             $this->request->data['DeliveryDetail']['status'] =  'Incomplete';
 
             
         }
 
-        if(!empty($this->request->data['DeliveryDetail']['from_replacing'])){
-
-            //pr($this->request->data); exit;
+        if(!empty($this->request->data['DeliveryDetail']['from_replacing'])){     
 
           if($this->request->data['DeliveryDetail']['from_replacing'] = 'replacing'){
 
@@ -353,6 +348,13 @@ $userData = $this->Session->read('Auth');
 
           }
         }
+
+        if(!empty($this->request->data['DeliveryDetail']['holder'])){  
+
+            $this->request->data['DeliveryDetail']['quantity'] = $this->request->data['DeliveryDetail']['holder'];
+
+        }
+            //pr($this->request->data); exit;
 
             $this->DeliveryDetail->saveDeliveryDetail($this->request->data,$userData['User']['id']);
 

@@ -56,7 +56,7 @@
 					<?php //foreach ($clientData['ClientOrderDeliverySchedule'] as $key => $scheduleList) { ?>
 						<tr>
 							<td class="td-heigth" style="width:10px;border:1px solid #FFFFFF;"> </td>
-							<td class="td-heigth" style="width:70px;border:1px solid #FFFFFF;"><center><?php echo ucfirst($clientData['Product']['name'])?></center></td>
+							<td class="td-heigth" style="width:70px;border:1px solid #FFFFFF; padding-right: 0px;"><center><?php echo ucfirst($clientData['Product']['name'])?></center></td>
 
 
 							<td class="td-heigth" style="width:50px;border:1px solid #FFFFFF;">
