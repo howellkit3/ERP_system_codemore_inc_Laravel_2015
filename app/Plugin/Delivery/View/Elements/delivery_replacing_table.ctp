@@ -108,7 +108,7 @@ $totalremaining = 0;
         <?php  
 
           echo $this->Form->create('ClientOrderDeliverySchedule',array(
-            'url'=>(array('controller' => 'deliveries', 'action' => 'print_dr',$deliveryDataList['Delivery']['dr_uuid'],$deliveryDataList['Delivery']['schedule_uuid']) ),'class' => 'form-horizontal')); ?>
+            'url'=>(array('controller' => 'deliveries', 'action' => 'print_replacing',$deliveryDataList['Delivery']['dr_uuid'],$deliveryDataList['Delivery']['schedule_uuid'])),'class' => 'form-horizontal')); ?>
 
           <br>
 
@@ -243,7 +243,7 @@ $totalremaining = 0;
                                                       'value' => $deliveryDataList['DeliveryDetail']['quantity'] - $deliveryDataList['DeliveryDetail']['delivered_quantity'] 
                                                       ));
 
-            echo $this->Form->input('DeliveryDetail.quantity', array(
+            echo $this->Form->input('DeliveryDetail.quantityMax', array(
                                                       'empty' => 'None',
                                                       'type' => 'hidden',
                                                       'required' => 'required',
