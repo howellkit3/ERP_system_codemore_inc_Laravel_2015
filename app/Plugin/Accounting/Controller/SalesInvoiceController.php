@@ -6,6 +6,7 @@ App::import('Vendor', 'DOMPDF', true, array(), 'dompdf'.DS.'dompdf_config.inc.ph
 class SalesInvoiceController extends AccountingAppController {
 
 	public $uses = array('Accounting.SalesInvoice');
+    public $helpers = array('Accounting.PhpExcel');
 
 	public function index(){
 		
@@ -280,6 +281,7 @@ class SalesInvoiceController extends AccountingAppController {
         foreach ($deliveryDetails as $key => $value) {
             
             $invoiceData[$key]['SalesInvoice']['quantity'] = $value['DeliveryDetail']['quantity'];
+            $invoiceData[$key]['SalesInvoice']['schedule'] = $value['DeliveryDetail']['schedule'];
            
         }
 
@@ -310,8 +312,97 @@ class SalesInvoiceController extends AccountingAppController {
 
     }
 
-    public function statement(){
+    public function dr_summary($reportname = null){
 
+        $this->loadModel('Delivery.Delivery');
+        $this->loadModel('Delivery.DeliveryDetail');
+        $this->loadModel('Sales.ClientOrder');
+        $this->loadModel('Sales.QuotationItemDetail');
+        $this->loadModel('Sales.Company');
+        $this->loadModel('Sales.PaymentTermHolder');
+
+        $paymentTermData = Cache::read('paymentTerms');
+        
+        if (!$paymentTermData) {
+            $paymentTermData = $this->PaymentTermHolder->getList(null,array('id','name'));
+            Cache::write('paymentTerms', $paymentTermData);
+        }
+
+        $companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')
+                                                            ));
+       
+        $invoiceList = $this->SalesInvoice->find('list',array('fields' => array('id','dr_uuid'),
+            'conditions' => array('SalesInvoice.status' => 1)
+            ));
+
+        //$this->SalesInvoice->bindInvoice();
+
+        $invoiceData = $this->SalesInvoice->find('all',array(
+             'conditions' => array('SalesInvoice.status' => 1)
+            ));
+
+        $deliveryData = $this->Delivery->find('all',array(
+            'conditions' => array('dr_uuid' => $invoiceList)
+            ));
+
+        $clientsId = [];
+        foreach ($deliveryData as $key => $value) {
+            
+            $invoiceData[$key]['SalesInvoice']['schedule_uuid'] = $value['Delivery']['schedule_uuid'];
+            $invoiceData[$key]['SalesInvoice']['clients_order_id'] = $value['Delivery']['clients_order_id'];
+            array_push($clientsId, $value['Delivery']['clients_order_id']);
+           
+        }
+
+        $deliveryDetails = $this->DeliveryDetail->find('all',array(
+            'conditions' => array('delivery_uuid' => $invoiceList)
+            ));
+
+        foreach ($deliveryDetails as $key => $value) {
+            
+            $invoiceData[$key]['SalesInvoice']['quantity'] = $value['DeliveryDetail']['quantity'];
+            $invoiceData[$key]['SalesInvoice']['schedule'] = $value['DeliveryDetail']['schedule'];
+           
+        }
+
+        $clientData = $this->ClientOrder->find('all',array(
+            'conditions' => array('ClientOrder.uuid' => $clientsId)
+            ));
+
+        $detailsId = [];
+        foreach ($clientData as $key => $value) {
+            
+            $invoiceData[$key]['SalesInvoice']['company_id'] = $value['ClientOrder']['company_id'];
+            $invoiceData[$key]['SalesInvoice']['payment_terms'] = $value['ClientOrder']['payment_terms'];
+            array_push($detailsId, $value['ClientOrder']['client_order_item_details_id']);
+           
+        }
+
+        $clientDetails = $this->QuotationItemDetail->find('all',array(
+            'conditions' => array('QuotationItemDetail.id' => $detailsId)
+            ));
+
+        foreach ($clientDetails as $key => $value) {
+            
+            $invoiceData[$key]['SalesInvoice']['unit_price'] = $value['QuotationItemDetail']['unit_price'];
+            $invoiceData[$key]['SalesInvoice']['unit_price_currency_id'] = $value['QuotationItemDetail']['unit_price_currency_id'];
+        }
+        //pr($invoiceData);exit();
+        $this->set(compact('invoiceData','companyData','paymentTermData'));
+
+        if ($reportname == 1) {
+            $this->render('SalesInvoice/xls/dr_summary');
+        }
+        if ($reportname == 2) {
+            $this->render('SalesInvoice/xls/php');
+        }
+        if ($reportname == 3) {
+            $this->render('SalesInvoice/xls/usd');
+        }
+        if ($reportname == 4) {
+            $this->render('SalesInvoice/xls/with_terms');
+        }
+        
     }
 
 }
