@@ -458,21 +458,36 @@ public function delivery_edit($dr_uuid = null, $clientsOrderUuid = null) {
 
 public function print_dr($dr_uuid = null,$schedule_uuid) {
 
+    $userData = $this->Session->read('Auth');
+
     $this->loadModel('Sales.ClientOrder');
     $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule','QuotationItemDetail','QuotationDetail','Product'));
     //$this->ClientOrder->bindDelivery();
     $this->loadModel('Sales.Company');
 
     $this->loadModel('Unit');
+    $this->loadModel('User');
     $units = $this->Unit->getList();
 
     $this->Company->bind('Address');
+
+    $approved = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
+                                                            'conditions' => array('User.id' => $userData['User']['id'])
+                                                            )); 
 
     $this->Delivery->bindDelivery();
     $drData = $this->Delivery->find('first', array(
                                         'conditions' => array('Delivery.dr_uuid' => $dr_uuid
                                         )));
+<<<<<<< HEAD
    
+=======
+
+    $prepared = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
+                                                            'conditions' => array('User.id' => $drData['DeliveryDetail']['created_by'])
+                                                            )); 
+    
+>>>>>>> 5a6cb1f2164e8393f246df07ad159a0f60714f2c
     $clientData = $this->ClientOrder->find('first', array(
                                         'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
                                         )));
@@ -483,6 +498,7 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
                                         'conditions' => array('Company.id' => $clientData['ClientOrder']['company_id']
                                         )));
 
+<<<<<<< HEAD
       $userData = $this->Session->read('Auth');
 
       $view = new View(null, false);
@@ -498,6 +514,13 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
         $view->viewPath = 'Deliveries'.DS.'pdf';  
      
         $output = $view->render('print_transmittal', false);
+=======
+    $userData = $this->Session->read('Auth');
+    
+    $view = new View(null, false);
+    
+    $view->set(compact('drData','clientData','companyData','units','approved','prepared'));
+>>>>>>> 5a6cb1f2164e8393f246df07ad159a0f60714f2c
       
         $dompdf = new DOMPDF();
         mb_internal_encoding('UTF-8');

@@ -135,6 +135,8 @@ class SalesInvoiceController extends AccountingAppController {
  
 	public function print_invoice($invoiceId = null) {
 
+        $userData = $this->Session->read('Auth');
+
         $this->loadModel('Sales.ClientOrder');
 
         $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule','QuotationItemDetail','QuotationDetail','Product'));
@@ -149,6 +151,12 @@ class SalesInvoiceController extends AccountingAppController {
         $this->loadModel('Currency');
         $units = $this->Unit->getList();
 
+        $this->loadModel('User');
+
+        $approved = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
+                                                            'conditions' => array('User.id' => $userData['User']['id'])
+                                                            )); 
+         
         $paymentTermData = Cache::read('paymentTerms');
         
         if (!$paymentTermData) {
@@ -171,6 +179,10 @@ class SalesInvoiceController extends AccountingAppController {
         $invoiceData = $this->SalesInvoice->find('first', array(
                                             'conditions' => array('SalesInvoice.id' => $invoiceId
                                             )));
+
+        $prepared = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
+                                                            'conditions' => array('User.id' => $invoiceData['SalesInvoice']['created_by'])
+                                                            )); 
         
         $this->Delivery->bindDelivery();
         $drData = $this->Delivery->find('first', array(
@@ -189,7 +201,7 @@ class SalesInvoiceController extends AccountingAppController {
         
         $view = new View(null, false);
         
-        $view->set(compact('drData','clientData','companyData','units','invoiceData','paymentTermData','currencyData'));
+        $view->set(compact('prepared','approved','drData','clientData','companyData','units','invoiceData','paymentTermData','currencyData'));
           
         $view->viewPath = 'SalesInvoice'.DS.'pdf';  
        
@@ -221,16 +233,70 @@ class SalesInvoiceController extends AccountingAppController {
 
     public function receivable(){
 
-        $this->loadModel('Accounting','SalesInvoice');
+        $this->loadModel('Delivery.Delivery');
+        $this->loadModel('Delivery.DeliveryDetail');
+        $this->loadModel('Sales.ClientOrder');
+        $this->loadModel('Sales.QuotationItemDetail');
+       
+        $invoiceList = $this->SalesInvoice->find('list',array('fields' => array('id','dr_uuid'),
+            'conditions' => array('SalesInvoice.status' => 1)
+            ));
 
-        $this->SalesInvoice->bindInvoice();
+        //$this->SalesInvoice->bindInvoice();
 
-        $invoiceData = $this->SalesInvoice->find('all', array(
-                                                        'fields' => array(
-                                                            'id','sales_invoice_no','dr_uuid','statement_no'),
-                                                        //'conditions' => array('SalesInvoice.id' => 'Delivery.dr_uuid'),
-                                                    ));
+        $invoiceData = $this->SalesInvoice->find('all',array(
+             'conditions' => array('SalesInvoice.status' => 1)
+            ));
+
+        $deliveryData = $this->Delivery->find('all',array(
+            'conditions' => array('dr_uuid' => $invoiceList)
+            ));
+
+        $clientsId = [];
+        foreach ($deliveryData as $key => $value) {
+            
+            $invoiceData[$key]['SalesInvoice']['schedule_uuid'] = $value['Delivery']['schedule_uuid'];
+            $invoiceData[$key]['SalesInvoice']['clients_order_id'] = $value['Delivery']['clients_order_id'];
+            array_push($clientsId, $value['Delivery']['clients_order_id']);
+            //$invoiceData[$key]['SalesInvoice']['bb'] = $value['Delivery']['dr_uuid'];
+        }
+
+        $deliveryDetails = $this->DeliveryDetail->find('all',array(
+            'conditions' => array('delivery_uuid' => $invoiceList)
+            ));
+
+        foreach ($deliveryDetails as $key => $value) {
+            
+            $invoiceData[$key]['SalesInvoice']['quantity'] = $value['DeliveryDetail']['quantity'];
+           
+        }
+
+        $clientData = $this->ClientOrder->find('all',array(
+            'conditions' => array('ClientOrder.uuid' => $clientsId)
+            ));
+
+        $detailsId = [];
+        foreach ($clientData as $key => $value) {
+            
+            $invoiceData[$key]['SalesInvoice']['company_id'] = $value['ClientOrder']['company_id'];
+            $invoiceData[$key]['SalesInvoice']['payment_terms'] = $value['ClientOrder']['payment_terms'];
+            array_push($detailsId, $value['ClientOrder']['client_order_item_details_id']);
+            //$invoiceData[$key]['SalesInvoice']['unit_price_currency_id'] = $value['QuotationItemDetail']['unit_price_currency_id'];
+           
+        }
+
+        $clientDetails = $this->QuotationItemDetail->find('all',array(
+            'conditions' => array('QuotationItemDetail.id' => $detailsId)
+            ));
+
+        foreach ($clientDetails as $key => $value) {
+            
+            $invoiceData[$key]['SalesInvoice']['unit_price'] = $value['QuotationItemDetail']['unit_price'];
+            $invoiceData[$key]['SalesInvoice']['unit_price_currency_id'] = $value['QuotationItemDetail']['unit_price_currency_id'];
+        }
+        
         //pr($invoiceData);
+
         $this->set(compact('invoiceData'));
 
     }

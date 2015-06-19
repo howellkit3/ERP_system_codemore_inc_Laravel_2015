@@ -280,8 +280,7 @@ $totalremaining = 0;
   ?> 
   </div>
 
-
-                             
+                            
         <?php 
           endforeach; 
   } 
@@ -289,3 +288,14 @@ $totalremaining = 0;
   ?> 
 
 <?php echo $this->element('modals');
+ ?>
+
+ <script>
+
+    $(.hh).click(function(){
+
+        $(this).hide();
+
+    });
+
+ </script>

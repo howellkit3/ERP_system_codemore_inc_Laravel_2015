@@ -8,9 +8,11 @@ class SalesInvoice extends AppModel {
 
     public $name = 'SalesInvoice';
 
-    public $recursive = -1;
+    //public $useTable = 'SalesInvoice';
 
-	public $actsAs = array('Containable');
+ 	//public $recursive = -1;
+
+	// public $actsAs = array('Containable');
 
     public function bindInvoice() {
 		
@@ -19,12 +21,17 @@ class SalesInvoice extends AppModel {
 				'Delivery' => array(
 					'className' => 'Delivery.Delivery',
 					'foreignKey' => false,
-					'conditions' => array('Delivery.dr_uuid = SalesInvoice.dr_uuid')
+					'conditions' => array('Delivery.id = SalesInvoice.dr_uuid')
 				), 
 				// 'ClientOrder' => array(
 				// 	'className' => 'Sales.ClientOrder',
 				// 	'foreignKey' => false,
-				// 	'conditions' => array('ClientOrder.uuid = Delivery.clients_order_id ')
+				// 	'conditions' => array('Delivery.clients_order_id = ClientOrder.id')
+				// )
+				// 'ClientOrder' => array( 15068619
+				// 	'className' => 'Sales.ClientOrder',
+				// 	'foreignKey' => false,
+				// 	'conditions' => 'ClientOrder.uuid = Delivery.clients_order_id'
 				// ),
 				// 'PaymentTermHolder' => array(
 				// 	'className' => 'PaymentTermHolder',

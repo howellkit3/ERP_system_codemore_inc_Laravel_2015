@@ -1,6 +1,6 @@
 <header class="navbar" id="header-navbar">
 	<div class="container">
-		<a href="<?php echo Router::url('/', true) ?>/dashboards" id="logo" class="navbar-brand">
+		<a href="<?php echo Router::url('/', true) ?>dashboards" id="logo" class="navbar-brand">
 		<?php echo $this->Html->image('logo.png',array('alt' => '','class' =>'normal-logo logo-black'));  ?>
 		<?php echo $this->Html->image('logo-black.png',array('alt' => '','class' =>'normal-logo logo-black'));  ?>
 		<?php echo $this->Html->image('logo-small.png',array('alt' => '','class' =>'small-logo hidden-xs hidden-sm hidde'));  ?>
