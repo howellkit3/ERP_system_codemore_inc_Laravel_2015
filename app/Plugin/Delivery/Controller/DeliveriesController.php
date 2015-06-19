@@ -334,12 +334,13 @@ $userData = $this->Session->read('Auth');
             if($this->request->data['DeliveryDetail']['quantityMax'] == $this->request->data['DeliveryDetail']['delivered_quantity']){
 
                 $this->request->data['DeliveryDetail']['status'] =  'Completed'; 
-
-            }else{
-
-                $this->request->data['DeliveryDetail']['status'] =  'Incomplete';
-
             }
+
+        }else{
+
+            $this->request->data['DeliveryDetail']['status'] =  'Incomplete';
+
+            
         }
 
         if(!empty($this->request->data['DeliveryDetail']['from_replacing'])){
