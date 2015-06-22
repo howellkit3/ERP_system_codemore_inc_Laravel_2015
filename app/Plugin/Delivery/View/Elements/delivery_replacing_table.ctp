@@ -311,19 +311,13 @@ $totalremaining = 0;
 
        $('.removeAppended').remove();
         
-       $('.appendhere').append('<br> <br> <br> <div class="form-group removeAppended"><label class="col-lg-2 control-label"><span style="color:red">*</span>Number</label> <div class="col-lg-8"><input type="text" maxlength="120" required = "required" placeholder = "Transmittal Number" class="form-control editable required removeAppended" name="data[DeliveryDetail][appended][]" ></div></div>');
-
-       $('.appendhere').append('<br> <br> <div class="form-group"><label class="col-lg-2 control-label"><span style="color:red">*</span>To :</label> <div class="col-lg-8 removeAppended"><input type="text" maxlength="120" required = "required" placeholder = "Customer Contact Person" class="form-control editable required" name="data[DeliveryDetail][appended][]" ></div></div>');
-
-        $('.appendhere').append('<br> <br> <div class="form-group removeAppended"><label class="col-lg-2 control-label">Remarks</label> <div class="col-lg-8 removeAppended"><input textarea = "text" maxlength="120" required = "required" placeholder = "Remarks" class="form-control editable required" name="data[DeliveryDetail][appended][]" ></div></div>');
+       $('.appendhere').append('<div class="form-group removeAppended"><br> <br> <br> <label class="col-lg-2 control-label"><span style="color:red">*</span>Number</label> <div class="col-lg-8"><input type="text" maxlength="120" required = "required" placeholder = "Transmittal Number" class="form-control editable required " name="data[DeliveryDetail][appended][]" ></div> <br> <br> <br> <label class="col-lg-2 control-label"><span style="color:red">*</span>To :</label> <div class="col-lg-8 "><input type="text" maxlength="120" required = "required" placeholder = "Customer Contact Person" class="form-control editable required" name="data[DeliveryDetail][appended][]" ></div> <br> <br> <br> <label class="col-lg-2 control-label">Remarks</label> <div class="col-lg-8 "><input textarea = "text" maxlength="120" required = "required" placeholder = "Remarks" class="form-control editable required" name="data[DeliveryDetail][appended][]" ></div></div>');
 
       }else{
 
-          $('.removeAppended').remove();
+        $('.removeAppended').remove();
 
-         $('.appendhere').append('<br> <br> <br> <div class="form-group removeAppended"><label class="col-lg-2 control-label"><span style="color:red">*</span>Number</label> <div class="col-lg-8"><input type="text" maxlength="120" required = "required" placeholder = "Delivery Number" class="form-control editable required removeAppended" name="data[DeliveryDetail][appended][]" ></div></div>');
-
-        $('.appendhere').append('<br> <br> <div class="form-group removeAppended"><label class="col-lg-2 control-label"><span style="color:red">*</span>To :</label> <div class="col-lg-8"><input type="text" maxlength="120" required = "required" placeholder = "Customer Contact Person" class="form-control editable required removeAppended" name="data[DeliveryDetail][appended][]" ></div></div>');
+        $('.appendhere').append('<div class="form-group removeAppended"><br> <br> <br> <label class="col-lg-2 control-label"><span style="color:red">*</span>Number</label> <div class="col-lg-8"><input type="text" maxlength="120" required = "required" placeholder = "Delivery Number" class="form-control editable required " name="data[DeliveryDetail][appended][]" ></div> </div>');
 
       }
     });
