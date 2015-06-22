@@ -91,15 +91,6 @@
 	 					?>
 					</li>
 
-					<!-- <li class="<?php echo ($this->params['plugin'] == 'receivable') ? 'active' : '' ?>">
-						<?php
-	 						echo $this->Html->link( " <i class='fa fa-book'></i> <span>Receivable</span>",   array('controller' =>'reports',
-	 											'action'=>'index',
-	 											'plugin' => 'receivable'),
-	 											array('escape' => false) );
-	 					?>
-					</li> -->
-
 					<!-- <li>
 						<?php
 	 						// echo $this->Html->link( " <i class='fa fa-th-large'></i> <span>Warehouse</span> <span class='label label-success pull-right'>New</span> ",   array('controller' =>'','action'=>'','plugin' => ''),array('escape' => false) );

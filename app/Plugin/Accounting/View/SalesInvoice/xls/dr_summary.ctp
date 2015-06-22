@@ -2,7 +2,8 @@
 // create new empty worksheet and set default font
 $this->PhpExcel->createWorksheet()
     ->setDefaultFont('Calibri', 12);
-
+//$this->PhpExcel->setActiveSheetIndex(0,1)->mergeCells('A1:A2');
+//$this->PhpExcel->setActiveSheetIndex(1,2)->mergeCells('B1:B2');
 // define table cells
 $table = array(
     array('label' => __('DATE')),
@@ -22,7 +23,8 @@ $this->PhpExcel->addTableHeader($table, array('name' => 'Cambria', 'bold' => tru
 // add data
 
 foreach ($invoiceData as $key => $invoiceList) {
-
+	$phpPrice = '';
+	$usdPrice = '';
 	if ($invoiceList['SalesInvoice']['unit_price_currency_id'] == 1) {
 		$phpPrice = number_format($invoiceList['SalesInvoice']['unit_price'],2);
 	} else {
