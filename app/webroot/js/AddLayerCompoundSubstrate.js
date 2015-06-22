@@ -32,6 +32,7 @@ $(function(){
 	$('.substrate-layers').remove();
 
 	$inputs = '';
+	
 	var count = 1;
 	for (i = 0; i < selected; i++) { 
 		$inputs += '<div class="form-group substrate-layers"><label class="col-lg-2 control-label"><span style="color:red">*</span>Substrate</label>';

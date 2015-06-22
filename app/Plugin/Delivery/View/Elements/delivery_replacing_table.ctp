@@ -112,9 +112,9 @@ $totalremaining = 0;
 
           <br>
 
-          <div class="form-group" id="existing_items">
-              <label class="col-lg-2 control-label">Delivery Form</label>
-            <div class="col-lg-9">
+          <div class="form-group appendhere" id="existing_items">
+              <label class="col-lg-2 control-label ">Delivery Form</label>
+            <div class="col-lg-9 ">
 
             <?php 
               echo $this->Form->input('Delivery.id', array(
@@ -137,13 +137,15 @@ $totalremaining = 0;
                                                     'options' => array('Delivery Receipt','Transmittal'),
                                                     'type' => 'select',
                                                     'label' => false,
-                                                    'class' => 'form-control required categorylist',
+                                                    'class' => 'form-control required transmittalData ',
                                                     'empty' => '---Select Delivery Form---',
                                                     'required' => 'required'
                                                      )); 
                                                 
 
             ?>
+
+               
 
             </div>
           </div>
@@ -155,11 +157,10 @@ $totalremaining = 0;
         </div>
 
         </div>
-
-
-
       </div>
     </div>
+
+
 
 
   <?php  
@@ -167,6 +168,8 @@ $totalremaining = 0;
   echo $this->Form->end();  
 
   ?> 
+
+
   </div>
 
   <div class="modal fade" id="myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" role="dialog" >
@@ -285,6 +288,9 @@ $totalremaining = 0;
   echo $this->Form->end();  
 
   ?> 
+
+
+
   </div>
 
                             
@@ -297,12 +303,29 @@ $totalremaining = 0;
 <?php echo $this->element('modals');
  ?>
 
- <script>
+<script>
 
-    $(.hh).click(function(){
+    $('.transmittalData').change(function(){
 
-        $(this).hide();
+      if($('.transmittalData :selected').text() == 'Transmittal'){
 
+       $('.removeAppended').remove();
+        
+       $('.appendhere').append('<br> <br> <br> <div class="form-group removeAppended"><label class="col-lg-2 control-label"><span style="color:red">*</span>Number</label> <div class="col-lg-8"><input type="text" maxlength="120" required = "required" placeholder = "Transmittal Number" class="form-control editable required removeAppended" name="data[DeliveryDetail][appended][]" ></div></div>');
+
+       $('.appendhere').append('<br> <br> <div class="form-group"><label class="col-lg-2 control-label"><span style="color:red">*</span>To :</label> <div class="col-lg-8 removeAppended"><input type="text" maxlength="120" required = "required" placeholder = "Customer Contact Person" class="form-control editable required" name="data[DeliveryDetail][appended][]" ></div></div>');
+
+        $('.appendhere').append('<br> <br> <div class="form-group removeAppended"><label class="col-lg-2 control-label">Remarks</label> <div class="col-lg-8 removeAppended"><input textarea = "text" maxlength="120" required = "required" placeholder = "Remarks" class="form-control editable required" name="data[DeliveryDetail][appended][]" ></div></div>');
+
+      }else{
+
+          $('.removeAppended').remove();
+
+         $('.appendhere').append('<br> <br> <br> <div class="form-group removeAppended"><label class="col-lg-2 control-label"><span style="color:red">*</span>Number</label> <div class="col-lg-8"><input type="text" maxlength="120" required = "required" placeholder = "Delivery Number" class="form-control editable required removeAppended" name="data[DeliveryDetail][appended][]" ></div></div>');
+
+        $('.appendhere').append('<br> <br> <div class="form-group removeAppended"><label class="col-lg-2 control-label"><span style="color:red">*</span>To :</label> <div class="col-lg-8"><input type="text" maxlength="120" required = "required" placeholder = "Customer Contact Person" class="form-control editable required removeAppended" name="data[DeliveryDetail][appended][]" ></div></div>');
+
+      }
     });
 
- </script>
+</script>

@@ -555,7 +555,7 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
     $approved = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
                                                             'conditions' => array('User.id' => $drData['DeliveryDetail']['created_by'])
                                                             ));
-   // pr($drData); exit;
+   pr($this->request->data); exit;
     $userData = $this->Session->read('Auth');
     
     $view = new View(null, false);

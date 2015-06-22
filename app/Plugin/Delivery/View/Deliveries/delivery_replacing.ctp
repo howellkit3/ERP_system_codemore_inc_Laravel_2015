@@ -153,8 +153,3 @@
           
 <?php echo $this->element('modals'); ?>
 
-
-<script>
-
-
-</script>
