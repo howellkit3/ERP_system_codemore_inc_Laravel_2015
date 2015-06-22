@@ -112,7 +112,34 @@ $totalremaining = 0;
 
                                 <tr>
                                     <td>Status</td>
-                                    <td><?php           //pr($scheduleInfo['ClientOrderDeliverySchedule']['uuid']); exit;
+                                    <td><?php         
+                                                 $uuidClientsOrder = $scheduleInfo['ClientOrderDeliverySchedule']['uuid'];
+
+                                                $arr = array();
+
+                                                 foreach ($deliveryStatus as $key => $value) {
+
+                                                  $IdClientsOrder = $orderListHelper[$value['Delivery']['clients_order_id']];
+                                                 // pr($orderList[$IdClientsOrder]);
+  
+                                                    if($value['Delivery']['schedule_uuid'] == $orderDeliveryList[$uuidClientsOrder]){  
+                                                   
+                                                      array_push($arr,$value['DeliveryDetail']['status']);
+
+                                                    }  
+
+                                                    //pr($arr);
+                                                    $dataholder = 0;
+                                                    foreach ($arr as $key => $value) {
+
+                                                       if ($value == 'Incomplete') {
+                                                         $dataholder = 1;
+                                                       }
+                                                    }
+                                                    
+                                                  }
+
+
                                                 $Scheddate = $scheduleInfo['ClientOrderDeliverySchedule']['schedule'];
                                                 
                                                 $Currentdate = date("Y-m-d H:i:s");
@@ -123,7 +150,11 @@ $totalremaining = 0;
 
                                                   if (!empty($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']]) || !empty($deliveryList[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']])) {   
 
-                                                    if ($deliveryDetailList[$deliveryList[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']]] == $scheduleInfo['ClientOrderDeliverySchedule']['quantity']){ 
+                                                    if($dataholder == 0){
+
+                                                      echo "<span class='label label-success'>Delivered</span>";
+
+                                                    }elseif ($deliveryDetailList[$deliveryList[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']]] == $scheduleInfo['ClientOrderDeliverySchedule']['quantity']){ 
 
                                                             echo "<span class='label label-success'>Delivered</span>";
 

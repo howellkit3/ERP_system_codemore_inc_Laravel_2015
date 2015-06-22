@@ -1,4 +1,5 @@
   <?php 
+       
                         if(!empty($clientsOrder)){
                          // pr($deliveryDetailsData); exit;
 ?>
@@ -48,16 +49,54 @@
 
                                         <td class="text-center">
 
-                                                <?php $Scheddate = $scheduleDataList['ClientOrderDeliverySchedule']['schedule'];
+                                                <?php 
+                                                //pr($scheduleDataList['ClientOrderDeliverySchedule']['uuid']);
+                                                $uuidClientsOrder = $scheduleDataList['ClientOrderDeliverySchedule']['uuid'];
+                                                //pr($orderDeliveryList[$uuidClientsOrder]);
+
+                                                $arr = array();
+
+                                                 foreach ($deliveryStatus as $key => $value) {
+
+                                                  $IdClientsOrder = $orderListHelper[$value['Delivery']['clients_order_id']];
+                                                 // pr($orderList[$IdClientsOrder]);
+  
+                                                    if($value['Delivery']['schedule_uuid'] == $orderDeliveryList[$uuidClientsOrder]){  
+                                                   
+                                                      array_push($arr,$value['DeliveryDetail']['status']);
+
+                                                    }  
+
+                                                    //pr($arr);
+                                                    $dataholder = 0;
+                                                    foreach ($arr as $key => $value) {
+
+                                                       if ($value == 'Incomplete') {
+                                                         $dataholder = 1;
+                                                       }
+                                                    }
+                                                    
+                                                  }
+
+
+                                                $Scheddate = $scheduleDataList['ClientOrderDeliverySchedule']['schedule'];
                                                 $Currentdate = date("Y-m-d H:i:s");
 
                                                 $Scheddate = str_replace('-', '', $Scheddate);
                                                 
                                                 $Currentdate = str_replace('-', '', $Currentdate);   
 
+
+
                                                   if (!empty($deliveryData[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']]) || !empty($deliveryList[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']])) {   
 
-                                                    if ($deliveryDetailList[$deliveryList[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']]] == $scheduleDataList['ClientOrderDeliverySchedule']['quantity']){ 
+                                                   
+                                                     if($dataholder == 0){
+
+                                                       echo "<span class='label label-success'>Delivered</span>";
+
+                                                     
+                                                    }elseif ($deliveryDetailList[$deliveryList[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']]] == $scheduleDataList['ClientOrderDeliverySchedule']['quantity']){ 
 
                                                             echo "<span class='label label-success'>Delivered</span>";
 

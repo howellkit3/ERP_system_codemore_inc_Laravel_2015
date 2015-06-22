@@ -51,12 +51,6 @@ $('body').on('click','.remove-layers',function(){
 
 		var parent = $(this).parent();
 
-		//console.log(parent.attr('class'));
-
-		 //var count  = $('.abc').length;
-
-		// alert(count);
-		
 		parent.find('.remove-field').val('true');
 
 		if (parent.find('.remove-field').length > 1) {
