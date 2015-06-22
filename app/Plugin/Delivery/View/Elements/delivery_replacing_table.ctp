@@ -94,84 +94,6 @@ $totalremaining = 0;
 
                 </tbody>
 
-  <div class="modal fade" id="myModalPrint<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" role="dialog" >
-    <div class="modal-dialog">
-      <div class="modal-content margintop">
-
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title">Delivered P.O. Quantity</h4>
-        </div> 
-
-        <div class="modal-body">
-
-        <?php  
-
-          echo $this->Form->create('ClientOrderDeliverySchedule',array(
-            'url'=>(array('controller' => 'deliveries', 'action' => 'print_replacing',$deliveryDataList['Delivery']['dr_uuid'],$deliveryDataList['Delivery']['schedule_uuid'])),'class' => 'form-horizontal')); ?>
-
-          <br>
-
-          <div class="form-group appendhere" id="existing_items">
-              <label class="col-lg-2 control-label ">Delivery Form</label>
-            <div class="col-lg-9 ">
-
-            <?php 
-              echo $this->Form->input('Delivery.id', array(
-                                                      'class' => 'form-control item_type editable required',
-                                                      'label' => false,
-                                                      'required' => 'required',
-                                                      'readonly' => 'readonly',
-                                                      'value' => $deliveryDataList['Delivery']['dr_uuid']
-                                                      ));
-
-              echo $this->Form->input('DeliveryDetail.id', array(
-                                                      'class' => 'form-control item_type editable required',
-                                                      'label' => false,
-                                                      'required' => 'required',
-                                                      'readonly' => 'readonly',
-                                                      'value' => $deliveryDataList['DeliveryDetail']['id']
-                                                      ));  
-
-              echo $this->Form->input('Delivery.print', array(
-                                                    'options' => array('Delivery Receipt','Transmittal'),
-                                                    'type' => 'select',
-                                                    'label' => false,
-                                                    'class' => 'form-control required transmittalData ',
-                                                    'empty' => '---Select Delivery Form---',
-                                                    'required' => 'required'
-                                                     )); 
-                                                
-
-            ?>
-
-               
-
-            </div>
-          </div>
-          <br><br>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i> Submit</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-        </div>
-
-        </div>
-      </div>
-    </div>
-
-
-
-
-  <?php  
-
-  echo $this->Form->end();  
-
-  ?> 
-
-
-  </div>
-
   <div class="modal fade" id="myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" role="dialog" >
     <div class="modal-dialog">
       <div class="modal-content margintop">
@@ -289,7 +211,75 @@ $totalremaining = 0;
 
   ?> 
 
+  </div>
+  <div class="modal fade" id="myModalPrint<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" role="dialog" >
+    <div class="modal-dialog">
+      <div class="modal-content margintop">
 
+           <?php echo $this->Form->create('ClientOrderDeliverySchedule',array(
+            'url'=>(array('controller' => 'deliveries', 'action' => 'print_replacing',$deliveryDataList['Delivery']['dr_uuid'],$deliveryDataList['Delivery']['schedule_uuid'])),'class' => 'form-horizontal')); ?>
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Delivered P.O. Quantity</h4>
+        </div> 
+
+          <div class="modal-body">
+            <br>
+            <div class="form-group appendhere" id="existing_items">
+              <label class="col-lg-2 control-label ">Delivery Form</label>
+              <div class="col-lg-9 ">
+
+                <?php 
+                  echo $this->Form->input('Delivery.id', array(
+                                                          'class' => 'form-control item_type editable required',
+                                                          'label' => false,
+                                                          'required' => 'required',
+                                                          'readonly' => 'readonly',
+                                                          'value' => $deliveryDataList['Delivery']['dr_uuid']
+                                                          ));
+
+                  echo $this->Form->input('DeliveryDetail.id', array(
+                                                          'class' => 'form-control item_type editable required',
+                                                          'label' => false,
+                                                          'required' => 'required',
+                                                          'readonly' => 'readonly',
+                                                          'value' => $deliveryDataList['DeliveryDetail']['id']
+                                                          ));  
+
+                  echo $this->Form->input('Delivery.print', array(
+                                                        'options' => array('Delivery Receipt','Transmittal'),
+                                                        'type' => 'select',
+                                                        'label' => false,
+                                                        'class' => 'form-control required transmittalData ',
+                                                        'empty' => '---Select Delivery Form---',
+                                                        'required' => 'required'
+                                                         ));
+
+                ?>
+
+              </div>
+            </div>
+            
+            <br><br>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i> Submit</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+            </div>
+          <?php echo $this->Form->end();  ?>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+  <?php  
+
+  echo $this->Form->end();  
+
+  ?> 
 
   </div>
 
@@ -300,26 +290,38 @@ $totalremaining = 0;
 
   ?> 
 
-<?php echo $this->element('modals');
- ?>
-
 <script>
-
+  $( document ).ready(function() {
     $('.transmittalData').change(function(){
 
       if($('.transmittalData :selected').text() == 'Transmittal'){
 
        $('.removeAppended').remove();
         
-       $('.appendhere').append('<div class="form-group removeAppended"><br> <br> <br> <label class="col-lg-2 control-label"><span style="color:red">*</span>Number</label> <div class="col-lg-8"><input type="text" maxlength="120" required = "required" placeholder = "Transmittal Number" class="form-control editable required " name="data[DeliveryDetail][appended][]" ></div> <br> <br> <br> <label class="col-lg-2 control-label"><span style="color:red">*</span>To :</label> <div class="col-lg-8 "><input type="text" maxlength="120" required = "required" placeholder = "Customer Contact Person" class="form-control editable required" name="data[DeliveryDetail][appended][]" ></div> <br> <br> <br> <label class="col-lg-2 control-label">Remarks</label> <div class="col-lg-8 "><input textarea = "text" maxlength="120" required = "required" placeholder = "Remarks" class="form-control editable required" name="data[DeliveryDetail][appended][]" ></div></div>');
-
-      }else{
-
-        $('.removeAppended').remove();
-
-        $('.appendhere').append('<div class="form-group removeAppended"><br> <br> <br> <label class="col-lg-2 control-label"><span style="color:red">*</span>Number</label> <div class="col-lg-8"><input type="text" maxlength="120" required = "required" placeholder = "Delivery Number" class="form-control editable required " name="data[DeliveryDetail][appended][]" ></div> </div>');
+       $('.appendhere').append('<div class="form-group removeAppended"><br> <br> <br> <label class="col-lg-2 control-label"><span style="color:red">*</span>Number</label> <div class="col-lg-8"><input type="text" maxlength="120" required = "required" placeholder = "Transmittal Number" class="form-control required textfieldwidth" name="data[DeliveryDetail][number]" ></div> <br> <br> <br> <label class="col-lg-2 control-label"><span style="color:red">*</span>To :</label> <div class="col-lg-8 "><input type="text" maxlength="120" required = "required" placeholder = "Customer Contact Person" class="form-control  required textfieldwidth" name="data[DeliveryDetail][to]" ></div> <br> <br> <br> <label class="col-lg-2 control-label">Remarks</label> <div class="col-lg-8 "><input type = "textarea" maxlength="120" required = "required" placeholder = "Remarks" class="form-control required textfieldwidth" name="data[DeliveryDetail][remarksss]" ></div></div>');
 
       }
+
+      if($('.transmittalData :selected').text() == 'Delivery Receipt'){
+
+         $('.removeAppended').remove();
+
+         $('.appendhere').append('<div class="form-group removeAppended"><br> <br> <br> <label class="col-lg-2 control-label"><span style="color:red">*</span>Number</label> <div class="col-lg-8"><input type="text" maxlength="120" required = "required" placeholder = "Delivery Number" class="form-control editable required textfieldwidth" name="data[DeliveryDetail][appended][]" ></div> </div>');
+
+       }
     });
 
+   jQuery("#ClientOrderDeliveryScheduleDeliveryReplacingForm").validate();
+ });
 </script>
+
+<style>
+
+  .textfieldwidth{
+    width: 410px;
+  }
+
+</style>
+
+<?php echo $this->element('modals');
+ ?>
