@@ -71,13 +71,17 @@
                                                     $dataholder = 0;
                                                     foreach ($arr as $key => $value) {
 
-                                                       if ($value == 'Incomplete') {
+                                                       if ($value == 'Incomplete' ) {
+                                                         $dataholder = 1;
+                                                       }
+
+                                                       if ($value == '' ) {
                                                          $dataholder = 1;
                                                        }
                                                     }
                                                     
                                                   }
-
+                                                  pr($dataholder);
 
                                                 $Scheddate = $scheduleDataList['ClientOrderDeliverySchedule']['schedule'];
                                                 $Currentdate = date("Y-m-d H:i:s");
