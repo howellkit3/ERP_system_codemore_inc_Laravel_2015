@@ -81,7 +81,7 @@
                                                     }
                                                     
                                                   }
-                                                  pr($dataholder);
+                                                  //pr($dataholder);
 
                                                 $Scheddate = $scheduleDataList['ClientOrderDeliverySchedule']['schedule'];
                                                 $Currentdate = date("Y-m-d H:i:s");
