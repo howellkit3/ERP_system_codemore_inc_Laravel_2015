@@ -2,7 +2,7 @@
 <?php include('word.css'); ?>
 
 </style>
-<div class="row" style="background:url('http://localhost/koufunet/img/transmittal.jpg');background-size: 768px;
+<div class="row" style="background:url('http://localhost/koufunet/img/transmitta.jpg');background-size: 768px;
   height: 100%;background-repeat:no-repeat;">
 	<div class="col-lg-12">
 		<div class="main-box main-pdf" >

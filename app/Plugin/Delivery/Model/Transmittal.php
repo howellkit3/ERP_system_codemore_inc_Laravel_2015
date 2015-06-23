@@ -24,5 +24,29 @@ class Transmittal extends AppModel {
 		
 	);
 
+	 public function bind($model = array('Group')){
+
+		$this->bindModel(array(
+			'belongsTo' => array(
+				'Delivery' => array(
+					'className' => 'Delivery.Delivery',
+					'foreignKey' => false,
+					'conditions' => array('Transmittal.dr_uuid = Delivery.dr_uuid'),
+					'dependent' => true
+				),
+
+				'DeliveryDetail' => array(
+					'className' => 'Delivery.DeliveryDetail',
+					'foreignKey' => false,
+					'conditions' => array('Delivery.dr_uuid = DeliveryDetail.delivery_uuid'),
+					'dependent' => true
+				),
+				
+			)
+		),false);
+
+		$this->contain($model);
+	}
+
 	
 }

@@ -281,7 +281,7 @@ class DeliveriesController extends DeliveryAppController {
                             ));
                 }
                 $this->Session->setFlash(__('Unable to update your post.'));
-            }
+          }
 
 
         $this->set(compact('deliveryScheduleId','quotationId','clientsOrderUuid','scheduleInfo','deliveryData', 'quantityInfo','deliveryDataID','deliveryDetailsData', 'deliveryEdit', 'deliveryDetailList','deliveryList','deliveryStatus', 'orderList', 'orderListHelper', 'orderDeliveryList'));
@@ -543,6 +543,8 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
   }
 
   public function print_replacing($dr_uuid = null,$schedule_uuid,$paper = null) {
+
+    $this->loadModel('Delivery.Transmittal');
     
     $this->loadModel('Sales.ClientOrder');
 
@@ -595,14 +597,24 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
 
         if ($this->request->data['Print']['form'] == 1 ){
        
-        $output = $view->render('print_transmittal', false);
+          $output = $view->render('print_transmittal', false);
 
-        
+          if ($this->request->is(array('post', 'put'))) {
+
+                //pr($userData); exit;
+
+                $this->request->data['Transmittal']['created_by'] = $userData['User']['id'];
+
+                $this->Transmittal->save($this->request->data);
+                $this->Session->setFlash(__('Schedule has been updated.'),'success');
+                          
+          }
+    
         }else{
 
         $output = $view->render('print_dr', false);
 
-         }
+        }
         
       
         $dompdf = new DOMPDF();
@@ -687,8 +699,36 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
 
    // pr($this->request->data);exit();
     $this->set(compact('drData','clientData','companyData','units','nameForm'));
-
     
+}
+
+public function delivery_transmittal_record() {
+
+  $userData = $this->Session->read('Auth');
+
+  $this->loadModel('Sales.ClientOrderDeliverySchedule');
+
+  $this->loadModel('Sales.ClientOrder');
+
+  $this->loadModel('Delivery.Transmittal');
+
+  $this->Delivery->bindDelivery();
+
+  //$this->Transmittal->bind(array('Delivery', 'DeliveryDetail'));
+  
+  $transmittalData = $this->Transmittal->find('all', array(
+                                        'order' => 'Transmittal.id DESC'
+                                    ));
+
+   //pr($transmittalData); exit;
+
+  $this->ClientOrder->bindDelivery();
+
+  $clientOrderData = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid','id')));
+
+  $scheduleInfo = $this->ClientOrder->find('all');
+
+  $this->set(compact('transmittalData', 'scheduleInfo', 'clientOrderData'));     
         
 }
 

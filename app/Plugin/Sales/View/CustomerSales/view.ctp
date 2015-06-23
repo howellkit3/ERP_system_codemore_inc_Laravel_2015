@@ -21,7 +21,8 @@
 						<div class="main-box-body clearfix">
 
 							<div class="profile-since">
-								<?php echo date('M d, Y', strtotime($company['Company']['created'])); ?>
+								<?php echo date('M d, Y', strtotime($company['Company']['created'])); 
+								?>
 							</div>
 
 							<?php if(!empty($company['Company']['description'])){ ?>
