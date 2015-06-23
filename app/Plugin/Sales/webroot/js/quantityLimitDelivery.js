@@ -51,6 +51,26 @@ $( document ).ready(function() {
 
 	});
 
+	$("body").on('keyup','.quantityLimit', function(e){
+
+   
+
+    var allVal = 0;
+    var isText = $(this);
+    var quantityValue = $('#quantity').val();
+    var Value = $('.quantityLimit').val();
+      //alert(quantityValue);  
+
+      
+    if ( Value > quantityValue ){
+
+        alert('Max Quantity');
+        isText.val(quantityValue);
+
+    }
+    
+  });
+
 	$("body").on('keyup','.addquantityLimit', function(e){
 
 		var allVal = 0;
