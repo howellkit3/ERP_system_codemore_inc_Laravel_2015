@@ -413,7 +413,6 @@ $userData = $this->Session->read('Auth');
 
   $scheduleInfo = $this->ClientOrder->find('all');
 
-
   $this->set(compact('deliveryEdit', 'scheduleInfo', 'clientOrderData'));     
         
 }
@@ -544,7 +543,7 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
   }
 
   public function print_replacing($dr_uuid = null,$schedule_uuid,$paper = null) {
-    pr($this->request->data); exit();
+    //pr($this->request->data); exit();
     $this->loadModel('Sales.ClientOrder');
 
     $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule','QuotationItemDetail','QuotationDetail','Product'));
@@ -623,9 +622,42 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
         }
         
         exit();
+  }      
+
+  public function delivery_transmittal($dr_uuid = null,$schedule_uuid,$paper = null) {
+
+    $userData = $this->Session->read('Auth');
+
+    $this->loadModel('Sales.ClientOrder');
+
+    $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule','QuotationItemDetail','QuotationDetail','Product'));
+    
+    $this->loadModel('Sales.Company');
+
+    $this->loadModel('Unit');
+    $units = $this->Unit->getList();
+
+    $this->Company->bind('Address');
+
+    $this->Delivery->bindDelivery();
+    $drData = $this->Delivery->find('first', array(
+                                        'conditions' => array('Delivery.dr_uuid' => $dr_uuid
+                                        )));
+    
+    $clientData = $this->ClientOrder->find('first', array(
+                                        'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
+                                        )));
+    
+    $companyData = $this->Company->find('first', array(
+                                        'conditions' => array('Company.id' => $clientData['ClientOrder']['company_id']
+                                        )));
+    
+    //pr($clientData);exit();
+    $this->set(compact('drData','clientData','companyData','units'));
 
     
-  }      
+        
+}
 
 
 }

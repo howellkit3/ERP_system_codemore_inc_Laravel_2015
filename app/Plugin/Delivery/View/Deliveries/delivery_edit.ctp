@@ -20,7 +20,7 @@ $totalremaining = 0;
 
 				<?php //foreach ($deliveryEdit as $deliveryDataList): ?>	
 
-					<?php  //pr($clientsOrder); 
+					<?php // pr($clientsOrder); 
                         echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'deliveries', 'action' => 'view', $clientsOrder['ClientOrderDeliverySchedule']['id'],$clientsOrder['QuotationDetail']['quotation_id'],$clientsOrder['ClientOrderDeliverySchedule']['uuid']),array('class' =>'btn btn-primary pull-right','escape' => false));
                     ?>
 		
@@ -220,7 +220,7 @@ $totalremaining = 0;
 											<button type="submit" class="btn btn-primary pull-left">Submit Product</button>&nbsp;
 											<?php 
 						                        echo $this->Html->link('Cancel', array('controller' => 'deliveries', 'action' => 'view',
-                                                                         $clientsOrder['ClientOrderDeliverySchedule']['id'],$clientsOrder['QuotationDetail']['quotation_id'],$clientsOrder['ClientOrder']['uuid']),array('class' =>'btn btn-default','escape' => false));
+                                                                         $clientsOrder['ClientOrderDeliverySchedule']['id'],$clientsOrder['ClientOrder']['quotation_id'],$clientsOrder['ClientOrderDeliverySchedule']['uuid']),array('class' =>'btn btn-default','escape' => false));
 						                    ?>
 										</div>
 									</div>
