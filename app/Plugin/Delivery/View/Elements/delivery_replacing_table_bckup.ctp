@@ -174,16 +174,6 @@ $totalremaining = 0;
                                                       'value' => $deliveryDataList['DeliveryDetail']['quantity'] - $deliveryDataList['DeliveryDetail']['delivered_quantity'] 
                                                       
                                                       ));
-            
-            echo $this->Form->input('DeliveryDetail.limit', array(
-                                              'class' => 'form-control item_type editable required MaximumQuantity',
-                                              'label' => false,
-                                              'required' => 'required',
-                                              'readonly' => 'readonly',
-                                              'value' => $deliveryDataList['DeliveryDetail']['quantity'] - $deliveryDataList['DeliveryDetail']['delivered_quantity'] 
-                                                ));
-
-
             echo $this->Form->input('DeliveryDetail.holder', array(
                                                       'empty' => 'None',
                                                       'type' => 'hidden',
@@ -225,7 +215,7 @@ $totalremaining = 0;
         <div class="modal-body">
 
         <?php echo $this->Form->create('ClientOrderDeliverySchedule',array(
-            'url'=>(array('controller' => 'deliveries', 'action' => 'delivery_transmittal',$deliveryDataList['Delivery']['dr_uuid'],$deliveryDataList['Delivery']['schedule_uuid'])),'class' => 'form-horizontal')); ?>
+            'url'=>(array('controller' => 'deliveries', 'action' => 'print_replacing',$deliveryDataList['Delivery']['dr_uuid'],$deliveryDataList['Delivery']['schedule_uuid'])),'class' => 'form-horizontal')); ?>
 
           <div class="form-group" id="existing_items">
               <label class="col-lg-2 control-label appendhere">D.R. #</label>
@@ -252,7 +242,7 @@ $totalremaining = 0;
                                                         'options' => array('Delivery Receipt','Transmittal'),
                                                         'type' => 'select',
                                                         'label' => false,
-                                                        'class' => 'form-control required  ',
+                                                        'class' => 'form-control required transmittalData ',
                                                         'empty' => '---Select Delivery Form---',
                                                         'required' => 'required'
                                                          ));
