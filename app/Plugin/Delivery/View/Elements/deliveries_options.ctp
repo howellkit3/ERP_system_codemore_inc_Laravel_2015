@@ -29,6 +29,20 @@
            
         </li>
 
+        <li class="dropdown hidden-xs">
+           
+            <?php echo $this->Html->link("<span class='count'>Transmittal Records</span>", array(
+                                                                                   'controller' => 'deliveries', 
+                                                                                    'action' => 'delivery_transmittal_record',
+                                                                                    ),
+                                                                            array(
+                                                                                   'escape' => false,
+                                                                                   'class' => 'btn'
+                                                                                   )); 
+            ?>
+           
+        </li>
+
    
     </ul>
 </div>

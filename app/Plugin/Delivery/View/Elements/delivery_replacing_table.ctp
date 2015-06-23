@@ -160,7 +160,7 @@ $totalremaining = 0;
             echo $this->Form->input('DeliveryDetail.delivered_quantity', array(
                                                       'empty' => 'None',
                                                       'required' => 'required',
-                                                      'class' => 'form-control item_type editable quantity ',
+                                                      'class' => 'form-control item_type editable quantityLimit ',
                                                       'label' => false,
                                                       'value' => $deliveryDataList['DeliveryDetail']['quantity'] - $deliveryDataList['DeliveryDetail']['delivered_quantity'] 
                                                       ));
@@ -169,21 +169,12 @@ $totalremaining = 0;
                                                       'empty' => 'None',
                                                       'type' => 'hidden',
                                                       'required' => 'required',
-                                                      'class' => 'form-control item_type editable MaximumQuantity',
+                                                      'class' => 'form-control item_type editable ',
                                                       'label' => false,
+                                                      'id' => 'quantity',
                                                       'value' => $deliveryDataList['DeliveryDetail']['quantity'] - $deliveryDataList['DeliveryDetail']['delivered_quantity'] 
                                                       
                                                       ));
-            
-            echo $this->Form->input('DeliveryDetail.limit', array(
-                                              'class' => 'form-control item_type editable required MaximumQuantity',
-                                              'label' => false,
-                                              'required' => 'required',
-                                              'readonly' => 'readonly',
-                                              'value' => $deliveryDataList['DeliveryDetail']['quantity'] - $deliveryDataList['DeliveryDetail']['delivered_quantity'] 
-                                                ));
-
-
             echo $this->Form->input('DeliveryDetail.holder', array(
                                                       'empty' => 'None',
                                                       'type' => 'hidden',
@@ -219,7 +210,7 @@ $totalremaining = 0;
 
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title">Delivered P.O. Quantity</h4>
+          <h4 class="modal-title">Delivery Printing</h4>
         </div> 
 
         <div class="modal-body">
@@ -227,9 +218,11 @@ $totalremaining = 0;
         <?php echo $this->Form->create('ClientOrderDeliverySchedule',array(
             'url'=>(array('controller' => 'deliveries', 'action' => 'delivery_transmittal',$deliveryDataList['Delivery']['dr_uuid'],$deliveryDataList['Delivery']['schedule_uuid'])),'class' => 'form-horizontal')); ?>
 
+            <br><br>
+
           <div class="form-group" id="existing_items">
-              <label class="col-lg-2 control-label appendhere">D.R. #</label>
-            <div class="col-lg-9 ">
+              <label class="col-lg-2 control-label ">Delivery Form</label>
+            <div class="col-lg-9 "> 
 
             <?php 
                echo $this->Form->input('Delivery.id', array(
@@ -252,7 +245,7 @@ $totalremaining = 0;
                                                         'options' => array('Delivery Receipt','Transmittal'),
                                                         'type' => 'select',
                                                         'label' => false,
-                                                        'class' => 'form-control required  ',
+                                                        'class' => 'form-control required transmittalData ',
                                                         'empty' => '---Select Delivery Form---',
                                                         'required' => 'required'
                                                          ));
@@ -262,11 +255,7 @@ $totalremaining = 0;
           </div>
           <br><br>
 
-        <div class="form-group " id="existing_items">
-          <div class="col-lg-9">
-
-          </div>
-        </div>
+    
         <br><br>
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i> Submit</button>
@@ -277,17 +266,10 @@ $totalremaining = 0;
         </div>
       </div>
     </div>
-
-
- 
-
-  </div>
-
-                            
+  </div>                         
         <?php 
           endforeach; 
   } 
-
   ?> 
 
 <script>
@@ -302,6 +284,26 @@ $totalremaining = 0;
 
    jQuery("#ClientOrderDeliveryScheduleDeliveryReplacingForm").validate();
  });
+
+  $("body").on('keyup','.quantityLimit', function(e){
+
+    var allVal = 0;
+    var isText = $(this);
+    var quantityValue = $('#quantity').val();
+    var Value = $('.quantityLimit').val();
+      //alert(quantityValue);  
+
+      
+    if ( Value > quantityValue ){
+
+        alert('Max Quantity');
+        isText.val(quantityValue);
+
+    }
+    
+  });
+
+
 </script>
 
 <style>
