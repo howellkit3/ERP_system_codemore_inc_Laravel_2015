@@ -577,20 +577,28 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
     $approved = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
                                                             'conditions' => array('User.id' => $drData['DeliveryDetail']['created_by'])
                                                             ));
+    //pr($this->request->data); exit;
+    if(!empty($this->request->data['DeliveryDetail']['quantity'])){
+
+    $drQuantity = $this->request->data['DeliveryDetail']['quantity'];
+
+    }
 
     if(!empty($this->request->data['Transmittal']['contact_person'])){
 
       $contactPerson = $this->request->data['Transmittal']['contact_person'];
 
-    }
+      $quantityTransmittal = $this->request->data['Transmittal']['quantity'];
 
-    $remarks = $this->request->data['Transmittal']['remarks'];
+      $remarks = $this->request->data['Transmittal']['remarks'];
+
+    }
    
     $userData = $this->Session->read('Auth');
     
     $view = new View(null, false);
     
-    $view->set(compact('drData','clientData','companyData','units', 'prepared', 'approved', 'contactPerson', 'remarks'));
+    $view->set(compact('drData','clientData','companyData','units', 'prepared', 'approved', 'contactPerson', 'remarks', 'quantityTransmittal','drQuantity'));
 
    
       $view->viewPath = 'Deliveries'.DS.'pdf';  
@@ -612,7 +620,10 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
     
         }else{
 
+        
+
         $output = $view->render('print_dr', false);
+
 
         }
         
@@ -652,9 +663,10 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
     
     $this->loadModel('Sales.Company');
 
+    $this->loadModel('Unit');
+
     if($this->request->data['Delivery']['print'] == 1){
 
-      $this->loadModel('Unit');
       $units = $this->Unit->getList();
 
       $this->Company->bind('Address');
@@ -675,9 +687,11 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
       $nameForm = "Transmittal";
 
     } else {
+
+      $units = $this->Unit->find('list',array('fields' => array('id','unit')));
+
+      //pr($units); exit;
       
-
-
       $this->Company->bind('Address');
 
       $this->Delivery->bindDelivery();

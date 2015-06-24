@@ -62,7 +62,7 @@
 							<td class="td-heigth" style="width:50px;border:1px solid #FFFFFF;">
 								<center>
 									<?php  $remainingQty = $drData['DeliveryDetail']['quantity'] - $drData['DeliveryDetail']['delivered_quantity']?>
-									<?php echo $remainingQty ?> 
+									<?php echo $quantityTransmittal ?> 
 									<span style="width:1000px;border:1px solid #FFFFFF;"></span>
 									
 								</center>

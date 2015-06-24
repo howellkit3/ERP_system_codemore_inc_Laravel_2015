@@ -68,8 +68,6 @@ $totalremaining = 0;
 										<div class="col-lg-8">
 										
 	                                     <?php 
-
-											
 	                                            echo $this->Form->input('DeliveryDetail.dr_uuid', array(
 	                                            								'class' => 'form-control item_type',
 							                                                    'label' => false,
@@ -85,20 +83,6 @@ $totalremaining = 0;
 							                                                    'value' => $deliveryEdit['DeliveryDetail']['id']
 							                                                    ));
                                             ?>
-
-                                            <?php 
-
-                                            	$limitquantity =  $totalremaining + $deliveryEdit['DeliveryDetail']['quantity'];
-
-	                                            echo $this->Form->input('DeliveryDetail.remaining_quantity', array(
-	                                            								'label' => false,
-							                                                    'hidden' => 'hidden',
-							                                                    'value' => $limitquantity,
-							                                                    'id' => 'quantity',
-							                                                    ));
-                                            ?>
-
-                                           
 
 										</div>
 									</div>	
@@ -154,12 +138,37 @@ $totalremaining = 0;
 									                                                    'label' => false,
 									                                                    'type' => 'text',
 									                                                    'required' => 'required',
-									                                                    'class' => 'form-control item_type datepik editable required quantityLimit',
+									                                                    'class' => 'form-control item_type datepik editable required quantityLimitHolder',
 									                                                    'value' => 
 									                                                    $deliveryEdit['DeliveryDetail']['quantity']
 
 									                                                   ));
 			                                        ?>
+
+			                                        <?php 
+			                                              echo $this->Form->input('DeliveryDetail.remaining', array(
+			                                            								'class' => 'form-control item_type',
+									                                                    'label' => false,
+									                                                    'type' => 'hidden',
+									                                                    'required' => 'required',
+									                                                    'class' => 'form-control item_type datepik editable required  quantityRemaining',
+									                                                    'value' => 
+									                                                    $deliveryEdit['DeliveryDetail']['quantity'] - $deliveryEdit['DeliveryDetail']['delivered_quantity']
+
+									                                                   ));
+			                                        ?>
+
+			                                        <?php 
+
+                                            	$limitquantity =  $totalremaining + $deliveryEdit['DeliveryDetail']['quantity'];
+
+	                                            echo $this->Form->input('DeliveryDetail.remaining_quantity', array(
+	                                            								'label' => false,
+							                                                    'hidden' => 'hidden',
+							                                                    'value' => $limitquantity,
+							                                                    'id' => 'quantityHolder',
+							                                                    ));
+                                            ?>
 
 			                                        <?php 
 					                                        echo $this->Form->input('DeliveryDetail.limitquantity', array('class' => 'form-control item_type',
@@ -196,7 +205,7 @@ $totalremaining = 0;
 									</div>
 
 								
-									<div class="form-group">
+									<!-- <div class="form-group">
 	                                			<label class="col-lg-2 control-label">Remarks</label>
 												<div class="col-lg-8">
 													<?php 
@@ -212,7 +221,7 @@ $totalremaining = 0;
 			                                        ?>
                                         
 										</div>
-									</div>
+									</div> -->
 
 									<div class="form-group">
 										<div class="col-lg-2"></div>
