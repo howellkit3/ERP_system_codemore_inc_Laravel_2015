@@ -471,12 +471,12 @@
 
 										<div class="form-group plusDisable">
                                             <label for="inputEmail1" class="col-lg-2 control-label ">Delivery Type</label>
-                                            <div class="col-lg-2">
+                                            <div class="col-lg-3">
                                                 <?php 
                                                     echo $this->Form->input('ClientOrderDeliverySchedule.0.delivery_type', array(
                                                         'options' => array('Once' => 'Once', 'Partial' => 'Partial'),
                                                         'label' => false,
-                                                        'class' => 'form-control col-lg-4 required OnceSelected sched required schedClone widthClientsOrder',
+                                                        'class' => 'form-control col-lg-4 required OnceSelected sched required schedClone widthClientsOrders',
                                                         'empty' => '---Select Delivery Type---'
                                                         
                                                     ));
@@ -529,12 +529,12 @@
 
 										<div class="form-group">
                                             <label for="inputEmail1" class="col-lg-2 control-label">Allowance</label>
-                                            <div class="col-lg-2">
+                                            <div class="col-lg-3">
                                                 <?php 
                                                     echo $this->Form->input('ClientOrderDeliverySchedule.0.allowance', array(
                                                         'options' => array('With charge' => 'With charge' , 'Without Charge' => 'Without charge'),
                                                         'label' => false,
-                                                        'class' => 'form-control col-lg-4 schedClone widthClientsOrder',
+                                                        'class' => 'form-control col-lg-4 schedClone widthClientsOrders',
                                                         'empty' => '---Select Allowance---'
                                                         
                                                     ));
