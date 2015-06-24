@@ -12,7 +12,7 @@ class SalesInvoiceController extends AccountingAppController {
 		
       	$invoiceData = $this->SalesInvoice->find('all', array(
                                           			'fields' => array(
-                                              			'id','sales_invoice_no','dr_uuid','statement_no'),
+                                              			'id','sales_invoice_no','dr_uuid','statement_no','status'),
                                         		));
       	
         $this->set(compact('invoiceData'));
@@ -328,7 +328,7 @@ class SalesInvoiceController extends AccountingAppController {
             Cache::write('paymentTerms', $paymentTermData);
         }
 
-        $companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')
+        $companyData = $this->Company->find('list', array('fields' => array('id', 'short_name')
                                                             ));
        
         $invoiceList = $this->SalesInvoice->find('list',array('fields' => array('id','dr_uuid'),

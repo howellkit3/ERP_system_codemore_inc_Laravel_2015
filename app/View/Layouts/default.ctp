@@ -42,7 +42,8 @@
 	            'jquery-ui',
 	            'libs/nifty-component',
 				'/css/font-awesome/css/font-awesome',
-				'bootstrap-tagsinput/bootstrap-tagsinput'
+				'bootstrap-tagsinput/bootstrap-tagsinput',
+				'sweet-alert'
 			));
 
 		 	echo $this->Html->script('jquery');
@@ -188,6 +189,7 @@
 	    	echo $this->Html->script('modalEffects');
 	    	echo $this->Html->script('modernizr.custom');
 	    	echo $this->Html->script('classie');
+	    	echo $this->Html->script('sweet-alert.min');
 	    	
 	        
 	    ?>

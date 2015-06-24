@@ -15,13 +15,13 @@ $objTpl = PHPExcel_IOFactory::load("./img/templates.xlsx");
             $amountUsd = number_format($usd,2);
 
             $objTpl->setActiveSheetIndex(2)
-                        ->setCellValue('A10'.$counter, $companyData[$invoiceList['SalesInvoice']['company_id']])
+                        ->setCellValue('A'.$counter, $companyData[$invoiceList['SalesInvoice']['company_id']])
                         ->setCellValue('B'.$counter, date('m/d/Y', strtotime($invoiceList['SalesInvoice']['created'])))
                         ->setCellValue('C'.$counter, $invoiceList['SalesInvoice']['dr_uuid'])
                         ->setCellValue('E'.$counter, $invoiceList['SalesInvoice']['sales_invoice_no'])
                         ->setCellValue('F'.$counter, $usd)
                         ->setCellValue('G13', $amountUsd)
-                        ->setCellValue('F15', 'USD'. $amountUsd);
+                        ->setCellValue('F15', 'USD '. $amountUsd);
 
             $counter++;  
         }

@@ -1,6 +1,7 @@
 <?php $this->Html->addCrumb('Sales', array('controller' => 'customer_sales', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Quotation', array('controller' => 'quotations', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('View', array('controller' => 'quotations', 'action' => 'view',$quotation['Quotation']['id'])); ?>
+<?php  echo $this->Html->script('Sales.sweet_alert');?>
 <?php echo $this->Html->script('Sales.custom');?>
 <?php echo $this->Html->css('redactor.css?v='.filemtime('css/redactor.css')); ?>
 <?php echo $this->Html->script('redactor/redactor/redactor_new.js?v='.filemtime('js/redactor/redactor/redactor_new.js'));?>
@@ -66,10 +67,14 @@
 
 					$status = (!$this->Status->isQuotationApproved($quotation['Quotation']['status'])) ? 'disabled' : '';
 
-					echo $this->Html->link('<i class="fa fa-times fa-lg"></i> Terminate ', array('controller' => 'quotations', 'action' => 'terminated',$quotation['Quotation']['id'],$quotation['Quotation']['uuid']),array('class' =>'btn btn-primary pull-right '.$status,'escape' => false)) ;
+					echo "<button class='btn btn-primary pull-right terminateQuotation ".$status."' data-uuid='".$quotation['Quotation']['uuid']."' data='".$quotation['Quotation']['id']."'><i class='fa fa-times fa-lg'></i>Terminate</button>";
+
+					//echo $this->Html->link('<i class="fa fa-times fa-lg"></i> Terminate ', array('controller' => 'quotations', 'action' => 'terminated',$quotation['Quotation']['id'],$quotation['Quotation']['uuid']),array('class' =>'btn btn-primary pull-right '.$status,'escape' => false)) ;
 				}else{
 
-					echo $this->Html->link('<i class="fa fa-times fa-lg"></i> Terminate ', array('controller' => 'quotations', 'action' => 'terminated',$quotation['Quotation']['id'],$quotation['Quotation']['uuid']),array('class' =>'btn btn-primary pull-right ','escape' => false,'disabled' => 'disabled')) ;	
+					echo "<button disabled='disabled' class='btn btn-primary pull-right terminateQuotation ".$status."' data-uuid='".$quotation['Quotation']['uuid']."' data='".$quotation['Quotation']['id']."'><i class='fa fa-times fa-lg'></i>Terminate</button>";
+
+					//echo $this->Html->link('<i class="fa fa-times fa-lg"></i> Terminate ', array('controller' => 'quotations', 'action' => 'terminated',$quotation['Quotation']['id'],$quotation['Quotation']['uuid']),array('class' =>'btn btn-primary pull-right ','escape' => false,'disabled' => 'disabled')) ;	
 				
 			}	
 		}		
@@ -81,20 +86,19 @@
 
 		if ( !empty($rolesPermissionData) ) {
 			//pr($rolesPermissionData);exit();
-                     if(in_array('4', $rolesPermissionData)){
+            if(in_array('4', $rolesPermissionData)){
 
-                        
-						echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i>Approved ', array('controller' => 'quotations', 'action' => 'approved',$quotation['Quotation']['id']),array('class' =>'btn btn-success pull-right '.$status.' '.$status1,'escape' => false)) ;
-                    }else{
-
-                         
-						echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i>Approved ', array('controller' => 'quotations', 'action' => 'approved',$quotation['Quotation']['id']),array('class' =>'not-active btn btn-info pull-right '.$status.' '.$status1,'escape' => false)) ;
-                    }
-                }else{
-                
-                  
-						echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i>Approved ', array('controller' => 'quotations', 'action' => 'approved',$quotation['Quotation']['id']),array('class' =>'not-active btn btn-info pull-right '.$status.' '.$status1,'escape' => false)) ;
-                }    
+ 				echo "<button class='btn btn-primary pull-right approvedQuotation ".$status." ".$status1."' data='".$quotation['Quotation']['id']."'><i class='fa fa-check-square-o fa-lg'></i>Approved</button>";
+				//echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i>Approved ', array('controller' => 'quotations', 'action' => 'approved',$quotation['Quotation']['id']),array('class' =>'btn btn-success pull-right '.$status.' '.$status1,'escape' => false)) ;
+            
+            }else{
+      			echo "<button class='not-active btn btn-primary pull-right approvedQuotation ".$status." ".$status1."' data='".$quotation['Quotation']['id']."'><i class='fa fa-check-square-o fa-lg'></i>Approved</button>";
+				//echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i>Approved ', array('controller' => 'quotations', 'action' => 'approved',$quotation['Quotation']['id']),array('class' =>'not-active btn btn-info pull-right '.$status.' '.$status1,'escape' => false)) ;
+            }
+        }else{
+            echo "<button class='not-active btn btn-primary pull-right approvedQuotation ".$status." ".$status1."' data='".$quotation['Quotation']['id']."'><i class='fa fa-check-square-o fa-lg'></i>Approved</button>";
+			// echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i>Approved ', array('controller' => 'quotations', 'action' => 'approved',$quotation['Quotation']['id']),array('class' =>'not-active btn btn-info pull-right '.$status.' '.$status1,'escape' => false)) ;
+        }    
 	
     	
     	

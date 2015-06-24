@@ -1,5 +1,5 @@
 <?php $this->Html->addCrumb('Receivable', array('controller' => 'sales_invoice', 'action' => 'receivable')); ?>
-
+<?php  echo $this->Html->script('Accounting.report');?>
 <?php echo $this->element('account_option'); ?>
 
 <div class="row">
@@ -35,7 +35,11 @@
 								<div class="tab-pane fade in active" id="tab-summary">
 									<?php
 		                               echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array('controller' => 'sales_invoice', 'action' => 'dr_summary',1),array('class' =>'btn btn-primary pull-right','escape' => false));
-		                            ?><br><br><br>
+
+		                            ?>
+		                           <!--  <button class="btn btn-primary pull-right printDR"><i class="fa fa-print fa-lg"></i> Print</button> -->
+		                            <br><br><br>
+
 									<div class="table-responsive">
 										
 										<table class="table table-striped table-hover">

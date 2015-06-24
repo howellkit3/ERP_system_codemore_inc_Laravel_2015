@@ -1,11 +1,11 @@
 <?php
-// create new empty worksheet and set default font
-$this->PhpExcel->createWorksheet()
-    ->setDefaultFont('Calibri', 12);
+    // create new empty worksheet and set default font
+    $this->PhpExcel->createWorksheet()
+        ->setDefaultFont('Calibri', 12);
 
-$objTpl = PHPExcel_IOFactory::load("./img/templates.xlsx");
+    $objTpl = PHPExcel_IOFactory::load("./img/templates.xlsx");
 
-// add data
+    // add data
     $counter = 8;
     foreach ($invoiceData as $key => $invoiceList) {
 
@@ -59,28 +59,28 @@ $objTpl = PHPExcel_IOFactory::load("./img/templates.xlsx");
         }
         
         $objTpl->setActiveSheetIndex(3)
-                    ->setCellValue('C'.$counter, $companyData[$invoiceList['SalesInvoice']['company_id']])
-                    ->setCellValue('D'.$counter, $phpPrice)
-                    ->setCellValue('E'.$counter, $usdPrice)
-                    ->setCellValue('F'.$counter, $totalP)
-                    ->setCellValue('G'.$counter, $totalPhpSale)
-                    ->setCellValue('H'.$counter, $percent)
-                    ->setCellValue('J'.$counter, $paymentTermData[$invoiceList['SalesInvoice']['payment_terms']])
-                    ->setCellValue('K'.$counter, date('m/d/Y', strtotime($invoiceList['SalesInvoice']['schedule'])));
+                ->setCellValue('C'.$counter, $companyData[$invoiceList['SalesInvoice']['company_id']])
+                ->setCellValue('D'.$counter, $phpPrice)
+                ->setCellValue('E'.$counter, $usdPrice)
+                ->setCellValue('F'.$counter, $totalP)
+                ->setCellValue('G'.$counter, $totalPhpSale)
+                ->setCellValue('H'.$counter, $percent)
+                ->setCellValue('J'.$counter, $paymentTermData[$invoiceList['SalesInvoice']['payment_terms']])
+                ->setCellValue('K'.$counter, date('m/d/Y', strtotime($invoiceList['SalesInvoice']['schedule'])));
 
         $counter++;  
        
     }
  
-//prepare download
-$filename = mt_rand(1,100000).'.xlsx'; //just some random filename
-header('Content-Type: application/vnd.ms-office');
-header('Content-Disposition: attachment;filename="'.$filename.'"');
-header('Cache-Control: max-age=0');
- 
-$objWriter = PHPExcel_IOFactory::createWriter($objTpl, 'Excel2007');  //downloadable file is in Excel 2003 format (.xls)
-$objWriter->save('php://output');  //send it to user, of course you can save it to disk also!
- 
-exit; //done.. exiting!
+    //prepare download
+    $filename = mt_rand(1,100000).'.xlsx'; //just some random filename
+    header('Content-Type: application/vnd.ms-office');
+    header('Content-Disposition: attachment;filename="'.$filename.'"');
+    header('Cache-Control: max-age=0');
+     
+    $objWriter = PHPExcel_IOFactory::createWriter($objTpl, 'Excel2007');  //downloadable file is in Excel 2003 format (.xls)
+    $objWriter->save('php://output');  //send it to user, of course you can save it to disk also!
+     
+    exit; //done.. exiting!
 
 ?>

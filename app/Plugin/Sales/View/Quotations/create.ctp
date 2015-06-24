@@ -131,8 +131,6 @@
 											</div>
 										</div>
 
-
-
 	                                    <div class="form-group">
 	                                    	<label class="col-lg-2 control-label">Attention</label>
 											<div class="col-lg-8">
