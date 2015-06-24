@@ -577,10 +577,13 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
     $approved = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
                                                             'conditions' => array('User.id' => $drData['DeliveryDetail']['created_by'])
                                                             ));
+    //pr($this->request->data); exit;
 
     if(!empty($this->request->data['Transmittal']['contact_person'])){
 
       $contactPerson = $this->request->data['Transmittal']['contact_person'];
+
+      $quantityTransmittal = $this->request->data['Transmittal']['quantity'];
 
     }
 
@@ -590,7 +593,7 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
     
     $view = new View(null, false);
     
-    $view->set(compact('drData','clientData','companyData','units', 'prepared', 'approved', 'contactPerson', 'remarks'));
+    $view->set(compact('drData','clientData','companyData','units', 'prepared', 'approved', 'contactPerson', 'remarks', 'quantityTransmittal'));
 
    
       $view->viewPath = 'Deliveries'.DS.'pdf';  

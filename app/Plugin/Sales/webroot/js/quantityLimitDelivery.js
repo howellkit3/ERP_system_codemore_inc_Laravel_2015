@@ -1,9 +1,9 @@
 $( document ).ready(function() {
 
-	var quantityValue = $('#quantity').val();
 
 	$("body").on('keyup','.quantityLimit', function(e){
 
+		var quantityValue = parseInt($('#quantity').val());
 
 		var myVal = $(this).attr('value');
 
@@ -14,7 +14,40 @@ $( document ).ready(function() {
 		var isText = $(this);
 		var allVal = 0;
 		
-	    $($('.quantityLimit')).each(function() {
+	    //$($('.quantityLimit')).each(function() {
+	     	allVal += parseInt($(this).val());
+	     	
+		//});
+		console.log(allVal)
+		console.log(quantityValue);
+		if ( allVal > quantityValue ){
+
+			alert('Max Quantity');
+			isText.val(myVal);
+			allVal = total;
+				
+		}
+
+	});
+
+	$("body").on('keyup','.quantityLimitHolder', function(e){
+
+		var quantityValue = $('#quantityHolder').val();
+
+		//var RemainingValue = $('.quantityRemaining').text();
+
+		//alert(RemainingValue);
+
+		var myVal = $(this).attr('value');
+
+		var realVal = $(this).val();
+		var fields = $('.quantityLimitHolder');
+		var total = '';
+		var limit = '';
+		var isText = $(this);
+		var allVal = 0;
+		
+	    $($('.quantityLimitHolder')).each(function() {
 	     	allVal += parseInt($(this).val());
 	     	
 		});
@@ -27,6 +60,8 @@ $( document ).ready(function() {
 			allVal = total;
 				
 		}
+
+		
 
 	});
 
@@ -51,25 +86,25 @@ $( document ).ready(function() {
 
 	});
 
-	$("body").on('keyup','.quantityLimit', function(e){
+	// $("body").on('keyup','.quantityLimit', function(e){
 
    
 
-    var allVal = 0;
-    var isText = $(this);
-    var quantityValue = $('#quantity').val();
-    var Value = $('.quantityLimit').val();
-      //alert(quantityValue);  
+ //    var allVal = 0;
+ //    var isText = $(this);
+ //    var quantityValue = $('#quantity').val();
+ //    var Value = $('.quantityLimit').val();
+ //      //alert(quantityValue);  
 
       
-    if ( Value > quantityValue ){
+ //    if ( Value > quantityValue ){
 
-        alert('Max Quantity');
-        isText.val(quantityValue);
+ //        alert('Max Quantity');
+ //        isText.val(quantityValue);
 
-    }
+ //    }
     
-  });
+ //  });
 
 	$("body").on('keyup','.addquantityLimit', function(e){
 

@@ -73,13 +73,7 @@ $totalremaining = 0;
                         </td>
 
                         <td>
-                            <?php 
-                                echo $this->Html->link('<span class="fa-stack">
-                                    <i class="fa fa-square fa-stack-2x"></i>
-                                    <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit</font></span>
-                                    </span> ', array('controller' => 'deliveries', 'action' => 'delivery_edit',$deliveryDataList['Delivery']['dr_uuid'], $deliveryDataList['Delivery']['schedule_uuid']),array('class' =>' table-link','escape' => false,'title'=>'Review Inquiry'));
-                            ?>
-
+                           
                               <a data-toggle="modal" href="#myModalPrint<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" class="table-link "><i class="fa fa-lg "></i><span class="fa-stack">
                                   <i class="fa fa-square fa-stack-2x"></i>
                                   <i class="fa  fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Print </font></span></a>
@@ -285,23 +279,9 @@ $totalremaining = 0;
    jQuery("#ClientOrderDeliveryScheduleDeliveryReplacingForm").validate();
  });
 
-  $("body").on('keyup','.quantityLimit', function(e){
 
-    var allVal = 0;
-    var isText = $(this);
-    var quantityValue = $('#quantity').val();
-    var Value = $('.quantityLimit').val();
-      //alert(quantityValue);  
-
-      
-    if ( Value > quantityValue ){
-
-        alert('Max Quantity');
-        isText.val(quantityValue);
-
-    }
     
-  });
+
 
 
 </script>
