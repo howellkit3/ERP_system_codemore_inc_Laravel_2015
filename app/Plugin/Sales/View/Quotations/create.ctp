@@ -138,12 +138,12 @@
 											<div class="col-lg-8">
 												<?php 
 		                                            echo $this->Form->input('Quotation.attention_details', array(
-		                                            								'type' => 'select',
-		                                            								'class' => 'form-control item_type contacpersonlist',
-								                                                    'label' => false,
-								                                                    'placeholder' => 'Attention',
-								                                                    'id' => 'QuotationAttentionDetails',
-								                                                    'empty' => '--Select Contact Person--'));
+                        								'type' => 'select',
+                        								'class' => 'form-control item_type contacpersonlists',
+	                                                    'label' => false,
+	                                                    'placeholder' => 'Attention',
+	                                                    'id' => 'QuotationAttentionDetails',
+	                                                    'empty' => '--Select Contact Person--'));
 	                                            ?>
 
 											</div>
@@ -154,10 +154,10 @@
 											<div class="col-lg-8">
 												<?php 
 		                                            echo $this->Form->input('QuotationDetail.size', array(
-		                                            								'class' => 'form-control item_type',
-								                                                    'type' => 'text',
-								                                                    'label' => false,
-								                                                    'placeholder' => 'Size'));
+                        								'class' => 'form-control item_type',
+	                                                    'type' => 'text',
+	                                                    'label' => false,
+	                                                    'placeholder' => 'Size'));
 	                                            ?>
 												  
 											</div>
@@ -182,10 +182,10 @@
 												<div class="col-lg-2">
 													<?php 
 			                                            echo $this->Form->input('QuotationItemDetail.0.quantity', array(
-			                                            								'class' => 'form-control item_type number required',
-									                                                    'type' => 'text',
-									                                                    'label' => false,
-									                                                    'placeholder' => 'Quantity'));
+                            								'class' => 'form-control item_type number required',
+		                                                    'type' => 'text',
+		                                                    'label' => false,
+		                                                    'placeholder' => 'Quantity'));
 		                                            ?>
 													 
 												</div>
@@ -208,11 +208,11 @@
 
 												<div class="col-lg-2">
 												<?php echo $this->Form->input('QuotationItemDetail.0.unit_price_currency_id', array(
-														                                'options' => array($currencyData),  
-														                                'label' => false,
-														                                'class' => 'form-control required',
-														                                'empty' => '-Select Currency-'
-														                                 )); 
+					                                'options' => array($currencyData),  
+					                                'label' => false,
+					                                'class' => 'form-control required',
+					                                'empty' => '-Select Currency-'
+					                                 )); 
 
 					                            ?>
 												</div>
@@ -220,12 +220,12 @@
 												<div class="col-lg-3">
 													<?php 
 			                                            echo $this->Form->input('QuotationItemDetail.0.unit_price', array(
-			                                            								'class' => 'form-control item_type unitprice number required',
-									                                                    'data' => 'unitprice',
-									                                                    'type' => 'text',
-									                                                    'label' => false,
-									                                                    'data-section' => 'quotationItemDetail',
-									                                                    'placeholder' => 'Unit Price'));
+                            								'class' => 'form-control item_type unitprice number required',
+		                                                    'data' => 'unitprice',
+		                                                    'type' => 'text',
+		                                                    'label' => false,
+		                                                    'data-section' => 'quotationItemDetail',
+		                                                    'placeholder' => 'Unit Price'));
 		                                            ?>
 													
 												</div>
@@ -248,11 +248,11 @@
 												<div class="col-lg-8">
 													<?php 
 			                                            echo $this->Form->input('QuotationItemDetail.0.vat_price', array(
-			                                            								'class' => 'form-control item_type vatprice',
-									                                                    'type' => 'text',
-									                                                    'label' => false,
-									                                                    'readonly' => 'readonly',
-									                                                    'placeholder' => 'Vat Price'));
+                            								'class' => 'form-control item_type vatprice',
+		                                                    'type' => 'text',
+		                                                    'label' => false,
+		                                                    'readonly' => 'readonly',
+		                                                    'placeholder' => 'Vat Price'));
 		                                            ?>
 													
 												</div>
@@ -273,11 +273,11 @@
 												<div class="col-lg-8">
 													<?php 
 			                                            echo $this->Form->input('QuotationItemDetail.0.material', array(
-			                                            								'class' => 'form-control item_type',
-									                                                    'alt' => 'address1',
-									                                                    'type' => 'text',
-									                                                    'label' => false,
-									                                                    'placeholder' => 'Material'));
+                            								'class' => 'form-control item_type',
+		                                                    'alt' => 'address1',
+		                                                    'type' => 'text',
+		                                                    'label' => false,
+		                                                    'placeholder' => 'Material'));
 		                                            ?>
 													
 												</div>
@@ -312,9 +312,9 @@
 											<div class="col-lg-8">
 												<?php 
 		                                            echo $this->Form->input('QuotationDetail.color', array(
-		                                            								'class' => 'form-control item_type',
-								                                                    'label' => false,
-								                                                    'placeholder' => 'Color'));
+                        								'class' => 'form-control item_type',
+	                                                    'label' => false,
+	                                                    'placeholder' => 'Color'));
 	                                            ?>
 											</div>
 										</div>
@@ -324,9 +324,9 @@
 											<div class="col-lg-8">
 												<?php 
 		                                            echo $this->Form->input('QuotationDetail.process', array(
-		                                            								'class' => 'form-control item_type',
-								                                                    'label' => false,
-								                                                    'placeholder' => 'Process'));
+                        								'class' => 'form-control item_type',
+	                                                    'label' => false,
+	                                                    'placeholder' => 'Process'));
 	                                            ?>
 											</div>
 										</div>
@@ -336,9 +336,9 @@
 											<div class="col-lg-8">
 												<?php 
 		                                            echo $this->Form->input('QuotationDetail.packaging', array(
-		                                            								'class' => 'form-control item_type',
-								                                                    'label' => false,
-								                                                    'placeholder' => 'Packaging'));
+                        								'class' => 'form-control item_type',
+	                                                    'label' => false,
+	                                                    'placeholder' => 'Packaging'));
 	                                            ?>
 											</div>
 										</div>
@@ -348,9 +348,9 @@
 											<div class="col-lg-8">
 												<?php 
 		                                            echo $this->Form->input('QuotationDetail.other_specs', array(
-		                                            								'class' => 'form-control item_type',
-								                                                    'label' => false,
-								                                                    'placeholder' => 'Other Specs'));
+                        								'class' => 'form-control item_type',
+	                                                    'label' => false,
+	                                                    'placeholder' => 'Other Specs'));
 	                                            ?>
 											</div>
 										</div>
@@ -375,10 +375,10 @@
 											<div class="col-lg-8">
 												<?php 
 		                                            echo $this->Form->input('Quotation.validity', array(
-		                                            								'type' => 'text',
-		                                            								'class' => 'form-control item_type datepick',
-								                                                    'label' => false,
-								                                                    'placeholder' => 'Validity'));
+	                    								'type' => 'text',
+	                    								'class' => 'form-control item_type datepick',
+	                                                    'label' => false,
+	                                                    'placeholder' => 'Validity'));
 	                                            ?>
 											</div>
 										</div>
@@ -388,9 +388,9 @@
 											<div class="col-lg-8">
 												<?php 
 		                                            echo $this->Form->input('QuotationDetail.remarks', array(
-		                                            								'class' => 'form-control item_type',
-								                                                    'label' => false,
-								                                                    'placeholder' => 'Remarks'));
+                        								'class' => 'form-control item_type',
+	                                                    'label' => false,
+	                                                    'placeholder' => 'Remarks'));
 	                                            ?>
 											</div>
 										</div>

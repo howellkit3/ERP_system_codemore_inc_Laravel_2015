@@ -28,7 +28,7 @@ $(document).ready(function() {
 		
 
 	$('.contacpersonlist').change(function(){
-			$('.option-append-contact').remove();
+			//$('.option-append-contact1').remove();
 			var contactID = $(this).val();
 
 			var selected = $('#quotations_attention_details').val();
@@ -41,13 +41,13 @@ $(document).ready(function() {
 				async: false,
 				dataType: "json",
 				success: function(data) {
-					
+					//$('.option-append-contact').remove();
 					$.each(data, function(key, value) {
 						
 						if (value.ContactPerson.id == selected) {
-							$option = "<option class='option-append-contact' value="+ value.ContactPerson.id + ">"+ value.ContactPerson.firstname+' '+value.ContactPerson.lastname +"</option>";	
+							$option = "<option class='option-append-contact1' value="+ value.ContactPerson.id + ">"+ value.ContactPerson.firstname+' '+value.ContactPerson.lastname +"</option>";	
 						} else {
-							$option = "<option class='option-append-contact' value="+ value.ContactPerson.id + ">"+ value.ContactPerson.firstname+' '+value.ContactPerson.lastname +"</option>";
+							$option = "<option class='option-append-contact1' value="+ value.ContactPerson.id + ">"+ value.ContactPerson.firstname+' '+value.ContactPerson.lastname +"</option>";
 							// $option = "<option class='option-append-contact'  value="+value.ItemTypeHolder.id+">"+value.ItemTypeHolder.name+"</option>";
 						}
 					     $('#QuotationAttentionDetails').append($option);
