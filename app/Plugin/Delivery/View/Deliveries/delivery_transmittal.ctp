@@ -280,7 +280,7 @@
                               </div>
                           </div>   
 
-                        <!-- <div class="form-group">
+                        <div class="form-group">
                             <label class="col-lg-2 control-label">Remarks</label>
                              <div class="col-lg-8">
                                 <?php echo $this->Form->textarea('DeliveryDetail.remarks', array(
@@ -289,7 +289,7 @@
                                 'value' => $drData['DeliveryDetail']['remarks']));
                             ?>
                             </div>
-                          </div>    --> 
+                          </div>    
 
                         <?php } ?>   
 

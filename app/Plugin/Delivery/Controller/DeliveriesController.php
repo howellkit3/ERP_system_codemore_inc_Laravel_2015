@@ -663,9 +663,10 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
     
     $this->loadModel('Sales.Company');
 
+    $this->loadModel('Unit');
+
     if($this->request->data['Delivery']['print'] == 1){
 
-      $this->loadModel('Unit');
       $units = $this->Unit->getList();
 
       $this->Company->bind('Address');
@@ -686,9 +687,11 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
       $nameForm = "Transmittal";
 
     } else {
+
+      $units = $this->Unit->find('list',array('fields' => array('id','unit')));
+
+      //pr($units); exit;
       
-
-
       $this->Company->bind('Address');
 
       $this->Delivery->bindDelivery();
