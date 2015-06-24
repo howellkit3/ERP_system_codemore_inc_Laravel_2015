@@ -53,15 +53,20 @@
 							<td class="td-heigth" style="width:95px;border:1px solid #FFFFFF;"><?php echo $clientData['ClientOrder']['po_number']?></td>
 							<td class="td-heigth" style="width:300px;border:1px solid #FFFFFF;"><center><?php echo ucfirst($clientData['Product']['name'])?></center></td>
 							<td class="td-heigth" style="width:220px;border:1px solid #FFFFFF;">
-								<center>
-									<?php echo $drData['DeliveryDetail']['quantity']?> x
+								<center> 
+									<?php if(!empty($drQuantity)){ ?>
+											<?php echo $drQuantity ?> x
+											<?php $totalQty = $clientData['QuotationItemDetail']['quantity'] * $drQuantity?>
+									<?php }else{ ?>
+											 <?php $totalQty = $clientData['QuotationItemDetail']['quantity'] * $drData['DeliveryDetail']['quantity']?>
+											 <?php echo $drData['DeliveryDetail']['quantity']  ?> x
+									 <?php } ?>
 									<?php echo $clientData['QuotationItemDetail']['quantity']?> /
 									<?php echo $units[$clientData['QuotationItemDetail']['quantity_unit_id']]?>
 								</center>
 							</td>
 							<td class="td-heigth" style="width:130px;border:1px solid #FFFFFF;">
 								<center>
-									<?php $totalQty = $clientData['QuotationItemDetail']['quantity'] * $drData['DeliveryDetail']['quantity']?>
 									<?php echo $totalQty ?> /
 									<?php echo $units[$clientData['QuotationItemDetail']['quantity_unit_id']]?>
 								</center>
