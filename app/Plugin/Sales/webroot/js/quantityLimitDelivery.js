@@ -28,6 +28,11 @@ $( document ).ready(function() {
 				
 		}
 
+		if (allVal <= 0){
+			alert('Quantity should be greater than 0');
+			isText.val(myVal);		
+		}
+
 	});
 
 	$("body").on('keyup','.quantityLimitHolder', function(e){
@@ -61,7 +66,10 @@ $( document ).ready(function() {
 				
 		}
 
-		
+		if (allVal <= 0){
+			alert('Quantity should be greater than 0');
+			isText.val(myVal);		
+		}
 
 	});
 
@@ -83,6 +91,8 @@ $( document ).ready(function() {
         isText.val(quantityValue);      
           
       }
+
+
 
 	});
 
@@ -128,6 +138,11 @@ $( document ).ready(function() {
 				allVal = total;
 				
 		}
+
+		if (allVal <= 0){
+			alert('Quantity should be greater than 0');
+			isText.val(total);		
+		}
 		
 	});
 
@@ -154,6 +169,8 @@ $( document ).ready(function() {
         isText.val(quantityValue);      
           
       }
+
+      
       
     });
 
