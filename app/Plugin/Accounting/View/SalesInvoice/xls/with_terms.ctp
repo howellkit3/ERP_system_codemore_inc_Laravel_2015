@@ -3,7 +3,7 @@
 $this->PhpExcel->createWorksheet()
     ->setDefaultFont('Calibri', 12);
 
-$objTpl = PHPExcel_IOFactory::load("./img/template.xlsx");
+$objTpl = PHPExcel_IOFactory::load("./img/templates.xlsx");
 
 // add data
     $counter = 8;
