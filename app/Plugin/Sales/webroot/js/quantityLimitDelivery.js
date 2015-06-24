@@ -24,7 +24,7 @@ $( document ).ready(function() {
 
 			alert('Max Quantity');
 			isText.val(myVal);
-			allVal = total;
+			//allVal = total;
 				
 		}
 
@@ -62,7 +62,7 @@ $( document ).ready(function() {
 
 			alert('Max Quantity');
 			isText.val(myVal);
-			allVal = total;
+			//allVal = total;
 				
 		}
 
@@ -133,9 +133,9 @@ $( document ).ready(function() {
 
 				var totalDeduction = parseInt(allVal) - parseInt(quantityValue);
 				alert('Max Quantity');
-				total = isText.val() - totalDeduction;
+				//total = isText.val() - totalDeduction;
 				isText.val(total);
-				allVal = total;
+				//allVal = total;
 				
 		}
 
@@ -170,7 +170,7 @@ $( document ).ready(function() {
           
       }
 
-      
+
       
     });
 
