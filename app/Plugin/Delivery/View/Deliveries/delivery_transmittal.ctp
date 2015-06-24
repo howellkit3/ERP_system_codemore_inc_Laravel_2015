@@ -245,11 +245,10 @@
                         <label class="col-lg-2 control-label">Quantity</label>
                         <div class="col-lg-8">
                           <?php 
-                            echo $this->Form->input('Transmittal.quantity', array(
+                            echo $this->Form->input('DeliveryDetail.quantity', array(
                             'class' => 'form-control item_type quantityLimit',
                             'label' => false,
                             'required' => 'required',
-                            'readonly' => 'readonly',
                             'placeholder' => 'Item Quantity',
                             'value' => $drData['DeliveryDetail']['quantity'] - $drData['DeliveryDetail']['delivered_quantity'] ));
 
@@ -270,7 +269,7 @@
                             <label class="col-lg-2 control-label">Unit</label>
                               <div class="col-lg-8">
                               <?php 
-                              echo $this->Form->input('Transmittal.unit', array(
+                              echo $this->Form->input('DeliveryDetail.unit', array(
                               'class' => 'form-control item_type',
                               'label' => false,
                               'required' => 'required',
@@ -281,17 +280,16 @@
                               </div>
                           </div>   
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label class="col-lg-2 control-label">Remarks</label>
                              <div class="col-lg-8">
-                                <?php echo $this->Form->textarea('Transmittal.remarks', array(
+                                <?php echo $this->Form->textarea('DeliveryDetail.remarks', array(
                                 'class' => 'form-control item_type',
                                 'label' => false,
-                                'readonly' => 'readonly',
                                 'value' => $drData['DeliveryDetail']['remarks']));
                             ?>
                             </div>
-                          </div>    
+                          </div>    --> 
 
                         <?php } ?>   
 

@@ -578,6 +578,11 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
                                                             'conditions' => array('User.id' => $drData['DeliveryDetail']['created_by'])
                                                             ));
     //pr($this->request->data); exit;
+    if(!empty($this->request->data['DeliveryDetail']['quantity'])){
+
+    $drQuantity = $this->request->data['DeliveryDetail']['quantity'];
+
+    }
 
     if(!empty($this->request->data['Transmittal']['contact_person'])){
 
@@ -585,15 +590,15 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
 
       $quantityTransmittal = $this->request->data['Transmittal']['quantity'];
 
-    }
+      $remarks = $this->request->data['Transmittal']['remarks'];
 
-    $remarks = $this->request->data['Transmittal']['remarks'];
+    }
    
     $userData = $this->Session->read('Auth');
     
     $view = new View(null, false);
     
-    $view->set(compact('drData','clientData','companyData','units', 'prepared', 'approved', 'contactPerson', 'remarks', 'quantityTransmittal'));
+    $view->set(compact('drData','clientData','companyData','units', 'prepared', 'approved', 'contactPerson', 'remarks', 'quantityTransmittal','drQuantity'));
 
    
       $view->viewPath = 'Deliveries'.DS.'pdf';  
@@ -615,7 +620,10 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
     
         }else{
 
+        
+
         $output = $view->render('print_dr', false);
+
 
         }
         
