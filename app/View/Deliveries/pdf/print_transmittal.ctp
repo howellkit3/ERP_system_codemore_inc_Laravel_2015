@@ -6,7 +6,7 @@
   height: 100%;background-repeat:no-repeat;">
 	<div class="col-lg-12">
 		<div class="main-box main-pdf" >
-			<table class="layout" style="line-height:5px;">
+			<table class="layout" style="line-height:0px;">
 				<thead>
 					<tr>
 						<td style="width:550px;"> </td>
@@ -23,6 +23,7 @@
 					</tr>
 				</thead>
 			</table>
+
 			<table class="layout" style="line-height:50px; width:430px;" >
 				<thead >
 					<tr >
@@ -34,7 +35,20 @@
 					
 				</thead>
 			</table>
-			<table class="table table-bordered" style="width:0px; line-height:85px;">
+
+			<table class="layout" style="line-height:-10px; width:100px;" >
+				<thead >
+					<tr >
+						<td class="td-heigth" style="width:25px;border:1px solid #FFFFFF;"> </td>
+						<td >
+							<?php echo $contactPerson;?>
+						</td>
+					</tr>
+					
+				</thead>
+			</table>
+
+			<table class="table table-bordered" style="width:0px; line-height:62px;">
 				<thead>
 					<tr>
 						<td class="td-heigth" style="width:20px;border:1px solid #FFFFFF;"></td>
@@ -54,8 +68,11 @@
 								</center>
 							</td>
 							<td class="td-heigth" style="width:100px;border:1px solid #FFFFFF;"> </td>
-							<td class="td-heigth" style="width:270px;border:1px solid #FFFFFF;">
+							<td class="td-heigth" style="width:100px;border:1px solid #FFFFFF;">
 									/<?php echo $units[$clientData['QuotationItemDetail']['quantity_unit_id']]?>
+							</td>
+							<td class="td-heigth" style="width:20px;border:1px solid #FFFFFF;">
+									<?php echo $remarks?>
 							</td>
 							<td class="td-heigth" style="width:270px;border:1px solid #FFFFFF;"> </td>
 						</tr>
@@ -68,7 +85,7 @@
 				<thead>
 					<tr>
 						<td class="td-heigth" style="width:110px;border:1px solid #FFFFFF;"> </td>
-						<td class="td-heigth" style="width:115px;border:1px solid #FFFFFF;"><center><?php echo ucfirst($prepared['User']['first_name'])?> <?php echo ucfirst($prepared['User']['last_name'])?></center></td>
+						<td class="td-heigth" style="width:70px;border:1px solid #FFFFFF;"><center><?php echo ucfirst($prepared['User']['first_name'])?> <?php echo ucfirst($prepared['User']['last_name'])?></center></td>
 						<td class="td-heigth" style="width:120px;border:1px solid #FFFFFF;"> </td>
 						<td class="td-heigth" style="width:115px;border:1px solid #FFFFFF;"><center><?php echo ucfirst($approved['User']['first_name'])?> <?php echo ucfirst($approved['User']['last_name'])?></center></td>
 						<td class="td-heigth" style="width:300px;border:1px solid #FFFFFF;"> </td>

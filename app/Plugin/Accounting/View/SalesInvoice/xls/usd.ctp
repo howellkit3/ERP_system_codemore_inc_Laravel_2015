@@ -1,45 +1,42 @@
 <?php
-// create new empty worksheet and set default font
+
 $this->PhpExcel->createWorksheet()
     ->setDefaultFont('Calibri', 12);
 
-// define table cells
-$table = array(
-    array('label' => __('CUSTOMER')),
-    array('label' => __('DATE')),
-    array('label' => __('DR#')),
-    array('label' => __('CM/DM#')),
-    array('label' => __('SI#')),
-    array('label' => __('Total Amount PHP')),
-    array('label' => __('Date Counter'))
-);
-
-// add heading with different font and bold text
-$this->PhpExcel->addTableHeader($table, array('name' => 'Cambria', 'bold' => true));
+$objTpl = PHPExcel_IOFactory::load("./img/templates.xlsx");
 
 // add data
+    $counter = 10;
+    foreach ($invoiceData as $key => $invoiceList) {
 
-foreach ($invoiceData as $invoiceList){
+       if ($invoiceList['SalesInvoice']['unit_price_currency_id'] == 2) {
 
-    if ($invoiceList['SalesInvoice']['unit_price_currency_id'] == 2) {
+            $usd = $invoiceList['SalesInvoice']['quantity'] * $invoiceList['SalesInvoice']['unit_price'];
+            $amountUsd = number_format($usd,2);
 
-        $usd = $invoiceList['SalesInvoice']['quantity'] * $invoiceList['SalesInvoice']['unit_price'];
-        $amountUsd = number_format($usd,2);
+            $objTpl->setActiveSheetIndex(2)
+                        ->setCellValue('A10'.$counter, $companyData[$invoiceList['SalesInvoice']['company_id']])
+                        ->setCellValue('B'.$counter, date('m/d/Y', strtotime($invoiceList['SalesInvoice']['created'])))
+                        ->setCellValue('C'.$counter, $invoiceList['SalesInvoice']['dr_uuid'])
+                        ->setCellValue('E'.$counter, $invoiceList['SalesInvoice']['sales_invoice_no'])
+                        ->setCellValue('F'.$counter, $usd)
+                        ->setCellValue('G13', $amountUsd)
+                        ->setCellValue('F15', 'USD'. $amountUsd);
 
-        $this->PhpExcel->addTableRow(array(
-            $companyData[$invoiceList['SalesInvoice']['company_id']],
-            date('m/d/Y', strtotime($invoiceList['SalesInvoice']['created'])),
-            $invoiceList['SalesInvoice']['dr_uuid'],
-            ' ',
-            $invoiceList['SalesInvoice']['sales_invoice_no'],
-            $amountUsd,
-            ' '
-        ));
-    }  
-}
+            $counter++;  
+        }
+    }
+ 
+//prepare download
+$filename = mt_rand(1,100000).'.xlsx'; //just some random filename
+header('Content-Type: application/vnd.ms-office');
+header('Content-Disposition: attachment;filename="'.$filename.'"');
+header('Cache-Control: max-age=0');
+ 
+$objWriter = PHPExcel_IOFactory::createWriter($objTpl, 'Excel2007');  //downloadable file is in Excel 2003 format (.xls)
+$objWriter->save('php://output');  //send it to user, of course you can save it to disk also!
+ 
+exit; //done.. exiting!
 
-
-// close table and output
-$this->PhpExcel->addTableFooter()
-    ->output($invoiceList['SalesInvoice']['sales_invoice_no'].'.xlsx');
 ?>
+

@@ -25,7 +25,7 @@
 
       <header class="main-box-header clearfix">
 
-        <h2 class="pull-left"><b>Delivery Schedule</b></h2>
+        <h2 class="pull-left"><b>Transmittal Records</b></h2>
 
       </header>
 
@@ -35,17 +35,15 @@
           <table class="table table-striped table-hover ">
             <thead>
             <tr >
+              <th class=""><a href="#"><span>Transmittal #</span></a></th>
               <th class=""><a href="#"><span>Delivery Receipt #</span></a></th>
-              <th class=""><a href="#"><span>Schedule</span></a></th>
-              <th class=""><a href="#"><span>Location</span></a></th>
               <th class=""><a href="#"><span>Quantity</span></a></th>
-              <th class=""><a href="#"><span>Remaining</span></a></th>
-              <th class=""><a href="#"><span>Status</span></a></th>
-              <th class=""><a href="#"><span>Action</span></a></th> 
+              <th class=""><a href="#"><span>Receiver</span></a></th>
+              <th class=""><a href="#"><span>Remarks</span></a></th>
             </tr>
             </thead>
 
-            <?php echo $this->element('delivery_replacing_table'); ?>   
+            <?php echo $this->element('delivery_transmittal_table'); ?>   
 
           </table>
           </div>

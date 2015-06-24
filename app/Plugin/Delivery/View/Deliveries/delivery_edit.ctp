@@ -15,7 +15,7 @@ $totalremaining = 0;
 				<header class="main-box-header clearfix">
 					                    
 					<h1 class="pull-left">
-						Edit Product
+						Edit Delivery Receipt
 					</h1>
 
 				<?php //foreach ($deliveryEdit as $deliveryDataList): ?>	
