@@ -285,6 +285,7 @@ CREATE TABLE `transmittals` (
 ) ENGINE=INNODB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 ALTER TABLE `koufu_delivery`.`transmittals` ADD COLUMN `contact_person` VARCHAR(30) NULL AFTER `dr_uuid`;
+ALTER TABLE `koufu_delivery`.`transmittals` ADD COLUMN `remarks` VARCHAR(60) NULL AFTER `quantity`;
 
 #NOTE: SELECT KOUFU ACCOUNTING DATABASE ----
 /** bien added this 06/15/2015  */

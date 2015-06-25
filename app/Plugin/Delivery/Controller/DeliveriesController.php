@@ -577,7 +577,7 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
     $approved = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
                                                             'conditions' => array('User.id' => $drData['DeliveryDetail']['created_by'])
                                                             ));
-    //pr($this->request->data); exit;
+
     if(!empty($this->request->data['DeliveryDetail']['quantity'])){
 
     $drQuantity = $this->request->data['DeliveryDetail']['quantity'];
@@ -600,7 +600,6 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
     
     $view->set(compact('drData','clientData','companyData','units', 'prepared', 'approved', 'contactPerson', 'remarks', 'quantityTransmittal','drQuantity'));
 
-   
       $view->viewPath = 'Deliveries'.DS.'pdf';  
 
         if ($this->request->data['Print']['form'] == 1 ){
@@ -609,21 +608,17 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
 
           if ($this->request->is(array('post', 'put'))) {
 
-                //pr($userData); exit;
-
                 $this->request->data['Transmittal']['created_by'] = $userData['User']['id'];
 
                 $this->Transmittal->save($this->request->data);
-                $this->Session->setFlash(__('Schedule has been updated.'),'success');
+
+                $this->Session->setFlash(__('Transmittal Form is ready now ready to print.'),'success');
                           
           }
     
         }else{
 
-        
-
         $output = $view->render('print_dr', false);
-
 
         }
         
