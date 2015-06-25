@@ -290,3 +290,4 @@ ALTER TABLE `koufu_delivery`.`transmittals` ADD COLUMN `remarks` VARCHAR(60) NUL
 #NOTE: SELECT KOUFU ACCOUNTING DATABASE ----
 /** bien added this 06/15/2015  */
 ALTER TABLE `koufu_sale`.`companies`     ADD COLUMN `short_name` VARCHAR(80) NULL AFTER `company_name`;
+ALTER TABLE `koufu_accounting`.`sales_invoices`     CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT,     CHANGE `sales_invoice_no` `sales_invoice_no` INT(6) NOT NULL,     CHANGE `dr_uuid` `dr_uuid` INT(11) NULL ,     CHANGE `statement_no` `statement_no` INT(6) NULL ,     CHANGE `status` `status` INT(1) NULL ,     CHANGE `created_by` `created_by` INT(11) NULL ,     CHANGE `modified_by` `modified_by` INT(11) NULL ;

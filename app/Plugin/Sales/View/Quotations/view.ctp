@@ -225,23 +225,28 @@
 						</div>
 					<?php } ?>
 					<!-- <div class ="boxed2"> -->
-					
+					<?php 
+						// $displayVat = 0;
+						// $displayMat = 0;
+					?>
 					<div class="form-group">
 							<div class="col-lg-1"></div>
 							<div class="col-lg-2">
 								Qty
 								<br><br>
 								Unit Price
-								
-								<br><br>
-								Vat Price
-							
-								<br><br>
-								Material
+								<?php //if($displayVat == 0){ ?>
+									<br><br>
+									Vat Price
+								<?php //} ?>
+								<?php //if($displayMat == 0){ ?>
+									<br><br>
+									Material
+								<?php //} ?>
 								
 							</div>
 							<div class="col-lg-8"><div class="pull-left"></div>
-								<?php foreach ($quotation['QuotationItemDetail'] as $key => $itemDetail){ ?>
+								<?php foreach ($quotation['QuotationItemDetail'] as $key => $itemDetail){?>
 									<table  class = "tbl">
 										<tr>
 											
@@ -268,24 +273,43 @@
 												</div>
 											</td>
 										</tr>
-										<tr>
-											<td height ="40px" class ="column2 col-md-12">
-												<div class="col-lg-12">
-													<?php echo (!empty($itemDetail['vat_price']) && is_numeric($itemDetail['vat_price'])) ? number_format($itemDetail['vat_price'],4) : '';
-													?> 
-												</div>
-											</td>
-										</tr>
-
-										<tr>
-											
-											<td height ="30px" class ="column2 col-md-12">
-												<div class="col-lg-12">
-													<?php echo $itemDetail['material'];?> 
-												</div>
-											</td>
-											
-										</tr>
+										<?php //if($displayVat == 1){ ?>
+											<tr>
+												<td height ="40px" class ="column2 col-md-12">
+													<div class="col-lg-12">
+														<?php echo (!empty($itemDetail['vat_price']) && is_numeric($itemDetail['vat_price'])) ? number_format($itemDetail['vat_price'],4) : '';
+														?> 
+													</div>
+												</td>
+											</tr>
+										<?php //} ?>
+										<?php //if($displayMat == 1){ ?>
+											<tr>
+												
+												<td height ="30px" class ="column2 col-md-12">
+													<div class="col-lg-12">
+														<?php echo $itemDetail['material'];?> 
+													</div>
+												</td>
+												
+											</tr>
+										<?php //} ?>
+										<?php 
+											// if (!empty($itemDetail['vat_price'])) {
+											// 	$displayVat++;
+											// }else{
+											// 	if ($displayVat !=0) {
+											// 		$displayVat--;
+											// 	}
+											// }
+											// if (!empty($itemDetail['material'])) {
+											// 	$displayMat++;
+											// }else{
+											// 	if ($displayMat !=0) {
+											// 		$displayMat--;
+											// 	}
+											// }
+										?>
 
 									</table>
 								<?php } ?>

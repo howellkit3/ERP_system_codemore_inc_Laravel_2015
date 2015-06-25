@@ -19,7 +19,7 @@
 
                         <div class="form-group">
                             <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Address(1)</label>
-                            <div class="col-lg-2">
+                            <div class="col-lg-3">
                                 <?php 
                                     echo $this->Form->input('Address.type', array(
                                         'options' => array('Work', 'Home', 'Business','Plant'),
@@ -31,7 +31,7 @@
                                     ));
                                 ?>
                             </div>
-                            <div class="col-lg-7">
+                            <div class="col-lg-6">
                                 <?php 
                                     echo $this->Form->input('Address.address1', array('class' => 'form-control item_type',
                                         'alt' => 'address1',
@@ -113,7 +113,7 @@
 
                         <div class="form-group">
                             <label for="inputPassword1" class="col-lg-2 control-label">Contact Number</label>
-                            <div class="col-lg-2">
+                            <div class="col-lg-3">
                                 <?php 
                                     echo $this->Form->input('Contact.type', array(
                                         'options' => array('Work', 'Home', 'Business'),
@@ -127,7 +127,7 @@
                                
                             </div>
                             
-                            <div class="col-lg-7">
+                            <div class="col-lg-6">
                                 <?php 
                                     echo $this->Form->input('Contact.number', array('class' => 'form-control',
                                         'alt' => 'number',
@@ -291,7 +291,7 @@
 
                         <div class="form-group">
                             <label for="inputPassword1" class="col-lg-2 control-label"> Email Address</label>
-                            <div class="col-lg-2">
+                            <div class="col-lg-3">
                                 <?php 
                                     echo $this->Form->input('Email.type', array(
                                         'options' => array('Work', 'Home', 'Business'),
@@ -300,7 +300,7 @@
                                         'empty' => false
                                     )); ?>
                             </div>
-                            <div class="col-lg-7">
+                            <div class="col-lg-6">
                                 <?php 
                                     echo $this->Form->input('Email.email', array('class' => 'form-control email required','label' => false));
                                 ?>
@@ -454,19 +454,19 @@
                     ?>
 
                         <div class="form-group" id="existing_items">
-                                                <label class="col-lg-2 control-label">Delivery Type</label>
-                                                <div class="col-lg-9">
-                                                    <?php 
-                                                        echo $this->Form->input('ClientOrderDeliverySchedule.delivery_type', array(
-                                                                                        'empty' => '--- Select Delivery Type ---',
-                                                                                        //'options' => array('Once' => 'Once', 'Partial' => 'Partial'),
-                                                                                        'class' => 'form-control item_type editable required',
-                                                                                        'label' => false,
-                                                                                        'value' => 'Partial',
-                                                                                        'required' => 'required',
-                                                                                        'readonly' => 'readonly'
-                                                                                        ));
-                                                    ?>
+                            <label class="col-lg-2 control-label">Delivery Type</label>
+                            <div class="col-lg-9">
+                                <?php 
+                                    echo $this->Form->input('ClientOrderDeliverySchedule.delivery_type', array(
+                                        'empty' => '--- Select Delivery Type ---',
+                                        //'options' => array('Once' => 'Once', 'Partial' => 'Partial'),
+                                        'class' => 'form-control item_type editable required',
+                                        'label' => false,
+                                        'value' => 'Partial',
+                                        'required' => 'required',
+                                        'readonly' => 'readonly'
+                                        ));
+                                ?>
                             </div>
                         </div>
 
@@ -475,13 +475,13 @@
                             <div class="col-lg-9">
                                 <?php 
                                     echo $this->Form->input('ClientOrderDeliverySchedule.schedule', array(
-                                                                                                            'class' => 'form-control required',
-                                                                                                            'label' => false,
-                                                                                                            'required' => 'required',
-                                                                                                            'class' => 'form-control item_type datepick required',
-                                                                                                            'type' => 'text',
-                                                                                                            'id' => 'date'
-                                                                                                        ));
+                                        'class' => 'form-control required',
+                                        'label' => false,
+                                        'required' => 'required',
+                                        'class' => 'form-control item_type datepick required',
+                                        'type' => 'text',
+                                        'id' => 'date'
+                                    ));
                                 ?>
                             </div>
                         </div>
@@ -491,8 +491,8 @@
                             <div class="col-lg-9">
                                 <?php 
                                     echo $this->Form->input('ClientOrderDeliverySchedule.location', array('class' => 'form-control required',
-                                                                                                           'required' => 'required', 
-                                                                                                            'label' => false));
+                                       'required' => 'required', 
+                                        'label' => false));
                                 ?>
                             </div>
                         </div>
@@ -502,24 +502,24 @@
                             <div class="col-lg-9">
                                 <?php 
                                     echo $this->Form->input('ClientOrderDeliverySchedule.quantity', array('class' => 'form-control required addquantityLimit number required',
-                                                                                                        'label' => false,
-                                                                                                        'required' => 'required'));
-                                ?>
+                                        'label' => false,
+                                        'required' => 'required'));
+                                    ?>
                             </div>
                         </div>
 
                          <div class="form-group" id="existing_items">
-                                                <label class="col-lg-2 control-label">Allowance</label>
-                                                <div class="col-lg-9">
-                                                    <?php 
-                                                        echo $this->Form->input('ClientOrderDeliverySchedule.allowance', array(
-                                                                                        'empty' => 'None',
-                                                                                        'options' => array('With charge' => 'With charge', 'Without charge' => 'Without charge'),
-                                                                                        'class' => 'form-control item_type editable',
-                                                                                        'label' => false,
-                                                                                        'readonly' => 'readonly'
-                                                                                        ));
-                                                    ?>
+                            <label class="col-lg-2 control-label">Allowance</label>
+                            <div class="col-lg-9">
+                                <?php 
+                                    echo $this->Form->input('ClientOrderDeliverySchedule.allowance', array(
+                                        'empty' => 'None',
+                                        'options' => array('With charge' => 'With charge', 'Without charge' => 'Without charge'),
+                                        'class' => 'form-control item_type editable',
+                                        'label' => false,
+                                        'readonly' => 'readonly'
+                                        ));
+                                ?>
                             </div>
                         </div>
 
@@ -536,12 +536,9 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal --> 
 
-
-
     <div class="md-overlay"></div>
 
     <script>
-        
         
         jQuery(document).ready(function($){
             $("#CustomerSaleViewForm").validate();

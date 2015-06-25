@@ -23,6 +23,11 @@ class SalesInvoiceController extends AccountingAppController {
 		$userData = $this->Session->read('Auth');
 
 		$this->loadModel('Delivery.Delivery');
+        // $DRdata = $this->SalesInvoice->find('first', array(
+        //     'conditions' => array(
+        //         'SalesInvoice.dr_uuid' => $this->request->data['SalesInvoice']['dr_uuid'])
+        //     ));
+        
         if($this->request->is('post')){
 
             if(!empty($this->request->data)){

@@ -34,7 +34,7 @@
 
 								<div class="tab-pane fade in active" id="tab-summary">
 									<?php
-		                               echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array('controller' => 'sales_invoice', 'action' => 'dr_summary',1),array('class' =>'btn btn-primary pull-right','escape' => false));
+		                               echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> Export  ', array('controller' => 'sales_invoice', 'action' => 'dr_summary',1),array('class' =>'btn btn-primary pull-right','escape' => false));
 
 		                            ?>
 		                           <!--  <button class="btn btn-primary pull-right printDR"><i class="fa fa-print fa-lg"></i> Print</button> -->
@@ -91,7 +91,7 @@
 
 								<div class="tab-pane fade " id="tab-newsfeed">
 									<?php
-		                               echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array('controller' => 'sales_invoice', 'action' => 'dr_summary',2),array('class' =>'btn btn-primary pull-right','escape' => false));
+		                               echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> Export ', array('controller' => 'sales_invoice', 'action' => 'dr_summary',2),array('class' =>'btn btn-primary pull-right','escape' => false));
 		                            ?><br><br><br>
 									<div class="table-responsive">
 										<table class="table table-striped table-hover">
@@ -131,7 +131,7 @@
 								</div>
 								<div class="tab-pane fade" id="tab-activity">
 									<?php
-		                               echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array('controller' => 'sales_invoice', 'action' => 'dr_summary',3),array('class' =>'btn btn-primary pull-right','escape' => false));
+		                               echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> Export ', array('controller' => 'sales_invoice', 'action' => 'dr_summary',3),array('class' =>'btn btn-primary pull-right','escape' => false));
 		                            ?><br><br><br>
 									<div class="table-responsive">
 										<table class="table table-striped table-hover">
@@ -171,7 +171,7 @@
 								</div>
 								<div class="tab-pane fade" id="tab-chat">
 									<?php
-		                               echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array('controller' => 'sales_invoice', 'action' => 'dr_summary',4),array('class' =>'btn btn-primary pull-right','escape' => false));
+		                               echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> Export ', array('controller' => 'sales_invoice', 'action' => 'dr_summary',4),array('class' =>'btn btn-primary pull-right','escape' => false));
 		                            ?><br><br><br>
 									<div class="table-responsive">
 										<table class="table table-striped table-hover">

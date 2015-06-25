@@ -176,7 +176,7 @@
 									<div class="main-box-body clearfix">
 										<div class="form-horizontal">
 											<div class="form-group">
-												<label class="col-lg-2 control-label">Quantity</label>
+												<label class="col-lg-2 control-label"><span style="color:red">*</span>Quantity</label>
 												<div class="col-lg-2">
 													<?php 
 			                                            echo $this->Form->input('QuotationItemDetail.0.quantity', array(
@@ -202,7 +202,7 @@
 											</div>
 
 											<div class="form-group">
-												<label class="col-lg-2 control-label">Unit Price</label>
+												<label class="col-lg-2 control-label"><span style="color:red">*</span>Unit Price</label>
 
 												<div class="col-lg-2">
 												<?php echo $this->Form->input('QuotationItemDetail.0.unit_price_currency_id', array(
@@ -354,7 +354,7 @@
 										</div>
 
 										<div class="form-group">
-	                                    	<label class="col-lg-2 control-label">Terms</label>
+	                                    	<label class="col-lg-2 control-label"><span style="color:red">*</span>Terms</label>
 											<div class="col-lg-8">
 												<?php echo $this->Form->input('Quotation.payment_terms', array(
 					                                'options' => array($paymentTermData),

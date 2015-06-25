@@ -20,12 +20,12 @@
 								<div class="col-lg-8">
 									<?php 
                                         echo $this->Form->input('SalesInvoice.status', array(
-                                                        'options' => array('Pre-Invoice', 'Invoice'),
-                                                        'alt' => 'Status',
-                                                        'label' => false,
-                                                        'class' => 'form-control col-lg-4 required',
-                                                        'empty' => '--Select Status--'
-                                                    ));
+                                            'options' => array('Pre-Invoice', 'Invoice'),
+                                            'alt' => 'Status',
+                                            'label' => false,
+                                            'class' => 'form-control col-lg-4 required',
+                                            'empty' => '--Select Status--'
+                                        	));
                                     ?>
 								</div>
 							</div>
@@ -34,12 +34,12 @@
 								<label class="col-lg-2 control-label"><span style="color:red">*</span>Invoice No.</label>
 								<div class="col-lg-8">
 									<?php 
-                                        echo $this->Form->input('SalesInvoice.sales_invoice_no', array(
-                                        								'class' => 'form-control item_type required',
-					                                                    'label' => false,
-					                                                    'readonly' => true,
-					                                                    'value' => rand(0,999).'-'.time(),
-					                                                    'placeholder' => 'Invoice No.'));
+                                        echo $this->Form->input('SalesInvoice.sales_invoice_nos', array(
+            								'class' => 'form-control item_type required',
+                                            'label' => false,
+                                            'readonly' => true,
+                                            'value' => rand(0,999).'-'.time(),
+                                            'placeholder' => 'Invoice No.'));
                                     ?>
 								</div>
 							</div>
@@ -48,12 +48,12 @@
 								<label class="col-lg-2 control-label"><span style="color:red">*</span>SA No.</label>
 								<div class="col-lg-8">
 									<?php 
-                                        echo $this->Form->input('SalesInvoice.statement_no', array(
-                                        								'class' => 'form-control item_type required',
-					                                                    'label' => false,
-					                                                    'readonly' => true,
-					                                                    'value' => rand(0,999).'-'.time(),
-					                                                    'placeholder' => 'Statement of Account No.'));
+                                        echo $this->Form->input('SalesInvoice.statement_nos', array(
+            								'class' => 'form-control item_type required',
+                                            'label' => false,
+                                            'readonly' => true,
+                                            'value' => rand(0,999).'-'.time(),
+                                            'placeholder' => 'Statement of Account No.'));
                                     ?>
 								</div>
 							</div>
@@ -63,11 +63,11 @@
 								<div class="col-lg-8">
 									<?php 
                                         echo $this->Form->input('SalesInvoice.dr_uuid', array(
-                                        								'class' => 'form-control item_type required',
-					                                                    'label' => false,
-					                                                    'type' =>'text',
-    																	//'options' => array($deliveryNo),
-					                                                    'placeholder' => 'Delivery No.'));
+            								'class' => 'form-control item_type required',
+                                            'label' => false,
+                                            'type' =>'text',
+											//'options' => array($deliveryNo),
+                                            'placeholder' => 'Delivery No.'));
                                     ?>
 								</div>
 							</div>
@@ -93,16 +93,13 @@
 								</div>
 								<div class="col-lg-3">
 									<?php
-				                        echo $this->Html->link('Cancel', array('controller' => 'salesInvoice', 
-				                        									   'action' => 'index'), array(
-				                												'class' =>'pull-left btn btn-default',
-				                												'escape' => false
-				                												));
+				                        echo $this->Html->link('Cancel', array('controller' => 'salesInvoice','action' => 'index'), array(
+											'class' =>'pull-left btn btn-default',
+											'escape' => false
+											));
 					                ?>
 								</div>
 							</div>
-
-							
 						</div>
 					</div>
 				</div>
@@ -114,8 +111,8 @@
 <script>
 		
 	jQuery(document).ready(function($){
-			$("#SalesInvoiceAddForm").validate();
+		$("#SalesInvoiceAddForm").validate();
 			
 	});
 
- </script>
+</script>
