@@ -2,6 +2,7 @@
     $pushRemaining  = array();
     $totaldifference = 0;
     $totalremaining = 0;
+
  ?>
 
  <div class="modal fade" id="myModalDeliveries" role="dialog" >
@@ -99,12 +100,12 @@
                             <div class="col-lg-9">
                                 <?php 
                                     echo $this->Form->input('DeliveryDetail.schedule', array(
-                                                                                'label' => false,
-                                                                                'required' => 'required',
-                                                                                'class' => 'form-control item_type datepick required',
-                                                                                'type' => 'text',
-                                                                                'id' => 'date'
-                                                                                ));
+                                        'type' => 'text',
+                                        'label' => false,
+                                        'required' => 'required',
+                                        'class' => 'form-control item_type datepick required',
+                                        'id' => 'date'
+                                        ));
                                     ?>
                             </div>
                         </div>
@@ -319,7 +320,7 @@
 
     <script>
     
-        jQuery(document).ready(function($){
+        jQuery(document).ready(function(){
             $("#ClientOrderDeliveryScheduleViewForm").validate();
             $('#date').datepicker({
                 format: 'yyyy-mm-dd'
@@ -327,8 +328,7 @@
           
         });
 
-        jQuery("#ClientOrderDeliveryScheduleViewForm").validate();
-        
+       
 
     </script>
 

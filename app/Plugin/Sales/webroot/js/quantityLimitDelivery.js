@@ -1,5 +1,8 @@
 $( document ).ready(function() {
-
+	//important
+	$('#date').datepicker({
+        format: 'yyyy-mm-dd'
+    });
 
 	$("body").on('keyup','.quantityLimit', function(e){
 
