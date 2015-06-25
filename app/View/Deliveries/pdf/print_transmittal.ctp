@@ -36,7 +36,7 @@
 				</thead>
 			</table>
 
-			<table class="layout" style="line-height:-10px; width:100px;" >
+			<table class="layout" style="line-height:-10px; width:900px;" >
 				<thead >
 					<tr >
 						<td class="td-heigth" style="width:25px;border:1px solid #FFF;"> </td>
