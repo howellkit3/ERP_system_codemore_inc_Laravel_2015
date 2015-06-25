@@ -235,9 +235,11 @@ class DeliveriesController extends DeliveryAppController {
         $this->Delivery->bindDelivery();
         $deliveryEdit = $this->Delivery->find('all', array(
                                          'conditions' => array(
-                                        'Delivery.schedule_uuid' => $deliveryScheduleId
+                                        'Delivery.schedule_uuid' => $clientsOrderUuid
                                         )
                                     ));
+
+        //pr($deliveryScheduleId); exit;
 
          $deliveryData = $this->Delivery->find('first', array(
                                          'conditions' => array(
