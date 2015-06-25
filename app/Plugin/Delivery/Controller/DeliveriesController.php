@@ -497,7 +497,7 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
     $drData = $this->Delivery->find('first', array(
                                         'conditions' => array('Delivery.dr_uuid' => $dr_uuid
                                         )));
-    //pr($drData);exit();
+    //pr('d');exit();
     $clientData = $this->ClientOrder->find('first', array(
                                         'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
                                         )));
@@ -507,10 +507,29 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
                                         )));
 
     $userData = $this->Session->read('Auth');
+
+    $this->Delivery->bindDelivery();
+    $drDataHolder = $this->Delivery->find('first', array(
+                                        'conditions' => array('Delivery.dr_uuid' => $dr_uuid
+                                        )));
+
+    $this->loadModel('User');
+
+    $prepared = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
+                                                            'conditions' => array('User.id' => $drDataHolder['DeliveryDetail']['modified_by'])
+                                                            ));
+
+
+
+    $approved = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
+                                                            'conditions' => array('User.id' => $drDataHolder['DeliveryDetail']['created_by'])
+                                                            ));
+
+
     
     $view = new View(null, false);
     
-    $view->set(compact('drData','clientData','companyData','units'));
+    $view->set(compact('drData','clientData','companyData','units','approved','prepared'));
       
     $view->viewPath = 'Deliveries'.DS.'pdf';  
    
@@ -542,7 +561,7 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
         
   }
 
-  public function print_replacing($dr_uuid = null,$schedule_uuid,$paper = null) {
+  public function print_replacing($dr_uuid = null,$schedule_uuid, $paper = null) {
 
     $this->loadModel('Delivery.Transmittal');
     
@@ -561,7 +580,7 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
     $drData = $this->Delivery->find('first', array(
                                         'conditions' => array('Delivery.dr_uuid' => $dr_uuid
                                         )));
-   // pr($this->request->data);exit();
+   // pr($drData);exit();
     $clientData = $this->ClientOrder->find('first', array(
                                         'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
                                         )));
@@ -574,10 +593,14 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
                                                             'conditions' => array('User.id' => $drData['DeliveryDetail']['modified_by'])
                                                             ));
 
+
+
     $approved = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
                                                             'conditions' => array('User.id' => $drData['DeliveryDetail']['created_by'])
                                                             ));
-    //pr($this->request->data); exit;
+
+    //pr($prepared); exit;
+
     if(!empty($this->request->data['DeliveryDetail']['quantity'])){
 
     $drQuantity = $this->request->data['DeliveryDetail']['quantity'];
@@ -600,7 +623,6 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
     
     $view->set(compact('drData','clientData','companyData','units', 'prepared', 'approved', 'contactPerson', 'remarks', 'quantityTransmittal','drQuantity'));
 
-   
       $view->viewPath = 'Deliveries'.DS.'pdf';  
 
         if ($this->request->data['Print']['form'] == 1 ){
@@ -609,21 +631,17 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
 
           if ($this->request->is(array('post', 'put'))) {
 
-                //pr($userData); exit;
-
                 $this->request->data['Transmittal']['created_by'] = $userData['User']['id'];
 
                 $this->Transmittal->save($this->request->data);
-                $this->Session->setFlash(__('Schedule has been updated.'),'success');
+
+                $this->Session->setFlash(__('Transmittal Form is ready now ready to print.'),'success');
                           
           }
     
         }else{
 
-        
-
         $output = $view->render('print_dr', false);
-
 
         }
         

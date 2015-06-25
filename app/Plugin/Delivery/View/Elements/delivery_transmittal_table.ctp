@@ -28,14 +28,14 @@ $totalremaining = 0;
 
                         <td class="">
 
-                            <?php echo $transmittalDataList['Transmittal']['created_by']; ?>
+                            <?php echo $transmittalDataList['Transmittal']['contact_person']; ?>
                         
                         </td>
 
                         <td class="">
-
-                            <?php echo $transmittalDataList['Transmittal']['remarks']; ?>
-                        
+                            <?php if(!empty($transmittalDataList['Transmittal']['remarks'])){ ?>
+                                <?php echo $transmittalDataList['Transmittal']['remarks']; ?>
+                             <?php } ?>
                         </td>
 
                     </tr>
