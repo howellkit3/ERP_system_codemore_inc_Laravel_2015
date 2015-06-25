@@ -84,6 +84,7 @@ class ProductSpecificationDetail extends AppModel {
 		// $processData = $this->ProductSpecificationProcessHolder->find('all');
 		
 		foreach ($specsList as $key => $list) {
+			
 			$dataArray[$key] = $list;
 
 			switch ($list['ProductSpecificationDetail']['model']) {

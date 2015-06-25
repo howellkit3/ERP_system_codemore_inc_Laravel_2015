@@ -192,17 +192,32 @@
 										$componentCounter = 0;
 										$partCounter = 0;
 										$processCounter = 0;
+										
 										foreach ($formatDataSpecs as $key => $specLists) {
+											echo "<input name='data[IdHolder][ProductSpecificationDetail][".$key."][id]' value='".$specLists['ProductSpecificationDetail']['id']."' class='form-control editMe' type='hidden' />";
 											if($specLists['ProductSpecificationDetail']['model'] == 'Component'){
+												
+												echo "<input name='data[IdHolder][ProductSpecificationComponent][".$componentCounter."][id]' value='".$specLists['ProductSpecificationComponent']['id']."' class='form-control editMe' type='hidden' />";
 												$componentCounter += 1;
 											} 
 											if($specLists['ProductSpecificationDetail']['model'] == 'Part'){
+												
+												echo "<input name='data[IdHolder][ProductSpecificationPart][".$partCounter."][id]' value='".$specLists['ProductSpecificationPart']['id']."' class='form-control editMe' type='hidden' />";
 												$partCounter += 1;
 											}
 											if($specLists['ProductSpecificationDetail']['model'] == 'Process'){
+												
+												echo "<input name='data[IdHolder][ProductSpecificationProcess][".$processCounter."][id]' value='".$specLists['ProductSpecificationProcess']['id']."' class='form-control editMe' type='hidden' />";
 												$processCounter += 1;
+	
+												foreach ($specLists['ProductSpecificationProcess']['ProcessHolder'] as $key => $processList) {
+													
+													echo "<input name='data[IdHolder][ProcessHolder][]' value='".$processList['ProductSpecificationProcessHolder']['id']."' class='form-control editMe' type='hidden' />";
+												}
+												
 											}
 										}
+										
 									?>
 									<div class="form-group buttonSpecs" style="display:none;">
 										<div class="col-lg-2"></div>
@@ -232,7 +247,7 @@
 												  	<section class="dragField">
 													    <header class="main-box-header dragHeader clearfix">
 													        <h2 class="pull-left"> <?php echo $specLists['ProductSpecificationDetail']['model'] ?> </h2>
-													        <?php if ($key > 3) { ?>
+													        <?php if ($key > 2) { ?>
 														        <a href="#" class="remove_field pull-right editMeBtn" style="display:none;">
 														            <i class="fa fa-times-circle fa-fw fa-lg"></i>
 														        </a>
