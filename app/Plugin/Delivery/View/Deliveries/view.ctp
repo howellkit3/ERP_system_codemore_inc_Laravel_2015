@@ -411,7 +411,7 @@ $totalremaining = 0;
 
       <div class="modal-body">
 
-      <?php  
+      <?php //pr($scheduleInfo); 
 
         echo $this->Form->create('ClientOrderDeliverySchedule',array(
           'url'=>(array('controller' => 'deliveries','action' => 'delivery_return',$scheduleInfo['ClientOrderDeliverySchedule']['id'],$scheduleInfo['QuotationDetail']['quotation_id'], $scheduleInfo['ClientOrderDeliverySchedule']['uuid']) ),'class' => 'form-horizontal')); ?>
@@ -527,13 +527,13 @@ echo $this->Form->end();
 
 <script>
     
-        jQuery(document).ready(function($){
+        jQuery(document).ready(function(){
             $("#ClientOrderDeliveryScheduleViewForm").validate();
             $('.datepick').datepicker({
                 format: 'yyyy-mm-dd'
             });
-            console.log('dfasdf');
-            jQuery("#ClientOrderDeliveryScheduleViewForm").validate();       
+            
+                
         });
 
        
