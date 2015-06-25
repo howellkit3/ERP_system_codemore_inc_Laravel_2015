@@ -265,9 +265,6 @@ $totalremaining = 0;
 
                         <?php   
 
-//  pr($deliveryDetailsData);
-//pr($deliveryEdit); exit;  
-
   if(!empty($deliveryEdit) ){
               ?>
       <?php  foreach ($deliveryEdit as $deliveryDataList): 
