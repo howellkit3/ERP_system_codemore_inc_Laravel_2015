@@ -27,7 +27,7 @@
         </div>
 
       <?php echo $this->Form->create('ClientOrderDeliverySchedule',array(
-      'url'=>(array('controller' => 'deliveries', 'action' => 'print_replacing',$drData['Delivery']['dr_uuid'],$drData['Delivery']['schedule_uuid'])),'class' => 'form-horizontal')); ?>
+      'url'=>(array('controller' => 'deliveries', 'action' => 'print_replacing',$drData['Delivery']['dr_uuid'],$drData['Delivery']['schedule_uuid'])),'class' => 'form-horizontal','target' => '_blank')); ?>
         <div class="col-lg-12">
           <div class="main-box">
             <div class="top-space"></div>
