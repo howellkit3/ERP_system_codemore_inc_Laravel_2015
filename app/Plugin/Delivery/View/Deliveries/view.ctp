@@ -525,3 +525,20 @@ echo $this->Form->end();
 
 </style>    
 
+<script>
+    
+        jQuery(document).ready(function($){
+            $("#ClientOrderDeliveryScheduleViewForm").validate();
+            $('.datepick').datepicker({
+                format: 'yyyy-mm-dd'
+            });
+            console.log('dfasdf');
+            jQuery("#ClientOrderDeliveryScheduleViewForm").validate();       
+        });
+
+       
+        
+
+    </script>
+
+

@@ -298,7 +298,7 @@
                           <div class="col-lg-8">
                             <button type="submit" class="btn btn-primary pull-left">Print</button>&nbsp;
                           <?php 
-                          echo $this->Html->link('Cancel', array('controller' => 'products', 'action' => 'index'),array('class' =>'btn btn-default','escape' => false));
+                          echo $this->Html->link('Cancel', array('controller' => 'deliveries', 'action' => 'delivery_replacing'),array('class' =>'btn btn-default','escape' => false));
                           ?>
                           </div>
                       </div>
