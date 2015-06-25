@@ -136,7 +136,7 @@ $( document ).ready(function() {
 
 				var totalDeduction = parseInt(allVal) - parseInt(quantityValue);
 				alert('Max Quantity');
-				//total = isText.val() - totalDeduction;
+				total = isText.val() - totalDeduction;
 				isText.val(total);
 				//allVal = total;
 				
