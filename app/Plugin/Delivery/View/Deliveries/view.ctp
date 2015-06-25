@@ -1,35 +1,42 @@
 <?php echo $this->element('deliveries_options'); ?><br><br>
-<?php echo $this->Html->script('Sales.quantityLimitDelivery');
+<?php 
+    echo $this->Html->script('Sales.quantityLimitDelivery');
 
-$pushRemaining  = array();
-$totaldifference = 0; 
-$totalremaining = 0;
+    $pushRemaining  = array();
+    $totaldifference = 0; 
+    $totalremaining = 0;
 ?>
 <div class="row1">
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
             <div class="filter-block pull-right marginDelivery">
-               <?php 
+                <?php 
                 
-                  echo $this->Html->link('<i class="fa  fa-arrow-left fa-lg "></i> Back ', 
+                    echo $this->Html->link('<i class="fa  fa-arrow-left fa-lg "></i> Back ', 
                         array('controller' => 'deliveries', 
                             'action' => 'index'
                             ),
                         array('class' =>'btn btn-primary pull-right',
                             'escape' => false));
+
+                    // echo $this->Form->input('DeliveryDetail.schedule', array(
+                    //                     'type' => 'text',
+                    //                     'label' => false,
+                    //                     'required' => 'required',
+                    //                     'class' => 'form-control item_type datepick required',
+                    //                     'id' => 'date'
+                    //                     ));
                 ?>  
 
+                <?php  
+                    if (!empty($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']])) { 
                 
-                <?php  if (!empty($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']])) { ?> 
-
-                  <?php if($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] != 'Approved') { ?>
-
-                
-                  <?php }else{ ?>
+                        if($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] != 'Approved') { 
+                   } else { ?>
 
                      <!-- <a data-toggle="modal" href="#myModalDeliveries" class="btn btn-primary pull-right addSchedButton "><i class="fa fa-edit fa-lg"></i> Edit Schedule</a> -->
 
-                 <?php }}else{ 
+                    <?php } } else { 
 
                     $Scheddate = $scheduleInfo['ClientOrderDeliverySchedule']['schedule'];
                                         $Currentdate = date("Y-m-d H:i:s");
@@ -464,6 +471,13 @@ $totalremaining = 0;
                                                     'label' => false,
                                                     'value' => $deliveryDataList['DeliveryDetail']['quantity']
                                                     ));
+echo $this->Form->input('DeliveryDetail.schedule', array(
+                                        'type' => 'text',
+                                        'label' => false,
+                                        'required' => 'required',
+                                        'class' => 'form-control item_type datepick required',
+                                        'id' => 'date'
+                                        ));
 
         ?>
         </div>
@@ -524,4 +538,14 @@ echo $this->Form->end();
 }
 
 </style>    
+<script>
+    
+        jQuery(document).ready(function(){
+            //$("#ClientOrderDeliveryScheduleViewForm").validate();
+            $('#date').datepicker({
+                format: 'yyyy-mm-dd'
+            });
+            
+        });
 
+    </script>
