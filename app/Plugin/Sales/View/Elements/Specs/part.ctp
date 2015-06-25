@@ -1,5 +1,5 @@
 <?php $plusCounter = $counter + 1; ?>
-<input type="hidden" value="<?php echo $formatDataSpecs['ProductSpecificationPart']['id'] ?>" class="form-control part_name<?php echo $plusCounter ;?> editMe" maxlenght="500" name="data[IdHolder][ProductSpecificationPart][<?php echo $counter ;?>][id]" />
+<!-- <input type="hidden" value="<?php echo $formatDataSpecs['ProductSpecificationPart']['id'] ?>" class="form-control part_name<?php echo $plusCounter ;?> editMe" maxlenght="500" name="data[IdHolder][ProductSpecificationPart][<?php echo $counter ;?>][id]" /> -->
 
 <div class="form-group">
     <label class="col-lg-2 control-label"><span style="color:red">*</span>Material</label>

@@ -448,15 +448,23 @@
 											<label class="col-lg-2 control-label">Validity</label>
 											<div class="col-lg-8">
 												<?php 
-												
-		                                            echo $this->Form->input('Quotation.validity', array(
-		                                            								'type' => 'text',
-		                                            								'class' => 'form-control item_type datepick',
-								                                                    'label' => false,
-								                                                    'placeholder' => 'Validity',
-								                                                    'value' => !empty($this->request->data['Quotation']['validity']) ? date("Y-m-d", strtotime($this->request->data['Quotation']['validity'])) : 'No validity date'
-								                                                    ));
-		                                            
+													if ($this->request->data['Quotation']['validity']) {
+														echo $this->Form->input('Quotation.validity', array(
+	                        								'type' => 'text',
+	                        								'class' => 'form-control item_type datepick',
+		                                                    'label' => false,
+		                                                    'placeholder' => 'Validity',
+		                                                    'value' => date("Y-m-d", strtotime($this->request->data['Quotation']['validity']))
+		                                                    ));
+													} else {
+
+			                                            echo $this->Form->input('Quotation.validity', array(
+	                        								'type' => 'text',
+	                        								'class' => 'form-control item_type datepick',
+		                                                    'label' => false,
+		                                                    'placeholder' => 'No validity date'
+		                                                    ));
+													}
 	                                            ?>
 											</div>
 										</div>

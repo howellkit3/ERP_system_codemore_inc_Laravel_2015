@@ -143,6 +143,9 @@ $(document).ready(function() {
         submitButton(submitCount);
         var quantitySpec = $('#ProductSpecificationQuantity').val();
         var stockQuantity = $('.stockQuantity').val();
+        if (stockQuantity == '') {
+            stockQuantity = 0;
+        }
         partQuantity = parseInt(quantitySpec) - parseInt(stockQuantity);
 
         //if(!$.isNumeric(quantitySpec)) {

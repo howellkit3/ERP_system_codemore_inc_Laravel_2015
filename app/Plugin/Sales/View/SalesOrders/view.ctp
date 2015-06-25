@@ -313,7 +313,12 @@
 									<label class="col-lg-2 control-label">Unit Price</label>
 									<div class="col-lg-8">
 										<?php 
+
+											//pr($quotationItemDetail); 
+
 											$fullPrice = $currencies[$quotationItemDetail['QuotationItemDetail']['unit_price_currency_id']].' '.number_format($quotationItemDetail['QuotationItemDetail']['unit_price'],4).' '.$units[$quotationItemDetail['QuotationItemDetail']['unit_price_unit_id']];
+
+
 
                                             echo $this->Form->input('QuotationItemDetail.unit_price', array(
                                             								'type' => 'hidden',

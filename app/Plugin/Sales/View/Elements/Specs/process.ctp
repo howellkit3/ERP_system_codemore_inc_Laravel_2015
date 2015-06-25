@@ -1,11 +1,11 @@
 <?php $plusCounter = $counter + 1; ?>
-<input type="hidden" name="data[IdHolder][ProductSpecificationProcess][]" value="<?php echo $formatDataSpecs['ProductSpecificationProcess']['id'] ?>" class="form-control"  />
+<!-- <input type="hidden" name="data[IdHolder][ProductSpecificationProcess][]" value="<?php echo $formatDataSpecs['ProductSpecificationProcess']['id'] ?>" class="form-control"  /> -->
 <input type="hidden" name="getMe" value="<?php echo $counter ?>" class="getMe form-control"  />
 <div class="form-group">
     <div class="col-lg-2"><span class="pull-right" style="color:red">*</span></div>
     <div class="col-lg-8">
-        <div class="input-group">
-            <span class="input-group-addon"><i class="fa fa-reorder"></i></span>
+        <!-- <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-reorder"></i></span> -->
             
                 <?php 
               
@@ -24,7 +24,7 @@
 
                 ?>
             </select>
-        </div>
+        <!-- </div> -->
     </div>
 </div>
 <section class="dropItem">

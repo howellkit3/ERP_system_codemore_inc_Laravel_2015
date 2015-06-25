@@ -127,8 +127,8 @@
 					<div class="table-responsive">
 						<table class="table table-bordered">
 							<thead>
-								<?php foreach ($formatDataSpecs as $key => $specLists) { ?>
-					
+								<?php foreach ($formatDataSpecs as $key => $specLists) {  ?>
+									
 									<?php
 
 								      	if($specLists['ProductSpecificationDetail']['model'] == 'Component'){

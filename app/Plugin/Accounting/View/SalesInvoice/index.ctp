@@ -8,18 +8,15 @@
                 <h2 class="pull-left"><b>Sales Invoice List</b></h2>
                 <div class="filter-block pull-right">
                    <?php
-                    //pr($truckAvailability);
-                    //pr($truckId);
+                   
                       echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Create Sales Invoice ', 
                             array('controller' => 'sales_invoice', 
                                     'action' => 'add',),
                             array('class' =>'btn btn-primary pull-right',
                                 'escape' => false));
 
-
                     ?> 
-                    <!-- <a data-toggle="modal" href="#myModalInvoice" class="btn btn-primary mrg-b-lg pull-right"><i class="fa fa-plus-circle fa-lg"></i> Create Sales Invoice</a> --> 
-
+                  
                    <br><br>
                </div>
             </header>
@@ -33,6 +30,7 @@
 								<th><a href="#"><span>Sales Invoice No.</span></a></th>
                                 <th><a href="#"><span>Statement of Account No.</span></a></th>
 								<th><a href="#"><span>Delivery No.</span></a></th>
+								<th class="text-center"><a href="#"><span>Status</span></a></th>
 								<th><a href="#"><span>Action</span></a></th>
 							</tr>
 						</thead>
@@ -56,6 +54,16 @@
 					                            <?php echo $invoiceDataList['SalesInvoice']['dr_uuid'];?>
 					                        </td>
 					                        
+					                        <td class="text-center">
+					                            <?php 
+					                            	if ($invoiceDataList['SalesInvoice']['status'] == 1) {
+					                            		echo "<span class='label label-success'>Invoice</span>";
+					                            	} else {
+					                            		echo "<span class='label label-success'>Pre-Invoice</span>";
+					                            	}
+					                            ?>
+					                        </td>
+
 					                       	<td>
 					                            <?php
 					                               echo $this->Html->link('<span class="fa-stack">

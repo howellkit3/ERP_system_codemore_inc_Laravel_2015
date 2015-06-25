@@ -516,10 +516,10 @@ class QuotationsController extends SalesAppController {
 		$this->Quotation->approvedData($quotationId,$userData['User']['id'],$userData['User']['modified']);
 
 		$this->Session->setFlash(__('Quotation Approved.'));
-    	$this->redirect(
-            array('controller' => 'quotations', 'action' => 'index')
-        );
-
+  //   	$this->redirect(
+  //           array('controller' => 'quotations', 'action' => 'index')
+  //       );
+		exit();
 	}
 
 	public function terminated($quotationId = null){
@@ -541,10 +541,10 @@ class QuotationsController extends SalesAppController {
 		$this->Quotation->terminateData($quotationId,$userData['User']['id'],$userData['User']['modified']);
 
 		$this->Session->setFlash(__('Quotation Terminated.'));
-    	$this->redirect(
-            array('controller' => 'quotations', 'action' => 'index')
-        );
-
+    	// $this->redirect(
+     //        array('controller' => 'quotations', 'action' => 'index')
+     //    );
+		exit();
 	}
 
 	public function print_word($quotationId = null,$companyId = null) {

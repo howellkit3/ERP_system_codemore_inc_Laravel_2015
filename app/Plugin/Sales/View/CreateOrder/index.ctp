@@ -471,12 +471,12 @@
 
 										<div class="form-group plusDisable">
                                             <label for="inputEmail1" class="col-lg-2 control-label ">Delivery Type</label>
-                                            <div class="col-lg-2">
+                                            <div class="col-lg-3">
                                                 <?php 
                                                     echo $this->Form->input('ClientOrderDeliverySchedule.0.delivery_type', array(
                                                         'options' => array('Once' => 'Once', 'Partial' => 'Partial'),
                                                         'label' => false,
-                                                        'class' => 'form-control col-lg-4 required OnceSelected sched required schedClone',
+                                                        'class' => 'form-control col-lg-4 required OnceSelected sched required schedClone widthClientsOrders',
                                                         'empty' => '---Select Delivery Type---'
                                                         
                                                     ));
@@ -529,12 +529,12 @@
 
 										<div class="form-group">
                                             <label for="inputEmail1" class="col-lg-2 control-label">Allowance</label>
-                                            <div class="col-lg-2">
+                                            <div class="col-lg-3">
                                                 <?php 
                                                     echo $this->Form->input('ClientOrderDeliverySchedule.0.allowance', array(
                                                         'options' => array('With charge' => 'With charge' , 'Without Charge' => 'Without charge'),
                                                         'label' => false,
-                                                        'class' => 'form-control col-lg-4 schedClone ',
+                                                        'class' => 'form-control col-lg-4 schedClone widthClientsOrders',
                                                         'empty' => '---Select Allowance---'
                                                         
                                                     ));
@@ -700,9 +700,7 @@
 										</div>
 									</div>
 								</div>
-								
 							</div>
-						
 						</div>
 					</div>
 				</div>
@@ -715,7 +713,6 @@
 						<div class="main-box-body clearfix">
 							<div class="main-box-body clearfix">
 								<div class="form-horizontal">
-								
 									<div class="form-group">
 										<label class="col-lg-2 control-label"></label>
 										<div class="col-lg-8">
@@ -725,15 +722,12 @@
 						                    ?>
 										</div>
 									</div>
-
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-
-
 
 		<?php echo $this->Form->end(); ?>
 	</div>
@@ -743,19 +737,17 @@
 <script>
 $(document).ready(function(){
 
-    //$(".OnceSelected").change(function(){
+
     $('body').on('change', '.OnceSelected', function(){
-   // alert($("option:selected", this).text());
+ 
     if ($("option:selected", this).text() == "Once") {
-    	//if ($(".quantityCondition").val() == "123") {
-    		//alert('quantityCondition');
-    	//alert ("asdas");
+
     	var quantityValue = $('#quantity').val();
     	$("#totalQuantity").val(quantityValue);
     	 $(".onceDisable").hide();
     	 $( ".disablefields" ).prop( "readonly", true );
     	 $(".OnceRemove").remove(); 
-    	//}
+    
     }else{
     	$(".onceDisable").show();
     	$( ".disablefields" ).prop( "readonly", false );
@@ -764,16 +756,15 @@ $(document).ready(function(){
       
     });
 
-    // $(".onceDisable").click(function(){
-   
-   	// 	//alert("a");
-    // 	  $(".plusDisable").children().hide();
-    // 	 //$(".plusDisable").Attr('disabled');
-
-   
-      
-    // });
-
 });
 
 </script>
+
+<style>
+
+.widthClientsOrder{
+
+	width:1050px;
+}
+
+</style>

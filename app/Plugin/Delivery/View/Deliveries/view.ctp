@@ -135,6 +135,10 @@ $totalremaining = 0;
                                                        if ($value == 'Incomplete') {
                                                          $dataholder = 1;
                                                        }
+
+                                                       if ($value == '' ) {
+                                                         $dataholder = 1;
+                                                       }
                                                     }
                                                     
                                                   }

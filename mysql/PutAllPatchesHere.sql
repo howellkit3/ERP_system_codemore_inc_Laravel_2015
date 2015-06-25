@@ -270,3 +270,22 @@ ALTER TABLE `koufu_accounting`.`sales_invoices`     ADD COLUMN `status` INT(1) N
 ALTER TABLE `koufu_accounting`.`sales_invoices`     CHANGE `status` `statement_no` varchar(100) NULL ;
 
 ALTER TABLE `koufu_accounting`.`sales_invoices`     ADD COLUMN `status` INT(1) NULL AFTER `statement_no`;
+
+#NOTE: SELECT KOUFU DELIVERY DATABASE ----
+/** howell kit added this 06/15/2015  */
+CREATE TABLE `transmittals` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `tr_uuid` INT(11) DEFAULT NULL,
+  `dr_uuid` INT(11) DEFAULT NULL,
+  `quantity`  VARCHAR(30) DEFAULT NULL,
+  `created_by` INT(11) DEFAULT NULL,
+  `modified_by` INT(11) DEFAULT NULL,
+  `created` TIMESTAMP NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+
+ALTER TABLE `koufu_delivery`.`transmittals` ADD COLUMN `contact_person` VARCHAR(30) NULL AFTER `dr_uuid`;
+
+#NOTE: SELECT KOUFU ACCOUNTING DATABASE ----
+/** bien added this 06/15/2015  */
+ALTER TABLE `koufu_sale`.`companies`     ADD COLUMN `short_name` VARCHAR(80) NULL AFTER `company_name`;

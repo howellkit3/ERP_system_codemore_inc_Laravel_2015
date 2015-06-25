@@ -52,9 +52,9 @@
 										<div class="col-lg-8">
 											<?php 
 	                                            echo $this->Form->input('Company.company_name', array(
-	                                            								'class' => 'form-control item_type',
-							                                                    'label' => false,
-							                                                    'disabled' => true));
+                    								'class' => 'form-control item_type',
+                                                    'label' => false,
+                                                    'disabled' => true));
                                             ?>
 										</div>
 									</div>									
@@ -64,17 +64,17 @@
 										<div class="col-lg-8">
 											<?php 
 	                                            echo $this->Form->input('Product.uuid', array(
-	                                            								'class' => 'form-control item_type',
-	                                            								'readonly' => true,
-							                                                    'label' => false,       
-							                                                    'placeholder' => 'Item Number',
-							                                                    'fields' =>array('name')));
+                    								'class' => 'form-control item_type',
+                    								'readonly' => true,
+                                                    'label' => false,       
+                                                    'placeholder' => 'Item Number',
+                                                    'fields' =>array('name')));
                                             ?>
                                             <?php 
 	                                            echo $this->Form->input('Product.id', array(
-	                                            								'type' => 'hidden',
-	                                            								'class' => 'form-control item_type',
-							                                                    'label' => false));
+                    								'type' => 'hidden',
+                    								'class' => 'form-control item_type',
+                                                    'label' => false));
                                             ?>
 										</div>
 									</div>
@@ -84,11 +84,11 @@
 										<div class="col-lg-8">
 											<?php 
 	                                            echo $this->Form->input('Product.name', array(
-	                                            								'class' => 'form-control item_type',
-							                                                    'label' => false,
-							                                                    'disabled' => true,
-							                                                    'placeholder' => 'Product Name',
-							                                                    'fields' =>array('name')));
+                    								'class' => 'form-control item_type',
+                                                    'label' => false,
+                                                    'disabled' => true,
+                                                    'placeholder' => 'Product Name',
+                                                    'fields' =>array('name')));
                                             ?>
 										</div>
 									</div>
@@ -98,35 +98,35 @@
 											<?php 
 												//hidden id
 												echo $this->Form->input('ProductSpecification.id', array(
-                                            								'class' => 'form-control item_type editMe',
-						                                                    'label' => false,
-						                                                    'hidden' => 'hidden',
-						                                                    'value' => $specs['ProductSpecification']['id']));
+                    								'class' => 'form-control item_type editMe',
+                                                    'label' => false,
+                                                    'hidden' => 'hidden',
+                                                    'value' => $specs['ProductSpecification']['id']));
 	                                            echo $this->Form->input('ProductSpecification.size1', array(
-                                            								'class' => 'form-control item_type editMe',
-						                                                    'label' => false,
-						                                                    'disabled' => true,
-						                                                    'value' => $specs['ProductSpecification']['size1']));
+                    								'class' => 'form-control item_type editMe',
+                                                    'label' => false,
+                                                    'disabled' => true,
+                                                    'value' => $specs['ProductSpecification']['size1']));
                                             ?>
 										</div>
 										<label class="col-lg-1 sizeWith">mm &emsp; x</label>
 										<div class="col-lg-2">
 											<?php 
 	                                            echo $this->Form->input('ProductSpecification.size2', array(
-	                                            								'class' => 'form-control item_type editMe',
-							                                                    'label' => false,
-							                                                    'disabled' => true,
-							                                                    'value' => $specs['ProductSpecification']['size2']));
+                    								'class' => 'form-control item_type editMe',
+                                                    'label' => false,
+                                                    'disabled' => true,
+                                                    'value' => $specs['ProductSpecification']['size2']));
                                             ?>
 										</div>
 										<label class="col-lg-1 sizeWith">mm &emsp; x</label>
 										<div class="col-lg-2">
 											<?php 
 	                                            echo $this->Form->input('ProductSpecification.size3', array(
-	                                            								'class' => 'form-control item_type editMe',
-							                                                    'label' => false,
-							                                                    'disabled' => true,
-							                                                    'value' => $specs['ProductSpecification']['size3']));
+                    								'class' => 'form-control item_type editMe',
+                                                    'label' => false,
+                                                    'disabled' => true,
+                                                    'value' => $specs['ProductSpecification']['size3']));
                                             ?>
 										</div>
 										<label class="col-lg-1 sizeWith">mm</label>
@@ -137,11 +137,11 @@
 										<div class="col-lg-2">
 											<?php 
 												echo $this->Form->input('ProductSpecification.quantity', array(
-	                                            								'class' => 'form-control item_type number required editMe',
-	                                            								'type' => 'number',
-							                                                    'label' => false,
-							                                                    'disabled' => true,
-							                                                    'value' => $specs['ProductSpecification']['quantity']));
+                    								'class' => 'form-control item_type number required editMe',
+                    								'type' => 'number',
+                                                    'label' => false,
+                                                    'disabled' => true,
+                                                    'value' => $specs['ProductSpecification']['quantity']));
 
 					                        ?>
 										</div>
@@ -160,12 +160,12 @@
 										<div class="col-lg-3">
 											<?php 
 												echo $this->Form->input('ProductSpecification.stock', array(
-	                                            								'class' => 'form-control item_type number editMe stockQuantity required',
-	                                            								'type' => 'number',
-							                                                    'label' => false,
-							                                                    'disabled' => true,
-							                                                    'placeholder' => 'Stocks',
-							                                                    'value' => $specs['ProductSpecification']['stock']));
+                    								'class' => 'form-control item_type number editMe stockQuantity ',
+                    								'type' => 'number',
+                                                    'label' => false,
+                                                    'disabled' => true,
+                                                    'placeholder' => 'Stocks',
+                                                    'value' => $specs['ProductSpecification']['stock']));
 
 					                        ?>
 										</div>
@@ -192,17 +192,32 @@
 										$componentCounter = 0;
 										$partCounter = 0;
 										$processCounter = 0;
+										
 										foreach ($formatDataSpecs as $key => $specLists) {
+											echo "<input name='data[IdHolder][ProductSpecificationDetail][".$key."][id]' value='".$specLists['ProductSpecificationDetail']['id']."' class='form-control editMe' type='hidden' />";
 											if($specLists['ProductSpecificationDetail']['model'] == 'Component'){
+												
+												echo "<input name='data[IdHolder][ProductSpecificationComponent][".$componentCounter."][id]' value='".$specLists['ProductSpecificationComponent']['id']."' class='form-control editMe' type='hidden' />";
 												$componentCounter += 1;
 											} 
 											if($specLists['ProductSpecificationDetail']['model'] == 'Part'){
+												
+												echo "<input name='data[IdHolder][ProductSpecificationPart][".$partCounter."][id]' value='".$specLists['ProductSpecificationPart']['id']."' class='form-control editMe' type='hidden' />";
 												$partCounter += 1;
 											}
 											if($specLists['ProductSpecificationDetail']['model'] == 'Process'){
+												
+												echo "<input name='data[IdHolder][ProductSpecificationProcess][".$processCounter."][id]' value='".$specLists['ProductSpecificationProcess']['id']."' class='form-control editMe' type='hidden' />";
 												$processCounter += 1;
+	
+												foreach ($specLists['ProductSpecificationProcess']['ProcessHolder'] as $key => $processList) {
+													
+													echo "<input name='data[IdHolder][ProcessHolder][]' value='".$processList['ProductSpecificationProcessHolder']['id']."' class='form-control editMe' type='hidden' />";
+												}
+												
 											}
 										}
+										
 									?>
 									<div class="form-group buttonSpecs" style="display:none;">
 										<div class="col-lg-2"></div>
@@ -232,7 +247,7 @@
 												  	<section class="dragField">
 													    <header class="main-box-header dragHeader clearfix">
 													        <h2 class="pull-left"> <?php echo $specLists['ProductSpecificationDetail']['model'] ?> </h2>
-													        <?php if ($key > 3) { ?>
+													        <?php if ($key > 2) { ?>
 														        <a href="#" class="remove_field pull-right editMeBtn" style="display:none;">
 														            <i class="fa fa-times-circle fa-fw fa-lg"></i>
 														        </a>
