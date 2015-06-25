@@ -27,7 +27,7 @@
         </div>
 
       <?php echo $this->Form->create('ClientOrderDeliverySchedule',array(
-      'url'=>(array('controller' => 'deliveries', 'action' => 'print_replacing',$drData['Delivery']['dr_uuid'],$drData['Delivery']['schedule_uuid'])),'class' => 'form-horizontal')); ?>
+      'url'=>(array('controller' => 'deliveries', 'action' => 'print_replacing',$drData['Delivery']['dr_uuid'],$drData['Delivery']['schedule_uuid'])),'class' => 'form-horizontal','target' => '_blank')); ?>
         <div class="col-lg-12">
           <div class="main-box">
             <div class="top-space"></div>
@@ -298,7 +298,7 @@
                           <div class="col-lg-8">
                             <button type="submit" class="btn btn-primary pull-left">Print</button>&nbsp;
                           <?php 
-                          echo $this->Html->link('Cancel', array('controller' => 'products', 'action' => 'index'),array('class' =>'btn btn-default','escape' => false));
+                          echo $this->Html->link('Cancel', array('controller' => 'deliveries', 'action' => 'delivery_replacing'),array('class' =>'btn btn-default','escape' => false));
                           ?>
                           </div>
                       </div>
