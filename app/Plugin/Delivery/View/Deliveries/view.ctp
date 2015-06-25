@@ -411,7 +411,7 @@ $totalremaining = 0;
 
       <div class="modal-body">
 
-      <?php //pr($scheduleInfo); 
+      <?php  
 
         echo $this->Form->create('ClientOrderDeliverySchedule',array(
           'url'=>(array('controller' => 'deliveries','action' => 'delivery_return',$scheduleInfo['ClientOrderDeliverySchedule']['id'],$scheduleInfo['QuotationDetail']['quotation_id'], $scheduleInfo['ClientOrderDeliverySchedule']['uuid']) ),'class' => 'form-horizontal')); ?>
