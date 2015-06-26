@@ -4,59 +4,39 @@
 
 <?php echo $this->Html->script('Accounting.accounting');?>
 
-<?php echo $this->Form->create('SalesInvoice',array('url'=>(array('controller' => 'sales_invoice','action' => 'add'))));?>
+<?php echo $this->Form->create('SalesInvoice',array('url'=>(array('controller' => 'sales_invoice','action' => 'add_statement'))));?>
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="main-box">
 				<header class="main-box-header clearfix">
-	        		<h1>Create Sales Invoice</h1>
+	        		<h1>Create Statement of Account</h1>
 	   		 	</header>
 				<div class="main-box-body clearfix">
 					<div class="main-box-body clearfix">
 						<div class="form-horizontal">
 
-							<div class="form-group">
-								<label class="col-lg-2 control-label"><span style="color:red">*</span>Status</label>
-								<div class="col-lg-8">
-									<?php 
-                                        echo $this->Form->input('SalesInvoice.status', array(
-                                            'options' => array('Pre-Invoice', 'Invoice'),
-                                            'alt' => 'Status',
-                                            'label' => false,
-                                            'class' => 'form-control col-lg-4 required',
-                                            'empty' => '--Select Status--'
-                                        	));
-                                    ?>
-								</div>
-							</div>
+							<?php 
+                                echo $this->Form->input('SalesInvoice.status', array(
+                                	'type' => 'hidden',
+                                    'label' => false,
+                                    'class' => 'form-control col-lg-4 required',
+                                    'value' => 2
+                                	));
+                            ?>
 
                             <div class="form-group">
 								<label class="col-lg-2 control-label"><span style="color:red">*</span>Invoice No.</label>
 								<div class="col-lg-8">
 									<?php 
-                                        echo $this->Form->input('SalesInvoice.sales_invoice_no', array(
+                                        echo $this->Form->input('SalesInvoice.statement_no', array(
             								'class' => 'form-control item_type required',
                                             'label' => false,
                                             'readonly' => true,
                                             'value' => $seriesSalesNo,
-                                            'placeholder' => 'Invoice No.'));
+                                            'placeholder' => 'Statement No.'));
                                     ?>
 								</div>
 							</div>
-
-							<!-- <div class="form-group">
-								<label class="col-lg-2 control-label"><span style="color:red">*</span>SA No.</label>
-								<div class="col-lg-8">
-									<?php 
-                                        echo $this->Form->input('SalesInvoice.statement_nos', array(
-            								'class' => 'form-control item_type required',
-                                            'label' => false,
-                                            'readonly' => true,
-                                            'value' => rand(0,999).'-'.time(),
-                                            'placeholder' => 'Statement of Account No.'));
-                                    ?>
-								</div>
-							</div> -->
 
 							<div class="form-group">
 								<label class="col-lg-2 control-label"><span style="color:red">*</span>Delivery No.</label>

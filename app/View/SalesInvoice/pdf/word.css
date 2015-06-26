@@ -1,11 +1,11 @@
 body{
-  font-family: "Arial";
+  font-family: "chiller";
   font-weight: normal;
   max-width: 800px;
   margin: 0px;
   margin-top: 0px;
 }
-@page { margin: 0px;margin-top: 0px; }
+@page { font-family: "chiller";margin: 0px;margin-top: 0px; }
 .padd,td{
   padding: 6px 0px;
   font-size: 15px;
