@@ -5,6 +5,13 @@
 
     $objTpl = PHPExcel_IOFactory::load("./img/templates.xlsx");
 
+    $addRow = 0;
+    foreach ($invoiceData as $key => $invoiceList) {
+        $addRow = $key + 1;
+    }
+
+    $objTpl->setActiveSheetIndex(1)->insertNewRowBefore(11,$addRow);
+
     // add data
     $counter = 8;
     foreach ($invoiceData as $key => $invoiceList) {

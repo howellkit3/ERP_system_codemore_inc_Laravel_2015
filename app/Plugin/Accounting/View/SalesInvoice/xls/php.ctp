@@ -35,7 +35,7 @@
             $counter++;  
         }
     }
-    $totalIndex = $counter + 3;
+    $totalIndex = $counter + 4;
     $objTpl->setActiveSheetIndex(1)
                     ->setCellValue('F'.$totalIndex, $totalquantity);
  

@@ -215,8 +215,8 @@ $totalremaining = 0;
             <br><br>
 
           <div class="form-group" id="existing_items">
-              <label class="col-lg-2 control-label ">Delivery Form</label>
-            <div class="col-lg-9 "> 
+              <label class="col-lg-3 control-label ">Delivery Form</label>
+            <div class="col-lg-8 "> 
 
             <?php 
                echo $this->Form->input('Delivery.id', array(
