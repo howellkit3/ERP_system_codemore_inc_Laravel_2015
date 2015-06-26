@@ -17,7 +17,7 @@
 					<tr>
 						<td style="width:100px;"> </td>
 						<td style="width:450px;"> </td>
-						<td style="width:160px;"><?php echo $invoiceData['SalesInvoice']['sales_invoice_no']?></td>
+						<td style="width:160px;"><?php echo $invoiceData['SalesInvoice']['statement_no']?></td>
 					</tr>
 					<tr>
 						<td style="width:100px;"> </td>
@@ -74,56 +74,19 @@
 			
 			<table class="layout" style="line-height:11px;padding-top:18px;">
 				<thead>
-					<tr>	
-						<td style="width:740px;text-align:right;">
-							<?php 
-								if($clientData['QuotationItemDetail']['unit_price_currency_id'] == 1){
-									echo number_format($totalQty,2);
-								}
-							?>
-						</td>
-					</tr>
-					<tr>	
-						<td style="width:740px;text-align:right;">-</td>
-					</tr>
-					<tr>	
-						<td style="width:740px;text-align:right;">
-							<?php 
-								if($clientData['QuotationItemDetail']['unit_price_currency_id'] == 2){
-									echo number_format($totalQty,2);
-								}else{
-									echo "-";
-								}
-							?>
-						</td>
-					</tr>
-					<tr>	
-						<td style="width:740px;text-align:right;">
-							<?php 
-								if($clientData['QuotationItemDetail']['unit_price_currency_id'] == 1){
-									$totalVat = $totalQty * .12;
-									echo number_format($totalVat,2);
-								}else{
-									echo "-";
-								}
-							?>
-						</td>
-					</tr>
+					
 					<tr>	
 						<td style="width:660px;text-align:right;">
+							
+							<?php $totalQty = $drData['DeliveryDetail']['quantity'] * $clientData['QuotationItemDetail']['unit_price']?>
 							<?php 
-								if($clientData['QuotationItemDetail']['unit_price_currency_id'] == 1){
-									$totalVat = $totalQty * .12;
-									$fullVat = $totalQty + $totalVat;
-									echo $currencyData[$clientData['QuotationItemDetail']['unit_price_currency_id']];
-									echo number_format($fullVat,2);
-								}else{
-									echo $currencyData[$clientData['QuotationItemDetail']['unit_price_currency_id']];
-									echo number_format($totalQty,2);
-								}
+								echo $currencyData[$clientData['QuotationItemDetail']['unit_price_currency_id']];
+								echo number_format($totalQty,2) ;
 							?>
+							
 						</td>
 					</tr>
+
 				</thead>
 			</table>
 			<br><br><br>
