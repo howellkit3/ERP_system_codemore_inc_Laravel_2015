@@ -562,13 +562,13 @@ class SalesInvoiceController extends AccountingAppController {
                                                             ));
        
         $invoiceList = $this->SalesInvoice->find('list',array('fields' => array('id','dr_uuid'),
-            'conditions' => array('SalesInvoice.status' => 1)
+             'conditions' => array('NOT' => array('SalesInvoice.status' => 0))
             ));
 
         //$this->SalesInvoice->bindInvoice();
 
         $invoiceData = $this->SalesInvoice->find('all',array(
-             'conditions' => array('SalesInvoice.status' => 1)
+              'conditions' => array('NOT' => array('SalesInvoice.status' => 0))
             ));
 
         $deliveryData = $this->Delivery->find('all',array(
