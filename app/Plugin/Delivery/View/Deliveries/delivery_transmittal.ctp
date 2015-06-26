@@ -249,8 +249,9 @@
                             'class' => 'form-control item_type quantityLimit',
                             'label' => false,
                             'required' => 'required',
+                            'readonly' => 'readonly',
                             'placeholder' => 'Item Quantity',
-                            'value' => $drData['DeliveryDetail']['quantity'] - $drData['DeliveryDetail']['delivered_quantity'] ));
+                            'value' => $drData['DeliveryDetail']['quantity']));
 
                             echo $this->Form->input('DeliveryDetail.limit', array(
                             'class' => 'form-control item_type editable required ',

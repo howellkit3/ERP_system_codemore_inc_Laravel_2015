@@ -238,18 +238,15 @@ class DeliveriesController extends DeliveryAppController {
 
          $deliveryData = $this->Delivery->find('first', array(
                                          'conditions' => array(
-                                        'Delivery.schedule_uuid' => $scheduleInfo['ClientOrderDeliverySchedule']['uuid']
+                                        'Delivery.schedule_uuid' => $clientsOrderUuid
                                         )
                                     ));
 
-        //$deliveryUuid = $this->Delivery->find('list',array('fields' => array('schedule_uuid', 'dr_uuid')));
-
-       // $uuidHolder = $deliveryUuid[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']]; 
+ 
          $this->Delivery->bindDelivery();
          $deliveryEdit = $this->Delivery->find('all', array(
                                          'conditions' => array(
-                                        'Delivery.schedule_uuid' => $scheduleInfo['ClientOrderDeliverySchedule']['uuid']
-                                       //'Delivery.dr_uuid' => $uuidHolder
+                                        'Delivery.schedule_uuid' => $clientsOrderUuid
                                         )
                                     ));
 
@@ -772,5 +769,45 @@ public function delivery_transmittal_record() {
         
 }
 
+public function search_order($hint = null){
 
+    $this->loadModel('Sales.ClientOrder');
+
+    $this->loadModel('Sales.ClientOrderDeliverySchedule');
+
+    $this->ClientOrder->bindDelivery();
+
+    $clientsOrder = $this->ClientOrder->find('all',array(
+                  'conditions' => array(
+                    'OR' => array(
+                      array('ClientOrder.po_number LIKE' => '%' . $hint . '%'),
+                      array('Product.name LIKE' => '%' . $hint . '%')
+                      )
+                    ),
+                  'limit' => 10
+                  )); 
+
+    $deliveryData = $this->Delivery->find('list',array('fields' => array('schedule_uuid','status')));
+
+    $this->Delivery->bindDelivery();
+    $deliveryStatus = $this->Delivery->find('all');
+
+    $deliveryList = $this->Delivery->find('list',array('fields' => array('schedule_uuid', 'dr_uuid')));
+
+    $orderList = $this->DeliveryDetail->find('list',array('fields' => array('delivery_uuid', 'status')));
+
+    $orderListHelper = $this->Delivery->find('list',array('fields' => array('clients_order_id', 'dr_uuid')));
+
+    $orderDeliveryList = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid', 'uuid')));
+
+    $deliveryDetailList = $this->DeliveryDetail->find('list',array('fields' => array('delivery_uuid', 'delivered_quantity')));
+
+    $this->set(compact('clientsOrder', 'deliveryStatus', 'deliveryList', 'orderListHelper', 'orderDeliveryList', 'deliveryDetailList' , 'deliveryData'));
+
+    if ($hint == ' ') {
+        $this->render('index');
+      }else{
+        $this->render('search_order');
+      }
+    }
 }

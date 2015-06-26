@@ -2,15 +2,6 @@
 <?php $this->Html->addCrumb('Quotation', array('controller' => 'quotations', 'action' => 'index')); ?>
 <?php echo $this->Html->script('Sales.searchQuotation');?>
 <div style="clear:both"></div>
-<?php 
-  /* echo $this->Html->script('jquery');
-   $this->Paginator->options(array(
-      'update' => '#QuotationsTable',
-      'before' => $this->Js->get("#loader")->effect('fadeIn', array('buffer' => false)),
-      'complete' => $this->Js->get("#loader")->effect('fadeOut', array('buffer' => false)),
-   )); */
-
-?>
 
 <div id="QuotationsTable">
 
@@ -26,8 +17,6 @@
                  
                 
                 <div class="filter-block pull-right">
-
-
 
                    <div class="form-group pull-left">
                         <?php //echo $this->Form->create('Quotation',array('controller' => 'quotations','action' => 'search', 'type'=> 'get')); ?>
