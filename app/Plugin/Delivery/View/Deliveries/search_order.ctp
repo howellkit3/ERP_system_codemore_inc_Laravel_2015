@@ -1,11 +1,12 @@
   <?php 
        
-                        if(!empty($clientsOrder)){
-                       
+                       // if(!empty($clientsOrder)){
+                         // pr($deliveryDetailsData); exit;
 ?>
                                 <?php foreach ($clientsOrder as $scheduleDataList): ?>
 
-                                   <tr class="">
+                              
+                                    <tr class="">
 
                                         <td class="text-center">
                                             <?php  echo $scheduleDataList['ClientOrder']['uuid']; ?>  
@@ -144,4 +145,4 @@
 
                         <?php 
                             endforeach; 
-                        } ?> 
+                        //} ?> 

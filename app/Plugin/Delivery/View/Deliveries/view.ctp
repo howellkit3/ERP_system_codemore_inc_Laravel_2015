@@ -107,7 +107,7 @@ $totalremaining = 0;
                                 </tr>
                                 <tr>
                                     <td>Location</td>
-                                    <td><?php echo  $scheduleInfo['ClientOrderDeliverySchedule']['location']; ?></td>
+                                    <td><?php echo  substr($scheduleInfo['ClientOrderDeliverySchedule']['location'],0,25); ?></td>
                                 </tr>
 
                                 <tr>
@@ -284,9 +284,11 @@ $totalremaining = 0;
                         </td>
 
                         <td class="">
+
+                          
               
-                           <?php echo  $deliveryDataList['DeliveryDetail']['location']; ?>    
-                           
+                           <?php echo  substr($deliveryDataList['DeliveryDetail']['location'],0,25); ?>    
+                           ..
                            
                         </td>
 
@@ -492,7 +494,7 @@ echo $this->Form->end();
   ?> 
                     </table>
                    
-                      <h2 class ='pull-right'>Remaining Quantity : <?php echo $totalremaining; ?> &nbsp;&nbsp;  </h2>
+                      <h2 class ='pull-right'>Remaining Balance : <?php echo $totalremaining; ?> &nbsp;&nbsp;  </h2>
         
               </div>
         </div>

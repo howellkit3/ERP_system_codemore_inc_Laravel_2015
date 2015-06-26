@@ -1,3 +1,4 @@
+<?php //echo $this->Html->script('Deliveries.searchOrder');?>
 <?php echo $this->element('deliveries_options'); ?><br><br>
 <div class="row">
     <div class="col-lg-12">
@@ -7,6 +8,17 @@
                 <h2 class="pull-left"><b>Delivery Monitoring</b></h2>
                 
             </header>
+
+            <div class="filter-block pull-right">
+
+                <div class="form-group pull-left">
+                
+                        <input placeholder="Search..." class="form-control searchOrder"  />
+                        <i class="fa fa-search search-icon"></i>
+                    
+                </div>
+
+            </div>    
             
             <div class="main-box-body clearfix ">
                 <div class="table-responsive">
@@ -24,7 +36,13 @@
                             </tr>
                         </thead>
 
-                        <?php echo $this->element('schedule_requests_table'); ?>  
+                        <tbody aria-relevant="all" aria-live="polite" class="OrderFields" role="alert">
+                            <?php echo $this->element('schedule_requests_table'); ?>  
+                        </tbody>
+
+                        <tbody aria-relevant="all" aria-live="polite" class="searchAppend" role="alert" style="display:none;">
+                        </tbody>
+
                     </table>
                     <hr>
 
@@ -43,4 +61,49 @@
         </div>
     </div>
 </div>
-<?php //echo $this->element('sql_dump'); ?>
+
+<script>
+
+    $("body").on('keyup','.searchOrder', function(e){
+
+        var searchInput = $(this).val();
+    
+        
+        //alert(searchInput);
+        if(searchInput != ''){
+
+            $('.OrderFields').hide();
+            $('.searchAppend').show();
+            //alert('hide');
+
+        }else{
+            $('.OrderFields').show();
+            $('.searchAppend').hide();
+            //alert('show');
+        }
+        
+        $.ajax({
+            type: "GET",
+            url: serverPath + "delivery/deliveries/search_order/"+searchInput,
+            dataType: "html",
+            success: function(data) {
+
+                //alert(data);
+
+                if(data){
+
+                    $('.searchAppend').html(data);
+
+                } 
+                if (data.length < 5 ) {
+
+                    $('.searchAppend').html('<font color="red"><b>No result..</b></font>');
+                     
+                }
+                
+            }
+        });
+
+    });
+
+</script>

@@ -24,7 +24,7 @@ $totalremaining = 0;
 
                         <td class="">
               
-                           <?php echo  $deliveryDataList['DeliveryDetail']['location']; ?>    
+                           <?php echo  substr($deliveryDataList['DeliveryDetail']['location'],0,25); ?>    
                            
                            
                         </td>
