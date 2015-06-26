@@ -263,7 +263,7 @@ $totalremaining = 0;
                             </tr>
                         </thead>
 
-                        <?php   
+                        <?php // pr($deliveryEdit); 
 
   if(!empty($deliveryEdit) ){
               ?>
