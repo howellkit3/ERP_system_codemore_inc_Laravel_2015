@@ -88,17 +88,19 @@ class ClientOrderDeliverySchedule extends AppModel {
 
 	public function saveClientOrderDeliverySchedule($clientOrderData = null, $auth = null, $clientOrderId = null){
 
-		$month = date("m"); 
-	    $year = date("y");
-	    $hour = date("H");
-	    $minute = date("i");
-	    $seconds = date("s");
-	    $random = rand(1000, 10000);
-	        
-		$code =  $year. $month .$random;
+		
 		
 		foreach ($clientOrderData[$this->name] as $key => $clientOrderDetails)
 		{
+			$month = date("m"); 
+		    $year = date("y");
+		    $hour = date("H");
+		    $minute = date("i");
+		    $seconds = date("s");
+		    $random = rand(1000, 10000);
+	        
+		$code =  $year. $month .$random;
+
 			$this->create();
 			
 			if (!empty($clientOrderData[$this->name])) {

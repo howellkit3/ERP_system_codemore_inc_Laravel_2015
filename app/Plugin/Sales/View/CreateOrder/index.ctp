@@ -751,7 +751,7 @@ $(document).ready(function(){
     }else{
     	$(".onceDisable").show();
     	$( ".disablefields" ).prop( "readonly", false );
-    	$("#totalQuantity").val("");
+    	//$("#totalQuantity").val("");
     }
       
     });
