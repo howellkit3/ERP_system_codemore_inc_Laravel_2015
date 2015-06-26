@@ -6,7 +6,7 @@
   height: 100%;background-repeat:no-repeat;">
 	<div class="col-lg-12">
 		<div class="main-box main-pdf" >
-			<table class="layout" style="line-height:0px;">
+			<table class="layout" style="line-height:0px; font-family: Verdana , Geneva, sans-serif;">
 				<thead>
 					<tr>
 						<td style="width:550px;"> </td>
@@ -24,7 +24,7 @@
 				</thead>
 			</table>
 
-			<table class="layout" style="line-height:50px; width:430px;" >
+			<table class="layout" style="line-height:50px; width:430px; font-family: Verdana , Geneva, sans-serif;" >
 				<thead >
 					<tr >
 						<td class="td-heigth" style="width:620px;border:1px solid #FFFFFF;"> </td>
@@ -36,7 +36,7 @@
 				</thead>
 			</table>
 
-			<table class="layout" style="line-height:-10px; width:900px;" >
+			<table class="layout" style="line-height:-10px; width:900px; font-family: Verdana , Geneva, sans-serif;" >
 				<thead >
 					<tr >
 						<td class="td-heigth" style="width:25px;border:1px solid #FFF;"> </td>
@@ -48,7 +48,7 @@
 				</thead>
 			</table>
 
-			<table class="table table-bordered" style="width:0px; line-height:62px;">
+			<table class="table table-bordered" style="width:0px; line-height:62px; font-family: Verdana , Geneva, sans-serif;">
 				<thead>
 					<tr>
 						<td class="td-heigth" style="width:20px;border:1px solid #FFFFFF;"></td>
@@ -81,7 +81,7 @@
 			</table>
 			<br><br><br><br><br><br><br>
 			<br><br><br><br>
-			<table class="table table-bordered" style="line-height:40px; ">
+			<table class="table table-bordered" style="line-height:40px; font-family: Verdana , Geneva, sans-serif;">
 				<thead>
 					<tr>
 						<td class="td-heigth" style="width:20px;border:1px solid #FFFFFF;"> </td>

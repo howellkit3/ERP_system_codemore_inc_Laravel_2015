@@ -9,7 +9,7 @@
 	<div class="col-lg-12">
 		<div class="main-box main-pdf" >
 			<br><br><br>
-			<table class="layout" style="line-height:7px;padding-top:25px;">
+			<table class="layout" style="line-height:7px;padding-top:25px; font-family: Verdana , Geneva, sans-serif;">
 				<thead>
 					<tr>
 						<td style="width:15px;"> </td>
@@ -45,7 +45,7 @@
 					</tr>
 				</thead>
 			</table>
-			<table class="table table-bordered" style="line-height:20px;padding-top:5px;">
+			<table class="table table-bordered" style="line-height:20px;padding-top:5px; font-family: Verdana , Geneva, sans-serif;">
 				<thead>
 					<?php //foreach ($clientData['ClientOrderDeliverySchedule'] as $key => $scheduleList) { ?>
 						<tr>
@@ -77,7 +77,7 @@
 			</table>
 			<br><br><br><br><br>
 			<br><br><br>
-			<table class="table table-bordered" style="line-height:20px;padding-top:45px;">
+			<table class="table table-bordered" style="line-height:20px;padding-top:45px; font-family: Verdana , Geneva, sans-serif;">
 				<thead>
 					<tr>
 						<td class="td-heigth" style="width:170px;border:1px solid #FFFFFF;"><center><?php echo ucfirst($prepared['User']['first_name'])?> <?php echo ucfirst($prepared['User']['last_name'])?></center></td>
