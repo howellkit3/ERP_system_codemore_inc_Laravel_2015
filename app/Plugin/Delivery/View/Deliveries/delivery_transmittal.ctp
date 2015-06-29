@@ -218,6 +218,14 @@
                                     date('Y-m-d',strtotime($drData['DeliveryDetail']['schedule']))
                                                                    ));
                                 ?>
+
+                                <?php 
+                                    echo $this->Form->input('DeliveryDetail.id', array( 
+                                    'id' => 'date',
+                                    'type' => 'hidden',
+                                    'value' => $drData['DeliveryDetail']['id']
+                                    ));
+                                ?>
                     
                             </div>
                         </div>
@@ -225,13 +233,13 @@
                         <div class="form-group">
                             <label class="col-lg-2 control-label">Location</label>
                             <div class="col-lg-8">
-                        <?php 
+                        <?php //pr($companyAddress[$clientData['ClientOrder']['company_id']]);
                             echo $this->Form->input('DeliveryDetail.location', array(
                             'class' => 'form-control item_type',
                             'label' => false,
-                            'type' => 'text',
+                            'type' => 'select',
+                            'options' => array($companyAddress[$clientData['ClientOrder']['company_id']]),
                             'required' => 'required',
-                            'readonly' => 'readonly',
                             'class' => 'form-control item_type datepik editable required',
                             'value' => 
                             $drData['DeliveryDetail']['location']

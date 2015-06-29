@@ -37,7 +37,7 @@
 						<td style="width:80px;font-family: Calibri;"><b> </b></td>
 						<td style="width:20px;"> </td>
 						<td style="width:480px;">
-							<?php echo ucfirst($companyData['Address'][0]['address1'])?>
+							<?php echo substr(ucfirst($companyData['Address'][0]['address1']), 0 , 30);?>
 						</td>
 						<td style="text-align:right;">
 							<?php echo ucfirst($companyData['Company']['tin'])?>

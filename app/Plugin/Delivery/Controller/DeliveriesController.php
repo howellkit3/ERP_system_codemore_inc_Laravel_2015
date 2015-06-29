@@ -428,6 +428,8 @@ public function delivery_edit($dr_uuid = null, $clientsOrderUuid = null) {
 
   $this->loadModel('Sales.ClientOrder');
 
+  $this->loadModel('Sales.Address');
+
   $this->Delivery->bindDelivery();
 
   $deliveryEdit = $this->Delivery->find('first', array(
@@ -451,6 +453,8 @@ public function delivery_edit($dr_uuid = null, $clientsOrderUuid = null) {
                                     ));
 
   $clientOrderData = $this->ClientOrder->find('list',array('fields' => array('uuid','po_number')));
+
+  $companyAddress = $this->Address->find('list',array('fields' => array('address1','address1','foreign_key')));
 
   $this->loadModel('Sales.ClientOrder');
   $this->ClientOrder->bindDelivery();
@@ -482,7 +486,7 @@ public function delivery_edit($dr_uuid = null, $clientsOrderUuid = null) {
                 $this->Session->setFlash(__('Unable to update your post.'));
      }            
         
-  $this->set(compact('deliveryEdit', 'clientOrderData', 'clientsOrder', 'deliveryData', 'scheduleInfo', 'userData'));      
+  $this->set(compact('deliveryEdit', 'clientOrderData', 'clientsOrder', 'deliveryData', 'scheduleInfo', 'userData', 'companyAddress'));      
 }
 
 
@@ -585,7 +589,7 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
     $drData = $this->Delivery->find('first', array(
                                         'conditions' => array('Delivery.dr_uuid' => $dr_uuid
                                         )));
-   // pr($drData);exit();
+    //pr($this->request->data);exit();
     $clientData = $this->ClientOrder->find('first', array(
                                         'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
                                         )));
@@ -609,6 +613,8 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
     if(!empty($this->request->data['DeliveryDetail']['quantity'])){
 
     $drQuantity = $this->request->data['DeliveryDetail']['quantity'];
+
+    $this->DeliveryDetail->save($this->request->data['DeliveryDetail']);
 
     }
 
@@ -645,6 +651,10 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
           }
     
         }else{
+
+        //pr($this->request->data); exit;
+
+        //$this->request->data['DeliveryDetail']['id'] = $userData['User']['id'];
 
         $output = $view->render('print_dr', false);
 
@@ -688,6 +698,16 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
 
     $this->loadModel('Unit');
 
+    $this->loadModel('Sales.Address');
+
+    $companyAddress = $this->Address->find('list',array('fields' => array('address1','address1','foreign_key')));
+
+   // $this->ClientOrder->bindDelivery();
+
+   // $clientsOrder = $this->ClientOrder->find('first', array(
+                                       // 'conditions' => array('ClientOrderDeliverySchedule.uuid' => $schedule_uuid
+                                       // ))); 
+
     if($this->request->data['Delivery']['print'] == 1){
 
       $units = $this->Unit->getList();
@@ -713,8 +733,6 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
 
       $units = $this->Unit->find('list',array('fields' => array('id','unit')));
 
-      //pr($units); exit;
-      
       $this->Company->bind('Address');
 
       $this->Delivery->bindDelivery();
@@ -734,8 +752,8 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
 
     }
 
-   // pr($this->request->data);exit();
-    $this->set(compact('drData','clientData','companyData','units','nameForm'));
+
+    $this->set(compact('drData','clientData','companyData','units','nameForm', 'companyAddress'));
     
 }
 
