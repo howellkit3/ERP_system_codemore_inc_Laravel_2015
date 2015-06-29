@@ -9,7 +9,7 @@
 	<div class="col-lg-12">
 		<div class="main-box main-pdf" >
 			<br><br><br>
-			<table class="layout" style="line-height:7px;padding-top:25px; font-family: Verdana , Geneva, sans-serif;">
+			<table class="layout" style="line-height:17px;padding-top:25px; font-family: Verdana , Geneva, sans-serif;">
 				<thead>
 					<tr>
 						<td style="width:15px;"> </td>
