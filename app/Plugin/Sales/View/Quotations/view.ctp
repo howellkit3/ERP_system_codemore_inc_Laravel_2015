@@ -189,7 +189,7 @@
 						<div class="form-group">
 							<div class="col-lg-1"></div>
 							<div class="col-lg-10">
-								Dear :&nbsp; <?php echo ucfirst($quotation['ContactPerson']['firstname']).' '.ucfirst($quotation['ContactPerson']['lastname']) ?>&nbsp;
+								Dear <?php echo ucfirst($quotation['ContactPerson']['firstname']).' '.ucfirst($quotation['ContactPerson']['lastname']) ?>,&nbsp;
 								
 							</div>
 						</div>
@@ -232,7 +232,7 @@
 					<div class="form-group">
 							<div class="col-lg-1"></div>
 							<div class="col-lg-2">
-								Qty
+								Quantity
 								<br><br>
 								Unit Price
 								<?php //if($displayVat == 0){ ?>
@@ -447,7 +447,7 @@
 						<div class="form-group">
 							<div class="col-lg-1"></div>
 							<div class="col-lg-10">
-								Approved by
+								Approved by :
 							</div>
 						</div>
 						<br><br>
