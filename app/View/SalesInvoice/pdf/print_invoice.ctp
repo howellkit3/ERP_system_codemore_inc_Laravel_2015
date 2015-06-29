@@ -40,7 +40,7 @@
 			<table class="table table-bordered" style="line-height:20px; font-family: Verdana , Geneva, sans-serif;">
 				<thead>
 					<tr>
-						<td style="width:30px;"> </td>
+						<td style="width:0px;"> </td>
 						<td style="width:140px;"><?php echo $clientData['ClientOrder']['po_number']?></td>
 						<td class="td-heigth" style="width:270px;border:1px solid #FFFFFF;"><?php echo ucfirst($clientData['Product']['name'])?></td>
 						<td class="td-heigth" style="width:70px;border:1px solid #FFFFFF;text-align:left;"><?php echo number_format($drData['DeliveryDetail']['quantity'])?></td>
