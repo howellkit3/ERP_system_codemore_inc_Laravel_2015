@@ -6,20 +6,20 @@
             <header class="main-box-header clearfix">
 
                 <h2 class="pull-left"><b>Delivery Monitoring</b></h2>
+
+                <div class="filter-block pull-right">
+
+                    <div class="form-group pull-left">
+                    
+                            <input placeholder="Search..." class="form-control searchOrder"  />
+                            <i class="fa fa-search search-icon"></i>
+                        
+                    </div>
+
+                </div> 
                 
             </header>
 
-            <div class="filter-block pull-right">
-
-                <div class="form-group pull-left">
-                
-                        <input placeholder="Search..." class="form-control searchOrder"  />
-                        <i class="fa fa-search search-icon"></i>
-                    
-                </div>
-
-            </div>    
-            
             <div class="main-box-body clearfix ">
                 <div class="table-responsive">
                     <table class="table table-striped table-hover ">
