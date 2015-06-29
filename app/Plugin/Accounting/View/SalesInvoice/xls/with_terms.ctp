@@ -10,26 +10,29 @@
         $addRow = $key + 1;
     }
 
-    $objTpl->setActiveSheetIndex(1)->insertNewRowBefore(11,$addRow);
+    $objTpl->setActiveSheetIndex(3)->insertNewRowBefore(8,$addRow);
 
     // add data
     $counter = 8;
+    $fulltotalphp = 0;
+    $fulltotalPhpSale = 0;
+    $fullpercent = 0;
     foreach ($invoiceData as $key => $invoiceList) {
 
         $phpPrice = '';
         $totalphp = '';
         $usdPrice = '';
-        $phpTotal = '';
+        //$phpTotal = '';
         $totalP = '';
-        $totalPhpSale = '';
+        //$totalPhpSale = '';
 
         if ($invoiceList['SalesInvoice']['unit_price_currency_id'] == 1) {
             $phpPrice = number_format($invoiceList['SalesInvoice']['unit_price'],2);
 
             $totalphp = number_format($invoiceList['SalesInvoice']['unit_price'],2);
-
+            $fulltotalphp = $fulltotalphp + $invoiceList['SalesInvoice']['unit_price'];
             $totalPhpSale = number_format($invoiceList['SalesInvoice']['unit_price'],2);
-
+            $fulltotalPhpSale = $fulltotalPhpSale + $invoiceList['SalesInvoice']['unit_price'];
         } else {
             $usdPrice = number_format($invoiceList['SalesInvoice']['unit_price'],2);
 
@@ -38,6 +41,7 @@
             $totalP = number_format($phpTotal,2);
 
             $totalPhpSale = number_format($phpTotal,2);
+            $fulltotalPhpSale = $fulltotalPhpSale + $phpTotal;
         }
 
         $totalSale = 0;
@@ -52,17 +56,17 @@
             }
         }
         
-        $percent = '';
+        //$percent = '';
         $fulltotalSale = '';
         if ($invoiceList['SalesInvoice']['unit_price_currency_id'] == 1) {
             $fulltotalSale = $totalSale /  $invoiceList['SalesInvoice']['unit_price'];
             $percent = number_format($fulltotalSale,2);
-                
+            $fullpercent = $fullpercent = $fulltotalSale;
         } else {
             $phpTotal = 44.221 * $invoiceList['SalesInvoice']['unit_price'];
             $fulltotalSale = $totalSale /  $phpTotal;
             $percent = number_format($fulltotalSale,2);
-            
+            $fullpercent = $fullpercent = $fulltotalSale;
         }
         
         $objTpl->setActiveSheetIndex(3)
@@ -78,6 +82,12 @@
         $counter++;  
        
     }
+
+    $totalIndex = $counter + 3;
+    $objTpl->setActiveSheetIndex(3)
+                    ->setCellValue('D'.$totalIndex, $fulltotalphp)
+                    ->setCellValue('G'.$totalIndex, $fulltotalPhpSale)
+                    ->setCellValue('H'.$totalIndex, $fullpercent);
  
     //prepare download
     $filename = mt_rand(1,100000).'.xlsx'; //just some random filename

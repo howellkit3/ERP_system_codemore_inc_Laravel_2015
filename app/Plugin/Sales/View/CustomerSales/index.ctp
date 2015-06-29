@@ -1,5 +1,5 @@
 <?php $this->Html->addCrumb('Sales', array('controller' => 'customer_sales', 'action' => 'index')); ?>
-
+<?php echo $this->Html->script('Sales.searchQuotation');?>
 <div style="clear:both"></div>
 
 <?php 
@@ -20,7 +20,12 @@
                 <h2 class="pull-left"><b>Customers List</b></h2>
                 
                 <div class="filter-block pull-right">
-                    
+                    <div class="form-group pull-left">
+                        <?php //echo $this->Form->create('Quotation',array('controller' => 'quotations','action' => 'search', 'type'=> 'get')); ?>
+                            <input placeholder="Search..." class="form-control searchCustomer"  />
+                            <i class="fa fa-search search-icon"></i>
+                         <?php //echo $this->Form->end(); ?>
+                    </div>
                     <?php
 
                         echo $this->Html->link('<i class="fa fa-plus-circle fa-lg"></i> Add Customer ', array('controller' => 'customer_sales', 'action' => 'add'),array('class' =>'btn btn-primary pull-right','escape' => false));
@@ -43,7 +48,11 @@
                             </tr>
                         </thead>
 
-                        <?php echo $this->element('customer_table'); ?>
+                        <tbody aria-relevant="all" aria-live="polite" class="customerFields" role="alert">
+                            <?php echo $this->element('customer_table'); ?>
+                        </tbody>
+                        <tbody aria-relevant="all" aria-live="polite" class="searchAppend" role="alert" style="display:none;">
+                        </tbody>
  
                     </table>
                     <hr>
