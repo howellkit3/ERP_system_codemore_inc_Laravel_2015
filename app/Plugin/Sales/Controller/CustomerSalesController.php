@@ -584,7 +584,42 @@ class CustomerSalesController extends SalesAppController {
 		
 	}
 
+	public function search_customer($hint = null){
 
+		$this->loadModel('Sales.Company');
 
-	
+		$this->Company->bind(array(
+			'ContactPerson' => array('fields' => array('firstname','middlename','lastname'))
+			));
+		$companyData = $this->Company->find('all',array(
+									'fields' => array(
+										'Company.id',
+						            	'Company.uuid', 
+						            	'Company.company_name',
+						            	'Company.website',
+						            	'Company.tin',
+						            	'Company.created'
+						            	// 'ContactPerson.firstname',
+						            	// 'ContactPerson.lastname'
+										),
+									'order' => 'Company.company_name ASC',
+									'conditions' => array(
+										'Company.company_name LIKE' => '%' . $hint . '%'
+										// 'OR' => array(
+											// array('Company.company_name LIKE' => '%' . $hint . '%'),
+											// array('Quotation.uuid LIKE' => '%' . $hint . '%'),
+											// array('Product.name LIKE' => '%' . $hint . '%')
+										//	)
+										),
+									'limit' => 10
+									));
+		
+		$this->set(compact('companyData','quotationData','inquiryId','salesStatus'));
+		
+		if ($hint == ' ') {
+    		$this->render('index');
+    	}else{
+    		$this->render('search_customer');
+    	}
+	}
 }
