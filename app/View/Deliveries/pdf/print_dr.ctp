@@ -9,7 +9,7 @@
 	<div class="col-lg-12">
 		<div class="main-box main-pdf" >
 			<br><br><br>
-			<table class="layout" style="line-height:7px;padding-top:25px; font-family: Verdana , Geneva, sans-serif;">
+			<table class="layout" style="line-height:20px;padding-top:25px; font-family: Verdana , Geneva, sans-serif;">
 				<thead>
 					<tr>
 						<td style="width:15px;"> </td>
@@ -34,7 +34,7 @@
 					</tr>
 					<tr>
 						<td style="width:15px;"> </td>
-						<td style="width:80px;font-family: Calibri;"><b> </b></td>
+						<td style="width:70px;font-family: Calibri;"><b> </b></td>
 						<td style="width:20px;"> </td>
 						<td style="width:480px;">
 							<?php echo ucfirst($companyData['Address'][0]['address1'])?>
@@ -49,7 +49,7 @@
 				<thead>
 					<?php //foreach ($clientData['ClientOrderDeliverySchedule'] as $key => $scheduleList) { ?>
 						<tr>
-							<td class="td-heigth" style="width:20px;border:1px solid #FFFFFF;"> </td>
+							
 							<td class="td-heigth" style="width:95px;border:1px solid #FFFFFF;"><?php echo $clientData['ClientOrder']['po_number']?></td>
 							<td class="td-heigth" style="width:300px;border:1px solid #FFFFFF;"><center><?php echo ucfirst($clientData['Product']['name'])?></center></td>
 							<td class="td-heigth" style="width:220px;border:1px solid #FFFFFF;">
@@ -80,7 +80,7 @@
 			<table class="table table-bordered" style="line-height:20px;padding-top:45px; font-family: Verdana , Geneva, sans-serif;">
 				<thead>
 					<tr>
-						<td class="td-heigth" style="width:170px;border:1px solid #FFFFFF;"><center><?php echo ucfirst($prepared['User']['first_name'])?> <?php echo ucfirst($prepared['User']['last_name'])?></center></td>
+						<td class="td-heigth" style="width:130px;border:1px solid #FFFFFF;"><center><?php echo ucfirst($prepared['User']['first_name'])?> <?php echo ucfirst($prepared['User']['last_name'])?></center></td>
 						<td class="td-heigth" style="width:150px;border:1px solid #FFFFFF;"> </td>
 						<td class="td-heigth" style="width:120px;border:1px solid #FFFFFF;text-align:left;"><center><?php echo ucfirst($approved['User']['first_name'])?> <?php echo ucfirst($approved['User']['last_name'])?></center></td>
 						<td class="td-heigth" style="width:300px;border:1px solid #FFFFFF;"> </td>

@@ -6,10 +6,8 @@
             <header class="main-box-header clearfix">
 
                 <h2 class="pull-left"><b>Delivery Monitoring</b></h2>
-                
-            </header>
 
-            <div class="filter-block pull-right">
+                <div class="filter-block pull-right">
 
                 <div class="form-group pull-left">
                 
@@ -18,8 +16,10 @@
                     
                 </div>
 
-            </div>    
-            
+            </div>
+                
+            </header>
+
             <div class="main-box-body clearfix ">
                 <div class="table-responsive">
                     <table class="table table-striped table-hover ">
