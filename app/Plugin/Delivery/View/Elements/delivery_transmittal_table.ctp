@@ -33,9 +33,9 @@ $totalremaining = 0;
                         </td>
 
                         <td class="">
-                            <?php //if(!empty($transmittalDataList['Transmittal']['remarks'])){ ?>
+                            <?php if(!empty($transmittalDataList['Transmittal']['remarks'])){ ?>
                                 <?php echo $transmittalDataList['Transmittal']['remarks']; ?>
-                             <?php //} ?>
+                             <?php } ?>
                         </td>
 
                     </tr>
