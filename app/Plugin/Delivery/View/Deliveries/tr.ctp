@@ -3,7 +3,7 @@
     $this->PhpExcel->createWorksheet()
         ->setDefaultFont('Calibri', 12);
 
-    $objTpl = PHPExcel_IOFactory::load("./img/transmittal_template.xlsx");
+    $objTpl = PHPExcel_IOFactory::load("./img/transmittal.xlsx");
      
     // add data
     $counter = 10;
@@ -18,17 +18,15 @@
 
         $objTpl->setActiveSheetIndex(0)
                     
-                    ->setCellValue('J'.'4', '')
+                    
                     ->setCellValue('J'.'5', (new \DateTime())->format('m/d/Y'))
-                    ->setCellValue('J'.'6', $drData['Delivery']['dr_uuid'])
-                    ->setCellValue('C'.'6', ucwords($companyData['Company']['company_name']))
-                    ->setCellValue('C'.'7', ucwords($drData['DeliveryDetail']['location']))
-                    ->setCellValue('C'.'9', ucfirst($clientData['Product']['name']))
-                    ->setCellValue('C'.'10', $drData['DeliveryDetail']['remarks'] )
-                    ->setCellValue('H'.'9', $drData['DeliveryDetail']['quantity'] . " x " . $clientData['QuotationItemDetail']['quantity'] . " / " . $units[$clientData['QuotationItemDetail']['quantity_unit_id']] )
-                    ->setCellValue('J'.'9', $totalQty)
-                    ->setCellValue('A'.'21', $preparedFName . " " .$preparedLName)
-                    ->setCellValue('E'.'21', $approvedFName . " " .$approvedLName);
+                    ->setCellValue('C'.'6', $contactPerson)
+                    ->setCellValue('I'.'8', $units[$clientData['QuotationItemDetail']['quantity_unit_id']])
+                    ->setCellValue('B'.'8', ucfirst($clientData['Product']['name']))
+                    ->setCellValue('J'.'8', $remarks )
+                    ->setCellValue('F'.'8', $quantityTransmittal )
+                    ->setCellValue('B'.'18', $preparedFName . " " .$preparedLName)
+                    ->setCellValue('F'.'18', $approvedFName . " " .$approvedLName);
 
         $counter++;  
 

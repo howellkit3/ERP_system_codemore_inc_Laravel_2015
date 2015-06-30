@@ -660,10 +660,17 @@ public function search_order($hint = null){
     $drData = $this->Delivery->find('first', array(
                                         'conditions' => array('Delivery.dr_uuid' => $dr_uuid
                                         )));
+
+    // $trData = $this->Delivery->find('first', array(
+    //                                     'conditions' => array('Transmittal.dr_uuid' => $dr_uuid
+    //                                     )));
+
     
     $clientData = $this->ClientOrder->find('first', array(
                                         'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
                                         )));
+
+    //pr($contactPerson); exit;
     
     $companyData = $this->Company->find('first', array(
                                         'conditions' => array('Company.id' => $clientData['ClientOrder']['company_id']
@@ -690,7 +697,7 @@ public function search_order($hint = null){
 
     
 
-    $this->set(compact('drData','clientData','companyData','units','approved','prepared'));
+    $this->set(compact('drData','clientData','companyData','units','approved','prepared', 'contactPerson', 'quantityTransmittal', 'remarks'));
 
     if ($this->request->is(array('post', 'put'))) {
 
