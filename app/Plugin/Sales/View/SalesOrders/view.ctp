@@ -237,15 +237,15 @@
 								<div class="form-group" id="existing_items">
 									<label class="col-lg-2 control-label">Payment Terms</label>
 									<div class="col-lg-8">
-										<?php 
+										<?php //pr($paymentTermData[$clientOrderData['ClientOrder']['payment_terms']]); 
 										
-		                                   $paymentTerms = !empty($paymentTermData[$quotationData['Quotation']['payment_terms']]) ? $paymentTermData[$quotationData['Quotation']['payment_terms']] : '';
+		                                   //$paymentTerms = !empty($paymentTermData[$clientOrderData['ClientOrder']['payment_terms']]) ? $paymentTermData[$quotationData['Quotation']['payment_terms']] : '';
 
                                             echo $this->Form->input('PaymentTermHolder.name', array(
                                             								'class' => 'form-control item_type',
 						                                                    'label' => false,
 						                                                    'readonly' => 'readonly',
-						                                                    'value' => $paymentTerms
+						                                                    'value' => $paymentTermData[$clientOrderData['ClientOrder']['payment_terms']]
 						                                                     ));
 		                                ?>	
 									</div>
