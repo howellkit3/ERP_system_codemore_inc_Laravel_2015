@@ -45,6 +45,7 @@
 					</tr>
 				</thead>
 			</table>
+			
 			<table class="table table-bordered" style="line-height:20px;padding-top:5px; font-family: Verdana , Geneva, sans-serif;">
 				<thead>
 					<?php //foreach ($clientData['ClientOrderDeliverySchedule'] as $key => $scheduleList) { ?>

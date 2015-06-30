@@ -571,6 +571,8 @@ class SalesInvoiceController extends AccountingAppController {
               'conditions' => array('NOT' => array('SalesInvoice.status' => 0))
             ));
 
+       // pr($invoiceData); exit;
+
         $deliveryData = $this->Delivery->find('all',array(
             'conditions' => array('dr_uuid' => $invoiceList)
             ));

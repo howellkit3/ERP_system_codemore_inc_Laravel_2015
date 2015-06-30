@@ -529,7 +529,6 @@ public function print_dr($dr_uuid = null,$schedule_uuid) {
                                                             ));
 
 
-
     $approved = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
                                                             'conditions' => array('User.id' => $drDataHolder['DeliveryDetail']['created_by'])
                                                             ));
@@ -828,4 +827,59 @@ public function search_order($hint = null){
         $this->render('search_order');
       }
     }
+
+    public function dr($dr_uuid = null,$schedule_uuid) {
+
+    $this->loadModel('Sales.ClientOrder');
+    $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule','QuotationItemDetail','QuotationDetail','Product'));
+    
+    $this->loadModel('Sales.Company');
+
+    $this->loadModel('Unit');
+    $units = $this->Unit->getList();
+
+    $this->Company->bind('Address');
+
+    $this->Delivery->bindDelivery();
+    $drData = $this->Delivery->find('first', array(
+                                        'conditions' => array('Delivery.dr_uuid' => $dr_uuid
+                                        )));
+    
+    $clientData = $this->ClientOrder->find('first', array(
+                                        'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
+                                        )));
+    
+    $companyData = $this->Company->find('first', array(
+                                        'conditions' => array('Company.id' => $clientData['ClientOrder']['company_id']
+                                        )));
+
+
+    $userData = $this->Session->read('Auth');
+
+    $this->Delivery->bindDelivery();
+    $drDataHolder = $this->Delivery->find('first', array(
+                                        'conditions' => array('Delivery.dr_uuid' => $dr_uuid
+                                        )));
+
+    $this->loadModel('User');
+
+    $prepared = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
+                                                            'conditions' => array('User.id' => $drDataHolder['DeliveryDetail']['modified_by'])
+                                                            ));
+
+
+    $approved = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
+                                                            'conditions' => array('User.id' => $drDataHolder['DeliveryDetail']['created_by'])
+                                                            ));
+
+    //pr($drData); exit;
+
+    $this->set(compact('drData','clientData','companyData','units','approved','prepared'));
+
+   // $this->render('dr');
+
+        
+        
+    }
+
 }
