@@ -210,7 +210,6 @@ $totalremaining = 0;
 
                     if(($totalremaining) == 0) {
 
-
                       if($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] == 'Approved') { 
 
                         foreach ($deliveryEdit as $deliveryDataList): 

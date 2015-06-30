@@ -73,11 +73,21 @@ $totalremaining = 0;
                         </td>
 
                         <td>
-                           
-                              <a data-toggle="modal" href="#myModalPrint<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" class="table-link "><i class="fa fa-lg "></i><span class="fa-stack">
-                                  <i class="fa fa-square fa-stack-2x"></i>
-                                  <i class="fa  fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Print </font></span></a>
 
+                              <?php
+                                echo $this->Html->link('<span class="fa-stack">
+                                    <i class="fa fa-square fa-stack-2x"></i>
+                                    <i class="fa  fa-ticket fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px">  D.R.</font></span>
+                                    </span> ', array('controller' => 'deliveries', 'action' => 'delivery_receipt',$deliveryDataList['Delivery']['dr_uuid'],$deliveryDataList['Delivery']['schedule_uuid']),array('class' =>' table-link','escape' => false,'title'=>'Review Inquiry'));
+                              ?>
+
+                              <?php
+                                echo $this->Html->link('<span class="fa-stack">
+                                    <i class="fa fa-square fa-stack-2x"></i>
+                                    <i class="fa  fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px">  T.R.</font></span>
+                                    </span> ', array('controller' => 'deliveries', 'action' => 'delivery_transmittal',$deliveryDataList['Delivery']['dr_uuid'],$deliveryDataList['Delivery']['schedule_uuid']),array('class' =>' table-link','escape' => false,'title'=>'Review Inquiry'));
+                              ?>
+                      
                               <a data-toggle="modal" href="#myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" class="table-link "><i class="fa fa-lg "></i><span class="fa-stack">
                                   <i class="fa fa-square fa-stack-2x"></i>
                                   <i class="fa  fa-mail-reply fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Return </font></span></a>
@@ -193,74 +203,8 @@ $totalremaining = 0;
         </div>
      </div>
     </div>
-
-
-
   </div>
-
-  <div class="modal fade" id="myModalPrint<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" role="dialog" >
-    <div class="modal-dialog">
-      <div class="modal-content margintop">
-
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title">Delivery Printing</h4>
-        </div> 
-
-        <div class="modal-body">
-
-        <?php echo $this->Form->create('ClientOrderDeliverySchedule',array(
-            'url'=>(array('controller' => 'deliveries', 'action' => 'delivery_transmittal',$deliveryDataList['Delivery']['dr_uuid'],$deliveryDataList['Delivery']['schedule_uuid'])),'class' => 'form-horizontal')); ?>
-
-            <br><br>
-
-          <div class="form-group" id="existing_items">
-              <label class="col-lg-3 control-label ">Delivery Form</label>
-            <div class="col-lg-8 "> 
-
-            <?php 
-               echo $this->Form->input('Delivery.id', array(
-                                                          'class' => 'form-control item_type editable required',
-                                                          'label' => false,
-                                                          'required' => 'required',
-                                                          'readonly' => 'readonly',
-                                                          'value' => $deliveryDataList['Delivery']['dr_uuid']
-                                                          ));
-
-                  echo $this->Form->input('DeliveryDetail.id', array(
-                                                          'class' => 'form-control item_type editable required',
-                                                          'label' => false,
-                                                          'required' => 'required',
-                                                          'readonly' => 'readonly',
-                                                          'value' => $deliveryDataList['DeliveryDetail']['id']
-                                                          ));  
-
-                  echo $this->Form->input('Delivery.print', array(
-                                                        'options' => array('Delivery Receipt','Transmittal'),
-                                                        'type' => 'select',
-                                                        'label' => false,
-                                                        'class' => 'form-control required transmittalData ',
-                                                        'empty' => '---Select Delivery Form---',
-                                                        'required' => 'required'
-                                                         ));
-            ?>
-
-            </div>
-          </div>
-          <br><br>
-
-    
-        <br><br>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i> Submit</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-        </div>
-          <?php  echo $this->Form->end();   ?>
-        </div>
-      </div>
-    </div>
-  </div>                         
+                      
         <?php 
           endforeach; 
   } 
