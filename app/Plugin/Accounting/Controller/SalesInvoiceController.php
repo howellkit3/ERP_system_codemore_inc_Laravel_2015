@@ -463,19 +463,21 @@ class SalesInvoiceController extends AccountingAppController {
 
         }
 
-        $companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')
+        $companyData = $this->Company->find('list', array('fields' => array('id', 'short_name')
                                                             ));
        
         $invoiceList = $this->SalesInvoice->find('list',array('fields' => array('id','dr_uuid'),
-            'conditions' => array('NOT' => array('SalesInvoice.status' => 0))
+            'conditions' => array('NOT' => array('SalesInvoice.status' => 0)),
+            'order' => 'SalesInvoice.id DESC'
             ));
 
         //$this->SalesInvoice->bindInvoice();
 
         $invoiceData = $this->SalesInvoice->find('all',array(
-            'conditions' => array('NOT' => array('SalesInvoice.status' => 0))
+            'conditions' => array('NOT' => array('SalesInvoice.status' => 0)),
+            'order' => 'SalesInvoice.id DESC'
             ));
-
+        
         $deliveryData = $this->Delivery->find('all',array(
             'conditions' => array('dr_uuid' => $invoiceList)
             ));
@@ -504,33 +506,25 @@ class SalesInvoiceController extends AccountingAppController {
            
         }
 
-        $clientData = $this->ClientOrder->find('all',array(
-            'conditions' => array('ClientOrder.uuid' => $clientsId)
-            ));
+        foreach ($clientsId as $key => $value) {
 
-        $detailsId = [];
+            $this->ClientOrder->bind('QuotationItemDetail');
 
-        foreach ($clientData as $key => $value) {
-            
-            $invoiceData[$key]['SalesInvoice']['company_id'] = $value['ClientOrder']['company_id'];
+            $clientData = $this->ClientOrder->find('first',array(
+                'conditions' => array('ClientOrder.uuid' => $value)
+                ));
+
+            $invoiceData[$key]['SalesInvoice']['company_id'] = $clientData['ClientOrder']['company_id'];
            
-            $invoiceData[$key]['SalesInvoice']['payment_terms'] = $value['ClientOrder']['payment_terms'];
+            $invoiceData[$key]['SalesInvoice']['payment_terms'] = $clientData['ClientOrder']['payment_terms'];
             
-            array_push($detailsId, $value['ClientOrder']['client_order_item_details_id']);
-           
+            $invoiceData[$key]['SalesInvoice']['unit_price'] = $clientData['QuotationItemDetail']['unit_price'];
+            
+            $invoiceData[$key]['SalesInvoice']['unit_price_currency_id'] = $clientData['QuotationItemDetail']['unit_price_currency_id'];
+
+
         }
 
-        $clientDetails = $this->QuotationItemDetail->find('all',array(
-            'conditions' => array('QuotationItemDetail.id' => $detailsId)
-            ));
-
-        foreach ($clientDetails as $key => $value) {
-            
-            $invoiceData[$key]['SalesInvoice']['unit_price'] = $value['QuotationItemDetail']['unit_price'];
-            
-            $invoiceData[$key]['SalesInvoice']['unit_price_currency_id'] = $value['QuotationItemDetail']['unit_price_currency_id'];
-        }
-        
         $this->set(compact('invoiceData','companyData','paymentTermData'));
 
     }
@@ -570,12 +564,13 @@ class SalesInvoiceController extends AccountingAppController {
             $to = str_replace('/', '-', $splitDate[1]);
 
             $invoiceList = $this->SalesInvoice->find('list',array('fields' => array('id','dr_uuid'),
-                 'conditions' => array(
+                'conditions' => array(
                     'AND' => array(
                         'SalesInvoice.status !=' => 0,
                         'SalesInvoice.created BETWEEN ? AND ?' => array($from.' '.'00:00:00:', $to.' '.'23:00:00:')
                     ),
                 ),
+                'order' => 'SalesInvoice.id DESC'
             ));
             
             $invoiceData = $this->SalesInvoice->find('all', array(
@@ -585,20 +580,23 @@ class SalesInvoiceController extends AccountingAppController {
                         'SalesInvoice.created BETWEEN ? AND ?' => array($from.' '.'00:00:00:', $to.' '.'23:00:00:')
                     ),
                 ),
+                'order' => 'SalesInvoice.id DESC'
             ));
            
         } else {
 
             $invoiceList = $this->SalesInvoice->find('list',array('fields' => array('id','dr_uuid'),
-                 'conditions' => array(
+                'conditions' => array(
                     'SalesInvoice.status !=' => 0
                 ),
+                'order' => 'SalesInvoice.id DESC'
             ));
             
             $invoiceData = $this->SalesInvoice->find('all', array(
                 'conditions' => array(
                     'SalesInvoice.status !=' => 0
                 ),
+                'order' => 'SalesInvoice.id DESC'
             ));
 
 
@@ -634,31 +632,23 @@ class SalesInvoiceController extends AccountingAppController {
            
         }
 
-        $clientData = $this->ClientOrder->find('all',array(
-            'conditions' => array('ClientOrder.uuid' => $clientsId)
-            ));
+        foreach ($clientsId as $key => $value) {
 
-        $detailsId = [];
+            $this->ClientOrder->bind('QuotationItemDetail');
 
-        foreach ($clientData as $key => $value) {
-            
-            $invoiceData[$key]['SalesInvoice']['company_id'] = $value['ClientOrder']['company_id'];
+            $clientData = $this->ClientOrder->find('first',array(
+                'conditions' => array('ClientOrder.uuid' => $value)
+                ));
+
+            $invoiceData[$key]['SalesInvoice']['company_id'] = $clientData['ClientOrder']['company_id'];
            
-            $invoiceData[$key]['SalesInvoice']['payment_terms'] = $value['ClientOrder']['payment_terms'];
+            $invoiceData[$key]['SalesInvoice']['payment_terms'] = $clientData['ClientOrder']['payment_terms'];
             
-            array_push($detailsId, $value['ClientOrder']['client_order_item_details_id']);
-           
-        }
+            $invoiceData[$key]['SalesInvoice']['unit_price'] = $clientData['QuotationItemDetail']['unit_price'];
+            
+            $invoiceData[$key]['SalesInvoice']['unit_price_currency_id'] = $clientData['QuotationItemDetail']['unit_price_currency_id'];
 
-        $clientDetails = $this->QuotationItemDetail->find('all',array(
-            'conditions' => array('QuotationItemDetail.id' => $detailsId)
-            ));
 
-        foreach ($clientDetails as $key => $value) {
-            
-            $invoiceData[$key]['SalesInvoice']['unit_price'] = $value['QuotationItemDetail']['unit_price'];
-            
-            $invoiceData[$key]['SalesInvoice']['unit_price_currency_id'] = $value['QuotationItemDetail']['unit_price_currency_id'];
         }
 
         $this->set(compact('invoiceData','companyData','paymentTermData'));
@@ -716,12 +706,13 @@ class SalesInvoiceController extends AccountingAppController {
                                                             ));
 
         $invoiceList = $this->SalesInvoice->find('list',array('fields' => array('id','dr_uuid'),
-             'conditions' => array(
+            'conditions' => array(
                 'AND' => array(
                     'SalesInvoice.status !=' => 0,
                     'SalesInvoice.created BETWEEN ? AND ?' => array($from.' '.'00:00:00:', $to.' '.'23:00:00:')
                 ),
             ),
+            'order' => 'SalesInvoice.created DESC'
         ));
         
         $invoiceData = $this->SalesInvoice->find('all', array(
@@ -731,6 +722,7 @@ class SalesInvoiceController extends AccountingAppController {
                     'SalesInvoice.created BETWEEN ? AND ?' => array($from.' '.'00:00:00:', $to.' '.'23:00:00:')
                 ),
             ),
+            'order' => 'SalesInvoice.id DESC'
         ));
            
         //$this->SalesInvoice->bindInvoice();
@@ -763,31 +755,23 @@ class SalesInvoiceController extends AccountingAppController {
            
         }
 
-        $clientData = $this->ClientOrder->find('all',array(
-            'conditions' => array('ClientOrder.uuid' => $clientsId)
-            ));
+        foreach ($clientsId as $key => $value) {
 
-        $detailsId = [];
+            $this->ClientOrder->bind('QuotationItemDetail');
 
-        foreach ($clientData as $key => $value) {
-            
-            $invoiceData[$key]['SalesInvoice']['company_id'] = $value['ClientOrder']['company_id'];
+            $clientData = $this->ClientOrder->find('first',array(
+                'conditions' => array('ClientOrder.uuid' => $value)
+                ));
+
+            $invoiceData[$key]['SalesInvoice']['company_id'] = $clientData['ClientOrder']['company_id'];
            
-            $invoiceData[$key]['SalesInvoice']['payment_terms'] = $value['ClientOrder']['payment_terms'];
+            $invoiceData[$key]['SalesInvoice']['payment_terms'] = $clientData['ClientOrder']['payment_terms'];
             
-            array_push($detailsId, $value['ClientOrder']['client_order_item_details_id']);
-           
-        }
+            $invoiceData[$key]['SalesInvoice']['unit_price'] = $clientData['QuotationItemDetail']['unit_price'];
+            
+            $invoiceData[$key]['SalesInvoice']['unit_price_currency_id'] = $clientData['QuotationItemDetail']['unit_price_currency_id'];
 
-        $clientDetails = $this->QuotationItemDetail->find('all',array(
-            'conditions' => array('QuotationItemDetail.id' => $detailsId)
-            ));
 
-        foreach ($clientDetails as $key => $value) {
-            
-            $invoiceData[$key]['SalesInvoice']['unit_price'] = $value['QuotationItemDetail']['unit_price'];
-            
-            $invoiceData[$key]['SalesInvoice']['unit_price_currency_id'] = $value['QuotationItemDetail']['unit_price_currency_id'];
         }
        
         $this->set(compact('invoiceData','companyData','paymentTermData'));
