@@ -32,7 +32,7 @@
 					<tr>
 						<td style="width:100px;"> </td>
 						<td style="width:470px;"><?php echo ucfirst($companyData['Address'][0]['address1'])?></td>
-						<td style="width:100px;text-align:right;"><?php echo ucfirst($paymentTermData[$clientData['Quotation']['payment_terms']])?></td>
+						<td style="width:100px;text-align:right;"><?php echo ucfirst($paymentTermData[$clientData['ClientOrder']['payment_terms']])?></td>
 					</tr>
 				</thead>
 			</table>

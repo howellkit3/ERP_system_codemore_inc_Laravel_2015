@@ -11,7 +11,7 @@
         	'action' => 'print_invoice',
         	//'ext' => 'pdf',
         	$invoiceId),
-        	array('class' =>'btn btn-info pull-right ','escape' => false,'target' => '_blank'));
+        	array('class' =>'btn btn-info pull-right ','escape' => false));
 	?>
 	<br><br>
 </div>
@@ -68,7 +68,8 @@
 							:&emsp;<?php echo ucfirst($companyData['Address'][0]['address1'])?>
 						</div>
 						<div class="col-lg-4">&emsp;&emsp;&nbsp;&nbsp;&nbsp;
-							TERMS : <?php echo ucfirst($paymentTermData[$clientData['Quotation']['payment_terms']])?>
+							TERMS : <?php echo ucfirst($paymentTermData[$clientData['ClientOrder']['payment_terms']])
+							?>
 						</div>
 					</div>
 				</form>

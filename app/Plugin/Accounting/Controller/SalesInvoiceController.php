@@ -392,53 +392,53 @@ class SalesInvoiceController extends AccountingAppController {
                                             'conditions' => array('Company.id' => $clientData['ClientOrder']['company_id']
                                             )));
 
-        $view = new View(null, false);
+        //$view = new View(null, false);
         
-        $view->set(compact('prepared','approved','drData','clientData','companyData','units','invoiceData','paymentTermData','currencyData'));
+        $this->set(compact('prepared','approved','drData','clientData','companyData','units','invoiceData','paymentTermData','currencyData'));
           
-        $view->viewPath = 'SalesInvoice'.DS.'pdf';  
+        //$view->viewPath = 'SalesInvoice'.DS.'pdf';  
         
         if (!empty($saNo)) {
-            $output = $view->render('print_statement', false);
+            $output = $this->render('print_statement');
         }else{
-            $output = $view->render('print_invoice', false);
+            $output = $this->render('print_invoice');
         }
         
      
-        $dompdf = new DOMPDF();
+        // $dompdf = new DOMPDF();
 
-        $dompdf->set_paper("A4");
+        // $dompdf->set_paper("A4");
 
-        $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));
+        // $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));
 
-        $dompdf->render();
+        // $dompdf->render();
 
-        $canvas = $dompdf->get_canvas();
+        // $canvas = $dompdf->get_canvas();
 
-        $font = Font_Metrics::get_font("Arial", "bold");
+        // $font = Font_Metrics::get_font("Arial", "bold");
 
-        $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
+        // $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
 
-        $output = $dompdf->output();
+        // $output = $dompdf->output();
 
-        $random = rand(0, 1000000) . '-' . time();
+        // $random = rand(0, 1000000) . '-' . time();
 
-        if (empty($filename)) {
+        // if (empty($filename)) {
 
-          $filename = 'SalesInvoice-'.$invoiceId.'-data'.time();
+        //   $filename = 'SalesInvoice-'.$invoiceId.'-data'.time();
 
-        }
+        // }
 
-        $filePath = 'view_pdf/'.strtolower(Inflector::slug( $filename , '-')).'.pdf';
+        // $filePath = 'view_pdf/'.strtolower(Inflector::slug( $filename , '-')).'.pdf';
 
-        $file_to_save = WWW_ROOT .DS. $filePath;
+        // $file_to_save = WWW_ROOT .DS. $filePath;
           
-        if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
+        // if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
 
-            unlink($file_to_save);
-        }
+        //     unlink($file_to_save);
+        // }
         
-        exit();
+        // exit();
             
     }
 
