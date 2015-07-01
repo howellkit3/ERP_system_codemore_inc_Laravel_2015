@@ -78,14 +78,14 @@ $totalremaining = 0;
                                 echo $this->Html->link('<span class="fa-stack">
                                     <i class="fa fa-square fa-stack-2x"></i>
                                     <i class="fa  fa-ticket fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px">  D.R.</font></span>
-                                    </span> ', array('controller' => 'deliveries', 'action' => 'delivery_receipt',$deliveryDataList['Delivery']['dr_uuid'],$deliveryDataList['Delivery']['schedule_uuid']),array('class' =>' table-link','escape' => false,'title'=>'Review Inquiry'));
+                                    </span> ', array('controller' => 'deliveries', 'action' => 'delivery_receipt',$deliveryDataList['Delivery']['dr_uuid'],$deliveryDataList['Delivery']['schedule_uuid']),array('class' =>' table-link','escape' => false,'title'=>'Print Delivery Receipt'));
                               ?>
 
                               <?php
                                 echo $this->Html->link('<span class="fa-stack">
                                     <i class="fa fa-square fa-stack-2x"></i>
                                     <i class="fa  fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px">  T.R.</font></span>
-                                    </span> ', array('controller' => 'deliveries', 'action' => 'delivery_transmittal',$deliveryDataList['Delivery']['dr_uuid'],$deliveryDataList['Delivery']['schedule_uuid']),array('class' =>' table-link','escape' => false,'title'=>'Review Inquiry'));
+                                    </span> ', array('controller' => 'deliveries', 'action' => 'delivery_transmittal',$deliveryDataList['Delivery']['dr_uuid'],$deliveryDataList['Delivery']['schedule_uuid']),array('class' =>' table-link','escape' => false,'title'=>'Print Transmittal Receipt'));
                               ?>
                       
                               <a data-toggle="modal" href="#myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" class="table-link "><i class="fa fa-lg "></i><span class="fa-stack">

@@ -972,6 +972,19 @@ class QuotationsController extends SalesAppController {
 			
 			$email = new CakeEmail('mandrill');
 
+
+			//$email->IsSMTP();                                      // Set mailer to use SMTP
+			$email->Host = 'smtp.mandrillapp.com';                 // Specify main and backup server
+			$email->Port = 465;                                    // Set the SMTP port
+			$email->SMTPAuth = true;                               // Enable SMTP authentication
+			// $mail->Username = 'MANDRILL_USERNAME';                // SMTP username
+			// $mail->Password = 'MANDRILL_APIKEY';                  // SMTP password
+			$email->SMTPSecure = 'tls';       
+
+
+
+			//$email->Port = 587;465
+			//$email->Port = 587;
 			$email->from($userData['User']['email']);
 
 			$email->to($to);

@@ -1,5 +1,5 @@
 <?php $this->Html->addCrumb('Receivable', array('controller' => 'sales_invoice', 'action' => 'receivable')); ?>
-<?php  echo $this->Html->script('Accounting.report');?>
+<?php  echo $this->Html->script('Accounting.date_range');?>
 <?php echo $this->element('account_option'); ?>
 
 <div class="row">
@@ -25,36 +25,33 @@
 					<div class="main-box clearfix">
 						<div class="tabs-wrapper profile-tabs">
 							<ul class="nav nav-tabs">
-								<li class="active"><a href="#tab-summary" data-toggle="tab">DR Summary</a></li>
-								<li><a href="#tab-newsfeed" data-toggle="tab">PHP</a></li>
-								<li><a href="#tab-activity" data-toggle="tab">USD</a></li>
-								<li><a href="#tab-chat" data-toggle="tab">With Terms</a></li>
+								<li class="active">
+									<a href="#tab-summary" class="dr" data-toggle="tab">DR Summary</a>
+								</li>
+								<li>
+									<a href="#tab-newsfeed" class="php" data-toggle="tab">PHP</a>
+									
+								</li>
+								<li><a href="#tab-activity" class="usd" data-toggle="tab">USD</a></li>
+								<li><a href="#tab-chat" class="term" data-toggle="tab">With Terms</a></li>
 							</ul>
+							<input name="report" type="hidden" value="1" class="form-control appendreport" >
 							<div class="tab-content">
 
 								<div class="tab-pane fade in active" id="tab-summary">
 									
-									<?php
-		                               echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> Export  ', array('controller' => 'sales_invoice', 'action' => 'dr_summary',1),array('class' =>'btn btn-primary pull-right','escape' => false));
+		                            <?php echo $this->Form->create('SalesInvoice',array('url'=>(array('controller' => 'sales_invoice','action' => 'dr_summary',1)),array('class' => 'form-inline')));?>
 
-		                            ?>
-		                            <div class="form-group col-md-2 pull-right">
-										<!-- <label for="maskedDate">Date</label> -->
-										<div class="input-group">
-											<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-											<input placeholder="to" type="text" class="form-control daterange" id="maskedDate">
+		                            	<button type="submit" class="form-export-btn btn btn-success pull-right"><i class="fa fa-share-square-o fa-lg"></i> Export</button>
+			                            
+										<div class="form-group col-md-3 pull-left">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+												<input placeholder="Date Filter" name="from_date" data="1" type="text" class="form-control myDateRange datepickerDateRange" id="datepickerDateRange" >
+											</div>
 										</div>
-										<!-- <span class="help-block">ex. 99/99/9999</span> -->
-									</div>
-									<div class="form-group col-md-2 pull-right">
-										<!-- <label for="maskedDate">Date</label> -->
-										<div class="input-group">
-											<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-											<input placeholder="from" type="text" class="form-control daterange" id="maskedDate">
-										</div>
-										<!-- <span class="help-block">ex. 99/99/9999</span> -->
-									</div>
-		                           <!--  <button class="btn btn-primary pull-right printDR"><i class="fa fa-print fa-lg"></i> Print</button> -->
+										<button type="button" class="clear-date btn btn-success pull-left"><i class="fa fa-eraser fa-lg"></i> Clear</button>
+									<?php echo $this->Form->end(); ?>	
 		                            <br><br><br>
 
 									<div class="table-responsive">
@@ -73,7 +70,9 @@
 													<th><a href="#"><span>Remarks</span></a></th>
 												</tr>
 											</thead>
-											<tbody aria-relevant="all" aria-live="polite" role="alert">
+											<tbody aria-relevant="all" class="dateRangeAppend-dr" aria-live="polite" role="alert" style="display:none;">
+											</tbody>
+											<tbody aria-relevant="all" class="dr-report" aria-live="polite" role="alert">
 												<?php foreach ($invoiceData as $key => $invoiceList) { ?>
 													<tr class="">
 														<td>
@@ -108,8 +107,22 @@
 
 								<div class="tab-pane fade " id="tab-newsfeed">
 									<?php
-		                               echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> Export ', array('controller' => 'sales_invoice', 'action' => 'dr_summary',2),array('class' =>'btn btn-primary pull-right','escape' => false));
-		                            ?><br><br><br>
+		                               //echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> Export ', array('controller' => 'sales_invoice', 'action' => 'dr_summary',2),array('class' =>'btn btn-primary pull-right','escape' => false));
+		                            ?>
+		                            <?php echo $this->Form->create('SalesInvoice',array('url'=>(array('controller' => 'sales_invoice','action' => 'dr_summary',2)),array('class' => 'form-inline')));?>
+
+		                            	<button type="submit" class="form-export-btn btn btn-success pull-right"><i class="fa fa-share-square-o fa-lg"></i> Export</button>
+			                            
+										<div class="form-group col-md-3 pull-left">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+												<input placeholder="Date Filter" name="from_date" data="1" type="text" class="form-control myDateRange datepickerDateRange" id="datepickerDateRange" >
+											</div>
+										</div>
+										<button type="button" class="clear-date btn btn-success pull-left"><i class="fa fa-eraser fa-lg"></i> Clear</button>
+									<?php echo $this->Form->end(); ?>
+
+		                            <br><br><br>
 									<div class="table-responsive">
 										<table class="table table-striped table-hover">
 											<thead>
@@ -123,7 +136,9 @@
 													<th><a href="#"><span>Date</span></a></th>
 												</tr>
 											</thead>
-											<tbody aria-relevant="all" aria-live="polite" role="alert">
+											<tbody aria-relevant="all" class="dateRangeAppend-php" aria-live="polite" role="alert" style="display:none;">
+											</tbody>
+											<tbody aria-relevant="all" class="php-report" aria-live="polite" role="alert">
 												<?php foreach ($invoiceData as $key => $invoiceList) { ?>
 													<?php if ($invoiceList['SalesInvoice']['unit_price_currency_id'] == 1) { ?>
 														<tr class="">
@@ -148,8 +163,21 @@
 								</div>
 								<div class="tab-pane fade" id="tab-activity">
 									<?php
-		                               echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> Export ', array('controller' => 'sales_invoice', 'action' => 'dr_summary',3),array('class' =>'btn btn-primary pull-right','escape' => false));
-		                            ?><br><br><br>
+		                               // echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> Export ', array('controller' => 'sales_invoice', 'action' => 'dr_summary',3),array('class' =>'btn btn-primary pull-right','escape' => false));
+		                            ?>
+		                            <?php echo $this->Form->create('SalesInvoice',array('url'=>(array('controller' => 'sales_invoice','action' => 'dr_summary',3)),array('class' => 'form-inline')));?>
+
+		                            	<button type="submit" class="form-export-btn btn btn-success pull-right"><i class="fa fa-share-square-o fa-lg"></i> Export</button>
+			                            
+										<div class="form-group col-md-3 pull-left">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+												<input placeholder="Date Filter" name="from_date" data="1" type="text" class="form-control myDateRange datepickerDateRange" id="datepickerDateRange" >
+											</div>
+										</div>
+										<button type="button" class="clear-date btn btn-success pull-left"><i class="fa fa-eraser fa-lg"></i> Clear</button>
+									<?php echo $this->Form->end(); ?>
+		                            <br><br><br>
 									<div class="table-responsive">
 										<table class="table table-striped table-hover">
 											<thead>
@@ -163,7 +191,9 @@
 													<th><a href="#"><span>Date</span></a></th>
 												</tr>
 											</thead>
-											<tbody aria-relevant="all" aria-live="polite" role="alert">
+											<tbody aria-relevant="all" class="dateRangeAppend-usd" aria-live="polite" role="alert" style="display:none;">
+											</tbody>
+											<tbody aria-relevant="all" class="usd-report" aria-live="polite" role="alert">
 												<?php foreach ($invoiceData as $key => $invoiceList) { ?>
 													<?php if ($invoiceList['SalesInvoice']['unit_price_currency_id'] == 2) {?>
 														<tr class="">
@@ -188,8 +218,21 @@
 								</div>
 								<div class="tab-pane fade" id="tab-chat">
 									<?php
-		                               echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> Export ', array('controller' => 'sales_invoice', 'action' => 'dr_summary',4),array('class' =>'btn btn-primary pull-right','escape' => false));
-		                            ?><br><br><br>
+		                               // echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> Export ', array('controller' => 'sales_invoice', 'action' => 'dr_summary',4),array('class' =>'btn btn-primary pull-right','escape' => false));
+		                            ?>
+		                            <?php echo $this->Form->create('SalesInvoice',array('url'=>(array('controller' => 'sales_invoice','action' => 'dr_summary',4)),array('class' => 'form-inline')));?>
+
+		                            	<button type="submit" class="form-export-btn btn btn-success pull-right"><i class="fa fa-share-square-o fa-lg"></i> Export</button>
+			                            
+										<div class="form-group col-md-3 pull-left">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+												<input placeholder="Date Filter" name="from_date" data="1" type="text" class="form-control myDateRange datepickerDateRange" id="datepickerDateRange" >
+											</div>
+										</div>
+										<button type="button" class="clear-date btn btn-success pull-left"><i class="fa fa-eraser fa-lg"></i> Clear</button>
+									<?php echo $this->Form->end(); ?>
+		                            <br><br><br>
 									<div class="table-responsive">
 										<table class="table table-striped table-hover">
 											<thead>
@@ -211,7 +254,9 @@
 													<th><a href="#"><span>Due Date</span></a></th>
 												</tr>
 											</thead>
-											<tbody aria-relevant="all" aria-live="polite" role="alert">
+											<tbody aria-relevant="all" class="dateRangeAppend-term" aria-live="polite" role="alert" style="display:none;">
+											</tbody>
+											<tbody aria-relevant="all" class="term-report" aria-live="polite" role="alert">
 												<?php foreach ($invoiceData as $key => $invoiceList) { ?>
 
 													<tr class="">
@@ -303,20 +348,43 @@
 		</div>
 	</div>
 </div>
+
 <script>
 		
 	jQuery(document).ready(function($){
-			
-			//datepicker
-			$('.daterange').datepicker({
-				format: 'yyyy-mm-dd'
-			});
-			
+
+		$("#SalesInvoiceReceivableForm").validate();
+		
+		$('.daterange').datepicker({
+			format: 'yyyy-mm-dd'
+		});
+		$('.datepickerDateRange').daterangepicker();
+
+		// $(document).on('myCustomEvent', function () {
+		//     console.log('test');
+		// });
+
+		// $('.datepickerDateRange').daterangepicker({
+		// 	// .. //
+		// 	function(start, end) {
+		// 	    //$('#dateRange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+		// 	    console.log('test');
+		// 	    $(document).trigger('myCustomEvent');
+		// 	}
+		// });
+	
 	});
 
-	 </script>
+
+</script>
+
 <style>
 	.tabs-wrapper .nav-tabs {
-	  margin-bottom: -20px;
+	  /*//margin-bottom: -20px;*/
+	}
+
+	.myDateRange{
+		cursor: pointer; 
+		cursor: hand;
 	}
 </style>
