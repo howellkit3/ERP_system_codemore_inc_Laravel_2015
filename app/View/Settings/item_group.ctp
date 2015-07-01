@@ -10,6 +10,7 @@
 							)); ?>
 
 <?php 
+
 $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : 'tab-general-items';
 ?>
 

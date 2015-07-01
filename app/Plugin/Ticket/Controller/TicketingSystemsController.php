@@ -218,16 +218,17 @@ class TicketingSystemsController extends TicketAppController {
         $dompdf = new DOMPDF();
         $dompdf->set_paper("A4");
         //$output = mb_convert_encoding($output, 'HTML-ENTITIES', 'UTF-8');
-        $dompdf->load_html($output, Configure::read('App.encoding'));
-        //$dompdf->load_html($output, 'UTF-8');
+        $dompdf->load_html($output);
+        $dompdf->load_html($output, 'UTF-8');
         $dompdf->render();
         $canvas = $dompdf->get_canvas();
-        $font = Font_Metrics::get_font("DejaVu Sans", "sans-serif");
+        $font = "DejaVu Sans";
         //body { font-family: DejaVu Sans, sans-serif; }
         //$pdf->SetFont('dejavusans', '', 14, '', true);
         $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
-
+        //
         $output = $dompdf->output();
+        
         $random = rand(0, 1000000) . '-' . time();
         if (empty($filename)) {
         	//$filename = 'product-'.$quotation['ProductDetail']['name'].'-quotation'.time();
@@ -235,11 +236,11 @@ class TicketingSystemsController extends TicketAppController {
         }
       	$filePath = 'view_pdf/'.strtolower(Inflector::slug( $filename , '-')).'.pdf';
         $file_to_save = WWW_ROOT .DS. $filePath;
-        	
+         //pr($output);exit();	
         if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
         		unlink($file_to_save);
         }
-        
+       
         exit();
     }
 

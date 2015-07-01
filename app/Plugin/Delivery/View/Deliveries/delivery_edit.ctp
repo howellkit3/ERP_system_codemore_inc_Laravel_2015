@@ -188,11 +188,12 @@ $totalremaining = 0;
 									<div class="form-group">
 	                                			<label class="col-lg-2 control-label">Location</label>
 												<div class="col-lg-8">
-													<?php 
+													<?php
 			                                              echo $this->Form->input('DeliveryDetail.location', array(
 			                                            								'class' => 'form-control item_type',
 									                                                    'label' => false,
-									                                                    'type' => 'text',
+									                                                    'options' => array($companyAddress[$clientsOrder['ClientOrder']['company_id']]),
+																						'type' => 'select',
 									                                                    'required' => 'required',
 									                                                    'class' => 'form-control item_type datepik editable required',
 									                                                    'value' => 
@@ -203,6 +204,7 @@ $totalremaining = 0;
                                         
 										</div>
 									</div>
+
 
 								
 									<!-- <div class="form-group">
