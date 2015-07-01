@@ -54,7 +54,7 @@
 					<thead>
 						<tr>
 							<td style="width:20px;">
-								Dear :&nbsp; <?php echo ucfirst($quotation['ContactPerson']['firstname']).' '.ucfirst($quotation['ContactPerson']['lastname']) ?> &nbsp;
+								Dear <?php echo ucfirst($quotation['ContactPerson']['firstname']).' '.ucfirst($quotation['ContactPerson']['lastname']) ?>,&nbsp;
 							</td>
 							
 						</tr>
@@ -294,7 +294,7 @@
 						<tr>
 							<td style="width:500px;">
 								<div style="display:inline-block; vertical-align:top; border-bottom: 1px solid #b2b2b2;width:335px">
-									Approved by <br/><br><br><br>
+									Approved by :<br/><br><br><br>
 									<?php
 								
 										echo ucfirst($approvedUser['User']['first_name']);
