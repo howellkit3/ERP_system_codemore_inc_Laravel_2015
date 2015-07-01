@@ -104,6 +104,7 @@
                             'class' => 'form-control item_type quantityLimit',
                             'label' => false,
                             'required' => 'required',
+                            'readonly' => 'readonly',
                             'placeholder' => 'Item Quantity',
                             'value' => $drData['DeliveryDetail']['quantity'] - $drData['DeliveryDetail']['delivered_quantity'] ));
 
