@@ -89,7 +89,7 @@
                                     ?>
                             </div>
                         </div>
-
+ 
                         <div class="form-group">
                             <label class="col-lg-2 control-label">Schedule</label>
                             <div class="col-lg-8">
@@ -100,6 +100,7 @@
                                     'class' => 'form-control item_type datepick required',
                                     'type' => 'text',
                                     'id' => 'date',
+                                    'disabled' => 'disabled',
                                     'readonly' => 'readonly',
                                     'value' => 
                                     date('Y-m-d',strtotime($drData['DeliveryDetail']['schedule']))
