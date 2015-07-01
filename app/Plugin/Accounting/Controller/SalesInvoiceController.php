@@ -601,9 +601,13 @@ class SalesInvoiceController extends AccountingAppController {
                 ),
             ));
 
+<<<<<<< HEAD
         }
         
         //$this->SalesInvoice->bindInvoice();
+=======
+       // pr($invoiceData); exit;
+>>>>>>> f903f64bb8fe3ca13c26e5c51d09d62da876a469
 
         $deliveryData = $this->Delivery->find('all',array(
             'conditions' => array('dr_uuid' => $invoiceList)

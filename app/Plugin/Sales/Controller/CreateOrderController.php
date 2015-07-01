@@ -125,6 +125,8 @@
 			$this->loadModel('Ticket.JobTicket');
 
 			$this->loadModel('Sales.ProductSpecification');
+
+			//pr($this->request->data); exit;
 		
 			if ($this->request->is('post')) {
 
