@@ -644,6 +644,10 @@ public function search_order($hint = null){
 
     $this->Company->bind('Address');
 
+   // pr($this->request->data['Transmittal']['dr_uuid']); exit;
+
+   
+
     if(!empty($this->request->data['DeliveryDetail']['quantity'])){
 
        $this->DeliveryDetail->save($this->request->data['DeliveryDetail']);
@@ -661,9 +665,23 @@ public function search_order($hint = null){
                                         'conditions' => array('Delivery.dr_uuid' => $dr_uuid
                                         )));
 
-    // $trData = $this->Delivery->find('first', array(
-    //                                     'conditions' => array('Transmittal.dr_uuid' => $dr_uuid
-    //                                     )));
+    //pr($this->request->data); exit;
+
+    $TRdata = $this->Transmittal->find('first', array(
+                    'conditions' => array(
+                      'Transmittal.tr_uuid' => $this->request->data['Transmittal']['tr_uuid']
+                    )));
+             
+
+    if (!empty($TRdata)) {
+
+    $this->Session->setFlash(__('The Delivery Receipt No. already exists'), 'error');
+    
+    $this->redirect( array(
+                 'controller' => 'deliveries',   
+                 'action' => 'delivery_transmittal',$drData['Delivery']['dr_uuid'],$drData['Delivery']['schedule_uuid']
+            ));  
+    }
 
     
     $clientData = $this->ClientOrder->find('first', array(

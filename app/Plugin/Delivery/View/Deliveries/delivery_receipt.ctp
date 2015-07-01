@@ -169,8 +169,7 @@
                               echo $this->Form->input('DeliveryDetail.unit', array(
                               'class' => 'form-control item_type',
                               'label' => false,
-                              'required' => 'required',
-                              'readonly' => 'readonly',
+                              'disabled' => 'disabled',
                               'placeholder' => 'Item Unit',
                               'value' => $clientData['QuotationItemDetail']['unit_price_unit_id']));
                               ?>

@@ -3,7 +3,7 @@
     $this->PhpExcel->createWorksheet()
         ->setDefaultFont('Calibri', 12);
 
-    $objTpl = PHPExcel_IOFactory::load("./img/delivery_template.xlsx");
+    $objTpl = PHPExcel_IOFactory::load("./img/delivery_template.xls");
      
     // add data
     $counter = 10;
@@ -22,6 +22,7 @@
                     ->setCellValue('J'.'5', (new \DateTime())->format('m/d/Y'))
                     ->setCellValue('J'.'6', $drData['Delivery']['dr_uuid'])
                     ->setCellValue('C'.'6', ucwords($companyData['Company']['company_name']))
+                    ->setCellValue('A'.'9', $clientData['ClientOrder']['po_number'])
                     ->setCellValue('C'.'7', ucwords($drData['DeliveryDetail']['location']))
                     ->setCellValue('C'.'9', ucfirst($clientData['Product']['name']))
                     ->setCellValue('C'.'10', $drData['DeliveryDetail']['remarks'] )
