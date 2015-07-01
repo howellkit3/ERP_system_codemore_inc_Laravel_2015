@@ -33,10 +33,27 @@
 							<div class="tab-content">
 
 								<div class="tab-pane fade in active" id="tab-summary">
+									
 									<?php
 		                               echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> Export  ', array('controller' => 'sales_invoice', 'action' => 'dr_summary',1),array('class' =>'btn btn-primary pull-right','escape' => false));
 
 		                            ?>
+		                            <div class="form-group col-md-2 pull-right">
+										<!-- <label for="maskedDate">Date</label> -->
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+											<input placeholder="to" type="text" class="form-control daterange" id="maskedDate">
+										</div>
+										<!-- <span class="help-block">ex. 99/99/9999</span> -->
+									</div>
+									<div class="form-group col-md-2 pull-right">
+										<!-- <label for="maskedDate">Date</label> -->
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+											<input placeholder="from" type="text" class="form-control daterange" id="maskedDate">
+										</div>
+										<!-- <span class="help-block">ex. 99/99/9999</span> -->
+									</div>
 		                           <!--  <button class="btn btn-primary pull-right printDR"><i class="fa fa-print fa-lg"></i> Print</button> -->
 		                            <br><br><br>
 
@@ -286,6 +303,18 @@
 		</div>
 	</div>
 </div>
+<script>
+		
+	jQuery(document).ready(function($){
+			
+			//datepicker
+			$('.daterange').datepicker({
+				format: 'yyyy-mm-dd'
+			});
+			
+	});
+
+	 </script>
 <style>
 	.tabs-wrapper .nav-tabs {
 	  margin-bottom: -20px;

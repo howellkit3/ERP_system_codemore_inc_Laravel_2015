@@ -1,8 +1,7 @@
-<?php 
-
-foreach ($company as $customerlist): ?>
-   
-        <tr class="">
+<?php if (!empty($companyData)) { ?>
+    <?php foreach ($companyData as $customerlist): ?>
+        
+            <tr class="">
             <td class="">
                 <?php echo ucfirst($customerlist['Company']['company_name']) ?>  
             </td>
@@ -49,5 +48,8 @@ foreach ($company as $customerlist): ?>
                 ?>
             </td>
         </tr>
-    
-<?php endforeach; ?> 
+        
+    <?php endforeach; ?> 
+<?php }else{
+    echo "<font color='red'><b>No result..</b></font>";
+    } ?> 

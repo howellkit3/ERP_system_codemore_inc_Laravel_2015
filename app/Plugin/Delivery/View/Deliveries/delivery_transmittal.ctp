@@ -11,7 +11,7 @@
           <div class="col-lg-12">
             <header class="main-box-header clearfix">
               <h1 class="pull-left">
-                Print <?php echo $nameForm; ?> Form 
+                Print Transmittal Form 
               </h1>
 
               <?php
@@ -27,15 +27,13 @@
         </div>
 
       <?php echo $this->Form->create('ClientOrderDeliverySchedule',array(
-      'url'=>(array('controller' => 'deliveries', 'action' => 'print_replacing',$drData['Delivery']['dr_uuid'],$drData['Delivery']['schedule_uuid'], $drData['Delivery']['clients_order_id'])),'class' => 'form-horizontal','target' => '_blank')); ?>
+      'url'=>(array('controller' => 'deliveries', 'action' => 'tr',$drData['Delivery']['dr_uuid'],$drData['Delivery']['schedule_uuid'], $drData['Delivery']['clients_order_id'])),'class' => 'form-horizontal','target' => '_blank')); ?>
         <div class="col-lg-12">
           <div class="main-box">
             <div class="top-space"></div>
               <div class="main-box-body clearfix">
                 <div class="main-box-body clearfix">
                   <div class="form-horizontal">    
-
-                  <?php if($nameForm == 'Transmittal'){ ?> 
 
                     <div class="form-group ">
                       <label class="col-lg-2 control-label">Transmittal #</label>
@@ -146,153 +144,7 @@
                         </div>
                       </div>
 
-                        <?php }else{ ?>
-
-                        <div class="form-group ">
-                            <label class="col-lg-2 control-label">Delivery Receipt #</label>
-                            <div class="col-lg-8 ">
-
-                        <?php 
-                            echo $this->Form->input('Transmittal.dr_uuid', array(
-                            'class' => 'form-control item_type',
-                            'label' => false,
-                            'readonly' => 'readonly',
-                            'required' => 'required',
-                            'placeholder' => 'Transmittal Number',
-                            'value' => $drData['Delivery']['dr_uuid']));
-                        ?>
-
-                        <?php 
-                            echo $this->Form->input('Print.form', array(
-                            'class' => 'form-control item_type',
-                            'label' => false,
-                            'required' => 'required',
-                            'type' => 'hidden',
-                            'value' => '0'));
-                          ?>
-
-                            </div>
-                        </div> 
-
-                        <div class="form-group">
-                          <label class="col-lg-2 control-label">Item</label>
-                         <div class="col-lg-8">
-                          <?php 
-                          echo $this->Form->input('Transmittal.number', array(
-                                  'class' => 'form-control item_type',
-                                  'label' => false,
-                                  'readonly' => 'readonly',
-                                  'required' => 'required',
-                                  'placeholder' => 'Item Name',
-                                  'value' => $clientData['Product']['name']));
-                          ?>
-                        </div>
-                      </div>    
-
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">P.O. Number</label>
-                                <div class="col-lg-8">
-                                    <input type="hidden" id="category_selected_type" value="">
-                                    <?php echo $this->Form->input('ClientOrder.po_number', array(
-                                    'class' => 'form-control item_type',
-                                    'label' => false,
-                                    'readonly' => 'readonly',
-                                    'value' => $clientData['ClientOrder']['po_number'],
-                                    'placeholder' => 'Item Name'));
-                                    ?>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Schedule</label>
-                            <div class="col-lg-8">
-                                <?php 
-                                    echo $this->Form->input('DeliveryDetail.schedule', array(
-                                    'label' => false,
-                                    'required' => 'required',
-                                    'class' => 'form-control item_type datepick required',
-                                    'type' => 'text',
-                                    'id' => 'date',
-                                    'readonly' => 'readonly',
-                                    'value' => 
-                                    date('Y-m-d',strtotime($drData['DeliveryDetail']['schedule']))
-                                                                   ));
-                                ?>
-                    
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Location</label>
-                            <div class="col-lg-8">
-                        <?php 
-                            echo $this->Form->input('DeliveryDetail.location', array(
-                            'class' => 'form-control item_type',
-                            'label' => false,
-                            'type' => 'text',
-                            'required' => 'required',
-                            'readonly' => 'readonly',
-                            'class' => 'form-control item_type datepik editable required',
-                            'value' => 
-                            $drData['DeliveryDetail']['location']
-                         ));
-                        ?>
-
-                        </div>
-                        </div>
-
-                      <div class="form-group">
-                        <label class="col-lg-2 control-label">Quantity</label>
-                        <div class="col-lg-8">
-                          <?php 
-                            echo $this->Form->input('DeliveryDetail.quantity', array(
-                            'class' => 'form-control item_type quantityLimit',
-                            'label' => false,
-                            'required' => 'required',
-                            'readonly' => 'readonly',
-                            'placeholder' => 'Item Quantity',
-                            'value' => $drData['DeliveryDetail']['quantity']));
-
-                            echo $this->Form->input('DeliveryDetail.limit', array(
-                            'class' => 'form-control item_type editable required ',
-                            'label' => false,
-                            'type' => 'hidden',
-                            'required' => 'required',
-                            'readonly' => 'readonly',
-                            'id' => 'quantity',
-                            'value' => $drData['DeliveryDetail']['quantity'] - $drData['DeliveryDetail']['delivered_quantity'] 
-                          ));
-                          ?>
-                        </div>
-                      </div>
-
-                      <div class="form-group">
-                            <label class="col-lg-2 control-label">Unit</label>
-                              <div class="col-lg-8">
-                              <?php 
-                              echo $this->Form->input('DeliveryDetail.unit', array(
-                              'class' => 'form-control item_type',
-                              'label' => false,
-                              'required' => 'required',
-                              'readonly' => 'readonly',
-                              'placeholder' => 'Item Unit',
-                              'value' => $clientData['QuotationItemDetail']['unit_price_unit_id']));
-                              ?>
-                              </div>
-                          </div>   
-
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Remarks</label>
-                             <div class="col-lg-8">
-                                <?php echo $this->Form->textarea('DeliveryDetail.remarks', array(
-                                'class' => 'form-control item_type',
-                                'label' => false,
-                                'value' => $drData['DeliveryDetail']['remarks']));
-                            ?>
-                            </div>
-                          </div>    
-
-                        <?php } ?>   
+                       
 
                       <div class="form-group">
                         <div class="col-lg-2"></div>
