@@ -17,7 +17,8 @@ class SalesInvoiceController extends AccountingAppController {
                                                         'status'),
                                                     'conditions' => array(
                                                         'NOT' => array(
-                                                            'SalesInvoice.status' => 2) )
+                                                            'SalesInvoice.status' => 2) ),
+                                                    'order' => 'SalesInvoice.id DESC'
                                         		));
       	
         $this->set(compact('invoiceData'));
@@ -30,8 +31,9 @@ class SalesInvoiceController extends AccountingAppController {
                                                         'id','sales_invoice_no',
                                                         'dr_uuid','statement_no',
                                                         'status'),
-                                                     'conditions' => array(
-                                                        'SalesInvoice.status' => 2 )
+                                                    'conditions' => array(
+                                                        'SalesInvoice.status' => 2 ),
+                                                    'order' => 'SalesInvoice.id DESC'
                                                 ));
         
         $this->set(compact('invoiceData'));
