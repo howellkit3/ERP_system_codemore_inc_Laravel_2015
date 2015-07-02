@@ -15,7 +15,7 @@
 						<?php 
 	                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'ticketing_systems', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
 
-	                        echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array('controller' => 'ticketing_systems', 'action' => 'print_ticket',$productData['Product']['uuid'],$ticketData['JobTicket']['uuid'],$clientOrderId),array('class' =>'btn btn-primary pull-right','escape' => false,'target' => '_blank'));
+	                        // echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array('controller' => 'ticketing_systems', 'action' => 'print_ticket',$productData['Product']['uuid'],$ticketData['JobTicket']['uuid'],$clientOrderId),array('class' =>'btn btn-primary pull-right','escape' => false,'target' => '_blank'));
 
 	                        if(!empty($ticketData['JobTicket']['remarks'])){
 	                        	$buttonName = 'Edit Remarks';
@@ -24,6 +24,12 @@
 	                        }
 
 	                    ?>
+	                    <?php 
+							echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> Export ', array(
+					        	'controller' => 'ticketing_systems', 
+					        	'action' => 'excel_ticket',$productData['Product']['uuid'],$ticketData['JobTicket']['uuid'],$clientOrderId),
+					        	array('class' =>'btn btn-info pull-right ','escape' => false));
+						?>
 	                    <a data-toggle="modal" href="#myModalRemarks" class="btn btn-primary mrg-b-lg pull-right"><i class="fa fa-pencil fa-lg"></i> <?php echo $buttonName ;?></a>
                     </div>
 				</header>

@@ -465,7 +465,7 @@ class SalesInvoiceController extends AccountingAppController {
 
         }
 
-        $companyData = $this->Company->find('list', array('fields' => array('id', 'short_name')
+        $companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')
                                                             ));
        
         $invoiceList = $this->SalesInvoice->find('list',array('fields' => array('id','dr_uuid'),
@@ -554,7 +554,7 @@ class SalesInvoiceController extends AccountingAppController {
 
         }
 
-        $companyData = $this->Company->find('list', array('fields' => array('id', 'short_name')
+        $companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')
                                                             ));
 
         if(!empty($this->request->data['from_date'])){
@@ -704,7 +704,7 @@ class SalesInvoiceController extends AccountingAppController {
 
         }
 
-        $companyData = $this->Company->find('list', array('fields' => array('id', 'short_name')
+        $companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')
                                                             ));
 
         $invoiceList = $this->SalesInvoice->find('list',array('fields' => array('id','dr_uuid'),
