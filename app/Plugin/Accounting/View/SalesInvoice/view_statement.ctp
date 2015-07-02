@@ -6,12 +6,12 @@
 <div class="filter-block pull-right">
 
 	<?php 
-		echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array(
+		echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> Export ', array(
         	'controller' => 'sales_invoice', 
         	'action' => 'print_invoice',
         	//'ext' => 'pdf',
         	$invoiceId,'sa_no'),
-        	array('class' =>'btn btn-info pull-right ','escape' => false,'target' => '_blank'));
+        	array('class' =>'btn btn-info pull-right ','escape' => false));
 	?>
 	<br><br>
 </div>
@@ -68,7 +68,7 @@
 							:&emsp;<?php echo ucfirst($companyData['Address'][0]['address1'])?>
 						</div>
 						<div class="col-lg-4">&emsp;&emsp;&nbsp;&nbsp;&nbsp;
-							TERMS : <?php echo ucfirst($paymentTermData[$clientData['Quotation']['payment_terms']])?>
+							TERMS : <?php echo ucfirst($paymentTermData[$clientData['ClientOrder']['payment_terms']])?>
 						</div>
 					</div>
 				</form>

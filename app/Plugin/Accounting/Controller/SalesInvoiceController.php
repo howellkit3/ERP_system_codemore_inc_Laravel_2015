@@ -17,7 +17,8 @@ class SalesInvoiceController extends AccountingAppController {
                                                         'status'),
                                                     'conditions' => array(
                                                         'NOT' => array(
-                                                            'SalesInvoice.status' => 2) )
+                                                            'SalesInvoice.status' => 2) ),
+                                                    'order' => 'SalesInvoice.id DESC'
                                         		));
       	
         $this->set(compact('invoiceData'));
@@ -30,8 +31,9 @@ class SalesInvoiceController extends AccountingAppController {
                                                         'id','sales_invoice_no',
                                                         'dr_uuid','statement_no',
                                                         'status'),
-                                                     'conditions' => array(
-                                                        'SalesInvoice.status' => 2 )
+                                                    'conditions' => array(
+                                                        'SalesInvoice.status' => 2 ),
+                                                    'order' => 'SalesInvoice.id DESC'
                                                 ));
         
         $this->set(compact('invoiceData'));
@@ -390,53 +392,53 @@ class SalesInvoiceController extends AccountingAppController {
                                             'conditions' => array('Company.id' => $clientData['ClientOrder']['company_id']
                                             )));
 
-        $view = new View(null, false);
+        //$view = new View(null, false);
         
-        $view->set(compact('prepared','approved','drData','clientData','companyData','units','invoiceData','paymentTermData','currencyData'));
+        $this->set(compact('prepared','approved','drData','clientData','companyData','units','invoiceData','paymentTermData','currencyData'));
           
-        $view->viewPath = 'SalesInvoice'.DS.'pdf';  
+        //$view->viewPath = 'SalesInvoice'.DS.'pdf';  
         
         if (!empty($saNo)) {
-            $output = $view->render('print_statement', false);
+            $output = $this->render('print_statement');
         }else{
-            $output = $view->render('print_invoice', false);
+            $output = $this->render('print_invoice');
         }
         
      
-        $dompdf = new DOMPDF();
+        // $dompdf = new DOMPDF();
 
-        $dompdf->set_paper("A4");
+        // $dompdf->set_paper("A4");
 
-        $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));
+        // $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));
 
-        $dompdf->render();
+        // $dompdf->render();
 
-        $canvas = $dompdf->get_canvas();
+        // $canvas = $dompdf->get_canvas();
 
-        $font = Font_Metrics::get_font("Arial", "bold");
+        // $font = Font_Metrics::get_font("Arial", "bold");
 
-        $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
+        // $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
 
-        $output = $dompdf->output();
+        // $output = $dompdf->output();
 
-        $random = rand(0, 1000000) . '-' . time();
+        // $random = rand(0, 1000000) . '-' . time();
 
-        if (empty($filename)) {
+        // if (empty($filename)) {
 
-          $filename = 'SalesInvoice-'.$invoiceId.'-data'.time();
+        //   $filename = 'SalesInvoice-'.$invoiceId.'-data'.time();
 
-        }
+        // }
 
-        $filePath = 'view_pdf/'.strtolower(Inflector::slug( $filename , '-')).'.pdf';
+        // $filePath = 'view_pdf/'.strtolower(Inflector::slug( $filename , '-')).'.pdf';
 
-        $file_to_save = WWW_ROOT .DS. $filePath;
+        // $file_to_save = WWW_ROOT .DS. $filePath;
           
-        if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
+        // if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
 
-            unlink($file_to_save);
-        }
+        //     unlink($file_to_save);
+        // }
         
-        exit();
+        // exit();
             
     }
 
@@ -463,19 +465,21 @@ class SalesInvoiceController extends AccountingAppController {
 
         }
 
-        $companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')
+        $companyData = $this->Company->find('list', array('fields' => array('id', 'short_name')
                                                             ));
        
         $invoiceList = $this->SalesInvoice->find('list',array('fields' => array('id','dr_uuid'),
-            'conditions' => array('NOT' => array('SalesInvoice.status' => 0))
+            'conditions' => array('NOT' => array('SalesInvoice.status' => 0)),
+            'order' => 'SalesInvoice.id DESC'
             ));
 
         //$this->SalesInvoice->bindInvoice();
 
         $invoiceData = $this->SalesInvoice->find('all',array(
-            'conditions' => array('NOT' => array('SalesInvoice.status' => 0))
+            'conditions' => array('NOT' => array('SalesInvoice.status' => 0)),
+            'order' => 'SalesInvoice.id DESC'
             ));
-
+        
         $deliveryData = $this->Delivery->find('all',array(
             'conditions' => array('dr_uuid' => $invoiceList)
             ));
@@ -504,33 +508,25 @@ class SalesInvoiceController extends AccountingAppController {
            
         }
 
-        $clientData = $this->ClientOrder->find('all',array(
-            'conditions' => array('ClientOrder.uuid' => $clientsId)
-            ));
+        foreach ($clientsId as $key => $value) {
 
-        $detailsId = [];
+            $this->ClientOrder->bind('QuotationItemDetail');
 
-        foreach ($clientData as $key => $value) {
-            
-            $invoiceData[$key]['SalesInvoice']['company_id'] = $value['ClientOrder']['company_id'];
+            $clientData = $this->ClientOrder->find('first',array(
+                'conditions' => array('ClientOrder.uuid' => $value)
+                ));
+
+            $invoiceData[$key]['SalesInvoice']['company_id'] = $clientData['ClientOrder']['company_id'];
            
-            $invoiceData[$key]['SalesInvoice']['payment_terms'] = $value['ClientOrder']['payment_terms'];
+            $invoiceData[$key]['SalesInvoice']['payment_terms'] = $clientData['ClientOrder']['payment_terms'];
             
-            array_push($detailsId, $value['ClientOrder']['client_order_item_details_id']);
-           
+            $invoiceData[$key]['SalesInvoice']['unit_price'] = $clientData['QuotationItemDetail']['unit_price'];
+            
+            $invoiceData[$key]['SalesInvoice']['unit_price_currency_id'] = $clientData['QuotationItemDetail']['unit_price_currency_id'];
+
+
         }
 
-        $clientDetails = $this->QuotationItemDetail->find('all',array(
-            'conditions' => array('QuotationItemDetail.id' => $detailsId)
-            ));
-
-        foreach ($clientDetails as $key => $value) {
-            
-            $invoiceData[$key]['SalesInvoice']['unit_price'] = $value['QuotationItemDetail']['unit_price'];
-            
-            $invoiceData[$key]['SalesInvoice']['unit_price_currency_id'] = $value['QuotationItemDetail']['unit_price_currency_id'];
-        }
-        
         $this->set(compact('invoiceData','companyData','paymentTermData'));
 
     }
@@ -560,18 +556,55 @@ class SalesInvoiceController extends AccountingAppController {
 
         $companyData = $this->Company->find('list', array('fields' => array('id', 'short_name')
                                                             ));
+
+        if(!empty($this->request->data['from_date'])){
+
+            $dateRange = str_replace(' ', '', $this->request->data['from_date']);
        
-        $invoiceList = $this->SalesInvoice->find('list',array('fields' => array('id','dr_uuid'),
-             'conditions' => array('NOT' => array('SalesInvoice.status' => 0))
+            $splitDate = split('-', $dateRange);
+            $from = str_replace('/', '-', $splitDate[0]);
+            $to = str_replace('/', '-', $splitDate[1]);
+
+            $invoiceList = $this->SalesInvoice->find('list',array('fields' => array('id','dr_uuid'),
+                'conditions' => array(
+                    'AND' => array(
+                        'SalesInvoice.status !=' => 0,
+                        'SalesInvoice.created BETWEEN ? AND ?' => array($from.' '.'00:00:00:', $to.' '.'23:00:00:')
+                    ),
+                ),
+                'order' => 'SalesInvoice.id DESC'
+            ));
+            
+            $invoiceData = $this->SalesInvoice->find('all', array(
+                'conditions' => array(
+                    'AND' => array(
+                        'SalesInvoice.status !=' => 0,
+                        'SalesInvoice.created BETWEEN ? AND ?' => array($from.' '.'00:00:00:', $to.' '.'23:00:00:')
+                    ),
+                ),
+                'order' => 'SalesInvoice.id DESC'
+            ));
+           
+        } else {
+
+            $invoiceList = $this->SalesInvoice->find('list',array('fields' => array('id','dr_uuid'),
+                'conditions' => array(
+                    'SalesInvoice.status !=' => 0
+                ),
+                'order' => 'SalesInvoice.id DESC'
+            ));
+            
+            $invoiceData = $this->SalesInvoice->find('all', array(
+                'conditions' => array(
+                    'SalesInvoice.status !=' => 0
+                ),
+                'order' => 'SalesInvoice.id DESC'
             ));
 
+
+        }
+        
         //$this->SalesInvoice->bindInvoice();
-
-        $invoiceData = $this->SalesInvoice->find('all',array(
-              'conditions' => array('NOT' => array('SalesInvoice.status' => 0))
-            ));
-
-       // pr($invoiceData); exit;
 
         $deliveryData = $this->Delivery->find('all',array(
             'conditions' => array('dr_uuid' => $invoiceList)
@@ -601,33 +634,25 @@ class SalesInvoiceController extends AccountingAppController {
            
         }
 
-        $clientData = $this->ClientOrder->find('all',array(
-            'conditions' => array('ClientOrder.uuid' => $clientsId)
-            ));
+        foreach ($clientsId as $key => $value) {
 
-        $detailsId = [];
+            $this->ClientOrder->bind('QuotationItemDetail');
 
-        foreach ($clientData as $key => $value) {
-            
-            $invoiceData[$key]['SalesInvoice']['company_id'] = $value['ClientOrder']['company_id'];
+            $clientData = $this->ClientOrder->find('first',array(
+                'conditions' => array('ClientOrder.uuid' => $value)
+                ));
+
+            $invoiceData[$key]['SalesInvoice']['company_id'] = $clientData['ClientOrder']['company_id'];
            
-            $invoiceData[$key]['SalesInvoice']['payment_terms'] = $value['ClientOrder']['payment_terms'];
+            $invoiceData[$key]['SalesInvoice']['payment_terms'] = $clientData['ClientOrder']['payment_terms'];
             
-            array_push($detailsId, $value['ClientOrder']['client_order_item_details_id']);
-           
+            $invoiceData[$key]['SalesInvoice']['unit_price'] = $clientData['QuotationItemDetail']['unit_price'];
+            
+            $invoiceData[$key]['SalesInvoice']['unit_price_currency_id'] = $clientData['QuotationItemDetail']['unit_price_currency_id'];
+
+
         }
 
-        $clientDetails = $this->QuotationItemDetail->find('all',array(
-            'conditions' => array('QuotationItemDetail.id' => $detailsId)
-            ));
-
-        foreach ($clientDetails as $key => $value) {
-            
-            $invoiceData[$key]['SalesInvoice']['unit_price'] = $value['QuotationItemDetail']['unit_price'];
-            
-            $invoiceData[$key]['SalesInvoice']['unit_price_currency_id'] = $value['QuotationItemDetail']['unit_price_currency_id'];
-        }
-        
         $this->set(compact('invoiceData','companyData','paymentTermData'));
 
         if ($reportname == 1) {
@@ -652,6 +677,118 @@ class SalesInvoiceController extends AccountingAppController {
 
             $this->render('SalesInvoice/xls/with_terms');
 
+        }
+        
+    }
+
+    public function daterange_summary($from = null, $to = null,$whatreport = null){
+
+        $this->loadModel('Delivery.Delivery');
+
+        $this->loadModel('Delivery.DeliveryDetail');
+
+        $this->loadModel('Sales.ClientOrder');
+
+        $this->loadModel('Sales.QuotationItemDetail');
+
+        $this->loadModel('Sales.Company');
+
+        $this->loadModel('Sales.PaymentTermHolder');
+
+        $paymentTermData = Cache::read('paymentTerms');
+        
+        if (!$paymentTermData) {
+
+            $paymentTermData = $this->PaymentTermHolder->getList(null,array('id','name'));
+            Cache::write('paymentTerms', $paymentTermData);
+
+        }
+
+        $companyData = $this->Company->find('list', array('fields' => array('id', 'short_name')
+                                                            ));
+
+        $invoiceList = $this->SalesInvoice->find('list',array('fields' => array('id','dr_uuid'),
+            'conditions' => array(
+                'AND' => array(
+                    'SalesInvoice.status !=' => 0,
+                    'SalesInvoice.created BETWEEN ? AND ?' => array($from.' '.'00:00:00:', $to.' '.'23:00:00:')
+                ),
+            ),
+            'order' => 'SalesInvoice.created DESC'
+        ));
+        
+        $invoiceData = $this->SalesInvoice->find('all', array(
+            'conditions' => array(
+                'AND' => array(
+                    'SalesInvoice.status !=' => 0,
+                    'SalesInvoice.created BETWEEN ? AND ?' => array($from.' '.'00:00:00:', $to.' '.'23:00:00:')
+                ),
+            ),
+            'order' => 'SalesInvoice.id DESC'
+        ));
+           
+        //$this->SalesInvoice->bindInvoice();
+
+        $deliveryData = $this->Delivery->find('all',array(
+            'conditions' => array('dr_uuid' => $invoiceList)
+            ));
+
+        $clientsId = [];
+
+        foreach ($deliveryData as $key => $value) {
+            
+            $invoiceData[$key]['SalesInvoice']['schedule_uuid'] = $value['Delivery']['schedule_uuid'];
+           
+            $invoiceData[$key]['SalesInvoice']['clients_order_id'] = $value['Delivery']['clients_order_id'];
+           
+            array_push($clientsId, $value['Delivery']['clients_order_id']);
+           
+        }
+
+        $deliveryDetails = $this->DeliveryDetail->find('all',array(
+            'conditions' => array('delivery_uuid' => $invoiceList)
+            ));
+
+        foreach ($deliveryDetails as $key => $value) {
+            
+            $invoiceData[$key]['SalesInvoice']['quantity'] = $value['DeliveryDetail']['quantity'];
+            
+            $invoiceData[$key]['SalesInvoice']['schedule'] = $value['DeliveryDetail']['schedule'];
+           
+        }
+
+        foreach ($clientsId as $key => $value) {
+
+            $this->ClientOrder->bind('QuotationItemDetail');
+
+            $clientData = $this->ClientOrder->find('first',array(
+                'conditions' => array('ClientOrder.uuid' => $value)
+                ));
+
+            $invoiceData[$key]['SalesInvoice']['company_id'] = $clientData['ClientOrder']['company_id'];
+           
+            $invoiceData[$key]['SalesInvoice']['payment_terms'] = $clientData['ClientOrder']['payment_terms'];
+            
+            $invoiceData[$key]['SalesInvoice']['unit_price'] = $clientData['QuotationItemDetail']['unit_price'];
+            
+            $invoiceData[$key]['SalesInvoice']['unit_price_currency_id'] = $clientData['QuotationItemDetail']['unit_price_currency_id'];
+
+
+        }
+       
+        $this->set(compact('invoiceData','companyData','paymentTermData'));
+
+        if($whatreport == 1){
+            $this->render('daterange_summary');
+        }
+        if($whatreport == 2){
+            $this->render('daterange_php');
+        }
+        if($whatreport == 3){
+            $this->render('daterange_usd');
+        }
+        if($whatreport == 4){
+            $this->render('daterange_term');
         }
         
     }
