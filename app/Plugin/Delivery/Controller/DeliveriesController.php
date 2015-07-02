@@ -21,6 +21,8 @@ class DeliveriesController extends DeliveryAppController {
 
     $this->ClientOrder->bindDelivery();
 
+    //pr($deliveryData); exit;
+
     $clientsOrder = $this->ClientOrder->find('all', array(
                                     'order' => 'ClientOrderDeliverySchedule.id DESC'
                                     ));  
@@ -532,6 +534,32 @@ public function delivery_transmittal_record() {
         
 }
 
+public function dr_record() {
+
+  $userData = $this->Session->read('Auth');
+
+  $this->loadModel('Sales.ClientOrderDeliverySchedule');
+
+  $this->loadModel('Sales.ClientOrder');
+
+  $this->loadModel('Delivery.DeliveryReceipt');
+
+  $this->loadModel('Delivery.Transmittal');
+
+  $this->Delivery->bindDelivery();
+  
+  $DRData = $this->DeliveryReceipt->find('all', array(
+                                        'order' => 'DeliveryReceipt.id DESC'
+                                    ));
+
+
+  $this->ClientOrder->bindDelivery();
+
+
+  $this->set(compact('DRData'));     
+        
+}
+
 public function search_order($hint = null){
 
     $this->loadModel('Sales.ClientOrder');
@@ -581,6 +609,8 @@ public function search_order($hint = null){
     
     $this->loadModel('Sales.Company');
 
+    $this->loadModel('Delivery.DeliveryReceipt');
+
     $this->loadModel('Unit');
     $units = $this->Unit->getList();
 
@@ -622,12 +652,42 @@ public function search_order($hint = null){
 
     $approved = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
                                                             'conditions' => array('User.id' => $drDataHolder['DeliveryDetail']['created_by'])
-                                                            ));
+                                                            ));  
 
-    
+    $this->request->data['DeliveryReceipt']['printed_by'] = $userData['User']['id'];
 
+    $this->request->data['DeliveryReceipt']['dr_uuid'] = $drData['Delivery']['dr_uuid'];
+
+    $this->request->data['DeliveryReceipt']['schedule'] = $drData['DeliveryDetail']['schedule'];
+
+    $this->request->data['DeliveryReceipt']['quantity'] = $drData['DeliveryDetail']['quantity'];
+
+    $this->request->data['DeliveryReceipt']['approved_by'] = $drData['DeliveryDetail']['created_by'];
+
+    if ($this->request->is(array('post', 'put'))) {
+
+       // pr('pst'); exit;
+
+         $this->request->data['DeliveryReceipt']['remarks'] = $this->request->data['DeliveryDetail']['remarks'];
+
+         $this->request->data['DeliveryReceipt']['location'] = $this->request->data['DeliveryDetail']['location'];       
+                  
+    }else{  
+
+     // pr('sda'); exit; 
+
+       $this->request->data['DeliveryReceipt']['location'] = $drData['DeliveryDetail']['location'];
+
+       $this->request->data['DeliveryReceipt']['remarks'] = $drData['DeliveryDetail']['remarks'];
+
+ }  
+  //  pr($this->request->data); exit;
+
+    $this->DeliveryReceipt->save($this->request->data);           
+                          
     $this->set(compact('drData','clientData','companyData','units','approved','prepared'));
 
+      
     }
 
     public function tr($dr_uuid = null,$schedule_uuid) {
@@ -664,8 +724,6 @@ public function search_order($hint = null){
     $drData = $this->Delivery->find('first', array(
                                         'conditions' => array('Delivery.dr_uuid' => $dr_uuid
                                         )));
-
-    //pr($this->request->data); exit;
 
     $TRdata = $this->Transmittal->find('first', array(
                     'conditions' => array(

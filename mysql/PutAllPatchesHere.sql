@@ -292,3 +292,23 @@ ALTER TABLE `koufu_delivery`.`transmittals` ADD COLUMN `remarks` VARCHAR(60) NUL
 ALTER TABLE `koufu_sale`.`companies`     ADD COLUMN `short_name` VARCHAR(80) NULL AFTER `company_name`;
 ALTER TABLE `koufu_accounting`.`sales_invoices`     CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT,     CHANGE `sales_invoice_no` `sales_invoice_no` INT(6) NOT NULL,     CHANGE `dr_uuid` `dr_uuid` INT(11) NULL ,     CHANGE `statement_no` `statement_no` INT(6) NULL ,     CHANGE `status` `status` INT(1) NULL ,     CHANGE `created_by` `created_by` INT(11) NULL ,     CHANGE `modified_by` `modified_by` INT(11) NULL ;
 ALTER TABLE `koufu_accounting`.`sales_invoices`     CHANGE `statement_no` `statement_no` VARCHAR(6) NULL ;
+
+#NOTE: SELECT KOUFU DELIVERY DATABASE ----
+/** howell kit added this 07/02/2015  */
+
+CREATE TABLE `delivery_receipts` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `dr_uuid` INT(11) DEFAULT NULL,
+  `quantity`  VARCHAR(30) DEFAULT NULL,
+  `remarks` VARCHAR(60),
+  `printed_by` INT(11) DEFAULT NULL,
+  `approved_by` INT(11) DEFAULT NULL,
+  `print` TIMESTAMP NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+
+ALTER TABLE `koufu_delivery`.`delivery_receipts` ADD COLUMN `schedule` VARCHAR(60) NULL AFTER `dr_uuid`;
+ALTER TABLE `koufu_delivery`.`delivery_receipts` ADD COLUMN `location` VARCHAR(60) NULL AFTER `quantity`;
+
+ALTER TABLE `delivery_receipts` 
+CHANGE COLUMN `print` `printed` TIMESTAMP NULL DEFAULT NULL;
