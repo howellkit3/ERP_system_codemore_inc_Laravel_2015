@@ -7,8 +7,8 @@ class TicketingSystemsController extends TicketAppController {
 
 	public $uses = array('Ticket.JobTicket');
 
-	public $helpers = array('Sales.Country','Sales.Status','Cache','Sales.DateFormat');
-
+	//public $helpers = array('Ticket.PhpExcel','Sales.Country','Sales.Status','Cache','Sales.DateFormat');
+    public $helpers = array('Ticket.PhpExcel');
 	public function beforeFilter() {
 
         parent::beforeFilter();
@@ -259,6 +259,76 @@ class TicketingSystemsController extends TicketAppController {
                 $this->request->data['JobTicket']['id'],
                 $this->request->data['JobTicket']['client_order_id']));
 
+    }
+
+    public function excel_ticket($productUuid = null,$ticketUuid = null, $clientOrderId = null ){
+
+        $userData = $this->Session->read('Auth');
+
+        $this->loadModel('Sales.ProductSpecification');
+
+        $this->loadModel('Sales.ProductSpecificationDetail');
+
+        $this->loadModel('Sales.Company');
+
+        $this->loadModel('Sales.Product');
+
+        $this->loadModel('Sales.ClientOrder');
+
+        $this->loadModel('Unit');
+
+        $this->ClientOrder->bind(array('ClientOrderDeliverySchedule'));
+
+        $delData = $this->ClientOrder->find('first',array('ClientOrder.id' => $clientOrderId));
+       
+        $productData = $this->Product->find('first',array(
+            'conditions' => array('Product.uuid' => $productUuid)));
+
+        $ticketData = $this->JobTicket->find('first',array(
+            'conditions' => array('JobTicket.uuid' => $ticketUuid)));
+
+        $specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productData['Product']['id'])));
+
+        //find if product has specs
+        $formatDataSpecs = $this->ProductSpecificationDetail->findData($productUuid);
+
+        $this->loadModel('SubProcess');
+
+        $subProcess = $this->SubProcess->find('list',
+                                            array('fields' => 
+                                                array('SubProcess.id',
+                                                    'SubProcess.name'
+                                                 )
+                                                ));
+
+        //set to cache in first load
+        $companyData = Cache::read('companyData');
+        
+        //if (!$companyData) {
+            $companyData = $this->Company->find('list', array(
+                                                'fields' => array( 
+                                                    'id','company_name')
+                                            ));
+
+            Cache::write('companyData', $companyData);
+        // }
+
+        //set to cache in first load
+        $unitData = Cache::read('unitData');
+        
+        if (!$unitData) {
+            
+            $unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
+                                                            'order' => array('Unit.unit' => 'ASC')
+                                                            ));
+
+            Cache::write('unitData', $unitData);
+        }
+       
+        $this->set(compact('userData','ticketData','formatDataSpecs','productData','specs','companyData','unitData','subProcess','ticketUuid','delData'));
+        
+        $this->render('excel_specs');
+       
     }
 
 }
