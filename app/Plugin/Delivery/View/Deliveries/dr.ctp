@@ -1,9 +1,9 @@
-<?php
+<?php 
     // create new empty worksheet and set default font
     $this->PhpExcel->createWorksheet()
         ->setDefaultFont('Calibri', 12);
 
-    $objTpl = PHPExcel_IOFactory::load("./img/delivery_template.xls");
+    $objTpl = PHPExcel_IOFactory::load("./img/delivery_template.xlsx");
      
     // add data
     $counter = 10;
@@ -15,12 +15,24 @@
         $preparedLName = ucwords($prepared['User']['last_name'])  ;
         $approvedFName = ucwords($approved['User']['first_name'])  ;
         $approvedLName = ucwords($approved['User']['last_name'])  ;
+        $toBePrinted = date("M/d/Y");
+
+       // pr($printedDate); exit;
+
+      if(!empty($DRRePrint[0]['DeliveryReceipt']['printed'])){   
+
+       $printedDate = date("M/d/Y", strtotime($DRRePrint[0]['DeliveryReceipt']['printed'])); 
+
+        $toBePrinted =  $printedDate;
+                
+      }
+
+      // pr($toBePrinted); exit;
 
         $objTpl->setActiveSheetIndex(0)
                     
                     ->setCellValue('J'.'4', '')
-                    ->setCellValue('J'.'5', (new \DateTime())->format('m/d/Y'))
-                    ->setCellValue('J'.'6', $drData['Delivery']['dr_uuid'])
+                    ->setCellValue('I'.'6', $drData['Delivery']['dr_uuid'])
                     ->setCellValue('C'.'6', ucwords($companyData['Company']['company_name']))
                     ->setCellValue('A'.'9', $clientData['ClientOrder']['po_number'])
                     ->setCellValue('C'.'7', ucwords($drData['DeliveryDetail']['location']))
@@ -29,7 +41,9 @@
                     ->setCellValue('H'.'9', $drData['DeliveryDetail']['quantity'] . " x " . $clientData['QuotationItemDetail']['quantity'] . " / " . $units[$clientData['QuotationItemDetail']['quantity_unit_id']] )
                     ->setCellValue('J'.'9', $totalQty)
                     ->setCellValue('A'.'21', $preparedFName . " " .$preparedLName)
-                    ->setCellValue('E'.'21', $approvedFName . " " .$approvedLName);
+                    ->setCellValue('E'.'21', $approvedFName . " " .$approvedLName)
+                    ->setCellValue('I'.'5', $toBePrinted);
+             
 
         $counter++;  
 

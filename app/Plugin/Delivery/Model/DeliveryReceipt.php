@@ -24,6 +24,21 @@ class DeliveryReceipt extends AppModel {
 		
 	);
 
+	public function bind($model = array('Group')){
+
+		$this->bindModel(array(
+			'hasOne' => array(
+				'Delivery' => array(
+					'className' => 'Delivery.Delivery',
+					'foreignKey' => false,
+					'conditions' => 'DeliveryReceipt.dr_uuid = Delivery.dr_uuid '
+				),
+			)
+		),false);
+
+		$this->contain($model);
+	}
+
 	 
 
 	

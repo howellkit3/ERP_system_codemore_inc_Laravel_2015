@@ -62,6 +62,8 @@ class Delivery extends AppModel {
 
 	}
 
+	
+
 	public function bindDelivery() {
 		$this->bindModel(array(
 			'hasOne' => array(

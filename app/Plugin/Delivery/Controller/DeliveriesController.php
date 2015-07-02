@@ -544,13 +544,16 @@ public function dr_record() {
 
   $this->loadModel('Delivery.DeliveryReceipt');
 
-  $this->loadModel('Delivery.Transmittal');
+  $this->loadModel('Delivery.Delivery');
 
   $this->Delivery->bindDelivery();
+
+  $this->DeliveryReceipt->bind('Delivery');
   
   $DRData = $this->DeliveryReceipt->find('all', array(
                                         'order' => 'DeliveryReceipt.id DESC'
                                     ));
+
 
 
   $this->ClientOrder->bindDelivery();
@@ -654,6 +657,19 @@ public function search_order($hint = null){
                                                             'conditions' => array('User.id' => $drDataHolder['DeliveryDetail']['created_by'])
                                                             ));  
 
+    
+    $this->loadModel('Delivery.DeliveryReceipt');
+
+    $this->Delivery->bindDelivery();
+
+    $this->DeliveryReceipt->bind('Delivery');
+  
+    $DRRePrint = $this->DeliveryReceipt->find('all', array(
+                                        'conditions' => array('DeliveryReceipt.dr_uuid' => $drData['Delivery']['dr_uuid'])
+                                     ));
+
+    //pr($DRRePrint); exit;
+
     $this->request->data['DeliveryReceipt']['printed_by'] = $userData['User']['id'];
 
     $this->request->data['DeliveryReceipt']['dr_uuid'] = $drData['Delivery']['dr_uuid'];
@@ -663,6 +679,10 @@ public function search_order($hint = null){
     $this->request->data['DeliveryReceipt']['quantity'] = $drData['DeliveryDetail']['quantity'];
 
     $this->request->data['DeliveryReceipt']['approved_by'] = $drData['DeliveryDetail']['created_by'];
+
+    $this->request->data['DeliveryReceipt']['printed'] = date("y-m-d");
+
+   //pr($DRRePrint[0]['DeliveryReceipt']['printed']); exit;
 
     if ($this->request->is(array('post', 'put'))) {
 
@@ -685,7 +705,7 @@ public function search_order($hint = null){
 
     $this->DeliveryReceipt->save($this->request->data);           
                           
-    $this->set(compact('drData','clientData','companyData','units','approved','prepared'));
+    $this->set(compact('drData','clientData','companyData','units','approved','prepared', 'DRRePrint'));
 
       
     }
@@ -784,3 +804,4 @@ public function search_order($hint = null){
     }     
   }
 }
+

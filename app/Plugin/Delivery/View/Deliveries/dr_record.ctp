@@ -42,6 +42,7 @@
               <th class=""><a href="#"><span>Remarks</span></a></th>
               <th class=""><a href="#"><span>Printed by</span></a></th>
               <th class=""><a href="#"><span>Printed Date</span></a></th>
+              <th class=""><a href="#"><span>Action</span></a></th>
             </tr>
             </thead>
 
