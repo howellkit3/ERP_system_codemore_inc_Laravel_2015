@@ -386,6 +386,12 @@ $totalremaining = 0;
 
                                         <?php } ?>
 
+                                        <?php 
+                                            echo $this->Html->link('<span class="fa-stack gatePass">
+                                                    <i class="fa fa-square fa-stack-2x"></i>
+                                                    <i class="fa fa-truck fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> GatePass</font></span>
+                                                    </span> ', array('controller' => 'deliveries', 'action' => 'gate_pass',$deliveryScheduleId, $quotationId,$clientsOrderUuid),array('class' =>' table-link','escape' => false,'title'=>'Gate Pass'));
+                                        ?>
                                         <a data-toggle="modal" href="#myGatePass<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" class="table-link "><i class="fa fa-lg "></i><span class="fa-stack gatePass">
                                         <i class="fa fa-square fa-stack-2x"></i>
                                         <i class="fa fa-truck fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> GatePass </font></span></a>
@@ -495,9 +501,9 @@ $totalremaining = 0;
                                                                                 )); 
                                                                         ?>
                                                                     </div>
-                                                                    <div class="col-lg-1 plusbtn">
-                                                                        <button type="button" class="add-gatepass danger btn btn-success "> <i class="fa fa-plus"></i></button>
-                                                                        <!-- <button type="button" class="remove-field btn btn-danger remove" onclick="removeClone('addressSection')"><i class="fa fa-minus"></i> </button> -->
+                                                                    <div class="col-lg-2 plusbtn">
+                                                                        <button type="button" class="add-gatepass danger btn btn-success"> <i class="fa fa-plus"></i></button>
+                                                                        <!-- <button type="button" style="display:none;" class="remove-field btn btn-danger remove" onclick="removeClone('appendHelper')"><i class="fa fa-minus"></i> </button> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -622,8 +628,8 @@ $totalremaining = 0;
             </div>
         </div>
     </div>
-</div>    
-            
+</div>   
+
 <?php echo $this->element('modals'); ?>
 
 <style>
