@@ -185,7 +185,6 @@ $totalremaining = 0;
                             </tbody>
                         
                             </table>
-
                     </div>
                   </div>
                 </div>
@@ -347,7 +346,29 @@ $totalremaining = 0;
                         </td>
 
                         <td >
-                            <?php if($deliveryDataList['DeliveryDetail']['status'] == 'Completed' || $deliveryDataList['DeliveryDetail']['status'] == 'Incomplete'){ 
+
+                           <?php // pr($deliveryDataList);
+
+                      
+                            
+                          if(!empty($deliveryDataList['DeliveryReceipt']['dr_uuid'])){
+
+                                echo $this->Html->link('<span class="fa-stack">
+                                    <i class="fa fa-square fa-stack-2x"></i>
+                                    <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit</font></span>
+                                    </span> ', array('controller' => 'deliveries', 'action' => 'delivery_edit',$deliveryDataList['Delivery']['dr_uuid'], $scheduleInfo['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link not-active','escape' => false,'title'=>'Review Inquiry'));
+                          
+
+                             
+                                echo $this->Html->link('<span class="fa-stack">
+                                <i class="fa fa-square fa-stack-2x"></i>
+                                <i class="fa fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Print </font></span>
+                                </span>', array('controller' => 'deliveries', 'action' => 'dr',$deliveryDataList['Delivery']['dr_uuid'],$scheduleInfo['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link not-active refresh','escape' => false,'title'=>'Print Delivery Receipt','target' => '_blank'));
+
+                            }else{
+
+
+                                if($deliveryDataList['DeliveryDetail']['status'] == 'Completed' || $deliveryDataList['DeliveryDetail']['status'] == 'Incomplete'){ 
                             
                                 echo $this->Html->link('<span class="fa-stack">
                                     <i class="fa fa-square fa-stack-2x"></i>
@@ -360,15 +381,15 @@ $totalremaining = 0;
                                     <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit</font></span>
                                     </span> ', array('controller' => 'deliveries', 'action' => 'delivery_edit',$deliveryDataList['Delivery']['dr_uuid'], $scheduleInfo['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link','escape' => false,'title'=>'Review Inquiry'));
 
-                            }?>
+                            }
 
-                            <?php  
                                 echo $this->Html->link('<span class="fa-stack">
                                 <i class="fa fa-square fa-stack-2x"></i>
                                 <i class="fa fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Print </font></span>
-                                </span>', array('controller' => 'deliveries', 'action' => 'dr',$deliveryDataList['Delivery']['dr_uuid'],$scheduleInfo['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link','escape' => false,'title'=>'Print Delivery Receipt','target' => '_blank'));
+                                </span>', array('controller' => 'deliveries', 'action' => 'dr',$deliveryDataList['Delivery']['dr_uuid'],$scheduleInfo['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link refresh','escape' => false,'title'=>'Print Delivery Receipt','target' => '_blank'));
 
-                            ?>
+
+                             }      ?>
 
                             <?php if($deliveryDataList['DeliveryDetail']['status'] == 'Incomplete'){ ?>
 
@@ -533,6 +554,10 @@ echo $this->Form->end();
             
                 
         });
+
+            $('.refresh').on("click",function(){
+            location.reload();
+      });
 
        
         

@@ -69,7 +69,12 @@ class Delivery extends AppModel {
 					'className' => 'Delivery.DeliveryDetail',
 					'foreignKey' => false,
 					'conditions' => 'Delivery.dr_uuid = DeliveryDetail.delivery_uuid'
-				)		
+				),		
+				'DeliveryReceipt' => array(
+					'className' => 'Delivery.DeliveryReceipt',
+					'foreignKey' => false,
+					'conditions' => 'Delivery.dr_uuid = DeliveryReceipt.dr_uuid'
+				),		
 			)
 		));
 		$this->recursive = 1;

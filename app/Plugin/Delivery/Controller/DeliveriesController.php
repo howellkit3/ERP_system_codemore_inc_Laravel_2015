@@ -158,6 +158,8 @@ class DeliveriesController extends DeliveryAppController {
 
        $this->loadModel('Sales.Address');
 
+       $this->loadModel('Delivery.DeliveryReceipt');
+
         $this->ClientOrder->bindDelivery();
         $scheduleInfo = $this->ClientOrder->find('first', array(
                                          'conditions' => array(
@@ -171,7 +173,7 @@ class DeliveriesController extends DeliveryAppController {
 
 
 
-         $deliveryData = $this->Delivery->find('first', array(
+         $deliveryDetailsData = $this->Delivery->find('all', array(
                                          'conditions' => array(
                                         'Delivery.schedule_uuid' => $clientsOrderUuid
                                         )
@@ -184,6 +186,10 @@ class DeliveriesController extends DeliveryAppController {
                                         'Delivery.schedule_uuid' => $clientsOrderUuid
                                         )
                                     ));
+
+    
+        $this->Delivery->bindDelivery();
+        $drData = $this->Delivery->find('all');
 
         $deliveryDetailList = $this->DeliveryDetail->find('list',array('fields' => array('delivery_uuid', 'delivered_quantity')));
         
@@ -207,7 +213,6 @@ class DeliveriesController extends DeliveryAppController {
         $orderDeliveryList = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid', 'uuid')));
 
         $companyAddress = $this->Address->find('list',array('fields' => array('address1','address1','foreign_key')));
-
  
         $this->ClientOrder->bindDelivery();
 
@@ -233,7 +238,7 @@ class DeliveriesController extends DeliveryAppController {
           }
 
 
-        $this->set(compact('deliveryScheduleId','quotationId','clientsOrderUuid','scheduleInfo','deliveryData', 'quantityInfo','deliveryDataID','deliveryDetailsData', 'deliveryEdit', 'deliveryDetailList','deliveryList','deliveryStatus', 'orderList', 'orderListHelper', 'orderDeliveryList', 'clientsOrder', 'companyAddress'));
+        $this->set(compact('deliveryScheduleId','quotationId','clientsOrderUuid','scheduleInfo','deliveryData', 'quantityInfo','deliveryDataID','deliveryDetailsData', 'deliveryEdit', 'deliveryDetailList','deliveryList','deliveryStatus', 'orderList', 'orderListHelper', 'orderDeliveryList', 'clientsOrder', 'companyAddress', 'drData', 'deliveryDetailsData'));
         
 }
 
@@ -544,13 +549,16 @@ public function dr_record() {
 
   $this->loadModel('Delivery.DeliveryReceipt');
 
-  $this->loadModel('Delivery.Transmittal');
+  $this->loadModel('Delivery.Delivery');
 
   $this->Delivery->bindDelivery();
+
+  $this->DeliveryReceipt->bind('Delivery');
   
   $DRData = $this->DeliveryReceipt->find('all', array(
                                         'order' => 'DeliveryReceipt.id DESC'
                                     ));
+
 
 
   $this->ClientOrder->bindDelivery();
@@ -654,6 +662,19 @@ public function search_order($hint = null){
                                                             'conditions' => array('User.id' => $drDataHolder['DeliveryDetail']['created_by'])
                                                             ));  
 
+    
+    $this->loadModel('Delivery.DeliveryReceipt');
+
+    $this->Delivery->bindDelivery();
+
+    $this->DeliveryReceipt->bind('Delivery');
+  
+    $DRRePrint = $this->DeliveryReceipt->find('all', array(
+                                        'conditions' => array('DeliveryReceipt.dr_uuid' => $drData['Delivery']['dr_uuid'])
+                                     ));
+
+    //pr($drData); exit;
+
     $this->request->data['DeliveryReceipt']['printed_by'] = $userData['User']['id'];
 
     $this->request->data['DeliveryReceipt']['dr_uuid'] = $drData['Delivery']['dr_uuid'];
@@ -663,6 +684,10 @@ public function search_order($hint = null){
     $this->request->data['DeliveryReceipt']['quantity'] = $drData['DeliveryDetail']['quantity'];
 
     $this->request->data['DeliveryReceipt']['approved_by'] = $drData['DeliveryDetail']['created_by'];
+
+    $this->request->data['DeliveryReceipt']['printed'] = date("y-m-d");
+
+   //pr($DRRePrint[0]['DeliveryReceipt']['printed']); exit;
 
     if ($this->request->is(array('post', 'put'))) {
 
@@ -685,9 +710,9 @@ public function search_order($hint = null){
 
     $this->DeliveryReceipt->save($this->request->data);           
                           
-    $this->set(compact('drData','clientData','companyData','units','approved','prepared'));
+    $this->set(compact('drData','clientData','companyData','units','approved','prepared', 'DRRePrint'));
 
-      
+
     }
 
     public function tr($dr_uuid = null,$schedule_uuid) {
@@ -784,3 +809,4 @@ public function search_order($hint = null){
     }     
   }
 }
+

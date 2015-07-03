@@ -312,3 +312,5 @@ ALTER TABLE `koufu_delivery`.`delivery_receipts` ADD COLUMN `location` VARCHAR(6
 
 ALTER TABLE `delivery_receipts` 
 CHANGE COLUMN `print` `printed` TIMESTAMP NULL DEFAULT NULL;
+
+ALTER TABLE `koufu_delivery`.`delivery_receipts` ADD COLUMN `type` VARCHAR(60) NULL AFTER `location`;
