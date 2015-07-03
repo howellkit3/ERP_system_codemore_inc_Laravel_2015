@@ -6,7 +6,7 @@ $(document).ready(function() {
                                             <div class="form-group">\
                                                 <label class="col-lg-3 control-label"><span style="color:red">*</span>Helper Name</label>\
                                                 <div class="col-lg-7">\
-                                                    <input type="text" class="form-control item_type" name="data[GatePass][][name]" >\
+                                                    <input type="text" class="form-control item_type" name="data[GatePassAssistant][][helper_id]" >\
                                                 </div>\
                                                 <div class="col-lg-1 plusbtn">\
                                                     <button type="button" class="remove-gatepass btn btn-danger"><i class="fa fa-minus"></i></button>\

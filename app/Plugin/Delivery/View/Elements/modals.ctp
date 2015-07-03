@@ -130,7 +130,7 @@
                             <div class="col-lg-9">
                                 <?php 
                                     echo $this->Form->input('DeliveryDetail.location', array(
-                                                                    'empty' => 'None',
+                                                                    'empty' => '--Select Location--',
                                                                     'class' => 'form-control item_type editable addquantityLimit',
                                                                     'options' => array($companyAddress[$clientsOrder['ClientOrder']['company_id']]),
                                                                                         'type' => 'select',

@@ -315,7 +315,67 @@ CHANGE COLUMN `print` `printed` TIMESTAMP NULL DEFAULT NULL;
 
 ALTER TABLE `koufu_delivery`.`delivery_receipts` ADD COLUMN `type` VARCHAR(60) NULL AFTER `location`;
 
+#NOTE: SELECT KOUFU SYSTEM DATABASE ----
+/** bien added this 07/03/2015  */
 
-#NOTE: SELECT KOUFU DELIVERY DATABASE ----
-/** howell kit added this 07/03/2015  */
-ALTER TABLE `koufu_delivery`.`transmittals` ADD COLUMN `type` VARCHAR(60) NULL AFTER `quantity`;
+CREATE TABLE `assistants` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `full_name` varchar(250) COLLATE utf8_bin DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+insert  into `assistants`(`id`,`full_name`,`created_by`,`modified_by`,`created`,`modified`) values (1,'arjay austria',1,1,'2015-07-03 11:23:22','2015-07-02 09:52:01'),(2,'jonald fabie',1,1,'2015-07-03 11:22:25','2015-07-03 11:22:25'),(3,'reymark besana',1,1,'2015-07-03 11:23:44','2015-07-03 11:22:25'),(4,'mark darril cruz',1,1,'2015-07-03 11:22:25','2015-07-03 11:22:25'),(5,'alrin osinsao',1,1,'2015-07-03 11:22:25','2015-07-03 11:22:25'),(6,'walter mirabueno',1,1,'2015-07-03 11:24:16','2015-07-03 11:22:25'),(7,'christopher naraja',1,1,'2015-07-03 11:22:25','2015-07-03 11:22:25');
+
+CREATE TABLE `drivers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `full_name` varchar(250) COLLATE utf8_bin DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+insert  into `drivers`(`id`,`full_name`,`created_by`,`modified_by`,`created`,`modified`) values (1,'nicanor sulit',1,1,'2015-07-03 11:22:55','2015-07-03 11:22:55'),(2,'rene azares',1,1,'2015-07-03 11:22:55','2015-07-03 11:22:55'),(3,'allan corona',1,1,'2015-07-03 11:22:55','2015-07-03 11:22:55'),(4,'vincent alvarado',1,1,'2015-07-03 11:22:55','2015-07-03 11:22:55');
+
+CREATE TABLE `gate_passes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `model` varchar(250) COLLATE utf8_bin DEFAULT NULL,
+  `foreign_key` int(11) DEFAULT NULL,
+  `truck_id` int(11) DEFAULT NULL,
+  `name` varchar(250) COLLATE utf8_bin DEFAULT NULL,
+  `driver_id` int(11) DEFAULT NULL,
+  `remarks` text COLLATE utf8_bin,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+CREATE TABLE `gate_pass_assistants` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `helper_id` int(11) DEFAULT NULL,
+  `gate_pass_id` int(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+CREATE TABLE `trucks` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `truck_no` varchar(250) COLLATE utf8_bin DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modified` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+insert  into `trucks`(`id`,`truck_no`,`created_by`,`modified_by`,`created`,`modified`) values (1,'nqx 893',1,1,'2015-07-03 11:22:55','2015-07-02 09:52:01'),(2,'VDL 679',1,1,'2015-07-03 11:22:55','2015-07-02 09:52:01'),(3,'ZLL 773',1,1,'2015-07-03 11:22:56','2015-07-02 09:52:01'),(4,'RJN 204',1,1,'2015-07-03 11:22:57','2015-07-02 09:52:01'),(5,'POT 216',1,1,'2015-07-03 11:22:57','2015-07-02 09:52:01'),(6,'XPB 842',1,1,'2015-07-03 11:22:58','2015-07-02 09:52:01'),(7,'NOO 901',1,1,'2015-07-03 11:22:58','2015-07-02 09:52:01'),(8,'AAA 9592',1,1,'2015-07-03 11:22:59','2015-07-02 09:52:01');

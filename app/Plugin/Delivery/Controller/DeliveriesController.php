@@ -5,72 +5,71 @@ App::import('Vendor', 'DOMPDF', true, array(), 'dompdf'.DS.'dompdf_config.inc.ph
 
 class DeliveriesController extends DeliveryAppController {
 
-  public $uses = array('Delivery.Delivery', 'Delivery.DeliveryDetail');
+    public $uses = array('Delivery.Delivery', 'Delivery.DeliveryDetail');
 
-   public $paginate = array(
-    'limit' => 10
+    public $paginate = array(
+        'limit' => 10
     );
 
-  public function index() {
+    public function index() {
 
-    $this->loadModel('Sales.ClientOrder');
+        $this->loadModel('Sales.ClientOrder');
 
-    $this->loadModel('Sales.ClientOrderDeliverySchedule');
+        $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
-    $deliveryData = $this->Delivery->find('list',array('fields' => array('schedule_uuid','status')));
+        $deliveryData = $this->Delivery->find('list',array('fields' => array('schedule_uuid','status')));
 
-    $this->ClientOrder->bindDelivery();
+        $this->ClientOrder->bindDelivery();
 
-    //pr($deliveryData); exit;
+        //pr($deliveryData); exit;
 
-    $clientsOrder = $this->ClientOrder->find('all', array(
-                                    'order' => 'ClientOrderDeliverySchedule.id DESC'
-                                    ));  
-    
-    $this->ClientOrder->bindDelivery();
-    $clientsStatus = $this->ClientOrder->find('all',array( 'conditions' => array(
-                                    'ClientOrderDeliverySchedule.client_order_id' => 86
-                                    )));
+        $clientsOrder = $this->ClientOrder->find('all', array(
+                                        'order' => 'ClientOrderDeliverySchedule.id DESC'
+                                        ));  
+        
+        $this->ClientOrder->bindDelivery();
+        $clientsStatus = $this->ClientOrder->find('all',array( 'conditions' => array(
+                                        'ClientOrderDeliverySchedule.client_order_id' => 86
+                                        )));
 
-    $this->Delivery->bindDelivery();
-    $deliveryStatus = $this->Delivery->find('all');
+        $this->Delivery->bindDelivery();
+        $deliveryStatus = $this->Delivery->find('all');
 
-    $deliveryList = $this->Delivery->find('list',array('fields' => array('schedule_uuid', 'dr_uuid')));
+        $deliveryList = $this->Delivery->find('list',array('fields' => array('schedule_uuid', 'dr_uuid')));
 
-    $orderList = $this->DeliveryDetail->find('list',array('fields' => array('delivery_uuid', 'status')));
+        $orderList = $this->DeliveryDetail->find('list',array('fields' => array('delivery_uuid', 'status')));
 
-    $orderListHelper = $this->Delivery->find('list',array('fields' => array('clients_order_id', 'dr_uuid')));
+        $orderListHelper = $this->Delivery->find('list',array('fields' => array('clients_order_id', 'dr_uuid')));
 
-    $orderDeliveryList = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid', 'uuid')));
+        $orderDeliveryList = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid', 'uuid')));
 
-    $deliveryDetailList = $this->DeliveryDetail->find('list',array('fields' => array('delivery_uuid', 'delivered_quantity')));
+        $deliveryDetailList = $this->DeliveryDetail->find('list',array('fields' => array('delivery_uuid', 'delivered_quantity')));
 
-    $limit = 10;
+        $limit = 10;
 
-    $conditions = array();
+        $conditions = array();
 
-    $this->ClientOrder->paginate = array(
-        'conditions' => $conditions,
-        'limit' => '1',
-        'fields' => array(
-          'ClientOrder.uuid',
-          'ClientOrder.po_number',
-          'Company.company_name',  
-          'Product.name', 
-          'ClientOrderDeliverySchedule.quantity', 
-          'ClientOrderDeliverySchedule.location', 
-          'ClientOrderDeliverySchedule.schedule'
-          ),
-        'order' => 'ClientOrderDeliverySchedule.id DESC',
-    );
+        $this->ClientOrder->paginate = array(
+            'conditions' => $conditions,
+            'limit' => '1',
+            'fields' => array(
+              'ClientOrder.uuid',
+              'ClientOrder.po_number',
+              'Company.company_name',  
+              'Product.name', 
+              'ClientOrderDeliverySchedule.quantity', 
+              'ClientOrderDeliverySchedule.location', 
+              'ClientOrderDeliverySchedule.schedule'
+              ),
+            'order' => 'ClientOrderDeliverySchedule.id DESC',
+        );
 
-    $clientsOrders = $this->paginate('ClientOrder');
+        $clientsOrders = $this->paginate('ClientOrder');
 
-    $this->set(compact('clientsOrder','deliveryData', 'deliveryList', 'deliveryDetailList', 'clientsStatus', 'deliveryStatus', 'orderList', 'orderListHelper', 'orderDeliveryList'));
-   }
+        $this->set(compact('clientsOrder','deliveryData', 'deliveryList', 'deliveryDetailList', 'clientsStatus', 'deliveryStatus', 'orderList', 'orderListHelper', 'orderDeliveryList'));
+    }
 
-  
-   public function add($deliveryScheduleId = null,$quotationId = null, $clientsOrderUuid = null){
+    public function add($deliveryScheduleId = null,$quotationId = null, $clientsOrderUuid = null){
 
    		$userData = $this->Session->read('Auth');
       
@@ -78,8 +77,6 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->ClientOrderDeliverySchedule->bind(array('ClientOrder'));
 
-       
-        
         $scheduleInfo = $this->ClientOrderDeliverySchedule->find('first', array(
                                                                          'conditions' => array(
                                                                           'ClientOrderDeliverySchedule.id' => $deliveryScheduleId
@@ -92,17 +89,16 @@ class DeliveriesController extends DeliveryAppController {
                     ));
 
              
-      if (!empty($DRdata)) {
+        if (!empty($DRdata)) {
 
-      $this->Session->setFlash(__('The Delivery Receipt No. already exists'), 'error');
-      
-      $this->redirect( array(
-                   'controller' => 'deliveries',   
-                   'action' => 'view',$deliveryScheduleId,$quotationId,$clientsOrderUuid
-              ));  
-      }
+            $this->Session->setFlash(__('The Delivery Receipt No. already exists'), 'error');
+          
+            $this->redirect( array(
+                'controller' => 'deliveries',   
+                'action' => 'view',$deliveryScheduleId,$quotationId,$clientsOrderUuid
+            ));  
+        }
 
-       
         $this->request->data['Delivery']['schedule_uuid'] = $scheduleInfo['ClientOrderDeliverySchedule']['uuid'];
         $this->request->data['Delivery']['clients_order_id']  = $scheduleInfo['ClientOrder']['uuid'];
         $this->request->data['Delivery']['status']  = 'Approved';
@@ -130,35 +126,45 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->set(compact('scheduleInfo'));
         
-   }
-
-   
+    }
 
     public function find_data($id = null){
 
-      $this->layout = false;
-      $this->loadModel('Delivery.Schedule');
-      $data = $this->Schedule->find('first', array(
-                                         'conditions' => array(
-                                            'sales_order_id' => $id
-                                        )
-                                    ));
+        $this->layout = false;
+        $this->loadModel('Delivery.Schedule');
+        $data = $this->Schedule->find('first', array(
+             'conditions' => array(
+                'sales_order_id' => $id
+            )
+        ));
    
-      echo json_encode($data);
+        echo json_encode($data);
 
-      $this->autoRender = false;
+        $this->autoRender = false;
 
-   }
+    }
 
     public function view($deliveryScheduleId = null, $quotationId = null, $clientsOrderUuid = null) {
 
-       $this->loadModel('Sales.ClientOrderDeliverySchedule');
+        $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
-       $this->loadModel('Sales.ClientOrder');
+        $this->loadModel('Sales.ClientOrder');
 
-       $this->loadModel('Sales.Address');
+        $this->loadModel('Sales.Address');
 
-       $this->loadModel('Delivery.DeliveryReceipt');
+        $this->loadModel('Delivery.DeliveryReceipt');
+
+        $this->loadModel('Truck');
+
+        $this->loadModel('Assistant');
+
+        $this->loadModel('Driver');
+
+        $truckList = $this->Truck->find('list',array('fields' => array('id', 'truck_no'),'order' => 'truck_no ASC'));
+
+        $helperList = $this->Assistant->find('list',array('fields' => array('id', 'full_name'),'order' => 'full_name ASC'));
+
+        $driverList = $this->Driver->find('list',array('fields' => array('id', 'full_name'),'order' => 'full_name ASC'));
 
         $this->ClientOrder->bindDelivery();
         $scheduleInfo = $this->ClientOrder->find('first', array(
@@ -167,11 +173,8 @@ class DeliveriesController extends DeliveryAppController {
                                         )
                                     ));
 
-
         $this->Delivery->bindDelivery();
         $deliveryDetailsData = $this->Delivery->find('first',array('order' => 'Delivery.id DESC'));
-
-
 
          $deliveryDetailsData = $this->Delivery->find('all', array(
                                          'conditions' => array(
@@ -179,7 +182,6 @@ class DeliveriesController extends DeliveryAppController {
                                         )
                                     ));
 
- 
          $this->Delivery->bindDelivery();
          $deliveryEdit = $this->Delivery->find('all', array(
                                          'conditions' => array(
@@ -187,7 +189,6 @@ class DeliveriesController extends DeliveryAppController {
                                         )
                                     ));
 
-    
         $this->Delivery->bindDelivery();
         $drData = $this->Delivery->find('all');
 
@@ -220,41 +221,39 @@ class DeliveriesController extends DeliveryAppController {
                                               'conditions' => array('ClientOrderDeliverySchedule.uuid' => $clientsOrderUuid
                                               )));    
 
-
         if ($this->request->is(array('post', 'put'))) {
 
-                $this->ClientOrderDeliverySchedule->id = $this->request->data['ClientOrderDeliverySchedule']['id'];
+            $this->ClientOrderDeliverySchedule->id = $this->request->data['ClientOrderDeliverySchedule']['id'];
 
-                if ($this->ClientOrderDeliverySchedule->save($this->request->data)) {
+            if ($this->ClientOrderDeliverySchedule->save($this->request->data)) {
 
-                    $this->ClientOrderDeliverySchedule->save($this->request->data);
-                    $this->Session->setFlash(__('Schedule has been updated.'),'success');
-                    $this->redirect( array(
-                                 'controller' => 'deliveries', 
-                                 'action' => 'view'
-                            ));
-                }
-                $this->Session->setFlash(__('Unable to update your post.'));
-          }
+                $this->ClientOrderDeliverySchedule->save($this->request->data);
+                $this->Session->setFlash(__('Schedule has been updated.'),'success');
+                $this->redirect( array(
+                             'controller' => 'deliveries', 
+                             'action' => 'view'
+                        ));
+            }
+            $this->Session->setFlash(__('Unable to update your post.'));
+        }
 
-
-        $this->set(compact('deliveryScheduleId','quotationId','clientsOrderUuid','scheduleInfo','deliveryData', 'quantityInfo','deliveryDataID','deliveryDetailsData', 'deliveryEdit', 'deliveryDetailList','deliveryList','deliveryStatus', 'orderList', 'orderListHelper', 'orderDeliveryList', 'clientsOrder', 'companyAddress', 'drData', 'deliveryDetailsData'));
+        $this->set(compact('driverList','helperList','truckList','deliveryScheduleId','quotationId','clientsOrderUuid','scheduleInfo','deliveryData', 'quantityInfo','deliveryDataID','deliveryDetailsData', 'deliveryEdit', 'deliveryDetailList','deliveryList','deliveryStatus', 'orderList', 'orderListHelper', 'orderDeliveryList', 'clientsOrder', 'companyAddress', 'drData', 'deliveryDetailsData'));
         
-}
+    }
 
- public function add_schedule($idDelivery = null,$idDeliveryDetail = null,$deliveryScheduleId = null, $quotationId = null, $clientsOrderUuid = null) {
+    public function add_schedule($idDelivery = null,$idDeliveryDetail = null,$deliveryScheduleId = null, $quotationId = null, $clientsOrderUuid = null) {
 
-      $userData = $this->Session->read('Auth');
+        $userData = $this->Session->read('Auth');
 
-      $this->loadModel('Delivery.DeliveryDetail');
+        $this->loadModel('Delivery.DeliveryDetail');
 
-      $this->loadModel('Sales.ClientOrder');
+        $this->loadModel('Sales.ClientOrder');
 
-      $this->Delivery->bindDelivery();
+        $this->Delivery->bindDelivery();
 
-      $deliveryData = $this->Delivery->find('first', array('conditions' => array(
-                                                                          'Delivery.schedule_uuid' => $this->request->data['Delivery']['schedule_uuid']),
-                                                                          'order' => 'Delivery.id DESC'));
+        $deliveryData = $this->Delivery->find('first', array('conditions' => array(
+                                  'Delivery.schedule_uuid' => $this->request->data['Delivery']['schedule_uuid']),
+                                  'order' => 'Delivery.id DESC'));
 
         if ($this->request->is(array('post', 'put'))) {
 
@@ -266,17 +265,15 @@ class DeliveriesController extends DeliveryAppController {
                       'Delivery.dr_uuid' => $this->request->data['Delivery']['dr_uuid'])
                     ));
 
-             
+            if (!empty($DRdata)) {
 
-              if (!empty($DRdata)) {
-
-              $this->Session->setFlash(__('The Delivery Receipt No. already exists'), 'error');
+                $this->Session->setFlash(__('The Delivery Receipt No. already exists'), 'error');
               
-              $this->redirect( array(
+                $this->redirect( array(
                            'controller' => 'deliveries',   
                            'action' => 'view',$deliveryScheduleId,$quotationId,$clientsOrderUuid
                       ));  
-              }
+            }
 
             $this->request->data['DeliveryDetail']['delivery_uuid'] =  $this->request->data['Delivery']['dr_uuid']; 
             $this->request->data['DeliveryDetail']['created_by'] =  $userData['User']['id'];    
@@ -292,17 +289,17 @@ class DeliveriesController extends DeliveryAppController {
                       ));
             
             $this->Session->setFlash(__('Unable to update your post.'));
-            }
+        }
 
         $this->set(compact('scheduleInfo',  'deliveryData'));
         
-}
+    }
 
-public function delivery_return($deliveryScheduleId = null,$quotationId = null,$clientsOrderUuid =null) {
+    public function delivery_return($deliveryScheduleId = null,$quotationId = null,$clientsOrderUuid =null) {
 
-$userData = $this->Session->read('Auth');
+        $userData = $this->Session->read('Auth');
 
-  if ($this->request->is(array('post', 'put'))) {
+        if ($this->request->is(array('post', 'put'))) {
 
             if($this->request->data['DeliveryDetail']['quantity'] == $this->request->data['DeliveryDetail']['delivered_quantity']){
 
@@ -310,27 +307,26 @@ $userData = $this->Session->read('Auth');
 
             }else{
 
-            $this->request->data['DeliveryDetail']['status'] =  'Incomplete';
+                $this->request->data['DeliveryDetail']['status'] =  'Incomplete';
 
             
-        }
+            }
 
-        if(!empty($this->request->data['DeliveryDetail']['from_replacing'])){     
+            if(!empty($this->request->data['DeliveryDetail']['from_replacing'])){     
 
-          if($this->request->data['DeliveryDetail']['from_replacing'] = 'replacing'){
+                if($this->request->data['DeliveryDetail']['from_replacing'] = 'replacing'){
 
-            $this->request->data['DeliveryDetail']['delivered_quantity'] =  $this->request->data['DeliveryDetail']['delivered'] + $this->request->data['DeliveryDetail']['delivered_quantity'];
+                    $this->request->data['DeliveryDetail']['delivered_quantity'] =  $this->request->data['DeliveryDetail']['delivered'] + $this->request->data['DeliveryDetail']['delivered_quantity'];
 
-          }
-        }
+                }
+            }
 
-        if(!empty($this->request->data['DeliveryDetail']['holder'])){  
+            if(!empty($this->request->data['DeliveryDetail']['holder'])){  
 
-            $this->request->data['DeliveryDetail']['quantity'] = $this->request->data['DeliveryDetail']['holder'];
+                $this->request->data['DeliveryDetail']['quantity'] = $this->request->data['DeliveryDetail']['holder'];
 
-        }
+            }
             
-
             $this->DeliveryDetail->saveDeliveryDetail($this->request->data,$userData['User']['id']);
 
             $this->Session->setFlash(__('Schedule has been updated.'),'success');
@@ -340,494 +336,468 @@ $userData = $this->Session->read('Auth');
                            'action' => 'view',$deliveryScheduleId,$quotationId,$clientsOrderUuid
                       ));
             
-           
-            }
+        }
        
-}
+    }
 
-public function delivery_replacing() {
+    public function delivery_replacing() {
 
-$userData = $this->Session->read('Auth');
+        $userData = $this->Session->read('Auth');
 
-  $this->loadModel('Sales.ClientOrderDeliverySchedule');
+        $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
-  $this->loadModel('Sales.ClientOrder');
+        $this->loadModel('Sales.ClientOrder');
 
-  $this->Delivery->bindDelivery();
-  
-  $deliveryEdit = $this->Delivery->find('all', array(
-                                         'conditions' => array(
-                                        'DeliveryDetail.status' => 'Incomplete'),
-                                        'order' => 'DeliveryDetail.modified DESC'
-                                    ));
+        $this->Delivery->bindDelivery();
+      
+        $deliveryEdit = $this->Delivery->find('all', array(
+                                             'conditions' => array(
+                                            'DeliveryDetail.status' => 'Incomplete'),
+                                            'order' => 'DeliveryDetail.modified DESC'
+                                        ));
 
-  $this->ClientOrder->bindDelivery();
+        $this->ClientOrder->bindDelivery();
 
-  $clientOrderData = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid','id')));
+        $clientOrderData = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid','id')));
 
-  $scheduleInfo = $this->ClientOrder->find('all');
+        $scheduleInfo = $this->ClientOrder->find('all');
 
-  $this->set(compact('deliveryEdit', 'scheduleInfo', 'clientOrderData'));     
-        
-}
+        $this->set(compact('deliveryEdit', 'scheduleInfo', 'clientOrderData'));     
+            
+    }
 
-public function delivery_edit($dr_uuid = null, $clientsOrderUuid = null) {
+    public function delivery_edit($dr_uuid = null, $clientsOrderUuid = null) {
 
-  $userData = $this->Session->read('Auth');
+        $userData = $this->Session->read('Auth');
 
-  $this->loadModel('Sales.ClientOrder');
+        $this->loadModel('Sales.ClientOrder');
 
-  $this->loadModel('Sales.Address');
+        $this->loadModel('Sales.Address');
 
-  $this->Delivery->bindDelivery();
+        $this->Delivery->bindDelivery();
 
-  $deliveryEdit = $this->Delivery->find('first', array(
+        $deliveryEdit = $this->Delivery->find('first', array(
                                          'conditions' => array(
                                         'DeliveryDetail.delivery_uuid' => $dr_uuid
                                         )
                                     ));
 
- $this->Delivery->bindDelivery();
- $deliveryData = $this->Delivery->find('all', array(
+        $this->Delivery->bindDelivery();
+        $deliveryData = $this->Delivery->find('all', array(
                                        'conditions' => array(
                                       'Delivery.schedule_uuid' => $clientsOrderUuid
                                       )
                                   ));
 
- $this->ClientOrder->bindDelivery();
- $scheduleInfo = $this->ClientOrder->find('first', array(
+        $this->ClientOrder->bindDelivery();
+        $scheduleInfo = $this->ClientOrder->find('first', array(
                                          'conditions' => array(
                                           'ClientOrderDeliverySchedule.uuid' => $clientsOrderUuid
                                         )
                                     ));
 
-  $clientOrderData = $this->ClientOrder->find('list',array('fields' => array('uuid','po_number')));
+        $clientOrderData = $this->ClientOrder->find('list',array('fields' => array('uuid','po_number')));
 
-  $companyAddress = $this->Address->find('list',array('fields' => array('address1','address1','foreign_key')));
+        $companyAddress = $this->Address->find('list',array('fields' => array('address1','address1','foreign_key')));
 
-  $this->loadModel('Sales.ClientOrder');
-  $this->ClientOrder->bindDelivery();
+        $this->loadModel('Sales.ClientOrder');
+        $this->ClientOrder->bindDelivery();
 
-  $clientsOrder = $this->ClientOrder->find('first', array(
+        $clientsOrder = $this->ClientOrder->find('first', array(
                                         'conditions' => array('ClientOrderDeliverySchedule.uuid' => $clientsOrderUuid
                                         )));    
  
- 
-  if ($this->request->is(array('post', 'put'))) {
+        if ($this->request->is(array('post', 'put'))) {
 
-                  $this->request->data['DeliveryDetail']['remaining_quantity'] = ($this->request->data['ClientOrderDeliverySchedule']['quantity']) - ($this->request->data['DeliveryDetail']['quantity']);
+            $this->request->data['DeliveryDetail']['remaining_quantity'] = ($this->request->data['ClientOrderDeliverySchedule']['quantity']) - ($this->request->data['DeliveryDetail']['quantity']);
                
-                  $this->DeliveryDetail->saveDeliveryDetail($this->request->data,$userData['User']['id']);
+            $this->DeliveryDetail->saveDeliveryDetail($this->request->data,$userData['User']['id']);
                     
-                  $this->Session->setFlash(__('Schedule has been updated.'),'success');
+            $this->Session->setFlash(__('Schedule has been updated.'),'success');
 
-                  $this->redirect( array(
-                                 'controller' => 'deliveries', 
-                                 'action' => 'view',$clientsOrder['ClientOrderDeliverySchedule']['id'],
-                                                    $clientsOrder['QuotationDetail']['quotation_id'],
-                                                    $deliveryEdit['Delivery']['schedule_uuid']
-                            ));
+            $this->redirect( array(
+                 'controller' => 'deliveries', 
+                 'action' => 'view',$clientsOrder['ClientOrderDeliverySchedule']['id'],
+                                    $clientsOrder['QuotationDetail']['quotation_id'],
+                                    $deliveryEdit['Delivery']['schedule_uuid']
+            ));
                 
-                $this->Session->setFlash(__('Unable to update your post.'));
-     }            
+            $this->Session->setFlash(__('Unable to update your post.'));
+        }            
         
-  $this->set(compact('deliveryEdit', 'clientOrderData', 'clientsOrder', 'deliveryData', 'scheduleInfo', 'userData', 'companyAddress'));      
-}
+        $this->set(compact('deliveryEdit', 'clientOrderData', 'clientsOrder', 'deliveryData', 'scheduleInfo', 'userData', 'companyAddress'));      
+    }
 
+    public function delivery_transmittal($dr_uuid = null,$schedule_uuid,$paper = null) {
 
-  public function delivery_transmittal($dr_uuid = null,$schedule_uuid,$paper = null) {
+        $userData = $this->Session->read('Auth');
 
-    $userData = $this->Session->read('Auth');
+        $this->loadModel('Sales.ClientOrder');
 
-    $this->loadModel('Sales.ClientOrder');
-
-    $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule','QuotationItemDetail','QuotationDetail','Product'));
-    
-    $this->loadModel('Sales.Company');
-
-    $this->loadModel('Unit');
-
-    $this->loadModel('Sales.Address');
-
-    $companyAddress = $this->Address->find('list',array('fields' => array('address1','address1','foreign_key')));
-
-    $units = $this->Unit->find('list',array('fields' => array('id','unit')));
-
-    $this->Company->bind('Address');
-
-    $this->Delivery->bindDelivery();
-    $drData = $this->Delivery->find('first', array(
-                                        'conditions' => array('Delivery.dr_uuid' => $dr_uuid
-                                        )));
-    
-    $clientData = $this->ClientOrder->find('first', array(
-                                        'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
-                                        )));
-    
-    $companyData = $this->Company->find('first', array(
-                                        'conditions' => array('Company.id' => $clientData['ClientOrder']['company_id']
-                                        )));
-
-    $nameForm = "Delivery Receipt"; 
-
-    $this->set(compact('drData','clientData','companyData','units','nameForm', 'companyAddress'));
-    
-}
-
-public function delivery_receipt($dr_uuid = null,$schedule_uuid,$paper = null) {
-
-    $userData = $this->Session->read('Auth');
-
-    $this->loadModel('Sales.ClientOrder');
-
-    $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule','QuotationItemDetail','QuotationDetail','Product'));
-    
-    $this->loadModel('Sales.Company');
-
-    $this->loadModel('Unit');
-
-    $this->loadModel('Sales.Address');
-
-    $companyAddress = $this->Address->find('list',array('fields' => array('address1','address1','foreign_key')));
-
-    $units = $this->Unit->find('list',array('fields' => array('id','unit')));
-
-    $this->Company->bind('Address');
-
-    $this->Delivery->bindDelivery();
-    $drData = $this->Delivery->find('first', array(
-                                        'conditions' => array('Delivery.dr_uuid' => $dr_uuid
-                                        )));
-    
-    $clientData = $this->ClientOrder->find('first', array(
-                                        'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
-                                        )));
-    
-    $companyData = $this->Company->find('first', array(
-                                        'conditions' => array('Company.id' => $clientData['ClientOrder']['company_id']
-                                        )));
-
-    $nameForm = "Delivery Receipt"; 
-
-    $this->set(compact('drData','clientData','companyData','units','nameForm', 'companyAddress'));
-    
-}
-
-public function delivery_transmittal_record() {
-
-  $userData = $this->Session->read('Auth');
-
-  $this->loadModel('Sales.ClientOrderDeliverySchedule');
-
-  $this->loadModel('Sales.ClientOrder');
-
-  $this->loadModel('Delivery.Transmittal');
-
-  $this->Delivery->bindDelivery();
-
-  $this->Transmittal->bind(array('Delivery','DeliveryDetail'));
-
-  $transmittalData = $this->Transmittal->find('all', array(
-                                        'order' => 'Transmittal.id DESC'
-                                    ));
-
-  $this->ClientOrder->bindDelivery();
-
-  $clientOrderData = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid','id')));
-
-  $scheduleInfo = $this->ClientOrder->find('all');
-
-  $this->set(compact('transmittalData', 'scheduleInfo', 'clientOrderData'));     
+        $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule','QuotationItemDetail','QuotationDetail','Product'));
         
-}
+        $this->loadModel('Sales.Company');
 
-public function dr_record() {
+        $this->loadModel('Unit');
 
-  $userData = $this->Session->read('Auth');
+        $this->loadModel('Sales.Address');
 
-  $this->loadModel('Sales.ClientOrderDeliverySchedule');
+        $companyAddress = $this->Address->find('list',array('fields' => array('address1','address1','foreign_key')));
 
-  $this->loadModel('Sales.ClientOrder');
+        $units = $this->Unit->find('list',array('fields' => array('id','unit')));
 
-  $this->loadModel('Delivery.DeliveryReceipt');
+        $this->Company->bind('Address');
 
-  $this->loadModel('Delivery.Delivery');
+        $this->Delivery->bindDelivery();
+        $drData = $this->Delivery->find('first', array(
+                                            'conditions' => array('Delivery.dr_uuid' => $dr_uuid
+                                            )));
+        
+        $clientData = $this->ClientOrder->find('first', array(
+                                            'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
+                                            )));
+        
+        $companyData = $this->Company->find('first', array(
+                                            'conditions' => array('Company.id' => $clientData['ClientOrder']['company_id']
+                                            )));
 
-  $this->Delivery->bindDelivery();
+        $nameForm = "Delivery Receipt"; 
 
-  $this->DeliveryReceipt->bind('Delivery');
+        $this->set(compact('drData','clientData','companyData','units','nameForm', 'companyAddress'));
+        
+    }
+
+    public function delivery_receipt($dr_uuid = null,$schedule_uuid,$paper = null) {
+
+        $userData = $this->Session->read('Auth');
+
+        $this->loadModel('Sales.ClientOrder');
+
+        $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule','QuotationItemDetail','QuotationDetail','Product'));
+        
+        $this->loadModel('Sales.Company');
+
+        $this->loadModel('Unit');
+
+        $this->loadModel('Sales.Address');
+
+        $companyAddress = $this->Address->find('list',array('fields' => array('address1','address1','foreign_key')));
+
+        $units = $this->Unit->find('list',array('fields' => array('id','unit')));
+
+        $this->Company->bind('Address');
+
+        $this->Delivery->bindDelivery();
+        $drData = $this->Delivery->find('first', array(
+                                            'conditions' => array('Delivery.dr_uuid' => $dr_uuid
+                                            )));
+        
+        $clientData = $this->ClientOrder->find('first', array(
+                                            'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
+                                            )));
+        
+        $companyData = $this->Company->find('first', array(
+                                            'conditions' => array('Company.id' => $clientData['ClientOrder']['company_id']
+                                            )));
+
+        $nameForm = "Delivery Receipt"; 
+
+        $this->set(compact('drData','clientData','companyData','units','nameForm', 'companyAddress'));
+    
+    }
+
+    public function delivery_transmittal_record() {
+
+        $userData = $this->Session->read('Auth');
+
+        $this->loadModel('Sales.ClientOrderDeliverySchedule');
+
+        $this->loadModel('Sales.ClientOrder');
+
+        $this->loadModel('Delivery.Transmittal');
+
+        $this->Delivery->bindDelivery();
+      
+        $transmittalData = $this->Transmittal->find('all', array(
+                                            'order' => 'Transmittal.id DESC'
+                                        ));
+
+        $this->ClientOrder->bindDelivery();
+
+        $clientOrderData = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid','id')));
+
+        $scheduleInfo = $this->ClientOrder->find('all');
+
+        $this->set(compact('transmittalData', 'scheduleInfo', 'clientOrderData'));     
+            
+    }
+
+    public function dr_record() {
+
+        $userData = $this->Session->read('Auth');
+
+        $this->loadModel('Sales.ClientOrderDeliverySchedule');
+
+        $this->loadModel('Sales.ClientOrder');
+
+        $this->loadModel('Delivery.DeliveryReceipt');
+
+        $this->loadModel('Delivery.Delivery');
+
+        $this->Delivery->bindDelivery();
+
+        $this->DeliveryReceipt->bind('Delivery');
   
-  $DRData = $this->DeliveryReceipt->find('all', array(
+        $DRData = $this->DeliveryReceipt->find('all', array(
                                         'order' => 'DeliveryReceipt.id DESC'
                                     ));
 
-  $this->ClientOrder->bindDelivery();
+        $this->ClientOrder->bindDelivery();
 
-
-  $this->set(compact('DRData'));     
+        $this->set(compact('DRData'));     
         
-}
+    }
 
-public function search_order($hint = null){
+    public function search_order($hint = null){
 
-    $this->loadModel('Sales.ClientOrder');
+        $this->loadModel('Sales.ClientOrder');
 
-    $this->loadModel('Sales.ClientOrderDeliverySchedule');
+        $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
-    $this->ClientOrder->bindDelivery();
+        $this->ClientOrder->bindDelivery();
 
-    $clientsOrder = $this->ClientOrder->find('all',array(
-                  'conditions' => array(
-                    'OR' => array(
-                      array('ClientOrder.po_number LIKE' => '%' . $hint . '%'),
-                      array('Product.name LIKE' => '%' . $hint . '%')
-                      )
-                    ),
-                  'limit' => 10
-                  )); 
+        $clientsOrder = $this->ClientOrder->find('all',array(
+                      'conditions' => array(
+                        'OR' => array(
+                          array('ClientOrder.po_number LIKE' => '%' . $hint . '%'),
+                          array('Product.name LIKE' => '%' . $hint . '%')
+                          )
+                        ),
+                      'limit' => 10
+                      )); 
 
-    $deliveryData = $this->Delivery->find('list',array('fields' => array('schedule_uuid','status')));
+        $deliveryData = $this->Delivery->find('list',array('fields' => array('schedule_uuid','status')));
 
-    $this->Delivery->bindDelivery();
-    $deliveryStatus = $this->Delivery->find('all');
+        $this->Delivery->bindDelivery();
+        $deliveryStatus = $this->Delivery->find('all');
 
-    $deliveryList = $this->Delivery->find('list',array('fields' => array('schedule_uuid', 'dr_uuid')));
+        $deliveryList = $this->Delivery->find('list',array('fields' => array('schedule_uuid', 'dr_uuid')));
 
-    $orderList = $this->DeliveryDetail->find('list',array('fields' => array('delivery_uuid', 'status')));
+        $orderList = $this->DeliveryDetail->find('list',array('fields' => array('delivery_uuid', 'status')));
 
-    $orderListHelper = $this->Delivery->find('list',array('fields' => array('clients_order_id', 'dr_uuid')));
+        $orderListHelper = $this->Delivery->find('list',array('fields' => array('clients_order_id', 'dr_uuid')));
 
-    $orderDeliveryList = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid', 'uuid')));
+        $orderDeliveryList = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid', 'uuid')));
 
-    $deliveryDetailList = $this->DeliveryDetail->find('list',array('fields' => array('delivery_uuid', 'delivered_quantity')));
+        $deliveryDetailList = $this->DeliveryDetail->find('list',array('fields' => array('delivery_uuid', 'delivered_quantity')));
 
-    $this->set(compact('clientsOrder', 'deliveryStatus', 'deliveryList', 'orderListHelper', 'orderDeliveryList', 'deliveryDetailList' , 'deliveryData'));
+        $this->set(compact('clientsOrder', 'deliveryStatus', 'deliveryList', 'orderListHelper', 'orderDeliveryList', 'deliveryDetailList' , 'deliveryData'));
 
-    if ($hint == ' ') {
-        $this->render('index');
-      }else{
-        $this->render('search_order');
-      }
+        if ($hint == ' ') {
+            $this->render('index');
+        }else{
+            $this->render('search_order');
+        }
     }
 
     public function dr($dr_uuid = null,$schedule_uuid) {
 
-    $this->loadModel('Sales.ClientOrder');
-    $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule','QuotationItemDetail','QuotationDetail','Product'));
-    
-    $this->loadModel('Sales.Company');
+        $this->loadModel('Sales.ClientOrder');
+        $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule','QuotationItemDetail','QuotationDetail','Product'));
+        
+        $this->loadModel('Sales.Company');
 
-    $this->loadModel('Delivery.DeliveryReceipt');
+        $this->loadModel('Delivery.DeliveryReceipt');
 
-    $this->loadModel('Unit');
-    $units = $this->Unit->getList();
+        $this->loadModel('Unit');
+        $units = $this->Unit->getList();
 
-    $this->Company->bind('Address');
+        $this->Company->bind('Address');
 
-  //  pr($this->request->data); exit;
+        if(!empty($this->request->data['DeliveryDetail']['quantity'])){
 
-    if(!empty($this->request->data['DeliveryDetail']['quantity'])){
+           $this->DeliveryDetail->save($this->request->data['DeliveryDetail']);
 
-       $this->DeliveryDetail->save($this->request->data['DeliveryDetail']);
+        }
 
-    }
-
-    $this->Delivery->bindDelivery();
-    $drData = $this->Delivery->find('first', array(
-                                        'conditions' => array('Delivery.dr_uuid' => $dr_uuid
-                                        )));
-    
-    $clientData = $this->ClientOrder->find('first', array(
-                                        'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
-                                        )));
-    
-    $companyData = $this->Company->find('first', array(
-                                        'conditions' => array('Company.id' => $clientData['ClientOrder']['company_id']
-                                        )));
+        $this->Delivery->bindDelivery();
+        $drData = $this->Delivery->find('first', array(
+                                            'conditions' => array('Delivery.dr_uuid' => $dr_uuid
+                                            )));
+        
+        $clientData = $this->ClientOrder->find('first', array(
+                                            'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
+                                            )));
+        
+        $companyData = $this->Company->find('first', array(
+                                            'conditions' => array('Company.id' => $clientData['ClientOrder']['company_id']
+                                            )));
 
 
-    $userData = $this->Session->read('Auth');
+        $userData = $this->Session->read('Auth');
 
-    $this->Delivery->bindDelivery();
-    $drDataHolder = $this->Delivery->find('first', array(
-                                        'conditions' => array('Delivery.dr_uuid' => $dr_uuid
-                                        )));
+        $this->Delivery->bindDelivery();
+        $drDataHolder = $this->Delivery->find('first', array(
+                                            'conditions' => array('Delivery.dr_uuid' => $dr_uuid
+                                            )));
 
-    $this->loadModel('User');
+        $this->loadModel('User');
 
-    $this->loadModel('Delivery.DeliveryReceipt');
-
-    $this->Delivery->bindDelivery();
-
-    $this->DeliveryReceipt->bind('Delivery');
-  
-    $DRRePrint = $this->DeliveryReceipt->find('all', array(
-                                        'conditions' => array('DeliveryReceipt.dr_uuid' => $drData['Delivery']['dr_uuid'])
-                                     ));
-
-    $this->request->data['DeliveryReceipt']['printed_by'] = $userData['User']['id'];
-
-    $this->request->data['DeliveryReceipt']['dr_uuid'] = $drData['Delivery']['dr_uuid'];
-
-    $this->request->data['DeliveryReceipt']['schedule'] = $drData['DeliveryDetail']['schedule'];
-
-    $this->request->data['DeliveryReceipt']['quantity'] = $drData['DeliveryDetail']['quantity'];
-
-    $this->request->data['DeliveryReceipt']['approved_by'] = $drData['DeliveryDetail']['created_by'];
-
-    $this->request->data['DeliveryReceipt']['printed'] = date("y-m-d");
-
-   //pr($DRRePrint[0]['DeliveryReceipt']['printed']); exit;
-
-    if ($this->request->is(array('post', 'put'))) {
-
-       // pr('pst'); exit;
-
-        $this->request->data['DeliveryReceipt']['remarks'] = $this->request->data['DeliveryDetail']['remarks'];
-
-        $this->request->data['DeliveryReceipt']['location'] = $this->request->data['DeliveryDetail']['location'];
-
-        $this->request->data['DeliveryReceipt']['type'] = 'replacing';       
-                  
-    }else{  
-
-     // pr('sda'); exit; 
-
-       $this->request->data['DeliveryReceipt']['location'] = $drData['DeliveryDetail']['location'];
-
-       $this->request->data['DeliveryReceipt']['remarks'] = $drData['DeliveryDetail']['remarks'];
-
- }  
-
-    $prepared = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
-                                                            'conditions' => array('User.id' => $drDataHolder['DeliveryDetail']['modified_by'])
-                                                            ));
+        $prepared = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
+                                                                'conditions' => array('User.id' => $drDataHolder['DeliveryDetail']['modified_by'])
+                                                                ));
 
 
-    $approved = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
-                                                            'conditions' => array('User.id' => $drDataHolder['DeliveryDetail']['created_by'])
-                                                            ));  
-  //  pr($this->request->data); exit;
+        $approved = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
+                                                                'conditions' => array('User.id' => $drDataHolder['DeliveryDetail']['created_by'])
+                                                                ));  
 
-    if(empty($DRRePrint[0]['DeliveryReceipt']['dr_uuid'])){
+        $this->loadModel('Delivery.DeliveryReceipt');
 
-      $this->DeliveryReceipt->save($this->request->data);   
+        $this->Delivery->bindDelivery();
+
+        $this->DeliveryReceipt->bind('Delivery');
       
-     } 
+        $DRRePrint = $this->DeliveryReceipt->find('all', array(
+                                            'conditions' => array('DeliveryReceipt.dr_uuid' => $drData['Delivery']['dr_uuid'])
+                                         ));
+
+        $this->request->data['DeliveryReceipt']['printed_by'] = $userData['User']['id'];
+
+        $this->request->data['DeliveryReceipt']['dr_uuid'] = $drData['Delivery']['dr_uuid'];
+
+        $this->request->data['DeliveryReceipt']['schedule'] = $drData['DeliveryDetail']['schedule'];
+
+        $this->request->data['DeliveryReceipt']['quantity'] = $drData['DeliveryDetail']['quantity'];
+
+        $this->request->data['DeliveryReceipt']['approved_by'] = $drData['DeliveryDetail']['created_by'];
+
+        $this->request->data['DeliveryReceipt']['printed'] = date("y-m-d");
+
+        if ($this->request->is(array('post', 'put'))) {
+
+            $this->request->data['DeliveryReceipt']['remarks'] = $this->request->data['DeliveryDetail']['remarks'];
+
+            $this->request->data['DeliveryReceipt']['location'] = $this->request->data['DeliveryDetail']['location'];
+
+            $this->request->data['DeliveryReceipt']['type'] = 'replacing';       
+                  
+        }else{  
+
+        $this->request->data['DeliveryReceipt']['location'] = $drData['DeliveryDetail']['location'];
+
+        $this->request->data['DeliveryReceipt']['remarks'] = $drData['DeliveryDetail']['remarks'];
+
+        }  
+ 
+        $this->DeliveryReceipt->save($this->request->data);           
                           
-    $this->set(compact('drData','clientData','companyData','units','approved','prepared', 'DRRePrint'));
+        $this->set(compact('drData','clientData','companyData','units','approved','prepared', 'DRRePrint'));
 
     }
 
     public function tr($dr_uuid = null,$schedule_uuid) {
 
-    $this->loadModel('Delivery.Transmittal');
+        $this->loadModel('Delivery.Transmittal');
 
-    $this->loadModel('Sales.ClientOrder');
-
-    $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule','QuotationItemDetail','QuotationDetail','Product'));
+        $this->loadModel('Sales.ClientOrder');
+        $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule','QuotationItemDetail','QuotationDetail','Product'));
     
-    $this->loadModel('Sales.Company');
+        $this->loadModel('Sales.Company');
 
-    $this->loadModel('Unit');
-    $units = $this->Unit->getList();
+        $this->loadModel('Unit');
+        $units = $this->Unit->getList();
 
-    $this->Company->bind('Address');
+        $this->Company->bind('Address');
 
-    $TRdata = $this->Transmittal->find('first', array(
-                    'conditions' => array(
-                      'Transmittal.dr_uuid' => $dr_uuid
-                    )));
+        if(!empty($this->request->data['DeliveryDetail']['quantity'])){
 
-    $TRRePrint = $this->Transmittal->find('all', array(
-                                        'conditions' => array('Transmittal.dr_uuid' => $TRdata['Transmittal']['dr_uuid'])
-                                     ));
+            $this->DeliveryDetail->save($this->request->data['DeliveryDetail']);
 
-    //pr($TRRePrint); exit;
+        }
 
-    if(!empty($this->request->data['DeliveryDetail']['quantity'])){
+        $contactPerson = $this->request->data['Transmittal']['contact_person'];
 
-       $this->DeliveryDetail->save($this->request->data['DeliveryDetail']);
+        $quantityTransmittal = $this->request->data['Transmittal']['quantity'];
 
-    }
+        $remarks = $this->request->data['Transmittal']['remarks'];
 
-    if(!empty($this->request->data)){
-
-      $contactPerson = $this->request->data['Transmittal']['contact_person'];
-
-      $quantityTransmittal = $this->request->data['Transmittal']['quantity'];
-
-      $remarks = $this->request->data['Transmittal']['remarks'];
-
-    }else{
-
-      $contactPerson = $TRdata['Transmittal']['contact_person'];
-
-      $quantityTransmittal = $TRdata['Transmittal']['quantity'];
-
-      $remarks = $TRdata['Transmittal']['remarks'];
-
-    }
-
-    $this->Delivery->bindDelivery();
-    $drData = $this->Delivery->find('first', array(
+        $this->Delivery->bindDelivery();
+        $drData = $this->Delivery->find('first', array(
                                         'conditions' => array('Delivery.dr_uuid' => $dr_uuid
                                         )));
 
+        $TRdata = $this->Transmittal->find('first', array(
+                    'conditions' => array(
+                      'Transmittal.tr_uuid' => $this->request->data['Transmittal']['tr_uuid']
+                    )));
+         
+        if (!empty($TRdata)) {
+
+            $this->Session->setFlash(__('The Delivery Receipt No. already exists'), 'error');
     
+            $this->redirect( array(
+                 'controller' => 'deliveries',   
+                 'action' => 'delivery_transmittal',$drData['Delivery']['dr_uuid'],$drData['Delivery']['schedule_uuid']
+            ));  
+        }
 
-    //pr($TRdata); exit;
-             
-
-    // if (!empty($TRdata)) {
-
-    // $this->Session->setFlash(__('The Delivery Receipt No. already exists'), 'error');
-    
-    // $this->redirect( array(
-    //              'controller' => 'deliveries',   
-    //              'action' => 'delivery_transmittal',$drData['Delivery']['dr_uuid'],$drData['Delivery']['schedule_uuid']
-    //         ));  
-    // }
- 
-    $clientData = $this->ClientOrder->find('first', array(
+        $clientData = $this->ClientOrder->find('first', array(
                                         'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
                                         )));
-    
-    $companyData = $this->Company->find('first', array(
+
+        $companyData = $this->Company->find('first', array(
                                         'conditions' => array('Company.id' => $clientData['ClientOrder']['company_id']
                                         )));
 
+        $userData = $this->Session->read('Auth');
 
-    $userData = $this->Session->read('Auth');
-
-    $this->Delivery->bindDelivery();
-    $drDataHolder = $this->Delivery->find('first', array(
+        $this->Delivery->bindDelivery();
+        $drDataHolder = $this->Delivery->find('first', array(
                                         'conditions' => array('Delivery.dr_uuid' => $dr_uuid
                                         )));
 
-    $this->loadModel('User');
+        $this->loadModel('User');
 
-    $prepared = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
+        $prepared = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
                                                             'conditions' => array('User.id' => $drDataHolder['DeliveryDetail']['modified_by'])
                                                             ));
 
-
-    $approved = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
+        $approved = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
                                                             'conditions' => array('User.id' => $drDataHolder['DeliveryDetail']['created_by'])
                                                             ));
 
-    $this->set(compact('drData','clientData','companyData','units','approved','prepared', 'contactPerson', 'quantityTransmittal', 'remarks', 'TRRePrint'));
+        $this->set(compact('drData','clientData','companyData','units','approved','prepared', 'contactPerson', 'quantityTransmittal', 'remarks'));
 
-    if ($this->request->is(array('post', 'put'))) {
+        if ($this->request->is(array('post', 'put'))) {
 
-                 $this->request->data['Transmittal']['created_by'] = $userData['User']['id'];
+            $this->request->data['Transmittal']['created_by'] = $userData['User']['id'];
 
-                 $this->request->data['Transmittal']['type'] = 'replacing';
-
-                 $this->Transmittal->save($this->request->data);               
+            $this->Transmittal->save($this->request->data);           
                           
-    }   
-    // $this->render('delivery_replacing'); 
-  }
-}
+        }     
+    }
 
+    public function add_gatepass(){
+       
+        $userData = $this->Session->read('Auth');
+      
+        $this->loadModel('GatePass');
+        $this->loadMdoel('GatePassAssistant');
+
+        if (!empty($this->request->data)) {
+            
+            $this->id = $this->GatePass->saveGatepass($this->request->data,$userData['User']['id']);
+
+            $this->GatePassAssistant->saveGatePassAssistant($this->request->data,$this->id,$userData['User']['id']);
+
+            $this->Session->setFlash(__('The Gate Pass successfully added.'), 'success');
+    
+            $this->redirect( array(
+                 'controller' => 'deliveries',   
+                 'action' => 'view',$this->request->data['Direct']['one'],$this->request->data['Direct']['two'],$this->request->data['Direct']['three']
+            ));
+        }
+    }
+
+}
