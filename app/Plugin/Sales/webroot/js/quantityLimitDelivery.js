@@ -148,10 +148,10 @@ $( document ).ready(function() {
 		}
 		
 	});
-
+	var quantityValue = 0;
 	$("body").on('blur','.quantity', function(e){
 
-    var quantityValue = $(this).parents('.modal-body').find('.MaximumQuantity').val();
+     quantityValue = $(this).parents('.modal-body').find('.MaximumQuantity').val();
 
     var Value = $(this).parents('.modal-body').find('.quantity').val();
 
