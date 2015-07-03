@@ -389,117 +389,147 @@ $totalremaining = 0;
                                         <a data-toggle="modal" href="#myGatePass<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" class="table-link "><i class="fa fa-lg "></i><span class="fa-stack gatePass">
                                         <i class="fa fa-square fa-stack-2x"></i>
                                         <i class="fa fa-truck fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> GatePass </font></span></a>
+
+                                        <div class="modal fade" id="myGatePass<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" role="dialog" >
+                                            <div class="modal-dialog">
+                                                <div class="modal-content margintop">
+
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                        <h4 class="modal-title">Delivery Gate Pass</h4>
+                                                    </div> 
+
+                                                    <?php
+                                                        echo $this->Form->create('GatePass',array('url'=>(array('controller' => 'deliveries','action' => 'add_gatepass'))));
+                                                    ?>
+                                                        <div class="modal-body">
+                                                           
+                                                            <div class="form-group">
+                                                                <label class="col-lg-3 control-label"><span style="color:red">*</span>DR No.</label>
+                                                                <div class="col-lg-8">
+                                                                    <?php 
+
+                                                                        echo $this->Form->input('Direct.one', array('class' => 'form-control item_type',
+                                                                            'type' => 'hidden',
+                                                                            'label' => false,
+                                                                            'value' => $deliveryScheduleId));
+
+                                                                        echo $this->Form->input('Direct.two', array('class' => 'form-control item_type',
+                                                                            'type' => 'hidden',
+                                                                            'label' => false,
+                                                                            'value' => $quotationId));
+
+                                                                        echo $this->Form->input('Direct.three', array('class' => 'form-control item_type',
+                                                                            'type' => 'hidden',
+                                                                            'label' => false,
+                                                                            'value' => $clientsOrderUuid));
+
+                                                                        echo $this->Form->input('GatePass.foreign_key', array('class' => 'form-control item_type',
+                                                                            'type' => 'hidden',
+                                                                            'label' => false,
+                                                                            'value' => $deliveryDataList['Delivery']['id']));
+                                                                        echo $this->Form->input('GatePass.model', array('class' => 'form-control item_type',
+                                                                            'type' => 'hidden',
+                                                                            'label' => false,
+                                                                            'value' => 'Delivery'));
+                                                                        echo $this->Form->input('GatePass.dr_no', array('class' => 'form-control item_type required',
+                                                                            'readonly' => true,
+                                                                            'label' => false,
+                                                                            'value' => $deliveryDataList['Delivery']['dr_uuid']));
+                                                                    ?>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="modal-body">
+                                                            
+                                                            <div class="form-group">
+                                                                <label class="col-lg-3 control-label"><span style="color:red">*</span>Truck No.</label>
+                                                                <div class="col-lg-8">
+                                                                    <?php 
+                                                                        echo $this->Form->input('GatePass.truck_id', array(
+                                                                            'options' => array($truckList),
+                                                                            'type' => 'select',
+                                                                            'label' => false,
+                                                                            'class' => 'form-control required ',
+                                                                            'empty' => '---Select Item Truck---',
+                                                                            'required' => 'required'
+                                                                            )); 
+                                                                    ?>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="modal-body">
+                                                           
+                                                            <div class="form-group">
+                                                                <label class="col-lg-3 control-label"><span style="color:red">*</span>Driver Name</label>
+                                                                <div class="col-lg-8">
+                                                                    <?php 
+                                                                        echo $this->Form->input('GatePass.driver_id', array(
+                                                                                'options' => array($driverList),
+                                                                                'type' => 'select',
+                                                                                'label' => false,
+                                                                                'class' => 'form-control required ',
+                                                                                'empty' => '---Select Driver---',
+                                                                                'required' => 'required'
+                                                                                ));
+                                                                    ?>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <section class="appendHelper">
+                                                            <div class="modal-body">
+                                                                <div class="form-group">
+                                                                    <label class="col-lg-3 control-label"><span style="color:red">*</span>Helper Name</label>
+                                                                    <div class="col-lg-7">
+                                                                        <?php 
+                                                                            echo $this->Form->input('GatePassAssistant.0.helper_id', array(
+                                                                                'options' => array($helperList),
+                                                                                'type' => 'select',
+                                                                                'label' => false,
+                                                                                'class' => 'form-control required ',
+                                                                                'empty' => '---Select Helper---',
+                                                                                'required' => 'required'
+                                                                                )); 
+                                                                        ?>
+                                                                    </div>
+                                                                    <div class="col-lg-1 plusbtn">
+                                                                        <button type="button" class="add-gatepass danger btn btn-success "> <i class="fa fa-plus"></i></button>
+                                                                        <!-- <button type="button" class="remove-field btn btn-danger remove" onclick="removeClone('addressSection')"><i class="fa fa-minus"></i> </button> -->
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+
+                                                        <div class="modal-body">
+                                                            <div class="form-group">
+                                                                <label class="col-lg-3 control-label"><span style="color:red">*</span>Remarks</label>
+                                                                <div class="col-lg-8">
+                                                                    <?php 
+                                                                        echo $this->Form->input('GatePass.remarks', array(
+                                                                            'type' => 'textarea',
+                                                                            'class' => 'form-control item_type',
+                                                                            'label' => false));
+                                                                    ?>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                        <br>
+                                                        <div class="modal-footer">
+                                                             <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i> Submit</button>
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            
+                                                        </div>
+                                                    <?php echo $this->Form->end(); ?>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>
-
-                            <div class="modal fade" id="myGatePass<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" role="dialog" >
-                                <div class="modal-dialog">
-                                    <div class="modal-content margintop">
-
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                            <h4 class="modal-title">Delivery Gate Pass</h4>
-                                        </div> 
-
-                                        <?php
-                                            echo $this->Form->create('GatePass',array('url'=>(array('controller' => 'deliveries','action' => 'add_gatepass'))));
-                                        ?>
-
-                                            <div class="modal-body">
-                                                <?php //echo $deliveryDataList['DeliveryDetail']['id'] ?>
-                                                <div class="form-group">
-                                                    <label class="col-lg-3 control-label"><span style="color:red">*</span>DR No.</label>
-                                                    <div class="col-lg-8">
-                                                        <?php 
-                                                            echo $this->Form->input('GatePass.foreign_key', array('class' => 'form-control item_type',
-                                                                'type' => 'hidden',
-                                                                'label' => false,
-                                                                'value' => $deliveryDataList['Delivery']['id']));
-                                                            echo $this->Form->input('GatePass.dr_no', array('class' => 'form-control item_type required',
-                                                                'readonly' => true,
-                                                                'label' => false,
-                                                                'value' => $deliveryDataList['Delivery']['dr_uuid']));
-                                                        ?>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="modal-body">
-                                                <?php //echo $deliveryDataList['DeliveryDetail']['id'] ?>
-                                                <div class="form-group">
-                                                    <label class="col-lg-3 control-label"><span style="color:red">*</span>Truck No.</label>
-                                                    <div class="col-lg-8">
-                                                        <?php 
-                                                        // echo $this->Form->input('GatePass.foreign_key', array(
-                                                        //     'options' => array($truckData),
-                                                        //     'type' => 'select',
-                                                        //     'label' => false,
-                                                        //     'class' => 'form-control required categorylist',
-                                                        //     'empty' => '---Select Item Category---',
-                                                        //     'required' => 'required'
-                                                        //     )); 
-                                                        ?>
-                                                        <?php 
-                                                            echo $this->Form->input('GatePass.truck_no', array('class' => 'form-control item_type required',
-                                                                'label' => false));
-                                                        ?>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="modal-body">
-                                                <?php //echo $deliveryDataList['DeliveryDetail']['id'] ?>
-                                                <div class="form-group">
-                                                    <label class="col-lg-3 control-label"><span style="color:red">*</span>Driver Name</label>
-                                                    <div class="col-lg-8">
-                                                        <?php 
-                                                            echo $this->Form->input('GatePass.driver_name', array('class' => 'form-control item_type required',
-                                                                'label' => false));
-                                                        ?>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <section class="appendHelper">
-                                                <div class="modal-body">
-                                                    <div class="form-group">
-                                                        <label class="col-lg-3 control-label"><span style="color:red">*</span>Helper Name</label>
-                                                        <div class="col-lg-7">
-                                                            <input type="text" class="form-control item_type required" name="data[GatePass][][name]" />
-                                                        </div>
-                                                        <div class="col-lg-1 plusbtn">
-                                                            <button type="button" class="add-gatepass danger btn btn-success "> <i class="fa fa-plus"></i></button>
-                                                            <!-- <button type="button" class="remove-field btn btn-danger remove" onclick="removeClone('addressSection')"><i class="fa fa-minus"></i> </button> -->
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </section>
-
-                                            <div class="modal-body">
-                                                <div class="form-group">
-                                                    <label class="col-lg-3 control-label"><span style="color:red">*</span>Remarks</label>
-                                                    <div class="col-lg-8">
-                                                        <?php 
-                                                            echo $this->Form->input('GatePass.remarks', array(
-                                                                'type' => 'textarea',
-                                                                'class' => 'form-control item_type',
-                                                                'label' => false));
-                                                        ?>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                            <br>
-                                            <div class="modal-footer">
-                                                 <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i> Submit</button>
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                
-                                            </div>
-                                        <?php echo $this->Form->end(); ?>
-                                    </div>
-                                </div>
-                            </div>
 
                             <div class="modal fade" id="myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" role="dialog" >
                                 <div class="modal-dialog">
