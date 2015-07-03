@@ -497,9 +497,10 @@ class SalesInvoiceController extends AccountingAppController {
         }
 
         $deliveryDetails = $this->DeliveryDetail->find('all',array(
-            'conditions' => array('delivery_uuid' => $invoiceList)
+            'conditions' => array('delivery_uuid' => $invoiceList),
+            'order' => 'DeliveryDetail.id DESC'
             ));
-
+        
         foreach ($deliveryDetails as $key => $value) {
             
             $invoiceData[$key]['SalesInvoice']['quantity'] = $value['DeliveryDetail']['quantity'];
@@ -526,7 +527,7 @@ class SalesInvoiceController extends AccountingAppController {
 
 
         }
-
+      
         $this->set(compact('invoiceData','companyData','paymentTermData'));
 
     }
