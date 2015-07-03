@@ -154,18 +154,6 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->loadModel('Delivery.DeliveryReceipt');
 
-        $this->loadModel('Truck');
-
-        $this->loadModel('Assistant');
-
-        $this->loadModel('Driver');
-
-        $truckList = $this->Truck->find('list',array('fields' => array('id', 'truck_no'),'order' => 'truck_no ASC'));
-
-        $helperList = $this->Assistant->find('list',array('fields' => array('id', 'full_name'),'order' => 'full_name ASC'));
-
-        $driverList = $this->Driver->find('list',array('fields' => array('id', 'full_name'),'order' => 'full_name ASC'));
-
         $this->ClientOrder->bindDelivery();
         $scheduleInfo = $this->ClientOrder->find('first', array(
                                          'conditions' => array(
@@ -827,9 +815,9 @@ class DeliveriesController extends DeliveryAppController {
     public function add_gatepass(){
        
         $userData = $this->Session->read('Auth');
-      
+        
         $this->loadModel('GatePass');
-        $this->loadMdoel('GatePassAssistant');
+        $this->loadModel('GatePassAssistant');
 
         if (!empty($this->request->data)) {
             
@@ -844,6 +832,23 @@ class DeliveriesController extends DeliveryAppController {
                  'action' => 'view',$this->request->data['Direct']['one'],$this->request->data['Direct']['two'],$this->request->data['Direct']['three']
             ));
         }
+    }
+
+     public function gate_pass($deliveryScheduleId = null, $quotationId = null,$clientsOrderUuid = null,$drId = null,$druuid = null){
+
+        $this->loadModel('Truck');
+
+        $this->loadModel('Assistant');
+
+        $this->loadModel('Driver');
+
+        $truckList = $this->Truck->find('list',array('fields' => array('id', 'truck_no'),'order' => 'truck_no ASC'));
+
+        $helperList = $this->Assistant->find('list',array('fields' => array('id', 'full_name'),'order' => 'full_name ASC'));
+
+        $driverList = $this->Driver->find('list',array('fields' => array('id', 'full_name'),'order' => 'full_name ASC'));
+
+       $this->set(compact('truckList','helperList','driverList','deliveryScheduleId','quotationId','clientsOrderUuid','drId','druuid'));
     }
 
 }
