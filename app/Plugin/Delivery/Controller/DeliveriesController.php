@@ -693,9 +693,11 @@ public function search_order($hint = null){
 
        // pr('pst'); exit;
 
-         $this->request->data['DeliveryReceipt']['remarks'] = $this->request->data['DeliveryDetail']['remarks'];
+        $this->request->data['DeliveryReceipt']['remarks'] = $this->request->data['DeliveryDetail']['remarks'];
 
-         $this->request->data['DeliveryReceipt']['location'] = $this->request->data['DeliveryDetail']['location'];       
+        $this->request->data['DeliveryReceipt']['location'] = $this->request->data['DeliveryDetail']['location'];
+
+        $this->request->data['DeliveryReceipt']['type'] = 'replacing';       
                   
     }else{  
 
