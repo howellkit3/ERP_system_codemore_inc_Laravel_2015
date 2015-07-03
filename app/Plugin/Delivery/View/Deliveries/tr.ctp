@@ -15,11 +15,20 @@
         $preparedLName = ucwords($prepared['User']['last_name'])  ;
         $approvedFName = ucwords($approved['User']['first_name'])  ;
         $approvedLName = ucwords($approved['User']['last_name'])  ;
+        $toBePrinted = date("M/d/Y");
+
+      if(!empty($TRRePrint[0]['Transmittal']['created'])){   
+
+       $printedDate = date("M/d/Y", strtotime($TRRePrint[0]['Transmittal']['created'])); 
+
+        $toBePrinted =  $printedDate;
+                
+      }
 
         $objTpl->setActiveSheetIndex(0)
                     
                     
-                    ->setCellValue('J'.'5', (new \DateTime())->format('m/d/Y'))
+                    ->setCellValue('J'.'5', $toBePrinted)
                     ->setCellValue('C'.'6', $contactPerson)
                     ->setCellValue('I'.'8', $units[$clientData['QuotationItemDetail']['quantity_unit_id']])
                     ->setCellValue('B'.'8', ucfirst($clientData['Product']['name']))

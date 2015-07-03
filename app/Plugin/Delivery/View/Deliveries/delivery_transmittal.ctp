@@ -150,7 +150,7 @@
                       <div class="form-group">
                         <div class="col-lg-2"></div>
                           <div class="col-lg-8">
-                            <button type="submit" class="btn btn-primary pull-left">Print</button>&nbsp;
+                            <button type="submit" class="btn btn-primary pull-left refresh">Print</button>&nbsp;
                           <?php 
                           echo $this->Html->link('Cancel', array('controller' => 'deliveries', 'action' => 'delivery_replacing'),array('class' =>'btn btn-default','escape' => false));
                           ?>
@@ -176,4 +176,28 @@
  }
 
  </style>
+
+<script>
+
+var backLocation = document.referrer;
+
+if (backLocation) {
+
+  if (backLocation.indexOf("?") > -1) {
+      backLocation += "&randomParam=" + new Date().getTime();
+  } else {
+      backLocation += "?randomParam=" + new Date().getTime();
+  }
+       
+  $('.refresh').on("click",function(){ 
+
+    setTimeout(function (){
+      window.location.assign(backLocation);
+    }, 2000);
+   
+  });
+}
+
+</script>
+
 

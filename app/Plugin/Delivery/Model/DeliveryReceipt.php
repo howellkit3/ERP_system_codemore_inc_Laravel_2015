@@ -11,18 +11,18 @@ class DeliveryReceipt extends AppModel {
     
     public $name = 'DeliveryReceipt';
 
-    public $validate = array(
+ //    public $validate = array(
 
-		'dr_uuid' => array(
+	// 	'dr_uuid' => array(
 			
-			'unique' => array(
-				'rule'    => 'isUnique',
-				'message' => 'Delivery receipt should be unique.'
-			),
+	// 		'unique' => array(
+	// 			'rule'    => 'isUnique',
+	// 			'message' => 'Delivery receipt should be unique.'
+	// 		),
 
-		)
+	// 	)
 		
-	);
+	// );
 
 	public function bind($model = array('Group')){
 

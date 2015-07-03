@@ -838,6 +838,8 @@ class DeliveriesController extends DeliveryAppController {
             $this->GatePassAssistant->saveGatePassAssistant($this->request->data,$this->id,$userData['User']['id']);
 
             $this->Session->setFlash(__('The Gate Pass successfully added.'), 'success');
+
+            
     
             $this->redirect( array(
                  'controller' => 'deliveries',   
