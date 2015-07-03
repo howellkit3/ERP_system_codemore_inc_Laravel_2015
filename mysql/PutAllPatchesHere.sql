@@ -379,3 +379,9 @@ CREATE TABLE `trucks` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 insert  into `trucks`(`id`,`truck_no`,`created_by`,`modified_by`,`created`,`modified`) values (1,'nqx 893',1,1,'2015-07-03 11:22:55','2015-07-02 09:52:01'),(2,'VDL 679',1,1,'2015-07-03 11:22:55','2015-07-02 09:52:01'),(3,'ZLL 773',1,1,'2015-07-03 11:22:56','2015-07-02 09:52:01'),(4,'RJN 204',1,1,'2015-07-03 11:22:57','2015-07-02 09:52:01'),(5,'POT 216',1,1,'2015-07-03 11:22:57','2015-07-02 09:52:01'),(6,'XPB 842',1,1,'2015-07-03 11:22:58','2015-07-02 09:52:01'),(7,'NOO 901',1,1,'2015-07-03 11:22:58','2015-07-02 09:52:01'),(8,'AAA 9592',1,1,'2015-07-03 11:22:59','2015-07-02 09:52:01');
+
+
+#NOTE: SELECT KOUFU ACCOUNTING DATABASE ----
+/** howell kit added this 07/03/2015  */
+
+ALTER TABLE `koufu_delivery`.`transmittals` ADD COLUMN `type` VARCHAR(60) NULL AFTER `quantity`;
