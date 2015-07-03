@@ -486,6 +486,18 @@
 			                                            								'options' => array('With charge' => 'With charge' , 'Without charge' => 'Without charge'),
 			                                            								'class' => 'form-control item_type editable',
 									                                                    'label' => false,
+									                                                    'type' => 'hidden',
+									                                                   	'readonly' => 'readonly',
+									                                                    'value' => $schedule['allowance']));
+			                                        ?>
+
+			                                        <?php 
+			                                            echo $this->Form->input('ClientOrderDeliverySchedule.allowance', array(
+			                                            								'empty' => '---Select Allowance---',
+			                                            								'options' => array('With charge' => 'With charge' , 'Without charge' => 'Without charge'),
+			                                            								'class' => 'form-control item_type editable',
+									                                                    'label' => false,
+									                                                    'disabled' => 'disabled',
 									                                                   	'readonly' => 'readonly',
 									                                                    'value' => $schedule['allowance']));
 			                                        ?>

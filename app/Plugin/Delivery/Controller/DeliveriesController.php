@@ -348,7 +348,7 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->loadModel('Sales.ClientOrder');
 
-        $this->Delivery->bindDelivery();
+        $this->Delivery->bindDeliveryTrans();
       
         $deliveryEdit = $this->Delivery->find('all', array(
                                              'conditions' => array(
