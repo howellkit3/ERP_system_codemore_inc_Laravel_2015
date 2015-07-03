@@ -350,7 +350,8 @@ body.dragging, body.dragging * {
 }
 .not-active {
         pointer-events: none;
-        background-color: #5bc0de;
+        /*background-color: #5bc0de;*/
+        background-color: transparent;
         border-color: none;
         cursor: not-allowed;
         opacity: 0.65;
@@ -359,6 +360,11 @@ body.dragging, body.dragging * {
 }
 .fa-stack {
         width: 1.75em;
+}
+
+.transparent {
+
+  background-color: transparent;
 }
 
 /*z index*/

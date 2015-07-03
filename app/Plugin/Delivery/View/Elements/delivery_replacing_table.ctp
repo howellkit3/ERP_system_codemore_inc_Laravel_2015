@@ -73,18 +73,30 @@ $totalremaining = 0;
                         </td>
 
                         <td>
-
                               <?php
+
+                              if(!empty($deliveryDataList['DeliveryReceipt']['type'])){
+
                                 echo $this->Html->link('<span class="fa-stack">
                                     <i class="fa fa-square fa-stack-2x"></i>
                                     <i class="fa  fa-ticket fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px">  D.R.</font></span>
-                                    </span> ', array('controller' => 'deliveries', 'action' => 'delivery_receipt',$deliveryDataList['Delivery']['dr_uuid'],$deliveryDataList['Delivery']['schedule_uuid']),array('class' =>' table-link','escape' => false,'title'=>'Print Delivery Receipt'));
+                                    </span> ', array('controller' => 'deliveries', 'action' => 'delivery_receipt',$deliveryDataList['Delivery']['dr_uuid'],$deliveryDataList['Delivery']['schedule_uuid']),array('class' =>' table-link ','escape' => false,'title'=>'Print Delivery Receipt'));
+                              }else{
+
+                                echo $this->Html->link('<span class="fa-stack">
+                                    <i class="fa fa-square fa-stack-2x"></i>
+                                    <i class="fa  fa-ticket fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px">  D.R.</font></span>
+                                    </span> ', array('controller' => 'deliveries', 'action' => 'delivery_receipt',$deliveryDataList['Delivery']['dr_uuid'],$deliveryDataList['Delivery']['schedule_uuid']),array('class' =>' table-link not-active','escape' => false,'title'=>'Print Delivery Receipt'));
+
+
+                              }
+
                               ?>
 
                               <?php
                                 echo $this->Html->link('<span class="fa-stack">
                                     <i class="fa fa-square fa-stack-2x"></i>
-                                    <i class="fa  fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px">  T.R.</font></span>
+                                    <i class="fa  fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> T.F.</font></span>
                                     </span> ', array('controller' => 'deliveries', 'action' => 'delivery_transmittal',$deliveryDataList['Delivery']['dr_uuid'],$deliveryDataList['Delivery']['schedule_uuid']),array('class' =>' table-link','escape' => false,'title'=>'Print Transmittal Receipt'));
                               ?>
                       
