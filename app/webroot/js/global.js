@@ -72,7 +72,9 @@ function cloneDataSchedule(whatSection, thisElement)
 {      
 
     var parentSection = $(thisElement).parents('.' + whatSection);
+
     var data = $(parentSection).first().clone().addClass('OnceRemove');
+   
     data.find('.remove').show();
     data = fieldResetSchedule(data, whatSection);
     $('.' + whatSection).last().after(data);
