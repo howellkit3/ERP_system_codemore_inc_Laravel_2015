@@ -314,3 +314,8 @@ ALTER TABLE `delivery_receipts`
 CHANGE COLUMN `print` `printed` TIMESTAMP NULL DEFAULT NULL;
 
 ALTER TABLE `koufu_delivery`.`delivery_receipts` ADD COLUMN `type` VARCHAR(60) NULL AFTER `location`;
+
+
+#NOTE: SELECT KOUFU DELIVERY DATABASE ----
+/** howell kit added this 07/03/2015  */
+ALTER TABLE `koufu_delivery`.`transmittals` ADD COLUMN `type` VARCHAR(60) NULL AFTER `quantity`;

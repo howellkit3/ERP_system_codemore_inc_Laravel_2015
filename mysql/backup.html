@@ -709,11 +709,9 @@ public function search_order($hint = null){
                                                             ));  
   //  pr($this->request->data); exit;
 
-    if(empty($DRRePrint[0]['DeliveryReceipt']['dr_uuid'])){
+    pr($DRRePrint); exit;
 
-      $this->DeliveryReceipt->save($this->request->data);   
-      
-     } 
+    $this->DeliveryReceipt->save($this->request->data);           
                           
     $this->set(compact('drData','clientData','companyData','units','approved','prepared', 'DRRePrint'));
 

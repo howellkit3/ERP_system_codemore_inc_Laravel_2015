@@ -40,6 +40,7 @@
               <th class=""><a href="#"><span>Quantity</span></a></th>
               <th class=""><a href="#"><span>Receiver</span></a></th>
               <th class=""><a href="#"><span>Remarks</span></a></th>
+              <th class=""><a href="#"><span>Action</span></a></th>
             </tr>
             </thead>
 
