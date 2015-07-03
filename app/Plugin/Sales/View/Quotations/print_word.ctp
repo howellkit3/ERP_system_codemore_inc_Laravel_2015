@@ -81,7 +81,7 @@
 					<div class="form-group">
 							<div class="col-lg-1"></div>
 							<div class="col-lg-2">
-								Qty<br><br>
+								Quantity<br><br>
 								Unit Price<br><br>
 								Vat Price<br><br>
 								Material

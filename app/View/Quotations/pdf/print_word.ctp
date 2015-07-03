@@ -101,7 +101,7 @@
 				
 				<tr>
 					<td width ="123px" height ="15px" valign ="top" class ="column3 col-md-8"> 
-						<div class="col-lg-12">QTY 
+						<div class="col-lg-12">Quantity
 						</div>
 					</td>
 					<td style="width:20px;">:</td>

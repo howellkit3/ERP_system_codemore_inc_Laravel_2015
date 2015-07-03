@@ -76,6 +76,26 @@ class Delivery extends AppModel {
 					'conditions' => 'Delivery.dr_uuid = DeliveryReceipt.dr_uuid'
 				),	
 
+			)
+		));
+		$this->recursive = 1;
+		//$this->contain($giveMeTheTableRelationship);
+	}
+
+	public function bindDeliveryTrans() {
+		$this->bindModel(array(
+			'hasOne' => array(
+				'DeliveryDetail' => array(
+					'className' => 'Delivery.DeliveryDetail',
+					'foreignKey' => false,
+					'conditions' => 'Delivery.dr_uuid = DeliveryDetail.delivery_uuid'
+				),		
+				'DeliveryReceipt' => array(
+					'className' => 'Delivery.DeliveryReceipt',
+					'foreignKey' => false,
+					'conditions' => 'Delivery.dr_uuid = DeliveryReceipt.dr_uuid'
+				),	
+
 				'Transmittal' => array(
 					'className' => 'Delivery.Transmittal',
 					'foreignKey' => false,
