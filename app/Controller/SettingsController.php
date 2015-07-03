@@ -2239,6 +2239,95 @@ class SettingsController extends AppController
             }
         }
 
+        public function trucks(){
+
+            $userData = $this->Session->read('Auth');
+        
+            $this->loadModel('Truck');
+
+            $truckData = $this->Truck->find('all',array('order' => 'id DESC'));
+            // $limit = 10;
+
+            // $conditions = array();
+
+            // $this->paginate = array(
+            //     'conditions' => $conditions,
+            //     'limit' => $limit,
+            //     'fields' => array('id', 'status','created'),
+            //     'order' => 'StatusFieldHolder.id DESC',
+            // );
+
+            // $statusData = $this->paginate('StatusFieldHolder');
+
+            if ($this->request->is('post')) {
+                
+                if (!empty($this->request->data)) {
+
+                    $this->id = $this->Truck->saveTruck($this->request->data, $userData['User']['id']);
+
+                    $this->Session->setFlash(__('Add Truck Complete.'));
+
+                    $this->redirect(
+
+                        array('controller' => 'settings', 'action' => 'trucks')
+
+                    );
+                }
+            }
+
+            $this->set(compact('truckData'));
+        }
+
+        public function truck_edit($id = null) {
+
+            $this->loadModel('Truck');
+
+            $truckData = $this->Truck->findById($id);
+            
+            if ($this->request->is(array('post', 'put'))) {
+
+                $this->Truck->id = $id;
+
+                if ($this->Truck->save($this->request->data)) {
+
+                    $this->Truck->save($this->request->data);
+
+                    $this->Session->setFlash(__('Truck has been updated.'));
+
+                    return $this->redirect(array('action' => 'trucks'));
+                }
+
+                $this->Session->setFlash(__('Unable to update your post.'));
+            }
+
+            if (!$this->request->data) {
+
+                $this->request->data = $truckData;
+            }
+        }
+
+        public function deleteTruck($id) {
+
+            $this->loadModel('Truck');
+          
+            if ($this->Truck->delete($id)) {
+
+                $this->Session->setFlash(
+
+                    __('Successfully deleted.', h($id))
+                );
+
+            } else {
+
+                $this->Session->setFlash(
+
+                    __('The Truck cannot be deleted.', h($id))
+                );
+            }
+
+            return $this->redirect(array('action' => 'trucks'));
+        }
+
 }
             
 
