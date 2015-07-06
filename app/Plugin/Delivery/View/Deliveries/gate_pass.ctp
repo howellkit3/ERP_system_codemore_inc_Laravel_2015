@@ -113,7 +113,7 @@
                                             </div>
                                             <div class="col-lg-2 plusbtn">
                                                 <button type="button" onclick="cloneData('appendHelper',this)" class="add-gatepass danger btn btn-success"> <i class="fa fa-plus"></i></button>
-                                                <!-- <button type="button" style="display:none;" class="remove-field btn btn-danger remove" onclick="removeClone('appendHelper')"><i class="fa fa-minus"></i> </button> -->
+                                                <button type="button" style="display:none;" class="remove-field btn btn-danger remove" onclick="removeClone('appendHelper')"><i class="fa fa-minus"></i> </button>
                                             </div>
                                         </div>
                                     </section>
