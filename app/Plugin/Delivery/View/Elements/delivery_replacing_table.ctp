@@ -4,7 +4,7 @@ $totalremaining = 0;
 
   if(!empty($deliveryEdit)){ ?>
 
-      <?php  foreach ($deliveryEdit as $deliveryDataList): ?>
+      <?php foreach ($deliveryEdit as $deliveryDataList): ?>
 
                 <tbody aria-relevant="all" aria-live="polite" role="alert">
 

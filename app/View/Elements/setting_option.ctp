@@ -111,6 +111,26 @@
         
     </ul>
 
+    <ul style="margin-left:0" class="nav navbar-nav pull-left">
+
+        <li class="dropdown hidden-xs">
+           
+            <?php echo $this->Html->link("<span class='count'>Driver</span>", array('controller' => 'settings', 'action' => 'driver_add'),array('escape' => false,'class' => 'btn')); ?>
+           
+        </li>
+        
+    </ul>
+
+    <ul style="margin-left:0" class="nav navbar-nav pull-left">
+
+        <li class="dropdown hidden-xs">
+           
+            <?php echo $this->Html->link("<span class='count'>Assistant</span>", array('controller' => 'settings', 'action' => 'assistant_add'),array('escape' => false,'class' => 'btn')); ?>
+           
+        </li>
+        
+    </ul>
+
 
 </div>
 <br><br>
