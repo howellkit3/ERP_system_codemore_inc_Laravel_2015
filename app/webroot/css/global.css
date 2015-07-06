@@ -382,12 +382,12 @@ body.dragging, body.dragging * {
     margin-top : 10%; 
 }
 
-.navbar,.nav-col{
+/*.navbar,.nav-col{
     z-index: 0 !important;
 }
 
 #nav-col{
     z-index: 0 !important;
-}
+}*/
 
 /*z index*/
