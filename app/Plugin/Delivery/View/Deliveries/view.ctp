@@ -1,6 +1,6 @@
 <?php echo $this->element('deliveries_options'); ?><br><br>
 <?php echo $this->Html->script('Sales.quantityLimitDelivery');
-    echo $this->Html->script('Delivery.gatepass');
+      echo $this->Html->script('Delivery.gatepass');
 $pushRemaining  = array();
 $totaldifference = 0; 
 $totalremaining = 0;
@@ -248,13 +248,15 @@ $totalremaining = 0;
                             <th class=""><a href="#"><span>Location</span></a></th>
                             <th class=""><a href="#"><span>Quantity</span></a></th>
                             <th class=""><a href="#"><span>Delivered</span></a></th>
+                            <th class=""><a href="#"><span>Type</span></a></th>
                             <th class=""><a href="#"><span>Status</span></a></th>
                             <th class=""><a href="#"><span>Action</span></a></th>
                         </tr>
                     </thead>
 
-                    <?php if(!empty($deliveryEdit) ) { ?>
+                    <?php   if(!empty($deliveryEdit) ) { ?>
                         <?php  foreach ($deliveryEdit as $deliveryDataList): ?>
+
                             <tbody aria-relevant="all" aria-live="polite" role="alert">
 
                                 <tr class="">
@@ -294,6 +296,19 @@ $totalremaining = 0;
                                             <?php echo $deliveryDataList['DeliveryDetail']['delivered_quantity']; ?>
 
                                         <?php } ?>  
+
+                                    </td>
+
+                                     <td class="">
+                            
+                                        <?php if(!empty($deliveryDataList['DeliveryReceipt']['type'])){ 
+
+                                            echo 'for replacing'; 
+                                        }else{
+
+                                            echo ''; 
+
+                                         } ?>  
 
                                     </td>
 
@@ -479,7 +494,7 @@ $totalremaining = 0;
                                 </div>
                             </div>
 
-                            <div class="md-overlay"></div>
+                        <div class="md-overlay"></div>
                     <?php endforeach; }  ?> 
                 </table>
                    
@@ -492,36 +507,7 @@ $totalremaining = 0;
 
 <?php echo $this->element('modals'); ?>
 
-<style>
-
-    .plusbtn{
-        padding-left: 3px;
-    }
-    .gatePass{
-        width: 43px;
-    }
-    .control-label{
-        padding-top: 7px;
-    }
-
-    .not-active {
-        background-color: transparent;
-
-    }
-
-    .margintop{
-        margin-top : 10%; 
-    }
-
-    .navbar,.nav-col{
-        z-index: 0 !important;
-    }
-    #nav-col{
-        z-index: 0 !important;
-    }
-
-</style>    
-
+ 
 <script>
     
     jQuery(document).ready(function(){

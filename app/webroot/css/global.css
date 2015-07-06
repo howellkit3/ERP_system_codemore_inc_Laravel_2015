@@ -117,9 +117,6 @@ hr {
 .input.checkbox {
     margin-left: 21px;
 }
-
-
-/*#searchfield { display: block; width: 100%; text-align: center; margin-bottom: 35px; }*/
  
 #searchfield form {
   display: inline-block;
@@ -365,6 +362,32 @@ body.dragging, body.dragging * {
 .transparent {
 
   background-color: transparent;
+}
+
+.plusbtn{
+    padding-left: 3px;
+}
+.gatePass{
+    width: 43px;
+}
+.control-label{
+    padding-top: 7px;
+}
+
+.not-active {
+    background-color: transparent;
+}
+
+.margintop{
+    margin-top : 10%; 
+}
+
+.navbar,.nav-col{
+    z-index: 0 !important;
+}
+
+#nav-col{
+    z-index: 0 !important;
 }
 
 /*z index*/

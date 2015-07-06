@@ -162,19 +162,22 @@ class DeliveriesController extends DeliveryAppController {
                                     ));
 
         $this->Delivery->bindDelivery();
-        $deliveryDetailsData = $this->Delivery->find('first',array('order' => 'Delivery.id DESC'));
+        $deliveryDetailsData = $this->Delivery->find('all',array('order' => 'Delivery.id DESC'));
 
-         $deliveryDetailsData = $this->Delivery->find('all', array(
+        // $deliveryDetailsData = $this->Delivery->find('all', array(
+        //                                  'conditions' => array(
+        //                                 'Delivery.schedule_uuid' => $clientsOrderUuid
+        //                                 )
+        //                             ));
+
+
+
+        $this->Delivery->bindDelivery();
+        $deliveryEdit = $this->Delivery->find('all', array(
                                          'conditions' => array(
                                         'Delivery.schedule_uuid' => $clientsOrderUuid
-                                        )
-                                    ));
-
-         $this->Delivery->bindDelivery();
-         $deliveryEdit = $this->Delivery->find('all', array(
-                                         'conditions' => array(
-                                        'Delivery.schedule_uuid' => $clientsOrderUuid
-                                        )
+                                        ),
+                                        'order' => 'Delivery.id DESC'
                                     ));
 
         $this->Delivery->bindDelivery();
@@ -341,7 +344,8 @@ class DeliveriesController extends DeliveryAppController {
         $deliveryEdit = $this->Delivery->find('all', array(
                                              'conditions' => array(
                                             'DeliveryDetail.status' => 'Incomplete'),
-                                            'order' => 'DeliveryDetail.modified DESC'
+                                            'order' => 'DeliveryDetail.modified DESC',
+                                            'fields' => array('DISTINCT Delivery.dr_uuid', 'DeliveryDetail.schedule','DeliveryDetail.location', 'DeliveryDetail.quantity','DeliveryDetail.delivered_quantity', 'DeliveryDetail.status', 'DeliveryReceipt.type', 'Delivery.schedule_uuid','DeliveryDetail.id', 'Transmittal.type' ,'DeliveryDetail.delivery_uuid'),
                                         ));
 
         $this->ClientOrder->bindDelivery();
