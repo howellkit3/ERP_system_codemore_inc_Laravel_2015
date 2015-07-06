@@ -6,7 +6,7 @@ App::import('Vendor', 'DOMPDF', true, array(), 'dompdf'.DS.'dompdf_config.inc.ph
 class DeliveriesController extends DeliveryAppController {
 
     public $uses = array('Delivery.Delivery', 'Delivery.DeliveryDetail');
-
+    public $helpers = array('Accounting.PhpExcel');
     public $paginate = array(
         'limit' => 10
     );
@@ -230,6 +230,11 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->set(compact('driverList','helperList','truckList','deliveryScheduleId','quotationId','clientsOrderUuid','scheduleInfo','deliveryData', 'quantityInfo','deliveryDataID','deliveryDetailsData', 'deliveryEdit', 'deliveryDetailList','deliveryList','deliveryStatus', 'orderList', 'orderListHelper', 'orderDeliveryList', 'clientsOrder', 'companyAddress', 'drData', 'deliveryDetailsData'));
         
+        //if ($gatepass == 1) {
+          
+            //$this->render('print_gatepass');
+
+        //}
     }
 
     public function add_schedule($idDelivery = null,$idDeliveryDetail = null,$deliveryScheduleId = null, $quotationId = null, $clientsOrderUuid = null) {
@@ -817,25 +822,64 @@ class DeliveriesController extends DeliveryAppController {
   }
 
     public function add_gatepass(){
-       
+        
         $userData = $this->Session->read('Auth');
         
         $this->loadModel('GatePass');
         $this->loadModel('GatePassAssistant');
+        $this->loadModel('Sales.ClientOrder');
+        $this->loadModel('Sales.Company');
+        $this->loadModel('Driver');
+        $this->loadModel('Assistant');
+        $this->loadModel('Truck');
+        $this->loadModel('Unit');
+        $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule','QuotationItemDetail','QuotationDetail','Product'));
 
         if (!empty($this->request->data)) {
             
-            $this->id = $this->GatePass->saveGatepass($this->request->data,$userData['User']['id']);
+            $gateId = $this->GatePass->saveGatepass($this->request->data,$userData['User']['id']);
+            
+            $this->GatePassAssistant->saveGatePassAssistant($this->request->data,$gateId,$userData['User']['id']);
+            
+            //$this->Session->setFlash(__('The Gate Pass successfully added.'), 'success');
+            $gateData = $this->GatePass->findById($gateId);
+            $assistData = $this->GatePassAssistant->find('all', array(
+                                        'conditions' => array('GatePassAssistant.gate_pass_id' => $gateId
+                                        )));
+            $driverList = $this->Driver->find('list', array(
+                                        'fields' => array('id','full_name')));
+            $assList = $this->Assistant->find('list', array(
+                                        'fields' => array('id','full_name')));
+            $truckList = $this->Truck->find('list', array(
+                                        'fields' => array('id','truck_no')));
+           
+            $this->Delivery->bindDelivery();
+            $drData = $this->Delivery->find('first', array(
+                                        'conditions' => array('Delivery.dr_uuid' => $this->request->data['GatePass']['dr_no']
+                                        )));
 
-            $this->GatePassAssistant->saveGatePassAssistant($this->request->data,$this->id,$userData['User']['id']);
+            $clientData = $this->ClientOrder->find('first', array(
+                                        'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
+                                        )));
+            $units = $this->Unit->find('list',array('fields' => array('id','unit')));
+            // pr($gateData);
+            // pr($assistData);
+            // pr($driverList);
+            // pr($assList);
+            // pr($drData);
+            // pr($clientData);exit();
 
-            $this->Session->setFlash(__('The Gate Pass successfully added.'), 'success');
-    
-            $this->redirect( array(
-                 'controller' => 'deliveries',   
-                 'action' => 'view',$this->request->data['Direct']['one'],$this->request->data['Direct']['two'],$this->request->data['Direct']['three']
-            ));
+            $this->set(compact('truckList','units','gateData','assistData','driverList','assList','drData','clientData'));
+
+            $this->render('print_gatepass');
+
+            // $this->redirect( array(
+            //      'controller' => 'deliveries',   
+            //      'action' => 'view',$this->request->data['Direct']['one'],$this->request->data['Direct']['two'],$this->request->data['Direct']['three']
+            // ));
+
         }
+         
     }
 
      public function gate_pass($deliveryScheduleId = null, $quotationId = null,$clientsOrderUuid = null,$drId = null,$druuid = null){

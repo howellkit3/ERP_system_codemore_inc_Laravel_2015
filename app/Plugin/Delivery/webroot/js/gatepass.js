@@ -1,5 +1,28 @@
 $(document).ready(function() {
 
+	$("body").on('click','.redirectMe', function(e){
+		var one = $('.one').val();
+		var two = $('.two').val();
+		var three = $('.three').val();
+		
+		var myarray = 1; // more efficient than new Array()
+			
+		$('.gatefield').each(function(){
+		    var val = $(this).val();
+		    if(val == ''){
+		    	myarray = 0 ;
+		    }
+		    // console.log(myarray);
+		    //console.log(val);
+		});
+		
+		if(myarray == 1){
+			window.setTimeout(function() {
+			    window.location.href = serverPath + "delivery/deliveries/view/"+one+"/"+two+"/"+three;
+			}, 3000);
+		}
+		
+	});
 	$("body").on('click','.add-gatepass', function(e){
 		var thisMe = $(this);
 	 	
