@@ -38,6 +38,7 @@
     $componentCounter = 1 ;
 	$partCounter = 1 ;
 	$processCounter = 1 ;
+
     foreach ($formatDataSpecs as $key => $specLists) { 
 
     	if($specLists['ProductSpecificationDetail']['model'] == 'Component'){
@@ -81,7 +82,16 @@
     		$processCounter++;
     	}
     	$counter++;
+
     }
+   
+   
+    $remark = $counter + $addRow;
+    $issuer = $remark + 3;
+    $objTpl->setActiveSheetIndex(0)
+                        ->setCellValue('A'.$remark, 'Remarks : '.ucfirst($ticketData['JobTicket']['remarks']))
+                        ->setCellValue('B'.$issuer, ucfirst($userData['User']['first_name']) . ucfirst($userData['User']['last_name']));
+
     
     //prepare download
     $filename = mt_rand(1,100000).'.xlsx'; //just some random filename
