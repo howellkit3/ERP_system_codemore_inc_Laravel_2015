@@ -40,7 +40,7 @@ $totalremaining = 0;
 
                         <td class="">
 
-                            <?php echo $deliveryDataList['DeliveryReceipt']['printed_by']; ?>
+                            <?php echo ucfirst($userFName[$deliveryDataList['DeliveryReceipt']['printed_by']]) . " " . ucfirst($userLName[$deliveryDataList['DeliveryReceipt']['printed_by']]); ?>
                         
                         </td>
 

@@ -559,6 +559,8 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->loadModel('Sales.ClientOrder');
 
+        $this->loadModel('User');
+
         $this->loadModel('Delivery.DeliveryReceipt');
 
         $this->loadModel('Delivery.Delivery');
@@ -573,7 +575,13 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->ClientOrder->bindDelivery();
 
-        $this->set(compact('DRData'));     
+        $userFName = $this->User->find('list',array('fields' => array('id','first_name')));
+
+        $userLName = $this->User->find('list',array('fields' => array('id','last_name')));
+
+        //pr($userLName); exit;
+
+        $this->set(compact('DRData','userFName','userLName'));     
         
     }
 
@@ -588,12 +596,14 @@ class DeliveriesController extends DeliveryAppController {
         $clientsOrder = $this->ClientOrder->find('all',array(
                       'conditions' => array(
                         'OR' => array(
-                          array('ClientOrder.po_number LIKE' => '%' . $hint . '%'),
-                          array('Product.name LIKE' => '%' . $hint . '%')
+                        array('ClientOrder.po_number LIKE' => '%' . $hint . '%'),
+                          array('Product.name LIKE' => '%' . $hint . '%'),
+                          array('Company.company_name LIKE' => '%' . $hint . '%')
                           )
                         ),
                       'limit' => 10
                       )); 
+
 
         $deliveryData = $this->Delivery->find('list',array('fields' => array('schedule_uuid','status')));
 
@@ -632,8 +642,6 @@ class DeliveriesController extends DeliveryAppController {
     $units = $this->Unit->getList();
 
     $this->Company->bind('Address');
-
-  //  pr($this->request->data); exit;
 
     if(!empty($this->request->data['DeliveryDetail']['quantity'])){
 
@@ -686,11 +694,7 @@ class DeliveriesController extends DeliveryAppController {
 
     $this->request->data['DeliveryReceipt']['printed'] = date("y-m-d");
 
-   //pr($DRRePrint[0]['DeliveryReceipt']['printed']); exit;
-
     if ($this->request->is(array('post', 'put'))) {
-
-       // pr('pst'); exit;
 
         $this->request->data['DeliveryReceipt']['remarks'] = $this->request->data['DeliveryDetail']['remarks'];
 
@@ -699,8 +703,6 @@ class DeliveriesController extends DeliveryAppController {
         $this->request->data['DeliveryReceipt']['type'] = 'replacing';       
                   
     }else{  
-
-     // pr('sda'); exit; 
 
        $this->request->data['DeliveryReceipt']['location'] = $drData['DeliveryDetail']['location'];
 
@@ -716,7 +718,6 @@ class DeliveriesController extends DeliveryAppController {
     $approved = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
                                                             'conditions' => array('User.id' => $drDataHolder['DeliveryDetail']['created_by'])
                                                             ));  
-   // pr($DRRePrint); exit;
 
     if(empty($DRRePrint[0]['DeliveryReceipt']['dr_uuid']) OR (!empty($this->request->data['DeliveryReceipt']['type']))){
 
