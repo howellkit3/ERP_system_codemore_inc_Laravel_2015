@@ -22,26 +22,26 @@ class ContactPerson extends AppModel {
 		$this->bindModel(array(
 			'belongsTo' => array(
 				'Supplier' => array(
-					'className' => 'Purchasings.Supplier',
+					'className' => 'Purchasing.Supplier',
 					'foreignKey' => 'company_id',
 					'dependent' => true
 				),
 			),
 			'hasMany' => array(
 				'Address' => array(
-					'className' => 'Purchasings.Address',
+					'className' => 'Purchasing.Address',
 					'foreignKey' => 'foreign_key',
 					'dependent' => true,
 					'conditions' => "Address.model = 'ContactPerson'"
 				),
 				'Contact' => array(
-					'className' => 'Purchasings.Contact',
+					'className' => 'Purchasing.Contact',
 					'foreignKey' => 'foreign_key',
 					'dependent' => true,
 					'conditions' => "Contact.model = 'ContactPerson'"
 				),
 				'Email' => array(
-					'className' => 'Purchasings.Email',
+					'className' => 'Purchasing.Email',
 					'foreignKey' => 'foreign_key',
 					'dependent' => true,
 					'conditions' => "Email.model = 'ContactPerson'"
@@ -53,7 +53,6 @@ class ContactPerson extends AppModel {
 	}
 	
 	public $validate = array(
-
 		
 		'firstname' => array(
 			'notEmpty' => array(
