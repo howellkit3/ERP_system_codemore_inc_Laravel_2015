@@ -209,13 +209,23 @@ $totalremaining = 0;
 
                             if($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] == 'Approved') { 
 
+
                                 foreach ($deliveryEdit as $deliveryDataList): 
 
-                                    $difference = $deliveryDataList['DeliveryDetail']['quantity']; 
+                                   // pr($deliveryDataList['DeliveryReceipt']['type']);
 
-                                    array_push($pushRemaining,$difference );
+                                    // if((next($deliveryDataList)['delivery_uuid'] == $deliveryDataList['DeliveryDetail']['delivery_uuid']) OR $deliveryDataList['DeliveryReceipt']['type'] == 'replacing'){
+
+                                        $difference = $deliveryDataList['DeliveryDetail']['quantity']; 
+
+                                        array_push($pushRemaining,$difference );
+
+                                  //  }
+
 
                                 endforeach; 
+
+                               
 
                                 foreach ($pushRemaining as $key => $value) {
 
@@ -248,13 +258,12 @@ $totalremaining = 0;
                             <th class=""><a href="#"><span>Location</span></a></th>
                             <th class=""><a href="#"><span>Quantity</span></a></th>
                             <th class=""><a href="#"><span>Delivered</span></a></th>
-                            <th class=""><a href="#"><span>Type</span></a></th>
                             <th class=""><a href="#"><span>Status</span></a></th>
                             <th class=""><a href="#"><span>Action</span></a></th>
                         </tr>
                     </thead>
 
-                    <?php   if(!empty($deliveryEdit) ) { ?>
+                    <?php  if(!empty($deliveryEdit) ) { ?>
                         <?php  foreach ($deliveryEdit as $deliveryDataList): ?>
 
                             <tbody aria-relevant="all" aria-live="polite" role="alert">
@@ -299,19 +308,6 @@ $totalremaining = 0;
 
                                     </td>
 
-                                     <td class="">
-                            
-                                        <?php if(!empty($deliveryDataList['DeliveryReceipt']['type'])){ 
-
-                                            echo 'for replacing'; 
-                                        }else{
-
-                                            echo ''; 
-
-                                         } ?>  
-
-                                    </td>
-
                                     <td class="">
               
                                         <?php  
@@ -340,8 +336,26 @@ $totalremaining = 0;
                                     <td >
 
                                     <?php 
-                                
-                                        if(!empty($deliveryDataList['DeliveryReceipt']['dr_uuid'])){
+
+                                    $dr_holder = null;
+
+                                        foreach ($DeliveryReceiptData as $key) {
+
+                                            if($key['DeliveryReceipt']['dr_uuid'] == $deliveryDataList['Delivery']['dr_uuid']){
+
+                                                  $dr_holder = 'matched';
+
+                                                  break;
+
+                                                }else{
+
+                                                  $dr_holder = 'not matched';
+     
+                                                }
+
+                                            } 
+
+                                        if($dr_holder == 'matched'){
 
                                             echo $this->Html->link('<span class="fa-stack">
                                                 <i class="fa fa-square fa-stack-2x"></i>
