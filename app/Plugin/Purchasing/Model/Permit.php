@@ -19,8 +19,8 @@ class Permit extends AppModel {
 
 		$this->bindModel(array(
 			'belongsTo' => array(
-				'Supllier' => array(
-					'className' => 'Purchasings.Supplier',
+				'Supplier' => array(
+					'className' => 'Purchasing.Supplier',
 					'foreignKey' => 'supplier_id',
 					'dependent' => true
 				),

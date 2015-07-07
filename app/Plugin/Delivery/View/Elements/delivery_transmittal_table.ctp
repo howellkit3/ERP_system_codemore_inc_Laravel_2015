@@ -28,7 +28,7 @@ $totalremaining = 0;
 
                         <td class="">
 
-                            <?php echo $transmittalDataList['Transmittal']['contact_person']; ?>
+                            <?php echo ucwords($transmittalDataList['Transmittal']['contact_person']); ?>
                         
                         </td>
 

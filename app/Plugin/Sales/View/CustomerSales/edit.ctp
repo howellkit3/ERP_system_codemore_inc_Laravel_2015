@@ -53,10 +53,10 @@
                                         <div class="col-lg-9">
                                             <?php
                                                 echo $this->Form->input('Company.description', array('type' => 'text', 
-                                                                                                    'maxlength'=>'1000',
-                                                                                                     'class' => 'form-control col-lg-6 ',
-                                                                                                     'label' => false
-                                                                                                     ));
+                                                    'maxlength'=>'1000',
+                                                     'class' => 'form-control col-lg-6 ',
+                                                     'label' => false
+                                                     ));
                                             ?>
                                         </div>
                                     </div>

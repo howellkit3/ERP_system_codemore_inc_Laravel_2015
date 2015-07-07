@@ -20,33 +20,33 @@ class Supplier extends AppModel {
 		$this->bindModel(array(
 			'hasMany' => array(
 				'Address' => array(
-					'className' => 'Purchasings.Address',
+					'className' => 'Purchasing.Address',
 					'foreignKey' => 'foreign_key',
 					'dependent' => true
 				),
 				'Product' => array(
-					'className' => 'Purchasings.Product',
+					'className' => 'Purchasing.Product',
 					'foreignKey' => 'supplier_id',
 					'dependent' => true
 				),
 				'Permit' => array(
-					'className' => 'Purchasings.Permit',
+					'className' => 'Purchasing.Permit',
 					'foreignKey' => 'supplier_id',
 					'dependent' => true
 				),
 				'Email' => array(
-					'className' => 'Purchasings.Email',
+					'className' => 'Purchasing.Email',
 					'foreignKey' => 'foreign_key',
 					'conditions' => "model = 'Supplier'",
 					'dependent' => true
 				),
 				'ContactPerson' => array(
-					'className' => 'Purchasings.ContactPerson',
+					'className' => 'Purchasing.ContactPerson',
 					'foreignKey' => 'supplier_id',
 					'dependent' => true
 				),
 				'Contact' => array(
-					'className' => 'Purchasings.Contact',
+					'className' => 'Purchasing.Contact',
 					'foreignKey' => 'foreign_key',
 					'conditions' => "model = 'Supplier'",
 					'dependent' => true
@@ -54,7 +54,7 @@ class Supplier extends AppModel {
 			),
 			'hasOne' => array(
 				'Organization'  => array (
-					'className' => 'Purchasings.Organization',
+					'className' => 'Purchasing.Organization',
 					'foreignKey'=> 'supplier_id',
 					'dependent' => true
 					)	

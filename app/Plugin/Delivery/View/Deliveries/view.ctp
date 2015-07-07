@@ -279,7 +279,7 @@ $totalremaining = 0;
                                     </td>
 
                                     <td class="">
-                                        <?php echo  substr($deliveryDataList['DeliveryDetail']['location'],0,25); ?>    
+                                        <?php echo  ucwords(substr($deliveryDataList['DeliveryDetail']['location'],0,25)); ?>    
                                         ..
                                     </td>
 

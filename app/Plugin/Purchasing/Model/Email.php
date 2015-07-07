@@ -19,8 +19,8 @@ class Email extends AppModel {
 
 		$this->bindModel(array(
 			'belongsTo' => array(
-				'Supllier' => array(
-					'className' => 'Purchasings.Supllier',
+				'Supplier' => array(
+					'className' => 'Purchasing.Supplier',
 					'foreignKey' => 'foreign_key',
 					'dependent' => true
 				),
