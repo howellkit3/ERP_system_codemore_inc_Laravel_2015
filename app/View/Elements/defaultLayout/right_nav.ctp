@@ -55,7 +55,7 @@
 					</li>
 					 
 					<li class="<?php echo ($this->params['plugin'] == 'purchasing') ? 'active' : '' ?>">
-						<?php echo $this->Html->link( " <i class='fa fa-th-large'></i> <span>Purchasing</span>",   array('controller' =>'suppliers','action'=>'index','plugin' => 'purchasings'),array('escape' => false) );
+						<?php echo $this->Html->link( " <i class='fa fa-th-large'></i> <span>Purchasing</span>",   array('controller' =>'suppliers','action'=>'index','plugin' => 'purchasing'),array('escape' => false) );
 	 					?>
 					</li>
 

@@ -24,17 +24,20 @@
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th><a href="#"><span>Company</span></a></th>
+                                <th><a href="#"><span>Supplier</span></a></th>
                                 <th><a href="#"><span>Website</span></a></th>
-                                <th class="text-center"><a href="#"><span>Status</span></a></th>
+                                <th><a href="#"><span>Tin</span></a></th>
+                                <th class="text-center"><a href="#"><span>Contact Person</span></a></th>
                                 <th class="text-center"><a href="#"><span>Created</span></a></th>
                                 <th>Action</th>
                             </tr>
                         </thead>
 
-                        <?php echo $this->element('supplier_order_table',array(
+                        <?php 
+                        echo $this->element('supplier_order_table',array(
                                 'suppliers' => $suppliers
-                            )); ?>
+                            )); 
+                            ?>
                             
                      </table>
                     <hr>
