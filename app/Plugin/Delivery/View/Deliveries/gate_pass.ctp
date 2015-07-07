@@ -1,5 +1,5 @@
 <?php echo $this->element('deliveries_options'); ?><br><br>
-
+<?php echo $this->Html->script('Delivery.gatepass'); ?>
 <div class="row">
     <div class="col-lg-12">
         
@@ -33,17 +33,17 @@
                                         <div class="col-lg-8">
                                             <?php 
 
-                                                echo $this->Form->input('Direct.one', array('class' => 'form-control item_type',
+                                                echo $this->Form->input('Direct.one', array('class' => 'form-control item_type one',
                                                     'type' => 'hidden',
                                                     'label' => false,
                                                     'value' => $deliveryScheduleId));
 
-                                                echo $this->Form->input('Direct.two', array('class' => 'form-control item_type',
+                                                echo $this->Form->input('Direct.two', array('class' => 'form-control item_type two',
                                                     'type' => 'hidden',
                                                     'label' => false,
                                                     'value' => $quotationId));
 
-                                                echo $this->Form->input('Direct.three', array('class' => 'form-control item_type',
+                                                echo $this->Form->input('Direct.three', array('class' => 'form-control item_type three',
                                                     'type' => 'hidden',
                                                     'label' => false,
                                                     'value' => $clientsOrderUuid));
@@ -72,7 +72,7 @@
                                                     'options' => array($truckList),
                                                     'type' => 'select',
                                                     'label' => false,
-                                                    'class' => 'form-control required ',
+                                                    'class' => 'form-control required gatefield',
                                                     'empty' => '---Select Item Truck---',
                                                     'required' => 'required'
                                                     )); 
@@ -84,14 +84,14 @@
                                         <label class="col-lg-2 control-label"><span style="color:red">*</span>Driver Name</label>
                                         <div class="col-lg-8">
                                             <?php 
-                                                echo $this->Form->input('GatePass.driver_id', array(
+                                                echo ucfirst($this->Form->input('GatePass.driver_id', array(
                                                         'options' => array($driverList),
                                                         'type' => 'select',
                                                         'label' => false,
-                                                        'class' => 'form-control required ',
+                                                        'class' => 'form-control required gatefield',
                                                         'empty' => '---Select Driver---',
                                                         'required' => 'required'
-                                                        ));
+                                                        )));
                                             ?>
                                         </div>
                                     </div>
@@ -105,7 +105,7 @@
                                                         'options' => array($helperList),
                                                         'type' => 'select',
                                                         'label' => false,
-                                                        'class' => 'form-control required ',
+                                                        'class' => 'form-control required gatefield',
                                                         'empty' => '---Select Helper---',
                                                         'required' => 'required'
                                                         )); 
@@ -113,7 +113,7 @@
                                             </div>
                                             <div class="col-lg-2 plusbtn">
                                                 <button type="button" onclick="cloneData('appendHelper',this)" class="add-gatepass danger btn btn-success"> <i class="fa fa-plus"></i></button>
-                                                <!-- <button type="button" style="display:none;" class="remove-field btn btn-danger remove" onclick="removeClone('appendHelper')"><i class="fa fa-minus"></i> </button> -->
+                                                <button type="button" style="display:none;" class="remove-field btn btn-danger remove" onclick="removeClone('appendHelper')"><i class="fa fa-minus"></i> </button>
                                             </div>
                                         </div>
                                     </section>
@@ -133,7 +133,7 @@
                                     <div class="form-group">
                                         <div class="col-lg-2"></div>
                                         <div class="col-lg-8">
-                                            <button type="submit" class="btn btn-primary pull-left">Submit</button>&nbsp;
+                                            <button type="submit" class="redirectMe btn btn-primary pull-left">Submit</button>&nbsp;
                                             <?php 
                                                 echo $this->Html->link('Cancel', array('controller' => 'settings', 'action' => 'view'),array('class' =>'btn btn-default','escape' => false));
                                             ?>

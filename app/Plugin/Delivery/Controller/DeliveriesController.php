@@ -6,7 +6,7 @@ App::import('Vendor', 'DOMPDF', true, array(), 'dompdf'.DS.'dompdf_config.inc.ph
 class DeliveriesController extends DeliveryAppController {
 
     public $uses = array('Delivery.Delivery', 'Delivery.DeliveryDetail');
-
+    public $helpers = array('Accounting.PhpExcel');
     public $paginate = array(
         'limit' => 10
     );
@@ -162,23 +162,32 @@ class DeliveriesController extends DeliveryAppController {
                                     ));
 
         $this->Delivery->bindDelivery();
-        $deliveryDetailsData = $this->Delivery->find('first',array('order' => 'Delivery.id DESC'));
+        $deliveryDetailsData = $this->Delivery->find('all',array('order' => 'Delivery.id DESC'));
 
-         $deliveryDetailsData = $this->Delivery->find('all', array(
+        // $deliveryDetailsData = $this->Delivery->find('all', array(
+        //                                  'conditions' => array(
+        //                                 'Delivery.schedule_uuid' => $clientsOrderUuid
+        //                                 )
+        //                             ));
+
+
+
+        $this->Delivery->bindDeliveryView();
+        $deliveryEdit = $this->Delivery->find('all', array(
                                          'conditions' => array(
                                         'Delivery.schedule_uuid' => $clientsOrderUuid
-                                        )
+                                        ),
+                                        'order' => 'Delivery.id DESC'
                                     ));
 
-         $this->Delivery->bindDelivery();
-         $deliveryEdit = $this->Delivery->find('all', array(
-                                         'conditions' => array(
-                                        'Delivery.schedule_uuid' => $clientsOrderUuid
-                                        )
-                                    ));
+        //pr($deliveryEdit); exit;
 
         $this->Delivery->bindDelivery();
         $drData = $this->Delivery->find('all');
+
+        $this->DeliveryReceipt->bindDelivery();
+
+        $DeliveryReceiptData =  $this->DeliveryReceipt->find('all');
 
         $deliveryDetailList = $this->DeliveryDetail->find('list',array('fields' => array('delivery_uuid', 'delivered_quantity')));
         
@@ -225,8 +234,13 @@ class DeliveriesController extends DeliveryAppController {
             $this->Session->setFlash(__('Unable to update your post.'));
         }
 
-        $this->set(compact('driverList','helperList','truckList','deliveryScheduleId','quotationId','clientsOrderUuid','scheduleInfo','deliveryData', 'quantityInfo','deliveryDataID','deliveryDetailsData', 'deliveryEdit', 'deliveryDetailList','deliveryList','deliveryStatus', 'orderList', 'orderListHelper', 'orderDeliveryList', 'clientsOrder', 'companyAddress', 'drData', 'deliveryDetailsData'));
+        $this->set(compact('driverList','helperList','truckList','deliveryScheduleId','quotationId','clientsOrderUuid','scheduleInfo','deliveryData', 'quantityInfo','deliveryDataID','deliveryDetailsData', 'deliveryEdit', 'deliveryDetailList','deliveryList','deliveryStatus', 'orderList', 'orderListHelper', 'orderDeliveryList', 'clientsOrder', 'companyAddress', 'drData', 'deliveryDetailsData', 'DeliveryReceiptData'));
         
+        //if ($gatepass == 1) {
+          
+            //$this->render('print_gatepass');
+
+        //}
     }
 
     public function add_schedule($idDelivery = null,$idDeliveryDetail = null,$deliveryScheduleId = null, $quotationId = null, $clientsOrderUuid = null) {
@@ -334,15 +348,30 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
+        $this->loadModel('Delivery.DeliveryReceipt');
+
+        $this->loadModel('Delivery.Transmittal');
+
         $this->loadModel('Sales.ClientOrder');
 
-        $this->Delivery->bindDeliveryTrans();
+        $this->Delivery->bindDeliveryView();
       
         $deliveryEdit = $this->Delivery->find('all', array(
                                              'conditions' => array(
                                             'DeliveryDetail.status' => 'Incomplete'),
                                             'order' => 'DeliveryDetail.modified DESC'
+                                           // 'fields' => array('DISTINCT Delivery.dr_uuid', 'DeliveryDetail.schedule','DeliveryDetail.location', 'DeliveryDetail.quantity','DeliveryDetail.delivered_quantity', 'DeliveryDetail.status', 'DeliveryReceipt.type', 'Delivery.schedule_uuid','DeliveryDetail.id', 'Transmittal.type' ,'DeliveryDetail.delivery_uuid'),
                                         ));
+
+        $this->DeliveryReceipt->bindDelivery();
+
+        $DeliveryReceiptData =  $this->DeliveryReceipt->find('all');
+
+        $this->Transmittal->bindDelivery();
+
+        $TransmittalData =  $this->Transmittal->find('all');
+
+        //pr($TranmisttalData); exit;
 
         $this->ClientOrder->bindDelivery();
 
@@ -350,7 +379,7 @@ class DeliveriesController extends DeliveryAppController {
 
         $scheduleInfo = $this->ClientOrder->find('all');
 
-        $this->set(compact('deliveryEdit', 'scheduleInfo', 'clientOrderData'));     
+        $this->set(compact('deliveryEdit', 'scheduleInfo', 'clientOrderData', 'DeliveryReceiptData', 'TransmittalData'));     
             
     }
 
@@ -530,6 +559,8 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->loadModel('Sales.ClientOrder');
 
+        $this->loadModel('User');
+
         $this->loadModel('Delivery.DeliveryReceipt');
 
         $this->loadModel('Delivery.Delivery');
@@ -544,7 +575,13 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->ClientOrder->bindDelivery();
 
-        $this->set(compact('DRData'));     
+        $userFName = $this->User->find('list',array('fields' => array('id','first_name')));
+
+        $userLName = $this->User->find('list',array('fields' => array('id','last_name')));
+
+        //pr($userLName); exit;
+
+        $this->set(compact('DRData','userFName','userLName'));     
         
     }
 
@@ -559,12 +596,14 @@ class DeliveriesController extends DeliveryAppController {
         $clientsOrder = $this->ClientOrder->find('all',array(
                       'conditions' => array(
                         'OR' => array(
-                          array('ClientOrder.po_number LIKE' => '%' . $hint . '%'),
-                          array('Product.name LIKE' => '%' . $hint . '%')
+                        array('ClientOrder.po_number LIKE' => '%' . $hint . '%'),
+                          array('Product.name LIKE' => '%' . $hint . '%'),
+                          array('Company.company_name LIKE' => '%' . $hint . '%')
                           )
                         ),
                       'limit' => 10
                       )); 
+
 
         $deliveryData = $this->Delivery->find('list',array('fields' => array('schedule_uuid','status')));
 
@@ -603,8 +642,6 @@ class DeliveriesController extends DeliveryAppController {
     $units = $this->Unit->getList();
 
     $this->Company->bind('Address');
-
-  //  pr($this->request->data); exit;
 
     if(!empty($this->request->data['DeliveryDetail']['quantity'])){
 
@@ -657,11 +694,7 @@ class DeliveriesController extends DeliveryAppController {
 
     $this->request->data['DeliveryReceipt']['printed'] = date("y-m-d");
 
-   //pr($DRRePrint[0]['DeliveryReceipt']['printed']); exit;
-
     if ($this->request->is(array('post', 'put'))) {
-
-       // pr('pst'); exit;
 
         $this->request->data['DeliveryReceipt']['remarks'] = $this->request->data['DeliveryDetail']['remarks'];
 
@@ -670,8 +703,6 @@ class DeliveriesController extends DeliveryAppController {
         $this->request->data['DeliveryReceipt']['type'] = 'replacing';       
                   
     }else{  
-
-     // pr('sda'); exit; 
 
        $this->request->data['DeliveryReceipt']['location'] = $drData['DeliveryDetail']['location'];
 
@@ -687,7 +718,6 @@ class DeliveriesController extends DeliveryAppController {
     $approved = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
                                                             'conditions' => array('User.id' => $drDataHolder['DeliveryDetail']['created_by'])
                                                             ));  
-   // pr($DRRePrint); exit;
 
     if(empty($DRRePrint[0]['DeliveryReceipt']['dr_uuid']) OR (!empty($this->request->data['DeliveryReceipt']['type']))){
 
@@ -813,25 +843,64 @@ class DeliveriesController extends DeliveryAppController {
   }
 
     public function add_gatepass(){
-       
+        
         $userData = $this->Session->read('Auth');
         
         $this->loadModel('GatePass');
         $this->loadModel('GatePassAssistant');
+        $this->loadModel('Sales.ClientOrder');
+        $this->loadModel('Sales.Company');
+        $this->loadModel('Driver');
+        $this->loadModel('Assistant');
+        $this->loadModel('Truck');
+        $this->loadModel('Unit');
+        $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule','QuotationItemDetail','QuotationDetail','Product'));
 
         if (!empty($this->request->data)) {
             
-            $this->id = $this->GatePass->saveGatepass($this->request->data,$userData['User']['id']);
+            $gateId = $this->GatePass->saveGatepass($this->request->data,$userData['User']['id']);
+            
+            $this->GatePassAssistant->saveGatePassAssistant($this->request->data,$gateId,$userData['User']['id']);
+            
+            //$this->Session->setFlash(__('The Gate Pass successfully added.'), 'success');
+            $gateData = $this->GatePass->findById($gateId);
+            $assistData = $this->GatePassAssistant->find('all', array(
+                                        'conditions' => array('GatePassAssistant.gate_pass_id' => $gateId
+                                        )));
+            $driverList = $this->Driver->find('list', array(
+                                        'fields' => array('id','full_name')));
+            $assList = $this->Assistant->find('list', array(
+                                        'fields' => array('id','full_name')));
+            $truckList = $this->Truck->find('list', array(
+                                        'fields' => array('id','truck_no')));
+           
+            $this->Delivery->bindDelivery();
+            $drData = $this->Delivery->find('first', array(
+                                        'conditions' => array('Delivery.dr_uuid' => $this->request->data['GatePass']['dr_no']
+                                        )));
 
-            $this->GatePassAssistant->saveGatePassAssistant($this->request->data,$this->id,$userData['User']['id']);
+            $clientData = $this->ClientOrder->find('first', array(
+                                        'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
+                                        )));
+            $units = $this->Unit->find('list',array('fields' => array('id','unit')));
+            // pr($gateData);
+            // pr($assistData);
+            // pr($driverList);
+            // pr($assList);
+            // pr($drData);
+            // pr($clientData);exit();
 
-            $this->Session->setFlash(__('The Gate Pass successfully added.'), 'success');
-    
-            $this->redirect( array(
-                 'controller' => 'deliveries',   
-                 'action' => 'view',$this->request->data['Direct']['one'],$this->request->data['Direct']['two'],$this->request->data['Direct']['three']
-            ));
+            $this->set(compact('truckList','units','gateData','assistData','driverList','assList','drData','clientData'));
+
+            $this->render('print_gatepass');
+
+            // $this->redirect( array(
+            //      'controller' => 'deliveries',   
+            //      'action' => 'view',$this->request->data['Direct']['one'],$this->request->data['Direct']['two'],$this->request->data['Direct']['three']
+            // ));
+
         }
+         
     }
 
      public function gate_pass($deliveryScheduleId = null, $quotationId = null,$clientsOrderUuid = null,$drId = null,$druuid = null){

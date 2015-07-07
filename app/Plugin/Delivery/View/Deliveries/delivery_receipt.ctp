@@ -27,7 +27,7 @@
         </div>
 
       <?php echo $this->Form->create('ClientOrderDeliverySchedule',array(
-      'url'=>(array('controller' => 'deliveries', 'action' => 'dr',$drData['Delivery']['dr_uuid'],$drData['Delivery']['schedule_uuid'], $drData['Delivery']['clients_order_id'])),'class' => 'form-horizontal','target' => '_blank')); ?>
+      'url'=>(array('controller' => 'deliveries', 'action' => 'dr',$drData['Delivery']['dr_uuid'],$drData['Delivery']['schedule_uuid'], $drData['Delivery']['clients_order_id'])),'class' => 'form-horizontal')); ?>
         <div class="col-lg-12">
           <div class="main-box">
             <div class="top-space"></div>
@@ -223,22 +223,22 @@
 
 var backLocation = document.referrer;
 
-if (backLocation) {
+  if (backLocation) {
 
-  if (backLocation.indexOf("?") > -1) {
-      backLocation += "&randomParam=" + new Date().getTime();
-  } else {
-      backLocation += "?randomParam=" + new Date().getTime();
+    if (backLocation.indexOf("?") > -1) {
+        backLocation += "&randomParam=" + new Date().getTime();
+    } else {
+        backLocation += "?randomParam=" + new Date().getTime();
+    }
+         
+    $('.refresh').on("click",function(){ 
+
+      setTimeout(function (){
+        window.location.assign(backLocation);
+      }, 1500);
+     
+    });
   }
-       
-  $('.refresh').on("click",function(){ 
-
-    setTimeout(function (){
-      window.location.assign(backLocation);
-    }, 2000);
-   
-  });
-}
 
 </script>
 

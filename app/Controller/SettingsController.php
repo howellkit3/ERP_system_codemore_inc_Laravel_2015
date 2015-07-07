@@ -2328,6 +2328,161 @@ class SettingsController extends AppController
             return $this->redirect(array('action' => 'trucks'));
         }
 
+         public function assistant_add(){
+
+            $userData = $this->Session->read('Auth');
+        
+            $this->loadModel('Assistant');
+
+            $assistantData = $this->Assistant->find('all',array('order' => 'id DESC'));
+
+            if ($this->request->is('post')) {
+                
+                if (!empty($this->request->data)) {
+
+                    $this->id = $this->Assistant->saveAssistant($this->request->data, $userData['User']['id']);
+
+                    $this->Session->setFlash(__('Add Assistant Complete.'));
+
+                    $this->redirect(
+
+                        array('controller' => 'settings', 'action' => 'assistant_add')
+
+                    );
+                }
+            }
+
+            $this->set(compact('assistantData'));
+        }
+
+        public function assistant_edit($id = null) {
+
+            $this->loadModel('Assistant');
+
+            $AssistantData = $this->Assistant->findById($id);
+            
+            if ($this->request->is(array('post', 'put'))) {
+
+                $this->Assistant->id = $id;
+
+                if ($this->Assistant->save($this->request->data)) {
+
+                    $this->Assistant->save($this->request->data);
+
+                    $this->Session->setFlash(__('Assistant has been updated.'));
+
+                    return $this->redirect(array('action' => 'assistant_add'));
+                }
+
+                $this->Session->setFlash(__('Unable to update your post.'));
+            }
+
+            if (!$this->request->data) {
+
+                $this->request->data = $AssistantData;
+            }
+        }
+
+        public function deleteAssistant($id) {
+
+            $this->loadModel('Assistant');
+          
+            if ($this->Assistant->delete($id)) {
+
+                $this->Session->setFlash(
+
+                    __('Successfully deleted.', h($id))
+                );
+
+            } else {
+
+                $this->Session->setFlash(
+
+                    __('The Assistant cannot be deleted.', h($id))
+                );
+            }
+
+            return $this->redirect(array('action' => 'assistant_add'));
+        }
+
+         public function driver_add(){
+
+            $userData = $this->Session->read('Auth');
+        
+            $this->loadModel('Driver');
+
+            $driverData = $this->Driver->find('all',array('order' => 'id DESC'));
+
+            if ($this->request->is('post')) {
+                
+                if (!empty($this->request->data)) {
+
+                    $this->id = $this->Driver->saveDriver($this->request->data, $userData['User']['id']);
+
+                    $this->Session->setFlash(__('Add Driver Complete.'));
+
+                    $this->redirect(
+
+                        array('controller' => 'settings', 'action' => 'driver_add')
+
+                    );
+                }
+            }
+
+            $this->set(compact('driverData'));
+        }
+
+        public function driver_edit($id = null) {
+
+            $this->loadModel('Driver');
+
+            $DriverData = $this->Driver->findById($id);
+            
+            if ($this->request->is(array('post', 'put'))) {
+
+                $this->Driver->id = $id;
+
+                if ($this->Driver->save($this->request->data)) {
+
+                    $this->Driver->save($this->request->data);
+
+                    $this->Session->setFlash(__('Driver has been updated.'));
+
+                    return $this->redirect(array('action' => 'driver_add'));
+                }
+
+                $this->Session->setFlash(__('Unable to update your post.'));
+            }
+
+            if (!$this->request->data) {
+
+                $this->request->data = $DriverData;
+            }
+        }
+
+        public function deleteDriver($id) {
+
+            $this->loadModel('Driver');
+          
+            if ($this->Driver->delete($id)) {
+
+                $this->Session->setFlash(
+
+                    __('Successfully deleted.', h($id))
+                );
+
+            } else {
+
+                $this->Session->setFlash(
+
+                    __('The Driver cannot be deleted.', h($id))
+                );
+            }
+
+            return $this->redirect(array('action' => 'driver_add'));
+        }
+
+
 }
             
 

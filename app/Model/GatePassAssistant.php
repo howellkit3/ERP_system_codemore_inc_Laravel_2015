@@ -27,7 +27,7 @@ class GatePassAssistant extends AppModel {
            
             $this->save($helperList);
         }
-        
+        return 1;
     }
 
 }

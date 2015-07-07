@@ -2,7 +2,9 @@
 App::uses('AppController', 'Controller');
 App::uses('SessionComponent', 'Controller/Component');
 
-class SuppliersController extends PurchasingsAppController {
+class SuppliersController extends PurchasingAppController {
+
+	public $helpers = array('Purchasing.Country');
 
 	public function index() {
 
@@ -29,22 +31,18 @@ class SuppliersController extends PurchasingsAppController {
 
 		if ($this->request->is('post')) {
 
-
             if (!empty($this->request->data)) {
-
+            	
             	$this->Supplier->bind(array('Address','Product','Permit','Email','Organization','Contact','ContactPerson'));
 
-            	$user = $this->Session->read('Auth.User');
-
-            	$this->request->data = $this->Supplier->formatData($this->request->data,$user['id']);
-
+            	$this->request->data = $this->Supplier->formatData($this->request->data,$userData['User']['id']);
+            	$this->request->data['Supplier']['uuid'] = time();
+            	pr($this->request->data);exit();
             	if ($this->Supplier->saveAssociated($this->request->data)) {
             		
-            		$value = $this->Supplier->id.'-'.time();
+            		$suppplierId = $this->Supplier->id;
 
-            		$this->Supplier->updateModelField('unique_id',$value,$this->Supplier->id);
-
-            	 	$contactPersonId = $this->Supplier->ContactPerson->saveContact($this->request->data['ContactPersonData'], $this->Supplier->id,$userData['User']['id']);
+            	 	$contactPersonId = $this->Supplier->ContactPerson->saveContact($this->request->data['ContactPersonData'], $suppplierId,$userData['User']['id']);
             		$this->Supplier->Contact->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
             		$this->Supplier->Address->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
             		$this->Supplier->Email->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
@@ -65,6 +63,7 @@ class SuppliersController extends PurchasingsAppController {
         }
 		
 	}
+	
 	public function view ($dataId = null) {
 
 		if (!empty($dataId)) {

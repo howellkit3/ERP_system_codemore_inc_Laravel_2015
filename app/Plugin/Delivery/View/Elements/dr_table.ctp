@@ -40,7 +40,7 @@ $totalremaining = 0;
 
                         <td class="">
 
-                            <?php echo $deliveryDataList['DeliveryReceipt']['printed_by']; ?>
+                            <?php echo ucfirst($userFName[$deliveryDataList['DeliveryReceipt']['printed_by']]) . " " . ucfirst($userLName[$deliveryDataList['DeliveryReceipt']['printed_by']]); ?>
                         
                         </td>
 
@@ -48,6 +48,19 @@ $totalremaining = 0;
 
                             <?php  echo date('M d, Y',strtotime($deliveryDataList['DeliveryReceipt']['printed'])); ?>
                         
+                        </td>
+
+                         <td class="">
+
+                            <?php if(!empty($deliveryDataList['DeliveryReceipt']['type'])){ 
+
+                               echo 'for replacing'; 
+                            }else{
+
+                                echo ''; 
+
+                            } ?>  
+
                         </td>
 
                         <td>

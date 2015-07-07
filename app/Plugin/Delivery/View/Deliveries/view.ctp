@@ -1,6 +1,6 @@
 <?php echo $this->element('deliveries_options'); ?><br><br>
 <?php echo $this->Html->script('Sales.quantityLimitDelivery');
-    echo $this->Html->script('Delivery.gatepass');
+      echo $this->Html->script('Delivery.gatepass');
 $pushRemaining  = array();
 $totaldifference = 0; 
 $totalremaining = 0;
@@ -209,13 +209,23 @@ $totalremaining = 0;
 
                             if($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] == 'Approved') { 
 
+
                                 foreach ($deliveryEdit as $deliveryDataList): 
 
-                                    $difference = $deliveryDataList['DeliveryDetail']['quantity']; 
+                                   // pr($deliveryDataList['DeliveryReceipt']['type']);
 
-                                    array_push($pushRemaining,$difference );
+                                    // if((next($deliveryDataList)['delivery_uuid'] == $deliveryDataList['DeliveryDetail']['delivery_uuid']) OR $deliveryDataList['DeliveryReceipt']['type'] == 'replacing'){
+
+                                        $difference = $deliveryDataList['DeliveryDetail']['quantity']; 
+
+                                        array_push($pushRemaining,$difference );
+
+                                  //  }
+
 
                                 endforeach; 
+
+                               
 
                                 foreach ($pushRemaining as $key => $value) {
 
@@ -253,8 +263,9 @@ $totalremaining = 0;
                         </tr>
                     </thead>
 
-                    <?php if(!empty($deliveryEdit) ) { ?>
+                    <?php  if(!empty($deliveryEdit) ) { ?>
                         <?php  foreach ($deliveryEdit as $deliveryDataList): ?>
+
                             <tbody aria-relevant="all" aria-live="polite" role="alert">
 
                                 <tr class="">
@@ -325,8 +336,26 @@ $totalremaining = 0;
                                     <td >
 
                                     <?php 
-                                
-                                        if(!empty($deliveryDataList['DeliveryReceipt']['dr_uuid'])){
+
+                                    $dr_holder = null;
+
+                                        foreach ($DeliveryReceiptData as $key) {
+
+                                            if($key['DeliveryReceipt']['dr_uuid'] == $deliveryDataList['Delivery']['dr_uuid']){
+
+                                                  $dr_holder = 'matched';
+
+                                                  break;
+
+                                                }else{
+
+                                                  $dr_holder = 'not matched';
+     
+                                                }
+
+                                            } 
+
+                                        if($dr_holder == 'matched'){
 
                                             echo $this->Html->link('<span class="fa-stack">
                                                 <i class="fa fa-square fa-stack-2x"></i>
@@ -336,7 +365,7 @@ $totalremaining = 0;
                                             echo $this->Html->link('<span class="fa-stack">
                                                 <i class="fa fa-square fa-stack-2x"></i>
                                                 <i class="fa fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Print </font></span>
-                                                </span>', array('controller' => 'deliveries', 'action' => 'dr',$deliveryDataList['Delivery']['dr_uuid'],$scheduleInfo['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link not-active refresh','escape' => false,'title'=>'Print Delivery Receipt','target' => '_blank'));
+                                                </span>', array('controller' => 'deliveries', 'action' => 'dr',$deliveryDataList['Delivery']['dr_uuid'],$scheduleInfo['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link not-active refresh','escape' => false,'title'=>'Print Delivery Receipt'));
 
                                         }else{
 
@@ -359,7 +388,7 @@ $totalremaining = 0;
                                         echo $this->Html->link('<span class="fa-stack">
                                             <i class="fa fa-square fa-stack-2x"></i>
                                             <i class="fa fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Print </font></span>
-                                            </span>', array('controller' => 'deliveries', 'action' => 'dr',$deliveryDataList['Delivery']['dr_uuid'],$scheduleInfo['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link refresh','escape' => false,'title'=>'Print Delivery Receipt','target' => '_blank'));
+                                            </span>', array('controller' => 'deliveries', 'action' => 'dr',$deliveryDataList['Delivery']['dr_uuid'],$scheduleInfo['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link refresh','escape' => false,'title'=>'Print Delivery Receipt'));
 
 
                                         } ?>
@@ -479,7 +508,7 @@ $totalremaining = 0;
                                 </div>
                             </div>
 
-                            <div class="md-overlay"></div>
+                        <div class="md-overlay"></div>
                     <?php endforeach; }  ?> 
                 </table>
                    
@@ -492,36 +521,7 @@ $totalremaining = 0;
 
 <?php echo $this->element('modals'); ?>
 
-<style>
-
-    .plusbtn{
-        padding-left: 3px;
-    }
-    .gatePass{
-        width: 43px;
-    }
-    .control-label{
-        padding-top: 7px;
-    }
-
-    .not-active {
-        background-color: transparent;
-
-    }
-
-    .margintop{
-        margin-top : 10%; 
-    }
-
-    .navbar,.nav-col{
-        z-index: 0 !important;
-    }
-    #nav-col{
-        z-index: 0 !important;
-    }
-
-</style>    
-
+ 
 <script>
     
     jQuery(document).ready(function(){
@@ -535,7 +535,11 @@ $totalremaining = 0;
     });
 
     $('.refresh').on("click",function(){
-        location.reload();
+       //  
+       setTimeout(function (){
+            location.reload();
+        }, 1000); 
+        
     });
 
 </script>

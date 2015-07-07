@@ -20,7 +20,7 @@ class Address extends AppModel {
 		$this->bindModel(array(
 			'belongsTo' => array(
 				'Supplier' => array(
-					'className' => 'Purchasings.Supplier',
+					'className' => 'Purchasing.Supplier',
 					'foreignKey' => 'foreign_key',
 					'dependent' => true
 				),

@@ -82,6 +82,20 @@ class Delivery extends AppModel {
 		//$this->contain($giveMeTheTableRelationship);
 	}
 
+	public function bindDeliveryView() {
+		$this->bindModel(array(
+			'hasOne' => array(
+				'DeliveryDetail' => array(
+					'className' => 'Delivery.DeliveryDetail',
+					'foreignKey' => false,
+					'conditions' => 'Delivery.dr_uuid = DeliveryDetail.delivery_uuid'
+				),		
+			)
+		));
+		$this->recursive = 1;
+		//$this->contain($giveMeTheTableRelationship);
+	}
+
 	public function bindDeliveryTrans() {
 		$this->bindModel(array(
 			'hasOne' => array(
