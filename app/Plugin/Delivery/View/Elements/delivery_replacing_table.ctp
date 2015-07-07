@@ -22,7 +22,7 @@ $totalremaining = 0;
 
                         <td class="">
               
-                           <?php echo  $deliveryDataList['DeliveryDetail']['location']; ?>    
+                           <?php echo ucwords($deliveryDataList['DeliveryDetail']['location']); ?>    
                                 
                         </td>
 

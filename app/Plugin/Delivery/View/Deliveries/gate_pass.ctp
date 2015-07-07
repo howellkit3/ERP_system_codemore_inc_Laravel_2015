@@ -84,14 +84,14 @@
                                         <label class="col-lg-2 control-label"><span style="color:red">*</span>Driver Name</label>
                                         <div class="col-lg-8">
                                             <?php 
-                                                echo $this->Form->input('GatePass.driver_id', array(
+                                                echo ucfirst($this->Form->input('GatePass.driver_id', array(
                                                         'options' => array($driverList),
                                                         'type' => 'select',
                                                         'label' => false,
                                                         'class' => 'form-control required gatefield',
                                                         'empty' => '---Select Driver---',
                                                         'required' => 'required'
-                                                        ));
+                                                        )));
                                             ?>
                                         </div>
                                     </div>
