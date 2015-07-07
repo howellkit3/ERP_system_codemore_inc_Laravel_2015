@@ -4,7 +4,7 @@ $totalremaining = 0;
 
   if(!empty($deliveryEdit)){ ?>
 
-      <?php foreach ($deliveryEdit as $deliveryDataList): ?>
+      <?php  foreach ($deliveryEdit as $deliveryDataList): ?>
 
                 <tbody aria-relevant="all" aria-live="polite" role="alert">
 
@@ -73,9 +73,39 @@ $totalremaining = 0;
                         </td>
 
                         <td>
+
+
                               <?php 
 
-                              if($deliveryDataList['DeliveryReceipt']['type'] == 'replacing'){
+                              $dr_uuid_holder = $deliveryDataList['Delivery']['dr_uuid'];
+                              $dr_type_holder = null;
+                              $tr_type_holder = null;
+
+                             foreach ($DeliveryReceiptData as $key) {
+
+                                 if($key['DeliveryReceipt']['dr_uuid'] == $dr_uuid_holder){
+
+                                  if($key['DeliveryReceipt']['type'] == 'replacing'){
+
+                                    $dr_type_holder = 'replacing';
+
+                                  }
+                                } 
+                              }  
+
+                              foreach ($TransmittalData as $key) {
+
+                                 if($key['Transmittal']['dr_uuid'] == $dr_uuid_holder){
+
+                                  if($key['Transmittal']['type'] == 'replacing'){
+
+                                    $tr_type_holder = 'replacing';
+
+                                  }
+                                } 
+                              }  
+
+                              if(!empty($dr_type_holder)){
 
                                 echo $this->Html->link('<span class="fa-stack">
                                     <i class="fa fa-square fa-stack-2x"></i>
@@ -91,7 +121,7 @@ $totalremaining = 0;
                               }
 
                               
-                              if($deliveryDataList['Transmittal']['type'] == 'replacing'){
+                              if(!empty($tr_type_holder)){
                               
                                 echo $this->Html->link('<span class="fa-stack">
                                     <i class="fa fa-square fa-stack-2x"></i>

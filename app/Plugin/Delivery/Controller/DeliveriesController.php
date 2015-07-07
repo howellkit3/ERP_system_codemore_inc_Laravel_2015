@@ -172,7 +172,7 @@ class DeliveriesController extends DeliveryAppController {
 
 
 
-        $this->Delivery->bindDelivery();
+        $this->Delivery->bindDeliveryView();
         $deliveryEdit = $this->Delivery->find('all', array(
                                          'conditions' => array(
                                         'Delivery.schedule_uuid' => $clientsOrderUuid
@@ -180,8 +180,14 @@ class DeliveriesController extends DeliveryAppController {
                                         'order' => 'Delivery.id DESC'
                                     ));
 
+        //pr($deliveryEdit); exit;
+
         $this->Delivery->bindDelivery();
         $drData = $this->Delivery->find('all');
+
+        $this->DeliveryReceipt->bindDelivery();
+
+        $DeliveryReceiptData =  $this->DeliveryReceipt->find('all');
 
         $deliveryDetailList = $this->DeliveryDetail->find('list',array('fields' => array('delivery_uuid', 'delivered_quantity')));
         
@@ -228,7 +234,7 @@ class DeliveriesController extends DeliveryAppController {
             $this->Session->setFlash(__('Unable to update your post.'));
         }
 
-        $this->set(compact('driverList','helperList','truckList','deliveryScheduleId','quotationId','clientsOrderUuid','scheduleInfo','deliveryData', 'quantityInfo','deliveryDataID','deliveryDetailsData', 'deliveryEdit', 'deliveryDetailList','deliveryList','deliveryStatus', 'orderList', 'orderListHelper', 'orderDeliveryList', 'clientsOrder', 'companyAddress', 'drData', 'deliveryDetailsData'));
+        $this->set(compact('driverList','helperList','truckList','deliveryScheduleId','quotationId','clientsOrderUuid','scheduleInfo','deliveryData', 'quantityInfo','deliveryDataID','deliveryDetailsData', 'deliveryEdit', 'deliveryDetailList','deliveryList','deliveryStatus', 'orderList', 'orderListHelper', 'orderDeliveryList', 'clientsOrder', 'companyAddress', 'drData', 'deliveryDetailsData', 'DeliveryReceiptData'));
         
         //if ($gatepass == 1) {
           
@@ -342,16 +348,30 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
+        $this->loadModel('Delivery.DeliveryReceipt');
+
+        $this->loadModel('Delivery.Transmittal');
+
         $this->loadModel('Sales.ClientOrder');
 
-        $this->Delivery->bindDeliveryTrans();
+        $this->Delivery->bindDeliveryView();
       
         $deliveryEdit = $this->Delivery->find('all', array(
                                              'conditions' => array(
                                             'DeliveryDetail.status' => 'Incomplete'),
-                                            'order' => 'DeliveryDetail.modified DESC',
-                                            'fields' => array('DISTINCT Delivery.dr_uuid', 'DeliveryDetail.schedule','DeliveryDetail.location', 'DeliveryDetail.quantity','DeliveryDetail.delivered_quantity', 'DeliveryDetail.status', 'DeliveryReceipt.type', 'Delivery.schedule_uuid','DeliveryDetail.id', 'Transmittal.type' ,'DeliveryDetail.delivery_uuid'),
+                                            'order' => 'DeliveryDetail.modified DESC'
+                                           // 'fields' => array('DISTINCT Delivery.dr_uuid', 'DeliveryDetail.schedule','DeliveryDetail.location', 'DeliveryDetail.quantity','DeliveryDetail.delivered_quantity', 'DeliveryDetail.status', 'DeliveryReceipt.type', 'Delivery.schedule_uuid','DeliveryDetail.id', 'Transmittal.type' ,'DeliveryDetail.delivery_uuid'),
                                         ));
+
+        $this->DeliveryReceipt->bindDelivery();
+
+        $DeliveryReceiptData =  $this->DeliveryReceipt->find('all');
+
+        $this->Transmittal->bindDelivery();
+
+        $TransmittalData =  $this->Transmittal->find('all');
+
+        //pr($TranmisttalData); exit;
 
         $this->ClientOrder->bindDelivery();
 
@@ -359,7 +379,7 @@ class DeliveriesController extends DeliveryAppController {
 
         $scheduleInfo = $this->ClientOrder->find('all');
 
-        $this->set(compact('deliveryEdit', 'scheduleInfo', 'clientOrderData'));     
+        $this->set(compact('deliveryEdit', 'scheduleInfo', 'clientOrderData', 'DeliveryReceiptData', 'TransmittalData'));     
             
     }
 

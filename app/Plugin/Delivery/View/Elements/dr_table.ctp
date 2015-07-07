@@ -50,6 +50,19 @@ $totalremaining = 0;
                         
                         </td>
 
+                         <td class="">
+
+                            <?php if(!empty($deliveryDataList['DeliveryReceipt']['type'])){ 
+
+                               echo 'for replacing'; 
+                            }else{
+
+                                echo ''; 
+
+                            } ?>  
+
+                        </td>
+
                         <td>
 
                             <?php  
