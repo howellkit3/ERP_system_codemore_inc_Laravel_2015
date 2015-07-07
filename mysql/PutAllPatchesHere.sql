@@ -382,3 +382,23 @@ insert  into `trucks`(`id`,`truck_no`,`created_by`,`modified_by`,`created`,`modi
 /** howell kit added this 07/03/2015  */
 
 ALTER TABLE `koufu_delivery`.`transmittals` ADD COLUMN `type` VARCHAR(60) NULL AFTER `quantity`;
+
+#NOTE: SELECT KOUFU ACCOUNTING DATABASE ----
+/** bien added this 07/07/2015  */
+
+DROP TABLE IF EXISTS `suppliers`;
+
+CREATE TABLE `suppliers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uuid` int(11) DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `short_name` varchar(80) DEFAULT NULL,
+  `description` text,
+  `website` varchar(255) DEFAULT NULL,
+  `tin` varchar(250) DEFAULT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;

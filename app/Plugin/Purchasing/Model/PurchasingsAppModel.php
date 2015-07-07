@@ -2,6 +2,6 @@
 
 App::uses('AppModel', 'Model');
 
-class PurchasingsAppModel extends AppModel {
+class PurchasingAppModel extends AppModel {
 
 }

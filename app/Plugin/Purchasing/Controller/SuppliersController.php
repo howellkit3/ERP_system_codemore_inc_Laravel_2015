@@ -15,7 +15,7 @@ class SuppliersController extends PurchasingAppController {
          $this->paginate = array(
             'conditions' => $conditions,
             'limit' => $limit,
-            'fields' => array('id', 'name', 'description','website','created'),
+            'fields' => array('id', 'name', 'description','website','created','tin'),
             'order' => 'Supplier.created DESC',
         );
 
@@ -37,18 +37,18 @@ class SuppliersController extends PurchasingAppController {
 
             	$this->request->data = $this->Supplier->formatData($this->request->data,$userData['User']['id']);
             	$this->request->data['Supplier']['uuid'] = time();
-            	pr($this->request->data);exit();
+            	$this->request->data['Supplier']['created_by'] = $userData['User']['id'];
+            	$this->request->data['Supplier']['modified_by'] = $userData['User']['id'];
             	if ($this->Supplier->saveAssociated($this->request->data)) {
             		
-            		$suppplierId = $this->Supplier->id;
-
-            	 	$contactPersonId = $this->Supplier->ContactPerson->saveContact($this->request->data['ContactPersonData'], $suppplierId,$userData['User']['id']);
+            		$supplierId = $this->Supplier->id;
+            		
+            	 	$contactPersonId = $this->Supplier->ContactPerson->saveContact($this->request->data['ContactPersonData'], $supplierId,$userData['User']['id']);
             		$this->Supplier->Contact->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
-            		$this->Supplier->Address->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
+            		//$this->Supplier->Address->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
             		$this->Supplier->Email->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
 
-
-	            	$this->Session->setFlash('Save Successfully','success');
+	            	$this->Session->setFlash('Supplier Successfully save.','success');
 
 	            	return $this->redirect(array('action' => 'index'));
 
@@ -63,7 +63,7 @@ class SuppliersController extends PurchasingAppController {
         }
 		
 	}
-	
+
 	public function view ($dataId = null) {
 
 		if (!empty($dataId)) {
@@ -101,32 +101,30 @@ class SuppliersController extends PurchasingAppController {
 
 		if (!empty($this->request->data)) {
 
+        	$this->Supplier->bind(array('Address','Product','Permit','Email','Organization','Contact','ContactPerson'));
+
+        	$user = $this->Session->read('Auth.User');
+
+        	$this->request->data = $this->Supplier->formatData($this->request->data,$user['id']);
+
+        	
+        	if ($this->Supplier->saveAssociated($this->request->data)) {
+
+        		$contactPersonId = $this->Supplier->ContactPerson->saveContact($this->request->data['ContactPersonData'], $this->Supplier->id,$userData['User']['id']);
+        		
+        		$this->Supplier->Contact->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
+        		//$this->Supplier->Address->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
+        		$this->Supplier->Email->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
 
 
-	        	$this->Supplier->bind(array('Address','Product','Permit','Email','Organization','Contact','ContactPerson'));
+				$this->Session->setFlash('Edit Supplier Successfully','success');
 
-	        	$user = $this->Session->read('Auth.User');
+            	return $this->redirect(array('action' => 'index'));
 
-	        	$this->request->data = $this->Supplier->formatData($this->request->data,$user['id']);
+            } else {
 
-	        	
-	        	if ($this->Supplier->saveAssociated($this->request->data)) {
-
-	        		$contactPersonId = $this->Supplier->ContactPerson->saveContact($this->request->data['ContactPersonData'], $this->Supplier->id,$userData['User']['id']);
-            		
-            		$this->Supplier->Contact->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
-            		$this->Supplier->Address->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
-            		$this->Supplier->Email->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
-
-
-					$this->Session->setFlash('Edit Supplier Successfully','success');
-
-	            	return $this->redirect(array('action' => 'index'));
-
-	            } else {
-
-	            	$this->Session->setFlash('There\'s a problem saving the data','error');
-	            }
+            	$this->Session->setFlash('There\'s a problem saving the data','error');
+            }
 	          
 
 		} else {
@@ -137,15 +135,15 @@ class SuppliersController extends PurchasingAppController {
 				$this->Supplier->bind(array('Address','Product','Permit','Email','Organization','Contact','ContactPerson'));
 
 				$this->request->data = $this->Supplier->read(null,$dataId);
-
+				
 				$this->Supplier->ContactPerson->bind(array('Address', 'Email', 'Contact'));
 
-			    $contactPerson = $this->Supplier->ContactPerson->find('first', array(
+			    $contactPerson = $this->Supplier->ContactPerson->find('all', array(
 			        'conditions' => array('ContactPerson.supplier_id' => $dataId)
 			    ));
 
-			    $this->request->data['ContactPersonInfo'] =  $contactPerson;
-
+				$this->request->data['ContactPersonData'] =  $contactPerson;
+				//pr($this->request->data);exit();
 			}
 		}
 
