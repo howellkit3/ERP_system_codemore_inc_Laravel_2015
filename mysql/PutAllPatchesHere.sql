@@ -383,7 +383,7 @@ insert  into `trucks`(`id`,`truck_no`,`created_by`,`modified_by`,`created`,`modi
 
 ALTER TABLE `koufu_delivery`.`transmittals` ADD COLUMN `type` VARCHAR(60) NULL AFTER `quantity`;
 
-#NOTE: SELECT KOUFU ACCOUNTING DATABASE ----
+#NOTE: SELECT KOUFU PURCHASING DATABASE ----
 /** bien added this 07/07/2015  */
 
 DROP TABLE IF EXISTS `suppliers`;
