@@ -20,7 +20,7 @@ class Organization extends AppModel {
 		$this->bindModel(array(
 			'belongsTo' => array(
 				'Supplier' => array(
-					'className' => 'Purchasings.Supplier',
+					'className' => 'Purchasing.Supplier',
 					'foreignKey' => 'supplier_id',
 					'dependent' => true
 				),
