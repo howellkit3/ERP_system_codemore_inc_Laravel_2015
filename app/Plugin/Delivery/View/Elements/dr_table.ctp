@@ -22,7 +22,7 @@ $totalremaining = 0;
 
                         <td class="">
 
-                            <?php echo $deliveryDataList['DeliveryReceipt']['location']; ?>
+                            <?php echo ucfirst($deliveryDataList['DeliveryReceipt']['location']); ?>
                         
                         </td>
 
