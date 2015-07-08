@@ -11,7 +11,16 @@
 			<?php echo $list['Supplier']['tin'] ?>
 		</td>
 		<td class="text-center">
-			 <?php //echo date('M d, Y', strtotime($list['Supplier']['created'])); ?>
+			<?php 
+                if(!empty($list['SupplierContactPerson'])) { 
+                    
+                    echo ucfirst($list['SupplierContactPerson'][0]['firstname']);  
+                    echo '&nbsp';
+                    echo ucfirst($list['SupplierContactPerson'][0]['middlename']); 
+                    echo '&nbsp';
+                    echo ucfirst($list['SupplierContactPerson'][0]['lastname']); 
+                } 
+            ?>
 		</td>
 		<td class="text-center">
 			 <?php echo date('M d, Y', strtotime($list['Supplier']['created'])); ?>
@@ -24,7 +33,7 @@
 	                    </span> ',
                     array('controller' => 'suppliers',
                     	'action' => 'view',
-                    	$list['Supplier']['id']),
+                    	$list['Supplier']['id'],'plugin' => 'purchasing'),
                     array('class' =>' table-link',
                     	'escape' => false
                     	,'title'=>'View Information'));
@@ -36,7 +45,7 @@
 		                </span> ',
 	                 array('controller' => 'suppliers',
 	                  	'action' => 'edit',
-	                 	 $list['Supplier']['id']),
+	                 	 $list['Supplier']['id'],'plugin' => 'purchasing'),
 	                 array('class' =>' table-link',
 	                 	'escape' => false,
 	                 	'title'=>'Edit Information'));

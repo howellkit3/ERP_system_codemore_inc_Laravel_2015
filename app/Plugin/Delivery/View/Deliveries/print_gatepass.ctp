@@ -8,16 +8,16 @@
  	$objTpl->setActiveSheetIndex(0)
                         ->setCellValue('J3', $gateData['GatePass']['id'])
                         ->setCellValue('J6', (new \DateTime())->format('l, F d, Y '))
-                        ->setCellValue('B8', $clientData['Product']['name'])
+                        ->setCellValue('B8', ucwords($clientData['Product']['name']))
                         ->setCellValue('F8', $drData['DeliveryDetail']['quantity'])
                         ->setCellValue('I8', $units[$clientData['QuotationItemDetail']['quantity_unit_id']])
                         ->setCellValue('J8', $gateData['GatePass']['remarks'])
-                        ->setCellValue('C10', $truckList[$gateData['GatePass']['truck_id']])
-                        ->setCellValue('C11', $driverList[$gateData['GatePass']['driver_id']]);
+                        ->setCellValue('C10', ucwords(strtoupper($truckList[$gateData['GatePass']['truck_id']])))
+                        ->setCellValue('C11', ucwords($driverList[$gateData['GatePass']['driver_id']]));
     $counter =  12;                   
     foreach ($assistData as $key => $helperlist) {
         $objTpl->setActiveSheetIndex(0)
-                        ->setCellValue('C'.$counter, $assList[$helperlist['GatePassAssistant']['helper_id']]);
+                        ->setCellValue('C'.$counter, ucwords($assList[$helperlist['GatePassAssistant']['helper_id']]));
         $counter++;
     }
                        

@@ -38,27 +38,27 @@
                         </thead>
 
                         <tbody>
-                            <?php foreach ($rawData  as $key => $list) { ?>
+                            <?php //foreach ($rawData  as $key => $list) { ?>
                        
                             <tr>
                                 <td>
-                                    <?php echo $list['RawMaterial']['name'] ?>
+                                    <?php //echo $list['RawMaterial']['name'] ?>
                                 </td>
                                 <td>
-                                    <?php echo $list['RawMaterial']['unit'] ?>
+                                    <?php //echo $list['RawMaterial']['unit'] ?>
                                 </td>
                                 <td>
-                                    <?php echo $list['RawMaterial']['unit_cost'] ?>
+                                    <?php //echo $list['RawMaterial']['unit_cost'] ?>
                                 </td>
                                 <td>
-                                    <?php echo $list['RawMaterial']['qty'] ?>
+                                    <?php //echo $list['RawMaterial']['qty'] ?>
                                 </td>
                                 <td>
-                                    <?php echo $list['RawMaterial']['description'] ?>
+                                    <?php //echo $list['RawMaterial']['description'] ?>
                                 </td>
 
                                 <td class="text-center">
-                                    <?php echo date('M d, Y', strtotime($list['RawMaterial']['created'])); ?>
+                                    <?php //echo date('M d, Y', strtotime($list['RawMaterial']['created'])); ?>
                                 </td>
                                 <td  class="text-center">
                                 <?php
@@ -74,33 +74,33 @@
                                 //      ,'title'=>'View Information'));
                                 ?>
                                 <?php
-                                    echo $this->Html->link('<span class="fa-stack">
-                                    <i class="fa fa-square fa-stack-2x"></i>
-                                    <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-                                    </span> ',
-                                    array('controller' => 'raw_materials',
-                                    'action' => 'edit',$list['RawMaterial']['id']
-                                    ),
-                                    array('class' =>' table-link',
-                                    'escape' => false,
-                                    'title'=>'Edit Information'));
+                                    // echo $this->Html->link('<span class="fa-stack">
+                                    // <i class="fa fa-square fa-stack-2x"></i>
+                                    // <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                    // </span> ',
+                                    // array('controller' => 'raw_materials',
+                                    // 'action' => 'edit',$list['RawMaterial']['id']
+                                    // ),
+                                    // array('class' =>' table-link',
+                                    // 'escape' => false,
+                                    // 'title'=>'Edit Information'));
                                 ?>
                                 <?php
-                                    echo $this->Html->link('<span class="fa-stack">
-                                    <i class="fa fa-square fa-stack-2x"></i>
-                                    <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-                                    </span>', 
-                                    array('controller' => 'raw_materials', 
-                                    'action' => 'delete',$list['RawMaterial']['id']
-                                    ),
-                                    array('class' =>' table-link',
-                                    'escape' => false,
-                                    'list'=>'Delete Information',
-                                    'confirm' => 'Do you want to delete Raw Material?'));
+                                    // echo $this->Html->link('<span class="fa-stack">
+                                    // <i class="fa fa-square fa-stack-2x"></i>
+                                    // <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                    // </span>', 
+                                    // array('controller' => 'raw_materials', 
+                                    // 'action' => 'delete',$list['RawMaterial']['id']
+                                    // ),
+                                    // array('class' =>' table-link',
+                                    // 'escape' => false,
+                                    // 'list'=>'Delete Information',
+                                    // 'confirm' => 'Do you want to delete Raw Material?'));
                                 ?>
                                 </td>
                             </tr>
-                            <?php  } ?>
+                            <?php  //} ?>
                         </tbody>
                      </table>
                     <hr>

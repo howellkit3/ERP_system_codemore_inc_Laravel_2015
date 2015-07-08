@@ -912,12 +912,30 @@ class DeliveriesController extends DeliveryAppController {
         $this->loadModel('Driver');
 
         $truckList = $this->Truck->find('list',array('fields' => array('id', 'truck_no'),'order' => 'truck_no ASC'));
+       
+        foreach ($truckList as $key => $value) {
+
+            $truckListUpper[$key] = ucwords(strtoupper($value));
+           
+        }
 
         $helperList = $this->Assistant->find('list',array('fields' => array('id', 'full_name'),'order' => 'full_name ASC'));
 
+        foreach ($helperList as $key => $value) {
+
+            $helperListUpper[$key] = ucwords($value);
+           
+        }
+
         $driverList = $this->Driver->find('list',array('fields' => array('id', 'full_name'),'order' => 'full_name ASC'));
 
-       $this->set(compact('truckList','helperList','driverList','deliveryScheduleId','quotationId','clientsOrderUuid','drId','druuid'));
+        foreach ($driverList as $key => $value) {
+
+            $driverListUpper[$key] = ucwords($value);
+           
+        }
+        
+        $this->set(compact('truckListUpper','helperListUpper','driverListUpper','deliveryScheduleId','quotationId','clientsOrderUuid','drId','druuid'));
     }
 
 }

@@ -128,10 +128,22 @@
                           echo $this->Form->input('Transmittal.unit', array(
                           'class' => 'form-control item_type',
                           'label' => false,
+                          'disabled' => 'disabled',
                           'required' => 'required',
                           'placeholder' => 'Item Unit',
                           'value' => $clientData['QuotationItemDetail']['unit_price_unit_id']));
                           ?>
+
+                          <?php 
+                          echo $this->Form->input('Transmittal.unit', array(
+                          'class' => 'form-control item_type',
+                          'label' => false,
+                          'type' => 'hidden',
+                          'required' => 'required',
+                          'placeholder' => 'Item Unit',
+                          'value' => $clientData['QuotationItemDetail']['unit_price_unit_id']));
+                          ?>
+
                           </div>
                       </div>
 

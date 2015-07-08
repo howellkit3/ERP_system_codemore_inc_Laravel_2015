@@ -19,12 +19,12 @@ class Contact extends AppModel {
 		$this->bindModel(array(
 			'belongsTo' => array(
 				'Supplier' => array(
-					'className' => 'Supplier',
+					'className' => 'Purchasing.Supplier',
 					'foreignKey' => 'foreign_key',
 					'dependent' => true
 				),
-				'ContactPerson' => array(
-					'className' => 'ContactPerson',
+				'SupplierContactPerson' => array(
+					'className' => 'Purchasing.SupplierContactPerson',
 					'foreignKey' => 'foreign_key',
 					'dependent' => true
 				)
@@ -57,6 +57,21 @@ class Contact extends AppModel {
 		
 		$this->data[$this->name]['created_by'] = $userId;
 		$this->data[$this->name]['modified_by'] = $userId;
+	}
+
+	public function saveNumber($data = null, $supplierId = null, $auth = null){
+
+		$this->create();
+		$data['Contact']['created_by'] = $auth;
+		$data['Contact']['modified_by'] = $auth;
+		$data['Contact']['foreign_key'] = $supplierId;
+		
+    	if($this->save($data['Contact'])){
+
+            return $this->id;
+
+        } 
+		
 	}
 	
 }

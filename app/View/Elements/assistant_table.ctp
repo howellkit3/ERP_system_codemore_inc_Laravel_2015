@@ -3,7 +3,7 @@
     <tbody aria-relevant="all" aria-live="polite" role="alert">
         <tr class="">
             <td>
-                <?php  echo $assistantDataList['Assistant']['full_name'] ?>
+                <?php  echo ucwords($assistantDataList['Assistant']['full_name']) ?>
             </td>
             <td class="text-center">
                 <?php echo  date('M d, Y', strtotime($assistantDataList['Assistant']['created'])); ?>

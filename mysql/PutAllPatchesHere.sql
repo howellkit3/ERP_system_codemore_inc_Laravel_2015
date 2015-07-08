@@ -383,7 +383,7 @@ insert  into `trucks`(`id`,`truck_no`,`created_by`,`modified_by`,`created`,`modi
 
 ALTER TABLE `koufu_delivery`.`transmittals` ADD COLUMN `type` VARCHAR(60) NULL AFTER `quantity`;
 
-#NOTE: SELECT KOUFU ACCOUNTING DATABASE ----
+#NOTE: SELECT KOUFU PURCHASING DATABASE ----
 /** bien added this 07/07/2015  */
 
 DROP TABLE IF EXISTS `suppliers`;
@@ -401,4 +401,26 @@ CREATE TABLE `suppliers` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+#NOTE: SELECT KOUFU PURCHASING DATABASE ----
+/** bien added this 07/08/2015  */
+
+DROP TABLE IF EXISTS `contact_people`;
+
+CREATE TABLE `supplier_contact_people` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `supplier_id` int(11) DEFAULT NULL,
+  `prefix` varchar(45) DEFAULT NULL,
+  `firstname` varchar(50) DEFAULT NULL,
+  `middlename` varchar(50) DEFAULT NULL,
+  `lastname` varchar(50) DEFAULT NULL,
+  `position` varchar(120) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` timestamp NULL DEFAULT NULL,
+  `modified` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_idx` (`supplier_id`),
+  CONSTRAINT `id` FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;

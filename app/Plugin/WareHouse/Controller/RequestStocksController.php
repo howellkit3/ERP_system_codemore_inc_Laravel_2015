@@ -4,13 +4,13 @@ App::uses('SessionComponent', 'Controller/Component');
 
 class RequestStocksController extends WareHouseAppController {
 
-	public $useDbConfig = array('koufu_ware_house','koufu_purchasing');
-	public $uses = array('WareHouse.RequestStock');
+	public $useDbConfig = array('koufu_warehouse');
+	//public $uses = array('WareHouse.RequestStock');
 
 	public function index(){
-		$resquestList = $this->RequestStock->find('all');
+		// $resquestList = $this->RequestStock->find('all');
 	
-		$this->set(compact('resquestList'));
+		// $this->set(compact('resquestList'));
 
 	}
 

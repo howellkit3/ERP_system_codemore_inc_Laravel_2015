@@ -19,13 +19,13 @@
 						
 						<div class="main-box-body clearfix">
 							
-							<div class="profile-stars">
+							<!-- <div class="profile-stars">
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star-o"></i>
-							</div>
+							</div> -->
 							
 							<div class="profile-since">
 								<?php echo date('M d, Y', strtotime($suppliers['Supplier']['created'])); ?>
@@ -79,7 +79,7 @@
 								<li><a href="#tab-chat" data-toggle="tab">Email</a></li>
 								<li><a href="#tab-friends" data-toggle="tab">Contact Person</a></li>
 								<?php 
-			                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'customer_sales', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+			                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'suppliers', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
 			                    ?>
 							</ul>
 							
@@ -92,6 +92,7 @@
 											<div class="story-content remove-pad">
 												<header class="story-header">
 													<div class="story-author">
+														<a data-toggle="modal" href="#myModal" class="btn btn-primary mrg-b-lg pull-right"><i class="fa fa-plus-circle fa-lg"></i> Add Address</a>
 														<table class="table table-striped table-hover">
 									                        <thead>
 									                            <tr>
@@ -152,7 +153,7 @@
 								<div class="tab-pane fade" id="tab-activity">
 									
 									<div class="table-responsive">
-
+										<a data-toggle="modal" href="#myModalContact" class="btn btn-primary mrg-b-lg pull-right"><i class="fa fa-plus-circle fa-lg"></i> Add Number</a>
 										<table class="table table-striped table-hover">
 					                        <thead>
 					                            <tr>
@@ -184,6 +185,7 @@
 								</div>
 								
 								<div class="tab-pane clearfix fade" id="tab-friends">
+									<a data-toggle="modal" href="#myModalContactPerson" class="btn btn-primary mrg-b-lg pull-right"><i class="fa fa-plus-circle fa-lg"></i> Add Contact Person</a>
 									<table class="table table-striped table-hover">
 				                        <thead>
 				                            <tr>
@@ -193,7 +195,7 @@
 				                            </tr>
 				                        </thead>
 				                        <?php
-					                		foreach($suppliers['ContactPerson'] as $contactPerson) { ?>
+					                		foreach($suppliers['SupplierContactPerson'] as $contactPerson) { ?>
 						                        <tbody aria-relevant="all" aria-live="polite" role="alert">
 					                         		<tr>
 					                         			<td>
@@ -222,6 +224,7 @@
 								
 								<div class="tab-pane fade" id="tab-chat">
 									<div class="table-responsive">
+										<a data-toggle="modal" href="#myModalEmail" class="btn btn-primary mrg-b-lg pull-right"><i class="fa fa-plus-circle fa-lg"></i> Add Email</a>
 										<table class="table table-striped table-hover">
 					                        <thead>
 					                            <tr>
@@ -259,3 +262,4 @@
 		</div>
 	</div>
 </div>
+<?php echo $this->element('supplier_modal'); ?>

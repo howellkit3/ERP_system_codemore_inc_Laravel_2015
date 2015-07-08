@@ -391,3 +391,7 @@ body.dragging, body.dragging * {
 }*/
 
 /*z index*/
+
+.gatefield{
+  text-transform: capitalize !important;
+}

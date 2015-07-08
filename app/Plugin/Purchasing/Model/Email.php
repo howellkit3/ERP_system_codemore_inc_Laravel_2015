@@ -15,7 +15,7 @@ class Email extends AppModel {
 
 	public $actsAs = array('Containable');
 
-	public function bind($model = array('Supplier')){
+	public function bind($model = array('Group')){
 
 		$this->bindModel(array(
 			'belongsTo' => array(
@@ -24,6 +24,11 @@ class Email extends AppModel {
 					'foreignKey' => 'foreign_key',
 					'dependent' => true
 				),
+				'SupplierContactPerson' => array(
+					'className' => 'Purchasing.SupplierContactPerson',
+					'foreignKey' => 'foreign_key',
+					'dependent' => true
+				)
 			)
 		));
 
@@ -51,6 +56,21 @@ class Email extends AppModel {
 			}
 			$this->saveAll($emailValue);
 		}
+		
+	}
+
+	public function saveEmail($data = null, $supplierId = null, $auth = null){
+
+		$this->create();
+		$data['Email']['created_by'] = $auth;
+		$data['Email']['modified_by'] = $auth;
+		$data['Email']['foreign_key'] = $supplierId;
+	
+    	if($this->save($data['Email'])){
+
+            return $this->id;
+
+        } 
 		
 	}
 
