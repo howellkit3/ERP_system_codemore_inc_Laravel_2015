@@ -15,34 +15,20 @@ class Supplier extends AppModel {
 
 	public $actsAs = array('Containable');
 
-	public function bind($model = array('Product')){
+	public function bind($model = array('Group')){
 
 		$this->bindModel(array(
 			'hasMany' => array(
+				'SupplierContactPerson' => array(
+					'className' => 'Purchasing.SupplierContactPerson',
+					'foreignKey' => 'supplier_id',
+					'dependent' => true
+				),
+				
 				'Address' => array(
 					'className' => 'Purchasing.Address',
 					'foreignKey' => 'foreign_key',
-					'dependent' => true
-				),
-				'Product' => array(
-					'className' => 'Purchasing.Product',
-					'foreignKey' => 'supplier_id',
-					'dependent' => true
-				),
-				'Permit' => array(
-					'className' => 'Purchasing.Permit',
-					'foreignKey' => 'supplier_id',
-					'dependent' => true
-				),
-				'Email' => array(
-					'className' => 'Purchasing.Email',
-					'foreignKey' => 'foreign_key',
 					'conditions' => "model = 'Supplier'",
-					'dependent' => true
-				),
-				'ContactPerson' => array(
-					'className' => 'Purchasing.ContactPerson',
-					'foreignKey' => 'supplier_id',
 					'dependent' => true
 				),
 				'Contact' => array(
@@ -51,14 +37,14 @@ class Supplier extends AppModel {
 					'conditions' => "model = 'Supplier'",
 					'dependent' => true
 				),
-			),
-			'hasOne' => array(
-				'Organization'  => array (
-					'className' => 'Purchasing.Organization',
-					'foreignKey'=> 'supplier_id',
+				'Email' => array(
+					'className' => 'Purchasing.Email',
+					'foreignKey' => 'foreign_key',
+					'conditions' => "model = 'Supplier'",
 					'dependent' => true
-					)	
 				)
+				
+			)
 		),false);
 
 		$this->contain($model);

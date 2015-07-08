@@ -3,30 +3,30 @@
 
 class RawMaterialsController extends WareHouseAppController {
 
-	public $useDbConfig = array('koufu_ware_house');
+	public $useDbConfig = array('koufu_warehouse');
 
 	public function index(){
-		$this->RawMaterial->bind(array('PullOut'));
-		$this->RawMaterial->recursive = 1;
-		$this->RawMaterial->virtualFields['TotalHours'] = 0;
-		$rawData = $this->RawMaterial->find('all');
+		// $this->RawMaterial->bind(array('PullOut'));
+		// $this->RawMaterial->recursive = 1;
+		// $this->RawMaterial->virtualFields['TotalHours'] = 0;
+		// $rawData = $this->RawMaterial->find('all');
 
-		// $rawData = $this->RawMaterial->find('all',array('fields' => array('SUM(qty) as PullOut__TotalHours',
-		// 	'RawMaterial.id',
-		// 	'RawMaterial.name',
-		// 	)));
-		$sum = 0;
-		foreach ($rawData as $key => $value) {
-				pr($key);	
-			foreach ($value['PullOut'] as $pullout_key => $val) {
-				 $sum+= $val['qty'];
-			}
-			$rawData[$key]['RawMaterial']['total_minus'] = $value['RawMaterial']['qty'] - $sum;
-		}
+		// // $rawData = $this->RawMaterial->find('all',array('fields' => array('SUM(qty) as PullOut__TotalHours',
+		// // 	'RawMaterial.id',
+		// // 	'RawMaterial.name',
+		// // 	)));
+		// $sum = 0;
+		// foreach ($rawData as $key => $value) {
+		// 		pr($key);	
+		// 	foreach ($value['PullOut'] as $pullout_key => $val) {
+		// 		 $sum+= $val['qty'];
+		// 	}
+		// 	$rawData[$key]['RawMaterial']['total_minus'] = $value['RawMaterial']['qty'] - $sum;
+		// }
 			
 	
 
-		$this->set(compact('rawData'));
+		// $this->set(compact('rawData'));
 		
 
 	}

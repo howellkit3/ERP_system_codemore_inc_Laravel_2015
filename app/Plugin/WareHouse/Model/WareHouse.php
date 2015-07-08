@@ -8,7 +8,7 @@ App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
  */
 class WareHouse extends AppModel {
 
-    public $useDbConfig = 'koufu_ware_house';
+    public $useDbConfig = 'koufu_warehouse';
 
     public $name = 'WareHouse';
 

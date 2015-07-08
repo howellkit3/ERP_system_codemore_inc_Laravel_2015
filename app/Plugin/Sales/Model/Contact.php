@@ -22,12 +22,12 @@ class Contact extends AppModel {
 		$this->bindModel(array(
 			'belongsTo' => array(
 				'Company' => array(
-					'className' => 'Company',
+					'className' => 'Sales.Company',
 					'foreignKey' => 'foreign_key',
 					'dependent' => true
 				),
 				'ContactPerson' => array(
-					'className' => 'ContactPerson',
+					'className' => 'Sales.ContactPerson',
 					'foreignKey' => 'foreign_key',
 					'dependent' => true
 				)

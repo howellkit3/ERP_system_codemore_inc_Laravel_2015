@@ -3,7 +3,7 @@
 
 class WareHouseSystemsController extends WareHouseAppController {
 
-	public $useDbConfig = array('koufu_ware_house');
+	public $useDbConfig = array('koufu_warehouse');
 	public $uses = array('WareHouse.CustomField');
 
 	public function beforeFilter() {

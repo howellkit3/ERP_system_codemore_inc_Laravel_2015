@@ -9,7 +9,7 @@ App::uses('AuthComponent', 'Controller/Component');
  */
 class RawMaterial extends AppModel {
 
-    public $useDbConfig = 'koufu_ware_house';
+    public $useDbConfig = 'koufu_warehouse';
     
   	public $name = 'RawMaterial';
 

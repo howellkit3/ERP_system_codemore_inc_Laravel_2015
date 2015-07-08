@@ -61,11 +61,11 @@
 
 		
 					
-					<!-- <li class="<?php echo ($this->params['plugin'] == 'ware_house') ? 'active' : '' ?>">
+					<li class="<?php echo ($this->params['plugin'] == 'ware_house') ? 'active' : '' ?>">
 						<?php
 	 						 echo $this->Html->link( " <i class='fa fa-archive'></i> <span>Ware House</span>",   array('controller' =>'ware_house_systems','action'=>'index','plugin' => 'ware_house'),array('escape' => false) );
 	 					?>
-					</li> -->
+					</li>
 					<!-- <li class="<?php //echo ($this->params['plugin'] == 'production') ? 'active' : '' ?>"> -->
 						<?php
 	 					//	echo $this->Html->link( " <i class='fa fa-archive'></i> <span>Production</span>",   array('controller' =>'schedules',
@@ -87,6 +87,15 @@
 	 						echo $this->Html->link( " <i class='fa fa-money'></i> <span>Accounting</span>",   array('controller' =>'sales_invoice',
 	 											'action'=>'index',
 	 											'plugin' => 'accounting'),
+	 											array('escape' => false) );
+	 					?>
+					</li>
+
+					<li class="<?php echo ($this->params['plugin'] == 'human_resource') ? 'active' : '' ?>">
+						<?php
+	 						echo $this->Html->link( " <i class='fa fa-user'></i> <span>Human Resource</span>",   array('controller' =>'dashboards',
+	 											'action'=>'index',
+	 											'plugin' => ''),
 	 											array('escape' => false) );
 	 					?>
 					</li>
