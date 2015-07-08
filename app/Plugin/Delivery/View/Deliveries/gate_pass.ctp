@@ -69,7 +69,7 @@
                                         <div class="col-lg-8">
                                             <?php 
                                                 echo $this->Form->input('GatePass.truck_id', array(
-                                                    'options' => array($truckList),
+                                                    'options' => array($truckListUpper),
                                                     'type' => 'select',
                                                     'label' => false,
                                                     'class' => 'form-control required gatefield',
@@ -85,7 +85,7 @@
                                         <div class="col-lg-8">
                                             <?php 
                                                 echo ucfirst($this->Form->input('GatePass.driver_id', array(
-                                                        'options' => array($driverList),
+                                                        'options' => array($driverListUpper),
                                                         'type' => 'select',
                                                         'label' => false,
                                                         'class' => 'form-control required gatefield',
@@ -102,7 +102,7 @@
                                             <div class="col-lg-7">
                                                 <?php 
                                                     echo $this->Form->input('GatePassAssistant.0.helper_id', array(
-                                                        'options' => array($helperList),
+                                                        'options' => array($helperListUpper),
                                                         'type' => 'select',
                                                         'label' => false,
                                                         'class' => 'form-control required gatefield',

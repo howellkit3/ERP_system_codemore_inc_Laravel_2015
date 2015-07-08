@@ -7,13 +7,13 @@ App::uses('AuthComponent', 'Controller/Component');
  * User Model
  *
  */
-class ContactPerson extends AppModel {
+class SupplierContactPerson extends AppModel {
 
     public $useDbConfig = 'koufu_purchasing';
 
 	public $recursive = -1;
 
-	 public $name = 'ContactPerson';
+	 public $name = 'SupplierContactPerson';
 
 	public $actsAs = array('Containable');
 
@@ -23,7 +23,7 @@ class ContactPerson extends AppModel {
 			'belongsTo' => array(
 				'Supplier' => array(
 					'className' => 'Purchasing.Supplier',
-					'foreignKey' => 'company_id',
+					'foreignKey' => 'supplier_id',
 					'dependent' => true
 				),
 			),
@@ -46,6 +46,7 @@ class ContactPerson extends AppModel {
 					'dependent' => true,
 					'conditions' => "Email.model = 'ContactPerson'"
 				),
+				
 			)
 		));
 
@@ -104,6 +105,20 @@ class ContactPerson extends AppModel {
 
 
 		
+	}
+
+	public function saveContactPerson($data = null, $supplierId = null, $auth = null){
+		
+		$this->create();
+		$data['SupplierContactPerson']['created_by'] = $auth;
+		$data['SupplierContactPerson']['modified_by'] = $auth;
+		$data['SupplierContactPerson']['supplier_id'] = $supplierId;
+		
+    	if($this->save($data['SupplierContactPerson'])){
+
+            return $this->id;
+
+        } 
 	}
 	
 }

@@ -6,7 +6,11 @@ class SuppliersController extends PurchasingAppController {
 
 	public $helpers = array('Purchasing.Country');
 
+	public $uses = array('Purchasing.Supplier');
+
 	public function index() {
+
+		$this->Supplier->bind(array('Address','Email','Contact','SupplierContactPerson'));
 
 		$limit = 10;
 
@@ -33,7 +37,7 @@ class SuppliersController extends PurchasingAppController {
 
             if (!empty($this->request->data)) {
             	
-            	$this->Supplier->bind(array('Address','Product','Permit','Email','Organization','Contact','ContactPerson'));
+            	$this->Supplier->bind(array('Address','Email','Contact','SupplierContactPerson'));
 
             	$this->request->data = $this->Supplier->formatData($this->request->data,$userData['User']['id']);
             	$this->request->data['Supplier']['uuid'] = time();
@@ -43,7 +47,7 @@ class SuppliersController extends PurchasingAppController {
             		
             		$supplierId = $this->Supplier->id;
             		
-            	 	$contactPersonId = $this->Supplier->ContactPerson->saveContact($this->request->data['ContactPersonData'], $supplierId,$userData['User']['id']);
+            	 	$contactPersonId = $this->Supplier->SupplierContactPerson->saveContact($this->request->data['ContactPersonData'], $supplierId,$userData['User']['id']);
             		$this->Supplier->Contact->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
             		//$this->Supplier->Address->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
             		$this->Supplier->Email->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
@@ -68,7 +72,7 @@ class SuppliersController extends PurchasingAppController {
 
 		if (!empty($dataId)) {
 
-				$this->Supplier->bind(array('Address','Product','Permit','Email','Organization','Contact','ContactPerson'));
+				$this->Supplier->bind(array('Address','Email','Contact','SupplierContactPerson'));
 
 				$suppliers = $this->Supplier->findById($dataId);
 				
@@ -79,7 +83,7 @@ class SuppliersController extends PurchasingAppController {
 
 	public function delete($dataId = null){
 
-		$this->Supplier->bind(array('Address','Product','Permit','Email','Organization'));
+		$this->Supplier->bind(array('Address','Email'));
 
 		if ($this->Supplier->delete($dataId)) {
 			
@@ -101,16 +105,15 @@ class SuppliersController extends PurchasingAppController {
 
 		if (!empty($this->request->data)) {
 
-        	$this->Supplier->bind(array('Address','Product','Permit','Email','Organization','Contact','ContactPerson'));
+        	$this->Supplier->bind(array('Address','Email','Contact','SupplierContactPerson'));
 
         	$user = $this->Session->read('Auth.User');
 
         	$this->request->data = $this->Supplier->formatData($this->request->data,$user['id']);
 
-        	
         	if ($this->Supplier->saveAssociated($this->request->data)) {
 
-        		$contactPersonId = $this->Supplier->ContactPerson->saveContact($this->request->data['ContactPersonData'], $this->Supplier->id,$userData['User']['id']);
+        		$contactPersonId = $this->Supplier->SupplierContactPerson->saveContact($this->request->data['ContactPersonData'], $this->Supplier->id,$userData['User']['id']);
         		
         		$this->Supplier->Contact->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
         		//$this->Supplier->Address->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
@@ -132,14 +135,14 @@ class SuppliersController extends PurchasingAppController {
 
 			if (!empty($dataId)) {
 
-				$this->Supplier->bind(array('Address','Product','Permit','Email','Organization','Contact','ContactPerson'));
+				$this->Supplier->bind(array('Address','Email','Contact','SupplierContactPerson'));
 
 				$this->request->data = $this->Supplier->read(null,$dataId);
 				
-				$this->Supplier->ContactPerson->bind(array('Address', 'Email', 'Contact'));
+				$this->Supplier->SupplierContactPerson->bind(array('Address', 'Email', 'Contact'));
 
-			    $contactPerson = $this->Supplier->ContactPerson->find('all', array(
-			        'conditions' => array('ContactPerson.supplier_id' => $dataId)
+			    $contactPerson = $this->Supplier->SupplierContactPerson->find('all', array(
+			        'conditions' => array('SupplierContactPerson.supplier_id' => $dataId)
 			    ));
 
 				$this->request->data['ContactPersonData'] =  $contactPerson;
@@ -149,5 +152,53 @@ class SuppliersController extends PurchasingAppController {
 
 	}
 
+	public function add_data(){
+
+		$userData = $this->Session->read('Auth');
+	
+		if ($this->request->is('post')) {
+
+            if (!empty($this->request->data)) {
+
+            	$supplierId = $this->request->data['Supplier']['id'];
+
+            	$this->Supplier->bind(array('Address','Contact','Email','SupplierContactPerson'));
+
+            	if(!empty($this->request->data['Contact'])){
+            		//pr($this->request->data);exit();
+            		$this->Supplier->Contact->saveNumber($this->request->data, $supplierId, $userData['User']['id']);
+            		$this->Session->setFlash(__('Contact Successfully added in the system.'));
+            	}
+            	if(!empty($this->request->data['Address'])){
+            		//pr($this->request->data);exit();
+            		$this->Supplier->Address->saveAddress($this->request->data, $supplierId, $userData['User']['id']);
+            		$this->Session->setFlash(__('Address Successfully added in the system.'));
+            	}
+            	if(!empty($this->request->data['Email'])){
+            		//pr($this->request->data);exit();
+            		$this->Supplier->Email->saveEmail($this->request->data, $supplierId, $userData['User']['id']);
+            		$this->Session->setFlash(__('Email Successfully added in the system.'));
+            	}
+            	if(!empty($this->request->data['SupplierContactPerson'])){
+            		
+            		$personId = $this->Supplier->SupplierContactPerson->saveContactPerson($this->request->data, $supplierId, $userData['User']['id']);
+            		
+            		$this->Supplier->Contact->saveNumber($this->request->data, $personId, $userData['User']['id']);
+
+            		$this->Supplier->Email->saveEmail($this->request->data, $personId, $userData['User']['id']);
+
+            		$this->Session->setFlash(__('Contact Person Successfully added in the system.'));
+            	}
+            	
+            	$this->redirect(
+					array('controller' => 'suppliers', 'action' => 'view', $supplierId)
+				);
+			}
+		}
+	}
+
+	public function request_list(){
+		
+	}
 
 }

@@ -15,15 +15,20 @@ class Address extends AppModel {
 
 	public $actsAs = array('Containable');
 
-	public function bind($model = array('Product')){
+	public function bind($model = array('Group')){
 
 		$this->bindModel(array(
 			'belongsTo' => array(
 				'Supplier' => array(
 					'className' => 'Purchasing.Supplier',
 					'foreignKey' => 'foreign_key',
-					'dependent' => true
+					'dependent' => false
 				),
+				'SupplierContactPerson' => array(
+					'className' => 'Purchasing.SupplierContactPerson',
+					'foreignKey' => 'supplier_id',
+					'dependent' => false
+				)
 			)
 		));
 
@@ -56,6 +61,21 @@ class Address extends AppModel {
 
 		$this->data[$this->name]['created_by'] = $userId;
 		$this->data[$this->name]['modified_by'] = $userId;
+	}
+
+	public function saveAddress($data = null, $supplierId = null, $auth = null){
+
+		$this->create();
+		$data['Address']['created_by'] = $auth;
+		$data['Address']['modified_by'] = $auth;
+		$data['Address']['foreign_key'] = $supplierId;
+		
+    	if($this->save($data['Address'])){
+
+            return $this->id;
+
+        } 
+		
 	}
 
 }

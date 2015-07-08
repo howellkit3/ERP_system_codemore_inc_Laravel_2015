@@ -9,7 +9,7 @@ App::uses('AuthComponent', 'Controller/Component');
  */
 class CustomField extends AppModel {
 
-    public $useDbConfig = 'koufu_ware_house';
+    public $useDbConfig = 'koufu_warehouse';
     
 
 }
