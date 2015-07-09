@@ -51,15 +51,15 @@ $totalremaining = 0;
 
                         <td class="">
               
-                         <?php if (!empty($deliveryDataList['DeliveryDetail']['status'])) {  
+                         <?php  if (!empty($deliveryDataList['DeliveryDetail']['status'])) {  
 
-                                            if($deliveryDataList['DeliveryDetail']['status'] == 'Completed'){
+                                            if($deliveryDataList['DeliveryDetail']['status'] == '4'){
 
                                               echo "<span class='label label-success'>Completed</span>"; 
 
-                                            }else if($deliveryDataList['DeliveryDetail']['status'] == 'Incomplete'){   
+                                            }else if($deliveryDataList['DeliveryDetail']['status'] == '2'){   
 
-                                              echo "<span class='label label-danger'>Incomplete</span>";  
+                                              echo "<span class='label label-info'>Incomplete</span>";  
 
                                             }
 

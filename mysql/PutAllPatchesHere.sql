@@ -383,7 +383,7 @@ insert  into `trucks`(`id`,`truck_no`,`created_by`,`modified_by`,`created`,`modi
 
 ALTER TABLE `koufu_delivery`.`transmittals` ADD COLUMN `type` VARCHAR(60) NULL AFTER `quantity`;
 
-#NOTE: SELECT KOUFU PURCHASING DATABASE ----
+#NOTE: SELECT KOUFU SYSTEM DATABASE ----
 /** bien added this 07/07/2015  */
 
 DROP TABLE IF EXISTS `suppliers`;
@@ -403,7 +403,7 @@ CREATE TABLE `suppliers` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
-#NOTE: SELECT KOUFU PURCHASING DATABASE ----
+#NOTE: SELECT KOUFU SYSTEM DATABASE ----
 /** bien added this 07/08/2015  */
 
 DROP TABLE IF EXISTS `contact_people`;
@@ -431,3 +431,8 @@ CREATE TABLE `supplier_contact_people` (
 
 insert  into `status_field_holders`(`id`,`status`,`created_by`,`modified_by`,`created`,`modified`) values (1,'Approved',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(2,'Incomplete',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(3,'Delivered',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(4,'Completed',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(5,'Terminate',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(6,'Pending',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(7,'Due',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03');
 
+#NOTE: SELECT KOUFU DELIVERY DATABASE ----
+/** howellkit added this 07/09/2015  */
+
+ALTER TABLE `koufu_delivery`.`delivery_details` DROP COLUMN `status`;
+ALTER TABLE `koufu_delivery`.`delivery_details` ADD COLUMN  `status` INT(11) NULL AFTER `delivery_type`;

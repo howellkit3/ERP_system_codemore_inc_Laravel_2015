@@ -113,7 +113,7 @@ $totalremaining = 0;
                                     <tr>
                                         <td>Status</td>
                                         <td>
-                                            <?php         
+                                            <?php 
                                                 $uuidClientsOrder = $scheduleInfo['ClientOrderDeliverySchedule']['uuid'];
 
                                                 $arr = array();
@@ -131,7 +131,11 @@ $totalremaining = 0;
                                                     $dataholder = 0;
                                                     foreach ($arr as $key => $value) {
 
-                                                        if ($value == 'Incomplete') {
+                                                        if ($value == '2') {
+                                                            $dataholder = 1;
+                                                        }
+
+                                                        if ($value == '5') {
                                                             $dataholder = 1;
                                                         }
 
@@ -160,7 +164,7 @@ $totalremaining = 0;
 
                                                         echo "<span class='label label-success'>Delivered</span>";
 
-                                                    }elseif ($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] == 'Approved') { 
+                                                    }elseif ($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] == '1') { 
                                                     
                                                          echo "<span class='label label-warning'>Approved</span>"; ?> &nbsp<?php
                                                     } 
@@ -170,11 +174,15 @@ $totalremaining = 0;
                                                     echo "<span class='label label-default'>Waiting</span>"; ?> &nbsp
 
 
-                                                    <?php                
+                                                    <?php               
                                                     if(strtotime($Scheddate) < strtotime($Currentdate))
                                                     {
                                                         echo "<span class='label label-danger'>Due</span>"; 
-                                                    }  
+                                                    } 
+
+                                                     
+                                                     
+                                                    
 
                                             } ?>
 
@@ -207,23 +215,25 @@ $totalremaining = 0;
 
                         if(($totalremaining) == 0) {
 
-                            if($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] == 'Approved') { 
+                            if($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] == '1') { 
 
 
                                 foreach ($deliveryEdit as $deliveryDataList): 
 
                                    // pr($deliveryDataList['DeliveryReceipt']['type']);
 
-                                    // if((next($deliveryDataList)['delivery_uuid'] == $deliveryDataList['DeliveryDetail']['delivery_uuid']) OR $deliveryDataList['DeliveryReceipt']['type'] == 'replacing'){
+                                     if($deliveryDataList['DeliveryDetail']['status'] != 5){
 
                                         $difference = $deliveryDataList['DeliveryDetail']['quantity']; 
 
                                         array_push($pushRemaining,$difference );
 
-                                  //  }
+                                    }
 
 
                                 endforeach; 
+
+                               
 
                                 foreach ($pushRemaining as $key => $value) {
 
@@ -312,13 +322,17 @@ $totalremaining = 0;
 
                                             if (!empty($deliveryDataList['DeliveryDetail']['status'])) {  
 
-                                                if($deliveryDataList['DeliveryDetail']['status'] == 'Completed'){
+                                                if($deliveryDataList['DeliveryDetail']['status'] == '4'){
 
                                                     echo "<span class='label label-success'>Completed</span>"; 
 
-                                                }else if($deliveryDataList['DeliveryDetail']['status'] == 'Incomplete'){   
+                                                }else if($deliveryDataList['DeliveryDetail']['status'] == '2'){   
 
-                                                    echo "<span class='label label-danger'>Incomplete</span>";  
+                                                    echo "<span class='label label-info'>Incomplete</span>";  
+
+                                                }else if($deliveryDataList['DeliveryDetail']['status'] == '5'){
+
+                                                     echo "<span class='label label-danger'>Terminated</span>"; 
 
                                                 }
 
@@ -353,6 +367,30 @@ $totalremaining = 0;
 
                                             } 
 
+                                        if($deliveryDataList['DeliveryDetail']['status'] == '5'){
+
+                                            echo $this->Html->link('<span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit</font></span>
+                                                </span> ', array('controller' => 'deliveries', 'action' => 'delivery_edit',$deliveryDataList['Delivery']['dr_uuid'], $scheduleInfo['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link not-active','escape' => false,'title'=>'Review Inquiry'));
+
+                                            echo $this->Html->link('<span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Print </font></span>
+                                                </span>', array('controller' => 'deliveries', 'action' => 'dr',$deliveryDataList['Delivery']['dr_uuid'],$scheduleInfo['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link not-active refresh','escape' => false,'title'=>'Print Delivery Receipt')); ?>
+
+                                            <a data-toggle="modal" href="#myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" class="table-link not-active"><i class="fa fa-lg "></i><span class="fa-stack">
+                                            <i class="fa fa-square fa-stack-2x "></i>
+                                            <i class="fa  fa-mail-reply fa-stack-1x fa-inverse "></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Return </font></span></a>
+
+                                            <?php echo $this->Html->link('<span class="fa-stack gatePass">
+                                                    <i class="fa fa-square fa-stack-2x"></i>
+                                                    <i class="fa fa-truck fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> GatePass</font></span>
+                                                    </span> ', array('controller' => 'deliveries', 'action' => 'gate_pass',$deliveryScheduleId, $quotationId,$clientsOrderUuid,$deliveryDataList['Delivery']['id'],$deliveryDataList['Delivery']['dr_uuid']),array('class' =>' table-link not-active','escape' => false,'title'=>'Gate Pass'));
+
+                                        }else{
+
+
                                         if($dr_holder == 'matched'){
 
                                             echo $this->Html->link('<span class="fa-stack">
@@ -368,7 +406,7 @@ $totalremaining = 0;
                                         }else{
 
 
-                                            if($deliveryDataList['DeliveryDetail']['status'] == 'Completed' || $deliveryDataList['DeliveryDetail']['status'] == 'Incomplete'){ 
+                                            if($deliveryDataList['DeliveryDetail']['status'] == '4' || $deliveryDataList['DeliveryDetail']['status'] == '2'){ 
                                 
                                                 echo $this->Html->link('<span class="fa-stack">
                                                     <i class="fa fa-square fa-stack-2x"></i>
@@ -391,7 +429,7 @@ $totalremaining = 0;
 
                                         } ?>
 
-                                        <?php if($deliveryDataList['DeliveryDetail']['status'] == 'Incomplete'){ ?>
+                                        <?php if($deliveryDataList['DeliveryDetail']['status'] == '2'){ ?>
 
                                             <a data-toggle="modal" href="#myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" class="table-link not-active"><i class="fa fa-lg "></i><span class="fa-stack">
                                             <i class="fa fa-square fa-stack-2x "></i>
@@ -399,7 +437,7 @@ $totalremaining = 0;
 
                                         <?php }
 
-                                        else if($deliveryDataList['DeliveryDetail']['status'] == 'Completed'){ ?>
+                                        else if($deliveryDataList['DeliveryDetail']['status'] == '4'){ ?>
 
                                             <a data-toggle="modal" href="#myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" class="table-link not-active"><i class="fa fa-lg "></i><span class="fa-stack">
                                             <i class="fa fa-square fa-stack-2x"></i>
@@ -418,7 +456,7 @@ $totalremaining = 0;
                                                     <i class="fa fa-square fa-stack-2x"></i>
                                                     <i class="fa fa-truck fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> GatePass</font></span>
                                                     </span> ', array('controller' => 'deliveries', 'action' => 'gate_pass',$deliveryScheduleId, $quotationId,$clientsOrderUuid,$deliveryDataList['Delivery']['id'],$deliveryDataList['Delivery']['dr_uuid']),array('class' =>' table-link','escape' => false,'title'=>'Gate Pass'));
-                                        ?>
+                                        }?>
                                         
                                     </td>
                                 </tr>

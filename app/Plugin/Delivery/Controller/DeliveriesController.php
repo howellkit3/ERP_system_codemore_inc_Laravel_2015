@@ -101,7 +101,7 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->request->data['Delivery']['schedule_uuid'] = $scheduleInfo['ClientOrderDeliverySchedule']['uuid'];
         $this->request->data['Delivery']['clients_order_id']  = $scheduleInfo['ClientOrder']['uuid'];
-        $this->request->data['Delivery']['status']  = 'Approved';
+        $this->request->data['Delivery']['status']  = '1';
         $this->request->data['DeliveryDetail']['location']  = $scheduleInfo['ClientOrderDeliverySchedule']['location'];
         $this->request->data['DeliveryDetail']['quantity']  = $scheduleInfo['ClientOrderDeliverySchedule']['quantity'];
         $this->request->data['DeliveryDetail']['schedule']  = $scheduleInfo['ClientOrderDeliverySchedule']['schedule'];
@@ -279,7 +279,7 @@ class DeliveriesController extends DeliveryAppController {
 
             $this->request->data['DeliveryDetail']['delivery_uuid'] =  $this->request->data['Delivery']['dr_uuid']; 
             $this->request->data['DeliveryDetail']['created_by'] =  $userData['User']['id'];    
-            $this->request->data['Delivery']['status'] =  'Approved';   
+            $this->request->data['Delivery']['status'] =  '1';   
   
             $this->Delivery->saveDelivery($this->request->data,$userData['User']['id']);
             $this->DeliveryDetail->saveDeliveryDetail($this->request->data,$userData['User']['id']);
@@ -305,11 +305,11 @@ class DeliveriesController extends DeliveryAppController {
 
             if($this->request->data['DeliveryDetail']['quantity'] == $this->request->data['DeliveryDetail']['delivered_quantity']){
 
-                $this->request->data['DeliveryDetail']['status'] =  'Completed'; 
+                $this->request->data['DeliveryDetail']['status'] =  '4'; 
 
             }else{
 
-                $this->request->data['DeliveryDetail']['status'] =  'Incomplete';
+                $this->request->data['DeliveryDetail']['status'] =  '2';
 
             
             }
@@ -358,7 +358,7 @@ class DeliveriesController extends DeliveryAppController {
       
         $deliveryEdit = $this->Delivery->find('all', array(
                                              'conditions' => array(
-                                            'DeliveryDetail.status' => 'Incomplete'),
+                                            'DeliveryDetail.status' => '2'),
                                             'order' => 'DeliveryDetail.modified DESC'
                                            // 'fields' => array('DISTINCT Delivery.dr_uuid', 'DeliveryDetail.schedule','DeliveryDetail.location', 'DeliveryDetail.quantity','DeliveryDetail.delivered_quantity', 'DeliveryDetail.status', 'DeliveryReceipt.type', 'Delivery.schedule_uuid','DeliveryDetail.id', 'Transmittal.type' ,'DeliveryDetail.delivery_uuid'),
                                         ));
@@ -644,8 +644,7 @@ class DeliveriesController extends DeliveryAppController {
 
     $this->Company->bind('Address');
 
-    //pr($this->request->data); exit;
-
+  
     if(!empty($this->request->data['DeliveryDetail']['quantity'])){
 
        $this->DeliveryDetail->save($this->request->data['DeliveryDetail']);
@@ -730,30 +729,24 @@ class DeliveriesController extends DeliveryAppController {
 
     if(!empty($this->request->data['DeliveryDetail']['new'])){
 
-    //pr($this->request->data); exit;
-       $terminated = '5';
+        // $this->request->data['DeliveryDetail']['id'] = $this->request->data['DeliveryDetail']['idholder'];
 
-       $this->request->data['DeliveryDetail']['id'] = $this->request->data['DeliveryDetail']['idholder'];
+        // $this->request->data['DeliveryDetail']['status'] = 5;
 
-       $this->request->data['DeliveryDetail']['status'] = $terminated;
+        // $this->DeliveryDetail->save($this->request->data);
 
-       //pr($this->request->data['DeliveryDetail']['status']); exit;
+        // unset($this->request->data['DeliveryDetail']['id']);
 
-       $this->DeliveryDetail->save($this->request->data);
+        $this->request->data['Delivery']['from'] = $this->request->data['Delivery']['dr_uuid'];
 
-       //  unset($this->request->data['DeliveryDetail']['id']);
+        $this->request->data['Delivery']['status'] = 1;
 
-       // $this->request->data['DeliveryDetail']['status'] = 'Incomplete';
+         $this->request->data['Delivery']['dr_uuid'] = $this->request->data['DeliveryDetail']['delivery_uuid'];
 
-       // $this->request->data['Delivery']['from'] = $this->request->data['Delivery']['dr_uuid'];
+         $this->DeliveryDetail->save($this->request->data);
 
-       // $this->request->data['Delivery']['dr_uuid'] = $this->request->data['DeliveryDetail']['delivery_uuid'];
+         $this->Delivery->save($this->request->data);
 
-       // $this->Delivery->save($this->request->data);
-
-       // $this->DeliveryDetail->save($this->request->data);
-
-       // $this->DeliveryDetail->save($this->request->data);
 
     }
                           

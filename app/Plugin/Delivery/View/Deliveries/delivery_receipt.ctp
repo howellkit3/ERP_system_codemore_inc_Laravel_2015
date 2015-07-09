@@ -85,12 +85,12 @@
                         ?>
 
                         <?php 
-                            echo $this->Form->input('DeliveryDetail.statusholder', array(
+                            echo $this->Form->input('DeliveryDetail.status', array(
                             'class' => 'form-control item_type',
                             'label' => false,
                             'type' => 'hidden',
                             'required' => 'required',
-                            'value' => $drData['DeliveryDetail']['status']));
+                            'value' => 5 ));
                         ?>
 
                         <?php 
@@ -121,12 +121,12 @@
                         ?>
 
                         <?php 
-                            echo $this->Form->input('Delivery.status', array(
+                            echo $this->Form->input('DeliveryDetail.status', array(
                             'class' => 'form-control item_type',
                             'label' => false,
                             'type' => 'hidden',
                             'required' => 'required',
-                            'value' => $drData['Delivery']['status']));
+                            'value' => $drData['DeliveryDetail']['status']));
                         ?>
 
                             </div>
@@ -174,6 +174,17 @@
                                     'id' => 'date',
                                     'disabled' => 'disabled',
                                     'readonly' => 'readonly',
+                                    'value' => 
+                                    date('Y-m-d',strtotime($drData['DeliveryDetail']['schedule']))
+                                                                   ));
+
+                                    echo $this->Form->input('DeliveryReceipt.schedule', array(
+                                    'label' => false,
+                                    'required' => 'required',
+                                    'class' => 'form-control item_type datepick required',
+                                    'type' => 'text',
+                                    'id' => 'date',
+                                    'type' => 'hidden',
                                     'value' => 
                                     date('Y-m-d',strtotime($drData['DeliveryDetail']['schedule']))
                                                                    ));
@@ -233,6 +244,14 @@
                             'label' => false,
                             'required' => 'required',
                             'readonly' => 'readonly',
+                            'placeholder' => 'Item Quantity',
+                            'value' => $drData['DeliveryDetail']['quantity']));
+
+                            echo $this->Form->input('DeliveryReceipt.quantity', array(
+                            'class' => 'form-control item_type quantityLimit',
+                            'label' => false,
+                            'required' => 'required',
+                            'type' => 'hidden',
                             'placeholder' => 'Item Quantity',
                             'value' => $drData['DeliveryDetail']['quantity']));
 

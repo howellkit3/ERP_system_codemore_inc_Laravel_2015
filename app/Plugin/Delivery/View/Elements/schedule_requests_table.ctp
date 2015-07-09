@@ -69,11 +69,18 @@
                                                     $dataholder = 0;
                                                     foreach ($arr as $key => $value) {
 
-                                                       if ($value == 'Incomplete' ) {
+                                                       if ($value == '2' ) {
+                                                        //pr('ff');
+                                                         $dataholder = 1;
+                                                       }
+
+                                                       if ($value == '5' ) {
+                                                        //pr('ff');
                                                          $dataholder = 1;
                                                        }
 
                                                        if ($value == '' ) {
+                                                       // pr('s');
                                                          $dataholder = 1;
                                                        }
                                                     }
@@ -102,7 +109,7 @@
 
                                                             echo "<span class='label label-success'>Delivered</span>";
 
-                                                    }elseif ($deliveryData[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']] == 'Approved') { 
+                                                    }elseif ($deliveryData[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']] == '1') { 
                                                         
                                                              echo "<span class='label label-warning'>Approved</span>"; ?> &nbsp<?php
                                                     } 
