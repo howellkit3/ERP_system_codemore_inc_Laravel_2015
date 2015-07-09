@@ -66,6 +66,15 @@
                             'value' => '0'));
                           ?>
 
+                          <?php 
+                            echo $this->Form->input('DeliveryDetail.new', array(
+                            'class' => 'form-control item_type',
+                            'label' => false,
+                            'required' => 'required',
+                            'type' => 'hidden',
+                            'value' => '1'));
+                          ?>
+
                         <?php 
                             echo $this->Form->input('Delivery.schedule_uuid', array(
                             'class' => 'form-control item_type',
@@ -73,6 +82,33 @@
                             'type' => 'hidden',
                             'required' => 'required',
                             'value' => $drData['Delivery']['schedule_uuid']));
+                        ?>
+
+                        <?php 
+                            echo $this->Form->input('DeliveryDetail.statusholder', array(
+                            'class' => 'form-control item_type',
+                            'label' => false,
+                            'type' => 'hidden',
+                            'required' => 'required',
+                            'value' => $drData['DeliveryDetail']['status']));
+                        ?>
+
+                        <?php 
+                            echo $this->Form->input('DeliveryDetail.delivered_quantity', array(
+                            'class' => 'form-control item_type',
+                            'label' => false,
+                            'type' => 'hidden',
+                            'required' => 'required',
+                            'value' => $drData['DeliveryDetail']['delivered_quantity']));
+                        ?>
+
+                        <?php 
+                            echo $this->Form->input('DeliveryDetail.idholder', array(
+                            'class' => 'form-control item_type',
+                            'label' => false,
+                            'type' => 'hidden',
+                            'required' => 'required',
+                            'value' => $drData['DeliveryDetail']['id']));
                         ?>
 
                         <?php 
@@ -143,14 +179,28 @@
                                                                    ));
                                 ?>
 
-                                <?php 
+                                 <?php 
+                                    echo $this->Form->input('DeliveryDetail.schedule', array(
+                                    'label' => false,
+                                    'required' => 'required',
+                                    'class' => 'form-control item_type datepick required',
+                                    'type' => 'text',
+                                    'id' => 'date',
+                                    'type' => 'hidden',
+                                    'readonly' => 'readonly',
+                                    'value' => 
+                                    date('Y-m-d',strtotime($drData['DeliveryDetail']['schedule']))
+                                                                   ));
+                                ?>
+
+                               <!--  <?php 
                                     echo $this->Form->input('DeliveryDetail.id', array( 
                                     'id' => 'date',
                                     'type' => 'hidden',
                                     'value' => $drData['DeliveryDetail']['id']
                                     ));
-                                ?>
-                                
+                                ?> -->
+
                     
                             </div>
                         </div>

@@ -644,7 +644,7 @@ class DeliveriesController extends DeliveryAppController {
 
     $this->Company->bind('Address');
 
-    pr($this->request->data); exit;
+    //pr($this->request->data); exit;
 
     if(!empty($this->request->data['DeliveryDetail']['quantity'])){
 
@@ -727,6 +727,35 @@ class DeliveriesController extends DeliveryAppController {
        $this->DeliveryReceipt->save($this->request->data);     
 
     }
+
+    if(!empty($this->request->data['DeliveryDetail']['new'])){
+
+    //pr($this->request->data); exit;
+       $terminated = '5';
+
+       $this->request->data['DeliveryDetail']['id'] = $this->request->data['DeliveryDetail']['idholder'];
+
+       $this->request->data['DeliveryDetail']['status'] = $terminated;
+
+       //pr($this->request->data['DeliveryDetail']['status']); exit;
+
+       $this->DeliveryDetail->save($this->request->data);
+
+       //  unset($this->request->data['DeliveryDetail']['id']);
+
+       // $this->request->data['DeliveryDetail']['status'] = 'Incomplete';
+
+       // $this->request->data['Delivery']['from'] = $this->request->data['Delivery']['dr_uuid'];
+
+       // $this->request->data['Delivery']['dr_uuid'] = $this->request->data['DeliveryDetail']['delivery_uuid'];
+
+       // $this->Delivery->save($this->request->data);
+
+       // $this->DeliveryDetail->save($this->request->data);
+
+       // $this->DeliveryDetail->save($this->request->data);
+
+    }
                           
     $this->set(compact('drData','clientData','companyData','units','approved','prepared', 'DRRePrint'));
 
@@ -791,20 +820,6 @@ class DeliveriesController extends DeliveryAppController {
                                         'conditions' => array('Delivery.dr_uuid' => $dr_uuid
                                         )));
 
-    
-
-    //pr($TRdata); exit;
-             
-
-    // if (!empty($TRdata)) {
-
-    // $this->Session->setFlash(__('The Delivery Receipt No. already exists'), 'error');
-    
-    // $this->redirect( array(
-    //              'controller' => 'deliveries',   
-    //              'action' => 'delivery_transmittal',$drData['Delivery']['dr_uuid'],$drData['Delivery']['schedule_uuid']
-    //         ));  
-    // }
  
     $clientData = $this->ClientOrder->find('first', array(
                                         'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']

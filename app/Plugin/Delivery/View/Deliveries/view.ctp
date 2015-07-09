@@ -225,8 +225,6 @@ $totalremaining = 0;
 
                                 endforeach; 
 
-                               
-
                                 foreach ($pushRemaining as $key => $value) {
 
                                     $totaldifference = $totaldifference + $value;
