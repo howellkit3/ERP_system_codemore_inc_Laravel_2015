@@ -40,12 +40,20 @@
                             <div class="col-lg-8 ">
 
                         <?php 
-                            echo $this->Form->input('Transmittal.dr_uuid', array(
+                            echo $this->Form->input('DeliveryDetail.delivery_uuid', array(
                             'class' => 'form-control item_type',
                             'label' => false,
-                            'readonly' => 'readonly',
                             'required' => 'required',
-                            'placeholder' => 'Transmittal Number',
+                            'placeholder' => 'Delivery Receipt Number',
+                            'value' => $drData['Delivery']['dr_uuid']));
+                        ?>
+
+                        <?php 
+                            echo $this->Form->input('Delivery.dr_uuid', array(
+                            'class' => 'form-control item_type',
+                            'label' => false,
+                            'type' => 'hidden',
+                            'required' => 'required',
                             'value' => $drData['Delivery']['dr_uuid']));
                         ?>
 
@@ -58,14 +66,42 @@
                             'value' => '0'));
                           ?>
 
+                        <?php 
+                            echo $this->Form->input('Delivery.schedule_uuid', array(
+                            'class' => 'form-control item_type',
+                            'label' => false,
+                            'type' => 'hidden',
+                            'required' => 'required',
+                            'value' => $drData['Delivery']['schedule_uuid']));
+                        ?>
+
+                        <?php 
+                            echo $this->Form->input('Delivery.clients_order_id', array(
+                            'class' => 'form-control item_type',
+                            'label' => false,
+                            'type' => 'hidden',
+                            'required' => 'required',
+                            'value' => $drData['Delivery']['clients_order_id']));
+                        ?>
+
+                        <?php 
+                            echo $this->Form->input('Delivery.status', array(
+                            'class' => 'form-control item_type',
+                            'label' => false,
+                            'type' => 'hidden',
+                            'required' => 'required',
+                            'value' => $drData['Delivery']['status']));
+                        ?>
+
                             </div>
                         </div> 
 
                         <div class="form-group">
                           <label class="col-lg-2 control-label">Item</label>
                          <div class="col-lg-8">
+
                           <?php 
-                          echo $this->Form->input('Transmittal.number', array(
+                          echo $this->Form->input('DeliveryDetail.product', array(
                                   'class' => 'form-control item_type',
                                   'label' => false,
                                   'readonly' => 'readonly',
@@ -114,6 +150,7 @@
                                     'value' => $drData['DeliveryDetail']['id']
                                     ));
                                 ?>
+                                
                     
                             </div>
                         </div>

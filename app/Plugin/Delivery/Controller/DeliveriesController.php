@@ -632,6 +632,7 @@ class DeliveriesController extends DeliveryAppController {
     public function dr($dr_uuid = null,$schedule_uuid) {
 
     $this->loadModel('Sales.ClientOrder');
+
     $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule','QuotationItemDetail','QuotationDetail','Product'));
     
     $this->loadModel('Sales.Company');
@@ -642,6 +643,8 @@ class DeliveriesController extends DeliveryAppController {
     $units = $this->Unit->getList();
 
     $this->Company->bind('Address');
+
+    pr($this->request->data); exit;
 
     if(!empty($this->request->data['DeliveryDetail']['quantity'])){
 
@@ -743,6 +746,8 @@ class DeliveriesController extends DeliveryAppController {
     $units = $this->Unit->getList();
 
     $this->Company->bind('Address');
+
+    //pr($this->request->data); exit;
 
     $TRdata = $this->Transmittal->find('first', array(
                     'conditions' => array(
