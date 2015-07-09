@@ -424,3 +424,10 @@ CREATE TABLE `supplier_contact_people` (
   KEY `id_idx` (`supplier_id`),
   CONSTRAINT `id` FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+
+#NOTE: SELECT KOUFU SYSTEM DATABASE ----
+/** bien added this 07/09/2015  */
+
+insert  into `status_field_holders`(`id`,`status`,`created_by`,`modified_by`,`created`,`modified`) values (1,'Approved',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(2,'Incomplete',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(3,'Delivered',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(4,'Completed',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(5,'Terminate',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(6,'Pending',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(7,'Due',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03');
+
