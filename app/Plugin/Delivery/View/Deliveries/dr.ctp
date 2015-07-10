@@ -32,7 +32,7 @@
         $objTpl->setActiveSheetIndex(0)
                     
                     ->setCellValue('J'.'4', '')
-                    ->setCellValue('I'.'6', $drData['Delivery']['dr_uuid'])
+                    ->setCellValue('I'.'6', $drData['Delivery']['id'])
                     ->setCellValue('C'.'6', ucwords($companyData['Company']['company_name']))
                     ->setCellValue('A'.'9', $clientData['ClientOrder']['po_number'])
                     ->setCellValue('C'.'7', ucwords($drData['DeliveryDetail']['location']))

@@ -710,7 +710,7 @@ class DeliveriesController extends DeliveryAppController {
 
        $this->request->data['DeliveryReceipt']['remarks'] = $drData['DeliveryDetail']['remarks'];
 
- }  
+    }  
 
     $prepared = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
                                                             'conditions' => array('User.id' => $drDataHolder['DeliveryDetail']['modified_by'])
@@ -723,33 +723,36 @@ class DeliveriesController extends DeliveryAppController {
 
     if(empty($DRRePrint[0]['DeliveryReceipt']['dr_uuid']) OR (!empty($this->request->data['DeliveryReceipt']['type']))){
 
-       $this->DeliveryReceipt->save($this->request->data);     
+        if(!empty($this->request->data['DeliveryDetail']['new'])){
 
+            $this->request->data['DeliveryReceipt']['dr_uuid'] = $this->request->data['DeliveryDetail']['delivery_uuid'];
+
+            $idholder = $this->request->data['DeliveryDetail']['idholder'];
+
+            if($this->request->data['DeliveryDetail']['delivery_uuid'] != $this->request->data['Delivery']['dr_uuid']){
+
+                $this->DeliveryDetail->id = $idholder;
+
+                $this->DeliveryDetail->saveField('status', 5);
+
+                unset($this->request->data['DeliveryDetail']['id']);
+
+                $this->request->data['Delivery']['from'] = $this->request->data['Delivery']['dr_uuid'];
+
+                $this->request->data['Delivery']['status'] = 1;
+
+                $this->request->data['Delivery']['dr_uuid'] = $this->request->data['DeliveryDetail']['delivery_uuid'];
+
+                $this->DeliveryDetail->save($this->request->data);
+
+                $this->Delivery->save($this->request->data);
+            } 
+
+        }
+
+        $this->DeliveryReceipt->save($this->request->data);   
     }
 
-    if(!empty($this->request->data['DeliveryDetail']['new'])){
-
-        // $this->request->data['DeliveryDetail']['id'] = $this->request->data['DeliveryDetail']['idholder'];
-
-        // $this->request->data['DeliveryDetail']['status'] = 5;
-
-        // $this->DeliveryDetail->save($this->request->data);
-
-        // unset($this->request->data['DeliveryDetail']['id']);
-
-        $this->request->data['Delivery']['from'] = $this->request->data['Delivery']['dr_uuid'];
-
-        $this->request->data['Delivery']['status'] = 1;
-
-         $this->request->data['Delivery']['dr_uuid'] = $this->request->data['DeliveryDetail']['delivery_uuid'];
-
-         $this->DeliveryDetail->save($this->request->data);
-
-         $this->Delivery->save($this->request->data);
-
-
-    }
-                          
     $this->set(compact('drData','clientData','companyData','units','approved','prepared', 'DRRePrint'));
 
     }
