@@ -6,6 +6,8 @@
     $objTpl = PHPExcel_IOFactory::load("./img/delivery_template.xlsx");
      
     // add data
+
+     //pr($approved); exit;
     $counter = 10;
    
         $phpPrice = '';
@@ -17,7 +19,7 @@
         $approvedLName = ucwords($approved['User']['last_name'])  ;
         $toBePrinted = date("M/d/Y");
 
-       // pr($printedDate); exit;
+       
 
       if(!empty($DRRePrint[0]['DeliveryReceipt']['printed'])){   
 
@@ -27,7 +29,7 @@
                 
       }
 
-      // pr($toBePrinted); exit;
+      // pr($drData); exit;
 
         $objTpl->setActiveSheetIndex(0)
                     

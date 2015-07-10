@@ -647,7 +647,7 @@ class DeliveriesController extends DeliveryAppController {
   
     if(!empty($this->request->data['DeliveryDetail']['quantity'])){
 
-       $this->DeliveryDetail->save($this->request->data['DeliveryDetail']);
+       $this->DeliveryDetail->saveDeliveryDetail($this->request->data['DeliveryDetail']);
 
     }
 
@@ -713,13 +713,15 @@ class DeliveriesController extends DeliveryAppController {
     }  
 
     $prepared = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
-                                                            'conditions' => array('User.id' => $drDataHolder['DeliveryDetail']['modified_by'])
+                                                            'conditions' => array('User.id' => $drDataHolder['Delivery']['modified_by'])
                                                             ));
 
 
     $approved = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
-                                                            'conditions' => array('User.id' => $drDataHolder['DeliveryDetail']['created_by'])
+                                                            'conditions' => array('User.id' => $drDataHolder['Delivery']['created_by'])
                                                             ));  
+
+   // pr($drDataHolder); pr($drDataHolder['DeliveryDetail']['created_by']); exit;
 
     if(empty($DRRePrint[0]['DeliveryReceipt']['dr_uuid']) OR (!empty($this->request->data['DeliveryReceipt']['type']))){
 
@@ -737,15 +739,19 @@ class DeliveriesController extends DeliveryAppController {
 
                 unset($this->request->data['DeliveryDetail']['id']);
 
+                $this->request->data['Delivery']['created_by'] = $drDataHolder['Delivery']['created_by'];
+
+                $this->request->data['Delivery']['modified_by'] = $drDataHolder['Delivery']['modified_by'];
+
                 $this->request->data['Delivery']['from'] = $this->request->data['Delivery']['dr_uuid'];
 
                 $this->request->data['Delivery']['status'] = 1;
 
                 $this->request->data['Delivery']['dr_uuid'] = $this->request->data['DeliveryDetail']['delivery_uuid'];
 
-                $this->DeliveryDetail->save($this->request->data);
+                $this->DeliveryDetail->saveDeliveryDetail($this->request->data);
 
-                $this->Delivery->save($this->request->data);
+                $this->Delivery->save($this->request->data['Delivery']);
             } 
 
         }
@@ -843,7 +849,7 @@ class DeliveriesController extends DeliveryAppController {
     $approved = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
                                                             'conditions' => array('User.id' => $drDataHolder['DeliveryDetail']['created_by'])
                                                             ));
-     //pr($contactPerson); pr($quantityTransmittal);exit;
+     // pr($approved); pr($prepared); exit;
     $this->set(compact('drData','clientData','companyData','units','approved','prepared', 'contactPerson', 'quantityTransmittal', 'remarks', 'TRRePrint'));
 
     if ($this->request->is(array('post', 'put'))) {
@@ -919,7 +925,7 @@ class DeliveriesController extends DeliveryAppController {
          
     }
 
-    public function gate_pass($deliveryScheduleId = null, $quotationId = null,$clientsOrderUuid = null){
+     public function gate_pass($deliveryScheduleId = null, $quotationId = null,$clientsOrderUuid = null,$drId = null,$druuid = null){
 
         $this->loadModel('Truck');
 
@@ -927,8 +933,6 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->loadModel('Driver');
 
-        $dr_nos = $this->Delivery->find('all', array('conditions' => array('Delivery.schedule_uuid' => $clientsOrderUuid)));
-        // pr($dr_nos);exit();
         $truckList = $this->Truck->find('list',array('fields' => array('id', 'truck_no'),'order' => 'truck_no ASC'));
        
         foreach ($truckList as $key => $value) {
@@ -953,7 +957,7 @@ class DeliveriesController extends DeliveryAppController {
            
         }
         
-        $this->set(compact('dr_nos','truckListUpper','helperListUpper','driverListUpper','deliveryScheduleId','quotationId','clientsOrderUuid','drId','druuid'));
+        $this->set(compact('truckListUpper','helperListUpper','driverListUpper','deliveryScheduleId','quotationId','clientsOrderUuid','drId','druuid'));
     }
 
 }

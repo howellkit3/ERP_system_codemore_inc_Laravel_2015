@@ -33,6 +33,8 @@ class Delivery extends AppModel {
 						
 				$data['Delivery']['created_by'] = $auth;
 				$data['Delivery']['modified_by'] = $auth;
+
+				//pr($data); exit;
 				
 		$this->save($data);
 

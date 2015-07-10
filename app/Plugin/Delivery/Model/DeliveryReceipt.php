@@ -54,7 +54,16 @@ class DeliveryReceipt extends AppModel {
 		//$this->contain($giveMeTheTableRelationship);
 	}
 
-	 
+   public function saveDeliveryReceipt($data = null, $auth = null){
+
+	$this->create();
+
+			$data['DeliveryDetail']['modified_by'] = $auth;
+			
+	$this->save($data);
+
+
+	}
 
 	
 }
