@@ -919,7 +919,7 @@ class DeliveriesController extends DeliveryAppController {
          
     }
 
-     public function gate_pass($deliveryScheduleId = null, $quotationId = null,$clientsOrderUuid = null,$drId = null,$druuid = null){
+    public function gate_pass($deliveryScheduleId = null, $quotationId = null,$clientsOrderUuid = null){
 
         $this->loadModel('Truck');
 
@@ -927,6 +927,8 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->loadModel('Driver');
 
+        $dr_nos = $this->Delivery->find('all', array('conditions' => array('Delivery.schedule_uuid' => $clientsOrderUuid)));
+        // pr($dr_nos);exit();
         $truckList = $this->Truck->find('list',array('fields' => array('id', 'truck_no'),'order' => 'truck_no ASC'));
        
         foreach ($truckList as $key => $value) {
@@ -951,7 +953,7 @@ class DeliveriesController extends DeliveryAppController {
            
         }
         
-        $this->set(compact('truckListUpper','helperListUpper','driverListUpper','deliveryScheduleId','quotationId','clientsOrderUuid','drId','druuid'));
+        $this->set(compact('dr_nos','truckListUpper','helperListUpper','driverListUpper','deliveryScheduleId','quotationId','clientsOrderUuid','drId','druuid'));
     }
 
 }
