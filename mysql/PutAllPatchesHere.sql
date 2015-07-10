@@ -480,3 +480,9 @@ CREATE TABLE `purchasing_type` (
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
+#NOTE: SELECT KOUFU PURCHASING DATABASE ----
+/** bien added this 07/10/2015  */
+
+ALTER TABLE `koufu_system`.`gate_passes`     CHANGE `foreign_key` `ref_uuid` VARCHAR(250) NULL ,     CHANGE `modified` `modified` TIMESTAMP NOT NULL;
+ALTER TABLE `koufu_system`.`gate_pass_assistants`     CHANGE `gate_pass_id` `ref_uuid` VARCHAR(250) NULL ,     CHANGE `modified` `modified` TIMESTAMP NOT NULL;
+
