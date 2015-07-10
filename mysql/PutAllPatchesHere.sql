@@ -437,8 +437,46 @@ insert  into `status_field_holders`(`id`,`status`,`created_by`,`modified_by`,`cr
 ALTER TABLE `koufu_delivery`.`delivery_details` DROP COLUMN `status`;
 ALTER TABLE `koufu_delivery`.`delivery_details` ADD COLUMN  `status` INT(11) NULL AFTER `delivery_type`;
 
-#NOTE: SELECT KOUFU SYSTEM DATABASE ----
-/** bien added this 07/10/2015  */
+#NOTE: SELECT KOUFU PURCHASING DATABASE ----
+/** howellkit added this 07/10/2015  */
 
-ALTER TABLE `koufu_system`.`gate_passes`     CHANGE `foreign_key` `ref_uuid` VARCHAR(250) NULL ,     CHANGE `modified` `modified` TIMESTAMP NOT NULL;
-ALTER TABLE `koufu_system`.`gate_pass_assistants`     CHANGE `gate_pass_id` `ref_uuid` VARCHAR(250) NULL ,     CHANGE `modified` `modified` TIMESTAMP NOT NULL;
+CREATE TABLE `request` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `uuid` INT(11) DEFAULT NULL,
+  `pur_type_id` INT(11) DEFAULT NULL,
+  `status_id` INT(11) DEFAULT NULL,
+  `remarks` VARCHAR(60) DEFAULT NULL,
+  `created` TIMESTAMP NULL DEFAULT NULL,
+  `modified` TIMESTAMP NULL DEFAULT NULL,
+  `prepared_by` INT(11) DEFAULT NULL,
+  `approved_by` INT(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `purchasing_item` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `model` VARCHAR(30) DEFAULT NULL,
+  `foreign_key` INT(11) DEFAULT NULL,
+  `item_group_id` INT(11) DEFAULT NULL,
+  `size1` VARCHAR(80) DEFAULT NULL,
+  `size1_unit_id` INT(11) DEFAULT NULL,
+  `size2` VARCHAR(80) DEFAULT NULL,
+  `size2_unit_id` INT(11) DEFAULT NULL,
+  `size3` VARCHAR(80) DEFAULT NULL,
+  `size3_unit_id` INT(11) DEFAULT NULL,
+  `quantity` INT(11) DEFAULT NULL,
+  `quantity_unit_id` INT(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `purchasing_type` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(30) DEFAULT NULL,
+  `description` TEXT,
+  `created` DATETIME NOT NULL,
+  `modified` DATETIME NOT NULL,
+  `created_by` INT(11) DEFAULT NULL,
+  `modified_by` INT(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+
