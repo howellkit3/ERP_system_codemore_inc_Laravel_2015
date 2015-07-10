@@ -436,3 +436,9 @@ insert  into `status_field_holders`(`id`,`status`,`created_by`,`modified_by`,`cr
 
 ALTER TABLE `koufu_delivery`.`delivery_details` DROP COLUMN `status`;
 ALTER TABLE `koufu_delivery`.`delivery_details` ADD COLUMN  `status` INT(11) NULL AFTER `delivery_type`;
+
+#NOTE: SELECT KOUFU SYSTEM DATABASE ----
+/** bien added this 07/10/2015  */
+
+ALTER TABLE `koufu_system`.`gate_passes`     CHANGE `foreign_key` `ref_uuid` VARCHAR(250) NULL ,     CHANGE `modified` `modified` TIMESTAMP NOT NULL;
+ALTER TABLE `koufu_system`.`gate_pass_assistants`     CHANGE `gate_pass_id` `ref_uuid` VARCHAR(250) NULL ,     CHANGE `modified` `modified` TIMESTAMP NOT NULL;
