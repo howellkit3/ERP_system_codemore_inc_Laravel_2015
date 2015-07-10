@@ -26,44 +26,59 @@
                         <div class="top-space"></div>
                         <div class="main-box-body clearfix">
                             <div class="main-box-body clearfix">
+
                                 <div class="form-horizontal">
-                                    
-                                    <div class="form-group">
-                                        <label class="col-lg-2 control-label"><span style="color:red">*</span>DR No.</label>
-                                        <div class="col-lg-8">
-                                            <?php 
 
-                                                echo $this->Form->input('Direct.one', array('class' => 'form-control item_type one',
-                                                    'type' => 'hidden',
-                                                    'label' => false,
-                                                    'value' => $deliveryScheduleId));
-
-                                                echo $this->Form->input('Direct.two', array('class' => 'form-control item_type two',
-                                                    'type' => 'hidden',
-                                                    'label' => false,
-                                                    'value' => $quotationId));
-
-                                                echo $this->Form->input('Direct.three', array('class' => 'form-control item_type three',
-                                                    'type' => 'hidden',
-                                                    'label' => false,
-                                                    'value' => $clientsOrderUuid));
-
-                                                echo $this->Form->input('GatePass.foreign_key', array('class' => 'form-control item_type',
-                                                    'type' => 'hidden',
-                                                    'label' => false,
-                                                    'value' => $drId));
-                                                echo $this->Form->input('GatePass.model', array('class' => 'form-control item_type',
-                                                    'type' => 'hidden',
-                                                    'label' => false,
-                                                    'value' => 'Delivery'));
-                                                echo $this->Form->input('GatePass.dr_no', array('class' => 'form-control item_type required',
-                                                    'readonly' => true,
-                                                    'label' => false,
-                                                    'value' => $druuid));
-                                            ?>
-                                        </div>
+                                    <div class="form-group form-height">
+                                        <label class="col-lg-2 control-label"><span style="color:red">*</span>Select DR No.</label>
+                                        
                                     </div>
 
+                                    <?php foreach ($dr_nos as $key => $value) { ?>
+                                        <div class="form-group form-height">
+                                            <label class="col-lg-2 control-label"> </label>
+                                            <div class="col-lg-8">
+                                                <div class="checkbox-nice">
+                                                    <input type="checkbox" class="check-ref-uuid" id="checkbox-<?php echo $key ?>" checked="checked">
+                                                    <label for="checkbox-<?php echo $key ?>">
+                                                        <?php echo $value['Delivery']['dr_uuid'] ;?>
+                                                    </label>
+                                                    <?php 
+                                                        echo $this->Form->input('GatePass_uuid.'.$key.'.ref_uuid', array('class' => 'form-control ref-uuid',
+                                                            'type' => 'hidden',
+                                                            'disabled' => false,
+                                                            'label' => false,
+                                                            'value' => $value['Delivery']['dr_uuid']));
+                                                    ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+
+                                    <?php 
+
+                                        echo $this->Form->input('Direct.one', array('class' => 'form-control item_type one',
+                                            'type' => 'hidden',
+                                            'label' => false,
+                                            'value' => $deliveryScheduleId));
+
+                                        echo $this->Form->input('Direct.two', array('class' => 'form-control item_type two',
+                                            'type' => 'hidden',
+                                            'label' => false,
+                                            'value' => $quotationId));
+
+                                        echo $this->Form->input('Direct.three', array('class' => 'form-control item_type three',
+                                            'type' => 'hidden',
+                                            'label' => false,
+                                            'value' => $clientsOrderUuid));
+
+                                        echo $this->Form->input('GatePass.model', array('class' => 'form-control item_type',
+                                            'type' => 'hidden',
+                                            'label' => false,
+                                            'value' => 'Delivery'));
+                                    
+                                    ?>
+                                     
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label"><span style="color:red">*</span>Truck No.</label>
                                         <div class="col-lg-8">
@@ -159,3 +174,8 @@
     });
 
 </script>
+<style type="text/css">
+    .form-height{
+        margin-top: -15px !important;
+    }
+</style>

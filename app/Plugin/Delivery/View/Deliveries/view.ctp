@@ -255,7 +255,10 @@ $totalremaining = 0;
                                     <a data-toggle="modal" href="#myModalDeliveries" class="btn btn-primary pull-right  "><i class="fa fa-edit fa-lg"></i> Add Schedule</a>
 
                     <?php  }  } } } ?>
-                 
+                    &nbsp;
+                    <?php 
+                        echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Create Gate Pass', array('controller' => 'deliveries', 'action' => 'gate_pass',$deliveryScheduleId,$quotationId,$clientsOrderUuid),array('class' =>' btn btn-primary pull-right','escape' => false,'title'=>'Gate Pass'));
+                    ?>
                 </header>
 
                 <table class="table table-striped table-hover ">
