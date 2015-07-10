@@ -9,7 +9,7 @@ App::uses('AuthComponent', 'Controller/Component');
  */
 class SupplierContactPerson extends AppModel {
 
-    public $useDbConfig = 'koufu_purchasing';
+   // public $useDbConfig = 'koufu_purchasing';
 
 	public $recursive = -1;
 
@@ -89,7 +89,7 @@ class SupplierContactPerson extends AppModel {
 
 		foreach ($data as $key => $contactPersonData)
 		{
-			foreach ($contactPersonData as $key => $contactPersonValue) 
+			foreach ($contactPersonData[$this->name] as $key => $contactPersonValue) 
 			{
 				$contactPersonValue['model'] = "Supplier";
 				$contactPersonValue['supplier_id'] = $supplier_id;

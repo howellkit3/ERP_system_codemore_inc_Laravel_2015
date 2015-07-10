@@ -46,11 +46,22 @@ class SuppliersController extends PurchasingAppController {
             	if ($this->Supplier->saveAssociated($this->request->data)) {
             		
             		$supplierId = $this->Supplier->id;
-            		
-            	 	$contactPersonId = $this->Supplier->SupplierContactPerson->saveContact($this->request->data['ContactPersonData'], $supplierId,$userData['User']['id']);
-            		$this->Supplier->Contact->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
+            	//	pr($this->request->data); exit;
+            	 	$contactPersonId = $this->Supplier->SupplierContactPerson->saveContactPerson($this->request->data['ContactPersonData'], $supplierId,$userData['User']['id']);
+            		$this->Supplier->Contact->saveContact($this->request->data['ContactPersonData'], $contactPersonId, $userData['User']['id']);
             		//$this->Supplier->Address->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
-            		$this->Supplier->Email->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
+            		$this->Supplier->Email->saveContact($this->request->data['ContactPersonData'], $contactPersonId,$userData['User']['id']);
+
+
+
+            		// $personId = $this->Supplier->SupplierContactPerson->saveContactPerson($this->request->data, $supplierId, $userData['User']['id'],$userData['User']['id']);
+            		
+            		// $this->Supplier->Contact->saveNumber($this->request->data, $personId, $userData['User']['id']);
+
+            		// $this->Supplier->Email->saveEmail($this->request->data, $personId, $userData['User']['id']);
+
+            		// $this->Session->setFlash(__('Contact Person Successfully added in the system.'));
+
 
 	            	$this->Session->setFlash('Supplier Successfully save.','success');
 
@@ -197,8 +208,6 @@ class SuppliersController extends PurchasingAppController {
 		}
 	}
 
-	public function request_list(){
-		
-	}
+
 
 }

@@ -409,21 +409,19 @@ CREATE TABLE `suppliers` (
 DROP TABLE IF EXISTS `contact_people`;
 
 CREATE TABLE `supplier_contact_people` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `supplier_id` int(11) DEFAULT NULL,
-  `prefix` varchar(45) DEFAULT NULL,
-  `firstname` varchar(50) DEFAULT NULL,
-  `middlename` varchar(50) DEFAULT NULL,
-  `lastname` varchar(50) DEFAULT NULL,
-  `position` varchar(120) DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
-  `modified_by` int(11) DEFAULT NULL,
-  `created` timestamp NULL DEFAULT NULL,
-  `modified` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id_idx` (`supplier_id`),
-  CONSTRAINT `id` FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `supplier_id` INT(11) DEFAULT NULL,
+  `prefix` VARCHAR(45) DEFAULT NULL,
+  `firstname` VARCHAR(50) DEFAULT NULL,
+  `middlename` VARCHAR(50) DEFAULT NULL,
+  `lastname` VARCHAR(50) DEFAULT NULL,
+  `position` VARCHAR(120) DEFAULT NULL,
+  `created_by` INT(11) DEFAULT NULL,
+  `modified_by` INT(11) DEFAULT NULL,
+  `created` TIMESTAMP NULL DEFAULT NULL,
+  `modified` TIMESTAMP NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 
 #NOTE: SELECT KOUFU SYSTEM DATABASE ----
@@ -440,7 +438,7 @@ ALTER TABLE `koufu_delivery`.`delivery_details` ADD COLUMN  `status` INT(11) NUL
 #NOTE: SELECT KOUFU PURCHASING DATABASE ----
 /** howellkit added this 07/10/2015  */
 
-CREATE TABLE `request` (
+CREATE TABLE `requests` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `uuid` INT(11) DEFAULT NULL,
   `pur_type_id` INT(11) DEFAULT NULL,
@@ -453,7 +451,7 @@ CREATE TABLE `request` (
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
-CREATE TABLE `purchasing_item` (
+CREATE TABLE `purchasing_items` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `model` VARCHAR(30) DEFAULT NULL,
   `foreign_key` INT(11) DEFAULT NULL,
@@ -469,7 +467,7 @@ CREATE TABLE `purchasing_item` (
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
-CREATE TABLE `purchasing_type` (
+CREATE TABLE `purchasing_types` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(30) DEFAULT NULL,
   `description` TEXT,
@@ -483,6 +481,11 @@ CREATE TABLE `purchasing_type` (
 #NOTE: SELECT KOUFU PURCHASING DATABASE ----
 /** bien added this 07/10/2015  */
 
-ALTER TABLE `koufu_system`.`gate_passes`     CHANGE `foreign_key` `ref_uuid` VARCHAR(250) NULL ,     CHANGE `modified` `modified` TIMESTAMP NOT NULL;
+ALTER TABLE `koufu_system`.`gate_passes`  CHANGE `foreign_key` `ref_uuid` VARCHAR(250) NULL , CHANGE `modified` `modified` TIMESTAMP NOT NULL;
 ALTER TABLE `koufu_system`.`gate_pass_assistants`     CHANGE `gate_pass_id` `ref_uuid` VARCHAR(250) NULL ,     CHANGE `modified` `modified` TIMESTAMP NOT NULL;
+
+#NOTE: SELECT KOUFU PURCHASING DATABASE ----
+/** howellkit added this 07/10/2015  */
+
+ALTER TABLE `koufu_purchasing`.`request`  ADD COLUMN  `name` VARCHAR(80) NULL AFTER `uuid`;
 

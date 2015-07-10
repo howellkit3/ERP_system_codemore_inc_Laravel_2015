@@ -9,7 +9,7 @@
    		
    		<li class="dropdown hidden-xs active">
            
-            <?php echo $this->Html->link("<span class='count'>Request List</span>", array('controller' => 'suppliers', 'action' => 'request_list'),array('escape' => false,'class' => 'btn')); ?>
+            <?php echo $this->Html->link("<span class='count'>Request List</span>", array('controller' => 'requests', 'action' => 'request_list'),array('escape' => false,'class' => 'btn')); ?>
            
         </li>
     </ul>

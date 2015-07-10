@@ -7,7 +7,7 @@ App::uses('AppModel', 'Model');
  */
 class Supplier extends AppModel {
 
-    public $useDbConfig = 'koufu_purchasing';
+    //public $useDbConfig = $default;
 
     public $name = 'Supplier';
 
