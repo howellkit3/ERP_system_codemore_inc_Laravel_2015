@@ -146,6 +146,22 @@ $totalremaining = 0;
                                                     
                                                 }
 
+                                                $arrDelivered = array();
+
+                                                foreach ($deliveryStatus as $key => $value) {
+
+                                                  $DeliveredHolder = $deliveryDetailList[$value['Delivery']['dr_uuid']];
+  
+                                                    if($value['Delivery']['schedule_uuid'] == $orderDeliveryList[$uuidClientsOrder] AND $value['DeliveryDetail']['status'] != 5 ){  
+
+                                                      array_push($arrDelivered,$DeliveredHolder);
+
+                                                    }  
+
+                                                }
+
+                                                $sumDelivered = array_sum($arrDelivered);
+
                                                 $Scheddate = $scheduleInfo['ClientOrderDeliverySchedule']['schedule'];
                                                 
                                                 $Currentdate = date("Y-m-d H:i:s");
@@ -164,6 +180,10 @@ $totalremaining = 0;
 
                                                         echo "<span class='label label-success'>Delivered</span>";
 
+                                                    }elseif ($sumDelivered == $scheduleInfo['ClientOrderDeliverySchedule']['quantity']){
+
+                                                            echo "<span class='label label-success'>Delivered</span>";
+
                                                     }elseif ($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] == '1') { 
                                                     
                                                          echo "<span class='label label-warning'>Approved</span>"; ?> &nbsp<?php
@@ -181,9 +201,6 @@ $totalremaining = 0;
                                                     } 
 
                                                      
-                                                     
-                                                    
-
                                             } ?>
 
                                         </td>

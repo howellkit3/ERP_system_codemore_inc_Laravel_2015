@@ -103,7 +103,7 @@
                                                 $sumDelivered = array_sum($arrDelivered);
                                                
                                                 $Scheddate = $scheduleDataList['ClientOrderDeliverySchedule']['schedule'];
-                                                
+
                                                 $Currentdate = date("Y-m-d H:i:s");
 
                                                 $Scheddate = str_replace('-', '', $Scheddate);
@@ -122,7 +122,7 @@
 
                                                             echo "<span class='label label-success'>Delivered</span>";
 
-                                                     }elseif ($sumDelivered == $scheduleDataList['ClientOrderDeliverySchedule']['quantity']){
+                                                    }elseif ($sumDelivered == $scheduleDataList['ClientOrderDeliverySchedule']['quantity']){
 
                                                             echo "<span class='label label-success'>Delivered</span>";
 
