@@ -4,8 +4,8 @@
 									'AddGeneralItem',
 									'AddCompoundSubstrate',
 									'AddCorrugatedPaper',
-									'AddLayerCompoundSubstrate',
-									'AddLayerCorrugatedPaper',	
+									 'AddLayerCompoundSubstrate',
+									 'AddLayerCorrugatedPaper',	
 									'ajax_pagination'
 							)); ?>
 

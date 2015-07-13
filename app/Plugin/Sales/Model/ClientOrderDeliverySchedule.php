@@ -88,8 +88,6 @@ class ClientOrderDeliverySchedule extends AppModel {
 
 	public function saveClientOrderDeliverySchedule($clientOrderData = null, $auth = null, $clientOrderId = null){
 
-		
-		
 		foreach ($clientOrderData[$this->name] as $key => $clientOrderDetails)
 		{
 			$month = date("m"); 

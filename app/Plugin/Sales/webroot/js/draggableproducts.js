@@ -175,7 +175,7 @@ $(document).ready(function() {
         if(x < max_fields){ //max input box allowed
 
             x++; //text box increment
-
+ 
             //call part.ctp
             $.ajax({ 
                 type: "GET", 
@@ -241,6 +241,7 @@ $(document).ready(function() {
                     //method for clicking radio trigger
                     $("body").on('change','.selectSpecProduct'+dynamicId, function(e){
                         var partName = $(this).val();
+                        
                         console.log(partName);
                         if ($(this).is(":checked")) {
                             //part1 = decode_utf8(partName);
@@ -315,8 +316,8 @@ $(document).ready(function() {
                 var paperqty = parseInt(paperQtyVal) / parseInt(outs);
                 $('.paper_qty'+varCounter).val(paperqty);
                 
-
             });
+            
             $("body").on('keyup','.outs_1'+varCounter, function(e){
 
                 var outs_1val = $(this).val();

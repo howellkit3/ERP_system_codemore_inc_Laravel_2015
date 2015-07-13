@@ -11,7 +11,7 @@
         <div class="form-group">
             <label class="col-lg-2 control-label"><span style="color:red">*</span>Material</label>
             <div class="col-lg-6 materialName<?php echo $varCounter ;?>" >
-                <input type="text" class="material required form-control part_name<?php echo $varCounter ;?>" maxlenght="500" name="data[ProductSpecificationPart][<?php echo $counterData ;?>][material]" readonly="readonly" />
+                <input type="text" class="material required form-control part_name<?php echo $varCounter ;?>" maxlenght="500" name="data[ProductSpecificationPart][<?php echo $counterData ;?>][material]" readonly="readonly" />.close
             </div>
             <div class="col-lg-3">
                 <button type="button" data-toggle="modal" href="#myModal<?php echo $varCounter ;?>" class="modalMaterial btn btn-primary edit-button<?php echo $varCounter ;?>">
@@ -57,7 +57,6 @@
                             'name' => 'data[ProductSpecificationPart]['.$counterData.'][quantity_unit_id]',
                             'empty' => '--Unit--'
                         ));
-
                     ?>
                 </div>
                 <label class="col-lg-1 control-label"><span style="color:red">*</span>Paper Qty</label>
@@ -92,7 +91,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Materiasdsaal</h4>
+                        <h4 class="modal-title">Material</h4>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">

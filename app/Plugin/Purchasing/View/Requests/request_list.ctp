@@ -25,19 +25,18 @@
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th><a href="#"><span></span></a></th>
-                                <th><a href="#"><span></span></a></th>
-                                <th><a href="#"><span></span></a></th>
-                                <th class="text-center"><a href="#"><span></span></a></th>
-                                <th class="text-center"><a href="#"><span>Created</span></a></th>
+                                <th><a href="#"><span></span></a>Request #</th>
+                                <th><a href="#"><span></span></a>Name</th>
+                                <th><a href="#"><span></span></a>Item</th>
+                                <th><a href="#"><span></span></a>Status</th>
+                                <th class=""><a href="#"><span>Created</span></a></th>
                                 <th>Action</th>
                             </tr>
                         </thead>
 
                         <?php 
-                        // echo $this->element('supplier_order_table',array(
-                        //         'suppliers' => $suppliers
-                        //     )); 
+                         echo $this->element('request_table'
+                             ); 
                             ?>
                             
                      </table>
