@@ -489,3 +489,6 @@ ALTER TABLE `koufu_system`.`gate_pass_assistants`     CHANGE `gate_pass_id` `ref
 
 ALTER TABLE `koufu_purchasing`.`request`  ADD COLUMN  `name` VARCHAR(80) NULL AFTER `uuid`;
 
+#NOTE: SELECT KOUFU SYSTEM DATABASE ----
+/** howellkit added this 07/10/2015  */
+insert  into `status_field_holders`(`id`,`status`,`created_by`,`modified_by`,`created`,`modified`) values (8,'Waiting',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03');
