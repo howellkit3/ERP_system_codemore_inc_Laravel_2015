@@ -1,5 +1,4 @@
-<?php $this->Html->addCrumb('Suppliers', array('controller' => 'suppliers', 'action' => 'index')); ?>
-<?php $this->Html->addCrumb('Request List', array('controller' => 'suppliers', 'action' => 'request_list')); ?>
+<?php $this->Html->addCrumb('Request List', array('controller' => 'requests', 'action' => 'request_list')); ?>
 
 <div style="clear:both"></div>
 
@@ -35,8 +34,7 @@
                         </thead>
 
                         <?php 
-                         echo $this->element('request_table'
-                             ); 
+                         echo $this->element('request_table'); 
                             ?>
                             
                      </table>
