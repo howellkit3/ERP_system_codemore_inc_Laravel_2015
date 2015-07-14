@@ -93,9 +93,8 @@
 
 					<li class="<?php echo ($this->params['plugin'] == 'human_resource') ? 'active' : '' ?>">
 						<?php
-	 						echo $this->Html->link( " <i class='fa fa-user'></i> <span>Human Resource</span>",   array('controller' =>'dashboards',
-	 											'action'=>'index',
-	 											'plugin' => ''),
+	 						echo $this->Html->link( " <i class='fa fa-user'></i> <span>Human Resource </span>",   array('controller' =>'employees','action'=>'index',
+	 											'plugin' => 'human_resource'),
 	 											array('escape' => false) );
 	 					?>
 					</li>

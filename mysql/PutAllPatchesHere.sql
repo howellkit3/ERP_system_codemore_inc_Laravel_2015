@@ -492,3 +492,24 @@ ALTER TABLE `koufu_purchasing`.`request`  ADD COLUMN  `name` VARCHAR(80) NULL AF
 #NOTE: SELECT KOUFU SYSTEM DATABASE ----
 /** howellkit added this 07/10/2015  */
 insert  into `status_field_holders`(`id`,`status`,`created_by`,`modified_by`,`created`,`modified`) values (8,'Waiting',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03');
+
+
+
+#NOTE: SELECT KOUFU Re ----
+/** aldrin added this 07/14/2015  */
+
+CREATE TABLE IF NOT EXISTS `employees` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(255) NOT NULL,
+  `middle_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `suffix` varchar(255) DEFAULT NULL,
+  `department_id` int(11) NOT NULL,
+  `position_id` int(11) NOT NULL,
+  `status` varchar(255) NOT NULL,
+  `gender` varchar(255) NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
