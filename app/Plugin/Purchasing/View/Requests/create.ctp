@@ -243,6 +243,9 @@
 										
 										
 										</section>
+
+										<section id="appending_place">
+										</section>
 	                                   
 										<div class="form-group">
 											<div class="col-lg-2"></div>
@@ -286,7 +289,9 @@
 			//alert(html);
 
 	   
-	       $(this).parents('.form-horizontal').find('#appending_items').append('<br><br><div class="form-horizontal removeItem">\
+	       $(this).parents('.form-horizontal').find('#appending_place').append('<div id = "idhover">\
+	       	<div class="form-horizontal removeItem">\
+	       																	<br><br>\
 	       																<div class="form-group " >\
 						 												<label class="col-lg-2 control-label">\
 						 													<span style="color:red">*</span>Item\
@@ -302,13 +307,20 @@
 																		<button type="button" class="remove-field  btn btn-danger" ><i class="fa fa-minus" ></i></button>\
 																		</div>\
 			 														</div>\
-			 														' + html);
+			 														' + html +
+			 														'</div>');
 
 
 	    });
 	});
 
 	$("body").on('click','.remove-field', function(e){
+		 	
+		 	$(this).parents('.removeItem').remove();
+		 	
+		});
+
+	$("body").on('hover','#idhover', function(e){
 		 	
 		 	$(this).parents('.removeItem').remove();
 		 	

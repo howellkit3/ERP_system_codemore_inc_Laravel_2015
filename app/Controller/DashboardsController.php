@@ -22,6 +22,10 @@ class DashboardsController extends AppController
     }
 	
 	public function index() {
+
+         $userData = $this->Session->read('Auth');
+
+         $this->set(compact('userData'));
 		
 	}
 
