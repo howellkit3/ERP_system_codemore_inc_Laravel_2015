@@ -59,7 +59,7 @@
 					</li>
 					 
 					<li class="<?php echo ($this->params['plugin'] == 'purchasing') ? 'active' : '' ?>">
-						<?php  if($userData['User']['role_id'] == 5 OR $userData['User']['role_id'] == 7 OR $userData['User']['role_id'] == 6 ){
+						<?php  if($userData['User']['role_id'] == 1 OR $userData['User']['role_id'] == 2 OR $userData['User']['role_id'] == 7 OR $userData['User']['role_id'] == 10){
 						 echo $this->Html->link( " <i class='fa fa-th-large'></i> <span>Purchasing</span>",   array('controller' =>'suppliers','action'=>'index','plugin' => 'purchasing'),array('escape' => false) );
 						}
 	 					?>
@@ -68,7 +68,7 @@
 		
 					
 					<li class="<?php echo ($this->params['plugin'] == 'ware_house') ? 'active' : '' ?>">
-						<?php  if($userData['User']['role_id'] == 10){
+						<?php  if($userData['User']['role_id'] == 1 OR $userData['User']['role_id'] == 2 OR $userData['User']['role_id'] == 4){
 	 						 echo $this->Html->link( " <i class='fa fa-archive'></i> <span>Ware House</span>",   array('controller' =>'ware_house_systems','action'=>'index','plugin' => 'ware_house'),array('escape' => false) );
 	 						}
 	 					?>
@@ -82,7 +82,7 @@
 	 					?>
 					<!-- </li> -->
 					<li class="<?php echo ($this->params['plugin'] == 'delivery') ? 'active' : '' ?>">
-						<?php  if($userData['User']['role_id'] == 4 OR $userData['User']['role_id'] == 6 OR $userData['User']['role_id'] == 7 OR $userData['User']['role_id'] == 8 OR $userData['User']['role_id'] == 9){
+						<?php  if($userData['User']['role_id'] == 1 OR $userData['User']['role_id'] == 2 OR $userData['User']['role_id'] == 5 OR $userData['User']['role_id'] == 3 OR $userData['User']['role_id'] == 9 ){
 	 						echo $this->Html->link( " <i class='fa fa-truck'></i> <span>Delivery</span>",   array('controller' =>'deliveries',
 	 											'action'=>'index',
 	 											'plugin' => 'delivery'),
@@ -91,7 +91,7 @@
 	 					?>
 					</li>
 					<li class="<?php echo ($this->params['plugin'] == 'accounting') ? 'active' : '' ?>">
-						<?php if($userData['User']['role_id'] == 6 OR $userData['User']['role_id'] == 7 OR $userData['User']['role_id'] == 8 OR $userData['User']['role_id'] == 9){
+						<?php if($userData['User']['role_id'] == 1 OR $userData['User']['role_id'] == 2 OR $userData['User']['role_id'] == 6 OR $userData['User']['role_id'] == 9 OR $userData['User']['role_id'] == 10 OR $userData['User']['role_id'] == 11){
 	 						echo $this->Html->link( " <i class='fa fa-money'></i> <span>Accounting</span>",   array('controller' =>'sales_invoice',
 	 											'action'=>'index',
 	 											'plugin' => 'accounting'),
@@ -101,7 +101,7 @@
 					</li>
 
 					<li class="<?php echo ($this->params['plugin'] == 'human_resource') ? 'active' : '' ?>">
-						<?php  if($userData['User']['role_id'] == 11 ){
+						<?php  if($userData['User']['role_id'] == 1 OR $userData['User']['role_id'] == 2){
 	 						echo $this->Html->link( " <i class='fa fa-user'></i> <span>Human Resource</span>",   array('controller' =>'dashboards',
 	 											'action'=>'index',
 	 											'plugin' => ''),
