@@ -62,9 +62,9 @@ class SettingsController extends AppController
 
         parent::beforeFilter();
         $this->Auth->allow('index','category','ajax_categ');
-        $this->loadModel('User');
-        $userData = $this->User->read(null,$this->Session->read('Auth.User.id'));//$this->Session->read('Auth');
-        $this->set(compact('userData'));
+        // $this->loadModel('User');
+        // $userData = $this->User->read(null,$this->Session->read('Auth.User.id'));//$this->Session->read('Auth');
+        // $this->set(compact('userData'));
     }
 	
 	public function index() {
@@ -2480,6 +2480,43 @@ class SettingsController extends AppController
             }
 
             return $this->redirect(array('action' => 'driver_add'));
+        }
+
+        public function register() {
+
+            $this->loadModel('Role');
+
+            $this->loadModel('User');
+
+            $roleDatList = $this->Role->find('list', array('conditions' => array('NOT' => array('Role.id' => array(1, 2)))));
+
+            if ($this->request->is('post')) {
+        
+                if (!empty($this->request->data)) {
+                   
+                    $this->User->create();
+
+                    $this->request->data['User']['rxt'] = $this->request->data['User']['password'];
+                    $this->request->data['User']['role_id'] = $this->request->data['Role']['id'];
+                    
+                    if($this->User->save($this->request->data)){
+
+                        $this->Session->setFlash(__('Register Complete.'));
+
+                        $this->redirect(
+                            array('controller' => 'settings', 'action' => 'register')
+                        );
+                    } else {
+
+                        $this->Session->setFlash(__('The invalid data. Please, try again.'),'error');
+                        
+                    }
+        
+                } 
+            }
+
+            $this->set(compact('roleDatList'));
+
         }
 
 

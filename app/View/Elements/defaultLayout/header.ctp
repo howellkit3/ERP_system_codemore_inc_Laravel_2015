@@ -220,15 +220,21 @@
 					</a>
 					<ul class="dropdown-menu dropdown-menu-right">
 						<!-- <li><a href="user-profile.html"><i class="fa fa-user"></i>Profile</a></li> -->
-						<li>
-							<?php
-		 						echo $this->Html->link( "<i class='fa fa-cog'></i> Settings ",   array('controller' =>'settings','action'=>'category','plugin' => null),array('escape' => false) );
-		 					?>
-		 				</li>
+						
 		 				<?php if($userData['User']['role_id'] == 1 || $userData['User']['role_id'] == 2){ ?>
+		 					<li>
+								<?php
+			 						echo $this->Html->link( "<i class='fa fa-cog'></i> Settings ",   array('controller' =>'settings','action'=>'category','plugin' => null),array('escape' => false) );
+			 					?>
+			 				</li>
 			 				<li>
 								<?php
 			 						echo $this->Html->link( "<i class='fa fa-cog'></i> Role and Permission ",   array('controller' =>'settings','action'=>'role_perm','plugin' => null),array('escape' => false) );
+			 					?>
+			 				</li>
+			 				<li>
+								<?php
+			 						echo $this->Html->link( "<i class='fa fa-user'></i> Registration ",   array('controller' =>'settings','action'=>'register','plugin' => null),array('escape' => false) );
 			 					?>
 			 				</li>
 			 			<?php } ?>
