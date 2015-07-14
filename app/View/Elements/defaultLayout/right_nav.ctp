@@ -101,12 +101,13 @@
 					</li>
 
 					<li class="<?php echo ($this->params['plugin'] == 'human_resource') ? 'active' : '' ?>">
-						<?php  if($userData['User']['role_id'] == 11 OR $userData['User']['role_id'] == 1){
-	 						echo $this->Html->link( " <i class='fa fa-user'></i> <span>Human Resource</span>",   array('controller' =>'dashboards',
+						<?php //if($userData['User']['role_id'] == 11 OR $userData['User']['role_id'] == 1){
+	 						echo $this->Html->link( " <i class='fa fa-user'></i> <span>Human Resource</span>",
+	 									array('controller' =>'employees',
 	 											'action'=>'index',
-	 											'plugin' => ''),
+	 											'plugin' => 'human_resource'),
 	 											array('escape' => false) );
-	 					}
+	 					//}
 	 					?>
 					</li>
 
