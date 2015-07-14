@@ -3,7 +3,7 @@
     $this->PhpExcel->createWorksheet()
         ->setDefaultFont('Calibri', 12);
 
-    $objTpl = PHPExcel_IOFactory::load("./img/transmittal.xlsx");
+    $objTpl = PHPExcel_IOFactory::load("./img/transmittal.xls");
      
     // add data
   //pr($contactPerson); exit;
