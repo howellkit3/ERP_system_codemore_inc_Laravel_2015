@@ -32,14 +32,14 @@ foreach ($company as $customerlist): ?>
             <td>
                 <?php
                     echo $this->Html->link('<span class="fa-stack">
-                    <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> View </font></span></span> ', array('controller' => 'customer_sales', 'action' => 'view',$customerlist['Company']['id']), array('class' =>' table-link','escape' => false, 'title'=>'View Information'
+                    <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> View </font></span></span> ', array('controller' => 'customer_sales', 'action' => 'view',$customerlist['Company']['id']), array('class' =>' table-link '.$noPermission,'escape' => false, 'title'=>'View Information'
                     ));
                 ?>
                 <?php
                     echo $this->Html->link('<span class="fa-stack">
                     <i class="fa fa-square fa-stack-2x"></i>
                     <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit </font></span>
-                    </span> ', array('controller' => 'customer_sales', 'action' => 'edit',$customerlist['Company']['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Information'));
+                    </span> ', array('controller' => 'customer_sales', 'action' => 'edit',$customerlist['Company']['id']),array('class' =>' table-link '.$noPermission,'escape' => false,'title'=>'Edit Information'));
                 ?>
                 <?php
                     // echo $this->Html->link('<span class="fa-stack">

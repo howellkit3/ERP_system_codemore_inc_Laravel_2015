@@ -22,13 +22,13 @@
                 <div class="filter-block pull-right">
                     <div class="form-group pull-left">
                         <?php //echo $this->Form->create('Quotation',array('controller' => 'quotations','action' => 'search', 'type'=> 'get')); ?>
-                            <input placeholder="Search..." class="form-control searchCustomer"  />
+                            <input placeholder="Search..." class="form-control searchCustomer <?php echo $noPermission; ?>"  />
                             <i class="fa fa-search search-icon"></i>
                          <?php //echo $this->Form->end(); ?>
                     </div>
                     <?php
 
-                        echo $this->Html->link('<i class="fa fa-plus-circle fa-lg"></i> Add Customer ', array('controller' => 'customer_sales', 'action' => 'add'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                        echo $this->Html->link('<i class="fa fa-plus-circle fa-lg"></i> Add Customer ', array('controller' => 'customer_sales', 'action' => 'add'),array('class' =>'btn btn-primary pull-right '. $noPermission,'escape' => false));
                        
                     ?>
                 </div>

@@ -39,8 +39,17 @@ class SalesOrdersController extends SalesAppController {
      												));
 
 		$quoteName = $this->Quotation->find('list',array('id','name'));
+
+    //no permission sales/Receivable Staff/Accounting Head
+    if ($userData['User']['role_id'] == 6 || $userData['User']['role_id'] == 9 ) {
+
+        $noPermission = 'disabled not-active';
+
+    }else{
+      $noPermission = ' ';
+    }
 		
-		$this->set(compact('clientOrder','quoteName','companyData','inquiryId'));
+		$this->set(compact('clientOrder','quoteName','companyData','inquiryId','noPermission'));
 	}
 
 	public function view($clientOrderId = null){
@@ -87,8 +96,10 @@ class SalesOrdersController extends SalesAppController {
 		$quotationItemDetail = $this->Quotation->QuotationItemDetail->find('first',array('conditions' => array('QuotationItemDetail.id' => $clientOrderData['ClientOrder']['client_order_item_details_id'])));
       
 		$paymentTermData = $this->PaymentTermHolder->find('list',array('fields' => array('id','name')));
-												
-		$this->set(compact('checkSpec','clientOrderData','quotationData','companyName','quotationItemDetail','paymentTermData','currencies','units'));
+					
+    $noPermission = ' ';
+
+		$this->set(compact('noPermission','checkSpec','clientOrderData','quotationData','companyName','quotationItemDetail','paymentTermData','currencies','units'));
 
     
 
