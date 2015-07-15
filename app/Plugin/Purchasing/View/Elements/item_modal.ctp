@@ -1,5 +1,5 @@
 <!-- Standard Bootstrap Modal -->
-    <div class="modal fade " id="myModalItem" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade msfyModalItem" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog specModal">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -123,21 +123,20 @@
      $("body").on('change','.selectSpecProduct', function(e){
                         var partName = $(this).val();
                         var itemModel = $(this).attr('name');
-                    
+                        //var name = $data['Requests']['name'];
+                        var itemName = $(this).attr('data-name');
+                        //console.log(test);
+                        //alert(test);
                         if ($(this).is(":checked")) {
-                            //part1 = decode_utf8(partName);
-                            //part = encode_utf8(partName);
+                            console.log(name);
                             console.log($(this).attr('class'));
-                           // $('.item_name').val(partName);
-                           $('.item_model').val(itemModel);
                             $('.item_model').val(itemModel);
                             $('.item_id').val(partName);
-                           // $(this).parents('.form-horizontal').find('.item_name').val(partName);
-                           $(this).parents('.item_name').val(partName);
+                            $('.item_name').val(itemName);
+                            $('.item_model').val(itemModel);
+                            $(this).parents('.item_name').val(itemName);
                             $( '.close' ).trigger( 'click' );
-                            // $('.allFieldPart'+varCounter).show();
-                            // $('.materialName'+varCounter).show();
-                            // $('.edit-button'+varCounter).html('<i class="fa fa-pencil fa-lg"></i>&emsp; Edit Material &nbsp;</button>');
+                          
     
                         }
                         
