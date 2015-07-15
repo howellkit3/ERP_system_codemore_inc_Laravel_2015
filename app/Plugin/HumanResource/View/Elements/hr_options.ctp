@@ -12,12 +12,62 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
         <li class="">
             <?php $page =($active_page == 'employees' && $active_action == 'index') ? 'active' : '' ?>
             <?php echo $this->Html->link("<span class='count'>Employees</span>",
-             array('controller' => 'sales_invoice',
+             array('controller' => 'employees',
               'action' => 'index'),
               array('escape' => false,
                 'class' => 'btn '.$page 
               )); ?>
            
+        </li>
+        <li class="">
+           <!--  <?php $page =($active_page == 'employees' && $active_action == 'index') ? 'active' : '' ?>
+            <?php echo $this->Html->link("<span class='count'>FP Manage</span>",
+             array('controller' => 'sales_invoice',
+              'action' => 'index'),
+              array('escape' => false,
+                'class' => 'btn '.$page 
+              )); ?> -->
+            <a href="#"><span class='count'>FP Manage</span></a>
+        </li>
+        <li class="">
+           <!--  <?php $page =($active_page == 'employees' && $active_action == 'index') ? 'active' : '' ?>
+            <?php echo $this->Html->link("<span class='count'>FP Manage</span>",
+             array('controller' => 'sales_invoice',
+              'action' => 'index'),
+              array('escape' => false,
+                'class' => 'btn '.$page 
+              )); ?> -->
+            <a href="#"><span class='count'>Schedule</span></a>
+        </li>
+        <li class="">
+           <!--  <?php $page =($active_page == 'employees' && $active_action == 'index') ? 'active' : '' ?>
+            <?php echo $this->Html->link("<span class='count'>FP Manage</span>",
+             array('controller' => 'sales_invoice',
+              'action' => 'index'),
+              array('escape' => false,
+                'class' => 'btn '.$page 
+              )); ?> -->
+            <a href="#"><span class='count'>Attendances</span></a>
+        </li>
+        <li class="">
+           <!--  <?php $page =($active_page == 'employees' && $active_action == 'index') ? 'active' : '' ?>
+            <?php echo $this->Html->link("<span class='count'>FP Manage</span>",
+             array('controller' => 'sales_invoice',
+              'action' => 'index'),
+              array('escape' => false,
+                'class' => 'btn '.$page 
+              )); ?> -->
+            <a href="#"><span class='count'>Overtime</span></a>
+        </li>
+        <li class="">
+           <!--  <?php $page =($active_page == 'employees' && $active_action == 'index') ? 'active' : '' ?>
+            <?php echo $this->Html->link("<span class='count'>FP Manage</span>",
+             array('controller' => 'sales_invoice',
+              'action' => 'index'),
+              array('escape' => false,
+                'class' => 'btn '.$page 
+              )); ?> -->
+            <a href="#"><span class='count'>Cause Memos</span></a>
         </li>
         
     </ul>
