@@ -13,6 +13,8 @@ class DeliveriesController extends DeliveryAppController {
 
     public function index() {
 
+        $userData = $this->Session->read('Auth');
+
         $this->loadModel('Sales.ClientOrder');
 
         $this->loadModel('Sales.ClientOrderDeliverySchedule');
@@ -66,7 +68,16 @@ class DeliveriesController extends DeliveryAppController {
 
         $clientsOrders = $this->paginate('ClientOrder');
 
-        $this->set(compact('clientsOrder','deliveryData', 'deliveryList', 'deliveryDetailList', 'clientsStatus', 'deliveryStatus', 'orderList', 'orderListHelper', 'orderDeliveryList'));
+        //no permission sales/Receivable Staff/Accounting Head
+        if ($userData['User']['role_id'] == 3 || $userData['User']['role_id'] == 6 || $userData['User']['role_id'] == 9) {
+
+            $noPermissionSales = 'disabled not-active';
+
+        }else{
+            $noPermissionSales = ' ';
+        }
+
+        $this->set(compact('noPermissionSales','clientsOrder','deliveryData', 'deliveryList', 'deliveryDetailList', 'clientsStatus', 'deliveryStatus', 'orderList', 'orderListHelper', 'orderDeliveryList'));
     }
 
     public function add($deliveryScheduleId = null,$quotationId = null, $clientsOrderUuid = null){
@@ -234,7 +245,9 @@ class DeliveriesController extends DeliveryAppController {
             $this->Session->setFlash(__('Unable to update your post.'));
         }
 
-        $this->set(compact('driverList','helperList','truckList','deliveryScheduleId','quotationId','clientsOrderUuid','scheduleInfo','deliveryData', 'quantityInfo','deliveryDataID','deliveryDetailsData', 'deliveryEdit', 'deliveryDetailList','deliveryList','deliveryStatus', 'orderList', 'orderListHelper', 'orderDeliveryList', 'clientsOrder', 'companyAddress', 'drData', 'deliveryDetailsData', 'DeliveryReceiptData'));
+        $noPermissionSales = ' ';
+
+        $this->set(compact('noPermissionSales','driverList','helperList','truckList','deliveryScheduleId','quotationId','clientsOrderUuid','scheduleInfo','deliveryData', 'quantityInfo','deliveryDataID','deliveryDetailsData', 'deliveryEdit', 'deliveryDetailList','deliveryList','deliveryStatus', 'orderList', 'orderListHelper', 'orderDeliveryList', 'clientsOrder', 'companyAddress', 'drData', 'deliveryDetailsData', 'DeliveryReceiptData'));
         
         //if ($gatepass == 1) {
           
@@ -379,7 +392,9 @@ class DeliveriesController extends DeliveryAppController {
 
         $scheduleInfo = $this->ClientOrder->find('all');
 
-        $this->set(compact('deliveryEdit', 'scheduleInfo', 'clientOrderData', 'DeliveryReceiptData', 'TransmittalData'));     
+        $noPermissionSales = ' '; 
+
+        $this->set(compact('noPermissionSales','deliveryEdit', 'scheduleInfo', 'clientOrderData', 'DeliveryReceiptData', 'TransmittalData'));     
             
     }
 
@@ -547,7 +562,9 @@ class DeliveriesController extends DeliveryAppController {
 
       $scheduleInfo = $this->ClientOrder->find('all');
 
-      $this->set(compact('transmittalData', 'scheduleInfo', 'clientOrderData'));     
+      $noPermissionSales = ' ';
+
+      $this->set(compact('noPermissionSales','transmittalData', 'scheduleInfo', 'clientOrderData'));     
         
 }
 
@@ -579,9 +596,9 @@ class DeliveriesController extends DeliveryAppController {
 
         $userLName = $this->User->find('list',array('fields' => array('id','last_name')));
 
-        //pr($userLName); exit;
+        $noPermissionSales = ' ';
 
-        $this->set(compact('DRData','userFName','userLName'));     
+        $this->set(compact('noPermissionSales','DRData','userFName','userLName'));     
         
     }
 
@@ -959,8 +976,9 @@ class DeliveriesController extends DeliveryAppController {
            
         }
         
+        $noPermissionSales = ' ';
         
-        $this->set(compact('truckListUpper','helperListUpper','driverListUpper','deliveryScheduleId','quotationId','clientsOrderUuid','dr_nos'));
+        $this->set(compact('noPermissionSales','truckListUpper','helperListUpper','driverListUpper','deliveryScheduleId','quotationId','clientsOrderUuid','dr_nos'));
     }
 
 }

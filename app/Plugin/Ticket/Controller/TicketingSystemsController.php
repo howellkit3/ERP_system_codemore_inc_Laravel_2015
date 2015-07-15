@@ -94,8 +94,15 @@ class TicketingSystemsController extends TicketAppController {
 		//find if product has specs
         $formatDataSpecs = $this->ProductSpecificationDetail->findData($productUuid);
 
+        //no permission sales
+        if ($userData['User']['role_id'] == 3 OR $userData['User']['role_id'] == 8) {
+            $noPermissionSales = 'disabled';
+        }else{
+            $noPermissionSales = ' ';
+        }
+
 		
-		$this->set(compact('userData','delData','ticketData','formatDataSpecs','specs','unitData','subProcess','productData','companyData','clientOrderId'));
+		$this->set(compact('userData','delData','ticketData','formatDataSpecs','specs','unitData','subProcess','productData','companyData','clientOrderId','noPermissionSales'));
 	}
 
 	public function updatePendingStatus($ticketId = null) {

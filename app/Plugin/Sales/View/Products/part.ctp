@@ -11,7 +11,7 @@
         <div class="form-group">
             <label class="col-lg-2 control-label"><span style="color:red">*</span>Material</label>
             <div class="col-lg-6 materialName<?php echo $varCounter ;?>" >
-                <input type="text" class="material required form-control part_name<?php echo $varCounter ;?>" maxlenght="500" name="data[ProductSpecificationPart][<?php echo $counterData ;?>][material]" readonly="readonly" />.close
+                <input type="text" class="material required form-control part_name<?php echo $varCounter ;?>" maxlenght="500" name="data[ProductSpecificationPart][<?php echo $counterData ;?>][material]" readonly="readonly" />
             </div>
             <div class="col-lg-3">
                 <button type="button" data-toggle="modal" href="#myModal<?php echo $varCounter ;?>" class="modalMaterial btn btn-primary edit-button<?php echo $varCounter ;?>">

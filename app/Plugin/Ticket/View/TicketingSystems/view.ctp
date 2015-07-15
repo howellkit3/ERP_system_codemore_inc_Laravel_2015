@@ -22,15 +22,13 @@
 	                        }else{
 	                        	$buttonName = 'Add Remarks';
 	                        }
-
-	                    ?>
-	                    <?php 
+	                       
 							echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> Export ', array(
 					        	'controller' => 'ticketing_systems', 
 					        	'action' => 'excel_ticket',$productData['Product']['uuid'],$ticketData['JobTicket']['uuid'],$clientOrderId),
-					        	array('class' =>'btn btn-info pull-right ','escape' => false));
+					        	array('class' =>'btn btn-info pull-right '.$noPermissionSales,'escape' => false));
 						?>
-	                    <a data-toggle="modal" href="#myModalRemarks" class="btn btn-primary mrg-b-lg pull-right"><i class="fa fa-pencil fa-lg"></i> <?php echo $buttonName ;?></a>
+	                    <a data-toggle="modal" href="#myModalRemarks" class="btn btn-primary mrg-b-lg pull-right <?php echo $noPermissionSales; ?>"><i class="fa fa-pencil fa-lg"></i> <?php echo $buttonName ;?></a>
                     </div>
 				</header>
 			</div>

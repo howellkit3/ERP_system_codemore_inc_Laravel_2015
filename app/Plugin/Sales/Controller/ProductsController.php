@@ -59,8 +59,9 @@ class ProductsController extends SalesAppController {
 
         $productData = $this->paginate('Product');
 
+        $noPermission = ' ';
 
-		$this->set(compact('productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData', 'companyData'));
+		$this->set(compact('noPermission','productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData', 'companyData'));
 
 	}
 
@@ -257,7 +258,10 @@ class ProductsController extends SalesAppController {
 															'fields' => array('id', 'company_name'),
 															'order' => array('Company.company_name' => 'ASC')
 															));
-		$this->set(compact('itemCategoryData','itemTypeData', 'companyData'));
+
+		$noPermission = ' ';
+
+		$this->set(compact('noPermission','itemCategoryData','itemTypeData', 'companyData'));
 	}
 
 	public function view($id){
@@ -280,7 +284,9 @@ class ProductsController extends SalesAppController {
 			'conditions' => array('id' => $id),
     		'order' => array('Product.id DESC')));	
 
-		$this->set(compact('product','productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData', 'companyData'));
+		$noPermission = ' ';
+
+		$this->set(compact('noPermission','product','productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData', 'companyData'));
 
 
 	}
@@ -337,7 +343,9 @@ class ProductsController extends SalesAppController {
 															'fields' => array('id', 'company_name'),
 															'order' => array('Company.company_name' => 'ASC')
 															));
-		$this->set(compact('itemCategoryData','itemTypeData','productData','productDetails','companyData'));
+		$noPermission = ' ';
+
+		$this->set(compact('noPermission','itemCategoryData','itemTypeData','productData','productDetails','companyData'));
 		$this->set(compact('companyName','itemCategoryData','itemTypeData', 'companyData'));
 
 	}
@@ -731,7 +739,9 @@ class ProductsController extends SalesAppController {
 		$productData = $this->Product->find('all',array(
     		'order' => array('Product.id DESC')));	
 
-		$this->set(compact('subProcess','processData','specs','formatDataSpecs','unitData','product','productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData', 'companyData'));
+		$noPermission = ' ';
+
+		$this->set(compact('noPermission','subProcess','processData','specs','formatDataSpecs','unitData','product','productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData', 'companyData'));
 
 		if(!empty($formatDataSpecs)){
 			$this->render('specification_view');
@@ -1077,7 +1087,9 @@ class ProductsController extends SalesAppController {
 		$productData = $this->Product->find('all',array(
     		'order' => array('Product.id DESC')));	
 
-		$this->set(compact('subProcess','processData','specs','formatDataSpecs','unitData','product','productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData', 'companyData'));
+		$noPermission = ' ';
+
+		$this->set(compact('noPermission','subProcess','processData','specs','formatDataSpecs','unitData','product','productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData', 'companyData'));
 
 		if(!empty($formatDataSpecs)){
 			$this->render('specification_edit');
