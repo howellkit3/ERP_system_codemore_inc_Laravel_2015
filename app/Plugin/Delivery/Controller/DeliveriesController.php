@@ -959,6 +959,7 @@ class DeliveriesController extends DeliveryAppController {
            
         }
         
+        
         $this->set(compact('truckListUpper','helperListUpper','driverListUpper','deliveryScheduleId','quotationId','clientsOrderUuid','dr_nos'));
     }
 

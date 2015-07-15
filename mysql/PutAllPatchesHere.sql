@@ -378,7 +378,7 @@ CREATE TABLE `trucks` (
 insert  into `trucks`(`id`,`truck_no`,`created_by`,`modified_by`,`created`,`modified`) values (1,'nqx 893',1,1,'2015-07-03 11:22:55','2015-07-02 09:52:01'),(2,'VDL 679',1,1,'2015-07-03 11:22:55','2015-07-02 09:52:01'),(3,'ZLL 773',1,1,'2015-07-03 11:22:56','2015-07-02 09:52:01'),(4,'RJN 204',1,1,'2015-07-03 11:22:57','2015-07-02 09:52:01'),(5,'POT 216',1,1,'2015-07-03 11:22:57','2015-07-02 09:52:01'),(6,'XPB 842',1,1,'2015-07-03 11:22:58','2015-07-02 09:52:01'),(7,'NOO 901',1,1,'2015-07-03 11:22:58','2015-07-02 09:52:01'),(8,'AAA 9592',1,1,'2015-07-03 11:22:59','2015-07-02 09:52:01');
 
 
-#NOTE: SELECT KOUFU ACCOUNTING DATABASE ----
+#NOTE: SELECT KOUFU DELIVERY DATABASE ----
 /** howell kit added this 07/03/2015  */
 
 ALTER TABLE `koufu_delivery`.`transmittals` ADD COLUMN `type` VARCHAR(60) NULL AFTER `quantity`;
@@ -403,7 +403,7 @@ CREATE TABLE `suppliers` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
-#NOTE: SELECT KOUFU SYSTEM DATABASE ----
+#NOTE: SELECT KOUFU PURCHASING DATABASE ----
 /** bien added this 07/08/2015  */
 
 DROP TABLE IF EXISTS `contact_people`;
@@ -436,7 +436,7 @@ ALTER TABLE `koufu_delivery`.`delivery_details` DROP COLUMN `status`;
 ALTER TABLE `koufu_delivery`.`delivery_details` ADD COLUMN  `status` INT(11) NULL AFTER `delivery_type`;
 
 #NOTE: SELECT KOUFU PURCHASING DATABASE ----
-/** howellkit added this 07/10/2015  */
+/** howellkit added this 07/10/2015 -codemark for koufu- */  
 
 CREATE TABLE `requests` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -487,8 +487,8 @@ ALTER TABLE `koufu_system`.`gate_pass_assistants`     CHANGE `gate_pass_id` `ref
 #NOTE: SELECT KOUFU PURCHASING DATABASE ----
 /** howellkit added this 07/10/2015  */
 
-ALTER TABLE `koufu_purchasing`.`request`  ADD COLUMN  `name` VARCHAR(80) NULL AFTER `uuid`;
+ALTER TABLE `koufu_purchasing`.`requests`  ADD COLUMN  `name` VARCHAR(80) NULL AFTER `uuid`;
 
 #NOTE: SELECT KOUFU SYSTEM DATABASE ----
-/** howellkit added this 07/10/2015  */
+/** howellkit added this 07/13/2015  */
 insert  into `status_field_holders`(`id`,`status`,`created_by`,`modified_by`,`created`,`modified`) values (8,'Waiting',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03');
