@@ -152,19 +152,19 @@ $('body').on('keyup','.unitprice',function(){
 $('body').on('change','.checkEx',function(){
     if($(this).is(":checked")) {
         var checkboxtext =  $('.checkEx').next('label').text();
-        $('.checkEx').next('label').text('Check to disable VAT Price');
+        $(this).parents('.form-horizontal').find('.checkEx').next('label').text('Check to disable VAT Price');
         $(this).parents('.form-horizontal').find(".vatEx").prop('readonly', true);
         $(this).parents('.form-horizontal').find(".vatIn").prop('readonly', false);
-        $('.vatEx').val("");
-        $('.vatIn').val("");
+        $(this).parents('.form-horizontal').find('.vatEx').val("");
+        $(this).parents('.form-horizontal').find('.vatIn').val("");
         $(".checkvat").attr("checked", false);
   
     }else{
-        $('.checkEx').next('label').text('Check to enable VAT Price');
+        $(this).parents('.form-horizontal').find('.checkEx').next('label').text('Check to enable VAT Price');
         $(this).parents('.form-horizontal').find(".vatEx").prop('readonly', false);
         $(this).parents('.form-horizontal').find(".vatIn").prop('readonly', true);
-        $('.vatIn').val("");
-        $('.vatEx').val("");
+        $(this).parents('.form-horizontal').find('.vatIn').val("");
+        $(this).parents('.form-horizontal').find('.vatEx').val("");
         $(".checkvat").attr("checked", false);
     }
 
