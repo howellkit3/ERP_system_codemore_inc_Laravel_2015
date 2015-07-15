@@ -492,3 +492,10 @@ ALTER TABLE `koufu_purchasing`.`requests`  ADD COLUMN  `name` VARCHAR(80) NULL A
 #NOTE: SELECT KOUFU SYSTEM DATABASE ----
 /** howellkit added this 07/13/2015  */
 insert  into `status_field_holders`(`id`,`status`,`created_by`,`modified_by`,`created`,`modified`) values (8,'Waiting',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03');
+
+
+#NOTE: SELECT KOUFU SYSTEM DATABASE ----
+/** howellkit added this 07/14/2015  */
+INSERT  INTO `roles`(`id`,`name`,`created_by`,`updated_by`,`created`,`modified`) VALUES (1,'C.E.O.',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(2,'Sales Supervisor',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(3,'Sales Staff',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(4,'Delivery Staff',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(5,'Purchasing Staff',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(6,'Accounting Head',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(7,'Payable Staff',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(8,'Receivable Staff',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(9,'Accounting  Staff',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03')
+,(10,'Warehouse Staff',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(11,'Human Resource Staff',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03');
+

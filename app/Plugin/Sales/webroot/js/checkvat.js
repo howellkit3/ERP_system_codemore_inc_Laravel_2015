@@ -26,16 +26,21 @@ function vatprice(whatsection, thisElement){
 } 
 
 function findValue($form, thisElement){
+
+
    
     var $unit_value = thisElement.parents('.'+$form).find('.unitprice').val();
+    var $vat_value = thisElement.parents('.'+$form).find('.vatIn').val();
+
+   // alert($form);
    
-    if ($unit_value == ''){
-         
+    if ($unit_value == '' && $vat_value == '' ){
+         //alert($vat_value);
         alert('Unit Price is Required.');
         thisElement.parents('.'+$form).find('.unitprice').focus();
         thisElement.attr('checked',false);
 
-    }else{
+    }else if($unit_value != '' && $form == 'quotationItemDetail'){
          
         var sum = 0;
         var index = 0;
@@ -45,24 +50,49 @@ function findValue($form, thisElement){
         total = (sum + parseFloat($unit_value));
         thisElement.parents('.'+$form).find('.vatprice').val(total);
 
-        //$("body").on('change','.checkvat', function(e){
+         if (thisElement.is(":checked")) {
+            console.log('check');
+            sum = $unit_value * .12;
+            total = (sum + parseFloat($unit_value));
+            thisElement.parents('.quotationItemDetail').find('.vatprice').val(total);
 
-             if (thisElement.is(":checked")) {
-                console.log('check');
-                sum = $unit_value * .12;
-                total = (sum + parseFloat($unit_value));
-                thisElement.parents('.quotationItemDetail').find('.vatprice').val(total);
+         } else {
+            console.log('uncheck');
+            sum = $unit_value * .12;
+            total = (parseFloat($unit_value) - sum);
+            thisElement.parents('.quotationItemDetail').find('.vatprice').val(' '); 
+         }
 
-             } else {
-                console.log('uncheck');
-                sum = $unit_value * .12;
-                total = (parseFloat($unit_value) - sum);
-                thisElement.parents('.quotationItemDetail').find('.vatprice').val(' '); 
-             }
+    }else if($vat_value != '' || $form == 'quotationItemDetails'){
 
-       // });
+        var sum = 0;
+        var index = 0;
+        var total = 0;
 
-       
+        if($form != 'quotationItemDetail' ){
+
+            $form = 'quotationItemDetail';
+
+        }
+
+        quotient = $vat_value / 1.12;
+        thisElement.parents('.'+$form).find('.unitprice').val(quotient);
+
+         if (thisElement.is(":checked")) {
+            var $vat_value = thisElement.parents('.'+$form).find('.vatIn').val();
+            console.log('check');
+            console.log($vat_value);
+            quotient = $vat_value / 1.12;
+            //total = (sum + parseFloat($unit_value));
+            thisElement.parents('.quotationItemDetail').find('.unitprice').val(quotient);
+
+         } else {
+            console.log('uncheck');
+            quotient = $vat_value / 1.12;
+           // total = (parseFloat($unit_value) - sum);
+            thisElement.parents('.quotationItemDetail').find('.unitprice').val(quotient); 
+         }
+  
     }
 
      
@@ -97,15 +127,47 @@ $('.unitprice').keypress(function(){
     console.log($(this).val());
 });
 
+$('body').on('keyup','.vatprice',function(){
+
+    $parents = $(this).parents('.quotationItemDetail');
+    
+    if ($parents.find('.unitprice').val() != '' && $(this).val() != '' ) {
+         findValue($(this).data('section'),$parents.find('.vat-price'));
+
+    }
+
+});
+
 $('body').on('keyup','.unitprice',function(){
     
     $parents = $(this).parents('.quotationItemDetail');
     
-    if ($parents.find('.vatprice').val() != '' && $(this).val() != '') {
+    if ($parents.find('.vatprice').val() != '' && $(this).val() != '' ) {
          findValue($(this).data('section'),$parents.find('.vat-price'));
     }
 
     //console.log($(this).val());
+});
+
+$('body').on('change','.checkEx',function(){
+    if($(this).is(":checked")) {
+        var checkboxtext =  $('.checkEx').next('label').text();
+        $('.checkEx').next('label').text('Check to disable VAT Price');
+        $(this).parents('.form-horizontal').find(".vatEx").prop('readonly', true);
+        $(this).parents('.form-horizontal').find(".vatIn").prop('readonly', false);
+        $('.vatEx').val("");
+        $('.vatIn').val("");
+        $(".checkvat").attr("checked", false);
+  
+    }else{
+        $('.checkEx').next('label').text('Check to enable VAT Price');
+        $(this).parents('.form-horizontal').find(".vatEx").prop('readonly', false);
+        $(this).parents('.form-horizontal').find(".vatIn").prop('readonly', true);
+        $('.vatIn').val("");
+        $('.vatEx').val("");
+        $(".checkvat").attr("checked", false);
+    }
+
 });
 
      // $whatsection.find('input').each(function() {

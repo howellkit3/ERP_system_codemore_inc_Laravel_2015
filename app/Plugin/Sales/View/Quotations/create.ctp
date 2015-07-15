@@ -208,7 +208,7 @@
 												<?php echo $this->Form->input('QuotationItemDetail.0.unit_price_currency_id', array(
 					                                'options' => array($currencyData),  
 					                                'label' => false,
-					                                'class' => 'form-control required',
+					                                'class' => 'form-control required ',
 					                                'empty' => '-Select Currency-'
 					                                 )); 
 
@@ -218,7 +218,7 @@
 												<div class="col-lg-3">
 													<?php 
 			                                            echo $this->Form->input('QuotationItemDetail.0.unit_price', array(
-                            								'class' => 'form-control item_type unitprice number required',
+                            								'class' => 'form-control item_type unitprice number required vatEx',
 		                                                    'data' => 'unitprice',
 		                                                    'type' => 'text',
 		                                                    'label' => false,
@@ -246,10 +246,11 @@
 												<div class="col-lg-8">
 													<?php 
 			                                            echo $this->Form->input('QuotationItemDetail.0.vat_price', array(
-                            								'class' => 'form-control item_type vatprice',
+                            								'class' => 'form-control item_type vatIn vatprice',
 		                                                    'type' => 'text',
 		                                                    'label' => false,
 		                                                    'readonly' => 'readonly',
+		                                                    'data-section' => 'quotationItemDetails',
 		                                                    'placeholder' => 'Vat Price'));
 		                                            ?>
 													
@@ -259,9 +260,14 @@
 											<div class="form-group">
 												<label class="col-lg-2 control-label"></label>
 												<div class="col-lg-8">
+
+													<input id="checkbox-1" class="checkEx vat-exclusive" type="checkbox" data-section='quotationItemDetail' name="[QuotationItemDetail][0][unit_price]"rel=".12" name ="togglecheckboxtext"><label>
+													<font color="gray"> Check to enable VAT Price   </font></label>
+
+
+													&nbsp &nbsp
 													
-													<input id="checkbox-1" class="checkvat checkbox-nice vat-price" type="checkbox" data-section='quotationItemDetail' name="[QuotationItemDetail][0][vat_price]" rel=".12">
-													<font color="gray"> Click to Compute the Unit Price with VAT </font>
+													<input id="checkbox-1" class="checkvat checkIn checkbox-nice vat-price" type="checkbox" data-section='quotationItemDetail' name="[QuotationItemDetail][0][vat_price]" rel=".12"><label><font color="gray"> Click to Compute the Unit Price/VAT Exclusive</font></label>
 														
 												</div>
 											</div>
