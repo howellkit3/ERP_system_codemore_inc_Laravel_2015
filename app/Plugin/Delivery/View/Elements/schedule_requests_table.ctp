@@ -157,7 +157,7 @@
                                                                           </span> ', array('controller' => 'deliveries', 
                                                                                          'action' => 'view',
                                                                          $scheduleDataList['ClientOrderDeliverySchedule']['id'],$scheduleDataList['QuotationDetail']['quotation_id'],$scheduleDataList['ClientOrderDeliverySchedule']['uuid']),
-                                                                          array('class' =>' table-link small-link-icon','escape' => false,'title'=>'Edit Information'
+                                                                          array('class' =>' table-link small-link-icon '.$noPermissionSales,'escape' => false,'title'=>'Edit Information'
                                                                      )); 
                                             ?>     
 
@@ -169,3 +169,12 @@
                         <?php 
                             endforeach; 
                         } ?> 
+
+                        <style type="text/css">
+                          .btn.disabled, .btn[disabled], fieldset[disabled] .btn {
+                            box-shadow: none;
+                            cursor: not-allowed;
+                            opacity: 0.65;
+                            pointer-events: none;
+                        }
+                        </style>

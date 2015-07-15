@@ -11,7 +11,10 @@
 	        $this->Auth->allow('add','index');
 
 	        $this->loadModel('User');
+
 	        $userData = $this->User->read(null,$this->Session->read('Auth.User.id'));//$this->Session->read('Auth');
+
+			
 	        $this->set(compact('userData'));
 
 	    }
@@ -104,7 +107,9 @@
 			$productData = $this->Company->Product->find('first',array('fields' => array('id','name'),
 											'conditions' => array('id' => $quotationData['QuotationDetailOrder'][0]['product_id'])));
 			//pr($productData);exit();
-			$this->set(compact('quotationData','companyData','paymentTerm','productData','currencies','units','code'));
+			$noPermission = ' '; 
+
+			$this->set(compact('noPermission','quotationData','companyData','paymentTerm','productData','currencies','units','code'));
 		}
 
 		public function find_item_detail($itemDetailId = null){
@@ -229,7 +234,9 @@
 			//find if product has specs
 			$formatDataSpecs = $this->ProductSpecificationDetail->findData($productData['Product']['uuid']);
 
-			$this->set(compact('clientOrderData','companyData','processData','specs','productId','productData','clientOrderId','formatDataSpecs','unitData','subProcess'));
+			$noPermission = ' '; 
+
+			$this->set(compact('noPermission','clientOrderData','companyData','processData','specs','productId','productData','clientOrderId','formatDataSpecs','unitData','subProcess'));
 
 			if($ifSpec == 0){
 				$this->render('view_specs_check');

@@ -493,10 +493,39 @@ ALTER TABLE `koufu_purchasing`.`requests`  ADD COLUMN  `name` VARCHAR(80) NULL A
 /** howellkit added this 07/13/2015  */
 insert  into `status_field_holders`(`id`,`status`,`created_by`,`modified_by`,`created`,`modified`) values (8,'Waiting',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03');
 
+#NOTE: SELECT KOUFU SYSTEM DATABASE ----
+/** bien added this 07/15/2015  */
+INSERT INTO `roles` (`id`, `name`, `created_by`, `updated_by`, `created`, `modified`)
+VALUES
+  (1,'Super Admin',2,2,'2015-05-12 10:20:35','2015-05-12 11:26:22'),
+  (2,'CEO',2,2,'2015-05-12 10:21:48','2015-07-14 15:17:38'),
+  (3,'Sales Supervisor',2,2,'2015-05-12 10:22:01','2015-07-14 17:14:29'),
+  (4,'Warehouse Supervisor',2,2,'2015-05-12 10:22:22','2015-07-14 17:14:49'),
+  (5,'Delivery Staff',2,2,'2015-05-12 10:22:22','2015-07-15 09:00:33'),
+  (6,'Accounting Head',2,2,'2015-07-14 17:15:24','2015-07-14 17:15:24'),
+  (7,'Purchasing Supervisor',2,2,'2015-07-14 17:15:49','2015-07-14 17:15:49'),
+  (8,'Sales Staff',2,2,'2015-07-14 17:16:17','2015-07-14 17:16:17'),
+  (9,'Receivable Staff',2,2,'2015-07-14 17:17:06','2015-07-14 17:17:06'),
+  (10,'Payable Staff',2,2,'2015-07-14 17:17:22','2015-07-14 17:17:22'),
+  (11,'Accounting Staff',2,2,'2015-07-14 17:17:42','2015-07-14 17:17:42');
 
+INSERT INTO `roles_permissions` (`id`, `role_id`, `permission_id`)
+VALUES
+  (1,1,1),
+  (2,1,2),
+  (3,1,3),
+  (4,1,4),
+  (5,8,1),
+  (6,8,2),
+  (7,8,3),
+  (8,3,1),
+  (9,3,2),
+  (10,3,3),
+  (11,3,4);
 
 #NOTE: SELECT KOUFU Re ----
 /** aldrin added this 07/14/2015  */
+
 CREATE TABLE IF NOT EXISTS `employees` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `first_name` varchar(255) NOT NULL,
@@ -505,15 +534,13 @@ CREATE TABLE IF NOT EXISTS `employees` (
   `suffix` varchar(255) DEFAULT NULL,
   `department_id` int(11) NOT NULL,
   `position_id` int(11) NOT NULL,
-  `code` int(11) DEFAULT NULL,
   `status` varchar(255) NOT NULL,
+  `gender` varchar(255) NOT NULL,
   `image` varchar(255) DEFAULT NULL,
-  `created_by` int(11) NOT NULL,
-  `modified_by` int(11) NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 #NOTE: SELECT KOUFU SYSTEM DATABASE ----
 /** howellkit added this 07/14/2015  */
@@ -521,91 +548,32 @@ INSERT  INTO `roles`(`id`,`name`,`created_by`,`updated_by`,`created`,`modified`)
 ,(10,'Warehouse Staff',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(11,'Human Resource Staff',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03');
 
 
-#NOTE: SELECT KOUFU Re ----
-/** aldrin added this 07/15/2015  */
-CREATE TABLE IF NOT EXISTS `addresses` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `model` varchar(255) NOT NULL,
-  `foreign_key` int(11) NOT NULL,
-  `address_1` varchar(255) DEFAULT NULL,
-  `address_2` varchar(255) DEFAULT NULL,
-  `city` varchar(255) DEFAULT NULL,
-  `state_province` varchar(255) DEFAULT NULL,
-  `zipcode` varchar(45) DEFAULT NULL,
-  `languages` varchar(255) DEFAULT NULL,
-  `created_by` int(11) NOT NULL,
-  `modified_by` int(11) NOT NULL,
-  `created` datetime NOT NULL,
-  `modified` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+#NOTE: SELECT KOUFU SYSTEM DATABASE ----
+/** bien added this 07/15/2015  */
+INSERT INTO `roles` (`id`, `name`, `created_by`, `updated_by`, `created`, `modified`)
+VALUES
+  (1,'Super Admin',2,2,'2015-05-12 10:20:35','2015-05-12 11:26:22'),
+  (2,'CEO',2,2,'2015-05-12 10:21:48','2015-07-14 15:17:38'),
+  (3,'Sales Supervisor',2,2,'2015-05-12 10:22:01','2015-07-14 17:14:29'),
+  (4,'Warehouse Supervisor',2,2,'2015-05-12 10:22:22','2015-07-14 17:14:49'),
+  (5,'Delivery Staff',2,2,'2015-05-12 10:22:22','2015-07-15 09:00:33'),
+  (6,'Accounting Head',2,2,'2015-07-14 17:15:24','2015-07-14 17:15:24'),
+  (7,'Purchasing Supervisor',2,2,'2015-07-14 17:15:49','2015-07-14 17:15:49'),
+  (8,'Sales Staff',2,2,'2015-07-14 17:16:17','2015-07-14 17:16:17'),
+  (9,'Receivable Staff',2,2,'2015-07-14 17:17:06','2015-07-14 17:17:06'),
+  (10,'Payable Staff',2,2,'2015-07-14 17:17:22','2015-07-14 17:17:22'),
+  (11,'Accounting Staff',2,2,'2015-07-14 17:17:42','2015-07-14 17:17:42');
 
-CREATE TABLE IF NOT EXISTS `employee_additional_informations` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `employee_id` int(11) NOT NULL,
-  `birthday` varchar(255) NOT NULL,
-  `height` varchar(45) NOT NULL,
-  `weight` varchar(45) NOT NULL,
-  `gender` varchar(45) NOT NULL,
-  `blood` varchar(45) NOT NULL,
-  `skills` text NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `modified_by` int(11) NOT NULL,
-  `created` datetime NOT NULL,
-  `modified` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
-CREATE TABLE IF NOT EXISTS `government_records` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `employee_id` int(11) NOT NULL,
-  `agency` varchar(255) NOT NULL,
-  `value` varchar(255) NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `modified_by` int(11) NOT NULL,
-  `created` datetime NOT NULL,
-  `modified` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
-
-CREATE TABLE IF NOT EXISTS `emails` (
-  `id` int(11) NOT NULL,
-  `model` varchar(255) NOT NULL,
-  `foreign_key` int(11) NOT NULL,
-  `type` int(11) NOT NULL DEFAULT '0',
-  `email` varchar(255) NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `modified_by` int(11) NOT NULL,
-  `created` datetime NOT NULL,
-  `modified` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-CREATE TABLE IF NOT EXISTS `contacts` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `model` varchar(45) DEFAULT NULL,
-  `foreign_key` int(11) DEFAULT NULL,
-  `type` int(11) DEFAULT NULL,
-  `number` varchar(50) DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
-  `modified_by` int(11) DEFAULT NULL,
-  `created` timestamp NULL DEFAULT NULL,
-  `modified` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=73;
-
-
-CREATE TABLE IF NOT EXISTS `contact_people` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `employee_id` int(11) DEFAULT NULL,
-  `prefix` varchar(45) DEFAULT NULL,
-  `firstname` varchar(50) DEFAULT NULL,
-  `middlename` varchar(50) DEFAULT NULL,
-  `lastname` varchar(50) DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
-  `modified_by` int(11) DEFAULT NULL,
-  `created` timestamp NULL DEFAULT NULL,
-  `modified` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id_idx` (`employee_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
+INSERT INTO `roles_permissions` (`id`, `role_id`, `permission_id`)
+VALUES
+  (1,1,1),
+  (2,1,2),
+  (3,1,3),
+  (4,1,4),
+  (5,8,1),
+  (6,8,2),
+  (7,8,3),
+  (8,3,1),
+  (9,3,2),
+  (10,3,3),
+  (11,3,4);

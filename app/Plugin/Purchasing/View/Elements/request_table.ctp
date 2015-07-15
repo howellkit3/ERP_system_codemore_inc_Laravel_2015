@@ -7,14 +7,27 @@
             <td class="">
                 <?php echo ucfirst($requestList['Request']['uuid']) ?>  
             </td>
+
             <td class="">
-                <?php echo ucfirst($requestList['Request']['name']) ?>
-                
+
+                <?php if(!empty($requestList['Request']['name'])){ 
+
+                  echo ucfirst($requestList['Request']['name']); 
+
+                } ?>
+
             </td>
 
-             <td class="">
-                <?php echo ucfirst($requestList['Request']['pur_type_id']) ?>
-                
+            <td class="">
+                <?php echo ucfirst($requestList['PurchasingItem']['name']);?>
+            </td>
+
+            <td class="">
+                <?php echo ucfirst($requestList['PurchasingItem']['model']);?>
+            </td>
+
+            <td class="">
+                <?php echo ucfirst($requestList['PurchasingItem']['quantity']);?>
             </td>
 
             <td class="">
@@ -27,11 +40,6 @@
 
             </td>
 
-     
-            
-            <td>
-                <?php echo date('M d, Y', strtotime($requestList['Request']['created'])); ?>
-            </td> 
             <td>
                 <?php
                     echo $this->Html->link('<span class="fa-stack">

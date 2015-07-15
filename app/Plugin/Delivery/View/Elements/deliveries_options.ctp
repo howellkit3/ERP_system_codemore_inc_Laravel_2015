@@ -4,6 +4,7 @@
 <?php 
 $active_page = !empty($this->params['controller']) ? $this->params['controller'] : '';
 $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
+
 ?>
 
 <div class="nav-no-collapse navbar-left pull-left hidden-sm hidden-xs">
@@ -17,7 +18,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
                                                                                             ),
                                                                                      array(
                                                                                             'escape' => false,
-                                                                                            'class' => 'btn '.$page 
+                                                                                            'class' => 'btn '.$page.' '.$noPermissionSales 
                                                                                             )); 
             ?>
            
@@ -31,7 +32,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
                                                                                     ),
                                                                             array(
                                                                                    'escape' => false,
-                                                                                   'class' => 'btn '.$page
+                                                                                   'class' => 'btn '.$page.' '.$noPermissionSales 
                                                                                    )); 
             ?>
            
@@ -45,7 +46,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
                                                                                     ),
                                                                             array(
                                                                                    'escape' => false,
-                                                                                   'class' => 'btn '.$page
+                                                                                   'class' => 'btn '.$page.' '.$noPermissionSales 
                                                                                    )); 
             ?>
            
@@ -59,7 +60,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
                                                                                     ),
                                                                             array(
                                                                                    'escape' => false,
-                                                                                   'class' => 'btn '.$page
+                                                                                   'class' => 'btn '.$page.' '.$noPermissionSales 
                                                                                    )); 
             ?>
            

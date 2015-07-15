@@ -41,8 +41,9 @@
 			<div id="login-box-footer">
 				<div class="row">
 					<div class="col-xs-12">
-						Do not have an account? 
-						<?php echo $this->Html->link(__('Register now'), array('controller' => 'users','action' => 'add')); ?>
+						<!-- Do not have an account?  -->
+
+						<?php //echo $this->Html->link(__('Register now'), array('controller' => 'users','action' => 'add')); ?>
 					</div>
 				</div>
 			</div>

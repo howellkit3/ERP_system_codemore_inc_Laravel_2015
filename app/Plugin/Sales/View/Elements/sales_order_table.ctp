@@ -24,7 +24,7 @@
                         echo $this->Html->link('<span class="fa-stack">
                             <i class="fa fa-square fa-stack-2x"></i>
                             <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> View </font></span>
-                            </span> ', array('controller' => 'sales_orders', 'action' => 'view',$clientOderData['ClientOrder']['id']),array('class' =>' table-link','escape' => false,'title'=>'View Information'));
+                            </span> ', array('controller' => 'sales_orders', 'action' => 'view',$clientOderData['ClientOrder']['id']),array('class' =>' table-link '.$noPermission,'escape' => false,'title'=>'View Information'));
 
                     ?>
                     <?php

@@ -103,7 +103,10 @@ class QuotationsController extends SalesAppController {
             Cache::write('inquiryId', $inquiryId);
        // }
 		
-		$this->set(compact('companyData','quotationData','inquiryId','salesStatus','rolesPermissionData'));
+		
+	    $noPermission = ' ';
+	   
+		$this->set(compact('companyData','quotationData','inquiryId','salesStatus','rolesPermissionData','noPermission'));
 
 	}
 
@@ -207,7 +210,9 @@ class QuotationsController extends SalesAppController {
 			 $userData = $this->Session->read('Auth');
 		}
 
-		$this->set(compact('category','inquiryId','companyData','customField','itemCategoryData','paymentTermData','unitData','currencyData'));
+		$noPermission = ' '; 
+
+		$this->set(compact('noPermission','category','inquiryId','companyData','customField','itemCategoryData','paymentTermData','unitData','currencyData'));
 		
 	}
 
@@ -495,7 +500,9 @@ class QuotationsController extends SalesAppController {
 										'User.id' => $userData['User']['id'] )
 								));
 		
-		$this->set(compact('disabled','userData','myPermission','approvedUser','units','currencies','paymentTerm','companyData','companyId', 'quotationSize', 'quotationOption','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','salesStatus', 'productName','clientOrderCount','quotationDetailData', 'rolesPermissionData'));
+		$noPermission = ' '; 
+
+		$this->set(compact('noPermission','disabled','userData','myPermission','approvedUser','units','currencies','paymentTerm','companyData','companyId', 'quotationSize', 'quotationOption','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','salesStatus', 'productName','clientOrderCount','quotationDetailData', 'rolesPermissionData'));
 		
 	}
 

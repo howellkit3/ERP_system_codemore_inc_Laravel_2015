@@ -10,6 +10,8 @@ class SalesInvoiceController extends AccountingAppController {
 
 	public function index(){
 		
+        $userData = $this->Session->read('Auth');
+
       	$invoiceData = $this->SalesInvoice->find('all', array(
                                           			'fields' => array(
                                               			'id','sales_invoice_no',
@@ -21,11 +23,31 @@ class SalesInvoiceController extends AccountingAppController {
                                                     'order' => 'SalesInvoice.id DESC'
                                         		));
       	
-        $this->set(compact('invoiceData'));
+        if ($userData['User']['role_id'] == 9 ) {
+            $noPermissionReciv = 'disabled not-active';
+        } else {
+            $noPermissionReciv = ' ';
+        }
+
+       if ($userData['User']['role_id'] == 10) {
+            $noPermissionPay = 'disabled not-active';
+            $this->redirect( array(
+                 'controller' => 'salesInvoice', 
+                 'action' => 'payable'
+            ));
+
+        } else {
+            $noPermissionPay = ' ';
+        }
+
+        $this->set(compact('invoiceData','noPermissionReciv','noPermissionPay'));
+
 	}
 
     public function statement(){
         
+        $userData = $this->Session->read('Auth');
+
         $invoiceData = $this->SalesInvoice->find('all', array(
                                                     'fields' => array(
                                                         'id','sales_invoice_no',
@@ -35,8 +57,22 @@ class SalesInvoiceController extends AccountingAppController {
                                                         'SalesInvoice.status' => 2 ),
                                                     'order' => 'SalesInvoice.id DESC'
                                                 ));
-        
-        $this->set(compact('invoiceData'));
+
+        if ($userData['User']['role_id'] == 9 ) {
+            $noPermissionReciv = 'disabled not-active';
+        } else {
+            $noPermissionReciv = ' ';
+        }
+
+       if ($userData['User']['role_id'] == 10) {
+            $noPermissionPay = 'disabled not-active';
+
+        } else {
+            $noPermissionPay = ' ';
+        }
+
+        $this->set(compact('invoiceData','noPermissionReciv','noPermissionPay'));
+
     }
 
     public function view($invoiceId = null,$saNo = null){
@@ -444,6 +480,8 @@ class SalesInvoiceController extends AccountingAppController {
 
     public function receivable(){
 
+        $userData = $this->Session->read('Auth');
+
         $this->loadModel('Delivery.Delivery');
 
         $this->loadModel('Delivery.DeliveryDetail');
@@ -527,8 +565,21 @@ class SalesInvoiceController extends AccountingAppController {
 
 
         }
-      
-        $this->set(compact('invoiceData','companyData','paymentTermData'));
+        
+        if ($userData['User']['role_id'] == 9 ) {
+            $noPermissionReciv = 'disabled not-active';
+        } else {
+            $noPermissionReciv = ' ';
+        }
+
+       if ($userData['User']['role_id'] == 10) {
+            $noPermissionPay = 'disabled not-active';
+
+        } else {
+            $noPermissionPay = ' ';
+        }
+
+        $this->set(compact('invoiceData','companyData','paymentTermData','noPermissionReciv','noPermissionPay'));
 
     }
 
@@ -792,6 +843,26 @@ class SalesInvoiceController extends AccountingAppController {
             $this->render('daterange_term');
         }
         
+    }
+
+    public function payable(){
+
+        $userData = $this->Session->read('Auth');
+
+        if ($userData['User']['role_id'] == 9 ) {
+            $noPermissionReciv = 'disabled not-active';
+        } else {
+            $noPermissionReciv = ' ';
+        }
+
+       if ($userData['User']['role_id'] == 10) {
+            $noPermissionPay = 'disabled not-active';
+
+        } else {
+            $noPermissionPay = ' ';
+        }
+
+        $this->set(compact('noPermissionReciv','noPermissionPay'));
     }
 
 }

@@ -15,7 +15,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
              array('controller' => 'customer_sales',
               'action' => 'index'),
               array('escape' => false,
-                'class' => 'btn '.$page 
+                'class' => 'btn '.$page.' '.$noPermission
               )); ?>
            
         </li>
@@ -26,7 +26,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
              array('controller' => 'customer_sales',
               'action' => 'inquiry'),
               array('escape' => false,
-                'class' => 'btn '.$page 
+                'class' => 'btn '.$page .' '.$noPermission
               )); ?>
            
         </li>
@@ -37,7 +37,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
              array('controller' => 'quotations',
               'action' => 'index'),
               array('escape' => false,
-                'class' => 'btn '.$page 
+                'class' => 'btn '.$page .' '.$noPermission
               )); ?>
            
         </li>
@@ -59,7 +59,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
              array('controller' => 'products',
               'action' => 'index'),
               array('escape' => false,
-                'class' => 'btn '.$page 
+                'class' => 'btn '.$page .' '.$noPermission
               )); ?>
            
         </li>

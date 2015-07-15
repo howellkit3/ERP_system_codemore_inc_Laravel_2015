@@ -16,6 +16,7 @@ class CustomerSalesController extends SalesAppController {
 
         $this->loadModel('User');
         $userData = $this->User->read(null,$this->Session->read('Auth.User.id'));//$this->Session->read('Auth');
+
         $this->set(compact('userData'));
 
     }
@@ -57,8 +58,17 @@ class CustomerSalesController extends SalesAppController {
         );
 
 		$company = $this->paginate('Company');
+
+		//no permission sales/Receivable Staff/Accounting Head
+	    if ($userData['User']['role_id'] == 6 || $userData['User']['role_id'] == 9 ) {
+
+	        $noPermission = 'disabled not-active';
+
+	    }else{
+	    	$noPermission = ' ';
+	    }
 	
-		$this->set(compact('company','paymentTermData'));
+		$this->set(compact('company','paymentTermData','noPermission'));
 		
 	}
 
@@ -374,6 +384,10 @@ class CustomerSalesController extends SalesAppController {
             }
         }
 
+        $noPermission = ' ';
+
+        $this->set(compact('noPermission'));
+
 	}
 
 	public function inquiry(){
@@ -397,7 +411,9 @@ class CustomerSalesController extends SalesAppController {
 		
 		$companyData = $this->Company->find('list',array('fields' => array('id', 'company_name')));
 
-		$this->set(compact('companyData','inquiryData'));
+		$noPermission = ' ';
+
+		$this->set(compact('companyData','inquiryData','noPermission'));
 		
 	}
 
@@ -413,7 +429,9 @@ class CustomerSalesController extends SalesAppController {
 	        'conditions' => array('Company.id' => $inquiry['Inquiry']['company_id'])
 	    ));
 		
-		$this->set(compact('company','inquiry'));
+		$noPermission = ' ';
+
+		$this->set(compact('company','inquiry','noPermission'));
 		
 	}
 

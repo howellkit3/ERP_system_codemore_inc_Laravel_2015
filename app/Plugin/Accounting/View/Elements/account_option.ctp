@@ -15,7 +15,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
              array('controller' => 'sales_invoice',
               'action' => 'index'),
               array('escape' => false,
-                'class' => 'btn '.$page 
+                'class' => 'btn '.$page .' '.$noPermissionPay
               )); ?>
            
         </li>
@@ -26,7 +26,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
              array('controller' => 'sales_invoice',
               'action' => 'statement'),
               array('escape' => false,
-                'class' => 'btn '.$page 
+                'class' => 'btn '.$page .' '.$noPermissionPay
               )); ?>
            
         </li>
@@ -37,7 +37,18 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
              array('controller' => 'sales_invoice',
               'action' => 'receivable'),
               array('escape' => false,
-                'class' => 'btn '.$page 
+                'class' => 'btn '.$page .' '.$noPermissionPay
+              )); ?>
+           
+        </li>
+
+        <li class="">
+            <?php $page =($active_page == 'sales_invoice' && $active_action == 'payable') ? 'active' : '' ?>
+            <?php echo $this->Html->link("<span class='count'>Payable</span>",
+             array('controller' => 'sales_invoice',
+              'action' => 'payable'),
+              array('escape' => false,
+                'class' => 'btn '.$page .' '.$noPermissionReciv
               )); ?>
            
         </li>
