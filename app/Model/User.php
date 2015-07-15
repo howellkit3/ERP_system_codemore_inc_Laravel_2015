@@ -27,19 +27,13 @@ class User extends AppModel {
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 			),
-			'alphaNumeric'=> array(
-	            'rule' => 'alphaNumeric',
-	            'message'=> 'Please enter a valid name'
-	        ),
+			
 		),
 		'last_name' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 			),
-			'alphaNumeric'=> array(
-	            'rule' => 'alphaNumeric',
-	            'message'=> 'Please enter a valid name'
-	        ),
+			
 		),
 	 	'password' => array(
             'identicalFieldValues' => array( 

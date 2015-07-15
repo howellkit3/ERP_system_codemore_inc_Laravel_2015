@@ -101,13 +101,13 @@ class DATABASE_CONFIG {
 	// 	//'encoding' => 'utf8',
 	// );
 
-	public $default = array(
+		public $default = array(
 				'datasource' => 'Database/Mysql',
 				'persistent' => false,
 				'host' => 'localhost',
 				'login' => 'root',
 				'password' => '',
-				'database' => 'koufu_system',
+				'database' => 'dev_koufu_system',
 				'prefix' => '',
 				//'encoding' => 'utf8',
 			);
@@ -118,7 +118,7 @@ class DATABASE_CONFIG {
 				'host' => 'localhost',
 				'login' => 'root',
 				'password' => '',
-				'database' => 'koufu_sale',
+				'database' => 'dev_koufu_sale',
 				'prefix' => '',
 				//'encoding' => 'utf8',
 			);
@@ -129,7 +129,7 @@ class DATABASE_CONFIG {
 				'host' => 'localhost',
 				'login' => 'root',
 				'password' => '',
-				'database' => 'koufu_ticketing_system',
+				'database' => 'dev_koufu_ticketing_system',
 				'prefix' => '',
 				//'encoding' => 'utf8',
 			);
@@ -140,7 +140,7 @@ class DATABASE_CONFIG {
 				'host' => 'localhost',
 				'login' => 'root',
 				'password' => '',
-				'database' => 'koufu_purchasing',
+				'database' => 'dev_koufu_purchasing',
 				'prefix' => '',
 				//'encoding' => 'utf8',
 			);
@@ -151,7 +151,29 @@ class DATABASE_CONFIG {
 				'host' => 'localhost',
 				'login' => 'root',
 				'password' => '',
-				'database' => 'koufu_delivery_system',
+				'database' => 'dev_koufu_delivery_system',
+				'prefix' => '',
+				//'encoding' => 'utf8',
+			);
+
+			public $koufu_ticketing = array(
+				'datasource' => 'Database/Mysql',
+				'persistent' => false,
+				'host' => 'localhost',
+				'login' => 'root',
+				'password' => '',
+				'database' => 'dev_koufu_ticketing',
+				'prefix' => '',
+				//'encoding' => 'utf8',
+			);
+
+			public $koufu_human_resource = array(
+				'datasource' => 'Database/Mysql',
+				'persistent' => false,
+				'host' => 'localhost',
+				'login' => 'root',
+				'password' => '',
+				'database' => 'dev_koufu_human_resource',
 				'prefix' => '',
 				//'encoding' => 'utf8',
 			);
