@@ -245,7 +245,7 @@
                             'required' => 'required',
                             //'readonly' => 'readonly',
                             'placeholder' => 'Item Quantity',
-                            'value' => $drData['DeliveryDetail']['quantity']- $drData['DeliveryDetail']['delivered_quantity']));
+                            'value' => $drData['DeliveryDetail']['delivered_quantity']));
 
                             echo $this->Form->input('DeliveryReceipt.quantity', array(
                             'class' => 'form-control item_type quantityLimit',
@@ -253,7 +253,7 @@
                             'required' => 'required',
                             'type' => 'hidden',
                             'placeholder' => 'Item Quantity',
-                            'value' => $drData['DeliveryDetail']['quantity']));
+                            'value' => $drData['DeliveryDetail']['delivered_quantity']));
 
                             echo $this->Form->input('DeliveryDetail.limit', array(
                             'class' => 'form-control item_type editable required ',

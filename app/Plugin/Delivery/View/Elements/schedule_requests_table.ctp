@@ -60,29 +60,29 @@
   
                                                     if($value['Delivery']['schedule_uuid'] == $orderDeliveryList[$uuidClientsOrder]  ){  
                                                    
-                                                      array_push($arr,$value['DeliveryDetail']['status']);
+                                                      array_push($arr,$value['DeliveryDetail']['delivered_quantity']);
 
                                                     }  
 
                                                     //pr($arr);
-                                                    $dataholder = 0;
-                                                    foreach ($arr as $key => $value) {
+                                                    // $dataholder = 0;
+                                                    // foreach ($arr as $key => $value) {
 
-                                                       if ($value == '2' ) {
-                                                        //pr('ff');
-                                                         $dataholder = 1;
-                                                       }
+                                                    //    if ($value == '2' ) {
+                                                    //     //pr('ff');
+                                                    //      $dataholder = 1;
+                                                    //    }
 
-                                                       if ($value == '5' ) {
-                                                        //pr('ff');
-                                                         $dataholder = 1;
-                                                       }
+                                                    //    if ($value == '5' ) {
+                                                    //     //pr('ff');
+                                                    //      $dataholder = 1;
+                                                    //    }
 
-                                                       if ($value == '' ) {
-                                                       // pr('s');
-                                                         $dataholder = 1;
-                                                       }
-                                                    }
+                                                    //    if ($value == '' ) {
+                                                    //    // pr('s');
+                                                    //      $dataholder = 1;
+                                                    //    }
+                                                    // }
                                                     
                                                   }
 
@@ -113,14 +113,9 @@
                                                   if (!empty($deliveryData[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']]) || !empty($deliveryList[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']])) {   
 
                                                    
-                                                    if($dataholder == 0){
+                                                    if (array_sum($arr) == $scheduleDataList['ClientOrderDeliverySchedule']['quantity']){ 
 
-                                                       echo "<span class='label label-success'>Delivered</span>";
-
-                                                     
-                                                    }elseif ($deliveryDetailList[$deliveryList[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']]] == $scheduleDataList['ClientOrderDeliverySchedule']['quantity']){ 
-
-                                                            echo "<span class='label label-success'>Delivered</span>";
+                                                            echo "<span class='label label-success'>Completed</span>";
 
                                                     }elseif ($sumDelivered == $scheduleDataList['ClientOrderDeliverySchedule']['quantity']){
 
