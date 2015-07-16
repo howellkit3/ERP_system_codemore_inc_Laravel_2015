@@ -84,62 +84,64 @@
 
     
 
-    var itemGroup = '';
-    var counterData = 0;
-         var dynamicId = "ItemGroup"+counterData;
+    // var itemGroup = '';
+    // var counterData = 0;
+    // var dynamicId = "ItemGroup"+counterData;
                     
-    $("body").on('change','.ItemGroup', function(e){
+    // $("body").on('change','.ItemGroup', function(e){
 
-         //var counterData = parseInt($(this).attr('data'));
+    //      //var counterData = parseInt($(this).attr('data'));
          
-        // alert(counterData);
-        itemGroup = $(this).val();
-        //alert(itemGroup);
-        // $('#itemGroup'+dynamicId).attr('value',itemGroup);
-        // itemG = itemGroup;
-        if(itemGroup == 0){
+    //     // alert(counterData);
+    //     itemGroup = $(this).val();
+
+    //     var getCounter = $('.get-counter').val();
+    //     //alert(itemGroup);
+    //     // $('#itemGroup'+dynamicId).attr('value',itemGroup);
+    //     // itemG = itemGroup;
+    //     if(itemGroup == 0){
             
-            $('.searchItem').attr('disabled',true);
+    //         $('.searchItem').attr('disabled',true);
 
-        }else{
+    //     }else{
 
-            $('.searchItem').attr('disabled',false);
+    //         $('.searchItem').attr('disabled',false);
 
-            $.ajax({
-                type: "GET",
-                url: serverPath + "purchasing/requests/item_details/"+itemGroup+"/"+dynamicId,
-                dataType: "html",
-                success: function(groupdata) {
+    //         $.ajax({
+    //             type: "GET",
+    //             url: serverPath + "purchasing/requests/item_details/"+itemGroup+"/"+getCounter,
+    //             dataType: "html",
+    //             success: function(groupdata) {
                     
-                    $('.tableProduct').html(groupdata); 
+    //                 $('.tableProduct').html(groupdata); 
                     
-                }
-            });
-        }
+    //             }
+    //         });
+    //     }
         
 
-    });
+    // });
 
-     $("body").on('change','.selectSpecProduct', function(e){
-                        var partName = $(this).val();
-                        var itemModel = $(this).attr('name');
-                        //var name = $data['Requests']['name'];
-                        var itemName = $(this).attr('data-name');
-                        //console.log(test);
-                        //alert(test);
-                        if ($(this).is(":checked")) {
-                            console.log(name);
-                            console.log($(this).attr('class'));
-                            $('.item_model').val(itemModel);
-                            $('.item_id').val(partName);
-                            $('.item_name').val(itemName);
-                            $('.item_model').val(itemModel);
-                            $(this).parents('.item_name').val(itemName);
-                            $( '.close' ).trigger( 'click' );
+     // $("body").on('change','.selectSpecProduct', function(e){
+     //                    var partName = $(this).val();
+     //                    var itemModel = $(this).attr('name');
+     //                    //var name = $data['Requests']['name'];
+     //                    var itemName = $(this).attr('data-name');
+     //                    //console.log(test);
+     //                    //alert(test);
+     //                    if ($(this).is(":checked")) {
+     //                        console.log(name);
+     //                        console.log($(this).attr('class'));
+     //                        $('.item_model').val(itemModel);
+     //                        $('.item_id').val(partName);
+     //                        $('.item_name').val(itemName);
+     //                        $('.item_model').val(itemModel);
+     //                        $(this).parents('.item_name').val(itemName);
+     //                        $( '.close' ).trigger( 'click' );
                           
     
-                        }
+     //                    }
                         
-                    });
+     //                });
 
     </script>
