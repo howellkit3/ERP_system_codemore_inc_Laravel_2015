@@ -110,7 +110,7 @@
 	 					?>
 					</li>
 
-					<li class="<?php echo ($this->params['plugin'] == 'human_resource') ? 'active' : '' ?>">
+					<!-- <li class="<?php echo ($this->params['plugin'] == 'human_resource') ? 'active' : '' ?>">
 
 						<?php  if($userData['User']['role_id'] == 1 OR $userData['User']['role_id'] == 2){
 
@@ -121,7 +121,7 @@
 	 											array('escape' => false) );
 	 					}
 	 					?>
-					</li>
+					</li> -->
 
 					<!-- <li>
 						<?php

@@ -817,9 +817,9 @@ class QuotationsController extends SalesAppController {
 		            }
 		
 		     }
-
+		$noPermission = ' ';
 		    //pr($productData); exit;
-		$this->set(compact('quotationData','itemDetailData','unitData','currencyData','companyData','customField','itemCategoryData', 'paymentTermData','itemTypeData','productData'));
+		$this->set(compact('noPermission','quotationData','itemDetailData','unitData','currencyData','companyData','customField','itemCategoryData', 'paymentTermData','itemTypeData','productData'));
 	}
 
 		//pr($this->request->data);
