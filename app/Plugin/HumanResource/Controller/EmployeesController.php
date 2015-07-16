@@ -7,7 +7,7 @@ App::uses('ImageUploader', 'Vendor');
 
 class EmployeesController  extends HumanResourceAppController {
 
-	var $helpers = array('HumanResource.CustomText');
+	var $helpers = array('HumanResource.CustomText','HumanResource.Country');
 
 	public function index() {
 
@@ -45,28 +45,72 @@ class EmployeesController  extends HumanResourceAppController {
 
 		if ($this->request->is('post')) {
 
+			 $this->loadModel('HumanResource.EmployeeAdditionalInformation');
+
+			 $this->loadModel('HumanResource.Email');
+
+			 $this->loadModel('HumanResource.Address');
+
+			 $this->loadModel('HumanResource.GovernmentRecord');
+
+			 $this->loadModel('HumanResource.Contact');
+
+			 $this->loadModel('HumanResource.ContactPerson');
+			
+
+
 			  $uploader = new ImageUploader;
         
 			 if(!empty($this->request->data)){
+			 	$auth = $this->Session->read('Auth.User');
+			 	$data = $this->request->data;
 
-			 //	pr($this->request->data); exit();
+			 	// if (!empty($this->request->data['Employee']['file']['name'])) {
 
-			 	if (!empty($this->request->data['Employee']['file']['name'])) {
-
-					$file = $this->request->data['Employee']['file'];
+					// $file = $this->request->data['Employee']['file'];
               
-                    if ($this->request->data['Employee']['file']['error'] == 0 ) {
-                       $time = time();
-                       $file['name'] = $uploader->resize($file, $time,'employee');
+
+     //                if ($this->request->data['Employee']['file']['error'] == 0 ) {
+     //                   $time = time();
+     //                   $file['name'] = $uploader->resize($file, $time,'employee');
                         
-                    }
+     //                }
                
-                	$this->request->data['Employee']['image'] = $file['name'];
-            }
+     //            	$this->request->data['Employee']['image'] = $file['name'];
+     //        }
 
+            		$this->Employee->create();
 
-			 	if ($this->Employee->save($this->request->data)) {
+			 		
 
+			 	if ($this->Employee->save($data)) {
+
+			 		$employeeId = $this->Employee->id;
+			 		//save additional info
+			 		$save = $this->EmployeeAdditionalInformation->saveInfo($employeeId,$data['EmployeeAdditionalInformation']);
+			 		//save employee emails
+			 		$save = $this->Email->saveEmails($data['Emails'],$employeeId,'Employee',$auth['id']);
+					//save employee address
+			 		$save = $this->Address->saveAddress($data['Address'],$employeeId,'Employee',$auth['id']);	
+			 		//save employee contact
+			 		//$this->loadModel('HumanResource.Contact');
+
+			 		$save = $this->Contact->saveContact($data['Contact'],$employeeId,'Employee',$auth['id']);
+					//save employee_goverment record
+			 		$save = $this->GovernmentRecord->saveRecord($data['EmployeeAgencyRecord'],$employeeId,$auth['id']);
+
+			 		if (!empty($data['ContactPersonData'])) {
+
+			 		
+			 			$this->ContactPerson->saveContact($data['ContactPersonData'],$employeeId,$auth['id']);
+			 		}
+
+			 		exit();
+
+					//save contactPerson emails
+			 		//$save = $this->Email->saveEmails($employeeId,'ContactPerson',$data['ContactPersonData']['Email'],$auth['id']);
+
+			 		//$save
 			 		$this->Session->setFlash('Saving employee information successfully');
 			 		   $this->redirect( array(
                                  'controller' => 'employees', 

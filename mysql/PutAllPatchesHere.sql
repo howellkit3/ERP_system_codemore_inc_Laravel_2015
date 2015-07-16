@@ -493,7 +493,35 @@ ALTER TABLE `koufu_purchasing`.`requests`  ADD COLUMN  `name` VARCHAR(80) NULL A
 /** howellkit added this 07/13/2015  */
 insert  into `status_field_holders`(`id`,`status`,`created_by`,`modified_by`,`created`,`modified`) values (8,'Waiting',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03');
 
+#NOTE: SELECT KOUFU SYSTEM DATABASE ----
+/** bien added this 07/15/2015  */
+INSERT INTO `roles` (`id`, `name`, `created_by`, `updated_by`, `created`, `modified`)
+VALUES
+  (1,'Super Admin',2,2,'2015-05-12 10:20:35','2015-05-12 11:26:22'),
+  (2,'CEO',2,2,'2015-05-12 10:21:48','2015-07-14 15:17:38'),
+  (3,'Sales Supervisor',2,2,'2015-05-12 10:22:01','2015-07-14 17:14:29'),
+  (4,'Warehouse Supervisor',2,2,'2015-05-12 10:22:22','2015-07-14 17:14:49'),
+  (5,'Delivery Staff',2,2,'2015-05-12 10:22:22','2015-07-15 09:00:33'),
+  (6,'Accounting Head',2,2,'2015-07-14 17:15:24','2015-07-14 17:15:24'),
+  (7,'Purchasing Supervisor',2,2,'2015-07-14 17:15:49','2015-07-14 17:15:49'),
+  (8,'Sales Staff',2,2,'2015-07-14 17:16:17','2015-07-14 17:16:17'),
+  (9,'Receivable Staff',2,2,'2015-07-14 17:17:06','2015-07-14 17:17:06'),
+  (10,'Payable Staff',2,2,'2015-07-14 17:17:22','2015-07-14 17:17:22'),
+  (11,'Accounting Staff',2,2,'2015-07-14 17:17:42','2015-07-14 17:17:42');
 
+INSERT INTO `roles_permissions` (`id`, `role_id`, `permission_id`)
+VALUES
+  (1,1,1),
+  (2,1,2),
+  (3,1,3),
+  (4,1,4),
+  (5,8,1),
+  (6,8,2),
+  (7,8,3),
+  (8,3,1),
+  (9,3,2),
+  (10,3,3),
+  (11,3,4);
 
 #NOTE: SELECT KOUFU Re ----
 /** aldrin added this 07/14/2015  */

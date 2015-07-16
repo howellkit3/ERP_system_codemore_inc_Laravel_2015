@@ -12,7 +12,10 @@ function readURL(input,element) {
     }
 }
 
-
+$('.datepick').datepicker({
+		  format: 'mm-dd-yyyy'
+		  
+	});
 $('body').on('click','.btn.btn-success.upload-image',function(e){
 
 

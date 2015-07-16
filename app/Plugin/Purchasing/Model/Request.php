@@ -32,30 +32,32 @@ class Request extends AppModel {
 		$this->contain($model);
 	}
 
+public function bindRequest() {
+	$this->bindModel(array(
+		'hasOne' => array(
+			'PurchasingItem' => array(
+				'className' => 'Purchasing.PurchasingItem',
+				'foreignKey' => false,
+				'conditions' => 'Request.uuid = PurchasingItem.item_group_uuid'
+			),		
+			
+
+		)
+	));
+	$this->recursive = 1;
+	//$this->contain($giveMeTheTableRelationship);
+}
+
 public function saveRequest($requestData = null, $auth = null){
 
-		
-		
-		
-			$month = date("m"); 
-		    $year = date("y");
-		    $hour = date("H");
-		    $minute = date("i");
-		    $seconds = date("s");
-		    $random = rand(1000, 10000);
-	        
-		$code =  $year. $month .$random;
+			
 
 			$this->create();
 
-				$requestData['uuid'] = $code;
 				$requestData['status_id'] = 8;
 				$requestData['prepared_by'] = $auth;
 				$requestData['approved_by'] = $auth;
-				//pr($requestData); exit;
 				$this->save($requestData);
-	
-							
 		
 	}
 
