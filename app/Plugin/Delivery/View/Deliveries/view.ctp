@@ -399,7 +399,7 @@ $totalremaining = 0;
 
                                             } 
 
-                                        if($deliveryDataList['DeliveryDetail']['status'] == '3'){
+                                        if($deliveryDataList['DeliveryDetail']['status'] == '3' || $deliveryDataList['DeliveryDetail']['status'] == '5'){
 
                                             echo $this->Html->link('<span class="fa-stack">
                                                 <i class="fa fa-square fa-stack-2x"></i>
