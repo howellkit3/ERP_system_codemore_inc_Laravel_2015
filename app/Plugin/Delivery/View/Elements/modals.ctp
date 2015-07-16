@@ -28,27 +28,30 @@
                                 <?php 
                                     foreach ($deliveryEdit as $deliveryDataList): 
 
-                                        if($deliveryDataList['DeliveryDetail']['status'] == 5){
+                                        if($deliveryDataList['DeliveryDetail']['status'] == 3){
 
                                           $difference = $deliveryDataList['DeliveryDetail']['delivered_quantity']; 
 
                                           array_push($pushRemaining,$difference );
 
-                                        }else{
+                                        }else if ($deliveryDataList['DeliveryDetail']['status'] != 5){
 
-                                          $difference = $deliveryDataList['DeliveryDetail']['quantity']; 
+                                        $difference = $deliveryDataList['DeliveryDetail']['quantity']; 
 
-                                          array_push($pushRemaining,$difference );
+                                        array_push($pushRemaining,$difference );
+
 
                                         }
 
                                     endforeach; 
+                                        
 
                                           foreach ($pushRemaining as $key => $value) {
 
                                           $totaldifference = $totaldifference + $value;
 
-                                          }             
+                                          }   
+        
 
                                           if($totaldifference != 0){                
                                            
@@ -58,6 +61,8 @@
 
                                           $totalremaining = $scheduleInfo['ClientOrderDeliverySchedule']['quantity'];
                                           }
+
+
 
                                           ?>
                                         

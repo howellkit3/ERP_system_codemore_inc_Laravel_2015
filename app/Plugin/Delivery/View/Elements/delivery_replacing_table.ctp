@@ -43,7 +43,7 @@ $totalremaining = 0;
 
                                  echo 0; }else{?> 
 
-                                <?php echo ($deliveryDataList['DeliveryDetail']['quantity'] - $deliveryDataList['DeliveryDetail']['delivered_quantity'])   ; ?>
+                                <?php echo $deliveryDataList['DeliveryDetail']['delivered_quantity']; ?>
 
                             <?php } ?>
 
@@ -53,9 +53,9 @@ $totalremaining = 0;
               
                          <?php  if (!empty($deliveryDataList['DeliveryDetail']['status'])) {  
 
-                                            if($deliveryDataList['DeliveryDetail']['status'] == '4'){
+                                            if($deliveryDataList['DeliveryDetail']['status'] == '3'){
 
-                                              echo "<span class='label label-success'>Completed</span>"; 
+                                              echo "<span class='label label-success'>Delivered</span>"; 
 
                                             }else if($deliveryDataList['DeliveryDetail']['status'] == '2'){   
 

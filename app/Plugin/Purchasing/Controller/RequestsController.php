@@ -211,7 +211,21 @@ class RequestsController extends PurchasingAppController {
 
     }
 
-    public function item_details($itemGroupId = null){
+    public function request_section($getCounter = null){
+
+    	$this->loadModel('Unit');
+
+		$unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
+															'order' => array('Unit.unit' => 'ASC')
+															));
+
+    	$this->set(compact('getCounter','unitData'));
+
+		$this->render('request_section');
+
+    }
+
+    public function item_details($itemGroupId = null, $getCounter = null){
     	
     	$this->loadModel('GeneralItem');
 
@@ -253,7 +267,7 @@ class RequestsController extends PurchasingAppController {
 											));
     		
     	}
-    	$this->set(compact('searchedProduct','ModelName','dynamicId'));
+    	$this->set(compact('searchedProduct','ModelName','getCounter'));
 
     	$this->render('item_details');
 		
