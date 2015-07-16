@@ -3,7 +3,6 @@
 <?php echo $this->Html->css('HumanResource.default');?>
 <?php echo $this->Html->script(array(
 						'jquery.maskedinput.min',
-						'bootstrap-datepicker',
 						'HumanResource.custom'
 )); ?>
 <div style="clear:both"></div>
@@ -67,3 +66,14 @@
         </div>
     </div>
 <?php echo $this->Form->end(); ?>
+    <script>
+        
+    jQuery(document).ready(function($){
+           //datepicker
+            $('.datepick').datepicker({
+                format: 'yyyy-mm-dd'
+            });
+            
+    });
+
+     </script>

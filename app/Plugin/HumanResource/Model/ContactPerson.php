@@ -38,6 +38,15 @@ class ContactPerson extends AppModel {
 						'Email.model = ContactPerson',
 						'Email.foreign_key = ContactPerson.id' 
 						)
+				),
+				'Address' => array(
+					'className' => 'Address',
+					'foreignKey' => false,
+					'dependent' => true,
+					'conditions' => array(
+						'Address.model = ContactPerson',
+						'Address.foreign_key = ContactPerson.id' 
+						)
 				)
 			)
 		),false);
@@ -51,7 +60,7 @@ class ContactPerson extends AppModel {
 		$contact_person = [];		
 
 		if (!empty($data)){
-	
+			$contact_person = $data[0];
 			$contact_person['employee_id'] = $employee_id;
 			$contact_person['created_by'] = $auth_id;
 			$contact_person['modified_by'] = $auth_id;
@@ -94,10 +103,25 @@ class ContactPerson extends AppModel {
 
 			}
 
+			if (!empty($data['Address'])) {
+				
+				$address = [];
+
+				foreach ($data['Address'] as $key => $value) {
+					$address[$key] = $value;
+					$address[$key]['model'] = 'ContactPerson';
+					$address[$key]['foreign_key'] = $this->id;
+					$address[$key]['created_by'] = $auth_id;
+					$address[$key]['modified_by'] = $auth_id;
+			
+				}
+
+				$this->Address->saveAll($address);	
+
+			}
+
 		}
 
-		exit();
-		
 		return $this->id;
 		
 	}

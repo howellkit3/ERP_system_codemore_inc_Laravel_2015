@@ -525,7 +525,7 @@ VALUES
 
 #NOTE: SELECT KOUFU Re ----
 /** aldrin added this 07/14/2015  */
-
+#NOTE: SELECT KOUFU PURCHASING DATABASE ----
 CREATE TABLE IF NOT EXISTS `employees` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `first_name` varchar(255) NOT NULL,
@@ -541,6 +541,21 @@ CREATE TABLE IF NOT EXISTS `employees` (
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+CREATE TABLE IF NOT EXISTS `emails` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `model` varchar(45) DEFAULT NULL,
+  `foreign_key` int(11) DEFAULT NULL,
+  `type` int(11) DEFAULT NULL,
+  `email` varchar(80) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` timestamp NULL DEFAULT NULL,
+  `modified` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=60 ;
+
 
 #NOTE: SELECT KOUFU SYSTEM DATABASE ----
 /** howellkit added this 07/14/2015  */
@@ -577,3 +592,38 @@ VALUES
   (9,3,2),
   (10,3,3),
   (11,3,4);
+#NOTE: SELECT KOUFU Re ----
+/** aldrin added this 07/16/2015  */
+
+ALTER TABLE `employee_additional_informations`  ADD `languages` VARCHAR(255) NULL  AFTER `blood`;
+
+
+CREATE TABLE IF NOT EXISTS `toolings` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `tools_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `price` float NOT NULL,
+  `pay` varchar(255) NOT NULL,
+  `status` varchar(45) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+CREATE TABLE IF NOT EXISTS `tools` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `brand` varchar(255) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `status` varchar(45) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
