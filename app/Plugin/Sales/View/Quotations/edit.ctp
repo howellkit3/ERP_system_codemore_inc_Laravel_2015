@@ -266,7 +266,7 @@
 												<div class="col-lg-3">
 													<?php 
 			                                            echo $this->Form->input('QuotationItemDetail.0.unit_price', array(
-                            								'class' => 'form-control item_type unitprice',
+                            								'class' => 'form-control item_type unitprice vatEx number  ',
 		                                                    'data' => 'unitprice',
 		                                                    'type' => 'text',
 		                                                    'label' => false,
@@ -299,14 +299,13 @@
 												<div class="col-lg-8">
 													<?php 
 			                                            echo $this->Form->input('QuotationItemDetail.0.vat_price', array(
-			                                            								'class' => 'form-control item_type vatprice',
+			                                            								'class' => 'form-control item_type vatIn vatprice',
 									                                                    'type' => 'text',
 									                                                    'label' => false,
 									                                                    'value' => $itemDetailDetails['QuotationItemDetail']['vat_price'],
 									                                                    'id' => 'QuotationItemDetail'.$key.'VatPrice',
 									                                                    'name' => 'data[QuotationItemDetail]['.$key.'][vat_price]',
 									                                                    'readonly' => 'readonly',
-									                                                    
 									                                                    'placeholder' => 'Vat Price'));
 		                                            ?>
 													
@@ -319,6 +318,11 @@
 												<?php if(!empty($itemDetailDetails['QuotationItemDetail']['vat_price'])){ 
 													$ckeckName = 'data[QuotationItemDetail]['.$key.'][vat_priceC]';
 													?>
+													<input id="checkbox-1" class="checkEx vat-exclusive" type="checkbox" data-section='quotationItemDetail' name="[QuotationItemDetail][0][unit_price]"rel=".12" name ="togglecheckboxtext"><label>
+													<font color="gray"> Check to enable VAT Price   </font></label>
+
+
+													&nbsp &nbsp
 
 													<input id="checkbox-1" class="checkvat checkbox-nice vat-price" type="checkbox" name="<?php echo $ckeckName; ?>" rel=".12" data-section='quotationItemDetail' checked="checked">
 
