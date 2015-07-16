@@ -12,24 +12,21 @@
    
         $phpPrice = '';
         $usdPrice = '';
-        $totalQty = $clientData['QuotationItemDetail']['quantity'] * $drData['DeliveryDetail']['quantity'];
         $preparedFName = ucwords($prepared['User']['first_name']) ;
         $preparedLName = ucwords($prepared['User']['last_name'])  ;
         $approvedFName = ucwords($approved['User']['first_name'])  ;
         $approvedLName = ucwords($approved['User']['last_name'])  ;
-        $toBePrinted = date("M/d/Y");
+        $quantityPrint = $drData['DeliveryDetail']['quantity'];
+       // $toBePrinted = date("M/d/Y");
 
-       
+       if(!empty($drQuantity)){   
 
-      if(!empty($DRRePrint[0]['DeliveryReceipt']['printed'])){   
-
-       $printedDate = date("M/d/Y", strtotime($DRRePrint[0]['DeliveryReceipt']['printed'])); 
-
-        $toBePrinted =  $printedDate;
+        $quantityPrint = $drQuantity;
                 
-      }
+       }
 
-      // pr($drData); exit;
+       $totalQty = $clientData['QuotationItemDetail']['quantity'] * $drQuantity;
+
 
         $objTpl->setActiveSheetIndex(0)
                     
@@ -40,11 +37,11 @@
                     ->setCellValue('C'.'7', ucwords($drData['DeliveryDetail']['location']))
                     ->setCellValue('C'.'9', ucfirst($clientData['Product']['name']))
                     ->setCellValue('C'.'10', $drData['DeliveryDetail']['remarks'] )
-                    ->setCellValue('H'.'9', $drData['DeliveryDetail']['quantity'] . " x " . $clientData['QuotationItemDetail']['quantity'] . " / " . $units[$clientData['QuotationItemDetail']['quantity_unit_id']] )
+                    ->setCellValue('H'.'9', $quantityPrint . " x " . $clientData['QuotationItemDetail']['quantity'] . " / " . $units[$clientData['QuotationItemDetail']['quantity_unit_id']] )
                     ->setCellValue('J'.'9', $totalQty)
                     ->setCellValue('A'.'21', $preparedFName . " " .$preparedLName)
                     ->setCellValue('E'.'21', $approvedFName . " " .$approvedLName)
-                    ->setCellValue('I'.'5', $toBePrinted);
+                    ->setCellValue('I'.'5', date("M/d/Y"));
              
 
         $counter++;  

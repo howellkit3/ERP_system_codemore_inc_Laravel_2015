@@ -123,28 +123,32 @@ $totalremaining = 0;
                                                     $IdClientsOrder = $orderListHelper[$value['Delivery']['clients_order_id']];
                                                 
                                                     if($value['Delivery']['schedule_uuid'] == $orderDeliveryList[$uuidClientsOrder]){  
+
+                                                        //pr($value['DeliveryDetail']['delivered_quantity']);
                                                    
-                                                        array_push($arr,$value['DeliveryDetail']['status']);
+                                                        array_push($arr,$value['DeliveryDetail']['delivered_quantity']);
 
                                                     }  
 
-                                                    $dataholder = 0;
-                                                    foreach ($arr as $key => $value) {
+                                                    //$dataholder = 0;
+                                                    // foreach ($arr as $key => $value) {
 
-                                                        if ($value == '2') {
-                                                            $dataholder = 1;
-                                                        }
+                                                    //     if ($value == '2') {
+                                                    //         $dataholder = 1;
+                                                    //     }
 
-                                                        if ($value == '5') {
-                                                            $dataholder = 1;
-                                                        }
+                                                    //     if ($value == '5') {
+                                                    //         $dataholder = 1;
+                                                    //     }
 
-                                                        if ($value == '' ) {
-                                                            $dataholder = 1;
-                                                        }
-                                                    }
+                                                    //     if ($value == '' ) {
+                                                    //         $dataholder = 1;
+                                                    //     }
+                                                    // }
                                                     
                                                 }
+
+                                               // array_sum($arr);
 
                                                 $arrDelivered = array();
 
@@ -172,13 +176,9 @@ $totalremaining = 0;
 
                                                 if (!empty($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']]) || !empty($deliveryList[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']])) {   
 
-                                                    if($dataholder == 0){
+                                                    if (array_sum($arr) == $scheduleInfo['ClientOrderDeliverySchedule']['quantity']){ 
 
-                                                        echo "<span class='label label-success'>Delivered</span>";
-
-                                                    }elseif ($deliveryDetailList[$deliveryList[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']]] == $scheduleInfo['ClientOrderDeliverySchedule']['quantity']){ 
-
-                                                        echo "<span class='label label-success'>Delivered</span>";
+                                                        echo "<span class='label label-success'>Completed</span>";
 
                                                     }elseif ($sumDelivered == $scheduleInfo['ClientOrderDeliverySchedule']['quantity']){
 
@@ -239,13 +239,13 @@ $totalremaining = 0;
 
                                    // pr($deliveryDataList['DeliveryReceipt']['type']);
 
-                                     if($deliveryDataList['DeliveryDetail']['status'] == 5){
+                                     if($deliveryDataList['DeliveryDetail']['status'] == 3 ){
 
                                         $difference = $deliveryDataList['DeliveryDetail']['delivered_quantity']; 
 
                                         array_push($pushRemaining,$difference );
 
-                                    }else{
+                                    }else if ($deliveryDataList['DeliveryDetail']['status'] != 5){
 
                                         $difference = $deliveryDataList['DeliveryDetail']['quantity']; 
 
@@ -351,11 +351,16 @@ $totalremaining = 0;
 
                                                 if($deliveryDataList['DeliveryDetail']['status'] == '4'){
 
-                                                    echo "<span class='label label-success'>Completed</span>"; 
+                                                    echo "<span class='label label-success'>Delivered</span>"; 
 
                                                 }else if($deliveryDataList['DeliveryDetail']['status'] == '2'){   
 
                                                     echo "<span class='label label-info'>Incomplete</span>";  
+
+                                                }else if($deliveryDataList['DeliveryDetail']['status'] == '3'){
+
+                                                     echo "<span class='label label-success'>Delivered</span>"; 
+                                                
 
                                                 }else if($deliveryDataList['DeliveryDetail']['status'] == '5'){
 
@@ -394,7 +399,7 @@ $totalremaining = 0;
 
                                             } 
 
-                                        if($deliveryDataList['DeliveryDetail']['status'] == '5'){
+                                        if($deliveryDataList['DeliveryDetail']['status'] == '3'){
 
                                             echo $this->Html->link('<span class="fa-stack">
                                                 <i class="fa fa-square fa-stack-2x"></i>

@@ -316,16 +316,16 @@ class DeliveriesController extends DeliveryAppController {
 
         if ($this->request->is(array('post', 'put'))) {
 
-            if($this->request->data['DeliveryDetail']['quantity'] == $this->request->data['DeliveryDetail']['delivered_quantity']){
+            // if($this->request->data['DeliveryDetail']['quantity'] == $this->request->data['DeliveryDetail']['delivered_quantity']){
 
-                $this->request->data['DeliveryDetail']['status'] =  '4'; 
+            //     $this->request->data['DeliveryDetail']['status'] =  '4'; 
 
-            }else{
+            // }else{
 
-                $this->request->data['DeliveryDetail']['status'] =  '2';
+                $this->request->data['DeliveryDetail']['status'] =  '3';
 
             
-            }
+            //}
 
             if(!empty($this->request->data['DeliveryDetail']['from_replacing'])){     
 
@@ -371,10 +371,11 @@ class DeliveriesController extends DeliveryAppController {
       
         $deliveryEdit = $this->Delivery->find('all', array(
                                              'conditions' => array(
-                                            'DeliveryDetail.status' => '2'),
+                                            'DeliveryDetail.quantity != DeliveryDetail.delivered_quantity' , "DeliveryDetail.status !=" => "5"),
                                             'order' => 'DeliveryDetail.modified DESC'
                                            // 'fields' => array('DISTINCT Delivery.dr_uuid', 'DeliveryDetail.schedule','DeliveryDetail.location', 'DeliveryDetail.quantity','DeliveryDetail.delivered_quantity', 'DeliveryDetail.status', 'DeliveryReceipt.type', 'Delivery.schedule_uuid','DeliveryDetail.id', 'Transmittal.type' ,'DeliveryDetail.delivery_uuid'),
                                         ));
+
 
         $this->DeliveryReceipt->bindDelivery();
 
@@ -675,7 +676,7 @@ class DeliveriesController extends DeliveryAppController {
     $drData = $this->Delivery->find('first', array(
                                         'conditions' => array('Delivery.dr_uuid' => $dr_uuid
                                         )));
-    
+
     $clientData = $this->ClientOrder->find('first', array(
                                         'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
                                         )));
@@ -710,7 +711,7 @@ class DeliveriesController extends DeliveryAppController {
 
     $this->request->data['DeliveryReceipt']['schedule'] = $drData['DeliveryDetail']['schedule'];
 
-    $this->request->data['DeliveryReceipt']['quantity'] = $drData['DeliveryDetail']['quantity'];
+   // $this->request->data['DeliveryReceipt']['quantity'] = $drData['DeliveryDetail']['quantity'];
 
     $this->request->data['DeliveryReceipt']['approved_by'] = $drData['DeliveryDetail']['created_by'];
 
@@ -759,6 +760,8 @@ class DeliveriesController extends DeliveryAppController {
 
                 unset($this->request->data['DeliveryDetail']['id']);
 
+                $drQuantity = $this->request->data['DeliveryDetail']['delivered_quantity'];
+
                 $this->request->data['Delivery']['created_by'] = $drDataHolder['Delivery']['created_by'];
 
                 $this->request->data['Delivery']['modified_by'] = $drDataHolder['Delivery']['modified_by'];
@@ -769,7 +772,7 @@ class DeliveriesController extends DeliveryAppController {
 
                 $this->request->data['Delivery']['dr_uuid'] = $this->request->data['DeliveryDetail']['delivery_uuid'];
 
-                $this->request->data['DeliveryDetail']['delivered_quantity'] = $drData['DeliveryDetail']['delivered_quantity'] + $this->request->data['DeliveryDetail']['quantity'];
+                $this->request->data['DeliveryDetail']['delivered_quantity'] = $drData['DeliveryDetail']['delivered_quantity'];
 
                 $this->DeliveryDetail->saveDeliveryDetail($this->request->data);
 
@@ -788,7 +791,7 @@ class DeliveriesController extends DeliveryAppController {
         $this->DeliveryReceipt->save($this->request->data);   
     }
 
-    $this->set(compact('drData','clientData','companyData','units','approved','prepared', 'DRRePrint'));
+    $this->set(compact('drData','clientData','companyData','units','approved','prepared', 'DRRePrint', 'drQuantity'));
 
     }
 

@@ -37,7 +37,7 @@
                                 <th class=""><a href="#"><span>Schedule</span></a></th>
                                 <th class=""><a href="#"><span>Location</span></a></th>
                                 <th class=""><a href="#"><span>Quantity</span></a></th>
-                                <th class=""><a href="#"><span>Remaining</span></a></th>
+                                <th class=""><a href="#"><span>Delivered</span></a></th>
                                 <th class=""><a href="#"><span>Status</span></a></th>
                                 <th class=""><a href="#"><span>Action</span></a></th> 
                             </tr>

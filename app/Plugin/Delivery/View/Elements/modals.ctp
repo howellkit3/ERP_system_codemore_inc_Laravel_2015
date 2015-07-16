@@ -28,7 +28,7 @@
                                 <?php 
                                     foreach ($deliveryEdit as $deliveryDataList): 
 
-                                        if($deliveryDataList['DeliveryDetail']['status'] == 5){
+                                        if($deliveryDataList['DeliveryDetail']['status'] == 3){
 
                                           $difference = $deliveryDataList['DeliveryDetail']['delivered_quantity']; 
 
