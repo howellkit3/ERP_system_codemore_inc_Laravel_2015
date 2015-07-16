@@ -26,14 +26,23 @@
                             <div class="col-lg-9">
 
                                 <?php 
-
                                     foreach ($deliveryEdit as $deliveryDataList): 
+
+                                        if($deliveryDataList['DeliveryDetail']['status'] == 5){
+
+                                          $difference = $deliveryDataList['DeliveryDetail']['delivered_quantity']; 
+
+                                          array_push($pushRemaining,$difference );
+
+                                        }else{
 
                                           $difference = $deliveryDataList['DeliveryDetail']['quantity']; 
 
                                           array_push($pushRemaining,$difference );
 
-                                          endforeach; 
+                                        }
+
+                                    endforeach; 
 
                                           foreach ($pushRemaining as $key => $value) {
 
@@ -58,9 +67,9 @@
                                     echo $this->Form->input('DeliveryDetail.delivered', array(
                                                 'type' => 'hidden',
                                                 'class' => 'form-control item_type',
-                                                    'label' => false,
-                                                    'value' => $totalremaining,
-                                                    'id' => 'quantity'
+                                                'label' => false,
+                                                'value' => $totalremaining,
+                                                'id' => 'quantity'
                                                     )); 
                                     
                                 ?>

@@ -239,13 +239,20 @@ $totalremaining = 0;
 
                                    // pr($deliveryDataList['DeliveryReceipt']['type']);
 
-                                     if($deliveryDataList['DeliveryDetail']['status'] != 5){
+                                     if($deliveryDataList['DeliveryDetail']['status'] == 5){
+
+                                        $difference = $deliveryDataList['DeliveryDetail']['delivered_quantity']; 
+
+                                        array_push($pushRemaining,$difference );
+
+                                    }else{
 
                                         $difference = $deliveryDataList['DeliveryDetail']['quantity']; 
 
                                         array_push($pushRemaining,$difference );
 
                                     }
+
 
 
                                 endforeach; 

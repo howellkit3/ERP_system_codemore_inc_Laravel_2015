@@ -493,9 +493,11 @@ class DeliveriesController extends DeliveryAppController {
                                             'conditions' => array('Company.id' => $clientData['ClientOrder']['company_id']
                                             )));
 
-        $nameForm = "Delivery Receipt"; 
+        $nameForm = "Delivery Receipt";
 
-        $this->set(compact('drData','clientData','companyData','units','nameForm', 'companyAddress'));
+        $noPermissionSales = ' ';
+
+        $this->set(compact('drData','clientData','companyData','units','nameForm', 'companyAddress', 'noPermissionSales'));
         
     }
 
@@ -534,7 +536,9 @@ class DeliveriesController extends DeliveryAppController {
 
         $nameForm = "Delivery Receipt"; 
 
-        $this->set(compact('drData','clientData','companyData','units','nameForm', 'companyAddress'));
+        $noPermissionSales = ' ';
+
+        $this->set(compact('drData','clientData','companyData','units','nameForm', 'companyAddress','noPermissionSales'));
     
     }
 
@@ -661,7 +665,6 @@ class DeliveriesController extends DeliveryAppController {
 
     $this->Company->bind('Address');
 
-  
     if(!empty($this->request->data['DeliveryDetail']['quantity'])){
 
        $this->DeliveryDetail->saveDeliveryDetail($this->request->data['DeliveryDetail']);
@@ -738,8 +741,6 @@ class DeliveriesController extends DeliveryAppController {
                                                             'conditions' => array('User.id' => $drDataHolder['Delivery']['created_by'])
                                                             ));  
 
-   // pr($drDataHolder); pr($drDataHolder['DeliveryDetail']['created_by']); exit;
-
     if(empty($DRRePrint[0]['DeliveryReceipt']['dr_uuid']) OR (!empty($this->request->data['DeliveryReceipt']['type']))){
 
         if(!empty($this->request->data['DeliveryDetail']['new'])){
@@ -748,7 +749,9 @@ class DeliveriesController extends DeliveryAppController {
 
             $idholder = $this->request->data['DeliveryDetail']['idholder'];
 
-            if($this->request->data['DeliveryDetail']['delivery_uuid'] != $this->request->data['Delivery']['dr_uuid']){
+           // pr($this->request->data['DeliveryDetail']['delivery_uuid']); pr($drData['Delivery']['dr_uuid']); exit; 
+
+            if($this->request->data['DeliveryDetail']['delivery_uuid'] != $drData['Delivery']['dr_uuid']){
 
                 $this->DeliveryDetail->id = $idholder;
 
@@ -766,11 +769,20 @@ class DeliveriesController extends DeliveryAppController {
 
                 $this->request->data['Delivery']['dr_uuid'] = $this->request->data['DeliveryDetail']['delivery_uuid'];
 
+                $this->request->data['DeliveryDetail']['delivered_quantity'] = $drData['DeliveryDetail']['delivered_quantity'] + $this->request->data['DeliveryDetail']['quantity'];
+
                 $this->DeliveryDetail->saveDeliveryDetail($this->request->data);
 
                 $this->Delivery->save($this->request->data['Delivery']);
-            } 
 
+            }else{ 
+
+                $this->Session->setFlash(__('New Delivery Receipt Number is required.'), 'error');
+
+                $this->redirect( array(
+                  'controller' => 'deliveries',   
+                  'action' => 'delivery_replacing'));
+            }    
         }
 
         $this->DeliveryReceipt->save($this->request->data);   
