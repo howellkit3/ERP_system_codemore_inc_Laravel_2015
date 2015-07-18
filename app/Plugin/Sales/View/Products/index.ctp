@@ -1,6 +1,7 @@
 <?php $this->Html->addCrumb('Sales', array('controller' => 'customer_sales', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Inquiry', array('controller' => 'customer_sales', 'action' => 'inquiry')); ?>
 <?php echo $this->Html->script('Sales.item_type');?>
+<?php echo $this->Html->script('Sales.searchQuotation');?>
 <div style="clear:both"></div>
 <?php 
   /* echo $this->Html->script('jquery');
@@ -50,7 +51,14 @@
                                 </tr>
                             </thead>
 
-                            <?php echo $this->element('product_table'); ?>
+                            
+
+                            <tbody aria-relevant="all" aria-live="polite" class="productFields" role="alert" style="display:none;">
+                                 <?php echo $this->element('product_table'); ?>
+                            </tbody>
+
+                            <tbody aria-relevant="all" aria-live="polite" class="searchProductAppend" role="alert" style="display:none;">
+                            </tbody>
 
                         </table>
                     </div>

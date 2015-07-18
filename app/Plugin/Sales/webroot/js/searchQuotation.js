@@ -22,7 +22,6 @@ $(document).ready(function() {
 
                 	$('.searchAppend').html(data);
                     
-
                 } 
                 if (data.length < 5 ) {
 
@@ -62,6 +61,42 @@ $(document).ready(function() {
                 if (data.length < 5 ) {
 
                     $('.searchAppend').html('<font color="red"><b>No result..</b></font>');
+                     
+                }
+                
+            }
+        });
+
+    });
+
+        $("body").on('keyup','.searchProduct', function(e){
+        var searchInput = $(this).val();
+
+        if(searchInput){
+           // alert(searchInput);
+            $('.productFields').hide();
+            $('.searchProductAppend').show();
+        }else{
+            $('.productFields').show();
+            $('.searchProductAppend').hide();
+        }
+        
+        
+        $.ajax({
+            type: "GET",
+            url: serverPath + "sales/products/search_product/"+searchInput,
+            dataType: "html",
+            success: function(data) {
+
+                if(data){
+
+                    $('.searchProductAppend').html(data);
+                    
+
+                } 
+                if (data.length < 5 ) {
+
+                    $('.searchProductAppend').html('<font color="red"><b>No result..</b></font>');
                      
                 }
                 

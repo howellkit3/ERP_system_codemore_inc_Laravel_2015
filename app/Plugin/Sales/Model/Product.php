@@ -30,13 +30,13 @@ class Product extends AppModel {
 					'foreignKey' => 'company_id',
 					'dependent' => true
 				),
-				'ItemCategoryData' => array( 
-					'className' => 'Sales.ItemCategory',
+				'ItemCategoryHolder' => array( 
+					'className' => 'ItemCategoryHolder',
 					'foreignKey' => 'item_category_holder_id',
 					'dependent' => true
 				),
-				'ItemTypeData' => array(
-					'className' => 'Sales.ItemType',
+				'ItemTypeHolder' => array(
+					'className' => 'ItemTypeholder',
 					'foreignKey' => 'item_type_holder_id',
 					'dependent' => true
 				),
@@ -63,6 +63,35 @@ class Product extends AppModel {
 		));
 
 		$this->contain($model);
+	}
+
+	public function bindProduct() {
+		$this->bindModel(array(
+			'hasOne' => array(
+
+				// 'ItemCategoryHolder' => array( 
+				// 	'className' => 'ItemCategoryHolder',
+				// 	'foreignKey' => false,
+				// 	'conditions' => 'Product.item_category_holder_id = ItemCategoryHolder.id'
+
+				// ),
+
+				// 'ItemTypeholder' => array( 
+				// 	'className' => 'ItemTypeholder',
+				// 	'foreignKey' => false,
+				// 	'conditions' => 'Product.item_type_holder_id = ItemTypeholder.id'
+				
+				// ),
+
+				'Company' => array(
+					'className' => 'Sales.Company',
+					'foreignKey' => false,
+					'conditions' => 'Product.company_id = Company.id'
+				),		
+			)
+		));
+		$this->recursive = 1;
+		//$this->contain($giveMeTheTableRelationship);
 	}
 
 	public $validate = array(

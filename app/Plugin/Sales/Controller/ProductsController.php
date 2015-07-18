@@ -28,7 +28,6 @@ class ProductsController extends SalesAppController {
         $this->loadModel('ItemTypeHolder');
 
         $this->loadModel('Company');
-
 		
 		$this->Product->recursive = 1;
 		
@@ -1095,6 +1094,76 @@ class ProductsController extends SalesAppController {
 			$this->render('specification_edit');
 		}
 
+    }
+
+    public function search_product($hint = null){
+    	
+    	$this->loadModel('Sales.Product');
+
+    	$this->loadModel('Sales.Company');
+
+    	$this->loadModel('ItemCategoryHolder');
+
+    	$this->loadModel('ItemTypeholder');
+
+		//$this->Product->bind(array('ProductDetail','Company','ItemCategoryHolder', 'ItemTypeholder'));
+
+		$this->Product->bindProduct();
+
+		$productData = $this->Product->find('all',array(
+									'fields' => array(
+										'Product.uuid',
+						            	'Product.name',
+						            	'Product.company_id',
+						            	'Product.remarks',
+						            	'Product.item_category_holder_id',
+						            	'Product.item_type_holder_id',
+						            	'Product.created',
+						            	'Product.id',
+						            	'Company.company_name'
+										),
+									'order' => 'Product.id DESC',
+									'conditions' => array(
+										'OR' => array(
+											array('Company.company_name LIKE' => '%' . $hint . '%'),
+											array('Product.uuid LIKE' => '%' . $hint . '%'),
+											array('Product.name LIKE' => '%' . $hint . '%')
+											)
+										),
+									'limit' => 10
+									));
+
+
+	
+
+		//set to cache in first load
+		$companyData = Cache::read('companyData');
+		
+		//if (!$companyData) {
+			$companyData = $this->Company->find('list', array(
+     											'fields' => array( 
+     												'id','company_name')
+     										));
+
+            Cache::write('companyData', $companyData);
+       // }
+
+            // $productData = $this->Product->find('list', array(
+     							// 				'fields' => array( 
+     							// 					'id','name')
+     							// 			));
+
+            // Cache::write('productData', $productData);
+
+		
+		$this->set(compact('companyData','productData'));
+		//pr($quotationData);exit();
+		
+		if ($hint == ' ') {
+    		$this->render('index');
+    	}else{
+    		$this->render('search_product');
+    	}
     }
 
 }
