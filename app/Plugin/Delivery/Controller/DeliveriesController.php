@@ -673,7 +673,7 @@ class DeliveriesController extends DeliveryAppController {
 
         //pr($this->request->data); exit;
 
-       $this->DeliveryDetail->saveDeliveryDetail($this->request->data['DeliveryDetail']);
+      // $this->DeliveryDetail->saveDeliveryDetail($this->request->data['DeliveryDetail']);
 
     }
 
@@ -716,13 +716,13 @@ class DeliveriesController extends DeliveryAppController {
 
     $this->request->data['DeliveryReceipt']['schedule'] = $drData['DeliveryDetail']['schedule'];
 
-   // $this->request->data['DeliveryReceipt']['quantity'] = $drData['DeliveryDetail']['quantity'];
-
     $this->request->data['DeliveryReceipt']['approved_by'] = $drData['DeliveryDetail']['created_by'];
 
     $this->request->data['DeliveryReceipt']['printed'] = date("y-m-d");
 
     if ($this->request->is(array('post', 'put'))) {
+
+       // $this->request->data['DeliveryReceipt']['quantity'] = $drData['DeliveryDetail']['limit'];
 
         $this->request->data['DeliveryReceipt']['remarks'] = $this->request->data['DeliveryDetail']['remarks'];
 
@@ -732,6 +732,7 @@ class DeliveriesController extends DeliveryAppController {
                   
     }else{  
 
+       $this->request->data['DeliveryReceipt']['quantity'] = $drData['DeliveryDetail']['quantity'];
 
        $this->request->data['DeliveryReceipt']['location'] = $drData['DeliveryDetail']['location'];
 

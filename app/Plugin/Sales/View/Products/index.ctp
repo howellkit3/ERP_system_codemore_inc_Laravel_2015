@@ -20,10 +20,19 @@
             <div class="main-box clearfix body-pad">
                 <header class="main-box-header clearfix">
                     <h2 class="pull-left"><b>Product List</b></h2>
+                    <div class="filter-block pull-right">
+                        <div class="form-group pull-left">
+                            <?php //echo $this->Form->create('Quotation',array('controller' => 'quotations','action' => 'search', 'type'=> 'get')); ?>
+                                <input placeholder="Search..." class="form-control searchProduct <?php echo $noPermission; ?>"  />
+                                <i class="fa fa-search search-icon"></i>
+                             <?php //echo $this->Form->end(); ?>
+                        </div>
+
                      <?php
 
                             echo $this->Html->link('<i class="fa fa-plus-circle fa-lg"></i> Add Product ', array('controller' => 'products', 'action' => 'create_product'),array('class' =>'btn btn-primary pull-right','escape' => false));
                         ?>
+                    </div>
                 </header>
                <div class="main-box-body clearfix">
                     <div class="table-responsive">
@@ -58,8 +67,7 @@
         <?php //echo $this->Js->writeBuffer(); ?>
 
 
-                </div>
-        
+                </div>       
             </div>
         </div>
     </div>
