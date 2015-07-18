@@ -502,10 +502,10 @@ $totalremaining = 0;
                                         <?php } ?>
 
                                         <?php 
-                                            echo $this->Html->link('<span class="fa-stack gatePass">
-                                                    <i class="fa fa-square fa-stack-2x"></i>
-                                                    <i class="fa fa-truck fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> GatePass</font></span>
-                                                    </span> ', array('controller' => 'deliveries', 'action' => 'gate_pass',$deliveryScheduleId, $quotationId,$clientsOrderUuid,$deliveryDataList['Delivery']['id'],$deliveryDataList['Delivery']['dr_uuid']),array('class' =>' table-link','escape' => false,'title'=>'Gate Pass'));
+                                            // echo $this->Html->link('<span class="fa-stack gatePass">
+                                            //         <i class="fa fa-square fa-stack-2x"></i>
+                                            //         <i class="fa fa-truck fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> GatePass</font></span>
+                                            //         </span> ', array('controller' => 'deliveries', 'action' => 'gate_pass',$deliveryScheduleId, $quotationId,$clientsOrderUuid,$deliveryDataList['Delivery']['id'],$deliveryDataList['Delivery']['dr_uuid']),array('class' =>' table-link','escape' => false,'title'=>'Gate Pass'));
                                         }?>
                                         
                                     </td>

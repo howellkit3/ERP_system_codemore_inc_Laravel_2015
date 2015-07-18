@@ -1,4 +1,6 @@
 <?php 
+
+ //pr('ds'); exit;
     // create new empty worksheet and set default font
     $this->PhpExcel->createWorksheet()
         ->setDefaultFont('Calibri', 12);
@@ -7,7 +9,7 @@
      
     // add data
 
-     //pr($approved); exit;
+   //  pr($drQuantity); exit;
     $counter = 10;
    
         $phpPrice = '';
@@ -18,18 +20,25 @@
         $approvedFName = ucwords($approved['User']['first_name'])  ;
         $approvedLName = ucwords($approved['User']['last_name'])  ;
         $toBePrinted = date("M/d/Y");
+        $quantity = $drData['DeliveryDetail']['quantity'];
 
        
+        if(!empty($drQuantity)){
 
-      if(!empty($DRRePrint[0]['DeliveryReceipt']['printed'])){   
-
-       $printedDate = date("M/d/Y", strtotime($DRRePrint[0]['DeliveryReceipt']['printed'])); 
-
-        $toBePrinted =  $printedDate;
+            $quantity = $drQuantity;
                 
-      }
+        }
 
-      // pr($drData); exit;
+
+      // if(!empty($DRRePrint[0]['DeliveryReceipt']['printed'])){   
+
+      //  $printedDate = date("M/d/Y", strtotime($DRRePrint[0]['DeliveryReceipt']['printed'])); 
+
+      //   $toBePrinted =  $printedDate;
+                
+      // }
+
+       // pr($drData); exit;
 
         $objTpl->setActiveSheetIndex(0)
                     
@@ -40,7 +49,7 @@
                     ->setCellValue('C'.'7', ucwords($drData['DeliveryDetail']['location']))
                     ->setCellValue('C'.'9', ucfirst($clientData['Product']['name']))
                     ->setCellValue('C'.'10', $drData['DeliveryDetail']['remarks'] )
-                    ->setCellValue('H'.'9', $drData['DeliveryDetail']['quantity'] . " x " . $clientData['QuotationItemDetail']['quantity'] . " / " . $units[$clientData['QuotationItemDetail']['quantity_unit_id']] )
+                    ->setCellValue('H'.'9', $quantity . " x " . $clientData['QuotationItemDetail']['quantity'] . " / " . $units[$clientData['QuotationItemDetail']['quantity_unit_id']] )
                     ->setCellValue('J'.'9', $totalQty)
                     ->setCellValue('A'.'21', $preparedFName . " " .$preparedLName)
                     ->setCellValue('E'.'21', $approvedFName . " " .$approvedLName)

@@ -446,7 +446,7 @@ class DeliveriesController extends DeliveryAppController {
                
             $this->DeliveryDetail->saveDeliveryDetail($this->request->data,$userData['User']['id']);
                     
-            $this->Session->setFlash(__('Schedule has been updated.'),'success');
+            $this->Session->setFlash(__('Delivery Receipt has been updated.'),'success');
 
             $this->redirect( array(
                  'controller' => 'deliveries', 
@@ -668,6 +668,7 @@ class DeliveriesController extends DeliveryAppController {
 
     $this->Company->bind('Address');
 
+
     if(!empty($this->request->data['DeliveryDetail']['quantity'])){
 
         //pr($this->request->data); exit;
@@ -731,6 +732,7 @@ class DeliveriesController extends DeliveryAppController {
                   
     }else{  
 
+
        $this->request->data['DeliveryReceipt']['location'] = $drData['DeliveryDetail']['location'];
 
        $this->request->data['DeliveryReceipt']['remarks'] = $drData['DeliveryDetail']['remarks'];
@@ -793,6 +795,8 @@ class DeliveriesController extends DeliveryAppController {
         }
 
         $this->DeliveryReceipt->save($this->request->data);   
+
+        $this->Session->setFlash(__('DR has is now ready to print.'), 'success');
     }
 
     $this->set(compact('drData','clientData','companyData','units','approved','prepared', 'DRRePrint', 'drQuantity'));

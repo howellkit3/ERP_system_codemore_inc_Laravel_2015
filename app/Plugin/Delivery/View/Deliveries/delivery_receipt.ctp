@@ -44,8 +44,9 @@
                             'class' => 'form-control item_type',
                             'label' => false,
                             'required' => 'required',
-                            'placeholder' => 'Delivery Receipt Number',
-                            'value' => $drData['Delivery']['dr_uuid']));
+                            'placeholder' => 'Delivery Receipt Number'
+                           // 'value' => $drData['Delivery']['dr_uuid']
+                            ));
                         ?>
 
                         <?php 
@@ -243,7 +244,7 @@
                             'class' => 'form-control item_type quantityLimit',
                             'label' => false,
                             'required' => 'required',
-                            //'readonly' => 'readonly',
+                            'readonly' => 'readonly',
                             'placeholder' => 'Item Quantity',
                             'value' => $drData['DeliveryDetail']['delivered_quantity']));
 

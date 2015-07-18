@@ -627,3 +627,9 @@ CREATE TABLE IF NOT EXISTS `tools` (
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+#NOTE: SELECT KOUFU SYSTEM DATABASE ----
+/** howellkit added this 07/14/2015  */
+
+
+ALTER TABLE `dev_koufu_delivery`.`deliveries` ADD COLUMN `from` INT(11) NULL AFTER `dr_uuid`;
