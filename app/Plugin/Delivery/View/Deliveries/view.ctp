@@ -124,11 +124,15 @@ $totalremaining = 0;
                                                 
                                                     if($value['Delivery']['schedule_uuid'] == $orderDeliveryList[$uuidClientsOrder]){  
 
-                                                        //pr($value['DeliveryDetail']['delivered_quantity']);
+                                                        if($value['DeliveryDetail']['status'] != 5){
                                                    
                                                         array_push($arr,$value['DeliveryDetail']['delivered_quantity']);
 
+                                                     }
+
                                                     }  
+
+                                                   // pr($arr);
 
                                                     //$dataholder = 0;
                                                     // foreach ($arr as $key => $value) {
@@ -172,7 +176,9 @@ $totalremaining = 0;
 
                                                 $Scheddate = str_replace('-', '', $Scheddate);
                                                 
-                                                $Currentdate = str_replace('-', '', $Currentdate);   
+                                                $Currentdate = str_replace('-', '', $Currentdate);
+
+                                                //pr(array_sum($arr));   
 
                                                 if (!empty($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']]) || !empty($deliveryList[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']])) {   
 
@@ -224,9 +230,11 @@ $totalremaining = 0;
 
                 <div class="filter-block pull-right marginDelivery"></div>
 
-                <header class="main-box-header clearfix">
+                <header class="main-box-header clearfix ">
 
                     <h2><b class="pull-left">Delivery Schedule</b></h2>
+
+                    <div class = "pull-right"> 
 
                     <?php if (!empty($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']])) { ;
 
@@ -276,13 +284,22 @@ $totalremaining = 0;
 
                                 if($totalremaining != 0){ ?>
 
-                                    <a data-toggle="modal" href="#myModalDeliveries" class="btn btn-primary pull-right  "><i class="fa fa-edit fa-lg"></i> Add Schedule</a>
+                                     &nbsp;
+
+                                    <a data-toggle="modal" href="#myModalDeliveries" class="btn btn-primary   "><i class="fa fa-edit fa-lg"></i> Add Schedule</a>
+
 
                     <?php  }  } } } ?>
-                    &nbsp;
+                    &nbsp; 
                     <?php 
-                        echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Create Gate Pass', array('controller' => 'deliveries', 'action' => 'gate_pass',$deliveryScheduleId,$quotationId,$clientsOrderUuid),array('class' =>' btn btn-primary pull-right','escape' => false,'title'=>'Gate Pass'));
+
+                        echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Create Gate Pass', array('controller' => 'deliveries', 'action' => 'gate_pass',$deliveryScheduleId,$quotationId,$clientsOrderUuid),array('class' =>' btn btn-primary ','escape' => false,'title'=>'Gate Pass'));
+
                     ?>
+                    </div>
+
+                         &nbsp; 
+
                 </header>
 
                 <table class="table table-striped table-hover ">
@@ -415,10 +432,11 @@ $totalremaining = 0;
                                             <i class="fa fa-square fa-stack-2x "></i>
                                             <i class="fa  fa-mail-reply fa-stack-1x fa-inverse "></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Return </font></span></a>
 
-                                            <?php echo $this->Html->link('<span class="fa-stack gatePass">
-                                                    <i class="fa fa-square fa-stack-2x"></i>
-                                                    <i class="fa fa-truck fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> GatePass</font></span>
-                                                    </span> ', array('controller' => 'deliveries', 'action' => 'gate_pass',$deliveryScheduleId, $quotationId,$clientsOrderUuid,$deliveryDataList['Delivery']['id'],$deliveryDataList['Delivery']['dr_uuid']),array('class' =>' table-link not-active','escape' => false,'title'=>'Gate Pass'));
+                                            <?php 
+                                                // echo $this->Html->link('<span class="fa-stack gatePass">
+                                                //     <i class="fa fa-square fa-stack-2x"></i>
+                                                //     <i class="fa fa-truck fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> GatePass</font></span>
+                                                //     </span> ', array('controller' => 'deliveries', 'action' => 'gate_pass',$deliveryScheduleId, $quotationId,$clientsOrderUuid,$deliveryDataList['Delivery']['id'],$deliveryDataList['Delivery']['dr_uuid']),array('class' =>' table-link not-active','escape' => false,'title'=>'Gate Pass'));
 
                                         }else{
 

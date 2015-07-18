@@ -344,7 +344,7 @@ class DeliveriesController extends DeliveryAppController {
             
             $this->DeliveryDetail->saveDeliveryDetail($this->request->data,$userData['User']['id']);
 
-            $this->Session->setFlash(__('Schedule has been updated.'),'success');
+            $this->Session->setFlash(__('Delivered quantity has been recorded.'),'success');
 
             $this->redirect( array(
                            'controller' => 'deliveries', 
@@ -457,8 +457,10 @@ class DeliveriesController extends DeliveryAppController {
                 
             $this->Session->setFlash(__('Unable to update your post.'));
         }            
+
+        $noPermissionSales = ' ';
         
-        $this->set(compact('deliveryEdit', 'clientOrderData', 'clientsOrder', 'deliveryData', 'scheduleInfo', 'userData', 'companyAddress'));      
+        $this->set(compact('deliveryEdit', 'clientOrderData', 'clientsOrder', 'deliveryData', 'scheduleInfo', 'userData', 'companyAddress', 'noPermissionSales'));      
     }
 
     public function delivery_transmittal($dr_uuid = null,$schedule_uuid,$paper = null) {
@@ -667,6 +669,8 @@ class DeliveriesController extends DeliveryAppController {
     $this->Company->bind('Address');
 
     if(!empty($this->request->data['DeliveryDetail']['quantity'])){
+
+        //pr($this->request->data); exit;
 
        $this->DeliveryDetail->saveDeliveryDetail($this->request->data['DeliveryDetail']);
 

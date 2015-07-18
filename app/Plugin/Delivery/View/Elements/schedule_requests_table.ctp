@@ -59,8 +59,12 @@
                                                   $IdClientsOrder = $orderListHelper[$value['Delivery']['clients_order_id']];
   
                                                     if($value['Delivery']['schedule_uuid'] == $orderDeliveryList[$uuidClientsOrder]  ){  
+
+                                                      if($value['DeliveryDetail']['status'] != 5){
                                                    
                                                       array_push($arr,$value['DeliveryDetail']['delivered_quantity']);
+
+                                                      }
 
                                                     }  
 
