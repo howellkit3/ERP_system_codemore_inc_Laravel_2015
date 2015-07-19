@@ -74,10 +74,10 @@ $(document).ready(function() {
 
         if(searchInput){
            // alert(searchInput);
-            $('.productFields').hide();
+            $('.field').hide();
             $('.searchProductAppend').show();
         }else{
-            $('.productFields').show();
+            $('.field').show();
             $('.searchProductAppend').hide();
         }
         

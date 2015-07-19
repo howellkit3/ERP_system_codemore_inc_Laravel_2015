@@ -1,47 +1,32 @@
 <?php if (!empty($productData)) { ?>
-    <?php foreach ($productData as $ProductDataList ):?>
+    <?php foreach ($productData as $productList): ?>
+        
+            <tr class="">
+                 <td class="">
+                    <?php echo $productList['Product']['uuid'] ?>  
+                </td>
+                <td class="">
+                    <?php echo ucfirst($productList['Product']['name']) ?>  
+                </td>
+                <td class="">
+                    <?php echo ucfirst($productList['Product']['company_id']) ?>
+                </td>
+                <td class="text-center">
+                     <?php echo $productList['Product']['item_category_holder_id'] ?>
+                </td>
 
-    <tbody aria-relevant="all" aria-live="polite" role="alert" >
+                <td class="text-center">
+                  <?php echo $productList['Product']['item_type_holder_id'] ?>
+                </td>
+                <td class="text-center">
+                  <?php echo $productList['Product']['remarks'] ?>
+                </td>
+                <td class="text-center">
+                  <?php echo $productList['Product']['created'] ?>
+                </td>
 
-        <tr class="">
 
-            <td>
-                <?php echo $ProductDataList['Product']['uuid'] ?>
-            </td>
-
-            <td>    
-                <?php echo ucfirst($ProductDataList['Product']['name']) ?>
-            </td>
-
-              <td>    
-                <?php echo ucfirst($ProductDataList['Product']['company_id'])  ?>
-            </td>
-
-            <td>
-                <?php  echo $ProductDataList['Product']['item_category_holder_id'] ?>
-            </td>
-
-            <td>
-                <?php  echo $ProductDataList['Product']['item_type_holder_id']  ?>
-            </td>
-
-            <td>
-
-                 <?php  //if(!$ProductDataList['Product']['remarks'])){
-
-                    echo $ProductDataList['Product']['remarks'] 
-                        
-                      //   }
-                    ?>
-
-            </td>
-
-            <td>
-                <?php  echo ucfirst($ProductDataList['Product']['created']) ?>
-            </td>
-
-            <td>
-
+                <td>
                 <?php
                     echo $this->Html->link('<span class="fa-stack">
                         <i class="fa fa-square fa-stack-2x"></i>
@@ -49,7 +34,7 @@
                         </span> ', array(
                                         'controller' => 'products', 
                                         'action' => 'view',
-                                        $ProductDataList['Product']['id']), array(
+                                        $productList['Product']['id']), array(
                                                                             'class' =>' table-link small-link-icon',
                                                                             'escape' => false, 
                                                                             'title'=>'View Information'
@@ -60,28 +45,27 @@
                     echo $this->Html->link('<span class="fa-stack">
                     <i class="fa fa-square fa-stack-2x"></i>
                     <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit </font></span>
-                    </span> ', array('controller' =>'products', 'action' => 'edit',$ProductDataList['Product']['id']),array('class' =>' table-link small-link-icon','escape' => false,'title'=>'Edit Information'
+                    </span> ', array('controller' =>'products', 'action' => 'edit',$productList['Product']['id']),array('class' =>' table-link small-link-icon','escape' => false,'title'=>'Edit Information'
                         )); 
                 ?>
                 <?php
                     // echo $this->Html->link('<span class="fa-stack">
                     // <i class="fa fa-square fa-stack-2x"></i>
                     // <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Delete </font></span>
-                    // </span>', array('controller' => 'products', 'action' => 'deleteProduct',$ProductDataList['Product']['id']),array('class' =>' table-link small-link-icon','escape' => false,'title'=>'Delete Information','confirm' => 'Do you want to delete this Product ?'
+                    // </span>', array('controller' => 'products', 'action' => 'deleteProduct',$productList['Product']['id']),array('class' =>' table-link small-link-icon','escape' => false,'title'=>'Delete Information','confirm' => 'Do you want to delete this Product ?'
                     //     ));
                     // echo "&emsp;";
                    
                     echo $this->Html->link('<span class="fa-stack">
                     <i class="fa fa-square fa-stack-2x"></i>
                     <i class="fa fa-plus-square fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Specs </font></span>
-                    </span>', array('controller' => 'products', 'action' => 'specification',$ProductDataList['Product']['id']),array('class' =>' table-link','escape' => false,'title'=>'Add Specifications'
+                    </span>', array('controller' => 'products', 'action' => 'specification',$productList['Product']['id']),array('class' =>' table-link','escape' => false,'title'=>'Add Specifications'
                         ));
                 ?>
-            </td>    
-        </tr>
-    </tbody>
-<?php endforeach;
-?> 
+                </td>
+            </tr>
+        
+    <?php endforeach; ?> 
 <?php }else{
     echo "<font color='red'><b>No result..</b></font>";
     } ?> 

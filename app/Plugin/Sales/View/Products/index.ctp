@@ -36,7 +36,46 @@
                     </div>
                 </header>
                <div class="main-box-body clearfix">
-                    <div class="table-responsive">
+
+                     <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr> 
+                               <th><a href="#"><span>Item Number</span></a></th>
+                                    <th><a href="#"><span>Product Name</span></a></th>
+                                    <th><a href="#"><span>Customer</span></a></th>
+                                    <th><a href="#"><span>Item Category</span></a></th>
+                                    <th><a href="#"><span>Item Type</span></a></th>
+                                    <th><a href="#"><span>Remarks</span></a></th>
+                                    <th><a href="#"><span>Created</span></a></th>
+                                    <th style="width:200px">Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody aria-relevant="all" aria-live="polite" class="field" role="alert" >
+                            <?php echo $this->element('product_table'); ?>
+                        </tbody>
+                        <tbody aria-relevant="all" aria-live="polite" class="searchProductAppend" role="alert" >
+                        </tbody>
+ 
+                    </table>
+                    <hr>
+
+                <div class="paging">
+                <?php
+
+                echo $this->Paginator->prev('< ' . __('previous'), null, null, array('class' => 'disable'));
+                echo $this->Paginator->numbers(array('separator' => ''));
+                echo $this->Paginator->next(__('next') . ' >', null, null, array('class' => 'disable'));
+                ?>
+                </div>
+                <?php //echo $this->Html->image('loader.gif', array('class' => 'hide', 'id' => 'loader')); ?>
+                <?php //echo $this->Js->writeBuffer(); ?>
+                </div>
+
+
+
+                    <!-- <div class="table-responsive">
                         <table class="table table-striped table-hover" >
                             <thead>
                                 <tr>
@@ -52,16 +91,17 @@
                             </thead>
 
                             
-
-                            <tbody aria-relevant="all" aria-live="polite" class="productFields" role="alert" style="display:none;">
-                                 <?php echo $this->element('product_table'); ?>
+                            <tbody  class="searchProductAppend">
+                            <span  ></span>
                             </tbody>
 
-                            <tbody aria-relevant="all" aria-live="polite" class="searchProductAppend" role="alert" style="display:none;">
+                              <tbody  class="field">
+                                 <?php //echo $this->element('product_table'); ?>
                             </tbody>
+                          
 
                         </table>
-                    </div>
+                    
 
         <div class="paging">
         <?php
@@ -71,7 +111,7 @@
         echo $this->Paginator->next(__('next') . ' >', null, null, array('class' => 'disable'));
         ?>
         </div>
-
+        </div> -->
         <?php //echo $this->Js->writeBuffer(); ?>
 
 
