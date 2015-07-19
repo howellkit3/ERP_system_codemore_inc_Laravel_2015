@@ -52,7 +52,7 @@
                             </tr>
                         </thead>
 
-                        <tbody aria-relevant="all" aria-live="polite" class="field" role="alert" >
+                        <tbody aria-relevant="all" aria-live="polite" class="field" name = "kit "role="alert" >
                             <?php echo $this->element('product_table'); ?>
                         </tbody>
                         <tbody aria-relevant="all" aria-live="polite" class="searchProductAppend" role="alert" >

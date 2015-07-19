@@ -71,10 +71,11 @@ $(document).ready(function() {
 
         $("body").on('keyup','.searchProduct', function(e){
         var searchInput = $(this).val();
+        var searchName = $('.field').attr('name');
 
         if(searchInput){
-           // alert(searchInput);
-            $('.field').hide();
+         //   alert(searchName);
+            $(".field").hide();
             $('.searchProductAppend').show();
         }else{
             $('.field').show();
