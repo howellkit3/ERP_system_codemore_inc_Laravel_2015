@@ -25,7 +25,6 @@
                   <?php echo $productList['Product']['created'] ?>
                 </td>
 
-
                 <td>
                 <?php
                     echo $this->Html->link('<span class="fa-stack">

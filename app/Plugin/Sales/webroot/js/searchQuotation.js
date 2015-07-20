@@ -10,8 +10,7 @@ $(document).ready(function() {
             $('.quotationFields').show();
             $('.searchAppend').hide();
         }
-        
-        
+         
         $.ajax({
             type: "GET",
             url: serverPath + "sales/quotations/search_quotation/"+searchInput,
@@ -73,7 +72,9 @@ $(document).ready(function() {
         var searchInput = $(this).val();
 
         if(searchInput){
-           // alert(searchInput);
+             
+            //$('.searchProductAppend').find('.field').hide();
+           // console.log( $('.searchProductAppend').find('.field'));
             $('.field').hide();
             $('.searchProductAppend').show();
         }else{

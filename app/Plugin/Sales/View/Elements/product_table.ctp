@@ -1,10 +1,6 @@
 <?php foreach ($productData as $ProductDataList ):?>
 
-    <tbody aria-relevant="all" aria-live="polite" role="alert" >
-
         <tr class="">
-
-          
 
             <td>
                 <?php echo ucfirst($ProductDataList['Product']['uuid']) ?>
@@ -73,5 +69,5 @@
                 ?>
             </td>    
         </tr>
-    </tbody>
+
 <?php endforeach; ?> 
