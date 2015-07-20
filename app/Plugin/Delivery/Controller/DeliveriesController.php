@@ -117,6 +117,7 @@ class DeliveriesController extends DeliveryAppController {
         $this->request->data['DeliveryDetail']['quantity']  = $scheduleInfo['ClientOrderDeliverySchedule']['quantity'];
         $this->request->data['DeliveryDetail']['schedule']  = $scheduleInfo['ClientOrderDeliverySchedule']['schedule'];
         $this->request->data['DeliveryDetail']['created_by']  = $userData['User']['id'];
+        $this->request->data['Delivery']['modified_by']  = $userData['User']['id'];
         $this->request->data['DeliveryDetail']['modified_by']  = $userData['User']['id'];
         $this->request->data['DeliveryDetail']['delivery_uuid']  = $this->request->data['Delivery']['dr_uuid'];
         $this->request->data['DeliveryDetail']['remaining_quantity'] = ($this->request->data['ClientOrderDeliverySchedule']['quantity']) - ($this->request->data['DeliveryDetail']['quantity']);
@@ -293,6 +294,7 @@ class DeliveriesController extends DeliveryAppController {
             $this->request->data['DeliveryDetail']['delivery_uuid'] =  $this->request->data['Delivery']['dr_uuid']; 
             $this->request->data['DeliveryDetail']['created_by'] =  $userData['User']['id'];    
             $this->request->data['Delivery']['status'] =  '1';   
+            $this->request->data['Delivery']['modified_by'] =  $userData['User']['id']; 
   
             $this->Delivery->saveDelivery($this->request->data,$userData['User']['id']);
             $this->DeliveryDetail->saveDeliveryDetail($this->request->data,$userData['User']['id']);
@@ -375,7 +377,6 @@ class DeliveriesController extends DeliveryAppController {
                                             'order' => 'DeliveryDetail.modified DESC'
                                            // 'fields' => array('DISTINCT Delivery.dr_uuid', 'DeliveryDetail.schedule','DeliveryDetail.location', 'DeliveryDetail.quantity','DeliveryDetail.delivered_quantity', 'DeliveryDetail.status', 'DeliveryReceipt.type', 'Delivery.schedule_uuid','DeliveryDetail.id', 'Transmittal.type' ,'DeliveryDetail.delivery_uuid'),
                                         ));
-
 
         $this->DeliveryReceipt->bindDelivery();
 
@@ -668,15 +669,6 @@ class DeliveriesController extends DeliveryAppController {
 
     $this->Company->bind('Address');
 
-
-    if(!empty($this->request->data['DeliveryDetail']['quantity'])){
-
-        //pr($this->request->data); exit;
-
-      // $this->DeliveryDetail->saveDeliveryDetail($this->request->data['DeliveryDetail']);
-
-    }
-
     $this->Delivery->bindDelivery();
     $drData = $this->Delivery->find('first', array(
                                         'conditions' => array('Delivery.dr_uuid' => $dr_uuid
@@ -740,10 +732,7 @@ class DeliveriesController extends DeliveryAppController {
 
     }  
 
-    $prepared = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
-                                                            'conditions' => array('User.id' => $drDataHolder['Delivery']['modified_by'])
-                                                            ));
-
+    $prepared = $userData;
 
     $approved = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
                                                             'conditions' => array('User.id' => $drDataHolder['Delivery']['created_by'])
@@ -757,8 +746,6 @@ class DeliveriesController extends DeliveryAppController {
 
             $idholder = $this->request->data['DeliveryDetail']['idholder'];
 
-           // pr($this->request->data['DeliveryDetail']['delivery_uuid']); pr($drData['Delivery']['dr_uuid']); exit; 
-
             if($this->request->data['DeliveryDetail']['delivery_uuid'] != $drData['Delivery']['dr_uuid']){
 
                 $this->DeliveryDetail->id = $idholder;
@@ -768,6 +755,8 @@ class DeliveriesController extends DeliveryAppController {
                 unset($this->request->data['DeliveryDetail']['id']);
 
                 $drQuantity = $this->request->data['DeliveryDetail']['delivered_quantity'];
+
+                $drRemarks = $this->request->data['DeliveryDetail']['remarks'];
 
                 $this->request->data['Delivery']['created_by'] = $drDataHolder['Delivery']['created_by'];
 
@@ -800,7 +789,9 @@ class DeliveriesController extends DeliveryAppController {
         $this->Session->setFlash(__('DR has is now ready to print.'), 'success');
     }
 
-    $this->set(compact('drData','clientData','companyData','units','approved','prepared', 'DRRePrint', 'drQuantity'));
+    $this->set(compact('drData','clientData','companyData','units','approved','prepared', 'DRRePrint', 'drQuantity','drRemarks'));
+
+   // $this->render('dr'); 
 
     }
 
@@ -882,9 +873,7 @@ class DeliveriesController extends DeliveryAppController {
 
     $this->loadModel('User');
 
-    $prepared = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
-                                                            'conditions' => array('User.id' => $drDataHolder['DeliveryDetail']['modified_by'])
-                                                            ));
+    $prepared = $userData;
 
 
     $approved = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
