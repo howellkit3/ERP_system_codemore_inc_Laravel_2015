@@ -115,13 +115,32 @@
 										                ?>
 
 										                <?php 
-										                    echo $this->Form->input('PurchasingItem name', 
+										                    echo $this->Form->input('PurchasingItem.0.name', 
 																			array( 
 																 'type' => 'hidden',  
-																'class' => 'form-control item_id required', 
+																'class' => 'form-control item_name required', 
 										    					'label' => false,
-										    					'readonly' => 'readonly',
-										    					'placeholder' => 'Item',
+										    					'readonly' => 'readonly'
+										    					));
+										                ?>
+
+										                <?php 
+										                    echo $this->Form->input('PurchasingItem.0.foreign_key', 
+																			array( 
+																'class' => 'form-control item_id required', 
+																'type' => 'hidden',
+										    					'label' => false,
+										    					'readonly' => 'readonly'
+										    					));
+										                ?>
+
+										                <?php 
+										                    echo $this->Form->input('PurchasingItem.0.model', 
+																			array( 
+																'class' => 'form-control item_model required ', 
+																'type' => 'hidden',
+										    					'label' => false,
+										    					'readonly' => 'readonly'
 										    					));
 										                ?>
 
@@ -160,28 +179,6 @@
 										                        'class' => 'form-control required',
 										                        'empty' => '---Select Unit---'
 										                         )); 
-										                ?>
-
-										         		<?php 
-										                    echo $this->Form->input('PurchasingItem.0.foreign_key', 
-																			array( 
-																'class' => 'form-control item_id required item_id', 
-																'type' => 'hidden',
-										    					'label' => false,
-										    					'readonly' => 'readonly',
-										    					'placeholder' => 'Item',
-										    					));
-										                ?>
-
-										                <?php 
-										                    echo $this->Form->input('PurchasingItem.0.model', 
-																			array( 
-																'class' => 'form-control item_model required ', 
-																'type' => 'hidden',
-										    					'label' => false,
-										    					'readonly' => 'readonly',
-										    					'placeholder' => 'Item',
-										    					));
 										                ?>
 
 													</div>

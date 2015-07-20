@@ -95,11 +95,8 @@ jQuery(document).ready(function($){
 
                         $recentItem = $('#myModalItem').attr('data-item');
 
-                         console.log($recentItem);
-
-                    $parent = $("[data-modal="+$recentItem+"]").parent().parent();
+                        $parent = $("[data-modal="+$recentItem+"]").parent().parent();
                         
-                        console.log($parent);
                         var idHolder = $(this).attr('data-holder');
                         var partName = $(this).val();
                         var itemModel = $(this).attr('name');
@@ -108,9 +105,9 @@ jQuery(document).ready(function($){
                         
                         if ($(this).is(":checked")) {
                            
-                            $('.item_model').val(itemModel);
+                            $parent.find('.item_model').val(itemModel);
                             $parent.find('.item_name').val(itemName);
-                            $('.item_id').val(partName);
+                            $parent.find('.item_id').val(partName);
                             $( '.close' ).trigger( 'click' );
                         }
 
