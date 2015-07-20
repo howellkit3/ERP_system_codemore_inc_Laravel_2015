@@ -633,4 +633,35 @@ CREATE TABLE IF NOT EXISTS `tools` (
 
 
 ALTER TABLE `dev_koufu_delivery`.`deliveries` ADD COLUMN `from` INT(11) NULL AFTER `dr_uuid`;
-ALTER TABLE `dev_koufu_purchasing`.`purchasing_items`  CHANGE `item_group_id` `item_group_uuid` INT(11) NULL;
+ALTER TABLE `dev_koufu_purchasing`.`purchasing_items`  CHANGE `item_group_id` `request_uuid` INT(11) NULL;
+
+#NOTE: SELECT KOUFU PURCHASING DATABASE ----
+/** howellkit added this 07/20/2015  */
+
+INSERT INTO `purchasing_types` (`id`, `name`, `description`, `created`, `modified`, `created_by`, `modified_by`)
+VALUES
+  (1,'By Focus',' ','2015-05-12 10:20:35','2015-05-12 11:26:22',1,1),
+  (2,'Basic P.O.',' ','2015-05-12 10:20:35','2015-05-12 11:26:22',1,1),
+  (3,'Maintainances',' ','2015-05-12 10:20:35','2015-05-12 11:26:22',1,1),
+  (4,'Stock',' ','2015-05-12 10:20:35','2015-05-12 11:26:22',1,1),
+  (5,'Emergency',' ','2015-05-12 10:20:35','2015-05-12 11:26:22',1,1),
+  (6,'Stock',' ','2015-05-12 10:20:35','2015-05-12 11:26:22',1,1),
+  (7,'Other',' ','2015-05-12 10:20:35','2015-05-12 11:26:22',1,1);
+
+#NOTE: SELECT KOUFU PURCHASING DATABASE ----
+/** howellkit added this 07/20/2015  */
+
+  CREATE TABLE IF NOT EXISTS `purchase_orders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uuid` INT(11) DEFAULT NULL,
+  `supplier_id` int(11) DEFAULT NULL,
+  `po_number` VARCHAR(120) DEFAULT NULL,
+  `request_id` int(11) DEFAULT NULL,
+  `name` varchar(60) NOT NULL,
+  `remarks` varchar(60) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;

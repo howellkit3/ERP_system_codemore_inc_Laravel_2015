@@ -5,6 +5,7 @@ App::import('Vendor', 'DOMPDF', true, array(), 'dompdf'.DS.'dompdf_config.inc.ph
 
 class DeliveriesController extends DeliveryAppController {
 
+   
     public $uses = array('Delivery.Delivery', 'Delivery.DeliveryDetail');
     public $helpers = array('Accounting.PhpExcel');
     public $paginate = array(
@@ -25,9 +26,9 @@ class DeliveriesController extends DeliveryAppController {
 
         //pr($deliveryData); exit;
 
-        $clientsOrder = $this->ClientOrder->find('all', array(
-                                        'order' => 'ClientOrderDeliverySchedule.id DESC'
-                                        ));  
+        // $clientsOrder = $this->ClientOrder->find('all', array(
+        //                                 'order' => 'ClientOrderDeliverySchedule.id DESC'
+        //                                 ));  
         
         $this->ClientOrder->bindDelivery();
         $clientsStatus = $this->ClientOrder->find('all',array( 'conditions' => array(
@@ -47,13 +48,17 @@ class DeliveriesController extends DeliveryAppController {
 
         $deliveryDetailList = $this->DeliveryDetail->find('list',array('fields' => array('delivery_uuid', 'delivered_quantity')));
 
-        $limit = 10;
+        $this->ClientOrder->bindDelivery();
+
+        $this->ClientOrder->recursive = 1;
+
+        $limit = 5;
 
         $conditions = array();
 
         $this->ClientOrder->paginate = array(
             'conditions' => $conditions,
-            'limit' => '1',
+            'limit' => $limit,
             'fields' => array(
               'ClientOrder.uuid',
               'ClientOrder.po_number',
@@ -63,10 +68,10 @@ class DeliveriesController extends DeliveryAppController {
               'ClientOrderDeliverySchedule.location', 
               'ClientOrderDeliverySchedule.schedule'
               ),
-            'order' => 'ClientOrderDeliverySchedule.id DESC',
+            'order' => 'ClientOrder.id DESC',
         );
 
-        $clientsOrders = $this->paginate('ClientOrder');
+        $clientsOrder = $this->paginate('ClientOrder');
 
         //no permission sales/Receivable Staff/Accounting Head
         if ($userData['User']['role_id'] == 3 || $userData['User']['role_id'] == 6 || $userData['User']['role_id'] == 9) {
@@ -117,6 +122,7 @@ class DeliveriesController extends DeliveryAppController {
         $this->request->data['DeliveryDetail']['quantity']  = $scheduleInfo['ClientOrderDeliverySchedule']['quantity'];
         $this->request->data['DeliveryDetail']['schedule']  = $scheduleInfo['ClientOrderDeliverySchedule']['schedule'];
         $this->request->data['DeliveryDetail']['created_by']  = $userData['User']['id'];
+        $this->request->data['Delivery']['modified_by']  = $userData['User']['id'];
         $this->request->data['DeliveryDetail']['modified_by']  = $userData['User']['id'];
         $this->request->data['DeliveryDetail']['delivery_uuid']  = $this->request->data['Delivery']['dr_uuid'];
         $this->request->data['DeliveryDetail']['remaining_quantity'] = ($this->request->data['ClientOrderDeliverySchedule']['quantity']) - ($this->request->data['DeliveryDetail']['quantity']);
@@ -293,6 +299,7 @@ class DeliveriesController extends DeliveryAppController {
             $this->request->data['DeliveryDetail']['delivery_uuid'] =  $this->request->data['Delivery']['dr_uuid']; 
             $this->request->data['DeliveryDetail']['created_by'] =  $userData['User']['id'];    
             $this->request->data['Delivery']['status'] =  '1';   
+            $this->request->data['Delivery']['modified_by'] =  $userData['User']['id']; 
   
             $this->Delivery->saveDelivery($this->request->data,$userData['User']['id']);
             $this->DeliveryDetail->saveDeliveryDetail($this->request->data,$userData['User']['id']);
@@ -376,7 +383,6 @@ class DeliveriesController extends DeliveryAppController {
                                            // 'fields' => array('DISTINCT Delivery.dr_uuid', 'DeliveryDetail.schedule','DeliveryDetail.location', 'DeliveryDetail.quantity','DeliveryDetail.delivered_quantity', 'DeliveryDetail.status', 'DeliveryReceipt.type', 'Delivery.schedule_uuid','DeliveryDetail.id', 'Transmittal.type' ,'DeliveryDetail.delivery_uuid'),
                                         ));
 
-
         $this->DeliveryReceipt->bindDelivery();
 
         $DeliveryReceiptData =  $this->DeliveryReceipt->find('all');
@@ -392,6 +398,29 @@ class DeliveriesController extends DeliveryAppController {
         $clientOrderData = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid','id')));
 
         $scheduleInfo = $this->ClientOrder->find('all');
+
+        // $this->Delivery->bindDeliveryView();
+
+        // $limit = 1;
+
+        // $conditions =  array('DeliveryDetail.quantity != DeliveryDetail.delivered_quantity' , "DeliveryDetail.status !=" => "5");
+
+        // $this->Delivery->paginate = array(
+        //     'conditions' => $conditions,
+        //     'limit' => '1',
+        //     'fields' => array(
+        //       'Delivery.dr_uuid',
+        //       'DeliveryDetail.schedule',
+        //       'DeliveryDetail.quantity',  
+        //       'DeliveryDetail.location', 
+        //       'DeliveryDetail.delivered_quantity', 
+        //       'DeliveryDetail.location', 
+        //       'DeliveryDetail.status'
+        //       ),
+        //     'order' => 'Delivery.id DESC',
+        // );
+
+        // $deliveryEdit = $this->paginate('Delivery');
 
         $noPermissionSales = ' '; 
 
@@ -559,9 +588,29 @@ class DeliveriesController extends DeliveryAppController {
 
       $this->Transmittal->bind(array('Delivery','DeliveryDetail'));
 
-      $transmittalData = $this->Transmittal->find('all', array(
-                                            'order' => 'Transmittal.id DESC'
-                                        ));
+      // $transmittalData = $this->Transmittal->find('all', array(
+      //                                       'order' => 'Transmittal.id DESC'
+      //                                   ));
+
+      $this->Transmittal->recursive = 1;
+
+        $limit = 5;
+
+        $conditions = array();
+
+        $this->Transmittal->paginate = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            'fields' => array(
+            'Transmittal.tr_uuid',
+            'Transmittal.dr_uuid',
+            'Transmittal.quantity', 
+            'Transmittal.contact_person'
+              ),
+            'order' => 'Transmittal.id DESC',
+        );
+
+      $transmittalData = $this->paginate('Transmittal');
 
       $this->ClientOrder->bindDelivery();
 
@@ -592,10 +641,6 @@ class DeliveriesController extends DeliveryAppController {
         $this->Delivery->bindDelivery();
 
         $this->DeliveryReceipt->bind('Delivery');
-  
-        $DRData = $this->DeliveryReceipt->find('all', array(
-                                        'order' => 'DeliveryReceipt.id DESC'
-                                    ));
 
         $this->ClientOrder->bindDelivery();
 
@@ -604,6 +649,35 @@ class DeliveriesController extends DeliveryAppController {
         $userLName = $this->User->find('list',array('fields' => array('id','last_name')));
 
         $noPermissionSales = ' ';
+
+        $this->DeliveryReceipt->bind('Delivery');
+
+        $this->DeliveryReceipt->recursive = 1;
+
+        $limit = 10;
+
+        $conditions = array();
+    
+        $this->paginate = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            'fields' => array(
+                'DeliveryReceipt.id', 
+                'DeliveryReceipt.dr_uuid', 
+                'DeliveryReceipt.schedule',
+                'DeliveryReceipt.quantity',
+                'DeliveryReceipt.location',
+                'DeliveryReceipt.remarks',
+                'DeliveryReceipt.printed_by',
+                'DeliveryReceipt.printed',
+                'DeliveryReceipt.type',
+                'Delivery.id',
+                'Delivery.schedule_uuid'
+                ),
+            'order' => 'DeliveryReceipt.id DESC',
+        );
+
+        $DRData = $this->paginate('DeliveryReceipt');
 
         $this->set(compact('noPermissionSales','DRData','userFName','userLName'));     
         
@@ -668,15 +742,6 @@ class DeliveriesController extends DeliveryAppController {
 
     $this->Company->bind('Address');
 
-
-    if(!empty($this->request->data['DeliveryDetail']['quantity'])){
-
-        //pr($this->request->data); exit;
-
-      // $this->DeliveryDetail->saveDeliveryDetail($this->request->data['DeliveryDetail']);
-
-    }
-
     $this->Delivery->bindDelivery();
     $drData = $this->Delivery->find('first', array(
                                         'conditions' => array('Delivery.dr_uuid' => $dr_uuid
@@ -740,10 +805,7 @@ class DeliveriesController extends DeliveryAppController {
 
     }  
 
-    $prepared = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
-                                                            'conditions' => array('User.id' => $drDataHolder['Delivery']['modified_by'])
-                                                            ));
-
+    $prepared = $userData;
 
     $approved = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
                                                             'conditions' => array('User.id' => $drDataHolder['Delivery']['created_by'])
@@ -757,8 +819,6 @@ class DeliveriesController extends DeliveryAppController {
 
             $idholder = $this->request->data['DeliveryDetail']['idholder'];
 
-           // pr($this->request->data['DeliveryDetail']['delivery_uuid']); pr($drData['Delivery']['dr_uuid']); exit; 
-
             if($this->request->data['DeliveryDetail']['delivery_uuid'] != $drData['Delivery']['dr_uuid']){
 
                 $this->DeliveryDetail->id = $idholder;
@@ -768,6 +828,8 @@ class DeliveriesController extends DeliveryAppController {
                 unset($this->request->data['DeliveryDetail']['id']);
 
                 $drQuantity = $this->request->data['DeliveryDetail']['delivered_quantity'];
+
+                $drRemarks = $this->request->data['DeliveryDetail']['remarks'];
 
                 $this->request->data['Delivery']['created_by'] = $drDataHolder['Delivery']['created_by'];
 
@@ -800,7 +862,9 @@ class DeliveriesController extends DeliveryAppController {
         $this->Session->setFlash(__('DR has is now ready to print.'), 'success');
     }
 
-    $this->set(compact('drData','clientData','companyData','units','approved','prepared', 'DRRePrint', 'drQuantity'));
+    $this->set(compact('drData','clientData','companyData','units','approved','prepared', 'DRRePrint', 'drQuantity','drRemarks'));
+
+   // $this->render('dr'); 
 
     }
 
@@ -882,9 +946,7 @@ class DeliveriesController extends DeliveryAppController {
 
     $this->loadModel('User');
 
-    $prepared = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
-                                                            'conditions' => array('User.id' => $drDataHolder['DeliveryDetail']['modified_by'])
-                                                            ));
+    $prepared = $userData;
 
 
     $approved = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),

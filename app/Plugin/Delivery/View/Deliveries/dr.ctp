@@ -21,13 +21,24 @@
         $approvedLName = ucwords($approved['User']['last_name'])  ;
         $toBePrinted = date("M/d/Y");
         $quantity = $drData['DeliveryDetail']['quantity'];
-
+        $remarks = $drData['DeliveryDetail']['remarks'];
        
         if(!empty($drQuantity)){
 
             $quantity = $drQuantity;
-                
+
+            if(!empty($drRemarks)){
+
+                $remarks = $drRemarks;
+
+            }else{
+
+                $remarks = " ";
+
+            }               
         }
+
+
 
 
       // if(!empty($DRRePrint[0]['DeliveryReceipt']['printed'])){   
@@ -48,7 +59,7 @@
                     ->setCellValue('A'.'9', $clientData['ClientOrder']['po_number'])
                     ->setCellValue('C'.'7', ucwords($drData['DeliveryDetail']['location']))
                     ->setCellValue('C'.'9', ucfirst($clientData['Product']['name']))
-                    ->setCellValue('C'.'10', $drData['DeliveryDetail']['remarks'] )
+                    ->setCellValue('C'.'10', $remarks)
                     ->setCellValue('H'.'9', $quantity . " x " . $clientData['QuotationItemDetail']['quantity'] . " / " . $units[$clientData['QuotationItemDetail']['quantity_unit_id']] )
                     ->setCellValue('J'.'9', $totalQty)
                     ->setCellValue('A'.'21', $preparedFName . " " .$preparedLName)

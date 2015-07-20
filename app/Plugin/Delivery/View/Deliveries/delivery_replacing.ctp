@@ -46,10 +46,20 @@
                         <?php echo $this->element('delivery_replacing_table'); ?>   
 
                     </table>
+                    <hr>
+                    </div>
+                    <div class="paging" id="item_type_pagination">
+                                <?php
+                               
+                                echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'Delivery','model' => 'Delivery'), null, array('class' => 'disable','model' => 'Delivery'));
+                                echo $this->Paginator->numbers(array('separator' => '','paginate' => 'Delivery'), array('paginate' => 'Delivery'));
+                                echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'Delivery','model' => 'Delivery'), null, array('class' => 'disable'));
+
+                                ?>
+                        </div>
                 </div>
-            </div>
-        </div>  
-    </div>
+            </div>  
+        </div>
 </div>
           
 <?php echo $this->element('modals'); ?>
