@@ -5,6 +5,7 @@ App::import('Vendor', 'DOMPDF', true, array(), 'dompdf'.DS.'dompdf_config.inc.ph
 
 class DeliveriesController extends DeliveryAppController {
 
+   
     public $uses = array('Delivery.Delivery', 'Delivery.DeliveryDetail');
     public $helpers = array('Accounting.PhpExcel');
     public $paginate = array(
@@ -25,9 +26,9 @@ class DeliveriesController extends DeliveryAppController {
 
         //pr($deliveryData); exit;
 
-        $clientsOrder = $this->ClientOrder->find('all', array(
-                                        'order' => 'ClientOrderDeliverySchedule.id DESC'
-                                        ));  
+        // $clientsOrder = $this->ClientOrder->find('all', array(
+        //                                 'order' => 'ClientOrderDeliverySchedule.id DESC'
+        //                                 ));  
         
         $this->ClientOrder->bindDelivery();
         $clientsStatus = $this->ClientOrder->find('all',array( 'conditions' => array(
@@ -47,13 +48,17 @@ class DeliveriesController extends DeliveryAppController {
 
         $deliveryDetailList = $this->DeliveryDetail->find('list',array('fields' => array('delivery_uuid', 'delivered_quantity')));
 
-        $limit = 10;
+        $this->ClientOrder->bindDelivery();
+
+        $this->ClientOrder->recursive = 1;
+
+        $limit = 5;
 
         $conditions = array();
 
         $this->ClientOrder->paginate = array(
             'conditions' => $conditions,
-            'limit' => '1',
+            'limit' => $limit,
             'fields' => array(
               'ClientOrder.uuid',
               'ClientOrder.po_number',
@@ -63,10 +68,10 @@ class DeliveriesController extends DeliveryAppController {
               'ClientOrderDeliverySchedule.location', 
               'ClientOrderDeliverySchedule.schedule'
               ),
-            'order' => 'ClientOrderDeliverySchedule.id DESC',
+            'order' => 'ClientOrder.id DESC',
         );
 
-        $clientsOrders = $this->paginate('ClientOrder');
+        $clientsOrder = $this->paginate('ClientOrder');
 
         //no permission sales/Receivable Staff/Accounting Head
         if ($userData['User']['role_id'] == 3 || $userData['User']['role_id'] == 6 || $userData['User']['role_id'] == 9) {
@@ -394,6 +399,29 @@ class DeliveriesController extends DeliveryAppController {
 
         $scheduleInfo = $this->ClientOrder->find('all');
 
+        // $this->Delivery->bindDeliveryView();
+
+        // $limit = 1;
+
+        // $conditions =  array('DeliveryDetail.quantity != DeliveryDetail.delivered_quantity' , "DeliveryDetail.status !=" => "5");
+
+        // $this->Delivery->paginate = array(
+        //     'conditions' => $conditions,
+        //     'limit' => '1',
+        //     'fields' => array(
+        //       'Delivery.dr_uuid',
+        //       'DeliveryDetail.schedule',
+        //       'DeliveryDetail.quantity',  
+        //       'DeliveryDetail.location', 
+        //       'DeliveryDetail.delivered_quantity', 
+        //       'DeliveryDetail.location', 
+        //       'DeliveryDetail.status'
+        //       ),
+        //     'order' => 'Delivery.id DESC',
+        // );
+
+        // $deliveryEdit = $this->paginate('Delivery');
+
         $noPermissionSales = ' '; 
 
         $this->set(compact('noPermissionSales','deliveryEdit', 'scheduleInfo', 'clientOrderData', 'DeliveryReceiptData', 'TransmittalData'));     
@@ -560,9 +588,29 @@ class DeliveriesController extends DeliveryAppController {
 
       $this->Transmittal->bind(array('Delivery','DeliveryDetail'));
 
-      $transmittalData = $this->Transmittal->find('all', array(
-                                            'order' => 'Transmittal.id DESC'
-                                        ));
+      // $transmittalData = $this->Transmittal->find('all', array(
+      //                                       'order' => 'Transmittal.id DESC'
+      //                                   ));
+
+      $this->Transmittal->recursive = 1;
+
+        $limit = 5;
+
+        $conditions = array();
+
+        $this->Transmittal->paginate = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            'fields' => array(
+            'Transmittal.tr_uuid',
+            'Transmittal.dr_uuid',
+            'Transmittal.quantity', 
+            'Transmittal.contact_person'
+              ),
+            'order' => 'Transmittal.id DESC',
+        );
+
+      $transmittalData = $this->paginate('Transmittal');
 
       $this->ClientOrder->bindDelivery();
 
@@ -593,10 +641,6 @@ class DeliveriesController extends DeliveryAppController {
         $this->Delivery->bindDelivery();
 
         $this->DeliveryReceipt->bind('Delivery');
-  
-        $DRData = $this->DeliveryReceipt->find('all', array(
-                                        'order' => 'DeliveryReceipt.id DESC'
-                                    ));
 
         $this->ClientOrder->bindDelivery();
 
@@ -605,6 +649,35 @@ class DeliveriesController extends DeliveryAppController {
         $userLName = $this->User->find('list',array('fields' => array('id','last_name')));
 
         $noPermissionSales = ' ';
+
+        $this->DeliveryReceipt->bind('Delivery');
+
+        $this->DeliveryReceipt->recursive = 1;
+
+        $limit = 10;
+
+        $conditions = array();
+    
+        $this->paginate = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            'fields' => array(
+                'DeliveryReceipt.id', 
+                'DeliveryReceipt.dr_uuid', 
+                'DeliveryReceipt.schedule',
+                'DeliveryReceipt.quantity',
+                'DeliveryReceipt.location',
+                'DeliveryReceipt.remarks',
+                'DeliveryReceipt.printed_by',
+                'DeliveryReceipt.printed',
+                'DeliveryReceipt.type',
+                'Delivery.id',
+                'Delivery.schedule_uuid'
+                ),
+            'order' => 'DeliveryReceipt.id DESC',
+        );
+
+        $DRData = $this->paginate('DeliveryReceipt');
 
         $this->set(compact('noPermissionSales','DRData','userFName','userLName'));     
         

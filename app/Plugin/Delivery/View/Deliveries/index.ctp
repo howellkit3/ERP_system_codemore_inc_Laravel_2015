@@ -47,16 +47,15 @@
 
                     </table>
                     <hr>
+                        <div class="paging" id="dr_pagination">
+                        <?php
 
-                    <div class="paging" id="item_type_pagination">
-                            <?php
-                           
-                            echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'ClientOrder','model' => 'ClientOrder'), null, array('class' => 'disable','model' => 'ClientOrder'));
-                            echo $this->Paginator->numbers(array('separator' => '','paginate' => 'ClientOrder'), array('paginate' => 'ClientOrder'));
-                            echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'ClientOrder','model' => 'ClientOrder'), null, array('class' => 'disable'));
+                        echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'ClientOrder','model' => 'ClientOrder'), null, array('class' => 'disable','model' => 'ClientOrder'));
+                        echo $this->Paginator->numbers(array('separator' => '','paginate' => 'ClientOrder'), array('paginate' => 'ClientOrder'));
+                        echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'ClientOrder','model' => 'ClientOrder'), null, array('class' => 'disable'));
+                        ?>
 
-                            ?>
-                    </div>
+                        </div>
                 </div>
             </div>
     
