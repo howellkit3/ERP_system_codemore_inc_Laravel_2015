@@ -31,3 +31,8 @@ label.strong {
 div.value {
   margin: 6px;
 }
+
+#result_container {
+  margin-bottom: 20px;
+  text-align: center;
+}

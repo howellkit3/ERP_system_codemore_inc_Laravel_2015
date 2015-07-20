@@ -61,7 +61,7 @@
 			                                        	 <label class="col-lg-4 control-label">
 			                                        	 <span style="color:red">*</span>Department</label>
 			                                            <?php
-				                                            $department = array('' => 'Select Department',
+				                                            $department = array(
 				                                            	'1' => 'Accounting',
 				                                            	'2' => 'Sales',
 				                                            	'3' => 'Delivery'
@@ -71,6 +71,7 @@
 				                                             	'options' => $department, 
 				                                             	'class' => 'form-control required',
 				                                             	'div' => 'col-lg-7',
+				                                             	'empty' => 'Select Department',
 				                                             	'label' => false));
 				                                            ?>
 			                                          </div>

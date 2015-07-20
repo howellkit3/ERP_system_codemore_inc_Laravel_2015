@@ -54,16 +54,12 @@
 									<?php 
 								        if(!empty($employees)){
 								            foreach ($employees as $key => $employee): ?>
-
-								                <tbody aria-relevant="all" aria-live="polite" role="alert">
-
-								                    <tr class="">
-
-								                        <td class="">
-								                            <?php echo rand(0,100); //$employee['Employee']['code'];?> 
+												<tbody aria-relevant="all" aria-live="polite" role="alert">
+													<tr class="">
+														<td class="">
+								                            <?php echo $employee['Employee']['code'];?> 
 								                        </td>
-
-								                        <td class="">
+														<td class="">
 								                            <?php echo $this->CustomText->getFullname($employee['Employee']);  ?>
 								                        </td>
 								                        
@@ -147,61 +143,42 @@
 								<table class="table table-striped table-hover">
 									<thead>
 										<tr>
-											<th><a href="#"><span>Code</span></a></th>
-			                                <!-- <th><a href="#"><span>Statement of Account No.</span></a></th> -->
-											<th><a href="#"><span>Name</span></a></th>
-											<th class="text-center"><a href="#"><span>Department</span></a></th>
-											<th class="text-center"><a href="#"><span>Position</span></a></th>
-											<th class="text-center"><a href="#"><span>Status</span></a></th>
-											<th class="text-center"><a href="#"><span>Gender</span></a></th>
+											<th><a href="#"><span>Employee Name</span></a></th>
+											<th class="text-center"><a href="#"><span>Tools</span></a></th>
+											<th class="text-center"><a href="#"><span>Quantity</span></a></th>
+											<th class="text-center"><a href="#"><span>Price</span></a></th>
 											<th><a href="#"><span>Actions</span></a></th>
 										</tr>
 									</thead>
-
-									<?php 
-								        if(!empty($employees)){
-								            foreach ($employees as $key => $employee): ?>
-
-								                <tbody aria-relevant="all" aria-live="polite" role="alert">
-
-								                    <tr class="">
-
-								                        <td class="">
-								                            <?php echo rand(0,100); //$employee['Employee']['code'];?> 
-								                        </td>
-
-								                        <td class="">
-								                            <?php echo $this->CustomText->getFullname($employee['Employee']);  ?>
+									  <?php if(!empty($toolings)) {
+								            foreach ($toolings as $key => $tooling): ?>
+													<tbody aria-relevant="all" aria-live="polite" role="alert">
+														<tr class="">
+														<td class="">
+								                            <?php echo $tooling['Tooling']['employee_id']; ?>
 								                        </td>
 								                        
 								                        <td class="text-center">
-								                           <?php echo !empty($departments[$employee['Employee']['department_id']]) ? $departments[$employee['Employee']['department_id']] : '';  ?>
+								                        	<?php echo $tooling['Tooling']['tools_id']; ?>
 								                        </td>
 
 								                         <td class="text-center">
-								                           <?php echo !empty($positions[$employee['Employee']['position_id']]) ? $positions[$employee['Employee']['position_id']] : '';  ?>
+								                           <?php echo $tooling['Tooling']['quantity']; ?>
 								                        </td>
 
 								                        <td class="text-center">
-								                           <?php echo !empty($employee['Employee']['status']) ? $employee['Employee']['status'] : '';  ?>
+								                         <?php echo $tooling['Tooling']['price']; ?>
 								                        </td>
-
-								                        <td class="text-center">
-								                           <?php echo !empty($employee['Employee']['gender']) ? $employee['Employee']['gender'] : '';  ?>
-								                        </td>
-
 								                       	<td>
-								                            <?php echo $this->Html->link('<span class="fa-stack">
-											                    <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> View </font></span></span> ', array('controller' => 'employees', 'action' => 'view',$employee['Employee']['id']), array('class' =>' table-link','escape' => false, 'title'=>'View Sales Invoice'
+								                         <?php echo $this->Html->link('<span class="fa-stack">
+											                    <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> View </font></span></span> ', array('controller' => 'toolings', 'action' => 'view',$tooling['Tooling']['id']), array('class' =>' table-link','escape' => false, 'title'=>'View Sales Invoice'
 											                    ));
 
-								                            ?>
-
-														<?php
+								                           
 														echo $this->Html->link('<span class="fa-stack">
 														<i class="fa fa-square fa-stack-2x"></i>
 														<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit </font></span>
-														</span> ', array('controller' => 'employees', 'action' => 'edit',$employee['Employee']['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Information'));
+														</span> ', array('controller' => 'toolings', 'action' => 'edit',$tooling['Tooling']['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Information'));
 														?>
 								                        </td>
 								                    </tr>
@@ -209,13 +186,13 @@
 								                </tbody>
 								        <?php 
 								            endforeach; 
-								        } ?> 
+								        } ?>  
 								
 								</table>	
 
 								<hr>
 
-			                    <div class="paging" id="item_type_pagination">
+			                   <!--  <div class="paging" id="item_type_pagination">
 			                            <?php
 			                           
 			                            echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'Employee','model' => 'Employee'), null, array('class' => 'disable','model' => 'ClientOrder'));
@@ -223,7 +200,7 @@
 			                            echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'Employee','model' => 'Employee'), null, array('class' => 'disable'));
 
 			                            ?>
-			                    </div>
+			                    </div> -->
 
 							</div>
 						</div>
