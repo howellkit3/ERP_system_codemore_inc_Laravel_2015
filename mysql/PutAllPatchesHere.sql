@@ -633,3 +633,4 @@ CREATE TABLE IF NOT EXISTS `tools` (
 
 
 ALTER TABLE `dev_koufu_delivery`.`deliveries` ADD COLUMN `from` INT(11) NULL AFTER `dr_uuid`;
+ALTER TABLE `dev_koufu_purchasing`.`purchasing_items`  CHANGE `item_group_id` `item_group_uuid` INT(11) NULL;

@@ -27,10 +27,6 @@
             </td>
 
             <td>
-                <?php  echo ucfirst($ProductDataList['Product']['created']) ?>
-            </td>
-
-            <td>
 
                 <?php
                     echo $this->Html->link('<span class="fa-stack">

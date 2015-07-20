@@ -1146,6 +1146,20 @@ class ProductsController extends SalesAppController {
      										));
 
             Cache::write('companyData', $companyData);
+
+            $categoryData = $this->ItemCategoryHolder->find('list', array(
+     											'fields' => array( 
+     												'id','name')
+     										));
+
+            Cache::write('categoryData', $categoryData);
+
+            $typeData = $this->ItemTypeholder->find('list', array(
+     											'fields' => array( 
+     												'id','name')
+     										));
+
+            Cache::write('typeData', $typeData);
        // }
 
             // $productData = $this->Product->find('list', array(
@@ -1156,7 +1170,7 @@ class ProductsController extends SalesAppController {
             // Cache::write('productData', $productData);
 
 		
-		$this->set(compact('companyData','productData'));
+		$this->set(compact('companyData','productData', 'categoryData', 'typeData'));
 		//pr($quotationData);exit();
 		
 		if ($hint == ' ') {

@@ -917,6 +917,7 @@ class DeliveriesController extends DeliveryAppController {
         $this->loadModel('Assistant');
         $this->loadModel('Truck');
         $this->loadModel('Unit');
+        
         $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule','QuotationItemDetail','QuotationDetail','Product'));
 
         if (!empty($this->request->data)) {
