@@ -120,9 +120,8 @@
                                                         'options' => array($helperListUpper),
                                                         'type' => 'select',
                                                         'label' => false,
-                                                        'class' => 'form-control required gatefield',
-                                                        'empty' => '---Select Helper---',
-                                                        'required' => 'required'
+                                                        'class' => 'form-control gatefield',
+                                                        'empty' => '---Select Helper---'
                                                         )); 
                                                 ?>
                                             </div>

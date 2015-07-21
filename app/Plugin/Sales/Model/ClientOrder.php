@@ -104,12 +104,12 @@ class ClientOrder extends AppModel {
 					'conditions' => 'Product.id = QuotationDetail.product_id'
 				),
 			
-				// 'Delivery' => array(
-				// 	'className' => 'Delivery.Delivery',
-				// 	'foreignKey' => false,
-				// 	'conditions' => 'Delivery.clients_order_id =  ClientOrder.uuid'
+				'QuotationItemDetail' => array(
+					'className' => 'Sales.QuotationItemDetail',
+					'foreignKey' => false,
+					'conditions' => 'QuotationItemDetail.quotation_id = ClientOrder.quotation_id'
+				),
 
-				// ),
 			)
 		));
 		$this->recursive = 1;
