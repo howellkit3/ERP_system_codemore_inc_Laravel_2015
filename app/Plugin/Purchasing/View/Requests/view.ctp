@@ -30,6 +30,7 @@
                     <h6>
                         Tel: +63(2)5844928  &emsp;Fax: +63(2)5844952
                     </h6><br>
+                    <b><h2>Purchase Order</h2></b>
                     <br>
                 </header>
             </center>
