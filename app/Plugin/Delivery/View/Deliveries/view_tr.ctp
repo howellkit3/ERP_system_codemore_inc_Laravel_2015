@@ -3,9 +3,9 @@
 
 <?php echo $this->element('deliveries_options'); ?><br><br>
 
- <?php if(!empty($DeliveryReceiptData)){ ?>
+ <?php if(!empty($transmittalData)){ ?>
 
-      <?php  foreach ($DeliveryReceiptData as $deliveryReceiptList): ?>
+      <?php  foreach ($transmittalData as $transmittalDataList): ?>
 
 <div class="row">
 	<div class="col-lg-12">
@@ -27,12 +27,12 @@
 
 			</div>
 		</div>
-				<?php echo $this->Form->create('Product',array('url'=>(array('controller' => 'products','action' => 'view'))));?>			
+				<?php echo $this->Form->create('Transmittal',array('url'=>(array('controller' => 'products','action' => 'view'))));?>			
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="main-box">
 						<header class="main-box-header clearfix">
-						<h2 class="pull-left">Delivery Receipt Details</h2>
+						<h2 class="pull-left">Tranmittal Details</h2>
 					</header>
 						<div class="top-space"></div>
 						<div class="main-box-body clearfix">
@@ -43,27 +43,27 @@
 										<input type="hidden" id="selected_type" value="<?php // echo $this->request->data['Product']['id']; ?>">
 										<div class="col-lg-8">
 											<?php 
-	                                            echo $this->Form->input('DeliveryReceipt.uuid', array(
+	                                            echo $this->Form->input('Transmittal.uuid', array(
 	                                            								'class' => 'form-control item_type',
 	                                            								'disabled' => true,
 							                                                    'label' => false,       
 							                                                    'placeholder' => 'Delivery Receipt Number',
-							                                                    'value' => $deliveryReceiptList['DeliveryReceipt']['dr_uuid'],
+							                                                    'value' => $transmittalDataList['Transmittal']['tr_uuid'],
 							                                                    'fields' =>array('name')));
                                             ?>
 										</div>
 									</div>
 
 									<div class="form-group">
-										<label class="col-lg-2 control-label">Schedule</label>
+										<label class="col-lg-2 control-label">Contact Person</label>
 										<div class="col-lg-8">
 											<?php 
-	                                            echo $this->Form->input('DeliveryReceipt.schedule', array(
+	                                            echo $this->Form->input('Transmittal.contact_person', array(
 	                                            								'class' => 'form-control item_type',
 							                                                    'label' => false,
 							                                                    'disabled' => true,
 							                                                    'placeholder' => 'Schedule',
-							                                                    'value' => date("F j, Y ", strtotime($deliveryReceiptList['DeliveryReceipt']['schedule'])),
+							                                                    'value' => $transmittalDataList['Transmittal']['contact_person'],
 							                                                    'fields' =>array('name')));
                                             ?>
 										</div>
@@ -73,13 +73,13 @@
 										<label class="col-lg-2 control-label">Quantity</label>
 										<div class="col-lg-8">
 											<?php 
-	                                            echo $this->Form->input('DeliveryReceipt.quantity', array(
+	                                            echo $this->Form->input('Transmittal.quantity', array(
 	                                            								'class' => 'form-control item_type',
 							                                                    'label' => false,
 							                                                    'disabled' => true,
 							                                                    'placeholder' => 'Quantity',
 							                                                    'fields' =>array('name'),
-							                                                    'value' => $deliveryReceiptList['DeliveryReceipt']['quantity']));
+							                                                    'value' => $transmittalDataList['Transmittal']['quantity']));
                                             ?>
 										</div>
 									</div>
@@ -88,30 +88,30 @@
 										<label class="col-lg-2 control-label">Location</label>
 										<div class="col-lg-8">
 											<?php 
-	                                            echo $this->Form->input('DeliveryReceipt.location', array(
+	                                            echo $this->Form->input('Transmittal.location', array(
 	                                            								'class' => 'form-control item_type',
 							                                                    'label' => false,
 							                                                    'disabled' => true,
 							                                                    'placeholder' => 'Location',
 							                                                    'fields' =>array('name'),
-							                                                    'value' => $deliveryReceiptList['DeliveryReceipt']['location']));
+							                                                    'value' => $transmittalDataList['DeliveryDetail']['location']));
                                             ?>
 										</div>
-									</div>
-									<?php $Fname = $printedFirstName[$deliveryReceiptList['DeliveryReceipt']['printed_by']]; 
+									</div> 
+									<?php $Fname = $printedFirstName[$transmittalDataList['Transmittal']['created_by']]; 
 
-										$Lname = $printedLastName[$deliveryReceiptList['DeliveryReceipt']['printed_by']];?>
+										$Lname = $printedLastName[$transmittalDataList['Transmittal']['created_by']];?>
 									<div class="form-group">
-										<label class="col-lg-2 control-label">Quantity</label>
+										<label class="col-lg-2 control-label">Printed By:</label>
 										<div class="col-lg-8">
 											<?php 
-	                                            echo $this->Form->input('DeliveryReceipt.quantity', array(
+	                                            echo $this->Form->input('Transmittal.printed', array(
 	                                            								'class' => 'form-control item_type',
 							                                                    'label' => false,
 							                                                    'disabled' => true,
-							                                                    'placeholder' => 'Quantity',
+							                                                    'placeholder' => 'Location',
 							                                                    'fields' =>array('name'),
-							                                                    'value' => $Fname . ' ' . $Lname));
+							                                                    'value' => $Fname . ' ' . $Lname ));
                                             ?>
 										</div>
 									</div>
@@ -120,12 +120,12 @@
 										<label class="col-lg-2 control-label">Schedule</label>
 										<div class="col-lg-8">
 											<?php 
-	                                            echo $this->Form->input('DeliveryReceipt.schedule', array(
+	                                            echo $this->Form->input('Tranmittal.schedule', array(
 	                                            								'class' => 'form-control item_type',
 							                                                    'label' => false,
 							                                                    'disabled' => true,
 							                                                    'placeholder' => 'Schedule',
-							                                                    'value' => date("F j, Y ", strtotime($deliveryReceiptList['DeliveryReceipt']['printed'])),
+							                                                    'value' => date("F j, Y ", strtotime($transmittalDataList['Transmittal']['created'])),
 							                                                    'fields' =>array('name')));
                                             ?>
 										</div>
@@ -135,12 +135,12 @@
 										<label class="col-lg-2 control-label">Remarks</label>
 										<div class="col-lg-8">
 											<?php 
-	                                            echo $this->Form->input('DeliveryReceipt.remarks', array(
+	                                            echo $this->Form->input('Transmittal.remarks', array(
 	                                            								'class' => 'form-control item_type',
 							                                                    'label' => false,
 							                                                    'disabled' => true,
 							                                                    'placeholder' => 'Remarks',
-							                                                    'value' => $deliveryReceiptList['DeliveryReceipt']['remarks']));
+							                                                    'value' => $transmittalDataList['Transmittal']['remarks']));
                                             ?>
 										</div>
 									</div>

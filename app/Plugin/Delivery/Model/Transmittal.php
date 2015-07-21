@@ -63,5 +63,27 @@ class Transmittal extends AppModel {
 		
 	}
 
+	public function bindTransmittalDelivery() {
+		$this->bindModel(array(
+			'hasOne' => array(
+				'Delivery' => array(
+					'className' => 'Delivery.Delivery',
+					'foreignKey' => false,
+					'conditions' => 'Transmittal.dr_uuid = Delivery.dr_uuid'
+				),	
+
+				'DeliveryDetail' => array(
+					'className' => 'Delivery.DeliveryDetail',
+					'foreignKey' => false,
+					'conditions' => 'Delivery.dr_uuid = DeliveryDetail.delivery_uuid'
+				),	
+
+			
+			)
+		));
+		$this->recursive = 1;
+		
+	}
+
 	
 }

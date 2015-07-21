@@ -1122,4 +1122,31 @@ class DeliveriesController extends DeliveryAppController {
             
     }
 
+     public function view_tr($tr_id = null) {
+
+        $userData = $this->Session->read('Auth');
+
+        $this->loadModel('Delivery.Transmittal');
+
+        $this->loadModel('User');
+
+        //$this->Delivery->bindDeliveryView();
+
+        $this->Transmittal->bindTransmittalDelivery();
+
+        $transmittalData = $this->Transmittal->find('all',array('conditions' => array(
+                                        'Transmittal.id' => $tr_id
+                                        )));
+        //pr($transmittalData); exit;
+
+        $printedFirstName = $this->User->find('list',array('fields' => array('id','first_name')));
+
+        $printedLastName = $this->User->find('list',array('fields' => array('id','last_name')));
+
+        $noPermissionSales = ' '; 
+
+        $this->set(compact('transmittalData','noPermissionSales', 'printedFirstName', 'printedLastName'));     
+            
+    }
+
 }
