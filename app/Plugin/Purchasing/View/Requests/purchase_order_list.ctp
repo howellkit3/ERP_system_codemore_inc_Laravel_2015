@@ -1,4 +1,4 @@
-<?php $this->Html->addCrumb('Request List', array('controller' => 'requests', 'action' => 'request_list')); ?>
+<?php $this->Html->addCrumb('Purchase Order List', array('controller' => 'requests', 'action' => 'purchase_order_list')); ?>
 
 <div style="clear:both"></div>
 
@@ -9,11 +9,12 @@
         <div class="main-box clearfix body-pad">
             <header class="main-box-header clearfix">
 
-                <h2 class="pull-left"><b>Request List</b></h2>
+                <h2 class="pull-left"><b>Purchase Order List</b></h2>
 
                   <div class="filter-block pull-right">
                     
-                    <?php echo $this->Html->link('<i class="fa fa-plus-circle fa-lg"></i> Add Request ', array('controller' => 'requests', 'action' => 'create'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                    <?php 
+                    //echo $this->Html->link('<i class="fa fa-plus-circle fa-lg"></i> Add Request ', array('controller' => 'requests', 'action' => 'create'),array('class' =>'btn btn-primary pull-right','escape' => false));
                      ?>
                 </div>
                 
@@ -24,27 +25,26 @@
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th>Request #</th>
-                                <th>Name</th>
-                                <th>Type</th>
-                                <th class="text-center">Status</th>
+                                <th>Purchase Order No</th>
+                                <th>Po No.</th>
+                                <th>Supplier</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
 
-                        <?php echo $this->element('request_table'); ?>
+                        <?php echo $this->element('purchase_order_table'); ?>
                             
                      </table>
                     <hr>
                 </div>
 
-            <ul class="pagination pull-right">
+                <ul class="pagination pull-right">
                     <?php 
                      echo $this->Paginator->prev('< ' . __('previous'), array('before' => 'a','tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'prev disabled'));
                      echo $this->Paginator->numbers(array('separator' => '','tag' => 'li'));
                      echo $this->Paginator->next(__('next') . ' >', array('tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'next disabled')); ?>
                
-              </ul>
+                </ul>
               
             </div>
     

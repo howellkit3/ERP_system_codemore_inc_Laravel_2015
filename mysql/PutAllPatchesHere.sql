@@ -665,3 +665,9 @@ VALUES
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+#NOTE: SELECT KOUFU PURCHASING DATABASE ----
+/** bien added this 07/21/2015  */
+ALTER TABLE `purchase_orders` ADD `delivery_date` DATETIME  NULL  AFTER `modified`;
+ALTER TABLE `purchase_orders` ADD `payment_term` INT(11)  NULL  DEFAULT NULL  AFTER `modified`;
+
