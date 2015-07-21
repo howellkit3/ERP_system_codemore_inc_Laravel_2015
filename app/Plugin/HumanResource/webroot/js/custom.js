@@ -15,11 +15,14 @@ function readURL(input,element) {
 $('.datepick').datepicker({
 		  format: 'mm-dd-yyyy'
 		  
-	});
-$('body').on('click','.btn.btn-success.upload-image',function(e){
+});
+$body = $('body');
 
+$body.on('click','.btn.btn-success.upload-image',function(e){
 
-	$('.image_profile input').click();
+    $('.image_profile input').click();
 
 	e.preventDefault();
 });
+
+//seasch Employees

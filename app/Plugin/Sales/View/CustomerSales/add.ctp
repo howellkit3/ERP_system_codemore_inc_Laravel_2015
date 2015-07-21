@@ -1,6 +1,7 @@
 <?php $this->Html->addCrumb('Sales', array('controller' => 'customer_sales', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Add', array('controller' => 'customer_sales', 'action' => 'add')); ?>
 <?php echo $this->Html->script('Sales.company_quotation');?>
+
 <div style="clear:both"></div>
 
 <?php echo $this->element('sales_option'); ?><br><br>
@@ -52,7 +53,6 @@
                                             ?>
                                         </div>
                                     </div>
-
                                      <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 control-label">Website</label>
                                         <div class="col-lg-9">

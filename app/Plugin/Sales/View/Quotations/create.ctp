@@ -29,10 +29,9 @@
 	                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'quotations', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
 	                    ?>
 					</header>
-
 				</div>
 			</div>
-			<?php echo $this->Form->create('Quotation',array('url'=>(array('controller' => 'quotations','action' => 'add'))));?>
+			<?php echo $this->Form->create('Quotation',array('url'=>(array('controller' => 'quotations','action' => 'add')))); ?>
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="main-box">
