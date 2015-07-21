@@ -49,16 +49,15 @@
                                         <td class="text-center">
 
                                                 <?php 
-                                                //pr($scheduleDataList['ClientOrderDeliverySchedule']['uuid']);
+                                              
                                                 $uuidClientsOrder = $scheduleDataList['ClientOrderDeliverySchedule']['uuid'];
-                                                //pr($orderDeliveryList[$uuidClientsOrder]);
-
+                                                
                                                 $arr = array();
 
                                                  foreach ($deliveryStatus as $key => $value) {
 
                                                   $IdClientsOrder = $orderListHelper[$value['Delivery']['clients_order_id']];
-                                                 // pr($orderList[$IdClientsOrder]);
+                                                 
   
                                                     if($value['Delivery']['schedule_uuid'] == $orderDeliveryList[$uuidClientsOrder]){  
                                                    
@@ -66,7 +65,6 @@
 
                                                     }  
 
-                                                    //pr($arr);
                                                     $dataholder = 0;
                                                     foreach ($arr as $key => $value) {
 
@@ -88,21 +86,35 @@
                                                 
                                                 $Currentdate = str_replace('-', '', $Currentdate);   
 
+                                                $arrDelivered = array();
+
+                                                  foreach ($deliveryStatus as $key => $value) {
+
+                                                  $DeliveredHolder = $deliveryDetailList[$value['Delivery']['dr_uuid']];
+  
+                                                    if($value['Delivery']['schedule_uuid'] == $orderDeliveryList[$uuidClientsOrder] AND $value['DeliveryDetail']['status'] != 5 ){  
+
+                                                      array_push($arrDelivered,$DeliveredHolder);
+
+                                                    }  
+
+                                                }
+
+                                                $sumDelivered = array_sum($arrDelivered);
 
 
-                                                  if (!empty($deliveryData[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']]) || !empty($deliveryList[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']])) {   
+                                                   if (!empty($deliveryData[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']]) || !empty($deliveryList[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']])) {   
 
                                                    
-                                                     if($dataholder == 0){
+                                                    if (array_sum($arr) == $scheduleDataList['ClientOrderDeliverySchedule']['quantity']){ 
 
-                                                       echo "<span class='label label-success'>Delivered</span>";
+                                                            echo "<span class='label label-success'>Completed</span>";
 
-                                                     
-                                                    }elseif ($deliveryDetailList[$deliveryList[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']]] == $scheduleDataList['ClientOrderDeliverySchedule']['quantity']){ 
+                                                    }elseif ($sumDelivered == $scheduleDataList['ClientOrderDeliverySchedule']['quantity']){
 
                                                             echo "<span class='label label-success'>Delivered</span>";
 
-                                                    }elseif ($deliveryData[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']] == 'Approved') { 
+                                                    }elseif ($deliveryData[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']] == '1') { 
                                                         
                                                              echo "<span class='label label-warning'>Approved</span>"; ?> &nbsp<?php
                                                     } 
