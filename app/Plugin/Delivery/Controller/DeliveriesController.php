@@ -329,7 +329,7 @@ class DeliveriesController extends DeliveryAppController {
 
             // }else{
 
-               // $this->request->data['DeliveryDetail']['status'] =  '3';
+                $this->request->data['DeliveryDetail']['status'] =  '3';
 
             
             //}
@@ -1016,7 +1016,7 @@ class DeliveriesController extends DeliveryAppController {
                                         )));
 
 
-            $this->ClientOrder->bindDelivery();
+            $this->ClientOrder->bindClientDelivery();
 
             $clientData = $this->ClientOrder->find('first', array(
                                         'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
@@ -1094,6 +1094,32 @@ class DeliveriesController extends DeliveryAppController {
         $noPermissionSales = ' ';
         
         $this->set(compact('noPermissionSales','truckListUpper','helperListUpper','driverListUpper','deliveryScheduleId','quotationId','clientsOrderUuid','dr_nos'));
+    }
+
+      public function view_dr($dr_id = null) {
+
+        $userData = $this->Session->read('Auth');
+
+        $this->loadModel('Delivery.DeliveryReceipt');
+
+        $this->loadModel('User');
+
+        //$this->Delivery->bindDeliveryView();
+
+        $this->DeliveryReceipt->bindDelivery();
+
+        $DeliveryReceiptData = $this->DeliveryReceipt->find('all',array('conditions' => array(
+                                        'DeliveryReceipt.id' => $dr_id
+                                        )));
+
+        $printedFirstName = $this->User->find('list',array('fields' => array('id','first_name')));
+
+        $printedLastName = $this->User->find('list',array('fields' => array('id','last_name')));
+
+        $noPermissionSales = ' '; 
+
+        $this->set(compact('DeliveryReceiptData','noPermissionSales', 'printedFirstName', 'printedLastName'));     
+            
     }
 
 }

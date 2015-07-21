@@ -104,6 +104,44 @@ class ClientOrder extends AppModel {
 					'conditions' => 'Product.id = QuotationDetail.product_id'
 				),
 			
+				// 'QuotationItemDetail' => array(
+				// 	'className' => 'Sales.QuotationItemDetail',
+				// 	'foreignKey' => false,
+				// 	'conditions' => 'QuotationItemDetail.quotation_id = ClientOrder.quotation_id'
+				// ),
+
+			)
+		));
+		$this->recursive = 1;
+		//$this->contain($giveMeTheTableRelationship);
+	}
+
+	public function bindClientDelivery() {
+		$this->bindModel(array(
+			'hasOne' => array(
+				'ClientOrderDeliverySchedule' => array(
+					'className' => 'Sales.ClientOrderDeliverySchedule',
+					'foreignKey' => 'client_order_id'
+				)
+				,				
+				'Company' => array(
+					'className' => 'Sales.Company',
+					'foreignKey' => false,
+					'conditions' => 'Company.id = ClientOrder.company_id'
+				),
+
+				'QuotationDetail' => array(
+					'className' => 'Sales.QuotationDetail',
+					'foreignKey' => false,
+					'conditions' => 'QuotationDetail.quotation_id = ClientOrder.quotation_id'
+				),
+
+				'Product' => array(
+					'className' => 'Sales.Product',
+					'foreignKey' => false,
+					'conditions' => 'Product.id = QuotationDetail.product_id'
+				),
+			
 				'QuotationItemDetail' => array(
 					'className' => 'Sales.QuotationItemDetail',
 					'foreignKey' => false,
