@@ -36,10 +36,12 @@
                             </tr>
                         </thead>
 
-                        <tbody aria-relevant="all" aria-live="polite" class="searchAppend" role="alert">
-                            <div class = "OrderFields">
-                                <?php echo $this->element('schedule_requests_table'); ?>  
-                            </div>
+                        <tbody aria-relevant="all" aria-live="polite" class="OrderFields" role="alert" >
+                            <!-- <div class ="field"> -->
+                            <?php echo $this->element('schedule_requests_table'); ?> 
+                            <!-- </div> -->
+                        </tbody>
+                        <tbody aria-relevant="all" aria-live="polite" class="searchAppend" role="alert" >
                         </tbody>
 
                        <!--  <tbody aria-relevant="all" aria-live="polite" class="" role="alert" style="display:none;">

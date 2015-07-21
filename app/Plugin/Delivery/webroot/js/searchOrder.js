@@ -9,8 +9,7 @@ $(document).ready(function() {
         }else{
             $('.quotationFields').show();
             $('.searchAppend').hide();
-        }
-        
+        }        
         
         $.ajax({
             type: "GET",

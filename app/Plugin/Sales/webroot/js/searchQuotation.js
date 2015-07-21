@@ -73,8 +73,6 @@ $(document).ready(function() {
 
         if(searchInput){
              
-            //$('.searchProductAppend').find('.field').hide();
-           // console.log( $('.searchProductAppend').find('.field'));
             $('.field').hide();
             $('.searchProductAppend').show();
         }else{
