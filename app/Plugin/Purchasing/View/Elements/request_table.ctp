@@ -22,13 +22,16 @@
                 <?php echo $type[$requestList['Request']['pur_type_id']];?>
             </td>
 
-            <td class="">
+            <td class="text-center">
 
-                <?php if($requestList['Request']['status_id'] == 8){ ?>
-
-                 <span class='label label-default'>Waiting</span>
-
-                <?php } ?>
+                <?php 
+                    if($requestList['Request']['status_id'] == 8){ 
+                        echo "<span class='label label-default'>Waiting</span>";
+                    }
+                    if($requestList['Request']['status_id'] == 1){ 
+                        echo "<span class='label label-success'>Approved</span>";
+                    }
+                ?>
 
             </td>
 

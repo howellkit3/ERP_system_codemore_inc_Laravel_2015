@@ -58,14 +58,14 @@
 	 					?>
 					</li>
 					 
-					<!-- <li class="<?php echo ($this->params['plugin'] == 'purchasing') ? 'active' : '' ?>">
+					<li class="<?php echo ($this->params['plugin'] == 'purchasing') ? 'active' : '' ?>">
 
 						<?php  if($userData['User']['role_id'] == 1 OR $userData['User']['role_id'] == 2 OR $userData['User']['role_id'] == 7 OR $userData['User']['role_id'] == 10 OR $userData['User']['role_id'] == 6){
 
 						 echo $this->Html->link( " <i class='fa fa-th-large'></i> <span>Purchasing</span>",   array('controller' =>'suppliers','action'=>'index','plugin' => 'purchasing'),array('escape' => false) );
 						}
 	 					?>
-					</li> -->
+					</li>
 
 		
 					

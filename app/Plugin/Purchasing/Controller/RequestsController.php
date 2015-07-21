@@ -254,7 +254,69 @@ class RequestsController extends PurchasingAppController {
 
     public function view($requestId = null){
 
-    	$this->set(compact('requestId'));
+    	$userData = $this->Session->read('Auth');
+
+    	$this->loadModel('Purchasing.Request');
+
+		$this->loadModel('Purchasing.PurchasingItem');
+
+		$this->loadModel('GeneralItem');
+
+		$this->loadModel('Substrate');
+
+		$this->loadModel('CorrugatedPaper');
+
+		$this->loadModel('CompoundSubstrate');
+
+    	$this->loadModel('Purchasing.PurchasingType');
+
+	 	$purchasingTypeData = $this->PurchasingType->find('list', array(
+														'fields' => array('PurchasingType.id', 'PurchasingType.name'),
+														));
+
+	 	$this->loadModel('Unit');
+
+		$unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
+															'order' => array('Unit.unit' => 'ASC')
+															));
+
+    	$requestData = $this->Request->find('first', array('conditions' => array('Request.id' => $requestId)));
+		
+		$requestPurchasingItem = $this->PurchasingItem->find('all', array('conditions' => array('PurchasingItem.request_uuid' => $requestData['Request']['uuid'])));
+
+	    foreach ($requestPurchasingItem as $key => $value) {
+			
+			if($value['PurchasingItem']['model'] == 'GeneralItem'){
+
+	 			$itemData = $this->GeneralItem->find('list',array('fields' => array('id', 'name')));
+
+	 			$requestPurchasingItem[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 		}
+
+	 		if($value['PurchasingItem']['model'] == 'CorrugatedPaper'){
+
+	 			$itemData = $this->CorrugatedPaper->find('list',array('fields' => array('id', 'name')));
+
+	 			$requestPurchasingItem[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 		}
+
+	 		if($value['PurchasingItem']['model'] == 'Substrate'){
+
+	 			$itemData = $this->Substrate->find('list',array('fields' => array('id', 'name')));
+
+	 			$requestPurchasingItem[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 		}
+
+	 		if($value['PurchasingItem']['model'] == 'CompoundSubstrate'){
+
+	 			$itemData = $this->CompoundSubstrate->find('list',array('fields' => array('id', 'name')));
+	 			
+	 			$requestPurchasingItem[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 		}
+
+	    } 
+	    //pr($requestPurchasingItem);exit();
+    	$this->set(compact('requestId','requestData','requestPurchasingItem','unitData'));
     }
 
     public function edit($requestId = null){
@@ -342,5 +404,86 @@ class RequestsController extends PurchasingAppController {
     	$this->set(compact('requestId','purchasingTypeData','unitData','requestPurchasingItem'));
     }
 
+    public function approved($requestId = null){
+
+    	$this->loadModel('Purchasing.Request');
+
+    	$this->Request->id = $requestId;
+
+    	$this->Request->saveField('status_id',1);
+
+    	$this->Session->setFlash(__('Request has been approved.'));
+
+        $this->redirect( array(
+                 'controller' => 'requests', 
+                 'action' => 'request_list'
+
+         ));
+
+    }
+
+    public function create_order($requestId = null){
+
+    	$userData = $this->Session->read('Auth');
+
+    	$this->loadModel('PaymentTermHolder');
+
+    	$this->loadModel('Purchasing.Request');
+
+    	$this->loadModel('Purchasing.PurchasingType');
+
+    	$requestData = $this->Request->find('first', array('conditions' => array('Request.id' => $requestId)));
+
+    	$supplierData = $this->Supplier->find('list', array(
+														'fields' => array('Supplier.id', 'Supplier.name'),
+														));
+
+    	$paymentTermData = $this->PaymentTermHolder->find('list', array(
+														'fields' => array('PaymentTermHolder.id', 'PaymentTermHolder.name'),
+														));
+
+    	$type = $this->PurchasingType->find('list', array('fields' => array('id', 'name'),
+															'order' => array('PurchasingType.id' => 'ASC')
+															));
+
+    	$this->set(compact('requestId','supplierData','paymentTermData','requestData','type'));
+
+    }
+
+    public function purchase_order(){
+
+    	$userData = $this->Session->read('Auth');
+
+    	$this->loadModel('Purchasing.PurchaseOrder');
+
+    	if (!empty($this->request->data)) {
+
+    		$this->PurchaseOrder->savePurchaseOrder($this->request->data,$userData['User']['id']);
+
+    		$this->Session->setFlash(__('Purchase Order complete.'));
+
+	        $this->redirect( array(
+	                 'controller' => 'requests', 
+	                 'action' => 'purchase_order_list'
+
+	        ));
+
+    	}
+
+    }
+
+    public function purchase_order_list(){
+
+    	$this->loadModel('Purchasing.PurchaseOrder');
+
+    	$supplierData = $this->Supplier->find('list', array(
+														'fields' => array('Supplier.id', 'Supplier.name'),
+														));
+
+		$purchaseOrderData = $this->PurchaseOrder->find('all',array('order' => 'PurchaseOrder.id DESC'));
+
+		$this->set(compact('purchaseOrderData','supplierData'));
+
+    }
 
 }
