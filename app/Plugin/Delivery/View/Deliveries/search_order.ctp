@@ -112,7 +112,7 @@
 
                                                     }elseif ($sumDelivered == $scheduleDataList['ClientOrderDeliverySchedule']['quantity']){
 
-                                                            echo "<span class='label label-success'>Delivered</span>";
+                                                            echo "<span class='label label-success'>Completed</span>";
 
                                                     }elseif ($deliveryData[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']] == '1') { 
                                                         

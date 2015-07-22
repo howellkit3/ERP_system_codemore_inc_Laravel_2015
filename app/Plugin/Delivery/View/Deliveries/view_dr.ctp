@@ -14,26 +14,24 @@
 			<div class="col-lg-12">
 				<header class="main-box-header clearfix">
 					
-                    
-					<h1 class="pull-left">
-						<?php
-							//echo ucfirst($companyName[$clientOrderData['ClientOrder']['company_id']]); 
-						?>
-					</h1>
-					<?php 
-                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'products','action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
-                    ?>
+             				
 				</header>
 
 			</div>
 		</div>
-				<?php echo $this->Form->create('Product',array('url'=>(array('controller' => 'products','action' => 'view'))));?>			
+				<?php echo $this->Form->create('DeliveryReceipt',array('url'=>(array('controller' => 'products','action' => 'view'))));?>			
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="main-box">
 						<header class="main-box-header clearfix">
-						<h2 class="pull-left">Delivery Receipt Details</h2>
-					</header>
+
+							<h2 class="pull-left">Delivery Receipt Details</h2>
+
+							<?php 
+                        		echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'deliveries','action' => 'dr_record'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                    		?>
+
+						</header>
 						<div class="top-space"></div>
 						<div class="main-box-body clearfix">
 							<div class="main-box-body clearfix">
