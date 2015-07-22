@@ -26,15 +26,13 @@
                         <div class="top-space"></div>
                         <div class="main-box-body clearfix">
                             <div class="main-box-body clearfix">
-
                                 <div class="form-horizontal">
-
                                     <div class="form-group form-height">
                                         <label class="col-lg-2 control-label"><span style="color:red">*</span>Select DR No.</label>
                                         
                                     </div>
 
-                                    <?php foreach ($dr_nos as $key => $value) { ?>
+                                    <?php foreach ($dr_nos as $key => $value) { ;?>
                                         <div class="form-group form-height">
                                             <label class="col-lg-2 control-label"> </label>
                                             <div class="col-lg-8">
@@ -44,11 +42,19 @@
                                                         <?php echo $value['Delivery']['dr_uuid'] ;?>
                                                     </label>
                                                     <?php 
-                                                        echo $this->Form->input('GatePass_uuid.'.$key.'.ref_uuid', array('class' => 'form-control ref-uuid',
+                                                        echo $this->Form->input('GatePass.'.$key.'.ref_uuid', array('class' => 'form-control ref-uuid',
                                                             'type' => 'hidden',
                                                             'disabled' => false,
                                                             'label' => false,
                                                             'value' => $value['Delivery']['dr_uuid']));
+                                                    ?>
+
+                                                    <?php 
+                                                        echo $this->Form->input('GatePass.'.$key.'.model', array('class' => 'form-control ref-uuid',
+                                                            'type' => 'hidden',
+                                                            'disabled' => false,
+                                                            'label' => false,
+                                                            'value' => 'Deliveries'));
                                                     ?>
                                                 </div>
                                             </div>
@@ -72,10 +78,10 @@
                                             'label' => false,
                                             'value' => $clientsOrderUuid));
 
-                                        echo $this->Form->input('GatePass.model', array('class' => 'form-control item_type',
-                                            'type' => 'hidden',
-                                            'label' => false,
-                                            'value' => 'Delivery'));
+                                        // echo $this->Form->input('GatePass.model', array('class' => 'form-control item_type',
+                                        //     'type' => 'hidden',
+                                        //     'label' => false,
+                                        //     'value' => 'Deliveries'));
                                     
                                     ?>
                                      
@@ -83,7 +89,7 @@
                                         <label class="col-lg-2 control-label"><span style="color:red">*</span>Truck No.</label>
                                         <div class="col-lg-8">
                                             <?php 
-                                                echo $this->Form->input('GatePass.truck_id', array(
+                                                echo $this->Form->input('GatePassTruck.truck_id', array(
                                                     'options' => array($truckListUpper),
                                                     'type' => 'select',
                                                     'label' => false,
@@ -99,7 +105,7 @@
                                         <label class="col-lg-2 control-label"><span style="color:red">*</span>Driver Name</label>
                                         <div class="col-lg-8">
                                             <?php 
-                                                echo ucfirst($this->Form->input('GatePass.driver_id', array(
+                                                echo ucfirst($this->Form->input('GatePassTruck.driver_id', array(
                                                         'options' => array($driverListUpper),
                                                         'type' => 'select',
                                                         'label' => false,
@@ -113,8 +119,8 @@
 
                                     <section class="appendHelper">
                                         <div class="form-group">
-                                            <label class="col-lg-2 control-label"><span style="color:red">*</span>Helper Name</label>
-                                            <div class="col-lg-7">
+                                            <label class="col-lg-2 control-label">Helper Name</label>
+                                            <div class="col-lg-8">
                                                 <?php 
                                                     echo $this->Form->input('GatePassAssistant.0.helper_id', array(
                                                         'options' => array($helperListUpper),
@@ -136,10 +142,26 @@
                                         <label class="col-lg-2 control-label"><span style="color:red">*</span>Remarks</label>
                                         <div class="col-lg-8">
                                             <?php 
-                                                echo $this->Form->input('GatePass.remarks', array(
+                                                echo $this->Form->input('GatePassTruck.remarks', array(
                                                     'type' => 'textarea',
                                                     'class' => 'form-control item_type',
                                                     'label' => false));
+                                            ?>
+                                        </div>
+                                    </div>
+
+                                       <div class="form-group">
+                                        <label class="col-lg-2 control-label"><span style="color:red">*</span>Approved by:</label>
+                                        <div class="col-lg-8">
+                                            <?php 
+                                                echo ucfirst($this->Form->input('GatePassTruck.approver_id', array(
+                                                        'options' => array($deliveryUserFNameUpper),
+                                                        'type' => 'select',
+                                                        'label' => false,
+                                                        'class' => 'form-control required gatefield',
+                                                        'empty' => '---Select Approver---',
+                                                        'required' => 'required'
+                                                        )));
                                             ?>
                                         </div>
                                     </div>

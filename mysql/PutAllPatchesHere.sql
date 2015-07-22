@@ -673,7 +673,39 @@ ALTER TABLE `purchase_orders` ADD `payment_term` INT(11)  NULL  DEFAULT NULL  AF
 
 #NOTE: SELECT KOUFU DELIVERY DATABASE ----
 /** howell kit added this 07/22/2015  */
+
 ALTER TABLE `deliveries` ADD `company_id` INT(11)  NULL  AFTER `clients_order_id`;
+
+ALTER TABLE `koufu_system`.`gate_passes`  CHANGE `foreign_key` `ref_uuid` INT(11) NULL;
+ALTER TABLE `koufu_system`.`gate_passes` DROP COLUMN `name`;
+ALTER TABLE `koufu_system`.`gate_passes` DROP COLUMN `remarks`;
+ALTER TABLE `koufu_system`.`gate_passes` DROP COLUMN `driver_id`;
+ALTER TABLE `koufu_system`.`gate_passes` DROP COLUMN `truck_id`;
+ALTER TABLE `koufu_system`.`gate_passes` DROP COLUMN `created_by`;
+ALTER TABLE `koufu_system`.`gate_passes` DROP COLUMN `created`;
+ALTER TABLE `koufu_system`.`gate_passes` DROP COLUMN `modified`;
+ALTER TABLE `koufu_system`.`gate_passes` DROP COLUMN `modified_by`;
+
+ALTER TABLE `gate_passes` ADD `gatepass_truck_id` INT(11)  NULL  AFTER `ref_uuid`;
+
+CREATE TABLE IF NOT EXISTS `gate_pass_trucks` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `truck_id` int(11) DEFAULT NULL,
+  `driver_id` int(11) DEFAULT NULL,
+  `remarks` varchar(60) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+ALTER TABLE `koufu_system`.`gate_pass_assistants` DROP COLUMN `gate_pass_id`;
+ALTER TABLE `koufu_system`.`gate_pass_assistants` DROP COLUMN `created_by`;
+ALTER TABLE `koufu_system`.`gate_pass_assistants` DROP COLUMN `created`;
+ALTER TABLE `koufu_system`.`gate_pass_assistants` DROP COLUMN `modified`;
+ALTER TABLE `koufu_system`.`gate_pass_assistants` DROP COLUMN `modified_by`;
+ALTER TABLE `gate_pass_assistants` ADD `gatepass_truck_id` INT(11)  NULL  AFTER `helper_id`;
 
 #NOTE: SELECT KOUFU PURCHASING DATABASE ----
 /** bien added this 07/22/2015  */

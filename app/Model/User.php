@@ -70,6 +70,10 @@ class User extends AppModel {
 	public $virtualFields = array(
 		'fullname' => 'CONCAT(User.last_name,",", User.first_name)'
 	);
+
+	public $virtualField = array(
+		'fullnameDropdown' => 'CONCAT( User.first_name," ",User.last_name)'
+	);
 	
 	public function identicalFieldValues( $field=array(), $compare_field=null ) { 
         foreach( $field as $key => $value ){ 

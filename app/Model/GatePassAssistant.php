@@ -18,15 +18,16 @@ class GatePassAssistant extends AppModel {
 	public $actsAs = array('Containable');
 
     public function saveGatePassAssistant($assistantData = null,$gateId = null, $auth = null){
+
        
         foreach ($assistantData['GatePassAssistant'] as $key => $helperList) {
             $this->create();
-            $helperList['created_by'] = $auth;
-            $helperList['modified_by'] = $auth;
-            $helperList['gate_pass_id'] = $gateId;
-           
+            $helperList['gatepass_truck_id'] = $gateId;
+            //pr($helperList);
             $this->save($helperList);
         }
+
+       
         return 1;
     }
 

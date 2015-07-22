@@ -138,7 +138,9 @@ class CustomerSalesController extends SalesAppController {
             }
         }
 
-        $this->set(compact('paymentTermData'));
+        $noPermission = ' ';
+
+        $this->set(compact('paymentTermData', 'noPermission'));
 
 	}
 

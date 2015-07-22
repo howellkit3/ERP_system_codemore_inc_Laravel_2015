@@ -983,6 +983,7 @@ class DeliveriesController extends DeliveryAppController {
             $userData = $this->Session->read('Auth');
             
             $this->loadModel('GatePass');
+            $this->loadModel('GatePassTruck');
             $this->loadModel('GatePassAssistant');
             $this->loadModel('Sales.ClientOrder');
             $this->loadModel('Sales.Company');
@@ -990,36 +991,62 @@ class DeliveriesController extends DeliveryAppController {
             $this->loadModel('Assistant');
             $this->loadModel('Truck');
             $this->loadModel('Unit');
+            $this->loadModel('User');
             
             $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule','QuotationItemDetail','QuotationDetail','Product'));
 
             if (!empty($this->request->data)) {
+
+                //pr($userData['User']['id']); exit;
+
+                $gateId = $this->GatePassTruck->saveGatePassTruck($this->request->data,$userData['User']['id']);
                 
-                $gateId = $this->GatePass->saveGatepass($this->request->data,$userData['User']['id']);
-                
+                $gatepassId = $this->GatePass->saveGatepass($this->request->data,$userData['User']['id'], $gateId);
+             
                 $this->GatePassAssistant->saveGatePassAssistant($this->request->data,$gateId,$userData['User']['id']);
                 
                 //$this->Session->setFlash(__('The Gate Pass successfully added.'), 'success');
-                $gateData = $this->GatePass->findById($gateId);
+
+                $gateData = $this->GatePass->findById($gatepassId);
+
                 $assistData = $this->GatePassAssistant->find('all', array(
-                                            'conditions' => array('GatePassAssistant.helper_id' => $gateId
+                                            'conditions' => array('GatePassAssistant.gatepass_truck_id' => $gateId
                                             )));
+
+                $companyList = $this->Company->find('list', array(
+                                            'fields' => array('id','company_name')));
+
                 $driverList = $this->Driver->find('list', array(
                                             'fields' => array('id','full_name')));
+
                 $assList = $this->Assistant->find('list', array(
                                             'fields' => array('id','full_name')));
+
                 $truckList = $this->Truck->find('list', array(
                                             'fields' => array('id','truck_no')));
 
-               // pr($this->request->data); 
-               
+                $userFnameList = $this->User->find('list', array(
+                                            'fields' => array('id','first_name')));
+
+                $userLnameList = $this->User->find('list', array(
+                                            'fields' => array('id','last_name')));
+
+                //pr($userList); exit;
+
+                $approver = $this->request->data['GatePassTruck']['approver_id'];
+
+                $driver = $this->request->data['GatePassTruck']['driver_id'];
+
+                $truck = $this->request->data['GatePassTruck']['truck_id'];
+
+                // pr($truckList[$truck]); pr($driverList[$driver]);exit;
+
                 $productList = array();
                 $productQuantity = array();
                 $productUnit = array();
 
-                foreach ($this->request->data['GatePass_uuid'] as $key => $value){
+                foreach ($this->request->data['GatePass'] as $key => $value){
                 
-                //pr($value);
                 $this->Delivery->bindDelivery();    
 
                 $drData = $this->Delivery->find('first', array(
@@ -1033,37 +1060,19 @@ class DeliveriesController extends DeliveryAppController {
                                             'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
                                             )));
 
-            
-               // $this->request->data['ProductList'][$key] = $clientData['Product']['name'];
                 array_push($productList, $clientData['Product']['name']);
                 array_push($productQuantity, $drData['DeliveryDetail']['quantity']);
                 array_push($productUnit, $clientData['QuotationItemDetail']['quantity_unit_id']);
             
                 }
 
-                     
-               //  pr($productList); 
-               //  pr($productQuantity);
-               //  pr($productUnit);
-               // exit;
-
                 $units = $this->Unit->find('list',array('fields' => array('id','unit')));
-                // pr($gateData);
-                // pr($assistData);
-                // pr($driverList);
-                // pr($assList);
-                // pr($drData);
-                // pr($clientData);exit();
 
-                $this->set(compact('truckList','units','gateData','assistData','driverList','assList','drData','clientData','productList','productQuantity','productUnit'));
+                $this->set(compact('truckList','units','gateData','assistData','driverList','assList','drData','clientData','productList','productQuantity','productUnit', 'companyList', 'userData', 'approver', 'userList', 'userFnameList', 'userLnameList', 'driver', 'truck'));
 
                 $this->render('print_gatepass');
 
-                // $this->redirect( array(
-                //      'controller' => 'deliveries',   
-                //      'action' => 'view',$this->request->data['Direct']['one'],$this->request->data['Direct']['two'],$this->request->data['Direct']['three']
-                // ));
-
+    
             }
          
     }
@@ -1075,6 +1084,8 @@ class DeliveriesController extends DeliveryAppController {
         $this->loadModel('Assistant');
 
         $this->loadModel('Driver');
+
+        $this->loadModel('User');
 
         $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
@@ -1088,8 +1099,30 @@ class DeliveriesController extends DeliveryAppController {
 
         $dr_nos = $this->Delivery->find('all',array('conditions' => array('Delivery.company_id' => $companyId )));
         
-        //$companyId = $dr_nos['Delivery']['id'];
-        //pr($dr_nos); exit;
+        $deliveryUserData = $this->User->find('all',array('conditions' =>  array('User.role_id' => 4
+                                            )));
+
+        $deliveryUserFName = $this->User->find('list',array('fields' => array('id', 'fullname'),'conditions' =>  array('User.role_id' => 4
+                                            )));
+
+        // 
+
+        foreach ($deliveryUserFName as $key => $value) {
+
+            $deliveryUserFNameUpper[$key] = ucwords($value);
+           
+        }
+
+        //pr($deliveryUserFNameUpper);exit;
+
+        // $deliveryUserLName = $this->User->find('list',array('fields' => array('id', 'last_name'),'conditions' =>  array('User.role_id' => 4
+        //                                     )));
+
+        // foreach ($deliveryUserLName as $key => $value) {
+
+        //     $deliveryUserLNameUpper[$key] = ucwords($value);
+           
+        // }
 
         $truckList = $this->Truck->find('list',array('fields' => array('id', 'truck_no'),'order' => 'truck_no ASC'));
        
@@ -1117,7 +1150,7 @@ class DeliveriesController extends DeliveryAppController {
         
         $noPermissionSales = ' ';
         
-        $this->set(compact('noPermissionSales','truckListUpper','helperListUpper','driverListUpper','deliveryScheduleId','quotationId','clientsOrderUuid','dr_nos'));
+        $this->set(compact('noPermissionSales','truckListUpper','helperListUpper','driverListUpper','deliveryScheduleId','quotationId','clientsOrderUuid','dr_nos', 'deliveryUserData', 'deliveryUserFNameUpper', 'deliveryUserLNameUpper'));
     }
 
       public function view_dr($dr_id = null) {
