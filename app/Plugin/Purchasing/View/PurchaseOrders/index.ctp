@@ -14,7 +14,7 @@
                   <div class="filter-block pull-right">
                     
                     <?php 
-                    //echo $this->Html->link('<i class="fa fa-plus-circle fa-lg"></i> Add Request ', array('controller' => 'requests', 'action' => 'create'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'suppliers', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
                      ?>
                 </div>
                 
@@ -28,6 +28,7 @@
                                 <th>Purchase Order No</th>
                                 <th>Po No.</th>
                                 <th>Supplier</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>

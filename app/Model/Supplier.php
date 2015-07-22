@@ -30,26 +30,57 @@ class Supplier extends AppModel {
 
      public function bind($model = array('Group')){
 
-		$this->bindModel(array(
+		// $this->bindModel(array(
 			
+		// 	'hasMany' => array(
+		// 		'ItemTypeHolder' => array(
+		// 			'className' => 'ItemTypeHolder',
+		// 			'foreignKey' => 'item_category_holder_id',
+		// 			'dependent' => true
+		// 		),
+		// 	),
+
+		// 	'hasOne' => array(
+		// 		'GeneralItem' => array(
+		// 			'className' => 'GeneralItem',
+		// 			'foreignKey' => 'item_category_holder_id',
+		// 			'dependent' => true
+		// 		),
+		// 	),
+
+
+		// ));
+
+		// $this->contain($model);
+		$this->bindModel(array(
 			'hasMany' => array(
-				'ItemTypeHolder' => array(
-					'className' => 'ItemTypeHolder',
-					'foreignKey' => 'item_category_holder_id',
+				'SupplierContactPerson' => array(
+					'className' => 'Purchasing.SupplierContactPerson',
+					'foreignKey' => 'supplier_id',
 					'dependent' => true
 				),
-			),
-
-			'hasOne' => array(
-				'GeneralItem' => array(
-					'className' => 'GeneralItem',
-					'foreignKey' => 'item_category_holder_id',
+				
+				'Address' => array(
+					'className' => 'Purchasing.Address',
+					'foreignKey' => 'foreign_key',
+					'conditions' => "model = 'Supplier'",
 					'dependent' => true
 				),
-			),
-
-
-		));
+				'Contact' => array(
+					'className' => 'Purchasing.Contact',
+					'foreignKey' => 'foreign_key',
+					'conditions' => "model = 'Supplier'",
+					'dependent' => true
+				),
+				'Email' => array(
+					'className' => 'Purchasing.Email',
+					'foreignKey' => 'foreign_key',
+					'conditions' => "model = 'Supplier'",
+					'dependent' => true
+				)
+				
+			)
+		),false);
 
 		$this->contain($model);
 	}

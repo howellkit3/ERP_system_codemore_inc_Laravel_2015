@@ -1,6 +1,4 @@
-<?php $this->Html->addCrumb('Request List', array('controller' => 'requests', 'action' => 'request_list')); ?>
-<?php $this->Html->addCrumb('View', array('controller' => 'requests', 'action' => 'view',$requestId)); ?>
-<?php $this->Html->addCrumb('Create Order', array('controller' => 'requests', 'action' => 'create_order',$requestId)); ?>
+<?php $this->Html->addCrumb('Edit', array('controller' => 'purchase_orders', 'action' => 'edit',$purchaseOrderId)); ?>
 
 <?php  echo $this->Html->script('Purchasing.create_order_selector');?>
 
@@ -17,10 +15,10 @@
 					
                     
 					<h1 class="pull-left">
-						Create Purchase Order
+						Edit Purchase Order
 					</h1>
 					<?php 
-						 echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'requests', 'action' => 'view',$requestId),array('class' =>'btn btn-primary pull-right','escape' => false));
+						 echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'purchase_orders', 'action' => 'view',$purchaseOrderId),array('class' =>'btn btn-primary pull-right','escape' => false));
 					?>
 				</header>
 
@@ -244,7 +242,7 @@
 				                           	<button type="submit" class="btn btn-primary">Submit</button>
 				                           	&emsp;
 				                           	<?php 
-												 echo $this->Html->link(' Cancel ', array('controller' => 'requests', 'action' => 'view',$requestId),array('class' =>'btn btn-default','escape' => false));
+												 echo $this->Html->link(' Cancel ', array('controller' => 'requests', 'action' => 'view',$purchaseOrderId),array('class' =>'btn btn-default','escape' => false));
 											?>
 										</div>
 									</div>

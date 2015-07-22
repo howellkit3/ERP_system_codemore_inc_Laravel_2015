@@ -674,3 +674,11 @@ ALTER TABLE `purchase_orders` ADD `payment_term` INT(11)  NULL  DEFAULT NULL  AF
 #NOTE: SELECT KOUFU DELIVERY DATABASE ----
 /** howell kit added this 07/22/2015  */
 ALTER TABLE `deliveries` ADD `company_id` INT(11)  NULL  AFTER `clients_order_id`;
+
+#NOTE: SELECT KOUFU PURCHASING DATABASE ----
+/** bien added this 07/22/2015  */
+ALTER TABLE `purchase_orders` ADD `status` INT(11)  NULL  DEFAULT NULL  AFTER `modified`;
+ALTER TABLE `purchase_orders` ADD `version` INT(11)  NULL  DEFAULT NULL  AFTER `status`;
+ALTER TABLE `purchase_orders` MODIFY COLUMN `contact_id` INT(11) DEFAULT NULL AFTER `version`;
+ALTER TABLE `purchase_orders` MODIFY COLUMN `contact_person_id` INT(11) DEFAULT NULL AFTER `contact_id`;
+

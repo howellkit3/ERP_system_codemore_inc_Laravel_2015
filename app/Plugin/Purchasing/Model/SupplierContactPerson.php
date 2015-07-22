@@ -102,8 +102,6 @@ class SupplierContactPerson extends AppModel {
 			
 			return $this->id;
 		}
-
-
 		
 	}
 

@@ -17,9 +17,18 @@
 
         }
 
-        echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i> Approved', array('controller' => 'requests', 'action' => 'approved',$requestId),array('class' =>'btn btn-primary pull-right','escape' => false));
+        if ($requestData['Request']['status_id'] == 0) {
 
-        echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit', array('controller' => 'requests', 'action' => 'edit',$requestId),array('class' =>'btn btn-primary pull-right','escape' => false));
+            echo $this->Html->link('<i class="fa fa-gift fa-lg"></i> Purchase Order', array('controller' => 'requests', 'action' => 'create_order',$requestId),array('class' =>'btn btn-primary pull-right disabled','escape' => false));
+
+        }
+
+        if ($requestData['Request']['status_id'] == 8) {
+
+            echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i> Approved', array('controller' => 'requests', 'action' => 'approved',$requestId),array('class' =>'btn btn-primary pull-right','escape' => false));
+
+            echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit', array('controller' => 'requests', 'action' => 'edit',$requestId),array('class' =>'btn btn-primary pull-right','escape' => false));
+        }
 
         echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print', array('controller' => 'requests', 'action' => 'approved'),array('class' =>'btn btn-primary pull-right','escape' => false));
     ?>
@@ -97,8 +106,8 @@
                         </thead>
                         
                         <tr>
-                            <td class="text-center"></td>
-                            <td class="text-center"></td>
+                            <td class="text-center"><?php echo ucfirst($preparedData['User']['first_name'])?> <?php echo ucfirst($preparedData['User']['last_name'])?></td>
+                            <td class="text-center">Shou Yi Yu</td>
                             <td class="text-center"></td>
                         </tr>
                         

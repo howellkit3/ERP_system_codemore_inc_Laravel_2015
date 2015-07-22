@@ -80,62 +80,12 @@ class RequestsController extends PurchasingAppController {
 
 		$this->loadModel('Purchasing.Request');
 
-		$this->loadModel('Purchasing.PurchasingItem');
-
 		$this->loadModel('StatusFieldHolder');
-
-		$this->loadModel('GeneralItem');
-
-		$this->loadModel('Substrate');
-
-		$this->loadModel('CorrugatedPaper');
-
-		$this->loadModel('CompoundSubstrate');
 
 		$this->loadModel('Purchasing.PurchasingType');
 
-		$itemGroupData = $this->PurchasingItem->find('all');
-
-		$this->Request->bind(array('PurchasingItem'));
-
 		$requestData = $this->Request->find('all', array('order' => array('Request.created' => 'DESC')));
 		
-		foreach ($requestData as $key => $value) {
-			
-			foreach ($value['PurchasingItem'] as $key1 => $valueGroup) {
-
-				if($valueGroup['model'] == 'GeneralItem'){
-
-		 			$itemData = $this->GeneralItem->find('list',array('fields' => array('id', 'name')));
-
-		 			$requestData[$key]['PurchasingItem'][$key1]['name'] = $itemData[$valueGroup['foreign_key']];
-		 		}
-
-		 		if($valueGroup['model'] == 'CorrugatedPaper'){
-
-		 			$itemData = $this->CorrugatedPaper->find('list',array('fields' => array('id', 'name')));
-
-		 			$requestData[$key]['PurchasingItem'][$key1]['name'] = $itemData[$valueGroup['foreign_key']];
-		 		}
-
-		 		if($valueGroup['model'] == 'Substrate'){
-
-		 			$itemData = $this->Substrate->find('list',array('fields' => array('id', 'name')));
-
-		 			$requestData[$key]['PurchasingItem'][$key1]['name'] = $itemData[$valueGroup['foreign_key']];
-		 		}
-
-		 		if($valueGroup['model'] == 'CompoundSubstrate'){
-
-		 			$itemData = $this->CompoundSubstrate->find('list',array('fields' => array('id', 'name')));
-		 			
-		 			$requestData[$key]['PurchasingItem'][$key1]['name'] = $itemData[$valueGroup['foreign_key']];
-		 		}
-		 		
-			}
-
-	    } 
-	    
 		$statusData = $this->StatusFieldHolder->find('list', array('fields' => array('id', 'status'),
 															'order' => array('StatusFieldHolder.status' => 'ASC')
 															));
@@ -143,7 +93,7 @@ class RequestsController extends PurchasingAppController {
 															'order' => array('PurchasingType.id' => 'ASC')
 															));
 
-		$this->set(compact('requestData','statusData', 'itemGroupData', 'itemData','type'));
+		$this->set(compact('requestData','statusData','type'));
 		
 	}
 
@@ -315,8 +265,14 @@ class RequestsController extends PurchasingAppController {
 	 		}
 
 	    } 
+
+	    $this->loadModel('User');
+
+	    $preparedData = $this->User->find('first', array(
+														'conditions' => array('User.id' => $requestData['Request']['prepared_by']),
+														));
 	    //pr($requestPurchasingItem);exit();
-    	$this->set(compact('requestId','requestData','requestPurchasingItem','unitData'));
+    	$this->set(compact('requestId','requestData','requestPurchasingItem','unitData','preparedData'));
     }
 
     public function edit($requestId = null){
@@ -456,15 +412,21 @@ class RequestsController extends PurchasingAppController {
 
     	$this->loadModel('Purchasing.PurchaseOrder');
 
-    	if (!empty($this->request->data)) {
+    	$this->loadModel('Purchasing.Request');
 
+    	if (!empty($this->request->data)) {
+    		
     		$this->PurchaseOrder->savePurchaseOrder($this->request->data,$userData['User']['id']);
+
+    		$this->Request->id = $this->request->data['PurchaseOrder']['request_id'];
+
+    		$this->Request->saveField('status_id',0);
 
     		$this->Session->setFlash(__('Purchase Order complete.'));
 
 	        $this->redirect( array(
-	                 'controller' => 'requests', 
-	                 'action' => 'purchase_order_list'
+	                 'controller' => 'purchase_orders', 
+	                 'action' => 'index'
 
 	        ));
 
@@ -472,17 +434,38 @@ class RequestsController extends PurchasingAppController {
 
     }
 
-    public function purchase_order_list(){
+    public function find_supplier_number($supplierId){
 
-    	$this->loadModel('Purchasing.PurchaseOrder');
+    	$this->layout = false;
 
-    	$supplierData = $this->Supplier->find('list', array(
-														'fields' => array('Supplier.id', 'Supplier.name'),
-														));
+    	$this->loadModel('Purchasing.Contact');
 
-		$purchaseOrderData = $this->PurchaseOrder->find('all',array('order' => 'PurchaseOrder.id DESC'));
+    	$this->loadModel('Purchasing.SupplierContactPerson');
 
-		$this->set(compact('purchaseOrderData','supplierData'));
+		$contactNumber = $this->Contact->find('all', array(
+										'conditions' => array(
+										'Contact.foreign_key' => $supplierId,
+										'Contact.model' => 'Supplier',
+										), 
+										'fields' => array(
+											'id', 'number')
+										));
+
+		$contactPerson = $this->SupplierContactPerson->find('all', array(
+										'conditions' => array(
+										'SupplierContactPerson.supplier_id' => $supplierId,
+										), 
+										'fields' => array(
+											'id', 'firstname','lastname')
+										));
+
+		$data = array();
+		$data['contact'] = $contactNumber;
+		$data['contactperson'] = $contactPerson;
+
+		echo json_encode($data);
+
+		$this->autoRender = false;
 
     }
 

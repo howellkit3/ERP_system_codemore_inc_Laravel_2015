@@ -19,7 +19,7 @@ class Contact extends AppModel {
 		$this->bindModel(array(
 			'belongsTo' => array(
 				'Supplier' => array(
-					'className' => 'Purchasing.Supplier',
+					'className' => 'Supplier',
 					'foreignKey' => 'foreign_key',
 					'dependent' => true
 				),
