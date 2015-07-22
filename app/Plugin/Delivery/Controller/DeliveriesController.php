@@ -99,6 +99,8 @@ class DeliveriesController extends DeliveryAppController {
                                                                         )
                                                                     ));
 
+       // pr($scheduleInfo);exit;
+
         $DRdata = $this->Delivery->find('first', array(
                     'conditions' => array(
                       'Delivery.dr_uuid' => $this->request->data['Delivery']['dr_uuid'])
@@ -126,6 +128,7 @@ class DeliveriesController extends DeliveryAppController {
         $this->request->data['DeliveryDetail']['modified_by']  = $userData['User']['id'];
         $this->request->data['DeliveryDetail']['delivery_uuid']  = $this->request->data['Delivery']['dr_uuid'];
         $this->request->data['DeliveryDetail']['remaining_quantity'] = ($this->request->data['ClientOrderDeliverySchedule']['quantity']) - ($this->request->data['DeliveryDetail']['quantity']);
+        $this->request->data['Delivery']['company_id']  = $scheduleInfo['ClientOrder']['company_id'];
 
         $this->Delivery->create();
 
@@ -296,6 +299,8 @@ class DeliveriesController extends DeliveryAppController {
                       ));  
             }
 
+
+            $this->request->data['Delivery']['company_id'] = $deliveryData['Delivery']['company_id']; 
             $this->request->data['DeliveryDetail']['delivery_uuid'] =  $this->request->data['Delivery']['dr_uuid']; 
             $this->request->data['DeliveryDetail']['created_by'] =  $userData['User']['id'];    
             $this->request->data['Delivery']['status'] =  '1';   
@@ -1063,7 +1068,7 @@ class DeliveriesController extends DeliveryAppController {
          
     }
 
-     public function gate_pass($deliveryScheduleId = null, $quotationId = null,$clientsOrderUuid = null){
+     public function gate_pass($deliveryScheduleId = null, $quotationId = null,$clientsOrderUuid = null, $companyId){
 
         $this->loadModel('Truck');
 
@@ -1071,8 +1076,21 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->loadModel('Driver');
 
-        $dr_nos = $this->Delivery->find('all',array('conditions' => array('Delivery.schedule_uuid' => $clientsOrderUuid )));
+        $this->loadModel('Sales.ClientOrderDeliverySchedule');
+
+        $this->loadModel('Sales.ClientOrder');
+
+        $ClientDeliveryUUIDList = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid', 'client_order_id')));
+
+        $ClientDeliveryList = $this->ClientOrder->find('list',array('fields' => array('id', 'company_id')));
+
+        // pr($ClientDeliveryList[$ClientDeliveryUUIDList[$clientsOrderUuid]]); exit;
+
+        $dr_nos = $this->Delivery->find('all',array('conditions' => array('Delivery.company_id' => $companyId )));
         
+        //$companyId = $dr_nos['Delivery']['id'];
+        //pr($dr_nos); exit;
+
         $truckList = $this->Truck->find('list',array('fields' => array('id', 'truck_no'),'order' => 'truck_no ASC'));
        
         foreach ($truckList as $key => $value) {

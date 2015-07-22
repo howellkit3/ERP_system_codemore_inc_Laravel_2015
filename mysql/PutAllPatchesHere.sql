@@ -671,3 +671,6 @@ VALUES
 ALTER TABLE `purchase_orders` ADD `delivery_date` DATETIME  NULL  AFTER `modified`;
 ALTER TABLE `purchase_orders` ADD `payment_term` INT(11)  NULL  DEFAULT NULL  AFTER `modified`;
 
+#NOTE: SELECT KOUFU DELIVERY DATABASE ----
+/** howell kit added this 07/22/2015  */
+ALTER TABLE `deliveries` ADD `company_id` INT(11)  NULL  AFTER `clients_order_id`;

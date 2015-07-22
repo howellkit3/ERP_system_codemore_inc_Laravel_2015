@@ -294,7 +294,7 @@ $totalremaining = 0;
                     &nbsp; 
                     <?php 
 
-                        echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Create Gate Pass', array('controller' => 'deliveries', 'action' => 'gate_pass',$deliveryScheduleId,$quotationId,$clientsOrderUuid),array('class' =>' btn btn-primary ','escape' => false,'title'=>'Gate Pass'));
+                        echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Create Gate Pass', array('controller' => 'deliveries', 'action' => 'gate_pass',$deliveryScheduleId,$quotationId,$clientsOrderUuid,$deliveryDataList['Delivery']['company_id']),array('class' =>' btn btn-primary ','escape' => false,'title'=>'Gate Pass'));
 
                     ?>
                     </div>
