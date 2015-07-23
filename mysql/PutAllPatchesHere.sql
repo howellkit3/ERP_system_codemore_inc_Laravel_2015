@@ -525,7 +525,7 @@ VALUES
 
 #NOTE: SELECT KOUFU Re ----
 /** aldrin added this 07/14/2015  */
-#NOTE: SELECT KOUFU PURCHASING DATABASE ----
+#NOTE: SELECT KOUFU HR DATABASE ----
 CREATE TABLE IF NOT EXISTS `employees` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `first_name` varchar(255) NOT NULL,
@@ -675,6 +675,8 @@ ALTER TABLE `purchase_orders` ADD `payment_term` INT(11)  NULL  DEFAULT NULL  AF
 /** howell kit added this 07/22/2015  */
 
 ALTER TABLE `deliveries` ADD `company_id` INT(11)  NULL  AFTER `clients_order_id`;
+
+#NOTE: SELECT KOUFU SYSTEM DATABASE ----
 
 ALTER TABLE `koufu_system`.`gate_passes`  CHANGE `foreign_key` `ref_uuid` INT(11) NULL;
 ALTER TABLE `koufu_system`.`gate_passes` DROP COLUMN `name`;

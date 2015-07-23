@@ -17,25 +17,22 @@
      foreach ($productList as $key => $productnamelist) {
          if(count($productList) < 5){
                 $objTpl->setActiveSheetIndex(0)
-                            ->setCellValueByColumnAndRow('1', $ctr + 7 , ucwords($clientData['Product']['name']))
-                            ->setCellValue('F'.$ctrQuantity, $drData['DeliveryDetail']['quantity'])
-                            ->setCellValue('I'.$ctrQuantity, $units[$clientData['QuotationItemDetail']['quantity_unit_id']]);
+                            ->setCellValueByColumnAndRow('1', $ctr + 7 , ucwords($productList[$key]))
+                            ->setCellValue('F'.$ctrQuantity, $productQuantity[$key])
+                            ->setCellValue('J8', $remarks)
+                            ->setCellValue('I'.$ctrQuantity, $units[$productUnit[$key]]);
                             
-
               $ctr++;
               $ctrQuantity++;
             
-
             }else{
 
                 $objTpl->setActiveSheetIndex(0)
                             ->setCellValueByColumnAndRow('1', 9 , count($productList) .' '. 'items')
-                            ->setCellValue('J9','pick up by '. $companyList[$drData['Delivery']['company_id']])
-                             ->setCellValue('C12', ucwords(strtoupper($truckList[$truck])))
-                            ->setCellValue('C13', ucwords($driverList[$driver]));;
+                            ->setCellValue('J9','pick up by '. $companyList[$drData['Delivery']['company_id']]);
+                          
             }
         }
-
                            
         $counter =  14;  
         foreach ($assistData as $key => $helperlist) {
@@ -47,6 +44,8 @@
         }
 
         $objTpl->setActiveSheetIndex(0)
+                                ->setCellValue('C12', ucwords(strtoupper($truckList[$truck])))
+                                ->setCellValue('C13', ucwords($driverList[$driver]))
                                 ->setCellValue('B18',ucwords($userData['User']['first_name']) . ' '. ucwords($userData['User']['last_name']))
                                 ->setCellValue('F18', ucwords($userFnameList[$approver]) . ' ' .ucwords($userLnameList[$approver]));
       

@@ -55,10 +55,22 @@
                                                             'disabled' => false,
                                                             'label' => false,
                                                             'value' => 'Deliveries'));
-                                                    ?>
+                                                    
+
+                                                    $keyholder = $key ?>
+
                                                 </div>
                                             </div>
                                         </div>
+                                    <?php } ?>
+
+                                    <?php if($keyholder >= 4){?>
+                                    <br>
+                                    <div class="form-group form-height">
+                                            <label class="col-lg-2 control-label"> </label>
+                                            <label for="checkbox-<?php echo $key ?>"> <I><span style="color:red">*</span>Gatepass details will be summarized once item number is greater than 4. </I> </label>
+                                    </div>
+
                                     <?php } ?>
 
                                     <?php 
