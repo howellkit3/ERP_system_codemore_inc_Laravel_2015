@@ -27,12 +27,13 @@
                         <div class="main-box-body clearfix">
                             <div class="main-box-body clearfix">
                                 <div class="form-horizontal">
+                                    <?php if(!empty($dr_nos)){ ?>
                                     <div class="form-group form-height">
                                         <label class="col-lg-2 control-label"><span style="color:red">*</span>Select DR No.</label>
                                         
                                     </div>
 
-                                    <?php foreach ($dr_nos as $key => $value) { ;?>
+                                     <?php foreach ($dr_nos as $key => $value) { ;?>
                                         <div class="form-group form-height">
                                             <label class="col-lg-2 control-label"> </label>
                                             <div class="col-lg-8">
@@ -71,7 +72,9 @@
                                             <label for="checkbox-<?php echo $key ?>"> <I><span style="color:red">*</span>Gatepass details will be summarized once item number is greater than 4. </I> </label>
                                     </div>
 
-                                    <?php } ?>
+                                    <?php } 
+
+                                    }?>
 
                                     <?php 
 
@@ -181,7 +184,7 @@
                                     <div class="form-group">
                                         <div class="col-lg-2"></div>
                                         <div class="col-lg-8">
-                                            <button type="submit" class="redirectMe btn btn-primary pull-left">Submit</button>&nbsp;
+                                            <button type="submit" class=" btn btn-primary pull-left">Submit</button>&nbsp;
                                             <?php 
                                                 echo $this->Html->link('Cancel', array('controller' => 'settings', 'action' => 'view'),array('class' =>'btn btn-default','escape' => false));
                                             ?>

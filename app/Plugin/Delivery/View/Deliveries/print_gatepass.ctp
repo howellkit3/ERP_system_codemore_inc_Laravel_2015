@@ -8,31 +8,45 @@
 
     $objTpl = PHPExcel_IOFactory::load("./img/gatepass1.xlsx");
  	
-        $objTpl->setActiveSheetIndex(0)
-                            //->setCellValueByColumnAndRow('1', 9, 'Howell Kit')
-                            ->setCellValue('J3', $gateData['GatePass']['id'])
-                            ->setCellValue('J6', (new \DateTime())->format('l, F d, Y '));
+        if(!empty($gateData['GatePass']['id'])){  
+            $objTpl->setActiveSheetIndex(0)
+                                ->setCellValue('J3', $gateData['GatePass']['id']);
+        }else{
+
+            $objTpl->setActiveSheetIndex(0)
+                                ->setCellValue('J3',rand ( 99 , 1000 ));
+
+
+        }
+
+        $objTpl->setActiveSheetIndex(0)                      
+                            ->setCellValue('J6', (new \DateTime())->format('l, F d, Y '))
+                            ->setCellValue('C12', ucwords(strtoupper($truckList[$truck])))
+                            ->setCellValue('C13', ucwords($driverList[$driver]))
+                            ->setCellValue('J8', $remarks);
 
        
      foreach ($productList as $key => $productnamelist) {
          if(count($productList) < 5){
                 $objTpl->setActiveSheetIndex(0)
-                            ->setCellValueByColumnAndRow('1', $ctr + 7 , ucwords($productList[$key]))
-                            ->setCellValue('F'.$ctrQuantity, $productQuantity[$key])
-                            ->setCellValue('J8', $remarks)
-                            ->setCellValue('I'.$ctrQuantity, $units[$productUnit[$key]]);
+                            ->setCellValueByColumnAndRow('1', $ctr + 7 , ucwords($clientData['Product']['name']))
+                            ->setCellValue('F'.$ctrQuantity, $drData['DeliveryDetail']['quantity'])
+                            ->setCellValue('I'.$ctrQuantity, $units[$clientData['QuotationItemDetail']['quantity_unit_id']]);
                             
+
               $ctr++;
               $ctrQuantity++;
             
+
             }else{
 
                 $objTpl->setActiveSheetIndex(0)
                             ->setCellValueByColumnAndRow('1', 9 , count($productList) .' '. 'items')
                             ->setCellValue('J9','pick up by '. $companyList[$drData['Delivery']['company_id']]);
-                          
+                             
             }
         }
+
                            
         $counter =  14;  
         foreach ($assistData as $key => $helperlist) {
@@ -44,8 +58,6 @@
         }
 
         $objTpl->setActiveSheetIndex(0)
-                                ->setCellValue('C12', ucwords(strtoupper($truckList[$truck])))
-                                ->setCellValue('C13', ucwords($driverList[$driver]))
                                 ->setCellValue('B18',ucwords($userData['User']['first_name']) . ' '. ucwords($userData['User']['last_name']))
                                 ->setCellValue('F18', ucwords($userFnameList[$approver]) . ' ' .ucwords($userLnameList[$approver]));
       

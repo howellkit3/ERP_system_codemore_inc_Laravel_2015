@@ -18,17 +18,20 @@ class GatePass extends AppModel {
 	public $actsAs = array('Containable');
 
     public function saveGatepass($gateData = null, $auth = null, $gatePassId = null){
-       
-        foreach ($gateData['GatePass'] as $key => $value) {
 
-            $this->create();
-            $gateData['GatePass'][$key] = $value;
-            $value['gatepass_truck_id'] = $gatePassId;
-            
-            $this->save($value);
-            
+        if(!empty($gateData['GatePass'])){
+       
+            foreach ($gateData['GatePass'] as $key => $value) {
+
+                $this->create();
+                $gateData['GatePass'][$key] = $value;
+                $value['gatepass_truck_id'] = $gatePassId;
+                
+                $this->save($value);
+                
+            }
         }
-        
+
     return $this->id;
 
     }
