@@ -388,11 +388,61 @@ class RequestsController extends PurchasingAppController {
 
     	$this->loadModel('Purchasing.PurchasingType');
 
+    	$this->loadModel('Purchasing.PurchasingItem');
+
+    	$this->loadModel('GeneralItem');
+
+		$this->loadModel('Substrate');
+
+		$this->loadModel('CorrugatedPaper');
+
+		$this->loadModel('CompoundSubstrate');
+
     	$requestData = $this->Request->find('first', array('conditions' => array('Request.id' => $requestId)));
 
+    	$requestPurchasingItem = $this->PurchasingItem->find('all', array('conditions' => array('PurchasingItem.request_uuid' => $requestData['Request']['uuid'])));
+
+    	foreach ($requestPurchasingItem as $key => $value) {
+			
+			if($value['PurchasingItem']['model'] == 'GeneralItem'){
+
+	 			$itemData = $this->GeneralItem->find('list',array('fields' => array('id', 'name')));
+
+	 			$requestPurchasingItem[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 		}
+
+	 		if($value['PurchasingItem']['model'] == 'CorrugatedPaper'){
+
+	 			$itemData = $this->CorrugatedPaper->find('list',array('fields' => array('id', 'name')));
+
+	 			$requestPurchasingItem[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 		}
+
+	 		if($value['PurchasingItem']['model'] == 'Substrate'){
+
+	 			$itemData = $this->Substrate->find('list',array('fields' => array('id', 'name')));
+
+	 			$requestPurchasingItem[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 		}
+
+	 		if($value['PurchasingItem']['model'] == 'CompoundSubstrate'){
+
+	 			$itemData = $this->CompoundSubstrate->find('list',array('fields' => array('id', 'name')));
+	 			
+	 			$requestPurchasingItem[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 		}
+
+	    } 
+    	
     	$supplierData = $this->Supplier->find('list', array(
 														'fields' => array('Supplier.id', 'Supplier.name'),
 														));
+
+    	$this->loadModel('Unit');
+
+		$unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
+															'order' => array('Unit.unit' => 'ASC')
+															));
 
     	$paymentTermData = $this->PaymentTermHolder->find('list', array(
 														'fields' => array('PaymentTermHolder.id', 'PaymentTermHolder.name'),
@@ -402,7 +452,7 @@ class RequestsController extends PurchasingAppController {
 															'order' => array('PurchasingType.id' => 'ASC')
 															));
 
-    	$this->set(compact('requestId','supplierData','paymentTermData','requestData','type'));
+    	$this->set(compact('requestId','supplierData','paymentTermData','requestData','type','unitData','requestPurchasingItem'));
 
     }
 
@@ -414,9 +464,13 @@ class RequestsController extends PurchasingAppController {
 
     	$this->loadModel('Purchasing.Request');
 
+    	$this->loadModel('Purchasing.PurchasingItem');
+
     	if (!empty($this->request->data)) {
     		
     		$this->PurchaseOrder->savePurchaseOrder($this->request->data,$userData['User']['id']);
+
+    		$this->PurchasingItem->savePurchasingItemPrice($this->request->data);
 
     		$this->Request->id = $this->request->data['PurchaseOrder']['request_id'];
 
