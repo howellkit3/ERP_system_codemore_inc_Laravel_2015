@@ -84,6 +84,7 @@ class Supplier extends AppModel {
 
 		$this->contain($model);
 	}
+
 	public function saveSupplier($supplierData = null, $auth = null){
 		
 		$this->create();

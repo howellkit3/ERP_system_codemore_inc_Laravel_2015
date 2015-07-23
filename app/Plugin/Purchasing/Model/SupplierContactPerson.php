@@ -76,6 +76,10 @@ class SupplierContactPerson extends AppModel {
 	
 	);
 
+	public $virtualFields = array(
+		'fullnameContact' => 'CONCAT(SupplierContactPerson.firstname," ", SupplierContactPerson.lastname)'
+	);
+
 	public function beforeSave($options = array())
 	{
 		$userId = AuthComponent::user('id'); 
