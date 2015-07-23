@@ -6,7 +6,7 @@ class PurchaseOrdersController extends PurchasingAppController {
 
 	public $uses = array('Purchasing.PurchaseOrder');
 
-	public $helpers = array('Purchasing.Country');
+	public $helpers = array('Accounting.PhpExcel');
 
 	public function index(){
 
@@ -113,12 +113,60 @@ class PurchaseOrdersController extends PurchasingAppController {
 
     	$this->loadModel('Purchasing.PurchasingType');
 
+    	$this->loadModel('Purchasing.PurchasingItem');
+
+    	$this->loadModel('Purchasing.Request');
+
+    	$this->loadModel('GeneralItem');
+
+		$this->loadModel('Substrate');
+
+		$this->loadModel('CorrugatedPaper');
+
+		$this->loadModel('CompoundSubstrate');
+
     	$this->PurchaseOrder->bind(array('Contact','SupplierContactPerson','Request','Supplier'));
 
     	$purchaseOrderData = $this->PurchaseOrder->find('first', array(
 														'conditions' => array('PurchaseOrder.id' => $purchaseOrderId),
 														));
-    	
+
+    	$requestData = $this->Request->find('first', array('conditions' => array('Request.id' => $purchaseOrderData['PurchaseOrder']['request_id'])));
+
+    	$requestPurchasingItem = $this->PurchasingItem->find('all', array('conditions' => array('PurchasingItem.request_uuid' => $requestData['Request']['uuid'])));
+
+    	foreach ($requestPurchasingItem as $key => $value) {
+			
+			if($value['PurchasingItem']['model'] == 'GeneralItem'){
+
+	 			$itemData = $this->GeneralItem->find('list',array('fields' => array('id', 'name')));
+
+	 			$requestPurchasingItem[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 		}
+
+	 		if($value['PurchasingItem']['model'] == 'CorrugatedPaper'){
+
+	 			$itemData = $this->CorrugatedPaper->find('list',array('fields' => array('id', 'name')));
+
+	 			$requestPurchasingItem[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 		}
+
+	 		if($value['PurchasingItem']['model'] == 'Substrate'){
+
+	 			$itemData = $this->Substrate->find('list',array('fields' => array('id', 'name')));
+
+	 			$requestPurchasingItem[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 		}
+
+	 		if($value['PurchasingItem']['model'] == 'CompoundSubstrate'){
+
+	 			$itemData = $this->CompoundSubstrate->find('list',array('fields' => array('id', 'name')));
+	 			
+	 			$requestPurchasingItem[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 		}
+
+	    } 
+
     	$contactData = $this->PurchaseOrder->Contact->find('list',array(
     									'conditions' => array(
     										'model' => 'Supplier',
@@ -151,7 +199,10 @@ class PurchaseOrdersController extends PurchasingAppController {
     	if (!empty($this->request->data)) {
 
     		$this->request->data['PurchaseOrder']['version'] = $this->request->data['PurchaseOrder']['version'] + 1 ;
+
     		$this->PurchaseOrder->savePurchaseOrder($this->request->data,$userData['User']['id']);
+
+    		$this->PurchasingItem->savePurchasingItemPrice($this->request->data);
 
     		$this->Session->setFlash(__('Purchase Order updated.'));
 
@@ -163,8 +214,36 @@ class PurchaseOrdersController extends PurchasingAppController {
 
     	}
 
+    	$this->loadModel('Unit');
+
+		$unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
+															'order' => array('Unit.unit' => 'ASC')
+															));
+
     	$this->request->data = $purchaseOrderData;
     	
-    	$this->set(compact('purchaseOrderId','supplierData','paymentTermData','purchaseOrderData','contactData','supplierContactPersonData','type'));
+    	$this->set(compact('unitData','purchaseOrderId','supplierData','paymentTermData','purchaseOrderData','contactData','supplierContactPersonData','type','requestPurchasingItem'));
+    }
+
+    public function approved($purchaseOrderId){
+
+    	$this->PurchaseOrder->id = $purchaseOrderId;
+
+    	$this->PurchaseOrder->saveField('status',1);
+
+    	$this->Session->setFlash(__('Purchase Order has been approved.'));
+
+        $this->redirect( array(
+                 'controller' => 'purchase_orders', 
+                 'action' => 'view',$purchaseOrderId
+
+        ));
+
+    }
+
+    public function print_purchase_order($purchaseOrderId){
+
+    	$output = $this->render('print_purchase_order');
+
     }
 }

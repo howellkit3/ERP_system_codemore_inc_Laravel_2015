@@ -716,3 +716,11 @@ ALTER TABLE `purchase_orders` ADD `version` INT(11)  NULL  DEFAULT NULL  AFTER `
 ALTER TABLE `purchase_orders` MODIFY COLUMN `contact_id` INT(11) DEFAULT NULL AFTER `version`;
 ALTER TABLE `purchase_orders` MODIFY COLUMN `contact_person_id` INT(11) DEFAULT NULL AFTER `contact_id`;
 
+#NOTE: SELECT KOUFU PURCHASING DATABASE ----
+/** bien added this 07/23/2015  */
+ALTER TABLE `purchasing_items` ADD `unit_price` DOUBLE  NULL  DEFAULT NULL  AFTER `quantity_unit_id`;
+ALTER TABLE `purchasing_items` ADD `unit_price_unit_id` INT(11)  NULL  DEFAULT NULL  AFTER `unit_price`;
+
+
+
+

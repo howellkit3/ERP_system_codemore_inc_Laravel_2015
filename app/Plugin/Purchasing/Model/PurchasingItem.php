@@ -48,4 +48,19 @@ class PurchasingItem extends AppModel {
 		return true;
 	}
 
+	public function savePurchasingItemPrice($priceData = null)
+	{
+	
+		foreach ($priceData['PurchasingItem'] as $key => $priceDataValue)
+		{
+			$this->create();
+			
+			$this->save($priceDataValue);
+		}
+
+		return true;
+	}
+
+	
+
 }

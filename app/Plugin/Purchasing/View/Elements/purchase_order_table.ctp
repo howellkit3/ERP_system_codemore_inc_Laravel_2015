@@ -18,10 +18,14 @@
                 <?php echo ucfirst($supplierData[$purchaseOrderDataList['PurchaseOrder']['supplier_id']]) ?>
             </td>
 
-            <td class="">
+            <td class="text-center">
                 <?php 
                     if($purchaseOrderDataList['PurchaseOrder']['status'] == 8){ 
                         echo "<span class='label label-default'>Waiting</span>";
+                    }
+
+                    if($purchaseOrderDataList['PurchaseOrder']['status'] == 1){ 
+                        echo "<span class='label label-success'>Approved</span>";
                     }
                 ?>
             </td>
