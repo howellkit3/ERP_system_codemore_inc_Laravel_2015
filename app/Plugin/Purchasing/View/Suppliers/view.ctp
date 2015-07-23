@@ -92,7 +92,7 @@
 											<div class="story-content remove-pad">
 												<header class="story-header">
 													<div class="story-author">
-														<a data-toggle="modal" href="#myModal" class="btn btn-primary mrg-b-lg pull-right"><i class="fa fa-plus-circle fa-lg"></i> Add Address</a>
+														<a data-toggle="modal" href="#myModal" class="btn btn-primary mrg-b-lg pull-right"><i class="fa fa-plus-circle fa-lg"></i> Add Address</a><br>
 														<table class="table table-striped table-hover">
 									                        <thead>
 									                            <tr>
@@ -101,7 +101,6 @@
 									                                <th><a href="#"><span>State Province</span></a></th>
 									                                <th><a href="#"><span>Zip Code</span></a></th>
 									                                <th><a href="#"><span>Country</span></a></th>
-									                                <th><a href="#"><span>Created</span></a></th>
 									                            </tr>
 									                        </thead>
 									                        <?php
@@ -129,11 +128,11 @@
 											                         			</td>
 											                         			<td><?php echo $this->Country->countryList(ucfirst($contactAddress['country'])); ?>
 											                         			</td>
-											                         			<td>
+											                         			<!-- <td>
 											                         				<i class="fa fa-clock-o">
 											                         				<?php echo date('M d, Y', strtotime($contactAddress['created']));
 											                         				?>
-											                         			</td>
+											                         			</td> -->
 											                         		</tr>
 											                         </tbody>
 									                        <?php }?>
@@ -153,7 +152,7 @@
 								<div class="tab-pane fade" id="tab-activity">
 									
 									<div class="table-responsive">
-										<a data-toggle="modal" href="#myModalContact" class="btn btn-primary mrg-b-lg pull-right"><i class="fa fa-plus-circle fa-lg"></i> Add Number</a>
+										<a data-toggle="modal" href="#myModalContact" class="btn btn-primary mrg-b-lg pull-right"><i class="fa fa-plus-circle fa-lg"></i> Add Number</a><br>
 										<table class="table table-striped table-hover">
 					                        <thead>
 					                            <tr>
@@ -185,7 +184,7 @@
 								</div>
 								
 								<div class="tab-pane clearfix fade" id="tab-friends">
-									<a data-toggle="modal" href="#myModalContactPerson" class="btn btn-primary mrg-b-lg pull-right"><i class="fa fa-plus-circle fa-lg"></i> Add Contact Person</a>
+									<a data-toggle="modal" href="#myModalContactPerson" class="btn btn-primary mrg-b-lg pull-right"><i class="fa fa-plus-circle fa-lg"></i> Add Contact Person</a><br>
 									<table class="table table-striped table-hover">
 				                        <thead>
 				                            <tr>
@@ -224,7 +223,7 @@
 								
 								<div class="tab-pane fade" id="tab-chat">
 									<div class="table-responsive">
-										<a data-toggle="modal" href="#myModalEmail" class="btn btn-primary mrg-b-lg pull-right"><i class="fa fa-plus-circle fa-lg"></i> Add Email</a>
+										<a data-toggle="modal" href="#myModalEmail" class="btn btn-primary mrg-b-lg pull-right"><i class="fa fa-plus-circle fa-lg"></i> Add Email</a><br>
 										<table class="table table-striped table-hover">
 					                        <thead>
 					                            <tr>
