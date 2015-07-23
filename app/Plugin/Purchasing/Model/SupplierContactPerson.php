@@ -99,15 +99,11 @@ class SupplierContactPerson extends AppModel {
 				$contactPersonValue[$key]['supplier_id'] = $supplier_id;
 				$contactPersonValue[$key]['created_by'] = $auth;
 				$contactPersonValue[$key]['modified_by'] = $auth;	
-
-			
-				
+						
 				$this->save($contactPersonValue);
 				
 			}
 
-
-			
 			return $this->id;
 		}
 		
