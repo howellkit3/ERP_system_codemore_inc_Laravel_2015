@@ -108,7 +108,63 @@ class PurchaseOrdersController extends PurchasingAppController {
     }
 
     public function edit($purchaseOrderId){
+
+    	$this->loadModel('Sales.PaymentTermHolder');
+
+    	$this->loadModel('Purchasing.PurchasingType');
+
+    	$this->PurchaseOrder->bind(array('Contact','SupplierContactPerson','Request','Supplier'));
+
+    	$purchaseOrderData = $this->PurchaseOrder->find('first', array(
+														'conditions' => array('PurchaseOrder.id' => $purchaseOrderId),
+														));
     	
-    	$this->set(compact('purchaseOrderId'));
+    	$contactData = $this->PurchaseOrder->Contact->find('list',array(
+    									'conditions' => array(
+    										'model' => 'Supplier',
+    										'foreign_key' => $purchaseOrderData['PurchaseOrder']['supplier_id']
+    										),
+    									'fields' => array('id','number')
+    									));
+
+    	$supplierContactPersonData = $this->PurchaseOrder->SupplierContactPerson->find('list',array(
+    									'conditions' => array(
+    										'supplier_id' => $purchaseOrderData['PurchaseOrder']['supplier_id']
+    										),
+    									'fields' => array('id','fullnameContact')
+    									));
+
+    	$type = $this->PurchasingType->find('list', array('fields' => array('id', 'name'),
+															'order' => array('PurchasingType.id' => 'ASC')
+															));
+    	
+    	//set to cache in first load
+		$paymentTermData = Cache::read('paymentTerms');
+		
+		if (!$paymentTermData) {
+            $paymentTermData = $this->PaymentTermHolder->getList(null,array('id','name'));
+            Cache::write('paymentTerms', $paymentTermData);
+        }
+
+        $userData = $this->Session->read('Auth');
+
+    	if (!empty($this->request->data)) {
+
+    		$this->request->data['PurchaseOrder']['version'] = $this->request->data['PurchaseOrder']['version'] + 1 ;
+    		$this->PurchaseOrder->savePurchaseOrder($this->request->data,$userData['User']['id']);
+
+    		$this->Session->setFlash(__('Purchase Order updated.'));
+
+	        $this->redirect( array(
+	                 'controller' => 'purchase_orders', 
+	                 'action' => 'view',$purchaseOrderId
+
+	        ));
+
+    	}
+
+    	$this->request->data = $purchaseOrderData;
+    	
+    	$this->set(compact('purchaseOrderId','supplierData','paymentTermData','purchaseOrderData','contactData','supplierContactPersonData','type'));
     }
 }

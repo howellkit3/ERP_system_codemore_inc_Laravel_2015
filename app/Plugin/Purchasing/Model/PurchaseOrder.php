@@ -35,6 +35,11 @@ class PurchaseOrder extends AppModel {
 					'foreignKey' =>  'contact_person_id',
 					//'conditions' => array('PurchasingItem.request_uuid = request_uuid')
 				),
+				'Supplier' => array(
+					'className' => 'Supplier',
+					'foreignKey' =>  'supplier_id',
+					//'conditions' => array('PurchasingItem.request_uuid = request_uuid')
+				),
 			)
 			
 		));
@@ -43,7 +48,7 @@ class PurchaseOrder extends AppModel {
 	}
 
 	public function savePurchaseOrder($purchaseOrderData = null, $auth = null){
-
+		
 		$month = date("m"); 
 
 		$year = date("y");
@@ -60,11 +65,17 @@ class PurchaseOrder extends AppModel {
 
 		$this->create();
 
-		$purchaseOrderData[$this->name]['uuid'] = $code;
-		$purchaseOrderData[$this->name]['created_by'] = $auth;
+		if (empty($purchaseOrderData['PurchaseOrder']['id'])) {
+
+			$purchaseOrderData[$this->name]['uuid'] = $code;
+			$purchaseOrderData[$this->name]['created_by'] = $auth;
+			$purchaseOrderData[$this->name]['status'] = 8;
+			$purchaseOrderData[$this->name]['version'] = 1;
+		}
+		
 		$purchaseOrderData[$this->name]['modified_by'] = $auth;
-		$purchaseOrderData[$this->name]['status'] = 8;
-		$purchaseOrderData[$this->name]['version'] = 1;
+		
+		
 		$this->save($purchaseOrderData);
 
 		return $this->id;

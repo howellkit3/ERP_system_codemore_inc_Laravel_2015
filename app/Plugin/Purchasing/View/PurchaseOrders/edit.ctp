@@ -25,7 +25,7 @@
 			</div>
 		</div>
 
-		<?php echo $this->Form->create('PurchaseOrder',array('url'=>(array('controller' => 'requests','action' => 'purchase_order'))));?>
+		<?php echo $this->Form->create('PurchaseOrder',array('url'=>(array('controller' => 'purchase_orders','action' => 'edit',$purchaseOrderId))));?>
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="main-box">
@@ -43,6 +43,16 @@
 	                                                					'label' => false,
 	                                                					'placeholder' => 'Purchase Order Name'  
 	                                                					));
+	                                            echo $this->Form->input('PurchaseOrder.id',array( 
+	                                            						'class' => 'form-control', 
+	                                                					'label' => false,
+	                                                					'type' => 'hidden'  
+	                                                					));
+	                                            echo $this->Form->input('PurchaseOrder.version',array( 
+	                                            						'class' => 'form-control', 
+	                                                					'label' => false,
+	                                                					'type' => 'hidden'  
+	                                                					));
 	                                        ?>
 										</div>
 									</div>
@@ -51,12 +61,12 @@
 	                                	<label class="col-lg-2 control-label"><span style="color:red">*</span>Supplier</label>
 										<div class="col-lg-8">
 											
-				                            <?php echo $this->Form->input('PurchaseOrder.supplier_id', array(
-					                                'options' => array($supplierData),
-					                                'type' => 'select',
+				                            <?php echo $this->Form->input('PurchaseOrder.supplier_name', array(
+					                                'type' => 'text',
 					                                'label' => false,
-					                                'class' => 'form-control required supplier-select',
-					                                'empty' => '---Select Payment Term---'
+					                                'disabled' => true,
+					                                'class' => 'form-control required ',
+					                                'value' => $purchaseOrderData['Supplier']['name']
 					                                 )); 
 
 					                            ?>
@@ -68,11 +78,12 @@
 										<div class="col-lg-8">
 											
 				                            <?php echo $this->Form->input('PurchaseOrder.contact_id', array(
-					                                //'options' => array($supplierData),
+					                                'options' => array($contactData),
 					                                'type' => 'select',
 					                                'label' => false,
 					                                'class' => 'form-control required supplier-number',
-					                                'empty' => '---Contact Number---'
+					                                'empty' => '---Contact Number---',
+					                                'default' => $purchaseOrderData['PurchaseOrder']['contact_id'],
 					                                 )); 
 
 					                            ?>
@@ -84,13 +95,15 @@
 										<div class="col-lg-8">
 											
 				                            <?php echo $this->Form->input('PurchaseOrder.contact_person_id', array(
-					                                //'options' => array($supplierData),
+					                                'options' => array($supplierContactPersonData),
 					                                'type' => 'select',
 					                                'label' => false,
 					                                'class' => 'form-control required supplier-contact-person',
-					                                'empty' => '---Contact Person---'
+					                                'empty' => '---Contact Person---',
+					                                'default' => $purchaseOrderData['PurchaseOrder']['contact_person_id']
+					                                //'value' => $purchaseOrderData['SupplierContactPerson']['firstname'].' '.$purchaseOrderData['SupplierContactPerson']['lastname']
 					                                 )); 
-
+				                            	//pr($purchaseOrderData['PurchaseOrder']['contact_person_id']);die;
 					                            ?>
 										</div>
 									</div>
@@ -103,27 +116,23 @@
 	                                            						'class' => 'form-control  required', 
 	                                                					'label' => false,
 	                                                					'placeholder' => 'PUO Number',
-	                                                					'id' => 'generate-poNumber' 
+	                                                					'id' => 'generate-poNumber' ,
+	                                                					'disabled' => true
 	                                                					));
-	                                            echo $this->Form->input('PurchaseOrder.request_id',array( 
-	                                            						'class' => 'form-control  required', 
-	                                                					'label' => false,
-	                                                					'type' => 'hidden',
-	                                                					'value' => $requestId
-	                                                					));
+	                                           
 	                                        ?>
 										</div>
 									</div>
 
-									<div class="form-group">
+									<!-- <div class="form-group">
 	                                	<label class="col-lg-2 control-label"></label>
 										<div class="col-lg-8">
 											<div class="checkbox-nice">
-												<input id="checkbox-1" type="checkbox" class="generate-poNumber">
+												<input id="checkbox-1" type="checkbox" class="generate-poNumber" disabled checked>
 												<label for="checkbox-1"> Generate PUO Number </label>
 											</div>
 										</div>
-									</div>
+									</div> -->
 
 									<div class="form-group">
 	                                	<label class="col-lg-2 control-label">Payment Terms</label>
@@ -134,7 +143,8 @@
 					                                'type' => 'select',
 					                                'label' => false,
 					                                'class' => 'form-control required ',
-					                                'empty' => '---Select Payment Term---'
+					                                'empty' => '---Select Payment Term---',
+					                                'default' => $purchaseOrderData['PurchaseOrder']['payment_term']
 					                                 )); 
 
 					                            ?>
@@ -145,11 +155,13 @@
 	                                	<label class="col-lg-2 control-label">Delivery Date</label>
 										<div class="col-lg-8">
 											<?php 
-	                                            echo $this->Form->input('PurchaseOrder.delivery_date',array( 
+	                                            echo $this->Form->input('PurchaseOrder.delivery_date_field',array( 
 	                                            						'class' => 'form-control datepick required', 
 	                                                					'label' => false,
-	                                                					'placeholder' => 'Delivery Date'  
+	                                                					'placeholder' => 'Delivery Date',
+	                                                					'value' => date("Y-m-d", strtotime($purchaseOrderData['PurchaseOrder']['delivery_date']))  
 	                                                					));
+	                                            
 	                                        ?>
 										</div>
 									</div>
@@ -196,8 +208,8 @@
 					                                'type' => 'text',
 					                                'label' => false,
 					                                'class' => 'form-control required',
-					                                'readonly' => true,
-					                                'value' => 'RQO'.$requestData['Request']['uuid']
+					                                'disabled' => true,
+					                                'value' => 'RQO'.$purchaseOrderData['Request']['uuid']
 					                                 )); 
 
 					                            ?>
@@ -212,8 +224,8 @@
 					                                'type' => 'text',
 					                                'label' => false,
 					                                'class' => 'form-control required',
-					                                'readonly' => true,
-					                                'value' => $type[$requestData['Request']['pur_type_id']]
+					                                'disabled' => true,
+					                                'value' => $type[$purchaseOrderData['Request']['pur_type_id']]
 					                                 )); 
 
 					                            ?>
