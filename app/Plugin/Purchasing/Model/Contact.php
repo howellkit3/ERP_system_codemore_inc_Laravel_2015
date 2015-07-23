@@ -46,6 +46,7 @@ class Contact extends AppModel {
 				$contactValue['foreign_key'] = $contact_id;	
 				
 			}
+			//pr($contactValue);
 			$this->saveAll($contactValue);
 		}
 		

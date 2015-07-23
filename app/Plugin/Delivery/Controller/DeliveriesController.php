@@ -1039,6 +1039,8 @@ class DeliveriesController extends DeliveryAppController {
 
                 $truck = $this->request->data['GatePassTruck']['truck_id'];
 
+                $remarks = $this->request->data['GatePassTruck']['remarks'];
+
                 // pr($truckList[$truck]); pr($driverList[$driver]);exit;
 
                 $productList = array();
@@ -1066,9 +1068,11 @@ class DeliveriesController extends DeliveryAppController {
             
                 }
 
+                //pr($productUnit); pr($productList); exit;
+
                 $units = $this->Unit->find('list',array('fields' => array('id','unit')));
 
-                $this->set(compact('truckList','units','gateData','assistData','driverList','assList','drData','clientData','productList','productQuantity','productUnit', 'companyList', 'userData', 'approver', 'userList', 'userFnameList', 'userLnameList', 'driver', 'truck'));
+                $this->set(compact('truckList','units','gateData','assistData','driverList','assList','drData','clientData','productList','productQuantity','productUnit', 'companyList', 'userData', 'approver', 'userList', 'userFnameList', 'userLnameList', 'driver', 'truck', 'remarks'));
 
                 $this->render('print_gatepass');
 
