@@ -540,11 +540,37 @@ class RequestsController extends PurchasingAppController {
 
 		$preparedFullName = $preparedFName . ' ' . $preparedLName;
 
-		//pr($preparedFullName); exit;
+		$departmentRole = $userData['User']['role_id'];
+
+		if($departmentRole == 10){
+
+			$department = 'Warehouse';
+
+		} else if ($departmentRole == 2 || $departmentRole == 3){
+
+			$department = 'Sales';
+		} else if ($departmentRole == 4 ){
+
+			$department = 'Delivery';
+
+		} else if ($departmentRole == 5 ){
+
+			$department = 'Purchasing';
+
+		} else if ($departmentRole == 6 || $departmentRole == 7 || $departmentRole == 8 || $departmentRole == 9 ){
+
+			$department = 'Accounting';
+
+		} else{
+
+			$department = 'Management';
+		}
+
+		//pr($request); exit;
 
 		$view = new View(null, false);
 
-		$view->set(compact('request', 'preparedFullName'));
+		$view->set(compact('request', 'preparedFullName', 'department'));
         
 		$view->viewPath = 'Requests'.DS.'pdf';	
    
