@@ -724,6 +724,11 @@ ALTER TABLE `purchase_orders` MODIFY COLUMN `contact_person_id` INT(11) DEFAULT 
 ALTER TABLE `purchasing_items` ADD `unit_price` DOUBLE  NULL  DEFAULT NULL  AFTER `quantity_unit_id`;
 ALTER TABLE `purchasing_items` ADD `unit_price_unit_id` INT(11)  NULL  DEFAULT NULL  AFTER `unit_price`;
 
+#NOTE: SELECT KOUFU PURCHASING DATABASE ----
+/** bien added this 07/24/2015  */
+CREATE TABLE `request_items` (   `id` int(11) NOT NULL AUTO_INCREMENT,   `model` varchar(30) DEFAULT NULL,   `foreign_key` int(11) DEFAULT NULL,   `request_uuid` int(11) DEFAULT NULL,   `size1` varchar(80) DEFAULT NULL,   `size1_unit_id` int(11) DEFAULT NULL,   `size2` varchar(80) DEFAULT NULL,   `size2_unit_id` int(11) DEFAULT NULL,   `size3` varchar(80) DEFAULT NULL,   `size3_unit_id` int(11) DEFAULT NULL,   `quantity` int(11) DEFAULT NULL,   `quantity_unit_id` int(11) DEFAULT NULL,   `unit_price` double DEFAULT NULL,   `unit_price_unit_id` int(11) DEFAULT NULL,   PRIMARY KEY (`id`) ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
 
 
 
