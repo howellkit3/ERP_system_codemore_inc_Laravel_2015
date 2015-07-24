@@ -1,6 +1,7 @@
 <?php
 App::uses('AppController', 'Controller');
 App::uses('SessionComponent', 'Controller/Component');
+App::import('Vendor', 'DOMPDF', true, array(), 'dompdf'.DS.'dompdf_config.inc.php', false);
 
 class PurchaseOrdersController extends PurchasingAppController {
 
@@ -198,6 +199,8 @@ class PurchaseOrdersController extends PurchasingAppController {
 
     	if (!empty($this->request->data)) {
 
+    		// pr($this->request->data);exit();
+    		
     		$this->request->data['PurchaseOrder']['version'] = $this->request->data['PurchaseOrder']['version'] + 1 ;
 
     		$this->PurchaseOrder->savePurchaseOrder($this->request->data,$userData['User']['id']);
@@ -243,7 +246,119 @@ class PurchaseOrdersController extends PurchasingAppController {
 
     public function print_purchase_order($purchaseOrderId){
 
-    	$output = $this->render('print_purchase_order');
+    	$this->loadModel('Supplier');
+
+		$this->loadModel('Purchasing.Request');
+
+		$this->loadModel('Purchasing.PurchasingItem');
+
+		$this->loadModel('GeneralItem');
+
+		$this->loadModel('Substrate');
+
+		$this->loadModel('CorrugatedPaper');
+
+		$this->loadModel('CompoundSubstrate');
+
+		$this->loadModel('Unit');
+
+		$this->loadModel('Sales.PaymentTermHolder');
+
+		$unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
+															'order' => array('Unit.unit' => 'ASC')
+															));
+		//set to cache in first load
+		$paymentTermData = Cache::read('paymentTerms');
+		
+		if (!$paymentTermData) {
+            $paymentTermData = $this->PaymentTermHolder->getList(null,array('id','name'));
+            Cache::write('paymentTerms', $paymentTermData);
+        }
+		
+    	$supplierData = $this->Supplier->find('list', array(
+														'fields' => array('Supplier.id', 'Supplier.name'),
+														));
+
+        $this->PurchaseOrder->bind(array('Contact','SupplierContactPerson'));
+
+		$purchaseOrderData = $this->PurchaseOrder->find('first',array('conditions' => array('PurchaseOrder.id' => $purchaseOrderId),'order' => 'PurchaseOrder.id DESC'));
+
+		$requestData = $this->Request->find('first', array('conditions' => array('Request.id' => $purchaseOrderData['PurchaseOrder']['request_id'])));
+
+		$purchaseItemData = $this->PurchasingItem->find('all', array('conditions' => array('PurchasingItem.request_uuid' => $requestData['Request']['uuid'])));
+
+		foreach ($purchaseItemData as $key => $value) {
+			
+			if($value['PurchasingItem']['model'] == 'GeneralItem'){
+
+	 			$itemData = $this->GeneralItem->find('list',array('fields' => array('id', 'name')));
+
+	 			$purchaseItemData[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 		}
+
+	 		if($value['PurchasingItem']['model'] == 'CorrugatedPaper'){
+
+	 			$itemData = $this->CorrugatedPaper->find('list',array('fields' => array('id', 'name')));
+
+	 			$purchaseItemData[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 		}
+
+	 		if($value['PurchasingItem']['model'] == 'Substrate'){
+
+	 			$itemData = $this->Substrate->find('list',array('fields' => array('id', 'name')));
+
+	 			$purchaseItemData[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 		}
+
+	 		if($value['PurchasingItem']['model'] == 'CompoundSubstrate'){
+
+	 			$itemData = $this->CompoundSubstrate->find('list',array('fields' => array('id', 'name')));
+	 			
+	 			$purchaseItemData[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 		}
+
+	    } 
+
+	    $this->loadModel('User');
+
+	    $preparedData = $this->User->find('first', array(
+														'conditions' => array('User.id' => $purchaseOrderData['PurchaseOrder']['created_by']),
+														));
+
+    	$view = new View(null, false);
+
+		$view->set(compact('purchaseOrderData','supplierData','purchaseOrderId','unitData','paymentTermData','purchaseItemData','preparedData'));
+		
+		$view->viewPath = 'PurchaseOrder'.DS.'pdf';	
+   
+        $output = $view->render('print_purchase_order', false);
+   	
+        $dompdf = new DOMPDF();
+        $dompdf->set_paper("A4");
+        $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));
+        $dompdf->render();
+        $canvas = $dompdf->get_canvas();
+        $font = Font_Metrics::get_font("helvetica", "bold");
+        $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
+
+        $output = $dompdf->output();
+        $random = rand(0, 1000000) . '-' . time();
+        if (empty($filename)) {
+        	$filename = 'PurchaseOrder-'.$purchaseOrderId.'-order'.time();
+        }
+      	$filePath = 'view_pdf/'.strtolower(Inflector::slug( $filename , '-')).'.pdf';
+        $file_to_save = WWW_ROOT .DS. $filePath;
+        	
+        if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
+        		unlink($file_to_save);
+        }
+        
+        exit();
 
     }
+
+    public function facial(){
+
+    }
+
 }

@@ -18,7 +18,7 @@
             echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit', array('controller' => 'purchase_orders', 'action' => 'edit',$purchaseOrderid),array('class' =>'btn btn-primary pull-right','escape' => false));
         }
 
-        echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print', array('controller' => 'purchase_orders', 'action' => 'print_purchase_order',$purchaseOrderid),array('class' =>'btn btn-primary pull-right','escape' => false));
+        echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print', array('controller' => 'purchase_orders', 'action' => 'print_purchase_order',$purchaseOrderid),array('class' =>'btn btn-primary pull-right','escape' => false,'target' => '_blank'));
     ?>
     <br><br>
 </div>
@@ -50,7 +50,7 @@
                             
                         </div>
                         <div class="col-lg-3">&emsp;&emsp;&nbsp;&nbsp;&nbsp;
-                            PO No  : <u>RQO<?php echo $purchaseOrderData['PurchaseOrder']['po_number']; ?></u>
+                            PO No  : <u><?php echo $purchaseOrderData['PurchaseOrder']['po_number']; ?></u>
                         </div>
                     </div>
 
@@ -138,7 +138,7 @@
                             <th class="">Version : <?php echo $purchaseOrderData['PurchaseOrder']['version']; ?></th>
                             <th class="text-center">Total : PHP <?php echo number_format($total,2)?></th>
                         </thead>
-                    </thead>
+                    </table>
                    
                     Note : <?php echo ucfirst($purchaseOrderData['PurchaseOrder']['remarks']); ?><br><br>
                     

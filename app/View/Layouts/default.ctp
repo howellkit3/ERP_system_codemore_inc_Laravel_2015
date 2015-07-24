@@ -191,6 +191,10 @@
 	    	echo $this->Html->script('modernizr.custom');
 	    	echo $this->Html->script('classie');
 	    	echo $this->Html->script('sweet-alert.min');
+
+	    	//face detection
+	    	echo $this->Html->script('jquery.facedetection');
+	    	echo $this->Html->script('jquery.facedetection.min');
 	    	
 	        
 	    ?>

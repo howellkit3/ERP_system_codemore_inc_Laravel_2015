@@ -1,0 +1,64 @@
+body{
+  font-family: "Arial";
+  font-weight: normal;
+  max-width: 1150px;
+}
+
+.padd,td{
+  padding: 6px 0px;
+  font-size: 12px;
+  height: 1px;
+
+}
+.small-space{
+  padding: 10px;
+}
+
+.text-header{
+    padding-left: 96.7px;
+} 
+.layout{
+     /*padding-left: 30px;*/
+} 
+
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    /*color: inherit;
+    font-family: inherit;
+    font-weight: 500;*/
+    line-height: 1.0 !important;
+    margin: 0;
+}
+.main-pdf{
+  height: 100px;
+}
+.para{
+  padding-left: 60px;
+}
+.footer{
+  padding-left: 30px;
+ text-align: left;
+}
+
+.footer2{
+  text-align: right;
+
+  padding-left: 1px;
+}
+.tables-css{
+  position: fixed;
+  float: left;
+  text-align: right;
+  top: 950px;
+  width:100%;
+}
+.border-bot{
+	border-bottom: solid 1px #EAEAEA;
+}
+/*.doc{
+  position: fixed;
+  float: left;
+  text-align: right;
+  /*top: 710px;
+}*/
+
