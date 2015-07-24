@@ -36,3 +36,61 @@ div.value {
   margin-bottom: 20px;
   text-align: center;
 }
+
+.input.date select {
+  display: inline-block;
+  float: none;
+  width: auto !important;
+}
+#calendar {
+    margin: 0 auto;
+  }
+
+.bootstrap-timepicker td i{
+  display: inline-block important;
+}
+.bootstrap-timepicker td {
+  text-align: center important;;
+}
+
+.bootstrap-timepicker table {
+  margin: auto !important;
+}
+
+/* workshift */
+.breaktime_cont li {
+  clear: both;
+  display: inline-block;
+  list-style: outside none none;
+  width: 100%;
+}
+.modal-dialog.breaktime {
+  width: 800px;
+}
+
+.breaktime_cont .col-lg-3 > span {
+  font-weight: bold;
+  left: 10px;
+  position: relative;
+}
+
+.selected_breaks {
+  margin: 12px;
+}
+
+.append li {
+  background: #66c9f6 none repeat scroll 0 0;
+  color: #fff;
+  display: inline-block;
+  margin: 2px 3px;
+  padding: 5px 9px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.append li:hover {
+  background: #03a9f4 none repeat scroll 0 0;
+}
+.append li .icon:hover {
+  color: #000 !important;
+}

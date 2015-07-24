@@ -51,7 +51,7 @@
                                 </div>
                                 <div class="col-xs-2 col-md-2 2">
                                     <?php 
-                                        echo $this->Html->link('Cancel ', array('controller' => 'customer_sales', 'action' => 'index'),array('class' =>'btn btn-default','escape' => false));
+                                        echo $this->Html->link('Cancel ', array('controller' => 'employees', 'action' => 'index','plugin' => 'human_resource'),array('class' =>'btn btn-default','escape' => false));
                                     ?>
                                 </div>
                             </div>
