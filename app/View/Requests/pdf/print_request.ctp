@@ -47,12 +47,30 @@ th, td {
 				<td style="border:1px solid black; width:100px">Qty./Unit</td>
 				<td style="border:1px solid black; width:100px">Remarks</td>
 			</tr>
+
+			<?php $ctr = 8;
+
+			foreach($requestItem as $key=>$value) { ?>
+
 			<tr>
-				<td  align = "center" style="border:1px solid black; width:30px ">2</td>
-				<td style="border:1px solid black; width:257px;">Table cell 2</td>
-				<td style="border:1px solid black; width:100px">Table cell 2</td>
-				<td style="border:1px solid black; width:150px"><?php echo $request['Request']['remarks'] ?></td>
+				<td  align = "center" style="border:1px solid black; width:30px ">1</td>
+				<td style="border:1px solid black; width:257px;"><?php echo $requestRequestItem[$key]['RequestItem']['name']?></td>
+				<td style="border:1px solid black; width:100px"><?php echo $value['RequestItem']['quantity'] . ' ' . $unitData[$value['RequestItem']['quantity_unit_id']]?></td>
+				<?php if($ctr == 8){ ?>
+					<td style="border:1px solid black; width:150px"><?php echo $request['Request']['remarks'] ?></td>
+				<?php }else{ ?>
+					<td style="border:1px solid black; width:150px"></td>
+				<?php } ?>	
 			</tr>
+
+			<?php 
+
+			$ctr--;
+
+			}
+
+			for ($i = $ctr; $i >= 1; $i--) { ?>
+   			 
 
 			<tr>
 				<td  align = "center" style="border:1px solid black;  "></td>
@@ -61,47 +79,9 @@ th, td {
 				<td style="border:1px solid black; "></td>
 			</tr>
 
-			<tr>
-				<td  align = "center" style="border:1px solid black; "></td>
-				<td style="border:1px solid black; "></td>
-				<td style="border:1px solid black; "></td>
-				<td style="border:1px solid black; "></td>
-			</tr>
+			<?php } ?>
 
-			<tr>
-				<td  align = "center" style="border:1px solid black; "></td>
-				<td style="border:1px solid black; "></td>
-				<td style="border:1px solid black; "></td>
-				<td style="border:1px solid black; "></td>
-			</tr>
-
-			<tr>
-				<td  align = "center" style="border:1px solid black; "></td>
-				<td style="border:1px solid black;"></td>
-				<td style="border:1px solid black; "></td>
-				<td style="border:1px solid black; "></td>
-			</tr>
-
-			<tr>
-				<td  align = "center" style="border:1px solid black; "></td>
-				<td style="border:1px solid black; "></td>
-				<td style="border:1px solid black; "></td>
-				<td style="border:1px solid black; "></td>
-			</tr>
-
-			<tr>
-				<td  align = "center" style="border:1px solid black;  "></td>
-				<td style="border:1px solid black; "></td>
-				<td style="border:1px solid black; "></td>
-				<td style="border:1px solid black; "></td>
-			</tr>
-
-			<tr>
-				<td  align = "center" style="border:1px solid black;  "></td>
-				<td style="border:1px solid black; "></td>
-				<td style="border:1px solid black; "></td>
-				<td style="border:1px solid black; "></td>
-			</tr>
+			
 			
 			</table>
 
@@ -177,12 +157,29 @@ th, td {
 				<td style="border:1px solid black; width:100px">Qty./Unit</td>
 				<td style="border:1px solid black; width:100px">Remarks</td>
 			</tr>
+			<?php $ctr = 8;
+
+			foreach($requestItem as $key=>$value) { ?>
+
 			<tr>
-				<td  align = "center" style="border:1px solid black; width:30px ">2</td>
-				<td style="border:1px solid black; width:257px;">Table cell 2</td>
-				<td style="border:1px solid black; width:100px">Table cell 2</td>
-				<td style="border:1px solid black; width:150px"><?php echo $request['Request']['remarks'] ?></td>
+				<td  align = "center" style="border:1px solid black; width:30px ">1</td>
+				<td style="border:1px solid black; width:257px;"><?php echo $requestRequestItem[$key]['RequestItem']['name']?></td>
+				<td style="border:1px solid black; width:100px"><?php echo $value['RequestItem']['quantity'] . ' ' . $unitData[$value['RequestItem']['quantity_unit_id']]?></td>
+				<?php if($ctr == 8){ ?>
+					<td style="border:1px solid black; width:150px"><?php echo $request['Request']['remarks'] ?></td>
+				<?php }else{ ?>
+					<td style="border:1px solid black; width:150px"></td>
+				<?php } ?>	
 			</tr>
+
+			<?php 
+
+			$ctr--;
+
+			}
+
+			for ($i = $ctr; $i >= 1; $i--) { ?>
+   			 
 
 			<tr>
 				<td  align = "center" style="border:1px solid black;  "></td>
@@ -191,47 +188,7 @@ th, td {
 				<td style="border:1px solid black; "></td>
 			</tr>
 
-			<tr>
-				<td  align = "center" style="border:1px solid black; "></td>
-				<td style="border:1px solid black; "></td>
-				<td style="border:1px solid black; "></td>
-				<td style="border:1px solid black; "></td>
-			</tr>
-
-			<tr>
-				<td  align = "center" style="border:1px solid black; "></td>
-				<td style="border:1px solid black; "></td>
-				<td style="border:1px solid black; "></td>
-				<td style="border:1px solid black; "></td>
-			</tr>
-
-			<tr>
-				<td  align = "center" style="border:1px solid black; "></td>
-				<td style="border:1px solid black;"></td>
-				<td style="border:1px solid black; "></td>
-				<td style="border:1px solid black; "></td>
-			</tr>
-
-			<tr>
-				<td  align = "center" style="border:1px solid black; "></td>
-				<td style="border:1px solid black; "></td>
-				<td style="border:1px solid black; "></td>
-				<td style="border:1px solid black; "></td>
-			</tr>
-
-			<tr>
-				<td  align = "center" style="border:1px solid black;  "></td>
-				<td style="border:1px solid black; "></td>
-				<td style="border:1px solid black; "></td>
-				<td style="border:1px solid black; "></td>
-			</tr>
-
-			<tr>
-				<td  align = "center" style="border:1px solid black;  "></td>
-				<td style="border:1px solid black; "></td>
-				<td style="border:1px solid black; "></td>
-				<td style="border:1px solid black; "></td>
-			</tr>
+			<?php } ?>
 			
 			</table>
 
