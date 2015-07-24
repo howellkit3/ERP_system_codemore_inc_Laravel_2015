@@ -19,11 +19,12 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
               )); ?>
            
         </li>
+
         <li class="">
-          <?php $page =($active_page == 'schedules' && $active_action == 'index') ? 'active' : '' ?>
+          <?php $page =($active_page == 'schedules') ? 'active' : '' ?>
             <?php echo $this->Html->link("<span class='count'>Schedule</span>",
              array('controller' => 'schedules',
-              'action' => 'index'),
+              'action' => 'holiday'),
               array('escape' => false,
                 'class' => 'btn '.$page 
               )); ?>

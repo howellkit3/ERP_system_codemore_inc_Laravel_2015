@@ -730,5 +730,47 @@ CREATE TABLE `request_items` (   `id` int(11) NOT NULL AUTO_INCREMENT,   `model`
 
 
 
+#NOTE: SELECT KOUFU Human Resource DATABASE ----
+/** aldrin added this 07/23/2015  */
+  CREATE TABLE IF NOT EXISTS `breaktimes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `from` time NOT NULL,
+  `to` time NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+  CREATE TABLE IF NOT EXISTS `work_shifts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `from` time NOT NULL,
+  `to` time NOT NULL,
+  `is_default` int(11) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+#NOTE: SELECT KOUFU Human Resource DATABASE ----
+/** aldrin added this 07/24/2015  */
+
+  CREATE TABLE IF NOT EXISTS `work_shift_breaks` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `worshift_id` int(11) NOT NULL,
+  `break_id` int(11) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
 
 
