@@ -1,6 +1,7 @@
 <?php
 App::uses('AppController', 'Controller');
 App::uses('SessionComponent', 'Controller/Component');
+App::import('Vendor', 'DOMPDF', true, array(), 'dompdf'.DS.'dompdf_config.inc.php', false);
 
 class RequestsController extends PurchasingAppController {
 
@@ -522,5 +523,56 @@ class RequestsController extends PurchasingAppController {
 		$this->autoRender = false;
 
     }
+
+    public function print_request($requestId = null) {
+
+		$this->loadModel('Purchasing.Request');
+
+		$request = $this->Request->find('first', array(
+														'conditions' => array( 
+															'Request.id' => $requestId)
+													));
+		$userData = $this->Session->read('Auth');
+
+		$preparedFName = $userData['User']['first_name'];
+
+		$preparedLName = $userData['User']['last_name'];
+
+		$preparedFullName = $preparedFName . ' ' . $preparedLName;
+
+		//pr($preparedFullName); exit;
+
+		$view = new View(null, false);
+
+		$view->set(compact('request', 'preparedFullName'));
+        
+		$view->viewPath = 'Requests'.DS.'pdf';	
+   
+        $output = $view->render('print_request', false);
+   	
+        $dompdf = new DOMPDF();
+        $dompdf->set_paper("A5");
+        $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));
+        $dompdf->render();
+        $canvas = $dompdf->get_canvas();
+        $font = Font_Metrics::get_font("verdana", "bold");
+        $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
+
+        $output = $dompdf->output();
+        $random = rand(0, 1000000) . '-' . time();
+        if (empty($filename)) {
+        	$filename = 'product-'.$request['Request']['uuid'].'-request'.time();
+        }
+      	$filePath = 'view_pdf/'.strtolower(Inflector::slug( $filename , '-')).'.pdf';
+        $file_to_save = WWW_ROOT .DS. $filePath;
+        	
+        if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
+        		unlink($file_to_save);
+        }
+        
+        exit();
+        
+
+	}
 
 }
