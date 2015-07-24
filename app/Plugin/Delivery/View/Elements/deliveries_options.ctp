@@ -66,6 +66,20 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
            
         </li>
 
+        <li class="dropdown hidden-xs">
+            <?php $page =($active_page == 'deliveries' && $active_action == 'gate_pass') ? 'active tab' : '' ?>
+            <?php echo $this->Html->link("<span class='count'>Trucks Gatepass</span>", array(
+                                                                                   'controller' => 'deliveries', 
+                                                                                    'action' => 'gate_pass',
+                                                                                    ),
+                                                                            array(
+                                                                                   'escape' => false,
+                                                                                   'class' => 'btn '.$page.' '.$noPermissionSales 
+                                                                                   )); 
+            ?>
+           
+        </li>
+
 
    
     </ul>
