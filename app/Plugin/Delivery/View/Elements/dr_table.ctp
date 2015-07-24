@@ -65,11 +65,24 @@ $totalremaining = 0;
 
                         <td>
 
+                           <?php 
+
+                            echo $this->Html->link('<span class="fa-stack">
+                                                     <i class="fa fa-square fa-stack-2x"></i>
+                                                  <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;
+                                                      <span class ="post"><font size = "1px">View</font></span>
+                                                      </span> ', array('controller' => 'deliveries', 
+                                                                     'action' => 'view_dr',
+                                                     $deliveryDataList['DeliveryReceipt']['id']),
+                                                      array('class' =>' table-link small-link-icon '.$noPermissionSales,'escape' => false,'title'=>'Edit Information'
+                                                 )); 
+                                            ?>     
+
                             <?php  
-                                echo $this->Html->link('<span class="fa-stack">
-                                <i class="fa fa-square fa-stack-2x"></i>
-                                <i class="fa fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> RePrint </font></span>
-                                </span>', array('controller' => 'deliveries', 'action' => 'dr',$deliveryDataList['DeliveryReceipt']['dr_uuid'],$deliveryDataList['Delivery']['schedule_uuid']),array('class' =>' table-link','escape' => false,'title'=>'Print Delivery Receipt'));
+                                // echo $this->Html->link('<span class="fa-stack">
+                                // <i class="fa fa-square fa-stack-2x"></i>
+                                // <i class="fa fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> RePrint </font></span>
+                                // </span>', array('controller' => 'deliveries', 'action' => 'dr',$deliveryDataList['DeliveryReceipt']['dr_uuid'],$deliveryDataList['Delivery']['schedule_uuid']),array('class' =>' table-link','escape' => false,'title'=>'Print Delivery Receipt'));
 
                             ?>
                        </td>

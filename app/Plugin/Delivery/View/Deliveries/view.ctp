@@ -216,6 +216,7 @@ $totalremaining = 0;
                         
                             </table>
                         </div>
+                        <h9 class ='pull-right'>Date Created : <?php echo date('M d, Y', strtotime($scheduleInfo['ClientOrderDeliverySchedule']['modified'])); ?> &nbsp;&nbsp;  </h9>
                     </div>
                 </div>
             </div>   
@@ -293,7 +294,10 @@ $totalremaining = 0;
                     &nbsp; 
                     <?php 
 
-                        echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Create Gate Pass', array('controller' => 'deliveries', 'action' => 'gate_pass',$deliveryScheduleId,$quotationId,$clientsOrderUuid),array('class' =>' btn btn-primary ','escape' => false,'title'=>'Gate Pass'));
+                    if(!empty($deliveryDataList['Delivery']['company_id'])){
+
+                        echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Create Gate Pass', array('controller' => 'deliveries', 'action' => 'gate_pass',$deliveryScheduleId,$quotationId,$clientsOrderUuid,$deliveryDataList['Delivery']['company_id']),array('class' =>' btn btn-primary ','escape' => false,'title'=>'Gate Pass'));
+                    }
 
                     ?>
                     </div>
@@ -430,7 +434,7 @@ $totalremaining = 0;
 
                                             <a data-toggle="modal" href="#myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" class="table-link not-active"><i class="fa fa-lg "></i><span class="fa-stack">
                                             <i class="fa fa-square fa-stack-2x "></i>
-                                            <i class="fa  fa-mail-reply fa-stack-1x fa-inverse "></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Return </font></span></a>
+                                            <i class="fa  fa-mail-reply fa-stack-1x fa-inverse "></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Delivered </font></span></a>
 
                                             <?php 
                                                 // echo $this->Html->link('<span class="fa-stack gatePass">
@@ -455,11 +459,10 @@ $totalremaining = 0;
 
                                              <a data-toggle="modal" href="#myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" class="table-link"><i class="fa fa-lg "></i><span class="fa-stack">
                                             <i class="fa fa-square fa-stack-2x "></i>
-                                            <i class="fa  fa-mail-reply fa-stack-1x fa-inverse "></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Return </font></span></a> <?php
+                                            <i class="fa  fa-mail-reply fa-stack-1x fa-inverse "></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Update </font></span></a> <?php
 
                                         }else{
 
-                                          
 
                                             echo $this->Html->link('<span class="fa-stack">
                                                 <i class="fa fa-square fa-stack-2x"></i>
@@ -474,7 +477,7 @@ $totalremaining = 0;
 
                                         <a data-toggle="modal" href="#myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" class="table-link not-active"><i class="fa fa-lg "></i><span class="fa-stack">
                                             <i class="fa fa-square fa-stack-2x "></i>
-                                            <i class="fa  fa-mail-reply fa-stack-1x fa-inverse "></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Return </font></span></a> <?php 
+                                            <i class="fa  fa-mail-reply fa-stack-1x fa-inverse "></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Update </font></span></a> <?php 
 
                                        } 
 

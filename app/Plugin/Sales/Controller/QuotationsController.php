@@ -41,8 +41,6 @@ class QuotationsController extends SalesAppController {
 		$this->loadModel('User');
 
 		$userData = $this->User->read(null,$this->Session->read('Auth.User.id'));
-
-		// $this->RolesPermission->bind(array('Role', 'Permission'));
 		
 		$rolesPermissionData = $this->RolesPermission->find('list', array(
 														'fields' => array('RolesPermission.id', 'RolesPermission.permission_id'),

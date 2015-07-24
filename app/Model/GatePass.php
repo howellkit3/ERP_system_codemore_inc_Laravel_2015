@@ -17,25 +17,23 @@ class GatePass extends AppModel {
     
 	public $actsAs = array('Containable');
 
-    public function saveGatepass($gateData = null, $auth = null){
-       
-       // pr($gateData['GatePass_uuid']);
-        foreach ($gateData['GatePass_uuid'] as $key => $value['ref_uuid']) {
+    public function saveGatepass($gateData = null, $auth = null, $gatePassId = null){
 
-            $gateData['GatePass_uuid'][$key]['ref_uuid'] = $value;
-            // $gateData[$this->name][$key]['created_by'] = $auth;
-            // $gateData[$this->name][$key]['modified_by'] = $auth;
-           // pr($gateData['GatePass_uuid']);
-        }
-       // exit();
-        $this->create();
-
-        $gateData[$this->name]['created_by'] = $auth;
-        $gateData[$this->name]['modified_by'] = $auth;
+        if(!empty($gateData['GatePass'])){
        
-        if($this->save($gateData)){
-            return $this->id;
+            foreach ($gateData['GatePass'] as $key => $value) {
+
+                $this->create();
+                $gateData['GatePass'][$key] = $value;
+                $value['gatepass_truck_id'] = $gatePassId;
+                
+                $this->save($value);
+                
+            }
         }
+
+    return $this->id;
+
     }
 
 }

@@ -27,7 +27,7 @@
                                 <th>Request #</th>
                                 <th>Name</th>
                                 <th>Type</th>
-                                <th>Status</th>
+                                <th class="text-center">Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>

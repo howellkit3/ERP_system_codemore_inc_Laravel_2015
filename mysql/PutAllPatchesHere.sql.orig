@@ -378,7 +378,7 @@ CREATE TABLE `trucks` (
 insert  into `trucks`(`id`,`truck_no`,`created_by`,`modified_by`,`created`,`modified`) values (1,'nqx 893',1,1,'2015-07-03 11:22:55','2015-07-02 09:52:01'),(2,'VDL 679',1,1,'2015-07-03 11:22:55','2015-07-02 09:52:01'),(3,'ZLL 773',1,1,'2015-07-03 11:22:56','2015-07-02 09:52:01'),(4,'RJN 204',1,1,'2015-07-03 11:22:57','2015-07-02 09:52:01'),(5,'POT 216',1,1,'2015-07-03 11:22:57','2015-07-02 09:52:01'),(6,'XPB 842',1,1,'2015-07-03 11:22:58','2015-07-02 09:52:01'),(7,'NOO 901',1,1,'2015-07-03 11:22:58','2015-07-02 09:52:01'),(8,'AAA 9592',1,1,'2015-07-03 11:22:59','2015-07-02 09:52:01');
 
 
-#NOTE: SELECT KOUFU ACCOUNTING DATABASE ----
+#NOTE: SELECT KOUFU DELIVERY DATABASE ----
 /** howell kit added this 07/03/2015  */
 
 ALTER TABLE `koufu_delivery`.`transmittals` ADD COLUMN `type` VARCHAR(60) NULL AFTER `quantity`;
@@ -403,27 +403,25 @@ CREATE TABLE `suppliers` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
-#NOTE: SELECT KOUFU SYSTEM DATABASE ----
+#NOTE: SELECT KOUFU PURCHASING DATABASE ----
 /** bien added this 07/08/2015  */
 
 DROP TABLE IF EXISTS `contact_people`;
 
 CREATE TABLE `supplier_contact_people` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `supplier_id` int(11) DEFAULT NULL,
-  `prefix` varchar(45) DEFAULT NULL,
-  `firstname` varchar(50) DEFAULT NULL,
-  `middlename` varchar(50) DEFAULT NULL,
-  `lastname` varchar(50) DEFAULT NULL,
-  `position` varchar(120) DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
-  `modified_by` int(11) DEFAULT NULL,
-  `created` timestamp NULL DEFAULT NULL,
-  `modified` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id_idx` (`supplier_id`),
-  CONSTRAINT `id` FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `supplier_id` INT(11) DEFAULT NULL,
+  `prefix` VARCHAR(45) DEFAULT NULL,
+  `firstname` VARCHAR(50) DEFAULT NULL,
+  `middlename` VARCHAR(50) DEFAULT NULL,
+  `lastname` VARCHAR(50) DEFAULT NULL,
+  `position` VARCHAR(120) DEFAULT NULL,
+  `created_by` INT(11) DEFAULT NULL,
+  `modified_by` INT(11) DEFAULT NULL,
+  `created` TIMESTAMP NULL DEFAULT NULL,
+  `modified` TIMESTAMP NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 
 #NOTE: SELECT KOUFU SYSTEM DATABASE ----
@@ -437,17 +435,10 @@ insert  into `status_field_holders`(`id`,`status`,`created_by`,`modified_by`,`cr
 ALTER TABLE `koufu_delivery`.`delivery_details` DROP COLUMN `status`;
 ALTER TABLE `koufu_delivery`.`delivery_details` ADD COLUMN  `status` INT(11) NULL AFTER `delivery_type`;
 
-<<<<<<< HEAD
-#NOTE: SELECT KOUFU SYSTEM DATABASE ----
-/** bien added this 07/10/2015  */
-
-ALTER TABLE `koufu_system`.`gate_passes`     CHANGE `foreign_key` `ref_uuid` VARCHAR(250) NULL ,     CHANGE `modified` `modified` TIMESTAMP NOT NULL;
-ALTER TABLE `koufu_system`.`gate_pass_assistants`     CHANGE `gate_pass_id` `ref_uuid` VARCHAR(250) NULL ,     CHANGE `modified` `modified` TIMESTAMP NOT NULL;
-=======
 #NOTE: SELECT KOUFU PURCHASING DATABASE ----
-/** howellkit added this 07/10/2015  */
+/** howellkit added this 07/10/2015 -codemark for koufu- */  
 
-CREATE TABLE `request` (
+CREATE TABLE `requests` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `uuid` INT(11) DEFAULT NULL,
   `pur_type_id` INT(11) DEFAULT NULL,
@@ -460,7 +451,7 @@ CREATE TABLE `request` (
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
-CREATE TABLE `purchasing_item` (
+CREATE TABLE `purchasing_items` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `model` VARCHAR(30) DEFAULT NULL,
   `foreign_key` INT(11) DEFAULT NULL,
@@ -476,7 +467,7 @@ CREATE TABLE `purchasing_item` (
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
-CREATE TABLE `purchasing_type` (
+CREATE TABLE `purchasing_types` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(30) DEFAULT NULL,
   `description` TEXT,
@@ -487,4 +478,243 @@ CREATE TABLE `purchasing_type` (
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
->>>>>>> a650b5aec5bd73244927f3f391e0fb00c7077bd1
+#NOTE: SELECT KOUFU PURCHASING DATABASE ----
+/** bien added this 07/10/2015  */
+
+ALTER TABLE `koufu_system`.`gate_passes`  CHANGE `foreign_key` `ref_uuid` VARCHAR(250) NULL , CHANGE `modified` `modified` TIMESTAMP NOT NULL;
+ALTER TABLE `koufu_system`.`gate_pass_assistants`     CHANGE `gate_pass_id` `ref_uuid` VARCHAR(250) NULL ,     CHANGE `modified` `modified` TIMESTAMP NOT NULL;
+
+#NOTE: SELECT KOUFU PURCHASING DATABASE ----
+/** howellkit added this 07/10/2015  */
+
+ALTER TABLE `koufu_purchasing`.`requests`  ADD COLUMN  `name` VARCHAR(80) NULL AFTER `uuid`;
+
+#NOTE: SELECT KOUFU SYSTEM DATABASE ----
+/** howellkit added this 07/13/2015  */
+insert  into `status_field_holders`(`id`,`status`,`created_by`,`modified_by`,`created`,`modified`) values (8,'Waiting',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03');
+
+#NOTE: SELECT KOUFU SYSTEM DATABASE ----
+/** bien added this 07/15/2015  */
+INSERT INTO `roles` (`id`, `name`, `created_by`, `updated_by`, `created`, `modified`)
+VALUES
+  (1,'Super Admin',2,2,'2015-05-12 10:20:35','2015-05-12 11:26:22'),
+  (2,'CEO',2,2,'2015-05-12 10:21:48','2015-07-14 15:17:38'),
+  (3,'Sales Supervisor',2,2,'2015-05-12 10:22:01','2015-07-14 17:14:29'),
+  (4,'Warehouse Supervisor',2,2,'2015-05-12 10:22:22','2015-07-14 17:14:49'),
+  (5,'Delivery Staff',2,2,'2015-05-12 10:22:22','2015-07-15 09:00:33'),
+  (6,'Accounting Head',2,2,'2015-07-14 17:15:24','2015-07-14 17:15:24'),
+  (7,'Purchasing Supervisor',2,2,'2015-07-14 17:15:49','2015-07-14 17:15:49'),
+  (8,'Sales Staff',2,2,'2015-07-14 17:16:17','2015-07-14 17:16:17'),
+  (9,'Receivable Staff',2,2,'2015-07-14 17:17:06','2015-07-14 17:17:06'),
+  (10,'Payable Staff',2,2,'2015-07-14 17:17:22','2015-07-14 17:17:22'),
+  (11,'Accounting Staff',2,2,'2015-07-14 17:17:42','2015-07-14 17:17:42');
+
+INSERT INTO `roles_permissions` (`id`, `role_id`, `permission_id`)
+VALUES
+  (1,1,1),
+  (2,1,2),
+  (3,1,3),
+  (4,1,4),
+  (5,8,1),
+  (6,8,2),
+  (7,8,3),
+  (8,3,1),
+  (9,3,2),
+  (10,3,3),
+  (11,3,4);
+
+#NOTE: SELECT KOUFU Re ----
+/** aldrin added this 07/14/2015  */
+#NOTE: SELECT KOUFU PURCHASING DATABASE ----
+CREATE TABLE IF NOT EXISTS `employees` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(255) NOT NULL,
+  `middle_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `suffix` varchar(255) DEFAULT NULL,
+  `department_id` int(11) NOT NULL,
+  `position_id` int(11) NOT NULL,
+  `status` varchar(255) NOT NULL,
+  `gender` varchar(255) NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+CREATE TABLE IF NOT EXISTS `emails` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `model` varchar(45) DEFAULT NULL,
+  `foreign_key` int(11) DEFAULT NULL,
+  `type` int(11) DEFAULT NULL,
+  `email` varchar(80) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` timestamp NULL DEFAULT NULL,
+  `modified` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=60 ;
+
+
+#NOTE: SELECT KOUFU SYSTEM DATABASE ----
+/** howellkit added this 07/14/2015  */
+INSERT  INTO `roles`(`id`,`name`,`created_by`,`updated_by`,`created`,`modified`) VALUES (1,'C.E.O.',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(2,'Sales Supervisor',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(3,'Sales Staff',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(4,'Delivery Staff',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(5,'Purchasing Staff',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(6,'Accounting Head',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(7,'Payable Staff',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(8,'Receivable Staff',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(9,'Accounting  Staff',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03')
+,(10,'Warehouse Staff',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(11,'Human Resource Staff',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03');
+
+
+#NOTE: SELECT KOUFU SYSTEM DATABASE ----
+/** bien added this 07/15/2015  */
+INSERT INTO `roles` (`id`, `name`, `created_by`, `updated_by`, `created`, `modified`)
+VALUES
+  (1,'Super Admin',2,2,'2015-05-12 10:20:35','2015-05-12 11:26:22'),
+  (2,'CEO',2,2,'2015-05-12 10:21:48','2015-07-14 15:17:38'),
+  (3,'Sales Supervisor',2,2,'2015-05-12 10:22:01','2015-07-14 17:14:29'),
+  (4,'Warehouse Supervisor',2,2,'2015-05-12 10:22:22','2015-07-14 17:14:49'),
+  (5,'Delivery Staff',2,2,'2015-05-12 10:22:22','2015-07-15 09:00:33'),
+  (6,'Accounting Head',2,2,'2015-07-14 17:15:24','2015-07-14 17:15:24'),
+  (7,'Purchasing Supervisor',2,2,'2015-07-14 17:15:49','2015-07-14 17:15:49'),
+  (8,'Sales Staff',2,2,'2015-07-14 17:16:17','2015-07-14 17:16:17'),
+  (9,'Receivable Staff',2,2,'2015-07-14 17:17:06','2015-07-14 17:17:06'),
+  (10,'Payable Staff',2,2,'2015-07-14 17:17:22','2015-07-14 17:17:22'),
+  (11,'Accounting Staff',2,2,'2015-07-14 17:17:42','2015-07-14 17:17:42');
+
+INSERT INTO `roles_permissions` (`id`, `role_id`, `permission_id`)
+VALUES
+  (1,1,1),
+  (2,1,2),
+  (3,1,3),
+  (4,1,4),
+  (5,8,1),
+  (6,8,2),
+  (7,8,3),
+  (8,3,1),
+  (9,3,2),
+  (10,3,3),
+  (11,3,4);
+#NOTE: SELECT KOUFU Re ----
+/** aldrin added this 07/16/2015  */
+
+ALTER TABLE `employee_additional_informations`  ADD `languages` VARCHAR(255) NULL  AFTER `blood`;
+
+
+CREATE TABLE IF NOT EXISTS `toolings` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `tools_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `price` float NOT NULL,
+  `pay` varchar(255) NOT NULL,
+  `status` varchar(45) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+CREATE TABLE IF NOT EXISTS `tools` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `brand` varchar(255) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `status` varchar(45) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+#NOTE: SELECT KOUFU SYSTEM DATABASE ----
+/** howellkit added this 07/14/2015  */
+
+
+ALTER TABLE `dev_koufu_delivery`.`deliveries` ADD COLUMN `from` INT(11) NULL AFTER `dr_uuid`;
+ALTER TABLE `dev_koufu_purchasing`.`purchasing_items`  CHANGE `item_group_id` `request_uuid` INT(11) NULL;
+
+#NOTE: SELECT KOUFU PURCHASING DATABASE ----
+/** howellkit added this 07/20/2015  */
+
+INSERT INTO `purchasing_types` (`id`, `name`, `description`, `created`, `modified`, `created_by`, `modified_by`)
+VALUES
+  (1,'By Focus',' ','2015-05-12 10:20:35','2015-05-12 11:26:22',1,1),
+  (2,'Basic P.O.',' ','2015-05-12 10:20:35','2015-05-12 11:26:22',1,1),
+  (3,'Maintainances',' ','2015-05-12 10:20:35','2015-05-12 11:26:22',1,1),
+  (4,'Stock',' ','2015-05-12 10:20:35','2015-05-12 11:26:22',1,1),
+  (5,'Emergency',' ','2015-05-12 10:20:35','2015-05-12 11:26:22',1,1),
+  (6,'Stock',' ','2015-05-12 10:20:35','2015-05-12 11:26:22',1,1),
+  (7,'Other',' ','2015-05-12 10:20:35','2015-05-12 11:26:22',1,1);
+
+#NOTE: SELECT KOUFU PURCHASING DATABASE ----
+/** howellkit added this 07/20/2015  */
+
+  CREATE TABLE IF NOT EXISTS `purchase_orders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uuid` INT(11) DEFAULT NULL,
+  `supplier_id` int(11) DEFAULT NULL,
+  `po_number` VARCHAR(120) DEFAULT NULL,
+  `request_id` int(11) DEFAULT NULL,
+  `name` varchar(60) NOT NULL,
+  `remarks` varchar(60) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+#NOTE: SELECT KOUFU PURCHASING DATABASE ----
+/** bien added this 07/21/2015  */
+ALTER TABLE `purchase_orders` ADD `delivery_date` DATETIME  NULL  AFTER `modified`;
+ALTER TABLE `purchase_orders` ADD `payment_term` INT(11)  NULL  DEFAULT NULL  AFTER `modified`;
+
+#NOTE: SELECT KOUFU DELIVERY DATABASE ----
+/** howell kit added this 07/22/2015  */
+<<<<<<< HEAD
+ALTER TABLE `deliveries` ADD `company_id` INT(11)  NULL  AFTER `clients_order_id`;
+
+#NOTE: SELECT KOUFU PURCHASING DATABASE ----
+/** bien added this 07/22/2015  */
+ALTER TABLE `purchase_orders` ADD `status` INT(11)  NULL  DEFAULT NULL  AFTER `modified`;
+ALTER TABLE `purchase_orders` ADD `version` INT(11)  NULL  DEFAULT NULL  AFTER `status`;
+ALTER TABLE `purchase_orders` MODIFY COLUMN `contact_id` INT(11) DEFAULT NULL AFTER `version`;
+ALTER TABLE `purchase_orders` MODIFY COLUMN `contact_person_id` INT(11) DEFAULT NULL AFTER `contact_id`;
+
+=======
+
+ALTER TABLE `deliveries` ADD `company_id` INT(11)  NULL  AFTER `clients_order_id`;
+
+ALTER TABLE `koufu_system`.`gate_passes`  CHANGE `foreign_key` `ref_uuid` INT(11) NULL;
+ALTER TABLE `koufu_system`.`gate_passes` DROP COLUMN `name`;
+ALTER TABLE `koufu_system`.`gate_passes` DROP COLUMN `remarks`;
+ALTER TABLE `koufu_system`.`gate_passes` DROP COLUMN `driver_id`;
+ALTER TABLE `koufu_system`.`gate_passes` DROP COLUMN `truck_id`;
+ALTER TABLE `koufu_system`.`gate_passes` DROP COLUMN `created_by`;
+ALTER TABLE `koufu_system`.`gate_passes` DROP COLUMN `created`;
+ALTER TABLE `koufu_system`.`gate_passes` DROP COLUMN `modified`;
+ALTER TABLE `koufu_system`.`gate_passes` DROP COLUMN `modified_by`;
+
+ALTER TABLE `gate_passes` ADD `gatepass_truck_id` INT(11)  NULL  AFTER `ref_uuid`;
+
+CREATE TABLE IF NOT EXISTS `gate_pass_trucks` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `truck_id` int(11) DEFAULT NULL,
+  `driver_id` int(11) DEFAULT NULL,
+  `remarks` varchar(60) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+ALTER TABLE `koufu_system`.`gate_pass_assistants` DROP COLUMN `gate_pass_id`;
+ALTER TABLE `koufu_system`.`gate_pass_assistants` DROP COLUMN `created_by`;
+ALTER TABLE `koufu_system`.`gate_pass_assistants` DROP COLUMN `created`;
+ALTER TABLE `koufu_system`.`gate_pass_assistants` DROP COLUMN `modified`;
+ALTER TABLE `koufu_system`.`gate_pass_assistants` DROP COLUMN `modified_by`;
+ALTER TABLE `gate_pass_assistants` ADD `gatepass_truck_id` INT(11)  NULL  AFTER `helper_id`;
+>>>>>>> 50ae320e17fc8955b378858c41e2bcaa0314dcc6
