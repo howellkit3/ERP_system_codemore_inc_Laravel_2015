@@ -238,12 +238,12 @@
 
 									<?php foreach ($requestPurchasingItem as $key => $value) { $dataPlus = $key + 1;?>
 										<?php 
-						    				echo $this->Form->input('PurchasingItem.'.$key.'.id', array(
+						    				echo $this->Form->input('PurchasingItemIdHolder.'.$key.'.id', array(
 												'class' => 'form-control',
 						                        'label' => false,
 						                        'type' => 'hidden',
 						                        'placeholder' => 'Size',
-						                        'value' => $value['PurchasingItem']['id']));
+						                        'value' => !empty($value['PurchasingItem']['id']) ? $value['PurchasingItem']['id'] : ''));
 						                ?>
 										<section class="cloneMe">
 											<div class="main-box-body clearfix">
@@ -252,9 +252,9 @@
 														<label class="col-lg-2 control-label"><span style="color:red">*</span>Item</label>
 														<div class="col-lg-5">
 															
-											                <input type="text" class="form-control item_name required" name="data[PurchasingItem][<?php echo $key ?>][nameToShow]" value="<?php echo $value['PurchasingItem']['name'] ?>" readonly>
+											                <input type="text" class="form-control item_name required" name="data[PurchasingItem][<?php echo $key ?>][nameToShow]" value="<?php echo $value[$modelTable]['name'] ?>" readonly>
 
-											                <input type="hidden" class="form-control item_name required" name="data[PurchasingItem][<?php echo $key ?>][name]" value="<?php echo $value['PurchasingItem']['name'] ?>" readonly>
+											                <input type="hidden" class="form-control item_name required" name="data[PurchasingItem][<?php echo $key ?>][name]" value="<?php echo $value[$modelTable]['name'] ?>" readonly>
 
 											                <?php 
 
@@ -263,7 +263,7 @@
 											                        'label' => false,
 											                        'type' => 'hidden',
 											                        'placeholder' => 'Size',
-											                        'value' => $value['PurchasingItem']['request_uuid']));
+											                        'value' => $value[$modelTable]['request_uuid']));
 											                	
 											                    echo $this->Form->input('PurchasingItem.'.$key.'.foreign_key', 
 																				array( 
@@ -271,7 +271,7 @@
 																	'type' => 'hidden',
 											    					'label' => false,
 											    					'readonly' => 'readonly',
-											    					'value' => $value['PurchasingItem']['foreign_key']
+											    					'value' => $value[$modelTable]['foreign_key']
 											    					));
 											                ?>
 
@@ -282,7 +282,7 @@
 																	'type' => 'hidden',
 											    					'label' => false,
 											    					'readonly' => 'readonly',
-											    					'value' => $value['PurchasingItem']['model']
+											    					'value' => $value[$modelTable]['model']
 											    					));
 											                ?>
 
@@ -312,7 +312,7 @@
 											                        'label' => false,
 											                        'placeholder' => 'Size',
 											                        'disabled' => false,
-											                        'value' => $value['PurchasingItem']['size1']));
+											                        'value' => $value[$modelTable]['size1']));
 											                ?>
 														</div>
 
@@ -324,7 +324,7 @@
 											                        'class' => 'form-control required',
 											                        'empty' => '---Select Unit---',
 											                        'disabled' => false,
-											                        'value' => $value['PurchasingItem']['size1_unit_id']
+											                        'value' => $value[$modelTable]['size1_unit_id']
 											                         )); 
 																
 											                ?>
@@ -344,7 +344,7 @@
 											                        'label' => false,
 											                        'placeholder' => 'Size',
 											                        'disabled' => false,
-											                        'value' => $value['PurchasingItem']['size2']));
+											                        'value' => $value[$modelTable]['size2']));
 
 											                ?>
 														</div>
@@ -357,7 +357,7 @@
 											                        'class' => 'form-control required',
 											                        'empty' => '---Select Unit---',
 											                        'disabled' => false,
-											                        'default' => $value['PurchasingItem']['size2_unit_id']
+											                        'default' => $value[$modelTable]['size2_unit_id']
 											                         )); 
 
 											                ?>
@@ -376,7 +376,7 @@
 											                        'label' => false,
 											                        'placeholder' => 'Size',
 											                        'disabled' => false,
-											                        'value' => $value['PurchasingItem']['size3']));
+											                        'value' => $value[$modelTable]['size3']));
 
 											                ?>
 														</div>
@@ -389,7 +389,7 @@
 											                        'class' => 'form-control required',
 											                        'empty' => '---Select Unit---',
 											                        'disabled' => false,
-											                        'default' => $value['PurchasingItem']['size3_unit_id']
+											                        'default' => $value[$modelTable]['size3_unit_id']
 											                         )); 
 
 											                ?>
@@ -409,7 +409,7 @@
 											                        'label' => false,
 											                        'disabled' => false,
 											                        'placeholder' => 'Quantity',
-											                        'value' => $value['PurchasingItem']['quantity']));
+											                        'value' => $value[$modelTable]['quantity']));
 
 											                ?>
 														</div>
@@ -422,7 +422,7 @@
 											                        'disabled' => false,
 											                        'class' => 'form-control required',
 											                        'empty' => '---Select Unit---',
-											                        'default' => $value['PurchasingItem']['quantity_unit_id']
+											                        'default' => $value[$modelTable]['quantity_unit_id']
 											                         )); 
 
 											                ?>
@@ -439,7 +439,7 @@
 																	'type' => 'number',
 											                        'label' => false,
 											                        'placeholder' => 'Price',
-											                        'value' => $value['PurchasingItem']['unit_price']));
+											                        'value' => $value[$modelTable]['unit_price']));
 
 											                ?>
 														</div>
@@ -451,7 +451,7 @@
 											                        'label' => false,
 											                        'class' => 'form-control required',
 											                        'empty' => '---Select Unit---',
-											                        'default' => $value['PurchasingItem']['unit_price_unit_id']
+											                        'default' => $value[$modelTable]['unit_price_unit_id']
 											                         )); 
 
 											                ?>
