@@ -32,34 +32,34 @@ class RequestItem extends AppModel {
 		$this->contain($model);
 	}
 
-	// public function savePurchasingItem($requestData = null,$requestUuid = null)
-	// {
+	public function saveRequestItem($requestData = null,$requestUuid = null)
+	{
 	
-	// 	foreach ($requestData['PurchasingItem'] as $key => $requestValue)
-	// 	{
-	// 		$this->create();
+		foreach ($requestData['RequestItem'] as $key => $requestValue)
+		{
+			$this->create();
 
-	// 		$requestValue['request_uuid'] = $requestUuid;
+			$requestValue['request_uuid'] = $requestUuid;
 
-	// 		$this->save($requestValue);
-	// 	}
+			$this->save($requestValue);
+		}
 
 		
-	// 	return true;
-	// }
+		return true;
+	}
 
-	// public function savePurchasingItemPrice($priceData = null)
-	// {
+	public function saveRequestItemPrice($priceData = null)
+	{
 	
-	// 	foreach ($priceData['PurchasingItem'] as $key => $priceDataValue)
-	// 	{
-	// 		$this->create();
+		foreach ($priceData['RequestItem'] as $key => $priceDataValue)
+		{
+			$this->create();
 			
-	// 		$this->save($priceDataValue);
-	// 	}
+			$this->save($priceDataValue);
+		}
 
-	// 	return true;
-	// }
+		return true;
+	}
 
 	
 

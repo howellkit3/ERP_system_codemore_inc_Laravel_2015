@@ -36,7 +36,7 @@ class RequestsController extends PurchasingAppController {
 
 		$this->loadModel('Purchasing.Request');
 
-		$this->loadModel('Purchasing.PurchasingItem');
+		$this->loadModel('Purchasing.RequestItem');
 
 		$this->loadModel('Purchasing.PurchasingType');
 
@@ -56,11 +56,14 @@ class RequestsController extends PurchasingAppController {
 															'order' => array('GeneralItem.name' => 'ASC')
 															));
 
+
 	 	if ($this->request->is(array('post','put'))) {
+
+	 		//pr($this->request->data); exit;
 
 			$requestUuid = $this->Request->saveRequest($this->request->data['Request'],$userData['User']['id']);
 
-			$this->PurchasingItem->savePurchasingItem($this->request->data ,$requestUuid);
+			$this->RequestItem->saveRequestItem($this->request->data ,$requestUuid);
 		
 	 		$this->Session->setFlash(__('Request has been added.'));
 
