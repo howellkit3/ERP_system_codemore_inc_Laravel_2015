@@ -104,15 +104,15 @@
 
 									<section class="cloneMe">
 
-										<?php foreach ($requestPurchasingItem as $key => $value) { ?>
+										<?php foreach ($requestRequestItem as $key => $value) { ?>
 
 											<?php 
-							                    echo $this->Form->input('PurchasingItem.'.$key.'.id', 
+							                    echo $this->Form->input('RequestItem.'.$key.'.id', 
 																array( 
 													'class' => 'form-control required', 
 													'type' => 'hidden',
 							    					'label' => false,
-							    					'value' => $value['PurchasingItem']['id']
+							    					'value' => $value['RequestItem']['id']
 							    					));
 							                ?>
 
@@ -125,9 +125,9 @@
 
 															<?php $dataPlus = $key + 1; ?>
 
-											                <input type="text" class="form-control item_name required" name="data[PurchasingItem][<?php echo $key ?>][nameToShow]" value="<?php echo $value['PurchasingItem']['name'] ?>" readonly>
+											                <input type="text" class="form-control item_name required" name="data[PurchasingItem][<?php echo $key ?>][nameToShow]" value="<?php echo $value['RequestItem']['name'] ?>" readonly>
 
-											                <input type="hidden" class="form-control item_name required" name="data[PurchasingItem][<?php echo $key ?>][name]" value="<?php echo $value['PurchasingItem']['name'] ?>" readonly>
+											                <input type="hidden" class="form-control item_name required" name="data[PurchasingItem][<?php echo $key ?>][name]" value="<?php echo $value['RequestItem']['name'] ?>" readonly>
 
 											                <?php 
 											                    echo $this->Form->input('PurchasingItem.'.$key.'.foreign_key', 
@@ -136,18 +136,18 @@
 																	'type' => 'hidden',
 											    					'label' => false,
 											    					'readonly' => 'readonly',
-											    					'value' => $value['PurchasingItem']['foreign_key']
+											    					'value' => $value['RequestItem']['foreign_key']
 											    					));
 											                ?>
 
 											                <?php 
-											                    echo $this->Form->input('PurchasingItem.'.$key.'.model', 
+											                    echo $this->Form->input('RequestItem.'.$key.'.model', 
 																				array( 
 																	'class' => 'form-control item_model required ', 
 																	'type' => 'hidden',
 											    					'label' => false,
 											    					'readonly' => 'readonly',
-											    					'value' => $value['PurchasingItem']['model']
+											    					'value' => $value['RequestItem']['model']
 											    					));
 											                ?>
 
@@ -171,23 +171,23 @@
 														<label class="col-lg-2 control-label">Size</label>
 														<div class="col-lg-3">
 															<?php 
-											                    echo $this->Form->input('PurchasingItem.'.$key.'.size1', array(
+											                    echo $this->Form->input('RequestItem.'.$key.'.size1', array(
 																	'class' => 'form-control item_type',
 											                        'label' => false,
 											                        'placeholder' => 'Size',
-											                        'value' => $value['PurchasingItem']['size1']
+											                        'value' => $value['RequestItem']['size1']
 											                        ));
 											                ?>
 														</div>
 
 														<div class="col-lg-3">
 															<?php 
-																echo $this->Form->input('PurchasingItem.'.$key.'.size1_unit_id', array(
+																echo $this->Form->input('RequestItem.'.$key.'.size1_unit_id', array(
 											                        'options' => array($unitData),  
 											                        'label' => false,
 											                        'class' => 'form-control required',
 											                        'empty' => '---Select Unit---',
-											                        'default' => $value['PurchasingItem']['size1_unit_id']
+											                        'default' => $value['RequestItem']['size1_unit_id']
 											                         )); 
 											                ?>
 
@@ -201,11 +201,11 @@
 														<label class="col-lg-2 control-label"> </label>
 														<div class="col-lg-3">
 															<?php 
-																echo $this->Form->input('PurchasingItem.'.$key.'.size2', array(
+																echo $this->Form->input('RequestItem.'.$key.'.size2', array(
 																	'class' => 'form-control item_type',
 											                        'label' => false,
 											                        'placeholder' => 'Size',
-											                        'value' => $value['PurchasingItem']['size2']
+											                        'value' => $value['RequestItem']['size2']
 											                        ));
 
 											                ?>
@@ -213,12 +213,12 @@
 
 														<div class="col-lg-3">
 															<?php 
-																echo $this->Form->input('PurchasingItem.'.$key.'.size2_unit_id', array(
+																echo $this->Form->input('RequestItem.'.$key.'.size2_unit_id', array(
 											                        'options' => array($unitData),  
 											                        'label' => false,
 											                        'class' => 'form-control required',
 											                        'empty' => '---Select Unit---',
-											                        'default' => $value['PurchasingItem']['size2_unit_id']
+											                        'default' => $value['RequestItem']['size2_unit_id']
 											                         )); 
 
 											                ?>
@@ -232,11 +232,11 @@
 														<label class="col-lg-2 control-label"> </label>
 														<div class="col-lg-3">
 															<?php 
-																echo $this->Form->input('PurchasingItem.'.$key.'.size3', array(
+																echo $this->Form->input('RequestItem.'.$key.'.size3', array(
 																	'class' => 'form-control item_type',
 											                        'label' => false,
 											                        'placeholder' => 'Size',
-											                        'value' => $value['PurchasingItem']['size3']
+											                        'value' => $value['RequestItem']['size3']
 											                        ));
 
 											                ?>
@@ -244,12 +244,12 @@
 
 														<div class="col-lg-3">
 															<?php 
-																echo $this->Form->input('PurchasingItem.'.$key.'.size3_unit_id', array(
+																echo $this->Form->input('RequestItem.'.$key.'.size3_unit_id', array(
 											                        'options' => array($unitData),  
 											                        'label' => false,
 											                        'class' => 'form-control required',
 											                        'empty' => '---Select Unit---',
-											                        'default' => $value['PurchasingItem']['size3_unit_id']
+											                        'default' => $value['RequestItem']['size3_unit_id']
 											                         )); 
 
 											                ?>
@@ -263,25 +263,25 @@
 														<label class="col-lg-2 control-label"><span style="color:red">*</span>Quantity</label>
 														<div class="col-lg-3">
 															<?php 
-																echo $this->Form->input('PurchasingItem.'.$key.'.quantity', array(
+																echo $this->Form->input('RequestItem.'.$key.'.quantity', array(
 																	'class' => 'form-control item_type number required',
 																	'type' => 'number',
 											                        'label' => false,
 											                        'data' => 0,
 											                        'placeholder' => 'Quantity',
-											                        'value' => $value['PurchasingItem']['quantity']));
+											                        'value' => $value['RequestItem']['quantity']));
 
 											                ?>
 														</div>
 
 														<div class="col-lg-3">
 															<?php 
-																echo $this->Form->input('PurchasingItem.'.$key.'.quantity_unit_id', array(
+																echo $this->Form->input('RequestItem.'.$key.'.quantity_unit_id', array(
 											                        'options' => array($unitData),  
 											                        'label' => false,
 											                        'class' => 'form-control required',
 											                        'empty' => '---Select Unit---',
-											                        'default' => $value['PurchasingItem']['quantity_unit_id']
+											                        'default' => $value['RequestItem']['quantity_unit_id']
 											                         )); 
 
 											                ?>

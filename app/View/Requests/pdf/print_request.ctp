@@ -10,6 +10,7 @@ th, td {
 }
 
 
+
 </style>
 
 			
@@ -19,18 +20,18 @@ th, td {
 		<div class="main-box main-pdf"  >
 			<center>
 				
-					<h3 style = "margin-bottom:0px;">KOU FU PACKAGING CORP.</h3>
-					<label style = "margin-top:0px; font-size: 15px;">REQUEST PURCHASE ORDER SLIP</label>
+					<h4 style = "margin-bottom:0px;">KOU FU PACKAGING CORP.</h4>
+					<label style = "margin-top:0px; font-size: 13px;">REQUEST PURCHASE ORDER SLIP</label>
 				
 			</center>
-			<table style="border:2px solid black;border-collapse:collapse;">
+			<table style="border:2px solid black;border-collapse:collapse; table-layout: fixed;">
 				<thead>
 			
 			
 				<tr >
-					<td align="center" style="border:1px solid black width:350px;">DEPT: Purchasing Department </td>
-					<td align="right" style="width:200px;">DATE: <?php echo (new \DateTime())->format('d/m/Y') ?></td>
-					<td align="center" style="width:150px align="right";" class ="pull-right"><>NO: RQ<?php echo $request['Request']['uuid'] ?></td>
+					<td align="center" style="border:1px  white-space: normal; width:150px;">DEPT: <?php echo $department ?> Dept. </td>
+					<td align="right" style="width:175px;">DATE: <?php echo (new \DateTime())->format('d/m/Y') ?></td>
+					<td align="center" style="width:200px align="right";" class ="pull-right"><>NO: RQ<?php echo $request['Request']['uuid'] ?></td>
 					<td></td>
 					
 				</tr>
@@ -48,58 +49,58 @@ th, td {
 			</tr>
 			<tr>
 				<td  align = "center" style="border:1px solid black; width:30px ">2</td>
-				<td style="border:1px solid black; width:307px;">Table cell 2</td>
+				<td style="border:1px solid black; width:257px;">Table cell 2</td>
 				<td style="border:1px solid black; width:100px">Table cell 2</td>
-				<td style="border:1px solid black; width:100px">asd</td>
+				<td style="border:1px solid black; width:150px"><?php echo $request['Request']['remarks'] ?></td>
 			</tr>
 
 			<tr>
-				<td  align = "center" style="border:1px solid black; width:30px "></td>
-				<td style="border:1px solid black; width:307px;"></td>
-				<td style="border:1px solid black; width:100px"></td>
-				<td style="border:1px solid black; width:100px"></td>
+				<td  align = "center" style="border:1px solid black;  "></td>
+				<td style="border:1px solid black; "></td>
+				<td style="border:1px solid black; "></td>
+				<td style="border:1px solid black; "></td>
 			</tr>
 
 			<tr>
-				<td  align = "center" style="border:1px solid black; width:30px "></td>
-				<td style="border:1px solid black; width:307px;"></td>
-				<td style="border:1px solid black; width:100px"></td>
-				<td style="border:1px solid black; width:100px"></td>
+				<td  align = "center" style="border:1px solid black; "></td>
+				<td style="border:1px solid black; "></td>
+				<td style="border:1px solid black; "></td>
+				<td style="border:1px solid black; "></td>
 			</tr>
 
 			<tr>
-				<td  align = "center" style="border:1px solid black; width:30px "></td>
-				<td style="border:1px solid black; width:307px;"></td>
-				<td style="border:1px solid black; width:100px"></td>
-				<td style="border:1px solid black; width:100px"></td>
+				<td  align = "center" style="border:1px solid black; "></td>
+				<td style="border:1px solid black; "></td>
+				<td style="border:1px solid black; "></td>
+				<td style="border:1px solid black; "></td>
 			</tr>
 
 			<tr>
-				<td  align = "center" style="border:1px solid black; width:30px "></td>
-				<td style="border:1px solid black; width:307px;"></td>
-				<td style="border:1px solid black; width:100px"></td>
-				<td style="border:1px solid black; width:100px"></td>
+				<td  align = "center" style="border:1px solid black; "></td>
+				<td style="border:1px solid black;"></td>
+				<td style="border:1px solid black; "></td>
+				<td style="border:1px solid black; "></td>
 			</tr>
 
 			<tr>
-				<td  align = "center" style="border:1px solid black; width:30px "></td>
-				<td style="border:1px solid black; width:307px;"></td>
-				<td style="border:1px solid black; width:100px"></td>
-				<td style="border:1px solid black; width:100px"></td>
+				<td  align = "center" style="border:1px solid black; "></td>
+				<td style="border:1px solid black; "></td>
+				<td style="border:1px solid black; "></td>
+				<td style="border:1px solid black; "></td>
 			</tr>
 
 			<tr>
-				<td  align = "center" style="border:1px solid black; width:30px "></td>
-				<td style="border:1px solid black; width:307px;"></td>
-				<td style="border:1px solid black; width:100px"></td>
-				<td style="border:1px solid black; width:100px"></td>
+				<td  align = "center" style="border:1px solid black;  "></td>
+				<td style="border:1px solid black; "></td>
+				<td style="border:1px solid black; "></td>
+				<td style="border:1px solid black; "></td>
 			</tr>
 
 			<tr>
-				<td  align = "center" style="border:1px solid black; width:30px "></td>
-				<td style="border:1px solid black; width:307px;"></td>
-				<td style="border:1px solid black; width:100px"></td>
-				<td style="border:1px solid black; width:100px"></td>
+				<td  align = "center" style="border:1px solid black;  "></td>
+				<td style="border:1px solid black; "></td>
+				<td style="border:1px solid black; "></td>
+				<td style="border:1px solid black; "></td>
 			</tr>
 			
 			</table>
@@ -107,29 +108,30 @@ th, td {
 			<table style=" margin-top:0px; border:1px solid black;border-collapse:collapse;">
 			
 			<tr>
-				<td style=" width:25px "></td>
+				<td style=" width:20px "></td>
 				
 			</tr>
 
 			<tr>
-				<td  align = "left" style="width:541px ">For RJN-204</td>
+				<td  align = "left" style="width:541px "><?php echo $request['Request']['remarks'] ?></td>
 			
 			</tr>
 			
 			</table>
 
-			<table style=" margin-top:0px; border:2px solid black;border-collapse:collapse;">
+			<table style=" margin-top:0px; border:2px solid black;border-collapse: separate;
+        border-spacing: 1px ">
 			
 			<tr>
 				<td align = "left" style=" width:180px; vertical-align: text-top; height:30px; ">Prepared by:</td>
 				<td align = "left" style=" width:181px; vertical-align: text-top;">Approved by:</td>
-				<td align = "left" style=" width:180px; vertical-align: text-top;">Purchased by:</td>
+				<td align = "left" style=" width:173px; vertical-align: text-top;">Purchased by:</td>
 			</tr>
 
 			<tr>
-				<td align = "center" style=" width:30px "><?php echo $preparedFullName ?></td>
-				<td align = "center" style=" width:307px;"></td>
-				<td align = "center" style=" width:100px"></td>
+				<td align = "left" style=" width:30px; padding-right:3px; "><?php echo ucwords($preparedFullName ) ?></td>
+				<td align = "left" >Shou Yi Yu</td>
+				<td align = "left" ></td>
 			</tr>
 			
 			</table>
@@ -148,8 +150,8 @@ th, td {
 
 			<center>
 				
-					<h3 style = "margin-bottom:0px;">KOU FU PACKAGING CORP.</h3>
-					<label style = "margin-top:0px; font-size: 15px;">PURCHASE ORDER SLIP</label>
+					<h4 style = "margin-bottom:0px;">KOU FU PACKAGING CORP.</h4>
+					<label style = "margin-top:0px; font-size: 13px;">PURCHASE ORDER SLIP</label>
 				
 			</center>
 			<table style="border:2px solid black;border-collapse:collapse;">
@@ -157,9 +159,9 @@ th, td {
 			
 			
 				<tr >
-					<td align="center" style="border:1px solid black width:350px;">DEPT: Purchasing Department </td>
-					<td align="right" style="width:200px;">DATE: <?php echo (new \DateTime())->format('d/m/Y') ?></td>
-					<td align="center" style="width:150px align="right";" class ="pull-right"><>NO: <?php echo $request['Request']['uuid'] ?></td>
+					<td align="center" style="border:1px solid black width:450px;">DEPT: <?php echo $department ?> Dept. </td>
+					<td align="right" style="width:170px;">DATE: <?php echo (new \DateTime())->format('d/m/Y') ?></td>
+					<td align="center" style="width:205px align="right";" class ="pull-right"><>NO: RQ<?php echo $request['Request']['uuid'] ?></td>
 					<td></td>
 					
 				</tr>
@@ -169,7 +171,7 @@ th, td {
 			</table>
 
 			<table style=" border:1px solid black;border-collapse:collapse; margin-bottom:0px;">
-			<tr>
+				<tr>
 				<td align = "center" ></td>
 				<td align = "center">Item Description</td>
 				<td style="border:1px solid black; width:100px">Qty./Unit</td>
@@ -177,58 +179,58 @@ th, td {
 			</tr>
 			<tr>
 				<td  align = "center" style="border:1px solid black; width:30px ">2</td>
-				<td style="border:1px solid black; width:307px;">Table cell 2</td>
+				<td style="border:1px solid black; width:257px;">Table cell 2</td>
 				<td style="border:1px solid black; width:100px">Table cell 2</td>
-				<td style="border:1px solid black; width:100px">asd</td>
+				<td style="border:1px solid black; width:150px"><?php echo $request['Request']['remarks'] ?></td>
 			</tr>
 
 			<tr>
-				<td  align = "center" style="border:1px solid black; width:30px "></td>
-				<td style="border:1px solid black; width:307px;"></td>
-				<td style="border:1px solid black; width:100px"></td>
-				<td style="border:1px solid black; width:100px"></td>
+				<td  align = "center" style="border:1px solid black;  "></td>
+				<td style="border:1px solid black; "></td>
+				<td style="border:1px solid black; "></td>
+				<td style="border:1px solid black; "></td>
 			</tr>
 
 			<tr>
-				<td  align = "center" style="border:1px solid black; width:30px "></td>
-				<td style="border:1px solid black; width:307px;"></td>
-				<td style="border:1px solid black; width:100px"></td>
-				<td style="border:1px solid black; width:100px"></td>
+				<td  align = "center" style="border:1px solid black; "></td>
+				<td style="border:1px solid black; "></td>
+				<td style="border:1px solid black; "></td>
+				<td style="border:1px solid black; "></td>
 			</tr>
 
 			<tr>
-				<td  align = "center" style="border:1px solid black; width:30px "></td>
-				<td style="border:1px solid black; width:307px;"></td>
-				<td style="border:1px solid black; width:100px"></td>
-				<td style="border:1px solid black; width:100px"></td>
+				<td  align = "center" style="border:1px solid black; "></td>
+				<td style="border:1px solid black; "></td>
+				<td style="border:1px solid black; "></td>
+				<td style="border:1px solid black; "></td>
 			</tr>
 
 			<tr>
-				<td  align = "center" style="border:1px solid black; width:30px "></td>
-				<td style="border:1px solid black; width:307px;"></td>
-				<td style="border:1px solid black; width:100px"></td>
-				<td style="border:1px solid black; width:100px"></td>
+				<td  align = "center" style="border:1px solid black; "></td>
+				<td style="border:1px solid black;"></td>
+				<td style="border:1px solid black; "></td>
+				<td style="border:1px solid black; "></td>
 			</tr>
 
 			<tr>
-				<td  align = "center" style="border:1px solid black; width:30px "></td>
-				<td style="border:1px solid black; width:307px;"></td>
-				<td style="border:1px solid black; width:100px"></td>
-				<td style="border:1px solid black; width:100px"></td>
+				<td  align = "center" style="border:1px solid black; "></td>
+				<td style="border:1px solid black; "></td>
+				<td style="border:1px solid black; "></td>
+				<td style="border:1px solid black; "></td>
 			</tr>
 
 			<tr>
-				<td  align = "center" style="border:1px solid black; width:30px "></td>
-				<td style="border:1px solid black; width:307px;"></td>
-				<td style="border:1px solid black; width:100px"></td>
-				<td style="border:1px solid black; width:100px"></td>
+				<td  align = "center" style="border:1px solid black;  "></td>
+				<td style="border:1px solid black; "></td>
+				<td style="border:1px solid black; "></td>
+				<td style="border:1px solid black; "></td>
 			</tr>
 
 			<tr>
-				<td  align = "center" style="border:1px solid black; width:30px "></td>
-				<td style="border:1px solid black; width:307px;"></td>
-				<td style="border:1px solid black; width:100px"></td>
-				<td style="border:1px solid black; width:100px"></td>
+				<td  align = "center" style="border:1px solid black;  "></td>
+				<td style="border:1px solid black; "></td>
+				<td style="border:1px solid black; "></td>
+				<td style="border:1px solid black; "></td>
 			</tr>
 			
 			</table>
@@ -236,29 +238,30 @@ th, td {
 			<table style=" margin-top:0px; border:1px solid black;border-collapse:collapse;">
 			
 			<tr>
-				<td style=" width:25px "></td>
+				<td style=" width:20px "></td>
 				
 			</tr>
 
 			<tr>
-				<td  align = "left" style="width:541px ">For RJN-204</td>
+				<td  align = "left" style="width:541px "><?php echo $request['Request']['remarks'] ?></td>
 			
 			</tr>
 			
 			</table>
 
-			<table style=" margin-top:0px; border:2px solid black;border-collapse:collapse;">
+			<table style=" margin-top:0px; border:2px solid black;border-collapse: separate;
+        border-spacing: 1px ">
 			
 			<tr>
 				<td align = "left" style=" width:180px; vertical-align: text-top; height:30px; ">Prepared by:</td>
 				<td align = "left" style=" width:181px; vertical-align: text-top;">Approved by:</td>
-				<td align = "left" style=" width:180px; vertical-align: text-top;">Purchased by:</td>
+				<td align = "left" style=" width:173px; vertical-align: text-top;">Purchased by:</td>
 			</tr>
 
 			<tr>
-				<td align = "center" style=" width:30px "><?php echo $preparedFullName ?></td>
-				<td align = "center" style=" width:307px;"></td>
-				<td align = "center" style=" width:100px"></td>
+				<td align = "left" style=" width:30px; padding-right:3px; "><?php echo ucwords($preparedFullName ) ?></td>
+				<td align = "left" >Shou Yi Yu</td>
+				<td align = "left" ></td>
 			</tr>
 			
 			</table>
