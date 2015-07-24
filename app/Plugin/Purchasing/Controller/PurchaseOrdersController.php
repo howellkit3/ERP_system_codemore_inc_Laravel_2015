@@ -246,4 +246,10 @@ class PurchaseOrdersController extends PurchasingAppController {
     	$output = $this->render('print_purchase_order');
 
     }
+
+    public function facial(){
+
+    	
+
+    }
 }
