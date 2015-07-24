@@ -628,11 +628,14 @@ CREATE TABLE IF NOT EXISTS `tools` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
-#NOTE: SELECT KOUFU SYSTEM DATABASE ----
+#NOTE: SELECT KOUFU DELIVERY DATABASE ----
 /** howellkit added this 07/14/2015  */
 
 
 ALTER TABLE `dev_koufu_delivery`.`deliveries` ADD COLUMN `from` INT(11) NULL AFTER `dr_uuid`;
+
+#NOTE: SELECT KOUFU PURCHASING DATABASE ----
+
 ALTER TABLE `dev_koufu_purchasing`.`purchasing_items`  CHANGE `item_group_id` `request_uuid` INT(11) NULL;
 
 #NOTE: SELECT KOUFU PURCHASING DATABASE ----
