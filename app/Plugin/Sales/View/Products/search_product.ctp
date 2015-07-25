@@ -9,22 +9,19 @@
                     <?php echo ucfirst($productList['Product']['name']) ?>  
                 </td>
                 <td class="">
-                    <?php echo ucfirst($productList['Product']['company_id']) ?>
+                    <?php echo ucfirst($companyData[$productList['Product']['company_id']]) ?>
                 </td>
-                <td class="text-center">
-                     <?php echo $productList['Product']['item_category_holder_id'] ?>
+                <td class="">
+                     <?php echo $categoryData[$productList['Product']['item_category_holder_id']] ?>
                 </td>
 
-                <td class="text-center">
-                  <?php echo $productList['Product']['item_type_holder_id'] ?>
+                <td class="">
+                  <?php echo $typeData[$productList['Product']['item_type_holder_id']] ?>
                 </td>
-                <td class="text-center">
+                <td class="">
                   <?php echo $productList['Product']['remarks'] ?>
                 </td>
-                <td class="text-center">
-                  <?php echo $productList['Product']['created'] ?>
-                </td>
-
+             
 
                 <td>
                 <?php

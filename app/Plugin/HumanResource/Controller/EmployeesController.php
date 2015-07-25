@@ -11,18 +11,42 @@ class EmployeesController  extends HumanResourceAppController {
 
 	public function index() {
 
-		 $limit = 10;
+		$limit = 10;
+
 
         $conditions = array();
 
-        $this->paginate = array(
-            'conditions' => $conditions,
-            'limit' => $limit,
-            //'fields' => array('id', 'status','created'),
-            'order' => 'Employee.id DESC',
-        );
+	 if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'Employee' ) {
 
-        $employees = $this->paginate();
+	        $this->paginate = array(
+	            'conditions' => $conditions,
+	            'limit' => $limit,
+	            //'fields' => array('id', 'status','created'),
+	            'order' => 'Employee.id DESC',
+	        );
+
+	        $employees = $this->paginate();
+
+	    }
+
+        $this->loadModel('HumanResource.Tooling');
+	
+ 
+	    if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'Tooling' ) {
+				//toolings
+		       $conditions = array();    
+
+		      // $this->Tooling->bind(array('Employee'));
+
+		        $this->paginate = array(
+		            'conditions' => $conditions,
+		            'limit' => $limit,
+		            //'fields' => array('id', 'status','created'),
+		            'order' => 'Tooling.id DESC',
+		        );
+
+		        $toolings = $this->paginate('Tooling');
+	    }
 
         $departments = array('' => 'Select Department',
                         	'1' => 'Accounting',
@@ -37,7 +61,7 @@ class EmployeesController  extends HumanResourceAppController {
 		                	'4' => 'Others'
 		                	);
 
-        $this->set(compact('employees','departments','positions'));
+        $this->set(compact('employees','departments','positions','toolings'));
 	}
 
 	public function add () {
@@ -246,7 +270,37 @@ class EmployeesController  extends HumanResourceAppController {
 		}
 	}
 
-	public function assign_tools(){
+
+	public function find($department = null, $name = '') {
+
+			$this->layout = false;
+
+			if (!empty($name)) {
+
+				$conditions = array('OR' => 
+					array('Employee.first_name LIKE' => '%'.$name.'%','Employee.last_name LIKE' => '%'.$name.'%')
+					);
+
+
+			if (!empty($department) && $department > 0) {
+
+				$conditions = array_merge($conditions,array('Employee.department_id' => $department));
+			}
+
+			$limit = 10;
+
+			$this->paginate = array(
+	            'conditions' => $conditions,
+	            'limit' => $limit,
+	            //'fields' => array('id', 'status','created'),
+	            'order' => 'Employee.Last_name DESC',
+	        );
+
+	        $employees = $this->paginate();
+
+	        $this->set(compact('employees'));
+
+		}
 
 	}
 

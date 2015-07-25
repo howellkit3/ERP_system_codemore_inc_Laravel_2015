@@ -16,13 +16,13 @@ class PurchasingItem extends AppModel {
 	public $actsAs = array('Containable');
 
 	
-public function bind($model = array('Group')){
+	public function bind($model = array('Group')){
 
 		$this->bindModel(array(
 			'belongsTo' => array(
 				'Request' => array(
 					'className' => 'Purchasing.Request',
-					'foreignKey' => 'item_group_id',
+					'foreignKey' => 'uuid',
 					'dependent' => true
 				),
 			),
@@ -32,25 +32,35 @@ public function bind($model = array('Group')){
 		$this->contain($model);
 	}
 
-// public function savePurchasingItem($requestData = null, $auth = null)
-// 	{
+	public function savePurchasingItem($requestData = null,$requestUuid = null)
+	{
 	
-// 		foreach ($requestData as $key => $requestValue)
-		
-// 				foreach ($requestValue[$this->name] as $key => $contactPersonValue) 
-// 				{
-// 					$contactPersonValue['id'] = !empty($requestValue[$this->name][$key]['id']) ? $contactPersonData[$this->name][$key]['id'] : '';
-// 					$contactPersonValue['model'] = "Company";
-// 					$contactPersonValue['company_id'] = $company_id;
-				
-			
-// 				}
-				
-// 		}
+		foreach ($requestData['RequestItem'] as $key => $requestValue)
+		{
+			$this->create();
 
-// 		$this->saveAll($contactPersonValue);
-// 		return $this->id;
+			$requestValue['request_uuid'] = $requestUuid;
+
+			$this->save($requestValue);
+		}
+
 		
-	//}
+		return true;
+	}
+
+	public function savePurchasingItemPrice($priceData = null)
+	{
+	
+		foreach ($priceData['RequestItem'] as $key => $priceDataValue)
+		{
+			$this->create();
+			
+			$this->save($priceDataValue);
+		}
+
+		return true;
+	}
+
+	
 
 }

@@ -20,6 +20,12 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
             <?php echo $this->Html->link("<span class='count'>Request List</span>", array('controller' => 'requests', 'action' => 'request_list'),array('escape' => false,'class' => 'btn '.$page )); ?>
            
         </li>
+
+        <li class="dropdown hidden-xs active">
+           <?php $page =($active_page == 'purchase_orders' && $active_action == 'index') ? 'active tab' : '' ?>
+            <?php echo $this->Html->link("<span class='count'>Purchase Order</span>", array('controller' => 'purchase_orders', 'action' => 'index'),array('escape' => false,'class' => 'btn '.$page )); ?>
+           
+        </li>
     </ul>
 </div>
 <br><br>

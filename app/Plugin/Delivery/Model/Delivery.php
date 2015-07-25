@@ -25,14 +25,14 @@ class Delivery extends AppModel {
 	);
 
 
-    
+ 
 	public function saveDelivery($data = null, $auth = null){
 
 		$this->create();
 
 						
 				$data['Delivery']['created_by'] = $auth;
-				$data['Delivery']['modified_by'] = $auth;
+			//	$data['Delivery']['modified_by'] = $auth;
 
 				//pr($data); exit;
 				

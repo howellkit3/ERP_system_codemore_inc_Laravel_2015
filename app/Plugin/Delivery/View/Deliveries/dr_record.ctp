@@ -29,7 +29,7 @@
 
       </header>
 
-      <div class="main-box-body clearfix">
+      <div class="main-box-body clearfix" id = "dr-table">
         <div class="table-responsive">
           <div class="main-box clearfix body-pad">        
           <table class="table table-striped table-hover ">
@@ -50,10 +50,22 @@
             <?php echo $this->element('dr_table'); ?>   
 
           </table>
+       
           </div>
+          <hr>
+           <div class="paging" id="dr_pagination">
+              <?php
+
+              echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'DeliveryReceipt','model' => 'DeliveryReceipt'), null, array('class' => 'disable','model' => 'DeliveryReceipt'));
+              echo $this->Paginator->numbers(array('separator' => '','paginate' => 'DeliveryReceipt'), array('paginate' => 'DeliveryReceipt'));
+              echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'DeliveryReceipt','model' => 'DeliveryReceipt'), null, array('class' => 'disable'));
+              ?>
+
+            </div>
         </div>
       </div>  
   </div>
+</div>
 </div>
           
 <?php echo $this->element('modals'); ?>

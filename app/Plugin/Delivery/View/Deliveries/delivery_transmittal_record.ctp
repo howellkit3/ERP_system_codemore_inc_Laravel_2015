@@ -47,6 +47,18 @@
             <?php echo $this->element('delivery_transmittal_table'); ?>   
 
           </table>
+
+          <hr>
+           <div class="paging" id="dr_pagination">
+              <?php
+
+              echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'Transmittal','model' => 'Transmittal'), null, array('class' => 'disable','model' => 'Transmittal'));
+              echo $this->Paginator->numbers(array('separator' => '','paginate' => 'Transmittal'), array('paginate' => 'Transmittal'));
+              echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'Transmittal','model' => 'Transmittal'), null, array('class' => 'disable'));
+              ?>
+
+            </div>
+
           </div>
         </div>
       </div>  

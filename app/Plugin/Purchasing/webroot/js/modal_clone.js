@@ -4,10 +4,11 @@ function cloneDatarequest(whatSection, thisElement)
     var data = $(parentSection).first().clone();
     data.find('.remove').show();
     modal_length = parseInt($('.modal-button').length);
-   
-   console.log(modal_length);
-    data = fieldReset(data, whatSection);
+
+    
+
     data.find('.modal-button').attr('data-modal',modal_length + 1);
+    data = fieldReset(data, whatSection);
     $('.' + whatSection).last().after(data);
 
     
@@ -21,7 +22,7 @@ function cloneDatarequest(whatSection, thisElement)
 }
 function fieldReset($form, section)
 {
-
+    console.log('test');
     var count = $('.' + section).length;
     
     // jQuery('.addressSection').addClass('io-'+count);
@@ -35,11 +36,17 @@ function fieldReset($form, section)
         if(type == "text")
         {
             $this.val('');
+            console.log('text');
         }
-         if(type == "checkbox")
+        if(type == "select")
         {
-             $this.prop('checked', false);
+            $this.val('');
+            $this.val('');
+                console.log('select');
+        }else{
+            console.log(type);
         }
+        
         //$this.prop('name', nameProp.replace("[0]", "[" + newIndex + "]"));
         $this.prop('name', nameProp.replace(/\[(\d+)\]/, function(str,p1){
             return '[' + (count) + ']'
@@ -95,11 +102,8 @@ jQuery(document).ready(function($){
 
                         $recentItem = $('#myModalItem').attr('data-item');
 
-                         console.log($recentItem);
-
-                    $parent = $("[data-modal="+$recentItem+"]").parent().parent();
+                        $parent = $("[data-modal="+$recentItem+"]").parent().parent();
                         
-                        console.log($parent);
                         var idHolder = $(this).attr('data-holder');
                         var partName = $(this).val();
                         var itemModel = $(this).attr('name');
@@ -108,9 +112,9 @@ jQuery(document).ready(function($){
                         
                         if ($(this).is(":checked")) {
                            
-                            $('.item_model').val(itemModel);
+                            $parent.find('.item_model').val(itemModel);
                             $parent.find('.item_name').val(itemName);
-                            $('.item_id').val(partName);
+                            $parent.find('.item_id').val(partName);
                             $( '.close' ).trigger( 'click' );
                         }
 

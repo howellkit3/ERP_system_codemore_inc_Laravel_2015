@@ -1,25 +1,66 @@
 <?php
+
+    $ctr = 1;
+    $ctrQuantity = 8;
     // create new empty worksheet and set default font
     $this->PhpExcel->createWorksheet()
         ->setDefaultFont('Calibri', 12);
 
     $objTpl = PHPExcel_IOFactory::load("./img/gatepass1.xlsx");
  	
- 	$objTpl->setActiveSheetIndex(0)
-                        ->setCellValue('J3', $gateData['GatePass']['id'])
-                        ->setCellValue('J6', (new \DateTime())->format('l, F d, Y '))
-                        ->setCellValue('B8', ucwords($clientData['Product']['name']))
-                        ->setCellValue('F8', $drData['DeliveryDetail']['quantity'])
-                        ->setCellValue('I8', $units[$clientData['QuotationItemDetail']['quantity_unit_id']])
-                        ->setCellValue('J8', $gateData['GatePass']['remarks'])
-                        ->setCellValue('C10', ucwords(strtoupper($truckList[$gateData['GatePass']['truck_id']])))
-                        ->setCellValue('C11', ucwords($driverList[$gateData['GatePass']['driver_id']]));
-    $counter =  12;                   
-    foreach ($assistData as $key => $helperlist) {
+        if(!empty($gateData['GatePass']['id'])){  
+            $objTpl->setActiveSheetIndex(0)
+                                ->setCellValue('J3', $gateData['GatePass']['id']);
+        }else{
+
+            $objTpl->setActiveSheetIndex(0)
+                                ->setCellValue('J3',rand ( 99 , 1000 ));
+
+
+        }
+
+        $objTpl->setActiveSheetIndex(0)                      
+                            ->setCellValue('J6', (new \DateTime())->format('l, F d, Y '))
+                            ->setCellValue('C12', ucwords(strtoupper($truckList[$truck])))
+                            ->setCellValue('C13', ucwords($driverList[$driver]))
+                            ->setCellValue('J8', $remarks);
+
+       
+     foreach ($productList as $key => $productnamelist) {
+         if(count($productList) < 5){
+                $objTpl->setActiveSheetIndex(0)
+                            ->setCellValueByColumnAndRow('1', $ctr + 7 , ucwords($clientData['Product']['name']))
+                            ->setCellValue('F'.$ctrQuantity, $drData['DeliveryDetail']['quantity'])
+                            ->setCellValue('I'.$ctrQuantity, $units[$clientData['QuotationItemDetail']['quantity_unit_id']]);
+                            
+
+              $ctr++;
+              $ctrQuantity++;
+            
+
+            }else{
+
+                $objTpl->setActiveSheetIndex(0)
+                            ->setCellValueByColumnAndRow('1', 9 , count($productList) .' '. 'items')
+                            ->setCellValue('J9','pick up by '. $companyList[$drData['Delivery']['company_id']]);
+                             
+            }
+        }
+
+                           
+        $counter =  14;  
+        foreach ($assistData as $key => $helperlist) {
+            if(!empty($helperlist['GatePassAssistant']['helper_id'])){     
+                $objTpl->setActiveSheetIndex(0)
+                                ->setCellValue('C'.$counter, ucwords($assList[$helperlist['GatePassAssistant']['helper_id']]));
+                $counter++;
+            }
+        }
+
         $objTpl->setActiveSheetIndex(0)
-                        ->setCellValue('C'.$counter, ucwords($assList[$helperlist['GatePassAssistant']['helper_id']]));
-        $counter++;
-    }
+                                ->setCellValue('B18',ucwords($userData['User']['first_name']) . ' '. ucwords($userData['User']['last_name']))
+                                ->setCellValue('F18', ucwords($userFnameList[$approver]) . ' ' .ucwords($userLnameList[$approver]));
+      
                        
     //prepare download
     $filename = mt_rand(1,100000).'.xlsx'; //just some random filename

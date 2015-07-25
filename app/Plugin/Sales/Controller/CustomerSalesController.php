@@ -138,7 +138,9 @@ class CustomerSalesController extends SalesAppController {
             }
         }
 
-        $this->set(compact('paymentTermData'));
+        $noPermission = ' ';
+
+        $this->set(compact('paymentTermData', 'noPermission'));
 
 	}
 
@@ -237,7 +239,9 @@ class CustomerSalesController extends SalesAppController {
 
 		$companyData = $this->Company->getList(array('id','company_name'),array('Company.id' => $company['Company']['id']));
 
-		$this->set(compact('paymentTermData','company','contactPerson','itemCategoryData','itemTypeData', 'companyData'));
+		$noPermission = ' ';
+
+		$this->set(compact('paymentTermData','company','contactPerson','itemCategoryData','itemTypeData', 'companyData', 'noPermission'));
 		
 	}
 
@@ -306,8 +310,10 @@ class CustomerSalesController extends SalesAppController {
 
 	        $this->request->data = am($company, $holder);
 		}
+
+		$noPermission = ' ';
  
-		$this->set(compact('paymentTermData'));
+		$this->set(compact('paymentTermData', 'noPermission'));
 		
 		
 	}

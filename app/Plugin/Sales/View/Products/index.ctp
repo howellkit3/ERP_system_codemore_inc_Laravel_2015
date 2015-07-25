@@ -47,13 +47,14 @@
                                     <th><a href="#"><span>Item Category</span></a></th>
                                     <th><a href="#"><span>Item Type</span></a></th>
                                     <th><a href="#"><span>Remarks</span></a></th>
-                                    <th><a href="#"><span>Created</span></a></th>
                                     <th style="width:200px">Action</th>
                             </tr>
                         </thead>
 
-                        <tbody aria-relevant="all" aria-live="polite" class="field" name = "kit "role="alert" >
-                            <?php echo $this->element('product_table'); ?>
+                        <tbody aria-relevant="all" aria-live="polite" class="field" role="alert" >
+                            <!-- <div class ="field"> -->
+                             <?php echo $this->element('product_table'); ?>
+                            <!-- </div> -->
                         </tbody>
                         <tbody aria-relevant="all" aria-live="polite" class="searchProductAppend" role="alert" >
                         </tbody>

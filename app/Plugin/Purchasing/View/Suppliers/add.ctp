@@ -303,7 +303,7 @@
                                             <label for="inputPassword1" class="col-lg-2 control-label">Firstname</label>
                                             <div class="col-lg-9">
                                                 <?php 
-                                                    echo $this->Form->input('ContactPersonData.0.ContactPerson.0.firstname', array('class' => 'form-control','label' => false));
+                                                    echo $this->Form->input('ContactPersonData.0.SupplierContactPerson.SupplierContactPerson.firstname', array('class' => 'form-control','label' => false));
                                                 ?>
                                             </div>
                                         </div>
@@ -312,7 +312,7 @@
                                             <label for="inputPassword1" class="col-lg-2 control-label">Middlename</label>
                                             <div class="col-lg-9">
                                                 <?php 
-                                                    echo $this->Form->input('ContactPersonData.0.ContactPerson.0.middlename', array('class' => 'form-control','label' => false));
+                                                    echo $this->Form->input('ContactPersonData.0.SupplierContactPerson.SupplierContactPerson.middlename', array('class' => 'form-control','label' => false));
                                                 ?>
                                             </div>
                                         </div>
@@ -321,7 +321,7 @@
                                             <label for="inputPassword1" class="col-lg-2 control-label">Lastname</label>
                                             <div class="col-lg-9">
                                                 <?php 
-                                                    echo $this->Form->input('ContactPersonData.0.ContactPerson.0.lastname', array('class' => 'form-control','label' => false));
+                                                    echo $this->Form->input('ContactPersonData.0.SupplierContactPerson.SupplierContactPerson.lastname', array('class' => 'form-control','label' => false));
                                                 ?>
                                             </div>
                                         </div>
@@ -330,7 +330,7 @@
                                             <label for="inputPassword1" class="col-lg-2 control-label">Position</label>
                                             <div class="col-lg-9">
                                                 <?php 
-                                                    echo $this->Form->input('ContactPersonData.0.ContactPerson.0.position', array('class' => 'form-control','label' => false));
+                                                    echo $this->Form->input('ContactPersonData.0.SupplierContactPerson.SupplierContactPerson.position', array('class' => 'form-control','label' => false));
                                                 ?>
                                             </div>
                                         </div>

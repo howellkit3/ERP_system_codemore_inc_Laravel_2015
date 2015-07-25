@@ -1,4 +1,4 @@
-<?php  foreach ($requestData as $requestList ):?>
+<?php  foreach ($requestData as $requestList ): ?>
     
     <tbody aria-relevant="all" aria-live="polite" role="alert">
 
@@ -19,24 +19,22 @@
             </td>
 
             <td class="">
-                <?php echo ucfirst($requestList['PurchasingItem']['name']);?>
+                <?php echo $type[$requestList['Request']['pur_type_id']];?>
             </td>
 
-            <td class="">
-                <?php echo ucfirst($requestList['PurchasingItem']['model']);?>
-            </td>
+            <td class="text-center">
 
-            <td class="">
-                <?php echo ucfirst($requestList['PurchasingItem']['quantity']);?>
-            </td>
-
-            <td class="">
-
-                <?php if($requestList['Request']['status_id'] == 8){ ?>
-
-                 <span class='label label-default'>Waiting</span>
-
-                <?php } ?>
+                <?php 
+                    if($requestList['Request']['status_id'] == 8){ 
+                        echo "<span class='label label-default'>Waiting</span>";
+                    }
+                    if($requestList['Request']['status_id'] == 1){ 
+                        echo "<span class='label label-success'>Approved</span>";
+                    }
+                    if($requestList['Request']['status_id'] == 0){ 
+                        echo "<span class='label label-success'>Purcahse Order</span>";
+                    }
+                ?>
 
             </td>
 
@@ -45,7 +43,7 @@
                     echo $this->Html->link('<span class="fa-stack">
                         <i class="fa fa-square fa-stack-2x"></i>
                         <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> View </font></span>
-                        </span> ', array('controller' => 'customer_sales', 'action' => 'review_inquiry',$requestList['Request']['id']),array('class' =>' table-link','escape' => false,'title'=>'Review Request'));
+                        </span> ', array('controller' => 'requests', 'action' => 'view',$requestList['Request']['id']),array('class' =>' table-link','escape' => false,'title'=>'Review Request'));
                 ?>
                
                 <?php

@@ -1,10 +1,6 @@
 <?php foreach ($productData as $ProductDataList ):?>
 
-    <tbody aria-relevant="all" aria-live="polite" role="alert" >
-
         <tr class="">
-
-          
 
             <td>
                 <?php echo ucfirst($ProductDataList['Product']['uuid']) ?>
@@ -28,10 +24,6 @@
 
             <td>
                  <?php  echo ucfirst($ProductDataList['Product']['remarks']) ?>
-            </td>
-
-            <td>
-                <?php  echo ucfirst($ProductDataList['Product']['created']) ?>
             </td>
 
             <td>
@@ -73,5 +65,5 @@
                 ?>
             </td>    
         </tr>
-    </tbody>
+
 <?php endforeach; ?> 

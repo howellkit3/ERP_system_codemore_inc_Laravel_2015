@@ -4,13 +4,12 @@ $(document).ready(function() {
         var searchInput = $(this).val();
 
         if(searchInput){
-            $('.quotationFields').hide();
+            $('.OrderFields').hide();
             $('.searchAppend').show();
         }else{
-            $('.quotationFields').show();
+            $('.OrderFields').show();
             $('.searchAppend').hide();
         }
-        
         
         $.ajax({
             type: "GET",
@@ -24,6 +23,7 @@ $(document).ready(function() {
                     
 
                 } 
+                
                 if (data.length < 5 ) {
 
                 	$('.searchAppend').html('<font color="red"><b>No result..</b></font>');

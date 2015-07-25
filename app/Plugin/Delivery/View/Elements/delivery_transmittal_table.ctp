@@ -41,10 +41,22 @@ $totalremaining = 0;
                         <td>
 
                             <?php  
+
                                 echo $this->Html->link('<span class="fa-stack">
-                                <i class="fa fa-square fa-stack-2x"></i>
-                                <i class="fa fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> RePrint </font></span>
-                                </span>', array('controller' => 'deliveries', 'action' => 'tr',$transmittalDataList['Delivery']['dr_uuid'],$transmittalDataList['Delivery']['schedule_uuid']),array('class' =>' table-link','escape' => false,'title'=>'Print Delivery Receipt'));
+                                                     <i class="fa fa-square fa-stack-2x"></i>
+                                                  <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;
+                                                      <span class ="post"><font size = "1px">View</font></span>
+                                                      </span> ', array('controller' => 'deliveries', 
+                                                                     'action' => 'view_tr',
+                                                     $transmittalDataList['Transmittal']['id']),
+                                                      array('class' =>' table-link small-link-icon '.$noPermissionSales,'escape' => false,'title'=>'Edit Information'
+                                                 )); 
+                                             
+
+                                // echo $this->Html->link('<span class="fa-stack">
+                                // <i class="fa fa-square fa-stack-2x"></i>
+                                // <i class="fa fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> RePrint </font></span>
+                                // </span>', array('controller' => 'deliveries', 'action' => 'tr',$transmittalDataList['Delivery']['dr_uuid'],$transmittalDataList['Delivery']['schedule_uuid']),array('class' =>' table-link','escape' => false,'title'=>'Print Delivery Receipt'));
 
                             ?>
                        </td>

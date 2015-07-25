@@ -24,19 +24,15 @@
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th><a href="#"><span></span></a>Request #</th>
-                                <th><a href="#"><span></span></a>Name</th>
-                                <th><a href="#"><span></span></a>Item</th>
-                                <th><a href="#"><span></span></a>Item Group</th>
-                                <th><a href="#"><span></span></a>Quantity</th>
-                                <th><a href="#"><span></span></a>Status</th>
+                                <th>Request #</th>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th class="text-center">Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
 
-                        <?php 
-                         echo $this->element('request_table'); 
-                            ?>
+                        <?php echo $this->element('request_table'); ?>
                             
                      </table>
                     <hr>
