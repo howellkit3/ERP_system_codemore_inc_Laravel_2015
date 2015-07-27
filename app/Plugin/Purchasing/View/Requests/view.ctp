@@ -30,7 +30,7 @@
             echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit', array('controller' => 'requests', 'action' => 'edit',$requestId),array('class' =>'btn btn-primary pull-right','escape' => false));
         }
 
-        echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print', array('controller' => 'requests', 'action' => 'approved'),array('class' =>'btn btn-primary pull-right','escape' => false));
+        echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print', array('controller' => 'requests', 'action' => 'print_request', $requestId),array('class' =>'btn btn-primary pull-right','escape' => false));
     ?>
     <br><br>
 </div>
@@ -83,8 +83,8 @@
                         <?php foreach ($requestPurchasingItem as $key => $value) {  $key++ ?>
                             <tr>
                                 <td><?php echo $key ?></td>
-                                <td class="text-center"><?php echo $value['PurchasingItem']['name']?></td>
-                                <td class="text-center"><?php echo $value['PurchasingItem']['quantity']?>/<?php echo $unitData[$value['PurchasingItem']['quantity_unit_id']]?></td>
+                                <td class="text-center"><?php echo $value['RequestItem']['name']?></td>
+                                <td class="text-center"><?php echo $value['RequestItem']['quantity']?>/<?php echo $unitData[$value['RequestItem']['quantity_unit_id']]?></td>
                                 <td class="text-center"> </td>
                             </tr>
                         <?php } ?>

@@ -1002,7 +1002,7 @@ class DeliveriesController extends DeliveryAppController {
                 $gateId = $this->GatePassTruck->saveGatePassTruck($this->request->data,$userData['User']['id']);
                 
                 $gatepassId = $this->GatePass->saveGatepass($this->request->data,$userData['User']['id'], $gateId);
-             
+
                 $this->GatePassAssistant->saveGatePassAssistant($this->request->data,$gateId,$userData['User']['id']);
                 
                 //$this->Session->setFlash(__('The Gate Pass successfully added.'), 'success');
@@ -1047,25 +1047,28 @@ class DeliveriesController extends DeliveryAppController {
                 $productQuantity = array();
                 $productUnit = array();
 
-                foreach ($this->request->data['GatePass'] as $key => $value){
+                if(!empty($this->request->data['GatePass'])){
+
+                    foreach ($this->request->data['GatePass'] as $key => $value){
+                    
+                    $this->Delivery->bindDelivery();    
+
+                    $drData = $this->Delivery->find('first', array(
+                                                'conditions' => array('Delivery.dr_uuid' => $value['ref_uuid']
+                                                )));
+
+
+                    $this->ClientOrder->bindClientDelivery();
+
+                    $clientData = $this->ClientOrder->find('first', array(
+                                                'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
+                                                )));
+
+                    array_push($productList, $clientData['Product']['name']);
+                    array_push($productQuantity, $drData['DeliveryDetail']['quantity']);
+                    array_push($productUnit, $clientData['QuotationItemDetail']['quantity_unit_id']);
                 
-                $this->Delivery->bindDelivery();    
-
-                $drData = $this->Delivery->find('first', array(
-                                            'conditions' => array('Delivery.dr_uuid' => $value['ref_uuid']
-                                            )));
-
-
-                $this->ClientOrder->bindClientDelivery();
-
-                $clientData = $this->ClientOrder->find('first', array(
-                                            'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
-                                            )));
-
-                array_push($productList, $clientData['Product']['name']);
-                array_push($productQuantity, $drData['DeliveryDetail']['quantity']);
-                array_push($productUnit, $clientData['QuotationItemDetail']['quantity_unit_id']);
-            
+                    }
                 }
 
                 //pr($productUnit); pr($productList); exit;
@@ -1081,7 +1084,7 @@ class DeliveriesController extends DeliveryAppController {
          
     }
 
-     public function gate_pass($deliveryScheduleId = null, $quotationId = null,$clientsOrderUuid = null, $companyId){
+     public function gate_pass($deliveryScheduleId = null, $quotationId = null,$clientsOrderUuid = null, $companyId = null){
 
         $this->loadModel('Truck');
 

@@ -36,7 +36,7 @@ class EmployeesController  extends HumanResourceAppController {
 				//toolings
 		       $conditions = array();    
 
-		       $this->Tooling->bind(array('Employee'));
+		      // $this->Tooling->bind(array('Employee'));
 
 		        $this->paginate = array(
 		            'conditions' => $conditions,

@@ -35,7 +35,7 @@ class PurchasingItem extends AppModel {
 	public function savePurchasingItem($requestData = null,$requestUuid = null)
 	{
 	
-		foreach ($requestData['PurchasingItem'] as $key => $requestValue)
+		foreach ($requestData['RequestItem'] as $key => $requestValue)
 		{
 			$this->create();
 
@@ -47,5 +47,20 @@ class PurchasingItem extends AppModel {
 		
 		return true;
 	}
+
+	public function savePurchasingItemPrice($priceData = null)
+	{
+	
+		foreach ($priceData['RequestItem'] as $key => $priceDataValue)
+		{
+			$this->create();
+			
+			$this->save($priceDataValue);
+		}
+
+		return true;
+	}
+
+	
 
 }

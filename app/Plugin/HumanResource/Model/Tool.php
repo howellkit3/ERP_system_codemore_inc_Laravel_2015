@@ -18,7 +18,7 @@ class Tool extends AppModel {
 					'className' => 'Tooling',
 					'foreignKey' => 'tools_id',
 					'dependent' => true,
-				)
+				))
 		),false);
 
 		$this->contain($model);

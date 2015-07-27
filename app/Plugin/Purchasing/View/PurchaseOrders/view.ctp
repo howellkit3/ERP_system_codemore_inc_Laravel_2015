@@ -15,11 +15,10 @@
 
             echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i> Approved', array('controller' => 'purchase_orders', 'action' => 'approved',$purchaseOrderid),array('class' =>'btn btn-primary pull-right','escape' => false));
 
+            echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit', array('controller' => 'purchase_orders', 'action' => 'edit',$purchaseOrderid),array('class' =>'btn btn-primary pull-right','escape' => false));
         }
 
-        echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit', array('controller' => 'purchase_orders', 'action' => 'edit',$purchaseOrderid),array('class' =>'btn btn-primary pull-right','escape' => false));
-
-        //echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print', array('controller' => 'purchase_orders', 'action' => 'print'),array('class' =>'btn btn-primary pull-right','escape' => false));
+        echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print', array('controller' => 'purchase_orders', 'action' => 'print_purchase_order',$purchaseOrderid),array('class' =>'btn btn-primary pull-right','escape' => false,'target' => '_blank'));
     ?>
     <br><br>
 </div>
@@ -51,7 +50,7 @@
                             
                         </div>
                         <div class="col-lg-3">&emsp;&emsp;&nbsp;&nbsp;&nbsp;
-                            PO No  : <u>RQO<?php echo $purchaseOrderData['PurchaseOrder']['po_number']; ?></u>
+                            PO No  : <u><?php echo $purchaseOrderData['PurchaseOrder']['po_number']; ?></u>
                         </div>
                     </div>
 
@@ -97,14 +96,23 @@
                             <th>#</th>
                             <th class="text-center">Item Decription</th>
                             <th class="text-center">Quantity/Unit</th>
-                            <th class="text-center">Remarks</th>
+                            <th class="text-center">Unit Price</th>
+                            <th class="text-center">Amount</th>
                         </thead>
-                        <?php foreach ($purchaseItemData as $key => $value) {  $key++ ?>
+                        <?php $total = 0; foreach ($purchaseItemData as $key => $value) {  $key++ ?>
                             <tr>
                                 <td><?php echo $key ?></td>
-                                <td class="text-center"><?php echo $value['PurchasingItem']['name']?></td>
-                                <td class="text-center"><?php echo $value['PurchasingItem']['quantity']?>/<?php echo $unitData[$value['PurchasingItem']['quantity_unit_id']]?></td>
-                                <td class="text-center"> </td>
+                                <td class="text-center"><?php echo $value[$modelTable]['name']?></td>
+                                <td class="text-center"><?php echo $value[$modelTable]['quantity']?>/<?php echo $unitData[$value[$modelTable]['quantity_unit_id']]?></td>
+                                <td class="text-center"><?php echo number_format($value[$modelTable]['unit_price'],2)?>/<?php echo $unitData[$value[$modelTable]['unit_price_unit_id']]?></td>
+                                <td class="text-center">
+                                    <?php 
+                                        $amount = $value[$modelTable]['quantity'] * $value[$modelTable]['unit_price'];
+                                        echo number_format($amount,2)."/".$unitData[$value[$modelTable]['unit_price_unit_id']];
+
+                                        $total = $total + $amount;
+                                    ?>
+                                </td>
                             </tr>
                         <?php } ?>
                         <tr>
@@ -122,12 +130,15 @@
                                     if($purchaseOrderData['PurchaseOrder']['status'] == 8){ 
                                         echo "<span class='label label-default'>Waiting</span>";
                                     }
+                                    if($purchaseOrderData['PurchaseOrder']['status'] == 1){ 
+                                        echo "<span class='label label-success'>Approved</span>";
+                                    }
                                 ?>
                             </th>
                             <th class="">Version : <?php echo $purchaseOrderData['PurchaseOrder']['version']; ?></th>
-                            <th class="">Total : </th>
+                            <th class="text-center">Total : PHP <?php echo number_format($total,2)?></th>
                         </thead>
-                    </thead>
+                    </table>
                    
                     Note : <?php echo ucfirst($purchaseOrderData['PurchaseOrder']['remarks']); ?><br><br>
                     

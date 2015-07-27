@@ -1,6 +1,7 @@
 <?php
 App::uses('AppController', 'Controller');
 App::uses('SessionComponent', 'Controller/Component');
+App::import('Vendor', 'DOMPDF', true, array(), 'dompdf'.DS.'dompdf_config.inc.php', false);
 
 class RequestsController extends PurchasingAppController {
 
@@ -35,7 +36,7 @@ class RequestsController extends PurchasingAppController {
 
 		$this->loadModel('Purchasing.Request');
 
-		$this->loadModel('Purchasing.PurchasingItem');
+		$this->loadModel('Purchasing.RequestItem');
 
 		$this->loadModel('Purchasing.PurchasingType');
 
@@ -55,11 +56,14 @@ class RequestsController extends PurchasingAppController {
 															'order' => array('GeneralItem.name' => 'ASC')
 															));
 
+
 	 	if ($this->request->is(array('post','put'))) {
+
+	 		//pr($this->request->data); exit;
 
 			$requestUuid = $this->Request->saveRequest($this->request->data['Request'],$userData['User']['id']);
 
-			$this->PurchasingItem->savePurchasingItem($this->request->data ,$requestUuid);
+			$this->RequestItem->saveRequestItem($this->request->data ,$requestUuid);
 		
 	 		$this->Session->setFlash(__('Request has been added.'));
 
@@ -208,7 +212,7 @@ class RequestsController extends PurchasingAppController {
 
     	$this->loadModel('Purchasing.Request');
 
-		$this->loadModel('Purchasing.PurchasingItem');
+		$this->loadModel('Purchasing.RequestItem');
 
 		$this->loadModel('GeneralItem');
 
@@ -232,36 +236,36 @@ class RequestsController extends PurchasingAppController {
 
     	$requestData = $this->Request->find('first', array('conditions' => array('Request.id' => $requestId)));
 		
-		$requestPurchasingItem = $this->PurchasingItem->find('all', array('conditions' => array('PurchasingItem.request_uuid' => $requestData['Request']['uuid'])));
+		$requestPurchasingItem = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestData['Request']['uuid'])));
 
 	    foreach ($requestPurchasingItem as $key => $value) {
 			
-			if($value['PurchasingItem']['model'] == 'GeneralItem'){
+			if($value['RequestItem']['model'] == 'GeneralItem'){
 
 	 			$itemData = $this->GeneralItem->find('list',array('fields' => array('id', 'name')));
 
-	 			$requestPurchasingItem[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 			$requestPurchasingItem[$key]['RequestItem']['name'] = $itemData[$value['RequestItem']['foreign_key']];
 	 		}
 
-	 		if($value['PurchasingItem']['model'] == 'CorrugatedPaper'){
+	 		if($value['RequestItem']['model'] == 'CorrugatedPaper'){
 
 	 			$itemData = $this->CorrugatedPaper->find('list',array('fields' => array('id', 'name')));
 
-	 			$requestPurchasingItem[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 			$requestPurchasingItem[$key]['RequestItem']['name'] = $itemData[$value['RequestItem']['foreign_key']];
 	 		}
 
-	 		if($value['PurchasingItem']['model'] == 'Substrate'){
+	 		if($value['RequestItem']['model'] == 'Substrate'){
 
 	 			$itemData = $this->Substrate->find('list',array('fields' => array('id', 'name')));
 
-	 			$requestPurchasingItem[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 			$requestPurchasingItem[$key]['RequestItem']['name'] = $itemData[$value['RequestItem']['foreign_key']];
 	 		}
 
-	 		if($value['PurchasingItem']['model'] == 'CompoundSubstrate'){
+	 		if($value['RequestItem']['model'] == 'CompoundSubstrate'){
 
 	 			$itemData = $this->CompoundSubstrate->find('list',array('fields' => array('id', 'name')));
 	 			
-	 			$requestPurchasingItem[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 			$requestPurchasingItem[$key]['RequestItem']['name'] = $itemData[$value['RequestItem']['foreign_key']];
 	 		}
 
 	    } 
@@ -281,7 +285,7 @@ class RequestsController extends PurchasingAppController {
 
     	$this->loadModel('Purchasing.Request');
 
-		$this->loadModel('Purchasing.PurchasingItem');
+		$this->loadModel('Purchasing.RequestItem');
 
 		$this->loadModel('GeneralItem');
 
@@ -305,36 +309,36 @@ class RequestsController extends PurchasingAppController {
 
 		$requestData = $this->Request->find('first', array('conditions' => array('Request.id' => $requestId)));
 		
-		$requestPurchasingItem = $this->PurchasingItem->find('all', array('conditions' => array('PurchasingItem.request_uuid' => $requestData['Request']['uuid'])));
+		$requestRequestItem = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestData['Request']['uuid'])));
 
-	    foreach ($requestPurchasingItem as $key => $value) {
+	    foreach ($requestRequestItem as $key => $value) {
 			
-			if($value['PurchasingItem']['model'] == 'GeneralItem'){
+			if($value['RequestItem']['model'] == 'GeneralItem'){
 
 	 			$itemData = $this->GeneralItem->find('list',array('fields' => array('id', 'name')));
 
-	 			$requestPurchasingItem[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 			$requestRequestItem[$key]['RequestItem']['name'] = $itemData[$value['RequestItem']['foreign_key']];
 	 		}
 
-	 		if($value['PurchasingItem']['model'] == 'CorrugatedPaper'){
+	 		if($value['RequestItem']['model'] == 'CorrugatedPaper'){
 
 	 			$itemData = $this->CorrugatedPaper->find('list',array('fields' => array('id', 'name')));
 
-	 			$requestPurchasingItem[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 			$requestRequestItem[$key]['RequestItem']['name'] = $itemData[$value['RequestItem']['foreign_key']];
 	 		}
 
-	 		if($value['PurchasingItem']['model'] == 'Substrate'){
+	 		if($value['RequestItem']['model'] == 'Substrate'){
 
 	 			$itemData = $this->Substrate->find('list',array('fields' => array('id', 'name')));
 
-	 			$requestPurchasingItem[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 			$requestRequestItem[$key]['RequestItem']['name'] = $itemData[$value['RequestItem']['foreign_key']];
 	 		}
 
-	 		if($value['PurchasingItem']['model'] == 'CompoundSubstrate'){
+	 		if($value['RequestItem']['model'] == 'CompoundSubstrate'){
 
 	 			$itemData = $this->CompoundSubstrate->find('list',array('fields' => array('id', 'name')));
 	 			
-	 			$requestPurchasingItem[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 			$requestRequestItem[$key]['RequestItem']['name'] = $itemData[$value['RequestItem']['foreign_key']];
 	 		}
 
 	    } 
@@ -343,7 +347,7 @@ class RequestsController extends PurchasingAppController {
 
 			$requestUuid = $this->Request->saveRequest($this->request->data['Request'],$userData['User']['id']);
 
-			$this->PurchasingItem->savePurchasingItem($this->request->data ,$requestUuid);
+			$this->RequestItem->saveRequestItem($this->request->data ,$requestUuid);
 		
 	 		$this->Session->setFlash(__('Request has been updated.'));
 
@@ -357,7 +361,7 @@ class RequestsController extends PurchasingAppController {
 	  
 	    $this->request->data = $requestData;
 
-    	$this->set(compact('requestId','purchasingTypeData','unitData','requestPurchasingItem'));
+    	$this->set(compact('requestId','purchasingTypeData','unitData','requestRequestItem'));
     }
 
     public function approved($requestId = null){
@@ -388,11 +392,61 @@ class RequestsController extends PurchasingAppController {
 
     	$this->loadModel('Purchasing.PurchasingType');
 
+    	$this->loadModel('Purchasing.PurchasingItem');
+
+    	$this->loadModel('GeneralItem');
+
+		$this->loadModel('Substrate');
+
+		$this->loadModel('CorrugatedPaper');
+
+		$this->loadModel('CompoundSubstrate');
+
     	$requestData = $this->Request->find('first', array('conditions' => array('Request.id' => $requestId)));
 
+    	$requestPurchasingItem = $this->PurchasingItem->find('all', array('conditions' => array('PurchasingItem.request_uuid' => $requestData['Request']['uuid'])));
+
+    	foreach ($requestPurchasingItem as $key => $value) {
+			
+			if($value['PurchasingItem']['model'] == 'GeneralItem'){
+
+	 			$itemData = $this->GeneralItem->find('list',array('fields' => array('id', 'name')));
+
+	 			$requestPurchasingItem[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 		}
+
+	 		if($value['PurchasingItem']['model'] == 'CorrugatedPaper'){
+
+	 			$itemData = $this->CorrugatedPaper->find('list',array('fields' => array('id', 'name')));
+
+	 			$requestPurchasingItem[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 		}
+
+	 		if($value['PurchasingItem']['model'] == 'Substrate'){
+
+	 			$itemData = $this->Substrate->find('list',array('fields' => array('id', 'name')));
+
+	 			$requestPurchasingItem[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 		}
+
+	 		if($value['PurchasingItem']['model'] == 'CompoundSubstrate'){
+
+	 			$itemData = $this->CompoundSubstrate->find('list',array('fields' => array('id', 'name')));
+	 			
+	 			$requestPurchasingItem[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 		}
+
+	    } 
+    	
     	$supplierData = $this->Supplier->find('list', array(
 														'fields' => array('Supplier.id', 'Supplier.name'),
 														));
+
+    	$this->loadModel('Unit');
+
+		$unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
+															'order' => array('Unit.unit' => 'ASC')
+															));
 
     	$paymentTermData = $this->PaymentTermHolder->find('list', array(
 														'fields' => array('PaymentTermHolder.id', 'PaymentTermHolder.name'),
@@ -402,7 +456,7 @@ class RequestsController extends PurchasingAppController {
 															'order' => array('PurchasingType.id' => 'ASC')
 															));
 
-    	$this->set(compact('requestId','supplierData','paymentTermData','requestData','type'));
+    	$this->set(compact('requestId','supplierData','paymentTermData','requestData','type','unitData','requestPurchasingItem'));
 
     }
 
@@ -414,9 +468,13 @@ class RequestsController extends PurchasingAppController {
 
     	$this->loadModel('Purchasing.Request');
 
+    	$this->loadModel('Purchasing.PurchasingItem');
+
     	if (!empty($this->request->data)) {
     		
     		$this->PurchaseOrder->savePurchaseOrder($this->request->data,$userData['User']['id']);
+
+    		$this->PurchasingItem->savePurchasingItemPrice($this->request->data);
 
     		$this->Request->id = $this->request->data['PurchaseOrder']['request_id'];
 
@@ -468,5 +526,143 @@ class RequestsController extends PurchasingAppController {
 		$this->autoRender = false;
 
     }
+
+    public function print_request($requestId = null) {
+
+		$this->loadModel('Purchasing.Request');
+
+		$this->loadModel('Purchasing.RequestItem');
+
+		$this->loadModel('CorrugatedPaper');
+
+		$this->loadModel('CompoundSubstrate');
+
+		$this->loadModel('Substrate');
+
+		$this->loadModel('GeneralItem');
+
+		$this->loadModel('Unit');
+
+
+		$request = $this->Request->find('first', array(
+														'conditions' => array( 
+															'Request.id' => $requestId)
+													));
+
+		$request = $this->Request->find('first', array(
+														'conditions' => array( 
+															'Request.id' => $requestId)
+													));
+
+		$requestItem = $this->RequestItem->find('all', array(
+														'conditions' => array( 
+															'RequestItem.request_uuid' => $request['Request']['uuid'])
+													));
+		foreach($requestItem as $key=>$value) {
+
+			if($value['RequestItem']['model'] == 'GeneralItem'){
+
+	 			$itemData = $this->GeneralItem->find('list',array('fields' => array('id', 'name')));
+
+	 			$requestRequestItem[$key]['RequestItem']['name'] = $itemData[$value['RequestItem']['foreign_key']];
+	 		}
+
+	 		if($value['RequestItem']['model'] == 'CorrugatedPaper'){
+
+	 			$itemData = $this->CorrugatedPaper->find('list',array('fields' => array('id', 'name')));
+
+	 			$requestRequestItem[$key]['RequestItem']['name'] = $itemData[$value['RequestItem']['foreign_key']];
+	 	
+	 		}
+
+	 		if($value['RequestItem']['model'] == 'Substrate'){
+
+	 			$itemData = $this->Substrate->find('list',array('fields' => array('id', 'name')));
+
+	 			$requestRequestItem[$key]['RequestItem']['name'] = $itemData[$value['RequestItem']['foreign_key']];
+	 	
+	 		}
+
+	 		if($value['RequestItem']['model'] == 'CompoundSubstrate'){
+
+	 			$itemData = $this->CompoundSubstrate->find('list',array('fields' => array('id', 'name')));
+	 			
+	 			$requestRequestItem[$key]['RequestItem']['name'] = $itemData[$value['RequestItem']['foreign_key']];
+	 	
+	  		}
+
+	  		
+		}
+
+
+		$unitData = $this->Unit->find('list',array('fields' => array('id', 'unit')));
+
+		$userData = $this->Session->read('Auth');
+
+		$preparedFName = $userData['User']['first_name'];
+
+		$preparedLName = $userData['User']['last_name'];
+
+		$preparedFullName = $preparedFName . ' ' . $preparedLName;
+
+		$departmentRole = $userData['User']['role_id'];
+
+		if($departmentRole == 10){
+
+			$department = 'Warehouse';
+
+		} else if ($departmentRole == 2 || $departmentRole == 3){
+
+			$department = 'Sales';
+		} else if ($departmentRole == 4 ){
+
+			$department = 'Delivery';
+
+		} else if ($departmentRole == 5 ){
+
+			$department = 'Purchasing';
+
+		} else if ($departmentRole == 6 || $departmentRole == 7 || $departmentRole == 8 || $departmentRole == 9 ){
+
+			$department = 'Accounting';
+
+		} else{
+
+			$department = 'Management';
+		}
+
+
+		$view = new View(null, false);
+
+		$view->set(compact('request', 'preparedFullName', 'department', 'requestItem', 'itemData', 'unitData', 'requestRequestItem'));
+        
+		$view->viewPath = 'Requests'.DS.'pdf';	
+   
+        $output = $view->render('print_request', false);
+   	
+        $dompdf = new DOMPDF();
+        $dompdf->set_paper("A5");
+        $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));
+        $dompdf->render();
+        $canvas = $dompdf->get_canvas();
+        $font = Font_Metrics::get_font("verdana", "bold");
+        $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
+
+        $output = $dompdf->output();
+        $random = rand(0, 1000000) . '-' . time();
+        if (empty($filename)) {
+        	$filename = 'product-'.$request['Request']['uuid'].'-request'.time();
+        }
+      	$filePath = 'view_pdf/'.strtolower(Inflector::slug( $filename , '-')).'.pdf';
+        $file_to_save = WWW_ROOT .DS. $filePath;
+        	
+        if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
+        		unlink($file_to_save);
+        }
+        
+        exit();
+        
+
+	}
 
 }

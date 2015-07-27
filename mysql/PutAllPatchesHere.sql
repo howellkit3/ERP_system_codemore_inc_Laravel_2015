@@ -628,11 +628,14 @@ CREATE TABLE IF NOT EXISTS `tools` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
-#NOTE: SELECT KOUFU SYSTEM DATABASE ----
+#NOTE: SELECT KOUFU DELIVERY DATABASE ----
 /** howellkit added this 07/14/2015  */
 
 
 ALTER TABLE `dev_koufu_delivery`.`deliveries` ADD COLUMN `from` INT(11) NULL AFTER `dr_uuid`;
+
+#NOTE: SELECT KOUFU PURCHASING DATABASE ----
+
 ALTER TABLE `dev_koufu_purchasing`.`purchasing_items`  CHANGE `item_group_id` `request_uuid` INT(11) NULL;
 
 #NOTE: SELECT KOUFU PURCHASING DATABASE ----
@@ -715,4 +718,59 @@ ALTER TABLE `purchase_orders` ADD `status` INT(11)  NULL  DEFAULT NULL  AFTER `m
 ALTER TABLE `purchase_orders` ADD `version` INT(11)  NULL  DEFAULT NULL  AFTER `status`;
 ALTER TABLE `purchase_orders` MODIFY COLUMN `contact_id` INT(11) DEFAULT NULL AFTER `version`;
 ALTER TABLE `purchase_orders` MODIFY COLUMN `contact_person_id` INT(11) DEFAULT NULL AFTER `contact_id`;
+
+#NOTE: SELECT KOUFU PURCHASING DATABASE ----
+/** bien added this 07/23/2015  */
+ALTER TABLE `purchasing_items` ADD `unit_price` DOUBLE  NULL  DEFAULT NULL  AFTER `quantity_unit_id`;
+ALTER TABLE `purchasing_items` ADD `unit_price_unit_id` INT(11)  NULL  DEFAULT NULL  AFTER `unit_price`;
+
+#NOTE: SELECT KOUFU PURCHASING DATABASE ----
+/** bien added this 07/24/2015  */
+CREATE TABLE `request_items` (   `id` int(11) NOT NULL AUTO_INCREMENT,   `model` varchar(30) DEFAULT NULL,   `foreign_key` int(11) DEFAULT NULL,   `request_uuid` int(11) DEFAULT NULL,   `size1` varchar(80) DEFAULT NULL,   `size1_unit_id` int(11) DEFAULT NULL,   `size2` varchar(80) DEFAULT NULL,   `size2_unit_id` int(11) DEFAULT NULL,   `size3` varchar(80) DEFAULT NULL,   `size3_unit_id` int(11) DEFAULT NULL,   `quantity` int(11) DEFAULT NULL,   `quantity_unit_id` int(11) DEFAULT NULL,   `unit_price` double DEFAULT NULL,   `unit_price_unit_id` int(11) DEFAULT NULL,   PRIMARY KEY (`id`) ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+#NOTE: SELECT KOUFU Human Resource DATABASE ----
+/** aldrin added this 07/23/2015  */
+  CREATE TABLE IF NOT EXISTS `breaktimes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `from` time NOT NULL,
+  `to` time NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+  CREATE TABLE IF NOT EXISTS `work_shifts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `from` time NOT NULL,
+  `to` time NOT NULL,
+  `is_default` int(11) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+#NOTE: SELECT KOUFU Human Resource DATABASE ----
+/** aldrin added this 07/24/2015  */
+
+  CREATE TABLE IF NOT EXISTS `work_shift_breaks` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `worshift_id` int(11) NOT NULL,
+  `break_id` int(11) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
 

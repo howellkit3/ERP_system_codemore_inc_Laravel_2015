@@ -28,7 +28,7 @@
                                 <th>Purchase Order No</th>
                                 <th>Po No.</th>
                                 <th>Supplier</th>
-                                <th>Status</th>
+                                <th class="text-center">Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
