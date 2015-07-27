@@ -125,4 +125,10 @@ jQuery(document).ready(function($){
         }
 
     });
+
+    $("body").on('click','.remove-purchase-order', function(e){
+
+        $(this).parents('.cloneMe').remove();
+        
+    });
 });

@@ -218,7 +218,7 @@ class PurchaseOrdersController extends PurchasingAppController {
         $userData = $this->Session->read('Auth');
 
     	if (!empty($this->request->data)) {
-
+    		
     		foreach ($this->request->data['PurchasingItemIdHolder'] as $key => $value) {
 
     			
