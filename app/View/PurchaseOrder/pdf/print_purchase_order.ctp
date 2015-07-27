@@ -1,7 +1,11 @@
+<header>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</header>
 <style>
 <?php include('word.css'); ?>
 
 </style>
+
 <div class="row">
 	<div class="col-lg-12">
 		<div class="main-box main-pdf" >
@@ -60,7 +64,7 @@
 						<td style="width:260px;" class="border-bot">:&nbsp;&nbsp;&nbsp;&nbsp;<?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']); ?> <?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
 						<td style="width:40px;">Tel# :</td>
 						<td style="width:130px;" class="border-bot">
-							<u><?php echo $purchaseOrderData['Contact']['number']; ?></u>
+							<?php echo $purchaseOrderData['Contact']['number']; ?>
 						</td>
 						<td>Delivery Date &nbsp;&nbsp;
 						</td>
@@ -74,7 +78,7 @@
 				<thead>
 					<tr>
 						<td class="td-heigth" style="width:20px;border:1px solid #EAEAEA;">&nbsp;&nbsp;#</td>
-						<td class="td-heigth" style="width:260px;border:1px solid #EAEAEA;"><center><b>ITEM DESCRIPTION</b></center></td>
+						<td class="td-heigth" style="width:260px;border:1px solid #EAEAEA;font-family: Tahoma, Helvetica, Arial, "Microsoft Yahei","微软雅黑", STXihei, "华文细黑", sans-serif;"><center><b>ITEM DESCRIPTION</b></center></td>
 						<td class="td-heigth" style="width:127px;border:1px solid #EAEAEA;"><center><b>QUANTITY/UNIT</b></center></td>
 						<td class="td-heigth" style="width:127px;border:1px solid #EAEAEA;"><center><b>UNIT PRICE</b></center></td>
 						<td class="td-heigth" style="width:127px;border:1px solid #EAEAEA;"><center><b>AMOUNT</b></center></td>

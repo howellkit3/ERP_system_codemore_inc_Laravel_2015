@@ -296,7 +296,7 @@
 															<!-- <button type="button" class="add-field1sd proxy-counter add-request-section table-link danger btn btn-success" ><i class="fa fa-plus"></i></button> -->
 															&emsp;&emsp;&emsp;&emsp;
 															<?php if ($key != 0) { ?>
-																<button type="button" class="remove btn btn-danger " onclick="removeClone('cloneMe')"><i class="fa fa-minus" ></i></button>
+																<button type="button" class="remove-purchase-order btn btn-danger "><i class="fa fa-minus" ></i></button>
 															<?php } ?>
 														</div>
 
