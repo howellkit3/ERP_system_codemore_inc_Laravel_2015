@@ -50,7 +50,7 @@ class PurchasingItem extends AppModel {
 
 	public function savePurchasingItemPrice($priceData = null)
 	{
-	
+		pr($priceData);exit();
 		foreach ($priceData['PurchasingItem'] as $key => $priceDataValue)
 		{
 			$this->create();

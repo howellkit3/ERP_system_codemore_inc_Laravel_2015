@@ -295,9 +295,15 @@
 															<button type="button" class="add-field1  table-link danger btn btn-success " onclick="cloneDatarequest('cloneMe', this)"><i class="fa fa-plus"></i></button>
 															<!-- <button type="button" class="add-field1sd proxy-counter add-request-section table-link danger btn btn-success" ><i class="fa fa-plus"></i></button> -->
 															&emsp;&emsp;&emsp;&emsp;
-															<?php if ($key != 0) { ?>
-																<button type="button" class="remove-purchase-order btn btn-danger "><i class="fa fa-minus" ></i></button>
-															<?php } ?>
+															<?php 
+																if ($key == 0 ) { 
+																	$newClass = 'hide-remove';
+																}else{
+																	$newClass = ' ';
+																}
+															?>
+																<button type="button" class="remove remove-purchase-order btn btn-danger <?php echo $newClass ?>"><i class="fa fa-minus" ></i></button>
+															
 														</div>
 
 													</div>
@@ -321,7 +327,7 @@
 																echo $this->Form->input('PurchasingItem.'.$key.'.size1_unit_id', array(
 											                        'options' => array($unitData),  
 											                        'label' => false,
-											                        'class' => 'form-control required',
+											                        'class' => 'form-control required select-drop',
 											                        'empty' => '---Select Unit---',
 											                        'disabled' => false,
 											                        'value' => $value[$modelTable]['size1_unit_id']
@@ -354,7 +360,7 @@
 																echo $this->Form->input('PurchasingItem.'.$key.'.size2_unit_id', array(
 											                        'options' => array($unitData),  
 											                        'label' => false,
-											                        'class' => 'form-control required',
+											                        'class' => 'form-control required select-drop',
 											                        'empty' => '---Select Unit---',
 											                        'disabled' => false,
 											                        'default' => $value[$modelTable]['size2_unit_id']
@@ -386,7 +392,7 @@
 																echo $this->Form->input('PurchasingItem.'.$key.'.size3_unit_id', array(
 											                        'options' => array($unitData),  
 											                        'label' => false,
-											                        'class' => 'form-control required',
+											                        'class' => 'form-control required select-drop',
 											                        'empty' => '---Select Unit---',
 											                        'disabled' => false,
 											                        'default' => $value[$modelTable]['size3_unit_id']
@@ -404,7 +410,7 @@
 														<div class="col-lg-3">
 															<?php 
 																echo $this->Form->input('PurchasingItem.'.$key.'.quantity', array(
-																	'class' => 'form-control item_type number required',
+																	'class' => 'form-control item_type number required select-drop',
 																	'type' => 'number',
 											                        'label' => false,
 											                        'disabled' => false,
@@ -420,7 +426,7 @@
 											                        'options' => array($unitData),  
 											                        'label' => false,
 											                        'disabled' => false,
-											                        'class' => 'form-control required',
+											                        'class' => 'form-control required select-drop',
 											                        'empty' => '---Select Unit---',
 											                        'default' => $value[$modelTable]['quantity_unit_id']
 											                         )); 
@@ -435,7 +441,7 @@
 														<div class="col-lg-3">
 															<?php 
 																echo $this->Form->input('PurchasingItem.'.$key.'.unit_price', array(
-																	'class' => 'form-control item_type number required',
+																	'class' => 'form-control item_type number required ',
 																	'type' => 'number',
 											                        'label' => false,
 											                        'placeholder' => 'Price',
@@ -449,7 +455,7 @@
 																echo $this->Form->input('PurchasingItem.'.$key.'.unit_price_unit_id', array(
 											                        'options' => array($unitData),  
 											                        'label' => false,
-											                        'class' => 'form-control required',
+											                        'class' => 'form-control required select-drop',
 											                        'empty' => '---Select Unit---',
 											                        'default' => $value[$modelTable]['unit_price_unit_id']
 											                         )); 
@@ -580,6 +586,8 @@
 <div class="md-overlay"></div>
 <script>
 	$(document).ready(function() {
+
+		$(".hide-remove").hide();
 
 		$("#PurchaseOrderCreateOrderForm").validate();
 
