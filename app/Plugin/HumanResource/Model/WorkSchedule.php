@@ -2,11 +2,11 @@
 App::uses('AppModel', 'Model');
 App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
 
-class WorkShift extends AppModel {
+class WorkSchedule extends AppModel {
 
     public $useDbConfig = 'koufu_human_resource';
 
-    public $name = 'WorkShift';
+    public $name = 'WorkSchedule';
 
     public $actsAs = array('Containable');
 
@@ -28,17 +28,5 @@ class WorkShift extends AppModel {
 	}
 
 
-
-	public function getList($conditions = array()) {
-		
-		return $this->find('list',array(
-				'conditions' =>$conditions,
-				'order' => array('WorkShift.name ASC'),
-				'group' => array('WorkShift.id'),
-				//fields' => array('WorkShift.id','name')
-			));
-	}
-
-
     
- }
+  }

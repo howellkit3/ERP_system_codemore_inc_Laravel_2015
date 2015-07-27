@@ -9,6 +9,10 @@ class Employee extends AppModel {
     public $name = 'Employee';
 
     public $actsAs = array('Containable');
+
+	public $virtualFields = array(
+		'full_name' => 'CONCAT_WS(" ",Employee.last_name , Employee.middle_name , Employee.first_name  )'
+	);
     
     public function bind($model = array('Group')){
 
@@ -78,6 +82,16 @@ class Employee extends AppModel {
 		),false);
 
 		$this->contain($model);
+	}
+
+	public function getList($conditions = array()) {
+
+		return $this->find('list',array(
+				'conditions' => array(),
+				'group' => array('Employee.id'),
+				'order' => array('Employee.last_name ASC','Employee.first_name ASC'),
+				'fields' => array('Employee.id','Employee.full_name')
+			));
 	}
 
 }
