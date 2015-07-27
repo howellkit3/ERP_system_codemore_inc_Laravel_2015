@@ -1,17 +1,19 @@
 function cloneDatarequest(whatSection, thisElement)
 {      
+    
     var parentSection = $(thisElement).parents('.' + whatSection);
     var data = $(parentSection).first().clone();
     data.find('.remove').show();
+    data.find('.select-drop').val('');
+    data.find('.select-quantity').val(' ');
     modal_length = parseInt($('.modal-button').length);
 
     
 
     data.find('.modal-button').attr('data-modal',modal_length + 1);
-    data = fieldReset(data, whatSection);
+    data = testko(data, whatSection);
     $('.' + whatSection).last().after(data);
-
-    
+ 
     // $('.remove').show();
 
     if ($('.remove').length == 1) $('.remove').hide();
@@ -20,9 +22,10 @@ function cloneDatarequest(whatSection, thisElement)
     });
     
 }
-function fieldReset($form, section)
+
+function testko($form, section)
 {
-    console.log('test');
+    
     var count = $('.' + section).length;
     
     // jQuery('.addressSection').addClass('io-'+count);
@@ -40,6 +43,7 @@ function fieldReset($form, section)
         }
         if(type == "select")
         {
+
             $this.val('');
             $this.val('');
                 console.log('select');

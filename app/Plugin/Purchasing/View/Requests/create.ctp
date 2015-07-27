@@ -248,12 +248,11 @@
 													<div class="col-lg-3">
 														<?php 
 															echo $this->Form->input('RequestItem.0.quantity', array(
-																'class' => 'form-control item_type number required',
+																'class' => 'form-control item_type number required select-drop',
 																'type' => 'number',
 										                        'label' => false,
 										                        'data' => 0,
-										                        'placeholder' => 'Quantity',
-										                        'value' => 0));
+										                        'placeholder' => 'Quantity'));
 
 										                ?>
 													</div>
