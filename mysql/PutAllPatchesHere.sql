@@ -806,3 +806,5 @@ CREATE TABLE IF NOT EXISTS `work_schedules` (
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+ALTER TABLE `work_schedules`  ADD `day` DATETIME NOT NULL  AFTER `workshift_id`;

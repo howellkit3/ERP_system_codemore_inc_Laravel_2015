@@ -21,13 +21,17 @@ class WorkShift extends AppModel {
 					'dependent' => true
 				),
 			
-			)
+			),
+			'belongsTo' =>  array(
+				'WorkSchedule' => array(
+					'className' => 'WorkSchedule',
+					'foreignKey' => 'workshift_id',
+					'dependent' => false
+				))
 		),false);
 
 		$this->contain($model);
 	}
-
-
 
 	public function getList($conditions = array()) {
 		

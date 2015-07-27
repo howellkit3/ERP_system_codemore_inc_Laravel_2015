@@ -2,15 +2,15 @@
 <?php $this->Html->addCrumb('Workshifts', array('controller' => 'schedules', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Add', array('controller' => 'workshifts', 'action' => 'add')); ?>
 <?php echo $this->Html->css(array(
-                    'HumanResource.default',
-                    'HumanResource.select2.css',
-                    'timepicker'
+    'HumanResource.default',
+    'HumanResource.select2.css',
+    'timepicker'
     ));?>
 <?php echo $this->Html->script(array(
-					'jquery.maskedinput.min',
-					'HumanResource.custom',
-                    'HumanResource.select2.min',
-                    'HumanResource.work_schedules',
+						'jquery.maskedinput.min',
+						'HumanResource.custom',
+                        'HumanResource.select2.min',
+                        'HumanResource.work_schedules'
 )); ?>
 <div style="clear:both"></div>
 <?php echo $this->element('hr_options'); ?><br><br>
@@ -182,3 +182,13 @@
         </div>
     </div>
 <?php echo $this->Form->end(); ?>
+
+<?php echo $this->element('modals/workshift'); ?>
+<script type="text/javascript">
+    $(document).ready(function(){
+           $('.datepick').datepicker({
+                format: 'yyyy-mm-dd'
+            });
+        $(".autocomplete").select2();
+    });
+</script>

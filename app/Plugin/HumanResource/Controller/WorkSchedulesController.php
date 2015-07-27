@@ -25,6 +25,21 @@ class WorkSchedulesController  extends HumanResourceAppController {
 
 		if ($this->request->is('post')) {
 
+
+			if ($this->WorkSchedule->save($this->request->data['WorkSchedule'])) {
+
+				$this->Session->setFlash('Work Schedule saved successfully');
+		 		   $this->redirect( array(
+                             'controller' => 'schedules', 
+                             'action' => 'work_schedules',
+                             'tab'	=> 'work_schedules'
+                        ));
+			} else  {
+
+				$this->Session->setFlash('There\'s an error saving Schedule');
+
+			}
+			
 		}
 
 		$this->set(compact('employees','workshifts'));
