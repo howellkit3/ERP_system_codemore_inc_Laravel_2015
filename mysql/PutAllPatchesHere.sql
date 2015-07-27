@@ -595,7 +595,22 @@ VALUES
 #NOTE: SELECT KOUFU Re ----
 /** aldrin added this 07/16/2015  */
 
-ALTER TABLE `employee_additional_informations`  ADD `languages` VARCHAR(255) NULL  AFTER `blood`;
+CREATE TABLE IF NOT EXISTS `employee_additional_informations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `birthday` varchar(255) NOT NULL,
+  `height` varchar(45) NOT NULL,
+  `weight` varchar(45) NOT NULL,
+  `gender` varchar(45) NOT NULL,
+  `blood` varchar(45) NOT NULL,
+  `languages` varchar(255) DEFAULT NULL,
+  `skills` text NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=75 ;
 
 
 CREATE TABLE IF NOT EXISTS `toolings` (
@@ -774,3 +789,20 @@ CREATE TABLE `request_items` (   `id` int(11) NOT NULL AUTO_INCREMENT,   `model`
 
 
 
+#NOTE: SELECT KOUFU Human Resource DATABASE ----
+/** aldrin added this 07/27/2015  */
+
+CREATE TABLE IF NOT EXISTS `work_schedules` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `model` varchar(255) NOT NULL,
+  `foreign_key` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `workshift_id` int(11) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `seq` varchar(255) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;

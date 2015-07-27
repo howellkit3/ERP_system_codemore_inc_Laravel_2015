@@ -25,11 +25,11 @@
 									'plugin' => 'human_resource'
 						)); ?>
 					</li>
-					<li class="<?php echo ($active_tab == 'work-schedules') ? 'active' : '' ?>" alt="tab-type">
+					<li class="<?php echo ($active_tab == 'work_schedules') ? 'active' : '' ?>" alt="tab-type">
 						<?php echo $this->Html->link('Work Schedules',array(
 									'controller' => 'schedules',
-									'action' => 'workshifts',
-									'tab' => 'workshift',
+									'action' => 'work_schedules',
+									'tab' => 'work_schedules',
 									'plugin' => 'human_resource'
 						)); ?>
 					</li>
