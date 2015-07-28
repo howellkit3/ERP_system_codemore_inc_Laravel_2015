@@ -116,7 +116,7 @@
                                               
                                                 <?php
 
-                                                    echo $this->Form->input('WorkSchedule.workshift_id', array(
+                                                    echo $this->Form->input('WorkSchedule.work_shift_id', array(
                                                         'type' => 'select',
                                                         'empty' => '--- Select shift ---',
                                                         'class' => 'col-lg-6 autocomplete required',
@@ -126,18 +126,6 @@
 
 
 
-                                            </div>
-                                            <div class="clearfix"></div>
-                                             <div class="selected_breaks" >
-
-                                               <?php echo $this->Form->input('WorkShift.breaktime_ids', array(
-                                                        'type' => 'hidden',
-                                                        'id' => 'breakTimeIds'
-                                                        ));
-                                                ?>
-
-                                                <div class="time"></div>
-                                                <div class="append"></div> 
                                             </div>
                                         </div>
                                      </div>

@@ -14,7 +14,7 @@
 )); ?>
 <div style="clear:both"></div>
 <?php echo $this->element('hr_options'); ?><br><br>
-<?php echo $this->Form->create('WorkSchedule',array('url'=>(array('controller' => 'work_schedules','action' => 'add')),
+<?php echo $this->Form->create('WorkSchedule',array('url'=>(array('controller' => 'work_schedules','action' => 'edit')),
 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data' ));?>
 
     <div class="row">
@@ -44,6 +44,7 @@
                             <div class="main-box-body clearfix">
                                 <div class="form-horizontal">
                                 <div class="col-lg-6">    
+                                    <?php echo $this->Form->input('WorkSchedule.id'); ?>
                                 
                                     <div class="form-group">
                                        <div class="col-lg-12">
@@ -51,6 +52,8 @@
                                                 <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span>  Add schedule by :   </label>
                                                 <div class="col-lg-9">
                                                    <div class="radio">
+
+
                                                                             <input type="radio" name="data[WorkSchedule][model]" id="categoryRadio1" value="Employee" checked>
                                                                             <label for="categoryRadio1">
                                                                                 Employee
@@ -116,7 +119,7 @@
                                               
                                                 <?php
 
-                                                    echo $this->Form->input('WorkSchedule.workshift_id', array(
+                                                    echo $this->Form->input('WorkSchedule.work_shift_id', array(
                                                         'type' => 'select',
                                                         'empty' => '--- Select shift ---',
                                                         'class' => 'col-lg-6 autocomplete required',
@@ -126,18 +129,6 @@
 
 
 
-                                            </div>
-                                            <div class="clearfix"></div>
-                                             <div class="selected_breaks" >
-
-                                               <?php echo $this->Form->input('WorkShift.breaktime_ids', array(
-                                                        'type' => 'hidden',
-                                                        'id' => 'breakTimeIds'
-                                                        ));
-                                                ?>
-
-                                                <div class="time"></div>
-                                                <div class="append"></div> 
                                             </div>
                                         </div>
                                      </div>
