@@ -192,7 +192,7 @@
 																echo $this->Form->input('RequestItem.'.$key.'.size1_unit_id', array(
 											                        'options' => array($unitData),  
 											                        'label' => false,
-											                        'class' => 'form-control required select-drop',
+											                        'class' => 'form-control select-drop',
 											                        'empty' => '---Select Unit---',
 											                        'default' => $value['RequestItem']['size1_unit_id']
 											                         )); 
@@ -223,7 +223,7 @@
 																echo $this->Form->input('RequestItem.'.$key.'.size2_unit_id', array(
 											                        'options' => array($unitData),  
 											                        'label' => false,
-											                        'class' => 'form-control required select-drop',
+											                        'class' => 'form-control select-drop',
 											                        'empty' => '---Select Unit---',
 											                        'default' => $value['RequestItem']['size2_unit_id']
 											                         )); 
@@ -254,7 +254,7 @@
 																echo $this->Form->input('RequestItem.'.$key.'.size3_unit_id', array(
 											                        'options' => array($unitData),  
 											                        'label' => false,
-											                        'class' => 'form-control required select-drop',
+											                        'class' => 'form-control select-drop',
 											                        'empty' => '---Select Unit---',
 											                        'default' => $value['RequestItem']['size3_unit_id']
 											                         )); 
@@ -271,7 +271,7 @@
 														<div class="col-lg-3">
 															<?php 
 																echo $this->Form->input('RequestItem.'.$key.'.quantity', array(
-																	'class' => 'form-control item_type number required select-drop',
+																	'class' => 'form-control item_type number select-drop',
 																	'type' => 'number',
 											                        'label' => false,
 											                        'data' => 0,
@@ -286,7 +286,7 @@
 																echo $this->Form->input('RequestItem.'.$key.'.quantity_unit_id', array(
 											                        'options' => array($unitData),  
 											                        'label' => false,
-											                        'class' => 'form-control required select-drop',
+											                        'class' => 'form-control select-drop',
 											                        'empty' => '---Select Unit---',
 											                        'default' => $value['RequestItem']['quantity_unit_id']
 											                         )); 
