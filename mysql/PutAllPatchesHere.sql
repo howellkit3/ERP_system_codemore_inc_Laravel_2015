@@ -806,3 +806,25 @@ CREATE TABLE IF NOT EXISTS `work_schedules` (
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+ALTER TABLE `work_schedules`  ADD `day` DATETIME NOT NULL  AFTER `workshift_id`;
+
+#NOTE: SELECT KOUFU Human Resource DATABASE ----
+/** aldrin added this 07/28/2015  */
+
+CREATE TABLE IF NOT EXISTS `attendances` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `date` datetime NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `from` datetime NOT NULL,
+  `to` datetime NOT NULL,
+  `in` time NOT NULL,
+  `out` time NOT NULL,
+  `remark` text NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;

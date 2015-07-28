@@ -113,7 +113,9 @@ class SchedulesController  extends HumanResourceAppController {
 
 	public function work_schedules() {
 
-		$this->loadModel('HumanResource.WorkSChedule');
+		$this->loadModel('HumanResource.WorkSchedule');
+
+		$this->loadModel('HumanResource.WorkShift');
 
 		$limit = 10;
 
@@ -123,14 +125,17 @@ class SchedulesController  extends HumanResourceAppController {
 	            'conditions' => $conditions,
 	            'limit' => $limit,
 	            //'fields' => array('id', 'status','created'),
-	           // 'order' => 'WorkSChedule.from ASC',
+	            'order' => 'WorkSChedule.day ASC',
 	        );
 
 		$this->paginate = $params;
 
-	    $workschedules = $this->paginate('WorkSChedule');
+		$this->WorkSchedule->bind(array('WorkShift','Employee'));
 
-	    $this->set(compact('workshifts'));
+	    $workSchedules = $this->paginate('WorkSchedule');
+
+
+	    $this->set(compact('workSchedules'));
 
 
 	}

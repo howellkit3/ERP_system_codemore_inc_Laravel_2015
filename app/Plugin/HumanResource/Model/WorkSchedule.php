@@ -14,14 +14,24 @@ class WorkSchedule extends AppModel {
      public function bind($model = array('Group')){
 
 		$this->bindModel(array(
-			'hasMany' => array(
-				'WorkShiftBreak' => array(
-					'className' => 'WorkShiftBreak',
-					'foreignKey' => 'workshift_id',
+			'hasOne' => array(
+				'WorkShift' => array(
+					'className' => 'HumanResource.WorkShift',
+					'foreignKey' => false,
+					'conditions' => array('WorkShift.id = WorkSchedule.work_shift_id'),
 					'dependent' => true
 				),
 			
-			)
+			),
+			'belongsTo' => array(
+				'Employee' => array(
+					'className' => 'HumanResource.Employee',
+					'foreignKey' => false,
+					'conditions' => array('Employee.id = WorkSchedule.foreign_key'),
+					'dependent' => true
+				),
+
+				)
 		),false);
 
 		$this->contain($model);

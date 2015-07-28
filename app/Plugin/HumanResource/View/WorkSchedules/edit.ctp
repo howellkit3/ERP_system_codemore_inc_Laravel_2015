@@ -2,19 +2,19 @@
 <?php $this->Html->addCrumb('Workshifts', array('controller' => 'schedules', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Add', array('controller' => 'workshifts', 'action' => 'add')); ?>
 <?php echo $this->Html->css(array(
-                    'HumanResource.default',
-                    'HumanResource.select2.css',
-                    'timepicker'
+    'HumanResource.default',
+    'HumanResource.select2.css',
+    'timepicker'
     ));?>
 <?php echo $this->Html->script(array(
-					'jquery.maskedinput.min',
-					'HumanResource.custom',
-                    'HumanResource.select2.min',
-                    'HumanResource.work_schedules',
+						'jquery.maskedinput.min',
+						'HumanResource.custom',
+                        'HumanResource.select2.min',
+                        'HumanResource.work_schedules'
 )); ?>
 <div style="clear:both"></div>
 <?php echo $this->element('hr_options'); ?><br><br>
-<?php echo $this->Form->create('WorkSchedule',array('url'=>(array('controller' => 'work_schedules','action' => 'add')),
+<?php echo $this->Form->create('WorkSchedule',array('url'=>(array('controller' => 'work_schedules','action' => 'edit')),
 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data' ));?>
 
     <div class="row">
@@ -44,6 +44,7 @@
                             <div class="main-box-body clearfix">
                                 <div class="form-horizontal">
                                 <div class="col-lg-6">    
+                                    <?php echo $this->Form->input('WorkSchedule.id'); ?>
                                 
                                     <div class="form-group">
                                        <div class="col-lg-12">
@@ -51,6 +52,8 @@
                                                 <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span>  Add schedule by :   </label>
                                                 <div class="col-lg-9">
                                                    <div class="radio">
+
+
                                                                             <input type="radio" name="data[WorkSchedule][model]" id="categoryRadio1" value="Employee" checked>
                                                                             <label for="categoryRadio1">
                                                                                 Employee
@@ -170,3 +173,13 @@
         </div>
     </div>
 <?php echo $this->Form->end(); ?>
+
+<?php echo $this->element('modals/workshift'); ?>
+<script type="text/javascript">
+    $(document).ready(function(){
+           $('.datepick').datepicker({
+                format: 'yyyy-mm-dd'
+            });
+        $(".autocomplete").select2();
+    });
+</script>
