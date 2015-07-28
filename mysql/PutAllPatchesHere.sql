@@ -821,10 +821,27 @@ CREATE TABLE IF NOT EXISTS `attendances` (
   `to` datetime NOT NULL,
   `in` time NOT NULL,
   `out` time NOT NULL,
-  `remark` text NOT NULL,
+  `notes` text NOT NULL,
   `created_by` int(11) NOT NULL,
   `modified_by` int(11) NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+ALTER TABLE `attendances`  ADD `schedule_id` INT NOT NULL  AFTER `date`;
+
+CREATE TABLE IF NOT EXISTS `timekeeps` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `notes` text NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+

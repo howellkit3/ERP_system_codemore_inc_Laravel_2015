@@ -19,6 +19,7 @@ class BreakTimesController  extends HumanResourceAppController {
 			$this->request->data['Breaktime']['modified_by'] = $auth['id'];
 
 			$this->loadModel('HumanResource.Breaktime');
+			
 			if ($this->Breaktime->save($this->request->data['Breaktime'])) {
 				
 				$this->Session->setFlash('Saving Breaktime information successfully');

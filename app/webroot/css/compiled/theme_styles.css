@@ -5595,6 +5595,13 @@ input[type="radio"] {
   right: 8px;
   top: 11px;
 }
+.filter-block .form-group .calendar-icon {
+  position: absolute;
+  color: #707070;
+  right: 8px;
+  top: 11px;
+}
+
 .filter-block .btn {
   margin-left: 5px;
 }

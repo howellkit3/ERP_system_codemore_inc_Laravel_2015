@@ -27,10 +27,8 @@
 			                    </div>
 			                     <?php
 			                   		
-			                   		$links = array('controller' => 'schedules', 'action' => 'holiday');
 
-			                   
-			                      echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Add', 
+			                   		echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Add', 
 			                            array('controller' => 'workshifts', 
 			                                    'action' => 'add'),
 			                            array('class' =>'btn btn-primary pull-right',

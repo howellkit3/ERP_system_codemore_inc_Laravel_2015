@@ -1,8 +1,18 @@
-<?php 
- echo $this->Html->css(array( 'HumanResource.default' ));
+<?php echo $this->Html->css(array(
+                    'HumanResource.default',
+                    'HumanResource.select2.css',
+                    'timepicker'
+)); 
+	echo $this->Html->script(array(
+					'jquery.maskedinput.min',
+					'HumanResource.custom',
+                    'HumanResource.select2.min',
+                    'HumanResource.moment',
+                    'HumanResource.attendance',
 
+)); 
 
-	echo $this->element('hr_options');
+ 	echo $this->element('hr_options');
 
 	$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
  ?>
@@ -10,93 +20,89 @@
  <div class="row">
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
-    		<?php echo $this->element('tab/schedules',array('active_tab' => $active_tab)); ?>
+    	<?php echo $this->element('tab/attendances',array('active_tab' => $active_tab)); ?>
 		<div class="main-box-body clearfix">
 		 
 			<div class="tabs-wrapper">
 				<div class="tab-content">
 					<div class="tab-pane active" id="tab-calendar">
 						<header class="main-box-header clearfix">
-			                <h2 class="pull-left"><b>Work Schedules</b> </h2>
+			                <h2 class="pull-left"><b>Sign I/O records</b> </h2>
 			                <div class="filter-block pull-right">
 			                 <div class="form-group pull-left">
 			                        <?php //echo $this->Form->create('Quotation',array('controller' => 'quotations','action' => 'search', 'type'=> 'get')); ?>
 			                            <input placeholder="Search..." class="form-control searchCustomer"  />
 			                            <i class="fa fa-search search-icon"></i>
 			                         <?php //echo $this->Form->end(); ?>
-			                    </div>
+			                   </div>
 			                    <?php
 			                   		
-			                   	$links = array('controller' => 'schedules', 'action' => 'holiday');
-
-			                   	echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Add', 
-			                            array('controller' => 'work_schedules', 
-			                                    'action' => 'add'),
-			                            array('class' =>'btn btn-primary pull-right',
-			                                'escape' => false));
+			                   		// echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Add', 
+			                     //        array('controller' => 'workshifts', 
+			                     //                'action' => 'add'),
+			                     //        array('class' =>'btn btn-primary pull-right',
+			                     //            'escape' => false));
 
 			                    ?> 
-			                  
+			                 
+			                   <button class="btn btn-primary pull-right add-timekeep" onclick="updateTime('.time_input')" data-toggle="modal" href="#timeKeep"> <i class="fa fa-pencil-square-o fa-lg"></i> Add </button>
 			                   <br><br>
+
 			               </div>
 			            </header>
 
 			            <div class="main-box-body clearfix">
 			            		 <div class="table-responsive">
 								<table class="table table-striped table-hover">
+									
 									<thead>
 										<tr>
+											<th><a href="#"><span>Time</span></a></th>
+											<th><a href="#"><span>Code</span></a></th>
 											<th><a href="#"><span>Employee Name</span></a></th>
-											<th class="text-center"><a href="#"><span>Date</span></a></th>
-											<th class="text-center"><a href="#"><span>Shift</span></a></th>
+											<th><a href="#"><span>Type</span></a></th>
 											<th><a href="#"><span>Actions</span></a></th>
 										</tr>
 									</thead>
 
-									<?php 
-								        if(!empty($workSchedules)){
-								            foreach ($workSchedules as $key => $schedule): ?>
+									<?php if(!empty($timekeeps)){
+								            foreach ($timekeeps as $key => $timekeep): ?>
 												<tbody aria-relevant="all" aria-live="polite" role="alert">
 													<tr class="">
-
-														<td class="">
+													
+														
+														<td> 
+								                           <?php echo date('Y/m/d h:i:a',strtotime($timekeep['Timekeep']['date'].' '.$timekeep['Timekeep']['time']));
+								                           ?> 
+								                        </td>
+								                        	<td > 
+								                           <?php echo $timekeep['Employee']['code'] ?> 
+								                        </td>
+								                        <td class="">
 								                          <?php 
-								                          if ($schedule['WorkSchedule']['model'] == 'Employee') {
+								                          		echo $this->CustomText->getFullname($timekeep['Employee']);
 
-								                          		echo $this->CustomText->getFullname($schedule['Employee']);
-
-								                          } else if ($schedule['WorkSchedule']['model'] == 'Department') {
-
-								                          		echo "Department";
-								                          }
-								                          
+								                        
 								                           ?>
 								                        </td>
-														<td class="text-center"> 
-								                           <?php echo date('Y/m/d',strtotime($schedule['WorkSchedule']['day'])); ?> 
-								                        </td>
 
-								                        <td class="text-center">
-								                           <?php echo $schedule['WorkShift']['name']; ?> 
+								                        <td>
+								                           <?php echo ucwords($timekeep['Timekeep']['type']); ?> 
 								                        </td>
 								                       	<td>
 								                      	<?php
-														echo $this->Html->link('<span class="fa-stack">
-														<i class="fa fa-square fa-stack-2x"></i>
-														<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit </font></span>
-														</span> ', array('controller' => 'work_schedules', 'action' => 'edit',$schedule['WorkSchedule']['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Information'));
-
-														 echo $this->Form->postLink('<span class="fa-stack">
+														
+														echo $this->Form->postLink('<span class="fa-stack">
 														<i class="fa fa-square fa-stack-2x"></i>
 														<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Delete </font></span>
 														</span>', array(
-																'controller' => 'work_schedules',
+																'controller' => 'timekeeps',
 																'action' => 'delete',
 																'plugin' => 'human_resource',
-																$schedule['WorkSchedule']['id']),
+																$timekeep['Timekeep']['id']),
 										                                array('escape' => false), 
 										                                __('Are you sure you want to delete %s?', 
-										                                $schedule['WorkSchedule']['name'])
+										                                $timekeep['Timekeep']['id'])
 										 						); 
 
 
@@ -128,9 +134,7 @@
 			</div>
 		</div>	
 
-
-
-
-	    </div>
+	 </div>
     </div>
 </div>
+<?php echo $this->element('modals/attendance'); ?>

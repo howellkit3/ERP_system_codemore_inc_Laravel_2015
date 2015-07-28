@@ -94,3 +94,11 @@ div.value {
 .append li .icon:hover {
   color: #000 !important;
 }
+.error.appended-error {
+  margin-top: 9px;
+  position: relative;
+  top: 29px;
+}
+#personalAttendance .modal-dialog {
+  width: 75%;
+}
