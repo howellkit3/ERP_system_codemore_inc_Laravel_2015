@@ -173,7 +173,7 @@
 										<div class="col-lg-8">
 											<?php 
 	                                            echo $this->Form->input('PurchaseOrder.remarks',array( 
-	                                            						'class' => 'form-control required', 
+	                                            						'class' => 'form-control ', 
 	                                                					'label' => false,
 	                                                					'placeholder' => 'Remarks'  
 	                                                					));
@@ -314,7 +314,7 @@
 														<div class="col-lg-3">
 															<?php 
 											                    echo $this->Form->input('PurchasingItem.'.$key.'.size1', array(
-																	'class' => 'form-control item_type',
+																	'class' => 'form-control item_type required',
 											                        'label' => false,
 											                        'placeholder' => 'Size',
 											                        'disabled' => false,
@@ -346,7 +346,7 @@
 														<div class="col-lg-3">
 															<?php 
 																echo $this->Form->input('PurchasingItem.'.$key.'.size2', array(
-																	'class' => 'form-control item_type',
+																	'class' => 'form-control item_type required',
 											                        'label' => false,
 											                        'placeholder' => 'Size',
 											                        'disabled' => false,
@@ -378,7 +378,7 @@
 														<div class="col-lg-3">
 															<?php 
 																echo $this->Form->input('PurchasingItem.'.$key.'.size3', array(
-																	'class' => 'form-control item_type',
+																	'class' => 'form-control item_type required',
 											                        'label' => false,
 											                        'placeholder' => 'Size',
 											                        'disabled' => false,
