@@ -230,7 +230,7 @@
 										<?php $dataPlus = $key + 1; ?>
 
 										<?php 
-						    				echo $this->Form->input('RequestItem.'.$key.'.id', array(
+						    				echo $this->Form->input('RequestItemIdHolder.'.$key.'.id', array(
 												'class' => 'form-control',
 						                        'label' => false,
 						                        'type' => 'hidden',
@@ -268,6 +268,14 @@
 								    					'label' => false,
 								    					'readonly' => 'readonly',
 								    					'value' => $value['RequestItem']['model']
+								    					));
+								                    echo $this->Form->input('RequestItem.'.$key.'.request_uuid', 
+																	array( 
+														'class' => 'form-control item_model required ', 
+														'type' => 'hidden',
+								    					'label' => false,
+								    					'readonly' => 'readonly',
+								    					'value' => $value['RequestItem']['request_uuid']
 								    					));
 								                ?>
 
@@ -379,7 +387,7 @@
 								                        'label' => false,
 								                        'class' => 'form-control required',
 								                        'empty' => '---Select Unit---',
-								                        'disabled' => fasle,
+								                        'disabled' => false,
 								                        'default' => $value['RequestItem']['size3_unit_id']
 								                         )); 
 

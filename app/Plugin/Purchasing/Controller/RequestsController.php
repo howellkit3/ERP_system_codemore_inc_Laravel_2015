@@ -483,6 +483,17 @@ class RequestsController extends PurchasingAppController {
 
     	if (!empty($this->request->data)) {
     		
+    		foreach ($this->request->data['RequestItemIdHolder'] as $key => $value) {
+
+    			
+    			if (!empty($value['id'])) {
+
+    				$this->RequestItem->delete($value['id']);
+
+    			}
+    			
+    		}
+    		
     		$this->PurchaseOrder->savePurchaseOrder($this->request->data,$userData['User']['id']);
 
     		$this->RequestItem->saveRequestItemPrice($this->request->data);
