@@ -7,7 +7,6 @@ class AttendancesController  extends HumanResourceAppController {
 
 	var $helpers = array('HumanResource.CustomText','HumanResource.CustomTime');
 
-
 	public function index() {
 
 		$this->loadModel('HumanResource.WorkSchedule');
@@ -30,25 +29,24 @@ class AttendancesController  extends HumanResourceAppController {
 			$date = $query['data']['date'];
 		}
 	
-
-
 		$conditions = array(
 			'Attendance.date <=' => $date,
 		 	'Attendance.date >=' => $date
 		);
 
-
 		if (!empty($query['data']['name'])) {
 			$search = $query['data']['name'];
 			$conditions = array_merge($conditions,array(
+					'OR' => array(
 					'Employee.first_name LIKE' => '%'.$search.'%',
-
-				));
+					'Employee.last_name LIKE' => '%'.$search.'%',
+					'Employee.middle_name' => '%'.$search.'%',
+			)));
 		}
 
 		$this->Attendance->bind(array('WorkSchedule','Employee','WorkShift'));
 
-	//$conditions = array();
+		//$conditions = array();
 		$params =  array(
 	            'conditions' => $conditions,
 	            'limit' => $limit,
@@ -73,13 +71,25 @@ class AttendancesController  extends HumanResourceAppController {
 
 		$limit = 10;
 
+		$query = $this->request->query;
+
+
+		$search = '';
+
 	 	$date = date('Y-m-d');
 
 		$date2 = date('Y-m-d', strtotime($date . ' +1 day'));
 
+
+		if (!empty($query['date'])) {
+
+			$date = $query['date'];
+
+		}
+
 		$conditions = array(
-		'Attendance.date <=' => $date,
-		 'Attendance.date >=' => $date
+			'Attendance.date <=' => $date,
+			 'Attendance.date >=' => $date
 		);
 
 		$attendance = $this->Attendance->getAll($conditions,array('Employee'));
@@ -94,7 +104,21 @@ class AttendancesController  extends HumanResourceAppController {
 			
 		}
 
-		$conditions = array();
+		$conditions = array(
+			'Timekeep.date <=' => $date,
+			 'Timekeep.date >=' => $date
+		);
+
+		if (!empty($query['name'])) {
+			$search = $query['name'];
+			$conditions = array_merge($conditions,array(
+				'OR' => array(
+					'Employee.first_name LIKE' => '%'.$search.'%',
+					'Employee.last_name LIKE' => '%'.$search.'%',
+					'Employee.middle_name' => '%'.$search.'%',
+			)));
+		}
+
 		$params =  array(
 	            'conditions' => $conditions,
 	            'limit' => $limit,
@@ -108,7 +132,7 @@ class AttendancesController  extends HumanResourceAppController {
 
 		$timekeeps = $this->paginate('Timekeep');
 
-		$this->set(compact('employees','timekeeps'));
+		$this->set(compact('employees','timekeeps','date','search'));
 	}
 
 	public function view($id) {
@@ -322,6 +346,15 @@ public function edit($id = null) {
 		));
 
 		$this->set(compact('breaktimes','breaks'));
+	}
+
+	public function absences() {
+
+		$date = date('Y-m-d');
+		$search = '';
+
+		$this->set(compact('date','search'));
+		
 	}
 
 

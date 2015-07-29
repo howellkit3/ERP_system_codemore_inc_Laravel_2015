@@ -314,4 +314,27 @@ class EmployeesController  extends HumanResourceAppController {
 	}
 
 
+	public function findById($id = null) {
+
+			$this->layout = false;
+
+			if (!empty($id)) {
+
+				if ($this->request->is('ajax')) {
+
+					$employee = $this->Employee->find('first',array(
+						'conditions' => array( 'Employee.id' => $id ),
+						'fields' => array('id','full_name','code')
+					));
+
+					echo json_encode($employee);
+					exit();
+				}
+			}
+
+		
+		$this->autoRender = false;
+
+	}
+
 }

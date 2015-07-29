@@ -3,7 +3,8 @@
 <?php echo $this->Html->css(array('HumanResource.default','timepicker'));?>
 <?php echo $this->Html->script(array(
 						'jquery.maskedinput.min',
-						'HumanResource.custom'
+						'HumanResource.custom',
+                        'HumanResource.breaktime'
 )); ?>
 <div style="clear:both"></div>
 
@@ -55,7 +56,24 @@
                                              </div>
                                         </div>
                                     </div>
+                                     <div class="form-group">
+                                       <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Duration</label>
+                                                <div class="col-lg-2">
+                                                   <?php
+                                                                echo $this->Form->input('Breaktime.duration', array(
+                                                                    'class' => 'form-control col-lg-6 required number',
+                                                                    'type' => 'number',
+                                                                    'value' => 1,
+                                                                    'label' => false));
+                                                         ?>
 
+
+                                                </div>
+                                             </div>
+                                        </div>
+                                    </div>
                                      <div class="form-group">
                                        
                                         <div class="col-lg-6">

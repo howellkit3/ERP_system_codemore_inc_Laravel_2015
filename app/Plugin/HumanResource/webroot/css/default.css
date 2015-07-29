@@ -63,6 +63,7 @@ div.value {
   display: inline-block;
   list-style: outside none none;
   width: 100%;
+  text-align: left;
 }
 .modal-dialog.breaktime {
   width: 800px;
@@ -72,6 +73,7 @@ div.value {
   font-weight: bold;
   left: 10px;
   position: relative;
+  font-size:1.5vh;
 }
 
 .selected_breaks {
@@ -101,4 +103,7 @@ div.value {
 }
 #personalAttendance .modal-dialog {
   width: 75%;
+}
+.date-range-to {
+  margin: 6px 0;
 }
