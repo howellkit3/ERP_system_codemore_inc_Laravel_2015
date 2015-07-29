@@ -233,6 +233,17 @@ class EmployeesController  extends HumanResourceAppController {
 		if (!empty($id)) {
 
 
+		$this->loadModel('HumanResource.EmployeeAdditionalInformation');
+
+		 $this->loadModel('HumanResource.Email');
+
+		 $this->loadModel('HumanResource.Address');
+
+		 $this->loadModel('HumanResource.GovernmentRecord');
+
+		 $this->loadModel('HumanResource.Contact');
+
+		 $this->loadModel('HumanResource.ContactPerson');
 
 			$this->Employee->bind(array(
 				'EmployeeAdditionalInformation',
@@ -260,20 +271,34 @@ class EmployeesController  extends HumanResourceAppController {
 
 		if (!empty($id)) {
 
+		$this->loadModel('HumanResource.EmployeeAdditionalInformation');
+
+		 $this->loadModel('HumanResource.Email');
+
+		 $this->loadModel('HumanResource.Address');
+
+		 $this->loadModel('HumanResource.GovernmentRecord');
+
+		 $this->loadModel('HumanResource.Contact');
+
+		 $this->loadModel('HumanResource.ContactPerson');
+
+
+			$this->Employee->bind(array(
+				'EmployeeAdditionalInformation',
+				'Email',
+				'GovernmentRecord',
+				'Address',
+				'Contact',
+				'ContactPerson',
+				'ContactPersonEmail',
+				'ContactPersonAddress',
+				'ContactPersonNumber'
+				));
+
 			$employee = $this->Employee->findById($id);
 
-			$departments = array('' => 'Select Department',
-                        	'1' => 'Accounting',
-                        	'2' => 'Sales',
-                        	'3' => 'Delivery'
-                        );
 
-         	$positions = array('' => 'Select Position',
-		                	'1' => 'CEO',
-		                	'2' => 'Vice President',
-		                	'3' => 'Employee',
-		                	'4' => 'Others'
-		                	);
 
 			$this->set(compact('employee','departments','positions'));
 		}

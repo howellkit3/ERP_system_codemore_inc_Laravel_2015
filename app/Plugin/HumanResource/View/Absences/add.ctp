@@ -17,10 +17,9 @@ echo $this->Html->script(array(
 <div style="clear:both"></div>
 
 <?php echo $this->element('hr_options'); ?><br><br>
-<?php echo $this->Form->create('Breaktime',array('url'=>(array('controller' => 'breaktimes','action' => 'add')),
+<?php echo $this->Form->create('Absence',array('url'=>(array('controller' => 'absences','action' => 'add')),
 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data' ));?>
-
-    <div class="row">
+ <div class="row">
         <div class="col-lg-12">
         	<div class="row">
                 <div class="col-lg-12">

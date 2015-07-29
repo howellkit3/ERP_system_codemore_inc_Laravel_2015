@@ -664,7 +664,6 @@ CREATE TABLE `request_items` (   `id` int(11) NOT NULL AUTO_INCREMENT,   `model`
 #NOTE: SELECT KOUFU HR DATABASE ----
 
 
-
 CREATE TABLE IF NOT EXISTS `absences` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_id` int(11) NOT NULL,
@@ -680,11 +679,6 @@ CREATE TABLE IF NOT EXISTS `absences` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `addresses`
---
 
 CREATE TABLE IF NOT EXISTS `addresses` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -703,12 +697,6 @@ CREATE TABLE IF NOT EXISTS `addresses` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=68 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `attendances`
---
-
 CREATE TABLE IF NOT EXISTS `attendances` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_id` int(11) NOT NULL,
@@ -725,11 +713,6 @@ CREATE TABLE IF NOT EXISTS `attendances` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `breaktimes`
---
 
 CREATE TABLE IF NOT EXISTS `breaktimes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -743,11 +726,7 @@ CREATE TABLE IF NOT EXISTS `breaktimes` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
--- --------------------------------------------------------
 
---
--- Table structure for table `contacts`
---
 
 CREATE TABLE IF NOT EXISTS `contacts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -762,11 +741,6 @@ CREATE TABLE IF NOT EXISTS `contacts` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=152 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `contact_people`
---
 
 CREATE TABLE IF NOT EXISTS `contact_people` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -783,11 +757,7 @@ CREATE TABLE IF NOT EXISTS `contact_people` (
   KEY `id_idx` (`employee_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=38 ;
 
--- --------------------------------------------------------
 
---
--- Table structure for table `departments`
---
 
 CREATE TABLE IF NOT EXISTS `departments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -802,11 +772,7 @@ CREATE TABLE IF NOT EXISTS `departments` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
 
---
--- Table structure for table `emails`
---
 
 CREATE TABLE IF NOT EXISTS `emails` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -821,11 +787,7 @@ CREATE TABLE IF NOT EXISTS `emails` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=65 ;
 
--- --------------------------------------------------------
 
---
--- Table structure for table `employees`
---
 
 CREATE TABLE IF NOT EXISTS `employees` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -846,11 +808,7 @@ CREATE TABLE IF NOT EXISTS `employees` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
--- --------------------------------------------------------
 
---
--- Table structure for table `employee_additional_informations`
---
 
 CREATE TABLE IF NOT EXISTS `employee_additional_informations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -869,11 +827,6 @@ CREATE TABLE IF NOT EXISTS `employee_additional_informations` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=78 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `government_records`
---
 
 CREATE TABLE IF NOT EXISTS `government_records` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -887,11 +840,7 @@ CREATE TABLE IF NOT EXISTS `government_records` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=173 ;
 
--- --------------------------------------------------------
 
---
--- Table structure for table `holidays`
---
 
 CREATE TABLE IF NOT EXISTS `holidays` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -907,11 +856,7 @@ CREATE TABLE IF NOT EXISTS `holidays` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
--- --------------------------------------------------------
 
---
--- Table structure for table `positions`
---
 
 CREATE TABLE IF NOT EXISTS `positions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -926,11 +871,6 @@ CREATE TABLE IF NOT EXISTS `positions` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `timekeeps`
---
 
 CREATE TABLE IF NOT EXISTS `timekeeps` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -946,11 +886,7 @@ CREATE TABLE IF NOT EXISTS `timekeeps` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
 
--- --------------------------------------------------------
 
---
--- Table structure for table `toolings`
---
 
 CREATE TABLE IF NOT EXISTS `toolings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -967,11 +903,7 @@ CREATE TABLE IF NOT EXISTS `toolings` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
--- --------------------------------------------------------
 
---
--- Table structure for table `tools`
---
 
 CREATE TABLE IF NOT EXISTS `tools` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -987,11 +919,6 @@ CREATE TABLE IF NOT EXISTS `tools` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `work_schedules`
---
 
 CREATE TABLE IF NOT EXISTS `work_schedules` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1009,11 +936,6 @@ CREATE TABLE IF NOT EXISTS `work_schedules` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `work_shifts`
---
 
 CREATE TABLE IF NOT EXISTS `work_shifts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1028,11 +950,6 @@ CREATE TABLE IF NOT EXISTS `work_shifts` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `work_shift_breaks`
---
 
 CREATE TABLE IF NOT EXISTS `work_shift_breaks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
