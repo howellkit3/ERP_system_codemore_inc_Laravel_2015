@@ -5,6 +5,19 @@
 						'jquery.maskedinput.min',
 						'HumanResource.custom'
 )); ?>
+
+<?php echo $this->Html->css(array(
+                    'HumanResource.select2.css',
+                    'timepicker'
+)); 
+    echo $this->Html->script(array(
+                    'jquery.maskedinput.min',
+                    'HumanResource.custom',
+                    'HumanResource.select2.min',
+                    'HumanResource.moment',
+                    'HumanResource.attendance',
+
+));  ?>
 <div style="clear:both"></div>
 
 <?php echo $this->element('hr_options'); ?><br><br>
@@ -77,3 +90,4 @@
     });
 
      </script>
+   
