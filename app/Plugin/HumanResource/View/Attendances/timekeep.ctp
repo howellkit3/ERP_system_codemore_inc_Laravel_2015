@@ -26,29 +26,40 @@
 			<div class="tabs-wrapper">
 				<div class="tab-content">
 					<div class="tab-pane active" id="tab-calendar">
-						<header class="main-box-header clearfix">
-			                <h2 class="pull-left"><b>Sign I/O records</b> </h2>
-			                <div class="filter-block pull-right">
-			                 <div class="form-group pull-left">
-			                        <?php //echo $this->Form->create('Quotation',array('controller' => 'quotations','action' => 'search', 'type'=> 'get')); ?>
-			                            <input placeholder="Search..." class="form-control searchCustomer"  />
-			                            <i class="fa fa-search search-icon"></i>
-			                         <?php //echo $this->Form->end(); ?>
-			                   </div>
-			                    <?php
-			                   		
-			                   		// echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Add', 
-			                     //        array('controller' => 'workshifts', 
-			                     //                'action' => 'add'),
-			                     //        array('class' =>'btn btn-primary pull-right',
-			                     //            'escape' => false));
 
-			                    ?> 
-			                 
-			                   <button class="btn btn-primary pull-right add-timekeep" onclick="updateTime('.time_input')" data-toggle="modal" href="#timeKeep"> <i class="fa fa-pencil-square-o fa-lg"></i> Add </button>
+						<header class="main-box-header clearfix">
+
+			                <h2 class="pull-left"><b>Sign I/O records</b> </h2>
+			                <div class="clearfix"></div>
+							<br>
+			              
+			                <div class="filter-block pull-left">
+			              	
+			              	 <?php echo $this->Form->create('Attendance',array('controller' => 'attendances','action' => 'timekeep', 'type'=> 'get')); ?>
+			                 	<div class="form-group pull-left">
+			                 		<input type="text" name="date" id="changeDate" class="form-control datepick" value="<?php echo $date ?>">
+									<i class="fa fa fa-calendar calendar-icon"></i>
+								</div>
+			                    <div class="form-group pull-left">
+			                 		 <input placeholder="Search..." class="form-control searchCustomer" value="<?php echo $search ?>" name="name" />
+			                            <i class="fa fa-search search-icon"></i>
+								</div>
+			                    <div class="form-group pull-left">
+			                    	 <button type="submit" class="btn btn-success">Go</button> 
+			                    </div>
+			                    <?php echo $this->Form->end(); ?>
+			               
 			                   <br><br>
 
 			               </div>
+
+			                 <div class="filter-block pull-right">
+
+			                	   <button class="btn btn-primary pull-right add-timekeep" onclick="updateTime('.time_input')" data-toggle="modal" href="#timeKeep"> <i class="fa fa-pencil-square-o fa-lg"></i> Add </button>
+			                </div>
+			                 <div class="filter-block pull-right">
+			                 &nbsp
+			                 </div>
 			            </header>
 
 			            <div class="main-box-body clearfix">

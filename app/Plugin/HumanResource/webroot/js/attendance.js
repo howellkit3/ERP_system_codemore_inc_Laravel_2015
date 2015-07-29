@@ -38,12 +38,18 @@
             	$('.radio input').attr('disabled',false);
 
             	if (data.type == 'in'){
-
-            		$('#categoryRadio1').attr('disabled',true).next().text('Time-In: '+data.time);
+                    
+                    $('#categoryRadio1').attr('disabled',true).next().text('Time-In: '+data.time);
             		$('#categoryRadio2').click();
-            	} else {
+
+                   
+            	
+                } else {
+
             		$('#categoryRadio2').attr('checked',false);
-            		$('#categoryRadio1').click().attr('disabled',false).next().text('In')
+            		$('#categoryRadio1').click().attr('disabled',false).next().text('In');
+
+                   // $('#AttendanceNotes').val('');
 
             	}
 
@@ -102,17 +108,40 @@ $(document).ready(function(){
                
             	$append_cont.html(data);
 
-            	$('.datepick').datepicker({
-                	format: 'yyyy-mm-dd'
-            		});
+                	$('.datepick').datepicker({
+                    	format: 'yyyy-mm-dd'
+                		});
 
-            	$(".autocomplete").select2();
+            	   $(".autocomplete").select2();
 
             }
         });
 
     	e.preventDefault();
 	});	 
+
+
+        $('body').on('click','.modal-pagination a',function(e) {
+     
+            $append_cont = $('#personalAttendance .main-box-body');
+
+            var getUrl = $(this).attr('href');
+
+            $append_cont.html('<img src="'+serverPath+'/img/loader.gif"/>');
+
+
+            $.ajax({
+              url:getUrl,
+              type: "GET",
+              success:function(data){
+
+                $append_cont.html(data);
+              }
+            });
+
+            e.preventDefault();
+
+     });
 
     $('body').on('submit','#AttendanceAjaxFindForm',function(e){
 
@@ -159,7 +188,7 @@ $(document).ready(function(){
 
         	$return = true;
         	
-        	$('input.required,select.required,textare.required').each(function(){
+        	$(this).find('input.required,select.required,textare.required').each(function(){
 
         		if ($(this).val() == '') {
 
@@ -174,6 +203,7 @@ $(document).ready(function(){
 
         		e.preventDefault();
         	}
+            console.log($return);
 
         	return $return;
         });
