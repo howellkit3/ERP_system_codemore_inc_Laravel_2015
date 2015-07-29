@@ -80,9 +80,8 @@ class EmployeesController  extends HumanResourceAppController {
 			 $this->loadModel('HumanResource.Contact');
 
 			 $this->loadModel('HumanResource.ContactPerson');
+
 			
-
-
 			  $uploader = new ImageUploader;
         
 			 if(!empty($this->request->data)){
@@ -143,6 +142,16 @@ class EmployeesController  extends HumanResourceAppController {
 
 			 } 
 		}
+
+		$this->loadModel('HumanResource.Position');
+
+		$this->loadModel('HumanResource.Department');
+
+		$positionList = $this->Position->find('list',array('fields' => array('id','name')));
+
+		$departmentList = $this->Department->find('list',array('fields' => array('id','name')));
+
+		$this->set(compact('positionList','departmentList'));
 	}
 
 	public function edit($id){
