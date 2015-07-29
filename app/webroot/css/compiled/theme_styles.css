@@ -8635,6 +8635,9 @@ svg {
   border-right: 2px solid #e7ebee;
   border-left: 0;
 }
+.datepicker-dropdown {
+  z-index: 9999 !important;
+}
 
 @media only screen and (min-width: 1170px) {
   .theme-turquoise .cd-timeline-content .cd-date {

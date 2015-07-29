@@ -395,3 +395,7 @@ body.dragging, body.dragging * {
 .gatefield{
   text-transform: capitalize !important;
 }
+
+.datepicker-dropdown {
+  z-index: 9999 !important;
+}
