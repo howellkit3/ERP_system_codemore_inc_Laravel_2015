@@ -1,5 +1,5 @@
 <?php $this->Html->addCrumb('Settings', array('controller' => 'settings', 'action' => 'department')); ?>
-<?php $this->Html->addCrumb('Position', array('controller' => 'settings', 'action' => 'position','tab'=>'position')); ?>
+<?php $this->Html->addCrumb('Status', array('controller' => 'settings', 'action' => 'status','tab'=>'status')); ?>
 <?php echo $this->element('hr_options');
     $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : ' ';
 
@@ -16,9 +16,9 @@
                         <div class="tab-content">
                             <!-- <div class="tab-pane <?php echo ($active_tab == 'position') ? 'active' : '' ?>" id="tab-position"> -->
                             <!-- <div class="tab-pane fade <?php echo ($active_tab == 'position' || $this->params['action'] == 'position') ? 'in active' : '' ?>" id="position"> -->
-                            <div class="tab-pane active" id="tab-position">
+                            <div class="tab-pane active" id="tab-status">
                                 <header class="main-box-header clearfix">
-                                    <h2 class="pull-left"><b>Positions</b></h2>
+                                    <h2 class="pull-left"><b>Status</b></h2>
                                     <div class="filter-block pull-right">
                                      <div class="form-group pull-left">
                                             <?php //echo $this->Form->create('Quotation',array('controller' => 'quotations','action' => 'search', 'type'=> 'get')); ?>
@@ -27,8 +27,8 @@
                                              <?php //echo $this->Form->end(); ?>
                                         </div>
                                        <?php
-                                            echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Add Position', 
-                                                array('controller' => 'positions', 
+                                            echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Add Status', 
+                                                array('controller' => 'status', 
                                                         'action' => 'add',),
                                                 array('class' =>'btn btn-primary pull-right',
                                                     'escape' => false));

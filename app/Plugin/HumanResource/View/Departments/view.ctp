@@ -1,6 +1,5 @@
-<?php $this->Html->addCrumb('Settings', array('controller' => 'settings', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Department', array('controller' => 'settings', 'action' => 'department')); ?>
-<?php $this->Html->addCrumb('View', array('controller' => 'settings', 'action' => 'view_department')); ?>
+<?php $this->Html->addCrumb('View', array('controller' => 'departments', 'action' => 'view',$departmentData['Department']['id'])); ?>
 <?php echo $this->Html->css('HumanResource.default');?>
 <?php echo $this->Html->script(array(
                         'jquery.maskedinput.min',
@@ -23,7 +22,7 @@
                         </h1>
                     </center>
                     <?php 
-                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'settings', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'settings', 'action' => 'department'),array('class' =>'btn btn-primary pull-right','escape' => false));
                     ?>
                 </header>
 

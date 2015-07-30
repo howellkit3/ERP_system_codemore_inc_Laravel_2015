@@ -55,7 +55,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
           <?php $page =($active_page == 'settings') ? 'active' : '' ?>
             <?php echo $this->Html->link("<span class='count'>Settings</span>",
              array('controller' => 'settings',
-              'action' => 'index'),
+              'action' => 'department'),
               array('escape' => false,
                 'class' => 'btn '.$page 
               )); ?>
