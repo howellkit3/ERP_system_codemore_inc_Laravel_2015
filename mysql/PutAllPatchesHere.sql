@@ -962,6 +962,44 @@ CREATE TABLE IF NOT EXISTS `work_shift_breaks` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=40 ;
 
+/** howell kit added this 07/30/2015  */
+
+CREATE TABLE IF NOT EXISTS `cause_memos` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `uuid` INT(11) DEFAULT NULL,
+  `employee_id` INT(11) DEFAULT NULL,
+  `description` VARCHAR(100) DEFAULT NULL,
+  `company_policy_id` INT(11) DEFAULT NULL,
+  `status_id` INT(11) DEFAULT NULL,
+  `created_by` INT(11) DEFAULT NULL,
+  `modified_by` INT(11) DEFAULT NULL,
+  `created` TIMESTAMP NULL DEFAULT NULL,
+  `modified` TIMESTAMP NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=38 ;
+
+CREATE TABLE IF NOT EXISTS `violations` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(50) DEFAULT NULL,
+  `disciplinary_action_id` INT(11) DEFAULT NULL,
+  `description` VARCHAR(100) DEFAULT NULL,
+  `created_by` INT(11) DEFAULT NULL,
+  `modified_by` INT(11) DEFAULT NULL,
+  `created` TIMESTAMP NULL DEFAULT NULL,
+  `modified` TIMESTAMP NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=38 ;
+
+CREATE TABLE IF NOT EXISTS `disciplinary_actions` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(50) DEFAULT NULL,
+  `created_by` INT(11) DEFAULT NULL,
+  `modified_by` INT(11) DEFAULT NULL,
+  `created` TIMESTAMP NULL DEFAULT NULL,
+  `modified` TIMESTAMP NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=38 ;
+
 
 ALTER TABLE `absences` CHANGE `total_time` `total_time` TIME NOT NULL;
 

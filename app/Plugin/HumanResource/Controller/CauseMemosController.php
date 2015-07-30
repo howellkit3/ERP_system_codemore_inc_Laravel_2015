@@ -3,7 +3,7 @@ App::uses('AppController', 'Controller');
 App::uses('SessionComponent', 'Controller/Component');
 
 
-class MemosController  extends HumanResourceAppController {
+class CauseMemosController  extends HumanResourceAppController {
 
 	var $helpers = array('');
 
