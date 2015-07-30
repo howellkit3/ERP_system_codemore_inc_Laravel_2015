@@ -963,4 +963,6 @@ CREATE TABLE IF NOT EXISTS `work_shift_breaks` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=40 ;
 
 
+ALTER TABLE `absences` CHANGE `total_time` `total_time` TIME NOT NULL;
+
 /* end all HR tables */

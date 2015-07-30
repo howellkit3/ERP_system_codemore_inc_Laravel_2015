@@ -199,7 +199,7 @@ class AttendancesController  extends HumanResourceAppController {
 
 				$this->Session->setFlash('There\'s an error saving data');
 			
-		}
+			}
 	}
 }
 
@@ -350,10 +350,60 @@ public function edit($id = null) {
 
 	public function absences() {
 
+		$limit = 10;
+
+		$this->loadModel('HumanResource.Absence');
+
+		$this->loadModel('HumanResource.Employee');
+
 		$date = date('Y-m-d');
+
 		$search = '';
 
-		$this->set(compact('date','search'));
+
+	 	$date = date('Y-m-d');
+
+	 	$conditions = array();
+
+	 	$query = $this->request->query;
+
+		if (!empty($query['date'])) {
+
+			$date = $query['date'];
+
+			$conditions = array_merge($conditions,array(
+				'Absence.from >=' => $date,	
+				
+			));
+
+		}
+
+		if (!empty($query['name'])) {
+
+			$search = $query['name'];
+
+			$conditions = array_merge($conditions,array(
+				'OR' => array(
+					'Employee.first_name LIKE' => '%'.$search.'%',
+					'Employee.last_name LIKE' => '%'.$search.'%',
+					'Employee.middle_name' => '%'.$search.'%',
+			)));
+		}
+
+		$params =  array(
+	            'conditions' => $conditions,
+	            'limit' => $limit,
+	            //'fields' => array('id', 'status','created'),
+	            'order' => 'Absence.from ASC',
+	    );
+
+		$this->Absence->bind(array('Employee'));
+
+		$this->paginate = $params;
+
+		$absences = $this->paginate('Absence');
+
+		$this->set(compact('absences','date','search'));
 		
 	}
 
