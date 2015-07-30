@@ -28,4 +28,11 @@ class Department extends AppModel {
 		
 	}
 
+	public function getList($conditions = array()) {
+
+		return  $this->find('list',array('conditions' => $conditions,'fields' => array('id','name')));
+
+	}
+
+
 }

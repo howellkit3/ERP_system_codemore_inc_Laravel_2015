@@ -1003,4 +1003,24 @@ CREATE TABLE IF NOT EXISTS `disciplinary_actions` (
 
 ALTER TABLE `absences` CHANGE `total_time` `total_time` TIME NOT NULL;
 
+/** aldrin added this 07/30/2015 all tables are here  */
+ALTER TABLE `work_shifts`  ADD `overtime_id` INT NULL  AFTER `id`;
+ALTER TABLE `work_schedules`  ADD `overtime_id` INT NULL  AFTER `foreign_key`;
+
+CREATE TABLE IF NOT EXISTS `overtimes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` date NOT NULL,
+  `from` datetime NOT NULL,
+  `to` datetime NOT NULL,
+  `day_type_id` int(11) NOT NULL,
+  `department_id` int(11) NOT NULL,
+  `remarks` text NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+ALTER TABLE `overtimes`  ADD `status` VARCHAR(255) NOT NULL  AFTER `remarks`,  ADD `approved_by` INT NOT NULL  AFTER `status`,  ADD `audit_date` DATETIME NOT NULL  AFTER `approved_by`,  ADD `audit_by` INT NOT NULL  AFTER `audit_date`;
 /* end all HR tables */
