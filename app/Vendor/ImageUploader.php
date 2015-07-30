@@ -37,9 +37,9 @@ class ImageUploader {
 			imagecopy($tmp, $image, 0, 0, $x, $y, $new_width, $new_height);
 			$folder_path = WWW_ROOT.'/img/uploads/'.$folder.'/';
 
-			if (!file_exists($folder_path)) {
+			//if (!file_exists($folder_path)) {
 				mkdir($folder_path, 0777, true);
-			}
+			//}
 			$image_name = $time.'_'.round($width)."x".$height."_".str_replace(' ','_',$name);
             $path = $folder_path.$image_name;
 
@@ -63,9 +63,9 @@ class ImageUploader {
 
 			$folder_path = WWW_ROOT.'/img/uploads/'.$folder.'/';
 
-			if (!file_exists($folder_path)) {
+			//if (!file_exists($folder_path)) {
 				mkdir($folder_path, 0777, true);
-			}
+			//}
 			$image_name = $time.'_'.round($width)."x".$height."_".str_replace(' ','_',$name);
             $path = $folder_path.$image_name;
        

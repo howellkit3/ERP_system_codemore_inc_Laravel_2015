@@ -32,7 +32,7 @@
                         echo "<span class='label label-success'>Approved</span>";
                     }
                     if($requestList['Request']['status_id'] == 0){ 
-                        echo "<span class='label label-success'>Purcahse Order</span>";
+                        echo "<span class='label label-success'>Purchase Order</span>";
                     }
                 ?>
 

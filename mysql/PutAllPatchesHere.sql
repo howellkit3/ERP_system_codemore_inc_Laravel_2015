@@ -523,39 +523,6 @@ VALUES
   (10,3,3),
   (11,3,4);
 
-#NOTE: SELECT KOUFU Re ----
-/** aldrin added this 07/14/2015  */
-#NOTE: SELECT KOUFU HR DATABASE ----
-CREATE TABLE IF NOT EXISTS `employees` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `first_name` varchar(255) NOT NULL,
-  `middle_name` varchar(255) NOT NULL,
-  `last_name` varchar(255) NOT NULL,
-  `suffix` varchar(255) DEFAULT NULL,
-  `department_id` int(11) NOT NULL,
-  `position_id` int(11) NOT NULL,
-  `status` varchar(255) NOT NULL,
-  `gender` varchar(255) NOT NULL,
-  `image` varchar(255) DEFAULT NULL,
-  `created` datetime NOT NULL,
-  `modified` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
-
-CREATE TABLE IF NOT EXISTS `emails` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `model` varchar(45) DEFAULT NULL,
-  `foreign_key` int(11) DEFAULT NULL,
-  `type` int(11) DEFAULT NULL,
-  `email` varchar(80) DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
-  `modified_by` int(11) DEFAULT NULL,
-  `created` timestamp NULL DEFAULT NULL,
-  `modified` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=60 ;
-
 
 #NOTE: SELECT KOUFU SYSTEM DATABASE ----
 /** howellkit added this 07/14/2015  */
@@ -592,59 +559,6 @@ VALUES
   (9,3,2),
   (10,3,3),
   (11,3,4);
-#NOTE: SELECT KOUFU Re ----
-/** aldrin added this 07/16/2015  */
-
-CREATE TABLE IF NOT EXISTS `employee_additional_informations` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `employee_id` int(11) NOT NULL,
-  `birthday` varchar(255) NOT NULL,
-  `height` varchar(45) NOT NULL,
-  `weight` varchar(45) NOT NULL,
-  `gender` varchar(45) NOT NULL,
-  `blood` varchar(45) NOT NULL,
-  `languages` varchar(255) DEFAULT NULL,
-  `skills` text NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `modified_by` int(11) NOT NULL,
-  `created` datetime NOT NULL,
-  `modified` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=75 ;
-
-
-CREATE TABLE IF NOT EXISTS `toolings` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `employee_id` int(11) NOT NULL,
-  `tools_id` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `price` float NOT NULL,
-  `pay` varchar(255) NOT NULL,
-  `status` varchar(45) NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `modified_by` int(11) NOT NULL,
-  `created` datetime NOT NULL,
-  `modified` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
-
-CREATE TABLE IF NOT EXISTS `tools` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `brand` varchar(255) NOT NULL,
-  `type` varchar(255) NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `status` varchar(45) NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `modified_by` int(11) NOT NULL,
-  `created` datetime NOT NULL,
-  `modified` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
-#NOTE: SELECT KOUFU DELIVERY DATABASE ----
-/** howellkit added this 07/14/2015  */
 
 
 ALTER TABLE `dev_koufu_delivery`.`deliveries` ADD COLUMN `from` INT(11) NULL AFTER `dr_uuid`;
@@ -745,9 +659,62 @@ CREATE TABLE `request_items` (   `id` int(11) NOT NULL AUTO_INCREMENT,   `model`
 
 
 
-#NOTE: SELECT KOUFU Human Resource DATABASE ----
-/** aldrin added this 07/23/2015  */
-  CREATE TABLE IF NOT EXISTS `breaktimes` (
+#NOTE: SELECT KOUFU Re ----
+/** aldrin added this 07/14/2015 all tables are here  */
+#NOTE: SELECT KOUFU HR DATABASE ----
+
+
+CREATE TABLE IF NOT EXISTS `absences` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `from` datetime NOT NULL,
+  `to` datetime NOT NULL,
+  `total_time` varchar(255) NOT NULL,
+  `reason` text NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+CREATE TABLE IF NOT EXISTS `addresses` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `model` varchar(255) NOT NULL,
+  `foreign_key` int(11) NOT NULL,
+  `address_1` varchar(255) DEFAULT NULL,
+  `address_2` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `state_province` varchar(255) DEFAULT NULL,
+  `zipcode` varchar(45) DEFAULT NULL,
+  `languages` varchar(255) DEFAULT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=68 ;
+
+CREATE TABLE IF NOT EXISTS `attendances` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `date` datetime NOT NULL,
+  `schedule_id` int(11) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `in` time DEFAULT NULL,
+  `out` time DEFAULT NULL,
+  `notes` text NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+
+
+CREATE TABLE IF NOT EXISTS `breaktimes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `from` time NOT NULL,
@@ -757,9 +724,220 @@ CREATE TABLE `request_items` (   `id` int(11) NOT NULL AUTO_INCREMENT,   `model`
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+
+
+
+CREATE TABLE IF NOT EXISTS `contacts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `model` varchar(45) DEFAULT NULL,
+  `foreign_key` int(11) DEFAULT NULL,
+  `type` int(11) DEFAULT NULL,
+  `number` varchar(50) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` timestamp NULL DEFAULT NULL,
+  `modified` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=152 ;
+
+
+CREATE TABLE IF NOT EXISTS `contact_people` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) DEFAULT NULL,
+  `prefix` varchar(45) DEFAULT NULL,
+  `firstname` varchar(50) DEFAULT NULL,
+  `middlename` varchar(50) DEFAULT NULL,
+  `lastname` varchar(50) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` timestamp NULL DEFAULT NULL,
+  `modified` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_idx` (`employee_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=38 ;
+
+
+
+CREATE TABLE IF NOT EXISTS `departments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `specification` text,
+  `notes` text,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
-  CREATE TABLE IF NOT EXISTS `work_shifts` (
+
+
+CREATE TABLE IF NOT EXISTS `emails` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `model` varchar(45) DEFAULT NULL,
+  `foreign_key` int(11) DEFAULT NULL,
+  `type` int(11) DEFAULT NULL,
+  `email` varchar(80) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` timestamp NULL DEFAULT NULL,
+  `modified` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=65 ;
+
+
+
+CREATE TABLE IF NOT EXISTS `employees` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(255) NOT NULL,
+  `middle_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `suffix` varchar(255) DEFAULT NULL,
+  `department_id` int(11) NOT NULL,
+  `position_id` int(11) NOT NULL,
+  `code` int(11) DEFAULT NULL,
+  `status` varchar(255) NOT NULL,
+  `gender` varchar(255) NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+
+
+CREATE TABLE IF NOT EXISTS `employee_additional_informations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `birthday` varchar(255) NOT NULL,
+  `height` varchar(45) NOT NULL,
+  `weight` varchar(45) NOT NULL,
+  `gender` varchar(45) NOT NULL,
+  `blood` varchar(45) NOT NULL,
+  `languages` varchar(255) DEFAULT NULL,
+  `skills` text NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=78 ;
+
+
+CREATE TABLE IF NOT EXISTS `government_records` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `agency` varchar(255) NOT NULL,
+  `value` varchar(255) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=173 ;
+
+
+
+CREATE TABLE IF NOT EXISTS `holidays` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date NOT NULL,
+  `year` varchar(255) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+
+
+
+CREATE TABLE IF NOT EXISTS `positions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `specification` text,
+  `notes` text,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+CREATE TABLE IF NOT EXISTS `timekeeps` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `notes` text NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
+
+
+
+CREATE TABLE IF NOT EXISTS `toolings` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `tools_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `price` float NOT NULL,
+  `pay` varchar(255) NOT NULL,
+  `status` varchar(45) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+
+
+CREATE TABLE IF NOT EXISTS `tools` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `brand` varchar(255) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `status` varchar(45) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+
+CREATE TABLE IF NOT EXISTS `work_schedules` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `model` varchar(255) NOT NULL,
+  `foreign_key` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `work_shift_id` int(11) NOT NULL,
+  `day` datetime NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `seq` varchar(255) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
+
+
+CREATE TABLE IF NOT EXISTS `work_shifts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `from` time NOT NULL,
@@ -770,61 +948,19 @@ CREATE TABLE `request_items` (   `id` int(11) NOT NULL AUTO_INCREMENT,   `model`
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
 
 
-#NOTE: SELECT KOUFU Human Resource DATABASE ----
-/** aldrin added this 07/24/2015  */
-
-  CREATE TABLE IF NOT EXISTS `work_shift_breaks` (
+CREATE TABLE IF NOT EXISTS `work_shift_breaks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `worshift_id` int(11) NOT NULL,
-  `break_id` int(11) NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `modified_by` int(11) NOT NULL,
-  `created` datetime NOT NULL,
-  `modified` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
-
-
-#NOTE: SELECT KOUFU Human Resource DATABASE ----
-/** aldrin added this 07/27/2015  */
-
-CREATE TABLE IF NOT EXISTS `work_schedules` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `model` varchar(255) NOT NULL,
-  `foreign_key` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
   `workshift_id` int(11) NOT NULL,
-  `type` varchar(255) NOT NULL,
-  `seq` varchar(255) NOT NULL,
+  `breaktime_id` int(11) NOT NULL,
   `created_by` int(11) NOT NULL,
   `modified_by` int(11) NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=40 ;
 
-ALTER TABLE `work_schedules`  ADD `day` DATETIME NOT NULL  AFTER `workshift_id`;
 
-#NOTE: SELECT KOUFU Human Resource DATABASE ----
-/** aldrin added this 07/28/2015  */
-
-CREATE TABLE IF NOT EXISTS `attendances` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `employee_id` int(11) NOT NULL,
-  `date` datetime NOT NULL,
-  `type` varchar(255) NOT NULL,
-  `from` datetime NOT NULL,
-  `to` datetime NOT NULL,
-  `in` time NOT NULL,
-  `out` time NOT NULL,
-  `remark` text NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `modified_by` int(11) NOT NULL,
-  `created` datetime NOT NULL,
-  `modified` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+/* end all HR tables */

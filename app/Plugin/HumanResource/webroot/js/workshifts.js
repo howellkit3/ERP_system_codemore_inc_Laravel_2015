@@ -1,16 +1,48 @@
 $(document).ready(function(){  
 
-$('#WorkShiftFrom').change(function(){
-        var timeElements = $(this).val().split(":");    
+ var updateTime = function(element1,element2,value){
+
+        var times = '';
+        var timeElements = $(element1).val().split(":");  
+
+
         var theHour = parseInt(timeElements[0]);
         var theMintute = timeElements[1];
-        var newHour = theHour + 9;
+        var newHour = theHour + parseInt(value);
+        
         if (newHour > 24) {
             newHour = 0 + (newHour - 24);
         }
-        $('#WorkShiftTo').val(newHour + ":" + theMintute+ ':00');
 
-});    
+        times.newHour = newHour;
+        times.theMintute = theMintute;
+
+         $(element2).val(newHour + ":" + theMintute+ ':00');
+    }
+
+
+$('#WorkShiftDuration').on("input", function() {
+    var dInput = this.value;
+    updateTime('#WorkShiftFrom','#WorkShiftTo',dInput)
+});
+
+$('#WorkShiftFrom').change(function(){
+        updateTime('#WorkShiftFrom','#WorkShiftTo',$('#WorkShiftDuration').val());
+}); 
+
+
+// $('#WorkShiftFrom').change(function(){
+        
+//         var timeElements = $(this).val().split(":");    
+//         var theHour = parseInt(timeElements[0]);
+//         var theMintute = timeElements[1];
+//         var newHour = theHour + 9;
+//         if (newHour > 24) {
+//             newHour = 0 + (newHour - 24);
+//         }
+//         $('#WorkShiftTo').val(newHour + ":" + theMintute+ ':00');
+
+// });    
 $('.timepicker').timepicker({
     minuteStep: 5,
     showSeconds: true,

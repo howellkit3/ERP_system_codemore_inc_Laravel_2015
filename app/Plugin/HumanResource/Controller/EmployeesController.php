@@ -80,9 +80,8 @@ class EmployeesController  extends HumanResourceAppController {
 			 $this->loadModel('HumanResource.Contact');
 
 			 $this->loadModel('HumanResource.ContactPerson');
+
 			
-
-
 			  $uploader = new ImageUploader;
         
 			 if(!empty($this->request->data)){
@@ -143,6 +142,16 @@ class EmployeesController  extends HumanResourceAppController {
 
 			 } 
 		}
+
+		$this->loadModel('HumanResource.Position');
+
+		$this->loadModel('HumanResource.Department');
+
+		$positionList = $this->Position->find('list',array('fields' => array('id','name')));
+
+		$departmentList = $this->Department->find('list',array('fields' => array('id','name')));
+
+		$this->set(compact('positionList','departmentList'));
 	}
 
 	public function edit($id){
@@ -224,6 +233,17 @@ class EmployeesController  extends HumanResourceAppController {
 		if (!empty($id)) {
 
 
+		$this->loadModel('HumanResource.EmployeeAdditionalInformation');
+
+		 $this->loadModel('HumanResource.Email');
+
+		 $this->loadModel('HumanResource.Address');
+
+		 $this->loadModel('HumanResource.GovernmentRecord');
+
+		 $this->loadModel('HumanResource.Contact');
+
+		 $this->loadModel('HumanResource.ContactPerson');
 
 			$this->Employee->bind(array(
 				'EmployeeAdditionalInformation',
@@ -251,20 +271,34 @@ class EmployeesController  extends HumanResourceAppController {
 
 		if (!empty($id)) {
 
+		$this->loadModel('HumanResource.EmployeeAdditionalInformation');
+
+		 $this->loadModel('HumanResource.Email');
+
+		 $this->loadModel('HumanResource.Address');
+
+		 $this->loadModel('HumanResource.GovernmentRecord');
+
+		 $this->loadModel('HumanResource.Contact');
+
+		 $this->loadModel('HumanResource.ContactPerson');
+
+
+			$this->Employee->bind(array(
+				'EmployeeAdditionalInformation',
+				'Email',
+				'GovernmentRecord',
+				'Address',
+				'Contact',
+				'ContactPerson',
+				'ContactPersonEmail',
+				'ContactPersonAddress',
+				'ContactPersonNumber'
+				));
+
 			$employee = $this->Employee->findById($id);
 
-			$departments = array('' => 'Select Department',
-                        	'1' => 'Accounting',
-                        	'2' => 'Sales',
-                        	'3' => 'Delivery'
-                        );
 
-         	$positions = array('' => 'Select Position',
-		                	'1' => 'CEO',
-		                	'2' => 'Vice President',
-		                	'3' => 'Employee',
-		                	'4' => 'Others'
-		                	);
 
 			$this->set(compact('employee','departments','positions'));
 		}
@@ -304,5 +338,28 @@ class EmployeesController  extends HumanResourceAppController {
 
 	}
 
+
+	public function findById($id = null) {
+
+			$this->layout = false;
+
+			if (!empty($id)) {
+
+				if ($this->request->is('ajax')) {
+
+					$employee = $this->Employee->find('first',array(
+						'conditions' => array( 'Employee.id' => $id ),
+						'fields' => array('id','full_name','code')
+					));
+
+					echo json_encode($employee);
+					exit();
+				}
+			}
+
+		
+		$this->autoRender = false;
+
+	}
 
 }

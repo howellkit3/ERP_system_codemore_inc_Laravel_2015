@@ -12,17 +12,33 @@ function readURL(input,element) {
     }
 }
 
-// $('.datepick').datepicker({
-// 		  format: 'mm-dd-yyyy'
-		  
-// });
+$(window).load(function(){
+
 $body = $('body');
 
 $body.on('click','.btn.btn-success.upload-image',function(e){
 
     $('.image_profile input').click();
 
-	e.preventDefault();
+    e.preventDefault();
 });
+
+$( ".datepick" ).datepicker({
+    format: 'yyyy-mm-dd', 
+    changeYear: true,
+    changeMonth: true,
+    showMonthAfterYear: true, //this is what you are looking for
+});
+
+//$('.datepick').datepicker({  format: 'yyyy-mm-dd'  });
+
+$(".autocomplete").select2();
+
+});
+// $('.datepick').datepicker({
+// 		  format: 'mm-dd-yyyy'
+		  
+// });
+
 
 //seasch Employees
