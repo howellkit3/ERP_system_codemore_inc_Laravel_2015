@@ -44,4 +44,23 @@ function getDuration($time1 = null,$time2 = null)
 	}
 }
 
+public function formaTime($time = null, $separator = null) {
+
+	if (!empty($time)) {
+
+		$time  = explode($separator,$time);
+
+		$formated = '';
+
+		$parts = array('hours','minutes','seconds');
+
+		foreach ($time as $key => $value) {
+				
+				$formated[] = $value.$parts[$key];   
+		}
+
+		return implode(' '.$separator.' ', $formated);
+	}
+}
+
 }

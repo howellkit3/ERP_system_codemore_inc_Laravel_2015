@@ -17,7 +17,7 @@
 						)); ?>
 					</li>
 
-					<li class="<?php echo ($active_tab == 'absences') ? 'active' : '' ?>" alt="tab-type">
+					<li class="<?php echo ($active_tab == 'absences' || $this->params['action'] == 'absences') ? 'active' : '' ?>" alt="tab-type">
 						<?php echo $this->Html->link('Absences',array(
 									'controller' => 'attendances',
 									'action' => 'absences',

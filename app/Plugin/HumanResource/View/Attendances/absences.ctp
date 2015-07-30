@@ -33,15 +33,15 @@ echo $this->element('hr_options');
 			                <h2 class="pull-left"><b>Absences Record</b> </h2>
 			                <div class="filter-block pull-right">
 			                 <div class="form-group pull-left">
-			                 	<?php echo $this->Form->create('Attendance',array('controller' => 'attendances','action' => 'index', 'type'=> 'get')); ?>
-			                 		<input type="text" name="data[date]" id="changeDate" class="form-control datepick" value="<?php echo $date ?>">
+			                 	<?php echo $this->Form->create('Attendance',array('controller' => 'attendances','action' => 'absences', 'type'=> 'get')); ?>
+			                 		<input type="text" name="date" id="changeDate" class="form-control datepick" value="<?php echo $date ?>">
 
 			                            <i class="fa fa fa-calendar calendar-icon"></i>
 
 			                 		
 			                    </div>
 			                    <div class="form-group pull-left">
-			                 		 <input placeholder="Search..." class="form-control searchCustomer" value="<?php echo $search ?>" name="data[name]" />
+			                 		 <input placeholder="Search..." class="form-control searchCustomer" value="<?php echo $search ?>" name="name" />
 			                            <i class="fa fa-search search-icon"></i>
 
 			                           
@@ -73,78 +73,64 @@ echo $this->element('hr_options');
 										<tr>
 											<th><a href="#"><span>Code</span></a></th>
 											<th><a href="#"><span>Employee Name</span></a></th>
-											<th><a href="#"><span>Type</span></a></th>
 											<th><a href="#" class="text-center"><span>From</span></a></th>
 											<th><a href="#" class="text-center"><span>To</span></a></th>
-											<th><a href="#"><span>In</span></a></th>
-											<th><a href="#"><span>Out</span></a></th>
-											<th><a href="#"><span>Duration</span></a></th>
-											<th><a href="#"><span>Remarks</span></a></th>
+											<th><a href="#"><span>Total Time</span></a></th>
+											<th><a href="#" class="text-center"><span>Reason</span></a></th>
 											<th><a href="#"><span>Actions</span></a></th>
 										</tr>
 									</thead>
 
 									<?php 
-								        if(!empty($attendances)){
-								            foreach ($attendances as $key => $schedule): ?>
+								        if(!empty($absences)){
+								            foreach ($absences as $key => $absence): ?>
 												<tbody aria-relevant="all" aria-live="polite" role="alert">
 													<tr class="">
-														<td> <?php echo $schedule['Employee']['code']; ?></td>
+														<td> <?php echo $absence['Employee']['code']; ?></td>
 														<td class="">
 								                          <?php 
-								                          if ($schedule['WorkSchedule']['model'] == 'Employee') {
+								                          if (!empty($absence['Employee']['id'])) {
 
-								                          		echo $this->CustomText->getFullname($schedule['Employee']);
+								                          		echo $this->CustomText->getFullname($absence['Employee']);
 
-								                          } else if ($schedule['WorkSchedule']['model'] == 'Department') {
-
-								                          		echo "Department";
-								                          }
-								                          
+								                          	}
 								                           ?>
 								                        </td>
-								                        <td class="text-center"> 
-								                           <?php echo $schedule['WorkSchedule']['type'] ?> 
-								                        </td>
 														<td> 
-								                           <?php echo date('Y/m/d',strtotime($schedule['Attendance']['date'])).' '.date('h:i a',strtotime($schedule['WorkShift']['from'])); ?> 
+								                           <?php  
+								                           if (!empty($absence['Absence']['from'])) {
+								                           	 		echo date('Y-m-d H:i',strtotime($absence['Absence']['from']));
+								                           	 }								                           
+								                           ?> 
 								                        </td>
 								                        <td > 
-								                           <?php echo date('Y/m/d',strtotime($schedule['Attendance']['date'])).' '.date('h:i a',strtotime($schedule['WorkShift']['to'])); ?> 
+								                             <?php  
+								                           if (!empty($absence['Absence']['from'])) {
+								                           	 		echo date('Y-m-d H:i',strtotime($absence['Absence']['to']));
+								                           	 }								                           
+								                           ?> 
 								                        </td>
 								                         </td>
-								                        <td class="text-center"> 
+								                        <td> 
 								                           <?php 
-								                           $timeIn = (!empty($schedule['Attendance']['in']) && $schedule['Attendance']['in']  != '00:00:00') ? date('h:i a',strtotime($schedule['Attendance']['in'])) : '';
-															echo $timeIn;
+									                           $timeIn = (!empty($absence['Absence']['total_time']) && $absence['Absence']['total_time']  != '00:00:00') ? date('h:i:s',strtotime($absence['Absence']['total_time'])) : '';
+																echo $timeIn;
 								                            ?> 
 								                        </td>
 								                        </td>
-								                        <td class="text-center"> 
-								                           <?php 
-								                           $timeOut = (!empty($schedule['Attendance']['out']) && $schedule['Attendance']['out']  != '00:00:00') ? date('h:i a',strtotime($schedule['Attendance']['out'])) : '';
-
-								                           	echo $timeOut;
-								                           ?> 
-								                        </td>
-								                         <td class="text-center"> 
-								                           <?php echo $this->CustomTime->getDuration($timeIn,$timeOut); ?> 
-								                        </td>
-								                        <td class="text-center"> 
-								                           <?php echo $schedule['Attendance']['notes']; ?> 
+								                        <td> 
+								                           <?php echo $absence['Absence']['reason']; ?> 
 								                        </td>
 								                       	<td>
 								                      	<?php
 														echo $this->Html->link('<span class="fa-stack">
 														<i class="fa fa-square fa-stack-2x"></i>
-														<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> view </font></span>
-														</span> ','#personalAttendance',
-														array('class' =>'view_attendance table-link',
+														<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> edit </font></span>
+														</span> ',array('controller' => 'absences', 'action' => 'edit',$absence['Absence']['id'] ),
+														array('class' =>'table-link',
 															   'escape' => false,
-															   'data-url' => '/attendances/view/'.$schedule['Attendance']['id'],
+															   'data-url' => '/absences/edit/'.$absence['Absence']['id'],
 															   'title'=>'Edit Information',
-															   'data-toggle' => 'modal',
-															   'data-id' => $schedule['Attendance']['id'],
 															));
 
 														?>
@@ -157,7 +143,6 @@ echo $this->element('hr_options');
 								        } ?> 
 								
 								</table>	
-
 								<hr>
 
 			                    <div class="paging" id="item_type_pagination">

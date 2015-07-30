@@ -19,7 +19,7 @@ echo $this->Html->script(array(
 <div style="clear:both"></div>
 
 <?php echo $this->element('hr_options'); ?><br><br>
-<?php echo $this->Form->create('Absence',array('url'=>(array('controller' => 'absences','action' => 'add')),
+<?php echo $this->Form->create('Absence',array('url'=>(array('controller' => 'absences','action' => 'edit')),
 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data' ));?>
  <div class="row">
         <div class="col-lg-12">
@@ -54,7 +54,10 @@ echo $this->Html->script(array(
                                                 <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Employee </label>
                                                 <div class="col-lg-9">
                                                   
-                                                    <?php echo $this->Form->input('Absence.employee_id', array(
+                                                    <?php 
+                                                    echo $this->Form->input('Absence.id');
+
+                                                     echo $this->Form->input('Absence.employee_id', array(
                                                         'class' => 'col-lg-6 required autocomplete',
                                                         'options' => $employees,
                                                         'empty' => '--- Select Employee ---',
@@ -123,10 +126,15 @@ echo $this->Html->script(array(
                                                 <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Total Time</label>
                                                 <div class="col-lg-9">
                                                    <?php
+                                                   		$time = !empty($this->request->data['Absence']['total_time']) ?  $this->request->data['Absence']['total_time'] : '';
+
+                                                   			$time = $this->CustomTime->formaTime($time,':');
+
                                                                 echo $this->Form->input('Absence.total_time_display', array(
                                                                     'class' => 'form-control col-lg-6 required disabled',
                                                                     'readonly' => true,
                                                                     'id' => 'AbsenceTotalTime',
+                                                                    'value' => $time,
                                                                     'label' => false));
                                                     ?>
                                                     <?php
@@ -233,8 +241,7 @@ echo $this->Html->script(array(
         $(document).ready(function(){
 
                 $('.datetimepick').datetimepicker({
-
-                        format:'Y-m-d  H:i'
+                	format:'Y-m-d  H:i'
                 });
 
         });
