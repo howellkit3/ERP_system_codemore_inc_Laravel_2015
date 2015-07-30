@@ -1,6 +1,6 @@
 <?php $this->Html->addCrumb('Settings', array('controller' => 'settings', 'action' => 'department')); ?>
-<?php $this->Html->addCrumb('Position', array('controller' => 'settings', 'action' => 'position','tab' => 'position')); ?>
-<?php $this->Html->addCrumb('View', array('controller' => 'positions', 'action' => 'view',$positionData['Position']['id'])); ?>
+<?php $this->Html->addCrumb('Agency', array('controller' => 'settings', 'action' => 'agency','tab' => 'agency')); ?>
+<?php $this->Html->addCrumb('View', array('controller' => 'agencies', 'action' => 'view',$agencyData['Agency']['id'])); ?>
 <?php echo $this->Html->css('HumanResource.default');?>
 <?php echo $this->Html->script(array(
                         'jquery.maskedinput.min',
@@ -19,11 +19,11 @@
                     
                     <center>
                         <h1 class="pull-left">
-                            Position Information
+                            Agency Information
                         </h1>
                     </center>
                     <?php 
-                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'settings', 'action' => 'position','tab'=>'position'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'settings', 'action' => 'agency','tab' => 'agency'),array('class' =>'btn btn-primary pull-right','escape' => false));
                     ?>
                 </header>
 
@@ -42,30 +42,25 @@
                                         <div class="form-group">
                                             <label for="inputEmail1" class="col-lg-3 control-label strong">Name</label>
                                               <div class="col-lg-8 value"> 
-                                               <?php echo ucfirst($positionData['Position']['name']);  ?>
-                                               </div>
-                                         </div>
-                                         <div class="form-group">
-                                            <label for="inputEmail1" class="col-lg-3 control-label strong">Description</label>
-                                              <div class="col-lg-8 value"> 
-                                               <?php echo ucfirst($positionData['Position']['description']);  ?>
+                                               <?php echo ucfirst($agencyData['Agency']['name']);  ?>
                                                </div>
                                          </div>
 
                                           <div class="form-group">
-                                            <label for="inputEmail1" class="col-lg-3 control-label strong">Specification</label>
+                                            <label for="inputEmail1" class="col-lg-3 control-label strong">Field</label>
                                               <div class="col-lg-8 value"> 
-                                               <?php echo ucfirst($positionData['Position']['specification']);  ?>
+                                               <?php echo ucfirst($agencyData['Agency']['field']);  ?>
                                                </div>
-                                            </div>
+                                          </div>
 
-                                            <div class="form-group">
-                                            <label for="inputEmail1" class="col-lg-3 control-label strong">Notes</label>
+                                          <div class="form-group">
+                                            <label for="inputEmail1" class="col-lg-3 control-label strong">Description</label>
                                               <div class="col-lg-8 value"> 
-                                               <?php echo !empty($positionData['Position']['notes']) ? ucfirst($positionData['Position']['notes']) : '';  ?>
+                                               <?php echo ucfirst($agencyData['Agency']['description']);  ?>
                                                </div>
-                                            </div>
+                                         </div>
 
+                                            
                                      </div>
 
                                 </div>

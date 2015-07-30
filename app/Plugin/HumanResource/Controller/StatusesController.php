@@ -5,25 +5,25 @@ App::uses('SessionComponent', 'Controller/Component');
 
 App::uses('ImageUploader', 'Vendor');
 
-class StatusController  extends HumanResourceAppController {
+class StatusesController  extends HumanResourceAppController {
 
 
 	public function add() {
 
-		$this->loadModel('HumanResource.Position');
+		$this->loadModel('HumanResource.Status');
 
 		$auth = $this->Session->read('Auth.User');
 
 		if(!empty($this->request->data)){
 			
-			$this->Position->savePosition($this->request->data,$auth['id']);
+			$this->Status->saveStatus($this->request->data,$auth['id']);
 
 			//$save
-	 		$this->Session->setFlash('Saving Position information completed');
+	 		$this->Session->setFlash('Saving Status information completed');
  		   	$this->redirect( array(
                      'controller' => 'settings', 
-                     'action' => 'position',
-                     'tab' => 'position'
+                     'action' => 'status',
+                     'tab' => 'status'
                 ));
 		}
 
@@ -31,26 +31,26 @@ class StatusController  extends HumanResourceAppController {
 
 	public function edit($id = null) {
 
-		$this->loadModel('HumanResource.Position');
+		$this->loadModel('HumanResource.Status');
 
 		$auth = $this->Session->read('Auth.User');
 		
 		if(!empty($this->request->data)){
 			
-			$this->Position->savePosition($this->request->data,$auth['id']);
+			$this->Status->saveStatus($this->request->data,$auth['id']);
 
 			//$save
-	 		$this->Session->setFlash('Saving Position information completed');
+	 		$this->Session->setFlash('Saving Status information completed');
  		   	$this->redirect( array(
                      'controller' => 'settings', 
-                     'action' => 'position',
-                     'tab' => 'position'
+                     'action' => 'status',
+                     'tab' => 'status'
                 ));
 		}
 		
 		if (!empty($id)) {
 
-			$this->request->data = $this->Position->findById($id);
+			$this->request->data = $this->Status->findById($id);
 
 		}
 
@@ -58,18 +58,18 @@ class StatusController  extends HumanResourceAppController {
 
 	public function view($id = null ) {
 
-		$this->loadModel('HumanResource.Position');
+		$this->loadModel('HumanResource.Status');
 
 		$auth = $this->Session->read('Auth.User');
 		
 		
 		if (!empty($id)) {
 
-			$positionData = $this->Position->findById($id);
+			$statusData = $this->Status->findById($id);
 
 		}
 
-		$this->set(compact('positionData'));
+		$this->set(compact('statusData'));
 
 	}
 
@@ -91,8 +91,8 @@ class StatusController  extends HumanResourceAppController {
 
             return $this->redirect( array(
                      'controller' => 'settings', 
-                     'action' => 'position',
-                     'tab' => 'position',
+                     'action' => 'status',
+                     'tab' => 'status',
                      'plugin' => 'human_resource'
 
                 ));

@@ -49,32 +49,24 @@
 
 		                                 </div>
 
-
-
 		                                 <div class="col-lg-6">
                                      		<div class="form-group">
 		                                       
-
-		                                        
 		                                        <div class="col-lg-7">
 			                                        <div class="form-group">
 			                                        	 <label class="col-lg-4 control-label">
 			                                        	 <span style="color:red">*</span>Department</label>
-			                                            <?php
-				                                            $department = array($departmentList);
+			                                            	<?php
+				                                            
+				                                            	$department = array($departmentList);
 
-				                                             // echo $this->Form->input('Employee.department_id', array(
-				                                             // 	'options' => $department, 
-				                                             // 	'class' => 'form-control required',
-				                                             // 	'div' => 'col-lg-7',
-				                                             // 	'empty' => 'Select Department',
-				                                             // 	'label' => false));
 				                                            ?>
 				                                            <?php echo $this->Form->input('Employee.department_id',
 							                                         array('class' => 'autocomplete required',
 							                                        'options' => $department,
 							                                        'placeholder' => 'Department name',
 							                                        'empty' => 'Select Department',
+							                                        'default' => !empty($employeeData['Employee']['department_id']) ? $employeeData['Employee']['department_id'] : '',
 							                                        'div' => 'col-lg-7',
 							                                        'label' => false));
 
@@ -84,15 +76,10 @@
 			                                          <div class="form-group">
 			                                        	 <label class="col-lg-4 control-label">
 			                                        	 <span style="color:red">*</span>Position</label>
-			                                            <?php
-				                                            $position = array($positionList);
+			                                            	<?php
+				                                            	
+				                                            	$position = array($positionList);
 
-				                                             // echo $this->Form->input('Employee.position_id', array(
-				                                             // 	'options' => $position, 
-				                                             // 	'class' => 'form-control required',
-				                                             // 	'div' => 'col-lg-7',
-				                                             // 	'empty' => 'Select Position',
-				                                             // 	'label' => false));
 				                                            ?>
 
 				                                            <?php 
@@ -101,6 +88,7 @@
 							                                        'options' => $position,
 							                                        'placeholder' => 'Position name',
 							                                        'empty' => 'Select Position',
+							                                        'default' => !empty($employeeData['Employee']['position_id']) ? $employeeData['Employee']['position_id'] : '',
 							                                        'div' => 'col-lg-7',
 							                                        'label' => false));
 
@@ -112,13 +100,14 @@
 			                                        	 <span style="color:red">*</span>Status</label>
 			                                           	 <div class="">
 															<?php 
-															// echo $this->Form->input('Employee.status', array(
-			            //                                  	'class' => 'form-control col-lg-6 required',
-			            //                                  	'div' => 'col-lg-7',
-			            //                                  	'label' => false));
+															$status = array($statusList);
 
 			                                             	echo $this->Form->input('Employee.status',
-							                                         array('class' => 'form-control required',
+							                                         array('class' => 'autocomplete required',
+							                                        'options' => $status,
+							                                        'placeholder' => 'Status name',
+							                                        'empty' => 'Select Status',
+							                                        'default' => !empty($employeeData['Employee']['status']) ? $employeeData['Employee']['status'] : '',
 							                                        'div' => 'col-lg-7',
 							                                        'label' => false));
 			                                        	?>				
@@ -129,10 +118,7 @@
 			                                        	 <span style="color:red">*</span>Code</label>
 			                                           	 <div class="">
 															<?php 
-															// echo $this->Form->input('Employee.code', array(
-			            //                                  	'class' => 'form-control col-lg-6 required',
-			            //                                  	'label' => false));
-
+															
 			                                             	echo $this->Form->input('Employee.code',
 							                                         array('class' => 'form-control required',
 							                                        'div' => 'col-lg-7',
@@ -267,7 +253,6 @@
 
 		                                 <div class="col-lg-6">
                                      		
-
 		                                     <div class="form-group">
 		                                        <label  class="col-lg-2 control-label"> Blood Type </label>
 		                                        <div class="col-lg-9">
@@ -651,7 +636,7 @@
 
 		                           		<div class="form-group">
 		                                    <label for="inputPassword1" class="col-lg-2 control-label">
-		                                    <?php echo 	$agencies[$data['agency']] ?> Number</label>
+		                                    <?php echo 	$nameList[$data['agency_id']]['name'] ?> <?php echo  $nameList[$data['agency_id']]['field'] ?></label>
 		                                    <div class="col-lg-9">
 		                                     	<?php 
 		                                     		 echo $this->Form->input('EmployeeAgencyRecord.'.$gov_key.'.id', array(
@@ -680,21 +665,22 @@
 		                           	<?php } ?>	
 		                           
 		                           <?php else : ?>
-		                           		<?php $agencies = array(
-												'sss' => 'SSS',
-												'philhealth' => 'PhilHealth',
-												'bir' => 'Tin',
-												'pagibig' => 'Pag-Ibig');
+		                           		<?php 
+		          //                  		$agencies = array(
+												// 'sss' => 'SSS',
+												// 'philhealth' => 'PhilHealth',
+												// 'bir' => 'Tin',
+												// 'pagibig' => 'Pag-Ibig');
 									
-									$count = 0; foreach ($agencies as $key => $agency) { ?>
+									$count = 0; foreach ($agencyList as $key => $agency) { ?>
 		                    		 	<div class="form-group">
-		                                    <label for="inputPassword1" class="col-lg-2 control-label"><?php echo $agency ?> Number</label>
+		                                    <label for="inputPassword1" class="col-lg-2 control-label"><?php echo ucfirst($agency['Agency']['name']) ?> <?php echo ucfirst($agency['Agency']['field']) ?></label>
 		                                    <div class="col-lg-9">
 		                                     	<?php 
-		                                            echo $this->Form->input('EmployeeAgencyRecord.'.$count.'.agency', array(
+		                                            echo $this->Form->input('EmployeeAgencyRecord.'.$count.'.agency_id', array(
 		                                                'label' => false,
 		                                                'type' => 'hidden',
-		                                                'value' => $key,
+		                                                'value' => $agency['Agency']['id'],
 		                                                'class' => 'form-control',
 		                                                'empty' => false
 		                                            ));

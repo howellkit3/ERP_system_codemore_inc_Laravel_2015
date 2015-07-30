@@ -22,7 +22,7 @@
                                                 <?php echo $time['BreakTime']['name']; ?></span>
                                             </div>
                                             <div class="col-lg-9 time">
-                                            <?php echo date('H:i: a',strtotime($time['BreakTime']['from'])); ?> - <?php echo date('H:i: a',strtotime($time['BreakTime']['to'])); ?> 
+                                            <?php echo date('H:i: a',strtotime($time['BreakTime']['from'])); ?>~<?php echo date('H:i: a',strtotime($time['BreakTime']['to'])); ?> 
                                             </div>
                                         </li>        
                                         <?php endforeach; ?>

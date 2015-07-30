@@ -1,3 +1,4 @@
+<?php $this->Html->addCrumb('Settings', array('controller' => 'settings', 'action' => 'department')); ?>
 <?php $this->Html->addCrumb('Department', array('controller' => 'settings', 'action' => 'department')); ?>
 <?php $this->Html->addCrumb('Add', array('controller' => 'departments', 'action' => 'add')); ?>
 <?php echo $this->Html->css('HumanResource.default');?>

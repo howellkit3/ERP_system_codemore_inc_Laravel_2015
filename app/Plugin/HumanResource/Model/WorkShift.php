@@ -43,6 +43,31 @@ class WorkShift extends AppModel {
 			));
 	}
 
+	public function createWorkshift($data = null,$overtimeId = null,$auth_id = null) {
+
+		$workshift = [];
+
+		$this->create();
+
+		if (!empty($data)) {
+
+			$workshift['name'] = 'OT-'.$overtimeId.'-'.$data['Overtime']['department_id'].'-'.$data['Overtime']['date'];
+			$workshift['overtime_id'] = $overtimeId;
+			$workshift['from'] = $data['Overtime']['from'];
+			$workshift['to'] = $data['Overtime']['to'];
+			$workshift['created_by'] = $auth_id;
+			$workshift['modified_by'] = $auth_id;
+
+			if ($this->save($workshift)) {
+
+				$workshift['id'] = $this->id;
+			}
+
+			return $workshift;
+
+		}
+	}
+
 
     
  }

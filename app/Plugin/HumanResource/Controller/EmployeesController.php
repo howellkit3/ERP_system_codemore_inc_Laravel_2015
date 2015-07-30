@@ -126,7 +126,7 @@ class EmployeesController  extends HumanResourceAppController {
 						$this->ContactPerson->saveContact($data['ContactPersonData'],$employeeId,$auth['id']);
 			 		}
 					//save contactPerson emails
-			 		//$save = $this->Email->saveEmails($employeeId,'ContactPerson',$data['ContactPersonData']['Email'],$auth['id']);
+			 		$save = $this->Email->saveEmails($employeeId,'ContactPerson',$data['ContactPersonData']['Email'],$auth['id']);
 
 			 		//$save
 			 		$this->Session->setFlash('Saving employee information successfully');
@@ -147,11 +147,19 @@ class EmployeesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Department');
 
+		$this->loadModel('HumanResource.Status');
+
+		$this->loadModel('HumanResource.Agency');
+
 		$positionList = $this->Position->find('list',array('fields' => array('id','name')));
 
 		$departmentList = $this->Department->find('list',array('fields' => array('id','name')));
 
-		$this->set(compact('positionList','departmentList'));
+		$statusList = $this->Status->find('list',array('fields' => array('id','name')));
+
+		$agencyList = $this->Agency->find('all',array('fields' => array('id','name','field')));
+
+		$this->set(compact('positionList','departmentList','statusList','agencyList'));
 	}
 
 	public function edit($id){
@@ -265,13 +273,35 @@ class EmployeesController  extends HumanResourceAppController {
 			
 
 		}
+		$this->loadModel('HumanResource.Position');
+
+		$this->loadModel('HumanResource.Department');
+
+		$this->loadModel('HumanResource.Status');
+
+		$this->loadModel('HumanResource.Agency');
+
+		$positionList = $this->Position->find('list',array('fields' => array('id','name')));
+
+		$departmentList = $this->Department->find('list',array('fields' => array('id','name')));
+
+		$statusList = $this->Status->find('list',array('fields' => array('id','name')));
+
+		$agencyList = $this->Agency->find('all',array('fields' => array('id','name','field')));
+
+		$nameList = array();
+		foreach ($agencyList as $key => $value) {
+			$nameList[$value['Agency']['id']] = array('name' => $value['Agency']['name'],'field' =>$value['Agency']['field']);
+		}
+		
+		$this->set(compact('positionList','departmentList','statusList','nameList'));
 	}
 
 	function view($id){
 
 		if (!empty($id)) {
 
-		$this->loadModel('HumanResource.EmployeeAdditionalInformation');
+		 $this->loadModel('HumanResource.EmployeeAdditionalInformation');
 
 		 $this->loadModel('HumanResource.Email');
 
@@ -283,13 +313,13 @@ class EmployeesController  extends HumanResourceAppController {
 
 		 $this->loadModel('HumanResource.ContactPerson');
 
-		$this->loadModel('HumanResource.Position');
+		 $this->loadModel('HumanResource.Position');
 
-		$this->loadModel('HumanResource.Department');
+		 $this->loadModel('HumanResource.Department');
 
 		$positions = $this->Position->find('list',array('fields' => array('id','name')));
 
-		$departments = $this->Department->find('list',array('fields' => array('id','name')));
+		$departments = $this->Department->getList();
 
 			$this->Employee->bind(array(
 				'EmployeeAdditionalInformation',
@@ -364,6 +394,43 @@ class EmployeesController  extends HumanResourceAppController {
 
 		
 		$this->autoRender = false;
+
+	}
+
+	public function findByDepartment($id = null) {
+
+			$this->layout = false;
+
+			if (!empty($id)) {
+
+				if ($this->request->is('ajax')) {
+
+				$this->loadModel('HumanResource.Position');	
+				$this->Employee->bind(array('Position'));
+
+				$employees = $this->Employee->find('all',array(
+				'conditions' => array('Employee.department_id' => $id),
+				'order' => array('Employee.last_name','Employee.code'),
+				'fields' => array(
+				'id',
+				'Employee.first_name',
+				'Employee.last_name',
+				'Employee.middle_name',
+				'Employee.position_id',
+				'Employee.department_id',
+				'Employee.image',
+				'Position.name'
+				),
+				'group' => 'Employee.id' 
+				));
+
+
+				}
+			}
+
+		$this->set(compact('employees'));		
+		
+		$this->render('Employees/ajax/employees_overtime');
 
 	}
 

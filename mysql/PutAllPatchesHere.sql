@@ -1004,29 +1004,58 @@ ALTER TABLE `koufu_human_resource`.`disciplinary_actions` ADD COLUMN `violation_
 
 ALTER TABLE `absences` CHANGE `total_time` `total_time` TIME NOT NULL;
 
-INSERT INTO `departments` (`id`, `name`, `description`, `specification`,`notes`,`created_by`,`modified_by`, `created`, `modified`)
-VALUES
-  (1,'Sales','Sales','Sales','Sales','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
-  (2,'Purchasing','Purchasing','Purchasing','Purchasing','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
-  (3,'Delivery','Delivery','Delivery','Delivery','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
-  (4,'Production','Production','Production','Production','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
-  (5,'Accounting','Accounting','Accounting','Accounting','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
-  (6,'Human Resource','Human Resource','Human Resource','Human Resource','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
-  (7,'Warehouse','Warehouse','Warehouse','Warehouse','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22');
+/** aldrin added this 07/30/2015 all tables are here  */
+ALTER TABLE `work_shifts`  ADD `overtime_id` INT NULL  AFTER `id`;
+ALTER TABLE `work_schedules`  ADD `overtime_id` INT NULL  AFTER `foreign_key`;
 
-INSERT INTO `positions` (`id`, `name`, `description`,`notes`,`created_by`,`modified_by`, `created`, `modified`)
-VALUES
-  (1,'Sales Staff','Sales Staff','Sales Staff','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
-  (2,'Sales Supervisor','Sales Supervisor','Sales Supervisor','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
-  (3,'Delivery Staff','Delivery Staff','Delivery Staff','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
-  (4,'Purchasing Staff','Purchasing Staff','Purchasing Staff','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
-  (5,'Accounting Staff','Accounting Staff','Accounting Staff','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
-  (6,'Accounting Payables','Accounting Payables','Accounting Payables','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
-  (7,'Accounting Receivables','Accounting Receivables','Accounting Receivables','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
-  (8,'Accounting Head','Accounting  Head','Accounting  Head','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
-  (9,'Human Resource Staff','Human Resource Staff','Human Resource Staff','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
-  (10,'Production Staff','Production Staff','Production Staff','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
-  (11,'Warehouse Staff','Warehouse Staff','Warehouse Staff','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
-  (12,'CEO','CEO','CEO','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22');
+CREATE TABLE IF NOT EXISTS `overtimes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` date NOT NULL,
+  `from` datetime NOT NULL,
+  `to` datetime NOT NULL,
+  `day_type_id` int(11) NOT NULL,
+  `department_id` int(11) NOT NULL,
+  `remarks` text NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
+ALTER TABLE `overtimes`  ADD `status` VARCHAR(255) NOT NULL  AFTER `remarks`,  ADD `approved_by` INT NOT NULL  AFTER `status`,  ADD `audit_date` DATETIME NOT NULL  AFTER `approved_by`,  ADD `audit_by` INT NOT NULL  AFTER `audit_date`;
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+
+ALTER TABLE `government_records` CHANGE `agency` `agency_id` INT(11)  NOT NULL;
+
+CREATE TABLE `agencies` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `field` varchar(255) NOT NULL DEFAULT '',
+  `description` text,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `statuses` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /* end all HR tables */
+
+

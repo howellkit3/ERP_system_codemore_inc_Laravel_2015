@@ -50,20 +50,58 @@ class Attendance extends AppModel {
 
 			$sched = [];
 
-			$sched['Attendance']['id'] = !empty($data['Attendance']['id']) ? $data['Attendance']['id'] : '';
+			$this->create();
+
+			if (is_array($data)) {
+
+				foreach ($data as $key => $dataList) {
+					
+					$sched['Attendance']['id'] = !empty($dataList['Attendance']['id']) ? $dataList['Attendance']['id'] : '';
+
+					if ($dataList['model'] == 'Employee') {
+					
+						$sched['Attendance']['employee_id'] = $dataList['foreign_key'];
+						
+					}
+
+					$sched['Attendance']['date'] = $dataList['day'];
+					$sched['Attendance']['schedule_id'] = $dataList['id'];
+
+					$sched['Attendance']['type'] = 'work';
+
+					if ($dataList['overtime_id']) {
+
+						$sched['Attendance']['type'] = 'overtime work';
+					}
+
+					$this->save($sched);	
+
+				}
+
+
+			}  else {
+
+
+				$sched['Attendance']['id'] = !empty($data['Attendance']['id']) ? $data['Attendance']['id'] : '';
 
 			if ($data['model'] == 'Employee') {
 			
-			$sched['Attendance']['employee_id'] = $data['foreign_key'];
+				$sched['Attendance']['employee_id'] = $data['foreign_key'];
 				
 			}
 
 			$sched['Attendance']['date'] = $data['day'];
 			$sched['Attendance']['schedule_id'] = $sched_id;
-			$sched['Attendance']['type']	= 'work';
+			$sched['Attendance']['type'] = 'work';
 
 
 			return $this->save($sched['Attendance']);
+
+
+			}
+			
+		
+			
 		}
 	}
 

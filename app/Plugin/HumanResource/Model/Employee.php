@@ -54,6 +54,13 @@ class Employee extends AppModel {
 				),
 			
 			),
+			'belongsTo' => array(
+				'Position' => array(
+					'className' => 'Position',
+					'foreignKey' => 'position_id',
+					'conditions' => '',
+					)	
+			),
 			'hasMany' => array(
 				'Email' => array(
 					'className' => 'Email',
