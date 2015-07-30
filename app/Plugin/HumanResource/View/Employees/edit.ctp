@@ -1,7 +1,18 @@
 <?php $this->Html->addCrumb('Employee', array('controller' => 'employees', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Add', array('controller' => 'employees', 'action' => 'add')); ?>
 <?php echo $this->Html->css('HumanResource.default');?>
-<?php echo $this->Html->script('HumanResource.custom');?>
+<?php echo $this->Html->script('HumanResource.custom');
+echo $this->Html->css(array(
+                    'HumanResource.select2.css',
+                    'timepicker'
+)); 
+ echo $this->Html->script(array(
+                    'jquery.maskedinput.min',
+                    'HumanResource.select2.min',
+                    'HumanResource.employee',
+
+)); 
+?>
 <div style="clear:both"></div>
 
 <?php echo $this->element('hr_options'); ?><br><br>

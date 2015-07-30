@@ -33,8 +33,6 @@ class SettingsController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Position');
 
-		$positionData = $this->Position->find('all',array('order' =>array('Position.id DESC')));
-
 		$limit = 10;
 
         $conditions = array();
@@ -49,6 +47,69 @@ class SettingsController  extends HumanResourceAppController {
 	    $positionData = $this->paginate('Position');
 
 		$this->set(compact('positionData'));
+
+	}
+
+	public function status() {
+
+		$this->loadModel('HumanResource.Status');
+
+		$limit = 10;
+
+        $conditions = array();
+
+        $this->paginate = array(
+	            'conditions' => $conditions,
+	            'limit' => $limit,
+	            //'fields' => array('id', 'status','created'),
+	            'order' => 'Status.id DESC',
+	        );
+
+	    $statusData = $this->paginate('Status');
+
+		$this->set(compact('statusData'));
+
+	}
+
+	public function agency() {
+
+		$this->loadModel('HumanResource.Agency');
+
+		$limit = 10;
+
+        $conditions = array();
+
+        $this->paginate = array(
+	            'conditions' => $conditions,
+	            'limit' => $limit,
+	            //'fields' => array('id', 'status','created'),
+	            'order' => 'Agency.id DESC',
+	        );
+
+	    $agencyData = $this->paginate('Agency');
+
+		$this->set(compact('agencyData'));
+
+	}
+
+	public function tool() {
+
+		$this->loadModel('HumanResource.Tool');
+
+		$limit = 10;
+
+        $conditions = array();
+
+        $this->paginate = array(
+	            'conditions' => $conditions,
+	            'limit' => $limit,
+	            //'fields' => array('id', 'status','created'),
+	            'order' => 'Tool.id DESC',
+	        );
+
+	    $toolData = $this->paginate('Tool');
+
+		$this->set(compact('toolData'));
 
 	}
 	

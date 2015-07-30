@@ -1,6 +1,6 @@
-<?php $this->Html->addCrumb('Settings', array('controller' => 'settings', 'action' => 'index')); ?>
-<?php $this->Html->addCrumb('Position', array('controller' => 'settings', 'action' => 'index','tab'=>'position')); ?>
-<?php $this->Html->addCrumb('Add', array('controller' => 'settings', 'action' => 'position')); ?>
+<?php $this->Html->addCrumb('Settings', array('controller' => 'settings', 'action' => 'department')); ?>
+<?php $this->Html->addCrumb('Position', array('controller' => 'settings', 'action' => 'position','tab'=>'position')); ?>
+<?php $this->Html->addCrumb('Add', array('controller' => 'positions', 'action' => 'add')); ?>
 <?php echo $this->Html->css('HumanResource.default');?>
 <?php echo $this->Html->script(array(
                         'jquery.maskedinput.min',
@@ -9,7 +9,7 @@
 <div style="clear:both"></div>
 
 <?php echo $this->element('hr_options'); ?><br><br>
-<?php echo $this->Form->create('Position',array('url'=>(array('controller' => 'settings','action' => 'position')),
+<?php echo $this->Form->create('Position',array('url'=>(array('controller' => 'positions','action' => 'add')),
 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data' ));?>
 
     <div class="row">

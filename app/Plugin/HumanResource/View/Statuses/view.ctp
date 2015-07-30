@@ -1,6 +1,6 @@
 <?php $this->Html->addCrumb('Settings', array('controller' => 'settings', 'action' => 'department')); ?>
-<?php $this->Html->addCrumb('Position', array('controller' => 'settings', 'action' => 'position','tab' => 'position')); ?>
-<?php $this->Html->addCrumb('View', array('controller' => 'positions', 'action' => 'view',$positionData['Position']['id'])); ?>
+<?php $this->Html->addCrumb('Status', array('controller' => 'settings', 'action' => 'status','tab' => 'status')); ?>
+<?php $this->Html->addCrumb('View', array('controller' => 'statuses', 'action' => 'view',$statusData['Status']['id'])); ?>
 <?php echo $this->Html->css('HumanResource.default');?>
 <?php echo $this->Html->script(array(
                         'jquery.maskedinput.min',
@@ -19,11 +19,11 @@
                     
                     <center>
                         <h1 class="pull-left">
-                            Position Information
+                            Status Information
                         </h1>
                     </center>
                     <?php 
-                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'settings', 'action' => 'position','tab'=>'position'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'settings', 'action' => 'status','tab' => 'status'),array('class' =>'btn btn-primary pull-right','escape' => false));
                     ?>
                 </header>
 
@@ -42,29 +42,15 @@
                                         <div class="form-group">
                                             <label for="inputEmail1" class="col-lg-3 control-label strong">Name</label>
                                               <div class="col-lg-8 value"> 
-                                               <?php echo ucfirst($positionData['Position']['name']);  ?>
+                                               <?php echo ucfirst($statusData['Status']['name']);  ?>
                                                </div>
                                          </div>
                                          <div class="form-group">
                                             <label for="inputEmail1" class="col-lg-3 control-label strong">Description</label>
                                               <div class="col-lg-8 value"> 
-                                               <?php echo ucfirst($positionData['Position']['description']);  ?>
+                                               <?php echo ucfirst($statusData['Status']['description']);  ?>
                                                </div>
                                          </div>
-
-                                          <div class="form-group">
-                                            <label for="inputEmail1" class="col-lg-3 control-label strong">Specification</label>
-                                              <div class="col-lg-8 value"> 
-                                               <?php echo ucfirst($positionData['Position']['specification']);  ?>
-                                               </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                            <label for="inputEmail1" class="col-lg-3 control-label strong">Notes</label>
-                                              <div class="col-lg-8 value"> 
-                                               <?php echo !empty($positionData['Position']['notes']) ? ucfirst($positionData['Position']['notes']) : '';  ?>
-                                               </div>
-                                            </div>
 
                                      </div>
 

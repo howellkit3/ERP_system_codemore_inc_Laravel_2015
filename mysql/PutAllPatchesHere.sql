@@ -1003,4 +1003,32 @@ CREATE TABLE IF NOT EXISTS `disciplinary_actions` (
 
 ALTER TABLE `absences` CHANGE `total_time` `total_time` TIME NOT NULL;
 
+/** bien added this 07/30/2015  */
+
+ALTER TABLE `government_records` CHANGE `agency` `agency_id` INT(11)  NOT NULL;
+
+CREATE TABLE `agencies` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `field` varchar(255) NOT NULL DEFAULT '',
+  `description` text,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `statuses` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /* end all HR tables */
+
+

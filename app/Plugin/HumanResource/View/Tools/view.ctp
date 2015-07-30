@@ -1,6 +1,6 @@
 <?php $this->Html->addCrumb('Settings', array('controller' => 'settings', 'action' => 'department')); ?>
-<?php $this->Html->addCrumb('Position', array('controller' => 'settings', 'action' => 'position','tab' => 'position')); ?>
-<?php $this->Html->addCrumb('View', array('controller' => 'positions', 'action' => 'view',$positionData['Position']['id'])); ?>
+<?php $this->Html->addCrumb('Tool', array('controller' => 'settings', 'action' => 'tool','tab' => 'tool')); ?>
+<?php $this->Html->addCrumb('View', array('controller' => 'tools', 'action' => 'view',$toolData['Tool']['id'])); ?>
 <?php echo $this->Html->css('HumanResource.default');?>
 <?php echo $this->Html->script(array(
                         'jquery.maskedinput.min',
@@ -19,11 +19,11 @@
                     
                     <center>
                         <h1 class="pull-left">
-                            Position Information
+                            Tool Information
                         </h1>
                     </center>
                     <?php 
-                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'settings', 'action' => 'position','tab'=>'position'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'settings', 'action' => 'tool','tab' => 'tool'),array('class' =>'btn btn-primary pull-right','escape' => false));
                     ?>
                 </header>
 
@@ -42,29 +42,33 @@
                                         <div class="form-group">
                                             <label for="inputEmail1" class="col-lg-3 control-label strong">Name</label>
                                               <div class="col-lg-8 value"> 
-                                               <?php echo ucfirst($positionData['Position']['name']);  ?>
+                                               <?php echo ucfirst($toolData['Tool']['name']);  ?>
                                                </div>
                                          </div>
                                          <div class="form-group">
-                                            <label for="inputEmail1" class="col-lg-3 control-label strong">Description</label>
+                                            <label for="inputEmail1" class="col-lg-3 control-label strong">Brand</label>
                                               <div class="col-lg-8 value"> 
-                                               <?php echo ucfirst($positionData['Position']['description']);  ?>
+                                               <?php echo ucfirst($toolData['Tool']['brand']);  ?>
                                                </div>
                                          </div>
-
-                                          <div class="form-group">
-                                            <label for="inputEmail1" class="col-lg-3 control-label strong">Specification</label>
+                                         <div class="form-group">
+                                            <label for="inputEmail1" class="col-lg-3 control-label strong">Type</label>
                                               <div class="col-lg-8 value"> 
-                                               <?php echo ucfirst($positionData['Position']['specification']);  ?>
+                                               <?php echo ucfirst($toolData['Tool']['type']);  ?>
                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                            <label for="inputEmail1" class="col-lg-3 control-label strong">Notes</label>
+                                         </div>
+                                         <div class="form-group">
+                                            <label for="inputEmail1" class="col-lg-3 control-label strong">Quantity</label>
                                               <div class="col-lg-8 value"> 
-                                               <?php echo !empty($positionData['Position']['notes']) ? ucfirst($positionData['Position']['notes']) : '';  ?>
+                                               <?php echo ucfirst($toolData['Tool']['quantity']);  ?>
                                                </div>
-                                            </div>
+                                         </div>
+                                         <div class="form-group">
+                                            <label for="inputEmail1" class="col-lg-3 control-label strong">Status</label>
+                                              <div class="col-lg-8 value"> 
+                                               <?php echo ucfirst($toolData['Tool']['status']);  ?>
+                                               </div>
+                                         </div>
 
                                      </div>
 
