@@ -11,7 +11,8 @@ class Employee extends AppModel {
     public $actsAs = array('Containable');
 
 	public $virtualFields = array(
-		'full_name' => 'CONCAT_WS(" ",Employee.last_name , Employee.middle_name , Employee.first_name  )'
+		'full_name' => 'CONCAT_WS(" ",Employee.last_name , Employee.middle_name , Employee.first_name  )',
+		'fullname' => 'CONCAT_WS(" ", Employee.first_name, Employee.middle_name, Employee.last_name   )'
 	);
     
     public function bind($model = array('Group')){

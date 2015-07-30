@@ -969,7 +969,7 @@ CREATE TABLE IF NOT EXISTS `cause_memos` (
   `uuid` INT(11) DEFAULT NULL,
   `employee_id` INT(11) DEFAULT NULL,
   `description` VARCHAR(100) DEFAULT NULL,
-  `company_policy_id` INT(11) DEFAULT NULL,
+  `violation_id` INT(11) DEFAULT NULL,
   `status_id` INT(11) DEFAULT NULL,
   `created_by` INT(11) DEFAULT NULL,
   `modified_by` INT(11) DEFAULT NULL,
