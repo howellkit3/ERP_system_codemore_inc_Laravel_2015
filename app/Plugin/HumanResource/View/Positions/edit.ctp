@@ -1,6 +1,5 @@
-<?php $this->Html->addCrumb('Settings', array('controller' => 'settings', 'action' => 'index')); ?>
-<?php $this->Html->addCrumb('Department', array('controller' => 'settings', 'action' => 'index')); ?>
-<?php $this->Html->addCrumb('Edit', array('controller' => 'settings', 'action' => 'edit_department')); ?>
+<?php $this->Html->addCrumb('Position', array('controller' => 'settings', 'action' => 'position','tab'=>'position')); ?>
+<?php $this->Html->addCrumb('Edit', array('controller' => 'positions', 'action' => 'edit')); ?>
 <?php echo $this->Html->css('HumanResource.default');?>
 <?php echo $this->Html->script(array(
                         'jquery.maskedinput.min',
@@ -9,7 +8,7 @@
 <div style="clear:both"></div>
 
 <?php echo $this->element('hr_options'); ?><br><br>
-<?php echo $this->Form->create('Department',array('url'=>(array('controller' => 'settings','action' => 'edit_department')),
+<?php echo $this->Form->create('Position',array('url'=>(array('controller' => 'positions','action' => 'edit')),
 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data','method' =>'post' ));?>
 
     <div class="row">
@@ -24,14 +23,14 @@
                             </h1>
                         </center>
                         <?php 
-                            echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'settings', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                            echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'settings', 'action' => 'position','tab'=>'position'),array('class' =>'btn btn-primary pull-right','escape' => false));
                         ?>
                     </header>
 
                 </div>
             </div>
 
-           <?php echo $this->element('department_form'); ?>
+           <?php echo $this->element('position_form'); ?>
 
             <div class="row">
                 <div class="col-lg-12">
@@ -50,7 +49,7 @@
                                                     <?php 
                                                         echo $this->Form->submit('Submit Department Information', array('class' => 'btn btn-success pull-left',  'title' => 'Click here to add the Department'));
                                                         echo "&nbsp;";
-                                                        echo $this->Html->link('Cancel ', array('controller' => 'settings', 'action' => 'department','plugin' => 'human_resource'),array('class' =>'btn btn-default ','escape' => false));
+                                                        echo $this->Html->link('Cancel ', array('controller' => 'settings', 'action' => 'position','tab'=>'position','plugin' => 'human_resource'),array('class' =>'btn btn-default ','escape' => false));
 
                                                     ?>
                                                 </div>
@@ -70,7 +69,7 @@
 <?php echo $this->Form->end(); ?>
 <script>
    jQuery(document).ready(function($){
-        $("#DepartmentEditDepartmentForm").validate();
+        $("#PositionEditForm").validate();
             
     });
 </script>
