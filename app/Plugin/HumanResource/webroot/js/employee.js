@@ -1,3 +1,16 @@
+function readURL(input,element) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+
+            $('.'+element).attr('style','background:url('+ e.target.result +')')
+
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
 var checkexistingDept = function(thisElement){
 
     $('.dynamic-input').remove();
@@ -35,3 +48,28 @@ var checkexistingDept = function(thisElement){
     });
 
 }
+
+$(document).ready(function(){
+
+$body = $('body');
+
+
+$body.on('click','.btn.btn-success.upload-image',function(e){
+
+    $('.image_profile input').click();
+
+    e.preventDefault();
+});
+
+$( ".datepick" ).datepicker({
+    format: 'yyyy-mm-dd', 
+    changeYear: true,
+    changeMonth: true,
+    showMonthAfterYear: true, //this is what you are looking for
+});
+
+$(".autocomplete").select2();
+//$('.datepick').datepicker({  format: 'yyyy-mm-dd'  });
+
+
+});

@@ -1,20 +1,9 @@
-function readURL(input,element) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
 
-        reader.onload = function (e) {
-
-            $('.'+element).attr('style','background:url('+ e.target.result +')')
-
-        }
-
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-
-$(window).load(function(){
+$(document).ready(function(){
 
 $body = $('body');
+
+
 
 $body.on('click','.btn.btn-success.upload-image',function(e){
 
@@ -32,13 +21,7 @@ $( ".datepick" ).datepicker({
 
 //$('.datepick').datepicker({  format: 'yyyy-mm-dd'  });
 
-$(".autocomplete").select2();
 
 });
-// $('.datepick').datepicker({
-// 		  format: 'mm-dd-yyyy'
-		  
-// });
-
 
 //seasch Employees

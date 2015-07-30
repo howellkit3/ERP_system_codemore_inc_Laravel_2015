@@ -10,7 +10,7 @@ echo $this->Html->css(array(
  echo $this->Html->script(array(
                     'jquery.maskedinput.min',
                     'HumanResource.select2.min',
-                    'HumanResource.custom',
+                    'HumanResource.employee',
 
 ));  ?>
 <div style="clear:both"></div>

@@ -7,7 +7,7 @@
         <div class="main-box clearfix body-pad">
     		<ul class="nav nav-tabs">
 					<li class="<?php echo ($active_tab == 'tab-employee') ? 'active' : '' ?>" alt="tab-category"><a href="#tab-employee" data-toggle="tab">Employee</a></li>
-					<li class="<?php echo ($active_tab == 'tab-tooling') ? 'active' : '' ?>" alt="tab-type"><a href="#tab-tooling" id = 'itemType' data-toggle="tab">Tooling</a></li>
+					<!-- <li class="<?php echo ($active_tab == 'tab-tooling') ? 'active' : '' ?>" alt="tab-type"><a href="#tab-tooling" id = 'itemType' data-toggle="tab">Tooling</a></li> -->
 				</ul>
 		<div class="main-box-body clearfix">
 			<div class="tabs-wrapper">

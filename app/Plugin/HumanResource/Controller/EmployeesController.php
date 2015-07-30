@@ -283,6 +283,13 @@ class EmployeesController  extends HumanResourceAppController {
 
 		 $this->loadModel('HumanResource.ContactPerson');
 
+		$this->loadModel('HumanResource.Position');
+
+		$this->loadModel('HumanResource.Department');
+
+		$positions = $this->Position->find('list',array('fields' => array('id','name')));
+
+		$departments = $this->Department->find('list',array('fields' => array('id','name')));
 
 			$this->Employee->bind(array(
 				'EmployeeAdditionalInformation',
@@ -293,12 +300,10 @@ class EmployeesController  extends HumanResourceAppController {
 				'ContactPerson',
 				'ContactPersonEmail',
 				'ContactPersonAddress',
-				'ContactPersonNumber'
-				));
+				'ContactPersonNumber',
+			));
 
 			$employee = $this->Employee->findById($id);
-
-
 
 			$this->set(compact('employee','departments','positions'));
 		}
