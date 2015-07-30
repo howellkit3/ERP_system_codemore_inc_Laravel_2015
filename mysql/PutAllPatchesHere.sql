@@ -1000,6 +1000,7 @@ CREATE TABLE IF NOT EXISTS `disciplinary_actions` (
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=38 ;
 
+ALTER TABLE `koufu_human_resource`.`disciplinary_actions` ADD COLUMN `violation_id` INT NULL AFTER `name`;
 
 ALTER TABLE `absences` CHANGE `total_time` `total_time` TIME NOT NULL;
 

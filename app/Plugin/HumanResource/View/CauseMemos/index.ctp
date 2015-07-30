@@ -6,9 +6,10 @@
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
             <ul class="nav nav-tabs">
-                    <li class="<?php echo ($active_tab == 'tab-employee') ? 'active' : '' ?>" alt="tab-category"><a href="#tab-employee" data-toggle="tab">Employee</a></li>
-                    <!-- <li class="<?php echo ($active_tab == 'tab-tooling') ? 'active' : '' ?>" alt="tab-type"><a href="#tab-tooling" id = 'itemType' data-toggle="tab">Tooling</a></li> -->
-                </ul>
+                    <li class="<?php echo ($active_tab == 'tab-employee') ? 'active' : '' ?>" alt="tab-category"><a href="#tab-employee" data-toggle="tab">Cause Memos</a></li>
+                    <li class="<?php echo ($active_tab == 'tab-violation') ? 'active' : '' ?>" alt="tab-type"><a href="#tab-violation" id = 'itemType' data-toggle="tab">Violation</a></li>
+                    <li class="<?php echo ($active_tab == 'tab-disciplinary') ? 'active' : '' ?>" alt="tab-type"><a href="#tab-disciplinary" id = 'itemType' data-toggle="tab">Disciplinary Action</a></li>
+            </ul>
         <div class="main-box-body clearfix">
             <div class="tabs-wrapper">
                 <div class="tab-content">
@@ -37,71 +38,80 @@
                         </header>
                         <div class="main-box-body clearfix">
                             <div class="table-responsive">
-                                <!-- <table class="table table-striped table-hover">
+                                <table class="table table-striped table-hover">
                                     <thead>
                                         <tr>
                                             <th><a href="#"><span>Code</span></a></th>
-                                            <!-- <th><a href="#"><span>Statement of Account No.</span></a></th> -->
-                                            <th><a href="#"><span>Name</span></a></th>
-                                            <th class="text-center"><a href="#"><span>Department</span></a></th>
-                                            <th class="text-center"><a href="#"><span>Position</span></a></th>
-                                            <th class="text-center"><a href="#"><span>Status</span></a></th>
-                                            <th class="text-center"><a href="#"><span>Gender</span></a></th>
+                                            <th><a href="#"><span>Employee</span></a></th>
+                                            <th class=""><a href="#"><span>Description</span></a></th>
+                                            <th class=""><a href="#"><span>Violation</span></a></th>
+                                            <th class=""><a href="#"><span>Status</span></a></th>
                                             <th><a href="#"><span>Actions</span></a></th>
                                         </tr>
                                     </thead>
 
-                                    <?php 
-                                        if(!empty($employees)){
-                                            foreach ($employees as $key => $employee): ?>
-                                                <tbody aria-relevant="all" aria-live="polite" role="alert">
-                                                    <tr class="">
-                                                        <td class="">
-                                                            <?php echo $employee['Employee']['code'];?> 
-                                                        </td>
-                                                        <td class="">
-                                                            <?php echo $this->CustomText->getFullname($employee['Employee']);  ?>
-                                                        </td>
-                                                        
-                                                        <td class="text-center">
-                                                           <?php echo !empty($departments[$employee['Employee']['department_id']]) ? $departments[$employee['Employee']['department_id']] : '';  ?>
-                                                        </td>
-
-                                                         <td class="text-center">
-                                                           <?php echo !empty($positions[$employee['Employee']['position_id']]) ? $positions[$employee['Employee']['position_id']] : '';  ?>
-                                                        </td>
-
-                                                        <td class="text-center">
-                                                           <?php echo !empty($employee['Employee']['status']) ? $employee['Employee']['status'] : '';  ?>
-                                                        </td>
-
-                                                        <td class="text-center">
-                                                           <?php echo !empty($employee['Employee']['gender']) ? $employee['Employee']['gender'] : '';  ?>
-                                                        </td>
-
-                                                        <td>
-                                                            <?php echo $this->Html->link('<span class="fa-stack">
-                                                                <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> View </font></span></span> ', array('controller' => 'employees', 'action' => 'view',$employee['Employee']['id']), array('class' =>' table-link','escape' => false, 'title'=>'View Sales Invoice'
-                                                                ));
-
-                                                            ?>
-
-                                                        <?php
-                                                        echo $this->Html->link('<span class="fa-stack">
-                                                        <i class="fa fa-square fa-stack-2x"></i>
-                                                        <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit </font></span>
-                                                        </span> ', array('controller' => 'employees', 'action' => 'edit',$employee['Employee']['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Information'));
-                                                        ?>
-                                                        </td>
-                                                    </tr>
-
-                                                </tbody>
-                                        <?php 
-                                            endforeach; 
-                                        } ?> 
+                                    <?php echo $this->element('cause_memos_table'); ?> 
                                 
                                 </table>    
- -->
+
+                                <hr>
+
+                                <div class="paging" id="item_type_pagination">
+                                        <?php
+                                       
+                                        echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'Employee','model' => 'Employee'), null, array('class' => 'disable','model' => 'ClientOrder'));
+                                        echo $this->Paginator->numbers(array('separator' => '','paginate' => 'Employee'), array('paginate' => 'Employee'));
+                                        echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'Employee','model' => 'Employee'), null, array('class' => 'disable'));
+
+                                        ?>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade  <?php echo ($active_tab == 'tab-violation') ? 'in active' : '' ?>" id="tab-violation">
+                        <header class="main-box-header clearfix">
+                            <h2 class="pull-left"><b>Violation List</b></h2>
+                            <div class="filter-block pull-right">
+                             <div class="form-group pull-left">
+                                    <?php //echo $this->Form->create('Quotation',array('controller' => 'quotations','action' => 'search', 'type'=> 'get')); ?>
+                                        <input placeholder="Search..." class="form-control searchViolation"  />
+                                        <i class="fa fa-search search-icon"></i>
+                                     <?php //echo $this->Form->end(); ?>
+                                </div>
+                               <?php
+                               
+                                  echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Add Violation', 
+                                        array('controller' => 'cause_memos', 
+                                                'action' => 'add_violation',),
+                                        array('class' =>'btn btn-primary pull-right',
+                                            'escape' => false));
+
+                                ?> 
+                              
+                               <br><br>
+                           </div>
+                        </header>
+                        <div class="main-box-body clearfix">
+                            <div class="table-responsive">
+                                 <table class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th><a href="#"><span>Name</span></a></th>
+                                            <th class=""><a href="#"><span>Description/span></a></th>
+                                            <th class=""><a href="#"><span>Created</span></a></th>
+                                            <th class=""><a href="#"><span>Created by</span></a></th>
+                                            <th><a href="#"><span>Actions</span></a></th>
+                                        </tr>
+                                    </thead>
+
+                                    <?php echo $this->element('violation_table'); ?> 
+                                
+                                </table>    
+
                                 <hr>
 
                                 <div class="paging" id="item_type_pagination">
@@ -117,20 +127,23 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade  <?php echo ($active_tab == 'tab-tooling') ? 'in active' : '' ?>" id="tab-tooling">
+
+
+
+                    <div class="tab-pane fade  <?php echo ($active_tab == 'tab-disciplinary') ? 'in active' : '' ?>" id="tab-disciplinary">
                         <header class="main-box-header clearfix">
-                            <h2 class="pull-left"><b>Toolings</b></h2>
+                            <h2 class="pull-left"><b>Disciplinary Action</b></h2>
                             <div class="filter-block pull-right">
                              <div class="form-group pull-left">
                                     <?php //echo $this->Form->create('Quotation',array('controller' => 'quotations','action' => 'search', 'type'=> 'get')); ?>
-                                        <input placeholder="Search..." class="form-control searchCustomer"  />
+                                        <input placeholder="Search..." class="form-control searchDisciplinary"  />
                                         <i class="fa fa-search search-icon"></i>
                                      <?php //echo $this->Form->end(); ?>
                                 </div>
                                <?php
-                                    echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Assign Tools', 
-                                        array('controller' => 'toolings', 
-                                                'action' => 'assign',),
+                                    echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i>Add Disciplinary Action', 
+                                        array('controller' => 'cause_memos', 
+                                                'action' => 'add_disciplinary_action',),
                                         array('class' =>'btn btn-primary pull-right',
                                             'escape' => false));
 
@@ -143,50 +156,14 @@
                                 <table class="table table-striped table-hover">
                                     <thead>
                                         <tr>
-                                            <th><a href="#"><span>Employee Name</span></a></th>
-                                            <th class="text-center"><a href="#"><span>Tools</span></a></th>
-                                            <th class="text-center"><a href="#"><span>Quantity</span></a></th>
-                                            <th class="text-center"><a href="#"><span>Price</span></a></th>
+                                            <th><a href="#"><span>Name</span></a></th>
+                                            <th class=""><a href="#"><span>Created by</span></a></th>
+                                            <th class=""><a href="#"><span>Created</span></a></th>
                                             <th><a href="#"><span>Actions</span></a></th>
                                         </tr>
                                     </thead>
-                                      <?php if(!empty($toolings)) {
-                                            foreach ($toolings as $key => $tooling): ?>
-                                                    <tbody aria-relevant="all" aria-live="polite" role="alert">
-                                                        <tr class="">
-                                                        <td class="">
-                                                            <?php echo $tooling['Tooling']['employee_id']; ?>
-                                                        </td>
-                                                        
-                                                        <td class="text-center">
-                                                            <?php echo $tooling['Tooling']['tools_id']; ?>
-                                                        </td>
-
-                                                         <td class="text-center">
-                                                           <?php echo $tooling['Tooling']['quantity']; ?>
-                                                        </td>
-
-                                                        <td class="text-center">
-                                                         <?php echo $tooling['Tooling']['price']; ?>
-                                                        </td>
-                                                        <td>
-                                                         <?php echo $this->Html->link('<span class="fa-stack">
-                                                                <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> View </font></span></span> ', array('controller' => 'toolings', 'action' => 'view',$tooling['Tooling']['id']), array('class' =>' table-link','escape' => false, 'title'=>'View Sales Invoice'
-                                                                ));
-
-                                                           
-                                                        echo $this->Html->link('<span class="fa-stack">
-                                                        <i class="fa fa-square fa-stack-2x"></i>
-                                                        <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit </font></span>
-                                                        </span> ', array('controller' => 'toolings', 'action' => 'edit',$tooling['Tooling']['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Information'));
-                                                        ?>
-                                                        </td>
-                                                    </tr>
-
-                                                </tbody>
-                                        <?php 
-                                            endforeach; 
-                                        } ?>  
+                                      
+                                    <?php echo $this->element('disciplinary_action_table'); ?> 
                                 
                                 </table>    
 
