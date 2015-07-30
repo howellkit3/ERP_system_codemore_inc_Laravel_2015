@@ -1,6 +1,6 @@
-<?php $this->Html->addCrumb('Settings', array('controller' => 'settings', 'action' => 'index')); ?>
-<?php $this->Html->addCrumb('Position', array('controller' => 'settings', 'action' => 'index','tab' => 'position')); ?>
-<?php $this->Html->addCrumb('View', array('controller' => 'settings', 'action' => 'view_position')); ?>
+<?php $this->Html->addCrumb('Settings', array('controller' => 'settings', 'action' => 'department')); ?>
+<?php $this->Html->addCrumb('Position', array('controller' => 'settings', 'action' => 'position','tab' => 'position')); ?>
+<?php $this->Html->addCrumb('View', array('controller' => 'positions', 'action' => 'view',$positionData['Position']['id'])); ?>
 <?php echo $this->Html->css('HumanResource.default');?>
 <?php echo $this->Html->script(array(
                         'jquery.maskedinput.min',
@@ -23,7 +23,7 @@
                         </h1>
                     </center>
                     <?php 
-                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'settings', 'action' => 'index','tab'=>'position'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'settings', 'action' => 'position','tab'=>'position'),array('class' =>'btn btn-primary pull-right','escape' => false));
                     ?>
                 </header>
 

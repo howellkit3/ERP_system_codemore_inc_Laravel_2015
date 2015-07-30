@@ -126,7 +126,7 @@ class EmployeesController  extends HumanResourceAppController {
 						$this->ContactPerson->saveContact($data['ContactPersonData'],$employeeId,$auth['id']);
 			 		}
 					//save contactPerson emails
-			 		//$save = $this->Email->saveEmails($employeeId,'ContactPerson',$data['ContactPersonData']['Email'],$auth['id']);
+			 		$save = $this->Email->saveEmails($employeeId,'ContactPerson',$data['ContactPersonData']['Email'],$auth['id']);
 
 			 		//$save
 			 		$this->Session->setFlash('Saving employee information successfully');
@@ -147,11 +147,19 @@ class EmployeesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Department');
 
+		$this->loadModel('HumanResource.Status');
+
+		$this->loadModel('HumanResource.Agency');
+
 		$positionList = $this->Position->find('list',array('fields' => array('id','name')));
 
 		$departmentList = $this->Department->find('list',array('fields' => array('id','name')));
 
-		$this->set(compact('positionList','departmentList'));
+		$statusList = $this->Status->find('list',array('fields' => array('id','name')));
+
+		$agencyList = $this->Agency->find('all',array('fields' => array('id','name','field')));
+
+		$this->set(compact('positionList','departmentList','statusList','agencyList'));
 	}
 
 	public function edit($id){
@@ -265,6 +273,28 @@ class EmployeesController  extends HumanResourceAppController {
 			
 
 		}
+		$this->loadModel('HumanResource.Position');
+
+		$this->loadModel('HumanResource.Department');
+
+		$this->loadModel('HumanResource.Status');
+
+		$this->loadModel('HumanResource.Agency');
+
+		$positionList = $this->Position->find('list',array('fields' => array('id','name')));
+
+		$departmentList = $this->Department->find('list',array('fields' => array('id','name')));
+
+		$statusList = $this->Status->find('list',array('fields' => array('id','name')));
+
+		$agencyList = $this->Agency->find('all',array('fields' => array('id','name','field')));
+
+		$nameList = array();
+		foreach ($agencyList as $key => $value) {
+			$nameList[$value['Agency']['id']] = array('name' => $value['Agency']['name'],'field' =>$value['Agency']['field']);
+		}
+		
+		$this->set(compact('positionList','departmentList','statusList','nameList'));
 	}
 
 	function view($id){

@@ -969,7 +969,7 @@ CREATE TABLE IF NOT EXISTS `cause_memos` (
   `uuid` INT(11) DEFAULT NULL,
   `employee_id` INT(11) DEFAULT NULL,
   `description` VARCHAR(100) DEFAULT NULL,
-  `company_policy_id` INT(11) DEFAULT NULL,
+  `violation_id` INT(11) DEFAULT NULL,
   `status_id` INT(11) DEFAULT NULL,
   `created_by` INT(11) DEFAULT NULL,
   `modified_by` INT(11) DEFAULT NULL,
@@ -1000,6 +1000,7 @@ CREATE TABLE IF NOT EXISTS `disciplinary_actions` (
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=38 ;
 
+ALTER TABLE `koufu_human_resource`.`disciplinary_actions` ADD COLUMN `violation_id` INT NULL AFTER `name`;
 
 ALTER TABLE `absences` CHANGE `total_time` `total_time` TIME NOT NULL;
 
@@ -1023,4 +1024,38 @@ CREATE TABLE IF NOT EXISTS `overtimes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 ALTER TABLE `overtimes`  ADD `status` VARCHAR(255) NOT NULL  AFTER `remarks`,  ADD `approved_by` INT NOT NULL  AFTER `status`,  ADD `audit_date` DATETIME NOT NULL  AFTER `approved_by`,  ADD `audit_by` INT NOT NULL  AFTER `audit_date`;
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+
+ALTER TABLE `government_records` CHANGE `agency` `agency_id` INT(11)  NOT NULL;
+
+CREATE TABLE `agencies` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `field` varchar(255) NOT NULL DEFAULT '',
+  `description` text,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `statuses` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /* end all HR tables */
+
+

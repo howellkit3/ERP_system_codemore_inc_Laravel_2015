@@ -1,5 +1,5 @@
 <?php $this->Html->addCrumb('Settings', array('controller' => 'settings', 'action' => 'department')); ?>
-<?php $this->Html->addCrumb('Position', array('controller' => 'settings', 'action' => 'position','tab'=>'position')); ?>
+<?php $this->Html->addCrumb('Tool', array('controller' => 'settings', 'action' => 'tool','tab'=>'tool')); ?>
 <?php echo $this->element('hr_options');
     $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : ' ';
 
@@ -16,9 +16,9 @@
                         <div class="tab-content">
                             <!-- <div class="tab-pane <?php echo ($active_tab == 'position') ? 'active' : '' ?>" id="tab-position"> -->
                             <!-- <div class="tab-pane fade <?php echo ($active_tab == 'position' || $this->params['action'] == 'position') ? 'in active' : '' ?>" id="position"> -->
-                            <div class="tab-pane active" id="tab-position">
+                            <div class="tab-pane active" id="tab-tool">
                                 <header class="main-box-header clearfix">
-                                    <h2 class="pull-left"><b>Positions</b></h2>
+                                    <h2 class="pull-left"><b>Tool</b></h2>
                                     <div class="filter-block pull-right">
                                      <div class="form-group pull-left">
                                             <?php //echo $this->Form->create('Quotation',array('controller' => 'quotations','action' => 'search', 'type'=> 'get')); ?>
@@ -27,8 +27,8 @@
                                              <?php //echo $this->Form->end(); ?>
                                         </div>
                                        <?php
-                                            echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Add Position', 
-                                                array('controller' => 'positions', 
+                                            echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Add Tool', 
+                                                array('controller' => 'tools', 
                                                         'action' => 'add',),
                                                 array('class' =>'btn btn-primary pull-right',
                                                     'escape' => false));
@@ -44,39 +44,44 @@
                                                 <tr>
                                                     <th><a href="#"><span>#</span></a></th>
                                                     <th><a href="#"><span>Name</span></a></th>
-                                                    <th class="text-center"><a href="#"><span>Description</span></a></th>
-                                                    <th class="text-center"><a href="#"><span>Specification</span></a></th>
-                                                    <th class="text-center"><a href="#"><span>Notes</span></a></th>
+                                                    <th class="text-center"><a href="#"><span>Brand</span></a></th>
+                                                    <th class="text-center"><a href="#"><span>Type</span></a></th>
+                                                    <th class="text-center"><a href="#"><span>Quantity</span></a></th>
+                                                     <th class="text-center"><a href="#"><span>Status</span></a></th>
                                                     <th><a href="#"><span>Actions</span></a></th>
                                                 </tr>
                                             </thead>
-                                              <?php if(!empty($positionData)) {
-                                                    foreach ($positionData as $key => $positionList): $key++ ?>
+                                              <?php if(!empty($toolData)) {
+                                                    foreach ($toolData as $key => $toolList): $key++ ?>
                                                             <tbody aria-relevant="all" aria-live="polite" role="alert">
                                                                 <tr class="">
                                                                     <td class="">
                                                                         <?php echo $key;?> 
                                                                     </td>
                                                                     <td class="">
-                                                                        <?php echo ucfirst($positionList['Position']['name']);  ?>
+                                                                        <?php echo ucfirst($toolList['Tool']['name']);  ?>
                                                                     </td>
                                                                     
                                                                     <td class="text-center">
-                                                                       <?php echo ucfirst($positionList['Position']['description']);  ?>
-                                                                    </td>
-
-                                                                     <td class="text-center">
-                                                                      <?php echo ucfirst($positionList['Position']['specification']);  ?>
+                                                                       <?php echo ucfirst($toolList['Tool']['brand']);  ?>
                                                                     </td>
 
                                                                     <td class="text-center">
-                                                                       <?php echo !empty($positionList['Position']['notes']) ? $positionList['Position']['notes'] : '';  ?>
+                                                                       <?php echo ucfirst($toolList['Tool']['type']);  ?>
+                                                                    </td>
+
+                                                                    <td class="text-center">
+                                                                       <?php echo ucfirst($toolList['Tool']['quantity']);  ?>
+                                                                    </td>
+
+                                                                    <td class="text-center">
+                                                                       <?php echo ucfirst($toolList['Tool']['status']);  ?>
                                                                     </td>
 
                                                                     <td>
                                                                         <?php 
                                                                         echo $this->Html->link('<span class="fa-stack">
-                                                                            <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> View </font></span></span> ', array('controller' => 'positions', 'action' => 'view',$positionList['Position']['id']), array('class' =>' table-link','escape' => false, 'title'=>'View Position'
+                                                                            <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> View </font></span></span> ', array('controller' => 'tools', 'action' => 'view',$toolList['Tool']['id']), array('class' =>' table-link','escape' => false, 'title'=>'View Tool'
                                                                             ));
 
                                                                         ?>
@@ -85,20 +90,20 @@
                                                                     echo $this->Html->link('<span class="fa-stack">
                                                                     <i class="fa fa-square fa-stack-2x"></i>
                                                                     <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit </font></span>
-                                                                    </span> ', array('controller' => 'positions', 'action' => 'edit',$positionList['Position']['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Position'));
+                                                                    </span> ', array('controller' => 'tools', 'action' => 'edit',$toolList['Tool']['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Tool'));
 
 
                                                                     echo $this->Form->postLink('<span class="fa-stack">
                                                                     <i class="fa fa-square fa-stack-2x"></i>
                                                                     <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Delete </font></span>
                                                                     </span>', array(
-                                                                            'controller' => 'positions',
+                                                                            'controller' => 'tools',
                                                                             'action' => 'delete',
                                                                             'plugin' => 'human_resource',
-                                                                            $positionList['Position']['id']),
+                                                                            $toolList['Tool']['id']),
                                                                                     array('escape' => false,'class'=> 'table-link'), 
                                                                                     __('Are you sure you want to delete %s?', 
-                                                                                    $positionList['Position']['name'])
+                                                                                    $toolList['Tool']['name'])
                                                                             ); 
                                                                     ?>
                                                                     </td>
@@ -116,9 +121,9 @@
                                         <div class="paging" id="item_type_pagination">
                                                 <?php
                                                
-                                                echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'Position','model' => 'Position'), null, array('class' => 'disable','model' => 'ClientOrder'));
-                                                echo $this->Paginator->numbers(array('separator' => '','paginate' => 'Position'), array('paginate' => 'Position'));
-                                                echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'Position','model' => 'Position'), null, array('class' => 'disable'));
+                                                echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'Tool','model' => 'Tool'), null, array('class' => 'disable','model' => 'ClientOrder'));
+                                                echo $this->Paginator->numbers(array('separator' => '','paginate' => 'Tool'), array('paginate' => 'Status'));
+                                                echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'Tool','model' => 'Tool'), null, array('class' => 'disable'));
 
                                                 ?>
                                         </div>

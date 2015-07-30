@@ -9,6 +9,18 @@ class DisciplinaryAction extends AppModel {
     public $name = 'DisciplinaryAction';
 
     public $actsAs = array('Containable');
+
+ 	public function saveDisciplinaryAction($data = null, $auth = null){
+
+		$this->create();
+
+				$data['DisciplinaryAction']['modified_by'] = $auth;
+				$data['DisciplinaryAction']['created_by'] = $auth;
+				
+		$this->save($data);
+
+
+	}
     
 	
   }
