@@ -72,10 +72,12 @@
 								                        </td>
 
 								                        <td class="text-center">
-								                           <?php echo !empty($employee['Employee']['status']) ? $employee['Employee']['status'] : '';  ?>
+
+
+								                           <?php echo !empty($employee['Employee']['status']) ? ' <span class="label label-success">'.$employee['Employee']['status'].'</span>'  : '';  ?>
 								                        </td>
 
-								                        <td class="text-center">
+								                        <td>
 								                           <?php echo !empty($employee['Employee']['gender']) ? $employee['Employee']['gender'] : '';  ?>
 								                        </td>
 

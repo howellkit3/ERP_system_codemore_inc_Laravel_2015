@@ -54,7 +54,7 @@ echo $this->element('hr_options');
 								<div class="form-group pull-left">
 								<?php
 
-									echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Add', 
+									echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Add Absence', 
 			                            array('controller' => 'absences', 
 			                                  'action' => 'add'),
 				                           array('class' =>'btn btn-primary pull-right',
@@ -113,8 +113,7 @@ echo $this->element('hr_options');
 								                         </td>
 								                        <td> 
 								                           <?php 
-									                           $timeIn = (!empty($absence['Absence']['total_time']) && $absence['Absence']['total_time']  != '00:00:00') ? date('h:i:s',strtotime($absence['Absence']['total_time'])) : '';
-																echo $timeIn;
+																echo $this->CustomTime->formaTime($absence['Absence']['total_time'],':');
 								                            ?> 
 								                        </td>
 								                        </td>

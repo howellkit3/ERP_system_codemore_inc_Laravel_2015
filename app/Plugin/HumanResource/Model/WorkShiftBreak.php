@@ -61,7 +61,7 @@ class WorkShiftBreak extends AppModel {
 	public function createWorkshiftBreak($data = null,$workShiftId = null,$overtimeId = null,$authId = null) {
 
 
-		if (!empty($data)) {
+		if (!empty($data['Workshift']['breakids'])) {
 
 			$workShiftBreak = [];
 

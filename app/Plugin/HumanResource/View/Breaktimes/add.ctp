@@ -1,5 +1,5 @@
-<?php $this->Html->addCrumb('Employee', array('controller' => 'employees', 'action' => 'index')); ?>
-<?php $this->Html->addCrumb('Add', array('controller' => 'employees', 'action' => 'add')); ?>
+<?php $this->Html->addCrumb('Breaktime', array('controller' => 'schedules', 'action' => 'index')); ?>
+<?php $this->Html->addCrumb('Add', array('controller' => 'breaktimes', 'action' => 'add')); ?>
 <?php echo $this->Html->css(array('HumanResource.default','timepicker'));?>
 <?php echo $this->Html->script(array(
 						'jquery.maskedinput.min',
@@ -23,7 +23,7 @@
                             Add Breaktime
                             </h1>
                         </center>
-                        <?php  echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'schedules', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                        <?php  echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'schedules', 'action' => 'breaktime'),array('class' =>'btn btn-primary pull-right','escape' => false));
                         ?>
                     </header>
 

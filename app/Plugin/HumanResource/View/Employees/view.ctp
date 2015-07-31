@@ -63,7 +63,8 @@
 												<div class="col-lg-12">
 		                                     		<div class="form-group">
 				                                        <label for="inputEmail1" class="col-lg-12 control-label strong">Name</label>
-					                                      <div class="col-lg-12 value"> 
+					                                      <div class="col-lg-12 value">
+
 					                                       <?php echo $this->CustomText->getFullname($employee['Employee']);  ?>
 					                                       </div>
 				                                     </div>
@@ -123,63 +124,81 @@
 														<div class="table-responsive">
 															<div class="col-lg-12">
 	                                     		<div class="form-group">
-			                                        <label for="inputEmail1" class="col-lg-2 control-label strong"> Birthday</label>
+			                                        <label for="inputEmail1" class="col-lg-2 control-label strong">
+			                                        <i class="fa fa-calendar"></i>	
+			                                        Birthday</label>
 				                                      <div class="col-lg-9 value"> 
 				                                       <i class="fa fa-cake"></i>
 				                                       <?php echo date('Y-m-d',strtotime($employee['EmployeeAdditionalInformation']['birthday']))  ?>
 				                                       </div>
 			                                     </div>
 			                                     <div class="form-group">
-			                                        <label for="inputEmail1" class="col-lg-2 control-label strong">Email</label>
+			                                        <label for="inputEmail1" class="col-lg-2 control-label strong">
+			                                        <i class="fa fa-envelope-o"></i>	
+			                                        Email</label>
 				                                      <div class="col-lg-9 value"> 
 				                                      <?php echo $employee['Email'][0]['email'];  ?>
 				                                       </div>
 			                                     </div>
 
 			                                      <div class="form-group">
-			                                        <label for="inputEmail1" class="col-lg-2 control-label strong">Gender</label>
+			                                        <label for="inputEmail1" class="col-lg-2 control-label strong">
+			                                        	<i class="fa fa-genderless"></i>
+			                                        Gender</label>
 				                                      <div class="col-lg-9 value"> 
 				                                       <?php echo ( $employee['EmployeeAdditionalInformation']['gender'] == 'M' ) ? 'Male' : 'Female' ?>
 				                                       </div>
 			                                     	</div>
 
 			                                     	<div class="form-group">
-			                                        <label for="inputEmail1" class="col-lg-2 control-label strong">Height</label>
+			                                        <label for="inputEmail1" class="col-lg-2 control-label strong">
+			                                        <i class="fa fa fa-user"></i>
+			                                        Height</label>
 				                                      <div class="col-lg-9 value"> 
 				                                       <?php echo $employee['EmployeeAdditionalInformation']['height']; ?>
 				                                       </div>
 			                                     	</div>
 
 			                                     	<div class="form-group">
-			                                        <label for="inputEmail1" class="col-lg-2 control-label strong">Weight</label>
+			                                        <label for="inputEmail1" class="col-lg-2 control-label strong">
+			                                        <i class="fa fa fa-user"></i>
+			                                        Weight</label>
 				                                      <div class="col-lg-9 value"> 
 				                                     	 <?php echo $employee['EmployeeAdditionalInformation']['weight']; ?>
 				                                       </div>
 			                                     	</div>
 
 			                                     	<div class="form-group">
-			                                        <label for="inputEmail1" class="col-lg-2 control-label strong">Blodd Type</label>
+			                                        <label for="inputEmail1" class="col-lg-2 control-label strong">
+			                                        <i class="fa fa-tint"></i>
+			                                        Blood Type</label>
 				                                      <div class="col-lg-9 value"> 
 				                                     	 <?php echo ucwords($employee['EmployeeAdditionalInformation']['blood']); ?>
 				                                       </div>
 			                                     	</div>
 
 			                                     	<div class="form-group">
-				                                        <label for="inputEmail1" class="col-lg-2 control-label strong">Languages</label>
+				                                        <label for="inputEmail1" class="col-lg-2 control-label strong">
+				                                        	<i class="fa fa-globe"></i>
+				                                        Languages</label>
 					                                      <div class="col-lg-9 value"> 
 					                                     	 <?php echo ucwords($employee['EmployeeAdditionalInformation']['languages']); ?>
 					                                       </div>
 				                                     	</div>
 
 													<div class="form-group">
-				                                        <label for="inputEmail1" class="col-lg-2 control-label strong">Skills</label>
+				                                        <label for="inputEmail1" class="col-lg-2 control-label strong">
+				                                        	<i class="fa fa-star"></i>
+				                                        Skills</label>
 					                                      <div class="col-lg-9 value"> 
 					                                     	 <?php echo ucwords($employee['EmployeeAdditionalInformation']['skills']); ?>
 					                                       </div>
 				                                     </div>
 
 				                                    <div class="form-group">
-				                                        <label for="inputEmail1" class="col-lg-2 control-label strong">Contact #</label>
+				                                        <label for="inputEmail1" class="col-lg-2 control-label strong">
+				                                        	<i class="fa fa-phone"></i>
+				                                        Contact #</label>
 					                                      <div class="col-lg-9 value"> 
 					                                     	 <?php echo $employee['Contact'][0]['number']; ?>
 					                                       </div>

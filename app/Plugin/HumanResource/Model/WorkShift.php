@@ -45,12 +45,19 @@ class WorkShift extends AppModel {
 
 	public function createWorkshift($data = null,$overtimeId = null,$auth_id = null) {
 
+		//check existing workshift on overtime
+		if ($overtimeId) {
+
+			$editWorkshift =  $this->find('first',array('conditions' => array('WorkShift.overtime_id' => $overtime_id )));
+		}
+
+
 		$workshift = [];
 
 		$this->create();
 
 		if (!empty($data)) {
-
+			$workshift['id'] = !empty($editWorkshift['WorkShift']['id']) ? $editWorkshift['WorkShift']['id'] : '';
 			$workshift['name'] = 'OT-'.$overtimeId.'-'.$data['Overtime']['department_id'].'-'.$data['Overtime']['date'];
 			$workshift['overtime_id'] = $overtimeId;
 			$workshift['from'] = $data['Overtime']['from'];

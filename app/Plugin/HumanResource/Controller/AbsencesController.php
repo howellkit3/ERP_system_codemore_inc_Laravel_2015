@@ -25,7 +25,7 @@ class AbsencesController  extends HumanResourceAppController {
 
 			$this->Session->setFlash('Absence save successfully');
 
-			$this->redirect( array(
+			$this->redirect(array(
                          'controller' => 'attendances', 
                          'action' => 'absences',
                          'tab' => 'absences',
@@ -66,28 +66,26 @@ class AbsencesController  extends HumanResourceAppController {
 
 				$data = $this->Absence->formatData($this->request->data,$auth['id']);
 
-
 				if ($this->Absence->save($data)) {
 
 				$this->Session->setFlash('Absence save successfully');
 
-				$this->redirect( array(
-	                         'controller' => 'attendances', 
-	                         'action' => 'absences',
-	                         'tab' => 'absences',
-	                         'plugin' => 'human_resource'
+					$this->redirect(array(
+		                         'controller' => 'attendances', 
+		                         'action' => 'absences',
+		                         'tab' => 'absences',
+		                         'plugin' => 'human_resource'
 
-	                    ));	
+		                    ));	
 
 			
+					return $this->redirect( array(
+		                         'controller' => 'attendances', 
+		                         'action' => 'absences',
+		                         'tab' => 'absences',
+		                         'plugin' => 'human_resource'
 
-				return $this->redirect( array(
-	                         'controller' => 'attendances', 
-	                         'action' => 'absences',
-	                         'tab' => 'absences',
-	                         'plugin' => 'human_resource'
-
-	                    ));	
+		                    ));	
 
 
 				} else {
@@ -105,7 +103,6 @@ class AbsencesController  extends HumanResourceAppController {
 
 			$this->request->data = $this->Absence->findById($id);
 
-			
 
 		} else {
 
