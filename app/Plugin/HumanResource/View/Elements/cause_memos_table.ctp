@@ -32,7 +32,19 @@
 
                              echo "<span class='label label-info'>Executing</span>";
 
-                            }?>    
+                            } elseif ($causeMemoDataList['CauseMemo']['status_id'] == 1){
+
+                             echo "<span class='label label-warning'>Approved</span>";
+
+                            } elseif ($causeMemoDataList['CauseMemo']['status_id'] == 5){
+
+                               echo "<span class='label label-danger'>Terminated</span>";
+
+                            } elseif ($causeMemoDataList['CauseMemo']['status_id'] == 10){
+
+                               echo "<span class='label label-success'>Closed</span>";
+
+                              }?>  
                                 
                         </td>
 
@@ -42,13 +54,18 @@
 
                           <?php echo $this->Html->link('<span class="fa-stack">
                           <i class="fa fa-square fa-stack-2x"></i>
-                          <i class="fa  fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit.</font></span>
-                          </span> ', array('controller' => 'cause_memos', 'action' => 'edit', $causeMemoDataList['CauseMemo']['violation_id']),array('class' =>' table-link ','escape' => false,'title'=>'Print Transmittal Receipt')); ?>
+                          <i class="fa  fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit</font></span>
+                          </span> ', array('controller' => 'cause_memos', 'action' => 'edit', $causeMemoDataList['CauseMemo']['id']),array('class' =>' table-link ','escape' => false,'title'=>'Print Transmittal Receipt')); ?>
 
                           <?php echo $this->Html->link('<span class="fa-stack">
                           <i class="fa fa-square fa-stack-2x"></i>
-                          <i class="fa  fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit.</font></span>
-                          </span> ', array('controller' => 'cause_memos', 'action' => 'print_violation'),array('class' =>' table-link ','escape' => false,'title'=>'Print Transmittal Receipt')); ?>
+                          <i class="fa  fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> View</font></span>
+                          </span> ', array('controller' => 'cause_memos', 'action' => 'view', $causeMemoDataList['CauseMemo']['id']),array('class' =>' table-link ','escape' => false,'title'=>'Print Transmittal Receipt')); ?>
+
+                         <!--  <?php echo $this->Html->link('<span class="fa-stack">
+                          <i class="fa fa-square fa-stack-2x"></i>
+                          <i class="fa  fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Print</font></span>
+                          </span> ', array('controller' => 'cause_memos', 'action' => 'print_cause_memo', $causeMemoDataList['CauseMemo']['id']),array('class' =>' table-link ','escape' => false,'title'=>'Print Transmittal Receipt')); ?> -->
       
                        </td>  
                     </tr>

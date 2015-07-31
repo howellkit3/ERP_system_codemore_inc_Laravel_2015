@@ -52,7 +52,6 @@
                                     <div class="col-lg-8">
                                         <?php 
                                         echo $this->Form->textarea('CauseMemo.description', array('class' => 'form-control item_type',
-                                        'alt' => 'Request Inquiry',
                                         'label' => false,
                                         'rows' => '6'));
                                         ?>

@@ -143,6 +143,35 @@ echo $this->Html->script(array(
                                         </div>
                                     </div>
 
+                                    <div class="form-group">
+                                       <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Type</label>
+                                                <div class="col-lg-9">
+                                                    <?php
+                                                        //echo $this->Form->input('Type.category_id', array('class' => 'form-control col-lg-6 required','label' => false));
+                                                    ?>
+                                                    <?php
+                                                                        
+                                                        $type = array($typeList);
+
+                                                    ?>
+                                                    <?php echo $this->Form->input('Type.category_id',
+                                                             array('class' => 'autocomplete required',
+                                                            'options' => $type,
+                                                            'placeholder' => 'Category name',
+                                                            'empty' => 'Select Category',
+                                                            //'default' => !empty($this->request->data['Type']['category_id']) ? $employeeData['Type']['category_id'] : '',
+                                                            'div' => 'col-lg-11',
+                                                            'label' => false));
+
+                                                    ?>
+
+                                                </div>
+                                             </div>
+                                        </div>
+                                    </div>
+
                                      <div class="form-group">
                                        <div class="col-lg-6">
                                             <div class="form-group">

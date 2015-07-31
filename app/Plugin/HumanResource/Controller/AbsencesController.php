@@ -14,6 +14,10 @@ class AbsencesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Employee');
 
+		$this->loadModel('HumanResource.Type');
+
+		$typeList = $this->Type->find('list',array('fields' => array('id','name')));
+
 		$date = date('Y-m-d');
 		$search = '';
 
@@ -46,7 +50,7 @@ class AbsencesController  extends HumanResourceAppController {
 
 
 
-		$this->set(compact('date','search','employees'));
+		$this->set(compact('date','search','employees','typeList'));
 	}
 
 	public function edit($id = null) {
