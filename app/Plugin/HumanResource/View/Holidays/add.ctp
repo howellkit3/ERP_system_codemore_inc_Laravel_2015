@@ -61,14 +61,17 @@
                                                 <div class="col-lg-9">
                                                   
                                                     <?php
-                                                        echo $this->Form->input('Holiday.start_date', array('class' => 'form-control col-lg-6 required','label' => false));
+                                                        //echo $this->Form->input('Holiday.start_date', array('class' => 'form-control col-lg-6 required','label' => false));
                                                     ?>
-
-                                                    To
-
                                                     <?php
-                                                        echo $this->Form->input('Holiday.end_date', array('class' => 'form-control col-lg-6 required','label' => false));
+                                                        ///echo $this->Form->input('Holiday.end_date', array('class' => 'form-control col-lg-6 required','label' => false));
                                                     ?>
+                                                     
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                        <input placeholder="Date Range" name="from_date" data="1" type="text" class="form-control myDateRange datepickerDateRange" id="datepickerDateRange" >
+                                                    </div>
+                                                        
                                                 </div>
                                              </div>
                                         </div>
@@ -186,6 +189,8 @@ jQuery(document).ready(function($){
                 $('.datepicker').hide();
             });
         });
+
+        $('.datepickerDateRange').daterangepicker();
 });
 
  </script>

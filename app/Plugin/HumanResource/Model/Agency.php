@@ -17,7 +17,7 @@ class Agency extends AppModel {
 
 			$this->create();
 			
-			$sagencyData['Agency']['id'] = !empty($sagencyData['Agency']['id']) ? $sagencyData['Agency']['id'] : '';
+			$sagencyData['Agency']['id'] = !empty($agencyData['Agency']['id']) ? $agencyData['Agency']['id'] : '';
 
 			$sagencyData['Agency']['created_by'] = $userId;
 
