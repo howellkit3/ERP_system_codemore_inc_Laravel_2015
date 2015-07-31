@@ -33,7 +33,7 @@
                           <?php echo $this->Html->link('<span class="fa-stack">
                           <i class="fa fa-square fa-stack-2x"></i>
                           <i class="fa  fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit.</font></span>
-                          </span> ', array('controller' => 'cause_memos', 'action' => 'edit_violation'),array('class' =>' table-link ','escape' => false,'title'=>'Print Transmittal Receipt')); ?>
+                          </span> ', array('controller' => 'cause_memos', 'action' => 'edit_violation', $violationDataList['Violation']['id']),array('class' =>' table-link ','escape' => false,'title'=>'Print Transmittal Receipt')); ?>
       
                        </td>  
                     </tr>

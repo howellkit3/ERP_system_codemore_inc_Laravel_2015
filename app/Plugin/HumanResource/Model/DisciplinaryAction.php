@@ -21,6 +21,18 @@ class DisciplinaryAction extends AppModel {
 
 
 	}
+
+		public function editDisciplinaryAction($data = null, $auth = null){
+
+		$this->create();
+
+				$data['DisciplinaryAction']['modified_by'] = $auth;
+				
+				
+		$this->save($data);
+
+
+	}
     
 	
   }

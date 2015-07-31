@@ -1083,6 +1083,8 @@ VALUES
   (10,'Production Staff','Production Staff','Production Staff','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
   (11,'Warehouse Staff','Warehouse Staff','Warehouse Staff','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
   (12,'CEO','CEO','CEO','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22');
+
+  ALTER TABLE `cause_memos`  ADD `disciplinary_action_id` TEXT NULL  AFTER `violation_id`;
 /* end all HR tables */
 
 

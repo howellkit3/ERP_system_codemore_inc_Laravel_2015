@@ -31,6 +31,19 @@ class CauseMemo extends AppModel {
 
 
 	}
+
+	public function editCauseMemo($data = null, $auth = null){
+
+
+
+		$this->create();
+
+				$data['CauseMemo']['modified_by'] = $auth;
+				
+		$this->save($data);
+
+
+	}
     
 	
   }
