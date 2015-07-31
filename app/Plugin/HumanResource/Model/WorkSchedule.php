@@ -52,10 +52,16 @@ class WorkSchedule extends AppModel {
 
 			$this->create();
 
+			$employeeSchedules = $this->find('list',array(
+				'conditions' => array('WorkSchedule.model' => 'Employee','WorkSchedule.overtime_id' => $overtimeId ),
+				'fields' => array('foreign_key','id')
+				));
+			$flipped = array_flip($employeeSchedules);
+			
 			if (!empty($data['Employee'])) {
 
 				foreach ($data['Employee']['id'] as $key => $employee) {
-							$schedule[$key]['id'] = '';
+							$schedule[$key]['id'] = in_array($employee,$flipped) ? $employeeSchedules[$employee] : '';
 							$schedule[$key]['model'] = 'Employee';
 							$schedule[$key]['foreign_key'] = $employee;
 						

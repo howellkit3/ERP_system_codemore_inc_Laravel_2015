@@ -16,11 +16,20 @@
                     <center>
                         <h1 class="pull-left">
                             Employee Information
-                        </h1>
+                        </h1> 
                     </center>
-                    <?php 
-                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'employees', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
-                    ?>
+                     <div class="form-group pull-right">
+                     	<?php echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'employees', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                   		?>
+                    </div>
+                    <div class="form-group pull-right" style="margin-right:10px;">
+                    	
+                    	<?php echo $this->Html->link('<i class="fa fa-pencil fa-lg"></i> Edit Information', array('controller' => 'employees', 'action' => 'edit',$employee['Employee']['id']),array('class' =>'btn btn-primary pull-right','escape' => false));
+						?>
+
+                    </div>
+                    
+					
                 </header>
 
             </div>
@@ -132,6 +141,7 @@
 				                                       <?php echo date('Y-m-d',strtotime($employee['EmployeeAdditionalInformation']['birthday']))  ?>
 				                                       </div>
 			                                     </div>
+			                                     <div class="clearfix"></div>
 			                                     <div class="form-group">
 			                                        <label for="inputEmail1" class="col-lg-2 control-label strong">
 			                                        <i class="fa fa-envelope-o"></i>	
@@ -140,7 +150,7 @@
 				                                      <?php echo $employee['Email'][0]['email'];  ?>
 				                                       </div>
 			                                     </div>
-
+			                                     <div class="clearfix"></div>
 			                                      <div class="form-group">
 			                                        <label for="inputEmail1" class="col-lg-2 control-label strong">
 			                                        	<i class="fa fa-genderless"></i>
@@ -149,7 +159,7 @@
 				                                       <?php echo ( $employee['EmployeeAdditionalInformation']['gender'] == 'M' ) ? 'Male' : 'Female' ?>
 				                                       </div>
 			                                     	</div>
-
+			                                     	<div class="clearfix"></div>
 			                                     	<div class="form-group">
 			                                        <label for="inputEmail1" class="col-lg-2 control-label strong">
 			                                        <i class="fa fa fa-user"></i>
@@ -158,7 +168,7 @@
 				                                       <?php echo $employee['EmployeeAdditionalInformation']['height']; ?>
 				                                       </div>
 			                                     	</div>
-
+			                                     	<div class="clearfix"></div>
 			                                     	<div class="form-group">
 			                                        <label for="inputEmail1" class="col-lg-2 control-label strong">
 			                                        <i class="fa fa fa-user"></i>
@@ -167,7 +177,7 @@
 				                                     	 <?php echo $employee['EmployeeAdditionalInformation']['weight']; ?>
 				                                       </div>
 			                                     	</div>
-
+			                                     	<div class="clearfix"></div>
 			                                     	<div class="form-group">
 			                                        <label for="inputEmail1" class="col-lg-2 control-label strong">
 			                                        <i class="fa fa-tint"></i>
@@ -176,6 +186,7 @@
 				                                     	 <?php echo ucwords($employee['EmployeeAdditionalInformation']['blood']); ?>
 				                                       </div>
 			                                     	</div>
+			                                     	<div class="clearfix"></div>
 
 			                                     	<div class="form-group">
 				                                        <label for="inputEmail1" class="col-lg-2 control-label strong">
@@ -185,7 +196,7 @@
 					                                     	 <?php echo ucwords($employee['EmployeeAdditionalInformation']['languages']); ?>
 					                                       </div>
 				                                     	</div>
-
+				                                     	<div class="clearfix"></div>
 													<div class="form-group">
 				                                        <label for="inputEmail1" class="col-lg-2 control-label strong">
 				                                        	<i class="fa fa-star"></i>
@@ -194,7 +205,7 @@
 					                                     	 <?php echo ucwords($employee['EmployeeAdditionalInformation']['skills']); ?>
 					                                       </div>
 				                                     </div>
-
+													<div class="clearfix"></div>
 				                                    <div class="form-group">
 				                                        <label for="inputEmail1" class="col-lg-2 control-label strong">
 				                                        	<i class="fa fa-phone"></i>

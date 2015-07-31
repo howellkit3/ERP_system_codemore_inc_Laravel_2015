@@ -73,11 +73,12 @@ echo $this->element('hr_options');
 										</tr>
 									</thead>
 
+									<tbody aria-relevant="all" aria-live="polite" role="alert">
 									<?php 
 								        if(!empty($attendances)){
+
 								            foreach ($attendances as $key => $schedule): ?>
-												<tbody aria-relevant="all" aria-live="polite" role="alert">
-													<tr class="">
+													<tr class="parent-tr-<?php echo $schedule['Attendance']['id'] ?>">
 														<td> <?php echo $schedule['Employee']['code']; ?></td>
 														<td class="">
 								                          <?php 
@@ -93,7 +94,10 @@ echo $this->element('hr_options');
 								                           ?>
 								                        </td>
 								                        <td class="text-center"> 
-								                           <?php echo $schedule['WorkSchedule']['type'] ?> 
+
+								                        	<?php echo !empty($overtime['Overtime']['status']) ? $overtime['Overtime']['status'] : ''; ?>
+															<span class="label <?php echo $schedule['Attendance']['type'] == 'work' ? 'label-success' : 'label-default' ?>"><?php echo $schedule['Attendance']['type'] ?></span>
+
 								                        </td>
 														<td> 
 								                           <?php echo date('Y/m/d',strtotime($schedule['Attendance']['date'])).' '.date('h:i a',strtotime($schedule['WorkShift']['from'])); ?> 
@@ -102,24 +106,24 @@ echo $this->element('hr_options');
 								                           <?php echo date('Y/m/d',strtotime($schedule['Attendance']['date'])).' '.date('h:i a',strtotime($schedule['WorkShift']['to'])); ?> 
 								                        </td>
 								                         </td>
-								                        <td class="text-center"> 
+								                        <td class="text-center time-in"> 
 								                           <?php 
 								                           $timeIn = (!empty($schedule['Attendance']['in']) && $schedule['Attendance']['in']  != '00:00:00') ? date('h:i a',strtotime($schedule['Attendance']['in'])) : '';
 															echo $timeIn;
 								                            ?> 
 								                        </td>
 								                        </td>
-								                        <td class="text-center"> 
+								                        <td class="text-center time-out"> 
 								                           <?php 
 								                           $timeOut = (!empty($schedule['Attendance']['out']) && $schedule['Attendance']['out']  != '00:00:00') ? date('h:i a',strtotime($schedule['Attendance']['out'])) : '';
 
 								                           	echo $timeOut;
 								                           ?> 
 								                        </td>
-								                         <td class="text-center"> 
+								                         <td class="text-center" > 
 								                           <?php echo $this->CustomTime->getDuration($timeIn,$timeOut); ?> 
 								                        </td>
-								                        <td class="text-center"> 
+								                        <td class="text-center notes-td"> 
 								                           <?php echo $schedule['Attendance']['notes']; ?> 
 								                        </td>
 								                       	<td>
@@ -136,15 +140,32 @@ echo $this->element('hr_options');
 															   'data-id' => $schedule['Attendance']['id'],
 															));
 
+														$sign = !empty($timeIn) ? 'fa-sign-out' : 'fa-sign-in';
+														if (empty($timeIn) || empty($timeOut)) {
+
+															
+															echo $this->Html->link('<span class="fa-stack">
+															<i class="fa fa-square fa-stack-2x"></i>
+															<i class="fa '.$sign.' fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Log </font></span>
+															</span> ','#timeKeep',
+															array('class' =>'add-timekeep table-link',
+																   'escape' => false,
+																   'data-toggle' => 'modal',
+																   'data-id' => $schedule['Attendance']['id'],
+																   'onClick' => 'getEmployeeData(this,'.$schedule['Attendance']['id'].')'
+																));
+
+														}
 														?>
+
 								                        </td>
 								                    </tr>
 
-								                </tbody>
+								                
 								        <?php 
 								            endforeach; 
 								        } ?> 
-								
+									</tbody>
 								</table>	
 
 								<hr>
@@ -161,11 +182,9 @@ echo $this->element('hr_options');
 	            </div>
 			</div>
 		</div>	
-
-
-
-
-	    </div>
+		 </div>
     </div>
 </div>
 <?php echo $this->element('modals/personnal_attendance'); ?>
+
+<?php echo $this->element('modals/time_in_attendance'); ?>

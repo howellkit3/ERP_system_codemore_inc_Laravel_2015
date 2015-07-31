@@ -59,6 +59,33 @@
 
 	}
 
+    var getEmployeeData = function(thisElement,attendance_id){
+
+        $('.dynamic-input').remove();
+
+        $('.appended-error').remove();
+
+        $this = $(thisElement);
+
+
+        $append_cont = $('#result_container');
+
+        $append_cont.html('<img src="'+serverPath+'/img/loader.gif"/>');
+
+        $.ajax({
+            type: "GET",
+            url: serverPath + "human_resource/attendances/getEmployeeData/"+attendance_id,
+            dataType: "html",
+            success: function(data) {
+
+                if( $append_cont.html(data)) {
+                     updateTime();
+                } 
+            }
+        });
+
+    }
+
 	var viewAttandance = function(thisElement){
 
 		$this = $(thisElement);
@@ -86,6 +113,86 @@
 
 $(document).ready(function(){
     
+
+    $('body').on('click','.view_attendance.table-link',function(e){
+
+        $append_cont = $('#personalAttendance .result_append');
+
+        $append_cont.html('<img src="'+serverPath+'/img/loader.gif"/>');
+
+        //$('#personalAttendance').modal('open');
+
+        $this =  $(this);
+
+        var url = $this.data('url');
+
+        var attendance_id = $this.data('id');
+
+        $.ajax({
+            type: "GET",
+            url: serverPath+'human_resource'+url,
+            dataType: "html",
+            success: function(data) {
+               
+                $append_cont.html(data);
+
+                    $('.datepick').datepicker({
+                        format: 'yyyy-mm-dd'
+                        });
+
+                   $(".autocomplete").select2();
+
+            }
+        });
+
+        e.preventDefault();
+    });  
+
+    $('body').on('submit','#updateTimeForm',function(e){
+
+        $url = $(this).attr('action');
+
+        $.ajax({
+            type: "POST",
+            url: $url,
+            data : $(this).serialize(),
+            dataType: "json",
+            success: function(data) {   
+                $parent = $('.parent-tr-'+data.Attendance.id);
+                
+                $parent.find('.time-in').text(data.Attendance.in);
+                 
+                 if (data.Attendance.out != null) {
+
+                    $parent.find('.time-out').text(data.Attendance.out);
+                     $parent.find('.time-out').text(data.Attendance.out);
+                 }
+
+                 $parent.find('.notes-td').text(data.Attendance.notes);
+             
+                //$('button[data-dismiss="modal"]').click();    
+
+              
+                if (data.Attendance.in != '') {
+                    
+                    $parent.find('.add-timekeep i')
+                    .removeClass('.fa-sign-in')
+                    .addClass('.fa-sign-out');
+
+                }
+                
+                $('.close-modal').click();
+
+            
+            },
+            error:function(data){
+
+            }
+        });
+
+        e.preventDefault();
+    });
+
     $('body').on('click','.view_attendance.table-link',function(e){
 
     	$append_cont = $('#personalAttendance .result_append');

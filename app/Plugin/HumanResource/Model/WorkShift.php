@@ -48,7 +48,7 @@ class WorkShift extends AppModel {
 		//check existing workshift on overtime
 		if ($overtimeId) {
 
-			$editWorkshift =  $this->find('first',array('conditions' => array('WorkShift.overtime_id' => $overtime_id )));
+			$editWorkshift =  $this->find('first',array('conditions' => array('WorkShift.overtime_id' => $overtimeId )));
 		}
 
 

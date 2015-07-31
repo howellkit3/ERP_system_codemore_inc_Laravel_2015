@@ -168,3 +168,8 @@ div.value {
     font-size: 12px;
     font-weight: normal;
 }
+
+.notes-td {
+  max-width: 100px;
+  word-wrap: break-word;
+}
