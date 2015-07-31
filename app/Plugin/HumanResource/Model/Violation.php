@@ -19,6 +19,16 @@ class Violation extends AppModel {
 				
 		$this->save($data);
 
+	}
+
+	public function editViolation($data = null, $auth = null){
+
+		$this->create();
+
+				$data['Violation']['modified_by'] = $auth;
+				
+		$this->save($data);
+
 
 	}
     
