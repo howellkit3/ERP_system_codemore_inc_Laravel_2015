@@ -5,25 +5,25 @@ App::uses('SessionComponent', 'Controller/Component');
 
 App::uses('ImageUploader', 'Vendor');
 
-class StatusesController  extends HumanResourceAppController {
+class CategoriesController  extends HumanResourceAppController {
 
 
 	public function add() {
 
-		$this->loadModel('HumanResource.Status');
+		$this->loadModel('HumanResource.Category');
 
 		$auth = $this->Session->read('Auth.User');
 
 		if(!empty($this->request->data)){
 			
-			$this->Status->saveStatus($this->request->data,$auth['id']);
+			$this->Category->saveCategory($this->request->data,$auth['id']);
 
 			//$save
-	 		$this->Session->setFlash('Saving Status information completed');
+	 		$this->Session->setFlash('Saving Category information completed');
  		   	$this->redirect( array(
                      'controller' => 'settings', 
-                     'action' => 'status',
-                     'tab' => 'status'
+                     'action' => 'category',
+                     'tab' => 'category'
                 ));
 		}
 
@@ -31,26 +31,26 @@ class StatusesController  extends HumanResourceAppController {
 
 	public function edit($id = null) {
 
-		$this->loadModel('HumanResource.Status');
+		$this->loadModel('HumanResource.Category');
 
 		$auth = $this->Session->read('Auth.User');
 		
 		if(!empty($this->request->data)){
 			
-			$this->Status->saveStatus($this->request->data,$auth['id']);
+			$this->Category->saveCategory($this->request->data,$auth['id']);
 
 			//$save
-	 		$this->Session->setFlash('Saving Status information completed');
+	 		$this->Session->setFlash('Saving Category information completed');
  		   	$this->redirect( array(
                      'controller' => 'settings', 
-                     'action' => 'status',
-                     'tab' => 'status'
+                     'action' => 'category',
+                     'tab' => 'category'
                 ));
 		}
 		
 		if (!empty($id)) {
 
-			$this->request->data = $this->Status->findById($id);
+			$this->request->data = $this->Category->findById($id);
 
 		}
 
@@ -58,41 +58,41 @@ class StatusesController  extends HumanResourceAppController {
 
 	public function view($id = null ) {
 
-		$this->loadModel('HumanResource.Status');
+		$this->loadModel('HumanResource.Category');
 
 		$auth = $this->Session->read('Auth.User');
 		
 		
 		if (!empty($id)) {
 
-			$statusData = $this->Status->findById($id);
+			$categoryData = $this->Category->findById($id);
 
 		}
 
-		$this->set(compact('statusData'));
+		$this->set(compact('categoryData'));
 
 	}
 
 	public function delete($posId){
 
-		$this->loadModel('HumanResource.Status');
+		$this->loadModel('HumanResource.Category');
 
 		if (!empty($posId)) {
 
-			if ($this->Position->delete($posId)) {
+			if ($this->Category->delete($posId)) {
                 $this->Session->setFlash(
-                    __('Position Successfully deleted.', h($posId))
+                    __('Category Successfully deleted.', h($posId))
                 );
             } else {
                 $this->Session->setFlash(
-                    __('Position cannot be deleted.', h($posId))
+                    __('Category cannot be deleted.', h($posId))
                 );
             }
 
             return $this->redirect( array(
                      'controller' => 'settings', 
-                     'action' => 'status',
-                     'tab' => 'status',
+                     'action' => 'category',
+                     'tab' => 'category',
                      'plugin' => 'human_resource'
 
                 ));

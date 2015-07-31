@@ -112,5 +112,51 @@ class SettingsController  extends HumanResourceAppController {
 		$this->set(compact('toolData'));
 
 	}
+
+	public function category() {
+
+		$this->loadModel('HumanResource.Category');
+
+		$limit = 10;
+
+        $conditions = array();
+
+        $this->paginate = array(
+	            'conditions' => $conditions,
+	            'limit' => $limit,
+	            //'fields' => array('id', 'status','created'),
+	            'order' => 'Category.id DESC',
+	        );
+
+	    $categoryData = $this->paginate('Category');
+
+		$this->set(compact('categoryData'));
+
+	}
+
+	public function type() {
+
+		$this->loadModel('HumanResource.Type');
+
+		$this->loadModel('HumanResource.Category');
+
+		$categoryList = $this->Category->find('list',array('fields' => array('id','name')));
+
+		$limit = 10;
+
+        $conditions = array();
+
+        $this->paginate = array(
+	            'conditions' => $conditions,
+	            'limit' => $limit,
+	            //'fields' => array('id', 'status','created'),
+	            'order' => 'Type.id DESC',
+	        );
+
+	    $typeData = $this->paginate('Type');
+
+		$this->set(compact('typeData','categoryList'));
+
+	}
 	
 }

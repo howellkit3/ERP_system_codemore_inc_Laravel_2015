@@ -41,4 +41,20 @@
 					'plugin' => 'human_resource'
 		)); ?>
 	</li>
+	<li class="<?php echo ($active_tab == 'category') ? 'active' : '' ?>" alt="tab-type">
+		<?php echo $this->Html->link('Category',array(
+					'controller' => 'settings',
+					'action' => 'category',
+					'tab' => 'category',
+					'plugin' => 'human_resource'
+		)); ?>
+	</li>
+	<li class="<?php echo ($active_tab == 'type') ? 'active' : '' ?>" alt="tab-type">
+		<?php echo $this->Html->link('Type',array(
+					'controller' => 'settings',
+					'action' => 'type',
+					'tab' => 'type',
+					'plugin' => 'human_resource'
+		)); ?>
+	</li>
 </ul>
