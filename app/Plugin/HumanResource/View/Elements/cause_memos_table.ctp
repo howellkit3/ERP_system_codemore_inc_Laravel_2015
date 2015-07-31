@@ -32,7 +32,19 @@
 
                              echo "<span class='label label-info'>Executing</span>";
 
-                            }?>    
+                            } elseif ($causeMemoDataList['CauseMemo']['status_id'] == 1){
+
+                             echo "<span class='label label-warning'>Approved</span>";
+
+                            } elseif ($causeMemoDataList['CauseMemo']['status_id'] == 5){
+
+                               echo "<span class='label label-danger'>Terminated</span>";
+
+                            } elseif ($causeMemoDataList['CauseMemo']['status_id'] == 10){
+
+                               echo "<span class='label label-success'>Closed</span>";
+
+                              }?>  
                                 
                         </td>
 

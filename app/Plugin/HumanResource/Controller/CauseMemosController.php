@@ -267,12 +267,36 @@ class CauseMemosController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.CauseMemo');
 
-		$CauseMemoData = $this->CauseMemo->find('first', array('conditions' => array('CauseMemo.id' => $id)
+		$this->loadModel('HumanResource.Employee');
+
+		$this->loadModel('HumanResource.Violation');
+
+		$this->loadModel('HumanResource.Department');
+
+		$this->loadModel('HumanResource.DisciplinaryAction');
+
+		$causeMemoData = $this->CauseMemo->find('first', array('conditions' => array('CauseMemo.id' => $id)
                                                                ));
+
+		$employeeData = $this->Employee->find('first', array('conditions' => array('Employee.id' => $causeMemoData['CauseMemo']['employee_id'])
+                                                               ));
+
+		$employeeName = $this->Employee->find('list', array('fields' => array('id', 'fullname')
+															));
+
+		$department = $this->Department->find('list', array('fields' => array('id', 'name')
+															));
+
+		$violationData = $this->Violation->find('list', array('fields' => array('id', 'name'),
+															'order' => array('Violation.id' => 'ASC')
+															));
+
+		$disciplinaryData = $this->DisciplinaryAction->find('list', array('fields' => array('id', 'name'),
+                                                                'order' => 'DisciplinaryAction.id ASC'));	
 
 		$view = new View(null, false);
 
-		$view->set(compact('CauseMemoData'));
+		$view->set(compact('causeMemoData', 'employeeData', 'employeeName', 'department', 'violationData', 'disciplinaryData', 'userData'));
         
 		$view->viewPath = 'CauseMemo'.DS.'pdf';	
    
@@ -289,7 +313,7 @@ class CauseMemosController  extends HumanResourceAppController {
         $output = $dompdf->output();
         $random = rand(0, 1000000) . '-' . time();
         if (empty($filename)) {
-        	$filename = 'cause_memo-'.$CauseMemoData['CauseMemo']['uuid'].'-request'.time();
+        	$filename = 'cause_memo-'.$causeMemoData['CauseMemo']['uuid'].'-request'.time();
         }
       	$filePath = 'view_pdf/'.strtolower(Inflector::slug( $filename , '-')).'.pdf';
         $file_to_save = WWW_ROOT .DS. $filePath;
@@ -303,6 +327,8 @@ class CauseMemosController  extends HumanResourceAppController {
 	}
 
 	public function view($id = null) {
+
+		$userData = $this->Session->read('Auth');
 
 		$this->loadModel('HumanResource.Employee');
 
@@ -330,11 +356,70 @@ class CauseMemosController  extends HumanResourceAppController {
 		$violationData = $this->Violation->find('list', array('fields' => array('id', 'name'),
 															'order' => array('Violation.id' => 'ASC')
 															));
+
 		$disciplinaryData = $this->DisciplinaryAction->find('list', array('fields' => array('id', 'name'),
                                                                 'order' => 'DisciplinaryAction.id ASC'));	
 
-  		$this->set(compact('requestId', 'causeMemoData', 'employeeName', 'department', 'employeeSection', 'employeeData', 'violationData', 'disciplinaryData'));
+  		$this->set(compact('requestId', 'causeMemoData', 'employeeName', 'department', 'employeeSection', 'employeeData', 'violationData', 'disciplinaryData', 'userData'));
 
 	}
 
+	public function approve_request($id = null) {
+
+		$userData = $this->Session->read('Auth');
+
+		$this->loadModel('HumanResource.CauseMemo');
+
+		$this->CauseMemo->id = $id;
+
+		$this->CauseMemo->saveField('status_id', 1);
+
+		$this->Session->setFlash(__('Cause Memo has been approved'), 'success');
+      
+        $this->redirect( array(
+            'controller' => 'cause_memos',   
+            'action' => 'index'
+        ));  
+
+	}
+
+	public function terminate_request($id = null) {
+
+		$userData = $this->Session->read('Auth');
+
+		$this->loadModel('HumanResource.CauseMemo');
+
+		$this->CauseMemo->id = $id;
+
+		$this->CauseMemo->saveField('status_id', 5);
+
+		$this->Session->setFlash(__('Cause Memo has been terminated'), 'success');
+      
+        $this->redirect( array(
+            'controller' => 'cause_memos',   
+            'action' => 'index'
+        ));  
+
+	}
+
+	public function close_request($id = null) {
+
+		$userData = $this->Session->read('Auth');
+
+		$this->loadModel('HumanResource.CauseMemo');
+
+		$this->CauseMemo->id = $id;
+
+		$this->CauseMemo->saveField('status_id', 10);
+
+		$this->Session->setFlash(__('Cause Memo has been closed'), 'success');
+      
+        $this->redirect( array(
+            'controller' => 'cause_memos',   
+            'action' => 'index'
+        ));  
+
+
+	}
+	
 }

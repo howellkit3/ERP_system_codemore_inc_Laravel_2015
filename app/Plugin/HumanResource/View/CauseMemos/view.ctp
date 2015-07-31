@@ -9,15 +9,35 @@
                     
     <?php 
         
-        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'cause_memo', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'cause_memos', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+
+        if($causeMemoData['CauseMemo']['status_id'] ==  9 || $causeMemoData['CauseMemo']['status_id'] == 5){
+
+            echo $this->Html->link('<i class="fa fa fa-pencil-square-o fa-lg"></i> Approve Request', array('controller' => 'cause_memos', 'action' => 'approve_request', $requestId),array('class' =>'btn btn-primary pull-right','escape' => false));
 
 
-            echo $this->Html->link('<i class="fa fa fa-pencil-square-o fa-lg"></i> Approve Request', array('controller' => 'cause_memos', 'action' => 'approve_request'),array('class' =>'btn btn-primary pull-right','escape' => false));
 
-      
+        }else{
 
-        echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print', array('controller' => 'requests', 'action' => 'print_cause_memo', $requestId),array('class' =>'btn btn-primary pull-right','escape' => false));
-    ?>
+            if($causeMemoData['CauseMemo']['status_id'] ==  1){
+
+                echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print', array('controller' => 'cause_memos', 'action' => 'print_cause_memo', $requestId),array('class' =>'btn btn-primary pull-right','escape' => false));
+
+            }
+
+            if($causeMemoData['CauseMemo']['status_id'] !=  10){
+
+            echo $this->Html->link('<i class="fa fa fa-pencil-square-o fa-lg"></i> Close', array('controller' => 'cause_memos', 'action' => 'close_request', $requestId),array('class' =>'btn btn-primary pull-right','escape' => false));
+
+             }
+        } 
+
+         if($causeMemoData['CauseMemo']['status_id'] !=  10){
+
+            if($causeMemoData['CauseMemo']['status_id'] != 5 ){
+                 echo $this->Html->link('<i class="fa fa fa-pencil-square-o fa-lg"></i> Terminate', array('controller' => 'cause_memos', 'action' => 'terminate_request', $requestId),array('class' =>'btn btn-primary pull-right','escape' => false));
+         }
+        }?>
     <br><br>
 </div>
 
