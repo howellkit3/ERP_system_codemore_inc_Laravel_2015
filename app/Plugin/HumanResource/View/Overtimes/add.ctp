@@ -32,7 +32,7 @@ echo $this->Html->script(array(
                             Overtime
                             </h1>
                         </center>
-                        <?php  echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'overtime', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                        <?php  echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'overtimes', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
                         ?>
                     </header>
 

@@ -1,5 +1,6 @@
-<?php $this->Html->addCrumb('Employee', array('controller' => 'employees', 'action' => 'index')); ?>
-<?php $this->Html->addCrumb('Add', array('controller' => 'employees', 'action' => 'add')); ?>
+<?php $this->Html->addCrumb('Attendance', array('controller' => 'attendances', 'action' => 'index')); ?>
+<?php $this->Html->addCrumb('Absence', array('controller' => 'attendances', 'action' => 'absences')); ?>
+<?php $this->Html->addCrumb('Add absences', array('controller' => 'employees', 'action' => 'add')); ?>
 <?php 
 echo $this->Html->css(array(
                     'HumanResource.default',
@@ -223,19 +224,10 @@ echo $this->Html->script(array(
         </div>
     </div>
 <?php echo $this->Form->end(); ?>
-<style type="text/css">
-    .datepicker-hide .ui-datepicker-year
-    {
-        display:none;   
-    }
-</style>
 <script>
         $(document).ready(function(){
 
-                $('.datetimepick').datetimepicker({
-
-                        format:'Y-m-d  H:i'
-                });
+                $('.datetimepick').datetimepicker();
 
         });
  </script>

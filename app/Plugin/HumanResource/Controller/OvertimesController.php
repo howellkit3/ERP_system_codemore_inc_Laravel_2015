@@ -12,7 +12,8 @@ class OvertimesController  extends HumanResourceAppController {
 		$this->loadModel('HumanResource.Department');
 
 		$date = date('Y-m-d');
-		$search = '';
+		
+		$department = '';
 
 		$departments = $this->Department->getList();
 
@@ -25,29 +26,26 @@ class OvertimesController  extends HumanResourceAppController {
 		$date = date('Y-m-d');
 
 		
-		// if (!empty($query['data']['date'])) {
-		// 	$date = $query['data']['date'];
-		// }
+		if (!empty($query['date'])) {
+			$date = $query['date'];
+		}
 	
-		// $conditions = array(
-		// 	'Attendance.date <=' => $date,
-		//  	'Attendance.date >=' => $date
-		// );
+		$conditions = array(
+			'Overtime.date <=' => $date,
+		 	'Overtime.date >=' => $date
+		);
 
-		// if (!empty($query['data']['name'])) {
+		if (!empty($query['department_id'])) {
 			
-		// 	$search = $query['data']['name'];
-		// 	$conditions = array_merge($conditions,array(
-		// 			'OR' => array(
-		// 			'Overtime.name LIKE' => '%'.$search.'%',
-		// 			'Overtime.name LIKE' => '%'.$search.'%',
-		// 			'Overtime.name' => '%'.$search.'%',
-		// 	)));
-		// }
+			$department = $query['department_id'];	
+
+			$conditions = array_merge($conditions,array(
+				'Overtime.department_id' => $department
+			));
+		}
 
 		//$this->Attendance->bind(array('WorkSchedule','Employee','WorkShift'));
 
-		$conditions = array();
 		
 		$params =  array(
 	            'conditions' => $conditions,
@@ -62,7 +60,7 @@ class OvertimesController  extends HumanResourceAppController {
 	            	'audit_date',
 	            	'Department.name'
 	            	),
-	            'order' => 'Overtime.date ASC',
+	            'order' => 'Overtime.date DESC',
 	    );
 
 
@@ -72,7 +70,7 @@ class OvertimesController  extends HumanResourceAppController {
 
 		$overtimes = $this->paginate();
 
-		$this->set(compact('date','search','departments','overtimes'));
+		$this->set(compact('date','search','department','departments','overtimes'));
 	}
 
 	public function add() {
@@ -104,6 +102,8 @@ class OvertimesController  extends HumanResourceAppController {
 			$this->Overtime->create();
 
 			$data = $this->Overtime->formatData($this->request->data,$auth['id']);
+
+
 
 			if ($this->Overtime->save($data)) {
 
@@ -205,9 +205,11 @@ class OvertimesController  extends HumanResourceAppController {
 
 			$data = $this->Overtime->formatData($this->request->data,$auth['id']);
 
+			$overtime = $this->Overtime->findById($id);
+
+
 			if ($this->Overtime->save($data)) {
 
-				$overtime_id = $this->Overtime->id;
 				//create worshift and schedule
 				$workshift = $this->Workshift->createWorkshift($data,$overtime_id,$auth['id']);
 
@@ -220,7 +222,7 @@ class OvertimesController  extends HumanResourceAppController {
 				if (!empty($overtime_id)) {
 				//workhift workschedule
 				$workSchedule = $this->WorkSchedule->createSchedule($data,$workshift['id'],$overtime_id,$auth['id']);
-				$attendance = $this->Attendance->saveRecord($workSchedule);
+				//$attendance = $this->Attendance->saveRecord($workSchedule);
 				
 				}
 

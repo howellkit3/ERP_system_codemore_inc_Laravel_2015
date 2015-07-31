@@ -51,6 +51,8 @@ $(document).ready(function(){
             var hours = Math.floor(minutes/60);
             minutes = minutes % 60;
 
+            console.log(diff);
+
             $('#AbsenceTotalTime').val(hours + " hours :" + minutes + " minutes:" + seconds +' seconds');
 
             $('#AbsenceTotalTimeHidden').val(hours+':'+minutes+':'+seconds);

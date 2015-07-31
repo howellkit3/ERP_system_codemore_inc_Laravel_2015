@@ -58,6 +58,25 @@ $(document).ready(function(){
 
     }).trigger('change');
 
+    $body.on('submit','#ovetimeForm',function(e){
+   
+        $return = true;
+        
+        if ($('.onoffswitch-checkbox:checked').length <= 0) {
+
+                 $('.selected-text').after('<label class="error appended-error" style="top:0;margin:0 10px;" >Please select employees to work.</label>');
+
+
+            $('html, body').animate({
+                scrollTop: parseInt($('.error.appended-error').offset().top - 150 )
+            },300);
+              $return = false;
+              e.preventDefault();
+        }
+
+        return $return;
+      
+    });
 
     $body.on('change','.datetimepick',function(){
 

@@ -32,8 +32,8 @@ $active_tab = 'overtimes';
 						<header class="main-box-header clearfix">			               
 						<div class="filter-block pull-left">
 			                 <div class="form-group pull-left">
-			                 	<?php echo $this->Form->create('Attendance',array('controller' => 'attendances','action' => 'index', 'type'=> 'get')); ?>
-			                 		<input type="text" name="data[date]" id="changeDate" class="form-control datepick" value="<?php echo $date ?>">
+			                 	<?php echo $this->Form->create('Overtime',array('controller' => 'overtimes','action' => 'index', 'type'=> 'get')); ?>
+			                 		<input type="text" name="date" id="changeDate" class="form-control datepick" value="<?php echo $date ?>">
 
 			                            <i class="fa fa fa-calendar calendar-icon"></i>
 
@@ -45,6 +45,7 @@ $active_tab = 'overtimes';
 			                 		'class' => 'autocomplete',
 			                 		'label' => false,
 			                 		'div'  => false,
+			                 		'default' => $department,
 			                 		'empty'=> '-- Select Department --'
 
 			                 		)); ?>
@@ -108,8 +109,7 @@ $active_tab = 'overtimes';
 														 	 ?> 
 								                        </td>
 								                        <td > 
-								                          	<?php echo $overtime['Overtime']['status']; ?>
-								                        </td>
+								                          	<?php echo !empty($overtime['Overtime']['status']) ? $overtime['Overtime']['status'] : '<span class="label label-default">Pending</span>'; ?>
 								                        </td>
 								                        <td > 
 								                           <?php echo $overtime['Department']['name']; ?>

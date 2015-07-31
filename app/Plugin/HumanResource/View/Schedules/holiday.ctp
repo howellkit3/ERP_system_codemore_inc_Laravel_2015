@@ -49,7 +49,7 @@ echo $this->Html->script(array(
 			                            array('class' =>'btn btn-primary pull-right',
 			                                'escape' => false));
 			                   
-			                      echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Add', 
+			                      echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Add Holiday', 
 			                            array('controller' => 'holidays', 
 			                                    'action' => 'add',),
 			                            array('class' =>'btn btn-primary pull-right',

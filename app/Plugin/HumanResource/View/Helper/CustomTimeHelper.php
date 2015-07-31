@@ -56,7 +56,7 @@ public function formaTime($time = null, $separator = null) {
 
 		foreach ($time as $key => $value) {
 				
-				$formated[] = $value.$parts[$key];   
+				$formated[] = $value.' '.$parts[$key];   
 		}
 
 		return implode(' '.$separator.' ', $formated);

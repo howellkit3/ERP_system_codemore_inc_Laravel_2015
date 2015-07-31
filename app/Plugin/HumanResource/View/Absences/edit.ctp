@@ -99,7 +99,8 @@ echo $this->Html->script(array(
                                                                 echo $this->Form->input('Absence.from', array(
                                                                     'class' => 'form-control col-lg-6 required datetimepick',
                                                                     'type' => 'text',
-                                                                    'label' => false
+                                                                    'label' => false,
+                                                                    'value' => !empty($this->request->data['Absence']['from']) ? date('Y/m/d h:i:s',strtotime($this->request->data['Absence']['from'])) : ''
                                                                     ));
                                                          ?>
 
@@ -110,7 +111,8 @@ echo $this->Html->script(array(
                                                             echo $this->Form->input('Absence.to', array(
                                                                 'class' => 'form-control col-lg-6 required datetimepick',
                                                                 'type' => 'text',    
-                                                                'label' => false
+                                                                'label' => false,
+                                                                'value' => !empty($this->request->data['Absence']['to']) ? date('Y/m/d h:i:s',strtotime($this->request->data['Absence']['to'])) : ''
                                                                 ));
                                                         ?>
                                                      </div>

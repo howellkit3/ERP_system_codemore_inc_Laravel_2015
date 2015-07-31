@@ -20,7 +20,7 @@ echo $this->Html->script(array(
 
 <?php echo $this->element('hr_options'); ?><br><br>
 <?php echo $this->Form->create('Overtime',array('url'=>(array('controller' => 'overtimes','action' => 'edit')),
-'class' => 'form-horizontal', 'enctype' => 'multipart/form-data' ));?>
+'class' => 'form-horizontal', 'enctype' => 'multipart/form-data','id' => 'ovetimeForm'));?>
  <div class="row">
         <div class="col-lg-12">
             <div class="row">
@@ -32,7 +32,7 @@ echo $this->Html->script(array(
                             Overtime
                             </h1>
                         </center>
-                        <?php  echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'overtime', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                        <?php  echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'overtimes', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
                         ?>
                     </header>
 

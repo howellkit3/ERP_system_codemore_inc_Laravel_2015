@@ -1,5 +1,5 @@
-<?php $this->Html->addCrumb('Employee', array('controller' => 'employees', 'action' => 'index')); ?>
-<?php $this->Html->addCrumb('Add', array('controller' => 'employees', 'action' => 'add')); ?>
+<?php $this->Html->addCrumb('Holidays', array('controller' => 'schedules', 'action' => 'holiday')); ?>
+<?php $this->Html->addCrumb('Add', array('controller' => 'holidays', 'action' => 'add')); ?>
 <?php echo $this->Html->css('HumanResource.default');?>
 <?php echo $this->Html->script(array(
 						'jquery.maskedinput.min',
@@ -22,7 +22,7 @@
                             Add Holiday
                             </h1>
                         </center>
-                        <?php  echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'schedules', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                        <?php  echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'schedules', 'action' => 'holiday'),array('class' =>'btn btn-primary pull-right','escape' => false));
                         ?>
                     </header>
 
