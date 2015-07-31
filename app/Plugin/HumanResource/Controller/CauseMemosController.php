@@ -86,6 +86,37 @@ class CauseMemosController  extends HumanResourceAppController {
 
 	public function edit($id = null) {
 
+
+		$userData = $this->Session->read('Auth');
+
+		$this->loadModel('HumanResource.CauseMemo');
+
+		$this->loadModel('HumanResource.Employee');
+
+		$this->loadModel('HumanResource.Violation');
+
+		$this->loadModel('HumanResource.DisciplinaryAction');
+		
+		$employeeData = $this->Employee->find('list', array('fields' => array('id', 'full_name'),
+															'order' => array('Employee.last_name' => 'ASC')
+															));
+
+		$violationData = $this->Violation->find('list', array('fields' => array('id', 'name'),
+															'order' => array('Violation.id' => 'ASC')
+															));
+
+		$notedByEmployee = $this->Employee->find('list', array('fields' => array('id', 'fullname'),
+															  'conditions' => array('Employee.department_id' => '6'),
+                                                                'order' => 'Employee.last_name ASC'));
+
+		$disciplinaryData = $this->DisciplinaryAction->find('list', array('fields' => array('id', 'name'),
+                                                                'order' => 'DisciplinaryAction.id ASC'));
+
+		$causeMemoData = $this->CauseMemo->find('all', array('conditions' => array('CauseMemo.id' => $id)
+                                                               ));
+
+		$this->set(compact('causeMemoData', 'disciplinaryData', 'notedByEmployee','violationData','employeeData'));
+
 	}
 
 

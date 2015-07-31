@@ -1056,6 +1056,33 @@ CREATE TABLE `statuses` (
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+/** howell kit added this 07/22/2015  */
+
+INSERT INTO `departments` (`id`, `name`, `description`, `specification`,`notes`,`created_by`,`modified_by`, `created`, `modified`)
+VALUES
+  (1,'Sales','Sales','Sales','Sales','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
+  (2,'Purchasing','Purchasing','Purchasing','Purchasing','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
+  (3,'Delivery','Delivery','Delivery','Delivery','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
+  (4,'Production','Production','Production','Production','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
+  (5,'Accounting','Accounting','Accounting','Accounting','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
+  (6,'Human Resource','Human Resource','Human Resource','Human Resource','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
+  (7,'Warehouse','Warehouse','Warehouse','Warehouse','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22');
+
+INSERT INTO `positions` (`id`, `name`, `description`,`notes`,`created_by`,`modified_by`, `created`, `modified`)
+VALUES
+  (1,'Sales Staff','Sales Staff','Sales Staff','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
+  (2,'Sales Supervisor','Sales Supervisor','Sales Supervisor','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
+  (3,'Delivery Staff','Delivery Staff','Delivery Staff','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
+  (4,'Purchasing Staff','Purchasing Staff','Purchasing Staff','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
+  (5,'Accounting Staff','Accounting Staff','Accounting Staff','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
+  (6,'Accounting Payables','Accounting Payables','Accounting Payables','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
+  (7,'Accounting Receivables','Accounting Receivables','Accounting Receivables','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
+  (8,'Accounting Head','Accounting  Head','Accounting  Head','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
+  (9,'Human Resource Staff','Human Resource Staff','Human Resource Staff','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
+  (10,'Production Staff','Production Staff','Production Staff','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
+  (11,'Warehouse Staff','Warehouse Staff','Warehouse Staff','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
+  (12,'CEO','CEO','CEO','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22');
 /* end all HR tables */
 
 

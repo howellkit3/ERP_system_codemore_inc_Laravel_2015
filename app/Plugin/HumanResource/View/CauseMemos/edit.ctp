@@ -4,6 +4,10 @@
 <?php  //echo $this->Html->script('Purchasing.request_section');?>
 <?php echo $this->element('hr_options'); ?><br><br>
 
+ <?php if(!empty($causeMemoData)){ ?>
+
+      <?php  foreach ($causeMemoData as $causeMemoDataList): ?>
+
 <div class="row">
     <div class="col-lg-12">
         <div class="row">
@@ -21,7 +25,7 @@
             </div>
         </div>
 
-    <?php echo $this->Form->create('Request',array('url'=>(array('controller' => 'cause_memos','action' => 'add'))));?>
+    <?php echo $this->Form->create('Request',array('url'=>(array('controller' => 'cause_memos','action' => 'edit'))));?>
         <div class="row">
             <div class="col-lg-12">
                 <div class="main-box">
@@ -36,12 +40,12 @@
                                         <?php 
                                             echo $this->Form->input('CauseMemo.employee_id', 
                                                                     array( 
+                                                                    'value' => $causeMemoDataList['CauseMemo']['employee_id'],
                                                                     'options' => array($employeeData),    
                                                                     'type' => 'select',
-                                                                    'class' => 'form-control item_type categorylist required', 
+                                                                    'class' => 'form-control required', 
                                                                     'label' => false, 
-                                                                    'placeholder' => 'Employee Name',
-                                                                    'empty' => '--Select Employee--'
+                                                                    'placeholder' => 'Employee Name'
                                                                     ));
                                         ?>
                                     </div>
@@ -52,6 +56,7 @@
                                     <div class="col-lg-8">
                                         <?php 
                                         echo $this->Form->textarea('CauseMemo.description', array('class' => 'form-control item_type',
+                                        'value' => $causeMemoDataList['CauseMemo']['description'],   
                                         'alt' => 'Request Inquiry',
                                         'label' => false,
                                         'rows' => '6'));
@@ -66,10 +71,10 @@
                                         <?php 
                                             echo $this->Form->input('CauseMemo.violation_id', 
                                                                     array( 
+                                                                    'value' => $causeMemoDataList['CauseMemo']['violation_id'],   
                                                                     'options' => array($violationData),    
-                                                                    'type' => 'select',
-                                                                    'class' => 'form-control item_type categorylist required', 
                                                                     'label' => false, 
+                                                                    'class' => 'form-control required',
                                                                     'placeholder' => 'Item',
                                                                     'empty' => '--Select Reference Company Policy--'
                                                                     ));
@@ -86,6 +91,7 @@
                                                                     'options' => array($disciplinaryData),    
                                                                     'type' => 'select',
                                                                     'class' => 'form-control item_type categorylist required', 
+                                                                    'value' => $causeMemoDataList['CauseMemo']['violation_id'],  
                                                                     'label' => false, 
                                                                     'placeholder' => 'Item',
                                                                     'empty' => '--Select Reference Company Policy--'
@@ -103,6 +109,7 @@
                                                                     'options' => array($notedByEmployee),    
                                                                     'type' => 'select',
                                                                     'class' => 'form-control item_type categorylist required', 
+                                                                    'value' => $causeMemoDataList['CauseMemo']['created_by'],  
                                                                     'label' => false, 
                                                                     'placeholder' => 'Item',
                                                                     'empty' => '--Select Human Resource Staff--'
@@ -131,5 +138,10 @@
         </div>
     </div>
 </div>       
+
+<?php 
+      endforeach; 
+} 
+?> 
 
 
