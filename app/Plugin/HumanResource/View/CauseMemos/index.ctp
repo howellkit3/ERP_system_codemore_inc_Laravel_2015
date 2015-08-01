@@ -50,7 +50,7 @@
                                         </tr>
                                     </thead>
 
-                        <tbody aria-relevant="all" aria-live="polite" class="OrderFields" role="alert" >
+                        <tbody aria-relevant="all" aria-live="polite" class="memoField" role="alert" >
                             <!-- <div class ="field"> -->
                             <?php echo $this->element('cause_memos_table'); ?> 
                             <!-- </div> -->

@@ -1,4 +1,4 @@
-  <?php if(!empty($causeMemoData)){ 
+  <?php 
 
        foreach ($causeMemoData as $causeMemoDataList): ?>
 
@@ -87,6 +87,5 @@
                       
         <?php 
           endforeach; 
-  } 
-  ?> 
+    ?> 
 

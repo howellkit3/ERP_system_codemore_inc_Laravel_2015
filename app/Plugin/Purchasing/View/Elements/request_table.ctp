@@ -1,6 +1,5 @@
 <?php  foreach ($requestData as $requestList ): ?>
-    
-    <tbody aria-relevant="all" aria-live="polite" role="alert">
+
 
         <tr class="">
 
@@ -57,5 +56,5 @@
             </td>
         </tr>
 
-    </tbody>
+
 <?php endforeach; ?> 
