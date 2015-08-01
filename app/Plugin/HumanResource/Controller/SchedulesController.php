@@ -111,6 +111,35 @@ class SchedulesController  extends HumanResourceAppController {
 
 	}
 
+	public function work_schedules() {
+
+		$this->loadModel('HumanResource.WorkSchedule');
+
+		$this->loadModel('HumanResource.WorkShift');
+
+		$limit = 10;
+
+		$conditions = array();
+
+		$params =  array(
+	            'conditions' => $conditions,
+	            'limit' => $limit,
+	            //'fields' => array('id', 'status','created'),
+	            'order' => 'WorkSChedule.day ASC',
+	        );
+
+		$this->paginate = $params;
+
+		$this->WorkSchedule->bind(array('WorkShift','Employee'));
+
+	    $workSchedules = $this->paginate('WorkSchedule');
+
+
+	    $this->set(compact('workSchedules'));
+
+
+	}
+
 
 
 }

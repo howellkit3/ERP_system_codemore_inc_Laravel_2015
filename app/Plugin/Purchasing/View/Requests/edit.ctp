@@ -102,20 +102,20 @@
 
 								<div class="main-box-body clearfix">
 
-									<section class="cloneMe">
+									
 
-										<?php foreach ($requestRequestItem as $key => $value) { ?>
+									<?php foreach ($requestRequestItem as $key => $value) { ?>
 
-											<?php 
-							                    echo $this->Form->input('RequestItem.'.$key.'.id', 
-																array( 
-													'class' => 'form-control required', 
-													'type' => 'hidden',
-							    					'label' => false,
-							    					'value' => $value['RequestItem']['id']
-							    					));
-							                ?>
-
+										<?php 
+						                    echo $this->Form->input('RequestItemIdHolder.'.$key.'.id', 
+															array( 
+												'class' => 'form-control required', 
+												'type' => 'hidden',
+						    					'label' => false,
+						    					'value' => $value['RequestItem']['id']
+						    					));
+						                ?>
+						                <section class="cloneMe">
 											<div class="main-box-body clearfix">
 												<div class="form-horizontal">
 
@@ -125,12 +125,12 @@
 
 															<?php $dataPlus = $key + 1; ?>
 
-											                <input type="text" class="form-control item_name required" name="data[PurchasingItem][<?php echo $key ?>][nameToShow]" value="<?php echo $value['RequestItem']['name'] ?>" readonly>
+											                <input type="text" class="form-control item_name required" name="data[RequestItem][<?php echo $key ?>][nameToShow]" value="<?php echo $value['RequestItem']['name'] ?>" readonly>
 
-											                <input type="hidden" class="form-control item_name required" name="data[PurchasingItem][<?php echo $key ?>][name]" value="<?php echo $value['RequestItem']['name'] ?>" readonly>
+											                <input type="hidden" class="form-control item_name required" name="data[RequestItem][<?php echo $key ?>][name]" value="<?php echo $value['RequestItem']['name'] ?>" readonly>
 
 											                <?php 
-											                    echo $this->Form->input('PurchasingItem.'.$key.'.foreign_key', 
+											                    echo $this->Form->input('RequestItem.'.$key.'.foreign_key', 
 																				array( 
 																	'class' => 'form-control item_id required', 
 																	'type' => 'hidden',
@@ -160,8 +160,15 @@
 															<button type="button" class="add-field1  table-link danger btn btn-success " onclick="cloneDatarequest('cloneMe', this)"><i class="fa fa-plus"></i></button>
 															<!-- <button type="button" class="add-field1sd proxy-counter add-request-section table-link danger btn btn-success" ><i class="fa fa-plus"></i></button> -->
 															&emsp;&emsp;&emsp;&emsp;
-															<button type="button" class="remove btn btn-danger " onclick="removeClone('cloneMe')"><i class="fa fa-minus" ></i></button>
-
+															<?php 
+																if ($key == 0 ) { 
+																	$newClass = 'hide-remove';
+																}else{
+																	$newClass = ' ';
+																}
+															?>
+																<button type="button" class="remove remove-purchase-order btn btn-danger <?php echo $newClass ?>"><i class="fa fa-minus" ></i></button>
+														
 														</div>
 
 													</div>
@@ -185,7 +192,7 @@
 																echo $this->Form->input('RequestItem.'.$key.'.size1_unit_id', array(
 											                        'options' => array($unitData),  
 											                        'label' => false,
-											                        'class' => 'form-control required',
+											                        'class' => 'form-control select-drop',
 											                        'empty' => '---Select Unit---',
 											                        'default' => $value['RequestItem']['size1_unit_id']
 											                         )); 
@@ -216,7 +223,7 @@
 																echo $this->Form->input('RequestItem.'.$key.'.size2_unit_id', array(
 											                        'options' => array($unitData),  
 											                        'label' => false,
-											                        'class' => 'form-control required',
+											                        'class' => 'form-control select-drop',
 											                        'empty' => '---Select Unit---',
 											                        'default' => $value['RequestItem']['size2_unit_id']
 											                         )); 
@@ -247,7 +254,7 @@
 																echo $this->Form->input('RequestItem.'.$key.'.size3_unit_id', array(
 											                        'options' => array($unitData),  
 											                        'label' => false,
-											                        'class' => 'form-control required',
+											                        'class' => 'form-control select-drop',
 											                        'empty' => '---Select Unit---',
 											                        'default' => $value['RequestItem']['size3_unit_id']
 											                         )); 
@@ -264,7 +271,7 @@
 														<div class="col-lg-3">
 															<?php 
 																echo $this->Form->input('RequestItem.'.$key.'.quantity', array(
-																	'class' => 'form-control item_type number required',
+																	'class' => 'form-control item_type number select-drop',
 																	'type' => 'number',
 											                        'label' => false,
 											                        'data' => 0,
@@ -279,7 +286,7 @@
 																echo $this->Form->input('RequestItem.'.$key.'.quantity_unit_id', array(
 											                        'options' => array($unitData),  
 											                        'label' => false,
-											                        'class' => 'form-control required',
+											                        'class' => 'form-control select-drop',
 											                        'empty' => '---Select Unit---',
 											                        'default' => $value['RequestItem']['quantity_unit_id']
 											                         )); 
@@ -294,8 +301,9 @@
 												</div>
 											    
 											</div>
-										<?php } ?>
-									</section>
+										</section>
+									<?php } ?>
+									
 									<div class="form-group">
 										<div class="col-lg-2"></div>
 										<div class="col-lg-8">
@@ -398,7 +406,7 @@
 		
 	jQuery(document).ready(function($){
 
-		$(".remove").hide();
+		$(".hide-remove").hide();
 
 		$("#QuotationCreateForm").validate();
 			//datepicker

@@ -7,23 +7,7 @@
                     <h4 class="modal-title"> Select Breaktime </h4>
                 </div>
                 <div class="modal-body">
-                 <?php echo $this->Form->create('Breaktime',array('url'=>(array('controller' => 'breaktimes','action' => 'find')),'class' => 'form-horizontal','id' => 'breaktimeForm'));?>
-                        <div class="form-group">
-                          
-                            <div class="form-group">
-                            <label for="inputEmail1" class="col-lg-2 control-label"> BreakTime </label>
-                            
-                            <div class="col-lg-6">
-                                <?php 
-                                    echo $this->Form->input('Tools.Name', array('class' => 'form-control item_type',
-                                        'alt' => 'Employee name',
-                                        'placeholder' => 'Item Name',
-                                        'label' => false));
-                                ?>
-                            </div>
-                             <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
-                        </div>
-                        </div>
+           
 
                         <div id="result_container">
                                 
@@ -38,7 +22,7 @@
                                                 <?php echo $time['BreakTime']['name']; ?></span>
                                             </div>
                                             <div class="col-lg-9 time">
-                                            <?php echo date('H:i: a',strtotime($time['BreakTime']['from'])); ?> - <?php echo date('H:i: a',strtotime($time['BreakTime']['to'])); ?> 
+                                            <?php echo date('H:i: a',strtotime($time['BreakTime']['from'])); ?>~<?php echo date('H:i: a',strtotime($time['BreakTime']['to'])); ?> 
                                             </div>
                                         </li>        
                                         <?php endforeach; ?>
@@ -47,27 +31,17 @@
 
                         </div>
 
-                        <hr>
                         <div class="clearfix"></div>
-                        <div class="right-dev">
-                                 <div class="col-xs-2 col-md-2 2">
-                                    <?php 
-                                        // echo $this->Form->submit('Submit', array('class' => 'btn btn-success pull-right',  'title' => 'Click here to add the customer'));
-                                    ?>
 
-                                    <button class="btn btn-success pull-right submit_breaktime" data-dismiss="modal">Submit</button>
-                                  
-                                </div>
-                                <div class="col-xs-2 col-md-2 2">
-
-                                 <button class="btn btn-default pull-right" data-dismiss="modal">Cancel</button>
-                                   
-                                </div>
-                        </div>
-                         <div class="clearfix"></div>
-                    </form>
-                        
+                     <div class="modal-footer">
+                            <button class="btn btn-success  submit_breaktime" data-dismiss="modal">Submit</button>
+                            &nbsp 
+                           <button class="btn btn-default " data-dismiss="modal">Cancel</button>
+                            
+                 </div>
                 </div>
+               
+
                 
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

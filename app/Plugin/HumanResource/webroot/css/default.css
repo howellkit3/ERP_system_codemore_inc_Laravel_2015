@@ -63,6 +63,7 @@ div.value {
   display: inline-block;
   list-style: outside none none;
   width: 100%;
+  text-align: left;
 }
 .modal-dialog.breaktime {
   width: 800px;
@@ -72,6 +73,7 @@ div.value {
   font-weight: bold;
   left: 10px;
   position: relative;
+  font-size:1.5vh;
 }
 
 .selected_breaks {
@@ -93,4 +95,81 @@ div.value {
 }
 .append li .icon:hover {
   color: #000 !important;
+}
+.error.appended-error {
+  margin-top: 9px;
+  position: relative;
+  top: 29px;
+}
+#personalAttendance .modal-dialog {
+  width: 75%;
+}
+.date-range-to {
+  margin: 6px 0;
+}
+
+.search-dropdown {
+  min-width: 200px;
+}
+.selected_breaks {
+  margin: 12px;
+  max-height: 150px;
+  overflow: auto;
+}
+
+
+/* ovetime */
+.selected_breaks > ul {
+  margin: 0;
+  padding: 0 10px;
+}
+.selected_breaks li {
+  list-style: outside none none;
+  margin: 4px 0;
+}
+.selected_breaks {
+  border: 1px dashed #ccc;
+  margin: 12px;
+  max-height: 150px;
+  overflow: auto;
+}
+
+.widget-users .image_profile {
+  border-radius: 50%;
+  float: left;
+  height: 60px;
+  margin-right: 14px;
+  width: 60px;
+  border: 0;
+}
+
+.onoffswitch-inner::before {
+  content: "Selected" !important;
+}
+.widget-users .onoffswitch-inner::after {
+  
+  content: "Select" !important;
+}
+.select-all .onoffswitch-inner::after {
+    content: "No" !important;
+}
+
+.select-all .onoffswitch-inner::before {
+  content: "Yes" !important;
+}
+
+.widget-users .onoffswitch {
+  width: 107px !important;
+}
+.widget-users .onoffswitch-switch {
+  right: 75px;
+}
+.widget-users li > .details > .name > a {
+    font-size: 12px;
+    font-weight: normal;
+}
+
+.notes-td {
+  max-width: 100px;
+  word-wrap: break-word;
 }

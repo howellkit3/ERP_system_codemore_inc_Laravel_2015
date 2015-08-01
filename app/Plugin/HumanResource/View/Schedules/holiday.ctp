@@ -23,7 +23,7 @@ echo $this->Html->script(array(
 		 
 			<div class="tabs-wrapper">
 				<div class="tab-content">
-					<div class="tab-pane fade  <?php echo ($active_tab == 'tab-employee') ? 'in active' : '' ?>" id="tab-holiday">
+					<div class="tab-pane fade <?php echo ($active_tab == 'holiday' || $this->params['action'] == 'holiday') ? 'in active' : '' ?>" id="holiday">
 						<header class="main-box-header clearfix">
 			                <h2 class="pull-left"><b>Holiday List <?php echo date('Y'); ?></b> </h2>
 			                <div class="filter-block pull-right">
@@ -49,7 +49,7 @@ echo $this->Html->script(array(
 			                            array('class' =>'btn btn-primary pull-right',
 			                                'escape' => false));
 			                   
-			                      echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Add', 
+			                      echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Add Holiday', 
 			                            array('controller' => 'holidays', 
 			                                    'action' => 'add',),
 			                            array('class' =>'btn btn-primary pull-right',

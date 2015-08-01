@@ -52,9 +52,9 @@
                         </thead>
 
                         <tbody aria-relevant="all" aria-live="polite" class="field" role="alert" >
-                            <!-- <div class ="field"> -->
+                            
                              <?php echo $this->element('product_table'); ?>
-                            <!-- </div> -->
+                           
                         </tbody>
                         <tbody aria-relevant="all" aria-live="polite" class="searchProductAppend" role="alert" >
                         </tbody>

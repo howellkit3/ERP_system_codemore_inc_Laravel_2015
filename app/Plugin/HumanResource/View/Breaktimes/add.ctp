@@ -1,9 +1,10 @@
-<?php $this->Html->addCrumb('Employee', array('controller' => 'employees', 'action' => 'index')); ?>
-<?php $this->Html->addCrumb('Add', array('controller' => 'employees', 'action' => 'add')); ?>
+<?php $this->Html->addCrumb('Breaktime', array('controller' => 'schedules', 'action' => 'index')); ?>
+<?php $this->Html->addCrumb('Add', array('controller' => 'breaktimes', 'action' => 'add')); ?>
 <?php echo $this->Html->css(array('HumanResource.default','timepicker'));?>
 <?php echo $this->Html->script(array(
 						'jquery.maskedinput.min',
-						'HumanResource.custom'
+						'HumanResource.custom',
+                        'HumanResource.breaktime'
 )); ?>
 <div style="clear:both"></div>
 
@@ -22,7 +23,7 @@
                             Add Breaktime
                             </h1>
                         </center>
-                        <?php  echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'schedules', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                        <?php  echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'schedules', 'action' => 'breaktime'),array('class' =>'btn btn-primary pull-right','escape' => false));
                         ?>
                     </header>
 
@@ -52,6 +53,24 @@
                                              </div>
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                       <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Duration</label>
+                                                <div class="col-lg-2">
+                                                   <?php
+                                                                echo $this->Form->input('Breaktime.duration', array(
+                                                                    'class' => 'form-control col-lg-6 required number',
+                                                                    'type' => 'number',
+                                                                    'value' => 1,
+                                                                    'label' => false));
+                                                         ?>
+
+
+                                                </div>
+                                             </div>
+                                        </div>
+                                    </div>
 
                                      <div class="form-group">
                                        
@@ -66,6 +85,8 @@
                                                          ?>
 
                                                      </div>
+
+
 
                                                         <div class="col-lg-2 text-center"> To </div>
                                                       <div class="col-lg-5 input-append bootstrap-timepicker">

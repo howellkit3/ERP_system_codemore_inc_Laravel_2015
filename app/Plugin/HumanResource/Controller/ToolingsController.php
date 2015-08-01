@@ -37,7 +37,6 @@ class ToolingsController  extends HumanResourceAppController {
 		$this->set(compact($tools));
 
 
-
 	}
 	
 

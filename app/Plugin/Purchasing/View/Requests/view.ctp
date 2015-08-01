@@ -83,8 +83,8 @@
                         <?php foreach ($requestPurchasingItem as $key => $value) {  $key++ ?>
                             <tr>
                                 <td><?php echo $key ?></td>
-                                <td class="text-center"><?php echo $value['PurchasingItem']['name']?></td>
-                                <td class="text-center"><?php echo $value['PurchasingItem']['quantity']?>/<?php echo $unitData[$value['PurchasingItem']['quantity_unit_id']]?></td>
+                                <td class="text-center"><?php echo $value['RequestItem']['name']?></td>
+                                <td class="text-center"><?php echo $value['RequestItem']['quantity']?>/<?php echo $unitData[$value['RequestItem']['quantity_unit_id']]?></td>
                                 <td class="text-center"> </td>
                             </tr>
                         <?php } ?>

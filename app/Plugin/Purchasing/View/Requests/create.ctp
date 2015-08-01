@@ -109,7 +109,7 @@
 																// 'options' => array($itemData),  
 																'class' => 'form-control item_name required', 
 										    					'label' => false,
-										    					'readonly' => 'readonly',
+										    					'readonly' => false,
 										    					'placeholder' => 'Item',
 										    					));
 										                ?>
@@ -176,7 +176,7 @@
 															echo $this->Form->input('RequestItem.0.size1_unit_id', array(
 										                        'options' => array($unitData),  
 										                        'label' => false,
-										                        'class' => 'form-control required',
+										                        'class' => 'form-control ',
 										                        'empty' => '---Select Unit---'
 										                         )); 
 										                ?>
@@ -204,7 +204,7 @@
 															echo $this->Form->input('RequestItem.0.size2_unit_id', array(
 										                        'options' => array($unitData),  
 										                        'label' => false,
-										                        'class' => 'form-control required',
+										                        'class' => 'form-control ',
 										                        'empty' => '---Select Unit---'
 										                         )); 
 
@@ -232,7 +232,7 @@
 															echo $this->Form->input('RequestItem.0.size3_unit_id', array(
 										                        'options' => array($unitData),  
 										                        'label' => false,
-										                        'class' => 'form-control required',
+										                        'class' => 'form-control ',
 										                        'empty' => '---Select Unit---'
 										                         )); 
 
@@ -248,12 +248,11 @@
 													<div class="col-lg-3">
 														<?php 
 															echo $this->Form->input('RequestItem.0.quantity', array(
-																'class' => 'form-control item_type number required',
+																'class' => 'form-control item_type number  select-drop',
 																'type' => 'number',
 										                        'label' => false,
 										                        'data' => 0,
-										                        'placeholder' => 'Quantity',
-										                        'value' => 0));
+										                        'placeholder' => 'Quantity'));
 
 										                ?>
 													</div>
@@ -263,7 +262,7 @@
 															echo $this->Form->input('RequestItem.0.quantity_unit_id', array(
 										                        'options' => array($unitData),  
 										                        'label' => false,
-										                        'class' => 'form-control required',
+										                        'class' => 'form-control ',
 										                        'empty' => '---Select Unit---'
 										                         )); 
 

@@ -23,5 +23,22 @@ class Tool extends AppModel {
 
 		$this->contain($model);
 	}
+
+	public function saveTool($toolData = null , $userId){
+
+		if (!empty($toolData)) {
+
+			$this->create();
+			
+			$toolData['Tool']['id'] = !empty($toolData['Tool']['id']) ? $toolData['Tool']['id'] : '';
+
+			$toolData['Tool']['created_by'] = $userId;
+
+			$toolData['Tool']['modified_by'] = $userId;
+			
+			return $this->save($toolData);
+		}
+		
+	}
 	
   }

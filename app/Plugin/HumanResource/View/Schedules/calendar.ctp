@@ -38,7 +38,7 @@ echo $this->Html->script(array(
 			                   		$links = array('controller' => 'schedules', 'action' => 'holiday');
 
 			                   
-			                      echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Add', 
+			                      echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Add Holiday', 
 			                            array('controller' => 'holidays', 
 			                                    'action' => 'add',),
 			                            array('class' =>'btn btn-primary pull-right',

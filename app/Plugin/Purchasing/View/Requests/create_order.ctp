@@ -4,6 +4,8 @@
 
 <?php  echo $this->Html->script('Purchasing.create_order_selector');?>
 
+<?php  echo $this->Html->script('Purchasing.modal_clone');?>
+
 <div style="clear:both"></div>
 
 <?php echo $this->element('purchasings_option'); ?><br><br>
@@ -224,21 +226,81 @@
 
 									<hr>
 									
-									<?php foreach ($requestPurchasingItem as $key => $value) { ?>
+									<?php foreach ($requestItem as $key => $value) { ?>
+										
+
+										<?php $dataPlus = $key + 1; ?>
+
+										<?php 
+						    				echo $this->Form->input('RequestItemIdHolder.'.$key.'.id', array(
+												'class' => 'form-control',
+						                        'label' => false,
+						                        'type' => 'hidden',
+						                        'placeholder' => 'Size',
+						                        'value' => $value['RequestItem']['id']));
+						                ?>
+								               
+
 										<div class="form-group" >
 											<label class="col-lg-2 control-label"><span style="color:red">*</span>Item</label>
-											<div class="col-lg-8">
-												<?php 
-								    				echo $this->Form->input('PurchasingItem.'.$key.'.id', array(
-														'class' => 'form-control',
-								                        'label' => false,
-								                        'type' => 'hidden',
-								                        'placeholder' => 'Size',
-								                        'value' => $value['PurchasingItem']['id']));
+											<div class="col-lg-5">
+
+												<?php $dataPlus = $key + 1; ?>
+
+								                <input type="text" class="form-control item_name required" name="data[RequestItem][<?php echo $key ?>][nameToShow]" value="<?php echo $value['RequestItem']['name'] ?>" readonly>
+
+								                <input type="hidden" class="form-control item_name required" name="data[RequestItem][<?php echo $key ?>][name]" value="<?php echo $value['RequestItem']['name'] ?>" readonly>
+
+								                <?php 
+								                    echo $this->Form->input('RequestItem.'.$key.'.foreign_key', 
+																	array( 
+														'class' => 'form-control item_id required', 
+														'type' => 'hidden',
+								    					'label' => false,
+								    					'readonly' => 'readonly',
+								    					'value' => $value['RequestItem']['foreign_key']
+								    					));
 								                ?>
-								                <input type="text" class="form-control item_name required" name="data[PurchasingItem][<?php echo $key ?>][name]" value="<?php echo $value['PurchasingItem']['name'] ?>" readonly>
+
+								                <?php 
+								                    echo $this->Form->input('RequestItem.'.$key.'.model', 
+																	array( 
+														'class' => 'form-control item_model required ', 
+														'type' => 'hidden',
+								    					'label' => false,
+								    					'readonly' => 'readonly',
+								    					'value' => $value['RequestItem']['model']
+								    					));
+								                    echo $this->Form->input('RequestItem.'.$key.'.request_uuid', 
+																	array( 
+														'class' => 'form-control item_model required ', 
+														'type' => 'hidden',
+								    					'label' => false,
+								    					'readonly' => 'readonly',
+								    					'value' => $value['RequestItem']['request_uuid']
+								    					));
+								                ?>
 
 								        	</div>
+
+											<div class="col-lg-3">
+
+												<a data-toggle="modal" href="#myModalItem" data-modal="<?php echo $dataPlus ?>" class="modal-button btn btn-primary mrg-b-lg pull-left  "><i class="fa fa-search-plus fa-lg"></i> Select Item</a>
+
+												&emsp;&emsp;&emsp;&emsp;
+												<button type="button" class="add-field1  table-link danger btn btn-success " onclick="cloneDatarequest('cloneMe', this)"><i class="fa fa-plus"></i></button>
+												<!-- <button type="button" class="add-field1sd proxy-counter add-request-section table-link danger btn btn-success" ><i class="fa fa-plus"></i></button> -->
+												&emsp;&emsp;&emsp;&emsp;
+												<?php 
+													if ($key == 0 ) { 
+														$newClass = 'hide-remove';
+													}else{
+														$newClass = ' ';
+													}
+												?>
+													<button type="button" class="remove remove-purchase-order btn btn-danger <?php echo $newClass ?>"><i class="fa fa-minus" ></i></button>
+											
+											</div>
 
 										</div>
 
@@ -247,24 +309,24 @@
 											<label class="col-lg-2 control-label">Size</label>
 											<div class="col-lg-3">
 												<?php 
-								                    echo $this->Form->input('PurchasingItem.'.$key.'.size1', array(
-														'class' => 'form-control item_type',
+								                    echo $this->Form->input('RequestItem.'.$key.'.size1', array(
+														'class' => 'form-control item_type required',
 								                        'label' => false,
 								                        'placeholder' => 'Size',
-								                        'disabled' => true,
-								                        'value' => $value['PurchasingItem']['size1']));
+								                        'disabled' => false,
+								                        'value' => $value['RequestItem']['size1']));
 								                ?>
 											</div>
 
 											<div class="col-lg-3">
 												<?php 
-													echo $this->Form->input('PurchasingItem.'.$key.'.size1_unit_id', array(
+													echo $this->Form->input('RequestItem.'.$key.'.size1_unit_id', array(
 								                        'options' => array($unitData),  
 								                        'label' => false,
 								                        'class' => 'form-control required',
 								                        'empty' => '---Select Unit---',
-								                        'disabled' => true,
-								                        'value' => $value['PurchasingItem']['size1_unit_id']
+								                        'disabled' => false,
+								                        'value' => $value['RequestItem']['size1_unit_id']
 								                         )); 
 													
 								                ?>
@@ -279,25 +341,25 @@
 											<label class="col-lg-2 control-label"> </label>
 											<div class="col-lg-3">
 												<?php 
-													echo $this->Form->input('PurchasingItem.'.$key.'.size2', array(
-														'class' => 'form-control item_type',
+													echo $this->Form->input('RequestItem.'.$key.'.size2', array(
+														'class' => 'form-control item_type required',
 								                        'label' => false,
 								                        'placeholder' => 'Size',
-								                        'disabled' => true,
-								                        'value' => $value['PurchasingItem']['size2']));
+								                        'disabled' => false,
+								                        'value' => $value['RequestItem']['size2']));
 
 								                ?>
 											</div>
 
 											<div class="col-lg-3">
 												<?php 
-													echo $this->Form->input('PurchasingItem.'.$key.'.size2_unit_id', array(
+													echo $this->Form->input('RequestItem.'.$key.'.size2_unit_id', array(
 								                        'options' => array($unitData),  
 								                        'label' => false,
 								                        'class' => 'form-control required',
 								                        'empty' => '---Select Unit---',
-								                        'disabled' => true,
-								                        'default' => $value['PurchasingItem']['size2_unit_id']
+								                        'disabled' => false,
+								                        'default' => $value['RequestItem']['size2_unit_id']
 								                         )); 
 
 								                ?>
@@ -311,25 +373,25 @@
 											<label class="col-lg-2 control-label"> </label>
 											<div class="col-lg-3">
 												<?php 
-													echo $this->Form->input('PurchasingItem.'.$key.'.size3', array(
-														'class' => 'form-control item_type',
+													echo $this->Form->input('RequestItem.'.$key.'.size3', array(
+														'class' => 'form-control item_type required',
 								                        'label' => false,
 								                        'placeholder' => 'Size',
-								                        'disabled' => true,
-								                        'value' => $value['PurchasingItem']['size3']));
+								                        'disabled' => false,
+								                        'value' => $value['RequestItem']['size3']));
 
 								                ?>
 											</div>
 
 											<div class="col-lg-3">
 												<?php 
-													echo $this->Form->input('PurchasingItem.'.$key.'.size3_unit_id', array(
+													echo $this->Form->input('RequestItem.'.$key.'.size3_unit_id', array(
 								                        'options' => array($unitData),  
 								                        'label' => false,
 								                        'class' => 'form-control required',
 								                        'empty' => '---Select Unit---',
-								                        'disabled' => true,
-								                        'default' => $value['PurchasingItem']['size3_unit_id']
+								                        'disabled' => false,
+								                        'default' => $value['RequestItem']['size3_unit_id']
 								                         )); 
 
 								                ?>
@@ -343,26 +405,26 @@
 											<label class="col-lg-2 control-label"><span style="color:red">*</span>Quantity</label>
 											<div class="col-lg-3">
 												<?php 
-													echo $this->Form->input('PurchasingItem.'.$key.'.quantity', array(
+													echo $this->Form->input('RequestItem.'.$key.'.quantity', array(
 														'class' => 'form-control item_type number required',
 														'type' => 'number',
 								                        'label' => false,
-								                        'disabled' => true,
+								                        'disabled' => false,
 								                        'placeholder' => 'Quantity',
-								                        'value' => $value['PurchasingItem']['quantity']));
+								                        'value' => $value['RequestItem']['quantity']));
 
 								                ?>
 											</div>
 
 											<div class="col-lg-3">
 												<?php 
-													echo $this->Form->input('PurchasingItem.'.$key.'.quantity_unit_id', array(
+													echo $this->Form->input('RequestItem.'.$key.'.quantity_unit_id', array(
 								                        'options' => array($unitData),  
 								                        'label' => false,
-								                        'disabled' => true,
+								                        'disabled' => false,
 								                        'class' => 'form-control required',
 								                        'empty' => '---Select Unit---',
-								                        'default' => $value['PurchasingItem']['quantity_unit_id']
+								                        'default' => $value['RequestItem']['quantity_unit_id']
 								                         )); 
 
 								                ?>
@@ -374,7 +436,7 @@
 											<label class="col-lg-2 control-label"><span style="color:red">*</span>Price</label>
 											<div class="col-lg-3">
 												<?php 
-													echo $this->Form->input('PurchasingItem.'.$key.'.unit_price', array(
+													echo $this->Form->input('RequestItem.'.$key.'.unit_price', array(
 														'class' => 'form-control item_type number required',
 														'type' => 'number',
 								                        'label' => false,
@@ -385,7 +447,7 @@
 
 											<div class="col-lg-3">
 												<?php 
-													echo $this->Form->input('PurchasingItem.'.$key.'.unit_price_unit_id', array(
+													echo $this->Form->input('RequestItem.'.$key.'.unit_price_unit_id', array(
 								                        'options' => array($unitData),  
 								                        'label' => false,
 								                        'class' => 'form-control required',
@@ -437,8 +499,90 @@
 		<?php echo $this->Form->end(); ?>
 	</div>
 </div>
+
+<div class="modal fade" id="myModalItem" role="dialog" data-item="" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog specModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Material</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-reorder"></i></span>
+                            <select  class="form-control select-group ItemGroup" >
+                                <option value="0">--Select Item Group--</option>
+                                <option value="1">General Items</option>
+                                <option value="2">Substrates</option>
+                                <option value="3">Compound Substrates</option>
+                                <option value="4">Corrugated Papers</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <header class="main-box-header clearfix">
+                    <h1 class="pull-left">Item List</h1>
+                    <div class="filter-block pull-right">
+                        <div class="form-group">
+
+                            <input placeholder="Search..."  class="form-control searchItem" type="search" disabled="disabled" />
+                            <i class="fa fa-search search-icon"></i>
+                         
+                        </div>  
+                    </div>
+                </header>
+
+                <input type="hidden" class="current_page" />
+
+                <input type="hidden" class="show_per_page" />
+
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th><a href="#"><span>Select</span></a></th>
+                            <th style="width:200px;"><a href="#"><span>Item Number</span></a></th>
+                            <th><a href="#"><span>Name</span></a></th>
+                        </tr>
+                    </thead>
+                    <tbody class="tableProduct" aria-relevant="all" id="scrollTable" aria-live="polite" role="alert" >
+                    </tbody>
+                </table>
+
+                <div class="table-responsive">
+                    <header class="main-box-header clearfix">
+                        <h1 class="pull-left">Item List</h1>
+                        <div class="filter-block pull-right">
+                            <div class="form-group pull-left">
+
+                            </div>
+                        </div>
+                    </header>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-lg-10"></div>
+                    <div class="col-lg-2">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="md-overlay"></div>	
+
+
+<?php echo $this->element('item_modal'); ?>
+
 <script>
 	$(document).ready(function() {
+
+		$(".hide-remove").hide();
 
 		$("#PurchaseOrderCreateOrderForm").validate();
 

@@ -218,7 +218,7 @@ class PurchaseOrdersController extends PurchasingAppController {
         $userData = $this->Session->read('Auth');
 
     	if (!empty($this->request->data)) {
-
+    		
     		foreach ($this->request->data['PurchasingItemIdHolder'] as $key => $value) {
 
     			
@@ -373,7 +373,7 @@ class PurchaseOrdersController extends PurchasingAppController {
         $output = $view->render('print_purchase_order', false);
    	
         $dompdf = new DOMPDF();
-        $dompdf->set_paper("A4");
+        $dompdf->set_paper("A5");
         $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));
         $dompdf->render();
         $canvas = $dompdf->get_canvas();

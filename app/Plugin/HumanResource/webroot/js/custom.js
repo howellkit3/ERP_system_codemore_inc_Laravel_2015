@@ -1,28 +1,27 @@
-function readURL(input,element) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
 
-        reader.onload = function (e) {
+$(document).ready(function(){
 
-            $('.'+element).attr('style','background:url('+ e.target.result +')')
-
-        }
-
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-
-// $('.datepick').datepicker({
-// 		  format: 'mm-dd-yyyy'
-		  
-// });
 $body = $('body');
+
+
 
 $body.on('click','.btn.btn-success.upload-image',function(e){
 
     $('.image_profile input').click();
 
-	e.preventDefault();
+    e.preventDefault();
+});
+
+$( ".datepick" ).datepicker({
+    format: 'yyyy-mm-dd', 
+    changeYear: true,
+    changeMonth: true,
+    showMonthAfterYear: true, //this is what you are looking for
+});
+
+//$('.datepick').datepicker({  format: 'yyyy-mm-dd'  });
+
+
 });
 
 //seasch Employees

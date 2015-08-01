@@ -1,21 +1,47 @@
 body{
-  font-family: "Arial";
+  font-family: "Calibri";
   font-weight: normal;
-  max-width: 1150px;
+  max-width: 1000px;
+  padding: 0px;
+   margin: 0px;
+  margin-top: 0px;
+  /*font-family: "Arial";
+  font-weight: normal;
+  max-width: 800px;
+  margin: 0px;
+  margin-top: 0px;*/
+  /*font-family: Tahoma, Helvetica, Arial, "Microsoft Yahei","微软雅黑", STXihei, "华文细黑", sans-serif;*/
 }
-
+@page { size: A3 }
+@page { margin: 1px;margin-top: 10px; }
+/*@font-face {
+      font-family: 'Noto Sans';
+      font-style: normal;
+      font-weight: 400;
+      src: url(http://eclecticgeek.com/dompdf/fonts/cjk/fireflysung.ttf) format('truetype');
+    }
+    * {
+      font-family: Noto Sans, DejaVu Sans, sans-serif;
+    }
+*/
+.4-pcs{
+  width: 200px;
+  border: solid 1px #000;
+  float: left;
+ 
+}
 .padd,td{
-  padding: 6px 0px;
+  /*padding: 6px 0px;*/
   font-size: 12px;
-  height: 1px;
+  /*height: 1px;*/
 
 }
 .small-space{
-  padding: 10px;
+ /* padding: 10px;*/
 }
 
 .text-header{
-    padding-left: 96.7px;
+   /* padding-left: 96.7px;*/
 } 
 .layout{
      /*padding-left: 30px;*/
@@ -33,27 +59,27 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   height: 100px;
 }
 .para{
-  padding-left: 60px;
+  /*padding-left: 60px;*/
 }
 .footer{
-  padding-left: 30px;
+  /*padding-left: 30px;*/
  text-align: left;
 }
 
 .footer2{
   text-align: right;
 
-  padding-left: 1px;
+  /*padding-left: 1px;*/
 }
 .tables-css{
-  position: fixed;
+ /* position: fixed;
   float: left;
   text-align: right;
   top: 950px;
-  width:100%;
+  width:100%;*/
 }
 .border-bot{
-	border-bottom: solid 1px #EAEAEA;
+	/*border-bottom: solid 1px #EAEAEA;*/
 }
 /*.doc{
   position: fixed;
@@ -61,4 +87,25 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   text-align: right;
   /*top: 710px;
 }*/
+
+.one{
+  width: 550px;
+  float:left;
+  border: solid 1px #000;
+  display :inline-block;
+  margin-left: 4px;
+}
+.purchase{
+  border: solid 1px #000;
+}
+
+.item-table{
+border-collapse:collapse;
+border:1px solid #FF0000;
+}
+
+.item-table td{
+border:1px solid #FF0000;
+}
+
 

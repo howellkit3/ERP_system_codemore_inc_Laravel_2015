@@ -212,7 +212,7 @@ class RequestsController extends PurchasingAppController {
 
     	$this->loadModel('Purchasing.Request');
 
-		$this->loadModel('Purchasing.PurchasingItem');
+		$this->loadModel('Purchasing.RequestItem');
 
 		$this->loadModel('GeneralItem');
 
@@ -236,36 +236,36 @@ class RequestsController extends PurchasingAppController {
 
     	$requestData = $this->Request->find('first', array('conditions' => array('Request.id' => $requestId)));
 		
-		$requestPurchasingItem = $this->PurchasingItem->find('all', array('conditions' => array('PurchasingItem.request_uuid' => $requestData['Request']['uuid'])));
+		$requestPurchasingItem = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestData['Request']['uuid'])));
 
 	    foreach ($requestPurchasingItem as $key => $value) {
 			
-			if($value['PurchasingItem']['model'] == 'GeneralItem'){
+			if($value['RequestItem']['model'] == 'GeneralItem'){
 
 	 			$itemData = $this->GeneralItem->find('list',array('fields' => array('id', 'name')));
 
-	 			$requestPurchasingItem[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 			$requestPurchasingItem[$key]['RequestItem']['name'] = $itemData[$value['RequestItem']['foreign_key']];
 	 		}
 
-	 		if($value['PurchasingItem']['model'] == 'CorrugatedPaper'){
+	 		if($value['RequestItem']['model'] == 'CorrugatedPaper'){
 
 	 			$itemData = $this->CorrugatedPaper->find('list',array('fields' => array('id', 'name')));
 
-	 			$requestPurchasingItem[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 			$requestPurchasingItem[$key]['RequestItem']['name'] = $itemData[$value['RequestItem']['foreign_key']];
 	 		}
 
-	 		if($value['PurchasingItem']['model'] == 'Substrate'){
+	 		if($value['RequestItem']['model'] == 'Substrate'){
 
 	 			$itemData = $this->Substrate->find('list',array('fields' => array('id', 'name')));
 
-	 			$requestPurchasingItem[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 			$requestPurchasingItem[$key]['RequestItem']['name'] = $itemData[$value['RequestItem']['foreign_key']];
 	 		}
 
-	 		if($value['PurchasingItem']['model'] == 'CompoundSubstrate'){
+	 		if($value['RequestItem']['model'] == 'CompoundSubstrate'){
 
 	 			$itemData = $this->CompoundSubstrate->find('list',array('fields' => array('id', 'name')));
 	 			
-	 			$requestPurchasingItem[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 			$requestPurchasingItem[$key]['RequestItem']['name'] = $itemData[$value['RequestItem']['foreign_key']];
 	 		}
 
 	    } 
@@ -345,6 +345,17 @@ class RequestsController extends PurchasingAppController {
 
 	    if ($this->request->is(array('post','put'))) {
 
+	    	foreach ($this->request->data['RequestItemIdHolder'] as $key => $value) {
+
+    			
+    			if (!empty($value['id'])) {
+
+    				$this->RequestItem->delete($value['id']);
+
+    			}
+    			
+    		}
+	    	
 			$requestUuid = $this->Request->saveRequest($this->request->data['Request'],$userData['User']['id']);
 
 			$this->RequestItem->saveRequestItem($this->request->data ,$requestUuid);
@@ -392,7 +403,7 @@ class RequestsController extends PurchasingAppController {
 
     	$this->loadModel('Purchasing.PurchasingType');
 
-    	$this->loadModel('Purchasing.PurchasingItem');
+    	$this->loadModel('Purchasing.RequestItem');
 
     	$this->loadModel('GeneralItem');
 
@@ -404,36 +415,36 @@ class RequestsController extends PurchasingAppController {
 
     	$requestData = $this->Request->find('first', array('conditions' => array('Request.id' => $requestId)));
 
-    	$requestPurchasingItem = $this->PurchasingItem->find('all', array('conditions' => array('PurchasingItem.request_uuid' => $requestData['Request']['uuid'])));
+    	$requestItem = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestData['Request']['uuid'])));
 
-    	foreach ($requestPurchasingItem as $key => $value) {
+    	foreach ($requestItem as $key => $value) {
 			
-			if($value['PurchasingItem']['model'] == 'GeneralItem'){
+			if($value['RequestItem']['model'] == 'GeneralItem'){
 
 	 			$itemData = $this->GeneralItem->find('list',array('fields' => array('id', 'name')));
 
-	 			$requestPurchasingItem[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 			$requestItem[$key]['RequestItem']['name'] = $itemData[$value['RequestItem']['foreign_key']];
 	 		}
 
-	 		if($value['PurchasingItem']['model'] == 'CorrugatedPaper'){
+	 		if($value['RequestItem']['model'] == 'CorrugatedPaper'){
 
 	 			$itemData = $this->CorrugatedPaper->find('list',array('fields' => array('id', 'name')));
 
-	 			$requestPurchasingItem[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 			$requestItem[$key]['RequestItem']['name'] = $itemData[$value['RequestItem']['foreign_key']];
 	 		}
 
-	 		if($value['PurchasingItem']['model'] == 'Substrate'){
+	 		if($value['RequestItem']['model'] == 'Substrate'){
 
 	 			$itemData = $this->Substrate->find('list',array('fields' => array('id', 'name')));
 
-	 			$requestPurchasingItem[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 			$requestItem[$key]['RequestItem']['name'] = $itemData[$value['RequestItem']['foreign_key']];
 	 		}
 
-	 		if($value['PurchasingItem']['model'] == 'CompoundSubstrate'){
+	 		if($value['RequestItem']['model'] == 'CompoundSubstrate'){
 
 	 			$itemData = $this->CompoundSubstrate->find('list',array('fields' => array('id', 'name')));
 	 			
-	 			$requestPurchasingItem[$key]['PurchasingItem']['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+	 			$requestItem[$key]['RequestItem']['name'] = $itemData[$value['RequestItem']['foreign_key']];
 	 		}
 
 	    } 
@@ -456,7 +467,7 @@ class RequestsController extends PurchasingAppController {
 															'order' => array('PurchasingType.id' => 'ASC')
 															));
 
-    	$this->set(compact('requestId','supplierData','paymentTermData','requestData','type','unitData','requestPurchasingItem'));
+    	$this->set(compact('requestId','supplierData','paymentTermData','requestData','type','unitData','requestItem'));
 
     }
 
@@ -468,13 +479,24 @@ class RequestsController extends PurchasingAppController {
 
     	$this->loadModel('Purchasing.Request');
 
-    	$this->loadModel('Purchasing.PurchasingItem');
+    	$this->loadModel('Purchasing.RequestItem');
 
     	if (!empty($this->request->data)) {
     		
+    		foreach ($this->request->data['RequestItemIdHolder'] as $key => $value) {
+
+    			
+    			if (!empty($value['id'])) {
+
+    				$this->RequestItem->delete($value['id']);
+
+    			}
+    			
+    		}
+    		
     		$this->PurchaseOrder->savePurchaseOrder($this->request->data,$userData['User']['id']);
 
-    		$this->PurchasingItem->savePurchasingItemPrice($this->request->data);
+    		$this->RequestItem->saveRequestItemPrice($this->request->data);
 
     		$this->Request->id = $this->request->data['PurchaseOrder']['request_id'];
 

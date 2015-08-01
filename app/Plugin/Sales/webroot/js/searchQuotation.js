@@ -50,7 +50,6 @@ $(document).ready(function() {
             url: serverPath + "sales/customer_sales/search_customer/"+searchInput,
             dataType: "html",
             success: function(data) {
-                console.log(data);
                 if(data){
 
                     $('.searchAppend').html(data);

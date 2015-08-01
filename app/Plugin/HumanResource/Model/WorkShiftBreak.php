@@ -58,6 +58,32 @@ class WorkShiftBreak extends AppModel {
 		}
 	}
 
+	public function createWorkshiftBreak($data = null,$workShiftId = null,$overtimeId = null,$authId = null) {
+
+
+		if (!empty($data['Workshift']['breakids'])) {
+
+			$workShiftBreak = [];
+
+			$this->create();
+
+			foreach ($data['Workshift']['breakids'] as $key => $id) {
+
+				$workShiftBreak['id'] = '';
+				$workShiftBreak['workshift_id'] = $workShiftId;
+				$workShiftBreak['breaktime_id'] = $id;
+				$workShiftBreak['created_by'] = $id;
+				$workShiftBreak['modified_by'] = $authId;
+
+
+				$save = $this->save($workShiftBreak);
+			}
+
+			return $save;
+
+		}
+	}
+
 
 
     

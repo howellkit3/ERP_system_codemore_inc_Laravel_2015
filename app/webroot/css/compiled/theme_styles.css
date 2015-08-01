@@ -5595,6 +5595,13 @@ input[type="radio"] {
   right: 8px;
   top: 11px;
 }
+.filter-block .form-group .calendar-icon {
+  position: absolute;
+  color: #707070;
+  right: 8px;
+  top: 11px;
+}
+
 .filter-block .btn {
   margin-left: 5px;
 }
@@ -8627,6 +8634,9 @@ svg {
 .rtl.theme-turquoise #content-wrapper {
   border-right: 2px solid #e7ebee;
   border-left: 0;
+}
+.datepicker-dropdown {
+  z-index: 9999 !important;
 }
 
 @media only screen and (min-width: 1170px) {

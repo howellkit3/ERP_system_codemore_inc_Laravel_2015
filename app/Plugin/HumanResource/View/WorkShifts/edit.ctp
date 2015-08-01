@@ -56,6 +56,27 @@
                                         </div>
                                     </div>
 
+
+                                     <div class="form-group">
+                                       <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span> Duration</label>
+                                                <div class="col-lg-2">
+                                                   <?php
+                                                                echo $this->Form->input('WorkShift.duration', array(
+                                                                    'class' => 'form-control col-lg-6 required number',
+                                                                    'type' => 'number',
+                                                                    'value' => 9,
+                                                                    'label' => false));
+                                                         ?>
+
+
+                                                </div>
+                                             </div>
+                                        </div>
+                                    </div>
+
+
                                     <div class="form-group">
                                        
                                         <div class="col-lg-12">
