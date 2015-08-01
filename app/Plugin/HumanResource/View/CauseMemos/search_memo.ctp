@@ -1,8 +1,8 @@
-  <?php if(!empty($causeMemoData)){ 
+  <?php if(!empty($CauseMemoData)){ 
 
-       foreach ($causeMemoData as $causeMemoDataList): ?>
+       foreach ($CauseMemoData as $causeMemoDataList): ?>
 
-               
+                
                     <tr class="">
 
                         <td class="">
@@ -82,6 +82,7 @@
                        </td>  
                     </tr>
 
+      
 
 
                       

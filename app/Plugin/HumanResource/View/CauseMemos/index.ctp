@@ -19,7 +19,7 @@
                             <div class="filter-block pull-right">
                              <div class="form-group pull-left">
                                     <?php //echo $this->Form->create('Quotation',array('controller' => 'quotations','action' => 'search', 'type'=> 'get')); ?>
-                                        <input placeholder="Search..." class="form-control searchRequest"  />
+                                        <input placeholder="Search..." class="form-control searchMemo"  />
                                         <i class="fa fa-search search-icon"></i>
                                      <?php //echo $this->Form->end(); ?>
                                 </div>
@@ -50,8 +50,15 @@
                                         </tr>
                                     </thead>
 
-                                    <?php echo $this->element('cause_memos_table'); ?> 
-                                
+                        <tbody aria-relevant="all" aria-live="polite" class="OrderFields" role="alert" >
+                            <!-- <div class ="field"> -->
+                            <?php echo $this->element('cause_memos_table'); ?> 
+                            <!-- </div> -->
+                        </tbody>
+                        <tbody aria-relevant="all" aria-live="polite" class="searchAppend" role="alert" >
+                        </tbody>
+
+
                                 </table>    
 
                                 <hr>
@@ -77,10 +84,7 @@
                             <h2 class="pull-left"><b>Violation List</b></h2>
                             <div class="filter-block pull-right">
                              <div class="form-group pull-left">
-                                    <?php //echo $this->Form->create('Quotation',array('controller' => 'quotations','action' => 'search', 'type'=> 'get')); ?>
-                                        <input placeholder="Search..." class="form-control searchViolation"  />
-                                        <i class="fa fa-search search-icon"></i>
-                                     <?php //echo $this->Form->end(); ?>
+                                   
                                 </div>
                                <?php
                                
@@ -135,10 +139,7 @@
                             <h2 class="pull-left"><b>Disciplinary Action</b></h2>
                             <div class="filter-block pull-right">
                              <div class="form-group pull-left">
-                                    <?php //echo $this->Form->create('Quotation',array('controller' => 'quotations','action' => 'search', 'type'=> 'get')); ?>
-                                        <input placeholder="Search..." class="form-control searchDisciplinary"  />
-                                        <i class="fa fa-search search-icon"></i>
-                                     <?php //echo $this->Form->end(); ?>
+                                    
                                 </div>
                                <?php
                                     echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i>Add Disciplinary Action', 
@@ -189,3 +190,49 @@
         </div>
     </div>
 </div>
+
+<script>
+
+    $("body").on('keyup','.searchMemo', function(e){
+
+        var searchInput = $(this).val();
+    
+        
+       // alert(searchInput);
+        if(searchInput != ''){
+
+            $('.memoField').hide();
+            $('.searchAppend').show();
+            //alert('hide');
+
+        }else{
+            $('.memoField').show();
+            $('.searchAppend').hide();
+            //alert('show');
+        }
+        
+        $.ajax({
+            type: "GET",
+            url: serverPath + "human_resource/cause_memos/search_memo/"+searchInput,
+            dataType: "html",
+            success: function(data) {
+
+                //alert(data);
+
+                if(data){
+
+                    $('.searchAppend').html(data);
+
+                } 
+                if (data.length < 5 ) {
+
+                    $('.searchAppend').html('<font color="red"><b>No result..</b></font>');
+                     
+                }
+                
+            }
+        });
+
+    });
+
+</script>

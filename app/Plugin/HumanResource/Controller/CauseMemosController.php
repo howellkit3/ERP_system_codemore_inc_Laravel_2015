@@ -56,7 +56,7 @@ class CauseMemosController  extends HumanResourceAppController {
 															));
 
 		$violationData = $this->Violation->find('list', array('fields' => array('id', 'name'),
-															'order' => array('Violation.id' => 'ASC')
+															'order' => array('Violation.name' => 'ASC')
 															));
 
 		$notedByEmployee = $this->Employee->find('list', array('fields' => array('id', 'fullname'),
@@ -105,7 +105,7 @@ class CauseMemosController  extends HumanResourceAppController {
           
             $this->redirect( array(
                 'controller' => 'cause_memos',   
-                'action' => 'index'
+                'action' => 'index','tab' => 'tab-violation'
             ));  
 
 		}
@@ -137,7 +137,7 @@ class CauseMemosController  extends HumanResourceAppController {
           
             $this->redirect( array(
                 'controller' => 'cause_memos',   
-                'action' => 'index'
+                'action' => 'index','tab' => 'tab-disciplinary'
             ));  
 
 		}
@@ -222,7 +222,7 @@ class CauseMemosController  extends HumanResourceAppController {
           
             $this->redirect( array(
                 'controller' => 'cause_memos',   
-                'action' => 'index'
+                'action' => 'index','tab' => 'tab-violation'
             ));  
 
 		}
@@ -252,7 +252,7 @@ class CauseMemosController  extends HumanResourceAppController {
           
             $this->redirect( array(
                 'controller' => 'cause_memos',   
-                'action' => 'index'
+                'action' => 'index','tab' => 'tab-disciplinary'
             ));  
 
 		}
@@ -430,5 +430,58 @@ class CauseMemosController  extends HumanResourceAppController {
 
 
 	}
+
+	public function search_memo($hint = null){
+
+       $this->loadModel('HumanResource.Violation');
+
+		$this->loadModel('HumanResource.DisciplinaryAction');
+
+		$this->loadModel('HumanResource.CauseMemo');
+
+		$this->loadModel('HumanResource.Employee');
+
+		$this->loadModel('HumanResource.Violation');
+
+		$this->loadModel('User');
+
+		$this->CauseMemo->bind(array(
+				'Employee'
+				));
+
+        $CauseMemoData = $this->CauseMemo->find('all',array(
+                      'conditions' => array(
+                        'OR' => array(
+                        array('CauseMemo.uuid LIKE' => '%' . $hint . '%'),
+                        array('Employee.first_name LIKE' => '%' . $hint . '%'),
+                        array('Employee.last_name LIKE' => '%' . $hint . '%')
+                          )
+                        ),
+                      'limit' => 10
+                      )); 
+
+        $violationData = $this->Violation->find('all');
+
+		$disciplinaryActionData = $this->DisciplinaryAction->find('all');
+
+		$causeMemoData = $this->CauseMemo->find('all');
+
+		$UserCreated = $this->User->find('list', array('fields' => array('id', 'fullname')
+															));
+
+		$employeeName = $this->Employee->find('list', array('fields' => array('id', 'fullname')
+															));
+
+		$violationTableData= $this->Violation->find('list', array('fields' => array('id', 'name')
+															));
+
+		$this->set(compact('violationData', 'UserCreated', 'disciplinaryActionData', 'causeMemoData', 'employeeName', 'violationTableData', 'CauseMemoData'));
+  
+        if ($hint == ' ') {
+            $this->render('index');
+        }else{
+            $this->render('search_memo');
+        }
+    }
 	
 }

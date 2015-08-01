@@ -7,16 +7,24 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
-            <header class="main-box-header clearfix">
+            
 
+             <header class="main-box-header clearfix">
                 <h2 class="pull-left"><b>Suppliers List</b></h2>
-
-                  <div class="filter-block pull-right">
-                    
-                    <?php echo $this->Html->link('<i class="fa fa-plus-circle fa-lg"></i> Add Supplier ', array('controller' => 'suppliers', 'action' => 'add'),array('class' =>'btn btn-primary pull-right','escape' => false));
-                     ?>
-                </div>
                 
+                <div class="filter-block pull-right">
+                    <div class="form-group pull-left">
+                        
+                            <input placeholder="Search..." class="form-control searchSupplier "  />
+                            <i class="fa fa-search search-icon"></i>
+                        
+                    </div>
+                    <?php
+
+                         echo $this->Html->link('<i class="fa fa-plus-circle fa-lg"></i> Add Supplier ', array('controller' => 'suppliers', 'action' => 'add'),array('class' =>'btn btn-primary','escape' => false));
+                       
+                    ?>
+                </div>
             </header>
             
             <div class="main-box-body clearfix">
@@ -33,11 +41,19 @@
                             </tr>
                         </thead>
 
-                        <?php 
+                         <tbody aria-relevant="all" aria-live="polite" class="supplierFields" role="alert" >
+                          
+                            <?php 
                         echo $this->element('supplier_order_table',array(
                                 'suppliers' => $suppliers
                             )); 
                             ?>
+                         
+                        </tbody>
+                        <tbody aria-relevant="all" aria-live="polite" class="searchAppend" role="alert" >
+                        </tbody>
+
+                        
                             
                      </table>
                     <hr>
@@ -56,3 +72,49 @@
         </div>
     </div>
 </div>
+
+<script>
+
+    $("body").on('keyup','.searchSupplier', function(e){
+
+        var searchInput = $(this).val();
+    
+        
+       // alert(searchInput);
+        if(searchInput != ''){
+
+            $('.supplierFields').hide();
+            $('.searchAppend').show();
+            //alert('hide');
+
+        }else{
+            $('.supplierFields').show();
+            $('.searchAppend').hide();
+            //alert('show');
+        }
+        
+        $.ajax({
+            type: "POST",
+            url: serverPath + "purchasing/suppliers/search_supplier/"+searchInput,
+            dataType: "html",
+            success: function(data) {
+
+                //alert(data);
+
+                if(data){
+
+                    $('.searchAppend').html(data);
+
+                } 
+                if (data.length < 5 ) {
+
+                    $('.searchAppend').html('<font color="red"><b>No result..</b></font>');
+                     
+                }
+                
+            }
+        });
+
+    });
+
+</script>
