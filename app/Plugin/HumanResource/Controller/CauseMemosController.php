@@ -35,7 +35,6 @@ class CauseMemosController  extends HumanResourceAppController {
 		$violationTableData= $this->Violation->find('list', array('fields' => array('id', 'name')
 															));
 
-	
 		$this->set(compact('violationData', 'UserCreated', 'disciplinaryActionData', 'causeMemoData', 'employeeName', 'violationTableData'));
 
 	}
@@ -275,6 +274,11 @@ class CauseMemosController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.DisciplinaryAction');
 
+		$this->loadModel('HumanResource.Position');
+
+		$positionData = $this->Position->find('list', array('fields' => array('id', 'name'),
+                                                                'order' => 'Position.id ASC'));	
+
 		$causeMemoData = $this->CauseMemo->find('first', array('conditions' => array('CauseMemo.id' => $id)
                                                                ));
 
@@ -296,7 +300,7 @@ class CauseMemosController  extends HumanResourceAppController {
 
 		$view = new View(null, false);
 
-		$view->set(compact('causeMemoData', 'employeeData', 'employeeName', 'department', 'violationData', 'disciplinaryData', 'userData'));
+		$view->set(compact('causeMemoData', 'employeeData', 'employeeName', 'department', 'violationData', 'disciplinaryData', 'userData', 'positionData'));
         
 		$view->viewPath = 'CauseMemo'.DS.'pdf';	
    
@@ -338,6 +342,8 @@ class CauseMemosController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.DisciplinaryAction');
 
+		$this->loadModel('HumanResource.Position');
+
 		$requestId = $id;
 
 		$causeMemoData = $this->CauseMemo->find('first', array('conditions' => array('CauseMemo.id' => $id)
@@ -360,7 +366,10 @@ class CauseMemosController  extends HumanResourceAppController {
 		$disciplinaryData = $this->DisciplinaryAction->find('list', array('fields' => array('id', 'name'),
                                                                 'order' => 'DisciplinaryAction.id ASC'));	
 
-  		$this->set(compact('requestId', 'causeMemoData', 'employeeName', 'department', 'employeeSection', 'employeeData', 'violationData', 'disciplinaryData', 'userData'));
+		$positionData = $this->Position->find('list', array('fields' => array('id', 'name'),
+                                                                'order' => 'Position.id ASC'));	
+
+  		$this->set(compact('requestId', 'causeMemoData', 'employeeName', 'department', 'employeeSection', 'employeeData', 'violationData', 'disciplinaryData', 'userData', 'positionData'));
 
 	}
 

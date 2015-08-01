@@ -1,15 +1,7 @@
 <!DOCTYPE html>
 <style>
+
 <?php include('word.css'); ?>
-
-table {
-    border-collapse: collapse;
-}
-th, td {
-    padding: 0; height:20px; width: 90%;  ;
-}
-
-
 
 </style>
 
@@ -30,17 +22,17 @@ th, td {
 			<table class="table table-bordered" style= "margin-bottom : 0px; table-layout: fixed; ">
                               
                 <tr>
-                    <td  style = " border:1px solid black; width:100px;"><b>To:</b></td>
-                    <td  style = " border:1px solid black; width:350px;" class="text-center" ><?php echo $employeeName[$causeMemoData['CauseMemo']['employee_id']]?></td>
+                    <td  style = " border:1px solid black; width:100px; height:30px;"><b>To:</b></td>
+                    <td  style = " border:1px solid black; width:350px;" class="text-center" ><?php echo ucwords($employeeName[$causeMemoData['CauseMemo']['employee_id']])?></td>
                     <td style = " border:1px solid black; width:100px;" class="text-center"><b>Issue Date:</b></td>
                     <td  style = " border:1px solid black; width:200px;" class="text-center"><?php echo (new \DateTime())->format('m/d/Y') ?></td>
                 </tr>
 
                 <tr>
-                    <td style = " border:1px solid black;" ><b>Section:</b></td>
+                    <td style = " border:1px solid black; height:30px;" ><b>Section:</b></td>
                     <td style = " border:1px solid black;" class="text-center" ><?php echo $department[$employeeData['Employee']['department_id']]?> Department</td>
                     <td style = " border:1px solid black;"  class="text-center"><b>Position:</b></td>
-                    <td style = " border:1px solid black;" class="text-center"><?php echo (new \DateTime())->format('m/d/Y') ?></td>
+                    <td style = " border:1px solid black;" class="text-center"><?php echo $positionData[$employeeData['Employee']['position_id']] ?></td>
                 </tr>
                         
             </table>
@@ -67,8 +59,8 @@ th, td {
             <table  style = "margin-top : 0px; margin-bottom : 1px;">
                               
                 <tr>
-                    <td  align ="left" style = "border:1px solid black; width:375px; height: 50px; vertical-align:top;" ><label><b>Prepared by:</b><br><center><?php echo  ucfirst($userData['User']['first_name']) . " " . ucfirst($userData['User']['last_name']) ?></center><center> Name/Position/Signature<center></label></td>
-                    <td  style = " border:1px solid black; width:375px; vertical-align:top; " ><label><b>Noted by:</b><br><center><?php echo ucfirst($employeeName[$causeMemoData['CauseMemo']['created_by']]) ?></center><center> HR Officer <center></label></td>
+                    <td  align ="left" style = "border:1px solid black; width:377px; height: 70px; vertical-align:top;" ><label><b>Prepared by:</b><br><br><center><?php echo ucfirst($userData['User']['first_name']) . " " . ucfirst($userData['User']['last_name']) . "/" .$positionData[$userData['User']['role_id']] . "/" ?></center><center> Name/Position/Signature<center></label></td>
+                    <td  style = " border:1px solid black; width:375px; vertical-align:top; " ><label><b>Noted by:</b><br><br><center><?php echo ucfirst($employeeName[$causeMemoData['CauseMemo']['created_by']]) ?></center><center> HR Officer <center></label></td>
                    
                 </tr>
 
@@ -85,7 +77,7 @@ th, td {
 	         <table  style = "margin-top : 0px; margin-bottom : 1px;">
                               
                 <tr>
-                    <td  align ="left" style = "border:1px solid black; width:375px;  vertical-align:top;" ><label><b>Prepared by:</b></label></td>
+                    <td  align ="left" style = "border:1px solid black; width:377px;  vertical-align:top; height:30px;" ><label><b>Prepared by:</b></label></td>
                     <td  style = " border:1px solid black; width:375px; vertical-align:top; " ><label><b>Date/Time:</label></td>
                    
                 </tr>
@@ -103,7 +95,7 @@ th, td {
 	        <table  style = "margin-top : 0px; margin-bottom : 1px;">
                               
                 <tr>
-                    <td  align ="left" style = "border:1px solid black; width:375px;  vertical-align:top;" ><label><b>Submitted by:</b></label></td>
+                    <td  align ="left" style = "border:1px solid black; width:377px;  vertical-align:top; height:30px;" ><label><b>Submitted by:</b></label></td>
                     <td  style = " border:1px solid black; width:375px; vertical-align:top; " ><label><b>Date/Time:</label></td>
                    
                 </tr>
@@ -114,37 +106,37 @@ th, td {
             <table  style = "margin-top : 0px; margin-bottom : 1px;">
                               
                 <tr>
-                    <td  align ="left" style = "border:1px solid black; width:375px;  vertical-align:top;" ><label><b>Explanation Received by:</b></label></td>
+                    <td  align ="left" style = "border:1px solid black; width:377px;  vertical-align:top; height:30px;" ><label><b>Explanation Received by:</b></label></td>
                     <td  style = " border:1px solid black; width:375px; vertical-align:top; " ><label><b>Date/Time:</label></td>
                    
                 </tr>
 
      
             </table>
-
-            <table  style = "margin-top : 0px; margin-bottom : 1px;">
-                              
-                <tr>
-                    <td  align ="left" style = "border:1px solid black; width:750px;  vertical-align:top;" ><label><b>RECOMMENDATION AND DECISION</b></label></td>
-                    
-                </tr>
-
+             
+            <table  bgcolor= 'gray' style = "margin-top : 0px; margin-bottom : 0px;">
+                         
+                    <tr>
+                        <td  align ="left" style = "border:1px solid black; width:753px;  vertical-align:top; height:25px;" ><center><label><b>RECOMMENDATION AND DECISION</b></label><center></td>
+                        
+                    </tr>
+                
      
             </table>
-
-            <table  style= "margin-bottom : 0px;">
+            
+            <table  style= " border:1px solid black; margin-bottom : 0px; width:755px; ">
  
                         <tr>
-                            <td align ="center" style = "width: 33%;  font-size : 12px;"><input type="checkbox" name="vehicle" value="Bike"> Explanation Accepted</td>
-                            <td align ="center" style = "width: 33%;  font-size : 12px;"><input type="checkbox" name="vehicle" value="Bike"> Impose DA Above</td>
-                            <td align ="center" style = "width: 34%;  font-size : 12px;"><input type="checkbox" name="vehicle" value="Bike"> Impose another DA below</td>
+                            <td align ="center" style = "width: 33%;  font-size : 12px;  height:50px; "> <div class = "div1"></div> Explanation Accepted</td>
+                            <td align ="center" style = "width: 33%;  font-size : 12px;"> <div class = "div2"></div> Impose DA Above</td>
+                            <td align ="center" style = "width: 34%;  font-size : 12px;"> <div class = "div3"></div> Impose another DA below</td>
    
                         </tr>
 
                         <tr>
-                            <td align ="center" style = "width: 33%;  font-size : 12px;"><input type="checkbox" name="vehicle" value="Bike"> Verbal Warning</td>
-                            <td align ="center" style = "width: 33%;  font-size : 12px;"><input type="checkbox" name="vehicle" value="Bike"> Suspension ____ days</td>
-                            <td align ="center" style = "width: 34%;  font-size : 12px;"><input type="checkbox" name="vehicle" value="Bike"> Termination Effective</td>
+                           <td align ="center" style = "width: 33%;  font-size : 12px; vertical-align:top; height:50px;"><div class = "div4"></div> Verbal Warning</td>
+                            <td align ="center" style = "width: 33%;  font-size : 12px; vertical-align:top;"><div class = "div5"></div>    Suspension ____ days</td>
+                            <td align ="center" style = "width: 34%;  font-size : 12px; vertical-align:top;"><div class = "div6"></div> Termination Effective</td> 
    
                         </tr>
                         
@@ -153,7 +145,7 @@ th, td {
             <table  style = "margin-top : 0px; margin-bottom : 1px;">
                               
                 <tr>
-                    <td  align ="left" style = "border:1px solid black; width:375px;  vertical-align:top;" ><label><b>Recommendation by: HR Officer</b></label></td>
+                    <td  align ="left" style = "border:1px solid black; width:377px;  vertical-align:top; height:30px;" ><label><b>Recommendation by: HR Officer</b></label></td>
                     <td  align ="left" style = "border:1px solid black; width:375px;  vertical-align:top;" ><label><b>Approved by: Operation Manager</b></label></td>
                     
                 </tr>
@@ -164,10 +156,14 @@ th, td {
              <table class="table table-bordered" style= "margin-bottom : 0px;">
  
                         <tr>
-                            <td align ="left" style = "width: 50%;  font-size : 12px;">Doc No.: KP-FR-HR1-013 REV 0<br>Effective 01 June 2015
-                            
+                            <td align ="left" style = "width: 377px;  font-size : 12px;">Doc No.: KP-FR-HR1-013 REV 0
+                             <td align ="right" style = "width: 375px;  font-size : 12px;"> Effective 01 June 2015
  
                         </tr>
+
+                       
+
+                        
                     
                     </table>
 
