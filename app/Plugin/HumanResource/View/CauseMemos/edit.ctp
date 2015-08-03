@@ -70,17 +70,17 @@
                                                 <label class="col-lg-2 control-label">Reference Company Policy</label>
                                                 <div class="col-lg-8">
                                                     <?php 
-                                                          echo $this->Form->input('CauseMemo.violation_id', array(
+                                                           echo $this->Form->input('CauseMemo.violation_id', array(
+                                                                                        'type' => 'select',
                                                                                         'label' => false,
-                                                                                        'required' => 'required',
-                                                                                        'class' => 'form-control   required',
-                                                                                        'id' => 'date',
-                                                                                        'empty' => $violationData[$causeMemoData['CauseMemo']['violation_id']],
+                                                                                        'class' => 'form-control required ',
+                                                                                        'empty' => '---Select Payment Term---',
                                                                                         'options' => array($violationData)
 
-                                                                                       ));
+                                                                                      ));
                                                     ?>
-                                        
+
+                                                    
                                             </div>
                                         </div>
 
@@ -88,15 +88,18 @@
                                                 <label class="col-lg-2 control-label">Disciplinary Action</label>
                                                 <div class="col-lg-8">
                                                     <?php 
+                                                        $val = $disciplinaryData[$causeMemoData['CauseMemo']['disciplinary_action_id']];
                                                           echo $this->Form->input('CauseMemo.disciplinary_action_id', array(
                                                                                         'label' => false,
+                                                                                         'options' => array($disciplinaryData),
                                                                                         'required' => 'required',
-                                                                                        'type' => 'select',
                                                                                         'class' => 'form-control required',
-                                                                                        'value' => $disciplinaryData[$causeMemoData['CauseMemo']['disciplinary_action_id']],
-                                                                                        'options' => array($disciplinaryData)
+                                                                                        'default' => 39,
+                                                                                        'empty' => '-------'
+                                                                                       
 
                                                                                        ));
+                                                          
 
                                                         //      echo $this->Form->input('CauseMemo.disciplinary_action_id', array(
                                                         // 'options' => array($disciplinaryData),
@@ -109,6 +112,7 @@
 
                                                 
                                                     ?>
+
                                         
                                             </div>
                                         </div>
@@ -122,7 +126,7 @@
                                                                                         'required' => 'required',
                                                                                         'class' => 'form-control required',
                                                                                          'options' => array($notedByEmployee), 
-                                                                                        'name' => $notedByEmployee[$causeMemoData['CauseMemo']['created_by']]
+                                                                                        'default' => $notedByEmployee[$causeMemoData['CauseMemo']['created_by']]
 
                                                                                        ));
                                                     ?>
