@@ -10,12 +10,20 @@ class DashboardsController  extends HumanResourceAppController {
 
 	public function index() {
 
+			$this->loadModel('HumanResource.WorkSchedule');
+
+		$this->loadModel('HumanResource.Employee');
+
+		$this->loadModel('HumanResource.Workshift');
+		
 		$date = date('Y-m-d');
 
 		$conditions = array(
 			'Attendance.date <=' => $date,
 		 	'Attendance.date >=' => $date
 		);
+
+		$this->Attendance->bind(array('WorkSchedule','Employee','WorkShift'));
 
 		$attendances = $this->Attendance->find('all',array('conditions' => $conditions ,'limit' => 5));
 
