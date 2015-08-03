@@ -1,6 +1,5 @@
 <?php  foreach ($purchaseOrderData as $purchaseOrderDataList ): ?>
     
-
         <tr class="">
 
             <td class="">
@@ -47,5 +46,5 @@
                 
             </td>
         </tr>
-
+        
 <?php endforeach; ?> 

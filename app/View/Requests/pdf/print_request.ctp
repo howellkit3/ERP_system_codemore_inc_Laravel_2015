@@ -16,6 +16,11 @@ th, td {
   height: 100%;background-repeat:no-repeat;">
 	<div class="col-lg-12">
 		<div class="main-box main-pdf"  >
+
+			<?php $ctrTable = 2; 
+
+			for ($i = $ctrTable; $i >= 1; $i--) { ?>
+
 			<center>
 				
 					<h4 style = "margin-bottom:0px;">KOU FU PACKAGING CORP.</h4>
@@ -49,7 +54,7 @@ th, td {
 			<table style=" border:1px solid black;border-collapse:collapse; margin-bottom:0px; ">
 			<tr>
 				<td align = "center" ></td>
-				<td align = "center" style =" width:264px; word-wrap: break-word;" >Item Description</td>
+				<td align = "center" style =" width:266px; word-wrap: break-word;" >Item Description</td>
 				<td style="border:1px solid black; width:100px">Qty./Unit</td>
 				<td style="border:1px solid black; width:150px">Remarks</td>
 			</tr>
@@ -82,8 +87,13 @@ th, td {
 
 				<td style="border:1px solid black;  "><?php echo $value['RequestItem']['quantity'] . ' ' . $unitData[$value['RequestItem']['quantity_unit_id']]?></td>
 				<?php if($ctr == 8){ ?>
-					<td style="border:1px solid black; word-wrap: break-word;"><?php echo $request['Request']['remarks'] ?></td>
-				<?php }else{ ?>
+
+				<?php $lengthRemarks = strlen($request['Request']['remarks'])?>
+
+				<?php if($lengthRemarks >= 35 && $lengthRemarks <= 70){ ?>
+					<td style="border:1px solid black; word-wrap: break-word; font-size:65%"><?php echo $request['Request']['remarks'] ?></td>
+				<?php }
+					}else{ ?>
 					<td style="border:1px solid black;  word-wrap: break-word;"></td>
 				<?php } ?>	
 			</tr>
@@ -115,7 +125,7 @@ th, td {
 				</tr>
 
 				<tr> 
-					<td  align = "left" style=" width:541px "><?php echo $request['Request']['remarks'] ?></td>
+					<td  align = "left" style=" width:548px "><?php echo $request['Request']['remarks'] ?></td>
 				</tr>
 			
 			</table>
@@ -145,7 +155,11 @@ th, td {
 			</tr>
 			
 			</table>
+
 			<br>
+			<?php } ?>
+
+			
 			<center>
 				
 					<h4 style = "margin-bottom:0px;">KOU FU PACKAGING CORP.</h4>
@@ -177,7 +191,7 @@ th, td {
 			<table style=" border:1px solid black;border-collapse:collapse; margin-bottom:0px;">
 			<tr>
 				<td align = "center" ></td>
-				<td align = "center" style =" width:264px; word-wrap: break-word;" >Item Description</td>
+				<td align = "center" style =" width:266px; word-wrap: break-word;" >Item Description</td>
 				<td style="border:1px solid black; width:100px">Qty./Unit</td>
 				<td style="border:1px solid black; width:150px">Remarks</td>
 			</tr>
@@ -210,8 +224,13 @@ th, td {
 
 				<td style="border:1px solid black;  "><?php echo $value['RequestItem']['quantity'] . ' ' . $unitData[$value['RequestItem']['quantity_unit_id']]?></td>
 				<?php if($ctr == 8){ ?>
-					<td style="border:1px solid black; word-wrap: break-word;"><?php echo $request['Request']['remarks'] ?></td>
-				<?php }else{ ?>
+
+				<?php $lengthRemarks = strlen($request['Request']['remarks'])?>
+
+				<?php if($lengthRemarks >= 35 && $lengthRemarks <= 70){ ?>
+					<td style="border:1px solid black; word-wrap: break-word; font-size:65%"><?php echo $request['Request']['remarks'] ?></td>
+				<?php }
+					}else{ ?>
 					<td style="border:1px solid black;  word-wrap: break-word;"></td>
 				<?php } ?>	
 			</tr>
@@ -243,7 +262,7 @@ th, td {
 				</tr>
 
 				<tr>
-					<td  align = "left" style="width:541px "><?php echo $request['Request']['remarks'] ?></td>
+					<td  align = "left" style="width:548px "><?php echo $request['Request']['remarks'] ?></td>
 				
 				</tr>
 			
