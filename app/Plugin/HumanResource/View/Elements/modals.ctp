@@ -166,15 +166,63 @@
                                                                   ));
                                 ?>
                             </div>
-                             <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
                         </div>
+
+                        <div class="form-group">
+                            <label for="inputEmail1" class="col-lg-2 control-label"> Department</label>
+
+                           <div class="col-lg-6">
+                                <div class="input-group">
+                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                        <input  placeholder="Date Range" name="from_date" data="1" type="text" class="form-control myDateRange datepickerDateRange high-z-index" id="datepickerDateRange" >
+                                                    </div>
+                            </div>
+
+                            <button type="button" class="clear-date btn btn-success pull-left"><i class="fa fa-eraser fa-lg"></i> Clear</button>
+
+                        </div>
+
                         <div class="modal-footer">
-                            
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                             
-                    </div>  
+                        </div>  
                 </form> 
             </div>
         </div>
     </div>
 </div>
+
+<style type="text/css">
+    .datepicker-hide .ui-datepicker-year
+    {
+        display:none;   
+    }
+
+    .datepickerDateRange{
+
+        z-index: 10000;
+    }
+
+    .high-z-index { z-index: 99;!important}
+</style>
+<script>
+    
+jQuery(document).ready(function($){
+       //datepicker
+        // $('.datepick').datepicker({
+            
+        //     changeYear: false,
+        //     autoClose: true
+        // });
+
+        // $("#HolidayDate").click(function() {
+        //     $(".datepicker-days .day").click(function() {
+        //         $('.datepicker').hide();
+        //     });
+        // });
+
+        $('.datepickerDateRange').daterangepicker();
+});
+
+ </script>

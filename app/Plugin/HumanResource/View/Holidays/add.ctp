@@ -29,7 +29,7 @@
                 </div>
             </div>
             
- <div class="row">
+            <div class="row">
                 <div class="col-lg-12">
                     <div class="main-box">
                         <h1>Holiday Info </h1>

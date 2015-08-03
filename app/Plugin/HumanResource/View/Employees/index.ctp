@@ -1,3 +1,7 @@
+<?php echo $this->Html->script(array(
+						'jquery.maskedinput.min',
+						'HumanResource.custom'
+)); ?>
 <?php echo $this->element('hr_options');
 	$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : 'tab-employee';
  ?>
@@ -231,3 +235,7 @@
 </div>
 
 <?php echo $this->element('modals'); ?>
+
+
+
+
