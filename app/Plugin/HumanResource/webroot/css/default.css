@@ -143,6 +143,11 @@ div.value {
   border: 0;
 }
 
+.selected_breaks .append ol {
+  padding: 10px;
+  margin: 0;
+}
+
 .onoffswitch-inner::before {
   content: "Selected" !important;
 }
@@ -172,4 +177,12 @@ div.value {
 .notes-td {
   max-width: 100px;
   word-wrap: break-word;
+}
+.clock {
+  font-size: 20px;
+}
+
+.datepick.homepage .datepicker.datepicker-inline {
+  border: 1px dashed #ccc;
+  margin: auto !important;
 }

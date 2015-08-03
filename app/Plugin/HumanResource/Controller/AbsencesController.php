@@ -49,7 +49,6 @@ class AbsencesController  extends HumanResourceAppController {
 		$employees = $this->Employee->getList($conditions);
 
 
-
 		$this->set(compact('date','search','employees','typeList'));
 	}
 

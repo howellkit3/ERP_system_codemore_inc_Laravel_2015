@@ -7,16 +7,9 @@ App::uses('ImageUploader', 'Vendor');
 
 class EmployeesController  extends HumanResourceAppController {
 
-	var $helpers = array('HumanResource.CustomText','HumanResource.Country', 'Accounting.PhpExcel');
+	var $helpers = array('HumanResource.CustomText','HumanResource.Country');
 
 	public function index() {
-
-		$this->loadModel('HumanResource.Department');
-
-		$departmentData = $this->Department->find('list', array('fields' => array('id', 'name')
-															));
-
-		array_push($departmentData, "All");
 
 		$limit = 10;
 
@@ -37,14 +30,11 @@ class EmployeesController  extends HumanResourceAppController {
 	    }
 
         $this->loadModel('HumanResource.Tooling');
-	
  
 	    if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'Tooling' ) {
 				//toolings
-		       $conditions = array();    
-
-		      // $this->Tooling->bind(array('Employee'));
-
+		       	$conditions = array();    
+		       	$this->Tooling->bind('Employee');
 		        $this->paginate = array(
 		            'conditions' => $conditions,
 		            'limit' => $limit,
@@ -52,7 +42,9 @@ class EmployeesController  extends HumanResourceAppController {
 		            'order' => 'Tooling.id DESC',
 		        );
 
+
 		        $toolings = $this->paginate('Tooling');
+		        
 	    }
 
         $departments = array('' => 'Select Department',
@@ -67,8 +59,13 @@ class EmployeesController  extends HumanResourceAppController {
 		                	'3' => 'Employee',
 		                	'4' => 'Others'
 		                	);
+         $this->loadModel('HumanResource.Employee');
 
-        $this->set(compact('employees','departments','positions','toolings', 'departmentData'));
+		$this->loadModel('HumanResource.Tool');
+
+		$toolList = $this->Tool->find('list',array('fields' => array('id','name')));
+
+        $this->set(compact('employees','departments','positions','toolings','toolList','employeeList'));
 	}
 
 	public function add () {
@@ -440,12 +437,5 @@ class EmployeesController  extends HumanResourceAppController {
 		$this->render('Employees/ajax/employees_overtime');
 
 	}
-	
 
-	public function print_employee() {
-
-
-        $this->render('employee_report');
-        
-    }
 }

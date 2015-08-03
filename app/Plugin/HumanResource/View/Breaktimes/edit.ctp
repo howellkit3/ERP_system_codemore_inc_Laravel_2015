@@ -90,9 +90,9 @@
 
                                                         <div class="col-lg-2 text-center"> To </div>
                                                       <div class="col-lg-5 input-append bootstrap-timepicker">
-                                                        <?php
-                                                            echo $this->Form->input('Breaktime.to', array('type' => 'text','class' => 'form-control col-lg-6 required timepicker','label' => false));
-                                                        ?>
+                                                       <?php 
+                                        echo $this->Html->link('Cancel ', array('controller' => 'schedules', 'action' => 'breaktime','plugin' => 'human_resource'),array('class' =>'btn btn-default','escape' => false));
+                                    ?>
                                                      </div>
                                                   
                                                    

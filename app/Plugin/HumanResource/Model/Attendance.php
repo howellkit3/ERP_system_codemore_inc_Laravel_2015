@@ -52,7 +52,7 @@ class Attendance extends AppModel {
 
 			$this->create();
 
-			if (is_array($data)) {
+			if (is_array($data) && !empty(($dataList['overtime_id']))) {
 
 				//check overtime 
 

@@ -58,23 +58,25 @@
                                        
                                         <div class="col-lg-6">
                                             <div class="form-group">
-                                                <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Month / Day </label>
+                                                <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Start / End Date </label>
                                                 <div class="col-lg-9">
-                                                  
-                                                   <?php
-                                                        echo $this->Form->input('Holiday.start_date', array('class' => 'form-control col-lg-6 required','label' => false));
-                                                    ?>
-
-                                                    To
-
-                                                    <?php
-                                                        echo $this->Form->input('Holiday.end_date', array('class' => 'form-control col-lg-6 required','label' => false));
-                                                    ?>
+                                                  <?php 
+                                                  $from  = date('Y/m/d',strtotime($this->request->data['Holiday']['start_date']));
+                                                  $to  = date('Y/m/d',strtotime($this->request->data['Holiday']['end_date']));
+                                                  ?>
+                                                     
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                        <input placeholder="Date Range" name="from_date" data="1"
+                                                        type="text" class="form-control myDateRange datepickerDateRange"
+                                                        value ="<?php echo $from.' - '.$to ?>" 
+                                                        id="datepickerDateRange" >
+                                                    </div>
+                                                        
                                                 </div>
                                              </div>
                                         </div>
                                     </div>
-
                                    <!--    <div class="form-group">
                                         <div class="col-lg-6">
                                             <div class="form-group">
@@ -181,6 +183,9 @@ jQuery(document).ready(function($){
             changeYear: false,
             autoClose: true
         });
+
+
+        $('.datepickerDateRange').daterangepicker();
 
         $("#HolidayDate").click(function() {
             $(".datepicker-days .day").click(function() {
