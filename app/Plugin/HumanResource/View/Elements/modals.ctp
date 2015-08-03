@@ -178,8 +178,7 @@
                                                     </div>
                             </div>
 
-                            <button type="button" class="clear-date btn btn-success pull-left"><i class="fa fa-eraser fa-lg"></i> Clear</button>
-
+                           
                         </div>
 
                         <div class="modal-footer">
@@ -204,7 +203,7 @@
         z-index: 10000;
     }
 
-    .high-z-index { z-index: 99;!important}
+    .daterangepicker { z-index: 999999;!important}
 </style>
 <script>
     
