@@ -27,10 +27,13 @@
 			                      echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Add Employee', 
 			                            array('controller' => 'employees', 
 			                                    'action' => 'add',),
-			                            array('class' =>'btn btn-primary pull-right',
-			                                'escape' => false));
+			                            array('class' =>'btn btn-primary',
+			                                'escape' => false)); ?>
 
-			                    ?> 
+			                                   
+			                       <a data-toggle="modal" href="#myEmployeeReport" class="btn btn-primary pull-right "><i class="fa fa-share-square-o fa-lg"></i> Export</a>
+
+			                   
 			                  
 			                   <br><br>
 			               </div>
@@ -217,13 +220,14 @@
 			                            ?>
 			                    </div> -->
 
+								</div>
 							</div>
-						</div>
-					</div>			
-	            </div>
-			</div>
-		</div>	
-
+						</div>			
+		            </div>
+				</div>
+			</div>	
 	    </div>
     </div>
 </div>
+
+<?php echo $this->element('modals'); ?>
