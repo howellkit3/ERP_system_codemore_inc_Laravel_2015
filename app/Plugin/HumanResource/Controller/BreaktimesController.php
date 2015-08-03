@@ -82,7 +82,7 @@ class BreakTimesController  extends HumanResourceAppController {
 
 		if (!empty($id)) {
 
-			if ($this->Breaktime->delete($id)) {
+			if ($this->BreakTime->delete($id)) {
                 $this->Session->setFlash(
                     __('Successfully deleted.', h($id))
                 );

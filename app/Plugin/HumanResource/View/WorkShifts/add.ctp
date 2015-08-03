@@ -169,8 +169,8 @@
                                   
                                 </div>
                                 <div class="col-xs-2 col-md-2 2">
-                                    <?php 
-                                        echo $this->Html->link('Cancel ', array('controller' => 'schedules', 'action' => 'holiday','plugin' => 'human_resorce'),array('class' =>'btn btn-default','escape' => false));
+                                   <?php 
+                                        echo $this->Html->link('Cancel ', array('controller' => 'schedules', 'action' => 'workshifts','plugin' => 'human_resource'),array('class' =>'btn btn-default','escape' => false));
                                     ?>
                                 </div>
                             </div>

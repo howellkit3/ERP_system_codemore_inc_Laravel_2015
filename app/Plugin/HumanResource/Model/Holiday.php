@@ -24,6 +24,21 @@ class Holiday extends AppModel {
 		// $this->contain($model);
 	}
 
+	public function formatData($data = null){
+
+		if (!empty($data)) {
+
+			$date = explode('-',$data['from_date']);
+
+			$split = new DateTime(trim($date[0]));
+			$data['Holiday']['year'] = $split->format('Y');
+
+			$data['Holiday']['start_date'] = date('Y-m-d',strtotime(trim($date[0])));
+			$data['Holiday']['end_date'] = date('Y-m-d',strtotime(trim($date[1])));
+		}
+
+		return $data;
+	}
 	public function getAllHolidays($params = array()){
 
 		

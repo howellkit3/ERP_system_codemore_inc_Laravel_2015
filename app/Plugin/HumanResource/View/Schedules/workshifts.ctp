@@ -78,18 +78,15 @@
 														<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit </font></span>
 														</span> ', array('controller' => 'workshifts', 'action' => 'edit',$workshift['WorkShift']['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Information'));
 
-														 echo $this->Form->postLink('<span class="fa-stack">
+													
+														 	echo $this->Form->postLink('<span class="fa-stack">
 														<i class="fa fa-square fa-stack-2x"></i>
 														<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Delete </font></span>
-														</span>', array(
-																'controller' => 'workshifts',
-																'action' => 'delete',
-																'plugin' => 'human_resource',
-																$workshift['WorkShift']['id']),
-										                                array('escape' => false), 
+														</span> ', array('controller' => 'workshifts', 'action' => 'delete',$workshift['WorkShift']['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Information'),
+															 array('escape' => false), 
 										                                __('Are you sure you want to delete %s?', 
-										                                $workshift['WorkShift']['name'])
-										 						); 
+										                                $workshift['WorkShift']['id'])
+														);
 
 
 														?>

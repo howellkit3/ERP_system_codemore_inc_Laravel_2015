@@ -14,11 +14,12 @@ class HolidaysController  extends HumanResourceAppController {
 
 		if ($this->request->is('post')) {
 			
+
 			$this->request->data['Holiday']['created_by'] =
 			$this->request->data['Holiday']['modified_by'] = $auth['id'];
-
-			$this->request->data['Holiday']['year'] =  $this->request->data['Holiday']['start_date']['year'];
-
+			
+			$this->request->data = $this->Holiday->formatData($this->request->data);
+			
 			if ($this->Holiday->save($this->request->data)) {
 				
 				$this->Session->setFlash('Saving Holiday information successfully');
@@ -44,7 +45,8 @@ class HolidaysController  extends HumanResourceAppController {
 			$this->request->data['Holiday']['created_by'] =
 			$this->request->data['Holiday']['modified_by'] = $auth['id'];
 
-			$this->request->data['Holiday']['year'] =  $this->request->data['Holiday']['start_date']['year'];
+			$this->request->data = $this->Holiday->formatData($this->request->data);
+			
 
 			if ($this->Holiday->save($this->request->data)) {
 				

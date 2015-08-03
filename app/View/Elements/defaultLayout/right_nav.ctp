@@ -115,7 +115,7 @@
 						<?php  if($userData['User']['role_id'] == 1 OR $userData['User']['role_id'] == 2){
 
 						
-	 						echo $this->Html->link( " <i class='fa fa-user'></i> <span>Human Resource</span>",   array('controller' =>'employees','action'=>'index','plugin' => 'human_resource'),
+	 						echo $this->Html->link( " <i class='fa fa-user'></i> <span>Human Resource</span>",   array('controller' =>'dashboards','action'=>'index','plugin' => 'human_resource'),
 	 											array('escape' => false) );
 	 					}
 	 					?>

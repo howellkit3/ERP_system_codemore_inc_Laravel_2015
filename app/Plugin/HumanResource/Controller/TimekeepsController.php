@@ -67,33 +67,6 @@ public function findExisting($employee_id = null,$date = null) {
 
 }
 
-public function getEmployeeData($employee_id = null, $data = null) {
-
-	$this->layout = false;
-	
-	if (!empty($employee_id)) {
-
-		$date = date('Y-m-d');
-
-		$conditions = array(
-		'Timekeep.date <=' => $date,
-		 'Timekeep.date >=' => $date,
-		 'Timekeep.employee_id' => $employee_id,
-		);
-
-		$this->bind(array('Employee'));
-
-		$timekeep = $this->Timekeep->find('first',array(
-			'conditions' => $conditions
-
-		));
-
-		$this->set(compact('timekeep'));
-
-		$this->render('ajax/ajax_view');
-	}	
-}
-
 
 
 }

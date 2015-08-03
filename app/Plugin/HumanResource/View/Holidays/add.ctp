@@ -57,7 +57,7 @@
                                        
                                         <div class="col-lg-6">
                                             <div class="form-group">
-                                                <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Month / Day </label>
+                                                <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Start / End Date </label>
                                                 <div class="col-lg-9">
                                                   
                                                     <?php
