@@ -16,12 +16,12 @@ class Tooling extends AppModel {
 		$this->bindModel(array(
 			'hasOne' => array(
 				'Employee' => array(
-					'className' => 'Employee',
-					'foreignKey' => 'employee_id',
+					'className' => 'HumanResource.Employee',
+					'foreignKey' => 'id',
 					'dependent' => true
 				),
 				'Tool' => array(
-					'className' => 'Tool',
+					'className' => 'HumanResource.Tool',
 					'foreignKey' => 'id',
 					'dependent' => true
 				),
