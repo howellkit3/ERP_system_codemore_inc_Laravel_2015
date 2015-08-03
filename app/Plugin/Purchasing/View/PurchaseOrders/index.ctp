@@ -11,12 +11,26 @@
 
                 <h2 class="pull-left"><b>Purchase Order List</b></h2>
 
-                  <div class="filter-block pull-right">
+                    <div class="filter-block pull-right">
+                        <div class="form-group pull-left">
+                            
+                                <input placeholder="Search..." class="form-control searchOrder "  />
+                                <i class="fa fa-search search-icon"></i>
+                            
+                        </div>
+                        <?php
+
+                             echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'suppliers', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                           
+                        ?>
+                    </div>  
+
+                  <!-- <div class="filter-block pull-right">
                     
                     <?php 
                         echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'suppliers', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
                      ?>
-                </div>
+                </div> -->
                 
             </header>
             
@@ -33,7 +47,16 @@
                             </tr>
                         </thead>
 
-                        <?php echo $this->element('purchase_order_table'); ?>
+
+                        <tbody aria-relevant="all" aria-live="polite" class="requestFields" role="alert" >
+                          
+                                <?php echo $this->element('purchase_order_table'); ?>
+                         
+                        </tbody>
+                        <tbody aria-relevant="all" aria-live="polite" class="searchAppend" role="alert" >
+                        </tbody>
+
+                       
                             
                      </table>
                     <hr>
@@ -52,3 +75,49 @@
         </div>
     </div>
 </div>
+
+<script>
+
+    $("body").on('keyup','.searchOrder', function(e){
+
+        var searchInput = $(this).val();
+    
+        
+      //alert(searchInput);
+        if(searchInput != ''){
+
+            $('.requestFields').hide();
+            $('.searchAppend').show();
+            //alert('hide');
+
+        }else{
+            $('.requestFields').show();
+            $('.searchAppend').hide();
+            //alert('show');
+        }
+        
+        $.ajax({
+            type: "GET",
+            url: serverPath + "purchasing/purchase_orders/search_order/"+searchInput,
+            dataType: "html",
+            success: function(data) {
+
+                //alert(data);
+
+                if(data){
+
+                    $('.searchAppend').html(data);
+
+                } 
+                if (data.length < 5 ) {
+
+                    $('.searchAppend').html('<font color="red"><b>No result..</b></font>');
+                     
+                }
+                
+            }
+        });
+
+    });
+
+</script>

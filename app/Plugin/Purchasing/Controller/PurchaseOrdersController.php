@@ -400,4 +400,34 @@ class PurchaseOrdersController extends PurchasingAppController {
 
     }
 
+    public function search_order($hint = null){
+
+    	$this->loadModel('Supplier');
+
+		$supplierData = $this->Supplier->find('list', array(
+														'fields' => array('Supplier.id', 'Supplier.name'),
+														));
+
+		$purchaseOrderData = $this->PurchaseOrder->find('all',array('order' => 'PurchaseOrder.id DESC'));
+
+        $purchaseOrderData = $this->PurchaseOrder->find('all',array(
+                      'conditions' => array(
+                        'OR' => array(
+                        array('PurchaseOrder.uuid LIKE' => '%' . $hint . '%'),
+                        array('PurchaseOrder.name LIKE' => '%' . $hint . '%')
+                          )
+                        ),
+                      'limit' => 10
+                      )); 
+
+
+     	 $this->set(compact('purchaseOrderData','supplierData'));
+
+        if ($hint == ' ') {
+            $this->render('index');
+        }else{
+            $this->render('search_order');
+        }
+    }
+
 }
