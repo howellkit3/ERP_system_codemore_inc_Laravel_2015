@@ -66,3 +66,74 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   /*top: 710px;
 }*/
 
+table {
+    border-collapse: collapse;
+}
+th, td {
+    padding: 0; height:20px; width: 90%;  ;
+}
+
+.div1{
+ 
+  width: 10px;
+  height: 10px;
+  border:1px solid black;
+  position: fixed;
+  top: 883px;
+  left: 40;
+}
+
+.div2{
+ 
+  width: 10px;
+  height: 10px;
+  border:1px solid black;
+  position: fixed;
+  top: 883px;
+  left: 233;
+   z-index: -1;
+}
+
+.div3{
+ 
+  width: 10px;
+  height: 10px;
+  border:1px solid black;
+  position: fixed;
+  top: 883px;
+  left: 408;
+   z-index: -1;
+}
+
+.div4{
+ 
+  width: 10px;
+  height: 10px;
+  border:1px solid black;
+  position: fixed;
+  top: 915px;
+  left: 47;
+   z-index: -1;
+}
+
+.div5{
+ 
+  width: 10px;
+  height: 10px;
+  border:1px solid black;
+  position: fixed;
+  top: 915px;
+  left: 229;
+   z-index: -1;
+}
+
+.div6{
+ 
+  width: 10px;
+  height: 10px;
+  border:1px solid black;
+  position: fixed;
+  top: 915px;
+  left: 410;
+   z-index: -1;
+}

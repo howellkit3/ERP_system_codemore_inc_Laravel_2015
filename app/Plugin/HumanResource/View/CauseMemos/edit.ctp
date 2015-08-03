@@ -75,7 +75,7 @@
                                                                                         'required' => 'required',
                                                                                         'class' => 'form-control   required',
                                                                                         'id' => 'date',
-                                                                                        'default' => $violationData[$causeMemoData['CauseMemo']['violation_id']],
+                                                                                        'empty' => $violationData[$causeMemoData['CauseMemo']['violation_id']],
                                                                                         'options' => array($violationData)
 
                                                                                        ));
@@ -91,11 +91,23 @@
                                                           echo $this->Form->input('CauseMemo.disciplinary_action_id', array(
                                                                                         'label' => false,
                                                                                         'required' => 'required',
+                                                                                        'type' => 'select',
                                                                                         'class' => 'form-control required',
-                                                                                        'default' => $disciplinaryData[$causeMemoData['CauseMemo']['disciplinary_action_id']],
+                                                                                        'value' => $disciplinaryData[$causeMemoData['CauseMemo']['disciplinary_action_id']],
                                                                                         'options' => array($disciplinaryData)
 
                                                                                        ));
+
+                                                        //      echo $this->Form->input('CauseMemo.disciplinary_action_id', array(
+                                                        // 'options' => array($disciplinaryData),
+                                                        // 'type' => 'select',
+                                                        // 'label' => false,
+                                                        // 'class' => 'form-control required ',
+                                                        // 'value' => $disciplinaryData[$causeMemoData['CauseMemo']['disciplinary_action_id']],
+                                                        // 'empty' => '---Select Payment Term---',
+                                                        //  )); 
+
+                                                
                                                     ?>
                                         
                                             </div>
@@ -110,7 +122,7 @@
                                                                                         'required' => 'required',
                                                                                         'class' => 'form-control required',
                                                                                          'options' => array($notedByEmployee), 
-                                                                                        'default' => $notedByEmployee[$causeMemoData['CauseMemo']['created_by']]
+                                                                                        'name' => $notedByEmployee[$causeMemoData['CauseMemo']['created_by']]
 
                                                                                        ));
                                                     ?>

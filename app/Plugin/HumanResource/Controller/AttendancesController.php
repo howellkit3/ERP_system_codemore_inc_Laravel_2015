@@ -181,10 +181,24 @@ class AttendancesController  extends HumanResourceAppController {
 
 			//update attendance
 			if (!empty($attendance)) {
+				
 				$this->Attendance->save($attendance);
 
+				if ($this->request->is('ajax')) {
+					if (!empty($attendance['Attendance']['in'])) {
+
+						$attendance['Attendance']['in'] = date('h:i a',strtotime($attendance['Attendance']['in']));
+					}
+					if (!empty($attendance['Attendance']['out'])) {
+
+						$attendance['Attendance']['out'] = date('h:i a',strtotime($attendance['Attendance']['out']));
+					} 
+					echo json_encode($attendance);
+
+					exit();
+				}	
 			}
-			
+
 			$this->Session->setFlash('Time in successfully');
 
 			$this->redirect( array(
@@ -284,6 +298,7 @@ public function ajax_find() {
 		//exit();	
 
 }
+
 
 public function edit($id = null) {
 
@@ -406,6 +421,40 @@ public function edit($id = null) {
 		$this->set(compact('absences','date','search'));
 		
 	}
+
+
+
+public function getEmployeeData($attendaceId = null, $data = null) {
+
+	$this->layout = false;
+	
+	if (!empty($attendaceId)) {
+
+		$this->loadModel('HumanResource.Workshift');
+
+		$this->loadModel('HumanResource.Employee');
+
+		$date = date('Y-m-d');
+
+		$conditions = array(
+		'Attendance.date <=' => $date,
+		 'Attendance.date >=' => $date,
+		 'Attendance.id' => $attendaceId,
+		);
+
+		$this->Attendance->bind(array('Employee'));
+
+		$attendance = $this->Attendance->find('first',array(
+			'conditions' => $conditions
+
+		));
+
+		$this->set(compact('attendance'));
+
+		$this->render('Attendances/ajax/timekeep');
+	}
+
+}
 
 
 

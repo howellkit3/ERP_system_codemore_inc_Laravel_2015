@@ -1,6 +1,5 @@
 <?php  foreach ($requestData as $requestList ): ?>
-
-
+    
         <tr class="">
 
             <td class="">
@@ -55,6 +54,5 @@
                 
             </td>
         </tr>
-
 
 <?php endforeach; ?> 

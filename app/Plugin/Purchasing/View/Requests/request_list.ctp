@@ -7,17 +7,26 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
-            <header class="main-box-header clearfix">
 
+          <header class="main-box-header clearfix">
                 <h2 class="pull-left"><b>Request List</b></h2>
-
-                  <div class="filter-block pull-right">
-                    
-                    <?php echo $this->Html->link('<i class="fa fa-plus-circle fa-lg"></i> Add Request ', array('controller' => 'requests', 'action' => 'create'),array('class' =>'btn btn-primary pull-right','escape' => false));
-                     ?>
-                </div>
                 
+                <div class="filter-block pull-right">
+                    <div class="form-group pull-left">
+                        
+                            <input placeholder="Search..." class="form-control searchRequest "  />
+                            <i class="fa fa-search search-icon"></i>
+                        
+                    </div>
+                    <?php
+
+                         echo $this->Html->link('<i class="fa fa-plus-circle fa-lg"></i> Add Request ', array('controller' => 'requests', 'action' => 'create'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                       
+                    ?>
+                </div>
             </header>
+
+         
             
             <div class="main-box-body clearfix">
                 <div class="table-responsive">
@@ -32,8 +41,16 @@
                             </tr>
                         </thead>
 
-                        <?php echo $this->element('request_table'); ?>
-                            
+                        <tbody aria-relevant="all" aria-live="polite" class="requestFields" role="alert" >
+                          
+                            <?php 
+                        echo $this->element('request_table'
+                            ); 
+                            ?>
+                         
+                        </tbody>
+                        <tbody aria-relevant="all" aria-live="polite" class="searchAppend" role="alert" >
+                        </tbody>
                      </table>
                     <hr>
                 </div>
@@ -47,7 +64,52 @@
               </ul>
               
             </div>
-    
         </div>
     </div>
 </div>
+
+<script>
+
+    $("body").on('keyup','.searchRequest', function(e){
+
+        var searchInput = $(this).val();
+    
+        
+      // alert(searchInput);
+        if(searchInput != ''){
+
+            $('.requestFields').hide();
+            $('.searchAppend').show();
+            //alert('hide');
+
+        }else{
+            $('.requestFields').show();
+            $('.searchAppend').hide();
+            //alert('show');
+        }
+        
+        $.ajax({
+            type: "GET",
+            url: serverPath + "purchasing/requests/search_request/"+searchInput,
+            dataType: "html",
+            success: function(data) {
+
+                //alert(data);
+
+                if(data){
+
+                    $('.searchAppend').html(data);
+
+                } 
+                if (data.length < 5 ) {
+
+                    $('.searchAppend').html('<font color="red"><b>No result..</b></font>');
+                     
+                }
+                
+            }
+        });
+
+    });
+
+</script>

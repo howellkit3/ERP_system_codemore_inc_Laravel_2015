@@ -80,7 +80,7 @@
                                 <div class="form-group">
                                     <div class="col-lg-2"></div>
                                     <div class="col-lg-8">
-                                        <button type="submit" class="btn btn-primary pull-left">Add Assistant</button>&nbsp;
+                                        <button type="submit" class="btn btn-primary pull-left">Add Violation</button>&nbsp;
                                         <?php 
                                             echo $this->Html->link('Cancel', array('controller' => 'cause_Memos', 'action' => 'index'),array('class' =>'btn btn-default','escape' => false));
                                         ?>

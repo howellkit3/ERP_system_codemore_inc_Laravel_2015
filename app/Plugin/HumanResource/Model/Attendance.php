@@ -48,16 +48,25 @@ class Attendance extends AppModel {
 
 		if (!empty($data)) {
 
-			$sched = [];
+			$sched = $attendance = [];
 
 			$this->create();
 
 			if (is_array($data)) {
 
+				//check overtime 
+
 				foreach ($data as $key => $dataList) {
-					
+					//if overtime
 					$sched['Attendance']['id'] = !empty($dataList['Attendance']['id']) ? $dataList['Attendance']['id'] : '';
 
+					if ($dataList['overtime_id']) {
+						
+						$attendance = $this->find('first',array('conditions' => array('employee_id' => $dataList['foreign_key'], 'schedule_id' => $dataList['id'])));
+
+						$sched['Attendance']['id'] = !empty($attendance['Attendance']['id']) ? $attendance['Attendance']['id'] : '';
+					}
+					
 					if ($dataList['model'] == 'Employee') {
 					
 						$sched['Attendance']['employee_id'] = $dataList['foreign_key'];
@@ -118,7 +127,6 @@ class Attendance extends AppModel {
 
 		if (!empty($data)) {
 
-
 			$login = !empty($data['Attendance']['time']) ? explode(',',$data['Attendance']['time']) : '';
 
 			$date = date('Y-m-d',strtotime($login[0]));
@@ -128,6 +136,10 @@ class Attendance extends AppModel {
 				'Attendance.date >=' => $date,
 				'Attendance.employee_id' => $data['Attendance']['employee_id']
 			);
+
+			if (!empty($data['Attendance']['id'])) {
+				$conditions = array('Attendance.id' => $data['Attendance']['id']);	
+			}
 
 			$attendance = $this->find('first',array('conditions' => $conditions));
 

@@ -687,4 +687,41 @@ class RequestsController extends PurchasingAppController {
 
 	}
 
+		public function search_request($hint = null){
+
+        $this->loadModel('Purchasing.Request');
+
+		$this->loadModel('StatusFieldHolder');
+
+		$this->loadModel('Purchasing.PurchasingType');
+
+		$requestData = $this->Request->find('all', array('order' => array('Request.created' => 'DESC')));
+		
+		$statusData = $this->StatusFieldHolder->find('list', array('fields' => array('id', 'status'),
+															'order' => array('StatusFieldHolder.status' => 'ASC')
+															));
+		$type = $this->PurchasingType->find('list', array('fields' => array('id', 'name'),
+															'order' => array('PurchasingType.id' => 'ASC')
+															));
+
+        $requestData = $this->Request->find('all',array(
+                      'conditions' => array(
+                        'OR' => array(
+                        array('Request.uuid LIKE' => '%' . $hint . '%'),
+                        array('Request.name LIKE' => '%' . $hint . '%')
+                          )
+                        ),
+                      'limit' => 10
+                      )); 
+
+
+       $this->set(compact('requestData', 'type','statusData'));
+
+        if ($hint == ' ') {
+            $this->render('index');
+        }else{
+            $this->render('search_request');
+        }
+    }
+
 }

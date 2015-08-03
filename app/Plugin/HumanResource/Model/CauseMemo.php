@@ -44,6 +44,24 @@ class CauseMemo extends AppModel {
 
 
 	}
+
+	public function bind($model = array('Group')){
+
+		$this->bindModel(array(
+			
+				'belongsTo' => array (
+					'Employee' => array(
+						'className' => 'Employee',
+						'foreignKey' => false,
+						'conditions' => array('Employee.id = CauseMemo.employee_id'),
+						'dependent' => true,
+					),
+					
+				)
+			),false);
+
+		$this->contain($model);
+	}
     
 	
   }
