@@ -149,6 +149,8 @@
 											<th class="text-center"><a href="#"><span>Tools</span></a></th>
 											<th class="text-center"><a href="#"><span>Quantity</span></a></th>
 											<th class="text-center"><a href="#"><span>Price</span></a></th>
+											<th class="text-center"><a href="#"><span>Pay</span></a></th>
+											<th class="text-center"><a href="#"><span>Status</span></a></th>
 											<th><a href="#"><span>Actions</span></a></th>
 										</tr>
 									</thead>
@@ -157,20 +159,31 @@
 													<tbody aria-relevant="all" aria-live="polite" role="alert">
 														<tr class="">
 														<td class="">
-								                            <?php echo $tooling['Tooling']['employee_id']; ?>
+								                            <?php echo ucfirst($tooling['Employee']['first_name'])?>
+								                            <?php echo ucfirst($tooling['Employee']['last_name'])?>
+								                            <?php echo ucfirst($tooling['Employee']['suffix'])?>
 								                        </td>
 								                        
 								                        <td class="text-center">
-								                        	<?php echo $tooling['Tooling']['tools_id']; ?>
+								                        	<?php echo ucfirst($toolList[$tooling['Tooling']['tools_id']]); ?>
 								                        </td>
 
-								                         <td class="text-center">
+								                        <td class="text-center">
 								                           <?php echo $tooling['Tooling']['quantity']; ?>
 								                        </td>
 
 								                        <td class="text-center">
 								                         <?php echo $tooling['Tooling']['price']; ?>
 								                        </td>
+
+								                        <td class="text-center">
+								                         <?php echo $tooling['Tooling']['pay']; ?>
+								                        </td>
+
+								                        <td class="text-center">
+								                         <?php echo $tooling['Tooling']['status']; ?>
+								                        </td>
+
 								                       	<td>
 								                         <?php echo $this->Html->link('<span class="fa-stack">
 											                    <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> View </font></span></span> ', array('controller' => 'toolings', 'action' => 'view',$tooling['Tooling']['id']), array('class' =>' table-link','escape' => false, 'title'=>'View Sales Invoice'

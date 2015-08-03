@@ -15,7 +15,7 @@ class Tool extends AppModel {
 		$this->bindModel(array(
 			'belongsTo' => array(
 				'Tooling' => array(
-					'className' => 'Tooling',
+					'className' => 'HumanResource.Tooling',
 					'foreignKey' => 'tools_id',
 					'dependent' => true,
 				))
