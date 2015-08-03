@@ -15,7 +15,7 @@ body{
   /*font-family: Tahoma, Helvetica, Arial, "Microsoft Yahei","微软雅黑", STXihei, "华文细黑", sans-serif;*/
 }
 @page { /*size: A3*/ }
-@page { size: landscape; margin: 3px;margin-top: 15px; }
+@page { size: landscape; margin: 3px;margin-top: 10px; }
 /*@font-face {
       font-family: 'Noto Sans';
       font-style: normal;
@@ -38,7 +38,7 @@ body{
   float: left;
  
 }
-.padd,td{
+.padd{
   /*padding: 6px 0px;*/
   font-size: 14px;
   height: 10px;
