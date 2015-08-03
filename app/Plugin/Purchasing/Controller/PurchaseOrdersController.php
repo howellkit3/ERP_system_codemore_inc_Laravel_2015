@@ -373,7 +373,8 @@ class PurchaseOrdersController extends PurchasingAppController {
         $output = $view->render('print_purchase_order', false);
    	
         $dompdf = new DOMPDF();
-        $dompdf->set_paper("A5");
+        //$dompdf->set_paper("A5");
+        $dompdf->set_paper("A3", "landscape" ); 
         $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));
         $dompdf->render();
         $canvas = $dompdf->get_canvas();
