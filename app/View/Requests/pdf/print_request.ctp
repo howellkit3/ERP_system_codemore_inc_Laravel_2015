@@ -9,8 +9,7 @@ th, td {
     padding: 0; height:20px; width: 90%;  ;
 }
 
-</style>
-
+</style> 
 			
 <div class="row" style="background:url('http://localhost/koufu_system/img/pr.pngs');background-size: 768px;
   height: 100%;background-repeat:no-repeat;">
