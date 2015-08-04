@@ -4,7 +4,8 @@
 echo $this->Html->css(array(
                     'HumanResource.default',
                     'HumanResource.select2.css',
-                    'datetimepicker/jquery.datetimepicker'
+                    'datetimepicker/jquery.datetimepicker',
+                    'HumanResource.../js/jquery-impromptu/jquery-impromptu.css',
 )); 
 
 echo $this->Html->script(array(
@@ -12,6 +13,7 @@ echo $this->Html->script(array(
                     'datetimepicker/jquery.datetimepicker',
                     'HumanResource.select2.min',
                     'HumanResource.custom',
+                    'HumanResource.jquery-impromptu/jquery-impromptu.js',   
                     'HumanResource.overtime'
 
 )); 
@@ -32,8 +34,33 @@ echo $this->Html->script(array(
                             Overtime
                             </h1>
                         </center>
-                        <?php  echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'overtimes', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+
+
+                        <div class="filter-block pull-right">
+
+                         <?php 
+
+                        echo $this->Html->script('Approved',array('controler' => 'overtimes' )); 
+
+                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back', array('controller' => 'overtimes', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                        
+                        echo $this->Html->link('<i class="fa fa-times fa-lg"></i> Rejected ', array('controller' => 'overtimes', 'action' => 'process',$this->request->data['Overtime']['id'],'reject'),
+                            array('class' =>' table-link btn btn-primary pull-right overtime-process',
+                            'escape' => false,
+                            'data-process' => 'reject',  
+                            'title'=>'Edit Information',
+                            ));
+
+                        echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i> Approved ', array('controller' => 'overtimes',
+                            'action' => 'process',
+                            $this->request->data['Overtime']['id'],'approved'),
+                            array('class' =>' table-link btn btn-primary pull-right overtime-process',
+                                  'data-process' => 'approved',   
+                                  'escape' => false));
+                                            
                         ?>
+                        </div>
+
                     </header>
 
                 </div>
@@ -164,7 +191,7 @@ echo $this->Html->script(array(
                                                                 <?php foreach ($breaktimes as $key => $time) { ?>
                                                                     <li>
                                                                    
-                                                                    <div class="checkbox-nice">
+                                                                <!--     <div class="checkbox-nice">
                                                                     <input type="checkbox" 
                                                                     <?php echo (in_array($time['BreakTime']['id'], $workshiftBreaks)) ? 'checked' : ''; ?>
                                                                     id="checkbox-<?php echo $time['BreakTime']['id']?>" name="data[Workshift][breakids][]" value="<?php echo $time['BreakTime']['id']?>">
@@ -172,6 +199,18 @@ echo $this->Html->script(array(
                                                                     <?php echo date('H:i: a',strtotime($time['BreakTime']['from'])); ?>~<?php echo date('H:i: a',strtotime($time['BreakTime']['to'])); ?>
                                                                     </label>
                                                                     </div>
+ -->
+
+
+                                                                    <div class="radio">
+                                                                    <input type="radio" id="checkbox-<?php echo $time['BreakTime']['id']?>" value="<?php echo $time['BreakTime']['id']?>" name="data[Workshift][breakids][]" <?php echo (in_array($time['BreakTime']['id'], $workshiftBreaks)) ? 'checked' : ''; ?>>
+                                                                      <label for="checkbox-<?php echo $time['BreakTime']['id']?>">
+                                                                    <?php echo date('H:i: a',strtotime($time['BreakTime']['from'])); ?>~<?php echo date('H:i: a',strtotime($time['BreakTime']['to'])); ?>
+                                                                    </label>
+                                                                    </div>
+
+
+
                                                                             </li>
                                                                 <?php } ?>
                                                             </ul>    
@@ -184,7 +223,7 @@ echo $this->Html->script(array(
 
                                              <div class="form-group">
                                                     <div class="col-lg-12">
-                                                        <label class="large-label"><span style="color:red;">*</span> <b>Employees </b> </label>
+                                                        <label class="large-label"><span style="color:red;">*</span> <b> Employees </b> </label>
                                                         <label class="selected-text"></label>
 
 
@@ -292,7 +331,7 @@ echo $this->Html->script(array(
     </div>
 <?php echo $this->Form->end(); ?>
 <script>
-        $(document).ready(function(){
+         $(document).ready(function(){
 
                 $('.datetimepick').datetimepicker({
                     format:'Y-m-d H:i',
@@ -307,6 +346,9 @@ echo $this->Html->script(array(
                         minDate: selectedDate
                     });
                 });
+
+                // quick routine for scrolling nav
+             
 
         });
  </script>

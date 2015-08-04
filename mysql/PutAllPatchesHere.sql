@@ -1108,6 +1108,10 @@ VALUES
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+  /* august 4 2015 */
+  ALTER TABLE `overtimes`  ADD `employee_ids` TEXT NULL  AFTER `to`;
+  ALTER TABLE `work_shift_breaks`  ADD `overtime_id` INT(11) NULL  AFTER `workshift_id`;
 /* end all HR tables */
 
 

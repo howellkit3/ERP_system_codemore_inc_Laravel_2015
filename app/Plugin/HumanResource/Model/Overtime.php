@@ -26,6 +26,11 @@ class Overtime extends AppModel {
     public function formatData($data = null,$auth = null) {
 
 
+    	if (!empty($data['Employee'])) {
+
+    		$data[$this->alias]['employee_ids']	= json_encode($data['Employee']['id']);	
+    	}
+
     	$data[$this->alias]['created_by'] = $auth;
     	$data[$this->alias]['modified_by'] = $auth;
 

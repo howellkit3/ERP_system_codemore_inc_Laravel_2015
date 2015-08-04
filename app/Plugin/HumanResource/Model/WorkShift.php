@@ -14,6 +14,13 @@ class WorkShift extends AppModel {
      public function bind($model = array('Group')){
 
 		$this->bindModel(array(
+			'hasOne' => array(
+				'Overtime' => array(
+					'className' => 'Overtime',
+					'foreignKey' => false,
+					'conditions' => array('Overtime.id = WorkShift.overtime_id'),
+					'dependent' => false
+				)),
 			'hasMany' => array(
 				'WorkShiftBreak' => array(
 					'className' => 'WorkShiftBreak',
@@ -27,7 +34,8 @@ class WorkShift extends AppModel {
 					'className' => 'WorkSchedule',
 					'foreignKey' => 'workshift_id',
 					'dependent' => false
-				))
+				),
+			)
 		),false);
 
 		$this->contain($model);

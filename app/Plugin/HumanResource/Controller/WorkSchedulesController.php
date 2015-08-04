@@ -29,7 +29,9 @@ class WorkSchedulesController  extends HumanResourceAppController {
 			if ($this->WorkSchedule->save($this->request->data['WorkSchedule'])) {
 
 				$attendance = $this->Attendance->saveRecord($this->request->data['WorkSchedule'],$this->WorkSchedule->id);
-				//must save dailt info
+				
+				//must save daily info
+				$dailynfo = $this->DailyInfo->saveDailyInfo($this->request->data);
 
 				$this->Session->setFlash('Work Schedule saved successfully','success');
 		 		   $this->redirect( array(
