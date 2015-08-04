@@ -30,7 +30,7 @@ echo $this->element('hr_options');
 				<div class="tab-content">
 					<div class="tab-pane active" id="tab-calendar">
 						<header class="main-box-header clearfix">
-			                <h2 class="pull-left"><b>Attendances</b> </h2>
+			                <h2 class="pull-left"><b>Daily Info</b> </h2>
 			                <div class="filter-block pull-right">
 			                 <div class="form-group pull-left">
 			                 	<?php echo $this->Form->create('Attendance',array('controller' => 'attendances','action' => 'index', 'type'=> 'get')); ?>

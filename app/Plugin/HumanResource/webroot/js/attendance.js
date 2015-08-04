@@ -72,9 +72,11 @@
 
         $append_cont.html('<img src="'+serverPath+'/img/loader.gif"/>');
 
+        $date = $('#changeDate').val();
+
         $.ajax({
             type: "GET",
-            url: serverPath + "human_resource/attendances/getEmployeeData/"+attendance_id,
+            url: serverPath + "human_resource/attendances/getEmployeeData/"+attendance_id+'/'+ $date,
             dataType: "html",
             success: function(data) {
 
@@ -232,7 +234,8 @@ $(document).ready(function(){
      
             $append_cont = $('#personalAttendance .main-box-body');
 
-            var getUrl = $(this).attr('href');
+
+            $date = $('#changeDate').val();
 
             $append_cont.html('<img src="'+serverPath+'/img/loader.gif"/>');
 

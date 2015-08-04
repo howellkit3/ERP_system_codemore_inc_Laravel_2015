@@ -57,7 +57,6 @@ class SchedulesController  extends HumanResourceAppController {
 
 		$list = $this->Holiday->getAllHolidays($params);
 
-
 		$this->set(compact('holidays','list'));
 
 	}

@@ -326,6 +326,25 @@ echo $this->Html->script(array(
 					left: x + 20
 				}).appendTo("body").fadeIn(200);
 			}
+
+
+		var datetime = null,
+		date = null;
+
+		var update = function () {
+		date = moment(new Date())
+		datetime.text(date.format('MMMM-D-YYYY, HH:mm:ss'));
+		};
+
+		var updateTime = function(thisElement){
+
+		datetime = $('.clock');
+		update();
+		setInterval(update, 1000);
+		}
+
+		updateTime();
+
 		}
 
 	}));

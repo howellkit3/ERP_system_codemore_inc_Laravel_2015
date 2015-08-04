@@ -424,7 +424,7 @@ public function edit($id = null) {
 
 
 
-public function getEmployeeData($attendaceId = null, $data = null) {
+public function getEmployeeData($attendaceId = null,$date = null) {
 
 	$this->layout = false;
 	
@@ -433,8 +433,11 @@ public function getEmployeeData($attendaceId = null, $data = null) {
 		$this->loadModel('HumanResource.Workshift');
 
 		$this->loadModel('HumanResource.Employee');
+		
+		if (empty($date)){
 
-		$date = date('Y-m-d');
+			$date = date('Y-m-d');
+		}
 
 		$conditions = array(
 		'Attendance.date <=' => $date,
@@ -453,6 +456,17 @@ public function getEmployeeData($attendaceId = null, $data = null) {
 
 		$this->render('Attendances/ajax/timekeep');
 	}
+
+}
+
+
+public function daily_info() {
+
+	$search = '';
+
+	$date = date('Y-m-d');
+
+	$this->set(compact('search','date'));
 
 }
 
