@@ -17,6 +17,15 @@
 						)); ?>
 					</li>
 
+					<li class="<?php echo ($active_tab == 'daily_info') || $this->params['action'] == 'daily_info' ? 'active' : '' ?>" alt="tab-type">
+						<?php echo $this->Html->link('Daily Info',array(
+									'controller' => 'attendances',
+									'action' => 'daily_info',
+									'tab' => 'daily_info',
+									'plugin' => 'human_resource'
+						)); ?>
+					</li>
+
 					<li class="<?php echo ($active_tab == 'absences' || $this->params['action'] == 'absences') ? 'active' : '' ?>" alt="tab-type">
 						<?php echo $this->Html->link('Absences',array(
 									'controller' => 'attendances',

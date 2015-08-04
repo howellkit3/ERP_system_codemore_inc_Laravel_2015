@@ -328,6 +328,8 @@ class EmployeesController  extends HumanResourceAppController {
 		 $this->loadModel('HumanResource.Position');
 
 		 $this->loadModel('HumanResource.Department');
+		
+		 $this->loadModel('HumanResource.Agency');
 
 		$positions = $this->Position->find('list',array('fields' => array('id','name')));
 
@@ -347,7 +349,15 @@ class EmployeesController  extends HumanResourceAppController {
 
 			$employee = $this->Employee->findById($id);
 
-			$this->set(compact('employee','departments','positions'));
+			$agencyList = $this->Agency->find('all',array('fields' => array('id','name','field')));
+
+			$nameList = array();
+			foreach ($agencyList as $key => $value) {
+			$nameList[$value['Agency']['id']] = array('name' => $value['Agency']['name'],'field' =>$value['Agency']['field']);
+			}
+			
+
+			$this->set(compact('employee','departments','positions','nameList'));
 		}
 	}
 

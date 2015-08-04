@@ -277,14 +277,9 @@
 												<div class="table-responsive">
 
 												<div class="col-lg-12">
-													<?php if (!empty($employee['GovernmentRecord'])) :
+												<?php if (!empty($employee['GovernmentRecord'])) :
 						                           	
-						                           	$agencies = array(
-																'sss' => 'SSS',
-																'philhealth' => 'PhilHealth',
-																'bir' => 'Tin',
-																'pagibig' => 'Pag-Ibig');
-
+						                         
 						                            foreach($employee['GovernmentRecord'] as $gov_key => $data) {
 
 						                           	$this->request->data['EmployeeAgencyRecord'][$gov_key] = $data;
@@ -292,11 +287,12 @@
 						                           	?>
 
 						                           	<div class="form-group">
-								                                        <label for="inputEmail1" class="col-lg-2 control-label strong"> <?php echo 	$agencies[$data['agency']] ?> Number </label>
+								                                        <label for="inputEmail1" class="col-lg-2 control-label strong"> <?php echo 	$nameList[$data['agency_id']]['name'] ?> <?php echo $nameList[$data['agency_id']]['field'] ?> </label>
 									                                      <div class="col-lg-9 value"> 
 									                                       	<?php echo $data['value'] ?>
 									                                       </div>
-								                               </div>
+								                   </div>
+								                   <div class="clearfix"></div>
 
 
 						                           	<?php } ?>	
@@ -329,7 +325,7 @@
 					                                        <?php echo $this->CustomText->getFullname($employee['ContactPerson'],'firstname','middlename','lastname');  ?>
 					                                       </div>
 								                 	</div>
-
+								                 	<div class="clearfix"></div>
 								                 	<div class="form-group">
 				                                        <label for="inputEmail1" class="col-lg-2 control-label strong">
 				                                        Number :
@@ -338,7 +334,7 @@
 					                                        <?php echo $employee['ContactPersonNumber']['number'];  ?>
 					                                       </div>
 								                 	</div>
-
+								                 	<div class="clearfix"></div>
 								                 	<?php if(!empty($employee['ContactPersonAddress']['ContactPersonEmail'])) : ?>
 								                 		<div class="form-group">
 					                                       	<label for="inputEmail1" class="col-lg-2 control-label strong">
@@ -348,6 +344,7 @@
 					                                       	<?php echo $employee['ContactPersonEmail']['email'] ?>
 					                                       </div>
 								                 		</div>
+								                 		<div class="clearfix"></div>
 								                    <?php endif;?>
 
 								                 	<h2>Address</h2>
@@ -360,6 +357,7 @@
 					                                       	<?php echo $employee['ContactPersonAddress']['address_1'] ?>
 					                                       </div>
 								                 	</div>
+								                 	<div class="clearfix"></div>
 								                 	<div class="form-group">
 				                                        <label for="inputEmail1" class="col-lg-2 control-label strong">
 				                                        City
@@ -368,6 +366,7 @@
 					                                       	<?php echo $employee['ContactPersonAddress']['city'] ?>
 					                                       </div>
 								                 	</div>
+								                 	<div class="clearfix"></div>
 								                 	<?php if(!empty($employee['ContactPersonAddress']['state_province'])) : ?>
 								                 		<div class="form-group">
 					                                       	<label for="inputEmail1" class="col-lg-2 control-label strong">
@@ -378,7 +377,7 @@
 					                                       </div>
 								                 		</div>
 								                    <?php endif;?>
-
+								                    <div class="clearfix"></div>
 								                    <?php if(!empty($employee['ContactPersonAddress']['zipcode'])) : ?>
 								                 		<div class="form-group">
 					                                       	<label for="inputEmail1" class="col-lg-2 control-label strong">
@@ -388,7 +387,9 @@
 					                                       	<?php echo $employee['ContactPersonAddress']['zipcode'] ?>
 					                                       </div>
 								                 		</div>
-								                    <?php endif; ?>		
+								                    <?php endif; ?>	
+								                    <div class="clearfix"></div>
+								                    	
 								                 	
 
 
