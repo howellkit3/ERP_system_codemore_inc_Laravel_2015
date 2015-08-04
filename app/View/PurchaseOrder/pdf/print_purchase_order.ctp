@@ -34,7 +34,7 @@
 
 		<div class="purchase">
 
-			<table class="layout">
+			<table class="layout" >
 				<thead>
 					<tr>
 						<td style="width:70px;">Supplier </td>
@@ -65,39 +65,39 @@
 						
 		</div>
 
-		<div class="purchase">
+		<div class="purchase" style =" padding:0px; margin:0px;">
 
-			<table class="item-table" style ="height: 266px;padding:0px; margin:0px">
+			<table class="item-table" style ="height: 266px;padding:0px; margin:0px;" >
 				<thead>
 					<tr>
-						<td class="td-heigth" style="vertical-align: center;width:10px;border:1px solid #EAEAEA;">#</td>
-						<td class="td-heigth" style="vertical-align: center;width:310px;border:1px solid #EAEAEA;font-family: Tahoma, Helvetica, Arial, "Microsoft Yahei","微软雅黑", STXihei, "华文细黑", sans-serif;"><center><b>Item Description</b></center></td>
-						<td class="td-heigth" style="vertical-align: center;width:128px;border:1px solid #EAEAEA;"><center><b>Quantity</b></center></td>
-						<td class="td-heigth" style="vertical-align: center;width:138px;border:1px solid #EAEAEA;"><center><b>Unit Price</b></center></td>
-						<td class="td-heigth" style="vertical-align: center;width:138px;border:1px solid #EAEAEA;"><center><b>Amount</b></center></td>
+						<td class="td-heigth" style=" vertical-align: center;width:10px;border:1px solid black;">#</td>
+						<td class="td-heigth" style=" vertical-align: center;width:310px;border:1px solid black;font-family: Tahoma, Helvetica, Arial, "Microsoft Yahei","微软雅黑", STXihei, "华文细黑", sans-serif;"><center><b>Item Description</b></center></td>
+						<td class="td-heigth" style=" vertical-align: center;width:128px;border:1px solid black;"><center><b>Quantity</b></center></td>
+						<td class="td-heigth" style="vertical-align: center;width:138px;border:1px solid black;"><center><b>Unit Price</b></center></td>
+						<td class="td-heigth" style="vertical-align: center;width:138px;border:1px solid black;"><center><b>Amount</b></center></td>
 					</tr>
 					<?php $total = 0; $addRow2 = 7; foreach ($purchaseItemData as $key => $value) {  $key++; $addRow2 = $addRow2 - 1; ?>
 						<tr>
-							<td class="td-heigth" style="width:10px;border:1px solid #EAEAEA;">&nbsp;&nbsp;<?php echo $key ?></td>
+							<td class="td-heigth" style="width:10px;border:1px solid black; ">&nbsp;&nbsp;<?php echo $key ?></td>
 							<?php $lengthName = strlen($value[$modelTable]['name'])?>
 
 							<?php if($lengthName >= 35 && $lengthName <= 70){ ?>
 
-								<td class="td-heigth" style="width:310px;border:1px solid #EAEAEA;"><span style="font-size:80%; word-spacing: 0px;; "><center><?php echo $value[$modelTable]['name']?></center></td>
+								<td class="td-heigth" style="width:313px;border:1px solid black;"><span style="font-size:80%; word-spacing: 0px;; "><center><?php echo $value[$modelTable]['name']?></center></td>
 
 							<?php } else if($lengthName >= 70) { ?>
 
-								<td class="td-heigth" style="width:310px;border:1px solid #EAEAEA;"><span style="font-size:65%"; ><center><?php echo $value[$modelTable]['name']?></center></td>
+								<td class="td-heigth" style="width:313px;border:1px solid black; "><span style="font-size:65%"; ><center><?php echo $value[$modelTable]['name']?></center></td>
 
 							<?php }else{ ?>
 
-								<td class="td-heigth" style="width:310px;border:1px solid #EAEAEA;margin:0px; padding:0px;"><span style="font-size:100%"; ><center><?php echo $value[$modelTable]['name']?></center></td>
+								<td class="td-heigth" style="width:313px;border:1px solid black;margin:0px; padding:0px; border:1px solid black"><span style="font-size:100%"; ><center><?php echo $value[$modelTable]['name']?></center></td>
 
 							<?php } ?>
 
-							<td class="td-heigth" style="width:128px;border:1px solid #EAEAEA;"><center><?php echo $value[$modelTable]['quantity']?>/<?php echo $unitData[$value[$modelTable]['quantity_unit_id']]?></center></td>
-							<td class="td-heigth" style="width:138px;border:1px solid #EAEAEA;"><center><?php echo number_format($value[$modelTable]['unit_price'],2)?>/<?php echo $unitData[$value[$modelTable]['unit_price_unit_id']]?></center></td>
-							<td class="td-heigth" style="width:138px;border:1px solid #EAEAEA;">
+							<td class="td-heigth" style="width:128px;border:1px solid black;"><center><?php echo $value[$modelTable]['quantity']?>/<?php echo $unitData[$value[$modelTable]['quantity_unit_id']]?></center></td>
+							<td class="td-heigth" style="width:138px;border:1px solid black;"><center><?php echo number_format($value[$modelTable]['unit_price'],2)?>/<?php echo $unitData[$value[$modelTable]['unit_price_unit_id']]?></center></td>
+							<td class="td-heigth" style="width:138px;border:1px solid black;">
 								<center>
 									<?php 
 	                                    $amount = $value[$modelTable]['quantity'] * $value[$modelTable]['unit_price'];
@@ -118,11 +118,11 @@
 					</tr> -->
 					<?php for ($i2=0; $i2 < $addRow2; $i2++) { ?>
 						<tr>
-							<td class="td-heigth" style="width:10px;border:1px solid #EAEAEA;">&nbsp;&nbsp;</td>
-							<td class="td-heigth" style="width:310px;border:1px solid #EAEAEA;">&nbsp;&nbsp;</td>
-							<td class="td-heigth" style="width:128px;border:1px solid #EAEAEA;">&nbsp;&nbsp;</td>
-							<td class="td-heigth" style="width:138px;border:1px solid #EAEAEA;">&nbsp;&nbsp;</td>
-							<td class="td-heigth" style="width:138px;border:1px solid #EAEAEA;">&nbsp;&nbsp;</td>
+							<td class="td-heigth" style="width:10px;border:1px solid black;">&nbsp;&nbsp;</td>
+							<td class="td-heigth" style="width:310px;border:1px solid black;">&nbsp;&nbsp;</td>
+							<td class="td-heigth" style="width:128px;border:1px solid black;">&nbsp;&nbsp;</td>
+							<td class="td-heigth" style="width:138px;border:1px solid black;">&nbsp;&nbsp;</td>
+							<td class="td-heigth" style="width:138px;border:1px solid black;">&nbsp;&nbsp;</td>
 						</tr>
 					<?php } ?>
 				</thead>
