@@ -54,9 +54,8 @@ class AttendancesController  extends HumanResourceAppController {
 	            'order' => 'Attendance.date ASC',
 	    );
 
-
 		$this->paginate = $params;
-
+		
 		$attendances = $this->paginate();
 
 		$this->set(compact('attendances','date','search'));
@@ -106,7 +105,7 @@ class AttendancesController  extends HumanResourceAppController {
 
 		$conditions = array(
 			'Timekeep.date <=' => $date,
-			 'Timekeep.date >=' => $date
+			'Timekeep.date >=' => $date
 		);
 
 		if (!empty($query['name'])) {
@@ -199,7 +198,7 @@ class AttendancesController  extends HumanResourceAppController {
 				}	
 			}
 
-			$this->Session->setFlash('Time in successfully');
+			$this->Session->setFlash('Time in successfully','success');
 
 			$this->redirect( array(
                          'controller' => 'attendances', 
@@ -211,7 +210,7 @@ class AttendancesController  extends HumanResourceAppController {
 
 			} else {
 
-				$this->Session->setFlash('There\'s an error saving data');
+				$this->Session->setFlash('There\'s an error saving data','error');
 			
 			}
 	}
@@ -232,7 +231,6 @@ public function ajax_find() {
 			$this->loadModel('HumanResource.Employee');
 
 			$this->loadModel('HumanResource.Workshift');
-
 			
 			if (!empty($query['from'])) {
 				$date = $query['from'];
@@ -325,7 +323,7 @@ public function edit($id = null) {
 					//save BreakTime
 					$data['WorkShiftBreak'] = $this->Workshift->WorkShiftBreak->saveBreaks($this->request->data['WorkShift'],$this->Workshift->id,$auth['id']);
 					
-					$this->Session->setFlash('Saving Workshift information successfully');
+					$this->Session->setFlash('Saving Workshift information successfully','success');
 		 		  	
 		 		  	$this->redirect( array(
                              'controller' => 'schedules', 
@@ -337,7 +335,7 @@ public function edit($id = null) {
 
 				} else {
 
-					$this->Session->setFlash('There\'s an error saving Workshift information');
+					$this->Session->setFlash('There\'s an error saving Workshift information','error');
 				
 				}
 		}

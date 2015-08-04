@@ -32,7 +32,7 @@ class WorkShiftsController  extends HumanResourceAppController {
 					//save BreakTime
 					$data['WorkShiftBreak'] = $this->Workshift->WorkShiftBreak->saveBreaks($this->request->data['WorkShift'],$this->Workshift->id,$auth['id']);
 					
-					$this->Session->setFlash('Saving Workshift information successfully');
+					$this->Session->setFlash('Saving Workshift information successfully','success');
 		 		  	
 		 		  	$this->redirect( array(
                              'controller' => 'schedules', 
@@ -44,7 +44,7 @@ class WorkShiftsController  extends HumanResourceAppController {
 
 				} else {
 
-					$this->Session->setFlash('There\'s an error saving Workshift information');
+					$this->Session->setFlash('There\'s an error saving Workshift information','error');
 				
 				}
 		}
@@ -84,7 +84,7 @@ public function edit($id = null) {
 					//save BreakTime
 					$data['WorkShiftBreak'] = $this->Workshift->WorkShiftBreak->saveBreaks($this->request->data['WorkShift'],$this->Workshift->id,$auth['id']);
 					
-					$this->Session->setFlash('Saving Workshift information successfully');
+					$this->Session->setFlash('Saving Workshift information successfully','success');
 		 		  	
 		 		  	$this->redirect( array(
                              'controller' => 'schedules', 
@@ -96,7 +96,7 @@ public function edit($id = null) {
 
 				} else {
 
-					$this->Session->setFlash('There\'s an error saving Workshift information');
+					$this->Session->setFlash('There\'s an error saving Workshift information','error');
 				
 				}
 		}

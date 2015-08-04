@@ -27,7 +27,7 @@ class AbsencesController  extends HumanResourceAppController {
 
 			if ($this->Absence->save($data)) {
 
-			$this->Session->setFlash('Absence save successfully');
+			$this->Session->setFlash('Absence save successfully','success');
 
 			$this->redirect(array(
                          'controller' => 'attendances', 
@@ -39,7 +39,7 @@ class AbsencesController  extends HumanResourceAppController {
 
 			} else {
 
-				$this->Session->setFlash('There\'s an error saving data');
+				$this->Session->setFlash('There\'s an error saving data','error');
 			
 			}
 		}
@@ -71,18 +71,9 @@ class AbsencesController  extends HumanResourceAppController {
 
 				if ($this->Absence->save($data)) {
 
-				$this->Session->setFlash('Absence save successfully');
+				$this->Session->setFlash('Absence save successfully','success');
 
-					$this->redirect(array(
-		                         'controller' => 'attendances', 
-		                         'action' => 'absences',
-		                         'tab' => 'absences',
-		                         'plugin' => 'human_resource'
-
-		                    ));	
-
-			
-					return $this->redirect( array(
+				return $this->redirect( array(
 		                         'controller' => 'attendances', 
 		                         'action' => 'absences',
 		                         'tab' => 'absences',
@@ -93,7 +84,7 @@ class AbsencesController  extends HumanResourceAppController {
 
 				} else {
 
-					$this->Session->setFlash('There\'s an error saving data');
+					$this->Session->setFlash('There\'s an error saving data','error');
 				
 				}
 

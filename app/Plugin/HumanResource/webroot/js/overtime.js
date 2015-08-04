@@ -27,7 +27,6 @@ var checkDepartmentEmployee = function(element){
 $(document).ready(function(){  
 
 
-
     var init = function(){
 
             $('.datepick').datepicker();
@@ -77,6 +76,7 @@ $(document).ready(function(){
         return $return;
       
     });
+
 
     $body.on('change','.datetimepick',function(){
 

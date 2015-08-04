@@ -22,7 +22,7 @@ class BreakTimesController  extends HumanResourceAppController {
 			
 			if ($this->Breaktime->save($this->request->data['Breaktime'])) {
 				
-				$this->Session->setFlash('Saving Breaktime information successfully');
+				$this->Session->setFlash('Saving Breaktime information successfully','success');
 		 		   $this->redirect( array(
                              'controller' => 'schedules', 
                              'action' => 'breaktime',
@@ -32,7 +32,7 @@ class BreakTimesController  extends HumanResourceAppController {
                         ));
 			} else  {
 
-				$this->Session->setFlash('There\'s an error saving Breaktime information');
+				$this->Session->setFlash('There\'s an error saving Breaktime information','error');
 
 
 			}
@@ -53,7 +53,7 @@ class BreakTimesController  extends HumanResourceAppController {
 
 			if ($this->Breaktime->save($this->request->data['Breaktime'])) {
 				
-				$this->Session->setFlash('Saving Breaktime information successfully');
+				$this->Session->setFlash('Saving Breaktime information successfully','success');
 		 		   $this->redirect( array(
                              'controller' => 'schedules', 
                              'action' => 'breaktime',
@@ -63,7 +63,7 @@ class BreakTimesController  extends HumanResourceAppController {
                         ));
 			} else  {
 
-				$this->Session->setFlash('There\'s an error saving Breaktime information');
+				$this->Session->setFlash('There\'s an error saving Breaktime information','error');
 
 
 			}

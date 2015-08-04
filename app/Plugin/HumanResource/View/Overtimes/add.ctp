@@ -293,8 +293,17 @@ echo $this->Html->script(array(
         $(document).ready(function(){
 
                 $('.datetimepick').datetimepicker({
+                    format:'Y-m-d H:i',
+                });
 
-                        format:'Y-m-d H:i'
+                $('body').on('change','#OvertimeDate',function(){
+                    
+                    var selectedDate = $.datepicker.formatDate('yy/mm/dd', new Date($(this).val()));
+                    
+                    $("#OvertimeFrom,#OvertimeTo").datetimepicker( {
+                        format:'Y-m-d H:i',
+                        minDate: selectedDate
+                    });
                 });
 
         });

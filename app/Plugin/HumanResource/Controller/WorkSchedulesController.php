@@ -14,6 +14,8 @@ class WorkSchedulesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Attendance');
 
+		$this->loadModel('HumanResource.DailyInfo');
+
 		$this->loadModel('HumanResource.Workshift');
 
 		$conditions = array();
@@ -27,8 +29,9 @@ class WorkSchedulesController  extends HumanResourceAppController {
 			if ($this->WorkSchedule->save($this->request->data['WorkSchedule'])) {
 
 				$attendance = $this->Attendance->saveRecord($this->request->data['WorkSchedule'],$this->WorkSchedule->id);
-				
-				$this->Session->setFlash('Work Schedule saved successfully');
+				//must save dailt info
+
+				$this->Session->setFlash('Work Schedule saved successfully','success');
 		 		   $this->redirect( array(
                              'controller' => 'schedules', 
                              'action' => 'work_schedules',
@@ -36,7 +39,7 @@ class WorkSchedulesController  extends HumanResourceAppController {
                         ));
 			} else  {
 
-				$this->Session->setFlash('There\'s an error saving Schedule');
+				$this->Session->setFlash('There\'s an error saving Schedule','success');
 
 			}
 			
@@ -60,7 +63,7 @@ class WorkSchedulesController  extends HumanResourceAppController {
 
 				if ($this->WorkSchedule->save($this->request->data['WorkSchedule'])) {
 
-					$this->Session->setFlash('Work Schedule saved successfully');
+					$this->Session->setFlash('Work Schedule saved successfully','success');
 			 		   $this->redirect( array(
 	                             'controller' => 'schedules', 
 	                             'action' => 'work_schedules',
@@ -68,7 +71,7 @@ class WorkSchedulesController  extends HumanResourceAppController {
 	                        ));
 				} else  {
 
-					$this->Session->setFlash('There\'s an error saving Schedule');
+					$this->Session->setFlash('There\'s an error saving Schedule','error');
 
 				}
 

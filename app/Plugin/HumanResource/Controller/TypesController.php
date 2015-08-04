@@ -23,7 +23,7 @@ class TypesController  extends HumanResourceAppController {
 			$this->Type->saveType($this->request->data,$auth['id']);
 
 			//$save
-	 		$this->Session->setFlash('Saving Type information completed');
+	 		$this->Session->setFlash('Saving Type information completed','success');
  		   	$this->redirect( array(
                      'controller' => 'settings', 
                      'action' => 'type',
@@ -50,7 +50,7 @@ class TypesController  extends HumanResourceAppController {
 			$this->Type->saveType($this->request->data,$auth['id']);
 
 			//$save
-	 		$this->Session->setFlash('Saving Type information completed');
+	 		$this->Session->setFlash('Saving Type information completed','success');
  		   	$this->redirect( array(
                      'controller' => 'settings', 
                      'action' => 'type',

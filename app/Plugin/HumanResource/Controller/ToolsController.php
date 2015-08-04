@@ -45,7 +45,7 @@ class ToolsController  extends HumanResourceAppController {
 			$this->Tool->saveTool($this->request->data,$auth['id']);
 
 			//$save
-	 		$this->Session->setFlash('Saving Tool information completed');
+	 		$this->Session->setFlash('Saving Tool information completed','success');
  		   	$this->redirect( array(
                      'controller' => 'settings', 
                      'action' => 'tool',
@@ -66,7 +66,7 @@ class ToolsController  extends HumanResourceAppController {
 			$this->Tool->saveTool($this->request->data,$auth['id']);
 
 			//$save
-	 		$this->Session->setFlash('Saving Tool information completed');
+	 		$this->Session->setFlash('Saving Tool information completed','success');
  		   	$this->redirect( array(
                      'controller' => 'settings', 
                      'action' => 'tool',
