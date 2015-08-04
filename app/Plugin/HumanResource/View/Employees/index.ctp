@@ -33,12 +33,9 @@
 			                                    'action' => 'add',),
 			                            array('class' =>'btn btn-primary',
 			                                'escape' => false)); ?>
-
-			                                   
+      
 			                       <a data-toggle="modal" href="#myEmployeeReport" class="btn btn-primary pull-right "><i class="fa fa-share-square-o fa-lg"></i> Export</a>
 
-			                   
-			                  
 			                   <br><br>
 			               </div>
 			            </header>
@@ -140,10 +137,13 @@
 			                   		echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Assign Tools', 
 			                            array('controller' => 'toolings', 
 			                                    'action' => 'assign',),
-			                            array('class' =>'btn btn-primary pull-right',
+			                            array('class' =>'btn btn-primary',
 			                                'escape' => false));
 
 			                    ?> 
+
+			                    <a data-toggle="modal" href="#myToolReport" class="btn btn-primary pull-right "><i class="fa fa-share-square-o fa-lg"></i> Export</a>
+
 			                  <br><br>
 			               </div>
 			            </header>
@@ -235,6 +235,7 @@
 </div>
 
 <?php echo $this->element('modals'); ?>
+
 
 
 

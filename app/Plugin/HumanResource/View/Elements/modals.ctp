@@ -142,7 +142,7 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->  
 
-     <div class="modal fade" id="myEmployeeReport" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="myEmployeeReport" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -150,16 +150,16 @@
                     <h4 class="modal-title"> Select Department </h4>
                 </div>
                 <div class="modal-body">
-                 <?php echo $this->Form->create('Employee',array('url'=>(array('controller' => 'employees','action' => 'print_employee')),'class' => 'form-horizontal'));?>
+                    <?php echo $this->Form->create('Employee',array('url'=>(array('controller' => 'employees','action' => 'print_employee')),'class' => 'form-horizontal'));?>
                         <div class="form-group">
                             <label for="inputEmail1" class="col-lg-2 control-label"> Department</label>
                             
                             <div class="col-lg-6">
                                 <?php 
-                                       echo $this->Form->input('Department.name', array(
+                                       echo $this->Form->input('Department.department_id', array(
                                                                     'type' => 'select',
                                                                     'label' => false,
-                                                                    'class' => 'form-control required ',
+                                                                    'class' => 'form-control required',
                                                                     'empty' => '---Select Department---',
                                                                     'options' => array($departmentData)
 
@@ -174,7 +174,7 @@
                            <div class="col-lg-6">
                                 <div class="input-group">
                                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                        <input  placeholder="Date Range" name="from_date" data="1" type="text" class="form-control myDateRange datepickerDateRange high-z-index" id="datepickerDateRange" >
+                                                        <input  placeholder="Date Range" name="from_date" data="1" type="text" class="form-control required myDateRange datepickerDateRange high-z-index" id="datepickerDateRange" >
                                                     </div>
                             </div>
 
@@ -182,46 +182,98 @@
                         </div>
 
                         <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-share-square-o fa-lg"></i> Export</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                             
                         </div>  
-                </form> 
+                    <?php echo $this->Form->end(); ?>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<style type="text/css">
-    .datepicker-hide .ui-datepicker-year
-    {
-        display:none;   
-    }
+    <div class="modal fade" id="myToolReport" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title"> Tooling </h4>
+                </div>
+                <div class="modal-body">
+                    <?php echo $this->Form->create('Tool',array('url'=>(array('controller' => 'employees','action' => 'print_tool')),'class' => 'form-horizontal'));?>
+                        <div class="form-group">
+                            <label for="inputEmail1" class="col-lg-3 control-label"> Select Tool</label>
+                            
+                            <div class="col-lg-6">
+                                <?php 
+                                       echo $this->Form->input('Department.tool_id', array(
+                                                                    'type' => 'select',
+                                                                    'label' => false,
+                                                                    'class' => 'form-control required',
+                                                                    'empty' => '---Select Department---',
+                                                                    'options' => array($departmentData)
 
-    .datepickerDateRange{
+                                                                  ));
+                                ?>
+                            </div>
+                        </div>
 
-        z-index: 10000;
-    }
+                        <div class="form-group">
+                            <label for="inputEmail1" class="col-lg-3 control-label"> Date Range</label>
 
-    .daterangepicker { z-index: 999999;!important}
-</style>
-<script>
+                           <div class="col-lg-6">
+                                <div class="input-group">
+                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                        <input  placeholder="Date Range" name="from_date" data="1" type="text" class="form-control required myDateRange datepickerDateRange high-z-index" id="datepickerDateRange" >
+                                                    </div>
+                            </div>
+
+                           
+                        </div>
+
+                        <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-share-square-o fa-lg"></i> Export</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            
+                        </div>  
+                    <?php echo $this->Form->end(); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style type="text/css">
+        .datepicker-hide .ui-datepicker-year
+        {
+            display:none;   
+        }
+
+        .datepickerDateRange{
+
+            z-index: 10000;
+        }
+
+        .daterangepicker { z-index: 999999;!important}
+    </style>
+    <script>
     
-jQuery(document).ready(function($){
-       //datepicker
-        // $('.datepick').datepicker({
-            
-        //     changeYear: false,
-        //     autoClose: true
-        // });
+        jQuery(document).ready(function($){
+               //datepicker
 
-        // $("#HolidayDate").click(function() {
-        //     $(".datepicker-days .day").click(function() {
-        //         $('.datepicker').hide();
-        //     });
-        // });
+               $("#EmployeeIndexForm").validate();
+                // $('.datepick').datepicker({
+                    
+                //     changeYear: false,
+                //     autoClose: true
+                // });
 
-        $('.datepickerDateRange').daterangepicker();
-});
+                // $("#HolidayDate").click(function() {
+                //     $(".datepicker-days .day").click(function() {
+                //         $('.datepicker').hide();
+                //     });
+                // });
 
- </script>
+                $('.datepickerDateRange').daterangepicker();
+        });
+
+    </script>

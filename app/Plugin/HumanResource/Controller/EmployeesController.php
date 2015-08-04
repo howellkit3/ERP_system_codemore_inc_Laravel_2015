@@ -7,8 +7,8 @@ App::uses('ImageUploader', 'Vendor');
 
 class EmployeesController  extends HumanResourceAppController {
 
-	var $helpers = array('HumanResource.CustomText','HumanResource.Country', 'Accounting.PhpExcel');
-
+	var $helpers = array('HumanResource.PhpExcel','HumanResource.CustomText');
+	//,'HumanResource.Country'
 	public function index() {
 
 		$this->loadModel('HumanResource.Department');
@@ -16,7 +16,7 @@ class EmployeesController  extends HumanResourceAppController {
 		$departmentData = $this->Department->find('list', array('fields' => array('id', 'name')
 															));
 
-		array_push($departmentData, "All");
+		//array_push($departmentData, "All");
 
 		$limit = 10;
 
@@ -468,8 +468,70 @@ class EmployeesController  extends HumanResourceAppController {
 	}
 
 	public function print_employee($id = null) {
+		
+		$departmentId = $this->request->data['Department']['department_id'];
+		
+        if (!empty($this->request->data['from_date'])) {
 
-		$this->render('Employees/employee_report');
+        	$dateRange = str_replace(' ', '', $this->request->data['from_date']);
+       
+	        $splitDate = split('-', $dateRange);
+	        $from = str_replace('/', '-', $splitDate[0]);
+	        $to = str_replace('/', '-', $splitDate[1]);
+
+	        $employeeData = $this->Employee->find('all', array(
+                'conditions' => array(
+                    'AND' => array(
+                        'Employee.department_id' => $departmentId,
+                        'Employee.created BETWEEN ? AND ?' => array($from.' '.'00:00:00:', $to.' '.'23:00:00:')
+                    ),
+                ),
+                'order' => 'Employee.id DESC'
+            ));
+
+        } else {
+
+        	$employeeData = $this->Employee->find('all',array('conditions' => array('Employee.department_id' => $departmentId)));
+
+        }
+		//pr($employeeData);exit();
+		$this->set(compact('employeeData'));
+		$this->render('Employees/xls/employee_report');
+
+	}
+
+	public function print_tool($id = null) {
+		
+		$this->loadModel('HumanResource.Tool');
+
+		$toolId = $this->request->data['Tool']['tool_id'];
+		
+        if (!empty($this->request->data['from_date'])) {
+
+        	$dateRange = str_replace(' ', '', $this->request->data['from_date']);
+       
+	        $splitDate = split('-', $dateRange);
+	        $from = str_replace('/', '-', $splitDate[0]);
+	        $to = str_replace('/', '-', $splitDate[1]);
+
+	        $toolData = $this->Tool->find('all', array(
+                'conditions' => array(
+                    'AND' => array(
+                        'Tool.tool_id' => $toolId,
+                        'Tool.created BETWEEN ? AND ?' => array($from.' '.'00:00:00:', $to.' '.'23:00:00:')
+                    ),
+                ),
+                'order' => 'Tool.id DESC'
+            ));
+
+        } else {
+
+        	$toolData = $this->Tool->find('all',array('conditions' => array('EmpToolloyee.tool_id' => $toolId)));
+
+        }
+		//pr($employeeData);exit();
+		$this->set(compact('toolData'));
+		$this->render('Employees/xls/tool_report');
 
 	}
 
