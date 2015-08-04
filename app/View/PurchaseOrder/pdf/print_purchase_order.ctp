@@ -3,7 +3,7 @@
 <?php include('word.css'); ?>
 
 </style>
-
+   
 	<div class="one">
 
 		<div class="header">
@@ -507,7 +507,6 @@
 			</table>
 			            
 		</div>
-
 	</div>
 <?php } ?>
 

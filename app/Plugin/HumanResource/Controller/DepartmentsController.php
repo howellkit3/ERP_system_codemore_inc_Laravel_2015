@@ -19,7 +19,7 @@ class DepartmentsController  extends HumanResourceAppController {
 			$this->Department->saveDepartment($this->request->data,$auth['id']);
 
 			//$save
-	 		$this->Session->setFlash('Saving department information completed');
+	 		$this->Session->setFlash('Saving department information completed','success');
  		   	$this->redirect( array(
                      'controller' => 'settings', 
                      'action' => 'department'
@@ -39,7 +39,7 @@ class DepartmentsController  extends HumanResourceAppController {
 			$this->Department->saveDepartment($this->request->data,$auth['id']);
 
 			//$save
-	 		$this->Session->setFlash('Saving department information completed');
+	 		$this->Session->setFlash('Saving department information completed','success');
  		   	$this->redirect( array(
                      'controller' => 'settings', 
                      'action' => 'department'

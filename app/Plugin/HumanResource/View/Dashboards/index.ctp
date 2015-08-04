@@ -80,8 +80,7 @@ echo $this->Html->script(array(
 									</thead>
 
 									<tbody aria-relevant="all" aria-live="polite" role="alert">
-									<?php 
-								        if(!empty($attendances)){
+									<?php  if(!empty($attendances)){
 
 								            foreach ($attendances as $key => $schedule): ?>
 													<tr class="parent-tr-<?php echo $schedule['Attendance']['id'] ?>">
@@ -140,6 +139,11 @@ echo $this->Html->script(array(
 								        } ?> 
 									</tbody>
 								</table>	
+								<?php  if(!empty($attendances)) { ?> 
+								<div class="pull-right">
+									<?php echo $this->Html->link('View All',array('controller' => 'attendances','action' => 'index'),array('escape' => false)); ?>
+								</div>
+								<?php } ?>
 							</div>
 						</div>		
 
@@ -154,7 +158,7 @@ echo $this->Html->script(array(
 
 <div class="main-box">
 <header class="main-box-header clearfix">
-<h2 class="pull-left">Absences</h2>
+<h2 class="pull-left">Recent Absences</h2>
 </header>
 <div class="main-box-body clearfix">
 <div class="row">
@@ -218,7 +222,15 @@ echo $this->Html->script(array(
 								            endforeach; 
 								        } ?> 
 								
-								</table>	
+								</table>
+
+
+								<?php  if(!empty($absences)) { ?> 
+								<div class="pull-right">
+									<?php echo $this->Html->link('View All',array('controller' => 'attendances','action' => 'absences'),array('escape' => false)); ?>
+								</div>
+								<?php } ?>
+
 							</div>
 						</div>
 </div>

@@ -7,7 +7,7 @@ App::uses('ImageUploader', 'Vendor');
 
 class EmployeesController  extends HumanResourceAppController {
 
-	var $helpers = array('HumanResource.CustomText','HumanResource.Country', 'Accounting.PhpExcel');
+	var $helpers = array('HumanResource.CustomText','HumanResource.Country','HumanResource.PhpExcel');
 
 	public function index() {
 
@@ -16,7 +16,7 @@ class EmployeesController  extends HumanResourceAppController {
 		$departmentData = $this->Department->find('list', array('fields' => array('id', 'name')
 															));
 
-		array_push($departmentData, "All");
+		//array_push($departmentData, "All");
 
 		$limit = 10;
 
@@ -141,7 +141,7 @@ class EmployeesController  extends HumanResourceAppController {
 			 		$save = $this->Email->saveEmails($employeeId,'ContactPerson',$data['ContactPersonData']['Email'],$auth['id']);
 
 			 		//$save
-			 		$this->Session->setFlash('Saving employee information successfully');
+			 		$this->Session->setFlash('Saving employee information successfully','success');
 			 		   $this->redirect( array(
                                  'controller' => 'employees', 
                                  'action' => 'index'
@@ -149,7 +149,7 @@ class EmployeesController  extends HumanResourceAppController {
                 
                 	} else {
 
-			 		$this->Session->setFlash('There\'s an error saving employee information');
+			 		$this->Session->setFlash('There\'s an error saving employee information','error');
 			 	}
 
 			 } 
@@ -235,7 +235,7 @@ class EmployeesController  extends HumanResourceAppController {
 			 		//$save = $this->Email->saveEmails($employeeId,'ContactPerson',$data['ContactPersonData']['Email'],$auth['id']);
 
 
-			 		$this->Session->setFlash('Saving employee information successfully');
+			 		$this->Session->setFlash('Saving employee information successfully','success');
 			 		   $this->redirect( array(
                                  'controller' => 'employees', 
                                  'action' => 'index'
@@ -243,7 +243,7 @@ class EmployeesController  extends HumanResourceAppController {
                 
                 	} else {
 
-			 		$this->Session->setFlash('There\'s an error saving employee information');
+			 		$this->Session->setFlash('There\'s an error saving employee information','error');
 			 	}
 
 			 } 
@@ -431,34 +431,71 @@ class EmployeesController  extends HumanResourceAppController {
 				$this->Employee->bind(array('Position'));
 
 				$employees = $this->Employee->find('all',array(
-				'conditions' => array('Employee.department_id' => $id),
-				'order' => array('Employee.last_name','Employee.code'),
-				'fields' => array(
-				'id',
-				'Employee.first_name',
-				'Employee.last_name',
-				'Employee.middle_name',
-				'Employee.position_id',
-				'Employee.department_id',
-				'Employee.image',
-				'Position.name'
-				),
-				'group' => 'Employee.id' 
+					'conditions' => array('Employee.department_id' => $id),
+					'order' => array('Employee.last_name','Employee.code'),
+					'fields' => array(
+					'id',
+					'Employee.first_name',
+					'Employee.last_name',
+					'Employee.middle_name',
+					'Employee.position_id',
+					'Employee.department_id',
+					'Employee.image',
+					'Position.name'
+					),
+					'group' => 'Employee.id' 
 				));
 
+				if (count($employees) == 0) {
+
+					echo "no result found";
+				}
 
 				}
+
+				$this->set(compact('employees'));		
+				
+				$this->render('Employees/ajax/employees_overtime');
+
+
+			} else {
+					echo "no result found";
+					exit();
 			}
 
-		$this->set(compact('employees'));		
-		
-		$this->render('Employees/ajax/employees_overtime');
+
 
 	}
 
 	public function print_employee($id = null) {
+		
+		$departmentId = $this->request->data['Department']['department_id'];
+		
+        if (!empty($this->request->data['from_date'])) {
 
-		$this->render('Employees/employee_report');
+        	$dateRange = str_replace(' ', '', $this->request->data['from_date']);
+       
+	        $splitDate = split('-', $dateRange);
+	        $from = str_replace('/', '-', $splitDate[0]);
+	        $to = str_replace('/', '-', $splitDate[1]);
+
+	        $employeeData = $this->Employee->find('all', array(
+                'conditions' => array(
+                    'AND' => array(
+                        'Employee.department_id' => $departmentId,
+                        'Employee.created BETWEEN ? AND ?' => array($from.' '.'00:00:00:', $to.' '.'23:00:00:')
+                    ),
+                ),
+                'order' => 'Employee.id DESC'
+            ));
+
+        } else {
+
+        	$employeeData = $this->Employee->find('all',array('conditions' => array('Employee.department_id' => $departmentId)));
+
+        }
+		
+		$this->render('Employees/xls/employee_report');
 
 	}
 

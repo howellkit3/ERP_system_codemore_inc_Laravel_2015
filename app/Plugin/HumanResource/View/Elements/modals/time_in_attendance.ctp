@@ -13,13 +13,10 @@
 
                         <div id="result_container"></div>
                         <div class="modal-footer">
-                             <button type="submit" class="btn btn-primary"><i class="fa fa-clock-o"></i> Time in</button>
-                            <button type="button" class="btn btn-default close-modal" data-dismiss="modal"> <i class="fa fa-times"></i> Close</button>
-                            
+                             <button type="submit" class="btn btn-primary"><i class="fa fa-clock-o"></i> Log Time</button>
+                             <button type="button" class="btn btn-default close-modal" data-dismiss="modal"> <i class="fa fa-times"></i> Close</button>
                         </div>
-
-                        
-                    </form>
+                   <?php echo $this->Form->end(); ?>
                         
                 </div>
                 
