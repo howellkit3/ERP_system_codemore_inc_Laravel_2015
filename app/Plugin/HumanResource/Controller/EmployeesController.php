@@ -7,11 +7,19 @@ App::uses('ImageUploader', 'Vendor');
 
 class EmployeesController  extends HumanResourceAppController {
 
-	var $helpers = array('HumanResource.CustomText','HumanResource.Country');
+	var $helpers = array('HumanResource.CustomText','HumanResource.Country', 'Accounting.PhpExcel');
 
 	public function index() {
 
+		$this->loadModel('HumanResource.Department');
+
+		$departmentData = $this->Department->find('list', array('fields' => array('id', 'name')
+															));
+
+		array_push($departmentData, "All");
+
 		$limit = 10;
+
 
 
         $conditions = array();
@@ -65,7 +73,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 		$toolList = $this->Tool->find('list',array('fields' => array('id','name')));
 
-        $this->set(compact('employees','departments','positions','toolings','toolList','employeeList'));
+        $this->set(compact('employees','departments','positions','toolings','toolList','employeeList', 'departmentData'));
 	}
 
 	public function add () {
@@ -435,6 +443,12 @@ class EmployeesController  extends HumanResourceAppController {
 		$this->set(compact('employees'));		
 		
 		$this->render('Employees/ajax/employees_overtime');
+
+	}
+
+	public function print_employee($id = null) {
+
+		$this->render('Employees/employee_report');
 
 	}
 

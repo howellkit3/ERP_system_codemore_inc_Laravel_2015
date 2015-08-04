@@ -689,7 +689,6 @@
 	jQuery(document).ready(function($){
 
 
-		
 		jQuery("#ClientOrderDeliveryScheduleViewForm").validate();
 
 		$("body").on('click','.buttonEdit', function(e){

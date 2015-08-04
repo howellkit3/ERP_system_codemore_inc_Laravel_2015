@@ -1,3 +1,7 @@
+<?php echo $this->Html->script(array(
+						'jquery.maskedinput.min',
+						'HumanResource.custom'
+)); ?>
 <?php echo $this->element('hr_options');
 	$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : 'tab-employee';
  ?>
@@ -27,10 +31,13 @@
 			                      echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Add Employee', 
 			                            array('controller' => 'employees', 
 			                                    'action' => 'add',),
-			                            array('class' =>'btn btn-primary pull-right',
-			                                'escape' => false));
+			                            array('class' =>'btn btn-primary',
+			                                'escape' => false)); ?>
 
-			                    ?> 
+			                                   
+			                       <a data-toggle="modal" href="#myEmployeeReport" class="btn btn-primary pull-right "><i class="fa fa-share-square-o fa-lg"></i> Export</a>
+
+			                   
 			                  
 			                   <br><br>
 			               </div>
@@ -217,13 +224,18 @@
 			                            ?>
 			                    </div> -->
 
+								</div>
 							</div>
-						</div>
-					</div>			
-	            </div>
-			</div>
-		</div>	
-
+						</div>			
+		            </div>
+				</div>
+			</div>	
 	    </div>
     </div>
 </div>
+
+<?php echo $this->element('modals'); ?>
+
+
+
+

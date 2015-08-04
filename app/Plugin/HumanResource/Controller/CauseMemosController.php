@@ -172,8 +172,7 @@ class CauseMemosController  extends HumanResourceAppController {
 															  'conditions' => array('Employee.department_id' => '6'),
                                                                 'order' => 'Employee.last_name ASC'));
 
-		$disciplinaryData = $this->DisciplinaryAction->find('list', array('fields' => array('id', 'name'),
-                                                                'order' => 'DisciplinaryAction.id ASC'));
+		$disciplinaryData = $this->DisciplinaryAction->find('list', array('fields' => array('id', 'name')));
 
 		$causeMemoData = $this->CauseMemo->find('first', array('conditions' => array('CauseMemo.id' => $id)
                                                                ));

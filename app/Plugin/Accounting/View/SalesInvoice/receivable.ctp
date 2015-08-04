@@ -379,12 +379,12 @@
 </script>
 
 <style>
-	.tabs-wrapper .nav-tabs {
+/*	.tabs-wrapper .nav-tabs {
 	  /*//margin-bottom: -20px;*/
 	}
 
 	.myDateRange{
 		cursor: pointer; 
 		cursor: hand;
-	}
+	}*/
 </style>

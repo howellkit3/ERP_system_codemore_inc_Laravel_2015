@@ -86,15 +86,15 @@ th, td {
 				<?php } ?>
 
 				<td style="border:1px solid black;  "><?php echo $value['RequestItem']['quantity'] . ' ' . $unitData[$value['RequestItem']['quantity_unit_id']]?></td>
-				<?php if($ctr == 8){ ?>
+				
 
 				<?php $lengthRemarks = strlen($request['Request']['remarks'])?>
 
 				<?php if($lengthRemarks >= 35 && $lengthRemarks <= 70){ ?>
 					<td style="border:1px solid black; word-wrap: break-word; font-size:65%"><?php echo $request['Request']['remarks'] ?></td>
-				<?php }
+				<?php 
 					}else{ ?>
-					<td style="border:1px solid black;  word-wrap: break-word;"></td>
+					<td style="border:1px solid black; word-wrap: break-word; font-size:65%"><?php echo $request['Request']['remarks'] ?></td>
 				<?php } ?>	
 			</tr>
 
@@ -223,15 +223,15 @@ th, td {
 				<?php } ?>
 
 				<td style="border:1px solid black;  "><?php echo $value['RequestItem']['quantity'] . ' ' . $unitData[$value['RequestItem']['quantity_unit_id']]?></td>
-				<?php if($ctr == 8){ ?>
+				
 
 				<?php $lengthRemarks = strlen($request['Request']['remarks'])?>
 
 				<?php if($lengthRemarks >= 35 && $lengthRemarks <= 70){ ?>
 					<td style="border:1px solid black; word-wrap: break-word; font-size:65%"><?php echo $request['Request']['remarks'] ?></td>
-				<?php }
+				<?php 
 					}else{ ?>
-					<td style="border:1px solid black;  word-wrap: break-word;"></td>
+					<td style="border:1px solid black; word-wrap: break-word; font-size:100%"><?php echo $request['Request']['remarks'] ?></td>
 				<?php } ?>	
 			</tr>
 
