@@ -19,7 +19,7 @@ class PositionsController  extends HumanResourceAppController {
 			$this->Position->savePosition($this->request->data,$auth['id']);
 
 			//$save
-	 		$this->Session->setFlash('Saving Position information completed');
+	 		$this->Session->setFlash('Saving Position information completed','success');
  		   	$this->redirect( array(
                      'controller' => 'settings', 
                      'action' => 'position',
@@ -40,7 +40,7 @@ class PositionsController  extends HumanResourceAppController {
 			$this->Position->savePosition($this->request->data,$auth['id']);
 
 			//$save
-	 		$this->Session->setFlash('Saving Position information completed');
+	 		$this->Session->setFlash('Saving Position information completed','success');
  		   	$this->redirect( array(
                      'controller' => 'settings', 
                      'action' => 'position',

@@ -19,7 +19,7 @@ class CategoriesController  extends HumanResourceAppController {
 			$this->Category->saveCategory($this->request->data,$auth['id']);
 
 			//$save
-	 		$this->Session->setFlash('Saving Category information completed');
+	 		$this->Session->setFlash('Saving Category information completed','success');
  		   	$this->redirect( array(
                      'controller' => 'settings', 
                      'action' => 'category',
@@ -40,7 +40,7 @@ class CategoriesController  extends HumanResourceAppController {
 			$this->Category->saveCategory($this->request->data,$auth['id']);
 
 			//$save
-	 		$this->Session->setFlash('Saving Category information completed');
+	 		$this->Session->setFlash('Saving Category information completed','success');
  		   	$this->redirect( array(
                      'controller' => 'settings', 
                      'action' => 'category',

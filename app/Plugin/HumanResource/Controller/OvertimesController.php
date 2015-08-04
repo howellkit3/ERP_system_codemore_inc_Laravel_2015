@@ -31,7 +31,7 @@ class OvertimesController  extends HumanResourceAppController {
 		}
 	
 		$conditions = array(
-			'Overtime.date <=' => $date,
+			//'Overtime.date <=' => $date,
 		 	'Overtime.date >=' => $date
 		);
 
@@ -60,7 +60,7 @@ class OvertimesController  extends HumanResourceAppController {
 	            	'audit_date',
 	            	'Department.name'
 	            	),
-	            'order' => 'Overtime.date DESC',
+	            'order' => 'Overtime.date ASC',
 	    );
 
 
@@ -124,7 +124,7 @@ class OvertimesController  extends HumanResourceAppController {
 				
 				}
 
-				$this->Session->setFlash('Saving overtime successfully');
+				$this->Session->setFlash('Saving overtime successfully','success');
 		 		
 		 		$this->redirect( array(
                              'controller' => 'overtimes', 
@@ -137,7 +137,7 @@ class OvertimesController  extends HumanResourceAppController {
 
 			} else  {
 
-				$this->Session->setFlash('There\'s an error saving Overtime information');
+				$this->Session->setFlash('There\'s an error saving Overtime information','error');
 
 
 			}
@@ -226,7 +226,7 @@ class OvertimesController  extends HumanResourceAppController {
 				
 				}
 
-				$this->Session->setFlash('Saving overtime successfully');
+				$this->Session->setFlash('Saving overtime successfully','success');
 		 		
 		 		$this->redirect( array(
                              'controller' => 'overtimes', 
@@ -239,7 +239,7 @@ class OvertimesController  extends HumanResourceAppController {
 
 			} else  {
 
-				$this->Session->setFlash('There\'s an error saving Overtime information');
+				$this->Session->setFlash('There\'s an error saving Overtime information','error');
 
 
 			}

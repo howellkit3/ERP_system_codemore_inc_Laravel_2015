@@ -19,7 +19,7 @@ class AgenciesController  extends HumanResourceAppController {
 			$this->Agency->saveAgency($this->request->data,$auth['id']);
 
 			//$save
-	 		$this->Session->setFlash('Saving Agency information completed');
+	 		$this->Session->setFlash('Saving Agency information completed','success');
  		   	$this->redirect( array(
                      'controller' => 'settings', 
                      'action' => 'agency',
@@ -40,7 +40,7 @@ class AgenciesController  extends HumanResourceAppController {
 			$this->Agency->saveAgency($this->request->data,$auth['id']);
 
 			//$save
-	 		$this->Session->setFlash('Saving Agency information completed');
+	 		$this->Session->setFlash('Saving Agency information completed','success');
  		   	$this->redirect( array(
                      'controller' => 'settings', 
                      'action' => 'agency',

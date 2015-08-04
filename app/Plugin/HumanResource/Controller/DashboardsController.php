@@ -27,12 +27,12 @@ class DashboardsController  extends HumanResourceAppController {
 
 		$attendances = $this->Attendance->find('all',array('conditions' => $conditions ,'limit' => 5));
 
-	
-		$conditions = array(
-			'Absence.from >=' => $date,	
-		);
+		
+		$this->Absence->bind(array('Employee'));
+		
+		$conditions = array();
 
-		$absences = $this->Absence->find('all',array('conditions' => $conditions ,'limit' => 5));
+		$absences = $this->Absence->find('all',array('conditions' => $conditions ,'limit' => 5,'order' => array('Absence.from DESC') ));
 	
 		$this->set(compact('attendances','absences'));
 	}

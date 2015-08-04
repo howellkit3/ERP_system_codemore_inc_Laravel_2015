@@ -19,7 +19,7 @@ class StatusesController  extends HumanResourceAppController {
 			$this->Status->saveStatus($this->request->data,$auth['id']);
 
 			//$save
-	 		$this->Session->setFlash('Saving Status information completed');
+	 		$this->Session->setFlash('Saving Status information completed','success');
  		   	$this->redirect( array(
                      'controller' => 'settings', 
                      'action' => 'status',
@@ -40,7 +40,7 @@ class StatusesController  extends HumanResourceAppController {
 			$this->Status->saveStatus($this->request->data,$auth['id']);
 
 			//$save
-	 		$this->Session->setFlash('Saving Status information completed');
+	 		$this->Session->setFlash('Saving Status information completed','success');
  		   	$this->redirect( array(
                      'controller' => 'settings', 
                      'action' => 'status',

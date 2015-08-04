@@ -22,14 +22,14 @@ class HolidaysController  extends HumanResourceAppController {
 			
 			if ($this->Holiday->save($this->request->data)) {
 				
-				$this->Session->setFlash('Saving Holiday information successfully');
+				$this->Session->setFlash('Saving Holiday information successfully','success');
 		 		   $this->redirect(array(
                              'controller' => 'schedules', 
                              'action' => 'holiday'
                         ));
 			} else  {
 
-				$this->Session->setFlash('There\'s an error saving Holiday information');
+				$this->Session->setFlash('There\'s an error saving Holiday information','error');
 
 			}
 		}
@@ -50,7 +50,7 @@ class HolidaysController  extends HumanResourceAppController {
 
 			if ($this->Holiday->save($this->request->data)) {
 				
-				$this->Session->setFlash('Saving Holiday information successfully');
+				$this->Session->setFlash('Saving Holiday information successfully','success');
 		 		
 		 		$this->redirect( array(
                              'controller' => 'schedules', 
@@ -58,7 +58,7 @@ class HolidaysController  extends HumanResourceAppController {
                         ));
 			} else  {
 
-				$this->Session->setFlash('There\'s an error saving Holiday information');
+				$this->Session->setFlash('There\'s an error saving Holiday information','error');
 
 			}
 		}
