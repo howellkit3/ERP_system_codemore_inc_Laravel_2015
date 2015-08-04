@@ -75,7 +75,7 @@ th, td {
 
 				<?php } else if($lengthName >= 70) { ?>
 
-					<td style="border:1px solid black; "><span style="font-size:65%"; ><?php echo $requestRequestItem[$key]['RequestItem']['name']?></span>
+					<td style="border:1px solid black; "><span style="font-size:50%"; ><?php echo $requestRequestItem[$key]['RequestItem']['name']?></span>
 					</td>
 
 				<?php }else{ ?>
@@ -156,9 +156,9 @@ th, td {
 			
 			</table>
 
-			<br>
+		
 			<?php } ?>
-
+			<br>
 			
 			<center>
 				
@@ -212,7 +212,7 @@ th, td {
 
 				<?php } else if($lengthName >= 70) { ?>
 
-					<td style="border:1px solid black; "><span style="font-size:65%"; ><?php echo $requestRequestItem[$key]['RequestItem']['name']?></span>
+					<td style="border:1px solid black; "><span style="font-size:50%"; ><?php echo $requestRequestItem[$key]['RequestItem']['name']?></span>
 					</td>
 
 				<?php }else{ ?>
