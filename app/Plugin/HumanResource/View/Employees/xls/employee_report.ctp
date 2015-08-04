@@ -5,11 +5,27 @@
     $this->PhpExcel->createWorksheet()
         ->setDefaultFont('Calibri', 12);
 
-    $objTpl = PHPExcel_IOFactory::load("./img/employee_report.xls");
-     
-         //$objTpl->setActiveSheetIndex(0)
-                    
-                 //   ->setCellValue('J'.'4', '');
+    $objTpl = PHPExcel_IOFactory::load("./img/employee_pattern.xls");
+    $counter = 5;
+    foreach ($employeeData as $key => $employeeList) {
+        $key++;
+       
+        $objTpl->setActiveSheetIndex(0)
+                    ->setCellValue('A'.$counter, $key)
+                    ->setCellValue('B'.$counter, 'section')
+                    ->setCellValue('C'.$counter, 'N/A')
+                    ->setCellValue('D'.$counter, $employeeList['Employee']['position_id'])
+                    ->setCellValue('E'.$counter, $employeeList['Employee']['last_name'])
+                    ->setCellValue('F'.$counter, $employeeList['Employee']['first_name'])
+                    ->setCellValue('G'.$counter, $employeeList['Employee']['middle_name'])
+                    ->setCellValue('H'.$counter, 'hired')
+                    ->setCellValue('I'.$counter, $employeeList['Employee']['status'])
+                    ->setCellValue('J'.$counter, 'to')
+                    ->setCellValue('K'.$counter, 'from');
+
+        $counter++;  
+        
+    }
     
             
     //prepare download
