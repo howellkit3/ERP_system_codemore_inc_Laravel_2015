@@ -156,10 +156,10 @@
                             
                             <div class="col-lg-6">
                                 <?php 
-                                       echo $this->Form->input('Department.name', array(
+                                       echo $this->Form->input('Department.department_id', array(
                                                                     'type' => 'select',
                                                                     'label' => false,
-                                                                    'class' => 'form-control required ',
+                                                                    'class' => 'form-control required',
                                                                     'empty' => '---Select Department---',
                                                                     'options' => array($departmentData)
 
@@ -174,7 +174,7 @@
                            <div class="col-lg-6">
                                 <div class="input-group">
                                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                        <input  placeholder="Date Range" name="from_date" data="1" type="text" class="form-control myDateRange datepickerDateRange high-z-index" id="datepickerDateRange" >
+                                                        <input  placeholder="Date Range" name="from_date" data="1" type="text" class="form-control required myDateRange datepickerDateRange high-z-index" id="datepickerDateRange" >
                                                     </div>
                             </div>
 
@@ -182,11 +182,11 @@
                         </div>
 
                         <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-share-square-o fa-lg"></i> Export</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                             
                         </div>  
-                </form> 
+                <?php echo $this->Form->end(); ?>
             </div>
         </div>
     </div>
@@ -209,6 +209,8 @@
     
 jQuery(document).ready(function($){
        //datepicker
+
+       $("#EmployeeIndexForm").validate();
         // $('.datepick').datepicker({
             
         //     changeYear: false,
