@@ -109,7 +109,7 @@ $active_tab = 'overtimes';
 														 	 ?> 
 								                        </td>
 								                        <td > 
-								                          	<?php echo !empty($overtime['Overtime']['status']) ? $overtime['Overtime']['status'] : '<span class="label label-default">Pending</span>'; ?>
+								                          	<?php echo !empty($overtime['Overtime']['status']) ? '<span class="label label-success">'.$overtime['Overtime']['status'].'</span>' : '<span class="label label-default">Pending</span>'; ?>
 								                        </td>
 								                        <td > 
 								                           <?php echo $overtime['Department']['name']; ?>
