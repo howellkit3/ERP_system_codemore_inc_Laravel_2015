@@ -12,6 +12,10 @@ class EmployeesController  extends HumanResourceAppController {
 	public function index() {
 
 		$this->loadModel('HumanResource.Department');
+		$this->loadModel('HumanResource.Position');
+		$this->loadModel('HumanResource.Department');
+		$this->loadModel('HumanResource.Tooling');
+		$this->loadModel('HumanResource.Status');
 
 		$departmentData = $this->Department->find('list', array('fields' => array('id', 'name')
 															));
@@ -21,10 +25,11 @@ class EmployeesController  extends HumanResourceAppController {
 		$limit = 10;
 
 
-
         $conditions = array();
 
 	 if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'Employee' ) {
+
+	 		$this->Employee->bind(array('Status'));
 
 	        $this->paginate = array(
 	            'conditions' => $conditions,
@@ -55,18 +60,10 @@ class EmployeesController  extends HumanResourceAppController {
 		        
 	    }
 
-        $departments = array('' => 'Select Department',
-                        	'1' => 'Accounting',
-                        	'2' => 'Sales',
-                        	'3' => 'Delivery'
-                        );
+        
+		$positions = $this->Position->find('list',array('fields' => array('id','name')));
 
-         $positions = array('' => 'Select Position',
-		                	'1' => 'CEO',
-		                	'2' => 'Vice President',
-		                	'3' => 'Employee',
-		                	'4' => 'Others'
-		                	);
+		$departments = $this->Department->find('list',array('fields' => array('id','name')));
 
         $this->loadModel('HumanResource.Employee');
 

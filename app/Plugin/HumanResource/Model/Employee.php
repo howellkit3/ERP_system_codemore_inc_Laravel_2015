@@ -60,10 +60,15 @@ class Employee extends AppModel {
 					'foreignKey' => 'position_id',
 					'conditions' => '',
 					),
-
 				'DailyInfo' => array(
 						'className' => 'DailyInfo',
 						'foreignKey' => 'employee_id',
+						'conditions' => '',
+						'dependent' => true,
+					),
+				'Status' => array(
+						'className' => 'Status',
+						'foreignKey' => 'status',
 						'conditions' => '',
 						'dependent' => true,
 					),		

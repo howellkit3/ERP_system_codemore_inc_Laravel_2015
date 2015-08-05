@@ -21,7 +21,6 @@
 
         $('.appended-error').remove();
 
-
 		$this = $(thisElement);
 
 		$employee_id = $(thisElement).val();
@@ -286,7 +285,8 @@ $(document).ready(function(){
 
      
      $('.datepick').datepicker({
-                format: 'yyyy-mm-dd'
+                format: 'yyyy-mm-dd',
+                'viewMode':2
             });
 
         $(".autocomplete").select2();

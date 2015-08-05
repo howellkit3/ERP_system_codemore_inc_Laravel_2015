@@ -205,8 +205,11 @@
 			                                                echo $this->Form->input('EmployeeAdditionalInformation.id', array('class' => 'form-control col-lg-6',
 			                                                	'type' => 'hidden',
 			                                                	'label' => false));
-			                                            ?>
-		                                            <?php echo $this->Form->input('EmployeeAdditionalInformation.birthday', array('class' => 'form-control col-lg-6 datepick','label' => false));
+			                                         		echo $this->Form->input('EmployeeAdditionalInformation.birthday', array('class' => 'form-control col-lg-6 datepick','label' => false,
+			                                         			'data-date-viewmode' => 'years',
+			                                         			'data-date-minviewmode' => 'months'
+
+			                                         			));
 		                                            ?>
 		                                        </div>
 		                                     </div>

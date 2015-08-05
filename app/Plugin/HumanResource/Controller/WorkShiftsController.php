@@ -30,7 +30,7 @@ class WorkShiftsController  extends HumanResourceAppController {
 
 					$this->Workshift->bind(array('WorkShiftBreak'));
 					//save BreakTime
-					$data['WorkShiftBreak'] = $this->Workshift->WorkShiftBreak->saveBreaks($this->request->data['WorkShift'],$this->Workshift->id,$auth['id']);
+					$data['WorkShiftBreak'] = $this->Workshift->WorkShiftBreak->saveBreaks($this->request->data,$this->Workshift->id,$auth['id']);
 					
 					$this->Session->setFlash('Saving Workshift information successfully','success');
 		 		  	
@@ -70,7 +70,6 @@ public function edit($id = null) {
 		
 		$auth = $this->Session->read('Auth.User');
 
-
 		if (!empty($this->request->data)) {
 
 				$this->Workshift->create();
@@ -82,7 +81,7 @@ public function edit($id = null) {
 
 					$this->Workshift->bind(array('WorkShiftBreak'));
 					//save BreakTime
-					$data['WorkShiftBreak'] = $this->Workshift->WorkShiftBreak->saveBreaks($this->request->data['WorkShift'],$this->Workshift->id,$auth['id']);
+					$data['WorkShiftBreak'] = $this->Workshift->WorkShiftBreak->saveBreaks($this->request->data,$this->Workshift->id,$auth['id']);
 					
 					$this->Session->setFlash('Saving Workshift information successfully','success');
 		 		  	

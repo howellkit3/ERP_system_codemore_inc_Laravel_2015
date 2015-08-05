@@ -157,12 +157,13 @@ $body.on('click','.btn.btn-success.upload-image',function(e){
     e.preventDefault();
 });
 
-$( ".datepick" ).datepicker({
-    format: 'yyyy-mm-dd', 
-    changeYear: true,
-    changeMonth: true,
-    showMonthAfterYear: true, //this is what you are looking for
-});
+// $( ".datepick" ).datepicker({
+//     format: 'yyyy-mm-dd', 
+//     changeYear: true,
+//     changeMonth: true,
+//     showMonthAfterYear: true,
+//      'viewMode':2 //this is what you are looking for
+// });
 
 $(".autocomplete").select2();
 //$('.datepick').datepicker({  format: 'yyyy-mm-dd'  });

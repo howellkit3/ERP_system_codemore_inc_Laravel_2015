@@ -153,7 +153,7 @@ echo $this->Html->script(array(
                                                 </div>
                                             </div>
 
-                                                <div class="form-group">
+                                            <div class="form-group">
                                                     <div class="col-lg-12">
                                                         <label class="large-label"><span style="color:red;">*</span> <b>Breaktime </b> </label>
                                                         <div class="clearfix"></div>
@@ -171,7 +171,7 @@ echo $this->Html->script(array(
 
 
                                                                     <div class="radio">
-                                                                    <input type="radio"  id="checkbox-<?php echo $time['BreakTime']['id']?>" value="<?php echo $time['BreakTime']['id']?>" name="data[Workshift][breakids][]">
+                                                                    <input type="radio"  id="checkbox-<?php echo $time['BreakTime']['id']?>" value="<?php echo $time['BreakTime']['id']?>" name="data[breakids][]">
                                                                       <label for="checkbox-<?php echo $time['BreakTime']['id']?>">
                                                                     <?php echo date('H:i: a',strtotime($time['BreakTime']['from'])); ?>~<?php echo date('H:i: a',strtotime($time['BreakTime']['to'])); ?>
                                                                     </label>

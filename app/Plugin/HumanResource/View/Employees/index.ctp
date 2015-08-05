@@ -78,7 +78,7 @@
 								                        <td class="text-center">
 
 
-								                           <?php echo !empty($employee['Employee']['status']) ? ' <span class="label label-success">'.$employee['Employee']['status'].'</span>'  : '';  ?>
+								                           <?php echo !empty($employee['Employee']['status']) ? ' <span class="label label-success">'.ucwords($employee['Status']['name']).'</span>'  : '';  ?>
 								                        </td>
 
 								                        <td>

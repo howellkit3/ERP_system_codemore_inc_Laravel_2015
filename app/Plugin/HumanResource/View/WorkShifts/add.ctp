@@ -38,6 +38,8 @@
                         <div class="main-box-body clearfix">
                             <div class="main-box-body clearfix">
                                 <div class="form-horizontal">
+                                
+                                
                                 <div class="col-lg-6">    
                                     
                                     <div class="form-group">
@@ -107,43 +109,36 @@
                                         </div>
                                     </div>
 
-                                        
-                                    
                                     <div class="form-group">
-                                        <div class="col-lg-12">
-                                            <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span>BreakTimes</label>
-                                            <div class="col-lg-9">
-                                              
-                                                <?php
+                                                    <div class="col-lg-12">
+                                                        <label class="large-label"><span style="color:red;">*</span> <b>Breaktime </b> </label>
+                                                        <div class="clearfix"></div>
+                                                        <div class="selected_breaks" >
+                                                            <ul>
+                                                                <?php foreach ($breaktimes as $key => $time) { ?>
+                                                                    <li>
 
-                                                    echo $this->Form->input('WorkShift.break_id', array(
-                                                        'type' => 'select',
-                                                        'empty' => '--- Select Breaks ---',
-                                                        'class' => 'form-control col-lg-6 break-id',
-                                                        'data-modal' => '#BreakTimeModal',
-                                                        'label' => false));
-                                                ?>
+                                                                    <div class="radio">
+                                                                    <input type="radio"  id="checkbox-<?php echo $time['BreakTime']['id']?>" value="<?php echo $time['BreakTime']['id']?>" name="data[breakids][]">
+                                                                      <label for="checkbox-<?php echo $time['BreakTime']['id']?>">
+                                                                    <?php echo date('H:i: a',strtotime($time['BreakTime']['from'])); ?>~<?php echo date('H:i: a',strtotime($time['BreakTime']['to'])); ?>
+                                                                    </label>
+                                                                    </div>
 
 
+                                                                       </li>
+                                                                <?php } ?>
+                                                            </ul>    
+                                                        </div>
+                                                    </div>    
+    
 
-                                            </div>
-                                            <div class="clearfix"></div>
-                                             <div class="selected_breaks" >
-
-                                               <?php echo $this->Form->input('WorkShift.breaktime_ids', array(
-                                                        'type' => 'hidden',
-                                                        'id' => 'breakTimeIds'
-                                                        ));
-                                                ?>
-
-                                                <div class="time"></div>
-                                                <div class="append"></div> 
-                                            </div>
                                         </div>
-                                     </div>
-                                    </div>
+
                                     </div>
                                 </div>
+
+
                             </div>
                         </div>
                     </div>

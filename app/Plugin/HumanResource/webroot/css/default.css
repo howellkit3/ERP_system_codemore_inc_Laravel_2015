@@ -186,3 +186,10 @@ div.value {
   border: 1px dashed #ccc;
   margin: auto !important;
 }
+
+.selected_breaks li {
+  float: left;
+  list-style: outside none none;
+  margin: 4px 0;
+  width: 50%;
+}

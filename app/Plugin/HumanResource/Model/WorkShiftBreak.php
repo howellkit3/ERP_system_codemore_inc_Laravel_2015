@@ -35,10 +35,10 @@ class WorkShiftBreak extends AppModel {
 	public function saveBreaks($data = null,$workShiftId = null,$authId = null) {
 
 		$this->deleteAll(array('WorkShiftBreak.workshift_id' => $workShiftId ));
-		
-		if (!empty($data['breaktime_ids'])) {
+
+		if (!empty($data['breakids'])) {
 			//$data = ['WorkshiftBreak'];
-			$breaks = explode(',', $data['breaktime_ids']);
+			$breaks = $data['breakids'];
 
 			$breakData = [];
 
@@ -49,7 +49,6 @@ class WorkShiftBreak extends AppModel {
 				$breakData[$key]['created_by'] = $authId;
 				$breakData[$key]['modified_by'] = $authId;
 			}
-
 
 			$this->saveAll($breakData);
 

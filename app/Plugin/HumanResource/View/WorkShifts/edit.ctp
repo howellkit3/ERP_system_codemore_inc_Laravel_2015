@@ -110,58 +110,31 @@
                                         </div>
                                     </div>
 
-                                        
-                                    
-                                    <div class="form-group">
-                                        <div class="col-lg-12">
-                                            <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span>BreakTimes</label>
-                                            <div class="col-lg-9">
-                                              
-                                                    <?php
-                                                        
-                                                        echo $this->Form->input('WorkShift.break_id', array(
-                                                            'type' => 'select',
-                                                            'empty' => '--- Select Breaks ---',
-                                                            'class' => 'form-control col-lg-6 required break-id',
-                                                            'data-modal' => '#BreakTimeModal',
-                                                            'label' => false));
-                                                    ?>
-
-                                            </div>
-                                            <div class="clearfix"></div>
-                                             <div class="selected_breaks" >
-
-                                               <?php echo $this->Form->input('WorkShift.breaktime_ids', array(
-                                                        'type' => 'hidden',
-                                                        'id' => 'breakTimeIds',
-                                                        'value' => !empty($breaks) ? implode(',', $breaks) : ''
-                                                        ));
-                                                ?>
-
-                                                <div class="time"></div>
-                                                <div class="append">
-                                                    <?php if(!empty($this->request->data['WorkShiftBreak'][0]['id'])) {   ?>
-                                                            <ol>
-                                                                <?php foreach ($this->request->data['WorkShiftBreak'] as $key => $break) { ?>
-
+                                       <div class="form-group">
+                                                    <div class="col-lg-12">
+                                                        <label class="large-label"><span style="color:red;">*</span> <b> Breaktime </b> </label>
+                                                        <div class="clearfix"></div>
+                                                        <div class="selected_breaks" >
+                                                            <ul>
+                                                                <?php foreach ($breaktimes as $key => $time) { ?>
                                                                     <li>
-                                                                        <i data-id="<?php echo $break['breaktime_id'] ?>" class="icon">X</i>
-                                                                        <?php $break =  $this->BreakTime->getData($break['breaktime_id']);
 
-                                                                        echo $break['BreakTime']['name'].' - ';
-                                                                        
-                                                                        echo date('H:i: a',strtotime($break['BreakTime']['from'])); ?> - <?php echo date('H:i: a',strtotime($break['BreakTime']['to'])); 
+                                                                    <div class="radio">
+                                                                        <input type="radio"  id="checkbox-<?php echo $time['BreakTime']['id']?>" value="<?php echo $time['BreakTime']['id']?>" name="data[Workshift][breakids][]" <?php echo (in_array($time['BreakTime']['id'], $breaks)) ? 'checked' : ''; ?>>
+                                                                            <label for="checkbox-<?php echo $time['BreakTime']['id']?>">
+                                                                            <?php echo date('H:i: a',strtotime($time['BreakTime']['from'])); ?>~<?php echo date('H:i: a',strtotime($time['BreakTime']['to'])); ?>
+                                                                            </label>
+                                                                        </div>
 
-                                                                        ?> 
                                                                     </li>
-
                                                                 <?php } ?>
-                                                            </ol>
-                                                     <?php } ?>
-                                                </div> 
-                                            </div>
-                                        </div>
-                                     </div>
+                                                            </ul>    
+                                                        </div>
+                                                    </div>    
+    
+
+                                        </div> 
+                                    
                                     </div>
                                     </div>
                                 </div>

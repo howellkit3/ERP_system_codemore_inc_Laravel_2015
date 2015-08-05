@@ -41,7 +41,7 @@
                                        
                                         <div class="col-lg-6">
                                             <div class="form-group">
-                                                <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Name</label>
+                                                <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span> Name</label>
                                                 <div class="col-lg-9">
                                                   
                                                     <?php
@@ -57,7 +57,7 @@
                                        
                                         <div class="col-lg-6">
                                             <div class="form-group">
-                                                <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Start / End Date </label>
+                                                <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span> Start / End Date </label>
                                                 <div class="col-lg-9">
                                                   
                                                     <?php
@@ -107,7 +107,7 @@
                                         <div class="form-group">
                                         <div class="col-lg-6">
                                             <div class="form-group">
-                                                <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Type </label>
+                                                <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span> Type </label>
                                                 <div class="col-lg-9">
                                                   
                                                     <?php
@@ -181,7 +181,8 @@ jQuery(document).ready(function($){
         $('.datepick').datepicker({
             
             changeYear: false,
-            autoClose: true
+            autoClose: true,
+            
         });
 
         $("#HolidayDate").click(function() {
