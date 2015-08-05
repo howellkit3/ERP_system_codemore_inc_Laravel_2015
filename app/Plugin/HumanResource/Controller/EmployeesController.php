@@ -114,10 +114,10 @@ class EmployeesController  extends HumanResourceAppController {
                 	$data['Employee']['image'] = $file['name'];
             	}
 
-
             	$this->Employee->create();
 
 			 	if ($this->Employee->save($data)) {
+
 
 			 		$employeeId = $this->Employee->id;
 			 		//save additional info
@@ -533,6 +533,56 @@ class EmployeesController  extends HumanResourceAppController {
 		$this->set(compact('toolData'));
 		$this->render('Employees/xls/tool_report');
 
+	}
+
+
+	public function getCode(){
+
+		if ($this->request->is('ajax')) {
+			$this->loadModel('HumanResource.Department');
+			//add position if ever
+			if (!empty($this->request->data['department'])) {
+				$department = $this->Department->find('first',array(
+					'conditions' => array('Department.id' => $this->request->data['department']),
+					'fields' => array('id','prefix')
+					)); 
+
+			}
+
+			$employee = $this->Employee->find('count',array('conditions' => array('Employee.department_id' => $this->request->data['department'] )));
+
+			$employee_number = str_pad($employee + 1, 3, '0', STR_PAD_LEFT);
+
+			echo json_encode(array('emp_number' => $department['Department']['prefix'].'-'.$employee_number ));
+			
+
+			exit();
+			
+		}
+	}
+
+	public function checkExistingEmployee()  {
+
+		if ($this->request->is('ajax')) {
+			$data = $this->request->data;
+
+			$conditions = array('AND'=>array(
+				'first_name like' => '%'.$data['first_name'].'%',
+				'last_name like' => '%'.$data['last_name'].'%',
+				'middle_name like' => '%'.$data['middle_name'].'%',
+
+			));
+
+			$employee = $this->Employee->find('count',array(
+				'conditions' => $conditions
+				));
+
+
+			echo json_encode($employee);
+
+		}
+
+		exit();
 	}
 
 }

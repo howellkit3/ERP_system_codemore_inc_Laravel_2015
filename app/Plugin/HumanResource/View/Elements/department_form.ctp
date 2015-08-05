@@ -20,6 +20,18 @@
                                         ?>
                                     </div>
                                  </div>
+
+                                   <div class="form-group">
+                                    <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span>Initials</label>
+                                    <div class="col-lg-8">
+                                        <?php
+                                            echo $this->Form->input('Department.prefix', array('class' => 'form-control col-lg-6','label' => false));
+                                        ?>
+                                        <span class="lighter-color2">Ex. PR</span>
+                                    </div>
+
+                                 </div>
+
                                  <div class="form-group">
                                     <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span>Description</label>
                                     <div class="col-lg-8">
@@ -28,6 +40,8 @@
                                         ?>
                                     </div>
                                  </div>
+
+
 
                                  <div class="form-group">
                                     <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Specification</label>

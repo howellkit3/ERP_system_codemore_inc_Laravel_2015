@@ -21,34 +21,19 @@ class DailyInfo extends AppModel {
 
 		$this->bindModel(array(
 			'belongsTo' => array(
-				'Contact' => array(
-					'className' => 'Contact',
+				'Employee' => array(
+					'className' => 'Employee',
 					'foreignKey' => false,
-					'dependent' => true,
-					'conditions' => array(
-						'Contact.model = ContactPerson',
-						'Contact.foreign_key = ContactPerson.id' 
-						)
+					'conditions' => array('Employee.id = DailyInfo.employee_id')
 				),
-				'Email' => array(
-					'className' => 'Email',
+				
+			),
+			'hasMany' => array (
+				'Attendance' => array(
+					'className' => 'Attendance',
 					'foreignKey' => false,
-					'dependent' => true,
-					'conditions' => array(
-						'Email.model = ContactPerson',
-						'Email.foreign_key = ContactPerson.id' 
-						)
-				),
-				'Address' => array(
-					'className' => 'Address',
-					'foreignKey' => false,
-					'dependent' => true,
-					'conditions' => array(
-						'Address.model = ContactPerson',
-						'Address.foreign_key = ContactPerson.id' 
-						)
-				)
-			)
+					'conditions' => array('Attendance.employee_id = DailyInfo.employee_id')
+				))
 		),false);
 
 		$this->contain($model);

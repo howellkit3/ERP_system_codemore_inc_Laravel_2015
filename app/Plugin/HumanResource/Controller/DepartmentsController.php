@@ -17,7 +17,6 @@ class DepartmentsController  extends HumanResourceAppController {
 		if(!empty($this->request->data)){
 			
 			$this->Department->saveDepartment($this->request->data,$auth['id']);
-
 			//$save
 	 		$this->Session->setFlash('Saving department information completed','success');
  		   	$this->redirect( array(

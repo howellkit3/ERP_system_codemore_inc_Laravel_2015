@@ -59,7 +59,14 @@ class Employee extends AppModel {
 					'className' => 'Position',
 					'foreignKey' => 'position_id',
 					'conditions' => '',
-					)	
+					),
+
+				'DailyInfo' => array(
+						'className' => 'DailyInfo',
+						'foreignKey' => 'employee_id',
+						'conditions' => '',
+						'dependent' => true,
+					),		
 			),
 			'hasMany' => array(
 				'Email' => array(

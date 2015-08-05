@@ -459,16 +459,47 @@ public function getEmployeeData($attendaceId = null,$date = null) {
 }
 
 
+
+
 public function daily_info() {
+
+	$this->loadModel('HumanResource.DailyInfo');
+
+	$this->loadModel('HumanResource.Employee');
+
+	$this->loadModel('HumanResource.Attendance');
 
 	$search = '';
 
 	$date = date('Y-m-d');
 
-	$this->set(compact('search','date'));
+	$limit = 10;
+
+	$query = $this->request->query;
+		
+	$search = '';
+
+	$this->DailyInfo->bind(array('Employee'));
+	//$conditions = array('DailyInfo.date >=' => $date , 'DailyInfo.date <=' => $date);
+	$conditions = array();
+
+	$params =  array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            //'fields' => array('id', 'status','created'),
+            'order' => 'DailyInfo.date ASC',
+            'group' => 'DailyInfo.id'
+    );
+
+	$this->paginate = $params;
+	
+	$dailyInfos = $this->paginate('DailyInfo');
+
+	//pr($dailyInfos); exit();
+
+	$this->set(compact('dailyInfos','search','date'));
 
 }
-
 
 
 }

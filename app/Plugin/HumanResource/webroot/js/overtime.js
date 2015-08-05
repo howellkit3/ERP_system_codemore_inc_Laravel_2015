@@ -7,7 +7,7 @@ function openMultiplePrompts(status,url){
         //title: "confirmed",
         buttons: { "Yes": true, "No": false },
         persistent: false,
-        submit: function(e,v,m,f){
+        submit: function(e,v,m,f) {
            if(v == true) {
                window.location.href = url;
             }
@@ -64,7 +64,7 @@ $(document).ready(function(){
             $('.datepick').datepicker();
             $(".autocomplete").select2();
 
-            $('#AbsenceEmployeeId,#OvertimeDepartmentId').change();
+            $('#AbsenceEmployeeId').change();
      }
 
      var $body = $('body');
