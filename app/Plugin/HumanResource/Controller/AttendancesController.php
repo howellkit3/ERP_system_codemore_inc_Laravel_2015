@@ -184,6 +184,7 @@ class AttendancesController  extends HumanResourceAppController {
 				$this->Attendance->save($attendance);
 
 				if ($this->request->is('ajax')) {
+
 					if (!empty($attendance['Attendance']['in'])) {
 
 						$attendance['Attendance']['in'] = date('h:i a',strtotime($attendance['Attendance']['in']));
@@ -323,7 +324,7 @@ public function edit($id = null) {
 					//save BreakTime
 					$data['WorkShiftBreak'] = $this->Workshift->WorkShiftBreak->saveBreaks($this->request->data['WorkShift'],$this->Workshift->id,$auth['id']);
 					
-					$this->Session->setFlash('Saving Workshift information successfully','success');
+					$this->Session->setFlash('Saving workshift information successfully','success');
 		 		  	
 		 		  	$this->redirect( array(
                              'controller' => 'schedules', 

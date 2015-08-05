@@ -13,7 +13,7 @@ class DailyInfo extends AppModel {
 
 	public $recursive = -1;
 
-	public $name = 'ContactPerson';
+	public $name = 'DailyInfo';
 
 	public $actsAs = array('Containable');
     
@@ -56,10 +56,14 @@ class DailyInfo extends AppModel {
 
 	public function saveDailyInfo($data) {
 
+		$info = [];
 
 		if (!empty($data)) {
 
+			$info['employee_id'] = $data['employee_id'];
+			$info['date'] = $data['date'];
 			
+			return $this->save($info);
 		}
 	}
 
