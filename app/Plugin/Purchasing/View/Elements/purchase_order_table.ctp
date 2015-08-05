@@ -24,7 +24,11 @@
                     }
 
                     if($purchaseOrderDataList['PurchaseOrder']['status'] == 1){ 
-                        echo "<span class='label label-success'>Approved</span>";
+                        echo "<span class='label label-warning'>Approved</span>";
+                    }
+
+                    if($purchaseOrderDataList['PurchaseOrder']['status'] == 11){ 
+                        echo "<span class='label label-success'>Received</span>";
                     }
                 ?>
             </td>

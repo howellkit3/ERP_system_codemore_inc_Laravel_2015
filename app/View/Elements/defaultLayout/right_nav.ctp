@@ -73,7 +73,7 @@
 
 						<?php  if($userData['User']['role_id'] == 1 OR $userData['User']['role_id'] == 2 OR $userData['User']['role_id'] == 4 OR $userData['User']['role_id'] == 7){
 
-	 						 echo $this->Html->link( " <i class='fa fa-archive'></i> <span>Ware House</span>",   array('controller' =>'ware_house_systems','action'=>'index','plugin' => 'ware_house'),array('escape' => false) );
+	 						 echo $this->Html->link( " <i class='fa fa-archive'></i> <span>Ware House</span>",   array('controller' =>'receivings','action'=>'index','plugin' => 'ware_house'),array('escape' => false) );
 	 						}
 	 					?>
 					</li>
