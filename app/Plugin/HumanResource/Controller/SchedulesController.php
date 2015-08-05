@@ -118,6 +118,12 @@ class SchedulesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.WorkShift');
 
+		$this->loadModel('HumanResource.Employee');
+
+        $employeeList = $this->Employee->find('list',array('fields' => array('id','fullname')));
+
+        $workshiftList = $this->WorkShift->find('list',array('fields' => array('id','name')));
+
 		$limit = 10;
 
 		$conditions = array();
@@ -136,7 +142,7 @@ class SchedulesController  extends HumanResourceAppController {
 	    $workSchedules = $this->paginate('WorkSchedule');
 
 
-	    $this->set(compact('workSchedules'));
+	    $this->set(compact('workSchedules','employeeList','workshiftList'));
 
 
 	}

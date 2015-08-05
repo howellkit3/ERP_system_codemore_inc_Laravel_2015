@@ -68,11 +68,11 @@
 								                        </td>
 								                        
 								                        <td class="text-center">
-								                           <?php echo !empty($departments[$employee['Employee']['department_id']]) ? $departments[$employee['Employee']['department_id']] : '';  ?>
+								                           <?php echo !empty($employee['Department']['name']) ? $employee['Department']['name'] : '';  ?>
 								                        </td>
 
 								                         <td class="text-center">
-								                           <?php echo !empty($positions[$employee['Employee']['position_id']]) ? $positions[$employee['Employee']['position_id']] : '';  ?>
+								                           <?php echo !empty($employee['Position']['name']) ? $employee['Position']['name'] : '';  ?>
 								                        </td>
 
 								                        <td class="text-center">

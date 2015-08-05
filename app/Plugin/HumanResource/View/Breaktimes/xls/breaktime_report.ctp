@@ -5,20 +5,17 @@
     $this->PhpExcel->createWorksheet()
         ->setDefaultFont('Calibri', 12);
 
-    $objTpl = PHPExcel_IOFactory::load("./img/tool_record.xls");
+    $objTpl = PHPExcel_IOFactory::load("./img/breaktime_record.xls");
     $counter = 5;
-    foreach ($toolingData as $key => $toolList) {
+    foreach ($breaktimeData as $key => $breakList) {
         $key++;
        
         $objTpl->setActiveSheetIndex(0)
                     ->setCellValue('A1',(new \DateTime())->format('m/d/Y'))
                     ->setCellValue('A'.$counter, $key)
-                    ->setCellValue('B'.$counter, $toolList['Employee']['first_name'].' '.$toolList['Employee']['middle_name'].' '.$toolList['Employee']['last_name'].' '.$toolList['Employee']['suffix'])
-                    ->setCellValue('C'.$counter, $toolList['Tool']['name'])
-                    ->setCellValue('D'.$counter, $toolList['Tooling']['quantity'])
-                    ->setCellValue('E'.$counter, $toolList['Tooling']['price'])
-                    ->setCellValue('F'.$counter, $toolList['Tooling']['pay'])
-                    ->setCellValue('G'.$counter, $toolList['Tooling']['status']);
+                    ->setCellValue('B'.$counter, $breakList['BreakTime']['name'])
+                    ->setCellValue('C'.$counter, $breakList['BreakTime']['from'])
+                    ->setCellValue('D'.$counter, $breakList['BreakTime']['to']);
 
         $counter++;  
         

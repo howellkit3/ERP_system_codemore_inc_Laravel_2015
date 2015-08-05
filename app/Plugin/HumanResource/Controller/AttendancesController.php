@@ -5,7 +5,9 @@ App::uses('SessionComponent', 'Controller/Component');
 
 class AttendancesController  extends HumanResourceAppController {
 
-	var $helpers = array('HumanResource.CustomText','HumanResource.CustomTime');
+	//var $helpers = array('HumanResource.CustomText','HumanResource.CustomTime');
+	var $helpers = array('HumanResource.PhpExcel','HumanResource.CustomTime');
+	//,'HumanResource.Country'
 
 	public function index() {
 
@@ -14,6 +16,8 @@ class AttendancesController  extends HumanResourceAppController {
 		$this->loadModel('HumanResource.Employee');
 
 		$this->loadModel('HumanResource.Workshift');
+
+		$this->loadModel('HumanResource.Department');
 
 		$limit = 10;
 
@@ -58,7 +62,11 @@ class AttendancesController  extends HumanResourceAppController {
 		
 		$attendances = $this->paginate();
 
-		$this->set(compact('attendances','date','search'));
+		$employeeList = $this->Employee->find('list',array('fields' => array('id','fullname')));
+
+		$departmentList = $this->Department->find('list',array('fields' => array('id','name')));
+
+		$this->set(compact('attendances','date','search','employeeList','departmentList'));
 
 	}
 
@@ -423,52 +431,95 @@ public function edit($id = null) {
 
 
 
-public function getEmployeeData($attendaceId = null,$date = null) {
+	public function getEmployeeData($attendaceId = null,$date = null) {
 
-	$this->layout = false;
-	
-	if (!empty($attendaceId)) {
-
-		$this->loadModel('HumanResource.Workshift');
-
-		$this->loadModel('HumanResource.Employee');
+		$this->layout = false;
 		
-		if (empty($date)){
+		if (!empty($attendaceId)) {
 
-			$date = date('Y-m-d');
+			$this->loadModel('HumanResource.Workshift');
+
+			$this->loadModel('HumanResource.Employee');
+			
+			if (empty($date)){
+
+				$date = date('Y-m-d');
+			}
+
+			$conditions = array(
+			'Attendance.date <=' => $date,
+			 'Attendance.date >=' => $date,
+			 'Attendance.id' => $attendaceId,
+			);
+
+			$this->Attendance->bind(array('Employee'));
+
+			$attendance = $this->Attendance->find('first',array(
+				'conditions' => $conditions
+
+			));
+
+			$this->set(compact('attendance'));
+
+			$this->render('Attendances/ajax/timekeep');
 		}
 
-		$conditions = array(
-		'Attendance.date <=' => $date,
-		 'Attendance.date >=' => $date,
-		 'Attendance.id' => $attendaceId,
-		);
-
-		$this->Attendance->bind(array('Employee'));
-
-		$attendance = $this->Attendance->find('first',array(
-			'conditions' => $conditions
-
-		));
-
-		$this->set(compact('attendance'));
-
-		$this->render('Attendances/ajax/timekeep');
 	}
 
-}
 
+	public function daily_info() {
 
-public function daily_info() {
+		$search = '';
 
-	$search = '';
+		$date = date('Y-m-d');
 
-	$date = date('Y-m-d');
+		$this->set(compact('search','date'));
 
-	$this->set(compact('search','date'));
+	}
 
-}
+	public function export() {
 
+		$this->loadModel('HumanResource.WorkSchedule');
+
+		$this->loadModel('HumanResource.Employee');
+
+		$this->loadModel('HumanResource.Workshift');
+		
+		$departmentId = $this->request->data['Attendance']['department_id'];
+		$employeeId = $this->request->data['Attendance']['employee_id'];
+		$fromDate = $this->request->data['Attendance']['from_date'];
+
+		$this->Attendance->bind(array('WorkSchedule','Employee','WorkShift'));
+
+		$conditions = array();
+
+    	if(!empty($departmentId)){
+
+    		$conditions = array_merge($conditions,array('Employee.department_id' => $departmentId));
+
+    	}
+
+    	if(!empty($employeeId)){
+
+    		$conditions = array_merge($conditions,array('Attendance.employee_id' => $employeeId));
+
+    	}
+
+    	if(!empty($employeeId)){
+
+    		$conditions = array_merge($conditions,array('Attendance.date >=' => $fromDate));
+
+    	}
+        	
+        $attendanceData = $this->Attendance->find('all', array(
+            'conditions' => $conditions,
+            'order' => 'Attendance.id ASC'
+        ));
+
+		$this->set(compact('attendanceData'));
+
+		$this->render('Attendances/xls/attendance_report');
+	}
 
 
 }

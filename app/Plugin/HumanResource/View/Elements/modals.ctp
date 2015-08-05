@@ -169,7 +169,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="inputEmail1" class="col-lg-2 control-label"> Department</label>
+                            <label for="inputEmail1" class="col-lg-2 control-label"> </label>
 
                            <div class="col-lg-6">
                                 <div class="input-group">
@@ -206,7 +206,7 @@
                             
                             <div class="col-lg-6">
                                 <?php 
-                                       echo $this->Form->input('Department.tool_id', array(
+                                       echo $this->Form->input('Tool.tool_id', array(
                                                                     'type' => 'select',
                                                                     'label' => false,
                                                                     'class' => 'form-control required',
@@ -223,7 +223,7 @@
                             
                             <div class="col-lg-6">
                                 <?php 
-                                       echo $this->Form->input('Department.employee_id', array(
+                                       echo $this->Form->input('Tool.employee_id', array(
                                                                     'type' => 'select',
                                                                     'label' => false,
                                                                     'class' => 'form-control required',
