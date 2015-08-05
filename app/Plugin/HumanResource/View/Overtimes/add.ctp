@@ -58,7 +58,7 @@ echo $this->Html->script(array(
                                                             <?php echo $this->Form->input('Overtime.department_id', array(
                                                                 'class' => 'col-lg-6 required autocomplete',
                                                                 'options' => $departments,
-                                                                'empty' => '--- Select Department ---',
+                                                                'empty' => false,
                                                                 'onchange' => 'checkDepartmentEmployee(this)',
                                                                 'label' => false));
                                                             ?>
@@ -155,19 +155,29 @@ echo $this->Html->script(array(
 
                                                 <div class="form-group">
                                                     <div class="col-lg-12">
-                                                        <label class="large-label"><span style="color:red;">*</span> <b>Breaktimes </b> </label>
+                                                        <label class="large-label"><span style="color:red;">*</span> <b>Breaktime </b> </label>
                                                         <div class="clearfix"></div>
                                                         <div class="selected_breaks" >
                                                             <ul>
                                                                 <?php foreach ($breaktimes as $key => $time) { ?>
                                                                     <li>
                                                                    
-                                                                    <div class="checkbox-nice">
-                                                                    <input type="checkbox"  id="checkbox-<?php echo $time['BreakTime']['id']?>" name="data[Workshift][breakids][]" value="<?php echo $time['BreakTime']['id']?>">
+                                                                  <!--   <div class="checkbox-nice">
+                                                                    <input type="radio"  id="checkbox-<?php echo $time['BreakTime']['id']?>" name="data[Workshift][breakids][]" value="<?php echo $time['BreakTime']['id']?>">
                                                                     <label for="checkbox-<?php echo $time['BreakTime']['id']?>">
                                                                     <?php echo date('H:i: a',strtotime($time['BreakTime']['from'])); ?>~<?php echo date('H:i: a',strtotime($time['BreakTime']['to'])); ?>
                                                                     </label>
+                                                                    </div> -->
+
+
+                                                                    <div class="radio">
+                                                                    <input type="radio"  id="checkbox-<?php echo $time['BreakTime']['id']?>" value="<?php echo $time['BreakTime']['id']?>" name="data[Workshift][breakids][]">
+                                                                      <label for="checkbox-<?php echo $time['BreakTime']['id']?>">
+                                                                    <?php echo date('H:i: a',strtotime($time['BreakTime']['from'])); ?>~<?php echo date('H:i: a',strtotime($time['BreakTime']['to'])); ?>
+                                                                    </label>
                                                                     </div>
+
+
                                                                             </li>
                                                                 <?php } ?>
                                                             </ul>    

@@ -35,7 +35,9 @@
 			                                'escape' => false));
 
 			                    ?> 
-			                  
+			                  	
+			                  	<a data-toggle="modal" href="#myToolReport" class="btn btn-primary pull-right "><i class="fa fa-share-square-o fa-lg"></i> Export</a>
+			                  	
 			                   <br><br>
 			               </div>
 			            </header>
@@ -102,15 +104,13 @@
 
 								<hr>
 
-								  <div class="paging" id="item_type_pagination">
-			                            <?php
-			                           
-			                            echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'Employee','model' => 'Employee'), null, array('class' => 'disable','model' => 'ClientOrder'));
-			                            echo $this->Paginator->numbers(array('separator' => '','paginate' => 'Employee'), array('paginate' => 'Employee'));
-			                            echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'Employee','model' => 'Employee'), null, array('class' => 'disable'));
-
-			                            ?>
-			                    </div>
+								   <div class="paging" id="item_type_pagination">
+								<?php
+								echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
+								echo $this->Paginator->numbers(array('separator' => ''));
+								echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
+								?>
+								</div>
 						</div>
 					</div>		
 	            </div>

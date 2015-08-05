@@ -32,7 +32,8 @@ class OvertimesController  extends HumanResourceAppController {
 	
 		$conditions = array(
 			//'Overtime.date <=' => $date,
-		 	'Overtime.date >=' => $date
+		 	'Overtime.date >=' => $date,
+			'Overtime.status' => 'approved'
 		);
 
 		if (!empty($query['department_id'])) {
@@ -73,6 +74,77 @@ class OvertimesController  extends HumanResourceAppController {
 		$this->set(compact('date','search','department','departments','overtimes'));
 	}
 
+
+
+	public function pendings() {
+
+		$this->loadModel('HumanResource.Department');
+
+		$date = date('Y-m-d');
+		
+		$department = '';
+
+		$departments = $this->Department->getList();
+
+		$limit = 10;
+
+		$query = $this->request->query;
+		
+		$search = '';
+
+		$date = date('Y-m-d');
+
+		
+		if (!empty($query['date'])) {
+			$date = $query['date'];
+		}
+	
+		$conditions = array(
+			//'Overtime.date <=' => $date,
+		 	'Overtime.date >=' => $date,
+		 	'Overtime.status' => ''
+		);
+
+		if (!empty($query['department_id'])) {
+			
+			$department = $query['department_id'];	
+
+			$conditions = array_merge($conditions,array(
+				'Overtime.department_id' => $department
+			));
+		}
+
+		//$this->Attendance->bind(array('WorkSchedule','Employee','WorkShift'));
+
+		
+		$params =  array(
+	            'conditions' => $conditions,
+	            'limit' => $limit,
+	            'fields' => array(
+	            	'id', 
+	            	'date',
+	            	'from',
+	            	'to',
+	            	'status',
+	            	'approved_by',
+	            	'audit_date',
+	            	'Department.name'
+	            	),
+	            'order' => 'Overtime.date ASC',
+	    );
+
+
+		$this->paginate = $params;
+
+		$this->Overtime->bind(array('Department'));
+
+		$overtimes = $this->paginate();
+
+		$this->set(compact('date','search','department','departments','overtimes'));
+	}
+
+
+
 	public function add() {
 
 		$this->loadModel('HumanResource.Department');
@@ -104,23 +176,20 @@ class OvertimesController  extends HumanResourceAppController {
 			$data = $this->Overtime->formatData($this->request->data,$auth['id']);
 
 
-
 			if ($this->Overtime->save($data)) {
 
 				$overtime_id = $this->Overtime->id;
 				//create worshift and schedule
-				$workshift = $this->Workshift->createWorkshift($data,$overtime_id,$auth['id']);
+				//$workshift = $this->Workshift->createWorkshift($data,$overtime_id,$auth['id']);
 
-				if (!empty($workshift['id'])) {
 				//workhift break
-				$workshiftBreak = $this->WorkshiftBreak->createWorkshiftBreak($data,$workshift['id'],$overtime_id,$auth['id']);
+				$workshiftBreak = $this->WorkshiftBreak->createWorkshiftBreak($data,0,$overtime_id,$auth['id']);
 
-				}
-
+			
 				if (!empty($overtime_id)) {
 				//workhift workschedule
-				$workSchedule = $this->WorkSchedule->createSchedule($data,$workshift['id'],$overtime_id,$auth['id']);
-				$attendance = $this->Attendance->saveRecord($workSchedule);
+				//$workSchedule = $this->WorkSchedule->createSchedule($data,$workshift['id'],$overtime_id,$auth['id']);
+				//$attendance = $this->Attendance->saveRecord($workSchedule);
 				
 				}
 
@@ -128,8 +197,8 @@ class OvertimesController  extends HumanResourceAppController {
 		 		
 		 		$this->redirect( array(
                              'controller' => 'overtimes', 
-                             'action' => 'index',
-                             'tab' => 'overtimes',
+                             'action' => 'pendings',
+                             'tab' => 'pendings',
                              'plugin' => 'human_resource'
 
                         ));
@@ -148,7 +217,6 @@ class OvertimesController  extends HumanResourceAppController {
 		$breaktimes = $this->BreakTime->find('all',array(
 				'order' => 'BreakTime.from DESC',
 				'limit' => 10
-
 		));
 
 		$this->Employee->bind(array('Position'));
@@ -174,22 +242,24 @@ class OvertimesController  extends HumanResourceAppController {
 
 
 	public function edit($id) {
-		
+
+
 		$this->loadModel('HumanResource.Department');
 
 		$this->loadModel('HumanResource.Employee');
 
-		$this->loadModel('HumanResource.BreakTime');
-
 		$this->loadModel('HumanResource.Workshift');
 
-		$this->loadModel('HumanResource.WorkshiftBreak');
-
 		$this->loadModel('HumanResource.WorkSchedule');
+		
+		$this->loadModel('HumanResource.BreakTime');
+
+		$this->loadModel('HumanResource.WorkshiftBreak');
 
 		$this->loadModel('HumanResource.Position');
 		
 		$this->loadModel('HumanResource.Attendance');
+
 
 		$date = date('Y-m-d');
 		
@@ -197,7 +267,7 @@ class OvertimesController  extends HumanResourceAppController {
 
 		$departments = $this->Department->getList();
 
-		$auth = $this->Session->read('Auth.User');
+		$auth = $this->Session->read('Auth.User');	
 
 		if ($this->request->is('put')) {
 
@@ -209,25 +279,28 @@ class OvertimesController  extends HumanResourceAppController {
 
 			if ($this->Overtime->save($data)) {
 
-				//create worshift and schedule
-				$workshift = $this->Workshift->createWorkshift($data,$id,$auth['id']);
-
-				if (!empty($workshift['id'])) {
-				//workhift break
-				$workshiftBreak = $this->WorkshiftBreak->createWorkshiftBreak($data,$workshift['id'],$id,$auth['id']);
-
-				}
-
-				if (!empty($id)) {
-				//workhift workschedule
-				$workSchedule = $this->WorkSchedule->createSchedule($data,$workshift['id'],$id,$auth['id']);
-	
-				$attendance = $this->Attendance->saveRecord($workSchedule);
-				
-				}
-
 				$this->Session->setFlash('Saving overtime successfully','success');
-		 		
+
+					if ($overtime['Overtime']['status'] == 'approved') {
+
+					//$overtime = $this->Overtime->read(null,$otId);
+					//create worshift and schedule
+					$workshift = $this->Workshift->createWorkshift($overtime,$id,$auth['id']);
+
+					if (!empty($workshift['id'])) {
+					//workhift break
+					$workshiftBreak = $this->WorkshiftBreak->createWorkshiftBreak($overtime,$workshift['id'],$id,$auth['id']);
+
+					}
+
+					if (!empty($id)) {
+					//workhift workschedule
+						$workSchedule = $this->WorkSchedule->createSchedule($overtime,$workshift['id'],$id,$auth['id']);
+
+						$attendance = $this->Attendance->saveRecord($workSchedule);
+
+					}
+		 		}
 		 		$this->redirect( array(
                              'controller' => 'overtimes', 
                              'action' => 'index',
@@ -259,12 +332,10 @@ class OvertimesController  extends HumanResourceAppController {
 			);
 
 			$workshiftBreaks = $this->WorkshiftBreak->find('list',array(
-				'conditions' => array('WorkshiftBreak.workshift_id' => $workSchedule[0]['WorkShift']['id']),
+				'conditions' => array('WorkshiftBreak.overtime_id' => $id),
 				'fields' => array('id','breaktime_id')
 				)); 
-			$selectedEmployee = array_map(function($value) { return $value['Employee']['id']; },
-                         $workSchedule);
-
+			$selectedEmployee = (array)json_decode($this->request->data['Overtime']['employee_ids']);
 
 		}
 
@@ -273,7 +344,7 @@ class OvertimesController  extends HumanResourceAppController {
 				'limit' => 10
 
 		));
-
+		
 		$this->Employee->bind(array('Position'));
 
 		$employees = $this->Employee->find('all',array(
@@ -282,5 +353,96 @@ class OvertimesController  extends HumanResourceAppController {
 		));
 
 		$this->set(compact('date','search','departments','breaktimes','employees','selectedEmployee','workshiftBreaks'));
+	}
+
+	public function process($otId = null, $status = null) {
+
+		$this->loadModel('HumanResource.Employee');
+
+		$this->loadModel('HumanResource.BreakTime');
+
+		$this->loadModel('HumanResource.Workshift');
+
+		$this->loadModel('HumanResource.WorkshiftBreak');
+
+		$this->loadModel('HumanResource.WorkSchedule');
+
+		$this->loadModel('HumanResource.Position');
+		
+		$this->loadModel('HumanResource.Attendance');
+
+		if (!empty($otId) && !empty($status)) {
+
+			$this->Overtime->create();
+
+			$auth = $this->Session->read('Auth.User');
+
+			$overtime['Overtime']['id'] = $otId;
+			$overtime['Overtime']['status'] = $status;
+
+			if ($this->Overtime->save($overtime['Overtime'])) {
+
+			if ($status == 'approved') {
+
+				$overtime = $this->Overtime->read(null,$otId);
+				//create worshift and schedule
+				$workshift = $this->Workshift->createWorkshift($overtime,$otId,$auth['id']);
+
+
+				if (!empty($workshift['id'])) {
+				//workhift break
+				$workshiftBreak = $this->WorkshiftBreak->createWorkshiftBreak($overtime,$workshift['id'],$otId,$auth['id']);
+
+				}
+
+				if (!empty($otId)) {
+				//workhift workschedule
+				$workSchedule = $this->WorkSchedule->createSchedule($overtime,$workshift['id'],$otId,$auth['id']);
+
+				$attendance = $this->Attendance->saveRecord($workSchedule);
+
+				$this->Session->setFlash('Saving overtime successfully','success');
+			   } 
+
+			} else {
+
+
+				$this->Session->setFlash('OT request rejected','error');	
+
+			}
+
+				$this->redirect( array(
+                             'controller' => 'overtimes', 
+                             'action' => 'index',
+                             'tab' => 'overtimes',
+                             'plugin' => 'human_resource'
+
+                        ));
+				
+		
+			}
+			 else  {
+
+				$this->Session->setFlash('There\'s an error saving Overtime information','error');
+
+	
+				// $this->redirect( array(
+    //                          'controller' => 'overtimes', 
+    //                          'action' => 'edit',
+    //                          'tab' => 'overtimes',
+    //                          'plugin' => 'human_resource',
+    //                          $otId
+
+    //                     ));
+
+				}
+
+
+			
+
+
+
+		}
+
 	}
 }
