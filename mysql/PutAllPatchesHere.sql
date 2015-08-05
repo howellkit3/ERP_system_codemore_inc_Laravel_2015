@@ -1112,6 +1112,30 @@ VALUES
   /* august 4 2015 */
   ALTER TABLE `overtimes`  ADD `employee_ids` TEXT NULL  AFTER `to`;
   ALTER TABLE `work_shift_breaks`  ADD `overtime_id` INT(11) NULL  AFTER `workshift_id`;
+
+/* august 5 2015 */
+  ALTER TABLE `employees` CHANGE `code` `code` VARCHAR(255) NULL DEFAULT NULL;
+
+  ALTER TABLE `departments`  ADD `prefix` VARCHAR(45) NULL  AFTER `name`;
+  
+  CREATE TABLE IF NOT EXISTS `daily_infos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `date` datetime NOT NULL,
+  `work` varchar(255) NOT NULL,
+  `ot` varchar(255) NOT NULL,
+  `ob` varchar(255) NOT NULL,
+  `night` varchar(255) NOT NULL,
+  `night_ot` varchar(255) NOT NULL,
+  `leave` varchar(255) NOT NULL,
+  `no_work` varchar(255) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `remark` text NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
 /* end all HR tables */
-
-

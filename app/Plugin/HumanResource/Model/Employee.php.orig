@@ -60,6 +60,7 @@ class Employee extends AppModel {
 					'foreignKey' => 'position_id',
 					'conditions' => '',
 					),
+<<<<<<< HEAD
 				'Department' => array(
 					'className' => 'HumanResource.Department',
 					'foreignKey' => 'department_id',
@@ -69,7 +70,8 @@ class Employee extends AppModel {
 					'className' => 'HumanResource.Status',
 					'foreignKey' => 'status',
 					'conditions' => '',
-					),
+					)	
+=======
 
 				'DailyInfo' => array(
 						'className' => 'DailyInfo',
@@ -77,6 +79,7 @@ class Employee extends AppModel {
 						'conditions' => '',
 						'dependent' => true,
 					),		
+>>>>>>> cac7ada745af75b2ffedc01f612809d7b8afa89a
 			),
 			'hasMany' => array(
 				'Email' => array(

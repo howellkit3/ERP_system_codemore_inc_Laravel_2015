@@ -316,5 +316,7 @@ echo $this->Html->script(array(
                     });
                 });
 
+                $('#OvertimeDepartmentId').change();
+
         });
  </script>

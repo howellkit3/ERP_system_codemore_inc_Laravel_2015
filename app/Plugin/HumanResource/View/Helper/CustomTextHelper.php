@@ -12,13 +12,13 @@ function getFullname($data = array(),$fistname = 'first_name',$middle_name = 'mi
 
 	if (!empty($data)) {
 
-		$name = $data[$fistname];
+			$name = $data[$fistname];
 
 		if (!empty($data[$middle_name])) {
 			$name .= ' '.$data[$middle_name];
 		}
 
-		$name .= ' '.$data[$last_name];
+			$name .= ' '.$data[$last_name];
 
 
 		if (!empty($data[$suffix])) {

@@ -1,6 +1,6 @@
 <?php $this->Html->addCrumb('Settings', array('controller' => 'settings', 'action' => 'department')); ?>
 <?php $this->Html->addCrumb('Department', array('controller' => 'settings', 'action' => 'department')); ?>
-<?php $this->Html->addCrumb('Edit', array('controller' => 'settings', 'action' => 'edit',$this->reqeust->data['Department']['id'])); ?>
+<?php $this->Html->addCrumb('Edit', array('controller' => 'settings', 'action' => 'edit',$this->request->data['Department']['id'])); ?>
 <?php echo $this->Html->css('HumanResource.default');?>
 <?php echo $this->Html->script(array(
                         'jquery.maskedinput.min',

@@ -75,7 +75,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="inputPassword1" class="col-lg-2 control-label">Tin No.</label>
+                                    <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span>Tin No.</label>
                                     <div class="col-lg-9">
                                         <?php
                                             echo $this->Form->input('Supplier.tin', array('class' => 'form-control col-lg-6 required','label' => false));
