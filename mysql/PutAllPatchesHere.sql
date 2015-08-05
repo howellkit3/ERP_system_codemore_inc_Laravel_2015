@@ -1139,3 +1139,20 @@ VALUES
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 /* end all HR tables */
+
+#NOTE: SELECT KOUFU Re ----
+/** howell kit added this 08/05/2015 all tables are here  */
+#NOTE: SELECT KOUFU WAREHOUSE DATABASE ----
+
+CREATE TABLE `received_orders` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `uuid` INT(11) NOT NULL,
+  `purchase_order_id` INT(11) DEFAULT NULL,
+  `status_id` INT(11) NOT NULL,
+  `remarks` TEXT NOT NULL,
+  `received_by` INT(11) NOT NULL,
+  `approved_by` INT(11) NOT NULL,
+  `created` TIMESTAMP NULL DEFAULT NULL,
+  `modified` TIMESTAMP NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
