@@ -210,8 +210,8 @@
                                                                     'type' => 'select',
                                                                     'label' => false,
                                                                     'class' => 'form-control required',
-                                                                    'empty' => '---Select Department---',
-                                                                    'options' => array($departmentData)
+                                                                    'empty' => '---Select Tool---',
+                                                                    'options' => array($toolList)
 
                                                                   ));
                                 ?>
@@ -219,6 +219,23 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="inputEmail1" class="col-lg-3 control-label"> Employee Name</label>
+                            
+                            <div class="col-lg-6">
+                                <?php 
+                                       echo $this->Form->input('Department.employee_id', array(
+                                                                    'type' => 'select',
+                                                                    'label' => false,
+                                                                    'class' => 'form-control required',
+                                                                    'empty' => '---Select Employee---',
+                                                                    'options' => array($employeeList)
+
+                                                                  ));
+                                ?>
+                            </div>
+                        </div>
+
+                        <!-- <div class="form-group">
                             <label for="inputEmail1" class="col-lg-3 control-label"> Date Range</label>
 
                            <div class="col-lg-6">
@@ -229,7 +246,7 @@
                             </div>
 
                            
-                        </div>
+                        </div> -->
 
                         <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-share-square-o fa-lg"></i> Export</button>
