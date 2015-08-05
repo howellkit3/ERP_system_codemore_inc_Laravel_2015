@@ -502,33 +502,33 @@ class EmployeesController  extends HumanResourceAppController {
 
 	public function print_tool($id = null) {
 		
-		$this->loadModel('HumanResource.Tool');
+		// $this->loadModel('HumanResource.Tool');
 
-		$toolId = $this->request->data['Tool']['tool_id'];
+		// $toolId = $this->request->data['Tool']['tool_id'];
 		
-        if (!empty($this->request->data['from_date'])) {
+  //       if (!empty($this->request->data['from_date'])) {
 
-        	$dateRange = str_replace(' ', '', $this->request->data['from_date']);
+  //       	$dateRange = str_replace(' ', '', $this->request->data['from_date']);
        
-	        $splitDate = split('-', $dateRange);
-	        $from = str_replace('/', '-', $splitDate[0]);
-	        $to = str_replace('/', '-', $splitDate[1]);
+	 //        $splitDate = split('-', $dateRange);
+	 //        $from = str_replace('/', '-', $splitDate[0]);
+	 //        $to = str_replace('/', '-', $splitDate[1]);
 
-	        $toolData = $this->Tool->find('all', array(
-                'conditions' => array(
-                    'AND' => array(
-                        'Tool.tool_id' => $toolId,
-                        'Tool.created BETWEEN ? AND ?' => array($from.' '.'00:00:00:', $to.' '.'23:00:00:')
-                    ),
-                ),
-                'order' => 'Tool.id DESC'
-            ));
+	 //        $toolData = $this->Tool->find('all', array(
+  //               'conditions' => array(
+  //                   'AND' => array(
+  //                       'Tool.tool_id' => $toolId,
+  //                       'Tool.created BETWEEN ? AND ?' => array($from.' '.'00:00:00:', $to.' '.'23:00:00:')
+  //                   ),
+  //               ),
+  //               'order' => 'Tool.id DESC'
+  //           ));
 
-        } else {
+  //       } else {
 
-        	$toolData = $this->Tool->find('all',array('conditions' => array('EmpToolloyee.tool_id' => $toolId)));
+  //       	$toolData = $this->Tool->find('all',array('conditions' => array('EmpToolloyee.tool_id' => $toolId)));
 
-        }
+  //       }
 		//pr($employeeData);exit();
 		$this->set(compact('toolData'));
 		$this->render('Employees/xls/tool_report');

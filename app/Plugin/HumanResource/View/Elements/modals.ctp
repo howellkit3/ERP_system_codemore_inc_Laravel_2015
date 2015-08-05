@@ -218,7 +218,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="inputEmail1" class="col-lg-3 control-label"> Date Range</label>
 
                            <div class="col-lg-6">
@@ -229,7 +229,7 @@
                             </div>
 
                            
-                        </div>
+                        </div> -->
 
                         <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-share-square-o fa-lg"></i> Export</button>

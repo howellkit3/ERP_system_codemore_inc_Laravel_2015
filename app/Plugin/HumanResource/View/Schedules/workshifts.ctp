@@ -35,7 +35,9 @@
 			                                'escape' => false));
 
 			                    ?> 
-			                  
+			                  	
+			                  	<a data-toggle="modal" href="#myToolReport" class="btn btn-primary pull-right "><i class="fa fa-share-square-o fa-lg"></i> Export</a>
+			                  	
 			                   <br><br>
 			               </div>
 			            </header>
