@@ -67,7 +67,10 @@ class EmployeesController  extends HumanResourceAppController {
 		                	'3' => 'Employee',
 		                	'4' => 'Others'
 		                	);
-         $this->loadModel('HumanResource.Employee');
+
+        $this->loadModel('HumanResource.Employee');
+
+        $employeeList = $this->Employee->find('list',array('fields' => array('id','fullname')));
 
 		$this->loadModel('HumanResource.Tool');
 
@@ -502,36 +505,31 @@ class EmployeesController  extends HumanResourceAppController {
 
 	public function print_tool($id = null) {
 		
-		// $this->loadModel('HumanResource.Tool');
+		$this->loadModel('HumanResource.Tooling');
 
-		// $toolId = $this->request->data['Tool']['tool_id'];
+		$toolId = $this->request->data['Tool']['tool_id'];
+		$employeeId = $this->request->data['Tool']['employee_id'];
 		
-  //       if (!empty($this->request->data['from_date'])) {
+        if (!empty($employeeId)) {
 
-  //       	$dateRange = str_replace(' ', '', $this->request->data['from_date']);
-       
-	 //        $splitDate = split('-', $dateRange);
-	 //        $from = str_replace('/', '-', $splitDate[0]);
-	 //        $to = str_replace('/', '-', $splitDate[1]);
+	        $toolingData = $this->Tooling->find('all', array(
+                'conditions' => array(
+                    'AND' => array(
+                        'Tooling.tool_id' => $toolId,
+                        'Tooling.tool_id' => $employeeId,
+                    ),
+                ),
+                'order' => 'Tooling.id DESC'
+            ));
 
-	 //        $toolData = $this->Tool->find('all', array(
-  //               'conditions' => array(
-  //                   'AND' => array(
-  //                       'Tool.tool_id' => $toolId,
-  //                       'Tool.created BETWEEN ? AND ?' => array($from.' '.'00:00:00:', $to.' '.'23:00:00:')
-  //                   ),
-  //               ),
-  //               'order' => 'Tool.id DESC'
-  //           ));
+        } else {
 
-  //       } else {
+        	$toolingData = $this->Tooling->find('all',array('conditions' => array('Tooling.tool_id' => $toolId)));
 
-  //       	$toolData = $this->Tool->find('all',array('conditions' => array('EmpToolloyee.tool_id' => $toolId)));
-
-  //       }
-		//pr($employeeData);exit();
-		$this->set(compact('toolData'));
-		$this->render('Employees/xls/tool_report');
+        }
+		pr($toolingData);exit();
+		// $this->set(compact('toolingData'));
+		// $this->render('Employees/xls/tool_report');
 
 	}
 
