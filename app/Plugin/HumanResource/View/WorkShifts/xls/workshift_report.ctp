@@ -5,20 +5,17 @@
     $this->PhpExcel->createWorksheet()
         ->setDefaultFont('Calibri', 12);
 
-    $objTpl = PHPExcel_IOFactory::load("./img/tool_record.xls");
+    $objTpl = PHPExcel_IOFactory::load("./img/workshift_record.xls");
     $counter = 5;
-    foreach ($toolingData as $key => $toolList) {
+    foreach ($workshiftData as $key => $workList) {
         $key++;
        
         $objTpl->setActiveSheetIndex(0)
                     ->setCellValue('A1',(new \DateTime())->format('m/d/Y'))
                     ->setCellValue('A'.$counter, $key)
-                    ->setCellValue('B'.$counter, $toolList['Employee']['first_name'].' '.$toolList['Employee']['middle_name'].' '.$toolList['Employee']['last_name'].' '.$toolList['Employee']['suffix'])
-                    ->setCellValue('C'.$counter, $toolList['Tool']['name'])
-                    ->setCellValue('D'.$counter, $toolList['Tooling']['quantity'])
-                    ->setCellValue('E'.$counter, $toolList['Tooling']['price'])
-                    ->setCellValue('F'.$counter, $toolList['Tooling']['pay'])
-                    ->setCellValue('G'.$counter, $toolList['Tooling']['status']);
+                    ->setCellValue('B'.$counter, $workList['WorkShift']['name'])
+                    ->setCellValue('C'.$counter, $workList['WorkShift']['from'])
+                    ->setCellValue('D'.$counter, $workList['WorkShift']['to']);
 
         $counter++;  
         

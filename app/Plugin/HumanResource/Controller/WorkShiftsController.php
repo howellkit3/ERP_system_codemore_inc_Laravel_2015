@@ -5,7 +5,9 @@ App::uses('SessionComponent', 'Controller/Component');
 
 class WorkShiftsController  extends HumanResourceAppController {
 
-	var $helpers = array('HumanResource.CustomText','HumanResource.Country','HumanResource.BreakTime');
+	//var $helpers = array('HumanResource.CustomText','HumanResource.Country','HumanResource.BreakTime');
+	var $helpers = array('HumanResource.PhpExcel','HumanResource.BreakTime');
+	//,'HumanResource.Country'
 
 	public function add() {
 
@@ -122,14 +124,14 @@ public function edit($id = null) {
 	}
 
 
-public function delete($id = null) {
+	public function delete($id = null) {
 
 
-		$this->loadModel('HumanResource.Workshift');
+		$this->loadModel('HumanResource.WorkShift');
 
 		if (!empty($id)) {
 
-			if ($this->Workshift->delete($id)) {
+			if ($this->WorkShift->delete($id)) {
                 $this->Session->setFlash(
                     __('Successfully deleted.', h($id))
                 );
@@ -147,8 +149,17 @@ public function delete($id = null) {
 
                         ));
 		}
- 
-}
+	 
+	}
+
+	public function export(){
+
+        $workshiftData = $this->WorkShift->find('all',array('order' => 'WorkShift.id ASC'));
+        
+		$this->set(compact('workshiftData'));
+
+		$this->render('Workshifts/xls/workshift_report');
+	}
 
 
 }
