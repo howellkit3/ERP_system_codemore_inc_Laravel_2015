@@ -62,115 +62,54 @@ echo $this->element('hr_options');
 										<tr>
 											<th><a href="#"><span>Code</span></a></th>
 											<th><a href="#"><span>Employee Name</span></a></th>
+											<th><a href="#"><span>Date</span></a></th>
+											<th><a href="#"><span>Work</span></a></th>
+											<th><a href="#"><span>OT</span></a></th>
+											<th><a href="#"><span>OB</span></a></th>
+											<th><a href="#"><span>NIGHT</span></a></th>
+											<th><a href="#"><span>NIGHT OT</span></a></th>
+											<th><a href="#"><span>LEAVE</span></a></th>
+											<th><a href="#"><span>No Work</span></a></th>
 											<th><a href="#"><span>Type</span></a></th>
-											<th><a href="#" class="text-center"><span>From</span></a></th>
-											<th><a href="#" class="text-center"><span>To</span></a></th>
-											<th><a href="#"><span>In</span></a></th>
-											<th><a href="#"><span>Out</span></a></th>
-											<th><a href="#"><span>Duration</span></a></th>
-											<th><a href="#"><span>Remarks</span></a></th>
-											<th><a href="#"><span>Actions</span></a></th>
+											<th><a href="#"><span>Remark</span></a></th>
 										</tr>
 									</thead>
 
 									<tbody aria-relevant="all" aria-live="polite" role="alert">
 									<?php 
-								        if(!empty($attendances)){
+								        if(!empty($dailyInfos)){
 
-								            foreach ($attendances as $key => $schedule): ?>
-													<tr class="parent-tr-<?php echo $schedule['Attendance']['id'] ?>">
-														<td> <?php echo $schedule['Employee']['code']; ?></td>
-														<td class="">
-								                          <?php 
-								                          if ($schedule['WorkSchedule']['model'] == 'Employee') {
-
-								                          		echo $this->CustomText->getFullname($schedule['Employee']);
-
-								                          } else if ($schedule['WorkSchedule']['model'] == 'Department') {
-
-								                          		echo "Department";
-								                          }
-								                          
-								                           ?>
-								                        </td>
-								                        <td class="text-center"> 
-
-								                        	<?php echo !empty($overtime['Overtime']['status']) ? $overtime['Overtime']['status'] : ''; ?>
-															<span class="label <?php echo $schedule['Attendance']['type'] == 'work' ? 'label-success' : 'label-default' ?>"><?php echo $schedule['Attendance']['type'] ?></span>
-
-								                        </td>
-														<td> 
-								                           <?php echo date('Y/m/d',strtotime($schedule['Attendance']['date'])).' '.date('h:i a',strtotime($schedule['WorkShift']['from'])); ?> 
-								                        </td>
-								                        <td > 
-								                           <?php echo date('Y/m/d',strtotime($schedule['Attendance']['date'])).' '.date('h:i a',strtotime($schedule['WorkShift']['to'])); ?> 
-								                        </td>
-								                         </td>
-								                        <td class="text-center time-in"> 
-								                           <?php 
-								                           $timeIn = (!empty($schedule['Attendance']['in']) && $schedule['Attendance']['in']  != '00:00:00') ? date('h:i a',strtotime($schedule['Attendance']['in'])) : '';
-															echo $timeIn;
-								                            ?> 
-								                        </td>
-								                        </td>
-								                        <td class="text-center time-out"> 
-								                           <?php 
-								                           $timeOut = (!empty($schedule['Attendance']['out']) && $schedule['Attendance']['out']  != '00:00:00') ? date('h:i a',strtotime($schedule['Attendance']['out'])) : '';
-
-								                           	echo $timeOut;
-								                           ?> 
-								                        </td>
-								                         <td class="text-center" > 
-								                           <?php echo $this->CustomTime->getDuration($timeIn,$timeOut); ?> 
-								                        </td>
-								                        <td class="text-center notes-td"> 
-								                           <?php echo $schedule['Attendance']['notes']; ?> 
-								                        </td>
-								                       	<td>
-								                      	<?php
-														echo $this->Html->link('<span class="fa-stack">
-														<i class="fa fa-square fa-stack-2x"></i>
-														<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> view </font></span>
-														</span> ','#personalAttendance',
-														array('class' =>'view_attendance table-link',
-															   'escape' => false,
-															   'data-url' => '/attendances/view/'.$schedule['Attendance']['id'],
-															   'title'=>'Edit Information',
-															   'data-toggle' => 'modal',
-															   'data-id' => $schedule['Attendance']['id'],
-															));
-														if (!empty($timeIn)) {
-
-															$sign = 'fa-sign-out';
-														
-															$title = 'Time Out';
-
-														} else {
-
-															$sign =  'fa-sign-in';
-
-															$title = 'Time In';
-														}
-														
-														if (empty($timeIn) || empty($timeOut)) {
-
-															echo $this->Html->link('<span class="fa-stack">
-															<i class="fa fa-square fa-stack-2x"></i>
-															<i class="fa '.$sign.' fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Log </font></span>
-															</span> ','#timeKeep',
-															array('class' =>'add-timekeep table-link',
-																   'escape' => false,
-																   'title' => $title ,
-																   'data-toggle' => 'modal',
-																   'data-id' => $schedule['Attendance']['id'],
-																   'onClick' => 'getEmployeeData(this,'.$schedule['Attendance']['id'].')'
-																));
-
-														}
-														?>
-
-								                        </td>
+								            foreach ($dailyInfos as $key => $daily): ?>
+													
+													<tr>
+														<td> <?php echo $daily['Employee']['code']; ?></td>
+								                   
+														<td> <?php echo $this->CustomText->getFullname($daily['Employee']); ?></td>
+								                   
+														<td> <?php echo date('Y/m/d',strtotime($daily['DailyInfo']['date'])); ?></td>
+								                    
+														<td> <?php 
+														$time = $this->CustomTime->getTotalWorks($daily['DailyInfo']['employee_id']);
+														echo !empty($time['total_time']) ? $time['total_time'] : '';
+														 ?></td>
+								                   
+														<td> <?php //echo $daily['Employee']['code']; ?></td>
+								                   
+														<td> <?php //echo $daily['Employee']['code']; ?></td>
+								                    
+														<td> <?php //echo $daily['Employee']['code']; ?></td>
+								                   
+														<td> <?php //echo $daily['Employee']['code']; ?></td>
+								                   
+														<td> <?php //echo $daily['Employee']['code']; ?></td>
+								                    
+														<td> <?php //echo $daily['Employee']['code']; ?></td>
+								                  
+														<td> <?php //echo $daily['Employee']['code']; ?></td>
+								                  
+														<td> <?php //echo $daily['Employee']['code']; ?></td>
 								                    </tr>
+
 
 								                
 								        <?php 

@@ -31,13 +31,18 @@
 			                   		echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Add', 
 			                            array('controller' => 'workshifts', 
 			                                    'action' => 'add'),
-			                            array('class' =>'btn btn-primary pull-right',
+			                            array('class' =>'btn btn-primary',
 			                                'escape' => false));
+
+			                   		echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> Export', 
+				                            array('controller' => 'workshifts', 
+				                                    'action' => 'export',),
+				                            array('class' =>'btn btn-primary pull-right',
+				                                'escape' => false));
 
 			                    ?> 
 			                  	
-			                  	<a data-toggle="modal" href="#myToolReport" class="btn btn-primary pull-right "><i class="fa fa-share-square-o fa-lg"></i> Export</a>
-			                  	
+			                  
 			                   <br><br>
 			               </div>
 			            </header>

@@ -13,10 +13,10 @@
 		                                        <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> First Name</label>
 		                                        <div class="col-lg-9">
 		                                        	<?php
-		                                                echo $this->Form->input('Employee.id', array('class' => 'form-control col-lg-6 required','label' => false));
+		                                                echo $this->Form->input('Employee.id', array('class' => 'form-control col-lg-6 required name-check','label' => false));
 		                                            ?>
 		                                            <?php
-		                                                echo $this->Form->input('Employee.first_name', array('class' => 'form-control col-lg-6 required','label' => false));
+		                                                echo $this->Form->input('Employee.first_name', array('class' => 'form-control col-lg-6 required name-check','label' => false));
 		                                            ?>
 		                                        </div>
 		                                     </div>
@@ -24,7 +24,7 @@
 		                                        <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Last Name</label>
 		                                        <div class="col-lg-9">
 		                                            <?php
-		                                                echo $this->Form->input('Employee.last_name', array('class' => 'form-control col-lg-6 required','label' => false));
+		                                                echo $this->Form->input('Employee.last_name', array('class' => 'form-control col-lg-6 required name-check','label' => false));
 		                                            ?>
 		                                        </div>
 		                                     </div>
@@ -33,7 +33,7 @@
 		                                        <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Middle Name</label>
 			                                        <div class="col-lg-9">
 			                                            <?php
-			                                                echo $this->Form->input('Employee.middle_name', array('class' => 'form-control col-lg-6 required','label' => false));
+			                                                echo $this->Form->input('Employee.middle_name', array('class' => 'form-control col-lg-6 required name-check','label' => false));
 			                                            ?>
 			                                        </div>
 		                                     </div>
@@ -123,8 +123,23 @@
 							                                         array('class' => 'form-control required',
 							                                        'div' => 'col-lg-7',
 							                                        'label' => false));
-			                                        	?>				
+			                                        	?>
+
+
 														 </div>
+			                                          </div>
+
+			                                          <div class="form-group">
+				                                          <div class="col-lg-4">	
+	                                                        </div> 
+	                                                        <div class="col-lg-5">		
+																<div class="checkbox-nice">
+	                                                                    <input type="checkbox" id="checkbox-generate" onclick="getCode(this)" name="generate_code">
+	                                                                    <label for="checkbox-generate">
+	                                                                    Generate Code
+	                                                                    </label>
+	                                                             </div>
+	                                                        </div> 
 			                                          </div>
 			                                          
 		                                        </div>
