@@ -22,8 +22,7 @@ class EmployeesController  extends HumanResourceAppController {
         $conditions = array();
 
 	 	if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'Employee' ) {
-	 		$this->Employee->bind(array('Position','Department'));
-	 		$this->Employee->bind(array('Status'));
+	 		$this->Employee->bind(array('Position','Department','Status'));
 
 	        $this->paginate = array(
 	            'conditions' => $conditions,
