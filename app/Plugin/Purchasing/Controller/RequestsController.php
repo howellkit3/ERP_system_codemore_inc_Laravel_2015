@@ -724,4 +724,57 @@ class RequestsController extends PurchasingAppController {
         }
     }
 
+
+    public function product_search($itemGroupId = null, $searchHint = null ,$dynamicId) {
+
+    	$this->loadModel('GeneralItem');
+
+    	$this->loadModel('Substrate');
+
+    	$this->loadModel('CorrugatedPaper');
+
+    	$this->loadModel('CompoundSubstrate');
+
+
+    	if($itemGroupId == 1) {
+    		$ModelName = 'GeneralItem';
+    		$searchedProduct = $this->GeneralItem->find('all',array(
+												'conditions' => array(
+        										'GeneralItem.name LIKE' => '%' . $searchHint . '%',
+        										 ),'limit' => 10));
+    	}
+    	if($itemGroupId == 2) {
+    		$ModelName = 'Substrate';
+    		$searchedProduct = $this->Substrate->find('all',array(
+												'conditions' => array(
+        										'Substrate.name LIKE' => '%' . $searchHint . '%',
+        										 ),'limit' => 10));
+    	}
+    	if($itemGroupId == 3) {
+    		$ModelName = 'CompoundSubstrate';
+    		$searchedProduct = $this->CompoundSubstrate->find('all',array(
+												'conditions' => array(
+        										'CompoundSubstrate.name LIKE' => '%' . $searchHint . '%',
+        										 ),'limit' => 10));
+    	}
+    	if($itemGroupId == 4) {
+    		$ModelName = 'CorrugatedPaper';
+    		$searchedProduct = $this->CorrugatedPaper->find('all',array(
+												'conditions' => array(
+        										'CorrugatedPaper.name LIKE' => '%' . $searchHint . '%',
+        										 ),'limit' => 10));
+    	}
+
+    	//pr($searchedProduct); exit;
+
+    	// foreach ($categoryData as $key => $list) {    		
+    	// 	$categoryData[$key][$ModelName]['name'] = utf8_encode($list[$ModelName]['name']);    		
+    	// }
+    	//pr($categoryData);exit();
+    	$this->set(compact('searchedProduct','ModelName','dynamicId'));
+		$this->render('searched_item_details');
+
+    }
+
+
 }
