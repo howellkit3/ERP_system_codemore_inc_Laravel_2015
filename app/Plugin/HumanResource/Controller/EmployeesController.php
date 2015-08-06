@@ -635,4 +635,21 @@ class EmployeesController  extends HumanResourceAppController {
 
 
 	}
+	
+	public function search_by_department($departmentId = null){
+
+		$this->loadModel('HumanResource.Position');
+		$this->loadModel('HumanResource.Department');
+		$this->loadModel('HumanResource.Status');
+
+		$this->Employee->bind(array('Position','Department','Status'));
+
+		$employeeData = $this->Employee->find('all',array('conditions' => array('Employee.department_id' => $departmentId)));
+
+		$this->set(compact('employeeData'));
+		
+    	$this->render('search_by_department');
+    	
+
+	}
 }

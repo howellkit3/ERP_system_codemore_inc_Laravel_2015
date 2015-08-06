@@ -158,7 +158,8 @@ $(document).ready(function(){
             url: $url,
             data : $(this).serialize(),
             dataType: "json",
-            success: function(data) {   
+            success: function(data) {  
+
                 $parent = $('.parent-tr-'+data.Attendance.id);
                 
                 $parent.find('.time-in').text(data.Attendance.in);
@@ -166,9 +167,17 @@ $(document).ready(function(){
                  if (data.Attendance.out != null) {
 
                     $parent.find('.time-out').text(data.Attendance.out);
-                     $parent.find('.time-out').text(data.Attendance.out);
-                 }
+                    $parent.find('.time-out').text(data.Attendance.out);
 
+                 }
+                
+                 if (data.Attendance.status == 'OnTime') {
+                    $parent.find('.attendance-status').html('<span class="label label-success">OnTime</span>');
+                 };
+                 if (data.Attendance.status == 'Late') {
+                    $parent.find('.attendance-status').html('<span class="label label-danger">Late</span>');
+                 };
+                 
                  $parent.find('.notes-td').text(data.Attendance.notes);
              
                 //$('button[data-dismiss="modal"]').click();    

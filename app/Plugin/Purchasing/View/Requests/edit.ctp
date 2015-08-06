@@ -371,8 +371,12 @@
 			                            <th><a href="#"><span>Name</span></a></th>
 			                        </tr>
 			                    </thead>
-			                    <tbody class="tableProduct" aria-relevant="all" id="scrollTable" aria-live="polite" role="alert" >
+			                     <tbody class="tableProduct" aria-relevant="all" id="scrollTable" aria-live="polite" role="alert" >
 			                    </tbody>
+
+			                    <tbody class="Itemtable" aria-relevant="all" id="scrollTable" aria-live="polite" role="alert" >
+			                    </tbody>
+
 			                </table>
 
 			                <div class="table-responsive">
@@ -456,6 +460,44 @@
 	    });
 
 
+	    $("body").on('keyup','.searchItem', function(e){
+        var searchInput = $(this).val();
+        var thisMe = $(this);
+        var itemGroup = $('.ItemGroup').val();
+
+        if(searchInput != ''){
+
+            thisMe.parents('.modal-body').find('.tableProduct').hide();
+            thisMe.parents('.modal-body').find('.Itemtable').show();
+            //alert('hide');
+
+        }else{
+            thisMe.parents('.modal-body').find('.tableProduct').show();
+            thisMe.parents('.modal-body').find('.Itemtable').hide();
+            //alert('show');
+        }
+
+        if(searchInput){
+            $.ajax({
+                type: "GET",
+                url: serverPath + "purchasing/requests/product_search/"+itemGroup+"/"+searchInput+"/"+itemGroup,
+                dataType: "html",
+                success: function(data) {
+                   
+                    if(data){
+                       
+                        thisMe.parents('.modal-body').find('.Itemtable').html(data); 
+                    }else{
+                         
+                        thisMe.parents('.modal-body').find('.Itemtable').html('<font color="red"><b>No result..</b></font>'); 
+                    }
+                    
+                }
+            });
+
+        }
+        
+    });
 
 	 </script>
 

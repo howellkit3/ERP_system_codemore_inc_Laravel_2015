@@ -1166,3 +1166,7 @@ CREATE TABLE IF NOT EXISTS `received_items` (
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
+/** bien added this 08/06/2015   */
+ALTER TABLE `attendances` ADD `status` VARCHAR(50)  NULL  DEFAULT NULL  AFTER `modified`;
+
+

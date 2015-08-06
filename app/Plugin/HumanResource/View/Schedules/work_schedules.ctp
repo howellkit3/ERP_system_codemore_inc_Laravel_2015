@@ -1,7 +1,6 @@
 <?php 
  echo $this->Html->css(array( 'HumanResource.default' ));
 
-
 	echo $this->element('hr_options');
 
 	$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
@@ -83,6 +82,13 @@
 									                        </td>
 									                       	<td>
 									                      	<?php
+
+									                      	echo $this->Html->link('<span class="fa-stack">
+															<i class="fa fa-square fa-stack-2x"></i>
+															<i class="fa fa-search fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> View </font></span>
+															</span> ', array('controller' => 'schedules', 'action' => 'view',$schedule['WorkSchedule']['id']),array('class' =>' table-link','escape' => false,'title'=>'View Information'));
+									                      	
+
 															echo $this->Html->link('<span class="fa-stack">
 															<i class="fa fa-square fa-stack-2x"></i>
 															<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit </font></span>
@@ -95,8 +101,9 @@
 															</span> ', array('controller' => 'work_schedules', 'action' => 'delete',$schedule['WorkSchedule']['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Information'),
 																 array('escape' => false), 
 											                          __('Are you sure you want to delete %s?', 
-											                                $schedule['WorkSchedule']['id'])
-															);
+											                                $schedule['WorkSchedule']['id']));
+
+
 
 															?>	
 									                        </td>

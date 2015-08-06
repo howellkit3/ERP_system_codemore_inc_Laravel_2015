@@ -429,6 +429,8 @@ public function getEmployeeData($attendaceId = null,$date = null) {
 	
 	if (!empty($attendaceId)) {
 
+		$this->loadModel('HumanResource.WorkSchedule');
+
 		$this->loadModel('HumanResource.Workshift');
 
 		$this->loadModel('HumanResource.Employee');
@@ -444,7 +446,7 @@ public function getEmployeeData($attendaceId = null,$date = null) {
 		 'Attendance.id' => $attendaceId,
 		);
 
-		$this->Attendance->bind(array('Employee'));
+		$this->Attendance->bind(array('Employee','WorkSchedule','WorkShift'));
 
 		$attendance = $this->Attendance->find('first',array(
 			'conditions' => $conditions

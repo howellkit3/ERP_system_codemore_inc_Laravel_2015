@@ -115,6 +115,26 @@ class Employee extends AppModel {
 		$this->contain($model);
 	}
 
+	public function bindEmployee() {
+		$this->bindModel(array(
+			'hasOne' => array(
+				'WorkSchedule' => array(
+					'className' => 'HumanResource.WorkSchedule',
+					'foreignKey' => false,
+					'conditions' => 'Employee.id = WorkSchedule.foreign_key'
+				),		
+
+				'WorkShift' => array(
+					'className' => 'HumanResource.WorkShift',
+					'foreignKey' => false,
+					'conditions' => 'WorkSchedule.work_shift_id = WorkShift.id'
+				),	
+			)
+		));
+		$this->recursive = 1;
+		//$this->contain($giveMeTheTableRelationship);
+	}
+
 	public function getList($conditions = array()) {
 
 		return $this->find('list',array(
@@ -124,5 +144,30 @@ class Employee extends AppModel {
 				'fields' => array('Employee.id','Employee.full_name')
 			));
 	}
+
+	public function getAllWorkShift($params = array()){
+
+		
+		$workshifts = $this->find('all',$params);
+
+	
+		$list = [];
+			foreach ($workshifts as $key => $workshift) {
+				if (!empty($workshift['WorkShift']['from']) && $workshift['WorkShift']['from'] != '00-00-00') {
+					$list[$key]['title'] = '2015-07-1';
+					$list[$key]['start'] = $workshift['WorkShift']['from'];
+					$list[$key]['end']  = $workshift['WorkShift']['to'];
+					$list[$key]['color'] = '#257e4a';
+				}
+			}
+
+			$list = json_encode($list);
+			$list = str_replace('[','',$list);
+			$list = str_replace(']','',$list);
+
+			return $list;
+
+	}
+
 
 }
