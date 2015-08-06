@@ -23,7 +23,7 @@
                                 Assign Tools
                             </h1>
                         </center>
-                        <?php echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'employees', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false)); ?>
+                        <?php echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'employees', 'action' => 'index','tab' => 'tab-tooling'),array('class' =>'btn btn-primary pull-right','escape' => false)); ?>
                     </header>
 
                 </div>
@@ -122,7 +122,7 @@
                                 </div>
                                 <div class="col-xs-2 col-md-2 2">
                                     <?php 
-                                        echo $this->Html->link('Cancel ', array('controller' => 'customer_sales', 'action' => 'index'),array('class' =>'btn btn-default','escape' => false));
+                                        echo $this->Html->link('Cancel ', array('controller' => 'employees', 'action' => 'index','tab' => 'tab-tooling'),array('class' =>'btn btn-default','escape' => false));
                                     ?>
                                 </div>
                             </div>

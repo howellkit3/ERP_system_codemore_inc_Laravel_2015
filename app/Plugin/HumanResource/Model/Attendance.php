@@ -153,6 +153,7 @@ class Attendance extends AppModel {
 			}
 
 			$attendance['Attendance']['notes'] = $data['Attendance']['notes']; 
+			$attendance['Attendance']['status'] = $data['Attendance']['status']; 
 
 	
 			return $attendance;

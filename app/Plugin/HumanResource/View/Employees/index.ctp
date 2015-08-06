@@ -6,6 +6,20 @@
 	$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : 'tab-employee';
  ?>
 
+ <?php 
+echo $this->Html->css('HumanResource.default');
+ 
+echo $this->Html->css(array(
+                    'HumanResource.select2.css',
+                    //'timepicker'
+)); 
+ echo $this->Html->script(array(
+                    //'jquery.maskedinput.min',
+                    'HumanResource.select2.min',
+                    'HumanResource.employee',
+
+));  ?>
+
 <div class="row">
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
@@ -20,6 +34,17 @@
 						<header class="main-box-header clearfix">
 			                <h2 class="pull-left"><b>Employee List</b></h2>
 			                <div class="filter-block pull-right">
+			                	<div class="form-group pull-left search-dropdown">
+			                 		<?php echo $this->Form->input('department_id',array(
+			                 		'options' => $departments,
+			                 		'class' => 'autocomplete select-department-view',
+			                 		'label' => false,
+			                 		'div'  => false,
+			                 		//'default' => $department,
+			                 		'empty'=> '-- Select Department --'
+
+			                 		)); ?>
+			                    </div>
 			                 <div class="form-group pull-left">
 			                        <?php //echo $this->Form->create('Quotation',array('controller' => 'quotations','action' => 'search', 'type'=> 'get')); ?>
 			                            <input placeholder="Search..." class="form-control searchCustomer"  />
@@ -55,10 +80,14 @@
 										</tr>
 									</thead>
 
+									<tbody aria-relevant="all" aria-live="polite" role="alert" class="append-table-department" style="display:none;">
+										<!-- append by department -->
+									</tbody>
+
 									<?php 
 								        if(!empty($employees)){
 								            foreach ($employees as $key => $employee): ?>
-												<tbody aria-relevant="all" aria-live="polite" role="alert">
+												<tbody aria-relevant="all" aria-live="polite" role="alert" class="default-table">
 													<tr class="">
 														<td class="">
 								                            <?php echo $employee['Employee']['code'];?> 

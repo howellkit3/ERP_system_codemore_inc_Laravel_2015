@@ -60,7 +60,15 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
               )); ?>
         </li>
 
-
+        <li class="">
+          <?php $page =($active_page == 'contracts') ? 'active' : '' ?>
+            <?php echo $this->Html->link("<span class='count'>Contract</span>",
+             array('controller' => 'contracts',
+              'action' => 'index'),
+              array('escape' => false,
+                'class' => 'btn '.$page 
+              )); ?>
+        </li>
 
          <li class="">
           <?php $page =($active_page == 'settings') ? 'active' : '' ?>
