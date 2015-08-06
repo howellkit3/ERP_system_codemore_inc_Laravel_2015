@@ -35,7 +35,7 @@ class WorkSchedulesController  extends HumanResourceAppController {
 				$data['employee_id'] = $this->request->data['WorkSchedule']['foreign_key'];
 				$data['date'] = $this->request->data['WorkSchedule']['day'];
 				//must save daily info
-				//$dailynfo = $this->DailyInfo->saveDailyInfo($data);
+				$dailynfo = $this->DailyInfo->saveDailyInfo($data);
 
 				$this->Session->setFlash('Work Schedule saved successfully','success');
 		 		   $this->redirect( array(

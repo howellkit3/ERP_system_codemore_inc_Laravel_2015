@@ -33,7 +33,7 @@ echo $this->element('hr_options');
 			                <h2 class="pull-left"><b>Daily Info</b> </h2>
 			                <div class="filter-block pull-right">
 			                 <div class="form-group pull-left">
-			                 	<?php echo $this->Form->create('Attendance',array('controller' => 'attendances','action' => 'index', 'type'=> 'get')); ?>
+			                 	<?php echo $this->Form->create('Attendance',array('controller' => 'attendances','action' => 'daily_info', 'type'=> 'get')); ?>
 			                 		<input type="text" name="data[date]" id="changeDate" class="form-control datepick" value="<?php echo $date ?>">
 
 			                            <i class="fa fa fa-calendar calendar-icon"></i>
@@ -41,7 +41,7 @@ echo $this->element('hr_options');
 			                 		
 			                    </div>
 			                    <div class="form-group pull-left">
-			                 		 <input placeholder="Search..." class="form-control searchCustomer" value="<?php echo $search ?>" name="data[name]" />
+			                 		 <input placeholder="Employee Code/Name" class="form-control searchCustomer" value="<?php echo $search ?>" name="data[name]" />
 			                            <i class="fa fa-search search-icon"></i>
 
 			                           

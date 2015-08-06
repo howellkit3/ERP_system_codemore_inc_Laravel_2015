@@ -12,7 +12,6 @@
        	<div class="row">
             <div class="col-lg-12">
                 <header class="main-box-header clearfix">
-                    
                     <center>
                         <h1 class="pull-left">
                             Employee Information
@@ -28,11 +27,16 @@
 						?>
 
                     </div>
-                    
-					
-                </header>
 
-            </div>
+                    <div class="form-group pull-right" style="margin-right:10px;">
+                    	
+                    	<?php echo $this->Html->link('<i class="fa fa-money fa-lg"></i> Salary Settings', array('controller' => 'salaries', 'action' => 'employee_settings',$employee['Employee']['id']),array('class' =>'btn btn-primary pull-right','escape' => false));
+						?>
+
+                    </div>
+
+                </header>
+			</div>
         </div>
 
 		<div class="row" id="user-profile">

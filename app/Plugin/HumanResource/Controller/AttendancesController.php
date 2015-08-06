@@ -481,7 +481,25 @@ public function daily_info() {
 
 	$this->DailyInfo->bind(array('Employee'));
 	//$conditions = array('DailyInfo.date >=' => $date , 'DailyInfo.date <=' => $date);
-	$conditions = array();
+	if (!empty($query['data']['date'])) {
+			$date = $query['data']['date'];
+	}
+	
+	$conditions = array(
+		'DailyInfo.date <=' => $date,
+	 	'DailyInfo.date >=' => $date
+	);
+
+	if (!empty($query['data']['name'])) {
+			$search = $query['data']['name'];
+			$conditions = array_merge($conditions,array(
+					'OR' => array(
+					'Employee.first_name LIKE' => '%'.$search.'%',
+					'Employee.last_name LIKE' => '%'.$search.'%',
+					'Employee.middle_name' => '%'.$search.'%',
+					'Employee.code' => $search
+			)));
+	}
 
 	$params =  array(
             'conditions' => $conditions,
