@@ -147,6 +147,29 @@ class SchedulesController  extends HumanResourceAppController {
 
 	}
 
+	public function view($id = null) {
+
+		$this->loadModel('HumanResource.Employee');
+		
+		$conditions = array();
+
+		$this->Employee->bindEmployee();
+
+		$params =  array(
+			'conditions' => array('Employee.id' => $id ),
+		);
+
+		$this->Employee->bindEmployee();
+
+		$list = $this->Employee->getAllWorkShift($params);
+
+		//pr($list); exit;
+
+		$this->set(compact('workshifts','list'));
+
+		
+	}
+
 
 
 }

@@ -83,6 +83,5 @@ class WorkShift extends AppModel {
 		}
 	}
 
-
-    
+  
  }
