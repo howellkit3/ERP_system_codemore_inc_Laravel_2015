@@ -186,7 +186,7 @@
                                         <div class="col-lg-8">
                                             <button type="submit" class=" btn btn-primary pull-left">Submit</button>&nbsp;
                                             <?php 
-                                                echo $this->Html->link('Cancel', array('controller' => 'settings', 'action' => 'view'),array('class' =>'btn btn-default','escape' => false));
+                                                echo $this->Html->link('Cancel', array('controller' => 'deliveries', 'action' => 'index'),array('class' =>'btn btn-default','escape' => false));
                                             ?>
                                         </div>
                                     </div>

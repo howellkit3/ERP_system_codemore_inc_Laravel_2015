@@ -1109,7 +1109,7 @@ class DeliveriesController extends DeliveryAppController {
         $deliveryUserData = $this->User->find('all',array('conditions' =>  array('User.role_id' => 4
                                             )));
 
-        $deliveryUserFName = $this->User->find('list',array('fields' => array('id', 'fullname'),'conditions' =>  array('User.role_id' => 4
+        $deliveryUserFName = $this->User->find('list',array('fields' => array('id', 'fullname'),'conditions' =>  array('User.role_id' => 5
                                             )));
 
         // 

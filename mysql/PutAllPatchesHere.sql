@@ -1140,8 +1140,7 @@ VALUES
 
 /* end all HR tables */
 
-#NOTE: SELECT KOUFU Re ----
-/** howell kit added this 08/05/2015 all tables are here  */
+/** howell kit added this 08/05/2015   */
 #NOTE: SELECT KOUFU WAREHOUSE DATABASE ----
 
 CREATE TABLE `received_orders` (
@@ -1156,3 +1155,14 @@ CREATE TABLE `received_orders` (
   `modified` TIMESTAMP NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+/** howell kit added this 08/06/2015   */
+
+CREATE TABLE IF NOT EXISTS `received_items` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `received_orders_id` INT(11) DEFAULT NULL,
+  `quantity` INT(11) NOT NULL,
+  `item_uuid` INT(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
