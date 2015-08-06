@@ -193,3 +193,12 @@ div.value {
   margin: 4px 0;
   width: 50%;
 }
+
+#user-profile h2 {
+  padding-right: 15px;
+  width: 100%;
+  border-bottom: 1px #ccc dashed;
+  font-weight: bold;
+  text-indent: 9px;
+  color: #03a9f4;
+}
