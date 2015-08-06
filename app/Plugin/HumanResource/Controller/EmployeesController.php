@@ -573,4 +573,66 @@ class EmployeesController  extends HumanResourceAppController {
 		exit();
 	}
 
+
+	public function getBy($id = null) {
+
+			$this->layout = false;
+
+			if ($this->request->is('ajax')) {
+				
+				$conditions = array();
+
+				$query = $this->request->query;
+
+				$this->loadModel('HumanResource.Position');	
+				$this->loadModel('HumanResource.Salary');	
+
+
+				$this->Employee->bind(array('Position'));
+
+				if (!empty($query['department'])) {
+					$conditions = array_merge($conditions,array('Employee.department_id' => $query['department'] ));	
+				}
+
+				if (!empty($query['id'])) {
+					
+					$this->Employee->bind(array('Department','Position','Salary'));
+					$conditions = array_merge($conditions,array('Employee.id' => $query['id'] ));
+				
+				}
+
+				
+
+				$employees = $this->Employee->find('all',array(
+					'conditions' => $conditions ,
+					'order' => array('Employee.last_name','Employee.code'),
+					// 'fields' => array(
+					// 'id',
+					// 'Employee.first_name',
+					// 'Employee.last_name',
+					// 'Employee.middle_name',
+					// 'Employee.position_id',
+					// 'Employee.department_id',
+					// 'Employee.code',
+					// 'Employee.image',
+					// 'Position.name'
+					// ),
+					'group' => 'Employee.id' 
+				));
+
+
+				if (count($employees) == 0) {
+
+					$employees = array('result' => 0);
+				} else {
+					$employees = array('result' => $employees );
+				}
+
+				echo json_encode($employees);
+			}
+
+			exit();
+
+
+	}
 }

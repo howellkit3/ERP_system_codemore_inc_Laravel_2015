@@ -562,5 +562,43 @@ public function export() {
 		$this->render('Attendances/xls/attendance_report');
 	}
 
+	public function getAllAttendance() {
+
+		$this->layout = false;
+
+		if ($this->request->is('ajax')) {
+
+			$query = $this->request->query;
+
+			$conditions = array('Attendance.employee_id' => 2 );
+
+			if (!empty($query['range'])) {
+
+				$days = explode(':', $query['range']);
+
+				$date = explode('-', $query['month']);
+
+				$start = $date[1].'-'.$date[0].'-'.sprintf("%02d", $days[0]);
+
+				$end = $date[1].'-'.$date[0].'-'.sprintf("%02d", $days[1]);
+
+
+				$conditions = array_merge($conditions,array(
+					'Attendance.date >=' => $start,
+					'Attendance.date <=' => $end
+				));
+			}
+
+			$attendance = $this->Attendance->find('all',array('conditions' => $conditions));
+			
+			
+		}
+
+		$this->set(compact('attendance'));
+
+		$this->render('Attendances/ajax/days_work');
+
+	}
+
 
 }

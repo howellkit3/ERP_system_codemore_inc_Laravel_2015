@@ -12,10 +12,8 @@ $body.on('click','.btn.btn-success.upload-image',function(e){
 });
 
 $( ".datepick" ).datepicker({
-    format: 'yyyy-mm-dd', 
-    changeYear: true,
-    changeMonth: true,
-    showMonthAfterYear: true, //this is what you are looking for
+ 	 format: "mm-yyyy",
+    viewMode: "months", 
 });
 
 //$('.datepick').datepicker({  format: 'yyyy-mm-dd'  });
