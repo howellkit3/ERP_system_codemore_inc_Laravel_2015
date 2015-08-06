@@ -75,7 +75,7 @@
 						
 						<?php if($lengthName >= 35 && $lengthName <= 70){ ?>
 
-							<td class="td-heigth; border:1px solid black;" ><span style="font-size:90% !important; word-spacing: 0px;white-space: nowrap;  "><center><?php echo $value[$modelTable]['name']?></center></td>
+							<td class="td-heigth; " style = "border:1px solid black;" ><span style="font-size:90% !important; word-spacing: 0px;white-space: nowrap;  "><center><?php echo $value[$modelTable]['name']?></center></td>
 
 						<?php } else if($lengthName >= 70) { ?>
 
@@ -236,7 +236,7 @@
 						
 						<?php if($lengthName >= 35 && $lengthName <= 70){ ?>
 
-							<td class="td-heigth; border:1px solid black;" ><span style="font-size:90% !important; word-spacing: 0px;white-space: nowrap;  "><center><?php echo $value[$modelTable]['name']?></center></td>
+							<td class="td-heigth;;" style = "border:1px solid black;"><span style="font-size:90% !important; word-spacing: 0px;white-space: nowrap;  "><center><?php echo $value[$modelTable]['name']?></center></td>
 
 						<?php } else if($lengthName >= 70) { ?>
 
@@ -254,15 +254,10 @@
 						
 
 						<td class="td-heigth" style="border:1px solid black;"><center><?php echo $value[$modelTable]['quantity']?>/<?php echo $unitData[$value[$modelTable]['quantity_unit_id']]?></center></td>
-						<td class="td-heigth" style="border:1px solid black;"><center><?php echo number_format($value[$modelTable]['unit_price'],2)?>/<?php echo $unitData[$value[$modelTable]['unit_price_unit_id']]?></center></td>
+						<td class="td-heigth" style="border:1px solid black;"><center></center></td>
 						<td class="td-heigth" style="border:1px solid black;">
 							<center>
-								<?php 
-                                    $amount = $value[$modelTable]['quantity'] * $value[$modelTable]['unit_price'];
-                                    echo number_format($amount,2)."/".$unitData[$value[$modelTable]['unit_price_unit_id']];
-
-                                    $total = $total + $amount;
-                                ?>
+								
 							</center>
 						</td>
 					</tr>
@@ -399,7 +394,7 @@
 						
 						<?php if($lengthName >= 35 && $lengthName <= 70){ ?>
 
-							<td class="td-heigth; border:1px solid black;" ><span style="font-size:90% !important; word-spacing: 0px;white-space: nowrap;  "><center><?php echo $value[$modelTable]['name']?></center></td>
+							<td class="td-heigth; " style = "border:1px solid black;"><span style="font-size:90% !important; word-spacing: 0px;white-space: nowrap;  "><center><?php echo $value[$modelTable]['name']?></center></td>
 
 						<?php } else if($lengthName >= 70) { ?>
 
