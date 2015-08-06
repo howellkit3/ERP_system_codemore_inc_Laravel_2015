@@ -71,6 +71,7 @@ echo $this->element('hr_options');
 											<th><a href="#"><span>In</span></a></th>
 											<th><a href="#"><span>Out</span></a></th>
 											<th><a href="#"><span>Duration</span></a></th>
+											<th><a href="#" class="text-center"><span>Status</span></a></th>
 											<th><a href="#"><span>Remarks</span></a></th>
 											<th><a href="#"><span>Actions</span></a></th>
 										</tr>
@@ -125,6 +126,17 @@ echo $this->element('hr_options');
 								                        </td>
 								                         <td class="text-center" > 
 								                           <?php echo $this->CustomTime->getDuration($timeIn,$timeOut); ?> 
+								                        </td>
+								                        <td class="attendance-status"> 
+								                           <?php 
+								                           		if ($schedule['Attendance']['status'] == 'OnTime') {
+								                           			echo "<span class='label label-success'>OnTime</span>";
+								                           		}
+								                           		if ($schedule['Attendance']['status'] == 'Late') {
+								                           			echo "<span class='label label-danger'>&nbsp;&emsp;&emsp;Late&emsp;&emsp;&nbsp;</span>";
+								                           		}
+								                           			
+								                           ?> 
 								                        </td>
 								                        <td class="text-center notes-td"> 
 								                           <?php echo $schedule['Attendance']['notes']; ?> 
