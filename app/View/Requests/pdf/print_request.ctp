@@ -67,7 +67,7 @@ th, td {
 
 					<?php $lengthName = strlen($requestRequestItem[$key]['RequestItem']['name'])?>
 
-					<?php if($lengthName >= 35 && $lengthName <= 70){ ?>
+					<?php if($lengthName >= 30 && $lengthName <= 70){ ?>
 
 						<td style="border:1px solid black; "><span style="font-size:80%"; ><?php echo $requestRequestItem[$key]['RequestItem']['name']?></span>
 						</td>
@@ -206,7 +206,7 @@ th, td {
 
 					<?php $lengthName = strlen($requestRequestItem[$key]['RequestItem']['name'])?>
 
-					<?php if($lengthName >= 35 && $lengthName <= 70){ ?>
+					<?php if($lengthName >= 30 && $lengthName <= 70){ ?>
 
 						<td style="border:1px solid black; "><span style="font-size:80%"; ><?php echo $requestRequestItem[$key]['RequestItem']['name']?></span>
 						</td>

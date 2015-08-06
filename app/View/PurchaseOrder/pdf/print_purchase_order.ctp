@@ -77,9 +77,13 @@
 
 							<td class="td-heigth; " style = "border:1px solid black;" ><span style="font-size:90% !important; word-spacing: 0px;white-space: nowrap;  "><center><?php echo $value[$modelTable]['name']?></center></td>
 
-						<?php } else if($lengthName >= 70) { ?>
+						<?php } else if($lengthName >= 70  && $lengthName <= 80) { ?>
 
 							<td class="td-heigth" style = "border:1px solid black;width:200px;word-wrap: break-word;" ><span style="font-size:65%"; ><center><?php echo $value[$modelTable]['name']?></center></td>
+
+						<?php } else if($lengthName >= 80 ) { ?>
+
+							<td class="td-heigth" style = "border:1px solid black;width:200px;word-wrap: break-word;" ><span style="font-size:50%"; ><center><?php echo $value[$modelTable]['name']?></center></td>
 
 						<?php }else{ ?>
 
@@ -236,11 +240,15 @@
 						
 						<?php if($lengthName >= 35 && $lengthName <= 70){ ?>
 
-							<td class="td-heigth;;" style = "border:1px solid black;"><span style="font-size:90% !important; word-spacing: 0px;white-space: nowrap;  "><center><?php echo $value[$modelTable]['name']?></center></td>
+							<td class="td-heigth; " style = "border:1px solid black;" ><span style="font-size:90% !important; word-spacing: 0px;white-space: nowrap;  "><center><?php echo $value[$modelTable]['name']?></center></td>
 
-						<?php } else if($lengthName >= 70) { ?>
+						<?php } else if($lengthName >= 70  && $lengthName <= 80) { ?>
 
 							<td class="td-heigth" style = "border:1px solid black;width:200px;word-wrap: break-word;" ><span style="font-size:65%"; ><center><?php echo $value[$modelTable]['name']?></center></td>
+
+						<?php } else if($lengthName >= 80 ) { ?>
+
+							<td class="td-heigth" style = "border:1px solid black;width:200px;word-wrap: break-word;" ><span style="font-size:50%"; ><center><?php echo $value[$modelTable]['name']?></center></td>
 
 						<?php }else{ ?>
 
@@ -394,11 +402,15 @@
 						
 						<?php if($lengthName >= 35 && $lengthName <= 70){ ?>
 
-							<td class="td-heigth; " style = "border:1px solid black;"><span style="font-size:90% !important; word-spacing: 0px;white-space: nowrap;  "><center><?php echo $value[$modelTable]['name']?></center></td>
+							<td class="td-heigth; " style = "border:1px solid black;" ><span style="font-size:90% !important; word-spacing: 0px;white-space: nowrap;  "><center><?php echo $value[$modelTable]['name']?></center></td>
 
-						<?php } else if($lengthName >= 70) { ?>
+						<?php } else if($lengthName >= 70  && $lengthName <= 80) { ?>
 
 							<td class="td-heigth" style = "border:1px solid black;width:200px;word-wrap: break-word;" ><span style="font-size:65%"; ><center><?php echo $value[$modelTable]['name']?></center></td>
+
+						<?php } else if($lengthName >= 80 ) { ?>
+
+							<td class="td-heigth" style = "border:1px solid black;width:200px;word-wrap: break-word;" ><span style="font-size:50%"; ><center><?php echo $value[$modelTable]['name']?></center></td>
 
 						<?php }else{ ?>
 
