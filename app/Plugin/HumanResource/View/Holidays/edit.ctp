@@ -42,7 +42,7 @@
                                        
                                         <div class="col-lg-6">
                                             <div class="form-group">
-                                                <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Name</label>
+                                                <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span> Name</label>
                                                 <div class="col-lg-9">
                                                   
                                                     <?php
@@ -58,7 +58,7 @@
                                        
                                         <div class="col-lg-6">
                                             <div class="form-group">
-                                                <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Start / End Date </label>
+                                                <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span> Start / End Date </label>
                                                 <div class="col-lg-9">
                                                   <?php 
                                                   $from  = date('Y/m/d',strtotime($this->request->data['Holiday']['start_date']));
@@ -107,7 +107,7 @@
                                         <div class="form-group">
                                         <div class="col-lg-6">
                                             <div class="form-group">
-                                                <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Type </label>
+                                                <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span> Type </label>
                                                 <div class="col-lg-9">
                                                   
                                                     <?php

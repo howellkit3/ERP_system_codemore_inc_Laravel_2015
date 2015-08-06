@@ -57,10 +57,12 @@ class WorkSchedule extends AppModel {
 				'fields' => array('foreign_key','id')
 				));
 			$flipped = array_flip($employeeSchedules);
-			
-			if (!empty($data['Employee'])) {
 
-				foreach ($data['Employee']['id'] as $key => $employee) {
+			if (!empty($data['Overtime']['employee_ids'])) {
+
+				$employees = (array)json_decode($data['Overtime']['employee_ids']);
+
+				foreach ($employees as $key => $employee) {
 							$schedule[$key]['id'] = in_array($employee,$flipped) ? $employeeSchedules[$employee] : '';
 							$schedule[$key]['model'] = 'Employee';
 							$schedule[$key]['foreign_key'] = $employee;

@@ -4,7 +4,26 @@ App::uses('HtmlHelper', 'View/Helper');
 
 class CustomTimeHelper extends AppHelper {
 
+function getTotalWorks($empId = null) {
 
+	$attendance = ClassRegistry::init('Attendance');
+
+	$total = [];
+
+	if (!empty($empId)) {
+
+		$total = $attendance->find('all',array('conditions' => array('Attendance.employee_id' => $empId )));
+	
+		foreach ($total as $key => $value) {
+				
+				$total['total_time'] = $this->getduration($value['Attendance']['in'],$value['Attendance']['out']);
+		}
+	}	
+
+
+	return $total;
+
+}
 function getDuration($time1 = null,$time2 = null)
 {	
 

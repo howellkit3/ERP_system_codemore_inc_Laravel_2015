@@ -6,7 +6,8 @@ App::uses('SessionComponent', 'Controller/Component');
 class BreakTimesController  extends HumanResourceAppController {
 
 
-	var $helpers = array('HumanResource.CustomText','HumanResource.Country');
+	var $helpers = array('HumanResource.PhpExcel','HumanResource.CustomText');
+	//,'HumanResource.Country'
 
 	public function add() {
 
@@ -132,6 +133,13 @@ class BreakTimesController  extends HumanResourceAppController {
 		}
 	}
 	
+	public function export(){
 
+        $breaktimeData = $this->BreakTime->find('all',array('order' => 'BreakTime.id ASC'));
+        
+		$this->set(compact('breaktimeData'));
+
+		$this->render('Breaktimes/xls/breaktime_report');
+	}
 
 }

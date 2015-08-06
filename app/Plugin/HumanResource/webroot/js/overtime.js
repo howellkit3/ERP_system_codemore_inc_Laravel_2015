@@ -1,3 +1,21 @@
+
+var multiplePromptsCounter = 1;
+
+function openMultiplePrompts(status,url){
+
+    $.prompt("Are you sure you want to "+status+" this request?", {
+        //title: "confirmed",
+        buttons: { "Yes": true, "No": false },
+        persistent: false,
+        submit: function(e,v,m,f) {
+           if(v == true) {
+               window.location.href = url;
+            }
+        }
+    });
+}
+
+
 var checkDepartmentEmployee = function(element){
 
     var departmentId = $(element).val();
@@ -22,7 +40,21 @@ var checkDepartmentEmployee = function(element){
             }
     });
 
-} 
+}
+
+// function confirmAction(status){
+       
+        
+//     if (status) {
+//      var confirmed = confirm("Reject this request");
+//     } else {
+
+//     var confirmed = confirm("Are you sure you want to approved this request");
+   
+//     }
+//     return confirmed;
+    
+// } 
 
 $(document).ready(function(){  
 
@@ -47,6 +79,14 @@ $(document).ready(function(){
              $('.onoffswitch-checkbox').prop('checked',false);
         }
 
+    });
+
+
+    $body.on('click','.table-link',function(e){
+        var status = $(this).data('process');
+        var url = $(this).attr('href');
+        openMultiplePrompts(status,url);
+        e.preventDefault();
     });
 
      $body.on('change','.onoffswitch-checkbox',function(){

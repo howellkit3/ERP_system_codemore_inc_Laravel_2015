@@ -7,24 +7,23 @@ App::uses('ImageUploader', 'Vendor');
 
 class EmployeesController  extends HumanResourceAppController {
 
-	var $helpers = array('HumanResource.CustomText','HumanResource.Country','HumanResource.PhpExcel');
-
+	var $helpers = array('HumanResource.PhpExcel','HumanResource.CustomText');
+	//,'HumanResource.Country'
 	public function index() {
 
+		$this->loadModel('HumanResource.Position');
 		$this->loadModel('HumanResource.Department');
-
-		$departmentData = $this->Department->find('list', array('fields' => array('id', 'name')
-															));
-
+		$this->loadModel('HumanResource.Tooling');
+		$this->loadModel('HumanResource.Status');
 		//array_push($departmentData, "All");
 
 		$limit = 10;
 
-
-
         $conditions = array();
 
-	 if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'Employee' ) {
+	 	if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'Employee' ) {
+	 		$this->Employee->bind(array('Position','Department'));
+	 		$this->Employee->bind(array('Status'));
 
 	        $this->paginate = array(
 	            'conditions' => $conditions,
@@ -34,7 +33,6 @@ class EmployeesController  extends HumanResourceAppController {
 	        );
 
 	        $employees = $this->paginate();
-
 	    }
 
         $this->loadModel('HumanResource.Tooling');
@@ -55,19 +53,17 @@ class EmployeesController  extends HumanResourceAppController {
 		        
 	    }
 
-        $departments = array('' => 'Select Department',
-                        	'1' => 'Accounting',
-                        	'2' => 'Sales',
-                        	'3' => 'Delivery'
-                        );
+        
+		$positions = $this->Position->find('list',array('fields' => array('id','name')));
 
-         $positions = array('' => 'Select Position',
-		                	'1' => 'CEO',
-		                	'2' => 'Vice President',
-		                	'3' => 'Employee',
-		                	'4' => 'Others'
-		                	);
-         $this->loadModel('HumanResource.Employee');
+		$departments = $this->Department->find('list',array('fields' => array('id','name')));
+        $this->loadModel('HumanResource.Employee');
+
+        $employeeList = $this->Employee->find('list',array('fields' => array('id','fullname')));
+
+        $this->loadModel('HumanResource.Department');
+
+        $departmentData = $this->Department->find('list',array('fields' => array('id','name')));
 
 		$this->loadModel('HumanResource.Tool');
 
@@ -114,10 +110,10 @@ class EmployeesController  extends HumanResourceAppController {
                 	$data['Employee']['image'] = $file['name'];
             	}
 
-
             	$this->Employee->create();
 
 			 	if ($this->Employee->save($data)) {
+
 
 			 		$employeeId = $this->Employee->id;
 			 		//save additional info
@@ -469,8 +465,16 @@ class EmployeesController  extends HumanResourceAppController {
 
 	public function print_employee($id = null) {
 		
+		$this->Employee->bind(array('Department','Position','Status'));
+
 		$departmentId = $this->request->data['Department']['department_id'];
 		
+		$conditions = array();
+
+		if (!empty($departmentId)) {
+			$conditions = array_merge($conditions,array('Employee.department_id' => $departmentId));
+			
+		}
         if (!empty($this->request->data['from_date'])) {
 
         	$dateRange = str_replace(' ', '', $this->request->data['from_date']);
@@ -479,24 +483,95 @@ class EmployeesController  extends HumanResourceAppController {
 	        $from = str_replace('/', '-', $splitDate[0]);
 	        $to = str_replace('/', '-', $splitDate[1]);
 
-	        $employeeData = $this->Employee->find('all', array(
-                'conditions' => array(
-                    'AND' => array(
-                        'Employee.department_id' => $departmentId,
-                        'Employee.created BETWEEN ? AND ?' => array($from.' '.'00:00:00:', $to.' '.'23:00:00:')
-                    ),
-                ),
-                'order' => 'Employee.id DESC'
-            ));
+	        $conditions = array_merge($conditions,array('Employee.created BETWEEN ? AND ?' => array($from.' '.'00:00:00:', $to.' '.'23:00:00:')));
 
-        } else {
+        } 
 
-        	$employeeData = $this->Employee->find('all',array('conditions' => array('Employee.department_id' => $departmentId)));
-
-        }
-		
+        $employeeData = $this->Employee->find('all',array('conditions' => $conditions,'order' => 'Employee.id ASC'));
+       
+		$this->set(compact('employeeData'));
 		$this->render('Employees/xls/employee_report');
 
+	}
+
+	public function print_tool($id = null) {
+		
+		$this->loadModel('HumanResource.Tooling');
+
+		$this->Tooling->bind(array('Employee','Tool'));
+
+		$toolId = $this->request->data['Tool']['tool_id'];
+		$employeeId = $this->request->data['Tool']['employee_id'];
+		
+		$conditions = array();
+
+        if (!empty($toolId)) {
+
+        	$conditions = array_merge($conditions,array('Tooling.tools_id' => $employeeId));
+
+        } 
+
+        if (!empty($employeeId)) {
+
+        	$conditions = array_merge($conditions,array('Tooling.employee_id' => $employeeId));
+
+        } 
+		
+		$toolingData = $this->Tooling->find('all',array('conditions' => $conditions,'order' => 'Tooling.id ASC'));
+		
+		$this->set(compact('toolingData'));
+		$this->render('Employees/xls/tool_report');
+
+	}
+
+
+	public function getCode(){
+
+		if ($this->request->is('ajax')) {
+			$this->loadModel('HumanResource.Department');
+			//add position if ever
+			if (!empty($this->request->data['department'])) {
+				$department = $this->Department->find('first',array(
+					'conditions' => array('Department.id' => $this->request->data['department']),
+					'fields' => array('id','prefix')
+					)); 
+
+			}
+
+			$employee = $this->Employee->find('count',array('conditions' => array('Employee.department_id' => $this->request->data['department'] )));
+
+			$employee_number = str_pad($employee + 1, 3, '0', STR_PAD_LEFT);
+
+			echo json_encode(array('emp_number' => $department['Department']['prefix'].'-'.$employee_number ));
+			
+
+			exit();
+			
+		}
+	}
+
+	public function checkExistingEmployee()  {
+
+		if ($this->request->is('ajax')) {
+			$data = $this->request->data;
+
+			$conditions = array('AND'=>array(
+				'first_name like' => '%'.$data['first_name'].'%',
+				'last_name like' => '%'.$data['last_name'].'%',
+				'middle_name like' => '%'.$data['middle_name'].'%',
+
+			));
+
+			$employee = $this->Employee->find('count',array(
+				'conditions' => $conditions
+				));
+
+
+			echo json_encode($employee);
+
+		}
+
+		exit();
 	}
 
 }

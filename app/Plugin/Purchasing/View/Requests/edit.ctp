@@ -271,7 +271,7 @@
 														<div class="col-lg-3">
 															<?php 
 																echo $this->Form->input('RequestItem.'.$key.'.quantity', array(
-																	'class' => 'form-control item_type number select-drop',
+																	'class' => 'form-control item_type number select-drop required',
 																	'type' => 'number',
 											                        'label' => false,
 											                        'data' => 0,
@@ -286,7 +286,7 @@
 																echo $this->Form->input('RequestItem.'.$key.'.quantity_unit_id', array(
 											                        'options' => array($unitData),  
 											                        'label' => false,
-											                        'class' => 'form-control select-drop',
+											                        'class' => 'form-control select-drop required',
 											                        'empty' => '---Select Unit---',
 											                        'default' => $value['RequestItem']['quantity_unit_id']
 											                         )); 

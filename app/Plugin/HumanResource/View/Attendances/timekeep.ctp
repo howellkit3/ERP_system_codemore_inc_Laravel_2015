@@ -57,6 +57,9 @@
 
 			                	   <button class="btn btn-primary pull-right add-timekeep" onclick="updateTime('.time_input')" data-toggle="modal" href="#timeKeep"> <i class="fa fa-pencil-square-o fa-lg"></i> Add </button>
 			                </div>
+
+			                <a data-toggle="modal" href="#myToolReport" class="btn btn-primary pull-right "><i class="fa fa-share-square-o fa-lg"></i> Export</a>
+			                
 			                 <div class="filter-block pull-right">
 			                 &nbsp
 			                 </div>

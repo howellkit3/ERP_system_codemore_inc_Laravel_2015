@@ -27,18 +27,20 @@
 
             echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i> Approved', array('controller' => 'requests', 'action' => 'approved',$requestId),array('class' =>'btn btn-primary pull-right','escape' => false));
 
-            echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit', array('controller' => 'requests', 'action' => 'edit',$requestId),array('class' =>'btn btn-primary pull-right','escape' => false));
+            // echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit', array('controller' => 'requests', 'action' => 'edit',$requestId),array('class' =>'btn btn-primary pull-right','escape' => false));
         }
 
         if ($requestData['Request']['status_id'] != 1) {
 
-             echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print', array('controller' => 'requests', 'action' => 'print_request', $requestId),array('class' =>'btn btn-primary pull-right not-active','escape' => false));
+             echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print', array('controller' => 'requests', 'action' => 'print_request', $requestId),array('class' =>'btn btn-primary pull-right ','escape' => false, 'target' => '_blank'));
 
         }else{
 
-            echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print', array('controller' => 'requests', 'action' => 'print_request', $requestId),array('class' =>'btn btn-primary pull-right ','escape' => false));
+            echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print', array('controller' => 'requests', 'action' => 'print_request', $requestId),array('class' =>'btn btn-primary pull-right ','escape' => false, 'target' => '_blank'));
 
         }
+
+        echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit', array('controller' => 'requests', 'action' => 'edit',$requestId),array('class' =>'btn btn-primary pull-right','escape' => false));
     ?>
     <br><br>
 </div>
@@ -89,13 +91,24 @@
                             <th class="text-center">Remarks</th>
                         </thead>
                         <?php foreach ($requestPurchasingItem as $key => $value) {  $key++ ?>
+                           
                             <tr>
                                 <td><?php echo $key ?></td>
                                 <td class="text-center"><?php echo $value['RequestItem']['name']?></td>
-                                <td class="text-center"><?php echo $value['RequestItem']['quantity']?>/<?php echo $unitData[$value['RequestItem']['quantity_unit_id']]?></td>
+                                <td class="text-center">
+                                    <?php  
+                                    if(!empty($value['RequestItem']['quantity'])){ 
+                                        echo $value['RequestItem']['quantity']?>/
+                                <?php } 
+
+                                    if(!empty($unitData[$value['RequestItem']['quantity_unit_id']])){ 
+                                    echo $unitData[$value['RequestItem']['quantity_unit_id']];
+                                   } ?>
+                                </td>
                                 <td class="text-center"> </td>
                             </tr>
-                        <?php } ?>
+                        <?php 
+                            } ?>
                         <tr>
                             <td> </td>
                             <td class="text-center">------END------</td>

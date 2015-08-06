@@ -5,7 +5,9 @@ App::uses('SessionComponent', 'Controller/Component');
 
 class WorkShiftsController  extends HumanResourceAppController {
 
-	var $helpers = array('HumanResource.CustomText','HumanResource.Country','HumanResource.BreakTime');
+	//var $helpers = array('HumanResource.CustomText','HumanResource.Country','HumanResource.BreakTime');
+	var $helpers = array('HumanResource.PhpExcel','HumanResource.BreakTime');
+	//,'HumanResource.Country'
 
 	public function add() {
 
@@ -30,7 +32,7 @@ class WorkShiftsController  extends HumanResourceAppController {
 
 					$this->Workshift->bind(array('WorkShiftBreak'));
 					//save BreakTime
-					$data['WorkShiftBreak'] = $this->Workshift->WorkShiftBreak->saveBreaks($this->request->data['WorkShift'],$this->Workshift->id,$auth['id']);
+					$data['WorkShiftBreak'] = $this->Workshift->WorkShiftBreak->saveBreaks($this->request->data,$this->Workshift->id,$auth['id']);
 					
 					$this->Session->setFlash('Saving Workshift information successfully','success');
 		 		  	
@@ -70,7 +72,6 @@ public function edit($id = null) {
 		
 		$auth = $this->Session->read('Auth.User');
 
-
 		if (!empty($this->request->data)) {
 
 				$this->Workshift->create();
@@ -82,7 +83,7 @@ public function edit($id = null) {
 
 					$this->Workshift->bind(array('WorkShiftBreak'));
 					//save BreakTime
-					$data['WorkShiftBreak'] = $this->Workshift->WorkShiftBreak->saveBreaks($this->request->data['WorkShift'],$this->Workshift->id,$auth['id']);
+					$data['WorkShiftBreak'] = $this->Workshift->WorkShiftBreak->saveBreaks($this->request->data,$this->Workshift->id,$auth['id']);
 					
 					$this->Session->setFlash('Saving Workshift information successfully','success');
 		 		  	
@@ -123,14 +124,14 @@ public function edit($id = null) {
 	}
 
 
-public function delete($id = null) {
+	public function delete($id = null) {
 
 
-		$this->loadModel('HumanResource.Workshift');
+		$this->loadModel('HumanResource.WorkShift');
 
 		if (!empty($id)) {
 
-			if ($this->Workshift->delete($id)) {
+			if ($this->WorkShift->delete($id)) {
                 $this->Session->setFlash(
                     __('Successfully deleted.', h($id))
                 );
@@ -148,8 +149,17 @@ public function delete($id = null) {
 
                         ));
 		}
- 
-}
+	 
+	}
+
+	public function export(){
+
+        $workshiftData = $this->WorkShift->find('all',array('order' => 'WorkShift.id ASC'));
+        
+		$this->set(compact('workshiftData'));
+
+		$this->render('Workshifts/xls/workshift_report');
+	}
 
 
 }

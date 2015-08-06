@@ -56,10 +56,27 @@ class Employee extends AppModel {
 			),
 			'belongsTo' => array(
 				'Position' => array(
-					'className' => 'Position',
+					'className' => 'HumanResource.Position',
 					'foreignKey' => 'position_id',
 					'conditions' => '',
-					)	
+					),
+				'Department' => array(
+					'className' => 'HumanResource.Department',
+					'foreignKey' => 'department_id',
+					'conditions' => '',
+					),
+				'Status' => array(
+					'className' => 'HumanResource.Status',
+					'foreignKey' => 'status',
+					'conditions' => '',
+					),
+
+				'DailyInfo' => array(
+						'className' => 'DailyInfo',
+						'foreignKey' => 'employee_id',
+						'conditions' => '',
+						'dependent' => true,
+					),		
 			),
 			'hasMany' => array(
 				'Email' => array(

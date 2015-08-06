@@ -50,6 +50,9 @@ echo $this->element('hr_options');
 			                     <div class="form-group pull-left">
 			                    	 <button class="btn btn-success">Go</button> 
 			                     </div>
+
+			                     <a data-toggle="modal" href="#myAttendance" class="btn btn-primary pull-right "><i class="fa fa-share-square-o fa-lg"></i> Export</a>
+			                     
 			                    <?php echo $this->Form->end(); ?>
 			                   <br><br>
 			               </div>
@@ -199,3 +202,86 @@ echo $this->element('hr_options');
 <?php echo $this->element('modals/personnal_attendance'); ?>
 
 <?php echo $this->element('modals/time_in_attendance'); ?>
+
+<div class="modal fade" id="myAttendance" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"> Attendance </h4>
+            </div>
+            <div class="modal-body">
+                <?php echo $this->Form->create('Attendance',array('url'=>(array('controller' => 'attendances','action' => 'export')),'class' => 'form-horizontal'));?>
+
+                	<div class="form-group">
+                        <label for="inputEmail1" class="col-lg-3 control-label"> Select Department</label>
+                        
+                        <div class="col-lg-6">
+                            <?php 
+                                   echo $this->Form->input('Attendance.department_id', array(
+                                                                'type' => 'select',
+                                                                'label' => false,
+                                                                'class' => 'form-control',
+                                                                'empty' => '---Select Employee---',
+                                                                'options' => array($departmentList)
+
+                                                              ));
+                            ?>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail1" class="col-lg-3 control-label"> Select Employee</label>
+                        
+                        <div class="col-lg-6">
+                            <?php 
+                                   echo $this->Form->input('Attendance.employee_id', array(
+                                                                'type' => 'select',
+                                                                'label' => false,
+                                                                'class' => 'form-control ',
+                                                                'empty' => '---Select Employee---',
+                                                                'options' => array($employeeList)
+
+                                                              ));
+                            ?>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail1" class="col-lg-3 control-label"> Date</label>
+                        
+                        <div class="col-lg-6">
+                            <?php 
+                                   echo $this->Form->input('Attendance.from_date', array(
+                                                                'label' => false,
+                                                                'class' => 'form-control  datepick',
+                                                                'placeholder' => 'Date from'
+
+                                                              ));
+                            ?>
+                        </div>
+                    </div>
+
+                    <!-- <div class="form-group">
+                        <label for="inputEmail1" class="col-lg-3 control-label"> Date Range</label>
+
+                       <div class="col-lg-6">
+                            <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                    <input  placeholder="Date Range" name="from_date" data="1" type="text" class="form-control required myDateRange datepickerDateRange high-z-index" id="datepickerDateRange" >
+                                                </div>
+                        </div>
+
+                       
+                    </div> -->
+
+                    <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-share-square-o fa-lg"></i> Export</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        
+                    </div>  
+                <?php echo $this->Form->end(); ?>
+            </div>
+        </div>
+    </div>
+</div>

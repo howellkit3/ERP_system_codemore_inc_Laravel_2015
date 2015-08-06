@@ -5,8 +5,9 @@ App::uses('SessionComponent', 'Controller/Component');
 
 class WorkSchedulesController  extends HumanResourceAppController {
 
-	var $helpers = array('HumanResource.CustomText','HumanResource.Country','HumanResource.BreakTime');
-
+	//var $helpers = array('HumanResource.CustomText','HumanResource.Country','HumanResource.BreakTime');
+	var $helpers = array('HumanResource.PhpExcel','HumanResource.CustomText');
+	//,'HumanResource.Country'
 	public function add() {
 
 
@@ -25,11 +26,16 @@ class WorkSchedulesController  extends HumanResourceAppController {
 		$workshifts = $this->Workshift->getList($conditions);
 
 		if ($this->request->is('post')) {
+
 			//save attendance
 			if ($this->WorkSchedule->save($this->request->data['WorkSchedule'])) {
 
 				$attendance = $this->Attendance->saveRecord($this->request->data['WorkSchedule'],$this->WorkSchedule->id);
-				//must save dailt info
+
+				$data['employee_id'] = $this->request->data['WorkSchedule']['foreign_key'];
+				$data['date'] = $this->request->data['WorkSchedule']['day'];
+				//must save daily info
+				//$dailynfo = $this->DailyInfo->saveDailyInfo($data);
 
 				$this->Session->setFlash('Work Schedule saved successfully','success');
 		 		   $this->redirect( array(
@@ -124,6 +130,37 @@ class WorkSchedulesController  extends HumanResourceAppController {
                         ));
 		}
  
-}
+	}
+
+	public function export(){
+
+		$employeeId = $this->request->data['WorkSchedule']['employee_id'];
+		$workShiftId = $this->request->data['WorkSchedule']['work_shift_id'];
+
+		$this->WorkSchedule->bind(array('Employee','WorkShift'));
+
+		$conditions = array('WorkSchedule.model ' => 'Employee');
+
+    	if(!empty($workShiftId)){
+
+    		$conditions = array_merge($conditions,array('WorkSchedule.work_shift_id' => $workShiftId));
+
+    	}
+
+    	if(!empty($employeeId)){
+
+    		$conditions = array_merge($conditions,array('WorkSchedule.foreign_key' => $employeeId));
+
+    	}
+        	
+        $workScheduleData = $this->WorkSchedule->find('all', array(
+            'conditions' => $conditions,
+            'order' => 'WorkSchedule.id ASC'
+        ));
+		
+		$this->set(compact('workScheduleData'));
+
+		$this->render('WorkSchedules/xls/work_shift_report');
+	}
 
 }

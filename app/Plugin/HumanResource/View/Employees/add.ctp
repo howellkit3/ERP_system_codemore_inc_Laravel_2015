@@ -79,7 +79,8 @@ echo $this->Html->css(array(
     jQuery(document).ready(function($){
            //datepicker
             $('.datepick').datepicker({
-                format: 'yyyy-mm-dd'
+                format: 'yyyy-mm-dd',
+                startView: "decade", 
             });
             
     });

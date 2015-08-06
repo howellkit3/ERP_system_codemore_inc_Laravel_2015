@@ -184,6 +184,7 @@ class AttendancesController  extends HumanResourceAppController {
 				$this->Attendance->save($attendance);
 
 				if ($this->request->is('ajax')) {
+
 					if (!empty($attendance['Attendance']['in'])) {
 
 						$attendance['Attendance']['in'] = date('h:i a',strtotime($attendance['Attendance']['in']));
@@ -323,7 +324,7 @@ public function edit($id = null) {
 					//save BreakTime
 					$data['WorkShiftBreak'] = $this->Workshift->WorkShiftBreak->saveBreaks($this->request->data['WorkShift'],$this->Workshift->id,$auth['id']);
 					
-					$this->Session->setFlash('Saving Workshift information successfully','success');
+					$this->Session->setFlash('Saving workshift information successfully','success');
 		 		  	
 		 		  	$this->redirect( array(
                              'controller' => 'schedules', 
@@ -458,16 +459,90 @@ public function getEmployeeData($attendaceId = null,$date = null) {
 }
 
 
+
+
 public function daily_info() {
+
+	$this->loadModel('HumanResource.DailyInfo');
+
+	$this->loadModel('HumanResource.Employee');
+
+	$this->loadModel('HumanResource.Attendance');
 
 	$search = '';
 
 	$date = date('Y-m-d');
 
-	$this->set(compact('search','date'));
+	$limit = 10;
+
+	$query = $this->request->query;
+		
+	$search = '';
+
+	$this->DailyInfo->bind(array('Employee'));
+	//$conditions = array('DailyInfo.date >=' => $date , 'DailyInfo.date <=' => $date);
+	$conditions = array();
+
+	$params =  array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            //'fields' => array('id', 'status','created'),
+            'order' => 'DailyInfo.date ASC',
+            'group' => 'DailyInfo.id'
+    );
+
+	$this->paginate = $params;
+	
+	$dailyInfos = $this->paginate('DailyInfo');
+
+	//pr($dailyInfos); exit();
+
+	$this->set(compact('dailyInfos','search','date'));
 
 }
+public function export() {
 
+		$this->loadModel('HumanResource.WorkSchedule');
+
+		$this->loadModel('HumanResource.Employee');
+
+		$this->loadModel('HumanResource.Workshift');
+		
+		$departmentId = $this->request->data['Attendance']['department_id'];
+		$employeeId = $this->request->data['Attendance']['employee_id'];
+		$fromDate = $this->request->data['Attendance']['from_date'];
+
+		$this->Attendance->bind(array('WorkSchedule','Employee','WorkShift'));
+
+		$conditions = array();
+
+    	if(!empty($departmentId)){
+
+    		$conditions = array_merge($conditions,array('Employee.department_id' => $departmentId));
+
+    	}
+
+    	if(!empty($employeeId)){
+
+    		$conditions = array_merge($conditions,array('Attendance.employee_id' => $employeeId));
+
+    	}
+
+    	if(!empty($employeeId)){
+
+    		$conditions = array_merge($conditions,array('Attendance.date >=' => $fromDate));
+
+    	}
+        	
+        $attendanceData = $this->Attendance->find('all', array(
+            'conditions' => $conditions,
+            'order' => 'Attendance.id ASC'
+        ));
+
+		$this->set(compact('attendanceData'));
+
+		$this->render('Attendances/xls/attendance_report');
+	}
 
 
 }

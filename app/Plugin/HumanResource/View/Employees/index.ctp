@@ -33,12 +33,9 @@
 			                                    'action' => 'add',),
 			                            array('class' =>'btn btn-primary',
 			                                'escape' => false)); ?>
-
-			                                   
+      
 			                       <a data-toggle="modal" href="#myEmployeeReport" class="btn btn-primary pull-right "><i class="fa fa-share-square-o fa-lg"></i> Export</a>
 
-			                   
-			                  
 			                   <br><br>
 			               </div>
 			            </header>
@@ -71,17 +68,17 @@
 								                        </td>
 								                        
 								                        <td class="text-center">
-								                           <?php echo !empty($departments[$employee['Employee']['department_id']]) ? $departments[$employee['Employee']['department_id']] : '';  ?>
+								                           <?php echo !empty($employee['Department']['name']) ? $employee['Department']['name'] : '';  ?>
 								                        </td>
 
 								                         <td class="text-center">
-								                           <?php echo !empty($positions[$employee['Employee']['position_id']]) ? $positions[$employee['Employee']['position_id']] : '';  ?>
+								                           <?php echo !empty($employee['Position']['name']) ? $employee['Position']['name'] : '';  ?>
 								                        </td>
 
 								                        <td class="text-center">
 
 
-								                           <?php echo !empty($employee['Employee']['status']) ? ' <span class="label label-success">'.$employee['Employee']['status'].'</span>'  : '';  ?>
+								                           <?php echo !empty($employee['Employee']['status']) ? ' <span class="label label-success">'.ucwords($employee['Status']['name']).'</span>'  : '';  ?>
 								                        </td>
 
 								                        <td>
@@ -140,10 +137,13 @@
 			                   		echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Assign Tools', 
 			                            array('controller' => 'toolings', 
 			                                    'action' => 'assign',),
-			                            array('class' =>'btn btn-primary pull-right',
+			                            array('class' =>'btn btn-primary',
 			                                'escape' => false));
 
 			                    ?> 
+
+			                    <a data-toggle="modal" href="#myToolReport" class="btn btn-primary pull-right "><i class="fa fa-share-square-o fa-lg"></i> Export</a>
+
 			                  <br><br>
 			               </div>
 			            </header>

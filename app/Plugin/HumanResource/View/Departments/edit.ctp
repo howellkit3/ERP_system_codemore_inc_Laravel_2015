@@ -1,6 +1,6 @@
 <?php $this->Html->addCrumb('Settings', array('controller' => 'settings', 'action' => 'department')); ?>
 <?php $this->Html->addCrumb('Department', array('controller' => 'settings', 'action' => 'department')); ?>
-<?php $this->Html->addCrumb('Edit', array('controller' => 'settings', 'action' => 'edit',$this->reqeust->data['Department']['id'])); ?>
+<?php $this->Html->addCrumb('Edit', array('controller' => 'settings', 'action' => 'edit',$this->request->data['Department']['id'])); ?>
 <?php echo $this->Html->css('HumanResource.default');?>
 <?php echo $this->Html->script(array(
                         'jquery.maskedinput.min',
@@ -11,8 +11,7 @@
 <?php echo $this->element('hr_options'); ?><br><br>
 <?php echo $this->Form->create('Department',array('url'=>(array('controller' => 'departments','action' => 'edit')),
 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data','method' =>'post' ));?>
-
-    <div class="row">
+<div class="row">
         <div class="col-lg-12">
         	<div class="row">
                 <div class="col-lg-12">
@@ -23,6 +22,8 @@
                                 Edit Department Information
                             </h1>
                         </center>
+
+                      
                         <?php 
                             echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'settings', 'action' => 'department'),array('class' =>'btn btn-primary pull-right','escape' => false));
                         ?>

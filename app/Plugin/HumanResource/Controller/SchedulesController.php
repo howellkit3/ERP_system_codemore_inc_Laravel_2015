@@ -90,6 +90,8 @@ class SchedulesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.WorkShift');
 
+		$this->loadModel('HumanResource.Overtime');
+
 		$limit = 10;
 
 		$conditions = array();
@@ -97,7 +99,7 @@ class SchedulesController  extends HumanResourceAppController {
 		$params =  array(
 	            'conditions' => $conditions,
 	            'limit' => $limit,
-	            //'fields' => array('id', 'status','created'),
+	            //'fields' => array('id','overtime_id'),
 	            'order' => 'WorkShift.from ASC',
 	        );
 
@@ -115,6 +117,12 @@ class SchedulesController  extends HumanResourceAppController {
 		$this->loadModel('HumanResource.WorkSchedule');
 
 		$this->loadModel('HumanResource.WorkShift');
+
+		$this->loadModel('HumanResource.Employee');
+
+        $employeeList = $this->Employee->find('list',array('fields' => array('id','fullname')));
+
+        $workshiftList = $this->WorkShift->find('list',array('fields' => array('id','name')));
 
 		$limit = 10;
 
@@ -134,7 +142,7 @@ class SchedulesController  extends HumanResourceAppController {
 	    $workSchedules = $this->paginate('WorkSchedule');
 
 
-	    $this->set(compact('workSchedules'));
+	    $this->set(compact('workSchedules','employeeList','workshiftList'));
 
 
 	}

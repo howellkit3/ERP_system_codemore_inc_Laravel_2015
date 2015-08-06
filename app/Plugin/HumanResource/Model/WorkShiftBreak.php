@@ -35,10 +35,10 @@ class WorkShiftBreak extends AppModel {
 	public function saveBreaks($data = null,$workShiftId = null,$authId = null) {
 
 		$this->deleteAll(array('WorkShiftBreak.workshift_id' => $workShiftId ));
-		
-		if (!empty($data['breaktime_ids'])) {
+
+		if (!empty($data['breakids'])) {
 			//$data = ['WorkshiftBreak'];
-			$breaks = explode(',', $data['breaktime_ids']);
+			$breaks = $data['breakids'];
 
 			$breakData = [];
 
@@ -50,7 +50,6 @@ class WorkShiftBreak extends AppModel {
 				$breakData[$key]['modified_by'] = $authId;
 			}
 
-
 			$this->saveAll($breakData);
 
 			return $breakData;
@@ -61,6 +60,9 @@ class WorkShiftBreak extends AppModel {
 	public function createWorkshiftBreak($data = null,$workShiftId = null,$overtimeId = null,$authId = null) {
 
 
+
+		$this->deleteAll(array('WorkShiftBreak.overtime_id' => $overtimeId ));
+
 		if (!empty($data['Workshift']['breakids'])) {
 
 			$workShiftBreak = [];
@@ -69,9 +71,15 @@ class WorkShiftBreak extends AppModel {
 
 			foreach ($data['Workshift']['breakids'] as $key => $id) {
 
+
 				$workShiftBreak['id'] = '';
 				$workShiftBreak['workshift_id'] = $workShiftId;
 				$workShiftBreak['breaktime_id'] = $id;
+
+				if (!empty($overtimeId)) {
+					$workShiftBreak['overtime_id'] = $overtimeId;
+				}
+
 				$workShiftBreak['created_by'] = $id;
 				$workShiftBreak['modified_by'] = $authId;
 
