@@ -81,7 +81,7 @@ echo $this->element('hr_options');
 			          		</div>
 			          		<div class="col-lg-9">
 
-			          			<div class="form-group">
+			          			<div class="form-group emp-info clearfix">
 			          				 <h2 class="list-group pull-left"><b>Employee Information</b> </h2>
 			          				 <br>
 			          				 <div class="clearfix"></div>
@@ -167,12 +167,13 @@ echo $this->element('hr_options');
 			          				 <br>
 			          				 <br>
 			          			</div>
-
+								<div class="clearfix"></div>
+								<?php echo $this->Form->create('Salaries',array('controller' => 'salaries','action' => 'compute_salaries'),array('id' => 'ComputeSalaries')); ?>
 			          			<div class="form-group">
 			          				 <h2 class="list-group pull-left"><b>Salary Information </b> </h2>
 			          				 <br>
 			          				 <div class="clearfix"></div>
-			          				<div class="row">
+			          					<div class="row">
 			          					<div class="col-lg-6">	
 										<header class="main-box-header clearfix">
 										<h2>Basic info</h2>
@@ -267,29 +268,49 @@ echo $this->element('hr_options');
 
 			          				 <div class="row">
 			          				 	<div class="col-lg-12">	
-											<button class="btn btn-success"> Generate</button>
-											<br>
-											<div class="clearfix"></div>
-											<br><br>
-				          				<table class="table table-striped table-hover">
+										
+				          					<table class="table table-striped table-hover">
 				          				 	<tr>
-				          				 		<td> <label for="inputEmail1" class="col-lg-12 control-label strong"> Total Hours :</label> </td><td></td>
-				          				 		<td class="price-symbolc"><label for="inputEmail1" class="col-lg-12 control-label strong"> 
-				          				 		<input type="readonly" class="form-control" value="600 hrs" /> </label></td><td></td>
+				          				 		<td class="col-lg-5"> <label for="inputEmail1" class="col-lg-12 control-label strong"> Total Hours :</label> </td><td></td>
+				          				 		<td class="col-lg-7"><label for="inputEmail1" class="control-label strong"> 
+				          				 		<input type="readonly" class="form-control col-lg-7" value="00:00:00" id="total-hours" /> </label></td>
 				          				 	</tr>
-				          				 
-				          				 	
-				          				 </table>
-			          				 </div>
-			          				 </div>
-				          				 	
+				          				   </table>
+
+			          				 	</div>
+			          				</div>
 
 
-			          			</div>
+			          				 <div class="row">
+			          				 	<div class="col-lg-12">	
+										
+				          					<table class="table table-striped table-hover calculate">
+				          				 	<tr>
+				          				 		<td class="col-lg-5"> 
+				          				 		<button class="calculate btn btn-success"><i class="fa fa-calculator"></i> Calculate</button></td>
+				          				 		<td  class="price-symbol col-lg-9">
+				          				 		<label for="inputEmail1" class="control-label strong"> 
+				          				 			<label for="inputEmail1" class="col-lg-12 control-label strong"> Net Gross :</label> <input type="readonly" class="form-control " value="" id="total-incom" />
+				          				 		</label>
+				          				 		</td>
+				          				 	</tr>
+				          				   </table>
+
+			          				 	</div>
+			          				</div>
+				          				 	
+
+			          				 <div class="row">
+			          				 	<div class="col-lg-12">	
+										
+				          						
+			          				 	</div>
+			          				</div>
+			          				</div>
 			          		
-			          		</div>
+			          			</div>
 
-
+			          		<?php echo $this->Form->end(); ?>
 						</div>
 
 
