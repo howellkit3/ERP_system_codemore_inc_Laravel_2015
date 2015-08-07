@@ -312,7 +312,9 @@
 			
 			$specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productId)));
 			
-			$this->set(compact('productData','clientOrderData','clientOrderId','subProcess','processData','specs','productId','unitData','product','productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData', 'companyData'));
+			$noPermission = "";
+
+			$this->set(compact('productData','clientOrderData','clientOrderId','subProcess','processData','specs','productId','unitData','product','productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData', 'companyData', 'noPermission'));
 
 		}
 
