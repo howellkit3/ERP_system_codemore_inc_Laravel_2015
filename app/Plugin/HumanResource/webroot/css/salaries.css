@@ -52,3 +52,6 @@ table td {
   margin: 0;
   padding: 0;
 }
+.calculate label{
+  width: 99%;
+}

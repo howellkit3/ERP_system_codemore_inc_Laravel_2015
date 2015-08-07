@@ -572,9 +572,11 @@ public function export() {
 
 			$query = $this->request->query;
 
-			$conditions = array('Attendance.employee_id' => 2 );
+			
 
-			if (!empty($query['range'])) {
+			if (!empty($query['range']) && !empty($query['empdId'])) {
+
+				$conditions = array('Attendance.employee_id' => $query['empdId']);
 
 				$days = explode(':', $query['range']);
 
@@ -595,6 +597,7 @@ public function export() {
 			
 			
 		}
+
 
 		$this->set(compact('attendance'));
 
