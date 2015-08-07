@@ -147,14 +147,14 @@ class Employee extends AppModel {
 
 	public function getAllWorkShift($params = array()){
 
-		
+		$this->bindEmployee();
 		$workshifts = $this->find('all',$params);
+		// pr($workshifts); exit;
 
-	
 		$list = [];
 			foreach ($workshifts as $key => $workshift) {
 				if (!empty($workshift['WorkShift']['from']) && $workshift['WorkShift']['from'] != '00-00-00') {
-					$list[$key]['title'] = '2015-07-1';
+					$list[$key]['title'] = $workshift['WorkShift']['from'] . ' - ' . $workshift['WorkShift']['to'];
 					$list[$key]['start'] = $workshift['WorkShift']['from'];
 					$list[$key]['end']  = $workshift['WorkShift']['to'];
 					$list[$key]['color'] = '#257e4a';
