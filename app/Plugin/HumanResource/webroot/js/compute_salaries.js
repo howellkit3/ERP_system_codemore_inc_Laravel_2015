@@ -5,11 +5,9 @@ $body = $('body');
 
 $('.autocomplete').select2();
 
-	$( ".datepick" ).datepicker({
-    format: 'yyyy-mm-dd', 
-    changeYear: true,
-    changeMonth: true,
-    showMonthAfterYear: true, //this is what you are looking for
+$( ".datepick" ).datepicker({
+     format: "mm-yyyy",
+     viewMode: "decade", 
 });
 
 	//check employee
@@ -54,7 +52,6 @@ $body.on('change','#department_id',function(){
 
  	           	} catch(e){
 
-          		console.log(e)
 
           	}
           	
@@ -142,7 +139,7 @@ $body.on('click','.employee-li',function(){
 //get employee data
 $body.on('submit','#SalariesComputeSalariesForm',function(e){
 
-    console.log($(this).serialize());
+    //console.log($(this).serialize());
 
     e.preventDefault();
 

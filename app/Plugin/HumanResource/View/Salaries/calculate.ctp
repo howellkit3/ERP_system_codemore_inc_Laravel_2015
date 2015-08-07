@@ -15,7 +15,6 @@ echo $this->Html->script(array(
 
 )); 
 
-
 echo $this->element('hr_options');
 
 	$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
@@ -232,7 +231,7 @@ echo $this->element('hr_options');
 				          				 		<td> <label for="inputEmail1" class="col-lg-12 control-label strong"> Date :</label> </td><td></td>
 												<td>
 				          				 			<label for="inputEmail1" class="col-lg-12 control-label strong">
-				          				 			<input type="readonly" class="form-control datepick" id="month-pay"/> 
+				          				 			<input type="readonly" class="form-control datepick-month" id="month-pay"/> 
 				          				 			</label>
 				          				 		</td>
 				          				 		<td></td>
@@ -324,3 +323,15 @@ echo $this->element('hr_options');
 <?php echo $this->element('modals/personnal_attendance'); ?>
 
 <?php echo $this->element('modals/time_in_attendance'); ?>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$( ".datepick-month" ).datepicker({
+     format: "mm-yyyy",
+     viewMode: "decade", 
+});
+
+
+});
+
+</script>

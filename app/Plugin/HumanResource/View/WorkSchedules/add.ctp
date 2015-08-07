@@ -55,10 +55,10 @@
                                                                             <label for="categoryRadio1">
                                                                                 Employee
                                                                             </label>
-                                                                            <input type="radio" name="data[WorkSchedule][model]" id="categoryRadio2" value="Department">
+                                                                           <!--  <input type="radio" name="data[WorkSchedule][model]" id="categoryRadio2" value="Department">
                                                                             <label for="categoryRadio2">
                                                                                 Department
-                                                                            </label>
+                                                                            </label> -->
                                                                 </div>
 
                                                 </div>
