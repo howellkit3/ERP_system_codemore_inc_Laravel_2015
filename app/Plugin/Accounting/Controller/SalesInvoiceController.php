@@ -292,7 +292,10 @@ class SalesInvoiceController extends AccountingAppController {
 	        }
         }
 
-        $this->set(compact('seriesSalesNo'));
+        $noPermissionPay = "";
+        $noPermissionReciv = "";
+
+        $this->set(compact('seriesSalesNo', 'noPermissionPay', 'noPermissionReciv'));
 		
 	}
 
