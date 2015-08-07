@@ -153,17 +153,16 @@ class SchedulesController  extends HumanResourceAppController {
 		
 		$conditions = array();
 
-		$this->Employee->bindEmployee();
+		
 
 		$params =  array(
 			'conditions' => array('Employee.id' => $id ),
 		);
 
-		$this->Employee->bindEmployee();
 
 		$list = $this->Employee->getAllWorkShift($params);
 
-		//pr($list); exit;
+		pr($list); exit;
 
 		$this->set(compact('workshifts','list'));
 
