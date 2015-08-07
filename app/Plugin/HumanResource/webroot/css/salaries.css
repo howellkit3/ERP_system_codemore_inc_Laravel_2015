@@ -1,0 +1,54 @@
+.right-pane {
+  
+  border-right: 1px solid #ccc;
+  padding: 0;
+
+}
+.right-pane .searchEmployee{
+
+	width: 100%;
+}
+.right-pane .select2-container.autocomplete {
+	width: 96% !important;
+}
+.table tbody > tr > td {
+	font-size: inherit;
+}
+
+.list-group.pull-left {
+  background: #03a9f4 none repeat scroll 0 0;
+  clear: both;
+  color: #fff;
+  margin-bottom: 10px;
+  text-indent: 10px;
+  width: 96%;
+}
+table td {
+	padding: 0 !important;
+}
+#result_container_employee {
+  width: 96%;
+}
+.employee-li.list-group-item:nth-child(2n+1) {
+  background: #F8F8F8;
+}
+.employee-li.list-group-item {
+	cursor: pointer;
+}
+.employee-li.list-group-item:hover {
+ background:#03A9F4;
+ color: #000;
+ font-weight: bold;
+}
+.employee-li.active {
+	background: #03a9f4 !important
+}
+
+#tab-calendar .main-box-header {
+	min-height: auto !important;
+  padding: 5px 0 !important;
+}
+.salaries .main-box-header {
+  margin: 0;
+  padding: 0;
+}

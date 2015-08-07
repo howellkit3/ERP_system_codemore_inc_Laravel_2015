@@ -52,6 +52,12 @@ class Employee extends AppModel {
 						'ContactPersonEmail.model' => 'ContactPerson'),
 					'dependent' => true
 				),
+				'Salary' => array(
+					'className' => 'Salary',
+					'foreignKey' => false,
+					'conditions' => array('Salary.employee_id = Employee.id'),
+					'dependent' => true
+				),
 			
 			),
 			'belongsTo' => array(

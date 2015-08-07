@@ -293,10 +293,10 @@ $(document).ready(function(){
     });
 
      
-     $('.datepick').datepicker({
-                format: 'yyyy-mm-dd',
-                'viewMode':2
-            });
+        $('.datepick').datepicker({
+            format: 'yyyy-mm-dd',
+           
+        });
 
         $(".autocomplete").select2();
 
