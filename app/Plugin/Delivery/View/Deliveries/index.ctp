@@ -29,8 +29,8 @@
                                 <th class="text-center"><a href="#"><span>P.O. Number</span></a></th>
                                 <th class="text-center"><a href="#"><span>Customer Name</span></a></th>
                                 <th class="text-center"><a href="#"><span>Item Name</span></a></th>
-                                <th class="text-center"><a href="#"><span>Schedule</span></a></th>
                                 <th class="text-center"><a href="#"><span>Quantity</span></a></th>
+                                <th class="text-center"><a href="#"><span>P.O. Balance</span></a></th>
                                 <th class="text-center"><a href="#"><span>Status</span></a></th>
                                 <th class="text-center">Action</th>
                             </tr>

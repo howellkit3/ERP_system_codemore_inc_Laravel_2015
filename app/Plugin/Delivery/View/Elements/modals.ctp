@@ -137,6 +137,37 @@
                                                                     ));
                                 ?>
                             </div>
+
+                        </div>
+
+                        <div class="form-group" id="existing_items">
+                            <label class="col-lg-2 control-label"><span style="color:red">*</span>Pieces</label>
+                            <div class="col-lg-3">
+                                <?php 
+                                    echo $this->Form->input('DeliveryDetail.pieces', array(
+                                                                    'empty' => 'None',
+                                                                    'required' => 'required',
+                                                                    'class' => 'form-control item_type editable addquantityLimit',
+                                                                    'label' => false
+                                                                    // 'value' => $deliveryEdit['DeliveryDetail']['quantity']
+                                                                    ));
+                                ?>
+                            </div>
+
+                             <div class="col-lg-6">
+                                <?php 
+                                    echo $this->Form->input('DeliveryDetail.measure', array(         
+                                                                    'required' => 'required',
+                                                                    'class' => 'form-control required  ',
+
+                                                                    'options' => array('by bundle', 'by pack'),
+                                                                    'empty' => '--Select Measure--',
+                                                                    'label' => false,
+                                                                    'type' => 'select',
+                                                                    'required' => 'required',
+                                                                    ));
+                                ?>
+                            </div>
                         </div>
 
                         <div class="form-group" id="existing_items">
@@ -147,7 +178,7 @@
                                                                     'empty' => '--Select Location--',
                                                                     'class' => 'form-control item_type editable addquantityLimit',
                                                                     'options' => array($companyAddress[$clientsOrder['ClientOrder']['company_id']]),
-                                                                                        'type' => 'select',
+                                                                    'type' => 'select',
                                                                     'required' => 'required',
                                                                     'label' => false,
                                                                      'value' => $deliveryEdit[0]['DeliveryDetail']['location']

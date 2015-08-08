@@ -19,31 +19,53 @@
 
                                         <td class="text-center">
 
-                                        <?php echo $scheduleDataList['Company']['company_name'] ?> 
+                                        <?php echo substr($scheduleDataList['Company']['company_name'],0,25);  ?> ..
 
                                         
                                         </td>
 
                                         <td class="text-center">
                               
-                                           <?php echo $scheduleDataList['Product']['name']; ?>  
+                                           <?php echo substr($scheduleDataList['Product']['name'],0,20);  ?>  
                                            <br>
                                            
                                         </td>
-
-                                        <td class="text-center" >
-                                            
-                                             <?php  echo date('M d, Y', strtotime($scheduleDataList['ClientOrderDeliverySchedule']['schedule']));?> 
-
-                                            <br>
-
-                                        </td >
 
                                         <td class="text-center">
 
                                            <?php echo $scheduleDataList['ClientOrderDeliverySchedule']['quantity']; ?>  
 
                                         </td>
+
+                                        <td class="text-center" >
+
+                                          <?php 
+                                            
+                                            $uuidClients = $scheduleDataList['ClientOrderDeliverySchedule']['uuid'];
+                                               
+                                                $arrholder = array();
+
+                                                 foreach ($deliveryStatus as $key => $value) {
+
+                                                  $IdClientsOrder = $orderListHelper[$value['Delivery']['clients_order_id']];
+  
+                                                    if($value['Delivery']['schedule_uuid'] == $orderDeliveryList[$uuidClients]  ){  
+
+                                                      if($value['DeliveryDetail']['status'] != 5){
+                                                   
+                                                      array_push($arrholder,$value['DeliveryDetail']['delivered_quantity']);
+
+                                                      }
+
+                                                    }  
+                                                                                                    
+                                                  }
+                                            
+                                            echo(array_sum($arrholder));?> 
+
+                                            <br>
+
+                                        </td >
 
                                         <td class="text-center">
 
