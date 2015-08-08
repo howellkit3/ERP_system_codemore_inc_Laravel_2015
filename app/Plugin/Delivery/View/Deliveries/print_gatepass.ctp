@@ -19,12 +19,15 @@
 
         }
 
-        $objTpl->setActiveSheetIndex(0)                      
-                            ->setCellValue('J6', (new \DateTime())->format('l, F d, Y '))
-                            ->setCellValue('C12', ucwords(strtoupper($truckList[$truck])))
-                            ->setCellValue('C13', ucwords($driverList[$driver]))
-                            ->setCellValue('J8', $remarks);
+        if(!empty($truckList[$truck]) || !empty($driverList[$driver])){
 
+            $objTpl->setActiveSheetIndex(0)                      
+                                ->setCellValue('J6', (new \DateTime())->format('l, F d, Y '))
+                                ->setCellValue('C12', ucwords(strtoupper($truckList[$truck])))
+                                ->setCellValue('C13', ucwords($driverList[$driver]));
+                                
+
+        
        
      foreach ($productList as $key => $productnamelist) {
          if(count($productList) < 5){
@@ -47,6 +50,8 @@
             }
         }
 
+        }
+
                            
         $counter =  14;  
         foreach ($assistData as $key => $helperlist) {
@@ -59,7 +64,8 @@
 
         $objTpl->setActiveSheetIndex(0)
                                 ->setCellValue('B18',ucwords($userData['User']['first_name']) . ' '. ucwords($userData['User']['last_name']))
-                                ->setCellValue('F18', ucwords($userFnameList[$approver]) . ' ' .ucwords($userLnameList[$approver]));
+                                ->setCellValue('F18', ucwords($userFnameList[$approver]) . ' ' .ucwords($userLnameList[$approver]))
+                                ->setCellValue('J8', $remarks);
       
                        
     //prepare download
