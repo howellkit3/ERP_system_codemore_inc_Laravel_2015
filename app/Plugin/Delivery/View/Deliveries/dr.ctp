@@ -15,6 +15,8 @@
         $phpPrice = '';
         $usdPrice = '';
         $totalQty = $clientData['QuotationItemDetail']['quantity'] * $drData['DeliveryDetail']['quantity'];
+        $dividend = $drData['DeliveryDetail']['quantity'] / $drData['DeliveryDetail']['pieces'];
+        $difference = $drData['DeliveryDetail']['quantity'] - (floor($dividend) * $drData['DeliveryDetail']['pieces']);
         $preparedFName = ucwords($prepared['User']['first_name']) ;
         $preparedLName = ucwords($prepared['User']['last_name'])  ;
         $approvedFName = ucwords($approved['User']['first_name'])  ;
@@ -44,7 +46,6 @@
       // if(!empty($DRRePrint[0]['DeliveryReceipt']['printed'])){   
 
       //  $printedDate = date("M/d/Y", strtotime($DRRePrint[0]['DeliveryReceipt']['printed'])); 
-
       //   $toBePrinted =  $printedDate;
                 
       // }
@@ -53,6 +54,7 @@
 
         $objTpl->setActiveSheetIndex(0)
                     
+
                     ->setCellValue('J'.'4', '')
                     ->setCellValue('I'.'6', $drData['Delivery']['id'])
                     ->setCellValue('C'.'6', ucwords($companyData['Company']['company_name']))
@@ -60,12 +62,24 @@
                     ->setCellValue('C'.'7', ucwords($drData['DeliveryDetail']['location']))
                     ->setCellValue('C'.'9', ucfirst($clientData['Product']['name']))
                     ->setCellValue('C'.'10', $remarks)
-                    ->setCellValue('H'.'9', $quantity . " x " . $clientData['QuotationItemDetail']['quantity'] . " / " . $units[$clientData['QuotationItemDetail']['quantity_unit_id']] )
-                    ->setCellValue('J'.'9', $totalQty)
+                    ->setCellValue('J'.'9', $drData['DeliveryDetail']['quantity'])
                     ->setCellValue('A'.'21', $preparedFName . " " .$preparedLName)
                     ->setCellValue('E'.'21', $approvedFName . " " .$approvedLName)
                     ->setCellValue('I'.'5', $toBePrinted);
-             
+
+        if($difference == 0){
+
+        $objTpl->setActiveSheetIndex(0)
+                    
+                    ->setCellValue('H'.'9', $drData['DeliveryDetail']['pieces'] . " x " .  floor($dividend) . " / " . $units[$clientData['QuotationItemDetail']['quantity_unit_id']] );
+
+        }else{
+
+        $objTpl->setActiveSheetIndex(0)
+                    
+                    ->setCellValue('H'.'9', $drData['DeliveryDetail']['pieces'] . " x " .  floor($dividend)  . " + " . floor($difference) . " / " . $units[$clientData['QuotationItemDetail']['quantity_unit_id']] );
+
+        }
 
         $counter++;  
 

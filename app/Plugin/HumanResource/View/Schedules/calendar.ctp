@@ -60,13 +60,9 @@ echo $this->Html->script(array(
 			</div>
 		</div>	
 
-
-
-
 	    </div>
     </div>
 </div>
-
 
 <script>
 var dateSelected = '<?php echo date("Y-m-d"); ?>';

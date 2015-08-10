@@ -1187,3 +1187,8 @@ CREATE TABLE IF NOT EXISTS `salaries` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
+
+/** howell kit added this 08/08/2015   */
+ALTER TABLE `delivery_details`  ADD `pieces` INT(11) NULL  AFTER `delivered_quantity`;
+ALTER TABLE `delivery_details`  ADD `measure` INT(11) NULL  AFTER `pieces`;
+ALTER TABLE `employees` ADD `contract_id` INT(11)  NULL  DEFAULT NULL  AFTER `modified`;
