@@ -6,6 +6,7 @@ echo $this->Html->css(array(
                     'HumanResource.select2.css',
                     'datetimepicker/jquery.datetimepicker',
                     'HumanResource.../js/jquery-impromptu/jquery-impromptu.css',
+                    'sweet-alert'
 )); 
 
 echo $this->Html->script(array(
@@ -13,7 +14,8 @@ echo $this->Html->script(array(
                     'datetimepicker/jquery.datetimepicker',
                     'HumanResource.select2.min',
                     'HumanResource.custom',
-                    'HumanResource.jquery-impromptu/jquery-impromptu.js',   
+                    'HumanResource.jquery-impromptu/jquery-impromptu.js',
+                    'sweet-alert.min',   
                     'HumanResource.overtime'
 
 )); 
@@ -348,7 +350,7 @@ echo $this->Html->script(array(
                 });
 
                 // quick routine for scrolling nav
-             
+              
 
         });
  </script>
