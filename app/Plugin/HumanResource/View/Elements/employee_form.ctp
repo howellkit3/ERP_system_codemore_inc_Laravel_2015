@@ -9,32 +9,40 @@
                                 <div class="form-horizontal">
                                     <div class="form-group">
                                     	<div class="col-lg-6">
-                                     		<div class="form-group">
-		                                        <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> First Name</label>
-		                                        <div class="col-lg-9">
-		                                        	<?php
-		                                                echo $this->Form->input('Employee.id', array('class' => 'form-control col-lg-6 required name-check','label' => false));
-		                                            ?>
-		                                            <?php
-		                                                echo $this->Form->input('Employee.first_name', array('class' => 'form-control col-lg-6 required name-check','label' => false));
-		                                            ?>
-		                                        </div>
-		                                     </div>
+
 		                                     <div class="form-group">
 		                                        <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Last Name</label>
 		                                        <div class="col-lg-9">
 		                                            <?php
+		                                               
+		                                                echo $this->Form->input('Employee.id', array('class' => 'form-control col-lg-6 required name-check','label' => false));
+
 		                                                echo $this->Form->input('Employee.last_name', array('class' => 'form-control col-lg-6 required name-check','label' => false));
 		                                            ?>
 		                                        </div>
 		                                     </div>
 
+                                     		<div class="form-group">
+		                                        <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> First Name</label>
+		                                        <div class="col-lg-9">
+		                                        	
+		                                            <?php
+
+		                                                echo $this->Form->input('Employee.first_name', array('class' => 'form-control col-lg-6 required name-check','label' => false));
+		                                            ?>
+
+		                                        </div>
+		                                     </div>
+
 		                                     <div class="form-group">
-		                                        <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Middle Name</label>
+		                                        <label for="inputEmail1" class="col-lg-2 control-label"> Middle Name</label>
 			                                        <div class="col-lg-9">
+
 			                                            <?php
-			                                                echo $this->Form->input('Employee.middle_name', array('class' => 'form-control col-lg-6 required name-check','label' => false));
+
+			                                                echo $this->Form->input('Employee.middle_name', array('class' => 'form-control col-lg-6 name-check','label' => false));
 			                                            ?>
+			                                            
 			                                        </div>
 		                                     </div>
 
@@ -80,9 +88,6 @@
 				                                            	
 				                                            	$position = array($positionList);
 
-				                                            ?>
-
-				                                            <?php 
 				                                            	echo $this->Form->input('Employee.position_id',
 							                                         array('class' => 'autocomplete required',
 							                                        'options' => $position,
@@ -113,7 +118,25 @@
 			                                        	?>				
 														 </div>
 			                                          </div>
+
 			                                           <div class="form-group">
+			                                        	 <label class="col-lg-4 control-label">
+			                                        	 <span style="color:red">*</span>Date Hired</label>
+			                                           	 <div class="">
+															<?php 
+															
+			                                             	echo $this->Form->input('Employee.date_hired',
+							                                         array('type' => 'text','class' => 'form-control required datepick',
+							                                        'value' => !empty($employeeData['Employee']['date_hired']) ? date('Y-m-d',strtotime($employeeData['Employee']['date_hired']))  : '', 	
+							                                        'div' => 'col-lg-7',
+							                                        'label' => false));
+			                                        		?>
+
+
+														 </div>
+			                                          </div>
+			                                          
+			                                          <div class="form-group">
 			                                        	 <label class="col-lg-4 control-label">
 			                                        	 <span style="color:red">*</span>Code</label>
 			                                           	 <div class="">
@@ -141,6 +164,9 @@
 	                                                             </div>
 	                                                        </div> 
 			                                          </div>
+
+
+
 			                                          
 		                                        </div>
 		                                        <div class="col-lg-4">

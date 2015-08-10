@@ -114,7 +114,7 @@
 					<div class="tabs-wrapper profile-tabs">
 						<ul class="nav nav-tabs">
 							<li class="active"><a href="#tab-ainfo" data-toggle="tab">Basic Salary Information</a></li>
-							<li class=""><a href="#tab-ainfo" data-toggle="tab">Salary Adjustment</a></li>
+						<!-- 	<li class=""><a href="#tab-ainfo" data-toggle="tab">Salary Adjustment</a></li> -->
 							
 						</ul>
 						

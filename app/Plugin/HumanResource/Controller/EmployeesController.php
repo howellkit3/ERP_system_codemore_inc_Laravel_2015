@@ -557,9 +557,12 @@ class EmployeesController  extends HumanResourceAppController {
 			$conditions = array('AND'=>array(
 				'first_name like' => '%'.$data['first_name'].'%',
 				'last_name like' => '%'.$data['last_name'].'%',
-				'middle_name like' => '%'.$data['middle_name'].'%',
 
 			));
+
+			if (!empty($data['middle_name'])) {
+				$conditions = array_merge($conditions,array('Employee.middle_name like' => '%'.$data['middle_name'].'%'));
+			}
 
 			$employee = $this->Employee->find('count',array(
 				'conditions' => $conditions
