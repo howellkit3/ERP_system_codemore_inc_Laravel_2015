@@ -72,37 +72,44 @@
 						</div>
 
 						<div class="story-author">
-									<div class="table-responsive">
-												<div class="col-lg-12">
-		                                     		<div class="form-group">
-				                                        <label for="inputEmail1" class="col-lg-12 control-label strong">Name</label>
-					                                      <div class="col-lg-12 value">
+							<div class="table-responsive">
+								<div class="col-lg-12">
+                             		<div class="form-group">
+                                        <label for="inputEmail1" class="col-lg-12 control-label strong">Name</label>
+	                                      <div class="col-lg-12 value">
 
-					                                       <?php echo $this->CustomText->getFullname($employee['Employee']);  ?>
-					                                       </div>
-				                                     </div>
-				                                     <div class="form-group">
-				                                        <label for="inputEmail1" class="col-lg-12 control-label strong">Employee #</label>
-					                                      <div class="col-lg-12 value"> 
-					                                       <?php echo rand(1000,80000);  ?>
-					                                       </div>
-				                                     </div>
+	                                       <?php echo $this->CustomText->getFullname($employee['Employee']);  ?>
+	                                       </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputEmail1" class="col-lg-12 control-label strong">Employee #</label>
+	                                      <div class="col-lg-12 value"> 
+	                                       <?php echo rand(1000,80000);  ?>
+	                                       </div>
+                                    </div>
 
-				                                      <div class="form-group">
-				                                        <label for="inputEmail1" class="col-lg-12 control-label strong">Department</label>
-					                                      <div class="col-lg-12 value"> 
-					                                       <?php echo !empty($departments[$employee['Employee']['department_id']]) ? $departments[$employee['Employee']['department_id']] : '';  ?>
-					                                       </div>
-				                                     	</div>
+                                    <div class="form-group">
+                                        <label for="inputEmail1" class="col-lg-12 control-label strong">Department</label>
+	                                      <div class="col-lg-12 value"> 
+	                                       <?php echo !empty($departments[$employee['Employee']['department_id']]) ? $departments[$employee['Employee']['department_id']] : '';  ?>
+	                                       </div>
+                                    </div>
 
-				                                     	<div class="form-group">
-				                                        <label for="inputEmail1" class="col-lg-12 control-label strong">Position</label>
-					                                      <div class="col-lg-12 value"> 
-					                                       <?php echo !empty($positions[$employee['Employee']['position_id']]) ? $positions[$employee['Employee']['position_id']] : '';  ?>
-					                                       </div>
-				                                     	</div>
-											</div>
+                                    <div class="form-group">
+                                        <label for="inputEmail1" class="col-lg-12 control-label strong">Position</label>
+	                                      <div class="col-lg-12 value"> 
+	                                       <?php echo !empty($positions[$employee['Employee']['position_id']]) ? $positions[$employee['Employee']['position_id']] : '';  ?>
+	                                       </div>
+                                    </div>
+
+                                     <div class="form-group">
+                                        <label for="inputEmail1" class="col-lg-12 control-label strong">Contract</label>
+	                                      <div class="col-lg-12 value"> 
+	                                       <?php echo !empty($contractList[$employee['Employee']['contract_id']]) ? $contractList[$employee['Employee']['contract_id']] : '';  ?>
+	                                       </div>
+                                    </div>
 								</div>
+							</div>
 						</div>
 
 					</div>

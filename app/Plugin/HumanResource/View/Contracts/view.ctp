@@ -6,6 +6,14 @@
     <?php
     	
         echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'contracts', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+
+        echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array(
+		        	'controller' => 'contracts', 
+		        	'action' => 'print_contractual',
+		        	//'ext' => 'pdf',
+		        	$employeeData['Employee']['id']
+		        	),
+		        	array('class' =>'btn btn-primary pull-right ','escape' => false,'target' => '_blank'));
 		
      ?>
    
@@ -51,7 +59,7 @@
 					<div class="form-group">
 						<div class="col-lg-2">&emsp;&emsp;&emsp;&emsp;ADDRESS</div>
 						<div class="col-lg-1">:</div>
-						<div class="col-lg-9"><?php echo $employeeData['Address'][0]['address_1'] ?>, <?php echo $employeeData['Address'][0]['city'] ?>, <?php echo $employeeData['Address'][0]['state_province'] ?></div>
+						<div class="col-lg-9"><?php echo ucfirst($employeeData['Address'][0]['address_1']) ?>, <?php echo ucfirst($employeeData['Address'][0]['city']) ?>, <?php echo ucfirst($employeeData['Address'][0]['state_province']) ?></div>
 					</div>
 
 					<div class="form-group">
@@ -59,8 +67,7 @@
 						<div class="col-lg-1">:</div>
 						<div class="col-lg-4"><?php echo $employeeData['EmployeeAdditionalInformation']['birthday'] ?></div>
 						<div class="col-lg-2">PLACE OF BIRTH</div>
-						<div class="col-lg-1">:</div>
-						<div class="col-lg-3"><?php //echo $employeeData['Employee']['last_name'] ?></div>
+						<div class="col-lg-3">:&emsp;&emsp;<?php echo $employeeData['EmployeeAdditionalInformation']['birth_place'] ?></div>
 					</div>
 
 					<div class="form-group">
@@ -68,8 +75,7 @@
 						<div class="col-lg-1">:</div>
 						<div class="col-lg-4"><?php echo $employeeData['Status']['name'] ?></div>
 						<div class="col-lg-2">NAME OF SPOUSE</div>
-						<div class="col-lg-1">:</div>
-						<div class="col-lg-3"><?php //echo $employeeData['Employee']['last_name'] ?></div>
+						<div class="col-lg-3">:&emsp;&emsp;<?php //echo $employeeData['Employee']['last_name'] ?></div>
 					</div>
 
 					<div class="form-group">
@@ -77,17 +83,15 @@
 						<div class="col-lg-1">:</div>
 						<div class="col-lg-4"><?php //echo $employeeData['Employee']['last_name'] ?></div>
 						<div class="col-lg-2">TIN NO</div>
-						<div class="col-lg-1">:</div>
-						<div class="col-lg-3"><?php //echo $employeeData['Employee']['last_name'] ?></div>
+						<div class="col-lg-3">:&emsp;&emsp;<?php //echo $employeeData['Employee']['last_name'] ?></div>
 					</div>
 
 					<div class="form-group">
 						<div class="col-lg-2">&emsp;&emsp;&emsp;&emsp;POSITION</div>
 						<div class="col-lg-1">:</div>
 						<div class="col-lg-4"><?php echo ucfirst($employeeData['Position']['name']) ?>/<?php echo ucfirst($employeeData['Department']['name']) ?></div>
-						<div class="col-lg-2">HITING DURATION</div>
-						<div class="col-lg-1">:</div>
-						<div class="col-lg-3"><?php //echo $employeeData['Employee']['last_name'] ?></div>
+						<div class="col-lg-2">HIRING DURATION</div>
+						<div class="col-lg-3">:&emsp;&emsp;<?php //echo $employeeData['Employee']['last_name'] ?></div>
 					</div>
 				</form>
 				<hr>

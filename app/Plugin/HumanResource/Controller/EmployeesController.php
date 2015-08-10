@@ -158,6 +158,8 @@ class EmployeesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Agency');
 
+		$this->loadModel('HumanResource.Contract');
+
 		$positionList = $this->Position->find('list',array('fields' => array('id','name')));
 
 		$departmentList = $this->Department->find('list',array('fields' => array('id','name')));
@@ -166,7 +168,9 @@ class EmployeesController  extends HumanResourceAppController {
 
 		$agencyList = $this->Agency->find('all',array('fields' => array('id','name','field')));
 
-		$this->set(compact('positionList','departmentList','statusList','agencyList'));
+		$contractList = $this->Contract->find('list',array('fields' => array('id','name')));
+
+		$this->set(compact('positionList','departmentList','statusList','agencyList','contractList'));
 	}
 
 	public function edit($id){
@@ -288,6 +292,8 @@ class EmployeesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Agency');
 
+		$this->loadModel('HumanResource.Contract');
+
 		$positionList = $this->Position->find('list',array('fields' => array('id','name')));
 
 		$departmentList = $this->Department->find('list',array('fields' => array('id','name')));
@@ -296,12 +302,14 @@ class EmployeesController  extends HumanResourceAppController {
 
 		$agencyList = $this->Agency->find('all',array('fields' => array('id','name','field')));
 
+		$contractList = $this->Contract->find('list',array('fields' => array('id','name')));
+
 		$nameList = array();
 		foreach ($agencyList as $key => $value) {
 			$nameList[$value['Agency']['id']] = array('name' => $value['Agency']['name'],'field' =>$value['Agency']['field']);
 		}
 		
-		$this->set(compact('positionList','departmentList','statusList','nameList'));
+		$this->set(compact('positionList','departmentList','statusList','nameList','contractList'));
 	}
 
 	function view($id){
@@ -325,6 +333,10 @@ class EmployeesController  extends HumanResourceAppController {
 		 $this->loadModel('HumanResource.Department');
 		
 		 $this->loadModel('HumanResource.Agency');
+
+		 $this->loadModel('HumanResource.Contract');
+
+		 $contractList = $this->Contract->find('list',array('fields' => array('id','name')));
 
 		$positions = $this->Position->find('list',array('fields' => array('id','name')));
 
@@ -352,7 +364,7 @@ class EmployeesController  extends HumanResourceAppController {
 			}
 			
 
-			$this->set(compact('employee','departments','positions','nameList'));
+			$this->set(compact('employee','departments','positions','nameList','contractList'));
 		}
 	}
 

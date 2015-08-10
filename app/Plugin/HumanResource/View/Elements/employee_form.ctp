@@ -10,6 +10,24 @@
                                     <div class="form-group">
                                     	<div class="col-lg-6">
 
+                                    		<div class="form-group">
+		                                        <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Contract</label>
+		                                        <div class="col-lg-9">
+		                                        	
+		                                            <?php echo $this->Form->input('Employee.contract_id',
+					                                         array('class' => 'autocomplete required',
+					                                        'options' => $contractList,
+					                                        'placeholder' => 'Department name',
+					                                        'empty' => 'Select Contract',
+					                                        'default' => !empty($employeeData['Employee']['contract_id']) ? $employeeData['Employee']['contract_id'] : '',
+					                                        'div' => 'col-lg-12',
+					                                        'label' => false));
+
+					                                ?>
+
+		                                        </div>
+		                                    </div>
+
 		                                     <div class="form-group">
 		                                        <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Last Name</label>
 		                                        <div class="col-lg-9">
@@ -17,7 +35,7 @@
 		                                               
 		                                                echo $this->Form->input('Employee.id', array('class' => 'form-control col-lg-6 required name-check','label' => false));
 
-		                                                echo $this->Form->input('Employee.last_name', array('class' => 'form-control col-lg-6 required name-check','label' => false));
+		                                                echo $this->Form->input('Employee.last_name', array('class' => 'form-control required name-check','label' => false ,'div' => 'col-lg-12'));
 		                                            ?>
 		                                        </div>
 		                                     </div>
@@ -28,7 +46,7 @@
 		                                        	
 		                                            <?php
 
-		                                                echo $this->Form->input('Employee.first_name', array('class' => 'form-control col-lg-6 required name-check','label' => false));
+		                                                echo $this->Form->input('Employee.first_name', array('class' => 'form-control required name-check','label' => false,'div' => 'col-lg-12'));
 		                                            ?>
 
 		                                        </div>
@@ -40,7 +58,7 @@
 
 			                                            <?php
 
-			                                                echo $this->Form->input('Employee.middle_name', array('class' => 'form-control col-lg-6 name-check','label' => false));
+			                                                echo $this->Form->input('Employee.middle_name', array('class' => 'form-control name-check','label' => false,'div' => 'col-lg-12'));
 			                                            ?>
 			                                            
 			                                        </div>
@@ -50,7 +68,7 @@
 		                                        <label for="inputEmail1" class="col-lg-2 control-label"> Suffix</label>
 			                                        <div class="col-lg-9">
 			                                            <?php
-			                                                echo $this->Form->input('Employee.suffix', array('class' => 'form-control col-lg-6','label' => false));
+			                                                echo $this->Form->input('Employee.suffix', array('class' => 'form-control','label' => false,'div' => 'col-lg-12'));
 			                                            ?>
 			                                        </div>
 		                                     </div>
@@ -225,7 +243,7 @@
                                     <div class="form-group">
                                     	<div class="col-lg-6">
                                      		<div class="form-group">
-		                                        <label for="inputEmail1" class="col-lg-2 control-label">Birthday </label>
+		                                        <label for="inputEmail1" class="col-lg-2 control-label">Date of Birth </label>
 		                                        <div class="col-lg-9">
 		                                      		   <?php
 			                                                echo $this->Form->input('EmployeeAdditionalInformation.id', array('class' => 'form-control col-lg-6',
@@ -235,6 +253,17 @@
 			                                         			'data-date-viewmode' => 'years',
 			                                         			'data-date-minviewmode' => 'months'
 
+			                                         			));
+		                                            ?>
+		                                        </div>
+		                                     </div>
+
+		                                     <div class="form-group">
+		                                        <label for="inputEmail1" class="col-lg-2 control-label">Place of Birth</label>
+		                                        <div class="col-lg-9">
+		                                      		   <?php
+			                                                
+			                                         		echo $this->Form->input('EmployeeAdditionalInformation.birth_place', array('class' => 'form-control col-lg-6','label' => false
 			                                         			));
 		                                            ?>
 		                                        </div>
