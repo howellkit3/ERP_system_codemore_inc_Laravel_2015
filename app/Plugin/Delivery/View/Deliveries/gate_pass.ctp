@@ -28,17 +28,35 @@
                             <div class="main-box-body clearfix">
                                 <div class="form-horizontal">
                                     <?php if(!empty($dr_nos)){ ?>
-                                    <div class="form-group form-height">
+
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label"><span style="color:red">*</span>Type of Gatepass</label>
+                                        <div class="col-lg-8">
+                                            <?php 
+                                                echo $this->Form->input('GatePassTruck.truck_id', array(
+                                                    'options' => array('Delivery', 'Pickup'),
+                                                    'value' => 0,
+                                                    'type' => 'select',
+                                                    'label' => false,
+                                                    'class' => 'form-control required gatefield gateType',
+                                                    'empty' => '---Type of Gatepass---',
+                                                    'required' => 'required'
+                                                    )); 
+                                            ?>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group form-height gatePickUp ">
                                         <label class="col-lg-2 control-label"><span style="color:red">*</span>Select DR No.</label>
                                         
                                     </div>
 
                                      <?php foreach ($dr_nos as $key => $value) { ;?>
-                                        <div class="form-group form-height">
+                                        <div class="form-group form-height gatePickUp">
                                             <label class="col-lg-2 control-label"> </label>
                                             <div class="col-lg-8">
                                                 <div class="checkbox-nice">
-                                                    <input type="checkbox" class="check-ref-uuid" id="checkbox-<?php echo $key ?>" checked="checked">
+                                                    <input type="checkbox" class="check-ref-uuid " id="checkbox-<?php echo $key ?>" checked="checked">
                                                     <label for="checkbox-<?php echo $key ?>">
                                                         <?php echo $value['Delivery']['dr_uuid'] ;?>
                                                     </label>
@@ -74,7 +92,27 @@
 
                                     <?php } 
 
-                                    }?>
+                                    }else{?>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label"><span style="color:red">*</span>Type of Gatepass</label>
+                                        <div class="col-lg-8">
+                                            <?php 
+                                                echo $this->Form->input('GatePassTruck.truck_id', array(
+                                                    'options' => array('Delivery', 'Pickup'),
+                                                    'value' => 1,
+                                                    'type' => 'select',
+                                                    'disabled' => 'disabled',
+                                                    'label' => false,
+                                                    'class' => 'form-control required gatefield gateType',
+                                                    'empty' => '---Type of Gatepass---',
+                                                    'required' => 'required'
+                                                    )); 
+                                            ?>
+                                        </div>
+                                    </div>
+
+                                    <?php } ?>
 
                                     <?php 
 
@@ -100,7 +138,7 @@
                                     
                                     ?>
                                      
-                                    <div class="form-group">
+                                    <div class="form-group gatePickUp">
                                         <label class="col-lg-2 control-label"><span style="color:red">*</span>Truck No.</label>
                                         <div class="col-lg-8">
                                             <?php 
@@ -108,7 +146,7 @@
                                                     'options' => array($truckListUpper),
                                                     'type' => 'select',
                                                     'label' => false,
-                                                    'class' => 'form-control required gatefield',
+                                                    'class' => 'form-control required gatefield ',
                                                     'empty' => '---Select Item Truck---',
                                                     'required' => 'required'
                                                     )); 
@@ -116,7 +154,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group gatePickUp">
                                         <label class="col-lg-2 control-label"><span style="color:red">*</span>Driver Name</label>
                                         <div class="col-lg-8">
                                             <?php 
@@ -124,7 +162,7 @@
                                                         'options' => array($driverListUpper),
                                                         'type' => 'select',
                                                         'label' => false,
-                                                        'class' => 'form-control required gatefield',
+                                                        'class' => 'form-control required gatefield ',
                                                         'empty' => '---Select Driver---',
                                                         'required' => 'required'
                                                         )));
@@ -206,8 +244,48 @@
     jQuery(document).ready(function(){
         
         $("#GatePassGatePassForm").validate();
+
+         type = $('.gateType').val();
+
+       if(type == 1){
+
+            $('.gatePickUp').hide();
+
+            $('.gatePickUp').attr('diabled', true);
+
+       }
+
+       if(type == 0){
+
+            $('.gatePickUp').show();
+
+       }
         
     });
+
+
+    $('.gateType').on("change",function(){
+        
+       type = $('.gateType').val();
+
+       if(type == 1){
+
+            $('.gatePickUp').hide();
+
+            $('.gatePickUp').attr('disabled', true);
+
+       }
+
+       if(type == 0){
+
+            $('.gatePickUp').show();
+
+       }
+        
+    });
+
+
+    gateType
 
 </script>
 <style type="text/css">

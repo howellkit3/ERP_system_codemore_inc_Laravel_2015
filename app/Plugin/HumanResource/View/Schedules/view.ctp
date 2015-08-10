@@ -32,7 +32,7 @@ echo $this->Html->script(array(
 			                    </div>
 			                     <?php
 			                   		
-			                   		$links = array('controller' => 'schedules', 'action' => 'holiday');
+			                   		$links = array('controller' => 'schedules', 'action' => 'view');
 
 			                   
 

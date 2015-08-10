@@ -1,6 +1,6 @@
   jQuery(document).ready(function($){
             $("#CustomerSaleViewForm").validate();
-            $('#date').datepicker({
+         $('#date').datepicker({
             format: 'yyyy-mm-dd'
         });
           

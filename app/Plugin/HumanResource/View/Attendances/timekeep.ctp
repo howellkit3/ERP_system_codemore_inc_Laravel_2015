@@ -55,11 +55,12 @@
 
 			                 <div class="filter-block pull-right">
 
-			                	   <button class="btn btn-primary pull-right add-timekeep" onclick="updateTime('.time_input')" data-toggle="modal" href="#timeKeep"> <i class="fa fa-pencil-square-o fa-lg"></i> Add </button>
+			                	 <button class="btn btn-primary pull-right add-timekeep" onclick="updateTime('.time_input')" data-toggle="modal" href="#timeKeep"> <i class="fa fa-pencil-square-o fa-lg"></i> Add </button>
 			                </div>
+			                <div class="filter-block pull-right">
 
 			                <a data-toggle="modal" href="#myToolReport" class="btn btn-primary pull-right "><i class="fa fa-share-square-o fa-lg"></i> Export</a>
-			                
+			                </div>
 			                 <div class="filter-block pull-right">
 			                 &nbsp
 			                 </div>

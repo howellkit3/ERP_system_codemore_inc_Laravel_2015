@@ -1169,7 +1169,7 @@ CREATE TABLE IF NOT EXISTS `received_items` (
 /** bien added this 08/06/2015   */
 ALTER TABLE `attendances` ADD `status` VARCHAR(50)  NULL  DEFAULT NULL  AFTER `modified`;
 
+/** howell kit added this 08/08/2015   */
+ALTER TABLE `delivery_details`  ADD `pieces` INT(11) NULL  AFTER `delivered_quantity`;
+ALTER TABLE `delivery_details`  ADD `measure` INT(11) NULL  AFTER `pieces`;
 ALTER TABLE `employees` ADD `contract_id` INT(11)  NULL  DEFAULT NULL  AFTER `modified`;
-
-
-

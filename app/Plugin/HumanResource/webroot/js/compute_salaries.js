@@ -5,11 +5,9 @@ $body = $('body');
 
 $('.autocomplete').select2();
 
-	$( ".datepick" ).datepicker({
-    format: 'yyyy-mm-dd', 
-    changeYear: true,
-    changeMonth: true,
-    showMonthAfterYear: true, //this is what you are looking for
+$( ".datepick" ).datepicker({
+     format: "mm-yyyy",
+     viewMode: "decade", 
 });
 
 	//check employee
@@ -54,7 +52,6 @@ $body.on('change','#department_id',function(){
 
  	           	} catch(e){
 
-          		console.log(e)
 
           	}
           	
@@ -69,20 +66,22 @@ $body.on('change','#department_id',function(){
 
 $body.on('click','.date-range .input',function(e){
 
-	if ($('.month-pay').val() != '') {
+	if ($('.month-pay').val() != '' && $('#month-pay').val()) {
 
 		$this = $(this);
-
 
 		$.ajax({
             type: "GET",
             url: serverPath + "human_resource/attendances/getAllAttendance/",
-            data: { 'month' : $('#month-pay').val(),'range' : $this.val() },
+            data: { 'month' : $('#month-pay').val(),'range' : $this.val(),'empdId' : $('#employee_id').val() },
             dataType: "html",
             success: function(data) {
 
-            			$('#days_work').html(data);
-           
+                console.log(data)
+            		
+            $('#days_work').html(data);
+            
+            $('#total-hours').val($('#append-total-hours').val());
 
             }
         });	
@@ -134,6 +133,16 @@ $body.on('click','.employee-li',function(){
 
             }
         });	
+});
+
+
+//get employee data
+$body.on('submit','#SalariesComputeSalariesForm',function(e){
+
+    //console.log($(this).serialize());
+
+    e.preventDefault();
+
 });
 
 });

@@ -11,12 +11,8 @@ $body.on('click','.btn.btn-success.upload-image',function(e){
     e.preventDefault();
 });
 
-$( ".datepick" ).datepicker({
- 	 format: "mm-yyyy",
-    viewMode: "months", 
-});
 
-//$('.datepick').datepicker({  format: 'yyyy-mm-dd'  });
+$('.datepick').datepicker({  format: 'yyyy-mm-dd'  });
 
 
 });
