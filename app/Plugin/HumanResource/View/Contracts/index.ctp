@@ -29,19 +29,67 @@
                         <thead>
                             <tr> 
                                 <th><a href="#"><span>Employee Name</span></a></th>
+                                <th><a href="#"><span>Department</span></a></th>
                                 <th><a href="#"><span>Position</span></a></th>
                                 <th><a href="#"><span>Status</span></a></th>
                                 <th><a href="#"><span>Type</span></a></th>
-                                <th><a href="#"><span>Created</span></a></th>
                                 <th>Action</th>
                             </tr>
                         </thead>
 
-                        <tbody aria-relevant="all" aria-live="polite" class="customerFields" role="alert">
-                            <?php //echo $this->element('customer_table'); ?>
-                        </tbody>
-                        <tbody aria-relevant="all" aria-live="polite" class="searchAppend" role="alert" style="display:none;">
-                        </tbody>
+                        <?php if(!empty($employeeData)){ 
+                            //pr($employeeData);exit();
+                           foreach ($employeeData as $employeeList): ?>
+
+                                <tbody aria-relevant="all" aria-live="polite" role="alert">
+
+                                    <tr class="">
+
+                                        <td class="">
+                                              <?php echo ucwords($employeeList['Employee']['full_name']); ?>,
+                                             
+                                        </td>
+
+                                        <td class="">
+                              
+                                           <?php echo ucwords($employeeList['Department']['name']); ?>    
+                                                
+                                        </td>
+
+                                        <td class="">
+                              
+                                           <?php echo ucwords($employeeList['Position']['name']); ?>    
+                                                
+                                        </td>
+
+                                        <td class="">
+                              
+                                           <?php echo ucwords($employeeList['Status']['name']); ?> 
+                                                
+                                        </td>
+
+                                        <td class="">
+                              
+                                           <?php echo ucwords($contract[$employeeList['Employee']['contract_id']]); ?>   
+                                                
+                                        </td>
+
+                                        <td>
+
+                                          <?php 
+                                           echo $this->Html->link('<span class="fa-stack">
+                                            <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> View </font></span></span> ', array('controller' => 'agencies', 'action' => 'view',$employeeList['Employee']['id']), array('class' =>' table-link','escape' => false, 'title'=>'View Agency'
+                                            )); ?>
+                      
+                                        </td>  
+                                    </tr>
+
+                                </tbody>
+                                          
+                            <?php 
+                                endforeach; 
+                            } 
+                        ?> 
  
                     </table>
                     <hr>
