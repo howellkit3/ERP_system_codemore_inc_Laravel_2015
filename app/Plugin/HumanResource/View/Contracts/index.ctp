@@ -46,7 +46,7 @@
                                     <tr class="">
 
                                         <td class="">
-                                              <?php echo ucwords($employeeList['Employee']['full_name']); ?>,
+                                              <?php echo ucwords($employeeList['Employee']['full_name']); ?>
                                              
                                         </td>
 
@@ -78,7 +78,7 @@
 
                                           <?php 
                                            echo $this->Html->link('<span class="fa-stack">
-                                            <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> View </font></span></span> ', array('controller' => 'agencies', 'action' => 'view',$employeeList['Employee']['id']), array('class' =>' table-link','escape' => false, 'title'=>'View Agency'
+                                            <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> View </font></span></span> ', array('controller' => 'contracts', 'action' => 'view',$employeeList['Employee']['id']), array('class' =>' table-link','escape' => false, 'title'=>'View Agency'
                                             )); ?>
                       
                                         </td>  
