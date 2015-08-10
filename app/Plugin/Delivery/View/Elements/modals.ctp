@@ -255,6 +255,53 @@
                             </div>
                         </div>
 
+                        <div class="form-group" id="existing_items">
+                            <label class="col-lg-2 control-label"><span style="color:red">*</span>Quantity</label>
+                            <div class="col-lg-9">
+                                <?php 
+                                    echo $this->Form->input('DeliveryDetail.quantity', array(
+                                                                    'empty' => 'None',
+                                                                    'required' => 'required',
+                                                                    'class' => 'form-control item_type editable addquantityLimit',
+                                                                    'label' => false,
+                                                                    'readonly' => 'readonly',
+                                                                     'value' => $scheduleInfo['ClientOrderDeliverySchedule']['quantity']
+                                                                    ));
+                                ?>
+                            </div>
+
+                        </div>
+
+                         <div class="form-group" id="existing_items">
+                            <label class="col-lg-2 control-label"><span style="color:red">*</span>Pieces</label>
+                            <div class="col-lg-3">
+                                <?php 
+                                    echo $this->Form->input('DeliveryDetail.pieces', array(
+                                                                    'empty' => 'None',
+                                                                    'required' => 'required',
+                                                                    'class' => 'form-control item_type editable addquantityLimit',
+                                                                    'label' => false
+                                                                    // 'value' => $deliveryEdit['DeliveryDetail']['quantity']
+                                                                    ));
+                                ?>
+                            </div>
+
+                             <div class="col-lg-6">
+                                <?php 
+                                    echo $this->Form->input('DeliveryDetail.measure', array(         
+                                                                    'required' => 'required',
+                                                                    'class' => 'form-control required  ',
+
+                                                                    'options' => array('by bundle', 'by pack'),
+                                                                    'empty' => '--Select Measure--',
+                                                                    'label' => false,
+                                                                    'type' => 'select',
+                                                                    'required' => 'required',
+                                                                    ));
+                                ?>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label for="inputPassword1" class="col-lg-2 control-label">Remarks</label>
                             <div class="col-lg-9">
