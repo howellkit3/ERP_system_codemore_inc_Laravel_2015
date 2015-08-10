@@ -1,20 +1,52 @@
 
 var multiplePromptsCounter = 1;
 
-function openMultiplePrompts(status,url){
+function openMultiplePrompts(element,url){
 
-    $.prompt("Are you sure you want to "+status+" this request?", {
-        //title: "confirmed",
-        buttons: { "Yes": true, "No": false },
-        persistent: false,
-        submit: function(e,v,m,f) {
-           if(v == true) {
-               window.location.href = url;
+    // $.prompt("Are you sure you want to "+status+" this request?", {
+    //     //title: "confirmed",
+    //     buttons: { "Yes": true, "No": false },
+    //     persistent: false,
+    //     submit: function(e,v,m,f) {
+    //        if(v == true) {
+    //            window.location.href = url;
+    //         }
+    //     }
+    // });
+
+
+       //var data1 = 1;
+        var data = $(element).attr('data');
+        
+        swal({
+            title: "Are you sure?",
+            text: "You want to approve this Quotation ",
+            type: "warning",
+            showCancelButton: true,
+            timer: 2000,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, approve it!",
+            cancelButtonText: "No, cancel",
+            closeOnConfirm: false,
+            closeOnCancel: false 
+        },
+        function (isConfirm) {
+
+            if (isConfirm) {
+
+                        swal("Successful!","Quotation approved.", "success");
+                        window.location.href = url;
+                 
+
+            } else {
+                swal("Cancelled", "Transaction error.", "error");
             }
-        }
-    });
+        });
+
+
 }
 
+     
 
 var checkDepartmentEmployee = function(element){
 
@@ -85,7 +117,7 @@ $(document).ready(function(){
     $body.on('click','.table-link',function(e){
         var status = $(this).data('process');
         var url = $(this).attr('href');
-        openMultiplePrompts(status,url);
+        openMultiplePrompts(this,url);
         e.preventDefault();
     });
 

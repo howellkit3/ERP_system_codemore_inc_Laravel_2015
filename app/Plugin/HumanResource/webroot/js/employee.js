@@ -128,7 +128,7 @@ $('.name-check').blur(function(){
     $middle_name = $('[name="data[Employee][middle_name]"]').val();
 
 
-    if ( $first_name != '' && $last_name != '' && $middle_name != '') {
+    if ( $first_name != '' && $last_name != '') {
 
          $.ajax({
             type: "POST",
