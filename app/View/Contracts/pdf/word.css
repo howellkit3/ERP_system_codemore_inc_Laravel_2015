@@ -72,10 +72,10 @@ border:1px solid #FF0000;
 }
 
 .one{
-  width: 150px;
+  width: 100px;
   float:left;
-  /*border: solid 1px #000;*/
+  border: solid 1px #000;
   display :inline-block;
-  margin-right: 100px;
-  margin-left: 100px;
+  margin-right: 150px;
+  margin-left: 150px;
 }

@@ -9,7 +9,7 @@
 
         echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array(
 		        	'controller' => 'contracts', 
-		        	'action' => 'print_contractual',
+		        	'action' => 'print_contract',
 		        	//'ext' => 'pdf',
 		        	$employeeData['Employee']['id']
 		        	),
@@ -95,41 +95,53 @@
 						<div class="col-lg-3"><?php echo ucfirst($employeeData['Position']['name']) ?>/<?php echo ucfirst($employeeData['Department']['name']) ?></div>
 						<div class="col-lg-5">HIRING DURATION&emsp;&emsp;</div>
 					</div>
-				</form>
-				<hr>
 
-				<div class="table-responsive">
-					<table class="table table-bordered">
-						<thead>
-							<tr>
-								<td><center><b>Employment Duration</b></center></td>
-								<td><center><b>Basic Salary (PHP)</b></center></td>
-								<td><center><b>Allowance</b></center></td>
-								<td><center><b>CTPA</b></center></td>
-								<td><center><b>SEA</b></center></td>
-							</tr>
-							<tr>
-								<td><center>- </center></td>
-								<td><center> -</center></td>
-								<td><center> -</center></td>
-								<td><center> -</center></td>
-								<td><center> -</center></td>
-							</tr>
-						</thead>
-					</table>
-				</div>
+					<div class="form-group">
+						<div class="col-lg-1"> </div>
+						<div class="col-lg-10"> <hr></div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-lg-1"> </div>
+						<div class="col-lg-10"> 
+							<div class="table-responsive">
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<td><center><b>Employment Duration</b></center></td>
+											<td><center><b>Basic Salary (PHP)</b></center></td>
+											<td><center><b>Allowance</b></center></td>
+											<td><center><b>CTPA</b></center></td>
+											<td><center><b>SEA</b></center></td>
+										</tr>
+										<tr>
+											<td><center>- </center></td>
+											<td><center> -</center></td>
+											<td><center> -</center></td>
+											<td><center> -</center></td>
+											<td><center> -</center></td>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+
+				</form>
 
 				<div class="main-box-body clearfix">
 					<form class="form-horizontal" role="form">
 						<div class="form-group">
-							<div class="col-lg-12">
-								YOUR APPOINTMENT CARRIES THE FOLLOWING TERMS AND CONDITIONS:
+							<div class="col-lg-1"> </div>
+							<div class="col-lg-10">
+								YOUR APPOINTMENT CARRIES THE FOLLOWING TERMS AND CONDITIONS:<br>
 								ANG PAGKAKAHIRANG SA IYO AY NASASAKLAW NG MGA SUMUSUNOD NA TAKDA AT BATAYAN:
 							</div>
 						</div>
 
 						<div class="form-group">
-							<div class="col-lg-12">
+							<div class="col-lg-1"> </div>
+							<div class="col-lg-10">
 								<ol>
 									<li>
 										This contract is related and valid only for the duration mentioned above, unless sooner terminated as provided in paragraph 8 below.
@@ -195,22 +207,40 @@
 				</div>
 
 				<div class="form-group">
-					<div class="col-lg-6"><center>___________________________________________</center></div>
-					<div class="col-lg-6"><center>___________________________________________</center></div>
-					<div class="col-lg-6"><center>Name and Signature of Employee</center></div>
-					<div class="col-lg-6"><center>Name and Signature of Company Representative</center></div>
+					<div class="col-lg-2"> </div>
+					<div class="col-lg-3"><center>___________________________________________</center></div>
+					<div class="col-lg-1"> </div>
+					<div class="col-lg-4"><center>___________________________________________</center></div>
 					
 				</div>
+
 				<div class="form-group">
+					<div class="col-lg-2"> </div>
+					<div class="col-lg-3"><center>Name and Signature of Employee</center></div>
+					<div class="col-lg-1"> </div>
+					<div class="col-lg-4"><center>Name and Signature of Company Representative</center></div>
+					
+				</div>
+				<br><br>
+				<div class="form-group">
+					<div class="col-lg-1"> </div>
 					<div class="col-lg-1">Date</div>
 					<div class="col-lg-1">:</div>
 					<div class="col-lg-1"> </div>
 					
 				</div>
+
+				<div class="form-group">
+					<div class="col-lg-1"> </div>
+					<div class="col-lg-5"> 
+						<br></br>
+						Doc No.:  KP-FR-HR1-012 Rev 0<br>
+						Effective  16 May 2015
+					</div>
+					
+				</div>
 			</div>
-			<br></br>
-			Doc No.:  KP-FR-HR1-012 Rev 0<br>
-			Effective  16 May 2015
+			
 		</div>
 	</div>
 </div>
