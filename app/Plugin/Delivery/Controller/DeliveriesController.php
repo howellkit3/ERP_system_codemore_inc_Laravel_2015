@@ -744,6 +744,8 @@ class DeliveriesController extends DeliveryAppController {
         
         $this->loadModel('Sales.Company');
 
+        $this->loadModel('Accounting.SalesInvoice');
+
         $this->loadModel('Delivery.DeliveryReceipt');
 
         $this->loadModel('Unit');
@@ -763,6 +765,7 @@ class DeliveriesController extends DeliveryAppController {
         $companyData = $this->Company->find('first', array(
                                             'conditions' => array('Company.id' => $clientData['ClientOrder']['company_id']
                                             )));
+
 
 
         $userData = $this->Session->read('Auth');
@@ -822,6 +825,16 @@ class DeliveriesController extends DeliveryAppController {
 
         if(empty($DRRePrint[0]['DeliveryReceipt']['dr_uuid']) OR (!empty($this->request->data['DeliveryReceipt']['type']))){
 
+            $accountingData = $this->SalesInvoice->find('first', array(
+                                            'conditions' => array('SalesInvoice.dr_uuid' => $dr_uuid
+                                            )));
+        
+            if($accountingData['SalesInvoice']['id']){
+
+                $idAccounting = $accountingData['SalesInvoice']['id'];
+
+            }
+
             if(!empty($this->request->data['DeliveryDetail']['new'])){
 
                 $this->request->data['DeliveryReceipt']['dr_uuid'] = $this->request->data['DeliveryDetail']['delivery_uuid'];
@@ -833,6 +846,14 @@ class DeliveriesController extends DeliveryAppController {
                     $this->DeliveryDetail->id = $idholder;
 
                     $this->DeliveryDetail->saveField('status', 5);
+
+                    if(!empty($idAccounting)){
+
+                        $this->SalesInvoice->id = $idAccounting;
+
+                        $this->SalesInvoice->saveField('status', 5);
+
+                    }
 
                     unset($this->request->data['DeliveryDetail']['id']);
 
