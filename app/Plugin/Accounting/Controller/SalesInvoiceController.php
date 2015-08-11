@@ -141,7 +141,11 @@ class SalesInvoiceController extends AccountingAppController {
                                             'conditions' => array('Company.id' => $clientData['ClientOrder']['company_id']
                                             )));
 
-        $this->set(compact('invoiceId','prepared','approved','drData','clientData','companyData','units','invoiceData','paymentTermData','currencyData'));
+        $noPermissionPay = "";
+
+        $noPermissionReciv = "";
+
+        $this->set(compact('invoiceId','prepared','approved','drData','clientData','companyData','units','invoiceData','paymentTermData','currencyData', 'noPermissionPay', 'noPermissionReciv'));
         
         if (!empty($saNo)) {
 
@@ -220,7 +224,11 @@ class SalesInvoiceController extends AccountingAppController {
             }
         }
 
-        $this->set(compact('seriesSalesNo'));
+        $noPermissionPay = "";
+
+        $noPermissionReciv = "";
+
+        $this->set(compact('seriesSalesNo', 'noPermissionPay', 'noPermissionReciv'));
 
     }
 
@@ -426,6 +434,8 @@ class SalesInvoiceController extends AccountingAppController {
         $clientData = $this->ClientOrder->find('first', array(
                                             'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
                                             )));
+
+        //pr($clientData); exit;
         
         $companyData = $this->Company->find('first', array(
                                             'conditions' => array('Company.id' => $clientData['ClientOrder']['company_id']

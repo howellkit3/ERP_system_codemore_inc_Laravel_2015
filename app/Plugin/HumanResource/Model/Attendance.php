@@ -90,21 +90,56 @@ class Attendance extends AppModel {
 
 			}  else {
 
+				if (!empty($data['type']) && $data['type'] == 'monthly') {
 
-				$sched['Attendance']['id'] = !empty($data['Attendance']['id']) ? $data['Attendance']['id'] : '';
+					$date = explode('-',$data['day']);
 
-			if ($data['model'] == 'Employee') {
+					$days1 = explode('/',trim($date[0]));
+					$days2 = explode('/',trim($date[1]));
+
+					ini_set('max_execution_time', 3600);
+					ini_set('memory_input_time', 1024);
+					ini_set('max_input_nesting_level', 1024);
+					ini_set('memory_limit', '1024M');
+
+					for ($days_count = $days1[2];$days_count <= $days2[2]; $days_count++) :
+
+						$sched['Attendance']['id'] = !empty($data['Attendance']['id']) ? $data['Attendance']['id'] : '';
+
+						if ($data['model'] == 'Employee') {
+						
+							$sched['Attendance']['employee_id'] = $data['foreign_key'];
+							
+						}
+
+						$sched['Attendance']['date'] = $days1[0].'-'.$days1[1].'-'.sprintf("%02d",$days_count);
+						$sched['Attendance']['schedule_id'] = $sched_id;
+						$sched['Attendance']['type'] = 'work';
+
+						$this->save($sched);
+
+					endfor;
+
+				} else {
+					
+
+						$sched['Attendance']['id'] = !empty($data['Attendance']['id']) ? $data['Attendance']['id'] : '';
+
+						if ($data['model'] == 'Employee') {
+						
+							$sched['Attendance']['employee_id'] = $data['foreign_key'];
+							
+						}
+
+						$sched['Attendance']['date'] = $data['day'];
+						$sched['Attendance']['schedule_id'] = $sched_id;
+						$sched['Attendance']['type'] = 'work';
+
+
+
+					return $this->save($sched['Attendance']);
+				}
 			
-				$sched['Attendance']['employee_id'] = $data['foreign_key'];
-				
-			}
-
-			$sched['Attendance']['date'] = $data['day'];
-			$sched['Attendance']['schedule_id'] = $sched_id;
-			$sched['Attendance']['type'] = 'work';
-
-
-			return $this->save($sched['Attendance']);
 
 
 			}

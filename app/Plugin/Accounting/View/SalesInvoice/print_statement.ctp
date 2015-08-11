@@ -5,7 +5,7 @@
 
     $objTpl = PHPExcel_IOFactory::load("./img/Statement.xlsx");
 
-    $totalQty = $drData['DeliveryDetail']['quantity'] * $clientData['QuotationItemDetail']['unit_price'];;
+    $totalQty = $drData['DeliveryDetail']['quantity'] * number_format($clientData['QuotationItemDetail']['unit_price'],2);;
 	$totalQ = number_format($totalQty,2);
 	$currency = $currencyData[$clientData['QuotationItemDetail']['unit_price_currency_id']];
 

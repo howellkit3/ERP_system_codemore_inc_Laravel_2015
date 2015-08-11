@@ -333,7 +333,7 @@
 		                                                echo $this->Form->input('EmployeeAdditionalInformation.blood',
 		                                                 array( 
 		                                                 	'options' => array('O' => 'O','A' => 'A','B' => 'B','AB' => 'AB'),
-		                                                 	'class' => 'form-control col-lg-6',
+		                                                 	'class' => 'col-lg-6 autocomplete',
 		                                                	'label' => false,
 		                                                	'empty' => '------Select Blood-Type -----'
 		                                                	));
@@ -453,7 +453,7 @@
 		                                <div class="form-group">
 		                                    <label for="inputPassword1" class="col-lg-2 control-label">Country</label>
 		                                    <div class="col-lg-9">
-		                                        <?php echo( $this->Country->select('Address.'.$address_key.'.country',null,array('class' => 'form-control required')));?> 
+		                                        <?php echo( $this->Country->select('Address.'.$address_key.'.country',null,array('class' => 'required autocomplete')));?> 
 		                                    </div>
 		                                </div>
 		                                <hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
@@ -549,7 +549,7 @@
 		                                <div class="form-group">
 		                                    <label for="inputPassword1" class="col-lg-2 control-label">Country</label>
 		                                    <div class="col-lg-9">
-		                                        <?php echo( $this->Country->select('Address.0.country',null,array('class' => 'form-control required')));?> 
+		                                        <?php echo( $this->Country->select('Address.0.country',null,array('class' => 'required autocomplete')));?> 
 		                                    </div>
 		                                </div>
 		                                <hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
