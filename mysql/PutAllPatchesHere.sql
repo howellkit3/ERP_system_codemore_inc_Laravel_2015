@@ -1140,6 +1140,8 @@ VALUES
 
 ALTER TABLE `employees`  ADD `date_hired` DATETIME NULL  AFTER `position_id`;
 
+ALTER TABLE `work_schedules` CHANGE `day` `day` VARCHAR(255) NOT NULL;
+
 /* end all HR tables */
 
 /** howell kit added this 08/05/2015   */

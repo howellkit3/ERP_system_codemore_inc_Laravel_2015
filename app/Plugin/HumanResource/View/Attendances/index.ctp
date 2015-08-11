@@ -234,7 +234,7 @@ echo $this->element('hr_options');
                                                                 'type' => 'select',
                                                                 'label' => false,
                                                                 'class' => 'form-control',
-                                                                'empty' => '---Select Employee---',
+                                                                'empty' => '---Select Department---',
                                                                 'options' => array($departmentList)
 
                                                               ));

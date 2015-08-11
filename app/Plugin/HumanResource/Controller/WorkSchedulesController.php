@@ -25,6 +25,7 @@ class WorkSchedulesController  extends HumanResourceAppController {
 		$conditions = array();
 		$workshifts = $this->Workshift->getList($conditions);
 
+
 		if ($this->request->is('post')) {
 
 			//save attendance

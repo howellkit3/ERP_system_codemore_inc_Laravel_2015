@@ -15,6 +15,8 @@ class AttendancesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Workshift');
 
+		$this->loadModel('HumanResource.Department');
+
 		$limit = 10;
 
 		$query = $this->request->query;
@@ -58,7 +60,11 @@ class AttendancesController  extends HumanResourceAppController {
 		
 		$attendances = $this->paginate();
 
-		$this->set(compact('attendances','date','search'));
+		$departmentList = $this->Department->getList();
+
+		$employeeList = array();
+
+		$this->set(compact('attendances','date','search','departmentList','employeeList'));
 
 	}
 
@@ -240,7 +246,6 @@ public function ajax_find() {
 			if (!empty($query['to'])) {
 				$date2 = $query['to'];
 			}
-
 
 			$conditions = array(
 				'Attendance.date >=' => $date,
@@ -450,7 +455,6 @@ public function getEmployeeData($attendaceId = null,$date = null) {
 
 		$attendance = $this->Attendance->find('first',array(
 			'conditions' => $conditions
-
 		));
 
 		$this->set(compact('attendance'));
