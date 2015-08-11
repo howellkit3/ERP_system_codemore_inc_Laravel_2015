@@ -175,25 +175,31 @@ $(".autocomplete").select2();
 $('body').on('change','.select-department-view',function(e){
 
     var thisDepartmentId = $(this).val();
-
-    //if (thisDepartmentId) {
+    console.log(thisDepartmentId);
+    if (thisDepartmentId > 0) {
         $('.default-table').hide();
         $('.append-table-department').show();
-   // };
-    
-    $.ajax({
-        type: "GET",
-        url: serverPath + "human_resource/employees/search_by_department/"+thisDepartmentId,
-        dataType: "html",
-        success: function(data) {
-           
-            if(data){
-                $('.append-table-department').html(data); 
-            }else{
-                $('.append-table-department').html('<font color="red"><b>No result..</b></font>'); 
+
+        $.ajax({
+            type: "GET",
+            url: serverPath + "human_resource/employees/search_by_department/"+thisDepartmentId,
+            dataType: "html",
+            success: function(data) {
+               
+                if(data){
+                    $('.append-table-department').html(data); 
+                }else{
+                    $('.append-table-department').html('<font color="red"><b>No result..</b></font>'); 
+                }
+                
             }
-            
-        }
-    });
+        });
+
+    }else{
+
+        $('.default-table').show();
+        $('.append-table-department').hide();
+    } 
+    
 
 });

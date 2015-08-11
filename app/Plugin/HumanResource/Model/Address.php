@@ -7,6 +7,25 @@ class Address extends AppModel {
     public $useDbConfig = 'koufu_human_resource';
 
     public $name = 'Address';
+
+  //   public function bind($model = array('Group')){
+
+  //    $this->bindModel(array(
+  //     'belongsTo' => array(
+  //       'Employee' => array(
+  //         'className' => 'Employee',
+  //         'foreignKey' => 'foreign_key',
+  //         //'dependent' => true,
+  //         // 'conditions' => array(
+  //         //   'Address.model = Employee',
+  //         //   'Address.foreign_key = Employee.id' 
+  //         //   )
+  //       )
+  //       ))
+  //    ),false);
+
+  //    $this->contain($model);
+  // }
   	
   	public function saveAddress($data,$foreignKey = null,$model = null,$authid = null) {
 

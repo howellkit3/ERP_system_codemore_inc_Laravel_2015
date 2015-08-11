@@ -5,7 +5,7 @@
 
     $objTpl = PHPExcel_IOFactory::load("./img/Invoice.xlsx");
  	
- 	$totalQty = $drData['DeliveryDetail']['quantity'] * $clientData['QuotationItemDetail']['unit_price'];
+ 	$totalQty = $drData['DeliveryDetail']['quantity'] * number_format($clientData['QuotationItemDetail']['unit_price'],2);
 	
 	$vatSale = '';
 	if($clientData['QuotationItemDetail']['unit_price_currency_id'] == 1){
@@ -53,7 +53,7 @@
                 ->setCellValue('A12', $clientData['ClientOrder']['po_number'])
                 ->setCellValue('C12', ucfirst($clientData['Product']['name']))
                 ->setCellValue('F12', number_format($drData['DeliveryDetail']['quantity']))
-                ->setCellValue('H12', number_format($clientData['QuotationItemDetail']['unit_price'],2))
+                ->setCellValue('H12', $clientData['QuotationItemDetail']['unit_price'])
                 ->setCellValue('J12', number_format($totalQty,2))
                 ->setCellValue('C22', 'DR#'.$drData['Delivery']['dr_uuid'])
                 ->setCellValue('C23', 'REF#'.$drData['Delivery']['id'])

@@ -1142,6 +1142,13 @@ ALTER TABLE `employees`  ADD `date_hired` DATETIME NULL  AFTER `position_id`;
 
 ALTER TABLE `work_schedules` CHANGE `day` `day` VARCHAR(255) NOT NULL;
 
+/** bien added this 08/06/2015   */
+ALTER TABLE `attendances` ADD `status` VARCHAR(50)  NULL  DEFAULT NULL  AFTER `modified`;
+
+/** bien added this 08/10/2015   */
+ALTER TABLE `employees` ADD `contract_id` INT(11)  NULL  DEFAULT NULL  AFTER `modified`;
+ALTER TABLE `employee_additional_informations` ADD `birth_place` VARCHAR(255)  NULL  DEFAULT NULL  AFTER `modified`;
+
 /* end all HR tables */
 
 /** howell kit added this 08/05/2015   */
@@ -1170,9 +1177,6 @@ CREATE TABLE IF NOT EXISTS `received_items` (
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
-/** bien added this 08/06/2015   */
-ALTER TABLE `attendances` ADD `status` VARCHAR(50)  NULL  DEFAULT NULL  AFTER `modified`;
-
 
 CREATE TABLE IF NOT EXISTS `salaries` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1193,4 +1197,3 @@ CREATE TABLE IF NOT EXISTS `salaries` (
 /** howell kit added this 08/08/2015   */
 ALTER TABLE `delivery_details`  ADD `pieces` INT(11) NULL  AFTER `delivered_quantity`;
 ALTER TABLE `delivery_details`  ADD `measure` INT(11) NULL  AFTER `pieces`;
-ALTER TABLE `employees` ADD `contract_id` INT(11)  NULL  DEFAULT NULL  AFTER `modified`;

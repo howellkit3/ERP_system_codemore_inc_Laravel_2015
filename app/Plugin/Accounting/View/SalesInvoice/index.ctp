@@ -58,8 +58,10 @@
 					                            <?php 
 					                            	if ($invoiceDataList['SalesInvoice']['status'] == 1) {
 					                            		echo "<span class='label label-success'>Invoice</span>";
-					                            	} else {
-					                            		echo "<span class='label label-info'>Pre-Invoice</span>";
+					                            	} else if($invoiceDataList['SalesInvoice']['status'] == 5){
+					                            		echo "<span class='label label-danger'>Terminated</span>";
+					                            	}else{
+					                        			echo "<span class='label label-info'>Pre-Invoice</span>";
 					                            	}
 					                            ?>
 					                        </td>
