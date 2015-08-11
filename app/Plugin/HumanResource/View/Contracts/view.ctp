@@ -46,9 +46,10 @@
 					</div>
 
 					<div class="form-group">
+						<div class="col-lg-1"> </div>
 						<div class="col-lg-2">&emsp;&emsp;&emsp;&emsp;EMPLOYEE</div>
 						<div class="col-lg-1">:</div>
-						<div class="col-lg-9">
+						<div class="col-lg-8">
 							<?php echo ucwords($employeeData['Employee']['last_name']) ?>, 
 							<?php echo ucwords($employeeData['Employee']['first_name']) ?>
 							<?php echo ucwords($employeeData['Employee']['middle_name']) ?>
@@ -57,41 +58,42 @@
 					</div>
 
 					<div class="form-group">
+						<div class="col-lg-1"> </div>
 						<div class="col-lg-2">&emsp;&emsp;&emsp;&emsp;ADDRESS</div>
 						<div class="col-lg-1">:</div>
-						<div class="col-lg-9"><?php echo ucfirst($employeeData['Address'][0]['address_1']) ?>, <?php echo ucfirst($employeeData['Address'][0]['city']) ?>, <?php echo ucfirst($employeeData['Address'][0]['state_province']) ?></div>
+						<div class="col-lg-8"><?php echo ucfirst($employeeData['Address'][0]['address_1']) ?>, <?php echo ucfirst($employeeData['Address'][0]['city']) ?>, <?php echo ucfirst($employeeData['Address'][0]['state_province']) ?></div>
 					</div>
 
 					<div class="form-group">
+						<div class="col-lg-1"> </div>
 						<div class="col-lg-2">&emsp;&emsp;&emsp;&emsp;DATE OF BIRTH</div>
 						<div class="col-lg-1">:</div>
-						<div class="col-lg-4"><?php echo $employeeData['EmployeeAdditionalInformation']['birthday'] ?></div>
-						<div class="col-lg-2">PLACE OF BIRTH</div>
-						<div class="col-lg-3">:&emsp;&emsp;<?php echo $employeeData['EmployeeAdditionalInformation']['birth_place'] ?></div>
+						<div class="col-lg-3"><?php echo $employeeData['EmployeeAdditionalInformation']['birthday'] ?></div>
+						<div class="col-lg-5">PLACE OF BIRTH &emsp;&emsp;:&emsp;&emsp;<?php echo $employeeData['EmployeeAdditionalInformation']['birth_place'] ?></div>
 					</div>
 
 					<div class="form-group">
+						<div class="col-lg-1"> </div>
 						<div class="col-lg-2">&emsp;&emsp;&emsp;&emsp;STATUS</div>
 						<div class="col-lg-1">:</div>
-						<div class="col-lg-4"><?php echo $employeeData['Status']['name'] ?></div>
-						<div class="col-lg-2">NAME OF SPOUSE</div>
-						<div class="col-lg-3">:&emsp;&emsp;<?php //echo $employeeData['Employee']['last_name'] ?></div>
+						<div class="col-lg-3"><?php echo $employeeData['Status']['name'] ?></div>
+						<div class="col-lg-5">NAME OF SPOUSE &emsp;&emsp;:</div>
 					</div>
 
 					<div class="form-group">
+						<div class="col-lg-1"> </div>
 						<div class="col-lg-2">&emsp;&emsp;&emsp;&emsp;SSS NO</div>
 						<div class="col-lg-1">:</div>
-						<div class="col-lg-4"><?php //echo $employeeData['Employee']['last_name'] ?></div>
-						<div class="col-lg-2">TIN NO</div>
-						<div class="col-lg-3">:&emsp;&emsp;<?php //echo $employeeData['Employee']['last_name'] ?></div>
+						<div class="col-lg-3"><?php //echo $employeeData['Employee']['last_name'] ?></div>
+						<div class="col-lg-5">TIN NO &emsp;&emsp; :</div>
 					</div>
 
 					<div class="form-group">
+						<div class="col-lg-1"> </div>
 						<div class="col-lg-2">&emsp;&emsp;&emsp;&emsp;POSITION</div>
 						<div class="col-lg-1">:</div>
-						<div class="col-lg-4"><?php echo ucfirst($employeeData['Position']['name']) ?>/<?php echo ucfirst($employeeData['Department']['name']) ?></div>
-						<div class="col-lg-2">HIRING DURATION</div>
-						<div class="col-lg-3">:&emsp;&emsp;<?php //echo $employeeData['Employee']['last_name'] ?></div>
+						<div class="col-lg-3"><?php echo ucfirst($employeeData['Position']['name']) ?>/<?php echo ucfirst($employeeData['Department']['name']) ?></div>
+						<div class="col-lg-5">HIRING DURATION&emsp;&emsp;</div>
 					</div>
 				</form>
 				<hr>

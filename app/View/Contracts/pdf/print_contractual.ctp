@@ -228,13 +228,13 @@
 			<div class="one">
 				<div class="form-group">
 					<div class="col-lg-6"><center>___________________________________________</center></div>
-					<div class="col-lg-6" style="font-size:15px">Name and Signature of Company Representative</div>
+					<div style="font-size:15px">Name and Signature of Company Representative</div>
 					
 				</div>
 			</div>
 			
 			<div class="form-group">
-				<div class="col-lg-1">Date :</div>
+				<div class="col-lg-1">Date : </div>
 			</div>
 			
 			<br></br>
