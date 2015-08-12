@@ -1197,3 +1197,39 @@ CREATE TABLE IF NOT EXISTS `salaries` (
 /** howell kit added this 08/08/2015   */
 ALTER TABLE `delivery_details`  ADD `pieces` INT(11) NULL  AFTER `delivered_quantity`;
 ALTER TABLE `delivery_details`  ADD `measure` INT(11) NULL  AFTER `pieces`;
+
+
+/*aldrin brion added this 08/12/2015 */
+CREATE TABLE IF NOT EXISTS `accounting_sss_ranges` (
+  `id` int(11) NOT NULL AUTO_INCREMENT, 
+  `range_from` decimal(8,2) NOT NULL,
+  `range_to` decimal(8,2) NOT NULL,
+  `bounds` decimal(8,2) NOT NULL,
+  `credits` decimal(8,2) NOT NULL,
+  `employers` decimal(8,2) NOT NULL,
+  `employees` decimal(8,2) NOT NULL,
+  `employee_compensations` decimal(8,2) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+CREATE TABLE IF NOT EXISTS `accounting_philhealth_ranges` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `range_from` decimal(8,2) NOT NULL,
+  `range_to` decimal(8,2) NOT NULL,
+  `condition` varchar(45) DEFAULT NULL,
+  `salary_base` decimal(8,2) NOT NULL,
+  `employer` decimal(8,2) NOT NULL,
+  `employee` decimal(8,2) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+ALTER TABLE `accounting_philhealth_ranges`  ADD `condition` VARCHAR(45) NULL  AFTER `range_to`;
+/*end -aldrin brion added this 08/12/2015 */

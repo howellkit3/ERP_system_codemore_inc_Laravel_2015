@@ -2513,3 +2513,10 @@ UNLOCK TABLES;
 insert  into `permissions`(`id`,`name`,`created_by`,`updated_by`,`created`,`modified`) values (1,'View Quotation',2,2,'2015-05-12 10:30:56','2015-05-12 10:30:56'),(2,'Edit Quotation',2,2,'2015-05-12 10:31:06','2015-05-12 10:31:06'),(3,'Delete Quotation',2,2,'2015-05-12 10:31:49','2015-05-12 10:31:49'),(4,'Approve Quotation',2,2,'2015-05-12 10:32:02','2015-05-12 10:32:02');
 
 insert  into `roles`(`id`,`name`,`created_by`,`updated_by`,`created`,`modified`) values (1,'Super Admin',2,2,'2015-05-12 10:20:35','2015-05-12 11:26:22'),(2,'Administrator',2,2,'2015-05-12 10:21:48','2015-05-12 11:26:23'),(3,'Sales',2,2,'2015-05-12 10:22:01','2015-05-12 11:26:23'),(4,'Guest',2,2,'2015-05-12 10:22:22','2015-05-12 11:26:25'),(5,'Staff',2,2,'2015-05-12 10:22:22','2015-05-12 11:26:25');
+
+
+/* addedd aug 12 2015 */
+INSERT INTO `contracts` (`id`, `name`, `description`, `created_by`, `modified_by`, `created`, `modified`)
+VALUES
+ (1,'Probational','',0,0,'0000-00-00 00:00:00','0000-00-00 00:00:00'),
+ (2,'Contractual','',0,0,'0000-00-00 00:00:00','0000-00-00 00:00:00');

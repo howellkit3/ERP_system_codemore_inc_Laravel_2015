@@ -576,8 +576,6 @@ public function export() {
 
 			$query = $this->request->query;
 
-			
-
 			if (!empty($query['range']) && !empty($query['empdId'])) {
 
 				$conditions = array('Attendance.employee_id' => $query['empdId']);
@@ -590,7 +588,6 @@ public function export() {
 
 				$end = $date[1].'-'.$date[0].'-'.sprintf("%02d", $days[1]);
 
-
 				$conditions = array_merge($conditions,array(
 					'Attendance.date >=' => $start,
 					'Attendance.date <=' => $end
@@ -601,7 +598,6 @@ public function export() {
 			
 			
 		}
-
 
 		$this->set(compact('attendance'));
 

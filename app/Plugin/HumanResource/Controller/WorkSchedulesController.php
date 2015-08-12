@@ -28,6 +28,7 @@ class WorkSchedulesController  extends HumanResourceAppController {
 
 		if ($this->request->is('post')) {
 
+			
 			//save attendance
 			if ($this->WorkSchedule->save($this->request->data['WorkSchedule'])) {
 

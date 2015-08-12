@@ -30,6 +30,18 @@ class Attendance extends AppModel {
 						'dependent' => false,
 						'conditions' => array('WorkShift.id = WorkSchedule.work_shift_id')
 					),
+					'WorkShiftBreak' => array(
+						'className' => 'WorkShiftBreak',
+						'foreignKey' => false,
+						'dependent' => false,
+						'conditions' => array('WorkShiftBreak.workshift_id = WorkSchedule.work_shift_id')
+					),
+					'BreakTime' => array(
+						'className' => 'BreakTime',
+						'foreignKey' => false,
+						'dependent' => false,
+						'conditions' => array('BreakTime.id = WorkShiftBreak.breaktime_id')
+					),
 					'Employee' => array(
 						'className' => 'Employee',
 						'foreignKey' => false,
@@ -195,6 +207,33 @@ class Attendance extends AppModel {
 
 		}
 
+	}
+
+	public function computeAttendance($conditions = array()){
+
+
+		if (!empty($conditions)) {
+			
+			$attendances = $this->find('all',array('conditions' => $conditions));
+
+			foreach ($attendances as $key => $attendance) {
+
+				if (strtotime($attendance['Attendance']['in']) >= strtotime($attendance['WorkShift']['from']) && strtotime($attendance['Attendance']['out']) <= strtotime($attendance['WorkShift']['to'])) {
+						$from = new DateTime($attendance['Attendance']['in']);
+						$to = new DateTime($attendance['Attendance']['out']);
+						
+						$attendances[$key]['total_hours'] =  $from->diff($to)->format('%h.%i'); 
+
+						if (strtotime($attendance['Attendance']['out']) >= strtotime($attendance['BreakTime']['from']) && strtotime($attendance['Attendance']['out']) >= strtotime($attendance['BreakTime']['to'])) {
+					
+							$attendances[$key]['total_hours'] -= 1;
+						}
+				}
+
+			}
+
+			return $attendances;
+		}
 	}
 	
   }
