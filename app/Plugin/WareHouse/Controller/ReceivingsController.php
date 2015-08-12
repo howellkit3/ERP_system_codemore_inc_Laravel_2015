@@ -14,8 +14,11 @@ class ReceivingsController extends WareHouseAppController {
 
 		$supplierData = $this->Supplier->find('list', array('fields' => array('Supplier.id', 'Supplier.name')
 																));
+		$this->PurchaseOrder->bindReceive();
 
 		$purchaseOrderData = $this->PurchaseOrder->find('all', array('conditions' => array('PurchaseOrder.status' => 1)));
+
+		//pr($purchaseOrderData); exit;
 	
 		$this->set(compact('purchaseOrderData', 'supplierData'));
 
@@ -78,5 +81,30 @@ class ReceivingsController extends WareHouseAppController {
 
     }
 	    	    
+	 public function view($id = null) {
+
+	 	$this->loadModel('Purchasing.PurchaseOrder');
+
+	 	$this->loadModel('Supplier');
+
+	 	$this->loadModel('User');
+
+		$this->PurchaseOrder->bindReceive();
+
+		$lastName = $this->User->find('list', array('fields' => array('User.id', 'User.last_name')
+																));
+
+		$firstName = $this->User->find('list', array('fields' => array('User.id', 'User.first_name')
+																));
+
+		$supplierData = $this->Supplier->find('list', array('fields' => array('Supplier.id', 'Supplier.name')
+																));
+
+		$purchaseOrderData = $this->PurchaseOrder->find('first', array('conditions' => array('PurchaseOrder.id' => $id)));
+
+
+    	$this->set(compact('purchaseOrderData', 'supplierData', 'firstName', 'lastName'));
+
+    }
 
 }
