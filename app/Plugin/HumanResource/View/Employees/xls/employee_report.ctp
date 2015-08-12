@@ -5,24 +5,24 @@
     $this->PhpExcel->createWorksheet()
         ->setDefaultFont('Calibri', 12);
 
-    $objTpl = PHPExcel_IOFactory::load("./img/emp_record-1.xls");
-    $counter = 5;
+    $objTpl = PHPExcel_IOFactory::load("./img/emp_filter.xls");
+    $counter = 7;
     foreach ($employeeData as $key => $employeeList) {
         $key++;
        
         $objTpl->setActiveSheetIndex(0)
-                    ->setCellValue('A1',(new \DateTime())->format('m/d/Y'))
+                    ->setCellValue('C5',(new \DateTime())->format('m/d/Y'))
                     ->setCellValue('A'.$counter, $key)
-                    ->setCellValue('B'.$counter, $employeeList['Department']['name'])
-                    ->setCellValue('C'.$counter, $employeeList['Position']['name'])
-                    ->setCellValue('D'.$counter, $employeeList['Employee']['last_name'])
-                    ->setCellValue('E'.$counter, $employeeList['Employee']['first_name'])
-                    ->setCellValue('F'.$counter, $employeeList['Employee']['middle_name'])
-                    ->setCellValue('G'.$counter, 'hired')
-                    ->setCellValue('H'.$counter, $employeeList['Status']['name'])
-                    ->setCellValue('I'.$counter, 'to')
-                    ->setCellValue('J'.$counter, 'from');
-
+                    ->setCellValue('B'.$counter, $employeeList['Employee']['code'])
+                    ->setCellValue('C'.$counter, $employeeList['Department']['name'])
+                    ->setCellValue('D'.$counter, $employeeList['Position']['name'])
+                    ->setCellValue('E'.$counter, $employeeList['Employee']['last_name'])
+                    ->setCellValue('F'.$counter, $employeeList['Employee']['first_name'])
+                    ->setCellValue('G'.$counter, $employeeList['Employee']['middle_name'])
+                    ->setCellValue('H'.$counter, $employeeList['Employee']['suffix'])
+                    ->setCellValue('I'.$counter, $employeeList['Status']['name'])
+                    ->setCellValue('J'.$counter, date('m/d/Y', strtotime($employeeList['Status']['date_hired'])));
+                    
         $counter++;  
         
     }

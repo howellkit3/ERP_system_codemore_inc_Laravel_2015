@@ -10,32 +10,140 @@ class ReceivingsController extends WareHouseAppController {
 
 		$this->loadModel('Purchasing.PurchaseOrder');
 
+		$this->loadModel('Purchasing.Request');
+
 		$this->loadModel('Supplier');
 
 		$supplierData = $this->Supplier->find('list', array('fields' => array('Supplier.id', 'Supplier.name')
 																));
+		$this->PurchaseOrder->bind(array('Request'));
 
 		$purchaseOrderData = $this->PurchaseOrder->find('all', array('conditions' => array('PurchaseOrder.status' => 1)));
+
+		//pr($purchaseOrderData); exit;
 	
 		$this->set(compact('purchaseOrderData', 'supplierData'));
 
     }
 
-    public function receive_order($id = null) {
+    public function receive_order($id = null, $requestUUID = null) {
 
     	$this->loadModel('WareHouse.ReceivedOrder');
 
+    	$this->loadModel('WareHouse.ReceivedItem');
+
     	$this->loadModel('Purchasing.PurchaseOrder');
+
+    	$this->loadModel('Purchasing.Request');
+
+    	$this->loadModel('GeneralItem');
+
+    	$this->loadModel('Substrate');
+
+    	$this->loadModel('CorrugatedPaper');
+
+    	$this->loadModel('CompoundSubstrate');
+
+    	$this->loadModel('Purchasing.RequestItem');
+
+    	$this->loadModel('Supplier');
 
 		$userData = $this->Session->read('Auth');
 
-		if ($this->request->is(array('post', 'put'))) {
+		$requestData = $this->Request->find('first', array('conditions' => array('Request.uuid' => $requestUUID)));
 
-			$this->ReceivedOrder->saveReceivedOrders($this->request->data['Receiving'],$userData['User']['id'],$id);
+		$supplierData = $this->Supplier->find('list', array('fields' => array('Supplier.id', 'Supplier.name')
+																));
 
-			$this->PurchaseOrder->id = $id;
+		$purchaseOrderData = $this->PurchaseOrder->find('first', array('conditions' => array('PurchaseOrder.id' => $id)));
 
-			$this->PurchaseOrder->saveField('status', 11);
+		if(empty($requestData['PurchaseItem'])){
+
+			$itemHolder = "RequestItem";
+
+			$itemData = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestUUID)));
+
+		}else{
+
+			$itemHolder = "PurchaseItem";
+
+			$itemData = $this->PurchaseItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestUUID)));
+
+		}
+
+		$requestPurchasingItemArray = array();
+
+
+		foreach ($itemData as $key => $value) {	
+
+			if($value[$itemHolder]['model'] == 'GeneralItem'){
+
+				$itemDetails = $this->GeneralItem->find('list', array('fields' => array('GeneralItem.id', 'GeneralItem.name')
+																	));  
+
+				$requestPurchasingItem[$key]['RequestItem']['name'] = $itemDetails[$value[$itemHolder]['foreign_key']];	
+
+				$requestPurchasingItem[$key]['RequestItem']['foreign_key'] = $value[$itemHolder]['foreign_key'];
+
+				array_push($requestPurchasingItemArray, $itemDetails[$value[$itemHolder]['foreign_key']]);
+
+	        } 
+
+	        if($value[$itemHolder]['model'] == 'Substrate'){
+
+				$itemDetails = $this->Substrate->find('list', array('fields' => array('Substrate.id', 'Substrate.name')
+																	));     
+
+				$requestPurchasingItem[$key]['RequestItem']['name'] = $itemDetails[$value[$itemHolder]['foreign_key']]; 
+
+				$requestPurchasingItem[$key]['RequestItem']['foreign_key'] = $value[$itemHolder]['foreign_key']; 
+
+				array_push($requestPurchasingItemArray, $itemDetails[$value[$itemHolder]['foreign_key']]);                 
+	        } 
+
+	        if($value[$itemHolder]['model'] == 'CompoundSubstrate'){
+
+				$itemDetails = $this->CompoundSubstrate->find('list', array('fields' => array('CompoundSubstrate.id', 'CompoundSubstrate.name')
+																	)); 
+
+				$requestPurchasingItem[$key]['RequestItem']['name'] = $itemDetails[$value[$itemHolder]['foreign_key']];
+
+				$requestPurchasingItem[$key]['RequestItem']['foreign_key'] = $value[$itemHolder]['foreign_key'];
+
+				array_push($requestPurchasingItemArray, $itemDetails[$value[$itemHolder]['foreign_key']]);
+
+
+	        } 
+
+	        if($value[$itemHolder]['model'] == 'CorrugatedPaper'){
+
+				$itemDetails = $this->CorrugatedPaper->find('list', array('fields' => array('CorrugatedPaper.id', 'CorrugatedPaper.name')
+																	));  
+
+				$requestPurchasingItem[$key]['RequestItem']['name'] = $itemDetails[$value[$itemHolder]['foreign_key']]; 
+
+				$requestPurchasingItem[$key]['RequestItem']['foreign_key'] = $value[$itemHolder]['foreign_key'];
+
+				array_push($requestPurchasingItemArray, $itemDetails[$value[$itemHolder]['foreign_key']]);                        
+	        } 
+
+        }
+
+      
+
+		if (!empty($this->request->data)) {
+
+			//pr($this->request->data); exit;
+
+			//$this->ReceivedOrder->saveReceivedOrders($this->request->data['Receiving'],$userData['User']['id'],$id);
+
+			//$this->PurchaseOrder->id = $id;
+
+			//$this->PurchaseOrder->saveField('status', 11);
+
+			//pr($this->request->data); exit;
+			
+			$this->ReceivedItem->saveReceivedItems($id, $this->request->data);
 
 			$this->Session->setFlash(__('Order has been received'), 'success');
           
@@ -46,7 +154,7 @@ class ReceivingsController extends WareHouseAppController {
 
 		}
 	
-		$this->set(compact());
+		$this->set(compact('requestData', 'requestPurchasingItem', 'purchaseOrderData', 'supplierData'));
 
     }
 
@@ -78,5 +186,96 @@ class ReceivingsController extends WareHouseAppController {
 
     }
 	    	    
+	 public function view($id = null, $requestUUID = null) {
+
+	 	$this->loadModel('Purchasing.PurchaseOrder');
+
+	 	$this->loadModel('Purchasing.Request');
+
+	 	$this->loadModel('Supplier');
+
+	 	$this->loadModel('User');
+
+	 	$this->loadModel('GeneralItem');
+
+	 	$this->loadModel('Substrate');
+
+	 	$this->loadModel('CorrugatedPaper');
+
+	 	$this->loadModel('CompoundSubstrate');
+
+	 	$this->loadModel('Purchasing.PurchasingItem');
+
+		$this->loadModel('Purchasing.RequestItem');
+
+
+		$lastName = $this->User->find('list', array('fields' => array('User.id', 'User.last_name')
+																));
+
+		$firstName = $this->User->find('list', array('fields' => array('User.id', 'User.first_name')
+																));
+
+		$supplierData = $this->Supplier->find('list', array('fields' => array('Supplier.id', 'Supplier.name')
+																));
+
+		$purchaseOrderData = $this->PurchaseOrder->find('first', array('conditions' => array('PurchaseOrder.id' => $id)));
+
+		$requestData = $this->Request->find('first', array('conditions' => array('Request.uuid' => $requestUUID)));
+
+		if(empty($requestData['PurchaseItem'])){
+
+			$itemHolder = "RequestItem";
+
+			$itemData = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestUUID)));
+
+		}else{
+
+			$itemHolder = "PurchaseItem";
+
+			$itemData = $this->PurchaseItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestUUID)));
+
+		}
+
+		foreach ($itemData as $key => $value) {	
+
+			if($value[$itemHolder]['model'] == 'GeneralItem'){
+
+				$itemDetails = $this->GeneralItem->find('list', array('fields' => array('GeneralItem.id', 'GeneralItem.name')
+																	));  
+
+				$requestPurchasingItem[$key]['RequestItem']['name'] = $itemDetails[$value[$itemHolder]['foreign_key']];	
+
+	        } 
+
+	        if($value[$itemHolder]['model'] == 'Substrate'){
+
+				$itemDetails = $this->Substrate->find('list', array('fields' => array('Substrate.id', 'Substrate.name')
+																	));     
+
+				$requestPurchasingItem[$key]['RequestItem']['name'] = $itemDetails[$value[$itemHolder]['foreign_key']];                   
+	        } 
+
+	        if($value[$itemHolder]['model'] == 'CompoundSubstrate'){
+
+				$itemDetails = $this->CompoundSubstrate->find('list', array('fields' => array('CompoundSubstrate.id', 'CompoundSubstrate.name')
+																	)); 
+
+				$requestPurchasingItem[$key]['RequestItem']['name'] = $itemDetails[$value[$itemHolder]['foreign_key']];
+
+	        } 
+
+	        if($value[$itemHolder]['model'] == 'CorrugatedPaper'){
+
+				$itemDetails = $this->CorrugatedPaper->find('list', array('fields' => array('CorrugatedPaper.id', 'CorrugatedPaper.name')
+																	));  
+
+				$requestPurchasingItem[$key]['RequestItem']['name'] = $itemDetails[$value[$itemHolder]['foreign_key']];                           
+	        } 
+        } 
+
+
+    	$this->set(compact('purchaseOrderData', 'supplierData', 'firstName', 'lastName', 'requestData', 'itemDetails', 'requestPurchasingItem', 'itemData'));
+
+    }
 
 }
