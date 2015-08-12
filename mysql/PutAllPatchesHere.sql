@@ -1194,6 +1194,10 @@ CREATE TABLE IF NOT EXISTS `salaries` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 
-/** howell kit added this 08/08/2015   */
+/** howell kit added this 08/08/2015 TO DELIVERY DATABASE */
 ALTER TABLE `delivery_details`  ADD `pieces` INT(11) NULL  AFTER `delivered_quantity`;
 ALTER TABLE `delivery_details`  ADD `measure` INT(11) NULL  AFTER `pieces`;
+
+/** howell kit added this 08/08/2015 TO WAREHOUSE DATABASE   */
+
+ALTER TABLE `received_items`  ADD `foreign_key` INT(11) NULL  AFTER `received_orders_id`;

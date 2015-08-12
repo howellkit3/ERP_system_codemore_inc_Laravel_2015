@@ -1,7 +1,8 @@
 <?php $this->Html->addCrumb('Ware House', array('controller' => 'ware_house_systems', 'action' => 'index')); ?>
 <div style="clear:both"></div>
 <?php echo $this->element('ware_house_option');
-$int = 0; ?>
+$int = 0;
+echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'receivings','action' => 'receive_order',$purchaseOrderData['PurchaseOrder']['id'] )),'class' => 'form-horizontal'));?>
 
 <br><br>
 
@@ -15,6 +16,7 @@ $int = 0; ?>
                         <h2 class="pull-left">Purchased Order</h2>
 
                     </header>
+
 
                     <div class="top-space"></div>  
                     <div class="main-box-body clearfix">
@@ -63,7 +65,7 @@ $int = 0; ?>
                                       
                                         <div class="col-lg-8">
                                            <div class = "checkbox-nice">
-                                             <input type="checkbox" class="check-ref-uuid checked" id="<?php echo $int?>" >
+                                             <input type="checkbox" class="check-ref-uuid checked" name="requestPurchasingItem[<?php echo $int ?>][$requestDataList['PurchaseItem']['foreign_key']]" id="<?php echo $int?>" >
                                                     <label for="<?php echo $int?>"> <?php echo $requestDataList['PurchaseItem']['name'] ?></label>
                                             </div>
                                         </div>
@@ -83,7 +85,7 @@ $int = 0; ?>
                                       
                                         <div class="col-lg-8">
                                            <div class = "checkbox-nice">
-                                             <input type="checkbox" class="check-ref-uuid checked" id="<?php echo $int?>" >
+                                             <input type="checkbox" class="check-ref-uuid checked" name="requestPurchasingItem[<?php echo $int ?>][<?php echo $requestDataList['RequestItem']['foreign_key'] ?>]" id="<?php echo $int?>" >
                                                     <label for="<?php echo $int?>"> <?php echo $requestDataList['RequestItem']['name'] ?></label>
                                             </div>
                                         </div>
@@ -98,7 +100,7 @@ $int = 0; ?>
                                 <label class="col-lg-2 control-label"></label>
                                 <div class="col-lg-16">
 
-                                <label><I>*check only the items received </I></label>
+                                <label><I>*check only the items received</I></label>
 
                                 </div>
                             </div>
@@ -107,7 +109,7 @@ $int = 0; ?>
                                 <label for="inputPassword1" class="col-lg-2 control-label">Remarks</label>
                                 <div class="col-lg-9">
                                     <?php 
-                                        echo $this->Form->textarea('Receiving.remarks', array('class' => 'form-control required',
+                                        echo $this->Form->textarea('ReceivedItems.remarks', array('class' => 'form-control required',
                                                                     'class' => 'form-control ',
                                                                     'label' => false
                                     ));
@@ -128,7 +130,7 @@ $int = 0; ?>
 
                                 <div class="col-lg-1">
                                     <?php 
-                                        echo $this->Html->link('Cancel ', array('controller' => 'customer_sales', 'action' => 'index'),array('class' =>'btn btn-default','escape' => false));
+                                        echo $this->Html->link('Cancel ', array('controller' => 'receivings', 'action' => 'index'),array('class' =>'btn btn-default','escape' => false));
                                     ?>
                                 </div>
                             </div>
@@ -138,10 +140,9 @@ $int = 0; ?>
                         </div>
                     </div>
                 </div>
+                <?php echo $this->Form->end(); ?>  
             </div>
         </div>
-        
-        <?php echo $this->Form->end(); ?>   
     </div>
 </div>
 

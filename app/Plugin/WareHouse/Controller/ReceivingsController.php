@@ -30,6 +30,8 @@ class ReceivingsController extends WareHouseAppController {
 
     	$this->loadModel('WareHouse.ReceivedOrder');
 
+    	$this->loadModel('WareHouse.ReceivedItem');
+
     	$this->loadModel('Purchasing.PurchaseOrder');
 
     	$this->loadModel('Purchasing.Request');
@@ -69,6 +71,9 @@ class ReceivingsController extends WareHouseAppController {
 
 		}
 
+		$requestPurchasingItemArray = array();
+
+
 		foreach ($itemData as $key => $value) {	
 
 			if($value[$itemHolder]['model'] == 'GeneralItem'){
@@ -78,6 +83,10 @@ class ReceivingsController extends WareHouseAppController {
 
 				$requestPurchasingItem[$key]['RequestItem']['name'] = $itemDetails[$value[$itemHolder]['foreign_key']];	
 
+				$requestPurchasingItem[$key]['RequestItem']['foreign_key'] = $value[$itemHolder]['foreign_key'];
+
+				array_push($requestPurchasingItemArray, $itemDetails[$value[$itemHolder]['foreign_key']]);
+
 	        } 
 
 	        if($value[$itemHolder]['model'] == 'Substrate'){
@@ -85,7 +94,11 @@ class ReceivingsController extends WareHouseAppController {
 				$itemDetails = $this->Substrate->find('list', array('fields' => array('Substrate.id', 'Substrate.name')
 																	));     
 
-				$requestPurchasingItem[$key]['RequestItem']['name'] = $itemDetails[$value[$itemHolder]['foreign_key']];                   
+				$requestPurchasingItem[$key]['RequestItem']['name'] = $itemDetails[$value[$itemHolder]['foreign_key']]; 
+
+				$requestPurchasingItem[$key]['RequestItem']['foreign_key'] = $value[$itemHolder]['foreign_key']; 
+
+				array_push($requestPurchasingItemArray, $itemDetails[$value[$itemHolder]['foreign_key']]);                 
 	        } 
 
 	        if($value[$itemHolder]['model'] == 'CompoundSubstrate'){
@@ -95,6 +108,11 @@ class ReceivingsController extends WareHouseAppController {
 
 				$requestPurchasingItem[$key]['RequestItem']['name'] = $itemDetails[$value[$itemHolder]['foreign_key']];
 
+				$requestPurchasingItem[$key]['RequestItem']['foreign_key'] = $value[$itemHolder]['foreign_key'];
+
+				array_push($requestPurchasingItemArray, $itemDetails[$value[$itemHolder]['foreign_key']]);
+
+
 	        } 
 
 	        if($value[$itemHolder]['model'] == 'CorrugatedPaper'){
@@ -102,17 +120,30 @@ class ReceivingsController extends WareHouseAppController {
 				$itemDetails = $this->CorrugatedPaper->find('list', array('fields' => array('CorrugatedPaper.id', 'CorrugatedPaper.name')
 																	));  
 
-				$requestPurchasingItem[$key]['RequestItem']['name'] = $itemDetails[$value[$itemHolder]['foreign_key']];                           
+				$requestPurchasingItem[$key]['RequestItem']['name'] = $itemDetails[$value[$itemHolder]['foreign_key']]; 
+
+				$requestPurchasingItem[$key]['RequestItem']['foreign_key'] = $value[$itemHolder]['foreign_key'];
+
+				array_push($requestPurchasingItemArray, $itemDetails[$value[$itemHolder]['foreign_key']]);                        
 	        } 
-        } 
 
-		if ($this->request->is(array('post', 'put'))) {
+        }
 
-			$this->ReceivedOrder->saveReceivedOrders($this->request->data['Receiving'],$userData['User']['id'],$id);
+      
 
-			$this->PurchaseOrder->id = $id;
+		if (!empty($this->request->data)) {
 
-			$this->PurchaseOrder->saveField('status', 11);
+			//pr($this->request->data); exit;
+
+			//$this->ReceivedOrder->saveReceivedOrders($this->request->data['Receiving'],$userData['User']['id'],$id);
+
+			//$this->PurchaseOrder->id = $id;
+
+			//$this->PurchaseOrder->saveField('status', 11);
+
+			//pr($this->request->data); exit;
+			
+			$this->ReceivedItem->saveReceivedItems($id, $this->request->data);
 
 			$this->Session->setFlash(__('Order has been received'), 'success');
           
