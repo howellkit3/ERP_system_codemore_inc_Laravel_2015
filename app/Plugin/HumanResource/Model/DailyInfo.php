@@ -45,10 +45,38 @@ class DailyInfo extends AppModel {
 
 		if (!empty($data)) {
 
-			$info['employee_id'] = $data['employee_id'];
-			$info['date'] = $data['date'];
+			if (!empty($data['type']) && $data['type'] == 'monthly') {
+							
+				$date = explode('-',$data['date']);
+
+				$days1 = explode('/',trim($date[0]));
+				$days2 = explode('/',trim($date[1]));
+
+				ini_set('max_execution_time', 3600);
+				ini_set('memory_input_time', 1024);
+				ini_set('max_input_nesting_level', 1024);
+				ini_set('memory_limit', '1024M');
+
+				for ($days_count = $days1[2];$days_count <= $days2[2]; $days_count++) :
+					$this->create();
+					//$sched['Attendance']['date'] = $days1[0].'-'.$days1[1].'-'.sprintf("%02d",$days_count);
+					$info['employee_id'] = $data['employee_id'];
+					$info['date'] = $days1[0].'-'.$days1[1].'-'.sprintf("%02d",$days_count);
+					$this->save($info);
+					//pr($info);
+				endfor;
+				//exit;
+			} else {
+				
+				$info['employee_id'] = $data['employee_id'];
+				$info['date'] = $data['date'];
+				$this->save($info);
+
+				return $this->id;
+
+			}
+
 			
-			return $this->save($info);
 		}
 	}
 

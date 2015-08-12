@@ -174,32 +174,126 @@ $(".autocomplete").select2();
 //view employee by department
 $('body').on('change','.select-department-view',function(e){
 
-    var thisDepartmentId = $(this).val();
-    console.log(thisDepartmentId);
-    if (thisDepartmentId > 0) {
-        $('.default-table').hide();
-        $('.append-table-department').show();
+    //some filter
+    var status = $('.select-status-view option:selected').val();
+    if (!status) {
+        status = 0;
+    };
 
-        $.ajax({
-            type: "GET",
-            url: serverPath + "human_resource/employees/search_by_department/"+thisDepartmentId,
-            dataType: "html",
-            success: function(data) {
-               
-                if(data){
-                    $('.append-table-department').html(data); 
-                }else{
-                    $('.append-table-department').html('<font color="red"><b>No result..</b></font>'); 
-                }
-                
-            }
-        });
-
-    }else{
-
-        $('.default-table').show();
-        $('.append-table-department').hide();
-    } 
+    var inputSearch = $('.searchEmployee').val();
     
+    var thisDepartmentId = $(this).val();
+
+    if (!thisDepartmentId) {
+        thisDepartmentId = 0;
+    };
+
+    $('.departmentHidden').val(thisDepartmentId);
+
+    $('.default-table').hide();
+    $('.append-table-department').show();
+
+    //ajax function to search
+    ajaxCallSearchEmployee(thisDepartmentId,status,inputSearch);
 
 });
+
+$('body').on('change','.select-status-view',function(e){
+
+    //some filter
+    var DepartmentId = $('.select-department-view option:selected').val();
+    if (!DepartmentId) {
+        DepartmentId = 0;
+    };
+    
+    var inputSearch = $('.searchEmployee').val();
+
+    var thisStatus = $(this).val();
+    
+     if (!thisStatus) {
+        thisStatus = 0;
+    };
+
+    $('.statusHidden').val(thisStatus);
+
+    $('.default-table').hide();
+    $('.append-table-department').show();
+
+    //ajax function to search
+    ajaxCallSearchEmployee(DepartmentId,thisStatus,inputSearch);
+   
+});
+
+$('body').on('keyup','.searchEmployee',function(e){
+
+    //some filter
+    var DepartmentId = $('.select-department-view option:selected').val();
+    if (!DepartmentId) {
+        DepartmentId = 0;
+    };
+
+    var status = $('.select-status-view option:selected').val();
+    if (!status) {
+        status = 0;
+    };
+   
+    var inputSearch = $(this).val();
+    $('.searchHidden').val(inputSearch);
+
+    $('.default-table').hide();
+    $('.append-table-department').show();
+
+    //ajax function to search
+    ajaxCallSearchEmployee(DepartmentId,status,inputSearch);
+   
+});
+
+// $('body').on('click','.exportEmployeeData',function(e){
+
+//     //some filter
+//     var DepartmentId = $('.select-department-view option:selected').val();
+//     if (!DepartmentId) {
+//         DepartmentId = 0;
+//     };
+
+//     var status = $('.select-status-view option:selected').val();
+//     if (!status) {
+//         status = 0;
+//     };
+   
+//     var inputSearch = $('.searchEmployee').val();
+     
+//     // window.setTimeout(function() {
+//     //     window.location.href = serverPath + "human_resource/employees/print_employee/"+DepartmentId+"/"+status+"/"+inputSearch;
+//     // }, 3000);
+//     //exportData
+//     $.ajax({
+//         type: "GET",
+//         url: serverPath + "human_resource/employees/print_employee/"+DepartmentId+"/"+status+"/"+inputSearch,
+//         dataType: "html",
+//         success: function(data) {
+           
+//            console.log(data); 
+//         }
+//     });
+   
+// });
+
+function ajaxCallSearchEmployee(DepartmentId,thisStatus,inputSearch){
+
+    $.ajax({
+        type: "GET",
+        url: serverPath + "human_resource/employees/search_by_department/"+DepartmentId+"/"+thisStatus+"/"+inputSearch,
+        dataType: "html",
+        success: function(data) {
+           
+            if(data){
+                $('.append-table-department').html(data); 
+            }else{
+                $('.append-table-department').html('<font color="red"><b>No result..</b></font>'); 
+            }
+            
+        }
+    });
+
+}
