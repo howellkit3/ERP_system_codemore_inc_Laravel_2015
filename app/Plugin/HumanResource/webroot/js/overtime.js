@@ -1,7 +1,6 @@
-
 var multiplePromptsCounter = 1;
 
-function openMultiplePrompts(element,url){
+function openMultiplePrompts(element,url,status){
 
     // $.prompt("Are you sure you want to "+status+" this request?", {
     //     //title: "confirmed",
@@ -20,12 +19,12 @@ function openMultiplePrompts(element,url){
         
         swal({
             title: "Are you sure?",
-            text: "You want to approve this Quotation ",
+            text: "You want to "+status+" this request ",
             type: "warning",
             showCancelButton: true,
             timer: 2000,
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, approve it!",
+            confirmButtonText: "Yes, "+status+" it!",
             cancelButtonText: "No, cancel",
             closeOnConfirm: false,
             closeOnCancel: false 
@@ -34,7 +33,7 @@ function openMultiplePrompts(element,url){
 
             if (isConfirm) {
 
-                        swal("Successful!","Quotation approved.", "success");
+                        swal("Successful!","Quotation "+status+".", "success");
                         window.location.href = url;
                  
 
@@ -117,7 +116,7 @@ $(document).ready(function(){
     $body.on('click','.table-link',function(e){
         var status = $(this).data('process');
         var url = $(this).attr('href');
-        openMultiplePrompts(this,url);
+        openMultiplePrompts(this,url,status);
         e.preventDefault();
     });
 

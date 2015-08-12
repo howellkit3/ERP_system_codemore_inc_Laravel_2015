@@ -145,27 +145,62 @@ class Employee extends AppModel {
 			));
 	}
 
-	public function getAllWorkShift($params = array()){
+	public function getAllWorkShift($params = array(),$data = null){
 
 		$this->bindEmployee();
 		$workshifts = $this->find('all',$params);
 		// pr($workshifts); exit;
-
 		$list = [];
+
+		if ($data['WorkSchedule']['type'] == 'monthly') {
+
+					$date = explode('-',$data['WorkSchedule']['day']);
+
+					$days1 = explode('/',trim($date[0]));
+					$days2 = explode('/',trim($date[1]));
+
+					ini_set('max_execution_time', 3600);
+					ini_set('memory_input_time', 1024);
+					ini_set('max_input_nesting_level', 1024);
+					ini_set('memory_limit', '1024M');
+
+					$list_key = 0;
+
+					for ($days_count = $days1[2];$days_count <= $days2[2]; $days_count++) :
+
+					foreach ($workshifts as $key => $workshift) {
+						if (!empty($workshift['WorkShift']['from']) && $workshift['WorkShift']['from'] != '00-00-00') {
+							$list[$list_key]['title'] = date('h:i a',strtotime($workshift['WorkShift']['from'])) . ' - ' .  date('h:i a',strtotime($workshift['WorkShift']['to']));
+							$list[$list_key]['start'] = $days1[0].'-'.$days1[1].'-'.sprintf("%02d",$days_count).' '.date('h:i:s',strtotime($workshift['WorkShift']['from']));
+							$list[$list_key]['end']  = $days1[0].'-'.$days1[1].'-'.sprintf("%02d",$days_count).' '.date('h:i:s',strtotime($workshift['WorkShift']['to']));
+							$list[$list_key]['color'] = '#257e4a';
+						}
+					}
+						
+					$list_key++;
+
+					endfor;
+
+
+		} else {
+
+
 			foreach ($workshifts as $key => $workshift) {
 				if (!empty($workshift['WorkShift']['from']) && $workshift['WorkShift']['from'] != '00-00-00') {
-					$list[$key]['title'] = $workshift['WorkShift']['from'] . ' - ' . $workshift['WorkShift']['to'];
-					$list[$key]['start'] = $workshift['WorkShift']['from'];
-					$list[$key]['end']  = $workshift['WorkShift']['to'];
+					$list[$key]['title'] =  date('h:i a',strtotime($workshift['WorkShift']['from'])) . ' - ' .  date('h:i a',strtotime($workshift['WorkShift']['to']));
+					$list[$key]['start'] = $data['WorkSchedule']['day'].' '.date('h:i:s',strtotime($workshift['WorkShift']['from']));
+					$list[$key]['end']  =  $data['WorkSchedule']['day'].' '.date('h:i:s',strtotime($workshift['WorkShift']['to']));
 					$list[$key]['color'] = '#257e4a';
 				}
 			}
 
-			$list = json_encode($list);
-			$list = str_replace('[','',$list);
-			$list = str_replace(']','',$list);
+		}
 
-			return $list;
+		$list = json_encode($list);
+		$list = str_replace('[','',$list);
+		$list = str_replace(']','',$list);
+
+		return $list;
 
 	}
 

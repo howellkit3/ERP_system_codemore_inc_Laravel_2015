@@ -47,7 +47,7 @@ class ContractsController  extends HumanResourceAppController {
 
 	}
 
-	public function print_contractual($id = null){
+	public function print_contract($id = null){
 
 		$this->loadModel('HumanResource.Employee');
 
@@ -70,8 +70,16 @@ class ContractsController  extends HumanResourceAppController {
 		$view->set(compact('employeeData'));
 		
 		$view->viewPath = 'Contracts'.DS.'pdf';	
+
+		if ($employeeData['Employee']['contract_id'] == 2) {
+			$output = $view->render('print_contractual', false);
+		}
+
+		if ($employeeData['Employee']['contract_id'] == 1) {
+			$output = $view->render('print_probational', false);
+		}
    
-        $output = $view->render('print_contractual', false);
+        
    	
         $dompdf = new DOMPDF();
         $dompdf->set_paper("A4");

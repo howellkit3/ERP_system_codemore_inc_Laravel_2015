@@ -9,7 +9,7 @@
 
         echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array(
 		        	'controller' => 'contracts', 
-		        	'action' => 'print_contractual',
+		        	'action' => 'print_contract',
 		        	//'ext' => 'pdf',
 		        	$employeeData['Employee']['id']
 		        	),
@@ -46,9 +46,10 @@
 					</div>
 
 					<div class="form-group">
+						<div class="col-lg-1"> </div>
 						<div class="col-lg-2">&emsp;&emsp;&emsp;&emsp;EMPLOYEE</div>
 						<div class="col-lg-1">:</div>
-						<div class="col-lg-9">
+						<div class="col-lg-8">
 							<?php echo ucwords($employeeData['Employee']['last_name']) ?>, 
 							<?php echo ucwords($employeeData['Employee']['first_name']) ?>
 							<?php echo ucwords($employeeData['Employee']['middle_name']) ?>
@@ -57,77 +58,90 @@
 					</div>
 
 					<div class="form-group">
+						<div class="col-lg-1"> </div>
 						<div class="col-lg-2">&emsp;&emsp;&emsp;&emsp;ADDRESS</div>
 						<div class="col-lg-1">:</div>
-						<div class="col-lg-9"><?php echo ucfirst($employeeData['Address'][0]['address_1']) ?>, <?php echo ucfirst($employeeData['Address'][0]['city']) ?>, <?php echo ucfirst($employeeData['Address'][0]['state_province']) ?></div>
+						<div class="col-lg-8"><?php echo ucfirst($employeeData['Address'][0]['address_1']) ?>, <?php echo ucfirst($employeeData['Address'][0]['city']) ?>, <?php echo ucfirst($employeeData['Address'][0]['state_province']) ?></div>
 					</div>
 
 					<div class="form-group">
+						<div class="col-lg-1"> </div>
 						<div class="col-lg-2">&emsp;&emsp;&emsp;&emsp;DATE OF BIRTH</div>
 						<div class="col-lg-1">:</div>
-						<div class="col-lg-4"><?php echo $employeeData['EmployeeAdditionalInformation']['birthday'] ?></div>
-						<div class="col-lg-2">PLACE OF BIRTH</div>
-						<div class="col-lg-3">:&emsp;&emsp;<?php echo $employeeData['EmployeeAdditionalInformation']['birth_place'] ?></div>
+						<div class="col-lg-3"><?php echo $employeeData['EmployeeAdditionalInformation']['birthday'] ?></div>
+						<div class="col-lg-5">PLACE OF BIRTH &emsp;&emsp;:&emsp;&emsp;<?php echo $employeeData['EmployeeAdditionalInformation']['birth_place'] ?></div>
 					</div>
 
 					<div class="form-group">
+						<div class="col-lg-1"> </div>
 						<div class="col-lg-2">&emsp;&emsp;&emsp;&emsp;STATUS</div>
 						<div class="col-lg-1">:</div>
-						<div class="col-lg-4"><?php echo $employeeData['Status']['name'] ?></div>
-						<div class="col-lg-2">NAME OF SPOUSE</div>
-						<div class="col-lg-3">:&emsp;&emsp;<?php //echo $employeeData['Employee']['last_name'] ?></div>
+						<div class="col-lg-3"><?php echo $employeeData['Status']['name'] ?></div>
+						<div class="col-lg-5">NAME OF SPOUSE &emsp;&emsp;:</div>
 					</div>
 
 					<div class="form-group">
+						<div class="col-lg-1"> </div>
 						<div class="col-lg-2">&emsp;&emsp;&emsp;&emsp;SSS NO</div>
 						<div class="col-lg-1">:</div>
-						<div class="col-lg-4"><?php //echo $employeeData['Employee']['last_name'] ?></div>
-						<div class="col-lg-2">TIN NO</div>
-						<div class="col-lg-3">:&emsp;&emsp;<?php //echo $employeeData['Employee']['last_name'] ?></div>
+						<div class="col-lg-3"><?php //echo $employeeData['Employee']['last_name'] ?></div>
+						<div class="col-lg-5">TIN NO &emsp;&emsp; :</div>
 					</div>
 
 					<div class="form-group">
+						<div class="col-lg-1"> </div>
 						<div class="col-lg-2">&emsp;&emsp;&emsp;&emsp;POSITION</div>
 						<div class="col-lg-1">:</div>
-						<div class="col-lg-4"><?php echo ucfirst($employeeData['Position']['name']) ?>/<?php echo ucfirst($employeeData['Department']['name']) ?></div>
-						<div class="col-lg-2">HIRING DURATION</div>
-						<div class="col-lg-3">:&emsp;&emsp;<?php //echo $employeeData['Employee']['last_name'] ?></div>
+						<div class="col-lg-3"><?php echo ucfirst($employeeData['Position']['name']) ?>/<?php echo ucfirst($employeeData['Department']['name']) ?></div>
+						<div class="col-lg-5">HIRING DURATION&emsp;&emsp;</div>
 					</div>
-				</form>
-				<hr>
 
-				<div class="table-responsive">
-					<table class="table table-bordered">
-						<thead>
-							<tr>
-								<td><center><b>Employment Duration</b></center></td>
-								<td><center><b>Basic Salary (PHP)</b></center></td>
-								<td><center><b>Allowance</b></center></td>
-								<td><center><b>CTPA</b></center></td>
-								<td><center><b>SEA</b></center></td>
-							</tr>
-							<tr>
-								<td><center>- </center></td>
-								<td><center> -</center></td>
-								<td><center> -</center></td>
-								<td><center> -</center></td>
-								<td><center> -</center></td>
-							</tr>
-						</thead>
-					</table>
-				</div>
+					<div class="form-group">
+						<div class="col-lg-1"> </div>
+						<div class="col-lg-10"> <hr></div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-lg-1"> </div>
+						<div class="col-lg-10"> 
+							<div class="table-responsive">
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<td><center><b>Employment Duration</b></center></td>
+											<td><center><b>Basic Salary (PHP)</b></center></td>
+											<td><center><b>Allowance</b></center></td>
+											<td><center><b>CTPA</b></center></td>
+											<td><center><b>SEA</b></center></td>
+										</tr>
+										<tr>
+											<td><center>- </center></td>
+											<td><center> -</center></td>
+											<td><center> -</center></td>
+											<td><center> -</center></td>
+											<td><center> -</center></td>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+
+				</form>
 
 				<div class="main-box-body clearfix">
 					<form class="form-horizontal" role="form">
 						<div class="form-group">
-							<div class="col-lg-12">
-								YOUR APPOINTMENT CARRIES THE FOLLOWING TERMS AND CONDITIONS:
+							<div class="col-lg-1"> </div>
+							<div class="col-lg-10">
+								YOUR APPOINTMENT CARRIES THE FOLLOWING TERMS AND CONDITIONS:<br>
 								ANG PAGKAKAHIRANG SA IYO AY NASASAKLAW NG MGA SUMUSUNOD NA TAKDA AT BATAYAN:
 							</div>
 						</div>
 
 						<div class="form-group">
-							<div class="col-lg-12">
+							<div class="col-lg-1"> </div>
+							<div class="col-lg-10">
 								<ol>
 									<li>
 										This contract is related and valid only for the duration mentioned above, unless sooner terminated as provided in paragraph 8 below.
@@ -193,22 +207,40 @@
 				</div>
 
 				<div class="form-group">
-					<div class="col-lg-6"><center>___________________________________________</center></div>
-					<div class="col-lg-6"><center>___________________________________________</center></div>
-					<div class="col-lg-6"><center>Name and Signature of Employee</center></div>
-					<div class="col-lg-6"><center>Name and Signature of Company Representative</center></div>
+					<div class="col-lg-2"> </div>
+					<div class="col-lg-3"><center>___________________________________________</center></div>
+					<div class="col-lg-1"> </div>
+					<div class="col-lg-4"><center>___________________________________________</center></div>
 					
 				</div>
+
 				<div class="form-group">
+					<div class="col-lg-2"> </div>
+					<div class="col-lg-3"><center>Name and Signature of Employee</center></div>
+					<div class="col-lg-1"> </div>
+					<div class="col-lg-4"><center>Name and Signature of Company Representative</center></div>
+					
+				</div>
+				<br><br>
+				<div class="form-group">
+					<div class="col-lg-1"> </div>
 					<div class="col-lg-1">Date</div>
 					<div class="col-lg-1">:</div>
 					<div class="col-lg-1"> </div>
 					
 				</div>
+
+				<div class="form-group">
+					<div class="col-lg-1"> </div>
+					<div class="col-lg-5"> 
+						<br></br>
+						Doc No.:  KP-FR-HR1-012 Rev 0<br>
+						Effective  16 May 2015
+					</div>
+					
+				</div>
 			</div>
-			<br></br>
-			Doc No.:  KP-FR-HR1-012 Rev 0<br>
-			Effective  16 May 2015
+			
 		</div>
 	</div>
 </div>

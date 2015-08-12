@@ -1,34 +1,36 @@
 <?php $this->Html->addCrumb('Schedules', array('controller' => 'Schedules', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Workshifts', array('controller' => 'schedules', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Add', array('controller' => 'workshifts', 'action' => 'add')); ?>
-<?php echo $this->Html->css(array(
+<?php 
+    echo $this->Html->css(array(
                     'HumanResource.default',
                     'HumanResource.select2.css',
                     'timepicker'
-    ));?>
-<?php echo $this->Html->script(array(
+    ));
+     echo $this->Html->script(array(
 					'jquery.maskedinput.min',
 					'HumanResource.custom',
                     'HumanResource.select2.min',
+                    'HumanResource.monthpicker-master/jquery.monthpicker',
                     'HumanResource.work_schedules',
+
 )); ?>
 <div style="clear:both"></div>
 <?php echo $this->element('hr_options'); ?><br><br>
 <?php echo $this->Form->create('WorkSchedule',array('url'=>(array('controller' => 'work_schedules','action' => 'add')),
 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data' ));?>
-
     <div class="row">
         <div class="col-lg-12">
         	<div class="row">
                 <div class="col-lg-12">
                     <header class="main-box-header clearfix">
-                        
                         <center>
                             <h1 class="pull-left">
                             Add Schedule
                             </h1>
                         </center>
-                        <?php  echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'schedules', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                        <?php 
+                            echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'schedules', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
                         ?>
                     </header>
 
@@ -87,7 +89,30 @@
                                         </div>
                                     </div>
 
-                                      <div class="form-group">
+                                    <div class="form-group select2-cont">
+                                       <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span> Schedule </label>
+                                                <div class="col-lg-9">
+                                                  
+                                                    <?php
+                                                        echo $this->Form->input('WorkSchedule.type',
+                                                            array(
+                                                                'id' => 'chooseType',
+                                                                'class' => 'col-lg-6 required autocomplete',
+                                                                'label' => false,
+                                                                'options' => array('daily'=>'Daily','monthly'=>'Monthly'),
+                                                                'empty' => '-- Select Schedule --'
+                                                                ));
+                                                    ?>
+
+                                                </div>
+                                             </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group day_type" id="daily">
                                        <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span>Day</label>
@@ -98,6 +123,27 @@
                                                             array(
                                                                 'type' => 'text',
                                                                 'class' => 'form-control col-lg-6 required datepick',
+                                                                'label' => false,
+                                                                'value' => date('Y-m-d')
+                                                                ));
+                                                    ?>
+
+                                                </div>
+                                             </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group day_type" id="monthly" >
+                                       <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span> Monthly </label>
+                                                <div class="col-lg-9">
+                                                  
+                                                    <?php
+                                                        echo $this->Form->input('WorkSchedule.day',
+                                                            array(
+                                                                'type' => 'text',
+                                                                'class' => 'form-control col-lg-6 required monthpicker',
                                                                 'label' => false,
                                                                 'value' => date('Y-m-d')
                                                                 ));
@@ -142,8 +188,7 @@
       <div class="row">
         <div class="col-lg-12">
             <div class="main-box">
-               
-                <div class="top-space"></div>
+               <div class="top-space"></div>
                 <div class="main-box-body clearfix">
                     <div class="main-box-body clearfix">
                         <div class="form-horizontal">

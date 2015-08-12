@@ -50,8 +50,9 @@
         <div class="col-lg-9">
             <div class="time-pad" style="padding-top:3px;">
                 <?php 
-                 //pr(date('Y-m-d'));pr($attendance['WorkShift']['from']);
-                    if (date('h:i a',strtotime($attendance['WorkShift']['from'])) >= date('h:i a')) {
+                $date = explode(' ', $attendance['WorkShift']['from']);
+        
+                    if (strtotime($attendance['WorkShift']['from']) >= strtotime(date('h:i a'))) {
                         echo "<span class='label label-danger pull-left'>Late</span>";
                         $status = 'Late';
                     }else{

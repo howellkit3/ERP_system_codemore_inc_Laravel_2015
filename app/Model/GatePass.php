@@ -20,7 +20,9 @@ class GatePass extends AppModel {
     public function saveGatepass($gateData = null, $auth = null, $gatePassId = null){
 
         if(!empty($gateData['GatePass'])){
-       
+
+            $gateIds = array();
+
             foreach ($gateData['GatePass'] as $key => $value) {
 
                 $this->create();
@@ -28,11 +30,13 @@ class GatePass extends AppModel {
                 $value['gatepass_truck_id'] = $gatePassId;
                 
                 $this->save($value);
-                
+                array_push($gateIds, $this->id);
             }
+
+             return $gateIds;
         }
 
-    return $this->id;
+       
 
     }
 

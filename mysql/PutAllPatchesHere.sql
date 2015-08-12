@@ -1140,6 +1140,8 @@ VALUES
 
 ALTER TABLE `employees`  ADD `date_hired` DATETIME NULL  AFTER `position_id`;
 
+ALTER TABLE `work_schedules` CHANGE `day` `day` VARCHAR(255) NOT NULL;
+
 /** bien added this 08/06/2015   */
 ALTER TABLE `attendances` ADD `status` VARCHAR(50)  NULL  DEFAULT NULL  AFTER `modified`;
 

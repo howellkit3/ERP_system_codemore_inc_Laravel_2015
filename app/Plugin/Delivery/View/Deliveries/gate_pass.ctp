@@ -146,7 +146,7 @@
                                                     'options' => array($truckListUpper),
                                                     'type' => 'select',
                                                     'label' => false,
-                                                    'class' => 'form-control required gatefield ',
+                                                    'class' => 'form-control required',
                                                     'empty' => '---Select Item Truck---',
                                                     'required' => 'required'
                                                     )); 
@@ -179,7 +179,7 @@
                                                         'options' => array($helperListUpper),
                                                         'type' => 'select',
                                                         'label' => false,
-                                                        'class' => 'form-control gatefield',
+                                                        'class' => 'form-control',
                                                         'empty' => '---Select Helper---'
                                                         )); 
                                                 ?>
@@ -208,7 +208,7 @@
                                         <div class="col-lg-8">
                                             <?php 
                                                 echo ucfirst($this->Form->input('GatePassTruck.approver_id', array(
-                                                        'options' => array($deliveryUserFNameUpper),
+                                                        'options' => array($deliveryUserFName),
                                                         'type' => 'select',
                                                         'label' => false,
                                                         'class' => 'form-control required gatefield',
@@ -222,7 +222,7 @@
                                     <div class="form-group">
                                         <div class="col-lg-2"></div>
                                         <div class="col-lg-8">
-                                            <button type="submit" class=" btn btn-primary pull-left">Submit</button>&nbsp;
+                                            <button type="submit" class=" btn btn-primary pull-left redirectMe">Submit</button>&nbsp;
                                             <?php 
                                                 echo $this->Html->link('Cancel', array('controller' => 'deliveries', 'action' => 'index'),array('class' =>'btn btn-default','escape' => false));
                                             ?>

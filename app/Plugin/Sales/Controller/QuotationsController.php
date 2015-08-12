@@ -1287,4 +1287,25 @@ class QuotationsController extends SalesAppController {
     		$this->render('search_quotation');
     	}
     }
+
+    public function color_autocomplete($hint = null){
+
+    	$this->autoRender = false;
+    	
+    	$this->loadModel('Sales.QuotationDetail');
+
+    	$colorData = $this->QuotationDetail->find('all',array(
+									'fields' => array(
+										'QuotationDetail.color'
+										),
+									'order' => 'QuotationDetail.color ASC',
+									'conditions' => array(
+											array('QuotationDetail.color LIKE' => '%' . $hint . '%')
+										
+										),
+									'limit' => 10
+									));
+    	
+    	return json_encode($colorData);
+    }
 }

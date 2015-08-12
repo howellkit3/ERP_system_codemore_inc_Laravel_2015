@@ -218,28 +218,32 @@
 				</form>
 			</div>
 			<br><br>
-			<div class="one">
-				<div class="form-group">
-					<div class="col-lg-12"><center>___________________________________________<br>Name and Signature of Employee</center></div>
-					
-				</div>
-			</div>
-
-			<div class="one">
-				<div class="form-group">
-					<div class="col-lg-6"><center>___________________________________________</center></div>
-					<div class="col-lg-6" style="font-size:15px">Name and Signature of Company Representative</div>
-					
-				</div>
-			</div>
+			<table class="item-table" style ="line-height:1.6;padding:0px; width:651px; margin-left:23px;table-layout: fixed; display: table" >
+				<thead>
+					<tr>
+						<td class="td-heigth" style=" vertical-align: center;  border:1px solid white;"><center>___________________________________________</center></td>
+						<td class="td-heigth" style=" vertical-align: center;  border:1px solid white;"><center>___________________________________________</center></td>
+					</tr>
+					<tr>
+						<td class="td-heigth" style=" vertical-align: center;  border:1px solid white;"><center>Name and Signature of Employee</center></td>
+						<td class="td-heigth" style=" vertical-align: center;  border:1px solid white;"><center>Name and Signature of Company Representative</center></td>
+						
+					</tr>
+				</thead>
+			</table>
 			
 			<div class="form-group">
-				<div class="col-lg-1">Date :</div>
+				<div class="col-lg-1">Date : </div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-lg-1" style="font-size:12px;width:330px;">
+					<br></br>
+					Doc No.:  KP-FR-HR1-012 Rev 0<br>
+					Effective  16 May 2015
+				</div>
 			</div>
 			
-			<br></br>
-			Doc No.:  KP-FR-HR1-012 Rev 0<br>
-			Effective  16 May 2015
 		</div>
 	</div>
 </div>
