@@ -31,16 +31,21 @@
 
             <td>
 
-                <a data-toggle="modal" href="#myModalReceiving<?php echo $purchaseOrderDataList['PurchaseOrder']['id'] ?>" class="table-link "><i class="fa fa-lg "></i><span class="fa-stack">
+              <!--   <a data-toggle="modal" href="#myModalReceiving<?php echo $purchaseOrderDataList['PurchaseOrder']['id'] ?>" class="table-link "><i class="fa fa-lg "></i><span class="fa-stack">
                                   <i class="fa fa-square fa-stack-2x"></i>
-                                  <i class="fa  fa-level-down fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Receive </font></span></a> 
-
+                                  <i class="fa  fa-level-down fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Receive </font></span></a>  -->
+                 <?php
+                        echo $this->Html->link('<span class="fa-stack">
+                            <i class="fa fa-square fa-stack-2x"></i>
+                            <i class="fa fa-level-down fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Receive</font></span>
+                            </span> ', array('controller' => 'receivings', 'action' => 'receive_order', $purchaseOrderDataList['PurchaseOrder']['id'], $purchaseOrderDataList['Request']['uuid'] ),array('class' =>' table-link','escape' => false,'title'=>'Review Inquiry'));
+                    ?>                    
 
                  <?php
                         echo $this->Html->link('<span class="fa-stack">
                             <i class="fa fa-square fa-stack-2x"></i>
                             <i class="fa fa-search fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> View</font></span>
-                            </span> ', array('controller' => 'receivings', 'action' => 'view', $purchaseOrderDataList['PurchaseOrder']['id']),array('class' =>' table-link','escape' => false,'title'=>'Review Inquiry'));
+                            </span> ', array('controller' => 'receivings', 'action' => 'view', $purchaseOrderDataList['PurchaseOrder']['id'], $purchaseOrderDataList['Request']['uuid'] ),array('class' =>' table-link','escape' => false,'title'=>'Review Inquiry'));
                     ?>   
             </td>
         </tr>
@@ -57,6 +62,54 @@
                 <div class="modal-body">
                     <?php  echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'receivings', 
                             'action' => 'receive_order',$purchaseOrderDataList['PurchaseOrder']['id'])),'class' => 'form-horizontal'))?>
+
+
+                     <?php  if(!empty($requestData['PurchaseItem'])){
+
+                                    foreach ($requestData['PurchaseItem'] as $requestDataList): ?>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label"></label>
+                                      
+                                        <div class="col-lg-8">
+                                            <?php 
+                                                echo $this->Form->input('PurchaseOrder.item', array(
+                                                                                'class' => 'form-control item_type',
+                                                                                'disabled' => true,
+                                                                                'label' => false,       
+                                                                                'value' => $requestDataList['foreign_key'],
+                                                                                'fields' =>array('name')));
+                                            ?>
+                                        </div>
+                                    </div>
+
+                                             <?php 
+                                        endforeach; 
+
+                                }else{
+
+                                    foreach ($requestPurchasingItem as $requestDataList): ?>
+                                        
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label"></label>
+                                      
+                                        <div class="col-lg-8">
+                                            <?php 
+                                                echo $this->Form->input('PurchaseOrder.item', array(
+                                                                                'class' => 'form-control item_type',
+                                                                                'disabled' => true,
+                                                                                'label' => false,       
+                                                                                'value' => $requestDataList['RequestItem'],
+                                                                                'fields' =>array('name')));
+                                            ?>
+                                        </div>
+                                    </div>
+
+                                             <?php 
+                                        endforeach; 
+                                              
+                                } ?>        
+
                     
 
                     <div class="form-group">

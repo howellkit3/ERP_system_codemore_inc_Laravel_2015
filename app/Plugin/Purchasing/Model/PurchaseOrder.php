@@ -45,9 +45,22 @@ class PurchaseOrder extends AppModel {
 					'foreignKey' =>  'purchase_order_id',
 					//'conditions' => array('PurchasingItem.request_uuid = request_uuid')
 				),
-			)
+			),
+
+			'hasMany' => array(	
+				'PurchasingItem' => array(
+					'className' => 'Purchasing.PurchasingItem',
+					'foreignKey' =>  false,
+					'conditions' => array('Request.uuid = request_uuid')
+				),
+
+				'RequestItem' => array(
+					'className' => 'Purchasing.RequestItem',
+					'foreignKey' =>  false,
+					'conditions' => array('Request.uuid = request_uuid')
+				),
 			
-		));
+		)));
 
 		$this->contain($model);
 	}

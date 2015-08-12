@@ -2,8 +2,9 @@
 <div style="clear:both"></div>
 <?php echo $this->element('ware_house_option');?>
 
-
+<br><br>
 <?php if(!empty($purchaseOrderData)){ ?>
+
 
 <div class="row">
     <div class="col-lg-12">
@@ -39,7 +40,7 @@
                             <div class="form-horizontal">                                   
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Purchase Order Number</label>
-                                    <input type="hidden" id="selected_type" value="<?php // echo $this->request->data['Product']['id']; ?>">
+                                    
                                     <div class="col-lg-8">
                                         <?php 
                                             echo $this->Form->input('PurchaseOrder.uuid', array(
@@ -48,6 +49,8 @@
                                                                             'label' => false,       
                                                                             'value' => $purchaseOrderData['PurchaseOrder']['uuid'],
                                                                             'fields' =>array('name')));
+
+
                                         ?>
                                     </div>
                                 </div>
@@ -117,7 +120,7 @@
                                     <label class="col-lg-2 control-label">Remarks</label>
                                     <div class="col-lg-8">
                                         <?php 
-                                            echo $this->Form->input('PurchaseOrder.remarks', array(
+                                            echo $this->Form->textarea('PurchaseOrder.remarks', array(
                                                                             'class' => 'form-control item_type',
                                                                             'label' => false,
                                                                             'disabled' => true,
@@ -138,7 +141,7 @@
                 <div class="main-box">
                     <header class="main-box-header clearfix">
 
-                        <h2 class="pull-left">Purchase Order Items</h2>
+                        <h2 class="pull-left">Received Order</h2>
 
                     </header>
 
@@ -146,21 +149,56 @@
 
                     <div class="main-box-body clearfix">
                         <div class="main-box-body clearfix">
-                            <div class="form-horizontal">                                   
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label">Purchase Order Number</label>
-                                    <input type="hidden" id="selected_type" value="<?php // echo $this->request->data['Product']['id']; ?>">
-                                    <div class="col-lg-8">
-                                        <?php 
-                                            echo $this->Form->input('PurchaseOrder.uuid', array(
-                                                                            'class' => 'form-control item_type',
-                                                                            'disabled' => true,
-                                                                            'label' => false,       
-                                                                            'value' => $purchaseOrderData['PurchaseOrder']['uuid'],
-                                                                            'fields' =>array('name')));
-                                        ?>
+                            <div class="form-horizontal">  
+
+                                <?php  if(!empty($requestData['PurchaseItem'])){
+
+                                    foreach ($requestData['PurchaseItem'] as $requestDataList): ?>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label"></label>
+                                      
+                                        <div class="col-lg-8">
+                                            <?php 
+                                                echo $this->Form->input('PurchaseOrder.item', array(
+                                                                                'class' => 'form-control item_type',
+                                                                                'disabled' => true,
+                                                                                'label' => false,       
+                                                                                'value' => $requestDataList['foreign_key'],
+                                                                                'fields' =>array('name')));
+                                            ?>
+                                        </div>
                                     </div>
-                                </div>
+
+                                             <?php 
+                                        endforeach; 
+
+                                }else{
+
+                                    foreach ($requestPurchasingItem as $requestDataList): ?>
+                                        
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label"></label>
+                                      
+                                        <div class="col-lg-8">
+                                            <?php 
+                                                echo $this->Form->input('PurchaseOrder.item', array(
+                                                                                'class' => 'form-control item_type',
+                                                                                'disabled' => true,
+                                                                                'label' => false,       
+                                                                                'value' => $requestDataList['RequestItem'],
+                                                                                'fields' =>array('name')));
+                                            ?>
+                                        </div>
+                                    </div>
+
+                                             <?php 
+                                        endforeach; 
+                                              
+                                } ?>
+
+                                
+
                             </div>
                         </div>
                     </div>
