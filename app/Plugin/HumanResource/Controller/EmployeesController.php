@@ -517,7 +517,7 @@ class EmployeesController  extends HumanResourceAppController {
 			}
 
 			$employeeData = $this->Employee->find('all',array('conditions' => $conditions));
-			pr($employeeData);exit();
+			//pr($employeeData);exit();
 			$this->set(compact('employeeData'));
 			
 			$this->render('Employees/xls/employee_report');
