@@ -25,6 +25,12 @@ class Request extends AppModel {
 					'foreignKey' =>  false,
 					'conditions' => array('PurchasingItem.request_uuid = request_uuid')
 				),
+
+				'RequestItem' => array(
+					'className' => 'Purchasing.RequestItem',
+					'foreignKey' =>  false,
+					'conditions' => array('RequestItem.request_uuid = request_uuid')
+				),
 			)
 			
 		));

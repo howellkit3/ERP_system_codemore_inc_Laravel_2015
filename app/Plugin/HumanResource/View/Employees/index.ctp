@@ -35,32 +35,62 @@ echo $this->Html->css(array(
 			                <h2 class="pull-left"><b>Employee List</b></h2>
 			                <div class="filter-block pull-right">
 			                	<div class="form-group pull-left search-dropdown">
-			                 		<?php echo $this->Form->input('department_id',array(
-			                 		'options' => $departments,
-			                 		'class' => 'autocomplete select-department-view',
-			                 		'label' => false,
-			                 		'div'  => false,
-			                 		//'default' => $department,
-			                 		'empty'=> '-- Select Department --'
+			                 		<?php 
+			                 			echo $this->Form->input('department_id',array(
+					                 		'options' => $departments,
+					                 		'class' => 'form-control select-department-view',
+					                 		'label' => false,
+					                 		'div'  => false,
+					                 		//'default' => $department,
+					                 		'empty'=> '-- Select Department --'
 
-			                 		)); ?>
+					                 		)); 
+
+					                ?>
 			                    </div>
-			                 <div class="form-group pull-left">
+			                    <div class="form-group pull-left search-dropdown">
+			                 		<?php 
+			                 			echo $this->Form->input('status_id',array(
+					                 		'options' => $statusList,
+					                 		'class' => 'form-control select-status-view',
+					                 		'label' => false,
+					                 		'div'  => false,
+					                 		//'default' => 1,
+					                 		'empty'=> '-- Select Status --'
+
+					                 		)); 
+
+					                ?>
+			                    </div>
+			                 	<div class="form-group pull-left">
 			                        <?php //echo $this->Form->create('Quotation',array('controller' => 'quotations','action' => 'search', 'type'=> 'get')); ?>
-			                            <input placeholder="Search..." class="form-control searchCustomer"  />
+			                            <input placeholder="Search..." class="form-control searchEmployee"  />
 			                            <i class="fa fa-search search-icon"></i>
 			                         <?php //echo $this->Form->end(); ?>
 			                    </div>
-			                   <?php
+
+			                    <div class="form-group pull-right search-dropdown1">
+	      							<?php echo $this->Form->create('Employee',array('controller' => 'employees','action' => 'print_employee')); ?>
+			                            <input type="hidden" name="department" value="" class="form-control departmentHidden"  />
+			                            <input type="hidden" name="status" value="" class="form-control statusHidden"  />
+			                            <input type="hidden" name="input_search" value="" class="form-control searchHidden"  />
+			                            <button type="submit" class="btn btn-success pull-right exportEmployeeDatatest"><i class="fa fa-share-square-o fa-lg"></i> Export</button>
+			                         <?php echo $this->Form->end(); ?>
+			                    </div>
+
+			                   	<?php
 			                   
-			                      echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Add Employee', 
+			                      	echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Add Employee', 
 			                            array('controller' => 'employees', 
 			                                    'action' => 'add',),
 			                            array('class' =>'btn btn-primary',
-			                                'escape' => false)); ?>
-      
-			                       <a data-toggle="modal" href="#myEmployeeReport" class="btn btn-primary pull-right "><i class="fa fa-share-square-o fa-lg"></i> Export</a>
+			                                'escape' => false)); 
 
+			                    ?>
+      							
+
+			                     <!-- <a data-toggle="modal" href="#myEmployeeReport" class="btn btn-primary pull-right "><i class="fa fa-share-square-o fa-lg"></i> Export</a>
+ -->
 			                   <br><br>
 			               </div>
 			            </header>
@@ -264,6 +294,13 @@ echo $this->Html->css(array(
 </div>
 
 <?php echo $this->element('modals'); ?>
+
+<style type="text/css">
+	.search-dropdown1 {
+		min-width: 105px !important;
+	}
+	
+</style>
 
 
 

@@ -130,7 +130,7 @@
 														<div class="table-responsive">
 															<div class="col-lg-12">
 					                                     		<div class="form-group">
-							                                        <label for="inputEmail1" class="col-lg-2 control-label strong"> Basic Salary </label>
+							                                        <label for="inputEmail1" class="col-lg-2 control-label strong"> Basic Salary / per Day </label>
 								                                      <div class="col-lg-7 value">
 								                                      		<?php
 								                                      		echo $this->Form->input('id');
@@ -141,37 +141,18 @@
 							                                     </div>
 							                                     <div class="clearfix"></div>
 							                                     <div class="form-group">
-							                                        <label for="inputEmail1" class="col-lg-2 control-label strong"> Regular OT </label>
+							                                        <label for="inputEmail1" class="col-lg-2 control-label strong"> CPTA </label>
 								                                      <div class="col-lg-7 value"> 
-								                                     		<?php echo $this->Form->input('overtime',array('label' => false,'class' => 'form-control')); ?>
+								                                     		<?php echo $this->Form->input('cpta',array('label' => false,'class' => 'form-control')); ?>
 								                                       </div>
 							                                     </div>
-							                                     <div class="clearfix"></div>
-
-							                                     <h2>Taxes</h2>
-
+							                                      <div class="clearfix"></div>
 							                                     <div class="form-group">
-							                                        <label for="inputEmail1" class="col-lg-2 control-label strong"> SSS </label>
+							                                        <label for="inputEmail1" class="col-lg-2 control-label strong"> SEA </label>
 								                                      <div class="col-lg-7 value"> 
-								                                     		<?php echo $this->Form->input('sss',array('label' => false,'class' => 'form-control','type' => 'number')); ?>
+								                                     		<?php echo $this->Form->input('sea',array('label' => false,'class' => 'form-control')); ?>
 								                                       </div>
 							                                     </div>
-							                                     <div class="clearfix"></div>
-							                                     <div class="form-group">
-							                                        <label for="inputEmail1" class="col-lg-2 control-label strong"> Phil.Health </label>
-								                                      <div class="col-lg-7 value"> 
-								                                     		<?php echo $this->Form->input('phil_health',array('label' => false,'class' => 'form-control','type' => 'number')); ?>
-								                                       </div>
-							                                     </div>
-							                                     <div class="clearfix"></div>
-
-							                                     <div class="form-group">
-							                                        <label for="inputEmail1" class="col-lg-2 control-label strong"> Pagibig Fund </label>
-								                                      <div class="col-lg-7 value"> 
-								                                     		<?php echo $this->Form->input('pagibig',array('label' => false,'class' => 'form-control','type' => 'number')); ?>
-								                                       </div>
-							                                     </div>
-							                                     <div class="clearfix"></div>
 			                                    			</div>
 														</div>
 												</div>

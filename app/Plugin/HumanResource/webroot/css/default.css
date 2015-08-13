@@ -10,6 +10,9 @@ background-size: cover !important;
   z-index: 1;
 }
 
+.inline-block {
+  display: inline-block;
+}
 .image_profile input {
   height: 146px;
   cursor: pointer;
@@ -201,4 +204,7 @@ div.value {
   font-weight: bold;
   text-indent: 9px;
   color: #03a9f4;
+}
+#exportData {
+  display: none;
 }

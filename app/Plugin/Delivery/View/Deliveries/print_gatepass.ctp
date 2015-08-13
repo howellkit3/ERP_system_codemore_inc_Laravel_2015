@@ -26,29 +26,39 @@
                                 ->setCellValue('C12', ucwords(strtoupper($truckList[$truck])))
                                 ->setCellValue('C13', ucwords($driverList[$driver]));
                                 
-
-        
-       
-     foreach ($productList as $key => $productnamelist) {
-         if(count($productList) < 5){
-                $objTpl->setActiveSheetIndex(0)
-                            ->setCellValueByColumnAndRow('1', $ctr + 7 , ucwords($clientData['Product']['name']))
-                            ->setCellValue('F'.$ctrQuantity, $drData['DeliveryDetail']['quantity'])
-                            ->setCellValue('I'.$ctrQuantity, $units[$clientData['QuotationItemDetail']['quantity_unit_id']]);
-                            
-
-              $ctr++;
-              $ctrQuantity++;
-            
-
-            }else{
+            foreach ($gateData as $key => $gateDateList) {
 
                 $objTpl->setActiveSheetIndex(0)
-                            ->setCellValueByColumnAndRow('1', 9 , count($productList) .' '. 'items')
-                            ->setCellValue('J9','pick up by '. $companyList[$drData['Delivery']['company_id']]);
-                             
+                                    ->setCellValueByColumnAndRow('1', $ctr + 7 , 'DR-'.$gateDateList['GatePass']['ref_uuid'].' / '.ucwords($gateDateList['ClientOrder']))
+                                    ->setCellValue('F'.$ctrQuantity, $gateDateList['DeliveryDetail'])
+                                    ->setCellValue('I'.$ctrQuantity, $units[$gateDateList['QuotationItemDetail']]);
+
+                $ctr++;
+                $ctrQuantity++;
+
             }
-        }
+        
+            // foreach ($productList as $key => $productnamelist) {   
+            //     if(count($productList) < 5){
+
+            //         $objTpl->setActiveSheetIndex(0)
+            //                         ->setCellValueByColumnAndRow('1', $ctr + 7 , ucwords($clientData['Product']['name']))
+            //                         ->setCellValue('F'.$ctrQuantity, $drData['DeliveryDetail']['quantity'])
+            //                         ->setCellValue('I'.$ctrQuantity, $units[$clientData['QuotationItemDetail']['quantity_unit_id']]);
+                                    
+
+            //         $ctr++;
+            //         $ctrQuantity++;
+                    
+
+            //     }else{
+
+            //         $objTpl->setActiveSheetIndex(0)
+            //                         ->setCellValueByColumnAndRow('1', 9 , count($productList) .' '. 'items')
+            //                         ->setCellValue('J9','pick up by '. $companyList[$drData['Delivery']['company_id']]);
+                                     
+            //     }
+            // }
 
         }
 

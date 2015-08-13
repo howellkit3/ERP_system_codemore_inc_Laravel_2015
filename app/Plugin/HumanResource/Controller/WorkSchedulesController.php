@@ -27,7 +27,8 @@ class WorkSchedulesController  extends HumanResourceAppController {
 
 
 		if ($this->request->is('post')) {
-
+			
+			
 			//save attendance
 			if ($this->WorkSchedule->save($this->request->data['WorkSchedule'])) {
 
@@ -35,6 +36,7 @@ class WorkSchedulesController  extends HumanResourceAppController {
 
 				$data['employee_id'] = $this->request->data['WorkSchedule']['foreign_key'];
 				$data['date'] = $this->request->data['WorkSchedule']['day'];
+				$data['type'] = $this->request->data['WorkSchedule']['type'];
 				//must save daily info
 				$dailynfo = $this->DailyInfo->saveDailyInfo($data);
 

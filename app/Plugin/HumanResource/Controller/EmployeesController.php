@@ -68,7 +68,9 @@ class EmployeesController  extends HumanResourceAppController {
 
 		$toolList = $this->Tool->find('list',array('fields' => array('id','name')));
 
-        $this->set(compact('employees','departments','positions','toolings','toolList','employeeList', 'departmentData'));
+		$statusList = $this->Status->find('list',array('fields' => array('id','name')));
+
+        $this->set(compact('employees','departments','positions','toolings','toolList','employeeList', 'departmentData','statusList'));
 	}
 
 	public function add () {
@@ -474,35 +476,54 @@ class EmployeesController  extends HumanResourceAppController {
 
 	}
 
-	public function print_employee($id = null) {
-		
-		$this->Employee->bind(array('Department','Position','Status'));
+	public function print_employee() {
 
-		$departmentId = $this->request->data['Department']['department_id'];
-		
-		$conditions = array();
+		if (!empty($this->request->data)) {
+			//pr($this->request->data);exit();
+			$this->loadModel('HumanResource.Position');
+			$this->loadModel('HumanResource.Department');
+			$this->loadModel('HumanResource.Status');
 
-		if (!empty($departmentId)) {
-			$conditions = array_merge($conditions,array('Employee.department_id' => $departmentId));
+			// ini_set('max_execution_time', 3600);
+			// ini_set('memory_input_time', 1024);
+			// ini_set('max_input_nesting_level', 1024);
+			// ini_set('memory_limit', '1024M');
+
+			$this->Employee->bind(array('Position','Department','Status'));
+
+			$conditions = array();
+
+			if ($this->request->data['status'] != 0) {
+
+				$conditions = array_merge($conditions,array('Employee.status' => $this->request->data['status'] ));
+
+			}
+
+			if ($this->request->data['department'] != 0) {
+
+				$conditions = array_merge($conditions,array('Employee.department_id' => $this->request->data['department'] ));
+
+			}
+
+			if (!empty($this->request->data['input_search'])) {
+
+				$conditions = array_merge($conditions,array(
+										'OR' => array(
+											array('Employee.first_name LIKE' => '%' . $this->request->data['input_search'] . '%'),
+											array('Employee.last_name LIKE' => '%' . $this->request->data['input_search'] . '%')
+										)
+									));
+
+			}
+
+			$employeeData = $this->Employee->find('all',array('conditions' => $conditions));
+			//pr($employeeData);exit();
+			$this->set(compact('employeeData'));
 			
+			$this->render('Employees/xls/employee_report');
+
 		}
-        if (!empty($this->request->data['from_date'])) {
-
-        	$dateRange = str_replace(' ', '', $this->request->data['from_date']);
-       
-	        $splitDate = split('-', $dateRange);
-	        $from = str_replace('/', '-', $splitDate[0]);
-	        $to = str_replace('/', '-', $splitDate[1]);
-
-	        $conditions = array_merge($conditions,array('Employee.created BETWEEN ? AND ?' => array($from.' '.'00:00:00:', $to.' '.'23:00:00:')));
-
-        } 
-
-        $employeeData = $this->Employee->find('all',array('conditions' => $conditions,'order' => 'Employee.id ASC'));
-       
-		$this->set(compact('employeeData'));
-		$this->render('Employees/xls/employee_report');
-
+		
 	}
 
 	public function print_tool($id = null) {
@@ -651,7 +672,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 	}
 	
-	public function search_by_department($departmentId = null){
+	public function search_by_department($departmentId = null , $status = null,$hintKey = null){
 
 		$this->loadModel('HumanResource.Position');
 		$this->loadModel('HumanResource.Department');
@@ -659,7 +680,32 @@ class EmployeesController  extends HumanResourceAppController {
 
 		$this->Employee->bind(array('Position','Department','Status'));
 
-		$employeeData = $this->Employee->find('all',array('conditions' => array('Employee.department_id' => $departmentId)));
+		$conditions = array();
+
+		if ($status != 0) {
+
+			$conditions = array_merge($conditions,array('Employee.status' => $status ));
+
+		}
+
+		if ($departmentId != 0) {
+
+			$conditions = array_merge($conditions,array('Employee.department_id' => $departmentId ));
+
+		}
+
+		if (!empty($hintKey)) {
+
+			$conditions = array_merge($conditions,array(
+									'OR' => array(
+										array('Employee.first_name LIKE' => '%' . $hintKey . '%'),
+										array('Employee.last_name LIKE' => '%' . $hintKey . '%')
+									)
+								));
+
+		}
+
+		$employeeData = $this->Employee->find('all',array('conditions' => $conditions));
 
 		$this->set(compact('employeeData'));
 		

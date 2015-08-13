@@ -3,6 +3,7 @@
 <?php $this->Html->addCrumb('Create', array('controller' => 'quotation', 'action' => 'create')); ?>
 <?php  echo $this->Html->script('Sales.company_quotation');?>
 <?php echo $this->Html->script('Sales.checkvat');?>
+<?php echo $this->Html->script('Sales.sale-autocomplete');?>
 <?php  echo $this->Html->script('Sales.create_ajax');?>
 <style type="text/css">#QuotationField12Description{background-color:#fff;}</style>
 <div style="clear:both"></div>
@@ -14,7 +15,7 @@
 	echo $this->element('inquiry_quotation');
 
 } else { ?>
-	
+
 	<div class="row">
 		<div class="col-lg-12">
 			
@@ -310,6 +311,29 @@
 							<div class="main-box-body clearfix">
 								<div class="main-box-body clearfix">
 									<div class="form-horizontal">
+
+										<!-- <div class="frmSearch">
+											<input type="text" id="search-box" placeholder="Country Name" />
+											<div id="suggesstion-box"></div>
+										</div> -->
+										<!-- <div class="ui-widget">
+										  <label for="tags">Tags: </label>
+										  <input id="tags">
+										</div>
+
+										<div class="form-group">
+											<label class="col-lg-2 control-label">Color Sample</label>
+											<div class="col-lg-8">
+												<?php 
+		                                            echo $this->Form->input('QuotationDetail.sample', array(
+                        								'class' => 'form-control item_type color-autocomplete',
+	                                                    'label' => false,
+	                                                    'placeholder' => 'Sample'));
+	                                            ?>
+											</div>
+											<div id="suggesstion-box"></div>
+										</div> -->
+
 										<div class="form-group">
 											<label class="col-lg-2 control-label">Color</label>
 											<div class="col-lg-8">
@@ -424,12 +448,12 @@
 	<script>
 		
 	jQuery(document).ready(function($){
-			$("#QuotationCreateForm").validate();
-			//datepicker
-			$('.datepick').datepicker({
-				format: 'yyyy-mm-dd'
-			});
-			
+		$("#QuotationCreateForm").validate();
+		//datepicker
+		$('.datepick').datepicker({
+			format: 'yyyy-mm-dd'
+		});
+	
 	});
 
 	 </script>

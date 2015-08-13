@@ -48,6 +48,8 @@ echo $this->element('hr_options');
 			                     </div>
 
 			                     <a data-toggle="modal" href="#myAttendance" class="btn btn-primary pull-right "><i class="fa fa-share-square-o fa-lg"></i> Export</a>
+
+
 			                     
 			                    <?php echo $this->Form->end(); ?>
 			                   <br><br>
