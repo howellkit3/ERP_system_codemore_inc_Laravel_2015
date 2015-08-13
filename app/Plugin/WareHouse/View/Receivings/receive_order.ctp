@@ -69,6 +69,22 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                                     <label for="<?php echo $int?>"> <?php echo $requestDataList['PurchaseItem']['name'] ?></label>
                                             </div>
                                         </div>
+
+                                        <div class="col-lg-2">
+                                <?php 
+                                    echo $this->Form->input('DeliveryDetail.measure', array(         
+                                                                    'required' => 'required',
+                                                                    'class' => 'form-control required  ',
+
+                                                                    'options' => array('by bundle', 'by pack' , 'by piece', 'by box', 'by pallet'),
+                                                                    'empty' => '--Select Measure--',
+                                                                    'label' => false,
+                                                                    'type' => 'select',
+                                                                    'required' => 'required',
+                                                                    ));
+                                ?>
+                            </div>
+
                                     </div>
 
                                              <?php 
@@ -91,6 +107,25 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                         </div>
                                     </div>
 
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label"></label>
+                                      <div class="col-lg-8">
+                                        <?php 
+                                    echo $this->Form->input('DeliveryDetail.measure', array(         
+                                                                    'required' => 'required',
+                                                                    'class' => 'form-control required  ',
+
+                                                                    'options' => array('by bundle', 'by pack' , 'by piece', 'by box', 'by pallet'),
+                                                                    'empty' => '--Select Measure--',
+                                                                    'label' => false,
+                                                                    'type' => 'select',
+                                                                    'required' => 'required',
+                                                                    ));
+                                ?>
+                                    </div>
+                                </div>
+
+
                                              <?php 
                                         endforeach; 
                                               
@@ -105,6 +140,7 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                 </div>
                             </div>
 
+                        
                             <div class="form-group">
                                 <label for="inputPassword1" class="col-lg-2 control-label">Remarks</label>
                                 <div class="col-lg-9">
