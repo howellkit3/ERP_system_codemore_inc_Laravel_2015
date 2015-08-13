@@ -1,5 +1,18 @@
 <?php 
- echo $this->Html->css(array( 'HumanResource.default' ));
+ echo $this->Html->css(array(
+                    'HumanResource.default',
+                    'HumanResource.select2.css',
+                    'timepicker',
+)); 
+
+echo $this->Html->script(array(
+					'jquery.maskedinput.min',
+					'HumanResource.select2.min',
+					'HumanResource.moment',
+					'HumanResource.custom',
+					'HumanResource.work_schedules'
+
+)); 
 
 	echo $this->element('hr_options');
 
@@ -18,15 +31,26 @@
 							<header class="main-box-header clearfix">
 				                <h2 class="pull-left"><b>Work Schedules</b> </h2>
 				                <div class="filter-block pull-right">
-				                 <div class="form-group pull-left">
-				                        <?php //echo $this->Form->create('Quotation',array('controller' => 'quotations','action' => 'search', 'type'=> 'get')); ?>
-				                            <input placeholder="Search..." class="form-control searchCustomer"  />
-				                            <i class="fa fa-search search-icon"></i>
-				                         <?php //echo $this->Form->end(); ?>
+				                 	
+						             <div class="form-group pull-left">
+										<div class="radio inline-block">
+											<input type="radio" checked="" value="employee" id="optionsRadios1" name="by">
+											<label for="optionsRadios1">
+												By Employee
+											</label>
+										</div>
+									</div>
+
+				                 	<div class="form-group pull-left" style="min-width:200px;">
+				                 		<?php echo $this->Form->input('employee_id',array(
+				                 			'type' => 'select',
+				                 			'options' => $employeeList,
+				                 			'class' => 'autocomplete',
+				                 			'label' => false,
+				                 			'id' => 'selectEmployee'
+				                 		)); ?>
 				                    </div>
 				                    <?php
-				                   		
-				                   	$links = array('controller' => 'schedules', 'action' => 'holiday');
 
 				                   	echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Add', 
 				                            array('controller' => 'work_schedules', 
@@ -43,14 +67,15 @@
 				            </header>
 
 				            <div class="main-box-body clearfix">
-				            		 <div class="table-responsive">
-									<table class="table table-striped table-hover">
+				            	<div class="table-responsive result-cont">
+										<table class="table table-striped table-hover">
 										<thead>
 											<tr>
 												<th><a href="#"><span>Employee Name</span></a></th>
 												<th class="text-center"><a href="#"><span>Date</span></a></th>
 												<th class="text-center"><a href="#"><span>Shift</span></a></th>
-												<th><a href="#"><span>Actions</span></a></th>
+												<th class="text-center"><a href="#"><span>Type</span></a></th>
+												<th class="text-right"><a href="#"><span>Actions</span></a></th>
 											</tr>
 										</thead>
 
@@ -76,11 +101,15 @@
 															<td class="text-center"> 
 									                           <?php echo $schedule['WorkSchedule']['day']; ?> 
 									                        </td>
-
+									                       
 									                        <td class="text-center">
 									                           <?php echo $schedule['WorkShift']['name']; ?> 
 									                        </td>
-									                       	<td>
+
+									                         <td class="text-center">
+									                            <?php echo !empty($schedule['WorkSchedule']['type']) ? $schedule['WorkSchedule']['type'] : '';  ?> 
+									                        </td>
+									                       	<td class="text-right">
 									                      	<?php
 
 									                      	echo $this->Html->link('<span class="fa-stack">
@@ -126,8 +155,8 @@
 									?>
 									</div>
 							</div>
-						</div>		
-		            </div>
+								</div>		
+		            		</div>
 				</div>
 			</div>	
 	    </div>

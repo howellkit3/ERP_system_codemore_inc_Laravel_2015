@@ -30,25 +30,19 @@ echo $this->Html->script(array(
 			                 <div class="form-group pull-left">
 			                        
 			                    </div>
-			                     <?php
-			                   		
-			                   		$links = array('controller' => 'schedules', 'action' => 'view');
-
-			                   
-			                    ?> 
+			                    
 			                  
 			                   <br><br>
 			               </div>
 			            </header>
 
 			            <div class="main-box-body clearfix">
-			            	<div class="box calendar_view">
-			            		
-			            		<ul class="legends">
-			            			<li> <div class="box-color green"></div> Regular working days </li>
-			            			<li> <div class="box-color violet"></div> Rest Days </li>
-			            			<li> <div class="box-color orange"></div> Holidays </li>
-			            		</ul>				
+			            	<div class="box calendar_view">	
+				            		<ul class="legends">
+				            			<li> <div class="box-color green"></div> Regular working days </li>
+				            			<li> <div class="box-color violet"></div> Rest Days </li>
+				            			<li> <div class="box-color orange"></div> Holidays </li>
+				            		</ul>			
 
 			             		 <div id="calendarSchedule"></div>
 

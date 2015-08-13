@@ -80,6 +80,7 @@ class SalariesController  extends HumanResourceAppController {
 
 			$emp_conditions = array('Employee.status NOT' => array('1'));
 			$this->Employee->bind(array('Salary'));
+
 			$employees = $this->Employee->find('all',array(
 								'conditions' => $emp_conditions,
 								'order' => array('Employee.last_name ASC'),
@@ -100,7 +101,6 @@ class SalariesController  extends HumanResourceAppController {
 
 			$payScheds = ( $days[0] == '16' ) ? 'second' : 'first';
 
-
 			$conditions = array_merge($conditions,array(
 					'Attendance.date >=' => $customDate['start'],
 					'Attendance.date <=' => $customDate['end']
@@ -118,12 +118,13 @@ class SalariesController  extends HumanResourceAppController {
 
 				$this->loadModel('HumanResource.BreakTime');
 
-				$this->Attendance->bind(array('WorkSchedule','WorkShift','WorkShiftBreak','BreakTime'));
+				//$this->Attendance->bind(array('WorkSchedule','WorkShift','WorkShiftBreak','BreakTime'));
+
+				$this->Attendance->bindWorkshift(); 
 
 				$employees[$key]['Attendance'] = $this->Attendance->computeAttendance($conditions);
 				
 			}
-
 
 			$this->set(compact('employees','customDate','payScheds'));
 

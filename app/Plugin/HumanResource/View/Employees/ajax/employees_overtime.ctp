@@ -24,7 +24,7 @@
                         ?>
                     </div>
                 <div class="time">
-                <!--  <i class="fa fa-clock-o"></i> Last online: 5 minutes ago -->
+                    <i class="fa fa-clock-o"></i> Time In : <?php echo $employee['Attendance']['in']?>
                 </div>
                 
                 <div class="pull-left">

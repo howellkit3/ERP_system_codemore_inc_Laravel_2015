@@ -52,17 +52,11 @@
                                                 <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span>  Add schedule by :   </label>
                                                 <div class="col-lg-9">
                                                    <div class="radio">
-
-
-                                                                            <input type="radio" name="data[WorkSchedule][model]" id="categoryRadio1" value="Employee" checked>
-                                                                            <label for="categoryRadio1">
-                                                                                Employee
-                                                                            </label>
-                                                                            <input type="radio" name="data[WorkSchedule][model]" id="categoryRadio2" value="Department">
-                                                                            <label for="categoryRadio2">
-                                                                                Department
-                                                                            </label>
-                                                                </div>
+                                                        <input type="radio" name="data[WorkSchedule][model]" id="categoryRadio1" value="Employee" checked>
+                                                            <label for="categoryRadio1">
+                                                                Employee
+                                                            </label>
+                                                    </div>
 
                                                 </div>
                                              </div>
@@ -102,7 +96,7 @@
                                                                 'type' => 'text',
                                                                 'class' => 'form-control col-lg-6 required datepick',
                                                                 'label' => false,
-                                                                'value' => date('Y-m-d')
+                                                                'value' => !empty($this->request->data['WorkSchedule']['day']) ? $this->request->data['WorkSchedule']['day'] : date('Y-m-d')
                                                                 ));
                                                     ?>
 

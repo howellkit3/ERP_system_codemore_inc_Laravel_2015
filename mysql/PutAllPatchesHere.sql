@@ -1151,6 +1151,8 @@ ALTER TABLE `employee_additional_informations` ADD `birth_place` VARCHAR(255)  N
 
 ALTER TABLE `attendances`  ADD `is_holiday` INT NULL  AFTER `type`;
 
+ALTER TABLE `work_schedules`  ADD `holiday` INT(11) NOT NULL DEFAULT '0'  AFTER `type`;
+
 /* end all HR tables */
 
 /** howell kit added this 08/05/2015   */
