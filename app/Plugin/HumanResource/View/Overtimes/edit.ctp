@@ -91,7 +91,15 @@ echo $this->Html->script(array(
                                                                 'options' => $departments,
                                                                 'empty' => '--- Select Department ---',
                                                                 'onchange' => 'checkDepartmentEmployee(this)',
-                                                                'label' => false));
+                                                                'label' => false,
+                                                                'disabled' => true));
+
+                                                            // echo $this->Form->input('Overtime.department_id', array(
+                                                            //     'class' => 'col-lg-6 required autocomplete',
+                                                            //     'options' => $departments,
+                                                            //     'empty' => '--- Select Department ---',
+                                                            //     'onchange' => 'checkDepartmentEmployee(this)',
+                                                            //     'label' => false));
                                                             ?>
 
                                                         </div>
@@ -108,7 +116,8 @@ echo $this->Html->script(array(
                                                                <?php echo $this->Form->input('Overtime.date', array(
                                                                             'class' => 'form-control col-lg-6 required datepick',
                                                                             'type' => 'text',
-                                                                            'label' => false
+                                                                            'label' => false,
+                                                                            'readonly' => true
                                                                             ));
                                                                  ?>
 
@@ -265,20 +274,21 @@ echo $this->Html->script(array(
                                                                          echo $this->Html->link(ucwords($name),array('controller' => 'employees','action' => 'view',$employee['Employee']['id']),array('target' => '_blank'));
 
                                                                         ?>
+                                                                        <input type="hidden" name="data[Idholder][id][]" value="<?php echo $employee['Attendance']['id']?>">
                                                                     </div>
                                                                 <div class="time">
                                                                 
-                                                                <?php if($employee['Position']['name']) : ?>
-                                                                    <i class="fa fa-check-circle"></i> Position: <span style="color:#000;">
-                                                                    <b><?php echo $employee['Position']['name']; ?></b></span>
+                                                                <?php if($employee['Employee']['position_id']) : ?>
+                                                                    <!-- <i class="fa fa-check-circle"></i> Position: <span style="color:#000;"> -->
+                                                                    <b><?php //echo $positionList[$employee['Employee']['position_id']]; ?></b></span>
                                                                 <?php endif; ?> 
-                                                                 
-                                                                 
+                                                                    <i class="fa fa-clock-o"></i> Time In : <?php echo $employee['Attendance']['in']?>
+                                                                    
                                                                 </div>
                                                                 
                                                                 <div class="pull-left">
                                                                     <div class="onoffswitch onoffswitch-success">
-                                                                            <input type="checkbox" <?php echo in_array($employee['Employee']['id'], $selectedEmployee) ? 'checked' : ''?> value="<?php echo $employee['Employee']['id']; ?>"  id="myonoffswitch-<?php echo $employee['Employee']['id']; ?>" class="onoffswitch-checkbox" name="data[Employee][id][]">
+                                                                            <input type="checkbox" <?php echo in_array($employee['Employee']['id'], $selectedEmployee) ? 'checked' : ''?> value="<?php echo $employee['Employee']['id']; ?>-<?php echo $employee['Attendance']['id']?>"  id="myonoffswitch-<?php echo $employee['Employee']['id']; ?>" class="onoffswitch-checkbox" name="data[Employee][id][]">
                                                                             <label for="myonoffswitch-<?php echo $employee['Employee']['id']; ?>" class="onoffswitch-label">
                                                                             <div class="onoffswitch-inner"></div>
                                                                             <div class="onoffswitch-switch"></div>

@@ -77,7 +77,9 @@ echo $this->Html->script(array(
                                                                <?php echo $this->Form->input('Overtime.date', array(
                                                                             'class' => 'form-control col-lg-6 required datepick',
                                                                             'type' => 'text',
-                                                                            'label' => false
+                                                                            'label' => false,
+                                                                            'value' => date('Y-m-d'),
+                                                                            'readonly' => true
                                                                             ));
                                                                  ?>
 

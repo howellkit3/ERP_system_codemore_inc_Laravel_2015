@@ -50,9 +50,10 @@
         <div class="col-lg-9">
             <div class="time-pad" style="padding-top:3px;">
                 <?php 
+                date_default_timezone_set('Asia/Manila'); 
                 $date = explode(' ', $attendance['WorkShift']['from']);
-        
-                    if (strtotime($attendance['WorkShift']['from']) >= strtotime(date('h:i a'))) {
+                
+                    if ($attendance['WorkShift']['from'] <= date('H:i:s')) {
                         echo "<span class='label label-danger pull-left'>Late</span>";
                         $status = 'Late';
                     }else{

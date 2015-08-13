@@ -30,6 +30,12 @@ class Attendance extends AppModel {
 						'dependent' => false,
 						'conditions' => array('WorkShift.id = WorkSchedule.work_shift_id')
 					),
+					'Overtime' => array(
+						'className' => 'Overtime',
+						'foreignKey' => false,
+						'dependent' => false,
+						'conditions' => array('Overtime.id = Attendance.overtime_id')
+					),
 					// 'WorkShiftBreak' => array(
 					// 	'className' => 'WorkShiftBreak',
 					// 	'foreignKey' => false,
