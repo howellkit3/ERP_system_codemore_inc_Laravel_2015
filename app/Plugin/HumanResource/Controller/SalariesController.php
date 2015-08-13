@@ -7,6 +7,9 @@ class SalariesController  extends HumanResourceAppController {
 
 	var $helpers = array('HumanResource.Salaries','HumanResource.PhpExcel');
 
+	public $components = array('HumanResource.SalaryComputation');
+
+
 	public function index() {
 
 		$date = date('Y-m-d');
@@ -131,6 +134,20 @@ class SalariesController  extends HumanResourceAppController {
 				
 			}
 
+
+
+			$this->Components->load('HumanResource.SalaryComputation');
+
+			$this->loadModel('HumanResource.SalaryReport');
+			
+			$salaries = $this->SalaryComputation->calculateBenifits($employees,$payScheds,$customDate);
+
+			if (!empty($salaries)) {
+
+				
+
+				$this->SalaryReport->saveAll($salaries);
+			}
 
 			$this->set(compact('employees','customDate','payScheds'));
 
@@ -355,6 +372,10 @@ class SalariesController  extends HumanResourceAppController {
 	}
 
 	public function reports(){
+		
+		$this->Components->load('HumanResource.SalaryComputation');
+		
+		$salaries = $this->SalaryComputation->calculateBenifits('wewe');
 
 		$this->render('Salaries/reports/reports');
 	}
