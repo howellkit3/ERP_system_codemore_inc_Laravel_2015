@@ -87,8 +87,177 @@ class WorkSchedule extends AppModel {
 		}
 	}
 
+	public function formatData($data = null,$holidays = null) {
 
-	
 
-    
+		if (!empty($data)) {
+
+			$sched = [];
+			$keys = 0;
+
+			if ($data['WorkSchedule']['type'] == 'monthly') {
+
+				$date = explode('-',$data['WorkSchedule']['day']);
+
+					$days1 = explode('/',trim($date[0]));
+					$days2 = explode('/',trim($date[1]));
+
+					
+
+					for ($days_count = $days1[2];$days_count <= $days2[2]; $days_count++) :
+
+						$checkDate = $days1[0].'-'.$days1[1].'-'.sprintf("%02d",$days_count);
+
+						if ( date("w",strtotime($checkDate)) != 0) {
+
+ 							$sched['WorkSchedule'][$keys] = $data['WorkSchedule'];
+							$sched['WorkSchedule'][$keys]['id'] = !empty($data['WorkSchedule']['id']) ? $data['WorkSchedule']['id'] : '';
+
+ 							$sched['WorkSchedule'][$keys]['day'] = $days1[0].'-'.$days1[1].'-'.sprintf("%02d",$days_count);
+
+ 							$sched['WorkSchedule'][$keys]['type'] = 'Work';
+
+						} else if (date("w",strtotime($checkDate)) == 0) {
+
+							$sched['WorkSchedule'][$keys] = $data['WorkSchedule'];
+							$sched['WorkSchedule'][$keys]['id'] = !empty($data['WorkSchedule']['id']) ? $data['WorkSchedule']['id'] : '';
+
+ 							$sched['WorkSchedule'][$keys]['day'] = $days1[0].'-'.$days1[1].'-'.sprintf("%02d",$days_count);
+
+ 							$sched['WorkSchedule'][$keys]['type'] = 'Rest Day';
+
+						}
+
+					foreach ($holidays as $key => $holiday) {
+
+							if ($checkDate >= $holiday['Holiday']['start_date'] && $checkDate <= $holiday['Holiday']['end_date'] ) {
+
+								$sched['WorkSchedule'][$keys]['type'] = $holiday['Holiday']['type'];
+								$sched['WorkSchedule'][$keys]['holiday'] = $holiday['Holiday']['id'];
+							} 
+
+					}
+
+
+					$keys++;
+					endfor;
+
+			} else {
+
+				$checkDate = $data['WorkSchedule']['day'];
+
+				if ( date("w",strtotime($checkDate)) != 0) {
+
+						$sched['WorkSchedule'][$keys] = $data['WorkSchedule'];
+						$sched['WorkSchedule'][$keys]['id'] = !empty($data['WorkSchedule']['id']) ? $data['WorkSchedule']['id'] : '';
+
+							$sched['WorkSchedule'][$keys]['day'] = $checkDate;
+
+							$sched['WorkSchedule'][$keys]['type'] = 'Work';
+
+					} else if (date("w",strtotime($checkDate)) == 0) {
+
+						$sched['WorkSchedule'][$keys] = $data['WorkSchedule'];
+						$sched['WorkSchedule'][$keys]['id'] = !empty($data['WorkSchedule']['id']) ? $data['WorkSchedule']['id'] : '';
+
+							$sched['WorkSchedule'][$keys]['day'] = $checkDate;
+
+							$sched['WorkSchedule'][$keys]['type'] = 'Rest Day';
+
+					}
+
+				foreach ($holidays as $key => $holiday) {
+
+						if ($checkDate >= $holiday['Holiday']['start_date'] && $checkDate <= $holiday['Holiday']['end_date'] ) {
+
+							$sched['WorkSchedule'][$keys]['type'] = $holiday['Holiday']['type'];
+							$sched['WorkSchedule'][$keys]['holiday'] = $holiday['Holiday']['id'];
+						} 
+
+				}
+
+			}
+
+
+			return $sched;
+		}
+	}
+
+
+	public function getAllSchedules($empId = null,$workSched = null,$holidays = null) {
+
+		if (!empty($empId)) {
+
+			$this->bind(array('WorkShift'));
+
+			$schedules = $this->find('all',array(
+				'conditions' => array('WorkSchedule.model' => 'Employee' , 
+					'WorkSchedule.foreign_key' => $empId ),
+				'order' => array('WorkSchedule.day ASC')
+				));
+
+			
+			$list_key = 0;	
+
+			//pr($schedules); exit();
+
+			foreach ($schedules as $key => $workshift) {
+
+						if (!empty($workshift['WorkShift']['from']) && $workshift['WorkShift']['from'] != '00-00-00') {
+								
+								$dateNow = $workshift['WorkSchedule']['day'];
+									
+								if ( date("w",strtotime($dateNow)) != 0) { 
+									
+									$list[$list_key]['title'] = date('h:i a',strtotime($workshift['WorkShift']['from'])) . ' - ' .  date('h:i a',strtotime($workshift['WorkShift']['to']));
+									$list[$list_key]['start'] =	$workshift['WorkSchedule']['day'].' '.$workshift['WorkShift']['from'];
+									$list[$list_key]['end']  = $workshift['WorkSchedule']['day'].' '.$workshift['WorkShift']['to'];
+									$list[$list_key]['color'] = '#257e4a';
+
+								} 
+
+								foreach ($holidays as $key => $holiday) {
+
+									if ($dateNow >= $holiday['Holiday']['start_date'] && $dateNow <= $holiday['Holiday']['end_date'] ) {
+
+											$list[$list_key]['title'] = date('h:i a',strtotime($workshift['WorkShift']['from'])) . ' - ' .  date('h:i a',strtotime($workshift['WorkShift']['to']));
+											$$list[$list_key]['start'] =	$workshift['WorkSchedule']['day'].' '.$workshift['WorkShift']['from'];
+											$list[$list_key]['end']  = $workshift['WorkSchedule']['day'].' '.$workshift['WorkShift']['to'];
+											$list[$list_key]['color'] = '#F57821';
+									} 
+								}
+
+
+
+								if (date("w",strtotime($dateNow)) == 0) {
+									$list[$list_key]['title'] = 'Rest Day';
+									$list[$list_key]['start'] =	$workshift['WorkSchedule']['day'].' '.$workshift['WorkShift']['from'];
+									$list[$list_key]['end']  = $workshift['WorkSchedule']['day'].' '.$workshift['WorkShift']['to'];
+									$list[$list_key]['color'] = '#6237A5';
+								}
+
+
+
+								if (!empty($workSched)) {
+
+									if ($dateNow == $workSched['WorkSchedule']['day']) {
+										$list[$list_key]['className'] = 'selected_date';
+									}
+									
+								}
+						
+
+								
+							
+						}
+
+					$list_key++;
+					}
+
+
+					return $list;
+
+		}
+	}
+
   }

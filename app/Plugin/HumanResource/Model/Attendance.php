@@ -30,18 +30,18 @@ class Attendance extends AppModel {
 						'dependent' => false,
 						'conditions' => array('WorkShift.id = WorkSchedule.work_shift_id')
 					),
-					'WorkShiftBreak' => array(
-						'className' => 'WorkShiftBreak',
-						'foreignKey' => false,
-						'dependent' => false,
-						'conditions' => array('WorkShiftBreak.workshift_id = WorkSchedule.work_shift_id')
-					),
-					'BreakTime' => array(
-						'className' => 'BreakTime',
-						'foreignKey' => false,
-						'dependent' => false,
-						'conditions' => array('BreakTime.id = WorkShiftBreak.breaktime_id')
-					),
+					// 'WorkShiftBreak' => array(
+					// 	'className' => 'WorkShiftBreak',
+					// 	'foreignKey' => false,
+					// 	'dependent' => false,
+					// 	'conditions' => array('WorkShiftBreak.workshift_id = WorkSchedule.work_shift_id')
+					// ),
+					// 'BreakTime' => array(
+					// 	'className' => 'BreakTime',
+					// 	'foreignKey' => false,
+					// 	'dependent' => false,
+					// 	'conditions' => array('BreakTime.id = WorkShiftBreak.breaktime_id')
+					// ),
 					'Employee' => array(
 						'className' => 'Employee',
 						'foreignKey' => false,
@@ -52,6 +52,38 @@ class Attendance extends AppModel {
 			),false);
 
 		$this->contain($model);
+	}
+
+	public function bindWorkshift() {
+		
+		$this->bindModel(array(
+				'belongsTo' => array (
+				'WorkSchedule' => array(
+						'className' => 'WorkSchedule',
+						'foreignKey' => false,
+						'conditions' => array('WorkSchedule.id = Attendance.schedule_id'),
+						'dependent' => true,
+					),
+					'WorkShift' => array(
+						'className' => 'WorkShift',
+						'foreignKey' => false,
+						'dependent' => false,
+						'conditions' => array('WorkShift.id = WorkSchedule.work_shift_id')
+					),
+					// 'WorkShiftBreak' => array(
+					// 	'className' => 'WorkShiftBreak',
+					// 	'foreignKey' => false,
+					// 	'dependent' => false,
+					// 	'conditions' => array('WorkShiftBreak.workshift_id = WorkSchedule.work_shift_id')
+					// ),
+					// 'BreakTime' => array(
+					// 	'className' => 'BreakTime',
+					// 	'foreignKey' => false,
+					// 	'dependent' => false,
+					// 	'conditions' => array('BreakTime.id = WorkShiftBreak.breaktime_id')
+					// ),
+			)));
+		$this->recursive = 1;
 	}
 
 

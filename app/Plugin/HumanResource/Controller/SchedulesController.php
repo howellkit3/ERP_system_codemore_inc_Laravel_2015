@@ -124,14 +124,14 @@ class SchedulesController  extends HumanResourceAppController {
 
         $workshiftList = $this->WorkShift->find('list',array('fields' => array('id','name')));
 
-		$limit = 10;
-
-		$conditions = array();
+		//$limit = 10;
+        $employee = array_flip( $employeeList);
+		$conditions = array('WorkSchedule.model' => 'Employee','WorkSchedule.foreign_key' => current($employee) );
 
 		$params =  array(
 	            'conditions' => $conditions,
-	            'limit' => $limit,
-	            //'fields' => array('id', 'status','created'),
+	           // 'limit' => $limit,
+	            //'group' => array('WorkSchedule.foreign_key'),
 	            'order' => 'WorkSChedule.day ASC',
 	        );
 
@@ -155,22 +155,28 @@ class SchedulesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Holiday');
 		
-		$conditions = array();
-
-		$workSchedule = $this->WorkSchedule->findById($id);
-
-		$params =  array(
-			'conditions' => array('Employee.id' => $user_id ),
-		);	
 
 		$conditions = array('Holiday.year' => date('Y'));
 
 		$holidays = $this->Holiday->find('all',array('conditions' => $conditions ,'order' =>  array('Holiday.start_date ASC'),'fields' => array('id','name','type','start_date','end_date','year') ));
 
 
-		$list = $this->Employee->getAllWorkShift($params,$workSchedule,$holidays);
-		 
-		$this->set(compact('workshifts','list'));
+		$workSchedule = $this->WorkSchedule->findById($id);
+
+		$list = $this->WorkSchedule->getAllSchedules($user_id,$workSchedule,$holidays);
+
+		if (!empty($list) ) {
+
+			$list = json_encode($list);
+		}
+
+		$list = str_replace('[','',$list);
+		$list = str_replace(']','',$list);
+		
+		$params['schedule_id'] = $id;
+		$params['employee_id'] = $user_id;
+
+		$this->set(compact('workshifts','list','params'));
 
 		
 	}

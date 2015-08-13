@@ -28,13 +28,14 @@ function gross_pay($attendance = null,$salaries = null,$hours = 8)
 
 function sss_pay($attendance = null,$salaries = null,$sched = 'first',$gross_pay = 0){
 
-
 	$pay = number_format(0,2);
 	
 	if ($sched == 'first' && $gross_pay != 0) {
 			
 			$SssRange = ClassRegistry::init('SssRange');
+			
 			$conditions = array('SssRange.range_from <=' => $gross_pay, 'SssRange.range_to >=' =>$gross_pay);
+			
 			$range = $SssRange->find('first',array('conditions' => $conditions ));
 
 			$pay = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $pay;
@@ -45,7 +46,6 @@ function sss_pay($attendance = null,$salaries = null,$sched = 'first',$gross_pay
 }
 
 function philhealth_pay($attendance = null,$salaries = null,$sched = 'first',$gross_pay = 0){
-
 
 	$pay = number_format(0,2);
 	

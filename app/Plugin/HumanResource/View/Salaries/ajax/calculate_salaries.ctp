@@ -33,10 +33,10 @@
 								                          <?php echo date('Y/m/d')  ?>
 								                        </td>
 								                          <td class="">
-								                          <?php echo date('Y/m/d',strtotime($customDate['start'])) ?>
+								                          <?php echo !empty($customDate['start']) ? date('Y/m/d',strtotime($customDate['start'])) : '' ?>
 								                        </td>
 								                          <td class="">
-								                           <?php echo date('Y/m/d',strtotime($customDate['end'])) ?>
+								                           <?php echo  !empty($customDate['end']) ? date('Y/m/d',strtotime($customDate['end'])) : '' ?>
 								                        </td>
 
 								                        <td class="">

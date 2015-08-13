@@ -2520,3 +2520,14 @@ INSERT INTO `contracts` (`id`, `name`, `description`, `created_by`, `modified_by
 VALUES
  (1,'Probational','',0,0,'0000-00-00 00:00:00','0000-00-00 00:00:00'),
  (2,'Contractual','',0,0,'0000-00-00 00:00:00','0000-00-00 00:00:00');
+
+
+ /* added aug 13 2015 human resource department*/
+
+ INSERT INTO `agencies` (`id`, `name`, `field`, `description`, `created_by`, `modified_by`, `created`, `modified`) VALUES
+(1, 'SSS', 'number', 'sss number', 4, 4, '2015-08-13 06:01:35', '2015-08-13 06:01:35'),
+(2, 'TIN', 'number', 'tin number', 4, 4, '2015-08-13 06:01:47', '2015-08-13 06:01:47'),
+(3, 'Phil Health', 'number', 'description', 4, 4, '2015-08-13 06:02:02', '2015-08-13 06:02:02'),
+(4, 'PAGIBIG', 'number', 'pagibig number', 4, 4, '2015-08-13 06:04:35', '2015-08-13 06:04:35');
+
+/* end */
