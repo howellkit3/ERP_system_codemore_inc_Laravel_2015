@@ -17,6 +17,8 @@ class AttendancesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Department');
 
+		$this->loadModel('HumanResource.Overtime');
+
 		$limit = 10;
 
 		$query = $this->request->query;
@@ -46,7 +48,7 @@ class AttendancesController  extends HumanResourceAppController {
 			)));
 		}
 
-		$this->Attendance->bind(array('WorkSchedule','Employee','WorkShift'));
+		$this->Attendance->bind(array('WorkSchedule','Employee','WorkShift','Overtime'));
 
 		//$conditions = array();
 		$params =  array(
@@ -59,7 +61,7 @@ class AttendancesController  extends HumanResourceAppController {
 		$this->paginate = $params;
 		
 		$attendances = $this->paginate();
-
+		
 		$departmentList = $this->Department->getList();
 
 		$employeeList = array();

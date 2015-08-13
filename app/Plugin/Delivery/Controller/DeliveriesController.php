@@ -38,6 +38,7 @@ class DeliveriesController extends DeliveryAppController {
         $this->Delivery->bindDelivery();
         $deliveryStatus = $this->Delivery->find('all');
 
+
         $deliveryList = $this->Delivery->find('list',array('fields' => array('schedule_uuid', 'dr_uuid')));
 
         $orderList = $this->DeliveryDetail->find('list',array('fields' => array('delivery_uuid', 'status')));
@@ -828,10 +829,14 @@ class DeliveriesController extends DeliveryAppController {
             $accountingData = $this->SalesInvoice->find('first', array(
                                             'conditions' => array('SalesInvoice.dr_uuid' => $dr_uuid
                                             )));
-        
-            if($accountingData['SalesInvoice']['id']){
 
-                $idAccounting = $accountingData['SalesInvoice']['id'];
+            if(!empty($accountingData['SalesInvoice']['id'])){
+        
+                if($accountingData['SalesInvoice']['id']){
+
+                    $idAccounting = $accountingData['SalesInvoice']['id'];
+
+                }
 
             }
 

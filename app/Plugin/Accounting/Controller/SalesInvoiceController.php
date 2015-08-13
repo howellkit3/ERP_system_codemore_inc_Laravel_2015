@@ -878,4 +878,19 @@ class SalesInvoiceController extends AccountingAppController {
         $this->set(compact('noPermissionReciv','noPermissionPay'));
     }
 
+    public function change_to_invoice($id = null) {
+
+        $userData = $this->Session->read('Auth');
+
+        $this->SalesInvoice->changeStatus($userData['User']['id'], $id);
+
+       $this->Session->setFlash(__('Pre-Invoice status was changed to Invoice'), 'success');
+      
+       $this->redirect( array(
+           'controller' => 'sales_invoice',   
+           'action' => 'view',$id 
+        ));  
+
+    }
+
 }

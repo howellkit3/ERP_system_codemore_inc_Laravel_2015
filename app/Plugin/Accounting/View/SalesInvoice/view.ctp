@@ -13,6 +13,19 @@
         	$invoiceId),
         	array('class' =>'btn btn-info pull-right ','escape' => false));
 	?>
+
+	<?php 
+
+	if($invoiceData['SalesInvoice']['status'] == 0 ){
+
+		echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> Change to Invoice ', array(
+        	'controller' => 'sales_invoice', 
+        	'action' => 'change_to_invoice',
+        	$invoiceId),
+        	array('class' =>'btn btn-info pull-right ','escape' => false));
+
+	}
+	?>
 	<br><br>
 </div>
 

@@ -109,6 +109,12 @@ class Employee extends AppModel {
 					'conditions' => array('Contact.model' => 'Employee'),
 					'dependent' => true
 				),
+				'Attendance' =>  array(
+					'className' => 'Attendance',
+					'foreignKey' => 'employee_id',
+					'conditions' => '',
+					'dependent' => true
+				),
 			)
 		),false);
 

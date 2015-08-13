@@ -70,6 +70,7 @@ echo $this->element('hr_options');
 											<th><a href="#" class="text-center"><span>To</span></a></th>
 											<th><a href="#"><span>In</span></a></th>
 											<th><a href="#"><span>Out</span></a></th>
+											<th><a href="#"><span>OT</span></a></th>
 											<th><a href="#"><span>Duration</span></a></th>
 											<th><a href="#" class="text-center"><span>Status</span></a></th>
 											<th><a href="#"><span>Remarks</span></a></th>
@@ -124,6 +125,27 @@ echo $this->element('hr_options');
 								                           	echo $timeOut;
 								                           ?> 
 								                        </td>
+								                        <td class="text-center" > 
+								                           	<?php 
+								                           		if (!empty($schedule['Attendance']['overtime_id'])) {
+								                           			if ($schedule['Overtime']['status'] == 'approved') {
+								                           				$from = $schedule['Overtime']['from'];
+									                           			$ex1 = explode(' ', $from);
+									                           			$to = $schedule['Overtime']['to'];
+									                           			$ex2 = explode(' ', $to);
+
+									                           			$diff = $ex2[1] - $ex1[1];
+									                           			
+									                           			echo ' + '. $diff .' hr/s ' ; 
+									                           		}else {
+									                           			echo "-----";
+									                           		}
+
+								                           		} else {
+								                           			echo "-----";
+								                           		}
+								                           	?> 
+								                        </td> 
 								                         <td class="text-center" > 
 								                           <?php echo $this->CustomTime->getDuration($timeIn,$timeOut); ?> 
 								                        </td>

@@ -77,7 +77,9 @@ echo $this->Html->script(array(
                                                                <?php echo $this->Form->input('Overtime.date', array(
                                                                             'class' => 'form-control col-lg-6 required datepick',
                                                                             'type' => 'text',
-                                                                            'label' => false
+                                                                            'label' => false,
+                                                                            'value' => date('Y-m-d'),
+                                                                            'readonly' => true
                                                                             ));
                                                                  ?>
 
@@ -229,13 +231,14 @@ echo $this->Html->script(array(
 
                                                                          echo $this->Html->link(ucwords($name),array('controller' => 'employees','action' => 'view',$employee['Employee']['id']),array('target' => '_blank'));
 
+
                                                                         ?>
                                                                     </div>
                                                                 <div class="time">
-                                                                
-                                                                <?php if($employee['Position']['name']) : ?>
+                                                               
+                                                                <?php if($employee['Employee']['position_id']) : ?>
                                                                     <i class="fa fa-check-circle"></i> Position: <span style="color:#000;">
-                                                                    <b><?php echo $employee['Position']['name']; ?></b></span>
+                                                                    <b><?php echo $employee['Employee']['position_id']; ?></b></span>
                                                                 <?php endif; ?> 
                                                                  
                                                                  
