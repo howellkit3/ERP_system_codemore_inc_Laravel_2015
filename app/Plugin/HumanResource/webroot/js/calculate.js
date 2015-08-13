@@ -3,13 +3,17 @@ $(document).ready(function(){
 
 	$body = $('body');
 
-	$( ".monthpick" ).datepicker({
-	     format: "mm-yyyy",
-	     viewMode: "decade", 
+	$(".monthpick").datepicker( {
+		format: "mm-yyyy",
+		startView: "months", 
+		minViewMode: "months"
 	});
+
+
 	$('#changeDate').change(function(){
 
 		$('#result-table').empty();
+		$('.datepicker-dropdown').remove();
 
 	});
 

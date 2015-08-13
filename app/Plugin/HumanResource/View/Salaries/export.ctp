@@ -76,7 +76,76 @@ echo $this->element('hr_options');
 
 			          <div class="main-box-body clearfix">
 			            	<div id="result-table">
-			            		
+			            		   <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th><a href="#"><span>Code</span></a></th>
+                    <th><a href="#"><span>Employee</span></a></th>
+                    <th><a href="#"><span>Pay Date</span></a></th>
+                    <th><a href="#" class="text-center"><span>From</span></a></th>
+                    <th><a href="#" class="text-center"><span>To</span></a></th>
+                    <th><a href="#"><span>Gross</span></a></th>
+                    <th><a href="#"><span>SSS</span></a></th>
+                    <th><a href="#"><span>PhilHealth</span></a></th>
+                    <th><a href="#"><span>WTax</span></a></th>
+                    <th><a href="#"><span>Deductions</span></a></th>
+
+                    <th><a href="#"><span>Remarks</span></a></th>
+                </tr>
+            </thead>
+
+
+            <tbody aria-relevant="all" aria-live="polite" role="alert">
+                                    <?php  if(!empty($employees)) { ?>
+
+                                           <?php foreach ($employees as $key => $employee): ?>
+                                                    
+                                                    <tr >
+                                                        <td> <?php echo $employee['Employee']['code']; ?></td>
+                                                        <td class="">
+                                                          <?php echo $this->CustomText->getFullname($employee['Employee']);  ?>
+                                                        </td>
+
+                                                         <td class="">
+                                                          <?php echo date('Y/m/d')  ?>
+                                                        </td>
+                                                          <td class="">
+                                                          <?php echo !empty($customDate['start']) ? date('Y/m/d',strtotime($customDate['start'])) : '' ?>
+                                                        </td>
+                                                          <td class="">
+                                                           <?php echo !empty($customDate['end']) ? date('Y/m/d',strtotime($customDate['end'])) : '' ?>
+                                                        </td>
+
+                                                        <td class="">
+                                                           <?php $gross = $this->Salaries->gross_pay($employee,$employee['Salary']); echo number_format($gross['gross'],2); ?>
+                                                        </td>
+
+                                                        <td class="">
+                                                           <?php 
+                                                           echo $this->Salaries->sss_pay($employee,$employee['Salary'],$payScheds,$gross['gross']); ?>
+                                                        </td>
+                                                        <td class="">
+                                                           <?php echo $this->Salaries->philhealth_pay($employee,$employee['Salary'],$payScheds,$gross['gross']); ?>
+                                                        </td>
+                                                        <td class="">
+                                                           <?php echo '0.00'; //$this->Salaries->sss_pay($employee['Attendance'],$employee['Salary'],$payScheds,$gross); ?>
+                                                        </td>
+                                                        <td class="">
+                                                           <?php echo '0.00';//$this->Salaries->sss_pay($employee['Attendance'],$employee['Salary'],$payScheds,$gross); ?>
+                                                        </td>
+                                                        <td class="">
+                                                           <?php //echo $this->Salaries->sss_pay($employee['Attendance'],$employee['Salary'],$payScheds,$gross); ?>
+                                                        </td>
+                                                      
+                                                    </tr>
+
+                                                
+                                        <?php  endforeach;  ?>
+                                       <?php } ?> 
+            </tbody>
+            </table>
+</div>
 			            	</div>
 						</div>		
 	            </div>
@@ -88,90 +157,3 @@ echo $this->element('hr_options');
 <?php echo $this->element('modals/personnal_attendance'); ?>
 
 <?php echo $this->element('modals/time_in_attendance'); ?>
-
-<div class="modal fade" id="myAttendance" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title"> Attendance </h4>
-            </div>
-            <div class="modal-body">
-                <?php echo $this->Form->create('Attendance',array('url'=>(array('controller' => 'attendances','action' => 'export')),'class' => 'form-horizontal'));?>
-
-                	<div class="form-group">
-                        <label for="inputEmail1" class="col-lg-3 control-label"> Select Department</label>
-                        
-                        <div class="col-lg-6">
-                            <?php 
-                                   echo $this->Form->input('Attendance.department_id', array(
-                                                                'type' => 'select',
-                                                                'label' => false,
-                                                                'class' => 'form-control',
-                                                                'empty' => '---Select Employee---',
-                                                                'options' => array($departmentList)
-
-                                                              ));
-                            ?>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="inputEmail1" class="col-lg-3 control-label"> Select Employee</label>
-                        
-                        <div class="col-lg-6">
-                            <?php 
-                                   echo $this->Form->input('Attendance.employee_id', array(
-                                                                'type' => 'select',
-                                                                'label' => false,
-                                                                'class' => 'form-control ',
-                                                                'empty' => '---Select Employee---',
-                                                                'options' => array($employeeList)
-
-                                                              ));
-                            ?>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="inputEmail1" class="col-lg-3 control-label"> Date</label>
-                        
-                        <div class="col-lg-6">
-                            <?php 
-                                   echo $this->Form->input('Attendance.from_date', array(
-                                                                'label' => false,
-                                                                'class' => 'form-control  datepick',
-                                                                'placeholder' => 'Date from'
-
-                                                              ));
-                            ?>
-                        </div>
-                    </div>
-
-                    <!-- <div class="form-group">
-                        <label for="inputEmail1" class="col-lg-3 control-label"> Date Range</label>
-
-                       <div class="col-lg-6">
-                            <div class="input-group">
-                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                    <input  placeholder="Date Range" name="from_date" data="1" type="text" class="form-control required myDateRange datepickerDateRange high-z-index" id="datepickerDateRange" >
-                                                </div>
-                        </div>
-
-                       
-                    </div> -->
-
-                    <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary"><i class="fa fa-share-square-o fa-lg"></i> Export</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        
-                    </div>  
-                <?php echo $this->Form->end(); ?>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script type="text/javascript">
-
-</script>

@@ -65,7 +65,7 @@ class SalariesController  extends HumanResourceAppController {
 
 	public function export(){
 
-		$date = date('Y-m-d');
+		$date = date('m-Y');
 		$search = '';
 		$this->set(compact('date','search'));
 	}
@@ -77,9 +77,10 @@ class SalariesController  extends HumanResourceAppController {
 			$this->loadModel('HumanResource.Attendance');
 			$this->loadModel('HumanResource.Employee');
 			$this->loadModel('HumanResource.Salary');
+			$this->loadModel('HumanResource.GovernmentRecord');
 
-			$emp_conditions = array('Employee.status NOT' => array('1'));
-			$this->Employee->bind(array('Salary'));
+			$emp_conditions = array();//array('Employee.status NOT' => array('1'));
+			$this->Employee->bind(array('Salary','GovernmentRecord'));
 
 			$employees = $this->Employee->find('all',array(
 								'conditions' => $emp_conditions,
@@ -107,6 +108,10 @@ class SalariesController  extends HumanResourceAppController {
 				));
 
 			foreach ($employees as $key => $emp) {
+
+				if (!empty($emp['GovernmentRecord'])) {
+					$employees[$key]['Agency'] = Set::classicExtract($emp['GovernmentRecord'], '{n}.agency_id');
+				}
 				
 				$conditions =  array_merge($conditions,array('Attendance.employee_id' => $emp['Employee']['id']));
 
@@ -125,6 +130,7 @@ class SalariesController  extends HumanResourceAppController {
 				$employees[$key]['Attendance'] = $this->Attendance->computeAttendance($conditions);
 				
 			}
+
 
 			$this->set(compact('employees','customDate','payScheds'));
 
@@ -145,9 +151,10 @@ class SalariesController  extends HumanResourceAppController {
 			$this->loadModel('HumanResource.Attendance');
 			$this->loadModel('HumanResource.Employee');
 			$this->loadModel('HumanResource.Salary');
+			$this->loadModel('HumanResource.GovernmentRecord');
 
-			$emp_conditions = array('Employee.status NOT' => array('1'));
-			$this->Employee->bind(array('Salary'));
+			$emp_conditions = array();//array('Employee.status NOT' => array('1'));
+			$this->Employee->bind(array('Salary','GovernmentRecord'));
 			$employees = $this->Employee->find('all',array(
 								'conditions' => $emp_conditions,
 								'order' => array('Employee.last_name ASC'),
@@ -177,6 +184,10 @@ class SalariesController  extends HumanResourceAppController {
 
 			foreach ($employees as $key => $emp) {
 				
+				if (!empty($emp['GovernmentRecord'])) {
+					$employees[$key]['Agency'] = Set::classicExtract($emp['GovernmentRecord'], '{n}.agency_id');
+				}
+
 				$conditions =  array_merge($conditions,array('Attendance.employee_id' => $emp['Employee']['id']));
 
 				$this->loadModel('HumanResource.WorkSchedule');
@@ -187,7 +198,9 @@ class SalariesController  extends HumanResourceAppController {
 
 				$this->loadModel('HumanResource.BreakTime');
 
-				$this->Attendance->bind(array('WorkSchedule','WorkShift','WorkShiftBreak','BreakTime'));
+				//$this->Attendance->bind(array('WorkSchedule','WorkShift','WorkShiftBreak','BreakTime'));
+
+				$this->Attendance->bindWorkshift(); 
 
 				$employees[$key]['Attendance'] = $this->Attendance->computeAttendance($conditions);
 				
@@ -229,6 +242,121 @@ class SalariesController  extends HumanResourceAppController {
         exit();
        
 
+	}
+
+	public function sss_table() {
+
+		$this->loadModel('SssRange');
+		$conditions = array();
+		$ranges = $this->SssRange->find('all',array(
+			'conditions' => $conditions,
+			'order' => array('SssRange.range_from ASC')
+		 ));
+
+		$this->set(compact('ranges'));
+		$this->render('/Salaries/sss_table');
+
+	}
+
+	public function philhealth_table() {
+
+	 	$this->loadModel('PhilHealthRange');
+
+	    $conditions = array();
+
+	    $ranges = $this->PhilHealthRange->find('all',array(
+	        'conditions' => $conditions,
+	        'order' => array('PhilHealthRange.range_from ASC')
+	         ));
+
+	    //pr($ranges); exit();
+	    $this->set(compact('ranges'));
+
+		$this->render('/Salaries/philhealth_table');
+
+	}
+
+	public function deductions() {
+
+		$this->loadModel('HumanResource.Deduction');
+		$this->loadModel('HumanResource.Employee');
+
+		$conditions = array();
+		$employeeList = $this->Employee->getList($conditions);	
+
+		$limit = 10;
+
+        $conditions = array('Deduction.employee_id' => current(array_flip($employeeList)));	
+
+        $params =  array(
+	            'conditions' => $conditions,
+	            'limit' => $limit,
+	            //'fields' => array('id', 'status','created'),
+	            'order' => 'Deduction.from ASC',
+	    );
+
+		$this->paginate = $params;
+
+		$this->Deduction->bind(array('Employee'));
+
+		$deductions = $this->paginate('Deduction');
+
+		//pr($deductions); exit();
+
+		$this->set(compact('deductions','employeeList'));
+
+
+	}
+
+	public function deductions_add() {
+
+		$this->loadModel('HumanResource.Deduction');
+
+		$this->loadModel('HumanResource.Employee');
+
+		if ($this->request->is('post')) {
+
+			$this->request->data['Deduction']['to'] = $this->request->data['Deduction']['from'];
+
+			if ($this->request->data['Deduction']['mode'] == 'installment') {
+
+				$time = explode('-', $this->request->data['Deduction']['from'] );
+				$this->request->data['Deduction']['from'] = date('Y-m-d',strtotime(trim($time[0])));
+				$this->request->data['Deduction']['to'] = date('Y-m-d',strtotime(trim($time[1])));
+
+			}
+
+
+			if ( $this->Deduction->save($this->request->data) ) {
+
+				$this->Session->setFlash('Deduction save successfully','success');
+
+				$this->redirect( array(
+			     'controller' => 'salaries', 
+			     'action' => 'deductions',
+			     $this->request->data['Salary']['employee_id']
+			));
+	 		
+			} else {
+
+				$this->Session->setFlash('There\'s an error saving','error');
+
+			}
+
+			
+		}	
+
+		$conditions = array();
+		$employeeList = $this->Employee->getList($conditions);
+
+			
+
+		$this->set(compact('employeeList'));
+	}
+
+	public function reports(){
+
+		$this->render('Salaries/reports/reports');
 	}
 
 }

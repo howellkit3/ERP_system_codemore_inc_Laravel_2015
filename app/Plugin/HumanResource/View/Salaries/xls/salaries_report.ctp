@@ -19,13 +19,11 @@
         $key++;
         $employee_name = $this->CustomText->getFullname($emp['Employee']);
 
-        $gross = $this->Salaries->gross_pay($emp['Attendance'],$emp['Salary']); echo number_format($gross['gross'],2); $total_gross = $gross['gross'];
+        $gross = $this->Salaries->gross_pay($emp,$emp['Salary']); echo number_format($gross['gross'],2); $total_gross = $gross['gross'];
 
-        $sss = $this->Salaries->sss_pay($employee['Attendance'],$employee['Salary'],$payScheds,$gross['gross']); $total_gross -= $sss;
+        $sss = $this->Salaries->sss_pay($employee,$employee['Salary'],$payScheds,$gross['gross']); $total_gross -= $sss;
 
-        $phil_health = $this->Salaries->philhealth_pay($employee['Attendance'],$employee['Salary'],$payScheds,$gross['gross']); $total_gross -= $phil_health; 
-
-
+        $phil_health = $this->Salaries->philhealth_pay($employee,$employee['Salary'],$payScheds,$gross['gross']); $total_gross -= $phil_health; 
 
         $objTpl->setActiveSheetIndex(0)
         ->setCellValue('A'.$counter,$employee_name)

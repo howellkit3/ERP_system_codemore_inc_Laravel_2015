@@ -36,18 +36,19 @@
 								                          <?php echo !empty($customDate['start']) ? date('Y/m/d',strtotime($customDate['start'])) : '' ?>
 								                        </td>
 								                          <td class="">
-								                           <?php echo  !empty($customDate['end']) ? date('Y/m/d',strtotime($customDate['end'])) : '' ?>
+								                           <?php echo !empty($customDate['end']) ? date('Y/m/d',strtotime($customDate['end'])) : '' ?>
 								                        </td>
 
 								                        <td class="">
-								                           <?php $gross = $this->Salaries->gross_pay($employee['Attendance'],$employee['Salary']); echo number_format($gross['gross'],2); ?>
+								                           <?php $gross = $this->Salaries->gross_pay($employee,$employee['Salary']); echo number_format($gross['gross'],2); ?>
 								                        </td>
 
 								                        <td class="">
-								                           <?php echo $this->Salaries->sss_pay($employee['Attendance'],$employee['Salary'],$payScheds,$gross['gross']); ?>
+								                           <?php 
+								                           echo $this->Salaries->sss_pay($employee,$employee['Salary'],$payScheds,$gross['gross']); ?>
 								                        </td>
 								                        <td class="">
-								                           <?php echo $this->Salaries->philhealth_pay($employee['Attendance'],$employee['Salary'],$payScheds,$gross['gross']); ?>
+								                           <?php echo $this->Salaries->philhealth_pay($employee,$employee['Salary'],$payScheds,$gross['gross']); ?>
 								                        </td>
 								                        <td class="">
 								                           <?php echo '0.00'; //$this->Salaries->sss_pay($employee['Attendance'],$employee['Salary'],$payScheds,$gross); ?>

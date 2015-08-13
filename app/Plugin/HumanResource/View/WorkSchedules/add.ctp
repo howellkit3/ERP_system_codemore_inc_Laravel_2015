@@ -115,7 +115,7 @@
                                     <div class="form-group day_type" id="daily">
                                        <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span>Day</label>
+                                                <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span> Day </label>
                                                 <div class="col-lg-9">
                                                   
                                                     <?php
@@ -203,7 +203,7 @@
                                 </div>
                                 <div class="col-xs-2 col-md-2 2">
                                      <?php 
-                                        echo $this->Html->link('Cancel ', array('controller' => 'schedules', 'action' => 'work_schedules','plugin' => 'human_resource'),array('class' =>'btn btn-default','escape' => false));
+                                        echo $this->Html->link('Cancel ', array('controller' => 'salaries', 'action' => 'deductions','plugin' => 'human_resource'),array('class' =>'btn btn-default','escape' => false));
                                     ?>
                                 </div>
                             </div>

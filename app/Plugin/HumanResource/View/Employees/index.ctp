@@ -38,7 +38,7 @@ echo $this->Html->css(array(
 			                 		<?php 
 			                 			echo $this->Form->input('department_id',array(
 					                 		'options' => $departments,
-					                 		'class' => 'form-control select-department-view',
+					                 		'class' => 'select-department-view autocomplete',
 					                 		'label' => false,
 					                 		'div'  => false,
 					                 		//'default' => $department,
@@ -52,7 +52,7 @@ echo $this->Html->css(array(
 			                 		<?php 
 			                 			echo $this->Form->input('status_id',array(
 					                 		'options' => $statusList,
-					                 		'class' => 'form-control select-status-view',
+					                 		'class' => ' select-status-view autocomplete',
 					                 		'label' => false,
 					                 		'div'  => false,
 					                 		//'default' => 1,
@@ -135,9 +135,7 @@ echo $this->Html->css(array(
 								                        </td>
 
 								                        <td class="text-center">
-
-
-								                           <?php echo !empty($employee['Employee']['status']) ? ' <span class="label label-success">'.ucwords($employee['Status']['name']).'</span>'  : '';  ?>
+															<?php echo !empty($employee['Employee']['status']) ? ' <span class="label label-success">'.ucwords($employee['Status']['name']).'</span>'  : '';  ?>
 								                        </td>
 
 								                        <td>

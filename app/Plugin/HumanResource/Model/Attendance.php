@@ -70,18 +70,18 @@ class Attendance extends AppModel {
 						'dependent' => false,
 						'conditions' => array('WorkShift.id = WorkSchedule.work_shift_id')
 					),
-					// 'WorkShiftBreak' => array(
-					// 	'className' => 'WorkShiftBreak',
-					// 	'foreignKey' => false,
-					// 	'dependent' => false,
-					// 	'conditions' => array('WorkShiftBreak.workshift_id = WorkSchedule.work_shift_id')
-					// ),
-					// 'BreakTime' => array(
-					// 	'className' => 'BreakTime',
-					// 	'foreignKey' => false,
-					// 	'dependent' => false,
-					// 	'conditions' => array('BreakTime.id = WorkShiftBreak.breaktime_id')
-					// ),
+					'WorkShiftBreak' => array(
+						'className' => 'WorkShiftBreak',
+						'foreignKey' => false,
+						'dependent' => false,
+						'conditions' => array('WorkShiftBreak.workshift_id = WorkSchedule.work_shift_id')
+					),
+					'BreakTime' => array(
+						'className' => 'BreakTime',
+						'foreignKey' => false,
+						'dependent' => false,
+						'conditions' => array('BreakTime.id = WorkShiftBreak.breaktime_id')
+					),
 			)));
 		$this->recursive = 1;
 	}
@@ -271,10 +271,15 @@ class Attendance extends AppModel {
 						
 						$attendances[$key]['total_hours'] =  $from->diff($to)->format('%h.%i'); 
 
-						if (strtotime($attendance['Attendance']['out']) >= strtotime($attendance['BreakTime']['from']) && strtotime($attendance['Attendance']['out']) >= strtotime($attendance['BreakTime']['to'])) {
-					
-							$attendances[$key]['total_hours'] -= 1;
+						if (!empty($attendance['BreakTime']['id'])) {
+							if (strtotime($attendance['Attendance']['out']) >= strtotime($attendance['BreakTime']['from']) && strtotime($attendance['Attendance']['out']) >= strtotime($attendance['BreakTime']['to'])) {
+						
+								$attendances[$key]['total_hours'] -= 1;
+							}
 						}
+
+
+						
 				}
 
 			}
