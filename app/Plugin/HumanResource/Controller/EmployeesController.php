@@ -436,13 +436,45 @@ class EmployeesController  extends HumanResourceAppController {
 
 				if ($this->request->is('ajax')) {
 
-				$this->loadModel('HumanResource.Position');	
-				$this->Employee->bind(array('Position'));
+				$this->loadModel('HumanResource.Position');
+				$this->loadModel('HumanResource.Employee');		
+				$this->loadModel('HumanResource.Attendance');	
+				$this->Attendance->bind(array('Employee'));
 
-				$employees = $this->Employee->find('all',array(
-					'conditions' => array('Employee.department_id' => $id),
-					'order' => array('Employee.last_name','Employee.code'),
-					'fields' => array(
+				$conditions = array();
+
+				//$conditions = array_merge($conditions,array('Attendance.date' => date('Y-m-d')));
+
+				$conditions = array_merge($conditions,array('Attendance.date' => date('Y-m-d')));
+
+				$conditions = array_merge($conditions,array('Attendance.in !=' => ' '));
+
+				$conditions = array_merge($conditions,array('Employee.department_id' => $id));
+
+				// $employees = $this->Employee->find('all',array(
+				// 	'conditions' => $conditions,
+				// 	'order' => array('Employee.last_name','Employee.code'),
+				// 	'fields' => array(
+				// 	'id',
+				// 	'Employee.first_name',
+				// 	'Employee.last_name',
+				// 	'Employee.middle_name',
+				// 	'Employee.position_id',
+				// 	'Employee.department_id',
+				// 	'Employee.image',
+				// 	// 'Attendance.schedule_id',
+				// 	// 'Attendance.type',
+				// 	// 'Attendance.in',
+				// 	// 'Attendance.out',
+				// 	'Position.name'
+				// 	),
+				// 	'group' => 'Employee.id' 
+				// ));
+
+				$employees = $this->Attendance->find('all',array(
+					'conditions' => $conditions,
+					//'order' => array('Employee.last_name','Employee.code')
+						'fields' => array(
 					'id',
 					'Employee.first_name',
 					'Employee.last_name',
@@ -450,10 +482,16 @@ class EmployeesController  extends HumanResourceAppController {
 					'Employee.position_id',
 					'Employee.department_id',
 					'Employee.image',
-					'Position.name'
+					'Attendance.schedule_id',
+					'Attendance.type',
+					'Attendance.in',
+					'Attendance.out'
+					//'Position.name'
 					),
-					'group' => 'Employee.id' 
+					
 				));
+
+//pr($employees);exit();
 
 				if (count($employees) == 0) {
 

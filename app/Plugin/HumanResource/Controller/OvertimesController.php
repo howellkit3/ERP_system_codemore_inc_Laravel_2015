@@ -235,7 +235,7 @@ class OvertimesController  extends HumanResourceAppController {
 			),
 			'group' => 'Employee.id' 
 		));
-
+		//pr($employees);exit();
 		$this->set(compact('date','search','departments','breaktimes','employees'));
 
 	}

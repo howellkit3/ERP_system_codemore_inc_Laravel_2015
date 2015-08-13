@@ -175,7 +175,7 @@ $(document).ready(function(){
                     $parent.find('.attendance-status').html('<span class="label label-success">OnTime</span>');
                  };
                  if (data.Attendance.status == 'Late') {
-                    $parent.find('.attendance-status').html('<span class="label label-danger">Late</span>');
+                    $parent.find('.attendance-status').html('<span class="label label-danger">&nbsp;&emsp;&emsp;Late&emsp;&emsp;&nbsp;</span>');
                  };
                  
                  $parent.find('.notes-td').text(data.Attendance.notes);
