@@ -2,7 +2,7 @@
 <div style="clear:both"></div>
 <?php echo $this->element('ware_house_option');
 $int = 0;
-echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'receivings','action' => 'receive_order',$purchaseOrderData['PurchaseOrder']['id'] )),'class' => 'form-horizontal'));?>
+echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'receivings','action' => 'receive_order',$purchaseOrderData['PurchaseOrder']['id'], $purchaseOrderData['RequestItem']['request_uuid'] )),'class' => 'form-horizontal'));?>
 
 <br><br>
 
