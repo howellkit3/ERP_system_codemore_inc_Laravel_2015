@@ -1244,4 +1244,4 @@ ALTER TABLE `received_items`  ADD `model` VARCHAR(30) DEFAULT NULL AFTER `receiv
 
 /** howell kit added this 08/08/2015 TO KOUFU SYSTEM DATABASE   */
 
-INSERT  INTO `status_field_holders`(`id`,`status`,`created_by`,`modified_by`,`created`,`modified`) VALUES (8,'Waiting',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(9,'Executing',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(10,'Replaced',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03');
+INSERT  INTO `status_field_holders`(`id`,`status`,`created_by`,`modified_by`,`created`,`modified`) VALUES (8,'Waiting',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(9,'Executing',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(10,'Closed',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(11,'Replaced',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03');
