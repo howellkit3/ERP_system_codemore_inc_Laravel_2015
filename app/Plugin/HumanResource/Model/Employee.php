@@ -210,6 +210,8 @@ class Employee extends AppModel {
 								}
 
 
+						
+
 								
 							
 						}
@@ -237,8 +239,6 @@ class Employee extends AppModel {
 		}
 
 		$list = json_encode($list);
-		$list = str_replace('[','',$list);
-		$list = str_replace(']','',$list);
 
 		return $list;
 

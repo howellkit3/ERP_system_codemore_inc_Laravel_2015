@@ -1,7 +1,7 @@
 <?php
 
     $this->PhpExcel->createWorksheet()
-        ->setDefaultFont('Calibri', 12);
+        ->setDefaultFont('Calibri', 10);
 
     $objTpl = PHPExcel_IOFactory::load("./img/salaries/salaries.xls");
     $counter = 5;
