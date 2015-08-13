@@ -56,13 +56,14 @@ class Attendance extends AppModel {
 
 
 
-	public function saveRecord($data = null,$sched_id = null) {
+	public function saveRecord($data = null,$sched_id = null,$holidays = array()) {
 
 		if (!empty($data)) {
 
 			$sched = $attendance = [];
 
 			$this->create();
+
 
 			if (is_array($data) && !empty($data[0]['overtime_id'])) {
 
@@ -127,9 +128,23 @@ class Attendance extends AppModel {
 						$sched['Attendance']['date'] = $days1[0].'-'.$days1[1].'-'.sprintf("%02d",$days_count);
 						$sched['Attendance']['schedule_id'] = $sched_id;
 						$sched['Attendance']['type'] = 'work';
+						$sched['Attendance']['is_holiday'] = 0;
+						
+						foreach ($holidays as $key => $holiday) {
+							
+							if ($sched['Attendance']['date'] >= $holiday['Holiday']['start_date'] && $sched['Attendance']['date'] <= $holiday['Holiday']['end_date'] ) {
+								
+								$sched['Attendance']['is_holiday'] = $holiday['Holiday']['id'];	
+							} 
+						}
+ 
+						if ( date("w",strtotime($sched['Attendance']['date'])) != 0) {
 
-						$this->save($sched);
+							$this->save($sched);
 
+						}
+
+				
 					endfor;
 
 				} else {

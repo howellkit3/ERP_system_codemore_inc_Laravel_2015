@@ -35,7 +35,6 @@ echo $this->Html->script(array(
 			                   		$links = array('controller' => 'schedules', 'action' => 'view');
 
 			                   
-
 			                    ?> 
 			                  
 			                   <br><br>
@@ -43,8 +42,17 @@ echo $this->Html->script(array(
 			            </header>
 
 			            <div class="main-box-body clearfix">
+			            	<div class="box calendar_view">
+			            		
+			            		<ul class="legends">
+			            			<li> <div class="box-color green"></div> Regular working days </li>
+			            			<li> <div class="box-color violet"></div> Rest Days </li>
+			            			<li> <div class="box-color orange"></div> Holidays </li>
+			            		</ul>				
 
-			              <div id="calendarSchedule"></div>
+			             		 <div id="calendarSchedule"></div>
+
+			            	</div>		
 			            
 						</div>
 					</div>		

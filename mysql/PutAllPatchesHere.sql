@@ -1149,6 +1149,8 @@ ALTER TABLE `attendances` ADD `status` VARCHAR(50)  NULL  DEFAULT NULL  AFTER `m
 ALTER TABLE `employees` ADD `contract_id` INT(11)  NULL  DEFAULT NULL  AFTER `modified`;
 ALTER TABLE `employee_additional_informations` ADD `birth_place` VARCHAR(255)  NULL  DEFAULT NULL  AFTER `modified`;
 
+ALTER TABLE `attendances`  ADD `is_holiday` INT NULL  AFTER `type`;
+
 /* end all HR tables */
 
 /** howell kit added this 08/05/2015   */
@@ -1199,7 +1201,7 @@ ALTER TABLE `delivery_details`  ADD `pieces` INT(11) NULL  AFTER `delivered_quan
 ALTER TABLE `delivery_details`  ADD `measure` INT(11) NULL  AFTER `pieces`;
 
 
-/*aldrin brion added this 08/12/2015 */
+/*aldrin brion added this koufu system database 08/12/2015 */
 CREATE TABLE IF NOT EXISTS `accounting_sss_ranges` (
   `id` int(11) NOT NULL AUTO_INCREMENT, 
   `range_from` decimal(8,2) NOT NULL,

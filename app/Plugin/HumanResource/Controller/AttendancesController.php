@@ -78,7 +78,6 @@ class AttendancesController  extends HumanResourceAppController {
 
 		$query = $this->request->query;
 
-
 		$search = '';
 
 	 	$date = date('Y-m-d');
@@ -156,7 +155,6 @@ class AttendancesController  extends HumanResourceAppController {
 
 			$conditions = array();
 			$employees = $this->Employee->getList($conditions);
-
 
 			$this->set(compact('attendances','date','employees'));
 		}
