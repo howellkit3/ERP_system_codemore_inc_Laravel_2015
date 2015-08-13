@@ -55,7 +55,11 @@ class ReceivingsController extends WareHouseAppController {
 		$supplierData = $this->Supplier->find('list', array('fields' => array('Supplier.id', 'Supplier.name')
 																));
 
+		$this->PurchaseOrder->bindReceive();
+
 		$purchaseOrderData = $this->PurchaseOrder->find('first', array('conditions' => array('PurchaseOrder.id' => $id)));
+
+		//pr($purchaseOrderData); exit;
 
 		if(empty($requestData['PurchaseItem'])){
 
@@ -149,7 +153,7 @@ class ReceivingsController extends WareHouseAppController {
           
             $this->redirect( array(
                 'controller' => 'receivings',   
-                'action' => 'index'
+                'action' => 'view', $id, $requestUUID
             ));  
 
 		}

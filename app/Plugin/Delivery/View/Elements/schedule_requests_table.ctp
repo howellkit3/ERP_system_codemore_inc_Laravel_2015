@@ -61,7 +61,7 @@
                                                                                                     
                                                   }
                                             
-                                            echo(array_sum($arrholder));?> 
+                                            echo($scheduleDataList['ClientOrderDeliverySchedule']['quantity'] - array_sum($arrholder));?> 
 
                                             <br>
 

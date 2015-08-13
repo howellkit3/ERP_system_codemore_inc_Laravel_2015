@@ -182,12 +182,11 @@
                                       
                                         <div class="col-lg-8">
                                             <?php 
-                                                echo $this->Form->input('PurchaseOrder.item', array(
-                                                                                'class' => 'form-control item_type',
+                                                echo $this->Form->input('PurchaseOrder.items', array(
+                                                                                'class' => 'form-control ',
                                                                                 'disabled' => true,
                                                                                 'label' => false,       
-                                                                                'value' => $requestDataList['RequestItem'],
-                                                                                'fields' =>array('name')));
+                                                                                'value' => $requestDataList['RequestItem']));
                                             ?>
                                         </div>
                                     </div>

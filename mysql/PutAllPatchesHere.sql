@@ -1242,6 +1242,8 @@ ALTER TABLE `accounting_philhealth_ranges`  ADD `condition` VARCHAR(45) NULL  AF
 ALTER TABLE `received_items`  ADD `foreign_key` INT(11) NULL  AFTER `received_orders_id`;
 ALTER TABLE `received_items`  ADD `model` VARCHAR(30) DEFAULT NULL AFTER `received_orders_id`;
 
+/** howell kit added this 08/08/2015 TO KOUFU SYSTEM DATABASE   */
+
+INSERT  INTO `status_field_holders`(`id`,`status`,`created_by`,`modified_by`,`created`,`modified`) VALUES (8,'Waiting',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(9,'Executing',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(10,'Replaced',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03');
 /** bien added this 08/13/2015 TO HR DATABASE   */
 ALTER TABLE `attendances` ADD `overtime_id` INT(11)  NULL  DEFAULT NULL  AFTER `status`;
-
