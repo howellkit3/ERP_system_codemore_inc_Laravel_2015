@@ -25,11 +25,13 @@
                     </div>
                 <div class="time">
                     <i class="fa fa-clock-o"></i> Time In : <?php echo $employee['Attendance']['in']?>
+
                 </div>
                 
                 <div class="pull-left">
                     <div class="onoffswitch onoffswitch-success">
-                            <input type="checkbox" value="<?php echo $employee['Employee']['id']; ?>"  id="myonoffswitch-<?php echo $employee['Employee']['id']; ?>" class="onoffswitch-checkbox" name="data[Employee][id][]">
+                            <input type="checkbox" value="<?php echo $employee['Employee']['id']; ?>-<?php echo $employee['Attendance']['id']; ?>"  id="myonoffswitch-<?php echo $employee['Employee']['id']; ?>" class="onoffswitch-checkbox" name="data[Employee][id][]">
+
                             <label for="myonoffswitch-<?php echo $employee['Employee']['id']; ?>" class="onoffswitch-label">
                             <div class="onoffswitch-inner"></div>
                             <div class="onoffswitch-switch"></div>

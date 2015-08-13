@@ -114,7 +114,7 @@
 
 $(document).ready(function(){
     
-
+    
     $('body').on('click','.view_attendance.table-link',function(e){
 
         $append_cont = $('#personalAttendance .result_append');

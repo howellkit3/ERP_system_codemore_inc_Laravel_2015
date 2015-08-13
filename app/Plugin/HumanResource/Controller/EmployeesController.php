@@ -443,8 +443,6 @@ class EmployeesController  extends HumanResourceAppController {
 
 				$conditions = array();
 
-				//$conditions = array_merge($conditions,array('Attendance.date' => date('Y-m-d')));
-
 				$conditions = array_merge($conditions,array('Attendance.date' => date('Y-m-d')));
 
 				$conditions = array_merge($conditions,array('Attendance.in !=' => ' '));
@@ -473,7 +471,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 				$employees = $this->Attendance->find('all',array(
 					'conditions' => $conditions,
-					//'order' => array('Employee.last_name','Employee.code')
+					'order' => array('Employee.last_name','Employee.code'),
 						'fields' => array(
 					'id',
 					'Employee.first_name',
@@ -491,7 +489,7 @@ class EmployeesController  extends HumanResourceAppController {
 					
 				));
 
-//pr($employees);exit();
+				//pr($employees);exit();
 
 				if (count($employees) == 0) {
 

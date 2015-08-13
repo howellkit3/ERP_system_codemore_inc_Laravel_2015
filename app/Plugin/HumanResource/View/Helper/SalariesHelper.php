@@ -12,29 +12,30 @@ function gross_pay($attendance = null,$salaries = null,$hours = 8)
 	$data['time_work'] = number_format(0,2);
 	$data['days'] = 0;
 
-	if (!empty($attendance)) {
+	if (!empty($attendance['Attendance'])) {
 
-		foreach ($attendance as $key => $days) {
+		foreach ($attendance['Attendance'] as $key => $days) {
 
 			$data['time_work'] += $days['total_hours'];
 		}
 
 		$data['gross'] = ($salaries['basic_pay'] * $data['time_work']) / $hours;
-		$data['days'] = count($attendance);
+		$data['days'] = count($attendance['Attendance']);
 
 	}
 	return $data;
 }
 
-function sss_pay($attendance = null,$salaries = null,$sched = 'first',$gross_pay = 0){
+function sss_pay( $attendance = null,$salaries = null,$sched = 'first',$gross_pay = 0 ){
+	//sss agency id = 1;
 
 	$pay = number_format(0,2);
 	
-	if ($sched == 'first' && $gross_pay != 0) {
+	if ( $gross_pay != 0 && in_array(1,$attendance['Agency'])) {
 			
 			$SssRange = ClassRegistry::init('SssRange');
 			
-			$conditions = array('SssRange.range_from <=' => $gross_pay, 'SssRange.range_to >=' =>$gross_pay);
+			$conditions = array('SssRange.range_from <=' => $gross_pay, 'SssRange.range_to >=' => $gross_pay);
 			
 			$range = $SssRange->find('first',array('conditions' => $conditions ));
 
@@ -45,11 +46,13 @@ function sss_pay($attendance = null,$salaries = null,$sched = 'first',$gross_pay
 
 }
 
-function philhealth_pay($attendance = null,$salaries = null,$sched = 'first',$gross_pay = 0){
+function philhealth_pay($attendance = null,$salaries = null,$sched = 'first',$gross_pay = 0 ){
+
+	//sss agency id = 2;
 
 	$pay = number_format(0,2);
 	
-	if ($sched == 'first' && $gross_pay != 0) {
+	if ( $gross_pay != 0 && in_array(2,$attendance['Agency'])) {
 			
 			$SssRange = ClassRegistry::init('PhilHealthRange');
 			$conditions = array('PhilHealthRange.range_from >=' => $gross_pay);

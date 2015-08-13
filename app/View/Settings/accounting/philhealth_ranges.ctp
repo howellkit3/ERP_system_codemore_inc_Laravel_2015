@@ -121,7 +121,7 @@
 							</div>
 							</header>
 							<div class="main-box-body clearfix">
-								<div class="table-responsive">
+							<div class="table-responsive">
 								<table class="table">
 								<thead>
 								<tr>

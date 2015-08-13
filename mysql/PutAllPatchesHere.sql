@@ -1242,6 +1242,74 @@ ALTER TABLE `accounting_philhealth_ranges`  ADD `condition` VARCHAR(45) NULL  AF
 ALTER TABLE `received_items`  ADD `foreign_key` INT(11) NULL  AFTER `received_orders_id`;
 ALTER TABLE `received_items`  ADD `model` VARCHAR(30) DEFAULT NULL AFTER `received_orders_id`;
 
+
+/* added 08/13/2015 human resource */
+
+CREATE TABLE IF NOT EXISTS `deductions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `from` date NOT NULL,
+  `to` date NOT NULL,
+  `mode` varchar(255) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `amount` decimal(8,2) NOT NULL,
+  `reason` text NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+CREATE TABLE IF NOT EXISTS `salary_reports` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `salary_type` varchar(255) NOT NULL,
+  `from` date NOT NULL,
+  `to` date NOT NULL,
+  `days` int(11) NOT NULL,
+  `total_hour_work` decimal(8,2) NOT NULL,
+  `overtime_work` decimal(8,2) NOT NULL,
+  `rest_day_work` decimal(8,2) NOT NULL,
+  `rest_day_ot` decimal(8,2) NOT NULL,
+  `regular_holiday` decimal(8,2) NOT NULL,
+  `regular_holiday_work` decimal(8,2) NOT NULL,
+  `regular_holiday_ot` decimal(8,2) NOT NULL,
+  `regular_rest_work` decimal(8,2) NOT NULL,
+  `regular_rest_ot` decimal(8,2) NOT NULL,
+  `special_holiday_work` decimal(8,2) NOT NULL,
+  `special_holiday_ot` decimal(8,2) NOT NULL,
+  `night` decimal(8,2) NOT NULL,
+  `leave` decimal(8,2) NOT NULL,
+  `ctpa` decimal(8,2) NOT NULL,
+  `sea` decimal(8,2) NOT NULL,
+  `gross_pay` decimal(8,2) NOT NULL,
+  `sss` decimal(8,2) NOT NULL,
+  `philhealth` decimal(8,2) NOT NULL,
+  `pagibig` decimal(8,2) NOT NULL,
+  `wtax` decimal(8,2) NOT NULL,
+  `ca_fund` decimal(8,2) NOT NULL,
+  `sss_loan` decimal(8,2) NOT NULL,
+  `pagibig_loan` decimal(8,2) NOT NULL,
+  `uniform` decimal(8,2) NOT NULL,
+  `other_1` decimal(8,2) NOT NULL,
+  `medical` decimal(8,2) NOT NULL,
+  `canteen` decimal(8,2) NOT NULL,
+  `bank_loan` decimal(8,2) NOT NULL,
+  `other_2` decimal(8,2) NOT NULL,
+  `total_deduction` decimal(8,2) NOT NULL,
+  `net_pay` decimal(8,2) NOT NULL,
+  `allowance` decimal(8,2) NOT NULL,
+  `incentives` decimal(8,2) NOT NULL,
+  `total_pay` decimal(8,2) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+/* end human resource */
+
 /** howell kit added this 08/08/2015 TO KOUFU SYSTEM DATABASE   */
 
-INSERT  INTO `status_field_holders`(`id`,`status`,`created_by`,`modified_by`,`created`,`modified`) VALUES (8,'Waiting',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(9,'Executing',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(10,'Closed',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(11,'Replaced',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03');
+INSERT  INTO `status_field_holders`(`id`,`status`,`created_by`,`modified_by`,`created`,`modified`) VALUES (8,'Waiting',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(9,'Executing',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(10,'Replaced',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03');
+/** bien added this 08/13/2015 TO HR DATABASE   */
+ALTER TABLE `attendances` ADD `overtime_id` INT(11)  NULL  DEFAULT NULL  AFTER `status`;

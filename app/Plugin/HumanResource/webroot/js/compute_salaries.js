@@ -10,6 +10,8 @@ $( ".datepick" ).datepicker({
      viewMode: "decade", 
 });
 
+
+
 	//check employee
 $body.on('change','#department_id',function(){
 
@@ -29,20 +31,20 @@ $body.on('change','#department_id',function(){
             data: { 'department' : $this.val()},
             dataType: "json",
             success: function(data) {
-
-            	
+      	
             try {
 
             	if (data.result != 0) {
 					$html = '<ul class="list-group">'; 	
 
 					$.each(data.result, function(key,value) {
-					$html += '<li class="employee-li list-group-item" data-id="'+value.Employee.id+'"> <span class="badge badge-primary">'+value.Employee.code+'</span> '+value.Employee.first_name+'  '+value.Employee.last_name+'</li>';
+					   $html += '<li class="employee-li list-group-item" data-id="'+value.Employee.id+'"> <span class="badge badge-primary">'+value.Employee.code+'</span> '+value.Employee.first_name+'  '+value.Employee.last_name+'</li>';
 					});
 
-					$html += '</ul>';
+					   $html += '</ul>';
 
 					$container.html($html);
+                    
             	} else {
 
             		$container.html('<span class="label label-danger label-large">No result found</span>');
