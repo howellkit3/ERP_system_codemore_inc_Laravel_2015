@@ -19,20 +19,23 @@ class WorkSchedulesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Workshift');
 
+		$this->loadModel('HumanResource.Holiday');
+
 		$conditions = array();
 		$employees = $this->Employee->getList($conditions);
 
 		$conditions = array();
 		$workshifts = $this->Workshift->getList($conditions);
 
+		$conditions = array('Holiday.year' => date('Y'));
 
-		if ($this->request->is('post')) {
-			
-			
-			//save attendance
+		$holidays = $this->Holiday->find('all',array('conditions' => $conditions ,'order' =>  array('Holiday.start_date ASC'),'fields' => array('id','name','type','start_date','end_date','year') ));
+
+		if ($this->request->is('post')) {		
+				//save attendance
 			if ($this->WorkSchedule->save($this->request->data['WorkSchedule'])) {
 
-				$attendance = $this->Attendance->saveRecord($this->request->data['WorkSchedule'],$this->WorkSchedule->id);
+				$attendance = $this->Attendance->saveRecord($this->request->data['WorkSchedule'],$this->WorkSchedule->id,$holidays);
 
 				$data['employee_id'] = $this->request->data['WorkSchedule']['foreign_key'];
 				$data['date'] = $this->request->data['WorkSchedule']['day'];

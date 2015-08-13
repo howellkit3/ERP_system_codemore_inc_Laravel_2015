@@ -152,6 +152,8 @@ class SchedulesController  extends HumanResourceAppController {
 		$this->loadModel('HumanResource.Employee');
 
 		$this->loadModel('HumanResource.WorkSchedule');
+
+		$this->loadModel('HumanResource.Holiday');
 		
 		$conditions = array();
 
@@ -161,9 +163,13 @@ class SchedulesController  extends HumanResourceAppController {
 			'conditions' => array('Employee.id' => $user_id ),
 		);	
 
-		$list = $this->Employee->getAllWorkShift($params,$workSchedule);
-		
+		$conditions = array('Holiday.year' => date('Y'));
 
+		$holidays = $this->Holiday->find('all',array('conditions' => $conditions ,'order' =>  array('Holiday.start_date ASC'),'fields' => array('id','name','type','start_date','end_date','year') ));
+
+
+		$list = $this->Employee->getAllWorkShift($params,$workSchedule,$holidays);
+		 
 		$this->set(compact('workshifts','list'));
 
 		

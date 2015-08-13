@@ -208,3 +208,31 @@ div.value {
 #exportData {
   display: none;
 }
+
+.legends {
+  margin: 8px 0;
+  padding: 0;
+}
+.legends > li {
+  display: inline-block;
+  list-style: outside none none;
+}
+
+.box-color {
+  border: 1px solid #ccc;
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+}
+
+.box-color.green {
+  background: #257e4a none repeat scroll 0 0;
+}
+
+.box-color.violet {
+  background: #6237A5 none repeat scroll 0 0;
+}
+
+.box-color.orange {
+  background: #F57821 none repeat scroll 0 0;
+}
