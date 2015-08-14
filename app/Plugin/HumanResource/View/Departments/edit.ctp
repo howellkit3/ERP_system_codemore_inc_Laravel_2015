@@ -13,7 +13,8 @@
 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data','method' =>'post' ));?>
 <div class="row">
         <div class="col-lg-12">
-        	<div class="row">
+        	
+            <div class="row">
                 <div class="col-lg-12">
                     <header class="main-box-header clearfix">
                         
@@ -65,6 +66,7 @@
                     </div>
                 </div>
             </div>
+            
         </div>
     </div>
 

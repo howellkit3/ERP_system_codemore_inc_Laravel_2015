@@ -70,7 +70,7 @@ $active_tab = 'gross_reports';
                           </header>
 
 
-                          <table class="table">
+                          <table class="table table-bordered">
                                       <thead>
                                       <tr>
                                         <th><a href="#"><span>Code</span></a></th>

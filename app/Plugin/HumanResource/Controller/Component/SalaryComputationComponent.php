@@ -10,10 +10,13 @@ class SalaryComputationComponent extends Component
     {
         		
         	$SalaryReport = ClassRegistry::init('SalaryReport');
+        	$Deduction = ClassRegistry::init('Deduction');
         	
         	if (!empty($data)) {
 
         		$salary = [];
+
+
         		foreach ($data as $key => $employee) {
 
         				$conditions = array('AND' => array(
@@ -28,6 +31,8 @@ class SalaryComputationComponent extends Component
 
         					));
 
+        				$total_net_pay = 0;
+
         				$gross = $this->gross_pay($employee['Attendance'],$employee['Salary']);
         				$salary[$key]['id'] = !empty($checkExisting['SalaryReport']['id']) ? $checkExisting['SalaryReport']['id'] : '';
         				$salary[$key]['employee_id'] = $employee['Employee']['id'];
@@ -36,11 +41,36 @@ class SalaryComputationComponent extends Component
         				$salary[$key]['to'] = $customDate['end'];
         				$salary[$key]['days'] = $gross['days'];
         				$salary[$key]['total_hour_work'] = $gross['time_work'];
+        				$salary[$key]['gross_pay'] = $gross['gross']; $total_net_pay = $gross['gross'];
+						$salary[$key]['ctpa'] = !empty($employee['Salary']['ctpa']) ? $employee['Salary']['ctpa'] : 0; $total_net_pay += $employee['Salary']['ctpa'];
+						$salary[$key]['sea'] = !empty($employee['Salary']['sea']) ? $employee['Salary']['sea'] : 0; $total_net_pay += $employee['Salary']['sea'];
+						$salary[$key]['allowance'] = $employee['Salary']['allowances'];						
+						$salary[$key]['sss'] = $this->sss_pay($employee['Attendance'],$employee['Salary'],$pay_sched,$gross['gross']);
 
-        				$salary[$key]['total_pay'] = $gross['gross'];
+						//check deductions 
+						$deductions = $this->checkDeductions($employee['Employee']['id'],$customDate);
 
+						if (!empty($deductions['All'])) {
+
+							foreach ($deductions['All'] as $key => $value) {
+
+								$salary[$key][$value['Deduction']['type']] = $value['Deduction']['amount'];
+								//update deductions
+								$Deduction->updateAll(
+			                            array('Deduction.paid_amount' => 'Deduction.paid_amount+'.$value['Deduction']['amount']),                    
+			                            array('Deduction.id' => $value['Deduction']['id'])
+			                        );
+								//$Deduction->save($saveDeduction);
+							}
+
+							$salary[$key]['total_deduction'] = $deductions['total_deduction'];
+						}
+						
+
+						$salary[$key]['total_pay'] = $total_net_pay;
 
         		}
+
 
         		return $salary;
 
@@ -74,7 +104,7 @@ class SalaryComputationComponent extends Component
 
 		$pay = number_format(0,2);
 		
-		if ( $gross_pay != 0 && in_array(1,$attendance['Agency'])) {
+		if ( $gross_pay != 0 && (!empty($attendance['Agency']) && in_array(1,$attendance['Agency']) ) ) {
 				
 				$SssRange = ClassRegistry::init('SssRange');
 				
@@ -150,6 +180,50 @@ class SalaryComputationComponent extends Component
 				return $empData;
 			
 			}
+
+	}
+
+	public function checkDeductions($employee_id = null,$customDate = null){
+
+
+		if (!empty($employee_id)) {
+
+			$Deduction = ClassRegistry::init('Deduction');
+
+			$conditions = array('Deduction.from >=' => $customDate['start']);
+
+			$deductions['All'] = $Deduction->find('all',array('conditions' => $conditions ));
+
+			//pr($deductions); exit();
+
+			$code = [];
+
+			$dedcution = [];
+
+			$amount = $deductions['total_deduction'] = number_format(0,2);
+
+			foreach ($deductions['All'] as $key => $less) {
+
+				$deductions['All'][$key] = $less;
+
+				if ($less['Deduction']['amount'] != $less['Deduction']['paid_amount']) {
+
+					if ($less['Deduction']['mode'] == 'installment') {
+						
+						$amount = $less['Deduction']['amount'] / $less['Deduction']['pay_split'];
+						$deductions['All'][$key]['Deduction']['amount'] = $amount;
+
+					}
+
+					$deductions['total_deduction'] += $amount;
+				
+				}		
+					
+			}
+
+			return $deductions;
+
+		}
 
 	}
 }

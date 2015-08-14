@@ -41,7 +41,7 @@ echo $this->element('hr_options');
 			            	<div id="result-table">
 			            		   <div class="table-responsive">
                                 <div class="table-responsive">
-            								<table class="table">
+            								<table class="table table-bordered">
 								<thead>
 								<tr>
 									<th><a href="#"><span>Range of compensations</span></a></th>
