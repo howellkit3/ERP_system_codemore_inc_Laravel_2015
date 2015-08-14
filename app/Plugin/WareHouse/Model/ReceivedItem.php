@@ -17,11 +17,7 @@ class ReceivedItem extends AppModel {
 		
 		$this->create();
 
-		//pr($data); exit;
-
 		$data['received_orders_id'] = $id;
-
-
 
 		foreach ($data as $key => $value)
 		{
@@ -30,17 +26,14 @@ class ReceivedItem extends AppModel {
 
 				$key = array_search("on", $valueOfvalue);
 
-				//pr($valueOfvalue); 
 				if(!empty($key)){
 
 					$this->create();
 					$valueOfvalue['foreign_key'] = $key;
 					$valueOfvalue['received_orders_id'] = $id;
-					//pr($valueOfvalue); 
 			 		$this->save($valueOfvalue);
 				}
 
-				//pr($valueOfvalue);
 			}
 			
 			return $this->id;

@@ -44,7 +44,7 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                     <label class="col-lg-2 control-label">Supplier</label>
                                     <div class="col-lg-8">
                                         <?php 
-                                            echo $this->Form->input('PurchaseOrder.quantity', array(
+                                            echo $this->Form->input('PurchaseOrder.supplier', array(
                                                                             'class' => 'form-control item_type',
                                                                             'label' => false,
                                                                             'disabled' => true,
@@ -81,6 +81,7 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                                                         'empty' => 'None',
                                                                         'required' => 'required',
                                                                         'class' => 'form-control item_type editable addquantityLimit',
+                                                                        'type' => 'number',
                                                                         'label' => false
                                             ));
                                         ?>

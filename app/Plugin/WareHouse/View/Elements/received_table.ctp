@@ -1,4 +1,4 @@
-<?php foreach ($received_orders as $requestOrderDataList ): ?>
+<?php pr($received_orders); exit; foreach ($received_orders as $requestOrderDataList ): ?>
     
 
         <tr class="">

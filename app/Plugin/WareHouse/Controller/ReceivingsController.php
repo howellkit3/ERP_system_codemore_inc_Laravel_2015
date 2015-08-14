@@ -191,6 +191,8 @@ class ReceivingsController extends WareHouseAppController {
 
 		$this->ReceivedOrder->bindReceive();
 
+		//$this->ReceivedOrder->bind(array('PurchaseOrder'));
+
 		$received_orders = $this->ReceivedOrder->find('all');
 
 		//pr($received_orders); exit;
