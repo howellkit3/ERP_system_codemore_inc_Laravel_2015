@@ -115,6 +115,12 @@ class Employee extends AppModel {
 					'conditions' => '',
 					'dependent' => true
 				),
+				'EmployeeEducationalBackground' =>  array(
+					'className' => 'EmployeeEducationalBackground',
+					'foreignKey' => 'employee_id',
+					'conditions' => '',
+					'dependent' => true
+				),
 			)
 		),false);
 

@@ -90,13 +90,16 @@ class EmployeesController  extends HumanResourceAppController {
 
 			 $this->loadModel('HumanResource.ContactPerson');
 
+			 $this->loadModel('HumanResource.EmployeeEducationalBackground');
+
 			
 			  $uploader = new ImageUploader;
         
 			 if(!empty($this->request->data)){
+			 	
 			 	$auth = $this->Session->read('Auth.User');
 			 	$data = $this->request->data;
-
+			 	//pr($data);exit();
 			 	if (!empty($this->request->data['Employee']['file']['name'])) {
 
 					$file = $this->request->data['Employee']['file'];
@@ -130,12 +133,17 @@ class EmployeesController  extends HumanResourceAppController {
 					//save employee_goverment record
 			 		$save = $this->GovernmentRecord->saveRecord($data['EmployeeAgencyRecord'],$employeeId,$auth['id']);
 
+			 		//save educational background
+			 		$save = $this->EmployeeEducationalBackground->saveEducation($data['EmployeeEducationalBackground'],$employeeId);
+
 			 		if (!empty($data['ContactPersonData'])) {
 						
 						$this->ContactPerson->saveContact($data['ContactPersonData'],$employeeId,$auth['id']);
 			 		}
 					//save contactPerson emails
-			 		$save = $this->Email->saveEmails($employeeId,'ContactPerson',$data['ContactPersonData']['Email'],$auth['id']);
+			 		//$save = $this->Email->saveEmails($employeeId,'ContactPerson',$data['ContactPersonData']['Email'],$auth['id']);
+
+			 		$save = $this->Email->saveEmails($data['ContactPersonData']['Email'],$employeeId,'ContactPerson',$auth['id']);
 
 			 		//$save
 			 		$this->Session->setFlash('Saving employee information successfully','success');
@@ -179,19 +187,25 @@ class EmployeesController  extends HumanResourceAppController {
 		
 		$this->loadModel('HumanResource.EmployeeAdditionalInformation');
 
-		 $this->loadModel('HumanResource.Email');
+		$this->loadModel('HumanResource.Email');
 
-		 $this->loadModel('HumanResource.Address');
+		$this->loadModel('HumanResource.Address');
 
-		 $this->loadModel('HumanResource.GovernmentRecord');
+		$this->loadModel('HumanResource.GovernmentRecord');
 
-		 $this->loadModel('HumanResource.Contact');
+		$this->loadModel('HumanResource.Contact');
 
-		 $this->loadModel('HumanResource.ContactPerson');
+		$this->loadModel('HumanResource.ContactPerson');
+
+		$this->loadModel('HumanResource.EmployeeEducationalBackground');
 
 		if ($this->request->is('put')) {
-
-			  $uploader = new ImageUploader;
+			
+			foreach ($this->request->data['EducationIdHolder']['id'] as $key => $value) {
+				$this->EmployeeEducationalBackground->delete($value);
+			}
+			
+			$uploader = new ImageUploader;
         
 			 if(!empty($this->request->data)){
 			 	$auth = $this->Session->read('Auth.User');
@@ -228,13 +242,16 @@ class EmployeesController  extends HumanResourceAppController {
 					//save employee_goverment record
 			 		$save = $this->GovernmentRecord->saveRecord($data['EmployeeAgencyRecord'],$employeeId,$auth['id']);
 
+			 		//save educational background
+			 		$save = $this->EmployeeEducationalBackground->saveEducation($data['EmployeeEducationalBackground'],$employeeId);
+
 			 		if (!empty($data['ContactPersonData'])) {
 						
 						$this->ContactPerson->saveContact($data['ContactPersonData'],$employeeId,$auth['id']);
 			 		}
-					//save contactPerson emails
-			 		//$save = $this->Email->saveEmails($employeeId,'ContactPerson',$data['ContactPersonData']['Email'],$auth['id']);
 
+					//save contactPerson emails
+			 		$save = $this->Email->saveEmails($employeeId,'ContactPerson',$data['ContactPersonData']['Email'],$auth['id']);
 
 			 		$this->Session->setFlash('Saving employee information successfully','success');
 			 		   $this->redirect( array(
@@ -265,6 +282,7 @@ class EmployeesController  extends HumanResourceAppController {
 		 $this->loadModel('HumanResource.Contact');
 
 		 $this->loadModel('HumanResource.ContactPerson');
+		 $this->loadModel('HumanResource.EmployeeEducationalBackground');
 
 			$this->Employee->bind(array(
 				'EmployeeAdditionalInformation',
@@ -275,11 +293,12 @@ class EmployeesController  extends HumanResourceAppController {
 				'ContactPerson',
 				'ContactPersonEmail',
 				'ContactPersonAddress',
-				'ContactPersonNumber'
+				'ContactPersonNumber',
+				'EmployeeEducationalBackground'
 				));
 
 			$this->request->data = $this->Employee->findById($id);
-
+			//pr($this->request->data);exit();
 			if (!empty($_GET['test'])) {
 				pr($this->request->data); exit();
 			}

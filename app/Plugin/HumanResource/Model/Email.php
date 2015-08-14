@@ -18,7 +18,7 @@ class Email extends AppModel {
   		if (!empty($foreignKey) && !empty($model) && !empty($data))  {
 
   				if (!empty($data[0])) {
-
+            
   					$emails = [];
   				  
   					foreach ($data as $key => $value) {
@@ -29,7 +29,7 @@ class Email extends AppModel {
   						$emails[$key]['modified_by'] =  $authid;
   						
 					}
-
+          
 					$save = $this->saveAll($emails);
   				} else {
 

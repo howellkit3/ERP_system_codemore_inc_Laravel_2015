@@ -5,7 +5,7 @@ App::uses('SessionComponent', 'Controller/Component');
 
 class AttendancesController  extends HumanResourceAppController {
 
-	var $helpers = array('HumanResource.CustomText','HumanResource.CustomTime');
+	var $helpers = array('HumanResource.CustomText','HumanResource.CustomTime','HumanResource.PhpExcel');
 
 	public function index() {
 
@@ -64,7 +64,7 @@ class AttendancesController  extends HumanResourceAppController {
 		
 		$departmentList = $this->Department->getList();
 
-		$employeeList = array();
+		//$employeeList = $this->Employee->;
 
 		$this->set(compact('attendances','date','search','departmentList','employeeList'));
 
@@ -533,7 +533,7 @@ public function export() {
 		$this->loadModel('HumanResource.Workshift');
 		
 		$departmentId = $this->request->data['Attendance']['department_id'];
-		$employeeId = $this->request->data['Attendance']['employee_id'];
+		//$employeeId = $this->request->data['Attendance']['employee_id'];
 		$fromDate = $this->request->data['Attendance']['from_date'];
 
 		$this->Attendance->bind(array('WorkSchedule','Employee','WorkShift'));
@@ -546,15 +546,15 @@ public function export() {
 
     	}
 
-    	if(!empty($employeeId)){
+    	// if(!empty($employeeId)){
 
-    		$conditions = array_merge($conditions,array('Attendance.employee_id' => $employeeId));
+    	// 	$conditions = array_merge($conditions,array('Attendance.employee_id' => $employeeId));
 
-    	}
+    	// }
 
-    	if(!empty($employeeId)){
+    	if(!empty($fromDate)){
 
-    		$conditions = array_merge($conditions,array('Attendance.date >=' => $fromDate));
+    		$conditions = array_merge($conditions,array('Attendance.date' => $fromDate.' '.'00:00:00'));
 
     	}
         	
@@ -562,7 +562,7 @@ public function export() {
             'conditions' => $conditions,
             'order' => 'Attendance.id ASC'
         ));
-
+        //pr($attendanceData);exit();
 		$this->set(compact('attendanceData'));
 
 		$this->render('Attendances/xls/attendance_report');
