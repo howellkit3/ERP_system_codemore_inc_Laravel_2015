@@ -1308,12 +1308,13 @@ CREATE TABLE IF NOT EXISTS `salary_reports` (
 
 /* end human resource */
 
-/** howell kit added this 08/08/2015 TO KOUFU SYSTEM DATABASE   */
+#NOTE: SELECT KOUFU WAREHOUSE DATABASE ----
+/** howellkit added this 08/08/2015  */
 
 INSERT  INTO `status_field_holders`(`id`,`status`,`created_by`,`modified_by`,`created`,`modified`) VALUES (8,'Waiting',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(9,'Executing',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(10,'Replaced',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03');
+
 /** bien added this 08/13/2015 TO HR DATABASE   */
 ALTER TABLE `attendances` ADD `overtime_id` INT(11)  NULL  DEFAULT NULL  AFTER `status`;
-
 
 INSERT  INTO `status_field_holders`(`id`,`status`,`created_by`,`modified_by`,`created`,`modified`) VALUES (8,'Waiting',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(9,'Executing',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(10,'Closed',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(11,'Replaced',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03');
 
@@ -1333,4 +1334,8 @@ ALTER TABLE `employee_additional_informations` ADD `spouse` VARCHAR(255)  NULL  
 
 ALTER TABLE `employee_additional_informations` ADD `no_children` VARCHAR(255)  NULL  DEFAULT NULL  AFTER `spouse`;
 
+#NOTE: SELECT KOUFU WAREHOUSE DATABASE ----
+/** howellkit added this 08/14/2015  */
 
+ALTER TABLE `received_items` ADD `condition` VARCHAR(30)  NULL  DEFAULT NULL  AFTER `quantity`;
+ALTER TABLE `koufu_warehouse`.`received_items` DROP COLUMN `item_uuid` ;

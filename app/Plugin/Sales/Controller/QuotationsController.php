@@ -475,6 +475,8 @@ class QuotationsController extends SalesAppController {
 													));
 
 		
+
+		
 		 if(!empty($clientOrder['ClientOrder'])) {
 		 //	pr($clientOrder['ClientOrder']['quotation_id']);
 
@@ -560,6 +562,8 @@ class QuotationsController extends SalesAppController {
 
 		$this->loadModel('Sales.PaymentTermHolder');
 
+		$this->loadModel('Sales.Address');
+
 		// Configure::write('debug',2);
 
 		$userData = $this->Session->read('Auth');
@@ -576,6 +580,22 @@ class QuotationsController extends SalesAppController {
      													'fields' => array(
      														'company_id')
      													));
+
+		$addressData = $this->Address->find('list', array(
+     													'fields' => array(
+     														'foreign_key','address1')
+     													));
+
+		$cityData = $this->Address->find('list', array(
+     													'fields' => array(
+     														'foreign_key','city')
+     													));
+
+		$provinceData = $this->Address->find('list', array(
+     													'fields' => array(
+     														'foreign_key','state_province')
+     													));
+
 
 		$contactInfo = $this->Company->ContactPerson->find('first', array(
 																'conditions' => array( 
@@ -634,7 +654,7 @@ class QuotationsController extends SalesAppController {
 		$view = new View(null, false);
 		//$this->set(compact('companyData','currencies','units','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','productName','user','quotationDetailData'));
 		
-		$view->set(compact('paymentTerm','approvedUser','companyData','units','currencies','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','productName','user','quotationDetailData'));
+		$view->set(compact('paymentTerm','approvedUser','companyData','units','currencies','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','productName','user','quotationDetailData','addressData','cityData', 'provinceData'));
         
 		
 		$view->viewPath = 'Quotations'.DS.'pdf';	

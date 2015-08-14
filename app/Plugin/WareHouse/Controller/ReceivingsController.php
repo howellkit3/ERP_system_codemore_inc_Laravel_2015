@@ -89,6 +89,8 @@ class ReceivingsController extends WareHouseAppController {
 
 				$requestPurchasingItem[$key]['RequestItem']['foreign_key'] = $value[$itemHolder]['foreign_key'];
 
+				$requestPurchasingItem[$key]['RequestItem']['model'] = $value[$itemHolder]['model'];
+
 				array_push($requestPurchasingItemArray, $itemDetails[$value[$itemHolder]['foreign_key']]);
 
 	        } 
@@ -102,6 +104,8 @@ class ReceivingsController extends WareHouseAppController {
 
 				$requestPurchasingItem[$key]['RequestItem']['foreign_key'] = $value[$itemHolder]['foreign_key']; 
 
+				$requestPurchasingItem[$key]['RequestItem']['model'] = $value[$itemHolder]['model'];
+
 				array_push($requestPurchasingItemArray, $itemDetails[$value[$itemHolder]['foreign_key']]);                 
 	        } 
 
@@ -113,6 +117,8 @@ class ReceivingsController extends WareHouseAppController {
 				$requestPurchasingItem[$key]['RequestItem']['name'] = $itemDetails[$value[$itemHolder]['foreign_key']];
 
 				$requestPurchasingItem[$key]['RequestItem']['foreign_key'] = $value[$itemHolder]['foreign_key'];
+
+				$requestPurchasingItem[$key]['RequestItem']['model'] = $value[$itemHolder]['model'];
 
 				array_push($requestPurchasingItemArray, $itemDetails[$value[$itemHolder]['foreign_key']]);
 
@@ -128,26 +134,29 @@ class ReceivingsController extends WareHouseAppController {
 
 				$requestPurchasingItem[$key]['RequestItem']['foreign_key'] = $value[$itemHolder]['foreign_key'];
 
+				$requestPurchasingItem[$key]['RequestItem']['model'] = $value[$itemHolder]['model'];
+
 				array_push($requestPurchasingItemArray, $itemDetails[$value[$itemHolder]['foreign_key']]);                        
 	        } 
 
         }
 
-      
+    //  pr($requestPurchasingItem); exit;
 
 		if (!empty($this->request->data)) {
 
 			//pr($this->request->data); exit;
+			//$userData = $this->Session->read('Auth');
 
-			//$this->ReceivedOrder->saveReceivedOrders($this->request->data['Receiving'],$userData['User']['id'],$id);
+			$itemId = $this->ReceivedOrder->saveReceivedOrders($this->request->data['ReceivedItems'],$userData['User']['id'],$id);
 
-			//$this->PurchaseOrder->id = $id;
+			$this->PurchaseOrder->id = $id;
 
-			//$this->PurchaseOrder->saveField('status', 11);
+			$this->PurchaseOrder->saveField('status', 11);
 
 			//pr($this->request->data); exit;
 			
-			$this->ReceivedItem->saveReceivedItems($id, $this->request->data);
+			$this->ReceivedItem->saveReceivedItems($itemId, $this->request->data,$value[$itemHolder]['model']);
 
 			$this->Session->setFlash(__('Order has been received'), 'success');
           
@@ -181,6 +190,8 @@ class ReceivingsController extends WareHouseAppController {
 																));
 
 		$this->ReceivedOrder->bindReceive();
+
+		//$this->ReceivedOrder->bind(array('PurchaseOrder'));
 
 		$received_orders = $this->ReceivedOrder->find('all');
 

@@ -44,7 +44,7 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                     <label class="col-lg-2 control-label">Supplier</label>
                                     <div class="col-lg-8">
                                         <?php 
-                                            echo $this->Form->input('PurchaseOrder.quantity', array(
+                                            echo $this->Form->input('PurchaseOrder.supplier', array(
                                                                             'class' => 'form-control item_type',
                                                                             'label' => false,
                                                                             'disabled' => true,
@@ -54,38 +54,53 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                     </div>
                                 </div>          
 
-                                <?php  if(!empty($requestData['PurchaseItem'])){
+                                <?php if(!empty($requestData['PurchaseItem'])){
 
-                                    foreach ($requestData['PurchaseItem'] as $requestDataList): ?>
+                                    foreach ($requestPurchasingItem as $requestDataList): ?>
 
-                                    <?php $int ++; ?>
+                                     <?php $int++; 
+                                    $arrholder = $int -1;?>
 
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label"></label>
                                       
                                         <div class="col-lg-8">
                                            <div class = "checkbox-nice">
-                                             <input type="checkbox" class="check-ref-uuid checked" name="requestPurchasingItem[<?php echo $int ?>][$requestDataList['PurchaseItem']['foreign_key']]" id="<?php echo $int?>" >
+                                             <input type="checkbox" class="check-ref-uuid checked" name="requestPurchasingItem[<?php echo $int ?>][<?php echo $requestDataList['PurchaseItem']['foreign_key'] ?>]" id="<?php echo $int?>" >
                                                     <label for="<?php echo $int?>"> <?php echo $requestDataList['PurchaseItem']['name'] ?></label>
                                             </div>
                                         </div>
+                                    </div>
 
-                                        <div class="col-lg-2">
-                                <?php 
-                                    echo $this->Form->input('DeliveryDetail.measure', array(         
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label"></label>
+
+                                    <div class="col-lg-2">
+                                        <?php 
+                                            echo $this->Form->input('ReceivedItems.'.$arrholder.'.quantity', array(
+                                                                        'empty' => 'None',
+                                                                        'required' => 'required',
+                                                                        'class' => 'form-control item_type editable addquantityLimit',
+                                                                        'type' => 'number',
+                                                                        'label' => false
+                                            ));
+                                        ?>
+                                    </div>
+                                      <div class="col-lg-2">
+                                        <?php 
+                                            echo $this->Form->input('ReceivedItems.'.$arrholder.'.condition', array(         
                                                                     'required' => 'required',
-                                                                    'class' => 'form-control required  ',
-
-                                                                    'options' => array('by bundle', 'by pack' , 'by piece', 'by box', 'by pallet'),
-                                                                    'empty' => '--Select Measure--',
+                                                                    'class' => 'form-control required',
+                                                                    'options' => array('good', 'reject'),
+                                                                    'value' => 0,
                                                                     'label' => false,
                                                                     'type' => 'select',
                                                                     'required' => 'required',
                                                                     ));
                                 ?>
-                            </div>
-
                                     </div>
+                                </div>
+
 
                                              <?php 
                                         endforeach; 
@@ -94,32 +109,51 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
 
                                     foreach ($requestPurchasingItem as $requestDataList): ?>
 
-                                    <?php $int++; ?>
+                                    <?php $int++; 
+                                    $arrholder = $int -1;?>
 
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label"></label>
-                                      
                                         <div class="col-lg-8">
                                            <div class = "checkbox-nice">
-                                             <input type="checkbox" class="check-ref-uuid checked" name="requestPurchasingItem[<?php echo $int ?>][<?php echo $requestDataList['RequestItem']['foreign_key'] ?>]" id="<?php echo $int?>" >
-                                                    <label for="<?php echo $int?>"> <?php echo $requestDataList['RequestItem']['name'] ?></label>
+                                             <input type="checkbox" class="check-ref-uuid checked" name="requestPurchasingItem[<?php echo $arrholder ?>][<?php echo $requestDataList['RequestItem']['foreign_key'] ?>]" id="<?php echo $int?>" >
+                                                    <label for="<?php echo $int?>"> <?php  echo $requestDataList['RequestItem']['name'] ?></label>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label"></label>
-                                      <div class="col-lg-8">
-                                        <?php 
-                                    echo $this->Form->input('DeliveryDetail.measure', array(         
-                                                                    'required' => 'required',
-                                                                    'class' => 'form-control required  ',
 
-                                                                    'options' => array('by bundle', 'by pack' , 'by piece', 'by box', 'by pallet'),
-                                                                    'empty' => '--Select Measure--',
+                                    <div class="col-lg-2">
+                                        <?php 
+                                            echo $this->Form->input('requestPurchasingItem.'.$arrholder.'.quantity', array(
+                                                                        'empty' => 'None',
+                                                                        'required' => 'required',
+                                                                        'class' => 'form-control item_type editable addquantityLimit',
+                                                                        'label' => false
+                                            ));
+                                        ?>
+                                    </div>
+                                      <div class="col-lg-2">
+                                        <?php 
+                                            echo $this->Form->input('requestPurchasingItem.'.$arrholder.'.condition', array(         
+                                                                    'required' => 'required',
+                                                                    'class' => 'form-control required',
+                                                                    'options' => array('good', 'reject'),
+                                                                    'value' => 0,
                                                                     'label' => false,
                                                                     'type' => 'select',
                                                                     'required' => 'required',
+                                                                    ));
+                                ?>
+
+                                <?php
+                                            echo $this->Form->input('requestPurchasingItem.'.$arrholder.'.model', array(                    'type' => 'hidden',
+                                                                    'class' => 'form-control',
+                                                                    'value' =>$requestDataList['RequestItem']['model'],
+                                                                    'label' => false,
+                                                                    
                                                                     ));
                                 ?>
                                     </div>
