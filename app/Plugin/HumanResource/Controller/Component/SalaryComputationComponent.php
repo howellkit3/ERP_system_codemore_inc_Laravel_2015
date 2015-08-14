@@ -37,6 +37,8 @@ class SalaryComputationComponent extends Component
         				$salary[$key]['days'] = $gross['days'];
         				$salary[$key]['total_hour_work'] = $gross['time_work'];
 
+        				$salary[$key]['total_pay'] = $gross['gross'];
+
 
         		}
 
@@ -103,6 +105,51 @@ class SalaryComputationComponent extends Component
 		}
 
 		return $pay;
+
+	}
+
+
+	public function computeMonthlySalary($data = null){
+
+
+			if (!empty($data)) {
+				
+				$empData = [];
+
+				//sort by employee_id
+				$sorted = [];
+
+				foreach($data as $key => $item)
+				{
+					$sorted[$item['SalaryReport']['employee_id']][$key] = $item;
+				}
+
+				ksort($sorted, SORT_NUMERIC);
+
+				foreach ($sorted as $sortedKey => $emp) {
+					
+						$empData[$sortedKey]['employee_id'] = $sortedKey;
+						$empData[$sortedKey]['first_half'] = '0.00';
+						$empData[$sortedKey]['second_half'] = '0.00';
+
+						foreach ($emp as $empKey => $salary) {
+
+							$empData[$sortedKey]['Employee'] = $salary['Employee'];
+
+							if ($salary['SalaryReport']['salary_type'] == 'first') {
+								$empData[$sortedKey]['first_half'] = $salary['SalaryReport']['total_pay'];
+							}
+							if ($salary['SalaryReport']['salary_type'] == 'second') {
+								$empData[$sortedKey]['second_half'] = $salary['SalaryReport']['total_pay'];
+							}
+							
+						}				
+				}
+
+
+				return $empData;
+			
+			}
 
 	}
 }

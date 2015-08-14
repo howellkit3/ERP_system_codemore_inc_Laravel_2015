@@ -171,7 +171,9 @@ class SalariesController  extends HumanResourceAppController {
 			$this->loadModel('HumanResource.GovernmentRecord');
 
 			$emp_conditions = array();//array('Employee.status NOT' => array('1'));
+
 			$this->Employee->bind(array('Salary','GovernmentRecord'));
+
 			$employees = $this->Employee->find('all',array(
 								'conditions' => $emp_conditions,
 								'order' => array('Employee.last_name ASC'),
@@ -373,11 +375,42 @@ class SalariesController  extends HumanResourceAppController {
 
 	public function reports(){
 		
-		$this->Components->load('HumanResource.SalaryComputation');
-		
-		$salaries = $this->SalaryComputation->calculateBenifits('wewe');
+		$date = date('m-Y');
+
+
+		$this->set(compact('date'));
 
 		$this->render('Salaries/reports/reports');
+	}
+
+	public function getSalaries() {
+
+		$query = $this->request->query;
+
+		if (!empty($query)) {
+
+			$this->Components->load('HumanResource.SalaryComputation');
+
+			$this->loadModel('HumanResource.SalaryReport');
+
+			$conditions = array('AND' => array(
+        					'SalaryReport.from >=' => date('Y-m-d',strtotime('01-'.$query['month'])),
+        					'SalaryReport.to <='=> date('Y-m-d',strtotime('31-'.$query['month']))
+        					));
+
+			$this->SalaryReport->bind(array('Employee'));
+
+			$salaries = $this->SalaryReport->find('all',array( 
+				'conditions' => $conditions ,
+				'group' => array('SalaryReport.id'), 
+				));
+	
+			$employees = $this->SalaryComputation->computeMonthlySalary($salaries);
+
+			$this->set(compact('employees'));				
+
+			$this->render('Salaries/ajax/monthly_salaries');
+		}
 	}
 
 }

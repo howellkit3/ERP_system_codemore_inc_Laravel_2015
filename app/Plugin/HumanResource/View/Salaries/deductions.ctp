@@ -38,7 +38,7 @@ $active_tab = 'sss_table';
 
 
                           <div class="form-group pull-left">
-                            <div class="input-group">
+                            <div class="input-group" style="max-width:150px;">
                                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                                         <input placeholder="Date Range" name="from_date" data="1" type="text" class="form-control myDateRange datepickerDateRange" id="datepickerDateRange"  style="min-width:217px">
                                                     </div>
