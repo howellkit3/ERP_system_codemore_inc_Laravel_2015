@@ -5,7 +5,7 @@
     $this->PhpExcel->createWorksheet()
         ->setDefaultFont('Calibri', 12);
 
-    $objTpl = PHPExcel_IOFactory::load("./img/attendance_record.xls");
+    $objTpl = PHPExcel_IOFactory::load("./exportexcel/attendance_report.xls");
     // $counter = 5;
     // foreach ($workScheduleData as $key => $workScheduleList) {
     //     $key++;
@@ -30,7 +30,7 @@
     header('Cache-Control: max-age=0');
      
     $objWriter = PHPExcel_IOFactory::createWriter($objTpl, 'Excel2007');  //downloadable file is in Excel 2003 format (.xls)
-    ob_end_clean();
+    //ob_end_clean();
     $objWriter->save('php://output');  //send it to user, of course you can save it to disk also!
      
     exit; //done.. exiting!

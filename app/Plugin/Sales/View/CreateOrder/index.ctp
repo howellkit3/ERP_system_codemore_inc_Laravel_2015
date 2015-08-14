@@ -257,7 +257,7 @@
 											<?php foreach ($quotationData['QuotationItemDetail'] as $key => $itemDetail){ ?>
 												<table  class = "tbl">
 													<tr>														
-														<td height ="37px" valign ="top" class ="column3 col-md-10"> 
+														<td height ="37px" valign ="top"  style = "border-color:#E8E8E8;" class ="column3 col-md-10"> 
 															<div class="col-lg-12">
 																
 																<?php echo (!empty($itemDetail['quantity']) && is_numeric($itemDetail['quantity'])) ? number_format($itemDetail['quantity']) : '';
@@ -272,7 +272,7 @@
 
 													<tr >
 														
-														<td height ="37px" valign ="top" class = "column4 col-md-10">
+														<td height ="37px" valign ="top" style = "border-color:#E8E8E8;" class = "column4 col-md-10">
 															<div class="col-lg-12">
 																<?php
 																	echo !empty($currencies[$itemDetail['unit_price_currency_id']]) ? $currencies[$itemDetail['unit_price_currency_id']] : ''

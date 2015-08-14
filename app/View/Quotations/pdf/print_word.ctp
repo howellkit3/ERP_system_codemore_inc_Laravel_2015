@@ -8,21 +8,17 @@
 		<div class="main-box main-pdf" >
 			<center>
 				<header class="main-box-header clearfix" >
-					<h1 style="padding-bottom:10px;">Kou Fu Packaging Corporation</h1>
-					<h5 style="padding-bottom:8px;">Lot 3-4 Blk 4 Mountview Industrial Complex Brgy. Bancal Carmona Cavite</h5>
-					<h6>
-						Tel: +63(2)5844928 &nbsp; Fax: +63(2)5844952
-						<!-- Tel: +63(46)4301576 / +63(46)9721111<br>
-						+63(2)5844928 / +63(2)5844929<br>
-						+63(2)5844947 Local: 302<br>
-
-						Fax: +63(2)5844952 / +63(46)9720120<br>
-						Mobile: +63(917)8922637<br>
-						Taiwan: +886 922565185<br> -->
-					</h6><br>
+					<img src="<?php echo Router::url('/', true) ?>img/koufu_logo.jpg" alt="logo" style="width:225px;height:40px;padding-bottom:10;"> <br>
+					<label style="padding-bottom:8px; font-size:14px;">Lot 4-5 Blk 3 Ph2 Mountview Industrial Complex</label> <br>
+					<label style="padding-bottom:8px; font-size:14px;">Brgy. Bancal Carmona Cavite</label><br>
+					<label style="padding-bottom:8px; font-size:14px;">Tel: +632-5844928; &nbsp; +6346-4301576 &nbsp; Fax: +632-5844952</label><br><br>
+						
+					<label style="padding-bottom:8px; font-size:24px; font-style: arial;"><b>PRICE QUOTATION</label></b><br><br><br>
+					
 				</header>
 			</center>
-			<table class="layout">
+
+			<table class="layout" style ="line-height:5px;" >
 				<thead>
 					<tr>
 						<td style="width:123px;font-family: Calibri;">Attention</td>
@@ -30,7 +26,7 @@
 						<td style="width:400px;">
 							<?php 
 							// 	echo $quotation['Quotation']['attention_details']
-								echo !empty($quotation['Quotation']['company_id']) ? ucfirst($companyData[$quotation['Quotation']['company_id']]) : ucfirst($companyData[$inquiryId[$quotation['Quotation']['inquiry_id']]]) 
+								echo ucfirst($quotation['ContactPerson']['firstname']).' '.ucfirst($quotation['ContactPerson']['lastname'])
 							?>
 						</td>
 						<td>
@@ -38,18 +34,32 @@
 						</td>
 					</tr>
 					<tr>
-						<td></td>
-						<td style="width:20px;"></td>
-						<td>
-							___________________________________________________
-						</td>
+						<td style="width:123px;font-family: Calibri;">Company</td>
+						<td style="width:20px;">:</td>
+						<td> <?php echo !empty($quotation['Quotation']['company_id']) ? ucfirst($companyData[$quotation['Quotation']['company_id']]) : ucfirst($companyData[$inquiryId[$quotation['Quotation']['inquiry_id']]]) ?></td>
 						<td>Date:
 							<?php echo !empty($quotation['Quotation']['created']) ? date('Y/m/d', strtotime($quotation['Quotation']['created'])) : '' 
 							?>
 						</td>
 					</tr>
+					<tr>
+						<td style="width:123px;font-family: Calibri;">Address</td>
+						<td style="width:20px;">:</td>
+						<td><?php echo !empty($quotation['Quotation']['company_id']) ? ucfirst($addressData[$quotation['Quotation']['company_id']])  : ucfirst($addressData[$inquiryId[$quotation['Quotation']['inquiry_id']]])  ?> 
+
+							<?php if(!empty($cityData[$quotation['Quotation']['company_id']])){ echo ucfirst($cityData[$quotation['Quotation']['company_id']]);   }?>
+
+							<?php if(!empty($provinceData[$quotation['Quotation']['company_id']])){ echo ucfirst($provinceData[$quotation['Quotation']['company_id']]);   }?>
+
+						</td>
+						<td>
+						</td>
+					</tr>
 				</thead>
 			</table>
+
+			<br>
+
 			<?php if (!empty($quotation['ContactPerson']['firstname']) || !empty($quotation['lastname']['firstname']) ) { ?>
 				<table class="layout">
 					<thead>
@@ -65,7 +75,7 @@
 			<table class="layout">
 				<thead>
 					<tr>
-						<td style="padding-left: 126px;">
+						<td style="padding-left: 0px;">
 							We are pleased to submit our price quotation on your printing requirement under the following <br>specifications:
 						</td>
 					</tr>
@@ -107,7 +117,7 @@
 					</td>
 					<td style="width:20px;">:</td>
 					<?php foreach ($quotation['QuotationItemDetail'] as $itemDetail){ ?>	
-						<td height ="15px" valign ="top" class ="column3 col-md-8" style="border:1px solid #000;  text-align:center"> 
+						<td height ="15px" valign ="top" class ="column3 col-md-8" style="border:1px solid #b2b2b2;  text-align:center"> 
 							<div class="col-lg-12">
 								<?php echo (!empty($itemDetail['quantity']) && is_numeric($itemDetail['quantity'])) ? number_format($itemDetail['quantity']) : '';
 								?>
@@ -126,7 +136,7 @@
 					</td>
 					<td style="width:20px;">:</td>
 					<?php foreach ($quotation['QuotationItemDetail'] as $itemDetail){ ?>
-						<td height ="15px" valign ="top" class = "column4 col-md-8" style="border:1px solid #000;  text-align:center">
+						<td height ="15px" valign ="top" class = "column4 col-md-8" style="border:1px solid #b2b2b2;  text-align:center">
 							<div class="col-lg-12" >
 								<?php
 								 echo !empty($currencies[$itemDetail['unit_price_currency_id']]) ? $currencies[$itemDetail['unit_price_currency_id']] : '' ?>
@@ -146,7 +156,7 @@
 					</td>
 					<td style="width:20px;">:</td>
 					<?php foreach ($quotation['QuotationItemDetail'] as $itemDetail){ ?>
-						<td height ="15px" class ="column2 col-md-8" style="border:1px solid #000;  text-align:center">
+						<td height ="15px" class ="column2 col-md-8" style="border:1px solid #b2b2b2;  text-align:center">
 							<div class="col-lg-12">
 								<?php echo (!empty($itemDetail['vat_price']) && is_numeric($itemDetail['vat_price'])) ? number_format($itemDetail['vat_price'],4) : '';
 								?>
@@ -163,7 +173,7 @@
 					</td>
 					<td style="width:20px;">:</td>
 					<?php foreach ($quotation['QuotationItemDetail'] as $itemDetail){ ?>
-						<td height ="15px" class ="column2 col-md-8" style="border:1px solid #000; text-align:center">
+						<td height ="15px" class ="column2 col-md-8" style="border:1px solid #b2b2b2; text-align:center">
 							<div class="col-lg-12">
 								<?php echo $itemDetail['material'];?> 
 							</div>
@@ -270,9 +280,11 @@
 			</table>
 			<br><br>
 			<table class="layout">
-				<thead>
+					<?php $space = "  "?>
 					<tr>
 						<td>Respectfully,</td>
+						<td style="width:270px;"><?php echo $space?></td>
+						<td>Approved by:</td>
 					</tr>
 					<tr>
 						<td></td>
@@ -281,116 +293,35 @@
 						<td></td>
 					</tr>
 					<tr>
-						<td style="width:335px;">
+						<td style="width:200px;">
 							<?php echo ucfirst($user['User']['first_name']) ?>
 							<?php echo ucfirst($user['User']['last_name'])?>
 							<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
 						</td>
-					</tr>
-				</thead>
-			</table>
-			<table class="layout">
-				<?php if(!empty($approvedUser)){ ?>
-					<thead>
-						<tr>
-							<td style="width:500px;">
-								<div style="display:inline-block; vertical-align:top; border-bottom: 1px solid #b2b2b2;width:335px">
-									Approved by :<br/><br><br><br>
-									<?php
-								
-										echo ucfirst($approvedUser['User']['first_name']);
-										echo ' ';
-									 	echo ucfirst($approvedUser['User']['last_name']);
-										
-									?>
-									<!-- <hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;"> -->
-								</div>
-								<div style="display:inline-block; vertical-align:top; border-bottom: 1px solid #b2b2b2;width:335px">
-								</div>
-								<div style="display:inline-block; vertical-align: bottom;text-align:right; margin-right:150px;">
-									<font size ="9px">
-										Doc No.: KFP-FR-MKT-07<br>
-										REV. No.: 01	
-									</font>				
-								</div>
-							</td>
+						<td style="width:200px;"></td>
 
-						</tr>
-					</thead>
-				<?php 
-					}else{
-						echo "Note: Not yet approved. ";
-					}
-				?>
-			</table >
-			
-			<!-- <hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
-			<center>
-				<header class="main-box-header clearfix">
-					<h4>Acceptance Slip</h4>
-				</header>
-			</center>
-			<table class="layout">
-				<thead>
-					<tr>
-						<td style="width:335px;text-align:center;">Send to manager</td>
-						<td style="padding-left: 150px;">Date:_____________________</td>
-					</tr>
-				</thead>
-			</table>
-			<center>
-				<header class="main-box-header clearfix para">
-					<center>
-					<p align ="justify">
-						<font size ="15px">I do hereby accept the price and other details submitted on your price quotation no.<?php echo $quotation['Quotation']['unique_id'] ?><br> Also, I do hereby authorize your company to proceed with and supply the work described above.
-						</font>
-					</p>
-					</center>
-				</header>
-			</center>
-			<table class="layout" >
-				<thead>
-					<tr>
-						<td>Authorized by:_________________</td>
-						<td style="padding-left: 270px;">Position:_________________</td>
-					</tr>
-					<tr>
-						<td> </td>
-						<td style="padding-left: 285px;">Date:_________________</td>
-					</tr>
-				</thead>
-			</table>
-			<footer >
-				<table class ="tables-css">
-					<tr>
-						<td class ="footer">
+						<td style="width:200px;">
+							<?php 
 
-							<font size = "12px">
-								<?php echo (new \DateTime())->format('l, F d, Y '); ?>
-							</font>
-						</td>
-						<td class ="footer">
-							&nbsp;&nbsp;&nbsp;
-						</td>
-						<td class ="footer">
-							&nbsp;&nbsp;&nbsp;
-						</td>
-						<td class = "footer2">
-							<font size = "12px">
-							
-							Page 1 of 1
-							</font>
+								echo ucfirst($approvedUser['User']['first_name']);
+								echo ' ';
+							 	echo ucfirst($approvedUser['User']['last_name']);
 
+							?>
+							<hr style="height:1px; border:none; text-align: left;  width: 200px; color:#b2b2b2; background-color:#b2b2b2;">
 						</td>
 					</tr>
-				</table>
-								
-			</footer> -->
+				
+			</table>
+
+			<div style="display:inline-block; vertical-align: bottom;text-align:left; margin-left:30px;">
+					<font size ="9px">
+						Doc No.: KFP-FR-MKT-07<br>
+						REV. No.: 01	
+					</font>				
+			</div>
 			<br><br>
-
-			
-			
-									
+				
 		</div>
 
 	</div>	

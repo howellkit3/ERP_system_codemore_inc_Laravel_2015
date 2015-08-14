@@ -164,6 +164,11 @@
 							                                         array('class' => 'form-control required',
 							                                        'div' => 'col-lg-7',
 							                                        'label' => false));
+			                                             	if (!empty($this->request->data['Employee']['code'])) {
+			                                             		$checkMe = 'checked';
+			                                             	} else {
+			                                             		$checkMe = ' ';
+			                                             	}
 			                                        	?>
 
 
@@ -175,7 +180,7 @@
 	                                                        </div> 
 	                                                        <div class="col-lg-5">		
 																<div class="checkbox-nice">
-	                                                                    <input type="checkbox" id="checkbox-generate" onclick="getCode(this)" name="generate_code">
+	                                                                    <input type="checkbox" id="checkbox-generate" onclick="getCode(this)" name="generate_code" <?php echo $checkMe ?> >
 	                                                                    <label for="checkbox-generate">
 	                                                                    Generate Code
 	                                                                    </label>
@@ -245,33 +250,34 @@
                                      		<div class="form-group">
 		                                        <label for="inputEmail1" class="col-lg-2 control-label">Date of Birth </label>
 		                                        <div class="col-lg-9">
-		                                      		   <?php
-			                                                echo $this->Form->input('EmployeeAdditionalInformation.id', array('class' => 'form-control col-lg-6',
-			                                                	'type' => 'hidden',
-			                                                	'label' => false));
-			                                         		echo $this->Form->input('EmployeeAdditionalInformation.birthday', array('class' => 'form-control col-lg-6 datepick','label' => false,
-			                                         			'data-date-viewmode' => 'years',
-			                                         			'data-date-minviewmode' => 'months'
+	                                      		   <?php
+		                                                echo $this->Form->input('EmployeeAdditionalInformation.id', array('class' => 'form-control col-lg-6',
+		                                                	'type' => 'hidden',
+		                                                	'label' => false));
+		                                         		echo $this->Form->input('EmployeeAdditionalInformation.birthday', array('class' => 'form-control col-lg-6 datepick','label' => false,
+		                                         			'data-date-viewmode' => 'years',
+		                                         			'data-date-minviewmode' => 'months'
 
-			                                         			));
+		                                         			));
 		                                            ?>
 		                                        </div>
-		                                     </div>
+		                                    </div>
 
-		                                     <div class="form-group">
+		                                    <div class="form-group">
 		                                        <label for="inputEmail1" class="col-lg-2 control-label">Place of Birth</label>
 		                                        <div class="col-lg-9">
-		                                      		   <?php
-			                                                
-			                                         		echo $this->Form->input('EmployeeAdditionalInformation.birth_place', array('class' => 'form-control col-lg-6','label' => false
-			                                         			));
+	                                      		   	<?php
+		                                                
+		                                         		echo $this->Form->input('EmployeeAdditionalInformation.birth_place', array('class' => 'form-control col-lg-6','label' => false
+		                                         			));
 		                                            ?>
 		                                        </div>
-		                                     </div>
-		                                     <div class="form-group">
+		                                    </div>
+
+		                                    <div class="form-group">
 		                                        <label for="inputEmail1" class="col-lg-2 control-label"> Email </label>
 		                                        <div class="col-lg-9">
-		                                         <?php
+		                                         	<?php
 		                                                echo $this->Form->input('Emails.id',array(
 		                                              		'type' => 'hidden',
 		                                                 	'label' => false,
@@ -290,20 +296,96 @@
 		                                                	));
 		                                            ?>
 		                                        </div>
-		                                     </div>
+		                                    </div>
 
-	                                          <div class="form-group">
-	                                        	 <label class="col-lg-2 control-label">
-	                                        	 <span style="color:red">*</span>Gender</label>
-	                                           	 <div class="radio col-lg-7">
-																	<input type="radio" name="data[EmployeeAdditionalInformation][gender]" id="categoryRadio1" value="M" checked>
-																	<label for="categoryRadio1">Male
-																	</label>
-																	<input type="radio" name="data[EmployeeAdditionalInformation][gender]" id="categoryRadio2" value="F">
-																	<label for="categoryRadio2">Female
-																	</label>
+		                                    <?php
+		                                    	
+			                                    if (!empty($this->request->data['EmployeeAdditionalInformation']['gender'])) {
+			                                    	
+			                                    	if ($this->request->data['EmployeeAdditionalInformation']['gender'] == 'M') {
+			                                    		$maleCheck = 'checked';
+			                                    	} else {
+			                                    		$maleCheck = ' ';
+			                                    	}
+
+			                                    	if ($this->request->data['EmployeeAdditionalInformation']['gender'] == 'F') {
+			                                    		$fmaleCheck = 'checked';
+			                                    	} else {
+			                                    		$fmaleCheck = ' ';
+			                                    	}
+			                                   	}else{
+			                                   		$maleCheck = ' ';
+			                                   		$fmaleCheck = ' ';
+			                                   	}
+		                                    	
+		                                    ?>
+
+	                                        <div class="form-group">
+	                                        	<label class="col-lg-2 control-label">
+	                                        	<span style="color:red">*</span>Gender</label>
+	                                           	<div class="radio col-lg-7">
+													<input type="radio" name="data[EmployeeAdditionalInformation][gender]" id="categoryRadio1" value="M" <?php echo $maleCheck ?> >
+													<label for="categoryRadio1">Male
+													</label>
+													<input type="radio" name="data[EmployeeAdditionalInformation][gender]" id="categoryRadio2" value="F" <?php echo $fmaleCheck ?> >
+													<label for="categoryRadio2">Female
+													</label>
 												</div>
-	                                          </div>
+	                                        </div>
+
+	                                        <?php
+		                                    	
+			                                    if (!empty($this->request->data['EmployeeAdditionalInformation']['status'])) {
+			                                    	
+			                                    	if ($this->request->data['EmployeeAdditionalInformation']['status'] == 'S') {
+			                                    		$sCheck = 'checked';
+			                                    	} else {
+			                                    		$sCheck = ' ';
+			                                    	}
+
+			                                    	if ($this->request->data['EmployeeAdditionalInformation']['status'] == 'M') {
+			                                    		$mCheck = 'checked';
+			                                    		$showMarriedSection = 'showMarriedSection';
+			                                    	} else {
+			                                    		$mCheck = ' ';
+			                                    	}
+			                                   	}else{
+			                                   		$sCheck = ' ';
+			                                   		$mCheck = ' ';
+			                                   		$showMarriedSection = ' ';
+			                                   	}
+		                                    	
+		                                    ?>
+
+	                                        <div class="form-group">
+	                                        	<label class="col-lg-2 control-label">
+	                                        	<span style="color:red">*</span>Status</label>
+	                                           	<div class="radio col-lg-7">
+													<input type="radio" name="data[EmployeeAdditionalInformation][status]" class="select-status" id="categoryRadio3" value="S" <?php echo $sCheck ?> >
+													<label for="categoryRadio3">Single
+													</label>
+													<input type="radio" name="data[EmployeeAdditionalInformation][status]" class="select-status" id="married-section" value="M" <?php echo $mCheck ?> >
+													<label for="married-section">Married
+													</label>
+												</div>
+	                                        </div>
+
+	                                        <div class="for-married-section <?php echo $showMarriedSection ?>" style="display:none;">
+		                                        <div class="form-group">
+			                                        <label for="inputEmail1" class="col-lg-2 control-label">Name of Spouse</label>
+			                                        <div class="col-lg-7">
+			                                            <?php
+			                                                echo $this->Form->input('EmployeeAdditionalInformation.spouse', array('class' => 'form-control col-lg-6','label' => false));
+			                                            ?>
+			                                        </div>
+			                                        <div class="col-lg-2">
+			                                            <?php
+			                                                echo $this->Form->input('EmployeeAdditionalInformation.no_children', array('class' => 'form-control col-lg-6','label' => false,'placeholder' => 'No. of Children'));
+			                                            ?>
+			                                        </div>
+			                                    </div>
+			                                </div>
+
 		                                     <div class="form-group">
 		                                        <label for="inputEmail1" class="col-lg-2 control-label">Height</label>
 		                                        <div class="col-lg-9">
@@ -369,6 +451,137 @@
                     </div>
                 </div>
             </div>
+
+            <div class="row">
+	            <div class="col-lg-12">
+	                <div class="main-box">
+	                    <h1>Educational Background</h1>
+	                    <!-- <div class="top-space"></div> -->
+	                    <div class="main-box-body clearfix">
+	                        <div class="main-box-body clearfix">
+	                        	
+
+	                        		<?php if (!empty($this->request->data)) { ?>
+
+	                        			<?php foreach ($this->request->data['EmployeeEducationalBackground'] as $key => $educationlist) { ?>
+	                        				<input name="data[EducationIdHolder][id][]" value="<?php echo $educationlist['id']?>" type="hidden">
+	                        				<section class="cloneMe educational_background">
+			                        			<div class="form-horizontal">
+				                    
+					                                <div class="form-group">
+					                                    <label for="inputPassword1" class="col-lg-2 control-label">Stage</label>
+					                                    <div class="col-lg-2">
+					                                        <?php 
+					                                            echo $this->Form->input('EmployeeEducationalBackground.'.$key.'.stages',
+				                                                 array( 
+				                                                 	'options' => array('Secondary' => 'Secondary','Tertiary' => 'Tertiary'),
+				                                                 	'class' => 'col-lg-6 form-control',
+				                                                	'label' => false,
+				                                                	'empty' => '------ Select Stage -----'
+				                                                	));
+
+					                                        ?>
+					                                       
+					                                    </div>
+					                                    
+					                                    <div class="col-lg-3">
+					                                        <?php 
+					                                            echo $this->Form->input('EmployeeEducationalBackground.'.$key.'.degree',
+				                                                 array( 
+				                                                 	'class' => 'col-lg-6 form-control',
+				                                                	'label' => false,
+				                                                	'placeholder' => 'Degree'
+				                                                	));
+
+					                                        ?>
+					                                         <!-- <span class="lighter-color">Ex. (02)-565-2056</span> -->
+					                                    </div>
+
+					                                    <div class="col-lg-2">
+					                                        <?php 
+					                                            echo $this->Form->input('EmployeeEducationalBackground.'.$key.'.year',
+				                                                 array( 
+				                                                 	'class' => 'col-lg-6 form-control',
+				                                                	'label' => false,
+				                                                	'placeholder' => 'Year'
+				                                                	));
+					                                            if ($key != 0 ) {
+					                                            	$showRemove = 'showRemoveButton';
+					                                            }else{
+					                                            	$showRemove = ' ';
+					                                            }
+
+					                                        ?>
+					                                         <!-- <span class="lighter-color">Ex. (02)-565-2056</span> -->
+					                                    </div>
+					                                    <div class="col-lg-2">
+					                                        <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneData('educational_background',this)"><i class="fa fa-plus"></i></button>
+					                                        <button type="button" class="remove-field btn btn-danger remove <?php echo $showRemove ?>" onclick="removeClone('educational_background')" style="display:none"><i class="fa fa-minus"></i> </button>
+					                                    </div>
+					                                </div>
+
+					                            </div>
+					                        </section>
+				                        <?php } ?>
+	                        		<?php } else { ?>
+		                        		<section class="cloneMe educational_background">
+				                            <div class="form-horizontal">
+				                    
+				                                <div class="form-group">
+				                                    <label for="inputPassword1" class="col-lg-2 control-label">Stage</label>
+				                                    <div class="col-lg-2">
+				                                        <?php 
+				                                            echo $this->Form->input('EmployeeEducationalBackground.0.stages',
+			                                                 array( 
+			                                                 	'options' => array('Secondary' => 'Secondary','Tertiary' => 'Tertiary'),
+			                                                 	'class' => 'col-lg-6 form-control',
+			                                                	'label' => false,
+			                                                	'empty' => '------ Select Stage -----'
+			                                                	));
+
+				                                        ?>
+				                                       
+				                                    </div>
+				                                    
+				                                    <div class="col-lg-3">
+				                                        <?php 
+				                                            echo $this->Form->input('EmployeeEducationalBackground.0.degree',
+			                                                 array( 
+			                                                 	'class' => 'col-lg-6 form-control',
+			                                                	'label' => false,
+			                                                	'placeholder' => 'Degree'
+			                                                	));
+
+				                                        ?>
+				                                         <!-- <span class="lighter-color">Ex. (02)-565-2056</span> -->
+				                                    </div>
+
+				                                    <div class="col-lg-2">
+				                                        <?php 
+				                                            echo $this->Form->input('EmployeeEducationalBackground.0.year',
+			                                                 array( 
+			                                                 	'class' => 'col-lg-6 form-control',
+			                                                	'label' => false,
+			                                                	'placeholder' => 'Year'
+			                                                	));
+
+				                                        ?>
+				                                         <!-- <span class="lighter-color">Ex. (02)-565-2056</span> -->
+				                                    </div>
+				                                    <div class="col-lg-2">
+				                                        <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneData('educational_background',this)"><i class="fa fa-plus"></i></button>
+				                                        <button type="button" class="remove-field btn btn-danger remove" onclick="removeClone('educational_background')" style="display:none"><i class="fa fa-minus"></i> </button>
+				                                    </div>
+				                                </div>
+
+				                            </div>
+				                        </section>
+			                        <?php } ?>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
 
 		   	<section class="cloneMe addressSection">
 		   		<?php if (!empty($employeeData['Address'])) : ?>
@@ -633,7 +846,7 @@
 
 		    	<?php } ?>
 		    <?php else : ?>
-		    		 <div class="row">
+		    	<div class="row">
 		            <div class="col-lg-12">
 		                <div class="main-box">
 		                    <h1>Employee Number</h1>
@@ -809,6 +1022,7 @@
 			                            	}
 			                            	if (!empty($employeeData['ContactPersonEmail']))  {
 			                            		$this->request->data['ContactPersonData']['Email'][0] = $employeeData['ContactPersonEmail'];
+			                            		
 			                            	}
 		                            	?>
 
@@ -997,3 +1211,8 @@
             margin-bottom: 15px !important;*/
         }
     </style>
+    <script type="text/javascript">
+    	$('.showRemoveButton').show();
+    	$('.showMarriedSection').show();
+
+    </script>

@@ -58,7 +58,7 @@ echo $this->element('hr_options');
 			               </div>
 			            </header>
 
-			          <div class="main-box-body clearfix">
+			          	<div class="main-box-body clearfix">
 			            	<div class="table-responsive">
 								<table class="table table-striped table-hover">
 									<thead>
@@ -264,7 +264,7 @@ echo $this->element('hr_options');
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label for="inputEmail1" class="col-lg-3 control-label"> Select Employee</label>
                         
                         <div class="col-lg-6">
@@ -279,17 +279,17 @@ echo $this->element('hr_options');
                                                               ));
                             ?>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="form-group">
-                        <label for="inputEmail1" class="col-lg-3 control-label"> Date</label>
+                        <label for="inputEmail1" class="col-lg-3 control-label">Date</label>
                         
                         <div class="col-lg-6">
                             <?php 
                                    echo $this->Form->input('Attendance.from_date', array(
                                                                 'label' => false,
                                                                 'class' => 'form-control  datepick',
-                                                                'placeholder' => 'Date from'
+                                                                'placeholder' => 'Date'
 
                                                               ));
                             ?>
