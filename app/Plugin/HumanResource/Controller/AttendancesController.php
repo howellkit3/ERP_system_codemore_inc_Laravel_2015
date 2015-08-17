@@ -531,6 +531,10 @@ public function export() {
 		$this->loadModel('HumanResource.Employee');
 
 		$this->loadModel('HumanResource.Workshift');
+
+		$this->loadModel('HumanResource.Department');
+
+		$departmentList = $this->Department->find('list',array('fields' => array('id','name')));
 		
 		$departmentId = $this->request->data['Attendance']['department_id'];
 		//$employeeId = $this->request->data['Attendance']['employee_id'];
@@ -563,7 +567,7 @@ public function export() {
             'order' => 'Attendance.id ASC'
         ));
         //pr($attendanceData);exit();
-		$this->set(compact('attendanceData'));
+		$this->set(compact('attendanceData','departmentList','departmentId'));
 
 		$this->render('Attendances/xls/attendance_report');
 	}
@@ -602,6 +606,34 @@ public function export() {
 		$this->set(compact('attendance'));
 
 		$this->render('Attendances/ajax/days_work');
+
+	}
+
+	public function leaves(){
+
+		$this->loadModel('HumanResource.Leave');
+
+		$this->loadModel('HumanResource.Employee');
+
+		$this->loadModel('HumanResource.Type');
+
+		$this->Leave->bind(array('Employee','Type'));
+		$limit = 10;
+
+		$conditions = array();
+
+		$params =  array(
+	            'conditions' => $conditions,
+	            'limit' => $limit,
+	            //'fields' => array('id','overtime_id'),
+	            'order' => 'Leave.from ASC',
+	        );
+
+		$this->paginate = $params;
+
+	    $leaveData = $this->paginate('Leave');
+	    
+	    $this->set(compact('leaveData'));
 
 	}
 

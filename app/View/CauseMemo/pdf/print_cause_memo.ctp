@@ -11,8 +11,7 @@
 	<div class="col-lg-12">
 		<div class="main-box main-pdf"  >
 			<center>
-                <h1 align ="center" style = "margin-bottom:0px; font-size: 40px;">KOUFU</h1>
-                <label align ="center" style = "margin-top:0px; padding-top:0px; font-size: 10px;">PACKAGING CORPORATION</label>
+                <img src="<?php echo Router::url('/', true) ?>img/koufu_logo.jpg" alt="logo" style="width:225px;height:50px;padding-bottom:10;">
                 <br>
                 <h2 style = "margin-top:10px; font-style: Cooper; font-size: 20px;">SHOW CAUSE MEMO</h2>
                 <br>
