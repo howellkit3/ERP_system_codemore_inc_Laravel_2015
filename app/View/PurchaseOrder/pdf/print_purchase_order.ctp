@@ -9,18 +9,18 @@
 for ($x = 0; $x <= 1; $x++) { ?>
     
 <div class = "one" width = "48%" height = "48%">
-	<table class="layout" style =" margin:0px; line-height: 13px; padding:0px; width:750px; border:1px solid black;">
-
-
+	<table class="layout" style =" margin:0px; line-height: 13px; padding:2px; width:750px; border:1px solid black;">
+				
 				<tr>
-					<td style =" padding:0px;  border:1px solid black; width:40%;">
-					<center>
-					<!-- <img src="<?php echo Router::url('/', true) ?>img/koufu_logo.png" alt="logo" style="width:165px;height:30px;">  -->
-					<img src="<?php echo Router::url('/', true) ?>img/koufu_logo.jpg" alt="logo" style="width:225px;height:40px;padding-bottom:10;"><br>
-							<label style = "margin-top:0px; font-size: 12px;">Lot 4-5 Blk 4 Mountview Industrial Complex<br>
-							Brgy. Bancal Carmona Cavite<br>
-							Tel: +632-5844928; &nbsp; +6346-4301576 &nbsp; Fax: +632-5844952</label>
-					</center>
+					<td style =" padding:0px; padding-top:0px; border:0px solid black; width:40%;">
+						<center>
+
+						<!-- <img src="<?php echo Router::url('/', true) ?>img/koufu_logo.png" alt="logo" style="width:165px;height:30px;">  -->
+						<img src="<?php echo Router::url('/', true) ?>img/koufu_logo.jpg" alt="logo" style="width:225px;height:50px;padding-bottom:10;"><br>
+								<label style = "margin-top:0px; font-size: 12px;">Lot 4-5 Blk 4 Mountview Industrial Complex<br>
+								Brgy. Bancal Carmona Cavite<br>
+								Tel: +632-5844928; &nbsp; +6346-4301576 &nbsp; Fax: +632-5844952</label>
+						</center>
 					</td>
 				
 					<td style =" padding:0px;  width:60%;"><center><h1><br>PURCHASE ORDER</h1></center><br>
@@ -195,13 +195,13 @@ for ($x = 0; $x <= 1; $x++) { ?>
 	 
 <div class = "one" width = "48%" height = "48%" > 
 
-	<table class="layout" style =" margin:0px; line-height: 13px; padding:0px; width:750px; border:1px solid black;">
+	<table class="layout" style =" margin:0px; line-height: 13px; padding:2px; width:750px; border:1px solid black;">
 
 				<tr>
-					<td style =" padding:0px;  border:1px solid black; width:40%;">
+					<td style =" padding:0px; padding-top:0px;  border:0px solid black; width:40%;">
 					<center>
 					<!-- <img src="<?php echo Router::url('/', true) ?>img/koufu_logo.png" alt="logo" style="width:165px;height:30px;">  -->
-					<img src="<?php echo Router::url('/', true) ?>img/koufu_logo.jpg" alt="logo" style="width:225px;height:40px;padding-bottom:10;"><br>
+					<img src="<?php echo Router::url('/', true) ?>img/koufu_logo.jpg" alt="logo" style="width:225px;height:50px;padding-bottom:10;"><br>
 							<label style = "margin-top:0px; font-size: 12px;">Lot 4-5 Blk 4 Mountview Industrial Complex<br>
 							Brgy. Bancal Carmona Cavite<br>
 							Tel: +632-5844928; &nbsp; +6346-4301576 &nbsp; Fax: +632-5844952</label>
@@ -376,13 +376,13 @@ for ($x = 0; $x <= 1; $x++) { ?>
 
 	<div class = "one" width = "48%" height = "48%" > 
 	
-	<table class="layout" style =" margin:0px; line-height: 13px; padding:0px; width:750px; border:1px solid black;">
+	<table class="layout" style =" margin:0px; line-height: 13px; padding:2px; width:750px; border:1px solid black;">
 
 				<tr>
-					<td style =" padding:0px;  border:1px solid black; width:40%;">
+					<td style =" padding:0px; padding-top:0px; border:0px solid black; width:40%;">
 					<center>
 					<!-- <img src="<?php echo Router::url('/', true) ?>img/koufu_logo.png" alt="logo" style="width:165px;height:30px;">  -->
-					<img src="<?php echo Router::url('/', true) ?>img/koufu_logo.jpg" alt="logo" style="width:225px;height:40px;padding-bottom:10;"><br>
+					<img src="<?php echo Router::url('/', true) ?>img/koufu_logo.jpg" alt="logo" style="width:225px;height:50px;padding-bottom:10;"><br>
 							<label style = "margin-top:0px; font-size: 12px;">Lot 4-5 Blk 4 Mountview Industrial Complex<br>
 							Brgy. Bancal Carmona Cavite<br>
 							Tel: +632-5844928; &nbsp; +6346-4301576 &nbsp; Fax: +632-5844952</label>
