@@ -3,7 +3,7 @@
     $this->PhpExcel->createWorksheet()
         ->setDefaultFont('Calibri', 12);
 
-    $objTpl = PHPExcel_IOFactory::load("./img/templates.xlsx");
+    $objTpl = PHPExcel_IOFactory::load("./img/dr_summary.xlsx");
      
     // add data
     $counter = 10;
@@ -16,15 +16,7 @@
             $usdPrice = number_format($invoiceList['SalesInvoice']['unit_price'],2);
         }
 
-        $objTpl->setActiveSheetIndex(0)
-                    ->setCellValue('B'.$counter, date('m/d/Y', strtotime($invoiceList['SalesInvoice']['created'])))
-                    ->setCellValue('C'.$counter, $invoiceList['SalesInvoice']['dr_uuid'])
-                    ->setCellValue('E'.$counter, $usdPrice)
-                    ->setCellValue('F'.$counter, $phpPrice)
-                    ->setCellValue('H'.$counter, $companyData[$invoiceList['SalesInvoice']['company_id']])
-                    ->setCellValue('J'.$counter, $invoiceList['SalesInvoice']['quantity'])
-                    ->setCellValue('K'.$counter, $invoiceList['SalesInvoice']['sales_invoice_no'])
-                    ->setCellValue('L'.$counter, $invoiceList['SalesInvoice']['statement_no']);
+        $objTpl->setActiveSheetIndex(0);
 
         $counter++;  
     }

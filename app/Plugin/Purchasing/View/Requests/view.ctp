@@ -150,9 +150,9 @@
                         
                     </table>
                     <div class = " pull-right ">
-                    <label font-size:60%;>
-                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KP-FR-LG1-001 R0 <br>Effective Date: 10 Aug 2015 
-                    </label>
+                        <label font-size:60%;>
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KP-FR-LG1-001 R0 <br>Effective Date: 10 Aug 2015 
+                        </label>
                     </div> 
                 </div>
             </div>

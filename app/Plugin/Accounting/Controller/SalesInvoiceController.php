@@ -610,6 +610,9 @@ class SalesInvoiceController extends AccountingAppController {
 
         $this->loadModel('Sales.PaymentTermHolder');
 
+        $this->loadModel('PaymentTermHolder');
+
+
         $paymentTermData = Cache::read('paymentTerms');
         
         if (!$paymentTermData) {
@@ -620,6 +623,9 @@ class SalesInvoiceController extends AccountingAppController {
         }
 
         $companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')
+                                                            ));
+
+        $companyTinData = $this->Company->find('list', array('fields' => array('id', 'tin')
                                                             ));
 
         if(!empty($this->request->data['from_date'])){
@@ -649,6 +655,10 @@ class SalesInvoiceController extends AccountingAppController {
                 ),
                 'order' => 'SalesInvoice.id DESC'
             ));
+
+            
+
+
            
         } else {
 
@@ -666,7 +676,18 @@ class SalesInvoiceController extends AccountingAppController {
                 'order' => 'SalesInvoice.id DESC'
             ));
 
+            $DeliveryDateData = $this->Delivery->find('list', array('fields' => array('dr_uuid', 'created')
+                                                            ));
 
+            $DeliveryClientsOrderData = $this->Delivery->find('list', array('fields' => array('dr_uuid', 'clients_order_id')
+                                                            ));
+
+            $clientOrderData = $this->ClientOrder->find('list', array('fields' => array('uuid', 'payment_terms')
+                                                            ));
+
+            $termData = $this->PaymentTermHolder->find('list', array('fields' => array('id', 'name')
+                                                            ));
+           // PaymentTermHolderpr($DeliveryClientsOrderData); exit;
         }
         
         //$this->SalesInvoice->bindInvoice();
@@ -718,7 +739,7 @@ class SalesInvoiceController extends AccountingAppController {
 
         }
 
-        $this->set(compact('invoiceData','companyData','paymentTermData'));
+        $this->set(compact('invoiceData','companyData','paymentTermData', 'companyTinData', 'DeliveryDateData', 'clientOrderData', 'DeliveryClientsOrderData', 'termData'));
 
         if ($reportname == 1) {
 
