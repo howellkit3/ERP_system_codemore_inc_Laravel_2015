@@ -19,11 +19,19 @@ th, td {
 					  $txtHolder = " ";?>
 				
 				<div style = "height: 48%">
-				<img src="<?php echo Router::url('/', true) ?>img/koufu_logo.png" alt="logo" style="width:165px;height:30px;"> 
-					<center>
-							<h4 style = "margin-bottom:0px;">PURCHASE REQUISITION</h4>
-					</center>
-					
+				<table>
+					<tr>
+						<td>
+							<img src="<?php echo Router::url('/', true) ?>img/koufu_logo.jpg" alt="logo" style="width:165px;height:30px;padding-bottom:10;">
+						</td>
+					<td>
+						<center>
+							<h4 style = "margin-bottom:0px; margin-top:0px; padding-top:0px;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PURCHASE REQUISITION</h4>
+						</center>
+					</td>
+					</tr>
+
+				</table>	
 						<table border="0" width="100%" style = "margin:0px; padding:0px; line-height:0px;">
 							<tbody>
 							
@@ -156,10 +164,19 @@ th, td {
 					
 				</div>
 				<div style = "height: 48%">
-				<img src="<?php echo Router::url('/', true) ?>img/koufu_logo.png" alt="logo" style="width:165px;height:30px;"> 
-					<center>
-							<h4 style = "margin-bottom:0px;">PURCHASE REQUISITION</h4>
-					</center>
+					<table>
+					<tr>
+						<td>
+							<img src="<?php echo Router::url('/', true) ?>img/koufu_logo.jpg" alt="logo" style="width:165px;height:30px;padding-bottom:10;">
+						</td>
+					<td>
+						<center>
+							<h4 style = "margin-bottom:0px; margin-top:0px; padding-top:0px;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PURCHASE REQUISITION</h4>
+						</center>
+					</td>
+					</tr>
+
+				</table>	
 					
 						<table border="0" width="100%" style = "margin:0px; padding:0px; line-height:0px;">
 							<tbody>
