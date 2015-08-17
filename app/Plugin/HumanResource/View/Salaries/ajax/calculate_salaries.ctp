@@ -19,12 +19,17 @@
 
 
 			<tbody aria-relevant="all" aria-live="polite" role="alert">
-									<?php  if(!empty($employees)) { ?>
+									<?php  if(!empty($salaries)) { ?>
 
-								           <?php foreach ($employees as $key => $employee): ?>
+								           <?php foreach ($salaries as $key => $salary): ?>
 													
 													<tr >
-														<td> <?php echo $employee['Employee']['code']; ?></td>
+													<td> 
+													<?php 
+
+													$employee = $this->CustomEmployee->findEmployee($salary['employee_id']);
+													echo !empty( $employee ) ?  $employee['Employee']['code'] : ''; ?>   
+													</td>
 														<td class="">
 								                          <?php echo $this->CustomText->getFullname($employee['Employee']);  ?>
 								                        </td>
@@ -33,31 +38,30 @@
 								                          <?php echo date('Y/m/d')  ?>
 								                        </td>
 								                          <td class="">
-								                          <?php echo !empty($customDate['start']) ? date('Y/m/d',strtotime($customDate['start'])) : '' ?>
+								                          <?php echo !empty($salary['from']) ? date('Y/m/d',strtotime($salary['from'])) : '' ?>
 								                        </td>
 								                          <td class="">
-								                           <?php echo !empty($customDate['end']) ? date('Y/m/d',strtotime($customDate['end'])) : '' ?>
+								                           <?php echo !empty($salary['to']) ? date('Y/m/d',strtotime($salary['to'])) : '' ?>
 								                        </td>
 
 								                        <td class="">
-								                           <?php $gross = $this->Salaries->gross_pay($employee,$employee['Salary']); echo number_format($gross['gross'],2); ?>
+								                           <?php echo $salary['gross_pay']; ?>
 								                        </td>
+								                        <td class="">
+								                       
+								                           <?php echo $salary['sss']; ?>
+								                        </td>
+								                        <td class="">
 
-								                        <td class="">
-								                           <?php 
-								                           echo $this->Salaries->sss_pay($employee,$employee['Salary'],$payScheds,$gross['gross']); ?>
+								                           <?php echo !empty($salary['philhealth']) ? $salary['philhealth'] : '0.00'; ?>
 								                        </td>
 								                        <td class="">
-								                           <?php echo $this->Salaries->philhealth_pay($employee,$employee['Salary'],$payScheds,$gross['gross']); ?>
+								                            	0.00
 								                        </td>
 								                        <td class="">
-								                           <?php echo '0.00'; //$this->Salaries->sss_pay($employee['Attendance'],$employee['Salary'],$payScheds,$gross); ?>
+								                          <?php echo $salary['total_deduction']; ?>
 								                        </td>
-								                        <td class="">
-								                           <?php echo '0.00';//$this->Salaries->sss_pay($employee['Attendance'],$employee['Salary'],$payScheds,$gross); ?>
-								                        </td>
-								                        <td class="">
-								                           <?php //echo $this->Salaries->sss_pay($employee['Attendance'],$employee['Salary'],$payScheds,$gross); ?>
+								                         <td class="">
 								                        </td>
 								                      
 								                    </tr>

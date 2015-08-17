@@ -79,26 +79,6 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
                 'class' => 'btn '.$page 
               )); ?>
         </li>
-
-        <li class="">
-          <?php $page =($active_page == 'salaries')  && !in_array($active_action,array('reports')) ? 'active' : '' ?>
-            <?php echo $this->Html->link("<span class='count'>Salaries</span>",
-             array('controller' => 'salaries',
-              'action' => 'export'),
-              array('escape' => false,
-                'class' => 'btn '.$page 
-              )); ?>
-        </li>
-
-        <li class="">
-          <?php $page = ($active_page == 'salaries') && in_array($active_action,array('reports')) ? 'active' : '' ?>
-            <?php echo $this->Html->link("<span class='count'>Salary Reports</span>",
-             array('controller' => 'salaries',
-              'action' => 'reports'),
-              array('escape' => false,
-                'class' => 'btn '.$page 
-              )); ?>
-        </li>
       
     </ul>
 </div>

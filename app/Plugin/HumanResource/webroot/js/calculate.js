@@ -36,6 +36,19 @@ $(document).ready(function(){
 		//e.preventDefault();
 	});
 
+	$body.on('click','#GeneratePayslip',function(e){
+
+		var url = $(this).attr('href');
+
+		var month = $('#changeDate').val();
+
+		var range = $('.radio.inline-block input:checked').val();
+
+		$(this).attr('href',url+'?days='+range+'&&month='+month);
+
+		//e.preventDefault();
+	});
+
 	$body.on('submit','#AttendanceComputeSalariesForm',function(e){
 
 		$result_table = $('#result-table');
@@ -55,6 +68,7 @@ $(document).ready(function(){
 	        	
 	        	$('#exportData').attr('style','display:block');
 
+	        	$('#GeneratePayslip').removeClass('hide')
 	        	},1000);
 
 	        }
@@ -64,6 +78,7 @@ $(document).ready(function(){
 			e.preventDefault();
 
 	});
+
 	
 
 	

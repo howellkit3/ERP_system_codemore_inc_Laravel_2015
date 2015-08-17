@@ -2,6 +2,11 @@
 App::uses('AppController', 'Controller');
 App::uses('SessionComponent', 'Controller/Component');
 
+App::import('PHPWord', 'Vendor');
+
+
+App::import('Vendor', 'PHPWord', array('file' => 'PHPWord'.DS.'PHPWord.php'));
+
 
 class SalariesController  extends HumanResourceAppController {
 
@@ -138,17 +143,23 @@ class SalariesController  extends HumanResourceAppController {
 
 			$this->loadModel('HumanResource.SalaryReport');
 
-			$this->loadModel('HumanResource.Deduction');
-			
+			$this->loadModel('Payroll.Deduction');
+
+			$this->loadModel('Payroll.Amorization');
+
+			$this->loadModel('HumanResource.Holiday');
+
 			$salaries = $this->SalaryComputation->calculateBenifits($employees,$payScheds,$customDate);
 
+
+
 			//save for salary report
-			if (!empty($salaries)) {
+			// if (!empty($salaries)) {
 
-				$this->SalaryReport->saveAll($salaries);
-			}
+			// 	$this->SalaryReport->saveAll($salaries);
+			// }
 
-			$this->set(compact('employees','customDate','payScheds'));
+			$this->set(compact('employees','customDate','payScheds','salaries'));
 
 		}
 
@@ -157,7 +168,6 @@ class SalariesController  extends HumanResourceAppController {
 	}
 
 	public function export_salaries_report($type) {
-
 
 		$query = $this->request->query;
 
@@ -208,13 +218,13 @@ class SalariesController  extends HumanResourceAppController {
 
 				$conditions =  array_merge($conditions,array('Attendance.employee_id' => $emp['Employee']['id']));
 
-				$this->loadModel('HumanResource.WorkSchedule');
+			$this->loadModel('HumanResource.WorkSchedule');
 
-				$this->loadModel('HumanResource.WorkShift');
+			$this->loadModel('HumanResource.WorkShift');
 
-				$this->loadModel('HumanResource.WorkShiftBreak');
+			$this->loadModel('HumanResource.WorkShiftBreak');
 
-				$this->loadModel('HumanResource.BreakTime');
+			$this->loadModel('HumanResource.BreakTime');
 
 				//$this->Attendance->bind(array('WorkSchedule','WorkShift','WorkShiftBreak','BreakTime'));
 
@@ -224,15 +234,35 @@ class SalariesController  extends HumanResourceAppController {
 				
 			}
 
-			$this->set(compact('employees','customDate','payScheds','days','date','payrollDate'));
 
+			$this->loadModel('HumanResource.SalaryReport');
+
+			$this->loadModel('Payroll.Deduction');
+
+			$this->loadModel('Payroll.Amorization');
+
+			$this->loadModel('HumanResource.Holiday');
+
+			$salaries = $this->SalaryComputation->calculateBenifits($employees,$payScheds,$customDate);
+
+			// pr($salaries);
+			// exit();
+
+			$this->set(compact('employees','customDate','payScheds','days','date','payrollDate','salaries'));
+
+			
 			switch ($type) {
-				
+
+
+			case 'payslip':
+				$this->render('Salaries/payslip/payslip');
+                break; 	
             case 'excel':
 				$this->render('Salaries/xls/salaries_report');
                 break;
-            case 'csv':
 
+
+            case 'csv':
                 $this->layout = false;
                 $this->render('csv/export');
                 # code...
@@ -296,15 +326,16 @@ class SalariesController  extends HumanResourceAppController {
 
 	public function deductions() {
 
-		$this->loadModel('HumanResource.Deduction');
+		$this->loadModel('Payroll.Deduction');
 		$this->loadModel('HumanResource.Employee');
 
 		$conditions = array();
 		$employeeList = $this->Employee->getList($conditions);	
 
 		$limit = 10;
+		$defaultId = current(array_flip($employeeList));
 
-        $conditions = array('Deduction.employee_id' => current(array_flip($employeeList)));	
+        $conditions = array('Deduction.employee_id' => $defaultId);	
 
         $params =  array(
 	            'conditions' => $conditions,
@@ -319,9 +350,7 @@ class SalariesController  extends HumanResourceAppController {
 
 		$deductions = $this->paginate('Deduction');
 
-		//pr($deductions); exit();
-
-		$this->set(compact('deductions','employeeList'));
+		$this->set(compact('deductions','employeeList','defaultId'));
 
 
 	}
@@ -346,6 +375,11 @@ class SalariesController  extends HumanResourceAppController {
 
 
 			if ( $this->Deduction->save($this->request->data) ) {
+
+
+				//save amortization schedules
+
+				
 
 				$this->Session->setFlash('Deduction save successfully','success');
 
@@ -421,8 +455,6 @@ class SalariesController  extends HumanResourceAppController {
 
 			$query = $this->request->data;
 
-
-
 			if (!empty($query['range'])) {
 
 				$date = explode('-',$query['range']);
@@ -440,35 +472,39 @@ class SalariesController  extends HumanResourceAppController {
 
 				$keys = 0;
 
-
 				while (strtotime($start_date) <= strtotime($end_date)) {
 						
-					if (in_array($start_date, array(date('Y-m-01',strtotime($start_date)),date('Y-m-30',strtotime($start_date))))) {
+					if (in_array($start_date, array(date('Y-m-15',strtotime($start_date)),date('Y-m-t',strtotime($start_date))))) {
 
 						$payment[$keys]['date'] = $start_date;
 						$count++;
 						$keys++; 
 					}
 
-
 					$start_date = date ("Y-m-d", strtotime("+1 days", strtotime($start_date)));
 
 				}
 
 				$total_payment = $query['amount'] / count($payment);
+
 				$total = $query['amount'];
+
 				foreach ($payment as $key => $pay) {
-					$payment[$key]['deduction'] = number_format($total_payment,2);
-					$payment[$key]['less'] = number_format($total,2);
 
+					$payment[$key]['less'] = number_format($total_payment,2);
+					$payment[$key]['deduction'] = number_format($total,2);
 					$total = $total - $total_payment;
+
 				}
+				//echo json_encode($payment);
 
-				echo json_encode($payment);
-
+				$this->set(compact('payment'));
+				
+				$this->render('Salaries/ajax/compute_deductions');
 			}
 		}
-		exit();
+		//exit();
 	}
+
 
 }

@@ -271,7 +271,9 @@ class Attendance extends AppModel {
 
 			foreach ($attendances as $key => $attendance) {
 
+				// if (strtotime($attendance['Attendance']['in']) >= strtotime($attendance['WorkShift']['from']) && strtotime($attendance['Attendance']['out']) <= strtotime($attendance['WorkShift']['to'])) {
 				if (strtotime($attendance['Attendance']['in']) >= strtotime($attendance['WorkShift']['from']) && strtotime($attendance['Attendance']['out']) <= strtotime($attendance['WorkShift']['to'])) {
+						
 						$from = new DateTime($attendance['Attendance']['in']);
 						$to = new DateTime($attendance['Attendance']['out']);
 						

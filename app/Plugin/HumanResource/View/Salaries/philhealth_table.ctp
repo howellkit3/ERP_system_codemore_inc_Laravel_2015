@@ -13,7 +13,7 @@ echo $this->Html->script(array(
 )); 
 
 
-echo $this->element('hr_options');
+echo $this->element('payroll_options');
 
 	$active_tab = 'sss_table';
  ?>
