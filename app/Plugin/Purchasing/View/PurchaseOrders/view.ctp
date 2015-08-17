@@ -27,69 +27,71 @@
     <div class="col-lg-12">
         <div class="main-box">
             <center>
-                <header class="main-box-header clearfix"><?php //echo pr($contactInfo);die; ?>
-                    <h1>Kou Fu Packaging Corporation</h1>
-                    <h5>Lot 3-4 Blk 4 Mountview Industrial Complex Brgy. Bancal Carmona Cavite</h5>
-                    <h6>
-                        Tel: +63(2)5844928  &emsp;Fax: +63(2)5844952
-                    </h6><br>
-                    <b><h2>Purchase Order Slip</h2></b>
-                    <br>
-                </header>
-            </center>
+            <table  width="100%" >
+                <tr>
+                    <td >
+                        <center>
+                        <!-- <img src="<?php echo Router::url('/', true) ?>img/koufu_logo.png" alt="logo" style="width:165px;height:30px;">  -->
+                        <img src="<?php echo Router::url('/', true) ?>img/koufu_logo.jpg" alt="logo" style="width:225px;height:60px;padding-bottom:10;"><br>
+                                <label style = "margin-top:0px; font-size: 12px;">Lot 4-5 Blk 4 Mountview Industrial Complex<br>
+                                Brgy. Bancal Carmona Cavite<br>
+                                Tel: +632-5844928; &nbsp; +6346-4301576 &nbsp; Fax: +632-5844952</label>
+                        </center>
+                    </td>
+                    <td width = "55%">
+                        
+                            <h1 style = "margin-bottom:0px; margin-top:0px; margin-bottom:30px; padding-top:0px;"><b>PURCHASE ORDER </b></h1>
+                            &emsp;&emsp;&nbsp;&nbsp;&nbsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            PO No  : <u><?php echo $purchaseOrderData['PurchaseOrder']['po_number']; ?></u>
+                        
+                    </td>
+                </tr>   
+            </table>
+
+            <br><br>
+
+            <table  width = "100%" style="margin-left:2%;" >
+                
+                    <tr>
+                        <td align = "left" width = "25%">Supplier </td>
+                        <td align = "left" width = "25%">:<?php echo ucfirst($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]); ?></td>
+                         
+                        <td align = "left" width = "25%">Date </td>
+                        <td align = "left" width = "25%">:<?php echo (new \DateTime())->format('M d, Y') ?>
+                        </td>
+                    </tr>
+            </table>
+
+            <table  width = "100%" style="margin-left:2%;" >
+                    <tr>
+                        <td align = "left" width = "25%">Contact Person</td>
+                        <td align = "left" width = "25%">:<?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']); ?> <?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
+                        
+                        <td align = "left" width = "25%">Terms </td>
+                        <td align = "left" width = "25%">:<?php echo $paymentTermData[$purchaseOrderData['PurchaseOrder']['payment_term']]; ?>   
+                        </td>
+                        
+                    </tr>
+                
+            </table>
+
+            <table  width = "100%"  style="margin-left:2%;">
+                    <tr>
+                        <td align = "left" width = "25%">Telephone</td>
+                        <td align = "left" width = "25%">:<?php echo $purchaseOrderData['Contact']['number']; ?></td>
+                         
+                        <td align = "left" width = "25%">Delivery Date:</td>
+                        <td align = "left" width = "25%">:<?php echo date('M d, Y', strtotime($purchaseOrderData['PurchaseOrder']['delivery_date'])); ?> 
+                        </td>
+                        
+                    </tr>
+                </thead>
+            </table>
+
+            <br><br>
 
             <div class="main-box-body clearfix">
-                <form class="form-horizontal" role="form">
-                    
-                    <div class="form-group">
-                        
-                        <div class="col-lg-6">
-                            &emsp;&emsp;
-                        </div>
-                        <div class="col-lg-3">&emsp;&emsp;&nbsp;&nbsp;&nbsp;
-                            
-                        </div>
-                        <div class="col-lg-3">&emsp;&emsp;&nbsp;&nbsp;&nbsp;
-                            PO No  : <u><?php echo $purchaseOrderData['PurchaseOrder']['po_number']; ?></u>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        
-                        <div class="col-lg-2">
-                            &emsp;&emsp;Supplier
-                        </div>
-                        <div class="col-lg-4">
-                            :&emsp;<?php echo ucfirst($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]); ?>
-                            
-                        </div>
-                        <div class="col-lg-3">&emsp;&emsp;&nbsp;&nbsp;&nbsp;
-                            Date : <u><?php echo date('M d, Y', strtotime($purchaseOrderData['PurchaseOrder']['created'])); ?></u>
-                        </div>
-                        <div class="col-lg-3">&emsp;&emsp;&nbsp;&nbsp;&nbsp;
-                            Terms  : <u><?php echo $paymentTermData[$purchaseOrderData['PurchaseOrder']['payment_term']]; ?></u>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        
-                        <div class="col-lg-2">
-                            &emsp;&emsp;Contact
-                        </div>
-                        <div class="col-lg-4">
-                            :&emsp;<?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']); ?> <?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?>
-                            
-                        </div>
-                        <div class="col-lg-3">&emsp;&emsp;&nbsp;&nbsp;&nbsp;
-                            Tel# : <u><?php echo $purchaseOrderData['Contact']['number']; ?></u>
-                        </div>
-                        <div class="col-lg-3">&emsp;&emsp;&nbsp;&nbsp;&nbsp;
-                            Delivery Date  : <u><?php echo date('M d, Y', strtotime($purchaseOrderData['PurchaseOrder']['delivery_date'])); ?></u>
-                        </div>
-                    </div>
-                    
-                </form>
-
+            
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
@@ -122,11 +124,18 @@
                             <td class="text-center"> </td>
                             <td class="text-center"> </td>
                         </tr>
+                         <tr>
+                            <td> </td>
+                            <td class="text-center"></td>
+                            <td class="text-center"> </td>
+                            <td class="text-center"> </td>
+                            <td class="text-center"><b>Total : PHP <?php echo number_format($total,2)?></b></td>
+                        </tr>
                     </table>
 
-                    <table class="table">
+                    <!-- <table width = "100%">
                         <thead>
-                            <th class="">
+                            <th width = "33%">
                                 <?php 
                                     if($purchaseOrderData['PurchaseOrder']['status'] == 8){ 
                                         echo "<span class='label label-default'>Waiting</span>";
@@ -134,15 +143,21 @@
                                     if($purchaseOrderData['PurchaseOrder']['status'] == 1){ 
                                         echo "<span class='label label-success'>Approved</span>";
                                     }
+                                    if($purchaseOrderData['PurchaseOrder']['status'] == 11){ 
+                                        echo "<span class='label label-success'>Received</span>";
+                                    }
                                 ?>
                             </th>
-                            <th class="">Version : <?php echo $purchaseOrderData['PurchaseOrder']['version']; ?></th>
-                            <th class="text-center">Total : PHP <?php echo number_format($total,2)?></th>
+                            <th width = "33%">Version : <?php //echo $purchaseOrderData['PurchaseOrder']['version']; ?></th> 
+
+                            <th width = "21%"</th>
+                            <th width = "33%" align="right"></th>
                         </thead>
-                    </table>
-                   
-                    Note : <?php echo ucfirst($purchaseOrderData['PurchaseOrder']['remarks']); ?><br><br>
-                    
+                    </table> -->
+                   <div style = " margin-left:0;"class="col-lg-1">
+                    Note/s : <?php echo ucfirst($purchaseOrderData['PurchaseOrder']['remarks']); ?><br><br>
+                    </div>
+
                     <table class="table table-bordered">
                         <thead>
                             <th class="text-center">Requested by :</th>
@@ -155,6 +170,12 @@
                             <td class="text-center"> </td>
                         </tr>
                     </table>
+
+                    <div class = " pull-right ">
+                    <label style = "font-size:60%;">
+                         <center>KP-FR-LG1-001 R0 <br>Effective Date: 10 Aug 2015 </center>
+                    </label>
+                    </div> 
                 </div>
 
             </div>

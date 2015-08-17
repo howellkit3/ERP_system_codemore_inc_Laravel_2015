@@ -48,49 +48,54 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="main-box">
-            <center>
-                <header class="main-box-header clearfix"><?php //echo pr($contactInfo);die; ?>
-                    <h1>Kou Fu Packaging Corporation</h1>
-                    <h5>Lot 3-4 Blk 4 Mountview Industrial Complex Brgy. Bancal Carmona Cavite</h5>
-                    <h6>
-                        Tel: +63(2)5844928  &emsp;Fax: +63(2)5844952
-                    </h6><br>
-                    <b><h2>Request Purchase Order</h2></b>
-                    <br>
-                </header>
-            </center>
-
-            <div class="main-box-body clearfix">
-                <form class="form-horizontal" role="form">
-                    
-                    <div class="form-group">
-                        
-                        <div class="col-lg-2">
-                            &emsp;&emsp;Department
-                        </div>
-                        <div class="col-lg-4">
-                            :&emsp;Purchasing Department
-                            
-                        </div>
-                        <div class="col-lg-3">&emsp;&emsp;&nbsp;&nbsp;&nbsp;
-                            Date : <u><?php echo date('M d, Y', strtotime($requestData['Request']['created'])); ?></u>
-                        </div>
-                        <div class="col-lg-3">&emsp;&emsp;&nbsp;&nbsp;&nbsp;
-                            No  : <u>RQO<?php echo $requestData['Request']['uuid']; ?></u>
-                        </div>
-                    </div>
-                    
-                </form>
             
+            <br><br>
+
+               <table width = "100%">
+                    <tr>
+                        <td >
+                            <img src="<?php echo Router::url('/', true) ?>img/koufu_logo.jpg" alt="logo" style="width:248px;height:45px;padding-bottom:10;">
+                        </td>
+                        <td width = "65%">
+                        
+                            <h1 style = "margin-bottom:0px; margin-top:0px; padding-top:0px;"><b>PURCHASE REQUISITION </b></h1>
+                        
+                        </td>
+                    </tr>
+
+                </table>    
+               
+               <br><br>
+                
+            <div class="main-box-body clearfix">
+                
+
+            <table border="0" width="100%" style = "margin:10px; padding:0px; line-height:0px;">
+                <tbody>
+                
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td ></td>
+                        <td align="right" style="line-height:8px;"><b>No: </b>RQ<?php echo $requestData['Request']['uuid']; ?><br><br><br><b>Date: </b><?php echo (new \DateTime())->format('d/m/Y') ?><br></td>
+                    </tr>
+
+                </tbody>
+            </table>
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
                             <th>#</th>
                             <th class="text-center">Item Decription</th>
-                            <th class="text-center">Quantity/Unit</th>
+                            <th class="text-center">Qty Needed</th>
+                            <th class="text-center">UOM</th>
+                            <th class="text-center">Current Stock</th>
+                            <th class="text-center">For Purchasing</th>
+                            <th class="text-center">Date Needed</th>
+                            <th class="text-center">Purpose</th>
                             <th class="text-center">Remarks</th>
                         </thead>
-                        <?php foreach ($requestPurchasingItem as $key => $value) {  $key++ ?>
+                        <?php  foreach ($requestPurchasingItem as $key => $value) {  $key++ ?>
                            
                             <tr>
                                 <td><?php echo $key ?></td>
@@ -98,14 +103,25 @@
                                 <td class="text-center">
                                     <?php  
                                     if(!empty($value['RequestItem']['quantity'])){ 
-                                        echo $value['RequestItem']['quantity']?>/
-                                <?php } 
+                                        echo $value['RequestItem']['quantity']?>
+                                <?php } ?>
 
+                                </td>
+
+                                 <td class="text-center">
+                                    <?php  
                                     if(!empty($unitData[$value['RequestItem']['quantity_unit_id']])){ 
                                     echo $unitData[$value['RequestItem']['quantity_unit_id']];
                                    } ?>
                                 </td>
-                                <td class="text-center"> </td>
+                                <td class="text-center"></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"> </td><td class="text-center"><?php  
+                                    if(!empty($unitData[$requestData['Request']['remarks']])){ 
+                                    echo $unitData[$requestData['Request']['remarks']];
+                                   } ?></td>
+                                
                             </tr>
                         <?php 
                             } ?>
@@ -133,6 +149,11 @@
                         </tr>
                         
                     </table>
+                    <div class = " pull-right ">
+                    <label font-size:60%;>
+                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KP-FR-LG1-001 R0 <br>Effective Date: 10 Aug 2015 
+                    </label>
+                    </div> 
                 </div>
             </div>
         </div>

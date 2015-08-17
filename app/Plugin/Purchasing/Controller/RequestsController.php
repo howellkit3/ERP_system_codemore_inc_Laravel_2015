@@ -565,12 +565,6 @@ class RequestsController extends PurchasingAppController {
 
 		$this->loadModel('Unit');
 
-
-		$request = $this->Request->find('first', array(
-														'conditions' => array( 
-															'Request.id' => $requestId)
-													));
-
 		$request = $this->Request->find('first', array(
 														'conditions' => array( 
 															'Request.id' => $requestId)

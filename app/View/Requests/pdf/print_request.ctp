@@ -19,25 +19,34 @@ th, td {
 					  $txtHolder = " ";?>
 				
 				<div style = "height: 48%">
-				<img src="<?php echo Router::url('/', true) ?>img/koufu_logo.png" alt="logo" style="width:165px;height:30px;"> 
-					<center>
-							<h4 style = "margin-bottom:0px;">PURCHASE REQUISITION</h4>
-					</center>
+				<table>
+					<tr>
+						<td>
+							<img src="<?php echo Router::url('/', true) ?>img/koufu_logo.jpg" alt="logo" style="width:165px;height:30px;padding-bottom:10;">
+						</td>
+					<td>
+						<center>
+							<h4 style = "margin-bottom:0px; margin-top:0px; padding-top:0px;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PURCHASE REQUISITION</h4>
+						</center>
+					</td>
+					</tr>
+
+				</table>	
+
+				<table border="0" width="100%" style = "margin:0px; padding:0px; line-height:0px;">
+					<tbody>
 					
-						<table border="0" width="100%" style = "margin:0px; padding:0px; line-height:0px;">
-							<tbody>
-							
-								<tr>
-									<td></td>
-									<td></td>
-									<td ></td>
-									<td align="right" style="line-height:8px;"><span style="font-size:70%"; ><b>No: </b>RQ<?php echo $request['Request']['uuid'] ?><br><br><b>Date: </b><?php echo (new \DateTime())->format('d/m/Y') ?></span></td>
-								</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td ></td>
+							<td align="right" style="line-height:8px;"><span style="font-size:70%"; ><b>No: </b>RQ<?php echo $request['Request']['uuid'] ?><br><br><b>Date: </b><?php echo (new \DateTime())->format('d/m/Y') ?></span></td>
+						</tr>
 
-							</tbody>
-						</table>
+					</tbody>
+				</table>
 
-					<table style=" border:1px solid black;border-collapse:collapse; margin-bottom:0px;  ">
+				<table style=" border:1px solid black;border-collapse:collapse; margin-bottom:0px;  ">
 					<tr>
 						<td align = "center" style="border:1px solid black; width:10px; font-size:70%;" ><b>No.</b></td>
 						<td align = "center" style =" width:180px; word-wrap: break-word;" ><b>Item Description</b></td>
@@ -91,10 +100,10 @@ th, td {
 						<?php $lengthRemarks = strlen($request['Request']['remarks'])?>
 
 						<?php if($lengthRemarks >= 35 && $lengthRemarks <= 70){ ?>
-							<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:65%">d<?php echo $request['Request']['remarks'] ?></td>
+							<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:65%"><?php echo $request['Request']['remarks'] ?></td>
 						<?php 
 							}else{ ?>
-							<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:65%">d<?php echo $request['Request']['remarks'] ?></td>
+							<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:65%"><?php echo $request['Request']['remarks'] ?></td>
 						<?php } ?>	
 					</tr>
 
@@ -120,7 +129,7 @@ th, td {
 
 					<?php } ?>
 					
-					</table>
+				</table>
 
 					<br>
 
@@ -156,10 +165,19 @@ th, td {
 					
 				</div>
 				<div style = "height: 48%">
-				<img src="<?php echo Router::url('/', true) ?>img/koufu_logo.png" alt="logo" style="width:165px;height:30px;"> 
-					<center>
-							<h4 style = "margin-bottom:0px;">PURCHASE REQUISITION</h4>
-					</center>
+					<table>
+					<tr>
+						<td>
+							<img src="<?php echo Router::url('/', true) ?>img/koufu_logo.jpg" alt="logo" style="width:165px;height:30px;padding-bottom:10;">
+						</td>
+					<td>
+						<center>
+							<h4 style = "margin-bottom:0px; margin-top:0px; padding-top:0px;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PURCHASE REQUISITION</h4>
+						</center>
+					</td>
+					</tr>
+
+				</table>	
 					
 						<table border="0" width="100%" style = "margin:0px; padding:0px; line-height:0px;">
 							<tbody>
