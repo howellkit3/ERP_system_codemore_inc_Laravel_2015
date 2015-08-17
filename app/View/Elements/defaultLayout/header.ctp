@@ -220,6 +220,15 @@
 					</a>
 					<ul class="dropdown-menu dropdown-menu-right">
 						<!-- <li><a href="user-profile.html"><i class="fa fa-user"></i>Profile</a></li> -->
+						<?php if($userData['User']['role_id'] == 8 ){ ?>
+
+						<li>
+								<?php
+			 						echo $this->Html->link( "<i class='fa fa-cog'></i> Settings ",   array('controller' =>'settings','action'=>'category','plugin' => null),array('escape' => false) );
+			 					?>
+			 			</li>
+
+			 			<?php  }?>
 						
 		 				<?php if($userData['User']['role_id'] == 1 || $userData['User']['role_id'] == 2){ ?>
 		 					<li>
