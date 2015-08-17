@@ -10,8 +10,6 @@ $( ".datepick" ).datepicker({
      viewMode: "decade", 
 });
 
-
-
 	//check employee
 $body.on('change','#department_id',function(){
 
@@ -78,12 +76,10 @@ $body.on('click','.date-range .input',function(e){
             data: { 'month' : $('#month-pay').val(),'range' : $this.val(),'empdId' : $('#employee_id').val() },
             dataType: "html",
             success: function(data) {
-
-                console.log(data)
             		
-            $('#days_work').html(data);
-            
-            $('#total-hours').val($('#append-total-hours').val());
+                $('#days_work').html(data);
+                
+                $('#total-hours').val($('#append-total-hours').val());
 
             }
         });	

@@ -41,9 +41,11 @@
                         <div class="main-box-body clearfix">
                             <div class="main-box-body clearfix">
                                 <div class="form-horizontal">
+
+                                <div class="form-group col-lg-6">
                                     <div class="form-group">
                                        
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-11">
                                             <div class="form-group">
                                                 <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span> Employee Name </label>
                                                 <div class="col-lg-9">
@@ -57,7 +59,7 @@
                                         </div>
                                     </div>                              
                                     <div class="form-group">
-                                             <div class="col-lg-6">
+                                             <div class="col-lg-11">
                                             <div class="form-group">
                                                 <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span> Mode </label>
                                                     
@@ -79,10 +81,10 @@
                                                 </div>
                                              </div>
                                         </div>      
-                                        </div>
+                                    </div>
 
                                     <div class="form-group day_type" id="daily" >
-                                       <div class="col-lg-6">
+                                       <div class="col-lg-11">
                                             <div class="form-group">
                                                 <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span> Day </label>
                                                 <div class="col-lg-9">
@@ -103,7 +105,7 @@
                                     </div>
 
                                     <div class="form-group day_type" id="monthly" style="display:none">
-                                       <div class="col-lg-6">
+                                       <div class="col-lg-11">
                                             <div class="form-group">
                                                 <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span> From / to </label>
                                                 <div class="col-lg-9">
@@ -125,8 +127,8 @@
                                     </div>
 
 
-                                        <div class="form-group">
-                                        <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <div class="col-lg-11">
                                             <div class="form-group">
                                                 <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span> Type </label>
                                                 <div class="col-lg-9">
@@ -154,7 +156,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-11">
                                             <div class="form-group">
                                                 <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span> Amount </label>
                                                 <div class="col-lg-9">
@@ -172,7 +174,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-11">
                                             <div class="form-group">
                                                 <label for="inputEmail1" class="col-lg-3 control-label"> Reason </label>
                                                 <div class="col-lg-9">
@@ -189,6 +191,12 @@
                                     </div>
 
                                 </div>
+
+                                <div class="form-group col-lg-6 computations">
+
+                                       
+                                </div>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -236,38 +244,3 @@
   margin-left: 15px;
 }
 </style>
-<script>
-    
-jQuery(document).ready(function($){
-       //datepicker
-        $('.datepick').datepicker({
-            
-            changeYear: false,
-            autoClose: true,
-            
-        });
-
-        $("#HolidayDate").click(function() {
-            $(".datepicker-days .day").click(function() {
-                $('.datepicker').hide();
-            });
-        });
-
-        $('.datepickerDateRange').daterangepicker();
-
-        $('body').on('click','.mode_type',function(e){
-            $('.day_type').hide().find('input').attr('disabled',false);
-            if ($(this).val() == 'once') {
-                $('#daily').attr('style','display:block').find('input').attr('disabled',false);
-                 $('#monthly').find('input').attr('disabled',true);
-            }
-
-            if ($(this).val() == 'installment') {
-                $('#monthly').attr('style','display:block').find('input').attr('disabled',false);
-                $('#daily').find('input').attr('disabled',true);
-            }
-
-        }).trigger('click');
-});
-
- </script>

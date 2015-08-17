@@ -83,9 +83,7 @@ class CauseMemosController  extends HumanResourceAppController {
 		
 
 	}
-
 	
-
 	public function add_violation($id = null) {
 
 		$userData = $this->Session->read('Auth');

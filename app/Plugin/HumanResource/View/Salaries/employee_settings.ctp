@@ -140,10 +140,30 @@
 								                                       </div>
 							                                     </div>
 							                                     <div class="clearfix"></div>
-							                                     <div class="form-group">
-							                                        <label for="inputEmail1" class="col-lg-2 control-label strong"> CPTA </label>
+
+							                                      <div class="form-group">
+							                                        <label for="inputEmail1" class="col-lg-2 control-label strong"> Allowances </label>
 								                                      <div class="col-lg-7 value"> 
-								                                     		<?php echo $this->Form->input('cpta',array('label' => false,'class' => 'form-control')); ?>
+								                                     		<?php echo $this->Form->input('allowances',array('label' => false,'class' => 'form-control')); ?>
+								                                       </div>
+							                                     </div>
+							                                       <div class="clearfix"></div>
+
+
+							                                       <div class="form-group">
+							                                        <label for="inputEmail1" class="col-lg-2 control-label strong"> Incentives </label>
+								                                      <div class="col-lg-7 value"> 
+								                                     		<?php echo $this->Form->input('incentives',array('label' => false,'class' => 'form-control')); ?>
+								                                       </div>
+							                                     </div>
+
+							                                       <div class="clearfix"></div>
+
+
+							                                     <div class="form-group">
+							                                        <label for="inputEmail1" class="col-lg-2 control-label strong"> CTPA </label>
+								                                      <div class="col-lg-7 value"> 
+								                                     		<?php echo $this->Form->input('ctpa',array('label' => false,'class' => 'form-control')); ?>
 								                                       </div>
 							                                     </div>
 							                                      <div class="clearfix"></div>

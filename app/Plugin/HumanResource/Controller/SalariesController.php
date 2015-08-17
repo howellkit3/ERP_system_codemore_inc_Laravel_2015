@@ -134,17 +134,16 @@ class SalariesController  extends HumanResourceAppController {
 				
 			}
 
-
-
-			$this->Components->load('HumanResource.SalaryComputation');
+			//$this->Components->load('HumanResource.SalaryComputation');
 
 			$this->loadModel('HumanResource.SalaryReport');
+
+			$this->loadModel('HumanResource.Deduction');
 			
 			$salaries = $this->SalaryComputation->calculateBenifits($employees,$payScheds,$customDate);
 
+			//save for salary report
 			if (!empty($salaries)) {
-
-				
 
 				$this->SalaryReport->saveAll($salaries);
 			}
@@ -171,7 +170,9 @@ class SalariesController  extends HumanResourceAppController {
 			$this->loadModel('HumanResource.GovernmentRecord');
 
 			$emp_conditions = array();//array('Employee.status NOT' => array('1'));
+
 			$this->Employee->bind(array('Salary','GovernmentRecord'));
+
 			$employees = $this->Employee->find('all',array(
 								'conditions' => $emp_conditions,
 								'order' => array('Employee.last_name ASC'),
@@ -373,11 +374,101 @@ class SalariesController  extends HumanResourceAppController {
 
 	public function reports(){
 		
-		$this->Components->load('HumanResource.SalaryComputation');
-		
-		$salaries = $this->SalaryComputation->calculateBenifits('wewe');
+		$date = date('m-Y');
+
+
+		$this->set(compact('date'));
 
 		$this->render('Salaries/reports/reports');
+	}
+
+	public function getSalaries() {
+
+		$query = $this->request->query;
+
+		if (!empty($query)) {
+
+			$this->Components->load('HumanResource.SalaryComputation');
+
+			$this->loadModel('HumanResource.SalaryReport');
+
+			$conditions = array('AND' => array(
+        					'SalaryReport.from >=' => date('Y-m-d',strtotime('01-'.$query['month'])),
+        					'SalaryReport.to <='=> date('Y-m-d',strtotime('31-'.$query['month']))
+        					));
+
+			$this->SalaryReport->bind(array('Employee'));
+
+			$salaries = $this->SalaryReport->find('all',array( 
+				'conditions' => $conditions ,
+				'group' => array('SalaryReport.id'), 
+				));
+	
+			$employees = $this->SalaryComputation->computeMonthlySalary($salaries);
+
+			$this->set(compact('employees'));				
+
+			$this->render('Salaries/ajax/monthly_salaries');
+		}
+	}
+
+
+
+	public function computeDeduction() {
+
+
+		if (!empty($this->request->data)) {
+
+			$query = $this->request->data;
+
+
+
+			if (!empty($query['range'])) {
+
+				$date = explode('-',$query['range']);
+				$datetime1 = new DateTime(trim($date[0]));
+				$datetime2 = new DateTime(trim($date[1]));
+
+				$interval = $datetime1->diff($datetime2);	
+
+				$days = $interval->days;
+
+				$start_date = date('Y-m-d',strtotime($date[0]));
+				$end_date = date('Y-m-d',strtotime($date[1]));
+
+				$count = 1;
+
+				$keys = 0;
+
+
+				while (strtotime($start_date) <= strtotime($end_date)) {
+						
+					if (in_array($start_date, array(date('Y-m-01',strtotime($start_date)),date('Y-m-30',strtotime($start_date))))) {
+
+						$payment[$keys]['date'] = $start_date;
+						$count++;
+						$keys++; 
+					}
+
+
+					$start_date = date ("Y-m-d", strtotime("+1 days", strtotime($start_date)));
+
+				}
+
+				$total_payment = $query['amount'] / count($payment);
+				$total = $query['amount'];
+				foreach ($payment as $key => $pay) {
+					$payment[$key]['deduction'] = number_format($total_payment,2);
+					$payment[$key]['less'] = number_format($total,2);
+
+					$total = $total - $total_payment;
+				}
+
+				echo json_encode($payment);
+
+			}
+		}
+		exit();
 	}
 
 }

@@ -1,5 +1,5 @@
 <div class="table-responsive">
-		<table class="table table-striped table-hover">
+		<table class="table table-bordered table-hover">
 			<thead>
 				<tr>
 					<th><a href="#"><span>Code</span></a></th>

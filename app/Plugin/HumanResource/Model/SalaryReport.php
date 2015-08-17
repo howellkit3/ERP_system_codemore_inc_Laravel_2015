@@ -12,14 +12,15 @@ class SalaryReport extends AppModel {
 
  	 public function bind($model = array('Group')){
 
-		// $this->bindModel(array(
-		// 	'Employee' => array(
-		// 		'Tooling' => array(
-		// 			'className' => 'HumanResource.Employee',
-		// 			'foreignKey' => 'employee_id',
-		// 		))
-		// ),false);
+		$this->bindModel(
+			array(
+			'belongsTo' => array(
+				'Employee' => array(
+					'className' => 'HumanResource.Employee',
+					'foreignKey' => 'employee_id')
+								)
+			),false);
 
-		// $this->contain($model);
+		$this->contain($model);
 	}
 }

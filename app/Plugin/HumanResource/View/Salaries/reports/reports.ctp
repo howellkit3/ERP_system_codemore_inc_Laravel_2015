@@ -11,7 +11,7 @@ echo $this->Html->script(array(
 					'HumanResource.moment',
           'HumanResource.select2.min',
 					'HumanResource.custom',
-					'HumanResource.deductions',
+					'HumanResource.reports',
           'datetimepicker/jquery.datetimepicker'
 
 )); 
@@ -40,50 +40,87 @@ $active_tab = 'gross_reports';
 			            	<div id="result-table">
 			            		   <div class="table-responsive">
                                 <div class="table-responsive">
-                <table class="table">
-                <thead>
-                <tr>
-                  <th><a href="#"><span>Code</span></a></th>
-                  <th><a href="#" class="desc"><span>Name</span></a></th>
-                  <th><a href="#" class="asc"><span>From</span></a></th>
-                  <th class="text-center"><span>To</span></th>
-                  <th class="text-center"><span>Mode</span></th>
-                  <th class="text-left"><span>Amount</span></th>
-                  <th class="text-right"><span>Reason</span></th>
-                </tr>
-                </thead>
-                <tbody>
-                  <?php if (!empty($deductions)) :?>
-                  <?php foreach ($deductions as $key => $deduction) { ?>
-                    <tr>
-                      <td>
-                        <?php echo $deduction['Employee']['code']; ?>  
-                      </td>
-                      <td>
-                        <?php echo $this->CustomText->getFullname($deduction['Employee']); ?>  
-                      </td>
-                      <td>
-                       <?php echo !empty($deduction['Deduction']['from']) && $deduction['Deduction']['from'] != '00:00:00' ? date('Y-m-d', strtotime($deduction['Deduction']['from'])) : ''; ?>  
-                      </td>
+                               
 
-                      <td class="text-center">
-                       <?php 
-                       echo !empty($deduction['Deduction']['to']) && $deduction['Deduction']['to'] != '00:00:00' ? date('Y-m-d', strtotime($deduction['Deduction']['to'])) : ''; ?>  
-                      </td class="text-center">
-                      <td class="text-left">
-                        <?php echo ucwords($deduction['Deduction']['mode'])?>   
-                      </td>
-                      <td class="text-left">
-                        <?php echo $deduction['Deduction']['amount']?>   
-                      </td>
-                      <td class="text-right">
-                        <?php echo $deduction['Deduction']['reason']?>   
-                      </td>
-                  </tr>
-                  <?php } ?>
-                <?php endif; ?>
-                  </tbody>
-                </table>
+
+
+                    <div class="tabs-wrapper">
+                        <ul class="nav nav-tabs">
+                          <li class="active"><a href="#tab-home" data-toggle="tab">Monthly</a></li>
+                          <li class=""><a href="#tab-help" data-toggle="tab">Yearly</a></li>
+                        </ul>
+                        <div class="tab-content">
+
+
+                        <div class="tab-pane fade active in" id="tab-home">
+
+                          <header class="main-box-header clearfix"><!-- 
+                                          <h2 class="pull-left"><b>Salaries</b> </h2> -->
+                                    <div class="filter-block pull-left">
+                                        <div class="form-group pull-left">
+                                            <input type="text" type="date" name="range[month]" id="changeDate" class="form-control monthpick" value="<?php echo $date ?>">
+                                           <i class="fa fa fa-calendar calendar-icon"></i>
+                                        </div>
+                                    </div>
+                                    <div class="filter-block pull-left">
+                                        <div class="form-group pull-left">
+                                            <button href="#" id="computeSalaries"  data-type="monthly" data-url="" class="btn btn-primary pull-right "><i class="fa fa-refresh fa-lg"></i> Generate </button>
+                                        </div>
+                                    </div>
+                          </header>
+
+
+                          <table class="table table-bordered">
+                                      <thead>
+                                      <tr>
+                                        <th><a href="#"><span>Code</span></a></th>
+                                        <th><a href="#" class="desc"><span>Name</span></a></th>
+                                        <th class="text-center"><a href="#" class="asc"><span>1st Half</span></a></th>
+                                        <th class="text-center"><span>2nd Half</span></th>
+                                        <th class="text-center"><span>Total</span></th>
+                                      </tr>
+                                      </thead>
+
+                                      <tbody id="monthly-result-cont"></tbody>
+                         </table>
+    </div>
+    <div class="tab-pane fade" id="tab-help">
+          <header class="main-box-header clearfix"><!-- 
+                                          <h2 class="pull-left"><b>Salaries</b> </h2> -->
+                                    <div class="filter-block pull-left">
+                                        <div class="form-group pull-left">
+                                            <input type="text" type="date" name="range[month]" id="changeDate" class="form-control monthpick" value="<?php echo $date ?>">
+                                           <i class="fa fa fa-calendar calendar-icon"></i>
+                                        </div>
+                                    </div>
+                                    <div class="filter-block pull-left">
+                                        <div class="form-group pull-left">
+                                            <button href="#" id="computeSalaries"  data-type="monthly" data-url="" class="btn btn-primary pull-right "><i class="fa fa-refresh fa-lg"></i> Generate </button>
+                                        </div>
+                                    </div>
+                          </header>
+
+
+                          <table class="table">
+                                      <thead>
+                                      <tr>
+                                        <th><a href="#"><span>Code</span></a></th>
+                                        <th><a href="#" class="desc"><span>Name</span></a></th>
+                                        <th class="text-center"><a href="#" class="asc"><span>1st Half</span></a></th>
+                                        <th class="text-center"><span>2nd Half</span></th>
+                                        <th class="text-center"><span>Total</span></th>
+                                      </tr>
+                                      </thead>
+
+                                      <tbody id="yearly-result-cont"></tbody>
+                         </table>
+    </div>
+   
+</div>
+</div>
+
+
+            
                 </div>
              </div> 
              </div>
@@ -94,3 +131,14 @@ $active_tab = 'gross_reports';
 		 </div>
     </div>
 </div>
+<script type="text/javascript">
+  $(document).ready(function(){
+
+    $(".monthpick").datepicker( {
+        format: "mm-yyyy",
+        startView: "months", 
+        minViewMode: "months"
+      });
+
+  });
+</script>

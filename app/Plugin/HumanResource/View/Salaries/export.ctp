@@ -32,10 +32,10 @@ echo $this->element('hr_options');
 						<header class="main-box-header clearfix"><!-- 
 			                <h2 class="pull-left"><b>Salaries</b> </h2> -->
 			                <div class="filter-block pull-left">
-			                 <div class="form-group pull-left">
+			              <div class="form-group pull-left">
 			                 	
 			                 		<input type="text" type="date" name="range[month]" id="changeDate" class="form-control monthpick" value="<?php echo $date ?>">
-									<i class="fa fa fa-calendar calendar-icon"></i>
+									     <i class="fa fa fa-calendar calendar-icon"></i>
 								</div>
 
 							<div class="form-group pull-left">
@@ -66,7 +66,7 @@ echo $this->element('hr_options');
                                     'id' => 'exportData',
                                     'escape' => false)	
 								 ); ?>
-								<button href="#" id="computeSalaries" data-url="" class="btn btn-primary pull-right "><i class="fa fa-share-square-o fa-lg"></i> Generate </button>
+								<button href="#" id="computeSalaries" data-url="" class="btn btn-primary pull-right "><i class="fa fa-refresh fa-lg"></i> Generate </button>
 							
 			               </div>
 			               </div>
@@ -77,7 +77,7 @@ echo $this->element('hr_options');
 			          <div class="main-box-body clearfix">
 			            	<div id="result-table">
 			            		   <div class="table-responsive">
-        <table class="table table-striped table-hover">
+        <table class="table table-bordered table-hover">
             <thead>
                 <tr>
                     <th><a href="#"><span>Code</span></a></th>

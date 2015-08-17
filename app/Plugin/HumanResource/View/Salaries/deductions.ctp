@@ -38,7 +38,7 @@ $active_tab = 'sss_table';
 
 
                           <div class="form-group pull-left">
-                            <div class="input-group">
+                            <div class="input-group" style="max-width:150px;">
                                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                                         <input placeholder="Date Range" name="from_date" data="1" type="text" class="form-control myDateRange datepickerDateRange" id="datepickerDateRange"  style="min-width:217px">
                                                     </div>
@@ -94,16 +94,17 @@ $active_tab = 'sss_table';
 			            	<div id="result-table">
 			            		   <div class="table-responsive">
                                 <div class="table-responsive">
-                <table class="table">
+                <table class="table table-bordered">
                 <thead>
                 <tr>
                   <th><a href="#"><span>Code</span></a></th>
                   <th><a href="#" class="desc"><span>Name</span></a></th>
-                  <th><a href="#" class="asc"><span>From</span></a></th>
+                  <th class="text-center"><a href="#" class="asc"><span>From</span></a></th>
                   <th class="text-center"><span>To</span></th>
                   <th class="text-center"><span>Mode</span></th>
-                  <th class="text-left"><span>Amount</span></th>
+                  <th class="text-center"><span>Amount</span></th>
                   <th class="text-right"><span>Reason</span></th>
+                 <!--  <th class="text-right"><span>Actions</span></th> -->
                 </tr>
                 </thead>
                 <tbody>
@@ -116,7 +117,7 @@ $active_tab = 'sss_table';
                       <td>
                         <?php echo $this->CustomText->getFullname($deduction['Employee']); ?>  
                       </td>
-                      <td>
+                      <td class="text-center">
                        <?php echo !empty($deduction['Deduction']['from']) && $deduction['Deduction']['from'] != '00:00:00' ? date('Y-m-d', strtotime($deduction['Deduction']['from'])) : ''; ?>  
                       </td>
 
@@ -124,10 +125,10 @@ $active_tab = 'sss_table';
                        <?php 
                        echo !empty($deduction['Deduction']['to']) && $deduction['Deduction']['to'] != '00:00:00' ? date('Y-m-d', strtotime($deduction['Deduction']['to'])) : ''; ?>  
                       </td class="text-center">
-                      <td class="text-left">
+                      <td class="text-center">
                         <?php echo ucwords($deduction['Deduction']['mode'])?>   
                       </td>
-                      <td class="text-left">
+                      <td class="text-center">
                         <?php echo $deduction['Deduction']['amount']?>   
                       </td>
                       <td class="text-right">
