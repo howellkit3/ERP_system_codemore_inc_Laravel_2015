@@ -229,6 +229,11 @@
 			 				</li>
 			 				<li>
 								<?php
+			 						echo $this->Html->link( "<i class='fa fa-cog'></i> Payroll Settings ",   array('controller' =>'payroll_settings','action'=>'settings','plugin' => null),array('escape' => false) );
+			 					?>
+			 				</li>
+			 				<li>
+								<?php
 			 						echo $this->Html->link( "<i class='fa fa-cog'></i> Role and Permission ",   array('controller' =>'settings','action'=>'role_perm','plugin' => null),array('escape' => false) );
 			 					?>
 			 				</li>

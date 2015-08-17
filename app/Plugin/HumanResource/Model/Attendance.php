@@ -98,7 +98,7 @@ class Attendance extends AppModel {
 
 		if (!empty($data)) {
 
-			$sched = $attendance = [];
+			$sched = $attendance = array();
 
 			$this->create();
 

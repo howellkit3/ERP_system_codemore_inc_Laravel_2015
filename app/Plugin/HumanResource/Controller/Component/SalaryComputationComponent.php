@@ -13,7 +13,7 @@ class SalaryComputationComponent extends Component
         	
         	if (!empty($data)) {
 
-        		$salary = [];
+        		$salary = array();
         		foreach ($data as $key => $employee) {
 
         				$conditions = array('AND' => array(
@@ -104,6 +104,10 @@ class SalaryComputationComponent extends Component
 
 		return $pay;
 
+	}
+	
+	public function checkdays($date = null, $hours = null) {
+		
 	}
 }
 ?>

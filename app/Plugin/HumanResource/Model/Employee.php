@@ -156,7 +156,7 @@ class Employee extends AppModel {
 		$this->bindEmployee();
 		$workshifts = $this->find('all',$params);
 		// pr($workshifts); exit;
-		$list = [];
+		$list = array();
 
 		if ($data['WorkSchedule']['type'] == 'monthly') {
 

@@ -46,7 +46,7 @@ class WorkSchedule extends AppModel {
 
 	public function createSchedule($data = null, $workShiftId = null,$overtimeId = null,$authId = null) {
 
-		$schedule = [];
+		$schedule = array();
 
 		if (!empty($data)) {
 
@@ -92,7 +92,7 @@ class WorkSchedule extends AppModel {
 
 		if (!empty($data)) {
 
-			$sched = [];
+			$sched = array();
 			$keys = 0;
 
 			if ($data['WorkSchedule']['type'] == 'monthly') {

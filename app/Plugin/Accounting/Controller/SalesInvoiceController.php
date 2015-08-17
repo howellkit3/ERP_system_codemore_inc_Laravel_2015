@@ -535,7 +535,7 @@ class SalesInvoiceController extends AccountingAppController {
             'conditions' => array('dr_uuid' => $invoiceList)
             ));
 
-        $clientsId = [];
+        $clientsId = array();
 
         foreach ($deliveryData as $key => $value) {
             
@@ -675,7 +675,7 @@ class SalesInvoiceController extends AccountingAppController {
             'conditions' => array('dr_uuid' => $invoiceList)
             ));
 
-        $clientsId = [];
+        $clientsId = array();
 
         foreach ($deliveryData as $key => $value) {
             
@@ -798,7 +798,7 @@ class SalesInvoiceController extends AccountingAppController {
             'conditions' => array('dr_uuid' => $invoiceList)
             ));
 
-        $clientsId = [];
+        $clientsId = array();
 
         foreach ($deliveryData as $key => $value) {
             
