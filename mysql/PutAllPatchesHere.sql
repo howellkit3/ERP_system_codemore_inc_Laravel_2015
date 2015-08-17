@@ -1343,3 +1343,19 @@ ALTER TABLE `employee_additional_informations` ADD `no_children` VARCHAR(255)  N
 
 ALTER TABLE `received_items` ADD `condition` VARCHAR(30)  NULL  DEFAULT NULL  AFTER `quantity`;
 ALTER TABLE `koufu_warehouse`.`received_items` DROP COLUMN `item_uuid` ;
+
+/** bien added this 08/17/2015 TO HR DATABASE   */
+CREATE TABLE `leaves` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) DEFAULT NULL,
+  `type_id` int(11) NOT NULL DEFAULT '',
+  `from` date NOT NULL,
+  `to` date NOT NULL,
+  `status` varchar(255) NOT NULL DEFAULT '',
+  `remarks` text,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

@@ -255,7 +255,7 @@ echo $this->element('hr_options');
                                    echo $this->Form->input('Attendance.department_id', array(
                                                                 'type' => 'select',
                                                                 'label' => false,
-                                                                'class' => 'form-control',
+                                                                'class' => 'form-control required',
                                                                 'empty' => '---Select Department---',
                                                                 'options' => array($departmentList)
 
@@ -264,23 +264,6 @@ echo $this->element('hr_options');
                         </div>
                     </div>
 
-                    <!-- <div class="form-group">
-                        <label for="inputEmail1" class="col-lg-3 control-label"> Select Employee</label>
-                        
-                        <div class="col-lg-6">
-                            <?php 
-                                   echo $this->Form->input('Attendance.employee_id', array(
-                                                                'type' => 'select',
-                                                                'label' => false,
-                                                                'class' => 'form-control ',
-                                                                'empty' => '---Select Employee---',
-                                                                'options' => array($employeeList)
-
-                                                              ));
-                            ?>
-                        </div>
-                    </div> -->
-
                     <div class="form-group">
                         <label for="inputEmail1" class="col-lg-3 control-label">Date</label>
                         
@@ -288,7 +271,7 @@ echo $this->element('hr_options');
                             <?php 
                                    echo $this->Form->input('Attendance.from_date', array(
                                                                 'label' => false,
-                                                                'class' => 'form-control  datepick',
+                                                                'class' => 'form-control  datepick required',
                                                                 'placeholder' => 'Date'
 
                                                               ));
@@ -296,21 +279,8 @@ echo $this->element('hr_options');
                         </div>
                     </div>
 
-                    <!-- <div class="form-group">
-                        <label for="inputEmail1" class="col-lg-3 control-label"> Date Range</label>
-
-                       <div class="col-lg-6">
-                            <div class="input-group">
-                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                    <input  placeholder="Date Range" name="from_date" data="1" type="text" class="form-control required myDateRange datepickerDateRange high-z-index" id="datepickerDateRange" >
-                                                </div>
-                        </div>
-
-                       
-                    </div> -->
-
                     <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary"><i class="fa fa-share-square-o fa-lg"></i> Export</button>
+                            <button type="submit" class="btn btn-primary export-close"><i class="fa fa-share-square-o fa-lg"></i> Export</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         
                     </div>  
@@ -319,3 +289,19 @@ echo $this->element('hr_options');
         </div>
     </div>
 </div>
+<script type="text/javascript">
+	$(document).ready(function(){  
+
+    	$('body').on('change','.datetimepick',function(){
+			$('#myAttendance').close();
+
+		});
+
+		$('#AttendanceIndexForm').validate();
+	});
+</script>
+<style type="text/css">
+	.error.appended-error {
+	    top: 0px;
+	}
+</style>

@@ -57,4 +57,12 @@
 					'plugin' => 'human_resource'
 		)); ?>
 	</li>
+	<li class="<?php echo ($active_tab == 'leave_types') ? 'active' : '' ?>" alt="tab-type">
+		<?php echo $this->Html->link('Leave Type',array(
+					'controller' => 'settings',
+					'action' => 'leave_types',
+					'tab' => 'leave_types',
+					'plugin' => 'human_resource'
+		)); ?>
+	</li>
 </ul>
