@@ -30,6 +30,24 @@ class Attendance extends AppModel {
 						'dependent' => false,
 						'conditions' => array('WorkShift.id = WorkSchedule.work_shift_id')
 					),
+					'Overtime' => array(
+						'className' => 'Overtime',
+						'foreignKey' => false,
+						'dependent' => false,
+						'conditions' => array('Overtime.id = Attendance.overtime_id')
+					),
+					// 'WorkShiftBreak' => array(
+					// 	'className' => 'WorkShiftBreak',
+					// 	'foreignKey' => false,
+					// 	'dependent' => false,
+					// 	'conditions' => array('WorkShiftBreak.workshift_id = WorkSchedule.work_shift_id')
+					// ),
+					// 'BreakTime' => array(
+					// 	'className' => 'BreakTime',
+					// 	'foreignKey' => false,
+					// 	'dependent' => false,
+					// 	'conditions' => array('BreakTime.id = WorkShiftBreak.breaktime_id')
+					// ),
 					'Employee' => array(
 						'className' => 'Employee',
 						'foreignKey' => false,
@@ -42,15 +60,48 @@ class Attendance extends AppModel {
 		$this->contain($model);
 	}
 
+	public function bindWorkshift() {
+		
+		$this->bindModel(array(
+				'belongsTo' => array (
+				'WorkSchedule' => array(
+						'className' => 'WorkSchedule',
+						'foreignKey' => false,
+						'conditions' => array('WorkSchedule.id = Attendance.schedule_id'),
+						'dependent' => true,
+					),
+					'WorkShift' => array(
+						'className' => 'WorkShift',
+						'foreignKey' => false,
+						'dependent' => false,
+						'conditions' => array('WorkShift.id = WorkSchedule.work_shift_id')
+					),
+					'WorkShiftBreak' => array(
+						'className' => 'WorkShiftBreak',
+						'foreignKey' => false,
+						'dependent' => false,
+						'conditions' => array('WorkShiftBreak.workshift_id = WorkSchedule.work_shift_id')
+					),
+					'BreakTime' => array(
+						'className' => 'BreakTime',
+						'foreignKey' => false,
+						'dependent' => false,
+						'conditions' => array('BreakTime.id = WorkShiftBreak.breaktime_id')
+					),
+			)));
+		$this->recursive = 1;
+	}
 
 
-	public function saveRecord($data = null,$sched_id = null) {
+
+	public function saveRecord($data = null,$sched_id = null,$holidays = array()) {
 
 		if (!empty($data)) {
 
-			$sched = $attendance = [];
+			$sched = $attendance = array();
 
 			$this->create();
+
 
 			if (is_array($data) && !empty($data[0]['overtime_id'])) {
 
@@ -115,9 +166,23 @@ class Attendance extends AppModel {
 						$sched['Attendance']['date'] = $days1[0].'-'.$days1[1].'-'.sprintf("%02d",$days_count);
 						$sched['Attendance']['schedule_id'] = $sched_id;
 						$sched['Attendance']['type'] = 'work';
+						$sched['Attendance']['is_holiday'] = 0;
+						
+						foreach ($holidays as $key => $holiday) {
+							
+							if ($sched['Attendance']['date'] >= $holiday['Holiday']['start_date'] && $sched['Attendance']['date'] <= $holiday['Holiday']['end_date'] ) {
+								
+								$sched['Attendance']['is_holiday'] = $holiday['Holiday']['id'];	
+							} 
+						}
+ 
+						if ( date("w",strtotime($sched['Attendance']['date'])) != 0) {
 
-						$this->save($sched);
+							$this->save($sched);
 
+						}
+
+				
 					endfor;
 
 				} else {
@@ -195,6 +260,40 @@ class Attendance extends AppModel {
 
 		}
 
+	}
+
+	public function computeAttendance($conditions = array()){
+
+
+		if (!empty($conditions)) {
+			
+			$attendances = $this->find('all',array('conditions' => $conditions));
+
+			foreach ($attendances as $key => $attendance) {
+
+				// if (strtotime($attendance['Attendance']['in']) >= strtotime($attendance['WorkShift']['from']) && strtotime($attendance['Attendance']['out']) <= strtotime($attendance['WorkShift']['to'])) {
+				if (strtotime($attendance['Attendance']['in']) >= strtotime($attendance['WorkShift']['from']) && strtotime($attendance['Attendance']['out']) <= strtotime($attendance['WorkShift']['to'])) {
+						
+						$from = new DateTime($attendance['Attendance']['in']);
+						$to = new DateTime($attendance['Attendance']['out']);
+						
+						$attendances[$key]['total_hours'] =  $from->diff($to)->format('%h.%i'); 
+
+						if (!empty($attendance['BreakTime']['id'])) {
+							if (strtotime($attendance['Attendance']['out']) >= strtotime($attendance['BreakTime']['from']) && strtotime($attendance['Attendance']['out']) >= strtotime($attendance['BreakTime']['to'])) {
+						
+								$attendances[$key]['total_hours'] -= 1;
+							}
+						}
+
+
+						
+				}
+
+			}
+
+			return $attendances;
+		}
 	}
 	
   }

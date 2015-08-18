@@ -122,7 +122,7 @@
                         ?>
 
                         <?php 
-                            echo $this->Form->input('DeliveryDetail.status', array(
+                            echo $this->Form->input('DeliveryDetail.status_name', array(
                             'class' => 'form-control item_type',
                             'label' => false,
                             'type' => 'hidden',

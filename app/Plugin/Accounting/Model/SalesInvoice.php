@@ -69,4 +69,12 @@ class SalesInvoice extends AppModel {
 		return $this->id;
 		
 	}
+
+	public function changeStatus($auth = null, $id = null){
+
+				$this->id = $id;
+				$this->saveField('status', 1);
+				$this->saveField('modified_by', $auth);
+				
+	}
 }

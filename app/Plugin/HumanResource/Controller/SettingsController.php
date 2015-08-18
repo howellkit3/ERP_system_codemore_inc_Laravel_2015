@@ -158,5 +158,26 @@ class SettingsController  extends HumanResourceAppController {
 		$this->set(compact('typeData','categoryList'));
 
 	}
+
+	public function leave_types() {
+
+		$this->loadModel('HumanResource.LeaveType');
+
+		$limit = 10;
+
+        $conditions = array();
+
+        $this->paginate = array(
+	            'conditions' => $conditions,
+	            'limit' => $limit,
+	            //'fields' => array('id', 'status','created'),
+	            'order' => 'LeaveType.id DESC',
+	        );
+
+	    $leavetypeData = $this->paginate('LeaveType');
+	    
+		$this->set(compact('leavetypeData'));
+
+	}
 	
 }

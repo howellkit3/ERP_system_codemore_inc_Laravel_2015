@@ -48,6 +48,8 @@ echo $this->element('hr_options');
 			                     </div>
 
 			                     <a data-toggle="modal" href="#myAttendance" class="btn btn-primary pull-right "><i class="fa fa-share-square-o fa-lg"></i> Export</a>
+
+
 			                     
 			                    <?php echo $this->Form->end(); ?>
 			                   <br><br>
@@ -56,7 +58,7 @@ echo $this->element('hr_options');
 
 			          <div class="main-box-body clearfix">
 			            	<div class="table-responsive">
-								<table class="table table-striped table-hover">
+								<table class="table table-bordered table-hover">
 									<thead>
 										<tr>
 											<th><a href="#"><span>Code</span></a></th>

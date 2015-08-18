@@ -22,13 +22,7 @@ class DeliveriesController extends DeliveryAppController {
 
         $deliveryData = $this->Delivery->find('list',array('fields' => array('schedule_uuid','status')));
 
-        $this->ClientOrder->bindDelivery();
-
-        //pr($deliveryData); exit;
-
-        // $clientsOrder = $this->ClientOrder->find('all', array(
-        //                                 'order' => 'ClientOrderDeliverySchedule.id DESC'
-        //                                 ));  
+        $this->ClientOrder->bindDelivery(); 
         
         $this->ClientOrder->bindDelivery();
         $clientsStatus = $this->ClientOrder->find('all',array( 'conditions' => array(
@@ -828,10 +822,14 @@ class DeliveriesController extends DeliveryAppController {
             $accountingData = $this->SalesInvoice->find('first', array(
                                             'conditions' => array('SalesInvoice.dr_uuid' => $dr_uuid
                                             )));
-        
-            if($accountingData['SalesInvoice']['id']){
 
-                $idAccounting = $accountingData['SalesInvoice']['id'];
+            if(!empty($accountingData['SalesInvoice']['id'])){
+        
+                if($accountingData['SalesInvoice']['id']){
+
+                    $idAccounting = $accountingData['SalesInvoice']['id'];
+
+                }
 
             }
 
@@ -870,6 +868,8 @@ class DeliveriesController extends DeliveryAppController {
                     $this->request->data['Delivery']['status'] = 1;
 
                     $this->request->data['Delivery']['dr_uuid'] = $this->request->data['DeliveryDetail']['delivery_uuid'];
+
+                    $this->request->data['DeliveryDetail']['status'] = 11;
 
                     $this->request->data['DeliveryDetail']['delivered_quantity'] = $drData['DeliveryDetail']['delivered_quantity'];
 

@@ -89,6 +89,11 @@ var checkDepartmentEmployee = function(element){
 
 $(document).ready(function(){  
 
+    // $('body').on('change','.onoffswitch-checkbox',function(e){ 
+    //    
+    // });
+
+
 
     var init = function(){
 
@@ -106,6 +111,7 @@ $(document).ready(function(){
 
         if ($(this).is(':checked')) {
             $('.onoffswitch-checkbox').prop('checked',true);
+
         } else {
              $('.onoffswitch-checkbox').prop('checked',false);
         }
@@ -121,9 +127,10 @@ $(document).ready(function(){
     });
 
      $body.on('change','.onoffswitch-checkbox',function(){
+
         $('.selected-text').empty();
         var selected = $('.widget-users .onoffswitch-checkbox:checked').length;
-
+        //console.log($(this));
         $('.selected-text').html('Selected : <b>'+selected+'</b> ');
 
     }).trigger('change');

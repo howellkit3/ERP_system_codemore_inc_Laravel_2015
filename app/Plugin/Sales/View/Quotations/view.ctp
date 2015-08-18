@@ -123,11 +123,7 @@
 
     	echo $this->Html->link('<i class="fa fa-envelope-o fa-lg"></i> Send Via Email ','#QuotationEmail',
 		        	array('data-toggle' => 'modal', 'class' =>'btn btn-info pull-right '.$status.' '.$sendQuotation,'escape' => false,'target' => '_blank'));
-    	
-
-    	 // echo $this->Html->link('<i class="fa fa-times fa-lg"></i> Terminate ', array('controller' => 'quotations', 'action' => 'status',3,$quotation['Quotation']['id']),array('class' =>'btn btn-danger pull-right','escape' => false));
-
-    	 // echo $this->Html->link('<i class="fa fa-location-arrow fa-lg"></i> Withdraw ', array('controller' => 'quotations', 'action' => 'status',4,$quotation['Quotation']['id']),array('class' =>'btn btn-warning pull-right','escape' => false));
+  
      ?>
    
    <br><br>
@@ -137,341 +133,332 @@
 	<div class="col-lg-12">
 		<div class="main-box">
 			<center>
-				<header class="main-box-header clearfix"><?php //echo pr($contactInfo);die; ?>
-					<?php echo $this->element('print_header'); ?>
-					<h2>Price Quotation</h2><br>
+				<br>
+				<header class="main-box-header clearfix" >
+					<img src="<?php echo Router::url('/', true) ?>img/koufu_logo.jpg" alt="logo" style="width:240px;height:50px;padding-bottom:10;"> <br><br>
+					<label style="padding-bottom:0px; font-size:12px;">Lot 4-5 Blk 3 Ph2 Mountview Industrial Complex</label> <br>
+					<label style="padding-bottom:0px; font-size:12px;">Brgy. Bancal Carmona Cavite</label><br>
+					<label style="padding-bottom:0px; font-size:12px;">Tel: +632-5844928; &nbsp; +6346-4301576 &nbsp; Fax: +632-5844952</label><br><br>
+						
+					<label style="padding-bottom:8px; font-size:24px; font-style: arial;"><b>PRICE QUOTATION</label></b><br><br><br>
+					
 				</header>
 			</center>
 			
-			<div class="main-box-body clearfix">
-				<form class="form-horizontal" role="form">
-					<div class="form-group">
+			<form class="form-horizontal" role="form">
+				<div class="form-group">
+					<div class="col-lg-1"></div>
+					<div class="col-lg-2">
+						Attention
+					</div>
+					<div class="col-lg-5">
+						:&emsp;
+						<?php 
+						 echo ucfirst($quotation['ContactPerson']['firstname']).' '.ucfirst($quotation['ContactPerson']['lastname']) 
+						?>
+					</div>
+					<div class="col-lg-4">&emsp;&emsp;&nbsp;&nbsp;&nbsp;
+						No : <u>PQ-<?php echo $quotation['Quotation']['uuid'] ?></u>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-lg-1"></div>
+					<div class="col-lg-2">
+						Company
+					</div>
+					<div class="col-lg-5">
+						:&emsp;
+						<?php 
+						// 	echo $quotation['Quotation']['attention_details']
+							echo !empty($quotation['Quotation']['company_id']) ? ucfirst($companyData[$quotation['Quotation']['company_id']]) : ucfirst($companyData[$inquiryId[$quotation['Quotation']['inquiry_id']]]) 
+						?>
+					</div>
+					<div class="col-lg-4">&emsp;&emsp;&emsp;
+						Date :&nbsp;<?php echo !empty($quotation['Quotation']['created']) ? date('Y/m/d', strtotime($quotation['Quotation']['created'])) : '' ?>
+					</div>
+				</div>
+				<?php if (!empty($quotation['ContactPerson']['firstname']) || !empty($quotation['ContactPerson']['lastname'])) { ?>
+				<br>
+
+				<div class="form-group">
+					<div class="col-lg-1"></div>
+					<div class="col-lg-10">
+						Dear <?php echo ucfirst($quotation['ContactPerson']['firstname']).' '.ucfirst($quotation['ContactPerson']['lastname']) ?>,&nbsp;
+						
+					</div>
+				</div>
+
+				<?php } ?>
+
+				<div class="form-group">
+					<div class="col-lg-1"></div>
+					<div class="col-lg-8">
+						We are pleased to submit our price quotation on your printing requirement under the following specifications:
+					</div>
+				</div><br>
+				<div class="form-group">
+
 						<div class="col-lg-1"></div>
 						<div class="col-lg-2">
-							Attention
+							Item
 						</div>
-						<div class="col-lg-5">
-							:&emsp;
-							<?php 
-							// 	echo $quotation['Quotation']['attention_details']
-								echo !empty($quotation['Quotation']['company_id']) ? ucfirst($companyData[$quotation['Quotation']['company_id']]) : ucfirst($companyData[$inquiryId[$quotation['Quotation']['inquiry_id']]]) 
-							?>
-						</div>
-						<div class="col-lg-4">&emsp;&emsp;&nbsp;&nbsp;&nbsp;
-							No : <u>PQ-<?php echo $quotation['Quotation']['uuid'] ?></u>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-lg-3"></div>
-						<div class="col-lg-5">
-							___________________________________________________
-						</div>
-						<div class="col-lg-4">&emsp;&emsp;&emsp;
-							Date :&nbsp;<?php echo !empty($quotation['Quotation']['created']) ? date('Y/m/d', strtotime($quotation['Quotation']['created'])) : '' ?>
-						</div>
-					</div>
-					<?php if (!empty($quotation['ContactPerson']['firstname']) || !empty($quotation['ContactPerson']['lastname'])) { ?>
-						<div class="form-group">
-							<div class="col-lg-1"></div>
-							<div class="col-lg-10">
-								Dear <?php echo ucfirst($quotation['ContactPerson']['firstname']).' '.ucfirst($quotation['ContactPerson']['lastname']) ?>,&nbsp;
-								
-							</div>
-						</div>
-					<?php } ?>
-					<div class="form-group">
-						<div class="col-lg-3"></div>
 						<div class="col-lg-8">
-							We are pleased to submit our price quotation on your printing requirement under the following specifications:
+							:&emsp;<?php echo $quotation['Product']['name']?>
 						</div>
-					</div><br>
+
+				</div>
+				<?php if (!empty($quotation['QuotationDetail']['size'])) { ?>
 					<div class="form-group">
 
 							<div class="col-lg-1"></div>
 							<div class="col-lg-2">
-								Item
+								Size
 							</div>
 							<div class="col-lg-8">
-								:&emsp;<?php echo $quotation['Product']['name']?>
+								:&emsp;<?php echo $quotation['QuotationDetail']['size']?>
 							</div>
 
 					</div>
-					<?php if (!empty($quotation['QuotationDetail']['size'])) { ?>
-						<div class="form-group">
-
-								<div class="col-lg-1"></div>
-								<div class="col-lg-2">
-									Size
-								</div>
-								<div class="col-lg-8">
-									:&emsp;<?php echo $quotation['QuotationDetail']['size']?>
-								</div>
-
-						</div>
-					<?php } ?>
-					<!-- <div class ="boxed2"> -->
-					<?php 
-						// $displayVat = 0;
-						// $displayMat = 0;
-					?>
-					<div class="form-group">
-							<div class="col-lg-1"></div>
-							<div class="col-lg-2">
-								Quantity
+				<?php } ?>
+				<!-- <div class ="boxed2"> -->
+				<?php 
+					// $displayVat = 0;
+					// $displayMat = 0;
+				?>
+				<div class="form-group">
+						<div class="col-lg-1"></div>
+						<div class="col-lg-2">
+							Quantity
+							<br><br>
+							Unit Price
+							<?php //if($displayVat == 0){ ?>
 								<br><br>
-								Unit Price
-								<?php //if($displayVat == 0){ ?>
-									<br><br>
-									Vat Price
-								<?php //} ?>
-								<?php //if($displayMat == 0){ ?>
-									<br><br>
-									Material
-								<?php //} ?>
-								
-							</div>
-							<div class="col-lg-8"><div class="pull-left"></div>
-								<?php foreach ($quotation['QuotationItemDetail'] as $key => $itemDetail){?>
-									<table  class = "tbl">
+								Vat Price
+							<?php //} ?>
+							<?php //if($displayMat == 0){ ?>
+								<br><br>
+								Material
+							<?php //} ?>
+							
+						</div>
+						<div class="col-lg-8"><div class="pull-left"></div>
+							<?php foreach ($quotation['QuotationItemDetail'] as $key => $itemDetail){?>
+								<table  class = "tbl">
+									<tr>
+										
+										<td height ="35px" valign ="top" class ="column2 col-md-12"> 
+											<div class="col-lg-12">
+												<?php echo (!empty($itemDetail['quantity']) && is_numeric($itemDetail['quantity'])) ? number_format($itemDetail['quantity']) : '';
+												?>
+												<?php
+												 echo !empty($units[$itemDetail['quantity_unit_id']]) ? $units[$itemDetail['quantity_unit_id']] : '' ?> 
+											</div>
+										</td>	
+										
+									</tr>
+									<tr>
+										<td height ="35px" valign ="top" class = "column2 col-md-12">
+											<div class="col-lg-12">
+												<?php
+												 echo !empty($currencies[$itemDetail['unit_price_currency_id']]) ? $currencies[$itemDetail['unit_price_currency_id']] : '' ?>
+												<?php echo (!empty($itemDetail['unit_price']) && is_numeric($itemDetail['unit_price'])) ? number_format($itemDetail['unit_price'],4) : '';?>
+												/
+												<?php
+												 echo !empty($units[$itemDetail['unit_price_unit_id']]) ? $units[$itemDetail['unit_price_unit_id']] : '' ?> 
+												 
+											</div>
+										</td>
+									</tr>
+									<?php //if($displayVat == 1){ ?>
 										<tr>
-											
-											<td height ="35px" valign ="top" class ="column2 col-md-12"> 
+											<td height ="40px" class ="column2 col-md-12">
 												<div class="col-lg-12">
-													<?php echo (!empty($itemDetail['quantity']) && is_numeric($itemDetail['quantity'])) ? number_format($itemDetail['quantity']) : '';
-													?>
-													<?php
-													 echo !empty($units[$itemDetail['quantity_unit_id']]) ? $units[$itemDetail['quantity_unit_id']] : '' ?> 
-												</div>
-											</td>	
-											
-										</tr>
-										<tr>
-											<td height ="35px" valign ="top" class = "column2 col-md-12">
-												<div class="col-lg-12">
-													<?php
-													 echo !empty($currencies[$itemDetail['unit_price_currency_id']]) ? $currencies[$itemDetail['unit_price_currency_id']] : '' ?>
-													<?php echo (!empty($itemDetail['unit_price']) && is_numeric($itemDetail['unit_price'])) ? number_format($itemDetail['unit_price'],4) : '';?>
-													/
-													<?php
-													 echo !empty($units[$itemDetail['unit_price_unit_id']]) ? $units[$itemDetail['unit_price_unit_id']] : '' ?> 
-													 
+													<?php echo (!empty($itemDetail['vat_price']) && is_numeric($itemDetail['vat_price'])) ? number_format($itemDetail['vat_price'],4) : '';
+													?> 
 												</div>
 											</td>
 										</tr>
-										<?php //if($displayVat == 1){ ?>
-											<tr>
-												<td height ="40px" class ="column2 col-md-12">
-													<div class="col-lg-12">
-														<?php echo (!empty($itemDetail['vat_price']) && is_numeric($itemDetail['vat_price'])) ? number_format($itemDetail['vat_price'],4) : '';
-														?> 
-													</div>
-												</td>
-											</tr>
-										<?php //} ?>
-										<?php //if($displayMat == 1){ ?>
-											<tr>
-												
-												<td height ="30px" class ="column2 col-md-12">
-													<div class="col-lg-12">
-														<?php echo $itemDetail['material'];?> 
-													</div>
-												</td>
-												
-											</tr>
-										<?php //} ?>
-										<?php 
-											// if (!empty($itemDetail['vat_price'])) {
-											// 	$displayVat++;
-											// }else{
-											// 	if ($displayVat !=0) {
-											// 		$displayVat--;
-											// 	}
-											// }
-											// if (!empty($itemDetail['material'])) {
-											// 	$displayMat++;
-											// }else{
-											// 	if ($displayMat !=0) {
-											// 		$displayMat--;
-											// 	}
-											// }
-										?>
-
-									</table>
-								<?php } ?>
-
-							</div>
+								
+										<tr>
+											
+											<td height ="30px" class ="column2 col-md-12">
+												<div class="col-lg-12">
+													<?php echo $itemDetail['material'];?> 
+												</div>
+											</td>
+										</tr>
+								</table>
+							<?php } ?>
 
 						</div>
 
-						<?php if (!empty($quotation['QuotationDetail']['color'])) { ?>
-							<div class="form-group">
+					</div>
 
-								<div class="col-lg-1"></div>
-								<div class="col-lg-2">
-									Color
-								</div>
-								<div class="col-lg-8">
-									:&emsp;<?php echo $quotation['QuotationDetail']['color']?>
-								</div>
-
-							</div>
-						<?php } ?>
-
-						<?php if (!empty($quotation['QuotationDetail']['process'])) { ?>
-							<div class="form-group">
-
-								<div class="col-lg-1"></div>
-								<div class="col-lg-2">
-									Process
-								</div>
-								<div class="col-lg-8">
-									:&emsp;<?php echo $quotation['QuotationDetail']['process']?>
-								</div>
-
-							</div>
-						<?php } ?>
-
-						<?php if (!empty($quotation['QuotationDetail']['packaging'])) { ?>
-							<div class="form-group">
-
-								<div class="col-lg-1"></div>
-								<div class="col-lg-2">
-									Packaging
-								</div>
-								<div class="col-lg-8">
-									:&emsp;<?php echo $quotation['QuotationDetail']['packaging']?>
-								</div>
-
-							</div>
-						<?php } ?>
-
-						<?php if (!empty($quotation['QuotationDetail']['other_specs'])) { ?>
-							<div class="form-group">
-
-								<div class="col-lg-1"></div>
-								<div class="col-lg-2">
-									Other Specs
-								</div>
-								<div class="col-lg-8">
-									:&emsp;<?php echo $quotation['QuotationDetail']['other_specs']?>
-								</div>
-
-							</div>
-						<?php } ?>
-
+					<?php if (!empty($quotation['QuotationDetail']['color'])) { ?>
 						<div class="form-group">
 
 							<div class="col-lg-1"></div>
 							<div class="col-lg-2">
-								Terms
+								Color
 							</div>
 							<div class="col-lg-8">
-								:&emsp;<?php echo !empty($paymentTerm[$quotation['Quotation']['payment_terms']]) ? $paymentTerm[$quotation['Quotation']['payment_terms']]: '' ?>
+								:&emsp;<?php echo $quotation['QuotationDetail']['color']?>
 							</div>
 
 						</div>
+					<?php } ?>
 
-						<?php if (!empty($quotation['Quotation']['validity'])) { ?>
-							<div class="form-group">
+					<?php if (!empty($quotation['QuotationDetail']['process'])) { ?>
+						<div class="form-group">
 
-								<div class="col-lg-1"></div>
-								<div class="col-lg-2">
-									Validity
-								</div>
-								<div class="col-lg-8">
-									:&emsp;<?php 
-									   if (!empty($quotation['Quotation']['validity']) 
-									   	&& $this->DateFormat->isValidDateTimeString($quotation['Quotation']['validity'])){
-									   	
-									   		echo date('M d, Y', strtotime($quotation['Quotation']['validity']));
-									   } else {
-
-									   		echo 'No validity date';
-									   } ?>
-								</div>
-
+							<div class="col-lg-1"></div>
+							<div class="col-lg-2">
+								Process
 							</div>
-						<?php } ?>
-
-						<?php if (!empty($quotation['Quotation']['remarks'])) { ?>
-							<div class="form-group">
-
-								<div class="col-lg-1"></div>
-								<div class="col-lg-2">
-									Remarks
-								</div>
-								<div class="col-lg-8">
-									:&emsp;<?php echo $quotation['QuotationDetail']['remarks']?>
-								</div>
-
+							<div class="col-lg-8">
+								:&emsp;<?php echo $quotation['QuotationDetail']['process']?>
 							</div>
-						<?php } ?>
-			
+
+						</div>
+					<?php } ?>
+
+					<?php if (!empty($quotation['QuotationDetail']['packaging'])) { ?>
+						<div class="form-group">
+
+							<div class="col-lg-1"></div>
+							<div class="col-lg-2">
+								Packaging
+							</div>
+							<div class="col-lg-8">
+								:&emsp;<?php echo $quotation['QuotationDetail']['packaging']?>
+							</div>
+
+						</div>
+					<?php } ?>
+
+					<?php if (!empty($quotation['QuotationDetail']['other_specs'])) { ?>
+						<div class="form-group">
+
+							<div class="col-lg-1"></div>
+							<div class="col-lg-2">
+								Other Specs
+							</div>
+							<div class="col-lg-8">
+								:&emsp;<?php echo $quotation['QuotationDetail']['other_specs']?>
+							</div>
+
+						</div>
+					<?php } ?>
+
+					<div class="form-group">
+
+						<div class="col-lg-1"></div>
+						<div class="col-lg-2">
+							Terms
+						</div>
+						<div class="col-lg-8">
+							:&emsp;<?php echo !empty($paymentTerm[$quotation['Quotation']['payment_terms']]) ? $paymentTerm[$quotation['Quotation']['payment_terms']]: '' ?>
+						</div>
+
+					</div>
+
+					<?php if (!empty($quotation['Quotation']['validity'])) { ?>
+						<div class="form-group">
+
+							<div class="col-lg-1"></div>
+							<div class="col-lg-2">
+								Validity
+							</div>
+							<div class="col-lg-8">
+								:&emsp;<?php 
+								   if (!empty($quotation['Quotation']['validity']) 
+								   	&& $this->DateFormat->isValidDateTimeString($quotation['Quotation']['validity'])){
+								   	
+								   		echo date('M d, Y', strtotime($quotation['Quotation']['validity']));
+								   } else {
+
+								   		echo 'No validity date';
+								   } ?>
+							</div>
+
+						</div>
+					<?php } ?>
+
+					<?php if (!empty($quotation['Quotation']['remarks'])) { ?>
+						<div class="form-group">
+
+							<div class="col-lg-1"></div>
+							<div class="col-lg-2">
+								Remarks
+							</div>
+							<div class="col-lg-8">
+								:&emsp;<?php echo $quotation['QuotationDetail']['remarks']?>
+							</div>
+
+						</div>
+					<?php } ?>
+		
+				<br><br>
+				<div class="form-group">
+					<div class="col-lg-1"></div>
+					<div class="col-lg-2">
+						Respectfully,
+					</div>
+					<div class="col-lg-4"></div>
+					<?php if(!empty($approvedUser)){ 
+						echo" Approved by :" ;
+
+					} ?>
+				</div>
+
+				<br>
+				<div class="form-group">
+					<div class="col-lg-1"></div>
+					<div class="col-lg-2" style = "padding-bottom:0px;">
+
+						<?php echo ucfirst($user['User']['first_name']) ?>&nbsp;
+						<?php echo ucfirst($user['User']['last_name'])?>
+						<hr style="height:1px; border:none; text-align: left; width: 200px; color:#b2b2b2; background-color:#b2b2b2;">
+					</div>
+
+					<div class="col-lg-2"></div>
+					<div class="col-lg-6" style = " padding-bottom:0px;">
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						
+							<?php if(!empty($approvedUser)){ ?>
+							<?php echo ucfirst($approvedUser['User']['first_name']);
+							echo '&nbsp';
+						 	echo ucfirst($approvedUser['User']['last_name']);
+
+							}else{
+								echo "Note: Not yet approved. ";
+							} ?>
+
+							<?php if(!empty($approvedUser)){  ?>
+						<hr style="height:1px; border:none; text-align: left; width: 200px; color:#b2b2b2; background-color:#b2b2b2;">
+							<?php  }?>
+					</div>
+				</div>
+
+				<br>
+
+				<div style=" text-align:left; margin-left:90px;">
 					
-
+					<font size ="1">
+						Doc No.: KFP-FR-MKT-07<br>
+						REV. No.: 01
+					</font>
 					
-					<br><br>
-					<div class="form-group">
-						<div class="col-lg-1"></div>
-						<div class="col-lg-10">
-							Respectfully,
-						</div>
-					</div>
-					<br><br>
-					<div class="form-group">
-						<div class="col-lg-1"></div>
-						<div class="col-lg-5">
-							<?php echo ucfirst($user['User']['first_name']) ?>&nbsp;
-							<?php echo ucfirst($user['User']['last_name'])?>
-							<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
-						</div>
-					</div>
-
-					<?php if(!empty($approvedUser)){ ?>
-						<div class="form-group">
-							<div class="col-lg-1"></div>
-							<div class="col-lg-10">
-								Approved by :
-							</div>
-						</div>
-						<br><br>
-						<div class="form-group">
-							<div class="col-lg-1"></div>
-							<div class="col-lg-5" style="display:inline-block !important;">
-							<?php
-								
-								echo ucfirst($approvedUser['User']['first_name']);
-								echo '&nbsp';
-							 	echo ucfirst($approvedUser['User']['last_name']);
-								
-							?>
-								
-								<hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
-
-							</div>
-							<br><br>
-							<div class=" pull-right col-lg-3" style="display:inline-block !important;">
-								<p class = "doc">
-									<font size ="1">
-										Doc No.: KFP-FR-MKT-07<br>
-										REV. No.: 01
-									</font>
-								</p>
-							</div>
-						</div>
-					<?php 
-						}else{
-							echo "Note: Not yet approved. ";
-						}
-					?>
-					<div style ="clear:both">
-					</div>
-				</form>
+				</div>
+							
+				<div style ="clear:both"></div>
+			</form>
 			</div>								
 		</div>
 	</div>	
-</div>
+
 <?php echo $this->element('send_email',array('quotation' => $quotation,'user' => $user )); ?>
 
 <style>
@@ -485,7 +472,6 @@
     cursor: not-allowed;
     opacity: 0.65;
     pointer-events: none;
-  
 
 }
 

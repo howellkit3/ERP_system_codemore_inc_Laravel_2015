@@ -3,7 +3,7 @@
     $this->PhpExcel->createWorksheet()
         ->setDefaultFont('Calibri', 12);
 
-    $objTpl = PHPExcel_IOFactory::load("./img/templates.xlsx");
+    $objTpl = PHPExcel_IOFactory::load("./img/dr_sum.xlsx");
 
     if (!empty($invoiceData)) {
         $addRow = 0;
@@ -11,10 +11,10 @@
             $addRow = $key + 1;
         }
 
-        $objTpl->setActiveSheetIndex(2)->insertNewRowBefore(11,$addRow);
+        $objTpl->setActiveSheetIndex(1)->insertNewRowBefore(6,$addRow);
 
         // add data
-        $counter = 10;
+        $counter = 4;
         $totalusd = 0;
         $totalquantity = 0;
         foreach ($invoiceData as $key => $invoiceList) {
@@ -22,23 +22,26 @@
            if ($invoiceList['SalesInvoice']['unit_price_currency_id'] == 2) {
 
                 $usd = $invoiceList['SalesInvoice']['quantity'] * $invoiceList['SalesInvoice']['unit_price'];
-                $amountUsd = number_format($usd,2);
+                $amountUsd = number_format($usd,1);
                 $totalquantity = $totalquantity + $usd;
-                $objTpl->setActiveSheetIndex(2)
-                            ->setCellValue('A'.$counter, $companyData[$invoiceList['SalesInvoice']['company_id']])
-                            ->setCellValue('B'.$counter, date('m/d/Y', strtotime($invoiceList['SalesInvoice']['created'])))
+                $objTpl->setActiveSheetIndex(1)
+                            ->setCellValue('B'.$counter, $companyData[$invoiceList['SalesInvoice']['company_id']])
+                            ->setCellValue('A'.$counter, date('m/d/Y', strtotime($DeliveryDateData[$invoiceList['SalesInvoice']['dr_uuid']])))
                             ->setCellValue('C'.$counter, $invoiceList['SalesInvoice']['dr_uuid'])
                             ->setCellValue('D'.$counter, $invoiceList['SalesInvoice']['statement_no'])
                             ->setCellValue('E'.$counter, $invoiceList['SalesInvoice']['sales_invoice_no'])
-                            ->setCellValue('F'.$counter, $usd);
+                            ->setCellValue('F'.$counter, $termData[$clientOrderData[$DeliveryClientsOrderData[$invoiceList['SalesInvoice']['dr_uuid']]]])
+                            ->setCellValue('G'.$counter, $usd);
 
                 $counter++;  
             }
         }
 
-        $totalIndex = $counter + 3;
-        $objTpl->setActiveSheetIndex(2)
-                        ->setCellValue('F'.$totalIndex, $totalquantity);
+        $totalIndex = $counter + 4;
+        $objTpl->setActiveSheetIndex(1)
+                        
+                        ->setCellValue('G'.$totalIndex, $totalquantity)
+                        ->setCellValue('H2', 42.12);
     }
     //prepare download
     $filename = mt_rand(1,100000).'.xlsx'; //just some random filename

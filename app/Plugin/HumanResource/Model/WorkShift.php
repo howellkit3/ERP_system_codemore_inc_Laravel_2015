@@ -60,7 +60,7 @@ class WorkShift extends AppModel {
 		}
 
 
-		$workshift = [];
+		$workshift = array();
 
 		$this->create();
 

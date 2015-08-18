@@ -39,12 +39,14 @@ echo $this->Html->script(array(
 
 			                   		if (empty($this->request->params['named']['calendar'])) {
 			                   			$calendar = "Calendar";
+			                   			$icons = 'fa fa-calendar';
 			                   			$links  = array_merge($links,array('calendar' => true));
 			                   		}  else {
 			                   			$calendar = "List";
+			                   			$icons = 'fa fa-list-ol';
 			                   		}
 			                   		
-			                      echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> View on '.$calendar, 
+			                      echo $this->Html->link('<i class="'.$icons.' fa-lg"></i> View on '.$calendar, 
 			                           $links ,
 			                            array('class' =>'btn btn-primary pull-right',
 			                                'escape' => false));

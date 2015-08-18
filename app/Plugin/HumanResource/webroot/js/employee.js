@@ -248,36 +248,20 @@ $('body').on('keyup','.searchEmployee',function(e){
    
 });
 
-// $('body').on('click','.exportEmployeeData',function(e){
+$('body').on('click','.select-status',function(e){
 
-//     //some filter
-//     var DepartmentId = $('.select-department-view option:selected').val();
-//     if (!DepartmentId) {
-//         DepartmentId = 0;
-//     };
-
-//     var status = $('.select-status-view option:selected').val();
-//     if (!status) {
-//         status = 0;
-//     };
+    var thisMe = $(this).val();
+    
+    if (thisMe == 'M') {
+        $('.for-married-section').attr('style','block');
+        
+    }
+    if (thisMe == 'S') {
+        $('.for-married-section').hide();
+      
+    }
    
-//     var inputSearch = $('.searchEmployee').val();
-     
-//     // window.setTimeout(function() {
-//     //     window.location.href = serverPath + "human_resource/employees/print_employee/"+DepartmentId+"/"+status+"/"+inputSearch;
-//     // }, 3000);
-//     //exportData
-//     $.ajax({
-//         type: "GET",
-//         url: serverPath + "human_resource/employees/print_employee/"+DepartmentId+"/"+status+"/"+inputSearch,
-//         dataType: "html",
-//         success: function(data) {
-           
-//            console.log(data); 
-//         }
-//     });
-   
-// });
+});
 
 function ajaxCallSearchEmployee(DepartmentId,thisStatus,inputSearch){
 

@@ -124,7 +124,6 @@
 							<?php if(!empty($employee['Address'][0])) : ?>
 									<li><a href="#tab-address" data-toggle="tab">My Address</a></li>
 							<?php endif; ?>		
-							<li><a href="#tab-gov" data-toggle="tab">Government Records</a></li>
 							<li><a href="#tab-cperson" data-toggle="tab">Contact Person</a></li>
 							<!-- <li><a href="#tab-chat" data-toggle="tab">Email</a></li>
 							<li><a href="#tab-friends" data-toggle="tab">Contact Person</a></li>
@@ -280,44 +279,6 @@
 
 								<?php endif; ?>
 
-
-								<div class="tab-pane" id="tab-gov">
-										<div class="story-content remove-pad">
-											<header class="story-header">
-												<div class="story-author">
-												<div class="table-responsive">
-
-												<div class="col-lg-12">
-												<?php if (!empty($employee['GovernmentRecord'])) :
-						                           	
-						                         
-						                            foreach($employee['GovernmentRecord'] as $gov_key => $data) {
-
-						                           	$this->request->data['EmployeeAgencyRecord'][$gov_key] = $data;
-
-						                           	?>
-
-						                           	<div class="form-group">
-								                                        <label for="inputEmail1" class="col-lg-2 control-label strong"> <?php echo 	$nameList[$data['agency_id']]['name'] ?> <?php echo $nameList[$data['agency_id']]['field'] ?> </label>
-									                                      <div class="col-lg-9 value"> 
-									                                       	<?php echo $data['value'] ?>
-									                                       </div>
-								                   </div>
-								                   <div class="clearfix"></div>
-
-
-						                           	<?php } ?>	
-						                           	<?php endif; ?>
-		                                 		</div>
-
-												</div>
-											</div>
-												
-											</header>
-										</div>
-								</div>
-
-
 								<div class="tab-pane" id="tab-cperson">
 										<div class="story-content remove-pad">
 											<header class="story-header">
@@ -415,6 +376,61 @@
 
 								</div>
 					</div>
+
+
+				</div>
+			</div>
+
+
+			<div class="col-lg-9 col-md-8 col-sm-8">
+				<div class="main-box clearfix">
+					<div class="tabs-wrapper profile-tabs">
+						<ul class="nav nav-tabs">
+							<li class="active"><a href="#tab-gov" data-toggle="tab">Government Records</a></li>
+						</ul>
+						
+						<div class="tab-content">
+						
+								<div class="tab-pane active" id="tab-gov">
+										<div class="story-content remove-pad">
+											<header class="story-header">
+												<div class="story-author">
+												<div class="table-responsive">
+
+												<div class="col-lg-12">
+												<?php if (!empty($employee['GovernmentRecord'])) :
+						                           	
+						                         
+						                            foreach($employee['GovernmentRecord'] as $gov_key => $data) {
+
+						                           	$this->request->data['EmployeeAgencyRecord'][$gov_key] = $data;
+
+						                           	?>
+
+						                           	<div class="form-group">
+								                                        <label for="inputEmail1" class="col-lg-2 control-label strong"> <?php echo 	$nameList[$data['agency_id']]['name'] ?> <?php echo $nameList[$data['agency_id']]['field'] ?> </label>
+									                                      <div class="col-lg-9 value"> 
+									                                       	<?php echo $data['value'] ?>
+									                                       </div>
+								                   </div>
+								                   <div class="clearfix"></div>
+
+
+						                           	<?php } ?>	
+						                           	<?php endif; ?>
+		                                 		</div>
+
+												</div>
+											</div>
+												
+											</header>
+										</div>
+								</div>
+
+							</div>
+					</div>
+
+					
 				</div>
 			</div>
 		</div>
