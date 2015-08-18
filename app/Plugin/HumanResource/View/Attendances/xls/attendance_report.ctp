@@ -5,7 +5,7 @@
     $this->PhpExcel->createWorksheet()
         ->setDefaultFont('Calibri', 12);
 
-    $objTpl = PHPExcel_IOFactory::load("./img/attendance_report.xlsx");
+    $objTpl = PHPExcel_IOFactory::load("./img/attendance_report.xls");
     
     if (!empty($attendanceData)) {
         
@@ -41,7 +41,7 @@
     }
 
     //prepare download
-    $filename = mt_rand(1,100000).'.xlsx'; //just some random filename
+    $filename = mt_rand(1,100000).'.xls'; //just some random filename
     header('Content-Type: application/vnd.ms-office');
     //header('Content-Type: application/vnd.ms-excel');
     
