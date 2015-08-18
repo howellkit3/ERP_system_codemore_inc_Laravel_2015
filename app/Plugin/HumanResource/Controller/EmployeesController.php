@@ -597,7 +597,7 @@ class EmployeesController  extends HumanResourceAppController {
 
         if (!empty($toolId)) {
 
-        	$conditions = array_merge($conditions,array('Tooling.tools_id' => $employeeId));
+        	$conditions = array_merge($conditions,array('Tooling.tools_id' => $toolId));
 
         } 
 
