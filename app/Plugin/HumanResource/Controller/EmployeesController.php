@@ -619,7 +619,7 @@ class EmployeesController  extends HumanResourceAppController {
 		$positionList = $this->Position->find('list',array('field' => array('id','name')));
 
 		$departmentList = $this->Department->find('list',array('field' => array('id','name')));
-		pr($toolingData);exit();
+		//pr($toolingData);exit();
 		$this->set(compact('toolingData','positionList','departmentList'));
 		$this->render('Employees/xls/tool_report');
 
