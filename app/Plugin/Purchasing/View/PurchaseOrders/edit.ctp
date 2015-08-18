@@ -453,7 +453,7 @@
 														<div class="col-lg-3">
 															<?php 
 																echo $this->Form->input('PurchasingItem.'.$key.'.unit_price_unit_id', array(
-											                        'options' => array($unitData),  
+											                        'options' => array($currencyData),  
 											                        'label' => false,
 											                        'class' => 'form-control required select-drop',
 											                        'empty' => '---Select Unit---',

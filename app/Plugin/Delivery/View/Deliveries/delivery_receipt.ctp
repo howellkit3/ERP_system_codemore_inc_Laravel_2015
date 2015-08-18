@@ -270,15 +270,14 @@
                       </div>
 
                       <div class="form-group">
-                            <label class="col-lg-2 control-label">Unit</label>
+                            <label class="col-lg-2 control-label">Measure</label>
                               <div class="col-lg-8">
                               <?php 
-                              echo $this->Form->input('DeliveryDetail.unit', array(
+                              echo $this->Form->input('DeliveryDetail.measures', array(
                               'class' => 'form-control item_type',
                               'label' => false,
                               'disabled' => 'disabled',
-                              'placeholder' => 'Item Unit',
-                              'value' => $clientData['QuotationItemDetail']['unit_price_unit_id']));
+                              'value' => $measureList[$drData['DeliveryDetail']['measure']]));
                               ?>
                               </div>
                           </div>   

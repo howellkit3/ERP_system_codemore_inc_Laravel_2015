@@ -3,7 +3,7 @@
     $this->PhpExcel->createWorksheet()
         ->setDefaultFont('Calibri', 12);
 
-    $objTpl = PHPExcel_IOFactory::load("./img/dr_sum.xlsx");
+    $objTpl = PHPExcel_IOFactory::load("./img/dr_sum.xls");
 
     if (!empty($invoiceData)) {
         $addRow = 0;
@@ -33,13 +33,11 @@
                             ->setCellValue('E'.$counter, $invoiceList['SalesInvoice']['sales_invoice_no'])
                             ->setCellValue('F'.$counter, $termData[$clientOrderData[$DeliveryClientsOrderData[$invoiceList['SalesInvoice']['dr_uuid']]]])
                             ->setCellValue('G'.$counter, $php);
-                            
-                            
-
+                           
                 $counter++;  
             }
         }
-        $totalIndex = $counter + 5;
+        $totalIndex = $counter + 2;
         $objTpl->setActiveSheetIndex(2)
                         ->setCellValue('G'.$totalIndex, $totalquantity);
     }

@@ -458,6 +458,10 @@ class RequestsController extends PurchasingAppController {
 		$unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
 															'order' => array('Unit.unit' => 'ASC')
 															));
+		$this->loadModel('Currency');
+
+		$currencyData = $this->Currency->find('list', array('fields' => array('id', 'name'))
+															);
 
     	$paymentTermData = $this->PaymentTermHolder->find('list', array(
 														'fields' => array('PaymentTermHolder.id', 'PaymentTermHolder.name'),
@@ -467,7 +471,7 @@ class RequestsController extends PurchasingAppController {
 															'order' => array('PurchasingType.id' => 'ASC')
 															));
 
-    	$this->set(compact('requestId','supplierData','paymentTermData','requestData','type','unitData','requestItem'));
+    	$this->set(compact('requestId','supplierData','paymentTermData','requestData','type','unitData','requestItem','currencyData'));
 
     }
 

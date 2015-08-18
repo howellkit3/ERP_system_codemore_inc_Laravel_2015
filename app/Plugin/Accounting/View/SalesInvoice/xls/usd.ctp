@@ -3,7 +3,7 @@
     $this->PhpExcel->createWorksheet()
         ->setDefaultFont('Calibri', 12);
 
-    $objTpl = PHPExcel_IOFactory::load("./img/dr_sum.xlsx");
+    $objTpl = PHPExcel_IOFactory::load("./img/dr_sum.xls");
 
     if (!empty($invoiceData)) {
         $addRow = 0;

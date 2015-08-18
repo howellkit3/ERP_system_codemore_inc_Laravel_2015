@@ -9,7 +9,7 @@
      
     // add data
 
-   //  pr($drQuantity); exit;
+    // pr($measureList); exit;
     $counter = 10;
    
         $phpPrice = '';
@@ -40,18 +40,6 @@
             }               
         }
 
-
-
-
-      // if(!empty($DRRePrint[0]['DeliveryReceipt']['printed'])){   
-
-      //  $printedDate = date("M/d/Y", strtotime($DRRePrint[0]['DeliveryReceipt']['printed'])); 
-      //   $toBePrinted =  $printedDate;
-                
-      // }
-
-       // pr($drData); exit;
-
         $objTpl->setActiveSheetIndex(0)
                     
 
@@ -71,13 +59,13 @@
 
         $objTpl->setActiveSheetIndex(0)
                     
-                    ->setCellValue('H'.'9', $drData['DeliveryDetail']['pieces'] . " x " .  floor($dividend) . " / " . $units[$clientData['QuotationItemDetail']['quantity_unit_id']] );
+                    ->setCellValue('H'.'9', $drData['DeliveryDetail']['pieces'] . " x " .  floor($dividend) . " / " . $measureList[$drData['DeliveryDetail']['measure']] );
 
         }else{
 
         $objTpl->setActiveSheetIndex(0)
                     
-                    ->setCellValue('H'.'9', $drData['DeliveryDetail']['pieces'] . " x " .  floor($dividend)  . " + " . floor($difference) . " / " . $units[$clientData['QuotationItemDetail']['quantity_unit_id']] );
+                    ->setCellValue('H'.'9', $drData['DeliveryDetail']['pieces'] . " x " .  floor($dividend)  . " + " . floor($difference) . " / " . $measureList[$drData['DeliveryDetail']['measure']] );
 
         }
 

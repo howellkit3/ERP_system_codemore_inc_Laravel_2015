@@ -9,7 +9,7 @@ body{
   background-size: 100%;*/
 }
 
-@page { margin:5px 7px 7px 7px;}
+@page { margin:5px 7px 2px 7px;}
     
 .padd,td{
   padding: 6px 0px;

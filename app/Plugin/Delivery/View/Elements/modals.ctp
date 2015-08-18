@@ -160,7 +160,7 @@
                                                                     'required' => 'required',
                                                                     'class' => 'form-control required  ',
 
-                                                                    'options' => array('by bundle', 'by pack' , 'by piece', 'by box', 'by pallet'),
+                                                                    'options' => array($measureList),
                                                                     'empty' => '--Select Measure--',
                                                                     'label' => false,
                                                                     'type' => 'select',
@@ -292,7 +292,7 @@
                                                                     'required' => 'required',
                                                                     'class' => 'form-control required  ',
 
-                                                                    'options' => array('by bundle', 'by pack' , 'by piece', 'by box', 'by pallet'),
+                                                                    'options' => array($measureList),
                                                                     'empty' => '--Select Measure--',
                                                                     'label' => false,
                                                                     'type' => 'select',
