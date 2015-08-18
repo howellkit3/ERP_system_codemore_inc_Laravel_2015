@@ -218,35 +218,35 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="inputEmail1" class="col-lg-3 control-label"> Employee Name</label>
+                        <!-- <div class="form-group">
+                            <label for="inputEmail1" class="col-lg-3 control-label"> Department</label>
                             
                             <div class="col-lg-6">
                                 <?php 
-                                       echo $this->Form->input('Tool.employee_id', array(
+                                       echo $this->Form->input('Tool.department_id', array(
                                                                     'type' => 'select',
                                                                     'label' => false,
                                                                     'class' => 'form-control required',
                                                                     'empty' => '---Select Employee---',
-                                                                    'options' => array($employeeList)
+                                                                    'options' => array($departmentData)
 
                                                                   ));
                                 ?>
                             </div>
-                        </div>
-
-                        <!-- <div class="form-group">
-                            <label for="inputEmail1" class="col-lg-3 control-label"> Date Range</label>
-
-                           <div class="col-lg-6">
-                                <div class="input-group">
-                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                        <input  placeholder="Date Range" name="from_date" data="1" type="text" class="form-control required myDateRange datepickerDateRange high-z-index" id="datepickerDateRange" >
-                                                    </div>
-                            </div>
-
-                           
                         </div> -->
+
+                        <div class="form-group">
+                            <label for="inputEmail1" class="col-lg-3 control-label"> Date</label>
+                            
+                            <div class="col-lg-6">
+                                <?php 
+                                    echo $this->Form->input('Tool.datepick', array(
+                                                                'label' => false,
+                                                                'class' => 'form-control required datepick'
+                                                              ));
+                                ?>
+                            </div>
+                        </div>
 
                         <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-share-square-o fa-lg"></i> Export</button>
@@ -278,11 +278,7 @@
                //datepicker
 
                $("#EmployeeIndexForm").validate();
-                // $('.datepick').datepicker({
-                    
-                //     changeYear: false,
-                //     autoClose: true
-                // });
+                $('.datepick').datepicker();
 
                 // $("#HolidayDate").click(function() {
                 //     $(".datepicker-days .day").click(function() {

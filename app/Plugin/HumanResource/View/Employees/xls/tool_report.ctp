@@ -5,25 +5,39 @@
     $this->PhpExcel->createWorksheet()
         ->setDefaultFont('Calibri', 12);
 
-    $objTpl = PHPExcel_IOFactory::load("./img/tool_record.xls");
-    $counter = 5;
-    foreach ($toolingData as $key => $toolList) {
-        $key++;
-       
-        $objTpl->setActiveSheetIndex(0)
-                    ->setCellValue('A1',(new \DateTime())->format('m/d/Y'))
-                    ->setCellValue('A'.$counter, $key)
-                    ->setCellValue('B'.$counter, $toolList['Employee']['first_name'].' '.$toolList['Employee']['middle_name'].' '.$toolList['Employee']['last_name'].' '.$toolList['Employee']['suffix'])
-                    ->setCellValue('C'.$counter, $toolList['Tool']['name'])
-                    ->setCellValue('D'.$counter, $toolList['Tooling']['quantity'])
-                    ->setCellValue('E'.$counter, $toolList['Tooling']['price'])
-                    ->setCellValue('F'.$counter, $toolList['Tooling']['pay'])
-                    ->setCellValue('G'.$counter, $toolList['Tooling']['status']);
+    $objTpl = PHPExcel_IOFactory::load("./img/assign_tool.xls");
 
-        $counter++;  
+    if (!empty($toolingData)) {
+       
+        $addRow = 0;
+        foreach ($toolingData as $key => $toolList) {
+            $addRow = $key + 1;
+        }
+
+        $objTpl->setActiveSheetIndex(0)->insertNewRowBefore(11,$addRow);
+
+        $counter = 10;
+        foreach ($toolingData as $key => $toolList) {
+            $key++;
+           
+            $objTpl->setActiveSheetIndex(0)
+                        ->setCellValue('C8','Assigned Tools /' .(new \DateTime())->format('m/d/Y'))
+                        ->setCellValue('A'.$counter, $key)
+                        ->setCellValue('B'.$counter, $toolList['Employee']['code'])
+                        ->setCellValue('C'.$counter, ucfirst($departmentList[$toolList['Employee']['department_id']]))
+                        ->setCellValue('D'.$counter, ucfirst($positionList[$toolList['Employee']['position_id']]))
+                        ->setCellValue('E'.$counter, ucwords($toolList['Employee']['fullname']).' '.ucwords($toolList['Employee']['suffix']))
+                        ->setCellValue('F'.$counter, ucfirst($toolList['Tool']['name']))
+                        ->setCellValue('G'.$counter, $toolList['Tooling']['quantity'])
+                        ->setCellValue('H'.$counter, $toolList['Tooling']['price'])
+                        ->setCellValue('I'.$counter, $toolList['Tooling']['pay'])
+                        ->setCellValue('J'.$counter, $toolList['Tooling']['status']);
+
+            $counter++;  
+            
+        }
         
-    }
-         
+    }   
     //prepare download
     $filename = mt_rand(1,100000).'.xls'; //just some random filename
     //header('Content-Type: application/vnd.ms-office');

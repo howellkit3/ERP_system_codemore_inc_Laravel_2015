@@ -5,8 +5,8 @@ App::uses('SessionComponent', 'Controller/Component');
 
 class AttendancesController  extends HumanResourceAppController {
 
-	var $helpers = array('HumanResource.CustomText','HumanResource.CustomTime','HumanResource.PhpExcel');
-
+	var $helpers = array('HumanResource.PhpExcel','HumanResource.CustomTime');
+	//,'HumanResource.CustomText'
 	public function index() {
 
 		$this->loadModel('HumanResource.WorkSchedule');
@@ -566,7 +566,7 @@ public function export() {
             'conditions' => $conditions,
             'order' => 'Attendance.id ASC'
         ));
-        //pr($attendanceData);exit();
+        
 		$this->set(compact('attendanceData','departmentList','departmentId'));
 
 		$this->render('Attendances/xls/attendance_report');

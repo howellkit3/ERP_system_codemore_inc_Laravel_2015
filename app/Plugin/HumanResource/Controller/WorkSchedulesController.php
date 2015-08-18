@@ -145,6 +145,10 @@ class WorkSchedulesController  extends HumanResourceAppController {
 		$employeeId = $this->request->data['WorkSchedule']['employee_id'];
 		$workShiftId = $this->request->data['WorkSchedule']['work_shift_id'];
 
+		$this->loadModel('HumanResource.Position');
+
+		$this->loadModel('HumanResource.Department');
+
 		$this->WorkSchedule->bind(array('Employee','WorkShift'));
 
 		$conditions = array('WorkSchedule.model ' => 'Employee');
@@ -166,7 +170,11 @@ class WorkSchedulesController  extends HumanResourceAppController {
             'order' => 'WorkSchedule.id ASC'
         ));
 		
-		$this->set(compact('workScheduleData'));
+		$positionList = $this->Position->find('list',array('field' => array('id','name')));
+
+		$departmentList = $this->Department->find('list',array('field' => array('id','name')));
+
+		$this->set(compact('workScheduleData','departmentList','positionList'));
 
 		$this->render('WorkSchedules/xls/work_shift_report');
 	}
