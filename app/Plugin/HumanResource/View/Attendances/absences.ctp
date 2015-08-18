@@ -62,6 +62,8 @@ echo $this->element('hr_options');
 									?>
 										
 			                	</div>
+
+			                	<a data-toggle="modal" href="#absencesReport" class="btn btn-primary pull-right "><i class="fa fa-share-square-o fa-lg"></i> Export</a>
 			                   <br><br>
 			               </div>
 			            </header>
@@ -153,14 +155,63 @@ echo $this->element('hr_options');
 								</div>
 							</div>
 						</div>		
-	            </div>
-			</div>
-		</div>	
-
-
-
-
+		            </div>
+				</div>
+			</div>	
 	    </div>
+    </div>
+</div>
+
+<div class="modal fade" id="absencesReport" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"> Attendance </h4>
+            </div>
+            <div class="modal-body">
+                <?php echo $this->Form->create('Absence',array('url'=>(array('controller' => 'absences','action' => 'export')),'class' => 'form-horizontal'));?>
+
+                	<div class="form-group">
+                        <label for="inputEmail1" class="col-lg-3 control-label"> Employee Name</label>
+                        
+                        <div class="col-lg-6">
+                            <?php 
+                                   echo $this->Form->input('Absence.employee_id', array(
+                                                                'type' => 'select',
+                                                                'label' => false,
+                                                                'class' => 'autocomplete required',
+                                                                'empty' => '---Select Employee---',
+                                                                'options' => array($employees)
+
+                                                              ));
+                            ?>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail1" class="col-lg-3 control-label">Date</label>
+                        
+                        <div class="col-lg-6">
+                            <?php 
+                                   echo $this->Form->input('Absence.from_date', array(
+                                                                'label' => false,
+                                                                'class' => 'form-control  datepick required',
+                                                                'placeholder' => 'Date'
+
+                                                              ));
+                            ?>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary export-close"><i class="fa fa-share-square-o fa-lg"></i> Export</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        
+                    </div>  
+                <?php echo $this->Form->end(); ?>
+            </div>
+        </div>
     </div>
 </div>
 <?php echo $this->element('modals/personnal_attendance'); ?>

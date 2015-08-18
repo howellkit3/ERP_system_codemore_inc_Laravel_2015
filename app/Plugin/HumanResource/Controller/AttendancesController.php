@@ -375,6 +375,8 @@ public function edit($id = null) {
 
 		$this->loadModel('HumanResource.Employee');
 
+		$employees = $this->Employee->getList();
+
 		$date = date('Y-m-d');
 
 		$search = '';
@@ -422,7 +424,7 @@ public function edit($id = null) {
 
 		$absences = $this->paginate('Absence');
 
-		$this->set(compact('absences','date','search'));
+		$this->set(compact('absences','date','search','employees'));
 		
 	}
 
