@@ -25,14 +25,32 @@ $(document).ready(function(){
 
 	$body.on('click','#exportData',function(e){
 
-		var url = $(this).attr('href');
 
 		var month = $('#changeDate').val();
 
 		var range = $('.radio.inline-block input:checked').val();
 
-		$(this).attr('href',url+'?days='+range+'&&month='+month);
+		swal({   title: "Export Data",  
+		 text: "This will update employee payroll information. Click OK to continue",  
+		 type: "info", 
+		 showCancelButton: true,   
+		 closeOnConfirm: false,   
+		 showLoaderOnConfirm: true, },
+		 function() {  
+		 		//$(this).attr('href',url+'?days='+range+'&&month='+month);
+				window.location.href = 	url+'?days='+range+'&&month='+month
+					
+				var alert = $(".sweet-alert");
 
+				var cancelButton = alert.find('.cancel');
+
+				cancelButton.trigger("click");
+		  });
+
+		var url = $(this).attr('href');
+
+
+		e.preventDefault();
 		//e.preventDefault();
 	});
 
@@ -44,9 +62,27 @@ $(document).ready(function(){
 
 		var range = $('.radio.inline-block input:checked').val();
 
-		$(this).attr('href',url+'?days='+range+'&&month='+month);
+		//$(this).attr('href',url+'?days='+range+'&&month='+month);
 
-		//e.preventDefault();
+		swal({   title: "Generate Payslip",  
+		 text: "This will update employee payroll information. Click OK to continue",  
+		 type: "info", 
+		 showCancelButton: true,   
+		 closeOnConfirm: false,   
+		 showLoaderOnConfirm: true, },
+		 function() {  
+		 		//$(this).attr('href',url+'?days='+range+'&&month='+month);
+				window.location.href = 	url+'?days='+range+'&&month='+month
+					
+				var alert = $(".sweet-alert");
+
+				var cancelButton = alert.find('.cancel');
+
+				cancelButton.trigger("click");
+		  });
+
+
+		e.preventDefault();
 	});
 
 	$body.on('submit','#AttendanceComputeSalariesForm',function(e){

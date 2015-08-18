@@ -45,4 +45,18 @@
 		    e.preventDefault();
     });
 
+
+    //sss reports
+
+    $body.on('click','#SSSReports',function(e){
+
+      var url = $(this).attr('href');
+      
+      var month = $('#changeDate').val();
+
+      $(this).attr('href',url+'?month='+month);
+    });
+
+
+
   });

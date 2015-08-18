@@ -21,7 +21,8 @@
                         <?php echo number_format($amortization['Amortization']['deduction'],2); ?>
                       </td>
                       <td class="text-center">
-                       <?php echo ($amortization['Amortization']['status'] == 1 ) ? 'Yes' : 'no' ?>
+
+                        <?php echo !empty($amortization['Amortization']['status']) && $amortization['Amortization']['status'] == 1  ? '<span class="label label-success">Yes</span>' : '<span class="label label-danger">No</span>' ?>
                       </td>
                   </tr>
                 <?php endforeach; ?>

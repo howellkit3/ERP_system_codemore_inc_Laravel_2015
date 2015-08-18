@@ -23,7 +23,6 @@ class Department extends AppModel {
 
 			if (empty($departmentData['Department']['prefix'])) {
 
-
 				$aName = explode(" ", $departmentData['Department']['name']);
 
 				if (count($aName) > 1) {

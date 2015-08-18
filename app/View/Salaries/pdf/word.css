@@ -1,0 +1,50 @@
+body {
+
+	background-image:url('img/reports/R-1A.png');
+	background-repeat: no-repeat;
+	width: 100%;
+	height: 100%;
+	padding: 0px;
+	margin: 0px;
+}
+@page { margin: 20px; }
+.background {
+	background-size: 800px !important;
+	position: absolute;
+}
+.sss-table td {
+	min-width: 100px;
+}
+.inline-block {
+	display: inline-block;
+}
+.spacing {
+	margin: 0 5px;
+}
+
+.ss_number {
+	width: 200px;
+	text-indent: 30px;
+}
+
+.emp_name {
+	width: 300px;
+	text-indent: 10px;
+}
+.emp_name td {
+	width: 130px;
+}
+
+.birthday {
+	width: 100px;
+}
+.date_hired {
+	width: 150px;
+}
+.monthly_income {
+	width: 100px;
+}
+.position {
+	width: 70px;
+	word-wrap:break-word;
+}

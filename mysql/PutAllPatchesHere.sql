@@ -1443,8 +1443,6 @@ CREATE TABLE `leaves` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-/** howell kit added this 08/17/2015 TO Delivery DATABASE   */
-
 CREATE TABLE `measures` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(30) DEFAULT NULL,
@@ -1457,6 +1455,19 @@ CREATE TABLE `measures` (
 
 INSERT  INTO `measures`(`id`,`name`,`created_by`,`modified_by`,`created`,`modified`) VALUES (1,'bundle',1,1,'2015-07-03 11:23:22','2015-07-02 09:52:01'),(2,'pack',1,1,'2015-07-03 11:22:25','2015-07-03 11:22:25'),(3,'piece',1,1,'2015-07-03 11:23:44','2015-07-03 11:22:25'),(4,'box',1,1,'2015-07-03 11:22:25','2015-07-03 11:22:25'),(5,'pallet',1,1,'2015-07-03 11:22:25','2015-07-03 11:22:25');
  
+/* aldrin added this 8/18/2015 */
+CREATE TABLE IF NOT EXISTS `loans` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `schedules` varchar(255) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
 #NOTE: SELECT KOUFU WAREHOUSE DATABASE ----
 
 CREATE TABLE IF NOT EXISTS `stocks` (
