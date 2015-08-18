@@ -15,24 +15,31 @@
 
     $counter = 6;
 
-    foreach ($employees as $key => $emp) {
+    foreach ($salaries as $key => $emp) {
         $key++;
-        $employee_name = $this->CustomText->getFullname($emp['Employee']);
+        $employee = $this->CustomEmployee->findEmployee($emp['employee_id']);
+        $employee_name = $this->CustomText->getFullname($employee['Employee']);
 
-        $gross = $this->Salaries->gross_pay($emp,$emp['Salary']); echo number_format($gross['gross'],2); $total_gross = $gross['gross'];
-
-        $sss = $this->Salaries->sss_pay($employee,$employee['Salary'],$payScheds,$gross['gross']); $total_gross -= $sss;
-
-        $phil_health = $this->Salaries->philhealth_pay($employee,$employee['Salary'],$payScheds,$gross['gross']); $total_gross -= $phil_health; 
-
-        $objTpl->setActiveSheetIndex(0)
+        
+         $objTpl->setActiveSheetIndex(0)
         ->setCellValue('A'.$counter,$employee_name)
-        ->setCellValue('B'.$counter,$gross['days'])
-        ->setCellValue('C'.$counter,$gross['time_work'])
-        ->setCellValue('T'.$counter,$gross['gross'])
-        ->setCellValue('U'.$counter,$sss)
-        ->setCellValue('V'.$counter,$phil_health)
-         ->setCellValue('AL'.$counter,$total_gross)
+        ->setCellValue('B'.$counter,$emp['days'])
+        ->setCellValue('C'.$counter,number_format($emp['regular_work'],2))
+        ->setCellValue('D'.$counter,number_format($emp['regular_work_ot'],2))
+        ->setCellValue('G'.$counter,number_format($emp['regular_holiday'],2))
+        ->setCellValue('H'.$counter,number_format($emp['regular_holiday_work'],2))
+        ->setCellValue('I'.$counter,number_format($emp['regular_holiday_work_ot'],2))
+
+        ->setCellValue('P'.$counter,number_format($emp['ctpa'],2))
+
+        ->setCellValue('Q'.$counter,number_format($emp['sea'],2))
+
+
+        ->setCellValue('R'.$counter,number_format($emp['gross_pay'],2))
+        ->setCellValue('S'.$counter,number_format($emp['sss'],2))
+        ->setCellValue('T'.$counter,number_format(0,2))
+         ->setCellValue('AH'.$counter,number_format($emp['allowance'],2))
+         ->setCellValue('AJ'.$counter,number_format($emp['total_pay'],2))
         ;
 
         $counter++;  

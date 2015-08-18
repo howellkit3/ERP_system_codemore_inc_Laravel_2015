@@ -135,4 +135,16 @@ class LeavesController  extends HumanResourceAppController {
 		exit();
 	}
 
+	public function limit_hours($leaveTypeId = null){
+
+		$this->autoRender = false;
+
+		$this->loadModel('HumanResource.LeaveType');
+
+		$leavetypeData = $this->LeaveType->find('first',array('conditions' => array('LeaveType.id' => $leaveTypeId)));
+		
+        echo json_encode($leavetypeData['LeaveType']['limit']);
+		
+	}
+
 }

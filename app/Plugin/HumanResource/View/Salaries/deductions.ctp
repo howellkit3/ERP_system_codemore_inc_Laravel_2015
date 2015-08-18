@@ -1,42 +1,40 @@
 <?php 
  echo $this->Html->css(array(
-                    'HumanResource.default',
-                    'HumanResource.select2.css',
+                    'Payroll.default',
+                    'Payroll.select2.css',
                     'timepicker',
                     'datetimepicker/jquery.datetimepicker',
 )); 
 
 echo $this->Html->script(array(
-					'jquery.maskedinput.min',
-					'HumanResource.moment',
+          'jquery.maskedinput.min',
+          'HumanResource.moment',
           'HumanResource.select2.min',
-					'HumanResource.custom',
-					'HumanResource.deductions',
+          'HumanResource.custom',
+          'HumanResource.deductions',
           'datetimepicker/jquery.datetimepicker'
 
 )); 
 
 
-echo $this->element('hr_options');
+echo $this->element('payroll_options');
 $active_tab = 'sss_table';
  ?>
 
  <div class="row">
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
-    		<?php echo $this->element('tab/salaries',array('active_tab' => $active_tab)); ?>
-		<div class="main-box-body clearfix">
-		 
-			<div class="tabs-wrapper">
-				<div class="tab-content">
-					<div class="tab-pane active" id="tab-calendar">
-						<header class="main-box-header clearfix">
-			                <h2 class="pull-left"><b>Deductions</b> </h2>
+        <?php echo $this->element('tab/salaries',array('active_tab' => $active_tab)); ?>
+    <div class="main-box-body clearfix">
+     
+      <div class="tabs-wrapper">
+        <div class="tab-content">
+          <div class="tab-pane active" id="tab-calendar">
+            <header class="main-box-header clearfix">
+                      <h2 class="pull-left"><b>Deductions</b> </h2>
                       <div class="clearfix"></div>
-			               
+                     
                     <div class="filter-block pull-left">
-
-
                           <div class="form-group pull-left">
                             <div class="input-group" style="max-width:150px;">
                                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
@@ -48,9 +46,12 @@ $active_tab = 'sss_table';
                             <?php echo $this->Form->input('employee_id',array(
                               'type' => 'select',
                               'options' => $employeeList,
+                              'empty' => '--- Select Employee --- ',
                               'class' => 'autocomplete',
                               'label' => false,
-                              'id' => 'selectEmployee'
+                              'id' => 'selectEmployee',
+                              'onChange' => 'loadDeduction(this)',
+                              'default' => $defaultId
                             )); ?>
                             </div>
                            <div class="form-group pull-left">
@@ -90,11 +91,11 @@ $active_tab = 'sss_table';
                      </div>
             </header>
 
-			       <div class="main-box-body clearfix">
-			            	<div id="result-table">
-			            		   <div class="table-responsive">
+             <div class="main-box-body clearfix">
+                    <div id="result-table">
+                         <div class="table-responsive">
                                 <div class="table-responsive">
-                <table class="table table-bordered">
+                <table class="table table-bordered" id="result-cont">
                 <thead>
                 <tr>
                   <th><a href="#"><span>Code</span></a></th>
@@ -104,18 +105,23 @@ $active_tab = 'sss_table';
                   <th class="text-center"><span>Mode</span></th>
                   <th class="text-center"><span>Amount</span></th>
                   <th class="text-right"><span>Reason</span></th>
+                  <th class="text-right"><span>Action</span></th>
                  <!--  <th class="text-right"><span>Actions</span></th> -->
                 </tr>
                 </thead>
                 <tbody>
-                  <?php if (!empty($deductions)) :?>
+                <?php if (!empty($deductions)) :?>
                   <?php foreach ($deductions as $key => $deduction) { ?>
                     <tr>
                       <td>
-                        <?php echo $deduction['Employee']['code']; ?>  
+                        <?php 
+                        $employee = $this->CustomEmployee->findEmployee($deduction['Deduction']['employee_id']);
+                        echo !empty( $employee ) ?  $employee['Employee']['code'] : ''; ?>  
                       </td>
-                      <td>
-                        <?php echo $this->CustomText->getFullname($deduction['Employee']); ?>  
+                      <td>  
+                        <?php 
+                        
+                        echo $this->CustomText->getFullname($employee['Employee']); ?>  
                       </td>
                       <td class="text-center">
                        <?php echo !empty($deduction['Deduction']['from']) && $deduction['Deduction']['from'] != '00:00:00' ? date('Y-m-d', strtotime($deduction['Deduction']['from'])) : ''; ?>  
@@ -134,6 +140,27 @@ $active_tab = 'sss_table';
                       <td class="text-right">
                         <?php echo $deduction['Deduction']['reason']?>   
                       </td>
+
+                      <td class="text-right">
+                            <?php echo $this->Html->link('<span class="fa-stack">
+                                          <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> View </font></span></span>',
+                                          '#viewDeductions', 
+                                            array('class' =>' table-link view_amortization',
+                                               'data-id' => $deduction['Deduction']['id'], 
+                                                'escape' => false,
+                                                'data-toggle' => 'modal',
+                                                'title'=>'View Amorization'
+                                          ));
+
+
+
+
+                                      echo $this->Html->link('<span class="fa-stack">
+                                      <i class="fa fa-square fa-stack-2x"></i>
+                                      <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit </font></span>
+                                      </span> ', array('controller' => 'deductions', 'action' => 'edit',$deduction['Deduction']['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Information'));
+                            ?>
+                      </td>
                   </tr>
                   <?php } ?>
                 <?php endif; ?>
@@ -142,10 +169,11 @@ $active_tab = 'sss_table';
                 </div>
              </div> 
              </div>
-					 </div>		
-	     </div>
-			</div>
-		</div>	
-		 </div>
+           </div>   
+       </div>
+      </div>
+    </div>  
+     </div>
     </div>
 </div>
+<?php echo $this->element('Payroll./modals/deductions'); ?>

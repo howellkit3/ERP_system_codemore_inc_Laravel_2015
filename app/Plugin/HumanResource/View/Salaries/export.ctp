@@ -14,7 +14,7 @@ echo $this->Html->script(array(
 )); 
 
 
-echo $this->element('hr_options');
+echo $this->element('payroll_options');
 
 	$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
  ?>
@@ -66,6 +66,16 @@ echo $this->element('hr_options');
                                     'id' => 'exportData',
                                     'escape' => false)	
 								 ); ?>
+
+                  <?php echo $this->Html->link('<i class="fa fa-file-text-o fa-lg"></i> Generate Payslip',array(
+                  'controller' => 'salaries',
+                  'action' => 'export_salaries_report' , 'payslip'),
+                  array('class' => 'btn btn-primary pull-right hide',
+                        'id' => 'GeneratePayslip',
+                       'escape' => false)  
+                 ); ?>
+
+
 								<button href="#" id="computeSalaries" data-url="" class="btn btn-primary pull-right "><i class="fa fa-refresh fa-lg"></i> Generate </button>
 							
 			               </div>

@@ -2,7 +2,6 @@
 App::uses('AppController', 'Controller');
 App::uses('SessionComponent', 'Controller/Component');
 
-
 App::uses('ImageUploader', 'Vendor');
 
 class EmployeesController  extends HumanResourceAppController {

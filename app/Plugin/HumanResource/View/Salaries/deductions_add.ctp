@@ -12,8 +12,8 @@
 )); ?>
 <div style="clear:both"></div>
 
-<?php echo $this->element('hr_options'); ?><br><br>
-<?php echo $this->Form->create('Deduction',array('url'=>(array('controller' => 'salaries','action' => 'deductions_add')),
+<?php echo $this->element('payroll_options'); ?><br><br>
+<?php echo $this->Form->create('Deduction',array('url'=>(array('controller' => 'deductions','action' => 'add')),
 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data' ));?>
 
     <div class="row">
@@ -42,7 +42,7 @@
                             <div class="main-box-body clearfix">
                                 <div class="form-horizontal">
 
-                                <div class="form-group col-lg-6">
+                                <div class="form-group col-lg-12">
                                     <div class="form-group">
                                        
                                         <div class="col-lg-11">
@@ -117,7 +117,7 @@
                                                                 'class' => 'form-control col-lg-6 required datepickerDateRange',
                                                                 'label' => false,
                                                                 'disabled' => true,
-                                                                'value' => date('Y/m/d').' - '.date('Y/m/d')
+                                                                'value' => date('Y/m/01').' - '.date('Y/m/t')
                                                                 ));
                                                     ?>
 
@@ -192,7 +192,7 @@
 
                                 </div>
 
-                                <div class="form-group col-lg-6 computations">
+                                <div class="form-group col-lg-12 computations">
 
                                        
                                 </div>
