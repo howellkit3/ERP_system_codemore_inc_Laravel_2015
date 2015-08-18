@@ -591,8 +591,9 @@ class EmployeesController  extends HumanResourceAppController {
 		$this->Tooling->bind(array('Employee','Tool'));
 
 		$toolId = $this->request->data['Tool']['tool_id'];
-		$employeeId = $this->request->data['Tool']['employee_id'];
-		
+		//$departmentId = $this->request->data['Tool']['department_id'];
+		$date = $this->request->data['Tool']['datepick'];
+		pr($this->request->data);
 		$conditions = array();
 
         if (!empty($toolId)) {
@@ -601,9 +602,15 @@ class EmployeesController  extends HumanResourceAppController {
 
         } 
 
-        if (!empty($employeeId)) {
+        // if (!empty($employeeId)) {
 
-        	$conditions = array_merge($conditions,array('Tooling.employee_id' => $employeeId));
+        // 	$conditions = array_merge($conditions,array('Employee.department_id' => $departmentId));
+
+        // } 
+
+        if (!empty($date)) {
+
+        	$conditions = array_merge($conditions,array('Tool.created' => $date.' '.'00:00:00'));
 
         } 
 		
@@ -612,7 +619,7 @@ class EmployeesController  extends HumanResourceAppController {
 		$positionList = $this->Position->find('list',array('field' => array('id','name')));
 
 		$departmentList = $this->Department->find('list',array('field' => array('id','name')));
-		
+		pr($toolingData);exit();
 		$this->set(compact('toolingData','positionList','departmentList'));
 		$this->render('Employees/xls/tool_report');
 
