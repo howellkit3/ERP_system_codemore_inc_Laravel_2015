@@ -314,6 +314,7 @@
 								                        'label' => false,
 								                        'placeholder' => 'Size',
 								                        'disabled' => false,
+								                        'type' => 'number',
 								                        'value' => $value['RequestItem']['size1']));
 								                ?>
 											</div>
@@ -346,6 +347,7 @@
 								                        'label' => false,
 								                        'placeholder' => 'Size',
 								                        'disabled' => false,
+								                        'type' => 'number',
 								                        'value' => $value['RequestItem']['size2']));
 
 								                ?>
@@ -378,6 +380,7 @@
 								                        'label' => false,
 								                        'placeholder' => 'Size',
 								                        'disabled' => false,
+								                        'type' => 'number',
 								                        'value' => $value['RequestItem']['size3']));
 
 								                ?>

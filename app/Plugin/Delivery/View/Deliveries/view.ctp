@@ -132,27 +132,7 @@ $totalremaining = 0;
 
                                                     }  
 
-                                                   // pr($arr);
-
-                                                    //$dataholder = 0;
-                                                    // foreach ($arr as $key => $value) {
-
-                                                    //     if ($value == '2') {
-                                                    //         $dataholder = 1;
-                                                    //     }
-
-                                                    //     if ($value == '5') {
-                                                    //         $dataholder = 1;
-                                                    //     }
-
-                                                    //     if ($value == '' ) {
-                                                    //         $dataholder = 1;
-                                                    //     }
-                                                    // }
-                                                    
                                                 }
-
-                                               // array_sum($arr);
 
                                                 $arrDelivered = array();
 
@@ -177,8 +157,6 @@ $totalremaining = 0;
                                                 $Scheddate = str_replace('-', '', $Scheddate);
                                                 
                                                 $Currentdate = str_replace('-', '', $Currentdate);
-
-                                                //pr(array_sum($arr));   
 
                                                 if (!empty($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']]) || !empty($deliveryList[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']])) {   
 
@@ -311,9 +289,9 @@ $totalremaining = 0;
                         <tr >
                             <th class=""><a href="#"><span>Delivery Receipt #</span></a>  </th>
                             <th class=""><a href="#"><span>Schedule</span></a></th>
-                            <th class=""><a href="#"><span>Location</span></a></th>
-                            <th class=""><a href="#"><span>Quantity</span></a></th>
+                            <th class=""><a href="#"><span>P.O. Quantity</span></a></th>
                             <th class=""><a href="#"><span>Delivered</span></a></th>
+                            <th class=""><a href="#"><span>Replaced by</span></a></th>
                             <th class=""><a href="#"><span>Status</span></a></th>
                             <th class=""><a href="#"><span>Action</span></a></th>
                         </tr>
@@ -332,11 +310,6 @@ $totalremaining = 0;
 
                                     <td class="">
                                         <?php echo date('M d, Y',strtotime($deliveryDataList['DeliveryDetail']['schedule'])); ?>
-                                    </td>
-
-                                    <td class="">
-                                        <?php echo  ucwords(substr($deliveryDataList['DeliveryDetail']['location'],0,25)); ?>    
-                                        ..
                                     </td>
 
                                     <td class="">
@@ -365,6 +338,14 @@ $totalremaining = 0;
                                     </td>
 
                                     <td class="">
+
+                                        <?php if(!empty($deliveryDataList['Delivery']['from'])){ ?>
+
+                                        DR#<?php echo  $deliveryDataList['Delivery']['from'];  }?> 
+
+                                    </td>
+
+                                    <td class="">
               
                                         <?php  
 
@@ -381,11 +362,14 @@ $totalremaining = 0;
                                                 }else if($deliveryDataList['DeliveryDetail']['status'] == '3'){
 
                                                      echo "<span class='label label-success'>Delivered</span>"; 
-                                                
 
                                                 }else if($deliveryDataList['DeliveryDetail']['status'] == '5'){
 
                                                      echo "<span class='label label-danger'>Terminated</span>"; 
+
+                                                }else if($deliveryDataList['DeliveryDetail']['status'] == '11'){
+
+                                                     echo "<span class='label label-info'>Replaced</span>"; 
 
                                                 }
 

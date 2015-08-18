@@ -1,3 +1,4 @@
+
 <?php
 App::uses('AppModel', 'Model');
 //namespace Sales\Model\Entity;

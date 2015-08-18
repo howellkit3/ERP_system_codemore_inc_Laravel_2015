@@ -109,6 +109,19 @@ class Employee extends AppModel {
 					'conditions' => array('Contact.model' => 'Employee'),
 					'dependent' => true
 				),
+				'Attendance' =>  array(
+					'className' => 'Attendance',
+					'foreignKey' => 'employee_id',
+					'conditions' => '',
+					'dependent' => true
+				),
+				'EmployeeEducationalBackground' =>  array(
+					'className' => 'EmployeeEducationalBackground',
+					'foreignKey' => 'employee_id',
+					'conditions' => '',
+					'dependent' => true
+				),
+				
 			)
 		),false);
 
@@ -145,12 +158,12 @@ class Employee extends AppModel {
 			));
 	}
 
-	public function getAllWorkShift($params = array(),$data = null){
+	public function getAllWorkShift($params = array(),$data = null,$holidays = array()){
 
 		$this->bindEmployee();
 		$workshifts = $this->find('all',$params);
 		// pr($workshifts); exit;
-		$list = [];
+		$list = array();
 
 		if ($data['WorkSchedule']['type'] == 'monthly') {
 
@@ -169,19 +182,55 @@ class Employee extends AppModel {
 					for ($days_count = $days1[2];$days_count <= $days2[2]; $days_count++) :
 
 					foreach ($workshifts as $key => $workshift) {
+
 						if (!empty($workshift['WorkShift']['from']) && $workshift['WorkShift']['from'] != '00-00-00') {
-							$list[$list_key]['title'] = date('h:i a',strtotime($workshift['WorkShift']['from'])) . ' - ' .  date('h:i a',strtotime($workshift['WorkShift']['to']));
-							$list[$list_key]['start'] = $days1[0].'-'.$days1[1].'-'.sprintf("%02d",$days_count).' '.date('h:i:s',strtotime($workshift['WorkShift']['from']));
-							$list[$list_key]['end']  = $days1[0].'-'.$days1[1].'-'.sprintf("%02d",$days_count).' '.date('h:i:s',strtotime($workshift['WorkShift']['to']));
-							$list[$list_key]['color'] = '#257e4a';
+								
+								$dateNow = $days1[0].'-'.$days1[1].'-'.sprintf("%02d",$days_count);
+									
+								if ( date("w",strtotime($dateNow)) != 0) { 
+									
+									$list[$list_key]['title'] = date('h:i a',strtotime($workshift['WorkShift']['from'])) . ' - ' .  date('h:i a',strtotime($workshift['WorkShift']['to']));
+									$list[$list_key]['start'] = $days1[0].'-'.$days1[1].'-'.sprintf("%02d",$days_count).' '.date('h:i:s',strtotime($workshift['WorkShift']['from']));
+									$list[$list_key]['end']  = $days1[0].'-'.$days1[1].'-'.sprintf("%02d",$days_count).' '.date('h:i:s',strtotime($workshift['WorkShift']['to']));
+									$list[$list_key]['color'] = '#257e4a';
+
+								} 
+
+								foreach ($holidays as $key => $holiday) {
+
+									if ($dateNow >= $holiday['Holiday']['start_date'] && $dateNow <= $holiday['Holiday']['end_date'] ) {
+
+											$list[$list_key]['title'] = date('h:i a',strtotime($workshift['WorkShift']['from'])) . ' - ' .  date('h:i a',strtotime($workshift['WorkShift']['to']));
+											$list[$list_key]['start'] = $days1[0].'-'.$days1[1].'-'.sprintf("%02d",$days_count).' '.date('h:i:s',strtotime($workshift['WorkShift']['from']));
+											$list[$list_key]['end']  = $days1[0].'-'.$days1[1].'-'.sprintf("%02d",$days_count).' '.date('h:i:s',strtotime($workshift['WorkShift']['to']));
+											$list[$list_key]['color'] = '#F57821';
+									} 
+								}
+
+
+
+								if (date("w",strtotime($dateNow)) == 0) {
+									$list[$list_key]['title'] = 'Rest Day';
+									$list[$list_key]['start'] = $days1[0].'-'.$days1[1].'-'.sprintf("%02d",$days_count).' '.date('h:i:s',strtotime($workshift['WorkShift']['from']));
+									$list[$list_key]['end']  = $days1[0].'-'.$days1[1].'-'.sprintf("%02d",$days_count).' '.date('h:i:s',strtotime($workshift['WorkShift']['to']));
+									$list[$list_key]['color'] = '#6237A5';
+								}
+
+
+						
+
+								
+							
 						}
 					}
+
 						
 					$list_key++;
 
 					endfor;
 
-
+					$list = array_values($list);
+				
 		} else {
 
 
@@ -197,8 +246,6 @@ class Employee extends AppModel {
 		}
 
 		$list = json_encode($list);
-		$list = str_replace('[','',$list);
-		$list = str_replace(']','',$list);
 
 		return $list;
 

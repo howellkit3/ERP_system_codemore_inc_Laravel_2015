@@ -1149,6 +1149,10 @@ ALTER TABLE `attendances` ADD `status` VARCHAR(50)  NULL  DEFAULT NULL  AFTER `m
 ALTER TABLE `employees` ADD `contract_id` INT(11)  NULL  DEFAULT NULL  AFTER `modified`;
 ALTER TABLE `employee_additional_informations` ADD `birth_place` VARCHAR(255)  NULL  DEFAULT NULL  AFTER `modified`;
 
+ALTER TABLE `attendances`  ADD `is_holiday` INT NULL  AFTER `type`;
+
+ALTER TABLE `work_schedules`  ADD `holiday` INT(11) NOT NULL DEFAULT '0'  AFTER `type`;
+
 /* end all HR tables */
 
 /** howell kit added this 08/05/2015   */
@@ -1198,6 +1202,243 @@ CREATE TABLE IF NOT EXISTS `salaries` (
 ALTER TABLE `delivery_details`  ADD `pieces` INT(11) NULL  AFTER `delivered_quantity`;
 ALTER TABLE `delivery_details`  ADD `measure` INT(11) NULL  AFTER `pieces`;
 
-/** howell kit added this 08/08/2015 TO WAREHOUSE DATABASE   */
 
+/*aldrin brion added this koufu system database 08/12/2015 */
+CREATE TABLE IF NOT EXISTS `accounting_sss_ranges` (
+  `id` int(11) NOT NULL AUTO_INCREMENT, 
+  `range_from` decimal(8,2) NOT NULL,
+  `range_to` decimal(8,2) NOT NULL,
+  `bounds` decimal(8,2) NOT NULL,
+  `credits` decimal(8,2) NOT NULL,
+  `employers` decimal(8,2) NOT NULL,
+  `employees` decimal(8,2) NOT NULL,
+  `employee_compensations` decimal(8,2) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+CREATE TABLE IF NOT EXISTS `accounting_philhealth_ranges` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `range_from` decimal(8,2) NOT NULL,
+  `range_to` decimal(8,2) NOT NULL,
+  `condition` varchar(45) DEFAULT NULL,
+  `salary_base` decimal(8,2) NOT NULL,
+  `employer` decimal(8,2) NOT NULL,
+  `employee` decimal(8,2) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+ALTER TABLE `accounting_philhealth_ranges`  ADD `condition` VARCHAR(45) NULL  AFTER `range_to`;
+ALTER TABLE `deductions` ADD `pay_split` INT NULL AFTER `amount`, ADD `paid_amount` DECIMAL(8,2) NULL AFTER `pay_split`;
+/*end -aldrin brion added this 08/12/2015 */
+
+/** howell kit added this 08/08/2015 TO WAREHOUSE DATABASE   */
 ALTER TABLE `received_items`  ADD `foreign_key` INT(11) NULL  AFTER `received_orders_id`;
+ALTER TABLE `received_items`  ADD `model` VARCHAR(30) DEFAULT NULL AFTER `received_orders_id`;
+
+
+/* added 08/13/2015 human resource */
+
+CREATE TABLE IF NOT EXISTS `deductions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `from` date NOT NULL,
+  `to` date NOT NULL,
+  `mode` varchar(255) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `amount` decimal(8,2) NOT NULL,
+  `reason` text NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+CREATE TABLE IF NOT EXISTS `salary_reports` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `salary_type` varchar(255) NOT NULL,
+  `from` date NOT NULL,
+  `to` date NOT NULL,
+  `days` int(11) NOT NULL,
+  `total_hour_work` decimal(8,2) NOT NULL,
+  `overtime_work` decimal(8,2) NOT NULL,
+  `rest_day_work` decimal(8,2) NOT NULL,
+  `rest_day_ot` decimal(8,2) NOT NULL,
+  `regular_holiday` decimal(8,2) NOT NULL,
+  `regular_holiday_work` decimal(8,2) NOT NULL,
+  `regular_holiday_ot` decimal(8,2) NOT NULL,
+  `regular_rest_work` decimal(8,2) NOT NULL,
+  `regular_rest_ot` decimal(8,2) NOT NULL,
+  `special_holiday_work` decimal(8,2) NOT NULL,
+  `special_holiday_ot` decimal(8,2) NOT NULL,
+  `night` decimal(8,2) NOT NULL,
+  `leave` decimal(8,2) NOT NULL,
+  `ctpa` decimal(8,2) NOT NULL,
+  `sea` decimal(8,2) NOT NULL,
+  `gross_pay` decimal(8,2) NOT NULL,
+  `sss` decimal(8,2) NOT NULL,
+  `philhealth` decimal(8,2) NOT NULL,
+  `pagibig` decimal(8,2) NOT NULL,
+  `wtax` decimal(8,2) NOT NULL,
+  `ca_fund` decimal(8,2) NOT NULL,
+  `sss_loan` decimal(8,2) NOT NULL,
+  `pagibig_loan` decimal(8,2) NOT NULL,
+  `uniform` decimal(8,2) NOT NULL,
+  `other_1` decimal(8,2) NOT NULL,
+  `medical` decimal(8,2) NOT NULL,
+  `canteen` decimal(8,2) NOT NULL,
+  `bank_loan` decimal(8,2) NOT NULL,
+  `other_2` decimal(8,2) NOT NULL,
+  `total_deduction` decimal(8,2) NOT NULL,
+  `net_pay` decimal(8,2) NOT NULL,
+  `allowance` decimal(8,2) NOT NULL,
+  `incentives` decimal(8,2) NOT NULL,
+  `total_pay` decimal(8,2) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+ALTER TABLE `salaries`  ADD `ctpa` DECIMAL(8,2) NULL  AFTER `basic_pay_per_month`,  ADD `sea` DECIMAL(8,2) NULL  AFTER `ctpa`,  ADD `allowances` DECIMAL(8,2) NULL  AFTER `sea`;
+
+/* end human resource */
+
+#NOTE: SELECT KOUFU WAREHOUSE DATABASE ----
+/** howellkit added this 08/08/2015  */
+
+INSERT  INTO `status_field_holders`(`id`,`status`,`created_by`,`modified_by`,`created`,`modified`) VALUES (8,'Waiting',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(9,'Executing',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(10,'Replaced',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03');
+
+/** bien added this 08/13/2015 TO HR DATABASE   */
+ALTER TABLE `attendances` ADD `overtime_id` INT(11)  NULL  DEFAULT NULL  AFTER `status`;
+
+INSERT  INTO `status_field_holders`(`id`,`status`,`created_by`,`modified_by`,`created`,`modified`) VALUES (8,'Waiting',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(9,'Executing',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(10,'Closed',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(11,'Replaced',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03');
+
+/** bien added this 08/14/2015 TO HR DATABASE   */
+CREATE TABLE `employee_educational_backgrounds` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `stages` varchar(255) NOT NULL DEFAULT '',
+  `degree` varchar(255) DEFAULT NULL,
+  `year` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `employee_additional_informations` ADD `status` VARCHAR(255)  NULL  DEFAULT NULL  AFTER `birth_place`;
+
+ALTER TABLE `employee_additional_informations` ADD `spouse` VARCHAR(255)  NULL  DEFAULT NULL  AFTER `status`;
+
+ALTER TABLE `employee_additional_informations` ADD `no_children` VARCHAR(255)  NULL  DEFAULT NULL  AFTER `spouse`;
+
+#NOTE: SELECT KOUFU WAREHOUSE DATABASE ----
+/** howellkit added this 08/14/2015  */
+
+ALTER TABLE `received_items` ADD `condition` VARCHAR(30)  NULL  DEFAULT NULL  AFTER `quantity`;
+ALTER TABLE `koufu_warehouse`.`received_items` DROP COLUMN `item_uuid` ;
+
+#NOTE: SELECT KOUFU PAyroll DATABASE ----
+/** aldrin added this 08/17/2015  */
+
+CREATE TABLE IF NOT EXISTS `amortizations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `deduction_id` int(11) NOT NULL,
+  `payroll_date` date NOT NULL,
+  `amount` decimal(8,2) NOT NULL,
+  `deduction` decimal(8,2) NOT NULL,
+  `interest` decimal(8,2) NOT NULL,
+  `status` varchar(255) NOT NULL DEFAULT '0',
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  `balance` decimal(8,2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+
+
+CREATE TABLE IF NOT EXISTS `deductions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `from` date NOT NULL,
+  `to` date NOT NULL,
+  `mode` varchar(255) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `amount` decimal(8,2) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '0',
+  `reason` text NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+CREATE TABLE IF NOT EXISTS `salary_reports` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `salary_type` varchar(255) NOT NULL,
+  `from` date NOT NULL,
+  `to` date NOT NULL,
+  `days` int(11) NOT NULL,
+  `total_hour_work` decimal(8,2) NOT NULL,
+  `overtime_work` decimal(8,2) NOT NULL,
+  `rest_day_work` decimal(8,2) NOT NULL,
+  `rest_day_ot` decimal(8,2) NOT NULL,
+  `regular_holiday` decimal(8,2) NOT NULL,
+  `regular_holiday_work` decimal(8,2) NOT NULL,
+  `regular_holiday_ot` decimal(8,2) NOT NULL,
+  `regular_rest_work` decimal(8,2) NOT NULL,
+  `regular_rest_ot` decimal(8,2) NOT NULL,
+  `special_holiday_work` decimal(8,2) NOT NULL,
+  `special_holiday_ot` decimal(8,2) NOT NULL,
+  `night` decimal(8,2) NOT NULL,
+  `leave` decimal(8,2) NOT NULL,
+  `ctpa` decimal(8,2) NOT NULL,
+  `sea` decimal(8,2) NOT NULL,
+  `gross_pay` decimal(8,2) NOT NULL,
+  `sss` decimal(8,2) NOT NULL,
+  `philhealth` decimal(8,2) NOT NULL,
+  `pagibig` decimal(8,2) NOT NULL,
+  `wtax` decimal(8,2) NOT NULL,
+  `ca_fund` decimal(8,2) NOT NULL,
+  `sss_loan` decimal(8,2) NOT NULL,
+  `pagibig_loan` decimal(8,2) NOT NULL,
+  `uniform` decimal(8,2) NOT NULL,
+  `other_1` decimal(8,2) NOT NULL,
+  `medical` decimal(8,2) NOT NULL,
+  `canteen` decimal(8,2) NOT NULL,
+  `bank_loan` decimal(8,2) NOT NULL,
+  `other_2` decimal(8,2) NOT NULL,
+  `total_deduction` decimal(8,2) NOT NULL,
+  `net_pay` decimal(8,2) NOT NULL,
+  `allowance` decimal(8,2) NOT NULL,
+  `incentives` decimal(8,2) NOT NULL,
+  `total_pay` decimal(8,2) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+/** end */
+
+/** bien added this 08/17/2015 TO HR DATABASE   */
+CREATE TABLE `leaves` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) DEFAULT NULL,
+  `type_id` int(11) NOT NULL DEFAULT '',
+  `from` date NOT NULL,
+  `to` date NOT NULL,
+  `status` varchar(255) NOT NULL DEFAULT '',
+  `remarks` text,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

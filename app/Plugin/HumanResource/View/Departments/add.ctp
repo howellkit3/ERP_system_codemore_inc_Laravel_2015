@@ -6,8 +6,8 @@
                         'jquery.maskedinput.min',
                         'HumanResource.custom'
 )); ?>
-<div style="clear:both"></div>
 
+<div style="clear:both"></div>
 <?php echo $this->element('hr_options'); ?><br><br>
 <?php echo $this->Form->create('Department',array('url'=>(array('controller' => 'departments','action' => 'add')),
 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data' ));?>

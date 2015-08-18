@@ -167,6 +167,7 @@
 										                    echo $this->Form->input('RequestItem.0.size1', array(
 																'class' => 'form-control item_type',
 										                        'label' => false,
+										                        'type' => 'number',
 										                        'placeholder' => 'Size'));
 										                ?>
 													</div>
@@ -194,6 +195,7 @@
 															echo $this->Form->input('RequestItem.0.size2', array(
 																'class' => 'form-control item_type',
 										                        'label' => false,
+										                        'type' => 'number',
 										                        'placeholder' => 'Size'));
 
 										                ?>
@@ -222,6 +224,7 @@
 															echo $this->Form->input('RequestItem.0.size3', array(
 																'class' => 'form-control item_type',
 										                        'label' => false,
+										                        'type' => 'number',
 										                        'placeholder' => 'Size'));
 
 										                ?>

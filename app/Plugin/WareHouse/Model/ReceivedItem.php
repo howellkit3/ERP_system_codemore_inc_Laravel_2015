@@ -17,33 +17,23 @@ class ReceivedItem extends AppModel {
 		
 		$this->create();
 
-		//pr($data); exit;
-
 		$data['received_orders_id'] = $id;
-
-
-		// foreach ($data['requestPurchasingItem'] as $key => $value) {
-			
-		// 		foreach ($value as $key => $valueOfvalue) {
-		// 			$key = array_search("on", $value);
-		// 			if($valueOfvalue = "on"){
-		// 				$data['foreign_key'] = $key;
-		// 				$this->save($data);
-		// 			}
-		// 	}
-		// }
 
 		foreach ($data as $key => $value)
 		{
-			
-			
 			foreach ($value as $key => $valueOfvalue) 
 			{
-				$this->create();
-				$data['foreign_key'] = $key;
-				//pr($valueOfvalue); 
-		 		$this->save($data);
-				
+
+				$key = array_search("on", $valueOfvalue);
+
+				if(!empty($key)){
+
+					$this->create();
+					$valueOfvalue['foreign_key'] = $key;
+					$valueOfvalue['received_orders_id'] = $id;
+			 		$this->save($valueOfvalue);
+				}
+
 			}
 			
 			return $this->id;

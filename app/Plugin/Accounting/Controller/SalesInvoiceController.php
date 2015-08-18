@@ -535,7 +535,7 @@ class SalesInvoiceController extends AccountingAppController {
             'conditions' => array('dr_uuid' => $invoiceList)
             ));
 
-        $clientsId = [];
+        $clientsId = array();
 
         foreach ($deliveryData as $key => $value) {
             
@@ -610,6 +610,9 @@ class SalesInvoiceController extends AccountingAppController {
 
         $this->loadModel('Sales.PaymentTermHolder');
 
+        $this->loadModel('PaymentTermHolder');
+
+
         $paymentTermData = Cache::read('paymentTerms');
         
         if (!$paymentTermData) {
@@ -620,6 +623,9 @@ class SalesInvoiceController extends AccountingAppController {
         }
 
         $companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')
+                                                            ));
+
+        $companyTinData = $this->Company->find('list', array('fields' => array('id', 'tin')
                                                             ));
 
         if(!empty($this->request->data['from_date'])){
@@ -649,6 +655,10 @@ class SalesInvoiceController extends AccountingAppController {
                 ),
                 'order' => 'SalesInvoice.id DESC'
             ));
+
+            
+
+
            
         } else {
 
@@ -666,7 +676,18 @@ class SalesInvoiceController extends AccountingAppController {
                 'order' => 'SalesInvoice.id DESC'
             ));
 
+            $DeliveryDateData = $this->Delivery->find('list', array('fields' => array('dr_uuid', 'created')
+                                                            ));
 
+            $DeliveryClientsOrderData = $this->Delivery->find('list', array('fields' => array('dr_uuid', 'clients_order_id')
+                                                            ));
+
+            $clientOrderData = $this->ClientOrder->find('list', array('fields' => array('uuid', 'payment_terms')
+                                                            ));
+
+            $termData = $this->PaymentTermHolder->find('list', array('fields' => array('id', 'name')
+                                                            ));
+           // PaymentTermHolderpr($DeliveryClientsOrderData); exit;
         }
         
         //$this->SalesInvoice->bindInvoice();
@@ -675,7 +696,7 @@ class SalesInvoiceController extends AccountingAppController {
             'conditions' => array('dr_uuid' => $invoiceList)
             ));
 
-        $clientsId = [];
+        $clientsId = array();
 
         foreach ($deliveryData as $key => $value) {
             
@@ -718,7 +739,7 @@ class SalesInvoiceController extends AccountingAppController {
 
         }
 
-        $this->set(compact('invoiceData','companyData','paymentTermData'));
+        $this->set(compact('invoiceData','companyData','paymentTermData', 'companyTinData', 'DeliveryDateData', 'clientOrderData', 'DeliveryClientsOrderData', 'termData'));
 
         if ($reportname == 1) {
 
@@ -798,7 +819,7 @@ class SalesInvoiceController extends AccountingAppController {
             'conditions' => array('dr_uuid' => $invoiceList)
             ));
 
-        $clientsId = [];
+        $clientsId = array();
 
         foreach ($deliveryData as $key => $value) {
             
@@ -876,6 +897,21 @@ class SalesInvoiceController extends AccountingAppController {
         }
 
         $this->set(compact('noPermissionReciv','noPermissionPay'));
+    }
+
+    public function change_to_invoice($id = null) {
+
+        $userData = $this->Session->read('Auth');
+
+        $this->SalesInvoice->changeStatus($userData['User']['id'], $id);
+
+       $this->Session->setFlash(__('Pre-Invoice status was changed to Invoice'), 'success');
+      
+       $this->redirect( array(
+           'controller' => 'sales_invoice',   
+           'action' => 'view',$id 
+        ));  
+
     }
 
 }

@@ -1,6 +1,16 @@
 <?php $this->Html->addCrumb('Ware House', array('controller' => 'ware_house_systems', 'action' => 'index')); ?>
 <div style="clear:both"></div>
 <?php echo $this->element('ware_house_option');?>
+    
+    <div class = "pull-right";>
+
+        <?php echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i>  Go Back ', array('controller' => 'receivings','action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+            ?>
+     
+        <?php echo $this->Html->link('<i class="fa fa-check fa-lg"></i> Approve ', array('controller' => 'receivings','action' => 'purchase_approve', $receivedOrderData['ReceivedOrder']['id']),array('class' =>'btn btn-primary pull-right','escape' => false));
+        ?>
+        
+    </div>
 
 <br><br>
 <?php if(!empty($purchaseOrderData)){ ?>
@@ -22,16 +32,14 @@
 
         <div class="row">
             <div class="col-lg-12">
-                <div class="main-box">
-                    <header class="main-box-header clearfix">
+                <div class="main-box" >
+                    <header class="main-box-header clearfix" >
 
-                        <h2 class="pull-left"><b>Purchase Order Details</b></h2>
-
-                        <?php 
-                            echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'receivings','action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
-                        ?>
-
+                        <h2 class="pull-left"  ><b>Purchase Order Details</b></h2>
+                        
                     </header>
+
+
 
 
                     <div class="top-space"></div>                       
@@ -182,12 +190,11 @@
                                       
                                         <div class="col-lg-8">
                                             <?php 
-                                                echo $this->Form->input('PurchaseOrder.item', array(
-                                                                                'class' => 'form-control item_type',
+                                                echo $this->Form->input('PurchaseOrder.items', array(
+                                                                                'class' => 'form-control ',
                                                                                 'disabled' => true,
                                                                                 'label' => false,       
-                                                                                'value' => $requestDataList['RequestItem'],
-                                                                                'fields' =>array('name')));
+                                                                                'value' => $requestDataList['RequestItem']));
                                             ?>
                                         </div>
                                     </div>

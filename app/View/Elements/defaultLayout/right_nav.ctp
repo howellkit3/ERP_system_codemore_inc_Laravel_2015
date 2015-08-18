@@ -110,7 +110,22 @@
 	 					?>
 					</li>
 
-				 <li class="<?php echo ($this->params['plugin'] == 'human_resource') ? 'active' : '' ?>">
+					<li class="<?php echo ($this->params['plugin'] == 'human_resource' && in_array($this->params['controller'],array('salaries'))) ? 'active' : '' ?>">
+
+						<?php 
+
+						if($userData['User']['role_id'] == 1 OR $userData['User']['role_id'] == 2 OR $userData['User']['role_id'] == 6 OR $userData['User']['role_id'] == 9 OR $userData['User']['role_id'] == 10 OR $userData['User']['role_id'] == 11){
+
+
+	 						echo $this->Html->link( " <i class='fa fa-money'></i> <span> Payroll </span>",   array('controller' =>'salaries',
+	 											'action'=>'export',
+	 											'plugin' => 'human_resource'),
+	 											array('escape' => false) );
+	 					}
+	 					?>
+					</li>
+
+				 <li class="<?php echo ($this->params['plugin'] == 'human_resource' && !in_array($this->params['controller'],array('salaries')))  ? 'active' : '' ?>">
 
 						<?php  if($userData['User']['role_id'] == 1 OR $userData['User']['role_id'] == 2){
 

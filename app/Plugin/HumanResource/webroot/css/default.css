@@ -10,6 +10,9 @@ background-size: cover !important;
   z-index: 1;
 }
 
+.inline-block {
+  display: inline-block;
+}
 .image_profile input {
   height: 146px;
   cursor: pointer;
@@ -201,4 +204,42 @@ div.value {
   font-weight: bold;
   text-indent: 9px;
   color: #03a9f4;
+}
+#exportData {
+  display: none;
+}
+
+.legends {
+  margin: 8px 0;
+  padding: 0;
+}
+.legends > li {
+  display: inline-block;
+  list-style: outside none none;
+}
+
+.box-color {
+  border: 1px solid #ccc;
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+}
+
+.box-color.green {
+  background: #257e4a none repeat scroll 0 0;
+}
+
+.box-color.violet {
+  background: #6237A5 none repeat scroll 0 0;
+}
+
+.box-color.orange {
+  background: #F57821 none repeat scroll 0 0;
+}
+.selected_date::before {
+  background: yellow none repeat scroll 0 0;
+  color: #000;
+  content: "selected schedule";
+  padding: 0;
+  width: 100%;
 }

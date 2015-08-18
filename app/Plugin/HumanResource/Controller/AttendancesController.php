@@ -5,7 +5,7 @@ App::uses('SessionComponent', 'Controller/Component');
 
 class AttendancesController  extends HumanResourceAppController {
 
-	var $helpers = array('HumanResource.CustomText','HumanResource.CustomTime');
+	var $helpers = array('HumanResource.CustomText','HumanResource.CustomTime','HumanResource.PhpExcel');
 
 	public function index() {
 
@@ -16,6 +16,8 @@ class AttendancesController  extends HumanResourceAppController {
 		$this->loadModel('HumanResource.Workshift');
 
 		$this->loadModel('HumanResource.Department');
+
+		$this->loadModel('HumanResource.Overtime');
 
 		$limit = 10;
 
@@ -46,7 +48,7 @@ class AttendancesController  extends HumanResourceAppController {
 			)));
 		}
 
-		$this->Attendance->bind(array('WorkSchedule','Employee','WorkShift'));
+		$this->Attendance->bind(array('WorkSchedule','Employee','WorkShift','Overtime'));
 
 		//$conditions = array();
 		$params =  array(
@@ -59,10 +61,10 @@ class AttendancesController  extends HumanResourceAppController {
 		$this->paginate = $params;
 		
 		$attendances = $this->paginate();
-
+		
 		$departmentList = $this->Department->getList();
 
-		$employeeList = array();
+		//$employeeList = $this->Employee->;
 
 		$this->set(compact('attendances','date','search','departmentList','employeeList'));
 
@@ -77,7 +79,6 @@ class AttendancesController  extends HumanResourceAppController {
 		$limit = 10;
 
 		$query = $this->request->query;
-
 
 		$search = '';
 
@@ -156,7 +157,6 @@ class AttendancesController  extends HumanResourceAppController {
 
 			$conditions = array();
 			$employees = $this->Employee->getList($conditions);
-
 
 			$this->set(compact('attendances','date','employees'));
 		}
@@ -531,9 +531,13 @@ public function export() {
 		$this->loadModel('HumanResource.Employee');
 
 		$this->loadModel('HumanResource.Workshift');
+
+		$this->loadModel('HumanResource.Department');
+
+		$departmentList = $this->Department->find('list',array('fields' => array('id','name')));
 		
 		$departmentId = $this->request->data['Attendance']['department_id'];
-		$employeeId = $this->request->data['Attendance']['employee_id'];
+		//$employeeId = $this->request->data['Attendance']['employee_id'];
 		$fromDate = $this->request->data['Attendance']['from_date'];
 
 		$this->Attendance->bind(array('WorkSchedule','Employee','WorkShift'));
@@ -546,15 +550,15 @@ public function export() {
 
     	}
 
-    	if(!empty($employeeId)){
+    	// if(!empty($employeeId)){
 
-    		$conditions = array_merge($conditions,array('Attendance.employee_id' => $employeeId));
+    	// 	$conditions = array_merge($conditions,array('Attendance.employee_id' => $employeeId));
 
-    	}
+    	// }
 
-    	if(!empty($employeeId)){
+    	if(!empty($fromDate)){
 
-    		$conditions = array_merge($conditions,array('Attendance.date >=' => $fromDate));
+    		$conditions = array_merge($conditions,array('Attendance.date' => $fromDate.' '.'00:00:00'));
 
     	}
         	
@@ -562,8 +566,8 @@ public function export() {
             'conditions' => $conditions,
             'order' => 'Attendance.id ASC'
         ));
-
-		$this->set(compact('attendanceData'));
+        //pr($attendanceData);exit();
+		$this->set(compact('attendanceData','departmentList','departmentId'));
 
 		$this->render('Attendances/xls/attendance_report');
 	}
@@ -575,8 +579,6 @@ public function export() {
 		if ($this->request->is('ajax')) {
 
 			$query = $this->request->query;
-
-			
 
 			if (!empty($query['range']) && !empty($query['empdId'])) {
 
@@ -590,7 +592,6 @@ public function export() {
 
 				$end = $date[1].'-'.$date[0].'-'.sprintf("%02d", $days[1]);
 
-
 				$conditions = array_merge($conditions,array(
 					'Attendance.date >=' => $start,
 					'Attendance.date <=' => $end
@@ -602,10 +603,37 @@ public function export() {
 			
 		}
 
-
 		$this->set(compact('attendance'));
 
 		$this->render('Attendances/ajax/days_work');
+
+	}
+
+	public function leaves(){
+
+		$this->loadModel('HumanResource.Leave');
+
+		$this->loadModel('HumanResource.Employee');
+
+		$this->loadModel('HumanResource.Type');
+
+		$this->Leave->bind(array('Employee','Type'));
+		$limit = 10;
+
+		$conditions = array();
+
+		$params =  array(
+	            'conditions' => $conditions,
+	            'limit' => $limit,
+	            //'fields' => array('id','overtime_id'),
+	            'order' => 'Leave.from ASC',
+	        );
+
+		$this->paginate = $params;
+
+	    $leaveData = $this->paginate('Leave');
+	    
+	    $this->set(compact('leaveData'));
 
 	}
 

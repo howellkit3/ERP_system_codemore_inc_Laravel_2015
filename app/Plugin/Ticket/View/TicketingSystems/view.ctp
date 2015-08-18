@@ -15,8 +15,6 @@
 						<?php 
 	                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'ticketing_systems', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
 
-	                        // echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array('controller' => 'ticketing_systems', 'action' => 'print_ticket',$productData['Product']['uuid'],$ticketData['JobTicket']['uuid'],$clientOrderId),array('class' =>'btn btn-primary pull-right','escape' => false,'target' => '_blank'));
-
 	                        if(!empty($ticketData['JobTicket']['remarks'])){
 	                        	$buttonName = 'Edit Remarks';
 	                        }else{
@@ -38,7 +36,7 @@
 			<div class="col-lg-12">
 				<div class="main-box">
 					<center>
-						<header class="main-box-header clearfix"><?php //echo pr($contactInfo);die; ?>
+						<header class="main-box-header clearfix"><?php  ?>
 							<h1>Kou Fu Packaging Corporation</h1>
 							<h5>Lot 3-4 Blk 4 Mountview Industrial Complex Brgy. Bancal Carmona Cavite</h5>
 							<h6>Tel: +63(2)5844928 &nbsp; Fax: +63(2)5844952</h6><br>
@@ -124,7 +122,7 @@
 									
 								</div>
 								<div class="col-lg-4">
-									Stock Quantity : <?php echo $specs['ProductSpecification']['stock']; ?>
+									Stock Quantity : <?php if(!empty($specs['ProductSpecification']['stock'])){ echo $specs['ProductSpecification']['stock']; }?>
 								</div>
 							</div>
 

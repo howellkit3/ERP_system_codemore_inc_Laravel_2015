@@ -6,12 +6,12 @@
         ->setDefaultFont('Calibri', 12);
 
     $objTpl = PHPExcel_IOFactory::load("./img/emp_filter.xls");
-    $counter = 7;
+    $counter = 10;
     foreach ($employeeData as $key => $employeeList) {
         $key++;
        
         $objTpl->setActiveSheetIndex(0)
-                    ->setCellValue('C5',(new \DateTime())->format('m/d/Y'))
+                    ->setCellValue('C8',(new \DateTime())->format('m/d/Y'))
                     ->setCellValue('A'.$counter, $key)
                     ->setCellValue('B'.$counter, $employeeList['Employee']['code'])
                     ->setCellValue('C'.$counter, $employeeList['Department']['name'])

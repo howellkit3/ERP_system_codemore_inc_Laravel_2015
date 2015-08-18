@@ -10,7 +10,6 @@ class WorkSchedulesController  extends HumanResourceAppController {
 	//,'HumanResource.Country'
 	public function add() {
 
-
 		$this->loadModel('HumanResource.Employee');
 
 		$this->loadModel('HumanResource.Attendance');
@@ -19,19 +18,26 @@ class WorkSchedulesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Workshift');
 
+		$this->loadModel('HumanResource.Holiday');
+
 		$conditions = array();
 		$employees = $this->Employee->getList($conditions);
 
 		$conditions = array();
 		$workshifts = $this->Workshift->getList($conditions);
 
+		$conditions = array('Holiday.year' => date('Y'));
 
-		if ($this->request->is('post')) {
-			
-			//save attendance
-			if ($this->WorkSchedule->save($this->request->data['WorkSchedule'])) {
+		$holidays = $this->Holiday->find('all',array('conditions' => $conditions ,'order' =>  array('Holiday.start_date ASC'),'fields' => array('id','name','type','start_date','end_date','year') ));
 
-				$attendance = $this->Attendance->saveRecord($this->request->data['WorkSchedule'],$this->WorkSchedule->id);
+
+		if ($this->request->is('post')) {	
+				//save attendance
+			$create_schedules = $this->WorkSchedule->formatData($this->request->data,$holidays);
+
+			if ($this->WorkSchedule->saveAll($create_schedules['WorkSchedule'])) {
+
+				$attendance = $this->Attendance->saveRecord($this->request->data['WorkSchedule'],$this->WorkSchedule->id,$holidays);
 
 				$data['employee_id'] = $this->request->data['WorkSchedule']['foreign_key'];
 				$data['date'] = $this->request->data['WorkSchedule']['day'];
@@ -163,6 +169,37 @@ class WorkSchedulesController  extends HumanResourceAppController {
 		$this->set(compact('workScheduleData'));
 
 		$this->render('WorkSchedules/xls/work_shift_report');
+	}
+
+	public function findByEmployeeId($id = null) {
+
+
+		if (!empty($id)) {
+
+		$this->loadModel('HumanResource.WorkSchedule');
+
+		//$limit = 10;
+		$conditions = array('WorkSchedule.model' => 'Employee','WorkSchedule.foreign_key' => $id );
+
+		$params =  array(
+	            'conditions' => $conditions,
+	           // 'limit' => $limit,
+	            //'group' => array('WorkSchedule.foreign_key'),
+	            'order' => 'WorkSChedule.day ASC',
+	        );
+
+		$this->paginate = $params;
+
+		$this->WorkSchedule->bind(array('WorkShift','Employee'));
+
+	    $workSchedules = $this->WorkSchedule->find('all',$params);
+
+	    $this->set(compact('workSchedules'));
+
+	    $this->render('WorkSchedules/ajax/work_schedules');
+
+
+		}
 	}
 
 }
