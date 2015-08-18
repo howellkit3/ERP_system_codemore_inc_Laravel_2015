@@ -28,6 +28,8 @@
                         </thead>
 
                         <?php echo $this->element('received_table'); ?>
+
+                        
                             
                      </table>
                     <hr>

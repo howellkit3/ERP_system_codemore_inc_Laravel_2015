@@ -152,7 +152,7 @@ class ReceivingsController extends WareHouseAppController {
 
 			$this->PurchaseOrder->id = $id;
 
-			$this->PurchaseOrder->saveField('status', 11);
+			//$this->PurchaseOrder->saveField('status', 11);
 
 			//pr($this->request->data); exit;
 			
@@ -179,11 +179,11 @@ class ReceivingsController extends WareHouseAppController {
 
     	$this->loadModel('User');
 
-    	$this->loadModel('User');
-
-    	$this->loadModel('StatusFieldHolder');
+    	//$this->loadModel('StatusFieldHolder');
 
     	$this->loadModel('Purchasing.Request');
+
+    	$this->loadModel('Purchasing.PurchaseOrder');
 
 		$userName = $this->User->find('list', array('fields' => array('User.id', 'User.fullname')
 																));
@@ -194,9 +194,11 @@ class ReceivingsController extends WareHouseAppController {
 		$receiveData = $this->Request->find('list', array('fields' => array('Request.id', 'Request.uuid')
 																));
 
-		$this->ReceivedOrder->bindReceive();
+		$this->ReceivedOrder->bind();
 
 		$received_orders = $this->ReceivedOrder->find('all');
+
+		//pr($received_orders); exit;
 
 		$uuid = $receiveData[$received_orders[0]['PurchaseOrder']['request_id']];
 	
@@ -316,8 +318,11 @@ class ReceivingsController extends WareHouseAppController {
             'action' => 'receive'
         ));  
 
-	
-		
+    }
+
+        public function in_record() {
+
+        	pr('s'); exit;
 
     }
 

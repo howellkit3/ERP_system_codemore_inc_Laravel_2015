@@ -1476,3 +1476,37 @@ CREATE TABLE IF NOT EXISTS `stocks` (
   `modified` DATETIME NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `in_records` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `remarks` TEXT NOT NULL,
+  `storekeeper_id` INT(11) NOT NULL,
+  `status_id` INT(11) NOT NULL,
+  `created_by` INT(11) NOT NULL,
+  `modified_by` INT(11) NOT NULL,
+  `created` DATETIME NOT NULL,
+  `modified` DATETIME NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `out_records` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `request_id` INT(11) NOT NULL,
+  `remarks` TEXT NOT NULL,
+  `created_by` INT(11) NOT NULL,
+  `modified_by` INT(11) NOT NULL,
+  `created` DATETIME NOT NULL,
+  `modified` DATETIME NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `item_records` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `type_record` INT(11) NOT NULL,
+  `type_record_id` INT(11) NOT NULL,
+  `model` INT(11) NOT NULL,
+  `foreign_key` INT(11) NOT NULL,
+  `quantity` INT(11) NOT NULL,
+  `quantity_unit_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
