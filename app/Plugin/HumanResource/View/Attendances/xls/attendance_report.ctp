@@ -5,7 +5,7 @@
     $this->PhpExcel->createWorksheet()
         ->setDefaultFont('Calibri', 12);
 
-    $objTpl = PHPExcel_IOFactory::load("./img/attendance_report.xls");
+    $objTpl = PHPExcel_IOFactory::load("./img/attendance.xls");
     
     if (!empty($attendanceData)) {
         
@@ -14,14 +14,14 @@
             $addRow = $key + 1;
         }
 
-        $objTpl->setActiveSheetIndex(0)->insertNewRowBefore(8,$addRow);
+        $objTpl->setActiveSheetIndex(0)->insertNewRowBefore(11,$addRow);
 
-        $counter = 7;
+        $counter = 10;
         foreach ($attendanceData as $key => $attendanceList) {
             $key++;
            
             $objTpl->setActiveSheetIndex(0)
-                        ->setCellValue('D5','Attendace List/' .$departmentList[$departmentId]. ' / ' . (new \DateTime())->format('m/d/Y'))
+                        ->setCellValue('C8','Attendace List/' .$departmentList[$departmentId]. ' / ' . (new \DateTime())->format('m/d/Y'))
                         ->setCellValue('A'.$counter, $key)
                         ->setCellValue('B'.$counter, $attendanceList['Employee']['code'])
                         ->setCellValue('C'.$counter, ucwords($attendanceList['Employee']['fullname']).' '.ucwords($attendanceList['Employee']['suffix']))
