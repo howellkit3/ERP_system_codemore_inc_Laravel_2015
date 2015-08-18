@@ -637,5 +637,33 @@ public function daily_info() {
 
 	}
 
+	public function export_dailyinfo(){
+
+		$this->loadModel('HumanResource.DailyInfo');
+
+		$this->loadModel('HumanResource.Employee');
+		
+		$fromDate = $this->request->data['Attendance']['from_date'];
+
+		$this->DailyInfo->bind(array('Employee'));
+
+		$conditions = array();
+
+    	if(!empty($fromDate)){
+
+    		$conditions = array_merge($conditions,array('DailyInfo.date' => $fromDate.' '.'00:00:00'));
+
+    	}
+        	
+        $dailyinfoData = $this->DailyInfo->find('all', array(
+            'conditions' => $conditions,
+            'order' => 'DailyInfo.id ASC'
+        ));
+        
+		$this->set(compact('dailyinfoData'));
+
+		$this->render('Attendances/xls/dailyinfo_report');
+
+	}
 
 }
