@@ -252,9 +252,14 @@ class PurchaseOrdersController extends PurchasingAppController {
 															'order' => array('Unit.unit' => 'ASC')
 															));
 
+		$this->loadModel('Currency');
+
+		$currencyData = $this->Currency->find('list', array('fields' => array('id', 'name'))
+															);
+
     	$this->request->data = $purchaseOrderData;
     	
-    	$this->set(compact('modelTable','unitData','purchaseOrderId','supplierData','paymentTermData','purchaseOrderData','contactData','supplierContactPersonData','type','requestPurchasingItem'));
+    	$this->set(compact('modelTable','unitData','purchaseOrderId','supplierData','paymentTermData','purchaseOrderData','contactData','supplierContactPersonData','type','requestPurchasingItem','currencyData' ));
     }
 
     public function approved($purchaseOrderId){

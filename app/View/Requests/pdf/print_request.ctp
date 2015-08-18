@@ -18,7 +18,7 @@ th, td {
 				<?php $ctrTable = 2; 
 					  $txtHolder = " ";?>
 				
-				<div style = "height: 48%">
+				<div style = "height: 48% ">
 				<table>
 					<tr>
 						<td>
@@ -164,7 +164,8 @@ th, td {
 				</table>
 					
 				</div>
-				<div style = "height: 48%">
+
+				<div style = "height: 48%; margin-top: 10px;">
 					<table>
 					<tr>
 						<td>
