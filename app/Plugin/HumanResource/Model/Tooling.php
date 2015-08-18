@@ -17,13 +17,13 @@ class Tooling extends AppModel {
 			'hasOne' => array(
 				'Employee' => array(
 					'className' => 'HumanResource.Employee',
-					'foreignKey' => 'id',
-					'dependent' => true
+					'foreignKey' => false,
+					'conditions' => array('Tooling.employee_id = Employee.id'),
 				),
 				'Tool' => array(
 					'className' => 'HumanResource.Tool',
-					'foreignKey' => 'id',
-					'dependent' => true
+					'foreignKey' => false,
+					'conditions' => array('Tooling.tools_id = Tool.id'),
 				),
 			
 			)

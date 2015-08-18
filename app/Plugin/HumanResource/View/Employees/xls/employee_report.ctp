@@ -6,6 +6,14 @@
         ->setDefaultFont('Calibri', 12);
 
     $objTpl = PHPExcel_IOFactory::load("./img/emp_filter.xls");
+
+    $addRow = 0;
+    foreach ($employeeData as $key => $employeeList) {
+        $addRow = $key + 1;
+    }
+
+    $objTpl->setActiveSheetIndex(0)->insertNewRowBefore(11,$addRow);
+
     $counter = 10;
     foreach ($employeeData as $key => $employeeList) {
         $key++;
