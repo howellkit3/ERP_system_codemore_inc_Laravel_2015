@@ -6,8 +6,8 @@ App::uses('SessionComponent', 'Controller/Component');
 class TimekeepsController  extends HumanResourceAppController {
 
 
-	var $helpers = array('HumanResource.CustomText','HumanResource.Country');
-
+	var $helpers = array('HumanResource.CustomText','HumanResource.PhpExcel');
+//HumanResource.Country
 	public function delete($id = null) {
 
 			if (!empty($id)) {
