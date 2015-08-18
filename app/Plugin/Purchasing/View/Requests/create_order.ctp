@@ -451,7 +451,7 @@
 											<div class="col-lg-3">
 												<?php 
 													echo $this->Form->input('RequestItem.'.$key.'.unit_price_unit_id', array(
-								                        'options' => array($unitData),  
+								                        'options' => array($currencyData),  
 								                        'label' => false,
 								                        'class' => 'form-control required',
 								                        'empty' => '---Select Unit---'

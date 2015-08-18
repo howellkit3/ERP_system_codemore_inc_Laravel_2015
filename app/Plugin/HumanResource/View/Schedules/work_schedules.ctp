@@ -205,19 +205,6 @@ echo $this->Html->script(array(
                         </div>
                     </div>
 
-                    <!-- <div class="form-group">
-                        <label for="inputEmail1" class="col-lg-3 control-label"> Date Range</label>
-
-                       <div class="col-lg-6">
-                            <div class="input-group">
-                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                    <input  placeholder="Date Range" name="from_date" data="1" type="text" class="form-control required myDateRange datepickerDateRange high-z-index" id="datepickerDateRange" >
-                                                </div>
-                        </div>
-
-                       
-                    </div> -->
-
                     <div class="modal-footer">
                             <button type="submit" class="btn btn-primary"><i class="fa fa-share-square-o fa-lg"></i> Export</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

@@ -5,31 +5,29 @@
     $this->PhpExcel->createWorksheet()
         ->setDefaultFont('Calibri', 12);
 
-    $objTpl = PHPExcel_IOFactory::load("./img/work_schedule.xls");
+    $objTpl = PHPExcel_IOFactory::load("./img/time_keep.xls");
 
-    if (!empty($workScheduleData)) {
+    if (!empty($timeKeepData)) {
         
         $addRow = 0;
-        foreach ($workScheduleData as $key => $workScheduleList) {
+        foreach ($timeKeepData as $key => $timeKeepList) {
             $addRow = $key + 1;
         }
 
         $objTpl->setActiveSheetIndex(0)->insertNewRowBefore(11,$addRow);
 
         $counter = 10;
-        foreach ($workScheduleData as $key => $workScheduleList) {
+        foreach ($timeKeepData as $key => $timeKeepList) {
             $key++;
            
             $objTpl->setActiveSheetIndex(0)
-                        ->setCellValue('C8','Work Schedules /' .(new \DateTime())->format('m/d/Y'))
+                        ->setCellValue('C8','Time Keep, Sign I/O -' .(new \DateTime())->format('m/d/Y'))
                         ->setCellValue('A'.$counter, $key)
-                        ->setCellValue('B'.$counter, $workScheduleList['Employee']['code'])
-                        ->setCellValue('C'.$counter, ucfirst($departmentList[$workScheduleList['Employee']['department_id']]))
-                        ->setCellValue('D'.$counter, ucfirst($positionList[$workScheduleList['Employee']['position_id']]))
-                        ->setCellValue('E'.$counter, ucwords($workScheduleList['Employee']['fullname']).' '.ucwords($workScheduleList['Employee']['suffix']))
-                        ->setCellValue('F'.$counter, $workScheduleList['WorkSchedule']['day'])
-                        ->setCellValue('G'.$counter, $workScheduleList['WorkShift']['name'])
-                        ->setCellValue('H'.$counter, $workScheduleList['WorkSchedule']['type']);
+                        ->setCellValue('B'.$counter, date('Y/m/d h:i:a',strtotime($timeKeepList['Timekeep']['date'].' '.$timeKeepList['Timekeep']['time'])))
+                        ->setCellValue('C'.$counter, $timeKeepList['Employee']['code'])
+                        ->setCellValue('D'.$counter, ucwords($timeKeepList['Employee']['fullname']).' '.ucwords($timeKeepList['Employee']['suffix']))
+                        ->setCellValue('E'.$counter, $timeKeepList['Timekeep']['type'])
+                        ->setCellValue('F'.$counter, $timeKeepList['Timekeep']['notes']);
 
             $counter++;  
             

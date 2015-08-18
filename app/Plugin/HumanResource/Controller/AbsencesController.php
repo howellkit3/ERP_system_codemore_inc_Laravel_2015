@@ -154,4 +154,38 @@ class AbsencesController  extends HumanResourceAppController {
 		exit();		
 	}
 
+	public function export() {
+
+		$this->loadModel('HumanResource.Employee');
+
+		$employeeId = $this->request->data['Absence']['employee_id'];
+		
+		$fromDate = $this->request->data['Absence']['from_date'];
+
+		$this->Absence->bind(array('Employee'));
+
+		$conditions = array();
+
+    	if(!empty($employeeId)){
+
+    		$conditions = array_merge($conditions,array('Absence.employee_id' => $employeeId));
+
+    	}
+
+    	if(!empty($fromDate)){
+
+    		$conditions = array_merge($conditions,array('Absence.created >=' => $fromDate.' '.'00:00:00'));
+
+    	}
+        	
+        $absenceData = $this->Absence->find('all', array(
+            'conditions' => $conditions,
+            'order' => 'Absence.id ASC'
+        ));
+        
+		$this->set(compact('absenceData'));
+
+		$this->render('Absences/xls/absence_report');
+	}
+
 }

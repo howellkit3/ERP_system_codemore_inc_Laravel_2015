@@ -291,7 +291,7 @@ $totalremaining = 0;
                             <th class=""><a href="#"><span>Schedule</span></a></th>
                             <th class=""><a href="#"><span>P.O. Quantity</span></a></th>
                             <th class=""><a href="#"><span>Delivered</span></a></th>
-                            <th class=""><a href="#"><span>Replaced by</span></a></th>
+                            <th class=""><a href="#"><span>Replaced</span></a></th>
                             <th class=""><a href="#"><span>Status</span></a></th>
                             <th class=""><a href="#"><span>Action</span></a></th>
                         </tr>
@@ -573,8 +573,6 @@ $totalremaining = 0;
     
     jQuery(document).ready(function(){
 
-
-        
         $("#GatePassViewForm").validate();
         $("#ClientOrderDeliveryScheduleViewForm").validate();
         $('.datepick').datepicker({

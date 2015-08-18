@@ -55,11 +55,10 @@
 
 			                 <div class="filter-block pull-right">
 
-			                	 <button class="btn btn-primary pull-right add-timekeep" onclick="updateTime('.time_input')" data-toggle="modal" href="#timeKeep"> <i class="fa fa-pencil-square-o fa-lg"></i> Add </button>
-			                </div>
-			                <div class="filter-block pull-right">
+			                 	<a data-toggle="modal" href="#mySignInOutReport" class="btn btn-primary pull-right "><i class="fa fa-share-square-o fa-lg"></i> Export</a>
+			                	<button class="btn btn-primary pull-right add-timekeep" onclick="updateTime('.time_input')" data-toggle="modal" href="#timeKeep"> <i class="fa fa-pencil-square-o fa-lg"></i> Add </button>
 
-			                <a data-toggle="modal" href="#myToolReport" class="btn btn-primary pull-right "><i class="fa fa-share-square-o fa-lg"></i> Export</a>
+
 			                </div>
 			                 <div class="filter-block pull-right">
 			                 &nbsp
@@ -143,13 +142,48 @@
 
 			                            ?>
 			                    </div>
-						</div>
-					</div>		
-	            </div>
-			</div>
-		</div>	
+							</div>
+						</div>		
+	            	</div>
+				</div>
+			</div>	
 
-	 </div>
+	 	</div>
+    </div>
+</div>
+<div class="modal fade" id="mySignInOutReport" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"> Sign IN/OUT </h4>
+            </div>
+            <div class="modal-body">
+                <?php echo $this->Form->create('TimeKeep',array('url'=>(array('controller' => 'time_keeps','action' => 'export')),'class' => 'form-horizontal'));?>
+
+                    <div class="form-group">
+                        <label for="inputEmail1" class="col-lg-3 control-label">Date</label>
+                        
+                        <div class="col-lg-6">
+                            <?php 
+                                   echo $this->Form->input('TimeKeep.from_date', array(
+                                                                'label' => false,
+                                                                'class' => 'form-control  datepick required',
+                                                                'placeholder' => 'Date'
+
+                                                              ));
+                            ?>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary export-close"><i class="fa fa-share-square-o fa-lg"></i> Export</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        
+                    </div>  
+                <?php echo $this->Form->end(); ?>
+            </div>
+        </div>
     </div>
 </div>
 <?php echo $this->element('modals/attendance'); ?>

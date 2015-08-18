@@ -36,19 +36,19 @@ class EmployeesController  extends HumanResourceAppController {
         $this->loadModel('HumanResource.Tooling');
  
 	    if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'Tooling' ) {
-				//toolings
-		       	$conditions = array();    
-		       	$this->Tooling->bind('Employee');
-		        $this->paginate = array(
-		            'conditions' => $conditions,
-		            'limit' => $limit,
-		            //'fields' => array('id', 'status','created'),
-		            'order' => 'Tooling.id DESC',
-		        );
+			//toolings
+	       	$conditions = array();    
+	       	$this->Tooling->bind('Employee');
+	        $this->paginate = array(
+	            'conditions' => $conditions,
+	            'limit' => $limit,
+	            //'fields' => array('id', 'status','created'),
+	            'order' => 'Tooling.id DESC',
+	        );
 
 
-		        $toolings = $this->paginate('Tooling');
-		        
+	        $toolings = $this->paginate('Tooling');
+		       
 	    }
 
         
@@ -584,28 +584,43 @@ class EmployeesController  extends HumanResourceAppController {
 		
 		$this->loadModel('HumanResource.Tooling');
 
+		$this->loadModel('HumanResource.Position');
+
+		$this->loadModel('HumanResource.Department');
+
 		$this->Tooling->bind(array('Employee','Tool'));
 
 		$toolId = $this->request->data['Tool']['tool_id'];
-		$employeeId = $this->request->data['Tool']['employee_id'];
+		//$departmentId = $this->request->data['Tool']['department_id'];
+		$date = $this->request->data['Tool']['datepick'];
 		
 		$conditions = array();
 
         if (!empty($toolId)) {
 
-        	$conditions = array_merge($conditions,array('Tooling.tools_id' => $employeeId));
+        	$conditions = array_merge($conditions,array('Tooling.tools_id' => $toolId));
 
         } 
 
-        if (!empty($employeeId)) {
+        // if (!empty($employeeId)) {
 
-        	$conditions = array_merge($conditions,array('Tooling.employee_id' => $employeeId));
+        // 	$conditions = array_merge($conditions,array('Employee.department_id' => $departmentId));
+
+        // } 
+
+        if (!empty($date)) {
+
+        	$conditions = array_merge($conditions,array('Tool.created' => $date.' '.'00:00:00'));
 
         } 
 		
 		$toolingData = $this->Tooling->find('all',array('conditions' => $conditions,'order' => 'Tooling.id ASC'));
-		
-		$this->set(compact('toolingData'));
+
+		$positionList = $this->Position->find('list',array('field' => array('id','name')));
+
+		$departmentList = $this->Department->find('list',array('field' => array('id','name')));
+		//pr($toolingData);exit();
+		$this->set(compact('toolingData','positionList','departmentList'));
 		$this->render('Employees/xls/tool_report');
 
 	}

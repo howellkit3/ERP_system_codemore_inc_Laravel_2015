@@ -1443,7 +1443,18 @@ CREATE TABLE `leaves` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+CREATE TABLE `measures` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(30) DEFAULT NULL,
+  `created` DATETIME NOT NULL,
+  `modified` DATETIME NOT NULL,
+  `created_by` INT(11) DEFAULT NULL,
+  `modified_by` INT(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
+INSERT  INTO `measures`(`id`,`name`,`created_by`,`modified_by`,`created`,`modified`) VALUES (1,'bundle',1,1,'2015-07-03 11:23:22','2015-07-02 09:52:01'),(2,'pack',1,1,'2015-07-03 11:22:25','2015-07-03 11:22:25'),(3,'piece',1,1,'2015-07-03 11:23:44','2015-07-03 11:22:25'),(4,'box',1,1,'2015-07-03 11:22:25','2015-07-03 11:22:25'),(5,'pallet',1,1,'2015-07-03 11:22:25','2015-07-03 11:22:25');
+ 
 /* aldrin added this 8/18/2015 */
 CREATE TABLE IF NOT EXISTS `loans` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1456,3 +1467,23 @@ CREATE TABLE IF NOT EXISTS `loans` (
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+#NOTE: SELECT KOUFU WAREHOUSE DATABASE ----
+
+CREATE TABLE IF NOT EXISTS `stocks` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `uuid` INT(11) NOT NULL,
+  `item_id` INT(11) NOT NULL,
+  `supplier_id` INT(11) NOT NULL,
+  `size` VARCHAR(20) NOT NULL,
+  `size_unit_id` INT(11) NOT NULL,
+  `quantity` INT(11) NOT NULL,
+  `quantity_unit_id` INT(11) NOT NULL,
+  `location_id` INT(11) NOT NULL,
+  `remarks` TEXT NOT NULL,
+  `created_by` INT(11) NOT NULL,
+  `modified_by` INT(11) NOT NULL,
+  `created` DATETIME NOT NULL,
+  `modified` DATETIME NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;

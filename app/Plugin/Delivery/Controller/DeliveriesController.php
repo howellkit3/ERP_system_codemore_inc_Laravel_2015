@@ -168,6 +168,8 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->loadModel('Delivery.DeliveryReceipt');
 
+        $this->loadModel('Delivery.Measure');
+
         $this->ClientOrder->bindDelivery();
         $scheduleInfo = $this->ClientOrder->find('first', array(
                                          'conditions' => array(
@@ -232,6 +234,8 @@ class DeliveriesController extends DeliveryAppController {
                                               'conditions' => array('ClientOrderDeliverySchedule.uuid' => $clientsOrderUuid
                                               )));    
 
+        $measureList = $this->Measure->find('list',array('fields' => array('id', 'name'))); 
+
         if ($this->request->is(array('post', 'put'))) {
 
             $this->ClientOrderDeliverySchedule->id = $this->request->data['ClientOrderDeliverySchedule']['id'];
@@ -250,7 +254,7 @@ class DeliveriesController extends DeliveryAppController {
 
         $noPermissionSales = ' ';
 
-        $this->set(compact('noPermissionSales','driverList','helperList','truckList','deliveryScheduleId','quotationId','clientsOrderUuid','scheduleInfo','deliveryData', 'quantityInfo','deliveryDataID','deliveryDetailsData', 'deliveryEdit', 'deliveryDetailList','deliveryList','deliveryStatus', 'orderList', 'orderListHelper', 'orderDeliveryList', 'clientsOrder', 'companyAddress', 'drData', 'deliveryDetailsData', 'DeliveryReceiptData'));
+        $this->set(compact('noPermissionSales','driverList','helperList','truckList','deliveryScheduleId','quotationId','clientsOrderUuid','scheduleInfo','deliveryData', 'quantityInfo','deliveryDataID','deliveryDetailsData', 'deliveryEdit', 'deliveryDetailList','deliveryList','deliveryStatus', 'orderList', 'orderListHelper', 'orderDeliveryList', 'clientsOrder', 'companyAddress', 'drData', 'deliveryDetailsData', 'DeliveryReceiptData', 'measureList'));
         
         //if ($gatepass == 1) {
           
@@ -550,6 +554,8 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->loadModel('Sales.Address');
 
+        $this->loadModel('Delivery.Measure');
+
         $companyAddress = $this->Address->find('list',array('fields' => array('address1','address1','foreign_key')));
 
         $units = $this->Unit->find('list',array('fields' => array('id','unit')));
@@ -569,11 +575,13 @@ class DeliveriesController extends DeliveryAppController {
                                             'conditions' => array('Company.id' => $clientData['ClientOrder']['company_id']
                                             )));
 
+        $measureList = $this->Measure->find('list',array('fields' => array('id', 'name'))); 
+
         $nameForm = "Delivery Receipt"; 
 
         $noPermissionSales = ' ';
 
-        $this->set(compact('drData','clientData','companyData','units','nameForm', 'companyAddress','noPermissionSales'));
+        $this->set(compact('drData','clientData','companyData','units','nameForm', 'companyAddress','noPermissionSales', 'measureList'));
     
     }
 
@@ -760,14 +768,16 @@ class DeliveriesController extends DeliveryAppController {
                                             'conditions' => array('Company.id' => $clientData['ClientOrder']['company_id']
                                             )));
 
-
-
         $userData = $this->Session->read('Auth');
 
         $this->Delivery->bindDelivery();
         $drDataHolder = $this->Delivery->find('first', array(
                                             'conditions' => array('Delivery.dr_uuid' => $dr_uuid
                                             )));
+
+        $this->loadModel('Delivery.Measure');
+
+        $measureList = $this->Measure->find('list',array('fields' => array('id', 'name')));
 
         $this->loadModel('User');
 
@@ -792,8 +802,6 @@ class DeliveriesController extends DeliveryAppController {
         $this->request->data['DeliveryReceipt']['printed'] = date("y-m-d");
 
         if ($this->request->is(array('post', 'put'))) {
-
-           // $this->request->data['DeliveryReceipt']['quantity'] = $drData['DeliveryDetail']['limit'];
 
             $this->request->data['DeliveryReceipt']['remarks'] = $this->request->data['DeliveryDetail']['remarks'];
 
@@ -892,7 +900,7 @@ class DeliveriesController extends DeliveryAppController {
             $this->Session->setFlash(__('DR has is now ready to print.'), 'success');
         }
 
-        $this->set(compact('drData','clientData','companyData','units','approved','prepared', 'DRRePrint', 'drQuantity','drRemarks'));
+        $this->set(compact('drData','clientData','companyData','units','approved','prepared', 'DRRePrint', 'drQuantity','drRemarks', 'measureList'));
 
         $this->render('dr'); 
 

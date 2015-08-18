@@ -5,8 +5,8 @@ App::uses('SessionComponent', 'Controller/Component');
 
 class AttendancesController  extends HumanResourceAppController {
 
-	var $helpers = array('HumanResource.CustomText','HumanResource.CustomTime','HumanResource.PhpExcel');
-
+	var $helpers = array('HumanResource.PhpExcel','HumanResource.CustomTime');
+	//,'HumanResource.CustomText'
 	public function index() {
 
 		$this->loadModel('HumanResource.WorkSchedule');
@@ -375,6 +375,8 @@ public function edit($id = null) {
 
 		$this->loadModel('HumanResource.Employee');
 
+		$employees = $this->Employee->getList();
+
 		$date = date('Y-m-d');
 
 		$search = '';
@@ -422,7 +424,7 @@ public function edit($id = null) {
 
 		$absences = $this->paginate('Absence');
 
-		$this->set(compact('absences','date','search'));
+		$this->set(compact('absences','date','search','employees'));
 		
 	}
 
@@ -524,7 +526,7 @@ public function daily_info() {
 	$this->set(compact('dailyInfos','search','date'));
 
 }
-public function export() {
+	public function export() {
 
 		$this->loadModel('HumanResource.WorkSchedule');
 
@@ -566,7 +568,7 @@ public function export() {
             'conditions' => $conditions,
             'order' => 'Attendance.id ASC'
         ));
-        //pr($attendanceData);exit();
+        
 		$this->set(compact('attendanceData','departmentList','departmentId'));
 
 		$this->render('Attendances/xls/attendance_report');
@@ -637,5 +639,33 @@ public function export() {
 
 	}
 
+	public function export_dailyinfo(){
+
+		$this->loadModel('HumanResource.DailyInfo');
+
+		$this->loadModel('HumanResource.Employee');
+		
+		$fromDate = $this->request->data['Attendance']['from_date'];
+
+		$this->DailyInfo->bind(array('Employee'));
+
+		$conditions = array();
+
+    	if(!empty($fromDate)){
+
+    		$conditions = array_merge($conditions,array('DailyInfo.date' => $fromDate.' '.'00:00:00'));
+
+    	}
+        	
+        $dailyinfoData = $this->DailyInfo->find('all', array(
+            'conditions' => $conditions,
+            'order' => 'DailyInfo.id ASC'
+        ));
+        
+		$this->set(compact('dailyinfoData'));
+
+		$this->render('Attendances/xls/dailyinfo_report');
+
+	}
 
 }

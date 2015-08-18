@@ -5,31 +5,30 @@
     $this->PhpExcel->createWorksheet()
         ->setDefaultFont('Calibri', 12);
 
-    $objTpl = PHPExcel_IOFactory::load("./img/work_schedule.xls");
+    $objTpl = PHPExcel_IOFactory::load("./img/absence_report.xls");
 
-    if (!empty($workScheduleData)) {
+    if (!empty($absenceData)) {
         
         $addRow = 0;
-        foreach ($workScheduleData as $key => $workScheduleList) {
+        foreach ($absenceData as $key => $absenceList) {
             $addRow = $key + 1;
         }
 
         $objTpl->setActiveSheetIndex(0)->insertNewRowBefore(11,$addRow);
 
         $counter = 10;
-        foreach ($workScheduleData as $key => $workScheduleList) {
+        foreach ($absenceData as $key => $absenceList) {
             $key++;
            
             $objTpl->setActiveSheetIndex(0)
-                        ->setCellValue('C8','Work Schedules /' .(new \DateTime())->format('m/d/Y'))
+                        ->setCellValue('C8','Absence /' .(new \DateTime())->format('m/d/Y'))
                         ->setCellValue('A'.$counter, $key)
-                        ->setCellValue('B'.$counter, $workScheduleList['Employee']['code'])
-                        ->setCellValue('C'.$counter, ucfirst($departmentList[$workScheduleList['Employee']['department_id']]))
-                        ->setCellValue('D'.$counter, ucfirst($positionList[$workScheduleList['Employee']['position_id']]))
-                        ->setCellValue('E'.$counter, ucwords($workScheduleList['Employee']['fullname']).' '.ucwords($workScheduleList['Employee']['suffix']))
-                        ->setCellValue('F'.$counter, $workScheduleList['WorkSchedule']['day'])
-                        ->setCellValue('G'.$counter, $workScheduleList['WorkShift']['name'])
-                        ->setCellValue('H'.$counter, $workScheduleList['WorkSchedule']['type']);
+                        ->setCellValue('B'.$counter, $absenceList['Employee']['code'])
+                        ->setCellValue('C'.$counter, ucwords($absenceList['Employee']['fullname']).' '.ucwords($absenceList['Employee']['suffix']))
+                        ->setCellValue('D'.$counter, $absenceList['Absence']['from'])
+                        ->setCellValue('E'.$counter, $absenceList['Absence']['to'])
+                        ->setCellValue('F'.$counter, $absenceList['Absence']['total_time'])
+                        ->setCellValue('F'.$counter, $absenceList['Absence']['reason']);
 
             $counter++;  
             
