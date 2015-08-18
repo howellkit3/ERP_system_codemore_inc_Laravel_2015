@@ -524,7 +524,7 @@ public function daily_info() {
 	$this->set(compact('dailyInfos','search','date'));
 
 }
-public function export() {
+	public function export() {
 
 		$this->loadModel('HumanResource.WorkSchedule');
 
