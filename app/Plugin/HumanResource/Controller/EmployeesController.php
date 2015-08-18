@@ -593,7 +593,7 @@ class EmployeesController  extends HumanResourceAppController {
 		$toolId = $this->request->data['Tool']['tool_id'];
 		//$departmentId = $this->request->data['Tool']['department_id'];
 		$date = $this->request->data['Tool']['datepick'];
-		pr($this->request->data);
+		
 		$conditions = array();
 
         if (!empty($toolId)) {
