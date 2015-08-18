@@ -36,19 +36,19 @@ class EmployeesController  extends HumanResourceAppController {
         $this->loadModel('HumanResource.Tooling');
  
 	    if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'Tooling' ) {
-				//toolings
-		       	$conditions = array();    
-		       	$this->Tooling->bind('Employee');
-		        $this->paginate = array(
-		            'conditions' => $conditions,
-		            'limit' => $limit,
-		            //'fields' => array('id', 'status','created'),
-		            'order' => 'Tooling.id DESC',
-		        );
+			//toolings
+	       	$conditions = array();    
+	       	$this->Tooling->bind('Employee');
+	        $this->paginate = array(
+	            'conditions' => $conditions,
+	            'limit' => $limit,
+	            //'fields' => array('id', 'status','created'),
+	            'order' => 'Tooling.id DESC',
+	        );
 
 
-		        $toolings = $this->paginate('Tooling');
-		        
+	        $toolings = $this->paginate('Tooling');
+		       
 	    }
 
         
@@ -584,6 +584,10 @@ class EmployeesController  extends HumanResourceAppController {
 		
 		$this->loadModel('HumanResource.Tooling');
 
+		$this->loadModel('HumanResource.Position');
+
+		$this->loadModel('HumanResource.Department');
+
 		$this->Tooling->bind(array('Employee','Tool'));
 
 		$toolId = $this->request->data['Tool']['tool_id'];
@@ -604,8 +608,12 @@ class EmployeesController  extends HumanResourceAppController {
         } 
 		
 		$toolingData = $this->Tooling->find('all',array('conditions' => $conditions,'order' => 'Tooling.id ASC'));
+
+		$positionList = $this->Position->find('list',array('field' => array('id','name')));
+
+		$departmentList = $this->Department->find('list',array('field' => array('id','name')));
 		
-		$this->set(compact('toolingData'));
+		$this->set(compact('toolingData','positionList','departmentList'));
 		$this->render('Employees/xls/tool_report');
 
 	}
