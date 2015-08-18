@@ -54,7 +54,7 @@
                                     <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span>Date</label>
                                     <div class="col-lg-8">
                                         <?php
-                                            echo $this->Form->input('Leave.date_range', array('class' => 'form-control col-lg-6 required datepickerDateRange','label' => false,'value' => !empty($this->request->data['Leave']['from']) ? str_replace('-', '/', $this->request->data['Leave']['from']).' - '.str_replace('-', '/', $this->request->data['Leave']['to']) : ''));
+                                            echo $this->Form->input('Leave.date_range', array('class' => 'form-control col-lg-6 required date-leave datepickerDateRange','label' => false,'value' => !empty($this->request->data['Leave']['from']) ? str_replace('-', '/', $this->request->data['Leave']['from']).' - '.str_replace('-', '/', $this->request->data['Leave']['to']) : '','readonly' => true));
                                         ?>
                                     </div>
                                 </div>
@@ -79,15 +79,15 @@
 <script>
     $(document).ready(function(){
 
-        $('.datepickerDateRange').daterangepicker({
+        // $('.datepickerDateRange').daterangepicker({
 
-            locale: {
-              format: 'YYYY-MM-DD'
-            },
-            startDate: '2015-08-17',
-            endDate: '2015-08-20'
+        //     locale: {
+        //       format: 'YYYY-MM-DD'
+        //     },
+        //     startDate: '2015-08-17',
+        //     endDate: '2015-08-20'
 
-        });
+        // });
 
     });
 </script>
