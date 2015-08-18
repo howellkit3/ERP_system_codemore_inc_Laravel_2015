@@ -2,10 +2,13 @@
 App::uses('AppController', 'Controller');
 App::uses('SessionComponent', 'Controller/Component');
 
-App::import('PHPWord', 'Vendor');
 
+App::import('Vendor', 'DOMPDF', true, array(), 'dompdf'.DS.'dompdf_config.inc.php', false);
+
+//App::import('PHPWord', 'Vendor');
 
 App::import('Vendor', 'PHPWord', array('file' => 'PHPWord'.DS.'PHPWord.php'));
+//App::import('Vendor', 'PHPWord', array('file' => 'PHPWord'.DS.'src'.DS.'PhpWord'.DS.'PhpWord.php'));
 
 
 class SalariesController  extends HumanResourceAppController {
@@ -13,7 +16,6 @@ class SalariesController  extends HumanResourceAppController {
 	var $helpers = array('HumanResource.Salaries','HumanResource.PhpExcel');
 
 	public $components = array('HumanResource.SalaryComputation');
-
 
 	public function index() {
 
@@ -60,7 +62,6 @@ class SalariesController  extends HumanResourceAppController {
 	}
 
 	public function calculate(){
-
 
 		$this->loadModel('HumanResource.Department');
 
@@ -149,15 +150,15 @@ class SalariesController  extends HumanResourceAppController {
 
 			$this->loadModel('HumanResource.Holiday');
 
-			$salaries = $this->SalaryComputation->calculateBenifits($employees,$payScheds,$customDate);
+			$updateDatabase = false;
 
-
+			$salaries = $this->SalaryComputation->calculateBenifits($employees,$payScheds,$customDate,$updateDatabase);
 
 			//save for salary report
-			// if (!empty($salaries)) {
+			if (!empty($salaries) && $updateDatabase) {
 
-			// 	$this->SalaryReport->saveAll($salaries);
-			// }
+				$this->SalaryReport->saveAll($salaries);
+			}
 
 			$this->set(compact('employees','customDate','payScheds','salaries'));
 
@@ -173,13 +174,12 @@ class SalariesController  extends HumanResourceAppController {
 
 		if (!empty($this->request->query)) {
 
-
 			$this->loadModel('HumanResource.Attendance');
 			$this->loadModel('HumanResource.Employee');
 			$this->loadModel('HumanResource.Salary');
 			$this->loadModel('HumanResource.GovernmentRecord');
 
-			$emp_conditions = array();//array('Employee.status NOT' => array('1'));
+			$emp_conditions = array(); //array('Employee.status NOT' => array('1'));
 
 			$this->Employee->bind(array('Salary','GovernmentRecord'));
 
@@ -188,8 +188,6 @@ class SalariesController  extends HumanResourceAppController {
 								'order' => array('Employee.last_name ASC'),
 								'group' => array('Employee.id')
 							));
-
-		
 
 			$conditions = array('Attendance.in NOT' => '','Attendance.out NOT' => '');
 
@@ -228,12 +226,11 @@ class SalariesController  extends HumanResourceAppController {
 
 				//$this->Attendance->bind(array('WorkSchedule','WorkShift','WorkShiftBreak','BreakTime'));
 
-				$this->Attendance->bindWorkshift(); 
+			$this->Attendance->bindWorkshift(); 
 
-				$employees[$key]['Attendance'] = $this->Attendance->computeAttendance($conditions);
+			$employees[$key]['Attendance'] = $this->Attendance->computeAttendance($conditions);
 				
 			}
-
 
 			$this->loadModel('HumanResource.SalaryReport');
 
@@ -243,14 +240,24 @@ class SalariesController  extends HumanResourceAppController {
 
 			$this->loadModel('HumanResource.Holiday');
 
-			$salaries = $this->SalaryComputation->calculateBenifits($employees,$payScheds,$customDate);
+			$updateDatabase = true;
 
-			// pr($salaries);
-			// exit();
+			$salaries = $this->SalaryComputation->calculateBenifits($employees,$payScheds,$customDate,$updateDatabase);
 
-			$this->set(compact('employees','customDate','payScheds','days','date','payrollDate','salaries'));
+			//save for salary report
+			if (!empty($salaries) && $updateDatabase) {
 
-			
+				$this->SalaryReport->saveAll($salaries);
+			}
+
+			$payTypes = array(
+				'Earnings' => array('regular_work','regular_work_ot','regular_holiday','regular_holiday_work','regular_holiday_work_ot','ctpa','sea','allowance'),
+				'Deductions' => array('uniform','penalty','total_deduction')
+			);
+
+			$this->set(compact('employees','customDate','payScheds','days','date','payrollDate','salaries','payTypes'));
+
+				//pr($salaries); exit();
 			switch ($type) {
 
 
@@ -260,12 +267,9 @@ class SalariesController  extends HumanResourceAppController {
             case 'excel':
 				$this->render('Salaries/xls/salaries_report');
                 break;
-
-
             case 'csv':
                 $this->layout = false;
                 $this->render('csv/export');
-                # code...
                 break;
             case 'pdf':
 
@@ -274,8 +278,7 @@ class SalariesController  extends HumanResourceAppController {
                 if (!empty($data)) {
                     $this->render('sales_report');
                 } else {
-
-                    $this->render('export'); 
+					$this->render('export'); 
                 }
 
                 ini_set('memory_limit', '512M');
@@ -373,21 +376,17 @@ class SalariesController  extends HumanResourceAppController {
 
 			}
 
-
 			if ( $this->Deduction->save($this->request->data) ) {
 
-
 				//save amortization schedules
-
-				
 
 				$this->Session->setFlash('Deduction save successfully','success');
 
 				$this->redirect( array(
-			     'controller' => 'salaries', 
-			     'action' => 'deductions',
-			     $this->request->data['Salary']['employee_id']
-			));
+				     'controller' => 'salaries', 
+				     'action' => 'deductions',
+				     $this->request->data['Salary']['employee_id']
+				));
 	 		
 			} else {
 
@@ -399,9 +398,8 @@ class SalariesController  extends HumanResourceAppController {
 		}	
 
 		$conditions = array();
-		$employeeList = $this->Employee->getList($conditions);
 
-			
+		$employeeList = $this->Employee->getList($conditions);
 
 		$this->set(compact('employeeList'));
 	}
@@ -504,6 +502,92 @@ class SalariesController  extends HumanResourceAppController {
 			}
 		}
 		//exit();
+	}
+
+
+
+	//reports 
+
+	public function sss_reports( $type = null ) {
+
+		$date = date('m-Y');
+		$this->set(compact('date'));
+
+		if (!empty($type) && $type == 'pdf') {
+
+			$this->loadModel('HumanResource.SalaryReport');
+
+			$query = $this->request->query;
+
+	        $this->SalaryReport->bind(array('Employee','EmployeeAdditionalInformation','SssRecord','Position'));
+	       	
+	       	$start_date = date('Y-m-01',strtotime('01-'.$query['month']));
+
+	       	$end_date = date('Y-m-t',strtotime('01-'.$query['month']));
+
+	       	$conditions = array('SalaryReport.from >=' => $start_date, 'SalaryReport.to <=' => $end_date);
+
+	       	//$this->SalaryReport->virtualFields['total_sss_contribution'] = 'SUM(SalaryReport.sss)';;
+
+	       	$salary = $this->SalaryReport->find('all',array(
+	       		'conditions' => $conditions,
+	       		 'fields' => array(
+	       		 	'SalaryReport.id',
+	       		 	'SalaryReport.employee_id',
+	       		 	'SalaryReport.sss',
+	       		 	'SalaryReport.total_pay',
+	       		 	'Employee.last_name',
+	       		 	'Employee.middle_name',
+	       		 	'Employee.first_name',
+	       		 	'Employee.date_hired',
+	       		 	'EmployeeAdditionalInformation.birthday',
+	       		 	'SssRecord.value',
+	       		 	'Position.name'
+	       		 	),
+
+	       		 ));
+
+	       	$employees = $this->SalaryReport->getTotalContribution($salary,'sss');	      	
+	      	
+	      	//pr($employees); exit();
+
+			$view = new View(null, false);
+
+			$view->set(compact('employees'));
+        
+
+			$view->viewPath = 'Salaries'.DS.'pdf';	
+	   	
+	        $output = $view->render('sss_reports', false);
+	   	
+	        $dompdf = new DOMPDF();
+	        $dompdf->set_paper("legal", 'landscape');
+	        $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));
+	        $dompdf->render();
+	        $canvas = $dompdf->get_canvas();
+	        $font = Font_Metrics::get_font("helvetica", "bold");
+	        $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
+
+	        $output = $dompdf->output();
+	        $random = rand(0, 1000000) . '-' . time();
+
+	        if (empty($filename)) {
+	        	$filename = 'product-'.time().'-quotation'.time();
+	        }
+	      	$filePath = 'view_pdf/'.strtolower(Inflector::slug( $filename , '-')).'.pdf';
+
+	        $file_to_save = WWW_ROOT .DS. $filePath;
+	        	
+	        if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
+	        		
+	        		unlink($file_to_save);
+	        
+	        }
+
+	    }
+			
+ 		$this->render('Salaries/reports/sss_reports');
+
 	}
 
 
