@@ -12,7 +12,7 @@
                                     <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Employee Name</label>
                                     <div class="col-lg-8">
                                     	<?php
-                                            echo $this->Form->input('Leave.id', array('class' => 'form-control col-lg-6 required','label' => false,'type' => 'hidden'));
+                                            echo $this->Form->input('Leave.id', array('class' => 'form-control leaveID col-lg-6 required','label' => false,'type' => 'hidden'));
                                         ?>
                                         <?php
                                             echo $this->Form->input('Leave.employee_id',
@@ -30,40 +30,94 @@
                                 <div class="form-group">
                                     <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span>Type</label>
                                     <div class="col-lg-8">
-                                        <?php
-                                                                        
-                                            $type = array($leavetypeList);
+                                        
+                                        <?php 
+                                            if (!empty($this->request->data)) {
+
+                                                echo $this->Form->input('Leave.type_id',
+                                                     array('class' => 'col-lg-6 autocomplete required leave-type-select',
+                                                    'options' => array($leavetypeList),
+                                                    'placeholder' => 'Type name',
+                                                    'disabled' => false,
+                                                    'empty' => 'Select Type',
+                                                    'label' => false));
+
+                                            }else {
+                                                echo $this->Form->input('Leave.type_id',
+                                                     array('class' => 'col-lg-6 autocomplete required leave-type-select',
+                                                    'options' => array($leavetypeList),
+                                                    'placeholder' => 'Type name',
+                                                    'disabled' => true,
+                                                    'empty' => 'Select Type',
+                                                    'label' => false));
+                                            }
+                                            
 
                                         ?>
-                                        <?php 
+                                    </div>
+                                </div>
 
-                                            echo $this->Form->input('Leave.type_id',
-                                                 array('class' => 'col-lg-6 autocomplete required leave-type-select',
-                                                'options' => $type,
-                                                'placeholder' => 'Type name',
-                                                'empty' => 'Select Type',
-                                                //'default' => !empty($this->request->data['Type']['category_id']) ? $employeeData['Type']['category_id'] : '',
-                                                //'div' => 'col-lg-12',
+                                <div class="form-group">
+                                    <label for="inputEmail1" class="col-lg-2 control-label">Limit Hours</label>
+                                    <div class="col-lg-2">
+                                        
+                                        <?php 
+                                            if (!empty($this->request->data)) {
+                                                $limitHours = $limit[$this->request->data['Leave']['type_id']];
+
+                                            }
+
+                                            echo $this->Form->input('Leave.limit_hours',
+                                                 array('class' => 'form-control required limit-hours',
+                                                'placeholder' => 'Limit Hours',
+                                                'readonly' => true,
+                                                'value' => !empty($limitHours) ? $limitHours : '',
                                                 'label' => false));
 
                                         ?>
+                                        <input type="hidden" value="0" class="form-control dayrange required" name="dayrange">
                                     </div>
-                                </div>
 
-                                <div class="form-group">
-                                    <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span>Date</label>
-                                    <div class="col-lg-8">
-                                        <?php
-                                            echo $this->Form->input('Leave.date_range', array('class' => 'form-control col-lg-6 required date-leave datepickerDateRange','label' => false,'value' => !empty($this->request->data['Leave']['from']) ? str_replace('-', '/', $this->request->data['Leave']['from']).' - '.str_replace('-', '/', $this->request->data['Leave']['to']) : '','readonly' => true));
+                                    <label for="inputEmail1" class="col-lg-1 control-label">Remaining Hours</label>
+                                    <div class="col-lg-2">
+                                        
+                                        <?php 
+
+                                             echo $this->Form->input('Leave.remaining_hours',
+                                                 array('class' => 'form-control required remaining-hours',
+                                                'placeholder' => 'Remaining Hours',
+                                                'readonly' => true,
+                                                'value' => !empty($remainingHours) ? $remainingHours : '',
+                                                'label' => false));
+
                                         ?>
+                                        
                                     </div>
+                                    <label class="col-lg-1 control-label noted-range">Note : <?php  echo !empty($note) ? $note.' Day/s' : '' ?></label>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span>Remarks</label>
+                                    <label for="inputEmail1" class="col-lg-2 control-label">Date From</label>
+                                    <div class="col-lg-2">
+                                       
+                                        <input type="date" placeholder="Date From" value="<?php echo !empty($this->request->data['Leave']['from']) ? $this->request->data['Leave']['from'] : '' ?>" day-range="0" class="form-control datepick required from-date-range" name="data[Leave][from]" min="<?php echo date('Y-m-d') ?>">
+
+                                    </div>
+
+                                    <label for="inputEmail1" class="col-lg-1 control-label">Date To</label>
+                                    <div class="col-lg-2">
+
+                                        <input type="date" placeholder="Date To" value="<?php echo !empty($this->request->data['Leave']['to']) ? $this->request->data['Leave']['to'] : '' ?>" class="form-control datepick date-to-range required" name="data[Leave][to]" max="" min="">
+                                       
+                                    </div>
+                                    
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputEmail1" class="col-lg-2 control-label">Remarks</label>
                                     <div class="col-lg-8">
                                         <?php
-                                            echo $this->Form->input('Leave.remarks', array('class' => 'form-control col-lg-6 required','label' => false));
+                                            echo $this->Form->input('Leave.remarks', array('class' => 'form-control col-lg-6 ','label' => false));
                                         ?>
                                     </div>
                                 </div>
@@ -78,7 +132,9 @@
 </div>
 <script>
     $(document).ready(function(){
-
+        // $('.datepick').datepicker({
+        //     format: 'YYYY-MM-DD'
+        // });
         // $('.datepickerDateRange').daterangepicker({
 
         //     locale: {

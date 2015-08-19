@@ -19,8 +19,6 @@ class ReceivingsController extends WareHouseAppController {
 		$this->PurchaseOrder->bind(array('Request'));
 
 		$purchaseOrderData = $this->PurchaseOrder->find('all', array('conditions' => array('PurchaseOrder.status' => 1)));
-
-		//pr($purchaseOrderData); exit;
 	
 		$this->set(compact('purchaseOrderData', 'supplierData'));
 
@@ -48,6 +46,8 @@ class ReceivingsController extends WareHouseAppController {
 
     	$this->loadModel('Supplier');
 
+    	$this->loadModel('Unit');
+
 		$userData = $this->Session->read('Auth');
 
 		$requestData = $this->Request->find('first', array('conditions' => array('Request.uuid' => $requestUUID)));
@@ -55,11 +55,12 @@ class ReceivingsController extends WareHouseAppController {
 		$supplierData = $this->Supplier->find('list', array('fields' => array('Supplier.id', 'Supplier.name')
 																));
 
+		$unitData = $this->Unit->find('list', array('fields' => array('Unit.id', 'Unit.unit')
+																));
+
 		$this->PurchaseOrder->bindReceive();
 
 		$purchaseOrderData = $this->PurchaseOrder->find('first', array('conditions' => array('PurchaseOrder.id' => $id)));
-
-		//pr($purchaseOrderData); exit;
 
 		if(empty($requestData['PurchaseItem'])){
 
@@ -141,20 +142,11 @@ class ReceivingsController extends WareHouseAppController {
 
         }
 
-    //  pr($requestPurchasingItem); exit;
-
 		if (!empty($this->request->data)) {
-
-			//pr($this->request->data); exit;
-			//$userData = $this->Session->read('Auth');
 
 			$itemId = $this->ReceivedOrder->saveReceivedOrders($this->request->data['ReceivedItems'],$userData['User']['id'],$id);
 
 			$this->PurchaseOrder->id = $id;
-
-			$this->PurchaseOrder->saveField('status', 11);
-
-			//pr($this->request->data); exit;
 			
 			$this->ReceivedItem->saveReceivedItems($itemId, $this->request->data,$value[$itemHolder]['model']);
 
@@ -167,7 +159,7 @@ class ReceivingsController extends WareHouseAppController {
 
 		}
 	
-		$this->set(compact('requestData', 'requestPurchasingItem', 'purchaseOrderData', 'supplierData'));
+		$this->set(compact('requestData', 'requestPurchasingItem', 'purchaseOrderData', 'supplierData', 'unitData'));
 
     }
 
@@ -179,11 +171,9 @@ class ReceivingsController extends WareHouseAppController {
 
     	$this->loadModel('User');
 
-    	$this->loadModel('User');
-
-    	$this->loadModel('StatusFieldHolder');
-
     	$this->loadModel('Purchasing.Request');
+
+    	$this->loadModel('Purchasing.PurchaseOrder');
 
 		$userName = $this->User->find('list', array('fields' => array('User.id', 'User.fullname')
 																));
@@ -194,13 +184,22 @@ class ReceivingsController extends WareHouseAppController {
 		$receiveData = $this->Request->find('list', array('fields' => array('Request.id', 'Request.uuid')
 																));
 
-		$this->ReceivedOrder->bindReceive();
+		$userNameList = $this->User->find('list', array('fields' => array('User.id', 'User.fullname'),
+														'conditions' => array( 
+															'User.role_id' => 4)
+													));
+
+		$this->ReceivedOrder->bind();
 
 		$received_orders = $this->ReceivedOrder->find('all');
 
-		$uuid = $receiveData[$received_orders[0]['PurchaseOrder']['request_id']];
+		if(!empty($received_orders[0]['PurchaseOrder']['request_id'])){
+
+			$uuid = $receiveData[$received_orders[0]['PurchaseOrder']['request_id']];
+
+		}
 	
-		$this->set(compact('received_orders', 'supplierData', 'userName', 'uuid'));
+		$this->set(compact('received_orders', 'supplierData', 'userName', 'uuid', 'userName', 'userNameList'));
 
     }
 	    	    
@@ -316,10 +315,37 @@ class ReceivingsController extends WareHouseAppController {
             'action' => 'receive'
         ));  
 
-	
-		
-
     }
 
+    public function in_record($id = null) {
+
+    	$this->loadModel('WareHouse.ReceivedOrder');
+
+    	$this->ReceivedOrder->bind(array('ReceivedItem'));
+
+    	$userData = $this->Session->read('Auth');
+
+    	$receivedData = $this->ReceivedOrder->find('first', array('conditions' => array('ReceivedOrder.id' => $id)));
+		
+
+		if (!empty($this->request->data)) {
+
+			$this->loadModel('WareHouse.InRecord');
+
+			$this->loadModel('WareHouse.ItemRecord');
+
+			$inRecordId = $this->InRecord->saveInRecord($this->request->data['InRecord'],$userData['User']['id'],$id);
+			
+			$this->ItemRecord->saveItemRecord($inRecordId, $receivedData['ReceivedItem']);
+
+			$this->Session->setFlash(__('Received Items has been moved to stocks'), 'success');
+          
+            $this->redirect( array(
+                'controller' => 'receivings',   
+                'action' => 'receive'
+            ));  
+
+		}
+    }
 
 }

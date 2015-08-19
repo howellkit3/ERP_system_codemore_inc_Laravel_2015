@@ -74,8 +74,9 @@
                                                                                         'type' => 'select',
                                                                                         'label' => false,
                                                                                         'class' => 'form-control required ',
-                                                                                        'empty' => '---Select Payment Term---',
-                                                                                        'options' => array($violationData)
+                                                                                        'empty' => '---Select Company Policy---',
+                                                                                        'options' => array($violationData),
+                                                                                        'default' => $causeMemoData['CauseMemo']['violation_id']
 
                                                                                       ));
                                                     ?>
@@ -88,13 +89,13 @@
                                                 <label class="col-lg-2 control-label">Disciplinary Action</label>
                                                 <div class="col-lg-8">
                                                     <?php 
-                                                        $val = $disciplinaryData[$causeMemoData['CauseMemo']['disciplinary_action_id']];
+                                                        
                                                           echo $this->Form->input('CauseMemo.disciplinary_action_id', array(
                                                                                         'label' => false,
                                                                                          'options' => array($disciplinaryData),
                                                                                         'required' => 'required',
                                                                                         'class' => 'form-control required',
-                                                                                        'default' => 39,
+                                                                                        'default' => $causeMemoData['CauseMemo']['disciplinary_action_id'],
                                                                                         'empty' => '-------'
                                                                                        
 
@@ -125,8 +126,8 @@
                                                                                         'label' => false,
                                                                                         'required' => 'required',
                                                                                         'class' => 'form-control required',
-                                                                                         'options' => array($notedByEmployee), 
-                                                                                        'default' => $notedByEmployee[$causeMemoData['CauseMemo']['created_by']]
+                                                                                         'options' => array($notedByUserHR), 
+                                                                                        'default' => $causeMemoData['CauseMemo']['noted_user_id']
 
                                                                                        ));
                                                     ?>

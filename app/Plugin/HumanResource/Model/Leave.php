@@ -19,10 +19,10 @@ class Leave extends AppModel {
 					'foreignKey' => false,
 					'conditions' => array('Employee.id = Leave.employee_id')
 				),
-				'Type' => array(
-					'className' => 'Type',
+				'LeaveType' => array(
+					'className' => 'LeaveType',
 					'foreignKey' => false,
-					'conditions' => array('Type.id = Leave.type_id')
+					'conditions' => array('LeaveType.id = Leave.type_id')
 				),
 				
 			)
