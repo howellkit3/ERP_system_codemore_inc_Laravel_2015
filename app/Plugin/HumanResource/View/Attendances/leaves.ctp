@@ -51,6 +51,9 @@ echo $this->element('hr_options');
 				                     	</div>
 			                    	
 										<div class="form-group pull-left">
+
+											<a data-toggle="modal" href="#leaveReport" class="btn btn-primary pull-right "><i class="fa fa-share-square-o fa-lg"></i> Export</a>
+
 											<?php
 
 												echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Request Leave', 
@@ -59,6 +62,7 @@ echo $this->element('hr_options');
 							                           array('class' =>'btn btn-primary pull-right',
 							                                'escape' => false)); 
 											?>
+
 				                		</div>
 				                	<?php echo $this->Form->end(); ?>
 			                   		<br><br>
@@ -101,7 +105,7 @@ echo $this->element('hr_options');
 									                        <td class="">
 									                          	<?php 
 									                          
-									                          		echo $leaveList['Type']['name'];
+									                          		echo $leaveList['LeaveType']['name'];
 
 									                           	?>
 									                        </td>
@@ -185,5 +189,60 @@ echo $this->element('hr_options');
 	    	</div>
    		</div>
 	</div>
+</div>
+
+<div class="modal fade" id="leaveReport" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"> Attendance </h4>
+            </div>
+            <div class="modal-body">
+                <?php echo $this->Form->create('Leave',array('url'=>(array('controller' => 'leaves','action' => 'export')),'class' => 'form-horizontal'));?>
+
+                	<div class="form-group">
+                        <label for="inputEmail1" class="col-lg-3 control-label"> Employee Name</label>
+                        
+                        <div class="col-lg-6">
+                            <?php 
+								echo $this->Form->input('Leave.employee_id', array(
+								    'type' => 'select',
+								    'label' => false,
+								    'class' => 'autocomplete',
+								    'empty' => '---Select Employee---',
+								    'options' => array($employees)
+
+								  ));
+                            ?>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail1" class="col-lg-3 control-label">Leave Type</label>
+                        
+                        <div class="col-lg-6">
+                            <?php 
+								echo $this->Form->input('Leave.type_id', array(
+								    'type' => 'select',
+								    'label' => false,
+								    'class' => 'autocomplete',
+								    'empty' => '---Select Leave Type---',
+								    'options' => array($leaveType)
+
+								  ));
+                            ?>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary export-close"><i class="fa fa-share-square-o fa-lg"></i> Export</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        
+                    </div>  
+                <?php echo $this->Form->end(); ?>
+            </div>
+        </div>
+    </div>
 </div>
 <?php echo $this->element('modals/personnal_attendance'); ?>
