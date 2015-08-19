@@ -9,14 +9,15 @@
     echo $this->Html->css(array(
                     'HumanResource.default',
                     'HumanResource.select2.css',
-                    'timepicker'
+                    //'timepicker'
     ));
      echo $this->Html->script(array(
                     'jquery.maskedinput.min',
                     'HumanResource.custom',
                     'HumanResource.select2.min',
-                    'HumanResource.monthpicker-master/jquery.monthpicker',
+                    //'HumanResource.monthpicker-master/jquery.monthpicker',
                     'HumanResource.work_schedules',
+                    'HumanResource.leave',
 
 )); ?>
 <div style="clear:both"></div>

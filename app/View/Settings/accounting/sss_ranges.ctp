@@ -30,7 +30,7 @@
 									<div class="form-group">
 										<label class="col-lg-2 control-label"><span style="color:red">*</span> Bounds / Salary Range</label>
 										<div class="col-lg-8">
-										<?php 
+											<?php 
 	                                            echo $this->Form->input('id');
 	                                            echo $this->Form->input('range_from', array(
 	                                            								'class' => 'form-control item_type col-lg-4',
@@ -137,15 +137,15 @@
 							<div class="table-responsive">
 								<table class="table">
 								<thead>
-								<tr>
-									<th><a href="#"><span>Range of compensations</span></a></th>
-									<th><a href="#" class="desc"><span>Credit</span></a></th>
-									<th><a href="#" class="asc"><span>Employer</span></a></th>
-									<th class="text-center"><span>Employee</span></th>
-									<th class="text-center"><span>Employee Compensations</span></th>
-									<th class="text-right"><span>Total Contibution</span></th>
-									<th class="text-right"><span>Action</span></th>
-								</tr>
+									<tr>
+										<th><a href="#"><span>Range of compensations</span></a></th>
+										<th><a href="#" class="desc"><span>Credit</span></a></th>
+										<th><a href="#" class="asc"><span>Employer</span></a></th>
+										<th class="text-center"><span>Employee</span></th>
+										<th class="text-center"><span>Employee Compensations</span></th>
+										<th class="text-right"><span>Total Contibution</span></th>
+										<th class="text-right"><span>Action</span></th>
+									</tr>
 								</thead>
 								<tbody>
 								<?php foreach ($ranges as $key => $range) { ?>
@@ -183,11 +183,13 @@
 										echo $this->Html->link('<span class="fa-stack">
 										<i class="fa fa-square fa-stack-2x"></i>
 										<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Delete </font></span>
-										</span>', array('controller' => 'settings', 'action' => 'sss_range_delete',$range['SssRange']['id']),array('class' =>' table-link small-link-icon','escape' => false,'title'=>'Delete Information','confirm' => 'Do you want to delete this Process ?'));
+										</span>', array('controller' => 'settings', 'action' => 'sss_ranges_delete',$range['SssRange']['id']),array('class' =>' table-link small-link-icon','escape' => false,'title'=>'Delete Information','confirm' => 'Do you want to delete this Process ?'));
 										?>
 										</td>
 								</tr>
 								<?php } ?>
+								</tbody>
+								</table>
 							
 							
 							</div>

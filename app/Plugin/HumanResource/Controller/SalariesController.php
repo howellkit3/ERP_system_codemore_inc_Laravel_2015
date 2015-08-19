@@ -6,10 +6,8 @@ App::uses('SessionComponent', 'Controller/Component');
 App::import('Vendor', 'DOMPDF', true, array(), 'dompdf'.DS.'dompdf_config.inc.php', false);
 
 //App::import('PHPWord', 'Vendor');
-
 App::import('Vendor', 'PHPWord', array('file' => 'PHPWord'.DS.'PHPWord.php'));
 //App::import('Vendor', 'PHPWord', array('file' => 'PHPWord'.DS.'src'.DS.'PhpWord'.DS.'PhpWord.php'));
-
 
 class SalariesController  extends HumanResourceAppController {
 
@@ -589,6 +587,291 @@ class SalariesController  extends HumanResourceAppController {
  		$this->render('Salaries/reports/sss_reports');
 
 	}
+
+	public function payroll() {
+
+		$this->loadModel('Payroll.Payroll');
+
+		$date = date('Y-m-d');	
+
+		$limit = 10;
+
+		$conditions = array();
+
+        $params =  array(
+	            'conditions' => $conditions,
+	            'limit' => $limit,
+	            //'fields' => array('id', 'status','created'),
+	            'order' => 'Payroll.date DESC',
+	    );
+
+		$this->paginate = $params;
+
+		//$this->Payroll->bind(array('Payroll'));
+
+		$payrolls = $this->paginate('Payroll');
+
+		$this->set(compact('date','payrolls'));
+	}
+
+
+	public function payroll_create() {
+
+		$this->loadModel('Payroll.Payroll');
+
+		$date = date('Y-m-d');		
+
+		$this->set(compact('date'));	
+
+		$auth = $this->Session->read('Auth.User');
+
+		if ($this->request->is('post')) {
+
+			$data = $this->Payroll->createPayroll($this->request->data,$auth);
+
+			if ($this->Payroll->save($data)) {
+
+                 $this->Session->setFlash(__('Saving data completed.'),'success');
+
+                $this->redirect(
+                    array('controller' => 'salaries', 'action' => 'payroll_view',$this->Payroll->id)
+                );
+
+            } else {
+
+                    $this->Session->setFlash(__('There\'s an error saving data, Please try again'),'error');
+            }
+
+		}	
+	}
+
+	public function payroll_edit($id = null ) {
+
+		$this->loadModel('Payroll.Payroll');
+
+		$date = date('Y-m-d');		
+
+		$this->set(compact('date'));	
+
+		$auth = $this->Session->read('Auth.User');
+
+		if ($this->request->is('put')) {
+
+			$data = $this->Payroll->createPayroll($this->request->data,$auth);
+
+			if ($this->Payroll->save($data)) {
+
+                 $this->Session->setFlash(__('Saving data completed.'),'success');
+
+                $this->redirect(
+                    array('controller' => 'salaries', 'action' => 'payroll_view',$this->Payroll->id)
+                );
+
+            } else {
+
+                    $this->Session->setFlash(__('There\'s an error saving data, Please try again'),'error');
+            }
+
+		}	
+
+		if (!empty($id)) {
+
+			
+			$this->request->data =  $this->Payroll->findById($id);	
+
+		}
+	}
+
+	public function payroll_view($id = null) {
+
+		$this->loadModel('Payroll.Payroll');
+
+		if (!empty($id)) {
+
+			$payroll = $this->Payroll->findById($id);
+
+			if ($payroll['Payroll']['status'] == 'process') {
+
+			$payroll['Payroll']['data'] = json_decode($payroll['Payroll']['data']);
+
+			$salaries = $this->Payroll->objectToArray($payroll['Payroll']['data']); 
+
+			} else {
+
+			$salaries = $this->_checkPayroll($payroll);
+			
+			}
+
+		
+		}
+
+		$this->set(compact('salaries','payroll'));
+
+	}
+
+	public function process_payroll($id = null){
+
+		if (!empty($id)) {
+
+			$this->loadModel('Payroll.Payroll');
+
+			$payroll = $this->Payroll->findById($id);
+
+			$salaries = $this->_checkPayroll($payroll,true);
+
+			if ($salaries) {
+
+				$payroll['Payroll']['status'] = 'process';
+				$payroll['Payroll']['data'] = json_encode($salaries);
+			}
+
+			if ($this->Payroll->save($payroll['Payroll']) ) {
+
+				$this->Session->setFlash(__('Payroll Process Completed.'),'success');
+
+			} else {
+
+                 $this->Session->setFlash(__('There\'s an error Processing Payroll, Please try again'),'error');
+			}
+
+			 $this->redirect(
+	                array('controller' => 'salaries', 'action' => 'payroll_view',$id)
+	            );
+		}
+
+		$this->set(compact('salaries','payroll'));
+	}
+
+	private function _checkPayroll($payroll = null , $update = false ){
+
+		if (!empty($payroll)) {
+
+			$this->loadModel('HumanResource.Attendance');
+			$this->loadModel('HumanResource.Employee');
+			$this->loadModel('HumanResource.Salary');
+			$this->loadModel('HumanResource.GovernmentRecord');
+
+			$emp_conditions = array();//array('Employee.status NOT' => array('1'));
+			$this->Employee->bind(array('Salary','GovernmentRecord'));
+
+			$employees = $this->Employee->find('all',array(
+								'conditions' => $emp_conditions,
+								'order' => array('Employee.last_name ASC'),
+								'group' => array('Employee.id')
+							));
+
+			$customDate['start'] = $payroll['Payroll']['from'];
+
+			$customDate['end'] = $payroll['Payroll']['to'];
+
+			$days = explode('-', $customDate['start']);
+
+			$payScheds = ( $days[2] == '16' ) ? 'second' : 'first';
+
+			$conditions = array('Attendance.in NOT' => '','Attendance.out NOT' => '');
+
+			$conditions = array_merge($conditions,array(
+					'Attendance.date >=' => $customDate['start'],
+					'Attendance.date <=' => $customDate['end'] 
+				));
+
+			foreach ($employees as $key => $emp) {
+
+				if (!empty($emp['GovernmentRecord'])) {
+					$employees[$key]['Agency'] = Set::classicExtract($emp['GovernmentRecord'], '{n}.agency_id');
+				}
+				
+				$conditions =  array_merge($conditions,array('Attendance.employee_id' => $emp['Employee']['id']));
+
+				$this->loadModel('HumanResource.WorkSchedule');
+
+				$this->loadModel('HumanResource.WorkShift');
+
+				$this->loadModel('HumanResource.WorkShiftBreak');
+
+				$this->loadModel('HumanResource.BreakTime');
+
+				$this->Attendance->bindWorkshift(); 
+
+				$employees[$key]['Attendance'] = $this->Attendance->computeAttendance($conditions);
+				
+			}
+
+			//$this->Components->load('HumanResource.SalaryComputation');
+
+			$this->loadModel('HumanResource.SalaryReport');
+
+			$this->loadModel('Payroll.Deduction');
+
+			$this->loadModel('Payroll.Amorization');
+
+			$this->loadModel('HumanResource.Holiday');
+
+			$updateDatabase = !empty($update) && $update == true ? true : false;
+
+			$salaries = $this->SalaryComputation->calculateBenifits($employees,$payScheds,$customDate,$updateDatabase);
+
+
+
+		}
+
+		return $salaries;
+	}
+
+	public function export_salaries($payroll_id = null, $type = excel) {
+
+
+		if (!empty($payroll_id)) {
+
+			$this->loadModel('Payroll.Payroll');
+
+			$salaries = array();
+			
+			$payroll = $this->Payroll->findById($payroll_id);
+
+				if ($payroll['Payroll']['data']) {
+
+					$payroll['Payroll']['data'] = json_decode($payroll['Payroll']['data']);
+
+					$salaries = $this->Payroll->objectToArray($payroll['Payroll']['data']); 
+				
+				}
+
+		$this->set(compact('salaries'));
+		
+		switch ($type) {
+
+			case 'payslip':
+				$this->render('Salaries/payslip/payslip');
+                break; 	
+            case 'excel':
+				$this->render('Salaries/xls/salaries_report');
+                break;
+            case 'csv':
+                $this->layout = false;
+                $this->render('csv/export');
+                break;
+            case 'pdf':
+
+                $this->layout = 'pdf';
+
+                if (!empty($data)) {
+                    $this->render('sales_report');
+                } else {
+					$this->render('export'); 
+                }
+
+                ini_set('memory_limit', '512M');
+
+                break;
+            
+        }
+
+			$this->set(compact('payroll'));
+		}	
+	}
+
+
 
 
 }

@@ -6,7 +6,8 @@
                   <th class="text-center"><span>To</span></th>
                   <th class="text-center"><span>Mode</span></th>
                   <th class="text-center"><span>Amount</span></th>
-                  <th class="text-right"><span>Reason</span></th>
+                  <th class="text-center"><span>Paid</span></th>
+                <th class="text-right"><span>Reason</span></th>
                   <th class="text-right"><span>Action</span></th>
                  <!--  <th class="text-right"><span>Actions</span></th> -->
                 </tr>
@@ -39,6 +40,12 @@
                       <td class="text-center">
                         <?php echo $deduction['Deduction']['amount']?>   
                       </td>
+                      <td class="text-center">
+
+                        <?php echo !empty($deduction['Deduction']['status']) && $deduction['Deduction']['status'] == 1  ? '<span class="label label-success">Yes</span>' : '<span class="label label-danger">No</span>' ?>
+                          
+                      </td>
+
                       <td class="text-right">
                         <?php echo $deduction['Deduction']['reason']?>   
                       </td>

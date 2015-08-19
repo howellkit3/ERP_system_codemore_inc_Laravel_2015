@@ -1,21 +1,21 @@
 <?php 
- echo $this->Html->css(array(
-                    'HumanResource.default',
-                    'HumanResource.select2.css',
-                    'timepicker'
-)); 
+   echo $this->Html->css(array(
+                      'HumanResource.default',
+                      'HumanResource.select2.css',
+                      'timepicker'
+  )); 
 
-echo $this->Html->script(array(
-					'jquery.maskedinput.min',
-					'HumanResource.moment',
-					'HumanResource.custom', 
-          'sweet-alert.min',  
-					'HumanResource.calculate'
+  
+  echo $this->Html->script(array(
+            'jquery.maskedinput.min',
+            'HumanResource.moment',
+            'HumanResource.custom', 
+            'sweet-alert.min',  
+            'HumanResource.calculate'
 
-)); 
+  )); 
 
-
-echo $this->element('payroll_options');
+  echo $this->element('payroll_options');
 
 	$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
  ?>
@@ -37,7 +37,7 @@ echo $this->element('payroll_options');
 			                 	
 			                 		<input type="text" type="date" name="range[month]" id="changeDate" class="form-control monthpick" value="<?php echo $date ?>">
 									     <i class="fa fa fa-calendar calendar-icon"></i>
-								</div>
+								    </div>
 
 							<div class="form-group pull-left">
 								<div class="radio inline-block">

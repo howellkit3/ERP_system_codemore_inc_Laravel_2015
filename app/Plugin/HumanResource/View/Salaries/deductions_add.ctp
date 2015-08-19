@@ -26,7 +26,7 @@
                                 Add Deductions
                             </h1>
                         </center>
-                        <?php  echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'schedules', 'action' => 'holiday'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                        <?php  echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'salaries', 'action' => 'deductions'),array('class' =>'btn btn-primary pull-right','escape' => false));
                         ?>
                     </header>
 

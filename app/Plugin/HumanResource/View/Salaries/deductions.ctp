@@ -104,7 +104,7 @@ $active_tab = 'sss_table';
                   <th class="text-center"><span>To</span></th>
                   <th class="text-center"><span>Mode</span></th>
                   <th class="text-center"><span>Amount</span></th>
-                  <th class="text-right"><span>Paid</span></th>
+                  <th class="text-center"><span>Paid</span></th>
                   <th class="text-right"><span>Reason</span></th>
                   <th class="text-right"><span>Action</span></th>
                  <!--  <th class="text-right"><span>Actions</span></th> -->
@@ -139,7 +139,7 @@ $active_tab = 'sss_table';
                         <?php echo $deduction['Deduction']['amount']?>   
                       </td>
                       
-                        <td class="text-right">
+                        <td class="text-center">
 
                         <?php echo !empty($deduction['Deduction']['status']) && $deduction['Deduction']['status'] == 1  ? '<span class="label label-success">Yes</span>' : '<span class="label label-danger">No</span>' ?>
                           
@@ -158,11 +158,7 @@ $active_tab = 'sss_table';
                                                 'data-toggle' => 'modal',
                                                 'title'=>'View Amorization'
                                           ));
-
-
-
-
-                                      echo $this->Html->link('<span class="fa-stack">
+                                  echo $this->Html->link('<span class="fa-stack">
                                       <i class="fa fa-square fa-stack-2x"></i>
                                       <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit </font></span>
                                       </span> ', array('controller' => 'deductions', 'action' => 'edit',$deduction['Deduction']['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Information'));
@@ -176,6 +172,15 @@ $active_tab = 'sss_table';
                 </div>
              </div> 
              </div>
+             
+               <div class="paging" id="item_type_pagination">
+                <?php
+                echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
+                echo $this->Paginator->numbers(array('separator' => ''));
+                echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
+                ?>
+                </div>
+
            </div>   
        </div>
       </div>

@@ -23,6 +23,15 @@
 									'plugin' => 'human_resource'
 						)); ?>
 					</li>
+
+					<li class="<?php echo ($this->params['controller'] == 'salaries' && in_array($this->params['action'], array('payroll','payroll_view'))) ? 'active' : '' ?>" alt="tab-type">
+						<?php echo $this->Html->link('Payroll',array(
+									'controller' => 'salaries',
+									'action' => 'payroll',
+									'tab' => 'export',
+									'plugin' => 'human_resource'
+						)); ?>
+					</li>
 					
 
 					<li class="<?php echo ($this->params['controller'] == 'salaries' && $this->params['action'] == 'deductions') ? 'active' : '' ?>" alt="tab-type">
@@ -50,4 +59,5 @@
 									'plugin' => 'human_resource'
 						)); ?>
 					</li> 
+					 
 </ul>

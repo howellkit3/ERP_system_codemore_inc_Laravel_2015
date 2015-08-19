@@ -2575,8 +2575,8 @@ class SettingsController extends AppController
             $this->loadModel('SssRange');
            
             if ($this->SssRange->delete($id)) {
-                $this->Session->setFlash(
-                    __('Successfully deleted.', h($id))
+                   $this->Session->setFlash(
+                    __('Successfully deleted.', h($id)), 'success'
                 );
             } else {
                 $this->Session->setFlash(
@@ -2646,7 +2646,7 @@ class SettingsController extends AppController
             if ($this->PhilHealthRange->delete($id)) {
 
                 $this->Session->setFlash(
-                    __('Successfully deleted.', h($id),'success')
+                    __('Successfully deleted.', h($id)), 'success'
                 );
 
             } else {

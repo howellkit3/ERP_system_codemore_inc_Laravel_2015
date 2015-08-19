@@ -617,9 +617,13 @@ public function daily_info() {
 
 		$this->loadModel('HumanResource.Employee');
 
-		$this->loadModel('HumanResource.Type');
+		$this->loadModel('HumanResource.LeaveType');
 
-		$this->Leave->bind(array('Employee','Type'));
+		$employees = $this->Employee->getList();
+
+		$leaveType = $this->LeaveType->find('list',array('fields' => array('id','name')));
+
+		$this->Leave->bind(array('Employee','LeaveType'));
 		$limit = 10;
 
 		$conditions = array();
@@ -635,7 +639,7 @@ public function daily_info() {
 
 	    $leaveData = $this->paginate('Leave');
 	    
-	    $this->set(compact('leaveData'));
+	    $this->set(compact('leaveData','employees','leaveType'));
 
 	}
 

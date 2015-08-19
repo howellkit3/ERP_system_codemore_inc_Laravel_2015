@@ -1456,6 +1456,7 @@ CREATE TABLE `measures` (
 INSERT  INTO `measures`(`id`,`name`,`created_by`,`modified_by`,`created`,`modified`) VALUES (1,'bundle',1,1,'2015-07-03 11:23:22','2015-07-02 09:52:01'),(2,'pack',1,1,'2015-07-03 11:22:25','2015-07-03 11:22:25'),(3,'piece',1,1,'2015-07-03 11:23:44','2015-07-03 11:22:25'),(4,'box',1,1,'2015-07-03 11:22:25','2015-07-03 11:22:25'),(5,'pallet',1,1,'2015-07-03 11:22:25','2015-07-03 11:22:25');
  
 /* aldrin added this 8/18/2015 */
+
 CREATE TABLE IF NOT EXISTS `loans` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -1487,6 +1488,52 @@ CREATE TABLE IF NOT EXISTS `stocks` (
   `modified` DATETIME NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+/* aldrin added this 8-19-2015 koufu payroll */
+
+CREATE TABLE IF NOT EXISTS `loans` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `schedules` varchar(255) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+
+CREATE TABLE IF NOT EXISTS `overtime_rates` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `day_type_id` int(11) NOT NULL,
+  `rates` decimal(8,2) NOT NULL DEFAULT '0.00',
+  `overtime` decimal(8,2) NOT NULL DEFAULT '0.00',
+  `night_diffrential` decimal(8,2) NOT NULL DEFAULT '0.00',
+  `night_defferential_ot` decimal(8,2) NOT NULL DEFAULT '0.00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+
+CREATE TABLE IF NOT EXISTS `payrolls` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` date NOT NULL,
+  `year` year(4) NOT NULL,
+  `from` date NOT NULL,
+  `to` date NOT NULL,
+  `range` varchar(255) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `description` text,
+  `transaction_date` date NOT NULL,
+  `status` varchar(255) NOT NULL,
+  `data` text,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
 
 CREATE TABLE IF NOT EXISTS `in_records` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -1526,3 +1573,4 @@ ALTER TABLE `cause_memos` ADD `noted_user_id` INT(11)  NULL  DEFAULT NULL  AFTER
 
 /** howell kit added this 08/17/2015 TO HR DATABASE   */
 ALTER TABLE `received_items` ADD `original_quantity` INT(11)  NULL  DEFAULT NULL  AFTER `quantity`;
+

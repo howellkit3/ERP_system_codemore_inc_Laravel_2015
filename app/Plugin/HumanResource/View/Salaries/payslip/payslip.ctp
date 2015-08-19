@@ -101,6 +101,15 @@ $PHPWord->addTableStyle('secondTable', $styleTable, $styleFirstRow);
 
 $table = $section->addTable('secondTable');
 
+
+
+//deductions 
+$ca_fund = !empty($salary['ca_fund']) ? $salary['ca_fund'] : number_format(0,2);
+$sss_loan = !empty($salary['sss_loan']) ? $salary['sss_loan'] : number_format(0,2);
+$uniform = !empty($salary['uniform']) ? $salary['uniform'] : number_format(0,2);
+$philhealth = !empty($salary['philhealth']) ? $salary['philhealth'] : 0;
+$sss = !empty($salary['sss']) ? $salary['sss'] : 0;
+
 //earnings 
 $table->addRow();
 $table->addCell(2500,$styleCell)
@@ -135,9 +144,9 @@ $table->addCell(2500,$styleCell)
 ->addText(number_format($salary['regular_work_ot'],2));
 
 $table->addCell(2500,$styleCell)
-->addText('TAXES',array('bold' => true));
+->addText('CA Fund');
 $table->addCell(2500,$styleCell)
-->addText('');
+->addText(number_format($ca_fund,2));
 
 
 $table->addRow();
@@ -147,11 +156,13 @@ $table->addCell(2500,$styleCell)
 $newTable = $table->addCell(2500,$styleCell)
 ->addText(number_format($salary['regular_holiday_work'],2));
 
-$sss = !empty($salary['sss']) ? $salary['sss'] : 0;
+
+$pagibig_loan = !empty($salary['pagibig_loan']) ? $salary['pagibig_loan'] : number_format(0,2);
+
 $table->addCell(2500,$styleCell)
-->addText('SSS');
-$newTable = $table->addCell(2500,$styleCell)
-->addText(number_format($sss,2));
+->addText('Pagibig Loan');
+$table->addCell(2500,$styleCell)
+->addText(number_format($pagibig_loan,2));
 
 
 $table->addRow();
@@ -161,12 +172,11 @@ $table->addCell(2500,$styleCell)
 $newTable = $table->addCell(2500,$styleCell)
 ->addText(number_format($salary['regular_holiday_work_ot'],2));
 
-$philhealth = !empty($salary['philhealth']) ? $salary['philhealth'] : 0;
 
 $table->addCell(2500,$styleCell)
-->addText('PhilHealth');
+->addText('SSS Loan');
 $newTable = $table->addCell(2500,$styleCell)
-->addText(number_format($philhealth,2));
+->addText(number_format($sss_loan,2));
 
 
 $table->addRow();
@@ -177,7 +187,7 @@ $newTable = $table->addCell(2500,$styleCell)
 ->addText(number_format($salary['ctpa'],2));
 
 $table->addCell(2500,$styleCell)
-->addText('');
+->addText('TAXES',array('bold' => true));
 $newTable = $table->addCell(2500,$styleCell)
 ->addText();
 
@@ -190,9 +200,9 @@ $newTable = $table->addCell(2500,$styleCell)
 ->addText(number_format($salary['sea'],2));
 
 $table->addCell(2500,$styleCell)
-->addText('');
+->addText('SSS');
 $newTable = $table->addCell(2500,$styleCell)
-->addText();
+->addText(number_format($sss,2));
 
 $table->addRow();
 
@@ -201,12 +211,24 @@ $table->addCell(2500,$styleCell)
 $newTable = $table->addCell(2500,$styleCell)
 ->addText(number_format($salary['allowance'],2));
 
+
+$table->addCell(2500,$styleCell)
+->addText('PhilHealth');
+$newTable = $table->addCell(2500,$styleCell)
+->addText(number_format($philhealth,2));
+
+$table->addRow();
+
+$table->addCell(2500,$styleCell)
+->addText('Gross Pay');
+$newTable = $table->addCell(2500,$styleCell)
+->addText(number_format($salary['gross_pay'],2));
+
+
 $table->addCell(2500,$styleCell)
 ->addText('');
 $newTable = $table->addCell(2500,$styleCell)
-->addText();
-
-
+->addText('');
 
 $styleTable = array('borderSize'=>1, 'borderColor'=>'#000', 'cellMargin'=>80,'align' => right);
 $styleFirstRow = array('borderBottomSize'=>1, 'borderBottomColor'=>'000', 'bgColor'=>'000');

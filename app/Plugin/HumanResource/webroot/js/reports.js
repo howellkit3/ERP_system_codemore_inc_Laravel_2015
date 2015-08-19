@@ -45,9 +45,6 @@
 		    e.preventDefault();
     });
 
-
-    //sss reports
-
     $body.on('click','#SSSReports',function(e){
 
       var url = $(this).attr('href');
@@ -56,7 +53,6 @@
 
       $(this).attr('href',url+'?month='+month);
     });
-
-
+    
 
   });
