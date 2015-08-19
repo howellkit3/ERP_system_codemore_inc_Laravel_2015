@@ -40,19 +40,6 @@ class ReceivedOrder extends AppModel {
 
 	}
 
-	// public function bindReceive() {
-	// 	$this->bindModel(array(
-	// 		'hasOne' => array(
-	// 			'PurchaseOrder' => array(
-	// 				'className' => 'Purchasing.PurchaseOrder',
-	// 				'foreignKey' => 'id',
-					
-	// 			),		
-	// 		)
-	// 	));
-	// 	$this->recursive = 1;
-	// }
-
 	public function bind($model = array('PurchaseOrder', 'ReceivedItem')){
 
 		$this->bindModel(array(

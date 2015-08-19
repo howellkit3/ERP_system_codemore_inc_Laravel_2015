@@ -1515,7 +1515,7 @@ CREATE TABLE IF NOT EXISTS `item_records` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `type_record` INT(11) NOT NULL,
   `type_record_id` INT(11) NOT NULL,
-  `model` INT(11) NOT NULL,
+  `model` VARCHAR(30) NOT NULL,
   `foreign_key` INT(11) NOT NULL,
   `quantity` INT(11) NOT NULL,
   `quantity_unit_id` INT(11) NOT NULL,

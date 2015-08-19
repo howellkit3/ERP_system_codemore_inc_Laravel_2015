@@ -86,6 +86,21 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                             ));
                                         ?>
                                     </div>
+
+                                    <div class="col-lg-2">
+                                        <?php 
+                                            echo $this->Form->input('ReceivedItems.'.$arrholder.'.quantity_unit', array(         
+                                                                    'required' => 'required',
+                                                                    'class' => 'form-control required',
+                                                                    'options' => array('good', 'reject'),
+                                                                    'empty' => "--Select Unit",
+                                                                    'label' => false,
+                                                                    'type' => 'select',
+                                                                    'required' => 'required',
+                                                                    ));
+                                         ?>
+                                    </div>
+
                                       <div class="col-lg-2">
                                         <?php 
                                             echo $this->Form->input('ReceivedItems.'.$arrholder.'.condition', array(         
@@ -97,8 +112,9 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                                                     'type' => 'select',
                                                                     'required' => 'required',
                                                                     ));
-                                ?>
+                                         ?>
                                     </div>
+
                                 </div>
 
 
@@ -123,7 +139,7 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="col-lg-2 control-label"></label>
+                                        <label class="col-lg-2 control-label">Quantity</label>
 
                                     <div class="col-lg-2">
                                         <?php 
@@ -131,11 +147,28 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                                                         'empty' => 'None',
                                                                         'required' => 'required',
                                                                         'class' => 'form-control item_type editable addquantityLimit',
+                                                                        'placeholder' => 'Quantity',
                                                                         'label' => false
                                             ));
                                         ?>
                                     </div>
-                                      <div class="col-lg-2">
+
+                                    <!-- <div class="col-lg-2">
+                                        <?php 
+                                            echo $this->Form->input('requestPurchasingItem.'.$arrholder.'.quantity_unit', array(         
+                                                                    'required' => 'required',
+                                                                    'class' => 'form-control required',
+                                                                    'options' => array($unitData),
+                                                                    'label' => false,
+                                                                    'type' => 'select',
+                                                                    'required' => 'required',
+                                                                    ));
+                                             ?>
+
+                              
+                                    </div> -->
+
+                                        <div class="col-lg-2">
                                         <?php 
                                             echo $this->Form->input('requestPurchasingItem.'.$arrholder.'.condition', array(         
                                                                     'required' => 'required',
@@ -146,7 +179,7 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                                                     'type' => 'select',
                                                                     'required' => 'required',
                                                                     ));
-                                ?>
+                                             ?>
 
                                 <?php
                                             echo $this->Form->input('requestPurchasingItem.'.$arrholder.'.model', array(                    'type' => 'hidden',
