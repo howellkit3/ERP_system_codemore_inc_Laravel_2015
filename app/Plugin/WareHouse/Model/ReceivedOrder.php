@@ -53,7 +53,7 @@ class ReceivedOrder extends AppModel {
 	// 	$this->recursive = 1;
 	// }
 
-	public function bind($model = array('PurchaseOrder')){
+	public function bind($model = array('PurchaseOrder', 'ReceivedItem')){
 
 		$this->bindModel(array(
 			'belongsTo' => array(
@@ -62,7 +62,15 @@ class ReceivedOrder extends AppModel {
 					'foreignKey' => 'purchase_order_id',
 					'dependent' => true
 				),
+			),
+			'hasMany' => array(
+				'ReceivedItem' => array(
+					'className' => 'WareHouse.ReceivedItem',
+					'foreignKey' => 'received_orders_id',
+					'dependent' => true
+				),
 			)
+
 		));
 
 

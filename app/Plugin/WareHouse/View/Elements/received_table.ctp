@@ -29,8 +29,13 @@
 
                     echo "<span class='label label-warning'>Received</span>"; 
 
+                     } else {
+                        
+                    echo "<span class='label label-success'>Approved</span>";
 
-                     }   ?>
+                     }
+
+                ?>
             </td>
 
             <td>
@@ -61,10 +66,10 @@
 
                         <div class="modal-body">
 
-                            <?php 
+                            <?php $id = $requestOrderDataList['ReceivedOrder']['id'];
 
                                 echo $this->Form->create('InRecord',array(
-                                    'url'=>(array('controller' => 'receivings','action' => 'in_record')),'class' => 'form-horizontal')); 
+                                    'url'=>(array('controller' => 'receivings','action' => 'in_record', $id)),'class' => 'form-horizontal')); 
                             ?>
 
                                 <div class="form-group" id="existing_items">
@@ -74,6 +79,8 @@
                                             echo $this->Form->input('InRecord.storekeeper', array(
                                                 'class' => 'form-control item_type editable required',
                                                 'label' => false,
+                                                'type' => 'select',
+                                                'options' => array($userNameList),
                                                 'required' => 'required',
                                                
                                                 ));
@@ -100,7 +107,6 @@
                                 </div>
                                 <br><br>
                                 <div class="modal-footer">
-
                                     <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i> Submit</button>
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
