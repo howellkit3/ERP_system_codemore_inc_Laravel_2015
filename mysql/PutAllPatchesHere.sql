@@ -1523,3 +1523,6 @@ CREATE TABLE IF NOT EXISTS `item_records` (
 ) ENGINE=INNODB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 /** bien added this 08/17/2015 TO HR DATABASE   */
 ALTER TABLE `cause_memos` ADD `noted_user_id` INT(11)  NULL  DEFAULT NULL  AFTER `modified`;
+
+/** howell kit added this 08/17/2015 TO HR DATABASE   */
+ALTER TABLE `received_items` ADD `original_quantity` INT(11)  NULL  DEFAULT NULL  AFTER `quantity`;

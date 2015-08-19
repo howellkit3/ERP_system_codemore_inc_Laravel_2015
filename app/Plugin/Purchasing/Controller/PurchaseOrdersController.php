@@ -76,6 +76,8 @@ class PurchaseOrdersController extends PurchasingAppController {
     		$modelTable = 'PurchasingItem'; 
     	}
 
+		
+
 		foreach ($purchaseItemData as $key => $value) {
 			
 			if($value[$modelTable]['model'] == 'GeneralItem'){

@@ -26,6 +26,8 @@ class RequestItem extends AppModel {
 					'dependent' => true
 				),
 			),
+
+		
 			
 		));
 
@@ -61,6 +63,5 @@ class RequestItem extends AppModel {
 		return true;
 	}
 
-	
 
 }

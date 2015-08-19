@@ -101,16 +101,16 @@
                             <th class="text-center">Unit Price</th>
                             <th class="text-center">Amount</th>
                         </thead>
-                        <?php $total = 0; foreach ($purchaseItemData as $key => $value) {  $key++ ?>
+                        <?php  $total = 0; foreach ($purchaseItemData as $key => $value) {  $key++ ?>
                             <tr>
                                 <td><?php echo $key ?></td>
                                 <td class="text-center"><?php echo $value[$modelTable]['name']?></td>
                                 <td class="text-center"><?php echo $value[$modelTable]['quantity']?>/<?php echo $unitData[$value[$modelTable]['quantity_unit_id']]?></td>
-                                <td class="text-center"><?php echo number_format($value[$modelTable]['unit_price'],2)?>/<?php echo $unitData[$value[$modelTable]['unit_price_unit_id']]?></td>
+                                <td class="text-center"><?php echo number_format($value[$modelTable]['unit_price'],2)?>/<?php //echo $unitData[$value[$modelTable]['unit_price_unit_id']]?></td>
                                 <td class="text-center">
                                     <?php 
                                         $amount = $value[$modelTable]['quantity'] * $value[$modelTable]['unit_price'];
-                                        echo number_format($amount,2)."/".$unitData[$value[$modelTable]['unit_price_unit_id']];
+                                        //echo number_format($amount,2)."/".$unitData[$value[$modelTable]['unit_price_unit_id']];
 
                                         $total = $total + $amount;
                                     ?>
