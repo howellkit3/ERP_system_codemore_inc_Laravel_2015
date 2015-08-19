@@ -6,6 +6,8 @@ App::import('Vendor', 'DOMPDF', true, array(), 'dompdf'.DS.'dompdf_config.inc.ph
 
 class CauseMemosController  extends HumanResourceAppController {
 
+	var $helpers = array('HumanResource.PhpExcel');
+	
 	public function index() {
 
 		$this->loadModel('HumanResource.Violation');
