@@ -15,7 +15,6 @@ class EmployeesController  extends HumanResourceAppController {
 		$this->loadModel('HumanResource.Tooling');
 		$this->loadModel('HumanResource.Status');
 		//array_push($departmentData, "All");
-
 		$limit = 10;
 
         $conditions = array();
