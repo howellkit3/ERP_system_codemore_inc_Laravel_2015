@@ -20,6 +20,12 @@
         $employee = $this->CustomEmployee->findEmployee($emp['employee_id']);
         $employee_name = $this->CustomText->getFullname($employee['Employee']);
 
+        //deductions 
+        $ca_fund = !empty($emp['ca_fund']) ? $emp['ca_fund'] : number_format(0,2);
+        $sss_loan = !empty($emp['sss_loan']) ? $emp['sss_loan'] : number_format(0,2);
+        $pagibig_loan = !empty($emp['pagibig_loan']) ? $emp['pagibig_loan'] : number_format(0,2);
+        $uniform = !empty($emp['uniform']) ? $emp['uniform'] : number_format(0,2);
+
         
          $objTpl->setActiveSheetIndex(0)
         ->setCellValue('A'.$counter,$employee_name)
@@ -33,13 +39,19 @@
         ->setCellValue('P'.$counter,number_format($emp['ctpa'],2))
 
         ->setCellValue('Q'.$counter,number_format($emp['sea'],2))
-
+        //deductions
+        ->setCellValue('W'.$counter,number_format($ca_fund,2))
+        ->setCellValue('X'.$counter,number_format($sss_loan,2))
+        ->setCellValue('Y'.$counter,number_format($pagibig_loan,2))
+        ->setCellValue('Z'.$counter,number_format($uniform,2))
+        ->setCellValue('Z'.$counter,number_format($uniform,2))
 
         ->setCellValue('R'.$counter,number_format($emp['gross_pay'],2))
         ->setCellValue('S'.$counter,number_format($emp['sss'],2))
         ->setCellValue('T'.$counter,number_format(0,2))
-         ->setCellValue('AH'.$counter,number_format($emp['allowance'],2))
-         ->setCellValue('AJ'.$counter,number_format($emp['total_pay'],2))
+        ->setCellValue('AF'.$counter,number_format($emp['total_deduction'],2))
+        ->setCellValue('AH'.$counter,number_format($emp['allowance'],2))
+        ->setCellValue('AJ'.$counter,number_format($emp['total_pay'],2))
         ;
 
         $counter++;  
