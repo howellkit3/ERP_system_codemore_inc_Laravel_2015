@@ -1084,7 +1084,7 @@ VALUES
   (11,'Warehouse Staff','Warehouse Staff','Warehouse Staff','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
   (12,'CEO','CEO','CEO','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22');
 
-  ALTER TABLE `cause_memos`  ADD `disciplinary_action_id` TEXT NULL  AFTER `violation_id`;
+  ALTER TABLE `cause_memos`  ADD `disciplinary_action_id` INT(11) NULL  AFTER `violation_id`;
 /** bien added this 07/22/2015  */
   CREATE TABLE `categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1476,3 +1476,6 @@ CREATE TABLE IF NOT EXISTS `stocks` (
   `modified` DATETIME NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+/** bien added this 08/17/2015 TO HR DATABASE   */
+ALTER TABLE `cause_memos` ADD `noted_user_id` INT(11)  NULL  DEFAULT NULL  AFTER `modified`;

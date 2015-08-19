@@ -24,6 +24,7 @@ class CauseMemo extends AppModel {
 		$this->create();
 
 				$data['CauseMemo']['modified_by'] = $auth;
+				$data['CauseMemo']['created_by'] = $auth;
 				$data['CauseMemo']['uuid'] = $code;
 				$data['CauseMemo']['status_id'] = 9;
 				
@@ -54,6 +55,12 @@ class CauseMemo extends AppModel {
 						'className' => 'Employee',
 						'foreignKey' => false,
 						'conditions' => array('Employee.id = CauseMemo.employee_id'),
+						'dependent' => true,
+					),
+					'Status' => array(
+						'className' => 'Status',
+						'foreignKey' => false,
+						'conditions' => array('Status.id = CauseMemo.status_id'),
 						'dependent' => true,
 					),
 					

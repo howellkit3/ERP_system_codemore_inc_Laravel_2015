@@ -27,6 +27,12 @@
 
                         <td class="">
               
+                           <?php echo ucwords($disciplinaryData[$causeMemoDataList['CauseMemo']['disciplinary_action_id']]); ?>    
+                                
+                        </td>
+
+                        <td class="">
+              
                            <?php if($causeMemoDataList['CauseMemo']['status_id'] == 9){
 
                              echo "<span class='label label-info'>Executing</span>";
