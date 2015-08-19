@@ -40,17 +40,40 @@ class ReceivedOrder extends AppModel {
 
 	}
 
-	public function bindReceive() {
+	// public function bindReceive() {
+	// 	$this->bindModel(array(
+	// 		'hasOne' => array(
+	// 			'PurchaseOrder' => array(
+	// 				'className' => 'Purchasing.PurchaseOrder',
+	// 				'foreignKey' => 'id',
+					
+	// 			),		
+	// 		)
+	// 	));
+	// 	$this->recursive = 1;
+	// }
+
+	public function bind($model = array('PurchaseOrder', 'ReceivedItem')){
+
 		$this->bindModel(array(
-			'hasOne' => array(
+			'belongsTo' => array(
 				'PurchaseOrder' => array(
 					'className' => 'Purchasing.PurchaseOrder',
-					'foreignKey' => 'id',
-					
-				),		
+					'foreignKey' => 'purchase_order_id',
+					'dependent' => true
+				),
+			),
+			'hasMany' => array(
+				'ReceivedItem' => array(
+					'className' => 'WareHouse.ReceivedItem',
+					'foreignKey' => 'received_orders_id',
+					'dependent' => true
+				),
 			)
+
 		));
-		$this->recursive = 1;
+
+
 	}
 
 }

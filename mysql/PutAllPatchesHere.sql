@@ -1084,7 +1084,7 @@ VALUES
   (11,'Warehouse Staff','Warehouse Staff','Warehouse Staff','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
   (12,'CEO','CEO','CEO','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22');
 
-  ALTER TABLE `cause_memos`  ADD `disciplinary_action_id` INT(11) NULL  AFTER `violation_id`;
+  ALTER TABLE `cause_memos`  ADD `disciplinary_action_id` TEXT NULL  AFTER `violation_id`;
 /** bien added this 07/22/2015  */
   CREATE TABLE `categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1443,8 +1443,6 @@ CREATE TABLE `leaves` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-/** howell kit added this 08/17/2015 TO Delivery DATABASE   */
-
 CREATE TABLE `measures` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(30) DEFAULT NULL,
@@ -1457,6 +1455,19 @@ CREATE TABLE `measures` (
 
 INSERT  INTO `measures`(`id`,`name`,`created_by`,`modified_by`,`created`,`modified`) VALUES (1,'bundle',1,1,'2015-07-03 11:23:22','2015-07-02 09:52:01'),(2,'pack',1,1,'2015-07-03 11:22:25','2015-07-03 11:22:25'),(3,'piece',1,1,'2015-07-03 11:23:44','2015-07-03 11:22:25'),(4,'box',1,1,'2015-07-03 11:22:25','2015-07-03 11:22:25'),(5,'pallet',1,1,'2015-07-03 11:22:25','2015-07-03 11:22:25');
  
+/* aldrin added this 8/18/2015 */
+CREATE TABLE IF NOT EXISTS `loans` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `schedules` varchar(255) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
 #NOTE: SELECT KOUFU WAREHOUSE DATABASE ----
 
 CREATE TABLE IF NOT EXISTS `stocks` (
@@ -1477,5 +1488,38 @@ CREATE TABLE IF NOT EXISTS `stocks` (
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
+CREATE TABLE IF NOT EXISTS `in_records` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `remarks` TEXT NOT NULL,
+  `storekeeper_id` INT(11) NOT NULL,
+  `status_id` INT(11) NOT NULL,
+  `created_by` INT(11) NOT NULL,
+  `modified_by` INT(11) NOT NULL,
+  `created` DATETIME NOT NULL,
+  `modified` DATETIME NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `out_records` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `request_id` INT(11) NOT NULL,
+  `remarks` TEXT NOT NULL,
+  `created_by` INT(11) NOT NULL,
+  `modified_by` INT(11) NOT NULL,
+  `created` DATETIME NOT NULL,
+  `modified` DATETIME NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `item_records` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `type_record` INT(11) NOT NULL,
+  `type_record_id` INT(11) NOT NULL,
+  `model` INT(11) NOT NULL,
+  `foreign_key` INT(11) NOT NULL,
+  `quantity` INT(11) NOT NULL,
+  `quantity_unit_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 /** bien added this 08/17/2015 TO HR DATABASE   */
 ALTER TABLE `cause_memos` ADD `noted_user_id` INT(11)  NULL  DEFAULT NULL  AFTER `modified`;

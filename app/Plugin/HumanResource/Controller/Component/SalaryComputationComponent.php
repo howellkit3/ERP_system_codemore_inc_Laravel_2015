@@ -3,7 +3,7 @@ App::uses('Component', 'Controller');
 
 class SalaryComputationComponent extends Component 
 {
-    public function calculateBenifits($data = null , $pay_sched = null,$customDate = null)
+    public function calculateBenifits($data = null , $pay_sched = null,$customDate = null, $updateDatabase = null)
     {
         		
         	$SalaryReport = ClassRegistry::init('SalaryReport');
@@ -43,7 +43,7 @@ class SalaryComputationComponent extends Component
 						$salary[$key]['ctpa'] = !empty($employee['Salary']['ctpa']) ? $employee['Salary']['ctpa'] : 0; 
 
 						$salary[$key]['sea'] = !empty($employee['Salary']['sea']) ? $employee['Salary']['sea'] : 0;
-						$salary[$key]['allowance'] = $employee['Salary']['allowances'];						
+						$salary[$key]['allowance'] = !empty($employee['Salary']['allowances'])  ? $employee['Salary']['allowances'] : 0;						
 						$salary[$key]['sss'] = $this->sss_pay($employee['Attendance'],$employee['Salary'],$pay_sched,$gross['gross']);
 
 			
@@ -66,7 +66,7 @@ class SalaryComputationComponent extends Component
 						
 						$total_pay  += $employee['Salary']['allowances'];
 						//check deductions 
-						$deductions = $this->checkDeductions($employee['Employee']['id'],$customDate);
+						$deductions = $this->checkDeductions($employee['Employee']['id'],$customDate,$updateDatabase);
 
 						if (!empty($deductions)) {
 
@@ -336,7 +336,7 @@ class SalaryComputationComponent extends Component
 
 	}
 
-	public function checkDeductions($employee_id = null,$customDate = null){
+	public function checkDeductions($employee_id = null,$customDate = null , $update = false){
 
 		if (!empty($employee_id)) {
 
@@ -371,16 +371,19 @@ class SalaryComputationComponent extends Component
 				foreach ($amortizations as $amortization_key => $amortization) {
 						$amortizationIds[] = 	$amortization['Amortization']['id'];
 						$my_deductions[$deduction_key]['amount'] += $amortization['Amortization']['deduction'];
-						$save['id'] = $amortization['Amortization']['id'];
-						$save['status'] = 1;
-						$Amortization->save($save);
+						if ($update == true) {
+							$save['id'] = $amortization['Amortization']['id'];
+							$save['status'] = 1;
+							$Amortization->save($save);
+						}
+						
 				}
 
 				//check if no amortization left
 				$amort = $Amortization->find('all',array( 
 					'conditions' => array('Amortization.id' => $amortizationIds, 'status' => 0)));
 					
-				if (empty($amort)) {
+				if (empty($amort) &&  $update == true) {
 
 					$save['id'] = $deduct['Deduction']['id'];
 					$save['status'] = 1;

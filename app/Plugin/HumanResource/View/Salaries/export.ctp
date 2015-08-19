@@ -8,7 +8,8 @@
 echo $this->Html->script(array(
 					'jquery.maskedinput.min',
 					'HumanResource.moment',
-					'HumanResource.custom',
+					'HumanResource.custom', 
+          'sweet-alert.min',  
 					'HumanResource.calculate'
 
 )); 
