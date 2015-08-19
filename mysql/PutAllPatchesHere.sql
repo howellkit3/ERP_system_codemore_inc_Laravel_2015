@@ -1521,3 +1521,5 @@ CREATE TABLE IF NOT EXISTS `item_records` (
   `quantity_unit_id` INT(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+/** bien added this 08/17/2015 TO HR DATABASE   */
+ALTER TABLE `cause_memos` ADD `noted_user_id` INT(11)  NULL  DEFAULT NULL  AFTER `modified`;

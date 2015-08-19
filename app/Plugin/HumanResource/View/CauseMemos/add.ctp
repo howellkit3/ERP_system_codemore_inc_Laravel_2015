@@ -97,9 +97,9 @@
                                     <label class="col-lg-2 control-label"><span style="color:red">*</span>Noted by</label>
                                     <div class="col-lg-8">
                                         <?php 
-                                            echo $this->Form->input('CauseMemo.created_by', 
+                                            echo $this->Form->input('CauseMemo.noted_user_id', 
                                                                     array( 
-                                                                    'options' => array($notedByEmployee),    
+                                                                    'options' => array($notedByUserHR),    
                                                                     'type' => 'select',
                                                                     'class' => 'form-control item_type categorylist required', 
                                                                     'label' => false, 

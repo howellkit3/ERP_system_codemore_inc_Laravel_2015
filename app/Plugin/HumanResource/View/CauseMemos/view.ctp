@@ -95,8 +95,12 @@
                     <table class="table table-bordered" style= "margin-bottom : 0px;">
  
                         <tr>
-                            <td align ="left" style = "width: 50%;  font-size : 12px;"><p><b>Prepared by:</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo ucfirst($userData['User']['first_name']) . " " . ucfirst($userData['User']['last_name']) . "/" .$positionData[$userData['User']['role_id']] . "/" ?><br></p> <center><p style = "padding:0px; " align = "center">Name/Position/Signature</p></center></td>
-                            <td align ="left" style = "width: 50%;  font-size : 12px;"><p><b>Noted by:</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo ucfirst($employeeName[$causeMemoData['CauseMemo']['created_by']])  ?><br></p> <p style = "padding:0px; " align = "center">HR Officer</p></td>
+                            <td align ="left" style = "width: 50%;  font-size : 12px;"><p><b>Prepared by:</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                <?php echo ucwords($preparedBy['User']['fullname']) ?>
+                                <br></p> <center><p style = "padding:0px; " align = "center">Name/Position/Signature</p></center></td>
+                            <td align ="left" style = "width: 50%;  font-size : 12px;"><p><b>Noted by:</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                <?php echo ucwords($notedBy['User']['fullname']);  ?>
+                                <br></p> <p style = "padding:0px; " align = "center">HR Officer</p></td>
                             
                         </tr>
                         

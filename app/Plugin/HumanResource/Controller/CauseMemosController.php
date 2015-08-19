@@ -6,6 +6,8 @@ App::import('Vendor', 'DOMPDF', true, array(), 'dompdf'.DS.'dompdf_config.inc.ph
 
 class CauseMemosController  extends HumanResourceAppController {
 
+	var $helpers = array('HumanResource.PhpExcel');
+	
 	public function index() {
 
 		$this->loadModel('HumanResource.Violation');
@@ -35,7 +37,10 @@ class CauseMemosController  extends HumanResourceAppController {
 		$violationTableData= $this->Violation->find('list', array('fields' => array('id', 'name')
 															));
 
-		$this->set(compact('violationData', 'UserCreated', 'disciplinaryActionData', 'causeMemoData', 'employeeName', 'violationTableData'));
+		$disciplinaryData = $this->Violation->find('list', array('fields' => array('id', 'name')
+															));
+
+		$this->set(compact('disciplinaryData','violationData', 'UserCreated', 'disciplinaryActionData', 'causeMemoData', 'employeeName', 'violationTableData'));
 
 	}
 
@@ -49,6 +54,8 @@ class CauseMemosController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Violation');
 
+		$this->loadModel('User');
+
 		$this->loadModel('HumanResource.DisciplinaryAction');
 		
 		$employeeData = $this->Employee->find('list', array('fields' => array('id', 'full_name'),
@@ -59,10 +66,10 @@ class CauseMemosController  extends HumanResourceAppController {
 															'order' => array('Violation.name' => 'ASC')
 															));
 
-		$notedByEmployee = $this->Employee->find('list', array('fields' => array('id', 'fullname'),
-															  'conditions' => array('Employee.department_id' => '6'),
-                                                                'order' => 'Employee.last_name ASC'));
-
+		$notedByUserHR = $this->User->find('list', array('fields' => array('id', 'fullname'),
+															  'conditions' => array('User.role_id' => '12'),
+                                                                'order' => 'User.last_name ASC'));
+		
 		$disciplinaryData = $this->DisciplinaryAction->find('list', array('fields' => array('id', 'name'),
                                                                 'order' => 'DisciplinaryAction.id ASC'));
 
@@ -79,7 +86,7 @@ class CauseMemosController  extends HumanResourceAppController {
 
 		}
 	
-		$this->set(compact('employeeData', 'violationData', 'notedByEmployee', 'disciplinaryData'));
+		$this->set(compact('employeeData', 'violationData', 'notedByUserHR', 'disciplinaryData'));
 		
 
 	}
@@ -158,6 +165,8 @@ class CauseMemosController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.DisciplinaryAction');
 		
+		$this->loadModel('User');
+
 		$employeeData = $this->Employee->find('list', array('fields' => array('id', 'full_name'),
 															'order' => array('Employee.last_name' => 'ASC')
 															));
@@ -166,16 +175,16 @@ class CauseMemosController  extends HumanResourceAppController {
 															'order' => array('Violation.id' => 'ASC')
 															));
 
-		$notedByEmployee = $this->Employee->find('list', array('fields' => array('id', 'fullname'),
-															  'conditions' => array('Employee.department_id' => '6'),
-                                                                'order' => 'Employee.last_name ASC'));
+		$notedByUserHR = $this->User->find('list', array('fields' => array('id', 'fullname'),
+															  'conditions' => array('User.role_id' => '12'),
+                                                                'order' => 'User.last_name ASC'));
 
 		$disciplinaryData = $this->DisciplinaryAction->find('list', array('fields' => array('id', 'name')));
 
 		$causeMemoData = $this->CauseMemo->find('first', array('conditions' => array('CauseMemo.id' => $id)
                                                                ));
 
-		$this->set(compact('causeMemoData', 'disciplinaryData', 'notedByEmployee','violationData','employeeData'));
+		$this->set(compact('causeMemoData', 'disciplinaryData', 'notedByUserHR','violationData','employeeData'));
 
 
 		if ($this->request->is(array('post', 'put'))) {
@@ -341,11 +350,19 @@ class CauseMemosController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Position');
 
+		$this->loadModel('User');
+
 		$requestId = $id;
 
 		$causeMemoData = $this->CauseMemo->find('first', array('conditions' => array('CauseMemo.id' => $id)
                                                                ));
 
+		$preparedBy = $this->User->find('first', array('conditions' => array('User.id' => $causeMemoData['CauseMemo']['created_by'])
+                                                               ));
+
+		$notedBy = $this->User->find('first', array('conditions' => array('User.id' => $causeMemoData['CauseMemo']['noted_user_id'])
+                                                               ));
+		
 		$employeeData = $this->Employee->find('first', array('conditions' => array('Employee.id' => $causeMemoData['CauseMemo']['employee_id'])
                                                                ));
 
@@ -363,10 +380,11 @@ class CauseMemosController  extends HumanResourceAppController {
 		$disciplinaryData = $this->DisciplinaryAction->find('list', array('fields' => array('id', 'name'),
                                                                 'order' => 'DisciplinaryAction.id ASC'));	
 
+
 		$positionData = $this->Position->find('list', array('fields' => array('id', 'name'),
                                                                 'order' => 'Position.id ASC'));	
 
-  		$this->set(compact('requestId', 'causeMemoData', 'employeeName', 'department', 'employeeSection', 'employeeData', 'violationData', 'disciplinaryData', 'userData', 'positionData'));
+  		$this->set(compact('notedBy','preparedBy','requestId', 'causeMemoData', 'employeeName', 'department', 'employeeSection', 'employeeData', 'violationData', 'disciplinaryData', 'userData', 'positionData'));
 
 	}
 
@@ -480,5 +498,55 @@ class CauseMemosController  extends HumanResourceAppController {
             $this->render('search_memo');
         }
     }
+
+    public function export(){
+
+		$employeeId = $this->request->data['CauseMemo']['employee_id'];
+
+		$date = $this->request->data['CauseMemo']['from_date'];
+
+		$this->loadModel('HumanResource.Position');
+
+		$this->loadModel('HumanResource.Department');
+
+		$this->loadModel('HumanResource.Employee');
+
+		$this->loadModel('HumanResource.DisciplinaryAction');
+
+		$this->loadModel('HumanResource.Violation');
+
+		$this->loadModel('User');
+
+		$this->CauseMemo->bind(array('Employee'));
+
+		$conditions = array();
+
+    	if(!empty($employeeId)){
+
+    		$conditions = array_merge($conditions,array('CauseMemo.employee_id' => $employeeId));
+
+    	}
+
+    	if(!empty($date)){
+
+    		$conditions = array_merge($conditions,array('CauseMemo.created >=' => $date.' '.'00:00:00'));
+
+    	}
+        	
+        $causeMemoData = $this->CauseMemo->find('all', array(
+            'conditions' => $conditions,
+            'order' => 'CauseMemo.id ASC'
+        ));
+		
+		$disciplinaryAction = $this->DisciplinaryAction->find('list',array('field' => array('id','name')));
+
+		$violationData = $this->Violation->find('list',array('field' => array('id','name')));
+
+		$noted = $this->User->find('list',array('field' => array('id','fullname')));
+
+		$this->set(compact('causeMemoData','departmentList','positionList','noted'));
+
+		$this->render('CauseMemos/xls/cause_memo_report');
+	}
 	
 }
