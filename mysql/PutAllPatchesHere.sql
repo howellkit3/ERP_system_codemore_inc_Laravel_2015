@@ -1676,5 +1676,15 @@ CREATE TABLE `departments` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 
+/** howell kit added this 08/20/2015 TO WAREHOUSE DATABASE   */
+ALTER TABLE `stocks` 
+CHANGE COLUMN `size` `size1` VARCHAR(30) NULL DEFAULT NULL;
 
+ALTER TABLE `stocks` 
+CHANGE COLUMN `size_unit_id` `size1_unit_id` INT(11) NULL DEFAULT NULL;
+ALTER TABLE `stocks` ADD `size2` VARCHAR(30)  NULL  DEFAULT NULL  AFTER `size1_unit_id`;
+ALTER TABLE `stocks` ADD `size2_unit_id` VARCHAR(30)  NULL  DEFAULT NULL  AFTER `size2`;
+ALTER TABLE `stocks` ADD `size3` VARCHAR(30)  NULL  DEFAULT NULL  AFTER `size2_unit_id`;
+ALTER TABLE `stocks` ADD `size3_unit_id` VARCHAR(30)  NULL  DEFAULT NULL  AFTER `size3`;
+ALTER TABLE `stocks` ADD `model` VARCHAR(35)  NULL  DEFAULT NULL  AFTER `uuid`;
 
