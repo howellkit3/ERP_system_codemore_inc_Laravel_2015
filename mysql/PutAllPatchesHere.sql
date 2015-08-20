@@ -1244,6 +1244,7 @@ ALTER TABLE `received_items`  ADD `foreign_key` INT(11) NULL  AFTER `received_or
 ALTER TABLE `received_items`  ADD `model` VARCHAR(30) DEFAULT NULL AFTER `received_orders_id`;
 
 
+
 /* added 08/13/2015 human resource */
 
 CREATE TABLE IF NOT EXISTS `deductions` (
@@ -1306,6 +1307,26 @@ CREATE TABLE IF NOT EXISTS `salary_reports` (
   `total_pay` decimal(8,2) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `salaries` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `basic_pay` decimal(8,2) DEFAULT '0.00',
+  `basic_pay_per_month` decimal(8,2) DEFAULT NULL,
+  `ctpa` decimal(8,2) DEFAULT NULL,
+  `sea` decimal(8,2) DEFAULT NULL,
+  `allowances` decimal(8,2) DEFAULT NULL,
+  `overtime` double DEFAULT '0',
+  `date` datetime NOT NULL,
+  `from` datetime NOT NULL,
+  `to` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
 
 
 ALTER TABLE `salaries`  ADD `ctpa` DECIMAL(8,2) NULL  AFTER `basic_pay_per_month`,  ADD `sea` DECIMAL(8,2) NULL  AFTER `ctpa`,  ADD `allowances` DECIMAL(8,2) NULL  AFTER `sea`;
