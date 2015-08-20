@@ -2657,8 +2657,73 @@ class SettingsController extends AppController
 
             return $this->redirect(array('action' => 'philhealth_ranges'));
         }
- 
 
+        public function banks($id = null){
+
+            $this->loadModel('Bank');
+
+            $conditions = array();
+
+            $bankData = $this->Bank->find('all',array(
+                'conditions' => $conditions,
+                'order' => array('Bank.id ASC')
+                 ));
+
+            //pr($ranges); exit();
+            $this->set(compact('bankData'));
+
+            if (!empty($id)) {
+
+                $this->request->data = $this->Bank->read(null,$id);
+
+                $this->render('bank/edit');
+
+            }else {
+
+                $this->render('bank/banks');
+            }
+           
+        }
+ 
+        public function add_bank(){
+
+            $this->loadModel('Bank');
+           
+            if ($this->request->is(array('post','put'))) {
+              
+                $auth = $this->Session->read('Auth');
+
+                $this->Bank->saveBank($this->request->data,$auth['User']['id']);
+
+                $this->Session->setFlash(__('Saving data completed.'),'success');
+
+                $this->redirect(
+                    array('controller' => 'settings', 'action' => 'banks')
+                );
+
+            }
+
+        }
+
+        public function deleteBank($id){
+
+
+            $this->loadModel('Bank');
+           
+            if ($this->Bank->delete($id)) {
+
+                $this->Session->setFlash(
+                    __('Successfully deleted.', h($id)), 'success'
+                );
+
+            } else {
+                $this->Session->setFlash(
+                    __('There\'s an error deleting the data', h($id)),'error'
+                );
+            }
+
+            return $this->redirect(array('action' => 'banks'));
+        }
 
 }
             

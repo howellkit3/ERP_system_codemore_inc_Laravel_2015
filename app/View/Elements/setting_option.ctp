@@ -152,6 +152,16 @@
         </li>
         
     </ul>
+
+     <ul style="margin-left:0" class="nav navbar-nav pull-left">
+
+        <li class="dropdown hidden-xs">
+           
+            <?php echo $this->Html->link("<span class='count'>Banks</span>", array('controller' => 'settings', 'action' => 'banks'),array('escape' => false,'class' => 'btn')); ?>
+           
+        </li>
+        
+    </ul>
 <!-- 
      <ul style="margin-left:0" class="nav navbar-nav pull-left">
 
