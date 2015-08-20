@@ -1244,6 +1244,7 @@ ALTER TABLE `received_items`  ADD `foreign_key` INT(11) NULL  AFTER `received_or
 ALTER TABLE `received_items`  ADD `model` VARCHAR(30) DEFAULT NULL AFTER `received_orders_id`;
 
 
+
 /* added 08/13/2015 human resource */
 
 CREATE TABLE IF NOT EXISTS `deductions` (
@@ -1306,6 +1307,26 @@ CREATE TABLE IF NOT EXISTS `salary_reports` (
   `total_pay` decimal(8,2) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `salaries` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `basic_pay` decimal(8,2) DEFAULT '0.00',
+  `basic_pay_per_month` decimal(8,2) DEFAULT NULL,
+  `ctpa` decimal(8,2) DEFAULT NULL,
+  `sea` decimal(8,2) DEFAULT NULL,
+  `allowances` decimal(8,2) DEFAULT NULL,
+  `overtime` double DEFAULT '0',
+  `date` datetime NOT NULL,
+  `from` datetime NOT NULL,
+  `to` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
 
 
 ALTER TABLE `salaries`  ADD `ctpa` DECIMAL(8,2) NULL  AFTER `basic_pay_per_month`,  ADD `sea` DECIMAL(8,2) NULL  AFTER `ctpa`,  ADD `allowances` DECIMAL(8,2) NULL  AFTER `sea`;
@@ -1571,8 +1592,48 @@ CREATE TABLE IF NOT EXISTS `item_records` (
 /** bien added this 08/17/2015 TO HR DATABASE   */
 ALTER TABLE `cause_memos` ADD `noted_user_id` INT(11)  NULL  DEFAULT NULL  AFTER `modified`;
 
-/** howell kit added this 08/19/2015 TO WAREHOUSE DATABASE   */
+/** howell kit added this 08/17/2015 TO HR DATABASE   */
 ALTER TABLE `received_items` ADD `original_quantity` INT(11)  NULL  DEFAULT NULL  AFTER `quantity`;
+
+/** bien added this 08/20/2015 TO Koufu system DATABASE   */
+CREATE TABLE `banks` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(250) COLLATE utf8_bin DEFAULT NULL,
+  `code` varchar(250) COLLATE utf8_bin DEFAULT NULL,
+  `remarks` text COLLATE utf8_bin,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+CREATE TABLE `leave_types` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `limit` int(11) DEFAULT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `dependents` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `birth_date` varchar(255) NOT NULL DEFAULT '',
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `employee_additional_informations` ADD `bank_id` INT(11)  NULL  DEFAULT NULL  AFTER `no_children`;
+ALTER TABLE `employee_additional_informations` ADD `bank_account_type` VARCHAR(50)  NULL  DEFAULT NULL  AFTER `bank_id`;
+ALTER TABLE `employee_additional_informations` ADD `bank_account_number` VARCHAR(255)  NULL  DEFAULT NULL  AFTER `bank_account_type`;
 
 
 /** howell kit added this 08/20/2015 TO WAREHOUSE DATABASE   */
@@ -1586,3 +1647,4 @@ ALTER TABLE `stocks` ADD `size2_unit_id` VARCHAR(30)  NULL  DEFAULT NULL  AFTER 
 ALTER TABLE `stocks` ADD `size3` VARCHAR(30)  NULL  DEFAULT NULL  AFTER `size2_unit_id`;
 ALTER TABLE `stocks` ADD `size3_unit_id` VARCHAR(30)  NULL  DEFAULT NULL  AFTER `size3`;
 ALTER TABLE `stocks` ADD `model` VARCHAR(35)  NULL  DEFAULT NULL  AFTER `uuid`;
+

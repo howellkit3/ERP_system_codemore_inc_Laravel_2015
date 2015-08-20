@@ -1582,3 +1582,117 @@ COLLATE = latin1_swedish_ci;
 
 
 
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`koufu_payrolls` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+
+--
+-- Table structure for table `amortizations`
+--
+
+CREATE TABLE IF NOT EXISTS `amortizations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `deduction_id` int(11) NOT NULL,
+  `payroll_date` date NOT NULL,
+  `amount` decimal(8,2) NOT NULL,
+  `deduction` decimal(8,2) NOT NULL,
+  `interest` decimal(8,2) NOT NULL,
+  `status` varchar(255) NOT NULL DEFAULT '0',
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  `balance` decimal(8,2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `deductions`
+--
+
+CREATE TABLE IF NOT EXISTS `deductions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `from` date NOT NULL,
+  `to` date NOT NULL,
+  `mode` varchar(255) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `amount` decimal(8,2) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '0',
+  `reason` text NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `loans`
+--
+
+CREATE TABLE IF NOT EXISTS `loans` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `schedules` varchar(255) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `salary_reports`
+--
+
+CREATE TABLE IF NOT EXISTS `salary_reports` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `salary_type` varchar(255) NOT NULL,
+  `from` date NOT NULL,
+  `to` date NOT NULL,
+  `days` int(11) NOT NULL,
+  `total_hour_work` decimal(8,2) NOT NULL,
+  `overtime_work` decimal(8,2) NOT NULL,
+  `rest_day_work` decimal(8,2) NOT NULL,
+  `rest_day_ot` decimal(8,2) NOT NULL,
+  `regular_holiday` decimal(8,2) NOT NULL,
+  `regular_holiday_work` decimal(8,2) NOT NULL,
+  `regular_holiday_ot` decimal(8,2) NOT NULL,
+  `regular_rest_work` decimal(8,2) NOT NULL,
+  `regular_rest_ot` decimal(8,2) NOT NULL,
+  `special_holiday_work` decimal(8,2) NOT NULL,
+  `special_holiday_ot` decimal(8,2) NOT NULL,
+  `night` decimal(8,2) NOT NULL,
+  `leave` decimal(8,2) NOT NULL,
+  `ctpa` decimal(8,2) NOT NULL,
+  `sea` decimal(8,2) NOT NULL,
+  `gross_pay` decimal(8,2) NOT NULL,
+  `sss` decimal(8,2) NOT NULL,
+  `philhealth` decimal(8,2) NOT NULL,
+  `pagibig` decimal(8,2) NOT NULL,
+  `wtax` decimal(8,2) NOT NULL,
+  `ca_fund` decimal(8,2) NOT NULL,
+  `sss_loan` decimal(8,2) NOT NULL,
+  `pagibig_loan` decimal(8,2) NOT NULL,
+  `uniform` decimal(8,2) NOT NULL,
+  `other_1` decimal(8,2) NOT NULL,
+  `medical` decimal(8,2) NOT NULL,
+  `canteen` decimal(8,2) NOT NULL,
+  `bank_loan` decimal(8,2) NOT NULL,
+  `other_2` decimal(8,2) NOT NULL,
+  `total_deduction` decimal(8,2) NOT NULL,
+  `net_pay` decimal(8,2) NOT NULL,
+  `allowance` decimal(8,2) NOT NULL,
+  `incentives` decimal(8,2) NOT NULL,
+  `total_pay` decimal(8,2) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
