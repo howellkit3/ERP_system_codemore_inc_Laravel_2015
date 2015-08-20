@@ -1,6 +1,6 @@
 <?php $this->Html->addCrumb('Ware House', array('controller' => 'ware_house_systems', 'action' => 'index')); ?>
 <div style="clear:both"></div>
-<?php echo $this->element('ware_house_option');?>
+<?php  echo $this->element('ware_house_option');?>
     
     <div class = "pull-right";>
 
@@ -232,7 +232,7 @@
     <div class="main-box clearfix">
 
     <header class="main-box-header clearfix">
-    <h2>Impending Item List</h2>
+    <h2>Purchased Item List</h2>
     </header>
 
         <div class="main-box-body clearfix">
@@ -318,14 +318,14 @@
                                 <i class="fa fa-tags"></i>&nbsp;<?php echo $requestDataList['PurchaseItem']['model'] ?> 
                                 </span>
                                 <span class="warranty">
-                                <i class="fa fa-certificate"></i>&nbsp; <?php echo $requestDataList['PurchaseItem']['quantity'] ?> pcs
+                                <i class="fa fa-certificate"></i>&nbsp; <?php  echo $requestDataList['PurchaseItem']['quantity'] ?> pcs
                                 </span>
                             </td>
                         </tr>
 
                     <?php  endforeach;  
 
-                         }else{
+                         }else{ 
 
                          foreach ($requestPurchasingItem as $requestDataList): ?>
                         <tr>
@@ -340,7 +340,13 @@
                                 <i class="fa fa-tags"></i>&nbsp;<?php echo $requestDataList['RequestItem']['model'] ?> 
                                 </span>
                                 <span class="warranty">
-                                <i class="fa fa-certificate"></i>&nbsp; <?php echo $requestDataList['RequestItem']['quantity'] ?> pcs
+                                <i class="fa fa-certificate"></i>&nbsp;  <?php 
+
+                                if(!empty($requestDataList['RequestItem']['original_quantity'])){
+
+                                 echo $requestDataList['RequestItem']['original_quantity'] ?> pcs
+
+                                <?php } ?>
                                 </span>
                                 
                             </td>

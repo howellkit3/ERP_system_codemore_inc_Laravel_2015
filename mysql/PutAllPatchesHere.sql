@@ -1571,6 +1571,18 @@ CREATE TABLE IF NOT EXISTS `item_records` (
 /** bien added this 08/17/2015 TO HR DATABASE   */
 ALTER TABLE `cause_memos` ADD `noted_user_id` INT(11)  NULL  DEFAULT NULL  AFTER `modified`;
 
-/** howell kit added this 08/17/2015 TO HR DATABASE   */
+/** howell kit added this 08/19/2015 TO WAREHOUSE DATABASE   */
 ALTER TABLE `received_items` ADD `original_quantity` INT(11)  NULL  DEFAULT NULL  AFTER `quantity`;
 
+
+/** howell kit added this 08/20/2015 TO WAREHOUSE DATABASE   */
+ALTER TABLE `stocks` 
+CHANGE COLUMN `size` `size1` VARCHAR(30) NULL DEFAULT NULL;
+
+ALTER TABLE `stocks` 
+CHANGE COLUMN `size_unit_id` `size1_unit_id` INT(11) NULL DEFAULT NULL;
+ALTER TABLE `stocks` ADD `size2` VARCHAR(30)  NULL  DEFAULT NULL  AFTER `size1_unit_id`;
+ALTER TABLE `stocks` ADD `size2_unit_id` VARCHAR(30)  NULL  DEFAULT NULL  AFTER `size2`;
+ALTER TABLE `stocks` ADD `size3` VARCHAR(30)  NULL  DEFAULT NULL  AFTER `size2_unit_id`;
+ALTER TABLE `stocks` ADD `size3_unit_id` VARCHAR(30)  NULL  DEFAULT NULL  AFTER `size3`;
+ALTER TABLE `stocks` ADD `model` VARCHAR(35)  NULL  DEFAULT NULL  AFTER `uuid`;
