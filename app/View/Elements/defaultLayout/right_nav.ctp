@@ -125,12 +125,25 @@
 	 					?>
 					</li>
 
-				 <li class="<?php echo ($this->params['plugin'] == 'human_resource' && !in_array($this->params['controller'],array('salaries')))  ? 'active' : '' ?>">
+				 	<li class="<?php echo ($this->params['plugin'] == 'human_resource' && !in_array($this->params['controller'],array('salaries')))  ? 'active' : '' ?>">
 
 						<?php  if($userData['User']['role_id'] == 1 OR $userData['User']['role_id'] == 2){
 
 						
 	 						echo $this->Html->link( " <i class='fa fa-user'></i> <span>Human Resource</span>",   array('controller' =>'dashboards','action'=>'index','plugin' => 'human_resource'),
+	 											array('escape' => false) );
+	 					}
+	 					?>
+					</li> 
+
+					<li class="<?php echo ($this->params['plugin'] == 'production') ? 'active' : '' ?>">
+
+						<?php if($userData['User']['role_id'] == 1 OR $userData['User']['role_id'] == 2 OR $userData['User']['role_id'] == 13 ){
+
+
+	 						echo $this->Html->link( " <i class='fa fa-money'></i> <span>Production</span>",   array('controller' =>'dashboards',
+	 											'action'=>'index',
+	 											'plugin' => 'production'),
 	 											array('escape' => false) );
 	 					}
 	 					?>

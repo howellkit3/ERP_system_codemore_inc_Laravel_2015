@@ -1635,6 +1635,46 @@ ALTER TABLE `employee_additional_informations` ADD `bank_id` INT(11)  NULL  DEFA
 ALTER TABLE `employee_additional_informations` ADD `bank_account_type` VARCHAR(50)  NULL  DEFAULT NULL  AFTER `bank_id`;
 ALTER TABLE `employee_additional_informations` ADD `bank_account_number` VARCHAR(255)  NULL  DEFAULT NULL  AFTER `bank_account_type`;
 
+CREATE TABLE `sections` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `department_id` int(11) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `description` text,
+  `remarks` text,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `machines` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `no` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `area` varchar(255) DEFAULT NULL,
+  `department_id` int(11) DEFAULT NULL,
+  `section_id` int(11) DEFAULT NULL,
+  `remarks` text,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `departments` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `description` text,
+  `remarks` text,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
 
 
 
