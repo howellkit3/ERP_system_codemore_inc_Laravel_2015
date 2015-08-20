@@ -7,8 +7,15 @@
         <?php echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i>  Go Back ', array('controller' => 'receivings','action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
             ?>
      
-        <?php echo $this->Html->link('<i class="fa fa-check fa-lg"></i> Approve ', array('controller' => 'receivings','action' => 'purchase_approve', $receivedOrderData['ReceivedOrder']['id']),array('class' =>'btn btn-primary pull-right','escape' => false));
-        ?>
+        <?php if($type == 1){
+
+            if($receivedOrderData['ReceivedOrder']['status_id'] == 11){
+
+                 echo $this->Html->link('<i class="fa fa-check fa-lg"></i> Approve ', array('controller' => 'receivings','action' => 'purchase_approve', $receivedOrderData['ReceivedOrder']['id']),array('class' =>'btn btn-primary pull-right','escape' => false));
+
+            }
+
+        } ?>
         
     </div>
 
@@ -144,7 +151,7 @@
             </div>
         </div>
 
-        <div class="row">
+   <!--      <div class="row">
             <div class="col-lg-12">
                 <div class="main-box">
                     <header class="main-box-header clearfix">
@@ -211,7 +218,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         
         <?php echo $this->Form->end(); ?>   
     </div>
@@ -220,3 +227,130 @@
   <?php 
 } 
 ?> 
+
+<div class="col-lg-6">
+    <div class="main-box clearfix">
+
+    <header class="main-box-header clearfix">
+    <h2>Impending Item List</h2>
+    </header>
+
+        <div class="main-box-body clearfix">
+            <div class="table-responsive">
+                <table class="table table-products table-hover">
+                    <tbody>
+
+                         <?php  if(!empty($requestData['PurchaseItem'])){
+
+                             foreach ($requestData['PurchaseItem'] as $requestDataList): ?>
+                        <tr>
+                            <td>
+                            <img src="<?php echo Router::url('/', true) ?>img/itemboxopen.png" alt="logo" style="width:60px;height:60px;padding-bottom:10;">
+                            </td>
+                            <td>
+                                <span class="name">
+                                <?php echo $requestDataList['PurchaseItem']['name'] ?>
+                                </span>
+                                <span class="price">
+                                <i class="fa fa-tags"></i>&nbsp;<?php echo $requestDataList['PurchaseItem']['model'] ?> 
+                                </span>
+                                <span class="warranty">
+                                <i class="fa fa-certificate"></i>&nbsp; <?php echo $requestDataList['PurchaseItem']['quantity'] ?> pcs
+                                </span>
+                            </td>
+                        </tr>
+
+                    <?php  endforeach;  
+
+                         }else{
+
+                         foreach ($requestPurchasingItem as $requestDataList): ?>
+                        <tr>
+                            <td>
+                            <img src="<?php echo Router::url('/', true) ?>img/itemboxopen.png" alt="logo" style="width:60px;height:60px;padding-bottom:10;">
+                            </td>
+                            <td>
+                                <span class="name">
+                                <?php echo $requestDataList['RequestItem']['name'] ?>
+                                </span>
+                                <span class="price">
+                                <i class="fa fa-tags"></i>&nbsp;<?php echo $requestDataList['RequestItem']['model'] ?> 
+                                </span>
+                                <span class="warranty">
+                                <i class="fa fa-certificate"></i>&nbsp; <?php echo $requestDataList['RequestItem']['quantity'] ?> pcs
+                                </span>
+                            </td>
+                        </tr>
+
+                    <?php  endforeach; } ?>
+                    
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-lg-6">
+    <div class="main-box clearfix">
+
+    <header class="main-box-header clearfix">
+    <h2>Delivered Item List</h2>
+    </header>
+
+        <div class="main-box-body clearfix">
+            <div class="table-responsive">
+                <table class="table table-products table-hover">
+                    <tbody>
+
+                         <?php  if(!empty($requestData['PurchaseItem'])){
+
+                             foreach ($requestData['PurchaseItem'] as $requestDataList): ?>
+                        <tr>
+                            <td>
+                            <img src="<?php echo Router::url('/', true) ?>img/itembox.png" alt="logo" style="width:85px;height:60px;padding-bottom:10;">
+                            </td>
+                            <td>
+                                <span class="name">
+                                <?php echo $requestDataList['PurchaseItem']['name'] ?>
+                                </span>
+                                <span class="price">
+                                <i class="fa fa-tags"></i>&nbsp;<?php echo $requestDataList['PurchaseItem']['model'] ?> 
+                                </span>
+                                <span class="warranty">
+                                <i class="fa fa-certificate"></i>&nbsp; <?php echo $requestDataList['PurchaseItem']['quantity'] ?> pcs
+                                </span>
+                            </td>
+                        </tr>
+
+                    <?php  endforeach;  
+
+                         }else{
+
+                         foreach ($requestPurchasingItem as $requestDataList): ?>
+                        <tr>
+                            <td>
+                            <img src="<?php echo Router::url('/', true) ?>img/itembox.png" alt="logo" style="width:85px;height:60px;padding-bottom:10;">
+                            </td>
+                            <td>
+                                <span class="name">
+                                <?php echo $requestDataList['RequestItem']['name'] ?>
+                                </span>
+                                <span class="price">
+                                <i class="fa fa-tags"></i>&nbsp;<?php echo $requestDataList['RequestItem']['model'] ?> 
+                                </span>
+                                <span class="warranty">
+                                <i class="fa fa-certificate"></i>&nbsp; <?php echo $requestDataList['RequestItem']['quantity'] ?> pcs
+                                </span>
+                                
+                            </td>
+                        </tr>
+
+                    <?php  endforeach; } ?>
+                    
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

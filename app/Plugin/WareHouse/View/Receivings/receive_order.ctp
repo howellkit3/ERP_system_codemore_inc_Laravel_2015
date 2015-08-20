@@ -27,6 +27,16 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                     <label class="col-lg-2 control-label">Purchase Order Number</label>
                                     
                                     <div class="col-lg-8">
+
+                                        <?php 
+                                            echo $this->Form->input('ReceivedItems.id', array(
+                                                                            'class' => 'form-control item_type',
+                                                                            'type' => 'hidden',
+                                                                            'label' => false,       
+                                                                            'value' => $purchaseOrderData['PurchaseOrder']['id'],
+                                                                            'fields' =>array('name')));
+                                        ?>
+
                                         <?php 
                                             echo $this->Form->input('PurchaseOrder.uuid', array(
                                                                             'class' => 'form-control item_type',
@@ -146,9 +156,10 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                             echo $this->Form->input('requestPurchasingItem.'.$arrholder.'.quantity', array(
                                                                         'empty' => 'None',
                                                                         'required' => 'required',
-                                                                        'class' => 'form-control item_type editable addquantityLimit',
+                                                                        'class' => 'form-control item_type limitQuantity',
                                                                         'placeholder' => 'Quantity',
-                                                                        'label' => false
+                                                                        'label' => false,
+                                                                        'value' => $requestDataList['RequestItem']['original_quantity']
                                             ));
                                         ?>
                                     </div>
@@ -185,6 +196,16 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                             echo $this->Form->input('requestPurchasingItem.'.$arrholder.'.model', array(                    'type' => 'hidden',
                                                                     'class' => 'form-control',
                                                                     'value' =>$requestDataList['RequestItem']['model'],
+                                                                    'label' => false,
+                                                                    
+                                                                    ));
+                                ?>
+
+                                <?php
+                                            echo $this->Form->input('requestPurchasingItem.'.$arrholder.'.original_quantity', array(        
+                                                                    'type' => 'hidden',
+                                                                    'class' => 'form-control limiter',
+                                                                    'value' =>$requestDataList['RequestItem']['original_quantity'],
                                                                     'label' => false,
                                                                     
                                                                     ));
@@ -248,5 +269,26 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
         </div>
     </div>
 </div>
+
+<script>
+
+jQuery(document).ready(function(){
+
+    $('.limitQuantity').on("blur",function(){
+
+    var limiter = $('.limiter').val();
+    var limitQuantity = $('.limitQuantity').val();
+
+    if(limiter < limitQuantity){
+
+        $(this).parents().find('.limitQuantity').val(limiter);
+        $( "p" ).parent( ".selected" ).css( "background", "yellow" );
+    }
+
+          
+    });
+
+});
+</script>
 
 

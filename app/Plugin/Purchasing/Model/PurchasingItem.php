@@ -61,7 +61,4 @@ class PurchasingItem extends AppModel {
 
 		return true;
 	}
-
-	
-
 }

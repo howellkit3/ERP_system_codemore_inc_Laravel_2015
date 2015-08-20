@@ -22,8 +22,8 @@
                                 <th><a href="#"><span>Supplier</span></a></th>
                                 <th><a href="#"><span>Received by</span></a></th>
                                 <th><a href="#"><span>Received</span></a></th>
-                                <th><a href="#"><span>Status</span></a></th>
-                                <th>Action</th>
+                                <th class="text-center"><a  href="#"><span>Status</span></a></th>
+                                <th class="text-center">Action</th>
                             </tr>
                         </thead>
 

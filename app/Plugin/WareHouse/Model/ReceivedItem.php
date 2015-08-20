@@ -14,8 +14,6 @@ class ReceivedItem extends AppModel {
   	public $name = 'ReceivedItem';
 
 	public function saveReceivedItems($id, $data){
-		
-		$this->create();
 
 		$data['received_orders_id'] = $id;
 
@@ -40,6 +38,20 @@ class ReceivedItem extends AppModel {
 			
 		}
 
+	}
+
+		public function bind($model = array('PurchaseOrder', 'ReceivedItem')){
+
+		$this->bindModel(array(
+			'hasOne' => array(
+				'ReceivedItem' => array(
+					'className' => 'WareHouse.ReceivedItem',
+					'foreignKey' => false,
+					'conditions' => 'Delivery.dr_uuid = DeliveryReceipt.dr_uuid'
+				),
+			)
+
+		));
 
 
 	}

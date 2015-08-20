@@ -31,15 +31,11 @@
 
             <td>
 
-              <!--   <a data-toggle="modal" href="#myModalReceiving<?php echo $purchaseOrderDataList['PurchaseOrder']['id'] ?>" class="table-link "><i class="fa fa-lg "></i><span class="fa-stack">
-                                  <i class="fa fa-square fa-stack-2x"></i>
-                                  <i class="fa  fa-level-down fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Receive </font></span></a>  -->
-
                  <?php
                         echo $this->Html->link('<span class="fa-stack">
                             <i class="fa fa-square fa-stack-2x"></i>
                             <i class="fa fa-search fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> View</font></span>
-                            </span> ', array('controller' => 'receivings', 'action' => 'view', $purchaseOrderDataList['PurchaseOrder']['id'], $purchaseOrderDataList['Request']['uuid'] ),array('class' =>' table-link','escape' => false,'title'=>'Review Inquiry'));
+                            </span> ', array('controller' => 'receivings', 'action' => 'view', $purchaseOrderDataList['PurchaseOrder']['id'], $purchaseOrderDataList['Request']['uuid'], 0),array('class' =>' table-link','escape' => false,'title'=>'Review Inquiry'));
                     ?>                    
 
                  <?php
