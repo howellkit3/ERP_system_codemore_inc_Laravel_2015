@@ -1,5 +1,5 @@
 <?php $this->Html->addCrumb('Production', array('controller' => 'dashboards', 'action' => 'index')); ?>
-<?php $this->Html->addCrumb('Machine', array('controller' => 'machines', 'action' => 'index')); ?>
+<?php $this->Html->addCrumb('Machine', array('controller' => 'settings', 'action' => 'machines','tab' => 'machines')); ?>
 <?php $this->Html->addCrumb('Add', array('controller' => 'machines', 'action' => 'add')); ?>
 
 <?php 	echo $this->element('production_options'); ?>

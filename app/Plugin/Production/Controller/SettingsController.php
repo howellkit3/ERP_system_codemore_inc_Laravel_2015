@@ -35,4 +35,54 @@ class SettingsController extends ProductionAppController {
 		
     }
 
+    public function departments() {
+
+        $this->loadModel('Production.Department');
+
+        $limit = 10;
+
+        $conditions = array();
+
+        $params =  array(
+                'conditions' => $conditions,
+                'limit' => $limit,
+                //'fields' => array('id', 'status','created'),
+                'order' => 'Department.id ASC',
+            );
+
+        $this->paginate = $params;
+
+        $departmentData = $this->paginate('Department');
+
+        $this->set(compact('departmentData'));
+        
+    }
+
+    public function sections() {
+
+        $this->loadModel('Production.Department');
+
+        $this->loadModel('Production.Section');
+
+        $limit = 10;
+
+        $conditions = array();
+
+        $params =  array(
+                'conditions' => $conditions,
+                'limit' => $limit,
+                //'fields' => array('id', 'status','created'),
+                'order' => 'Section.id ASC',
+            );
+
+        $this->paginate = $params;
+
+        $sectionData = $this->paginate('Section');
+
+        $departmentList = $this->Department->find('list',array('fields' => array('id','name')));
+
+        $this->set(compact('sectionData','departmentList'));
+        
+    }
+
 }

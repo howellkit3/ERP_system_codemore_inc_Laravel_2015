@@ -26,7 +26,7 @@ class Department extends AppModel {
 		$this->contain($model);
 	}
 
-	public function addDepartment($data,$auth){
+	public function saveDepartment($data,$auth){
 		
 		$this->create();
 		 

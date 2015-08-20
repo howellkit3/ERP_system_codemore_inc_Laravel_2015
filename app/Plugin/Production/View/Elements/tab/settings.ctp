@@ -19,5 +19,14 @@
 					'plugin' => 'production'
 		)); ?>
 	</li>
+
+	<li class="<?php echo ($active_tab == 'sections') ? 'active' : '' ?>" alt="tab-sections">
+		<?php echo $this->Html->link('Section',array(
+					'controller' => 'settings',
+					'action' => 'sections',
+					'tab' => 'sections',
+					'plugin' => 'production'
+		)); ?>
+	</li>
 	
 </ul>

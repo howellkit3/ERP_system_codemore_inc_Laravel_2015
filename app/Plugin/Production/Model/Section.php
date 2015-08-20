@@ -7,7 +7,7 @@ class Section extends AppModel {
     public $useDbConfig = 'koufu_production_system';
     public $name = 'Section';
 
-	public function addSection($data,$auth){
+	public function saveSection($data,$auth){
 		
 		$this->create();
 		 
