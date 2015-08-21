@@ -9,6 +9,8 @@ class Overtime extends AppModel {
 
     public $actsAs = array('Containable');
 
+    var $useTable = 'overtimes';
+
      public function bind($model = array('Group')){
 
 		$this->bindModel(

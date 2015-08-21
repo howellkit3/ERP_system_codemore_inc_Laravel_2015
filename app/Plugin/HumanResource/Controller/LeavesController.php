@@ -114,9 +114,9 @@ class LeavesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Employee');
 
-		$this->loadModel('HumanResource.Type');
+		$this->loadModel('HumanResource.LeaveType');
 
-		$this->Leave->bind(array('Employee','Type'));
+		$this->Leave->bind(array('Employee','LeaveType'));
 
 		$auth = $this->Session->read('Auth.User');
 		
@@ -133,14 +133,27 @@ class LeavesController  extends HumanResourceAppController {
 	public function approved($leaveId = null){
 
 		$this->loadModel('User');
+		$this->loadModel('HumanResource.Attendance');
 
 		$userData = $this->User->read(null,$this->Session->read('Auth.User.id'));
 
-		$this->Leave->id = $leaveId;
-		$this->Leave->saveField('status', 1);
-		$this->Leave->saveField('modified_by', $userData['User']['id']);
 		
-		$this->Session->setFlash(__('Leave Approved.'));
+		$leave['id'] = $leaveId;
+		$leave['status'] = 1;
+
+		if ($this->Leave->save($leave)) {
+
+			//save leave on attendance
+			$leave = $this->Leave->read(null,$leaveId);
+
+			$this->Attendance->setLeave($leave);
+
+			$this->Session->setFlash(__('Leave Approved.'), 'success');
+		
+		} else {
+
+			$this->Session->setFlash(__('There\'s an error saving your leave'),'error');
+		}
 
 		exit();
 	}

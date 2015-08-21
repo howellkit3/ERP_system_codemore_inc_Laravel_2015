@@ -1,8 +1,9 @@
 <header class="main-box-header clearfix">
 	<div class="filter-block">	
 
-		<?php echo $this->Form->create('Attendance',array('controller' => 'attendances','action' => 'ajax_find', 'type'=> 'get'),array('id'=>'ajaxSearchForm')); ?>
-			<div class="form-group pull-left">
+		
+		<?php echo $this->Form->create('Attendance',array('controller' => 'attendances','action' => 'ajax_find', 'type'=> 'get')); ?>
+	<div class="form-group pull-left">
 
 				<input type="text" name="from" id="changeDate" class="form-control datepick" value="<?php echo $date ?>">
 
@@ -10,13 +11,10 @@
 
 				
 			</div>
-		<?php echo $this->Form->end(); ?>
 
 		<div class="form-group pull-left">
 			-
 		</div>
-
-		<?php echo $this->Form->create('Attendance',array('controller' => 'attendances','action' => 'ajax_find', 'type'=> 'get')); ?>
 
 			<div class="form-group pull-left">
 				

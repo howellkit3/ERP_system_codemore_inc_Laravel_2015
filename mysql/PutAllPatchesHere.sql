@@ -1237,6 +1237,9 @@ CREATE TABLE IF NOT EXISTS `accounting_philhealth_ranges` (
 
 ALTER TABLE `accounting_philhealth_ranges`  ADD `condition` VARCHAR(45) NULL  AFTER `range_to`;
 ALTER TABLE `deductions` ADD `pay_split` INT NULL AFTER `amount`, ADD `paid_amount` DECIMAL(8,2) NULL AFTER `pay_split`;
+
+ALTER TABLE `attendances`  ADD `leave_id` INT NULL  AFTER `is_holiday`;
+
 /*end -aldrin brion added this 08/12/2015 */
 
 /** howell kit added this 08/08/2015 TO WAREHOUSE DATABASE   */
@@ -1331,6 +1334,7 @@ CREATE TABLE IF NOT EXISTS `salaries` (
 
 ALTER TABLE `salaries`  ADD `ctpa` DECIMAL(8,2) NULL  AFTER `basic_pay_per_month`,  ADD `sea` DECIMAL(8,2) NULL  AFTER `ctpa`,  ADD `allowances` DECIMAL(8,2) NULL  AFTER `sea`;
 
+ALTER TABLE `salaries`  ADD `employee_salary_type` VARCHAR(255) NULL  AFTER `employee_id`;
 /* end human resource */
 
 #NOTE: SELECT KOUFU WAREHOUSE DATABASE ----

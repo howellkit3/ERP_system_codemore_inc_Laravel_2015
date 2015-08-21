@@ -47,22 +47,6 @@ class SalaryComputationComponent extends Component
         				$salary[$key]['from'] = $customDate['start'];
         				$salary[$key]['to'] = $customDate['end'];
         				$salary[$key]['days'] = $gross['days'];
-      //   				$salary[$key]['total_hour_work'] = !empty( $gross['total_hours'] ) ?  $gross['total_hours'] : number_format(0,2);
-      //   				$salary[$key]['gross_pay'] = $gross['gross']; 
-						// $salary[$key]['ctpa'] = !empty($employee['Salary']['ctpa']) ? $gross['days'] * $employee['Salary']['ctpa'] : 0; 
-						// $salary[$key]['sea'] = !empty($employee['Salary']['sea']) ? $gross['days'] * $employee['Salary']['sea'] : 0;
-						// $salary[$key]['allowance'] = !empty($employee['Salary']['allowances'])  ? $employee['Salary']['allowances'] : 0;						
-						// $salary[$key]['sss'] = $this->sss_pay($employee['Attendance'],$employee['Salary'],$pay_sched,$gross['gross']);
-						// $salary[$key]['philhealth'] = $this->philhealth_pay($employee['Attendance'],$employee['Salary'],$pay_sched,$gross['gross']);
-						// $salary[$key]['regular_work'] =  !empty($gross['regular']) ? $gross['regular'] : number_format(0,2) ;
-						// $salary[$key]['regular_work_ot'] = !empty($gross['OT']) ? $gross['OT'] : number_format(0,2) ;
-						// $salary[$key]['night_diff'] = number_format($gross['night_diff'],2);
-						// $salary[$key]['night_diff'] = number_format($gross['night_diff_ot'],2);
-						// $salary[$key]['legal_holiday'] =  !empty($gross['legal_holiday']) ? $gross['legal_holiday'] : number_format(0,2);
-						// $salary[$key]['legal_holiday_work'] =  !empty($gross['legal_holiday_work']) ? $gross['legal_holiday_work'] : number_format(0,2);
-						// $salary[$key]['legal_holiday_work_ot'] =  number_format(0,2);
-						// $salary[$key]['legal_holiday_work_ot'] =  number_format(0,2);
-        			
         				$salary[$key]['sss'] = $this->sss_pay($employee['Attendance'],$employee['Salary'],$pay_sched,$gross['gross'], $models );
 						$salary[$key]['philhealth'] = $this->philhealth_pay($employee['Attendance'],$employee['Salary'],$pay_sched,$gross['gross'] , $models);
 						$salary[$key]['pagibig'] = $this->pagibig_pay($employee['Attendance'],$employee['Salary'],$pay_sched,$gross['gross'] , $models);
@@ -71,13 +55,14 @@ class SalaryComputationComponent extends Component
 						$salary[$key]['ctpa'] = !empty($employee['Salary']['ctpa']) ? $gross['days'] * $employee['Salary']['ctpa'] : 0; 
 						$salary[$key]['sea'] = !empty($employee['Salary']['sea']) ? $gross['days'] * $employee['Salary']['sea'] : 0;
 						
-
+						$salary[$key]['allowances'] =  $employee['Salary']['allowances'];
+						
 						foreach ($gross as $gross_key => $gross_value) {
 							$salary[$key][$gross_key] = $gross_value;
 						}
 
 						//additional income 
-						$salary[$key]['total_pay'] =  $gross['gross']; $total_pay = $gross['gross'];
+						$salary[$key]['total_pay'] = $gross['gross']; $total_pay = $gross['gross'];
 
 						//ctpa computations = 
 						$total_pay 	+= !empty($employee['Salary']['ctpa']) ? $employee['Salary']['ctpa'] : number_format(0,2);
@@ -104,10 +89,11 @@ class SalaryComputationComponent extends Component
 
         		}
 
-
         		return $salary;
 
         	}
+
+        	exit();
     }
 
 
@@ -141,24 +127,31 @@ class SalaryComputationComponent extends Component
 		$data['sunday_work_ot'] =  number_format(0,2);
 		$data['night_diff_sunday_work'] =  number_format(0,2);
 		$data['night_diff_sunday_work_ot'] =  number_format(0,2);
+		$data['leave'] =  number_format(0,2);
+
 
 		if (!empty($attendance)) {
-
+			$countDays = 0;
 			foreach ($attendance as $key => $days) {
+
 				//$data['time_work'] += $days['total_hours'];
 				$work[$key] = $this->checkDays($days,$salaries, 8 , $models );
 
 				foreach ( $work[$key] as $pay_keys => $list) {
 
-						if (in_array($pay_keys,array('regular','OT','legal_holiday','legal_holiday_work','night_diff_legal_holiday', 'night_diff_legal_holiday_work', 'special_holday', 'special_holday_work', 'night_diff_special_holday', 'night_diff_special_holday_work','sunday_work','sunday_work_ot','night_diff_sunday_work','night_diff_sunday_work_ot'))) {
+						if (in_array($pay_keys,array('regular','OT','legal_holiday','legal_holiday_work','night_diff_legal_holiday', 'night_diff_legal_holiday_work', 'special_holday', 'special_holday_work', 'night_diff_special_holday', 'night_diff_special_holday_work','sunday_work','sunday_work_ot','night_diff_sunday_work','night_diff_sunday_work_ot','leave'))) {
 							$data[$pay_keys] += $list;
 							$data['gross'] += $list;
 						}
 				}
+				//check working days
+				if (!empty($days['Attendance']['in']) && !empty($days['Attendance']['out'])) {
+					$countDays++;
+				}
 				
 			}
 
-			$data['days'] = count($attendance);
+			$data['days'] = $countDays;
 
 		}
 		return $data;
@@ -187,6 +180,13 @@ class SalaryComputationComponent extends Component
 	$days['sunday_work_ot'] = 0;
 	$days['night_diff_sunday_work'] = 0;
 	$days['night_diff_sunday_work_ot'] = 0;
+	$days['leave'] = 0;
+	
+	//
+	if (!empty($data['Attendance']['leave_id'])) {
+
+		$days['leave'] = $salaries['basic_pay']; //($salaries['basic_pay'] * $days['total_hours'])	
+	}
 
 
 	if (!empty($data['Attendance']['in']) && !empty($data['Attendance']['out']) ) {
@@ -252,6 +252,7 @@ class SalaryComputationComponent extends Component
 
 			//check if OT
 			if (!empty($data['Attendance']['overtime_id'])) {
+				
 				$data['hours_ot'] = 0;
 				$Overtime = ClassRegistry::init('Overtime');
 
@@ -279,7 +280,7 @@ class SalaryComputationComponent extends Component
 
 	foreach ($models['Holiday'] as $holiday_key => $holiday) {
 		
-		if ($today >= $holiday['Holiday']['start_date'] && $today >= $holiday['Holiday']['end_date']) {
+		if ($today >= $holiday['Holiday']['start_date'] && $today <= $holiday['Holiday']['end_date']) {
 		
 		$days['regular'] = 0.0;
 		
@@ -293,11 +294,11 @@ class SalaryComputationComponent extends Component
 
 		if ($holiday['Holiday']['type'] == 'special') {
 
-			$days['legal_holiday'] = ($salaries['basic_pay'] * $hours ) / $hours;
+			$days['special_holiday'] = ($salaries['basic_pay'] * $hours ) / $hours;
 			
 		}
 
-		//if employee work in legal holiday
+		//if employee work in legal or special holiday holiday
 		if (!empty($data['Attendance']['in']) && !empty($data['Attendance']['out']) ) {
 
 				if ($holiday['Holiday']['type'] == 'regular') {
@@ -305,7 +306,7 @@ class SalaryComputationComponent extends Component
 				}
 
 				if ($holiday['Holiday']['type'] == 'special') {
-					$days['legal_holiday_work'] = ($salaries['basic_pay'] * $days['total_hours']) / $hours;
+					$days['special_holiday_work'] = ($salaries['basic_pay'] * $days['total_hours']) / $hours;
 				}
 
 			}
@@ -314,7 +315,7 @@ class SalaryComputationComponent extends Component
 
 	}
 		
-		return $days;
+	return $days;
 
 
 	}

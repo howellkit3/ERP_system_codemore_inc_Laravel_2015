@@ -50,7 +50,7 @@ class Holiday extends AppModel {
 					$list[$key]['title'] = $holiday['Holiday']['name'];
 					$list[$key]['start'] = $holiday['Holiday']['start_date'];
 					$list[$key]['end']  = $holiday['Holiday']['end_date'];
-					$list[$key]['color'] = $holiday['Holiday']['type'] == 'special' ? '#E11B22' : '#257e4a';
+					$list[$key]['color'] = $holiday['Holiday']['type'] == 'special' ? '#F57821' : '#257e4a';
 				}
 			}
 

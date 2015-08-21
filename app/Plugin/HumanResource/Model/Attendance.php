@@ -13,10 +13,6 @@ class Attendance extends AppModel {
      public function bind($model = array('Group')){
 
 		$this->bindModel(array(
-				'hasMany' => array(
-
-				
-				),
 				'belongsTo' => array (
 					'WorkSchedule' => array(
 						'className' => 'WorkSchedule',
@@ -30,12 +26,17 @@ class Attendance extends AppModel {
 						'dependent' => false,
 						'conditions' => array('WorkShift.id = WorkSchedule.work_shift_id')
 					),
+					'Employee' => array(
+						'className' => 'Employee',
+						'foreignKey' => false,
+						'conditions' => array('Employee.id = Attendance.employee_id'),
+						'dependent' => true,
+					),
 					'Overtime' => array(
 						'className' => 'Overtime',
 						'foreignKey' => false,
-						'dependent' => false,
 						'conditions' => array('Overtime.id = Attendance.overtime_id')
-					),
+					)
 					// 'WorkShiftBreak' => array(
 					// 	'className' => 'WorkShiftBreak',
 					// 	'foreignKey' => false,
@@ -48,12 +49,7 @@ class Attendance extends AppModel {
 					// 	'dependent' => false,
 					// 	'conditions' => array('BreakTime.id = WorkShiftBreak.breaktime_id')
 					// ),
-					'Employee' => array(
-						'className' => 'Employee',
-						'foreignKey' => false,
-						'conditions' => array('Employee.id = Attendance.employee_id'),
-						'dependent' => true,
-					),
+					
 				)
 			),false);
 
@@ -295,6 +291,39 @@ class Attendance extends AppModel {
 			}
 
 			return $attendances;
+		}
+	}
+
+	public function setLeave($leaveData = null) {
+
+
+		if (!empty($leaveData)) {
+
+			$attendances = $this->find('all',array(
+				'conditions' => array(
+					'date >=' => $leaveData['Leave']['from'],
+					'date <=' => $leaveData['Leave']['to'],
+					'employee_id' => $leaveData['Leave']['employee_id']
+				),
+				'fields' => array(
+					'Attendance.id',
+					'Attendance.employee_id',
+					'Attendance.date'
+				)
+
+			));
+
+			$leave = array();
+
+			foreach ($attendances as $key => $value) {
+					
+				if ( date("w",strtotime($value['Attendance']['date'])) != 0) {
+					$leave['id'] = $value['Attendance']['id'];
+					$leave['type'] = 'leave';
+					$leave['leave_id'] = $leaveData['Leave']['id'];
+					$this->save($leave);
+				}	
+			}
 		}
 	}
 	

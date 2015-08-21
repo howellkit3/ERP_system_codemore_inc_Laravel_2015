@@ -213,19 +213,19 @@ class SalariesController  extends HumanResourceAppController {
 
 				$conditions =  array_merge($conditions,array('Attendance.employee_id' => $emp['Employee']['id']));
 
-			$this->loadModel('HumanResource.WorkSchedule');
+				$this->loadModel('HumanResource.WorkSchedule');
 
-			$this->loadModel('HumanResource.WorkShift');
+				$this->loadModel('HumanResource.WorkShift');
 
-			$this->loadModel('HumanResource.WorkShiftBreak');
+				$this->loadModel('HumanResource.WorkShiftBreak');
 
-			$this->loadModel('HumanResource.BreakTime');
+				$this->loadModel('HumanResource.BreakTime');
 
 				//$this->Attendance->bind(array('WorkSchedule','WorkShift','WorkShiftBreak','BreakTime'));
 
-			$this->Attendance->bindWorkshift(); 
+				$this->Attendance->bindWorkshift(); 
 
-			$employees[$key]['Attendance'] = $this->Attendance->computeAttendance($conditions);
+				$employees[$key]['Attendance'] = $this->Attendance->computeAttendance($conditions);
 				
 			}
 
@@ -695,6 +695,8 @@ class SalariesController  extends HumanResourceAppController {
 
 			$salaries = $this->Payroll->objectToArray($payroll['Payroll']['data']); 
 
+
+			//pr($salaries); exit();
 			} else {
 
 			$salaries = $this->_checkPayroll($payroll);
@@ -773,7 +775,7 @@ class SalariesController  extends HumanResourceAppController {
 
 			$payScheds = ( $days[2] == '16' ) ? 'second' : 'first';
 
-			$conditions = array('Attendance.in NOT' => '','Attendance.out NOT' => '');
+			$conditions = array();
 
 			$conditions = array_merge($conditions,array(
 					'Attendance.date >=' => $customDate['start'],
@@ -789,6 +791,7 @@ class SalariesController  extends HumanResourceAppController {
 				 $employees[$key]['Attendance'] = $this->Attendance->computeAttendance($conditions);
 				
 			}
+
 			//$this->Components->load('HumanResource.SalaryComputation');
 
 			$this->loadModel('HumanResource.SalaryReport');
@@ -824,7 +827,7 @@ class SalariesController  extends HumanResourceAppController {
 					$payroll['Payroll']['data'] = json_decode($payroll['Payroll']['data']);
 
 					$salaries = $this->Payroll->objectToArray($payroll['Payroll']['data']); 
-				
+
 				}
 
 		$this->set(compact('salaries'));

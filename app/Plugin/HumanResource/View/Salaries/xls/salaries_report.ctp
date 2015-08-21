@@ -58,6 +58,9 @@
         ->setCellValue('I'.$counter,number_format($emp['regular_holiday_work_ot'],2))
 
         ->setCellValue('J'.$counter,number_format($emp['regular_holiday_work_ot'],2))
+
+        ->setCellValue('O'.$counter,number_format($emp['leave'],2))
+
         ->setCellValue('N'.$counter,number_format( $night,2))
         ->setCellValue('P'.$counter,number_format($emp['ctpa'],2))
         ->setCellValue('Q'.$counter,number_format($emp['sea'],2))
@@ -74,7 +77,7 @@
 
         ->setCellValue('T'.$counter,number_format($emp['pagibig'],2))
         ->setCellValue('AF'.$counter,number_format($emp['total_deduction'],2))
-        ->setCellValue('AH'.$counter,number_format($emp['allowance'],2))
+        ->setCellValue('AH'.$counter,number_format($emp['allowances'],2))
         ->setCellValue('AG'.$counter,number_format($emp['total_pay'],2))
         ->setCellValue('AJ'.$counter,number_format($emp['total_pay'],2))
 

@@ -176,33 +176,39 @@ echo $this->element('hr_options');
 															   'data-toggle' => 'modal',
 															   'data-id' => $schedule['Attendance']['id'],
 															));
-														if (!empty($timeIn)) {
 
-															$sign = 'fa-sign-out';
+														if ($schedule['Attendance']['type'] != 'leave') {
+															if (!empty($timeIn)) {
+
+																$sign = 'fa-sign-out';
+															
+																$title = 'Time Out';
+
+															} else {
+
+																$sign =  'fa-sign-in';
+
+																$title = 'Time In';
+															}
 														
-															$title = 'Time Out';
+															if (empty($timeIn) || empty($timeOut)) {
 
-														} else {
+																echo $this->Html->link('<span class="fa-stack">
+																<i class="fa fa-square fa-stack-2x"></i>
+																<i class="fa '.$sign.' fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Log </font></span>
+																</span> ','#timeKeep',
+																array('class' =>'add-timekeep table-link',
+																	   'escape' => false,
+																	   'title' => $title ,
+																	   'data-toggle' => 'modal',
+																	   'data-id' => $schedule['Attendance']['id'],
+																	   'onClick' => 'getEmployeeData(this,'.$schedule['Attendance']['id'].')'
+																	));
 
-															$sign =  'fa-sign-in';
+															}
 
-															$title = 'Time In';
-														}
-														
-														if (empty($timeIn) || empty($timeOut)) {
 
-															echo $this->Html->link('<span class="fa-stack">
-															<i class="fa fa-square fa-stack-2x"></i>
-															<i class="fa '.$sign.' fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Log </font></span>
-															</span> ','#timeKeep',
-															array('class' =>'add-timekeep table-link',
-																   'escape' => false,
-																   'title' => $title ,
-																   'data-toggle' => 'modal',
-																   'data-id' => $schedule['Attendance']['id'],
-																   'onClick' => 'getEmployeeData(this,'.$schedule['Attendance']['id'].')'
-																));
-
+															
 														}
 														?>
 

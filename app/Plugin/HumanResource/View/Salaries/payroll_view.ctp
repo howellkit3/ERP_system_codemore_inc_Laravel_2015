@@ -133,7 +133,7 @@ echo $this->element('payroll_options');
 
 			       		<div class="main-box-body clearfix">
 			            	<div id="result-table">
-			            		  <div class="table-responsive">
+			            		  <div class="table-responsive overflow">
 		                                <div class="table-responsive">
 		            					
 		                                	<div class="table-responsive">

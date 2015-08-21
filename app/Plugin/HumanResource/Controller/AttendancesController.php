@@ -278,24 +278,26 @@ public function ajax_find() {
 			
 		if (!empty($query)) {
 
-			$this->loadModel('HumanResource.WorkSchedule');
+		$this->loadModel('HumanResource.WorkSchedule');
 
-			$this->loadModel('HumanResource.Employee');
+		$this->loadModel('HumanResource.Employee');
 
-			$this->loadModel('HumanResource.Workshift');
-			
-			if (!empty($query['from'])) {
-				$date = $query['from'];
-			}
+		$this->loadModel('HumanResource.Workshift');
 
-			if (!empty($query['to'])) {
-				$date2 = $query['to'];
-			}
+		$this->loadModel('HumanResource.Overtime');
+		
+		if (!empty($query['from'])) {
+			$date = $query['from'];
+		}
 
-			$conditions = array(
-				'Attendance.date >=' => $date,
-				'Attendance.date <=' => $date2
-			);
+		if (!empty($query['to'])) {
+			$date2 = $query['to'];
+		}
+
+		$conditions = array(
+			'Attendance.date >=' => $date,
+			'Attendance.date <=' => $date2
+		);
 
 
 		if (!empty($query['employee_id'])) {
@@ -306,8 +308,7 @@ public function ajax_find() {
 				));
 		}
 
-
-		$this->Attendance->bind(array('WorkSchedule','Employee','WorkShift'));
+		$this->Attendance->bind(array('WorkSchedule','Employee','WorkShift','Overtime'));
 
 	//$conditions = array();
 		$params =  array(
@@ -331,13 +332,14 @@ public function ajax_find() {
 	            	'Employee.middle_name',
 	            	'Employee.code',
 	            	'created'),
-	            'order' => 'Attendance.date ASC',
+	            	'order' => 'Attendance.date ASC',
 	    );
 
 
 		$this->paginate = $params;
 
 		$attendances = $this->paginate();
+
 
 		$this->set(compact('attendances','date','search'));
 
