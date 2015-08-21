@@ -1336,12 +1336,11 @@ ALTER TABLE `salaries`  ADD `ctpa` DECIMAL(8,2) NULL  AFTER `basic_pay_per_month
 #NOTE: SELECT KOUFU WAREHOUSE DATABASE ----
 /** howellkit added this 08/08/2015  */
 
-INSERT  INTO `status_field_holders`(`id`,`status`,`created_by`,`modified_by`,`created`,`modified`) VALUES (8,'Waiting',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(9,'Executing',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(10,'Replaced',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03');
 
 /** bien added this 08/13/2015 TO HR DATABASE   */
 ALTER TABLE `attendances` ADD `overtime_id` INT(11)  NULL  DEFAULT NULL  AFTER `status`;
 
-INSERT  INTO `status_field_holders`(`id`,`status`,`created_by`,`modified_by`,`created`,`modified`) VALUES (8,'Waiting',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(9,'Executing',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(10,'Closed',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(11,'Replaced',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03');
+INSERT  INTO `status_field_holders`(`id`,`status`,`created_by`,`modified_by`,`created`,`modified`) VALUES (9,'Executing',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(10,'Closed',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(11,'Replaced',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03');
 
 /** bien added this 08/14/2015 TO HR DATABASE   */
 CREATE TABLE `employee_educational_backgrounds` (
@@ -1555,6 +1554,8 @@ CREATE TABLE IF NOT EXISTS `payrolls` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
+/** howell kit added this 08/17/2015 TO WAREHOUSE DATABASE   */
+
 
 CREATE TABLE IF NOT EXISTS `in_records` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -1589,10 +1590,11 @@ CREATE TABLE IF NOT EXISTS `item_records` (
   `quantity_unit_id` INT(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
 /** bien added this 08/17/2015 TO HR DATABASE   */
 ALTER TABLE `cause_memos` ADD `noted_user_id` INT(11)  NULL  DEFAULT NULL  AFTER `modified`;
 
-/** howell kit added this 08/17/2015 TO HR DATABASE   */
+/** howell kit added this 08/17/2015 TO WAREHOUSE DATABASE   */
 ALTER TABLE `received_items` ADD `original_quantity` INT(11)  NULL  DEFAULT NULL  AFTER `quantity`;
 /** bien added this 08/20/2015 TO Koufu system DATABASE   */
 CREATE TABLE `banks` (
@@ -1606,6 +1608,8 @@ CREATE TABLE `banks` (
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+/** bien added this 08/20/2015 TO Koufu HR DATABASE   */
 
 CREATE TABLE `leave_types` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1633,6 +1637,8 @@ CREATE TABLE `dependents` (
 ALTER TABLE `employee_additional_informations` ADD `bank_id` INT(11)  NULL  DEFAULT NULL  AFTER `no_children`;
 ALTER TABLE `employee_additional_informations` ADD `bank_account_type` VARCHAR(50)  NULL  DEFAULT NULL  AFTER `bank_id`;
 ALTER TABLE `employee_additional_informations` ADD `bank_account_number` VARCHAR(255)  NULL  DEFAULT NULL  AFTER `bank_account_type`;
+
+/** bien added this 08/20/2015 TO Koufu PRODUCTION DATABASE   */
 
 CREATE TABLE `sections` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,

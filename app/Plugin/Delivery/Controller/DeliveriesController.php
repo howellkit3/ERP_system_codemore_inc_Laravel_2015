@@ -1135,7 +1135,6 @@ class DeliveriesController extends DeliveryAppController {
 
         $ClientDeliveryList = $this->ClientOrder->find('list',array('fields' => array('id', 'company_id')));
 
-        // pr($ClientDeliveryList[$ClientDeliveryUUIDList[$clientsOrderUuid]]); exit;
 
         $dr_nos = $this->Delivery->find('all',array('conditions' => array('Delivery.company_id' => $companyId )));
         
@@ -1145,7 +1144,6 @@ class DeliveriesController extends DeliveryAppController {
         $deliveryUserFName = $this->User->find('list',array('fields' => array('id', 'fullname'),'conditions' =>  array('User.role_id' => 5
                                             )));
 
-        // 
 
         foreach ($deliveryUserFName as $key => $value) {
 
@@ -1153,17 +1151,7 @@ class DeliveriesController extends DeliveryAppController {
            
         }
 
-        //pr($deliveryUserFName);exit;
-
-        // $deliveryUserLName = $this->User->find('list',array('fields' => array('id', 'last_name'),'conditions' =>  array('User.role_id' => 4
-        //                                     )));
-
-        // foreach ($deliveryUserLName as $key => $value) {
-
-        //     $deliveryUserLNameUpper[$key] = ucwords($value);
-           
-        // }
-
+    
         $truckList = $this->Truck->find('list',array('fields' => array('id', 'truck_no'),'order' => 'truck_no ASC'));
        
         foreach ($truckList as $key => $value) {

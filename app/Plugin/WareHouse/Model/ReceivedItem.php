@@ -33,7 +33,7 @@ class ReceivedItem extends AppModel {
 				}
 
 			}
-			//pr($data);  exit;
+			
 			return $this->id;
 			
 		}

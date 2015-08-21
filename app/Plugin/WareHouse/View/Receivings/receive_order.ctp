@@ -137,7 +137,7 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
 
                                 <div class="form-group modal-main-body">
                                     <label for="inputPassword1" class="col-lg-2 control-label"></label>
-                                    <div class="col-lg-8 bgcolor"  style = "background-color:#eee;">
+                                    <div class="col-lg-8 bgcolor"  >
                                         
                                     <div class = "checkbox-nice">
                                     <input type="checkbox" class="check-ref-uuid checked" name="requestPurchasingItem[<?php echo $key ?>][<?php echo $requestDataList['RequestItem']['foreign_key'] ?>]" id="<?php echo $key?>" >
@@ -338,7 +338,7 @@ jQuery(document).ready(function(){
 
         $(this).parents('.bgcolor').find('.condition').prop('disabled', false);
 
-        $(this).parents('.bgcolor').css("background-color", " #FFFFFF");
+        $(this).parents('.bgcolor').css("background-color", "#eee");
 
     } else{
 
@@ -346,7 +346,7 @@ jQuery(document).ready(function(){
 
         $(this).parents('.bgcolor').find('.condition').prop('disabled', true);
 
-        $(this).parents('.bgcolor').css("background-color", "#eee");
+        $(this).parents('.bgcolor').css("background-color", "#FFFFFF");
 
     }
 
@@ -366,21 +366,6 @@ jQuery(document).ready(function(){
         }
     }
 
-    function disableClick() {
-
-        alert('r');
-
-        // var limiter = $(this).parents('.modal-body').find('.limiter').val();
-
-        // var limitQuantity = $(this).parents('.modal-body').find('.limitQuantity').val();
-
-        // if(limiter < limitQuantity){
-
-        //     alert('Maximum Quantity'); 
-        //     $(this).parents('.modal-body').find('.limitQuantity').val(limiter);
-        
-        // }
-    }
 
 </script>
 

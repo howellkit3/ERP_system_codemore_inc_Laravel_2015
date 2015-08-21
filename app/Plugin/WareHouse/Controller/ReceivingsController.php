@@ -150,14 +150,10 @@ class ReceivingsController extends WareHouseAppController {
 
         }
 
-        //pr($requestPurchasingItem); exit;
-
+        
 		if (!empty($this->request->data)) {
 
-			// $this->request->data['quantity'] = $itemData[$itemHolder]['quantity'];
 			ksort($this->request->data['requestPurchasingItem']);
-
-		 	//pr($this->request->data); exit;
 
 			$receivedData = $this->ReceivedOrder->find('first', array('conditions' => array('ReceivedOrder.purchase_order_id' => $id)));
 
@@ -275,9 +271,7 @@ class ReceivingsController extends WareHouseAppController {
 		$receivedOrderData = $this->ReceivedOrder->find('first', array('conditions' => array('ReceivedOrder.purchase_order_id' => $purchaseOrderData['PurchaseOrder']['id'])));
 
 		$requestData = $this->Request->find('first', array('conditions' => array('Request.uuid' => $requestUUID)));
-
-		//$requestItemData = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestUUID)));
-
+	
 		if(empty($requestData['PurchaseItem'])){
 
 			$itemHolder = "RequestItem";
@@ -292,7 +286,8 @@ class ReceivingsController extends WareHouseAppController {
 
 		}
 
-		$receivedItemData = $this->ReceivedItem->find('all', array('conditions' => array('ReceivedItem.received_orders_id' => $id)));
+		$receivedItemData = $this->ReceivedItem->find('all', array('conditions' => array('ReceivedItem.received_orders_id' => $purchaseOrderData['PurchaseOrder']['id'])));
+	
 
 		foreach ($itemData as $key1 => $value) {	
 
@@ -305,13 +300,16 @@ class ReceivingsController extends WareHouseAppController {
 
 					$requestPurchasingItem[$key1][$itemHolder]['model'] = $value[$itemHolder]['model'];
 
-					$requestPurchasingItem[$key1][$itemHolder]['quantity'] = $value[$itemHolder]['quantity'];		
+					$requestPurchasingItem[$key1][$itemHolder]['quantity'] = $value[$itemHolder]['quantity'];	
+
 
 					foreach ($receivedItemData as $key => $receivedValue) {	
 
 						if($receivedValue['ReceivedItem']['model'] == 'GeneralItem' && $receivedValue['ReceivedItem']['foreign_key'] == $value[$itemHolder]['foreign_key']){
 							
 							$requestPurchasingItem[$key1][$itemHolder]['original_quantity'] = $receivedValue['ReceivedItem']['original_quantity'];	
+
+							$requestPurchasingItem[$key1][$itemHolder]['delivered_quantity'] = $receivedValue['ReceivedItem']['quantity'];	
 
 						}
         			}
@@ -335,6 +333,7 @@ class ReceivingsController extends WareHouseAppController {
 
 							$requestPurchasingItem[$key1][$itemHolder]['original_quantity'] = $receivedValue['ReceivedItem']['original_quantity'];	
 
+							$requestPurchasingItem[$key1][$itemHolder]['delivered_quantity'] = $receivedValue['ReceivedItem']['quantity'];
 						}
 
         			}
@@ -357,12 +356,17 @@ class ReceivingsController extends WareHouseAppController {
 
 							$requestPurchasingItem[$key1][$itemHolder]['original_quantity'] = $receivedValue['ReceivedItem']['original_quantity'];	
 
+							$requestPurchasingItem[$key1][$itemHolder]['delivered_quantity'] = $receivedValue['ReceivedItem']['quantity'];
 						}
 
         			}
 		        } 
 
 		        if($value[$itemHolder]['model'] == 'CorrugatedPaper'){
+
+		        	$foreignkeyHolder = $value[$itemHolder]['foreign_key'];
+
+		        	$modelHolder = $value[$itemHolder]['model'];
 
 					$itemDetails = $this->CorrugatedPaper->find('list', array('fields' => array('CorrugatedPaper.id', 'CorrugatedPaper.name')
 																		));  
@@ -371,14 +375,29 @@ class ReceivingsController extends WareHouseAppController {
 
 					$requestPurchasingItem[$key1][$itemHolder]['model'] = $value[$itemHolder]['model'];
 
-					$requestPurchasingItem[$key1][$itemHolder]['quantity'] = $value[$itemHolder]['quantity'];                    
-		    		
+					$requestPurchasingItem[$key1][$itemHolder]['quantity'] = $value[$itemHolder]['quantity'];   
+
 		    		foreach ($receivedItemData as $key => $receivedValue) {	
 
-						if($receivedValue['ReceivedItem']['model'] == 'CorrugatedPaper' && $receivedValue['ReceivedItem']['foreign_key'] == $value[$itemHolder]['foreign_key']){
+		    			$conditions = array(); 
+
+		    			$deliveredQuantityArray = array();
+
+						$conditions = array_merge($conditions, array('ReceivedItem.model' => $modelHolder, 'ReceivedItem.foreign_key' => $foreignkeyHolder ));
+
+						$received_items_data = $this->ReceivedItem->find('all', array('conditions' => $conditions));
+
+						foreach ($received_items_data as $key => $value) {
+
+						array_push($deliveredQuantityArray, $value['ReceivedItem']['quantity']);
+
+						}
+
+						if($receivedValue['ReceivedItem']['model'] == 'CorrugatedPaper' && $receivedValue['ReceivedItem']['foreign_key'] == $foreignkeyHolder){
 
 							$requestPurchasingItem[$key1][$itemHolder]['original_quantity'] = $receivedValue['ReceivedItem']['original_quantity'];	
 
+							$requestPurchasingItem[$key1][$itemHolder]['delivered_quantity'] = array_sum($deliveredQuantityArray);
 						}
 
         			}
@@ -387,7 +406,7 @@ class ReceivingsController extends WareHouseAppController {
 
 
         }
-       //pr($requestPurchasingItem);  exit;
+ 
 
    	$this->set(compact('purchaseOrderData', 'supplierData', 'firstName', 'lastName', 'requestData', 'itemDetails', 'requestPurchasingItem', 'itemData', 'receivedOrderData', 'type', 'requestItemData'));
 
@@ -422,25 +441,13 @@ class ReceivingsController extends WareHouseAppController {
 
     	$receivedData = $this->ReceivedOrder->find('first', array('conditions' => array('ReceivedOrder.id' => $id)));
 
-    	//pr($receivedData); exit;
-
 		if (!empty($this->request->data)) {
-
-			//pr($this->request->data); exit;
 
 			$this->loadModel('WareHouse.InRecord');
 
 			$this->loadModel('WareHouse.ItemRecord');
 
 			$this->loadModel('WareHouse.Stock');
-
-			//$this->ReceivedOrder->id = $id;
-
-			//$this->ReceivedOrder->saveField('status_id', 13);
-
-			//$inRecordId = $this->InRecord->saveInRecord($this->request->data['InRecord'],$userData['User']['id'],$id);
-
-			//$this->ItemRecord->saveItemRecord($inRecordId, $receivedData['ReceivedItem']);
 			
 			$this->Stock->saveStock($receivedData, $this->request->data);
 
@@ -464,8 +471,6 @@ class ReceivingsController extends WareHouseAppController {
 
     	$supplierData = $this->Supplier->find('list', array('fields' => array('Supplier.id', 'Supplier.name')
 																));
-
-    	//pr($supplierData); exit;
 
     	$this->set(compact('stock_table', 'supplierData'));
 

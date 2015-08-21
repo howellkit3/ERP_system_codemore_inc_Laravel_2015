@@ -151,75 +151,7 @@
             </div>
         </div>
 
-   <!--      <div class="row">
-            <div class="col-lg-12">
-                <div class="main-box">
-                    <header class="main-box-header clearfix">
-
-                        <h2 class="pull-left">Received Order</h2>
-
-                    </header>
-
-                    <div class="top-space"></div>            
-
-                    <div class="main-box-body clearfix">
-                        <div class="main-box-body clearfix">
-                            <div class="form-horizontal">  
-
-                                <?php  if(!empty($requestData['PurchaseItem'])){
-
-                                    foreach ($requestData['PurchaseItem'] as $requestDataList): ?>
-
-                                    <div class="form-group">
-                                        <label class="col-lg-2 control-label"></label>
-                                      
-                                        <div class="col-lg-8">
-                                            <?php 
-                                                echo $this->Form->input('PurchaseOrder.item', array(
-                                                                                'class' => 'form-control item_type',
-                                                                                'disabled' => true,
-                                                                                'label' => false,       
-                                                                                'value' => $requestDataList['foreign_key'],
-                                                                                'fields' =>array('name')));
-                                            ?>
-                                        </div>
-                                    </div>
-
-                                             <?php 
-                                        endforeach; 
-
-                                }else{
-
-                                    foreach ($requestPurchasingItem as $requestDataList): ?>
-                                        
-                                    <div class="form-group">
-                                        <label class="col-lg-2 control-label"></label>
-                                      
-                                        <div class="col-lg-8">
-                                            <?php 
-                                                echo $this->Form->input('PurchaseOrder.items', array(
-                                                                                'class' => 'form-control ',
-                                                                                'disabled' => true,
-                                                                                'label' => false,       
-                                                                                'value' => $requestDataList['RequestItem']));
-                                            ?>
-                                        </div>
-                                    </div>
-
-                                             <?php 
-                                        endforeach; 
-                                              
-                                } ?>
-
-                                
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-        
+   
         <?php echo $this->Form->end(); ?>   
     </div>
 </div>
@@ -327,7 +259,7 @@
 
                          }else{ 
 
-                         foreach ($requestPurchasingItem as $requestDataList): ?>
+                         foreach ($requestPurchasingItem as $requestDataList):?>
                         <tr>
                             <td>
                             <img src="<?php echo Router::url('/', true) ?>img/itembox.png" alt="logo" style="width:85px;height:60px;padding-bottom:10;">
@@ -342,9 +274,9 @@
                                 <span class="warranty">
                                 <i class="fa fa-certificate"></i>&nbsp;  <?php 
 
-                                if(!empty($requestDataList['RequestItem']['original_quantity'])){
+                                if(!empty($requestDataList['RequestItem']['delivered_quantity'])){
 
-                                 echo $requestDataList['RequestItem']['original_quantity'] ?> pcs
+                                 echo $requestDataList['RequestItem']['delivered_quantity'] ?> pcs
 
                                 <?php } ?>
                                 </span>
