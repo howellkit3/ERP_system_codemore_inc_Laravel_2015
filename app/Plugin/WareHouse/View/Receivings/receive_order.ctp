@@ -64,7 +64,7 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                     </div>
                                 </div>          
 
-                                <?php    foreach ($requestPurchasingItem as $key => $requestDataList): 
+                                <?php  foreach ($requestPurchasingItem as $key => $requestDataList): 
 
                                 if(empty($requestDataList[$itemHolder]['delivered_quantity'])){
 
@@ -88,7 +88,7 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                                         <label for="<?php echo $key?>"> <?php  echo $requestDataList[$itemHolder]['name'] ?></label>
 
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group ">
                                             
                                             <label class="col-lg-2 control-label">Quantity</label>
 
@@ -107,11 +107,11 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                             ?>
                                         </div>
 
-                                            <div class="col-lg-2">
+                                            <div class="col-lg-2 ">
                                             <?php 
                                                 echo $this->Form->input('requestPurchasingItem.'.$key.'.condition', array(         
                                                                         'required' => 'required',
-                                                                        'class' => 'form-control required condition',
+                                                                        'class' => 'form-control required condition ',
                                                                         'options' => array('good', 'reject'),
                                                                         'value' => 0,
                                                                         'label' => false,
@@ -139,9 +139,11 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                                                         
                                                                         ));
                                     ?>
+
+
                                        
                                      </div>
-
+                                        <div class="col-lg-2 searchAppend"> </div>
                                     
                                     </div>                  
                                 </div>
@@ -198,7 +200,7 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
 
 <script>
 
-jQuery(document).ready(function(){
+jQuery("body").ready(function(){
 
     $('.limitQuantity').bind('change', quantityController); });
 
@@ -224,6 +226,13 @@ jQuery(document).ready(function(){
 
     });
 
+    //  $('.condition').on("change", function() {
+
+    //     $('.searchAppend').html('<input name="data[requestPurchasingItem][0][quantity]" empty="None" required="required" class="form-control item_type limitQuantity valid" placeholder="Quantity" value="12" type="text" id="requestPurchasingItem0Quantity" aria-required="true" aria-invalid="false"> <input name="data[requestPurchasingItem][0][quantity]" empty="None" required="required" class="form-control item_type limitQuantity valid" placeholder="Quantity" value="12" type="text" id="requestPurchasingItem0Quantity" aria-required="true" aria-invalid="false">');
+
+    // });
+
+
     function quantityController() {
 
     var limiter = $(this).parents('.modal-main-body').find('.limiter').val();
@@ -237,6 +246,7 @@ jQuery(document).ready(function(){
         
         }
     }
+
 
 
 </script>
