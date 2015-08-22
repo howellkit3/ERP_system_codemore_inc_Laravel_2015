@@ -165,6 +165,18 @@
 
     <header class="main-box-header clearfix">
     <h2>Purchased Item List</h2>
+    <span style = "font-size:10px;">
+    <I>
+        <span class="price table table-products table-hover">
+            <i class="fa fa-tags" style = "color:#52D017;"></i>&nbsp; Model
+            </span>
+                                
+
+        <span class="warranty">
+            <i class="fa fa-certificate" style = "color:orange;"></i>&nbsp; Purchased Item
+        </span>
+    </I>
+    </span>
     </header>
 
         <div class="main-box-body clearfix">
@@ -203,7 +215,20 @@
     <div class="main-box clearfix">
 
     <header class="main-box-header clearfix">
-    <h2>Delivered Item List</h2>
+    <h2>Delivered Item List</h2> 
+    <span style = "font-size:10px;">
+    <I>
+        <span class="price table table-products table-hover">
+            <i class="fa fa-certificate" style = "color:#52D017;"></i>&nbsp; Good
+            </span>
+                                
+
+        <span class="warranty">
+            <i class="fa fa-certificate" style = "color:orange;"></i>&nbsp; Rejected
+        </span>
+    </I>
+    </span>
+
     </header>
 
         <div class="main-box-body clearfix">
@@ -223,10 +248,16 @@
                                 <?php echo $requestDataList[$itemHolder]['name'] ?>
                                 </span>
                                 <span class="price">
-                                <i class="fa fa-tags"></i>&nbsp;<?php echo $requestDataList[$itemHolder]['model'] ?> 
+                                <i class="fa fa-certificate"></i>&nbsp; <?php 
+
+                                if(!empty($requestDataList[$itemHolder]['delivered_quantity'])){
+
+                                 echo $requestDataList[$itemHolder]['delivered_quantity'] ?> pcs
+
+                                <?php } ?>
                                 </span>
                                 <span class="warranty">
-                                <i class="fa fa-certificate"></i>&nbsp;  <?php 
+                                <i class="fa fa-certificate"></i>&nbsp; <?php 
 
                                 if(!empty($requestDataList[$itemHolder]['delivered_quantity'])){
 
@@ -242,7 +273,8 @@
                     
                     </tbody>
                 </table>
-            </div>
+            </div> 
         </div>
     </div>
+
 </div>
