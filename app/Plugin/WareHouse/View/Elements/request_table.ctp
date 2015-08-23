@@ -1,45 +1,62 @@
-<?php foreach ($stock_table as $stockTableList ): ?>
-    
+<?php  foreach ($requestData as $requestDataList ): ?>
+
         <tr class="">
 
             <td class="">
-                <?php echo 'WIO' . ucfirst($stockTableList['Stock']['uuid']) ?>  
+                <?php echo ucfirst($requestDataList['Request']['uuid']) ?>  
             </td>
 
             <td class="">
-                <?php echo $stockTableList['Stock']['item_id'] ?>  
+
+                <?php echo ucfirst($requestDataList['Request']['name']) ?>
+
             </td>
 
             <td class="">
-                <?php echo ucfirst($supplierData[$stockTableList['Stock']['supplier_id']]) ?>
+                <?php echo ucfirst($requestDataList['PurchasingType']['name']) ?>
+            </td>
+
+            <td >
+               
+                       <span class='label label-default'>Waiting</span>
+                  
             </td>
 
             <td class="">
-                <?php echo ucfirst($stockTableList['Stock']['quantity']) ?>
+
+                <?php echo ucwords($userNameList[$requestDataList['Request']['prepared_by']]) ?>
+
             </td>
 
             <td class="">
-                <?php echo ucfirst($stockTableList['Stock']['location_id']) ?>
+
+                <?php echo ucwords($roleData[$userROleList[$requestDataList['Request']['prepared_by']]]) ?>
+
             </td>
 
-            <td class="">
-                <?php echo date('M d, Y', strtotime($stockTableList['Stock']['created'])) ?>
+
+             <td class="">
+
+                <?php echo date('M d, Y', strtotime($requestDataList['Request']['created'])); ?>
+
             </td>
 
-            <td align = "center">
+            <td>
 
-                <?php echo $this->Html->link('<span class="fa-stack">
-                          <i class="fa fa-square fa-stack-2x"></i>
-                          <i class="fa  fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> View</font></span>
-                          </span> ', array('controller' => 'receivings', 'action' => 'view', $stockTableList['Stock']['id']),array('class' =>' table-link ','escape' => false,'title'=>'Print Transmittal Receipt')); ?>
+                 <?php
+                        echo $this->Html->link('<span class="fa-stack">
+                            <i class="fa fa-square fa-stack-2x"></i>
+                            <i class="fa fa-search fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> View</font></span>
+                            </span> ', array('controller' => 'receivings', 'action' => 'view', $requestDataList['Request']['id'], $requestDataList['Request']['uuid'], 0),array('class' =>' table-link','escape' => false,'title'=>'Review Inquiry'));
+                    ?>                    
 
-                   <!--  <a data-toggle="modal" href="#myModalReturn<?php echo $stockTableList['Stock']['id']?>" class="table-link "><i class="fa fa-lg "></i><span class="fa-stack">
+                <a data-toggle="modal" href="#myModalReturn<?php echo $requestDataList['Request']['id']?>" class="table-link "><i class="fa fa-lg "></i><span class="fa-stack">
                                       <i class="fa fa-square fa-stack-2x"></i>
-                                      <i class="fa  fa-sign-in fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> OutRecord </font></span></a>  -->
+                                      <i class="fa  fa-sign-in fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> OutRecord </font></span></a> 
 
             </td>
 
-            <!-- <div class="modal fade" id="myModalReturn<?php echo $stockTableList['Stock']['id']?>" role="dialog" >
+            <div class="modal fade" id="myModalReturn<?php echo $requestDataList['Request']['id']?>" role="dialog" >
                 <div class="modal-dialog">
                     <div class="modal-content margintop">
 
@@ -50,10 +67,10 @@
 
                         <div class="modal-body">
 
-                            <?php $id = $requestOrderDataList['ReceivedOrder']['id'];
+                            <?php // $id = $requestOrderDataList['ReceivedOrder']['id'];
 
                                 echo $this->Form->create('InRecord',array(
-                                    'url'=>(array('controller' => 'receivings','action' => 'in_record', $id)),'class' => 'form-horizontal')); 
+                                    'url'=>(array('controller' => 'receivings','action' => 'in_record')),'class' => 'form-horizontal')); 
                             ?>
 
                                 <div class="form-group" id="existing_items">
@@ -99,8 +116,9 @@
                         </div>
                     </div>
                 </div>
-            </div> -->
-        </tr>
+            </div>
+<div class="md-overlay"></div>
+
 
 <?php endforeach; ?> 
 

@@ -8,7 +8,7 @@
         <div class="main-box clearfix body-pad">
             <header class="main-box-header clearfix">
 
-                <h2 class="pull-left"><b>Stock List</b></h2>
+                <h2 class="pull-left"><b>Request List</b></h2>
 
             </header>
             
@@ -17,17 +17,18 @@
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th><a href="#"><span>Receive No</span></a></th>
-                                <th><a href="#"><span>Item</span></a></th>
-                                <th><a href="#"><span>Supplier</span></a></th>
-                                <th><a href="#"><span>Quantity</span></a></th>
-                                <th><a href="#"><span>Location</span></a></th>
+                                <th><a href="#"><span>Request No</span></a></th>
+                                <th><a href="#"><span>Name</span></a></th>
+                                <th><a href="#"><span>Type</span></a></th>
+                                <th><a href="#"><span>Status</span></a></th>
+                                <th><a href="#"><span>Requested By</span></a></th>
+                                <th><a href="#"><span>Position</span></a></th>
                                 <th><a href="#"><span>Created</span></a></th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
 
-                        <?php echo $this->element('stocks_table'); ?>
+                        <?php echo $this->element('request_table'); ?>
 
                                                     
                      </table>

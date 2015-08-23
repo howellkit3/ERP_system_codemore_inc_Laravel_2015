@@ -620,13 +620,17 @@ class ReceivingsController extends WareHouseAppController {
 
 		if (!empty($this->request->data)) {
 
+			//pr($receivedData); exit;
+
 			$this->loadModel('WareHouse.InRecord');
 
 			$this->loadModel('WareHouse.ItemRecord');
 
 			$this->loadModel('WareHouse.Stock');
 
-			$this->InRecord->saveInRecord($receivedData, $this->request->data, $userData['User']['id']);
+			$idInRecord = $this->InRecord->saveInRecord($receivedData, $this->request->data, $userData['User']['id']);
+
+			$this->ItemRecord->saveItemRecord($receivedData['ReceivedItem'], $idInRecord);
 			
 			$this->Stock->saveStock($receivedData, $this->request->data);
 
@@ -642,16 +646,26 @@ class ReceivingsController extends WareHouseAppController {
 
     public function out_record() {
 
-    	$this->loadModel('WareHouse.Stock');
+    	$this->loadModel('Purchasing.Request');
 
-    	$this->loadModel('Supplier');
+    	$this->loadModel('User');
 
-    	$stock_table = $this->Stock->find('all');
+    	$this->loadModel('Role');
 
-    	$supplierData = $this->Supplier->find('list', array('fields' => array('Supplier.id', 'Supplier.name')
-																));
+    	$userNameList = $this->User->find('list', array('fields' => array('User.id', 'User.fullname'))
+													);
 
-    	$this->set(compact('stock_table', 'supplierData'));
+    	$userROleList = $this->User->find('list', array('fields' => array('User.id', 'User.role_id'))
+													);
+
+    	$roleData = $this->Role->find('list', array('fields' => array('Role.id', 'Role.name'))
+													);
+
+    	$this->Request->bind(array('PurchasingType'));
+
+    	$requestData = $this->Request->find('all');
+
+    	$this->set(compact('requestData', 'userNameList', 'roleData', 'userROleList'));
 
 
     }

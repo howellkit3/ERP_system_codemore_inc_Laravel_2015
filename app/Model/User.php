@@ -56,7 +56,7 @@ class User extends AppModel {
 			'hasOne' => array(
 				'Role' => array(
 					'className' => 'Role',
-					'foreignKey' => 'role_id',
+					'foreignKey' => 'id',
 					'dependent' => true
 				),
 			), 
