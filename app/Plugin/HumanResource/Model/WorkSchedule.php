@@ -103,7 +103,6 @@ class WorkSchedule extends AppModel {
 					$days2 = explode('/',trim($date[1]));
 
 					
-
 					for ($days_count = $days1[2];$days_count <= $days2[2]; $days_count++) :
 
 						$checkDate = $days1[0].'-'.$days1[1].'-'.sprintf("%02d",$days_count);

@@ -12,7 +12,6 @@
 					<th><a href="#"><span>PhilHealth</span></a></th>
 					<th><a href="#"><span>WTax</span></a></th>
 					<th><a href="#"><span>Deductions</span></a></th>
-
 					<th><a href="#"><span>Remarks</span></a></th>
 				</tr>
 			</thead>

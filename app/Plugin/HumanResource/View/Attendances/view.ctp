@@ -1,5 +1,5 @@
 <header class="main-box-header clearfix">
-	<div class="filter-block pull-right">	
+	<div class="filter-block">	
 
 		<?php echo $this->Form->create('Attendance',array('controller' => 'attendances','action' => 'ajax_find', 'type'=> 'get'),array('id'=>'ajaxSearchForm')); ?>
 			<div class="form-group pull-left">
@@ -91,7 +91,8 @@
 		                        <td class="text-center"> 
 		                           	<?php //echo $schedule['WorkSchedule']['type'] ?> 
 		                           	<?php echo !empty($overtime['Overtime']['status']) ? $overtime['Overtime']['status'] : ''; ?>
-									<span class="label <?php echo $schedule['Attendance']['type'] == 'work' ? 'label-success' : 'label-default' ?>"><?php echo $schedule['Attendance']['type'] ?></span>
+									<span class="label <?php echo $schedule['Attendance']['type'] == 'work' ? 'label-success' : 'label-default' ?>"><?php
+									 echo Inflector::humanize($schedule['Attendance']['type'])  ?></span>
 		                        </td>
 								<td> 
 		                           <?php echo date('Y/m/d',strtotime($schedule['Attendance']['date'])).' '.date('h:i a',strtotime($schedule['WorkShift']['from'])); ?> 
@@ -102,14 +103,17 @@
 		                         </td>
 		                        <td class="text-center"> 
 		                           <?php 
-		                           $timeIn = (!empty($schedule['Attendance']['in']) && $schedule['Attendance']['in']  != '00:00:00') ? date('h:i a',strtotime($schedule['Attendance']['in'])) : '';
+		                           	
+		                           	$timeIn = (!empty($schedule['Attendance']['in']) && $schedule['Attendance']['in']  != '00:00:00') ? date('h:i a',strtotime($schedule['Attendance']['in'])) : '';
+									
 									echo $timeIn;
 		                            ?> 
 		                        </td>
 		                        </td>
 		                        <td class="text-center"> 
 		                           <?php 
-		                           $timeOut = (!empty($schedule['Attendance']['out']) && $schedule['Attendance']['out']  != '00:00:00') ? date('h:i a',strtotime($schedule['Attendance']['out'])) : '';
+		                           
+		                           	$timeOut = (!empty($schedule['Attendance']['out']) && $schedule['Attendance']['out']  != '00:00:00') ? date('h:i a',strtotime($schedule['Attendance']['out'])) : '';
 
 		                           	echo $timeOut;
 		                           ?> 

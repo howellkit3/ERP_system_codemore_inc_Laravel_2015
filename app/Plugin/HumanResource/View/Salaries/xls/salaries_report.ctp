@@ -25,19 +25,41 @@
         $sss_loan = !empty($emp['sss_loan']) ? $emp['sss_loan'] : number_format(0,2);
         $pagibig_loan = !empty($emp['pagibig_loan']) ? $emp['pagibig_loan'] : number_format(0,2);
         $uniform = !empty($emp['uniform']) ? $emp['uniform'] : number_format(0,2);
-
         
+        $other_1 = 0;
+        $other_2 = 0;
+        $medical = 0;
+        $canteen = 0;
+        $bank_loan = 0;
+        $incentives = 0;
+
+
+        $night = number_format(0,2);
+
+        $night += $emp['night'];
+        $night += $emp['night_diff_ot'];
+        $night += $emp['night_diff_legal_holiday'];
+        $night += $emp['night_diff_legal_holiday_work'];
+        $night += $emp['night_diff_special_holday'];
+        $night += $emp['night_diff_special_holday_work'];
+        $night += $emp['night_diff_sunday_work'];
+        $night += $emp['night_diff_sunday_work_ot'];
+
+ 
          $objTpl->setActiveSheetIndex(0)
         ->setCellValue('A'.$counter,$employee_name)
         ->setCellValue('B'.$counter,$emp['days'])
-        ->setCellValue('C'.$counter,number_format($emp['regular_work'],2))
-        ->setCellValue('D'.$counter,number_format($emp['regular_work_ot'],2))
-        ->setCellValue('G'.$counter,number_format($emp['regular_holiday'],2))
-        ->setCellValue('H'.$counter,number_format($emp['regular_holiday_work'],2))
+        ->setCellValue('C'.$counter,number_format($emp['regular'],2))
+        ->setCellValue('D'.$counter,number_format($emp['OT'],2))
+        ->setCellValue('E'.$counter,number_format($emp['sunday_work'],2))
+        ->setCellValue('F'.$counter,number_format($emp['sunday_work_ot'],2))
+        ->setCellValue('G'.$counter,number_format($emp['legal_holiday'],2))
+        ->setCellValue('H'.$counter,number_format($emp['legal_holiday_work'],2))
         ->setCellValue('I'.$counter,number_format($emp['regular_holiday_work_ot'],2))
 
+        ->setCellValue('J'.$counter,number_format($emp['regular_holiday_work_ot'],2))
+        ->setCellValue('N'.$counter,number_format( $night,2))
         ->setCellValue('P'.$counter,number_format($emp['ctpa'],2))
-
         ->setCellValue('Q'.$counter,number_format($emp['sea'],2))
         //deductions
         ->setCellValue('W'.$counter,number_format($ca_fund,2))
@@ -48,12 +70,15 @@
 
         ->setCellValue('R'.$counter,number_format($emp['gross_pay'],2))
         ->setCellValue('S'.$counter,number_format($emp['sss'],2))
-        ->setCellValue('T'.$counter,number_format(0,2))
+        ->setCellValue('T'.$counter,number_format($emp['pagibig'],2))
+
+        ->setCellValue('T'.$counter,number_format($emp['pagibig'],2))
         ->setCellValue('AF'.$counter,number_format($emp['total_deduction'],2))
         ->setCellValue('AH'.$counter,number_format($emp['allowance'],2))
+        ->setCellValue('AG'.$counter,number_format($emp['total_pay'],2))
         ->setCellValue('AJ'.$counter,number_format($emp['total_pay'],2))
-        ;
 
+        ;
         $counter++;  
         
     }

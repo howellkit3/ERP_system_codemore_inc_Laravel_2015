@@ -130,8 +130,6 @@ class SalariesController  extends HumanResourceAppController {
 
 				$this->loadModel('HumanResource.BreakTime');
 
-				//$this->Attendance->bind(array('WorkSchedule','WorkShift','WorkShiftBreak','BreakTime'));
-
 				$this->Attendance->bindWorkshift(); 
 
 				$employees[$key]['Attendance'] = $this->Attendance->computeAttendance($conditions);
@@ -144,7 +142,8 @@ class SalariesController  extends HumanResourceAppController {
 
 			$this->loadModel('Payroll.Deduction');
 
-			$this->loadModel('Payroll.Amorization');
+			$this->loadModel('Payroll.Amortization');
+			$this->loadModel('Payroll.OvertimeRate');
 
 			$this->loadModel('HumanResource.Holiday');
 
@@ -234,7 +233,7 @@ class SalariesController  extends HumanResourceAppController {
 
 			$this->loadModel('Payroll.Deduction');
 
-			$this->loadModel('Payroll.Amorization');
+			$this->loadModel('Payroll.Amortization');
 
 			$this->loadModel('HumanResource.Holiday');
 
@@ -751,12 +750,18 @@ class SalariesController  extends HumanResourceAppController {
 			$this->loadModel('HumanResource.Salary');
 			$this->loadModel('HumanResource.GovernmentRecord');
 
+			$this->loadModel('HumanResource.WorkSchedule');
+			$this->loadModel('HumanResource.WorkShift');
+			$this->loadModel('HumanResource.WorkShiftBreak');
+			$this->loadModel('HumanResource.BreakTime');
+
 			$emp_conditions = array();//array('Employee.status NOT' => array('1'));
 			$this->Employee->bind(array('Salary','GovernmentRecord'));
 
 			$employees = $this->Employee->find('all',array(
 								'conditions' => $emp_conditions,
 								'order' => array('Employee.last_name ASC'),
+								//'fields' => array('')
 								'group' => array('Employee.id')
 							));
 
@@ -775,43 +780,28 @@ class SalariesController  extends HumanResourceAppController {
 					'Attendance.date <=' => $customDate['end'] 
 				));
 
-			foreach ($employees as $key => $emp) {
 
-				if (!empty($emp['GovernmentRecord'])) {
-					$employees[$key]['Agency'] = Set::classicExtract($emp['GovernmentRecord'], '{n}.agency_id');
-				}
+			foreach ($employees as $key => $emp) {
 				
 				$conditions =  array_merge($conditions,array('Attendance.employee_id' => $emp['Employee']['id']));
 
-				$this->loadModel('HumanResource.WorkSchedule');
-
-				$this->loadModel('HumanResource.WorkShift');
-
-				$this->loadModel('HumanResource.WorkShiftBreak');
-
-				$this->loadModel('HumanResource.BreakTime');
-
-				$this->Attendance->bindWorkshift(); 
-
-				$employees[$key]['Attendance'] = $this->Attendance->computeAttendance($conditions);
+				 $this->Attendance->bindWorkshift(); 
+				 $employees[$key]['Attendance'] = $this->Attendance->computeAttendance($conditions);
 				
 			}
-
 			//$this->Components->load('HumanResource.SalaryComputation');
 
 			$this->loadModel('HumanResource.SalaryReport');
-
-			$this->loadModel('Payroll.Deduction');
-
-			$this->loadModel('Payroll.Amorization');
-
 			$this->loadModel('HumanResource.Holiday');
+			$this->loadModel('Payroll.Deduction');
+			$this->loadModel('Payroll.Amortization');			
+			$this->loadModel('Payroll.OvertimeRate');			
 
+			//$OvertimeRate = ClassRegistry::init('Amortization')->find('all');
+			
 			$updateDatabase = !empty($update) && $update == true ? true : false;
 
 			$salaries = $this->SalaryComputation->calculateBenifits($employees,$payScheds,$customDate,$updateDatabase);
-
-
 
 		}
 

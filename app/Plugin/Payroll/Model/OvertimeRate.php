@@ -32,6 +32,19 @@ class OvertimeRate extends AppModel {
 
 		$this->contain($model);
 	}
-		
+	
+	public function getOvertimeRate() {
+
+		$list = $this->find('all');
+
+		$rates = array();
+
+		foreach ($list as $key => $value) {
+				
+			$rates[$value['OvertimeRate']['id']]  = $value;
+		}
+
+		return $rates;
+	}	
 
 }

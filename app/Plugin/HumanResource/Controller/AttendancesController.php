@@ -64,8 +64,6 @@ class AttendancesController  extends HumanResourceAppController {
 		
 		$departmentList = $this->Department->getList();
 
-		//$employeeList = $this->Employee->;
-
 		$this->set(compact('attendances','date','search','departmentList','employeeList'));
 
 	}
@@ -165,8 +163,7 @@ class AttendancesController  extends HumanResourceAppController {
 
 
 	public function add() {
-
-		
+	
 		$this->loadModel('HumanResource.Timekeep');
 
 		$auth = $this->Session->read('Auth.User');
@@ -195,10 +192,14 @@ class AttendancesController  extends HumanResourceAppController {
 
 						$attendance['Attendance']['in'] = date('h:i a',strtotime($attendance['Attendance']['in']));
 					}
+
 					if (!empty($attendance['Attendance']['out'])) {
 
 						$attendance['Attendance']['out'] = date('h:i a',strtotime($attendance['Attendance']['out']));
-					} 
+
+						$attendance['Attendance']['duration'] = $this->_getDuration($attendance['Attendance']['in'],$attendance['Attendance']['out']);
+					}
+					 
 					echo json_encode($attendance);
 
 					exit();
@@ -221,6 +222,50 @@ class AttendancesController  extends HumanResourceAppController {
 			
 			}
 	}
+}
+
+
+private function _getDuration($time1 = null,$time2 = null){
+
+
+		if (!empty($time1) && $time2) {
+
+		$date = date('Y-m-d');
+		$date1 = new DateTime($date.' '.$time1);
+		$date2 = new DateTime($date.' '.$time2);
+
+		$interval = $date1->diff($date2);
+
+		$difference = '';
+
+			if ($interval->d != 0){
+
+				$days = ($interval->d > 1) ? 'days' : 'day';
+				$difference	.= $interval->d  .' '.$days;
+			}
+			else{
+				if ($interval->h != 0){
+
+					$difference .= $interval->h  . ' hours';
+				} 
+			}
+
+			if ($interval->d == 0 && $interval->invert == 0 && $interval->i != 0) {
+				if ($interval->h != 0) {
+				  $difference .= ' & ';
+				}
+				$minutes = ' min';
+
+				if ($interval->i > 1) {
+					$minutes = ' mins';
+				}
+				$difference .= $interval->i  .$minutes;
+			}
+
+		return $difference;
+	}
+
+
 }
 
 public function ajax_find() {

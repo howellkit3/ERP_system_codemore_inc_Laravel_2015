@@ -1594,4 +1594,3 @@ ALTER TABLE `cause_memos` ADD `noted_user_id` INT(11)  NULL  DEFAULT NULL  AFTER
 
 /** howell kit added this 08/17/2015 TO HR DATABASE   */
 ALTER TABLE `received_items` ADD `original_quantity` INT(11)  NULL  DEFAULT NULL  AFTER `quantity`;
-

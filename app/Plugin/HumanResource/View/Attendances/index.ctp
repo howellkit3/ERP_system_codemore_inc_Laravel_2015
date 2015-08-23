@@ -101,7 +101,7 @@ echo $this->element('hr_options');
 								                        <td class="text-center"> 
 
 								                        	<?php echo !empty($overtime['Overtime']['status']) ? $overtime['Overtime']['status'] : ''; ?>
-															<span class="label <?php echo $schedule['Attendance']['type'] == 'work' ? 'label-success' : 'label-default' ?>"><?php echo $schedule['Attendance']['type'] ?></span>
+															<span class="label <?php echo $schedule['Attendance']['type'] == 'work' ? 'label-success' : 'label-default' ?>"><?php echo Inflector::humanize($schedule['Attendance']['type']) ?></span>
 
 								                        </td>
 														<td> 
@@ -146,7 +146,7 @@ echo $this->element('hr_options');
 								                           		}
 								                           	?> 
 								                        </td> 
-								                         <td class="text-center" > 
+								                         <td class="text-center duration" > 
 								                           <?php echo $this->CustomTime->getDuration($timeIn,$timeOut); ?> 
 								                        </td>
 								                        <td class="attendance-status"> 

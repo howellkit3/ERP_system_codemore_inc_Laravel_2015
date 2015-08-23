@@ -243,3 +243,7 @@ div.value {
   padding: 0;
   width: 100%;
 }
+
+.table-responsive {
+  overflow: auto;
+}

@@ -48,7 +48,7 @@ class Payroll extends AppModel {
 			$data[$this->alias]['to'] = date('Y-m-d',strtotime($dates[1].'-'.$data[$this->alias]['month_year']));
 			$data[$this->alias]['date'] = date('Y-m-d');
 			$data[$this->alias]['transaction_date'] = date('Y-m-d');
-			//$data[$this->alias]['transaction_date'] = date('Y-m-d');
+			$data[$this->alias]['year'] = date('Y',strtotime($dates[1].'-'.$data[$this->alias]['month_year']));
 		}
 
 		return $data;

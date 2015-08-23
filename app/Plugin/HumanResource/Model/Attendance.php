@@ -176,11 +176,13 @@ class Attendance extends AppModel {
 							} 
 						}
  
-						if ( date("w",strtotime($sched['Attendance']['date'])) != 0) {
+						if ( date("w",strtotime($sched['Attendance']['date'])) == 0) {
 
-							$this->save($sched);
+							$sched['Attendance']['type'] = 'rest_day';
 
 						}
+
+						$this->save($sched);
 
 				
 					endfor;
@@ -253,7 +255,7 @@ class Attendance extends AppModel {
 			}
 
 			$attendance['Attendance']['notes'] = $data['Attendance']['notes']; 
-			$attendance['Attendance']['status'] = $data['Attendance']['status']; 
+			$attendance['Attendance']['status'] = !empty($data['Attendance']['status']) ? $data['Attendance']['status'] : ''; 
 
 	
 			return $attendance;

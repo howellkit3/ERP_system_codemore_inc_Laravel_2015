@@ -102,7 +102,7 @@
             dataType: "html",
             success: function(data) {
                
-            	console.log(data);
+            	//console.log(data);
 
             }
         });
@@ -168,6 +168,11 @@ $(document).ready(function(){
 
                     $parent.find('.time-out').text(data.Attendance.out);
                     $parent.find('.time-out').text(data.Attendance.out);
+                    
+                    if (data.Attendance.duration != '') {
+                        $parent.find('.duration').text(data.Attendance.duration);
+                    }
+                    
 
                  }
                 
@@ -301,30 +306,29 @@ $(document).ready(function(){
         $(".autocomplete").select2();
 
 
-        $('form').submit(function(e){
+        // $('form').submit(function(e){
 
-        	$('.appended-error').remove();
+        // 	$('.appended-error').remove();
 
-        	$return = true;
+        // 	$return = true;
         	
-        	$(this).find('input.required,select.required,textare.required').each(function(){
+        // 	$(this).find('input.required,select.required,textare.required').each(function(){
 
-        		if ($(this).val() == '') {
+        // 		if ($(this).val() == '') {
 
-        			$(this).after('<label class="error appended-error" >This field is required.</label>');
+        // 			$(this).after('<label class="error appended-error" >This field is required.</label>');
 
-        			$return = false;
-        		}
+        // 			$return = false;
+        // 		}
 
-        	});
+        // 	});
 
-        	if ($return == false) {
+        // 	if ($return == false) {
 
-        		e.preventDefault();
-        	}
-            console.log($return);
+        // 		e.preventDefault();
+        // 	}
 
-        	return $return;
-        });
+        // 	return $return;
+        // });
 
 });

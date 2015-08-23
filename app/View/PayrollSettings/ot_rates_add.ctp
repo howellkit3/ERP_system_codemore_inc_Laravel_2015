@@ -50,7 +50,6 @@
 	                                            echo $this->Form->input('rates', array(
 	                                            								'class' => 'form-control item_type required',
 							                                                    'label' => false,
-							                                                    'type' => 'number',
 							                                                    'placeholder' => '0.00'));
                                             
                                             ?>
@@ -64,7 +63,6 @@
 											<?php 
 	                                            echo $this->Form->input('overtime', 
 	                                            	array(
-	                                            		'type' => 'number',
 	                                            		'class' => 'form-control item_type required',
 	                                            		'label' => false,
 							                            'placeholder' => '0.00'
