@@ -127,6 +127,12 @@ class Employee extends AppModel {
 					'conditions' => '',
 					'dependent' => true
 				),
+				'Dependent' =>  array(
+					'className' => 'Dependent',
+					'foreignKey' => 'employee_id',
+					'conditions' => '',
+					'dependent' => true
+				),
 				
 			)
 		),false);

@@ -90,7 +90,10 @@ class EmployeesController  extends HumanResourceAppController {
 
 			 $this->loadModel('HumanResource.EmployeeEducationalBackground');
 
-			
+			 $this->loadModel('HumanResource.Department');
+
+			 $this->loadModel('HumanResource.Dependent');
+
 			  $uploader = new ImageUploader;
         
 			 if(!empty($this->request->data)){
@@ -134,6 +137,9 @@ class EmployeesController  extends HumanResourceAppController {
 			 		//save educational background
 			 		$save = $this->EmployeeEducationalBackground->saveEducation($data['EmployeeEducationalBackground'],$employeeId);
 
+			 		//save dependent
+			 		$save = $this->Dependent->saveDependent($data['Dependent'],$employeeId,$auth['id']);
+
 			 		if (!empty($data['ContactPersonData'])) {
 						
 						$this->ContactPerson->saveContact($data['ContactPersonData'],$employeeId,$auth['id']);
@@ -168,6 +174,8 @@ class EmployeesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Contract');
 
+		$this->loadModel('HumanResource.Bank');
+
 		$positionList = $this->Position->find('list',array('fields' => array('id','name')));
 
 		$departmentList = $this->Department->find('list',array('fields' => array('id','name')));
@@ -178,7 +186,9 @@ class EmployeesController  extends HumanResourceAppController {
 
 		$contractList = $this->Contract->find('list',array('fields' => array('id','name')));
 
-		$this->set(compact('positionList','departmentList','statusList','agencyList','contractList'));
+		$bankList = $this->Bank->find('list',array('fields' => array('id','code')));
+
+		$this->set(compact('positionList','departmentList','statusList','agencyList','contractList','bankList'));
 	}
 
 	public function edit($id){
@@ -196,6 +206,8 @@ class EmployeesController  extends HumanResourceAppController {
 		$this->loadModel('HumanResource.ContactPerson');
 
 		$this->loadModel('HumanResource.EmployeeEducationalBackground');
+
+		$this->loadModel('HumanResource.Dependent');
 
 		if ($this->request->is('put')) {
 			
@@ -242,6 +254,9 @@ class EmployeesController  extends HumanResourceAppController {
 
 			 		//save educational background
 			 		$save = $this->EmployeeEducationalBackground->saveEducation($data['EmployeeEducationalBackground'],$employeeId);
+
+			 		//save dependent
+			 		$save = $this->Dependent->saveDependent($data['Dependent'],$employeeId,$auth['id']);
 
 			 		if (!empty($data['ContactPersonData'])) {
 						
@@ -292,7 +307,8 @@ class EmployeesController  extends HumanResourceAppController {
 				'ContactPersonEmail',
 				'ContactPersonAddress',
 				'ContactPersonNumber',
-				'EmployeeEducationalBackground'
+				'EmployeeEducationalBackground',
+				'Dependent'
 				));
 
 			$this->request->data = $this->Employee->findById($id);
@@ -313,6 +329,10 @@ class EmployeesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Contract');
 
+		$this->loadModel('HumanResource.Bank');
+
+		$bankList = $this->Bank->find('list',array('fields' => array('id','code')));
+
 		$positionList = $this->Position->find('list',array('fields' => array('id','name')));
 
 		$departmentList = $this->Department->find('list',array('fields' => array('id','name')));
@@ -328,7 +348,7 @@ class EmployeesController  extends HumanResourceAppController {
 			$nameList[$value['Agency']['id']] = array('name' => $value['Agency']['name'],'field' =>$value['Agency']['field']);
 		}
 		
-		$this->set(compact('positionList','departmentList','statusList','nameList','contractList'));
+		$this->set(compact('positionList','departmentList','statusList','nameList','contractList','bankList'));
 	}
 
 	function view($id){

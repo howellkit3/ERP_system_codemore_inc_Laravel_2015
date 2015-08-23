@@ -10,14 +10,20 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
     <ul style="margin-left:0" class="nav navbar-nav pull-left">
 
         <li class="dropdown hidden-xs">
-           <?php $page =($active_page == 'index' && $active_action == 'index') ? 'active tab' : '' ?>
+           <?php $page =($active_page == 'receivings' && $active_action == 'index') ? 'active tab' : '' ?>
             <?php echo $this->Html->link("<span class='count'>Receivings</span>", array('controller' => 'receivings', 'action' => 'index'),array('escape' => false,'class' => 'btn '.$page )); ?>
            
         </li>
         
         <li class="dropdown hidden-xs active">
            <?php $page =($active_page == 'receivings' && $active_action == 'receive') ? 'active tab' : '' ?>
-            <?php echo $this->Html->link("<span class='count'>Received</span>", array('controller' => 'receivings', 'action' => 'receive'),array('escape' => false,'class' => 'btn '.$page )); ?>
+            <?php echo $this->Html->link("<span class='count'>In Record</span>", array('controller' => 'receivings', 'action' => 'receive'),array('escape' => false,'class' => 'btn '.$page )); ?>
+           
+        </li>
+
+         <li class="dropdown hidden-xs active">
+           <?php $page =($active_page == 'receivings' && $active_action == 'out_record') ? 'active tab' : '' ?>
+            <?php echo $this->Html->link("<span class='count'>Out Record</span>", array('controller' => 'receivings', 'action' => 'out_record'),array('escape' => false,'class' => 'btn '.$page )); ?>
            
         </li>
 
