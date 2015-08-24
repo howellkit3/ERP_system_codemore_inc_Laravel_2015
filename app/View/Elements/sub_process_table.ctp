@@ -1,4 +1,4 @@
-<?php foreach ($SubProcessData as $SubProcessDataList ):?>
+<?php foreach ($SubProcessData as $SubProcessDataList ): ?>
     
     <tbody aria-relevant="all" aria-live="polite" role="alert">
 
@@ -10,9 +10,19 @@
                
             </td>
 
-              <td class="">
+            <td class="">
 
                 <?php echo ucfirst($SubProcessDataList['Process']['name']) ?>
+            
+            </td>
+
+            <td class="">
+
+                <?php 
+                    if (!empty($SubProcessDataList['SubProcess']['machine_id'])) {
+                        echo ucfirst($machineList[$SubProcessDataList['SubProcess']['machine_id']]) ;
+                    }
+                ?>
             
             </td>
 

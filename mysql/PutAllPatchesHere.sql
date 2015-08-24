@@ -1694,3 +1694,30 @@ ALTER TABLE `stocks` ADD `size3_unit_id` VARCHAR(30)  NULL  DEFAULT NULL  AFTER 
 ALTER TABLE `stocks` ADD `model` VARCHAR(35)  NULL  DEFAULT NULL  AFTER `uuid`;
 
 ALTER TABLE `in_records` ADD `received_orders_id` INT(11)  NULL  DEFAULT NULL  AFTER `id`;
+
+/** bien added this 08/24/2015 TO PRODUCTION DATABASE   */
+CREATE TABLE `machine_specifications` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `machine_id` int(11) DEFAULT NULL,
+  `paper_size_wmin` varchar(255) DEFAULT NULL,
+  `paper_size_lmin` varchar(255) DEFAULT '',
+  `paper_size_wmax` varchar(255) DEFAULT '',
+  `paper_size_lmax` varchar(255) DEFAULT NULL,
+  `work_area_wmin` varchar(255) DEFAULT NULL,
+  `work_area_lmin` varchar(255) DEFAULT NULL,
+  `work_area_wmax` varchar(255) DEFAULT NULL,
+  `work_area_lmax` varchar(255) DEFAULT NULL,
+  `paper_thickness_min` varchar(255) DEFAULT NULL,
+  `paper_thickness_max` varchar(255) DEFAULT NULL,
+  `machine_speed_min` varchar(255) DEFAULT NULL,
+  `machine_speed_max` varchar(255) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+/** bien added this 08/24/2015 TO System DATABASE   */
+ALTER TABLE `sub_processes` ADD `machine_id` INT(11)  NULL  DEFAULT NULL  AFTER `process_id`;
+
