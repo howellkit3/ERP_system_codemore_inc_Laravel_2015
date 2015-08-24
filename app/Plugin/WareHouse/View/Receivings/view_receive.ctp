@@ -5,17 +5,13 @@
     <div class = "pull-right";>
 
         <?php echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i>  Go Back ', array('controller' => 'receivings','action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
-            ?>
-     
-        <?php if($type == 1){
+            
+    
+             echo $this->Html->link('<i class="fa fa-check fa-lg"></i> Approve ', array('controller' => 'receivings','action' => 'purchase_approve', $deliveredDataID),array('class' =>'btn btn-primary pull-right','escape' => false));?>
 
-            if($receivedOrderData['ReceivedOrder']['status_id'] == 11){
+            
 
-                 echo $this->Html->link('<i class="fa fa-check fa-lg"></i> Approve ', array('controller' => 'receivings','action' => 'purchase_approve', $receivedOrderData['ReceivedOrder']['id']),array('class' =>'btn btn-primary pull-right','escape' => false));
-
-            }
-
-        } ?>
+        
         
     </div>
 
@@ -181,7 +177,7 @@
                 <table class="table table-products table-hover">
                     <tbody>
 
-                         <?php  foreach ($requestPurchasingItem as $requestDataList): ?>
+                         <?php  foreach ($receiveItem as $requestDataList): ?>
                         <tr>
                             <td>
                             <img src="<?php echo Router::url('/', true) ?>img/itemboxopen.png" alt="logo" style="width:60px;height:60px;padding-bottom:10;">
@@ -234,7 +230,7 @@
                     <tbody> 
 
                     <?php  
-                         foreach ($requestPurchasingItem as $requestDataList):?>
+                         foreach ($receiveItem as $requestDataList):?>
                         <tr>
                             <td>
                             <img src="<?php echo Router::url('/', true) ?>img/itembox.png" alt="logo" style="width:85px;height:60px;padding-bottom:10;">

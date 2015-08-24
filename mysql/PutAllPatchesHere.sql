@@ -44,7 +44,6 @@ CHANGE COLUMN `type` `type` VARCHAR(60) NULL DEFAULT NULL;
 DROP TABLE `item_category_holders`;
 DROP TABLE `item_type_holders`;
 
-
 #NOTE: SELECT KOUFU SYSTEM DATABASE ----
 /** jRr added this 05/05/2015 03:58PM */
 CREATE TABLE IF NOT EXISTS `currencies` (
@@ -1692,7 +1691,6 @@ ALTER TABLE `stocks` ADD `size2_unit_id` VARCHAR(30)  NULL  DEFAULT NULL  AFTER 
 ALTER TABLE `stocks` ADD `size3` VARCHAR(30)  NULL  DEFAULT NULL  AFTER `size2_unit_id`;
 ALTER TABLE `stocks` ADD `size3_unit_id` VARCHAR(30)  NULL  DEFAULT NULL  AFTER `size3`;
 ALTER TABLE `stocks` ADD `model` VARCHAR(35)  NULL  DEFAULT NULL  AFTER `uuid`;
-
 ALTER TABLE `in_records` ADD `received_orders_id` INT(11)  NULL  DEFAULT NULL  AFTER `id`;
 
 /** bien added this 08/24/2015 TO PRODUCTION DATABASE   */
@@ -1720,4 +1718,3 @@ CREATE TABLE `machine_specifications` (
 
 /** bien added this 08/24/2015 TO System DATABASE   */
 ALTER TABLE `sub_processes` ADD `machine_id` INT(11)  NULL  DEFAULT NULL  AFTER `process_id`;
-
