@@ -736,20 +736,32 @@ class ReceivingsController extends WareHouseAppController {
 
     public function out_record() {
 
-    	$this->loadModel('WareHouse.Stock');
+    	$this->loadModel('Purchasing.Request');
 
-    	$this->loadModel('Supplier');
+    	$this->loadModel('User');
 
-    	$stock_table = $this->Stock->find('all');
+    	$this->loadModel('Role');
 
-    	$supplierData = $this->Supplier->find('list', array('fields' => array('Supplier.id', 'Supplier.name')
-																));
+    	$this->Request->bind(array('PurchasingType', 'RequestItem'));
 
-    	//pr($supplierData); exit;
+    	$requestData = $this->Request->find('all');
 
-    	$this->set(compact('stock_table', 'supplierData'));
+    	$userNameList = $this->User->find('list', array('fields' => array('User.id', 'User.fullname')));
+
+    	$userRoleList = $this->User->find('list', array('fields' => array('User.id', 'User.role_id')));
+
+    	$roleData = $this->Role->find('list', array('fields' => array('Role.id', 'Role.name')));
+
+    	//pr($userRoleList); exit;
+
+    	$this->set(compact('requestData', 'userNameList', 'userRoleList', 'roleData'));
 
 
+    }
+
+        public function out_record_item() {
+
+   
     }
 
 }
