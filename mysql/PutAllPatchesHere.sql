@@ -44,7 +44,6 @@ CHANGE COLUMN `type` `type` VARCHAR(60) NULL DEFAULT NULL;
 DROP TABLE `item_category_holders`;
 DROP TABLE `item_type_holders`;
 
-
 #NOTE: SELECT KOUFU SYSTEM DATABASE ----
 /** jRr added this 05/05/2015 03:58PM */
 CREATE TABLE IF NOT EXISTS `currencies` (
@@ -1697,3 +1696,18 @@ ALTER TABLE `in_records` ADD `received_orders_id` INT(11)  NULL  DEFAULT NULL  A
 /** howell kit added this 08/24/2015 TO WAREHOUSE DATABASE   */
 ALTER TABLE `received_items` ADD `delivery_uuid` INT(11)  NULL  DEFAULT NULL  AFTER `id`;
 ALTER TABLE `received_items` ADD `reject_quantity` INT(11)  NULL  DEFAULT NULL  AFTER `quantity`;
+
+CREATE TABLE `delivered_orders` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `uuid` VARCHAR(30) DEFAULT NULL,
+  `created` DATETIME NOT NULL,
+  `modified` DATETIME NOT NULL,
+  `created_by` INT(11) DEFAULT NULL,
+  `modified_by` INT(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+
+ALTER TABLE `received_items` CHANGE COLUMN `deliveredOrder_id` `delivered_order_id` INT(11) NULL DEFAULT NULL;
+ALTER TABLE `delivered_orders` ADD `received_orders_id` INT(11)  NULL  DEFAULT NULL  AFTER `id`;
+ALTER TABLE `delivered_orders` ADD `purchase_orders_id` INT(11)  NULL  DEFAULT NULL  AFTER `id`;
+ALTER TABLE `delivered_orders` ADD `status_id` INT(11)  NULL  DEFAULT NULL  AFTER `uuid`;

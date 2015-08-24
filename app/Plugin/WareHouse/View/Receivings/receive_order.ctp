@@ -75,7 +75,8 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                     $deliveredQuantityHolder = $requestDataList[$itemHolder]['delivered_quantity'];
                                 }
 
-                                $remainingQuantity = $requestDataList[$itemHolder]['original_quantity'] - $deliveredQuantityHolder;
+                                $remainingQuantity =  $requestDataList[$itemHolder]['original_quantity'] -  $requestDataList[$itemHolder]['good_quantity'];
+
 
                                 if($remainingQuantity > 0){  ?>
 
@@ -85,7 +86,7 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                         
                                     <div class = "checkbox-nice">
                                     <input type="checkbox" class="check-ref-uuid checked" name="requestPurchasingItem[<?php echo $key ?>][<?php echo $requestDataList[$itemHolder]['foreign_key'] ?>]" id="<?php echo $key?>" >
-                                                        <label for="<?php echo $key?>"> <?php  echo $requestDataList[$itemHolder]['name'] ?> &nbsp;<I>(<?php  echo (!empty( $requestDataList[$itemHolder]['good_quantity']) ? $requestDataList[$itemHolder]['good_quantity']: $requestDataList[$itemHolder]['original_quantity']) ?>)</I></label>
+                                                        <label for="<?php echo $key?>"> <?php  echo $requestDataList[$itemHolder]['name'] ?> &nbsp;<I>(<?php  echo (!empty( $requestDataList[$itemHolder]['good_quantity']) ? $remainingQuantity: $requestDataList[$itemHolder]['original_quantity']) ?>)</I></label>
 
                                     </div>
                                     <div class="form-group ">
@@ -102,7 +103,7 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                                                             'placeholder' => 'Quantity',
                                                                             'label' => false,
                                                                             'disabled' => 'disabled',
-                                                                            'value' => (!empty( $requestDataList[$itemHolder]['good_quantity']) ? $requestDataList[$itemHolder]['good_quantity']: $requestDataList[$itemHolder]['original_quantity'])
+                                                                            'value' => (!empty( $requestDataList[$itemHolder]['good_quantity']) ? $remainingQuantity: $requestDataList[$itemHolder]['original_quantity'])
                                                 ));
                                             ?>
                                         </div>
@@ -133,7 +134,7 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                                 echo $this->Form->input('requestPurchasingItem.'.$key.'.original_quantity', array(        
                                                                         'type' => 'hidden',
                                                                         'class' => 'form-control limiter',
-                                                                        'value' =>(!empty( $requestDataList[$itemHolder]['good_quantity']) ? $requestDataList[$itemHolder]['good_quantity']: $requestDataList[$itemHolder]['original_quantity']),
+                                                                        'value' =>(!empty( $requestDataList[$itemHolder]['good_quantity']) ? $remainingQuantity: $requestDataList[$itemHolder]['original_quantity']),
                                                                         'label' => false,
                                                                         
                                                                         ));

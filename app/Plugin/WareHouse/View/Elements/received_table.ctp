@@ -13,11 +13,11 @@
             </td>
 
             <td class="">
-                <?php echo ucfirst($supplierData[$requestOrderDataList['PurchaseOrder']['supplier_id']]) ?>
+                <?php echo ucfirst($requestOrderDataList['DeliveredOrder']['uuid']) ?>
             </td>
 
             <td class="">
-                <?php echo ucfirst($userName[$requestOrderDataList['ReceivedOrder']['received_by']]) ?>
+                <?php echo ucfirst($supplierData[$requestOrderDataList['PurchaseOrder']['supplier_id']]) ?>
             </td>
 
             <td class="">
@@ -40,10 +40,10 @@
 
             <td align = "center">
 
-                <?php echo $this->Html->link('<span class="fa-stack">
+                <?php   echo $this->Html->link('<span class="fa-stack">
                           <i class="fa fa-square fa-stack-2x"></i>
                           <i class="fa  fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> View</font></span>
-                          </span> ', array('controller' => 'receivings', 'action' => 'view', $requestOrderDataList['PurchaseOrder']['id'], $uuid, 1),array('class' =>' table-link ','escape' => false,'title'=>'Print Transmittal Receipt')); ?>
+                          </span> ', array('controller' => 'receivings', 'action' => 'view_receive', $requestOrderDataList['DeliveredOrder']['id']),array('class' =>' table-link ','escape' => false,'title'=>'Print Transmittal Receipt')); ?>
 
                 <?php //if($requestOrderDataList['ReceivedOrder']['status_id'] == 1){ ?>
 
