@@ -78,10 +78,15 @@ class ReceivingsController extends WareHouseAppController {
 
 		$requestPurchasingItemArray = array();
 
+		$receivedItemData = $this->ReceivedItem->find('all', array('conditions' => array('ReceivedItem.received_orders_id' => $id)));
 
 		foreach ($itemData as $key => $value) {	
 
 			if($value[$itemHolder]['model'] == 'GeneralItem'){
+
+				$arrayGoodQuantity = array();
+
+				$arrayRejectQuantity = array();
 
 				$itemDetails = $this->GeneralItem->find('list', array('fields' => array('GeneralItem.id', 'GeneralItem.name')
 																	));  
@@ -94,12 +99,31 @@ class ReceivingsController extends WareHouseAppController {
 
 				$requestPurchasingItem[$key]['RequestItem']['original_quantity'] = $value[$itemHolder]['quantity'];
 
-
 				array_push($requestPurchasingItemArray, $itemDetails[$value[$itemHolder]['foreign_key']]);
+
+				foreach ($receivedItemData as $key1 => $receivedValue) {	
+
+					if($receivedValue['ReceivedItem']['model'] == 'CompoundSubstrate' && $receivedValue['ReceivedItem']['foreign_key'] == $value[$itemHolder]['foreign_key']){
+
+						$arrayGoodQuantity[$key1] = $receivedValue['ReceivedItem']['quantity'];
+
+						$arrayRejectQuantity[$key1] = $receivedValue['ReceivedItem']['reject_quantity'];
+
+					} 	
+
+				}  		
+						$requestPurchasingItem[$key][$itemHolder]['good_quantity'] = array_sum($arrayGoodQuantity);
+						
+						$requestPurchasingItem[$key][$itemHolder]['reject_quantity'] = array_sum($arrayRejectQuantity);
+ 	
 
 	        } 
 
 	        if($value[$itemHolder]['model'] == 'Substrate'){
+
+	        	$arrayGoodQuantity = array();
+
+				$arrayRejectQuantity = array();
 
 				$itemDetails = $this->Substrate->find('list', array('fields' => array('Substrate.id', 'Substrate.name')
 																	));     
@@ -113,9 +137,31 @@ class ReceivingsController extends WareHouseAppController {
 				$requestPurchasingItem[$key]['RequestItem']['original_quantity'] = $value[$itemHolder]['quantity'];
 
 				array_push($requestPurchasingItemArray, $itemDetails[$value[$itemHolder]['foreign_key']]);                 
+	        
+	        	foreach ($receivedItemData as $key1 => $receivedValue) {	
+
+					if($receivedValue['ReceivedItem']['model'] == 'CompoundSubstrate' && $receivedValue['ReceivedItem']['foreign_key'] == $value[$itemHolder]['foreign_key']){
+
+						$arrayGoodQuantity[$key1] = $receivedValue['ReceivedItem']['quantity'];
+
+						$arrayRejectQuantity[$key1] = $receivedValue['ReceivedItem']['reject_quantity'];
+
+					} 	
+
+				}  		 
+
+						$requestPurchasingItem[$key][$itemHolder]['good_quantity'] = array_sum($arrayGoodQuantity);
+						
+						$requestPurchasingItem[$key][$itemHolder]['reject_quantity'] = array_sum($arrayRejectQuantity);
+ 	
+
 	        } 
 
 	        if($value[$itemHolder]['model'] == 'CompoundSubstrate'){
+
+	        	$arrayGoodQuantity = array();
+
+				$arrayRejectQuantity = array();
 
 				$itemDetails = $this->CompoundSubstrate->find('list', array('fields' => array('CompoundSubstrate.id', 'CompoundSubstrate.name')
 																	)); 
@@ -130,9 +176,29 @@ class ReceivingsController extends WareHouseAppController {
 
 				array_push($requestPurchasingItemArray, $itemDetails[$value[$itemHolder]['foreign_key']]);
 
+				foreach ($receivedItemData as $key1 => $receivedValue) {	
+
+					if($receivedValue['ReceivedItem']['model'] == 'CompoundSubstrate' && $receivedValue['ReceivedItem']['foreign_key'] == $value[$itemHolder]['foreign_key']){
+
+						$arrayGoodQuantity[$key1] = $receivedValue['ReceivedItem']['quantity'];
+
+						$arrayRejectQuantity[$key1] = $receivedValue['ReceivedItem']['reject_quantity'];
+						
+					} 	
+
+				}  		
+
+						$requestPurchasingItem[$key][$itemHolder]['good_quantity'] = array_sum($arrayGoodQuantity);
+						
+						$requestPurchasingItem[$key][$itemHolder]['reject_quantity'] = array_sum($arrayRejectQuantity);
+ 						
 	        } 
 
 	        if($value[$itemHolder]['model'] == 'CorrugatedPaper'){
+
+	        	$arrayGoodQuantity = array();
+
+				$arrayRejectQuantity = array();
 
 				$itemDetails = $this->CorrugatedPaper->find('list', array('fields' => array('CorrugatedPaper.id', 'CorrugatedPaper.name')
 																	));  
@@ -146,6 +212,23 @@ class ReceivingsController extends WareHouseAppController {
 				$requestPurchasingItem[$key]['RequestItem']['original_quantity'] = $value[$itemHolder]['quantity'];
 
 				array_push($requestPurchasingItemArray, $itemDetails[$value[$itemHolder]['foreign_key']]);                        
+	       
+				foreach ($receivedItemData as $key1 => $receivedValue) {	
+
+					if($receivedValue['ReceivedItem']['model'] == 'CompoundSubstrate' && $receivedValue['ReceivedItem']['foreign_key'] == $value[$itemHolder]['foreign_key']){
+
+						$arrayGoodQuantity[$key1] = $receivedValue['ReceivedItem']['quantity'];
+
+						$arrayRejectQuantity[$key1] = $receivedValue['ReceivedItem']['reject_quantity'];
+
+					} 	
+
+				}  		 
+
+						$requestPurchasingItem[$key][$itemHolder]['good_quantity'] = array_sum($arrayGoodQuantity);
+						
+						$requestPurchasingItem[$key][$itemHolder]['reject_quantity'] = array_sum($arrayRejectQuantity);
+ 	
 	        } 
 
         }
@@ -296,6 +379,10 @@ class ReceivingsController extends WareHouseAppController {
 
 				if($value[$itemHolder]['model'] == 'GeneralItem'){
 
+					$arrayGoodQuantity = array();
+
+					$arrayRejectQuantity = array();
+
 					$itemDetails = $this->GeneralItem->find('list', array('fields' => array('GeneralItem.id', 'GeneralItem.name')
 																		));  
 
@@ -308,19 +395,29 @@ class ReceivingsController extends WareHouseAppController {
 					foreach ($receivedItemData as $key => $receivedValue) {	
 
 						if($receivedValue['ReceivedItem']['model'] == 'GeneralItem' && $receivedValue['ReceivedItem']['foreign_key'] == $value[$itemHolder]['foreign_key']){
-							
+
+							$arrayGoodQuantity[$key] = $receivedValue['ReceivedItem']['quantity'];
+
+							$arrayRejectQuantity[$key] = $receivedValue['ReceivedItem']['reject_quantity'];
+
 							$requestPurchasingItem[$key1][$itemHolder]['original_quantity'] = $receivedValue['ReceivedItem']['original_quantity'];	
 
-							$requestPurchasingItem[$key1][$itemHolder]['good_quantity'] = $receivedValue['ReceivedItem']['quantity'];
+						} 	
 
-							$requestPurchasingItem[$key1][$itemHolder]['reject_quantity'] = $receivedValue['ReceivedItem']['reject_quantity'];
+					}  		 
 
-						}
-        			}
+							$requestPurchasingItem[$key1][$itemHolder]['good_quantity'] = array_sum($arrayGoodQuantity);
+							
+							$requestPurchasingItem[$key1][$itemHolder]['reject_quantity'] = array_sum($arrayRejectQuantity);
+ 	
         			
 		        } 
 
 		        if($value[$itemHolder]['model'] == 'Substrate'){
+
+		        	$arrayGoodQuantity = array();
+
+					$arrayRejectQuantity = array();
 
 					$itemDetails = $this->Substrate->find('list', array('fields' => array('Substrate.id', 'Substrate.name')
 																		));     
@@ -335,18 +432,27 @@ class ReceivingsController extends WareHouseAppController {
 
 						if($receivedValue['ReceivedItem']['model'] == 'Substrate' && $receivedValue['ReceivedItem']['foreign_key'] == $value[$itemHolder]['foreign_key']){
 
+							$arrayGoodQuantity[$key] = $receivedValue['ReceivedItem']['quantity'];
+
+							$arrayRejectQuantity[$key] = $receivedValue['ReceivedItem']['reject_quantity'];
+
 							$requestPurchasingItem[$key1][$itemHolder]['original_quantity'] = $receivedValue['ReceivedItem']['original_quantity'];	
 
-							$requestPurchasingItem[$key1][$itemHolder]['good_quantity'] = $receivedValue['ReceivedItem']['quantity'];
+						} 	
+
+					}  		 
+
+							$requestPurchasingItem[$key1][$itemHolder]['good_quantity'] = array_sum($arrayGoodQuantity);
 							
-							$requestPurchasingItem[$key1][$itemHolder]['reject_quantity'] = $receivedValue['ReceivedItem']['reject_quantity'];
-
-						}
-
-        			}
+							$requestPurchasingItem[$key1][$itemHolder]['reject_quantity'] = array_sum($arrayRejectQuantity);
+ 	
 		        } 
 
 		        if($value[$itemHolder]['model'] == 'CompoundSubstrate'){
+
+		        	$arrayGoodQuantity = array();
+
+					$arrayRejectQuantity = array();
 
 					$itemDetails = $this->CompoundSubstrate->find('list', array('fields' => array('CompoundSubstrate.id', 'CompoundSubstrate.name')
 																		)); 
@@ -379,6 +485,10 @@ class ReceivingsController extends WareHouseAppController {
 
 		        if($value[$itemHolder]['model'] == 'CorrugatedPaper'){
 
+		        	$arrayGoodQuantity = array();
+
+					$arrayRejectQuantity = array();
+
 					$itemDetails = $this->CorrugatedPaper->find('list', array('fields' => array('CorrugatedPaper.id', 'CorrugatedPaper.name')
 																		));  
 
@@ -392,16 +502,20 @@ class ReceivingsController extends WareHouseAppController {
 
 						if($receivedValue['ReceivedItem']['model'] == 'CorrugatedPaper' && $receivedValue['ReceivedItem']['foreign_key'] == $value[$itemHolder]['foreign_key']){
 
+							$arrayGoodQuantity[$key] = $receivedValue['ReceivedItem']['quantity'];
+
+							$arrayRejectQuantity[$key] = $receivedValue['ReceivedItem']['reject_quantity'];
+
 							$requestPurchasingItem[$key1][$itemHolder]['original_quantity'] = $receivedValue['ReceivedItem']['original_quantity'];	
 
-							$requestPurchasingItem[$key1][$itemHolder]['good_quantity'] = $receivedValue['ReceivedItem']['quantity'];
+						} 	
+
+					}  		 
+
+							$requestPurchasingItem[$key1][$itemHolder]['good_quantity'] = array_sum($arrayGoodQuantity);
 							
-							$requestPurchasingItem[$key1][$itemHolder]['reject_quantity'] = $receivedValue['ReceivedItem']['reject_quantity'];
-
-						}
-
-        			}
-
+							$requestPurchasingItem[$key1][$itemHolder]['reject_quantity'] = array_sum($arrayRejectQuantity);
+ 	
 		    }
 
 
