@@ -1693,21 +1693,28 @@ ALTER TABLE `stocks` ADD `size3_unit_id` VARCHAR(30)  NULL  DEFAULT NULL  AFTER 
 ALTER TABLE `stocks` ADD `model` VARCHAR(35)  NULL  DEFAULT NULL  AFTER `uuid`;
 ALTER TABLE `in_records` ADD `received_orders_id` INT(11)  NULL  DEFAULT NULL  AFTER `id`;
 
-/** howell kit added this 08/24/2015 TO WAREHOUSE DATABASE   */
-ALTER TABLE `received_items` ADD `delivery_uuid` INT(11)  NULL  DEFAULT NULL  AFTER `id`;
-ALTER TABLE `received_items` ADD `reject_quantity` INT(11)  NULL  DEFAULT NULL  AFTER `quantity`;
-
-CREATE TABLE `delivered_orders` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `uuid` VARCHAR(30) DEFAULT NULL,
-  `created` DATETIME NOT NULL,
-  `modified` DATETIME NOT NULL,
-  `created_by` INT(11) DEFAULT NULL,
-  `modified_by` INT(11) DEFAULT NULL,
+/** bien added this 08/24/2015 TO PRODUCTION DATABASE   */
+CREATE TABLE `machine_specifications` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `machine_id` int(11) DEFAULT NULL,
+  `paper_size_wmin` varchar(255) DEFAULT NULL,
+  `paper_size_lmin` varchar(255) DEFAULT '',
+  `paper_size_wmax` varchar(255) DEFAULT '',
+  `paper_size_lmax` varchar(255) DEFAULT NULL,
+  `work_area_wmin` varchar(255) DEFAULT NULL,
+  `work_area_lmin` varchar(255) DEFAULT NULL,
+  `work_area_wmax` varchar(255) DEFAULT NULL,
+  `work_area_lmax` varchar(255) DEFAULT NULL,
+  `paper_thickness_min` varchar(255) DEFAULT NULL,
+  `paper_thickness_max` varchar(255) DEFAULT NULL,
+  `machine_speed_min` varchar(255) DEFAULT NULL,
+  `machine_speed_max` varchar(255) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=INNODB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
-ALTER TABLE `received_items` CHANGE COLUMN `deliveredOrder_id` `delivered_order_id` INT(11) NULL DEFAULT NULL;
-ALTER TABLE `delivered_orders` ADD `received_orders_id` INT(11)  NULL  DEFAULT NULL  AFTER `id`;
-ALTER TABLE `delivered_orders` ADD `purchase_orders_id` INT(11)  NULL  DEFAULT NULL  AFTER `id`;
-ALTER TABLE `delivered_orders` ADD `status_id` INT(11)  NULL  DEFAULT NULL  AFTER `uuid`;
+/** bien added this 08/24/2015 TO System DATABASE   */
+ALTER TABLE `sub_processes` ADD `machine_id` INT(11)  NULL  DEFAULT NULL  AFTER `process_id`;

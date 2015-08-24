@@ -139,6 +139,174 @@
 		           	</div>
 		        </div>
 		    </div>
+
+		    <div class="row">
+                <div class="col-lg-12">
+                    <div class="main-box">
+                        <h1>Machine Specifications</h1>
+                        <!-- <div class="top-space"></div> -->
+                        <div class="main-box-body clearfix">
+                            <div class="main-box-body clearfix">
+                                <div class="form-horizontal">
+                                    <div class="form-group">
+                                    	
+                                		<div class="form-group">
+
+	                                        <label class="col-lg-2 control-label">Paper Size</label>
+	                                        <div class="col-lg-2">
+	                                        	
+	                                            <?php echo $this->Form->input('MachineSpecification.paper_size_wmin',
+				                                         array('class' => 'form-control ',
+				                                        'placeholder' => 'Paper Size (Wmin)',
+				                                        'label' => false));
+
+				                                ?>
+
+	                                        </div>
+
+	                                        <div class="col-lg-2">
+	                                        	
+	                                            <?php echo $this->Form->input('MachineSpecification.paper_size_lmin',
+				                                         array('class' => 'form-control ',
+				                                        'placeholder' => 'Paper Size (Lmin)',
+				                                        'label' => false));
+
+				                                ?>
+
+	                                        </div>
+
+	                                        <div class="col-lg-2">
+	                                        	
+	                                            <?php echo $this->Form->input('MachineSpecification.paper_size_wmax',
+				                                         array('class' => 'form-control ',
+				                                        'placeholder' => 'Paper Size (Wmax)',
+				                                        'label' => false));
+
+				                                ?>
+
+	                                        </div>
+
+	                                        <div class="col-lg-2">
+	                                        	
+	                                            <?php echo $this->Form->input('MachineSpecification.paper_size_lmax',
+				                                         array('class' => 'form-control ',
+				                                        'placeholder' => 'Paper Size (Lmax)',
+				                                        'label' => false));
+
+				                                ?>
+
+	                                        </div>
+	                                    </div>
+
+	                                    <div class="form-group">
+
+	                                        <label class="col-lg-2 control-label">Work Area</label>
+	                                        <div class="col-lg-2">
+	                                        	
+	                                            <?php echo $this->Form->input('MachineSpecification.work_area_wmin',
+				                                         array('class' => 'form-control ',
+				                                        'placeholder' => 'Work Area (Wmin)',
+				                                        'label' => false));
+
+				                                ?>
+
+	                                        </div>
+
+	                                        <div class="col-lg-2">
+	                                        	
+	                                            <?php echo $this->Form->input('MachineSpecification.work_area_lmin',
+				                                         array('class' => 'form-control ',
+				                                        'placeholder' => 'Work Area (Lmin)',
+				                                        'label' => false));
+
+				                                ?>
+
+	                                        </div>
+
+	                                        <div class="col-lg-2">
+	                                        	
+	                                            <?php echo $this->Form->input('MachineSpecification.work_area_wmax',
+				                                         array('class' => 'form-control ',
+				                                        'placeholder' => 'Work Area (Wmax)',
+				                                        'label' => false));
+
+				                                ?>
+
+	                                        </div>
+
+	                                        <div class="col-lg-2">
+	                                        	
+	                                            <?php echo $this->Form->input('MachineSpecification.work_area_lmax',
+				                                         array('class' => 'form-control ',
+				                                        'placeholder' => 'Work Area (Lmax)',
+				                                        'label' => false));
+
+				                                ?>
+
+	                                        </div>
+	                                    </div>
+
+	                                    <div class="form-group">
+
+	                                        <label class="col-lg-2 control-label">Paper Thickness</label>
+	                                        <div class="col-lg-4">
+	                                        	
+	                                            <?php echo $this->Form->input('MachineSpecification.paper_thickness_min',
+				                                         array('class' => 'form-control ',
+				                                        'placeholder' => 'Paper Thickness (min)',
+				                                        'label' => false));
+
+				                                ?>
+
+	                                        </div>
+
+	                                        <div class="col-lg-4">
+	                                        	
+	                                            <?php echo $this->Form->input('MachineSpecification.paper_thickness_max',
+				                                         array('class' => 'form-control ',
+				                                        'placeholder' => 'Paper Thickness (max)',
+				                                        'label' => false));
+
+				                                ?>
+
+	                                        </div>
+
+	                                    </div>
+
+	                                    <div class="form-group">
+
+	                                        <label class="col-lg-2 control-label">Machine Speed</label>
+	                                        <div class="col-lg-4">
+	                                        	
+	                                            <?php echo $this->Form->input('MachineSpecification.machine_speed_min',
+				                                         array('class' => 'form-control ',
+				                                        'placeholder' => 'Machine Speed (min)',
+				                                        'label' => false));
+
+				                                ?>
+
+	                                        </div>
+
+	                                        <div class="col-lg-4">
+	                                        	
+	                                            <?php echo $this->Form->input('MachineSpecification.machine_speed_max',
+				                                         array('class' => 'form-control ',
+				                                        'placeholder' => 'Machine Speed (max)',
+				                                        'label' => false));
+
+				                                ?>
+
+	                                        </div>
+
+	                                    </div>
+
+		                            </div>
+		                        </div>
+		                    </div>
+		                </div>
+		           	</div>
+		        </div>
+		    </div>
           
       	</div>
     </div>

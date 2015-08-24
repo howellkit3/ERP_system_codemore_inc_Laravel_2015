@@ -1387,9 +1387,13 @@ class SettingsController extends AppController
 
         $this->loadModel('SubProcess');
 
+        $this->loadModel('Production.Machine');
+
         $userData = $this->Session->read('Auth');
 
         $processDataDropList = $this->Process->find('list',  array('order' => 'Process.id DESC'));
+
+        $machineList = $this->Machine->find('list',  array('order' => 'Machine.id ASC'));
 
         $this->SubProcess->bind(array('Process',));
 
@@ -1419,7 +1423,7 @@ class SettingsController extends AppController
             $this->paginate['SubProcess'] = array(
                 'conditions' => $conditions,
                 'limit' => $limit,
-                'fields' => array('id', 'name', 'created','Process.name'),
+                'fields' => array('id', 'name', 'created','Process.name','machine_id'),
             );
 
             $SubProcessData = $this->paginate('SubProcess');
@@ -1442,7 +1446,7 @@ class SettingsController extends AppController
                 }
             }
 
-        $this->set(compact('processData', 'processDataDropList', 'SubProcessData'));
+        $this->set(compact('processData', 'processDataDropList', 'SubProcessData','machineList'));
     }
 
      public function process_edit($id = null) {
@@ -1543,6 +1547,10 @@ class SettingsController extends AppController
 
         $subProcessDropList = $this->Process->find('list',  array('order' => 'Process.id DESC'));
 
+        $this->loadModel('Production.Machine');
+
+        $machineList = $this->Machine->find('list',  array('order' => 'Machine.id ASC'));
+
             if (!$id) {
                 throw new NotFoundException(__('Invalid post'));
             }
@@ -1572,7 +1580,7 @@ class SettingsController extends AppController
                 $this->request->data = $post;
             }
 
-        $this->set(compact('subProcessDropList'));
+        $this->set(compact('subProcessDropList','machineList'));
     }
 
     public function deleteSubProcess($id) {

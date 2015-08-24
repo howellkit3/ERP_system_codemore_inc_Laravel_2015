@@ -166,6 +166,21 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 															</div>
 
 															<div class="form-group">
+																<label class="col-lg-2 control-label">Machine</label>
+																<div class="col-lg-8">
+																			<?php echo $this->Form->input('SubProcess.machine_id', array(
+																			'options' => array($machineList),
+																			'type' => 'select',
+																			'label' => false,
+																			'class' => 'form-control',
+																			'empty' => '---Select Machine---',
+																			'required' => true					                               
+																			)); 
+																			?>
+																</div>
+															</div>
+
+															<div class="form-group">
 																<div class="col-lg-2"></div>
 																	<div class="col-lg-8">
 																		<button type="submit" class="btn btn-primary pull-left">Submit Sub Process</button>&nbsp;
@@ -195,6 +210,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																	<tr>		                              
 																		<th><a href="#"><span>Sub Process</span></a></th>
 																		<th><a href="#"><span>Process</span></a></th>
+																		<th><a href="#"><span>Machine</span></a></th>
 																		<th class="text-center"><a href="#"><span>Created</span></a></th>
 																		 <th style="width:135px">Action</th>
 																	</tr>

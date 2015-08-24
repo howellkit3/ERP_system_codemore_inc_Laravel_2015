@@ -44,7 +44,6 @@ CHANGE COLUMN `type` `type` VARCHAR(60) NULL DEFAULT NULL;
 DROP TABLE `item_category_holders`;
 DROP TABLE `item_type_holders`;
 
-
 #NOTE: SELECT KOUFU SYSTEM DATABASE ----
 /** jRr added this 05/05/2015 03:58PM */
 CREATE TABLE IF NOT EXISTS `currencies` (
@@ -1084,7 +1083,7 @@ VALUES
   (11,'Warehouse Staff','Warehouse Staff','Warehouse Staff','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22'),
   (12,'CEO','CEO','CEO','1','1','2015-05-12 10:20:35','2015-05-12 11:26:22');
 
-  ALTER TABLE `cause_memos`  ADD `disciplinary_action_id` INT(11) NULL  AFTER `violation_id`;
+  ALTER TABLE `cause_memos`  ADD `disciplinary_action_id` TEXT NULL  AFTER `violation_id`;
 /** bien added this 07/22/2015  */
   CREATE TABLE `categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1244,6 +1243,7 @@ ALTER TABLE `received_items`  ADD `foreign_key` INT(11) NULL  AFTER `received_or
 ALTER TABLE `received_items`  ADD `model` VARCHAR(30) DEFAULT NULL AFTER `received_orders_id`;
 
 
+
 /* added 08/13/2015 human resource */
 
 CREATE TABLE IF NOT EXISTS `deductions` (
@@ -1307,6 +1307,26 @@ CREATE TABLE IF NOT EXISTS `salary_reports` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
+CREATE TABLE IF NOT EXISTS `salaries` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `basic_pay` decimal(8,2) DEFAULT '0.00',
+  `basic_pay_per_month` decimal(8,2) DEFAULT NULL,
+  `ctpa` decimal(8,2) DEFAULT NULL,
+  `sea` decimal(8,2) DEFAULT NULL,
+  `allowances` decimal(8,2) DEFAULT NULL,
+  `overtime` double DEFAULT '0',
+  `date` datetime NOT NULL,
+  `from` datetime NOT NULL,
+  `to` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+
 
 ALTER TABLE `salaries`  ADD `ctpa` DECIMAL(8,2) NULL  AFTER `basic_pay_per_month`,  ADD `sea` DECIMAL(8,2) NULL  AFTER `ctpa`,  ADD `allowances` DECIMAL(8,2) NULL  AFTER `sea`;
 
@@ -1315,12 +1335,11 @@ ALTER TABLE `salaries`  ADD `ctpa` DECIMAL(8,2) NULL  AFTER `basic_pay_per_month
 #NOTE: SELECT KOUFU WAREHOUSE DATABASE ----
 /** howellkit added this 08/08/2015  */
 
-INSERT  INTO `status_field_holders`(`id`,`status`,`created_by`,`modified_by`,`created`,`modified`) VALUES (8,'Waiting',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(9,'Executing',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(10,'Replaced',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03');
 
 /** bien added this 08/13/2015 TO HR DATABASE   */
 ALTER TABLE `attendances` ADD `overtime_id` INT(11)  NULL  DEFAULT NULL  AFTER `status`;
 
-INSERT  INTO `status_field_holders`(`id`,`status`,`created_by`,`modified_by`,`created`,`modified`) VALUES (8,'Waiting',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(9,'Executing',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(10,'Closed',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(11,'Replaced',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03');
+INSERT  INTO `status_field_holders`(`id`,`status`,`created_by`,`modified_by`,`created`,`modified`) VALUES (9,'Executing',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(10,'Closed',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(11,'Replaced',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03');
 
 /** bien added this 08/14/2015 TO HR DATABASE   */
 CREATE TABLE `employee_educational_backgrounds` (
@@ -1456,6 +1475,7 @@ CREATE TABLE `measures` (
 INSERT  INTO `measures`(`id`,`name`,`created_by`,`modified_by`,`created`,`modified`) VALUES (1,'bundle',1,1,'2015-07-03 11:23:22','2015-07-02 09:52:01'),(2,'pack',1,1,'2015-07-03 11:22:25','2015-07-03 11:22:25'),(3,'piece',1,1,'2015-07-03 11:23:44','2015-07-03 11:22:25'),(4,'box',1,1,'2015-07-03 11:22:25','2015-07-03 11:22:25'),(5,'pallet',1,1,'2015-07-03 11:22:25','2015-07-03 11:22:25');
  
 /* aldrin added this 8/18/2015 */
+
 CREATE TABLE IF NOT EXISTS `loans` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -1488,10 +1508,54 @@ CREATE TABLE IF NOT EXISTS `stocks` (
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
-<<<<<<< HEAD
-/** bien added this 08/17/2015 TO HR DATABASE   */
-ALTER TABLE `cause_memos` ADD `noted_user_id` INT(11)  NULL  DEFAULT NULL  AFTER `modified`;
-=======
+
+/* aldrin added this 8-19-2015 koufu payroll */
+
+CREATE TABLE IF NOT EXISTS `loans` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `schedules` varchar(255) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+
+CREATE TABLE IF NOT EXISTS `overtime_rates` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `day_type_id` int(11) NOT NULL,
+  `rates` decimal(8,2) NOT NULL DEFAULT '0.00',
+  `overtime` decimal(8,2) NOT NULL DEFAULT '0.00',
+  `night_diffrential` decimal(8,2) NOT NULL DEFAULT '0.00',
+  `night_defferential_ot` decimal(8,2) NOT NULL DEFAULT '0.00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+
+CREATE TABLE IF NOT EXISTS `payrolls` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` date NOT NULL,
+  `year` year(4) NOT NULL,
+  `from` date NOT NULL,
+  `to` date NOT NULL,
+  `range` varchar(255) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `description` text,
+  `transaction_date` date NOT NULL,
+  `status` varchar(255) NOT NULL,
+  `data` text,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+/** howell kit added this 08/17/2015 TO WAREHOUSE DATABASE   */
+
+
 CREATE TABLE IF NOT EXISTS `in_records` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `remarks` TEXT NOT NULL,
@@ -1519,10 +1583,160 @@ CREATE TABLE IF NOT EXISTS `item_records` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `type_record` INT(11) NOT NULL,
   `type_record_id` INT(11) NOT NULL,
-  `model` INT(11) NOT NULL,
+  `model` VARCHAR(30) NOT NULL,
   `foreign_key` INT(11) NOT NULL,
   `quantity` INT(11) NOT NULL,
   `quantity_unit_id` INT(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
->>>>>>> ec73142a2caabb73de4f79fd2517301a96c92ee9
+
+/** bien added this 08/17/2015 TO HR DATABASE   */
+ALTER TABLE `cause_memos` ADD `noted_user_id` INT(11)  NULL  DEFAULT NULL  AFTER `modified`;
+
+/** howell kit added this 08/17/2015 TO WAREHOUSE DATABASE   */
+ALTER TABLE `received_items` ADD `original_quantity` INT(11)  NULL  DEFAULT NULL  AFTER `quantity`;
+/** bien added this 08/20/2015 TO Koufu system DATABASE   */
+CREATE TABLE `banks` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(250) COLLATE utf8_bin DEFAULT NULL,
+  `code` varchar(250) COLLATE utf8_bin DEFAULT NULL,
+  `remarks` text COLLATE utf8_bin,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+/** bien added this 08/20/2015 TO Koufu HR DATABASE   */
+
+CREATE TABLE `leave_types` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `limit` int(11) DEFAULT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `dependents` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `birth_date` varchar(255) NOT NULL DEFAULT '',
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `employee_additional_informations` ADD `bank_id` INT(11)  NULL  DEFAULT NULL  AFTER `no_children`;
+ALTER TABLE `employee_additional_informations` ADD `bank_account_type` VARCHAR(50)  NULL  DEFAULT NULL  AFTER `bank_id`;
+ALTER TABLE `employee_additional_informations` ADD `bank_account_number` VARCHAR(255)  NULL  DEFAULT NULL  AFTER `bank_account_type`;
+
+/** bien added this 08/20/2015 TO Koufu PRODUCTION DATABASE   */
+
+CREATE TABLE `sections` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `department_id` int(11) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `description` text,
+  `remarks` text,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `machines` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `no` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `area` varchar(255) DEFAULT NULL,
+  `department_id` int(11) DEFAULT NULL,
+  `section_id` int(11) DEFAULT NULL,
+  `remarks` text,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `departments` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `description` text,
+  `remarks` text,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+
+/** howell kit added this 08/20/2015 TO WAREHOUSE DATABASE   */
+ALTER TABLE `stocks` 
+CHANGE COLUMN `size` `size1` VARCHAR(30) NULL DEFAULT NULL;
+
+ALTER TABLE `stocks` 
+CHANGE COLUMN `size_unit_id` `size1_unit_id` INT(11) NULL DEFAULT NULL;
+ALTER TABLE `stocks` ADD `size2` VARCHAR(30)  NULL  DEFAULT NULL  AFTER `size1_unit_id`;
+ALTER TABLE `stocks` ADD `size2_unit_id` VARCHAR(30)  NULL  DEFAULT NULL  AFTER `size2`;
+ALTER TABLE `stocks` ADD `size3` VARCHAR(30)  NULL  DEFAULT NULL  AFTER `size2_unit_id`;
+ALTER TABLE `stocks` ADD `size3_unit_id` VARCHAR(30)  NULL  DEFAULT NULL  AFTER `size3`;
+ALTER TABLE `stocks` ADD `model` VARCHAR(35)  NULL  DEFAULT NULL  AFTER `uuid`;
+ALTER TABLE `in_records` ADD `received_orders_id` INT(11)  NULL  DEFAULT NULL  AFTER `id`;
+
+<<<<<<< HEAD
+/** bien added this 08/24/2015 TO PRODUCTION DATABASE   */
+CREATE TABLE `machine_specifications` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `machine_id` int(11) DEFAULT NULL,
+  `paper_size_wmin` varchar(255) DEFAULT NULL,
+  `paper_size_lmin` varchar(255) DEFAULT '',
+  `paper_size_wmax` varchar(255) DEFAULT '',
+  `paper_size_lmax` varchar(255) DEFAULT NULL,
+  `work_area_wmin` varchar(255) DEFAULT NULL,
+  `work_area_lmin` varchar(255) DEFAULT NULL,
+  `work_area_wmax` varchar(255) DEFAULT NULL,
+  `work_area_lmax` varchar(255) DEFAULT NULL,
+  `paper_thickness_min` varchar(255) DEFAULT NULL,
+  `paper_thickness_max` varchar(255) DEFAULT NULL,
+  `machine_speed_min` varchar(255) DEFAULT NULL,
+  `machine_speed_max` varchar(255) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+/** bien added this 08/24/2015 TO System DATABASE   */
+ALTER TABLE `sub_processes` ADD `machine_id` INT(11)  NULL  DEFAULT NULL  AFTER `process_id`;
+
+=======
+/** howell kit added this 08/24/2015 TO WAREHOUSE DATABASE   */
+ALTER TABLE `received_items` ADD `delivery_uuid` INT(11)  NULL  DEFAULT NULL  AFTER `id`;
+ALTER TABLE `received_items` ADD `reject_quantity` INT(11)  NULL  DEFAULT NULL  AFTER `quantity`;
+
+CREATE TABLE `delivered_orders` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `uuid` VARCHAR(30) DEFAULT NULL,
+  `created` DATETIME NOT NULL,
+  `modified` DATETIME NOT NULL,
+  `created_by` INT(11) DEFAULT NULL,
+  `modified_by` INT(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+
+ALTER TABLE `received_items` CHANGE COLUMN `deliveredOrder_id` `delivered_order_id` INT(11) NULL DEFAULT NULL;
+ALTER TABLE `delivered_orders` ADD `received_orders_id` INT(11)  NULL  DEFAULT NULL  AFTER `id`;
+ALTER TABLE `delivered_orders` ADD `purchase_orders_id` INT(11)  NULL  DEFAULT NULL  AFTER `id`;
+ALTER TABLE `delivered_orders` ADD `status_id` INT(11)  NULL  DEFAULT NULL  AFTER `uuid`;
+>>>>>>> 42fa3026f252aee6e1f1116b2cf1f72d51973351

@@ -10,6 +10,8 @@ class MachinesController extends ProductionAppController {
 
     	$this->loadModel('Production.Section');
 
+        $this->loadModel('Production.MachineSpecification');
+
     	$departmentList = $this->Department->find('list',array('fields' => array('id','name')));
 
     	$sectionList = $this->Section->find('list',array('fields' => array('id','name')));
@@ -18,7 +20,9 @@ class MachinesController extends ProductionAppController {
 
 		if(!empty($this->request->data)){
 			
-			$this->Machine->saveMachine($this->request->data,$auth['id']);
+			$machineId = $this->Machine->saveMachine($this->request->data,$auth['id']);
+
+            $this->MachineSpecification->saveMachineSpecification($this->request->data,$machineId,$auth['id']);
 
 			//$save
 	 		$this->Session->setFlash('Saving Machine information completed','success');

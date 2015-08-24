@@ -61,6 +61,21 @@
 									</div>
 
 									<div class="form-group">
+										<label class="col-lg-2 control-label">Machine</label>
+										<div class="col-lg-8">
+													<?php echo $this->Form->input('SubProcess.machine_id', array(
+													'options' => array($machineList),
+													'type' => 'select',
+													'label' => false,
+													'class' => 'form-control',
+													'empty' => '---Select Machine---',
+													'required' => true					                               
+													)); 
+													?>
+										</div>
+									</div>
+
+									<div class="form-group">
 										<div class="col-lg-2"></div>
 										<div class="col-lg-8">
 											<button type="submit" class="btn btn-primary pull-left">Submit Sub Process</button>&nbsp;
