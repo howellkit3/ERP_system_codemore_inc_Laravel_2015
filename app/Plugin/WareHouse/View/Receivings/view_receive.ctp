@@ -7,17 +7,10 @@
         <?php echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i>  Go Back ', array('controller' => 'receivings','action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
             
     
-             echo $this->Html->link('<i class="fa fa-check fa-lg"></i> Approve ', array('controller' => 'receivings','action' => 'purchase_approve', $deliveredDataID),array('class' =>'btn btn-primary pull-right','escape' => false));?>
-
-            
-
-        
-        
+             echo $this->Html->link('<i class="fa fa-check fa-lg"></i> Approve ', array('controller' => 'receivings','action' => 'purchase_approve', $deliveredDataID),array('class' =>'btn btn-primary pull-right','escape' => false));?>  
     </div>
 
 <br><br>
-<?php if(!empty($purchaseOrderData)){ ?>
-
 
 <div class="row">
     <div class="col-lg-12">
@@ -55,7 +48,7 @@
                                                                             'class' => 'form-control item_type',
                                                                             'disabled' => true,
                                                                             'label' => false,       
-                                                                            'value' => $purchaseOrderData['PurchaseOrder']['uuid'],
+                                                                            'value' => $receivedItemData[0]['PurchaseOrder']['uuid'],
                                                                             'fields' =>array('name')));
 
 
@@ -72,7 +65,7 @@
                                                                             'label' => false,
                                                                             'disabled' => true,
                                                                             'fields' =>array('name'),
-                                                                            'value' => ucwords($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']])));
+                                                                            'value' => ucwords($supplierData[$receivedItemData[0]['PurchaseOrder']['supplier_id']])));
                                         ?>
                                     </div>
                                 </div>
@@ -86,7 +79,7 @@
                                                                             'label' => false,
                                                                             'disabled' => true,
                                                                             'fields' =>array('name'),
-                                                                            'value' => $purchaseOrderData['PurchaseOrder']['po_number']));
+                                                                            'value' => $receivedItemData[0]['PurchaseOrder']['po_number']));
                                         ?>
                                     </div>
                                 </div>
@@ -99,7 +92,7 @@
                                                                             'class' => 'form-control item_type',
                                                                             'label' => false,
                                                                             'disabled' => true,
-                                                                            'value' => date("F j, Y ", strtotime($purchaseOrderData['PurchaseOrder']['created'])),
+                                                                            'value' => date("F j, Y ", strtotime($receivedItemData[0]['PurchaseOrder']['created'])),
                                                                             'fields' =>array('name')));
                                         ?>
                                     </div>
@@ -108,11 +101,11 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Created by</label>
                                     <div class="col-lg-8">
-                                        <?php $Fname = $firstName[$purchaseOrderData['PurchaseOrder']['created_by']];
+                                        <?php $Fname = $firstName[$receivedItemData[0]['PurchaseOrder']['created_by']];
 
-                                            $Fname = ucfirst($firstName[$purchaseOrderData['PurchaseOrder']['created_by']]); 
+                                            $Fname = ucfirst($firstName[$receivedItemData[0]['PurchaseOrder']['created_by']]); 
 
-                                            $Lname = ucfirst($lastName[$purchaseOrderData['PurchaseOrder']['created_by']]);
+                                            $Lname = ucfirst($lastName[$receivedItemData[0]['PurchaseOrder']['created_by']]);
 
                                             echo $this->Form->input('PurchaseOrder.createdBy', array(
                                                                             'class' => 'form-control item_type',
@@ -133,7 +126,7 @@
                                                                             'label' => false,
                                                                             'disabled' => true,
                                                                             'fields' =>array('name'),
-                                                                            'value' => $purchaseOrderData['PurchaseOrder']['remarks']));
+                                                                            'value' => $receivedItemData[0]['PurchaseOrder']['remarks']));
                                         ?>
                                     </div>
                                 </div>
@@ -148,11 +141,7 @@
         <?php echo $this->Form->end(); ?>   
     </div>
 </div>
-
-  <?php 
-} 
-?> 
-
+ 
 <div class="col-lg-6">
     <div class="main-box clearfix">
 
