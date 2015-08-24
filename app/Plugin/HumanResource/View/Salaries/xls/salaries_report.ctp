@@ -7,7 +7,7 @@
     $counter = 5;
     
     $objTpl->setActiveSheetIndex(0)
-    ->setCellValue('A2','Payroll '.$payrollDate )
+    ->setCellValue('A2','Payroll ' )
 
     ->getStyle('A4:AK4')
     ->getFont()->setBold(true);
@@ -17,8 +17,7 @@
 
     foreach ($salaries as $key => $emp) {
         $key++;
-        $employee = $this->CustomEmployee->findEmployee($emp['employee_id']);
-        $employee_name = $this->CustomText->getFullname($employee['Employee']);
+        $employee_name = $this->CustomText->getFullname($emp['Employee']);
 
         //deductions 
         $ca_fund = !empty($emp['ca_fund']) ? $emp['ca_fund'] : number_format(0,2);
@@ -36,53 +35,71 @@
 
         $night = number_format(0,2);
 
-        $night += $emp['night'];
-        $night += $emp['night_diff_ot'];
-        $night += $emp['night_diff_legal_holiday'];
-        $night += $emp['night_diff_legal_holiday_work'];
-        $night += $emp['night_diff_special_holday'];
-        $night += $emp['night_diff_special_holday_work'];
-        $night += $emp['night_diff_sunday_work'];
-        $night += $emp['night_diff_sunday_work_ot'];
+        // $night += $emp['night'];
+        // $night += $emp['night_diff_ot'];
+        // $night += $emp['night_diff_legal_holiday'];
+        // $night += $emp['night_diff_legal_holiday_work'];
+        // $night += $emp['night_diff_special_holday'];
+        // $night += $emp['night_diff_special_holday_work'];
+        // $night += $emp['night_diff_sunday_work'];
+        // $night += $emp['night_diff_sunday_work_ot'];
 
- 
-         $objTpl->setActiveSheetIndex(0)
-        ->setCellValue('A'.$counter,$employee_name)
-        ->setCellValue('B'.$counter,$emp['days'])
-        ->setCellValue('C'.$counter,number_format($emp['regular'],2))
-        ->setCellValue('D'.$counter,number_format($emp['OT'],2))
-        ->setCellValue('E'.$counter,number_format($emp['sunday_work'],2))
-        ->setCellValue('F'.$counter,number_format($emp['sunday_work_ot'],2))
-        ->setCellValue('G'.$counter,number_format($emp['legal_holiday'],2))
-        ->setCellValue('H'.$counter,number_format($emp['legal_holiday_work'],2))
-        ->setCellValue('I'.$counter,number_format($emp['regular_holiday_work_ot'],2))
+     $sheet = $objTpl->getActiveSheet();
+          $sheet->setCellValue('A'.$counter,$employee_name);
+      //$sheet->setCellValue('A'.$counter,$emp['employee_id']);
+          $sheet->setCellValue('B'.$counter,$emp['days']);
+          $sheet->setCellValue('C'.$counter,number_format($emp['regular'],2));
+          $sheet->setCellValue('D'.$counter,number_format($emp['OT'],2));
+          $sheet->setCellValue('E'.$counter,number_format($emp['sunday_work'],2));
+          $sheet->setCellValue('F'.$counter,number_format($emp['sunday_work_ot'],2));
+          $sheet->setCellValue('G'.$counter,number_format($emp['legal_holiday'],2));
+          $sheet->setCellValue('H'.$counter,number_format($emp['legal_holiday_work'],2));
+          $sheet->setCellValue('I'.$counter,number_format($emp['regular_holiday_work_ot'],2));
 
-        ->setCellValue('J'.$counter,number_format($emp['regular_holiday_work_ot'],2))
+          $sheet->setCellValue('J'.$counter,number_format($emp['regular_holiday_work_ot'],2));
+          $sheet->setCellValue('L'.$counter,number_format($emp['special_holiday'],2));
+          $sheet->setCellValue('M'.$counter,number_format($emp['special_holiday_work'],2));
+          $sheet->setCellValue('N'.$counter,number_format($emp['special_holiday_work_ot'],2));
 
-        ->setCellValue('O'.$counter,number_format($emp['leave'],2))
+          $sheet->setCellValue('O'.$counter,number_format($emp['special_sunday_holiday_work'],2));
 
-        ->setCellValue('N'.$counter,number_format( $night,2))
-        ->setCellValue('P'.$counter,number_format($emp['ctpa'],2))
-        ->setCellValue('Q'.$counter,number_format($emp['sea'],2))
-        //deductions
-        ->setCellValue('W'.$counter,number_format($ca_fund,2))
-        ->setCellValue('X'.$counter,number_format($sss_loan,2))
-        ->setCellValue('Y'.$counter,number_format($pagibig_loan,2))
-        ->setCellValue('Z'.$counter,number_format($uniform,2))
-        ->setCellValue('Z'.$counter,number_format($uniform,2))
+          $sheet->setCellValue('P'.$counter,number_format($emp['special_sunday_holiday_work_ot'],2));
 
-        ->setCellValue('R'.$counter,number_format($emp['gross_pay'],2))
-        ->setCellValue('S'.$counter,number_format($emp['sss'],2))
-        ->setCellValue('T'.$counter,number_format($emp['pagibig'],2))
+          $sheet->setCellValue('Q'.$counter,number_format($night,2));
+         
+          $sheet->setCellValue('R'.$counter,number_format($emp['leave'],2));
 
-        ->setCellValue('T'.$counter,number_format($emp['pagibig'],2))
-        ->setCellValue('AF'.$counter,number_format($emp['total_deduction'],2))
-        ->setCellValue('AH'.$counter,number_format($emp['allowances'],2))
-        ->setCellValue('AG'.$counter,number_format($emp['total_pay'],2))
-        ->setCellValue('AJ'.$counter,number_format($emp['total_pay'],2))
+          $sheet->setCellValue('S'.$counter,number_format($emp['ctpa'] ,2));
+          $sheet->setCellValue('T'.$counter,number_format($emp['sea'],2));
+          //gross pay
+          $sheet->setCellValue('U'.$counter,number_format($emp['gross_pay'],2));
+    
 
-        ;
-        $counter++;  
+          $sheet->setCellValue('V'.$counter,number_format($emp['sss'],2));
+          $sheet->setCellValue('W'.$counter,number_format($emp['philhealth'],2));
+          $sheet->setCellValue('X'.$counter,number_format($emp['pagibig'],2));
+
+           //deductions
+          $sheet->setCellValue('Z'.$counter,number_format($ca_fund,2));
+          $sheet->setCellValue('AA'.$counter,number_format($sss_loan,2));
+          $sheet->setCellValue('AB'.$counter,number_format($pagibig_loan,2));
+          $sheet->setCellValue('AC'.$counter,number_format($uniform,2));
+          $sheet->setCellValue('AD'.$counter,number_format($emp['other_1'],2));
+          $sheet->setCellValue('AE'.$counter,number_format($emp['medical'],2));
+          $sheet->setCellValue('AF'.$counter,number_format($emp['canteen'],2));
+          $sheet->setCellValue('AG'.$counter,number_format($emp['bank_loan'],2));
+          $sheet->setCellValue('AH'.$counter,number_format($emp['other_2'],2));
+          $sheet->setCellValue('AI'.$counter,number_format($emp['total_deduction'],2));
+          
+          $sheet->setCellValue('AJ'.$counter,number_format($emp['net_pay'],2));
+
+          $sheet->setCellValue('AK'.$counter,number_format($emp['allowances'],2));
+
+          $sheet->setCellValue('AL'.$counter,number_format($emp['incentives'],2));
+
+
+          $sheet->setCellValue('AM'.$counter,number_format($emp['total_pay'],2));
+         $counter++;  
         
     }
 
@@ -96,8 +113,10 @@
      
     $objWriter = PHPExcel_IOFactory::createWriter($objTpl, 'Excel2007');  //downloadable file is in Excel 2003 format (.xls)
     ob_end_clean();
+    //$objWriter->setReadDataOnly( true );
     $objWriter->save('php://output');  //send it to user, of course you can save it to disk also!
-     
+         
+
     exit; //done.. exiting!
 
 

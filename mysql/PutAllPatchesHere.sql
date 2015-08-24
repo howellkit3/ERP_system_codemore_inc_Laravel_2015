@@ -1690,3 +1690,30 @@ ALTER TABLE `stocks` ADD `size2_unit_id` VARCHAR(30)  NULL  DEFAULT NULL  AFTER 
 ALTER TABLE `stocks` ADD `size3` VARCHAR(30)  NULL  DEFAULT NULL  AFTER `size2_unit_id`;
 ALTER TABLE `stocks` ADD `size3_unit_id` VARCHAR(30)  NULL  DEFAULT NULL  AFTER `size3`;
 ALTER TABLE `stocks` ADD `model` VARCHAR(35)  NULL  DEFAULT NULL  AFTER `uuid`;
+
+
+/* aldrin added this for HR database 8-24-15 */
+
+--
+-- Table structure for table `contributions`
+-
+
+CREATE TABLE IF NOT EXISTS `contributions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `schedules` varchar(255) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+
+
+INSERT INTO `contributions` (`id`, `name`, `description`, `schedules`, `created_by`, `modified_by`, `created`, `modified`) VALUES
+('', 'SSS', 'desc', '1', 0, 0, '2015-08-24 01:27:47', '2015-08-24 01:40:14'),
+('', 'Phil Health', 'descripion', '1', 0, 0, '2015-08-24 01:33:19', '2015-08-24 01:33:19'),
+('', 'Pagibig', 'description', '2', 0, 0, '2015-08-24 01:39:52', '2015-08-24 01:39:52'); 
+
+/* end */

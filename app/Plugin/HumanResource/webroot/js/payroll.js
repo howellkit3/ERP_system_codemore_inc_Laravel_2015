@@ -82,6 +82,37 @@ $(document).ready(function(){
 	});
 
 
+
+	$body = $('body');
+
+	$body.on('click','#rejectPayroll',function(e){
+
+		var url = $(this).attr('href');
+
+		//$(this).attr('href',url+'?days='+range+'&&month='+month);
+
+		swal({   title: "Reject Payroll",  
+		 text: "This will delete payroll information. Click OK to continue",  
+		 type: "warning", 
+		 showCancelButton: true,   
+		 closeOnConfirm: false,   
+		 showLoaderOnConfirm: true, },
+		 function() {  
+		 		//$(this).attr('href',url+'?days='+range+'&&month='+month);
+				window.location.href = 	url;
+					
+				var alert = $(".sweet-alert");
+
+				var cancelButton = alert.find('.cancel');
+
+				cancelButton.trigger("click");
+		  });
+
+
+		e.preventDefault();
+	});
+
+
 	$(".monthpick").datepicker( {
 		format: "mm-yyyy",
 		startView: "months", 

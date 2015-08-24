@@ -56,11 +56,28 @@ class Payroll extends AppModel {
 
 	public function objectToArray( $object = null )
     {
+	    	foreach ($object as $key => $value) {
 
-    	foreach ($object as $key => $value) {
-    		$object[$key] = (array)$value;
+	    		$object[$key] = (array)$value;
 
-    	}
+	    		if (is_object($value) && !empty($value->Employee)) {
+
+	    		$object[$key]['Employee'] = (array)$value->Employee;
+	    			
+	    		}
+	    		if (is_object($value) && !empty($value->Department)) {
+
+	    		$object[$key]['Department'] = (array)$value->Department;
+	    			
+	    		}
+	    		if (is_object($value) && !empty($value->Position)) {
+
+	    		$object[$key]['Position'] = (array)$value->Position;
+	    			
+	    		}
+
+	    	}
+   		 
         return $object;
     }
 

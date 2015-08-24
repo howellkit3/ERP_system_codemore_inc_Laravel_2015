@@ -55,21 +55,21 @@
 									</div>	
 
 									<div class="form-group">
-										<label class="col-lg-2 control-label"><span style="color:red">*</span> Payment Schedule </label>
+										<label class="col-lg-2 control-label"><span style="color:red">*</span> Scheme </label>
 										<div class="col-lg-8">
 											<?php 
 	                                            echo $this->Form->input('schedules', 
 	                                            	array(
 	                                            		'options' => array(
-	                                            		  '1' => 'Once',
-	                                            		  '2' => 'Every Month',
-	                                            		  '3' => 'Twice a Month', 
-	                                            		  '4' => 'Yearly'
+	                                            		  '1' => 'Semi Monthly(Equal)',
+	                                            		  '2' => 'Semi Monthly(First Payroll)',
+	                                            		  '3' => 'Semi Monthly(Second Payroll)', 
+	                                            		  '4' => 'Anytime'
 	                                            		  ),
 	                                            		'class' => 'form-control item_type',
 	                                            		'empty' => '---- Select Type -----',
 	                                            		'label' => false,
-							                             'placeholder' => 'Payment Schedule'
+							                             'placeholder' => 'Payment Scheme'
 							                        ));
                                             
                                             ?>
