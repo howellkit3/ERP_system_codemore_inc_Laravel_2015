@@ -311,6 +311,10 @@ class ReceivingsController extends WareHouseAppController {
 							
 							$requestPurchasingItem[$key1][$itemHolder]['original_quantity'] = $receivedValue['ReceivedItem']['original_quantity'];	
 
+							$requestPurchasingItem[$key1][$itemHolder]['good_quantity'] = $receivedValue['ReceivedItem']['quantity'];
+
+							$requestPurchasingItem[$key1][$itemHolder]['reject_quantity'] = $receivedValue['ReceivedItem']['reject_quantity'];
+
 						}
         			}
         			
@@ -333,6 +337,10 @@ class ReceivingsController extends WareHouseAppController {
 
 							$requestPurchasingItem[$key1][$itemHolder]['original_quantity'] = $receivedValue['ReceivedItem']['original_quantity'];	
 
+							$requestPurchasingItem[$key1][$itemHolder]['good_quantity'] = $receivedValue['ReceivedItem']['quantity'];
+							
+							$requestPurchasingItem[$key1][$itemHolder]['reject_quantity'] = $receivedValue['ReceivedItem']['reject_quantity'];
+
 						}
 
         			}
@@ -353,11 +361,20 @@ class ReceivingsController extends WareHouseAppController {
 
 						if($receivedValue['ReceivedItem']['model'] == 'CompoundSubstrate' && $receivedValue['ReceivedItem']['foreign_key'] == $value[$itemHolder]['foreign_key']){
 
+							$arrayGoodQuantity[$key] = $receivedValue['ReceivedItem']['quantity'];
+
+							$arrayRejectQuantity[$key] = $receivedValue['ReceivedItem']['reject_quantity'];
+
 							$requestPurchasingItem[$key1][$itemHolder]['original_quantity'] = $receivedValue['ReceivedItem']['original_quantity'];	
 
-						}
+						} 	
 
-        			}
+					}  		 
+
+							$requestPurchasingItem[$key1][$itemHolder]['good_quantity'] = array_sum($arrayGoodQuantity);
+							
+							$requestPurchasingItem[$key1][$itemHolder]['reject_quantity'] = array_sum($arrayRejectQuantity);
+ 					
 		        } 
 
 		        if($value[$itemHolder]['model'] == 'CorrugatedPaper'){
@@ -376,6 +393,10 @@ class ReceivingsController extends WareHouseAppController {
 						if($receivedValue['ReceivedItem']['model'] == 'CorrugatedPaper' && $receivedValue['ReceivedItem']['foreign_key'] == $value[$itemHolder]['foreign_key']){
 
 							$requestPurchasingItem[$key1][$itemHolder]['original_quantity'] = $receivedValue['ReceivedItem']['original_quantity'];	
+
+							$requestPurchasingItem[$key1][$itemHolder]['good_quantity'] = $receivedValue['ReceivedItem']['quantity'];
+							
+							$requestPurchasingItem[$key1][$itemHolder]['reject_quantity'] = $receivedValue['ReceivedItem']['reject_quantity'];
 
 						}
 

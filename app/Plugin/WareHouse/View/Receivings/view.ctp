@@ -96,7 +96,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-lg-2 control-label">Purchase Order Creted</label>
+                                    <label class="col-lg-2 control-label">Purchase Order Created</label>
                                     <div class="col-lg-8">
                                         <?php 
                                             echo $this->Form->input('PurchaseOrder.schedule', array(
@@ -234,7 +234,6 @@
                     <tbody> 
 
                     <?php  
-                           
                          foreach ($requestPurchasingItem as $requestDataList):?>
                         <tr>
                             <td>
@@ -247,18 +246,18 @@
                                 <span class="price">
                                 <i class="fa fa-certificate"></i>&nbsp; <?php 
 
-                                if(!empty($requestDataList[$itemHolder]['delivered_quantity'])){
+                                if(!empty($requestDataList[$itemHolder]['good_quantity'])){
 
-                                 echo $requestDataList[$itemHolder]['delivered_quantity'] ?> pcs
+                                 echo $requestDataList[$itemHolder]['good_quantity'] ?> pcs
 
                                 <?php } ?>
                                 </span>
                                 <span class="warranty">
                                 <i class="fa fa-certificate"></i>&nbsp; <?php 
 
-                                if(!empty($requestDataList[$itemHolder]['delivered_quantity'])){
+                                if(!empty($requestDataList[$itemHolder]['reject_quantity'])){
 
-                                 echo $requestDataList[$itemHolder]['delivered_quantity'] ?> pcs
+                                 echo $requestDataList[$itemHolder]['reject_quantity'] ?> pcs
 
                                 <?php } ?>
                                 </span>

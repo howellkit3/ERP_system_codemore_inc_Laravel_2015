@@ -39,9 +39,10 @@ class ReceivedItem extends AppModel {
 					$valueOfvalue['foreign_key'] = $key1;
 					$valueOfvalue['received_orders_id'] = $id;
 					$valueOfvalue['delivery_uuid'] = $code;
+					$valueOfvalue['reject_quantity'] = $valueOfvalue['rejectQuantity'];
 			 		$this->save($valueOfvalue);
 				}
-
+ 
 			}
 			
 			return $this->id;

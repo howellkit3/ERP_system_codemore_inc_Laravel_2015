@@ -85,12 +85,12 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                         
                                     <div class = "checkbox-nice">
                                     <input type="checkbox" class="check-ref-uuid checked" name="requestPurchasingItem[<?php echo $key ?>][<?php echo $requestDataList[$itemHolder]['foreign_key'] ?>]" id="<?php echo $key?>" >
-                                                        <label for="<?php echo $key?>"> <?php  echo $requestDataList[$itemHolder]['name'] ?></label>
+                                                        <label for="<?php echo $key?>"> <?php  echo $requestDataList[$itemHolder]['name'] ?> &nbsp;<I>(<?php  echo $requestDataList[$itemHolder]['original_quantity'] ?>)</I></label>
 
                                     </div>
                                     <div class="form-group ">
                                             
-                                            <label class="col-lg-2 control-label">Quantity</label>
+                                            <label class="col-lg-2 control-label">Items</label>
 
                                         <div class="col-lg-2">
                                             
@@ -119,7 +119,11 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                                                         'type' => 'select',
                                                                         'required' => 'required',
                                                                         ));
-                                                 ?>
+                                            ?>
+
+
+
+
 
                                     <?php
                                                 echo $this->Form->input('requestPurchasingItem.'.$key.'.model', array(                    'type' => 'hidden',
@@ -143,7 +147,38 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
 
                                        
                                      </div>
-                                        <div class="col-lg-2 searchAppend"> </div>
+
+                                      <div class="col-lg-2">
+                                            
+                                            <?php 
+                                                echo $this->Form->input('requestPurchasingItem.'.$key.'.rejectQuantity', array(
+                                                                            'empty' => 'None',
+                                                                            'required' => 'required',
+                                                                            'class' => 'form-control item_type  reject',
+                                                                            'placeholder' => 'Quantity',
+                                                                            'label' => false,
+                                                                            'disabled' => 'disabled',
+                                                                            'value' => 0
+                                                ));
+                                            ?>
+                                        </div>
+
+                                        <div class="col-lg-2">
+                                            
+                                            <?php 
+                                                echo $this->Form->input('requestPurchasingItem.'.$key.'.condition', array(         
+                                                                        'required' => 'required',
+                                                                        'class' => 'form-control required condition ',
+                                                                        'options' => array('good', 'reject'),
+                                                                        'value' => 1,
+                                                                        'label' => false,
+                                                                        'disabled' => 'disabled',
+                                                                        'type' => 'select',
+                                                                        'required' => 'required',
+                                                                        ));
+                                            ?>
+                                        </div>
+                                       
                                     
                                     </div>                  
                                 </div>
@@ -210,7 +245,7 @@ jQuery("body").ready(function(){
 
         $(this).parents('.bgcolor').find('.limitQuantity').prop('disabled', false);
 
-        $(this).parents('.bgcolor').find('.condition').prop('disabled', false);
+        $(this).parents('.bgcolor').find('.reject').prop('disabled', false);
 
         $(this).parents('.bgcolor').css("background-color", "#eee");
 
@@ -218,7 +253,7 @@ jQuery("body").ready(function(){
 
         $(this).parents('.bgcolor').find('.limitQuantity').prop('disabled', true);
 
-        $(this).parents('.bgcolor').find('.condition').prop('disabled', true);
+        $(this).parents('.bgcolor').find('.reject').prop('disabled', true);
 
         $(this).parents('.bgcolor').css("background-color", "#FFFFFF");
 
@@ -226,18 +261,44 @@ jQuery("body").ready(function(){
 
     });
 
-    //  $('.condition').on("change", function() {
+   $('.reject').on("change", function() {
 
-    //     $('.searchAppend').html('<input name="data[requestPurchasingItem][0][quantity]" empty="None" required="required" class="form-control item_type limitQuantity valid" placeholder="Quantity" value="12" type="text" id="requestPurchasingItem0Quantity" aria-required="true" aria-invalid="false"> <input name="data[requestPurchasingItem][0][quantity]" empty="None" required="required" class="form-control item_type limitQuantity valid" placeholder="Quantity" value="12" type="text" id="requestPurchasingItem0Quantity" aria-required="true" aria-invalid="false">');
+   var limitQuantity = $(this).parents('.modal-main-body').find('.limitQuantity').val();
 
-    // });
+   var limiter = $(this).parents('.modal-main-body').find('.limiter').val();
 
+   var rejectQuantity = $(this).parents('.modal-main-body').find('.reject').val();
+
+   var totalQuantity =  parseInt(rejectQuantity) +  parseInt(limitQuantity);
+
+   var RemainingQuantity =  parseInt(limiter) -  parseInt(rejectQuantity);
+
+    if(parseInt(limiter) < parseInt(totalQuantity)){
+
+            alert('Sum of Good and Reject Items Exceeds'); 
+
+            if(parseInt(RemainingQuantity) < 0){
+
+                $(this).parents('.modal-main-body').find('.limitQuantity').val(0);
+
+                $(this).parents('.modal-main-body').find('.reject').val(0);
+            
+            }else{
+
+                $(this).parents('.modal-main-body').find('.limitQuantity').val(RemainingQuantity);
+
+            }
+        }
+
+    });
 
     function quantityController() {
 
     var limiter = $(this).parents('.modal-main-body').find('.limiter').val();
 
     var limitQuantity = $(this).parents('.modal-main-body').find('.limitQuantity').val();
+
+    var rejectQuantity = $(this).parents('.modal-main-body').find('.reject').val();
 
         if(parseInt(limiter) < parseInt(limitQuantity)){
 

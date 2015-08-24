@@ -1696,3 +1696,4 @@ ALTER TABLE `in_records` ADD `received_orders_id` INT(11)  NULL  DEFAULT NULL  A
 
 /** howell kit added this 08/24/2015 TO WAREHOUSE DATABASE   */
 ALTER TABLE `received_items` ADD `delivery_uuid` INT(11)  NULL  DEFAULT NULL  AFTER `id`;
+ALTER TABLE `received_items` ADD `reject_quantity` INT(11)  NULL  DEFAULT NULL  AFTER `quantity`;
