@@ -13,7 +13,7 @@ class ReceivedItem extends AppModel {
     
   	public $name = 'ReceivedItem';
 
-	public function saveReceivedItems($id, $data){
+	public function saveReceivedItems($id, $data, $uuid){
 
 		$data['received_orders_id'] = $id;
 
@@ -29,31 +29,15 @@ class ReceivedItem extends AppModel {
 					$this->create();
 					$valueOfvalue['foreign_key'] = $key1;
 					$valueOfvalue['received_orders_id'] = $id;
+					$valueOfvalue['delivered_order_id'] = $uuid;
+					$valueOfvalue['reject_quantity'] = $valueOfvalue['rejectQuantity'];
 			 		$this->save($valueOfvalue);
 				}
-
+ 
 			}
-			//pr($data);  exit;
+			
 			return $this->id;
 			
 		}
-
 	}
-
-		public function bind($model = array('PurchaseOrder', 'ReceivedItem')){
-
-		$this->bindModel(array(
-			'hasOne' => array(
-				'ReceivedItem' => array(
-					'className' => 'WareHouse.ReceivedItem',
-					'foreignKey' => false,
-					'conditions' => 'Delivery.dr_uuid = DeliveryReceipt.dr_uuid'
-				),
-			)
-
-		));
-
-
-	}
-
 }

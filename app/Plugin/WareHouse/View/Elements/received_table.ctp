@@ -13,11 +13,11 @@
             </td>
 
             <td class="">
-                <?php echo ucfirst($supplierData[$requestOrderDataList['PurchaseOrder']['supplier_id']]) ?>
+                <?php echo ucfirst($requestOrderDataList['DeliveredOrder']['uuid']) ?>
             </td>
 
             <td class="">
-                <?php echo ucfirst($userName[$requestOrderDataList['ReceivedOrder']['received_by']]) ?>
+                <?php echo ucfirst($supplierData[$requestOrderDataList['PurchaseOrder']['supplier_id']]) ?>
             </td>
 
             <td class="">
@@ -25,13 +25,17 @@
             </td>
 
             <td align = "center">
-                <?php if($requestOrderDataList['ReceivedOrder']['status_id'] == 11){
+                <?php if($requestOrderDataList['DeliveredOrder']['status_id'] == 1){
 
-                    echo "<span class='label label-warning'>Received</span>"; 
+                    echo "<span class='label label-success'>Approved</span>";
+
+                     }else if($requestOrderDataList['DeliveredOrder']['status_id'] == 13){
+                        
+                    echo "<span class='label label-info'>Stored</span>"; 
 
                      }else{
-                        
-                    echo "<span class='label label-success'>Approved</span>";
+
+                     echo "<span class='label label-warning'>Received</span>"; 
 
                      }
 
@@ -40,22 +44,29 @@
 
             <td align = "center">
 
-                <?php echo $this->Html->link('<span class="fa-stack">
+                 <?php if($requestOrderDataList['DeliveredOrder']['status_id'] == 1){ 
+
+                    $disableButton = " ";
+
+                }else{
+
+                    $disableButton = "not-active";
+
+                } ?>
+
+                <?php   echo $this->Html->link('<span class="fa-stack">
                           <i class="fa fa-square fa-stack-2x"></i>
                           <i class="fa  fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> View</font></span>
-                          </span> ', array('controller' => 'receivings', 'action' => 'view', $requestOrderDataList['PurchaseOrder']['id'], $uuid, 1),array('class' =>' table-link ','escape' => false,'title'=>'Print Transmittal Receipt')); ?>
+                          </span> ', array('controller' => 'receivings', 'action' => 'view_receive', $requestOrderDataList['DeliveredOrder']['id']),array('class' =>' table-link ','escape' => false,'title'=>'Print Transmittal Receipt')); ?>
 
-                <?php if($requestOrderDataList['ReceivedOrder']['status_id'] == 1){ ?>
-
-                    <a data-toggle="modal" href="#myModalReturn<?php echo $requestOrderDataList['PurchaseOrder']['id'], $uuid ?>" class="table-link "><i class="fa fa-lg "></i><span class="fa-stack">
-                                      <i class="fa fa-square fa-stack-2x"></i>
-                                      <i class="fa  fa-sign-in fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> InRecord </font></span></a> 
-
-                <?php } ?>
+                    <a data-toggle="modal" href="#myModalInRecord<?php echo $requestOrderDataList['PurchaseOrder']['id'], $uuid ?>" class="table-link <?php echo $disableButton ?>"><i class="fa fa-lg  "></i><span class="fa-stack ">
+                                      <i class="fa fa-square fa-stack-2x "></i>
+                                      <i class="fa  fa-sign-in fa-stack-1x fa-inverse "></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> InRecord </font></span></a>
 
             </td>
 
-            <div class="modal fade" id="myModalReturn<?php echo $requestOrderDataList['PurchaseOrder']['id'], $uuid ?>" role="dialog" >
+
+            <div class="modal fade" id="myModalInRecord<?php echo $requestOrderDataList['PurchaseOrder']['id'], $uuid ?>" role="dialog" >
                 <div class="modal-dialog">
                     <div class="modal-content margintop">
 
@@ -68,8 +79,10 @@
 
                             <?php $id = $requestOrderDataList['ReceivedOrder']['id'];
 
+                                 $DeliveredOrderId = $requestOrderDataList['DeliveredOrder']['id'];
+
                                 echo $this->Form->create('InRecord',array(
-                                    'url'=>(array('controller' => 'receivings','action' => 'in_record', $id)),'class' => 'form-horizontal')); 
+                                    'url'=>(array('controller' => 'receivings','action' => 'in_record', $id, $DeliveredOrderId)),'class' => 'form-horizontal')); 
                             ?>
 
                                 <div class="form-group" id="existing_items">

@@ -18,6 +18,14 @@ class Request extends AppModel {
  	public function bind($model = array('Group')){
 
 		$this->bindModel(array(
+
+			'hasOne' => array(	
+				'PurchasingType' => array(
+					'className' => 'Purchasing.PurchasingType',
+					'foreignKey' =>  false,
+					'conditions' => array('PurchasingType.id = pur_type_id')
+				),
+			),
 			
 			'hasMany' => array(	
 				'PurchasingItem' => array(

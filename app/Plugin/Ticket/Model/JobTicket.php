@@ -36,6 +36,44 @@ class JobTicket extends AppModel {
 		//$this->contain($giveMeTheTableRelationship);
 	}
 
+	public function bindJobTicket() {
+		$this->bindModel(array(
+			'hasOne' => array(
+				'ClientOrderDeliverySchedule' => array(
+					'className' => 'Sales.ClientOrderDeliverySchedule',
+					'foreignKey' => 'client_order_id'
+				)
+				,				
+				// 'ClientOrder' => array(
+				// 	'className' => 'Sales.ClientOrder',
+				// 	'foreignKey' => false,
+				// 	'conditions' => 'ClientOrder.id = ClientOrderDeliverySchedule.client_order_id'
+				// ),
+
+				// 'QuotationDetail' => array(
+				// 	'className' => 'Sales.QuotationDetail',
+				// 	'foreignKey' => false,
+				// 	'conditions' => 'QuotationDetail.quotation_id = ClientOrder.quotation_id'
+				// ),
+
+				// 'Product' => array(
+				// 	'className' => 'Sales.Product',
+				// 	'foreignKey' => false,
+				// 	'conditions' => 'Product.id = JobTicket.product_id'
+				// ),
+			
+				// 'QuotationItemDetail' => array(
+				// 	'className' => 'Sales.QuotationItemDetail',
+				// 	'foreignKey' => false,
+				// 	'conditions' => 'QuotationItemDetail.quotation_id = ClientOrder.quotation_id'
+				// ),
+
+			)
+		));
+		$this->recursive = 1;
+		//$this->contain($giveMeTheTableRelationship);
+	}
+
 	public $validate = array(
 
 		'unique_id' => array(

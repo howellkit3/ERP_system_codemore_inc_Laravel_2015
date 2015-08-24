@@ -35,6 +35,7 @@ class WorkSchedulesController  extends HumanResourceAppController {
 				//save attendance
 			$create_schedules = $this->WorkSchedule->formatData($this->request->data,$holidays);
 
+			
 			if ($this->WorkSchedule->saveAll($create_schedules['WorkSchedule'])) {
 
 				$attendance = $this->Attendance->saveRecord($this->request->data['WorkSchedule'],$this->WorkSchedule->id,$holidays);

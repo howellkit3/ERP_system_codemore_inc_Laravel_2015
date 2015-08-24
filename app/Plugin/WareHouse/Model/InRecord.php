@@ -13,16 +13,21 @@ class InRecord extends AppModel {
     
   	public $name = 'InRecord';
 
-  	public function saveInRecord($data, $auth, $order_id){
+  	public function saveInRecord( $data,$receiveddata, $auth){
+
+      //pr($data); exit;
 
   		$this->create();
 
-  		$data['storekeeper_id'] = $data['storekeeper'];
-  		$data['created_by'] = $auth;
-  		$data['modified_by'] = $auth;
-  		$data['status_id'] = 12;
+  		$dataHolder['received_orders_id'] = $receiveddata['received_orders_id'];
+  		$dataHolder['remarks'] = $data['remarks'];
+  		$dataHolder['storekeeper_id'] = $data['storekeeper'];
+      $dataHolder['status_id'] = 12 ;
+      $dataHolder['created_by'] = $auth;
+      $dataHolder['modified_by'] = $auth;
+  	
   		 		
-  		$this->save($data);
+  		$this->save($dataHolder);
 
   		return $this->id;
 

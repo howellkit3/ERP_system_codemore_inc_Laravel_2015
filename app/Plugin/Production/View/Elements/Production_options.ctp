@@ -11,6 +11,17 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
     <ul style="margin-left:0" class="nav navbar-nav pull-left">
 
         <li class="">
+            <?php $page =($active_page == 'jobs') ? 'active' : '' ?>
+            <?php echo $this->Html->link("<span class='count'>Jobs</span>",
+             array('controller' => 'jobs',
+              'action' => 'plans'),
+              array('escape' => false,
+                'class' => 'btn '.$page 
+              )); ?>
+           
+        </li>
+
+        <li class="">
             <?php $page =($active_page == 'settings') ? 'active' : '' ?>
             <?php echo $this->Html->link("<span class='count'>Settings</span>",
              array('controller' => 'settings',
