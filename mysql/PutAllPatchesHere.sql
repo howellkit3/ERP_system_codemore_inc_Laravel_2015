@@ -1692,5 +1692,7 @@ ALTER TABLE `stocks` ADD `size2_unit_id` VARCHAR(30)  NULL  DEFAULT NULL  AFTER 
 ALTER TABLE `stocks` ADD `size3` VARCHAR(30)  NULL  DEFAULT NULL  AFTER `size2_unit_id`;
 ALTER TABLE `stocks` ADD `size3_unit_id` VARCHAR(30)  NULL  DEFAULT NULL  AFTER `size3`;
 ALTER TABLE `stocks` ADD `model` VARCHAR(35)  NULL  DEFAULT NULL  AFTER `uuid`;
-
 ALTER TABLE `in_records` ADD `received_orders_id` INT(11)  NULL  DEFAULT NULL  AFTER `id`;
+
+/** howell kit added this 08/24/2015 TO WAREHOUSE DATABASE   */
+ALTER TABLE `received_items` ADD `delivery_uuid` INT(11)  NULL  DEFAULT NULL  AFTER `id`;

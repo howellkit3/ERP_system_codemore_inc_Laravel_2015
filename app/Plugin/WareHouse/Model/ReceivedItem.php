@@ -15,6 +15,15 @@ class ReceivedItem extends AppModel {
 
 	public function saveReceivedItems($id, $data){
 
+		$month = date("m"); 
+	    $year = date("y");
+	    $hour = date("H");
+	    $minute = date("i");
+	    $seconds = date("s");
+	    $random = rand(1000, 10000);
+	        
+		$code =  $year. $month .$random;
+
 		$data['received_orders_id'] = $id;
 
 		foreach ($data as $key => $value)
@@ -29,6 +38,7 @@ class ReceivedItem extends AppModel {
 					$this->create();
 					$valueOfvalue['foreign_key'] = $key1;
 					$valueOfvalue['received_orders_id'] = $id;
+					$valueOfvalue['delivery_uuid'] = $code;
 			 		$this->save($valueOfvalue);
 				}
 

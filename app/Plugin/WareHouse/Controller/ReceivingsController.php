@@ -18,10 +18,8 @@ class ReceivingsController extends WareHouseAppController {
 																));
 		$this->PurchaseOrder->bind(array('Request'));
 
-		$purchaseOrderData = $this->PurchaseOrder->find('all', array('conditions' => array('PurchaseOrder.status' => 1),'order' => 'PurchaseOrder.created DESC'));
+		$purchaseOrderData = $this->PurchaseOrder->find('all', array('conditions' => array('PurchaseOrder.status' => 1)));
 	
-	
-
 		$this->set(compact('purchaseOrderData', 'supplierData'));
 
     }
@@ -46,8 +44,6 @@ class ReceivingsController extends WareHouseAppController {
 
     	$this->loadModel('Purchasing.RequestItem');
 
-    	$this->loadModel('Purchasing.PurchasingItem');
-
     	$this->loadModel('Supplier');
 
     	$this->loadModel('Unit');
@@ -66,9 +62,7 @@ class ReceivingsController extends WareHouseAppController {
 
 		$purchaseOrderData = $this->PurchaseOrder->find('first', array('conditions' => array('PurchaseOrder.id' => $id)));
 
-		$purchaseData = $this->PurchasingItem->find('all', array('conditions' => array('PurchasingItem.request_uuid' => $requestUUID)));
-
-		if(empty($purchaseData[0]['PurchasingItem']['id'])){
+		if(empty($requestData['PurchaseItem'])){
 
 			$itemHolder = "RequestItem";
 
@@ -76,202 +70,94 @@ class ReceivingsController extends WareHouseAppController {
 
 		}else{
 
-			$itemHolder = "PurchasingItem";
+			$itemHolder = "PurchaseItem";
 
-			$itemData = $this->PurchasingItem->find('all', array('conditions' => array('PurchasingItem.request_uuid' => $requestUUID)));
+			$itemData = $this->PurchaseItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestUUID)));
 
 		}
-
-		$receivedItemData = $this->ReceivedItem->find('all', array('conditions' => array('ReceivedItem.received_orders_id' => $purchaseOrderData['PurchaseOrder']['id'])));
 
 		$requestPurchasingItemArray = array();
 
 
 		foreach ($itemData as $key => $value) {	
 
-			$foreignkeyHolder = $value[$itemHolder]['foreign_key'];
-
-		    $modelHolder = $value[$itemHolder]['model'];
-
-			if($modelHolder == 'GeneralItem'){
+			if($value[$itemHolder]['model'] == 'GeneralItem'){
 
 				$itemDetails = $this->GeneralItem->find('list', array('fields' => array('GeneralItem.id', 'GeneralItem.name')
 																	));  
 
-				$requestPurchasingItem[$key][$itemHolder]['name'] = $itemDetails[$value[$itemHolder]['foreign_key']];	
+				$requestPurchasingItem[$key]['RequestItem']['name'] = $itemDetails[$value[$itemHolder]['foreign_key']];	
 
-				$requestPurchasingItem[$key][$itemHolder]['foreign_key'] = $value[$itemHolder]['foreign_key'];
+				$requestPurchasingItem[$key]['RequestItem']['foreign_key'] = $value[$itemHolder]['foreign_key'];
 
-				$requestPurchasingItem[$key][$itemHolder]['model'] = $value[$itemHolder]['model'];
+				$requestPurchasingItem[$key]['RequestItem']['model'] = $value[$itemHolder]['model'];
 
-				$requestPurchasingItem[$key][$itemHolder]['original_quantity'] = $value[$itemHolder]['quantity'];
+				$requestPurchasingItem[$key]['RequestItem']['original_quantity'] = $value[$itemHolder]['quantity'];
 
 
 				array_push($requestPurchasingItemArray, $itemDetails[$value[$itemHolder]['foreign_key']]);
 
-				foreach ($receivedItemData as $key2 => $receivedValue) {	
-
-						$conditions = array(); 
-
-		    			$deliveredQuantityArray = array();
-
-						$conditions = array_merge($conditions, array('ReceivedItem.model' => $modelHolder, 'ReceivedItem.foreign_key' => $foreignkeyHolder ));
-
-						$received_items_data = $this->ReceivedItem->find('all', array('conditions' => $conditions));
-
-
-						foreach ($received_items_data as $key1 => $value) {
-
-							array_push($deliveredQuantityArray, $value['ReceivedItem']['quantity']); 
-
-						} 
-
-						if($receivedValue['ReceivedItem']['model'] == 'GeneralItem' && $receivedValue['ReceivedItem']['foreign_key'] == $foreignkeyHolder){
-							
-							$requestPurchasingItem[$key][$itemHolder]['original_quantity'] = $receivedValue['ReceivedItem']['original_quantity'];	
-
-							$requestPurchasingItem[$key][$itemHolder]['delivered_quantity'] = array_sum($deliveredQuantityArray);	
-
-						}
-        			}
-
-
 	        } 
 
-	        if($modelHolder == 'Substrate'){
+	        if($value[$itemHolder]['model'] == 'Substrate'){
 
 				$itemDetails = $this->Substrate->find('list', array('fields' => array('Substrate.id', 'Substrate.name')
 																	));     
 
-				$requestPurchasingItem[$key][$itemHolder]['name'] = $itemDetails[$value[$itemHolder]['foreign_key']]; 
+				$requestPurchasingItem[$key]['RequestItem']['name'] = $itemDetails[$value[$itemHolder]['foreign_key']]; 
 
-				$requestPurchasingItem[$key][$itemHolder]['foreign_key'] = $value[$itemHolder]['foreign_key']; 
+				$requestPurchasingItem[$key]['RequestItem']['foreign_key'] = $value[$itemHolder]['foreign_key']; 
 
-				$requestPurchasingItem[$key][$itemHolder]['model'] = $value[$itemHolder]['model'];
+				$requestPurchasingItem[$key]['RequestItem']['model'] = $value[$itemHolder]['model'];
 
-				$requestPurchasingItem[$key][$itemHolder]['original_quantity'] = $value[$itemHolder]['quantity'];
+				$requestPurchasingItem[$key]['RequestItem']['original_quantity'] = $value[$itemHolder]['quantity'];
 
-				array_push($requestPurchasingItemArray, $itemDetails[$value[$itemHolder]['foreign_key']]);     
-
-				foreach ($receivedItemData as $key2 => $receivedValue) {	
-
-						$conditions = array(); 
-
-		    			$deliveredQuantityArray = array();
-
-						$conditions = array_merge($conditions, array('ReceivedItem.model' => $modelHolder, 'ReceivedItem.foreign_key' => $foreignkeyHolder ));
-
-						$received_items_data = $this->ReceivedItem->find('all', array('conditions' => $conditions));
-
-
-						foreach ($received_items_data as $key1 => $value) {
-
-							array_push($deliveredQuantityArray, $value['ReceivedItem']['quantity']); 
-
-						} 
-
-						if($receivedValue['ReceivedItem']['model'] == 'Substrate' && $receivedValue['ReceivedItem']['foreign_key'] == $foreignkeyHolder){
-							
-							$requestPurchasingItem[$key][$itemHolder]['original_quantity'] = $receivedValue['ReceivedItem']['original_quantity'];	
-
-							$requestPurchasingItem[$key][$itemHolder]['delivered_quantity'] = array_sum($deliveredQuantityArray);	
-
-						}
-        			} 
-
-
+				array_push($requestPurchasingItemArray, $itemDetails[$value[$itemHolder]['foreign_key']]);                 
 	        } 
 
-	        if($modelHolder == 'CompoundSubstrate'){
+	        if($value[$itemHolder]['model'] == 'CompoundSubstrate'){
 
 				$itemDetails = $this->CompoundSubstrate->find('list', array('fields' => array('CompoundSubstrate.id', 'CompoundSubstrate.name')
 																	)); 
 
-				$requestPurchasingItem[$key][$itemHolder]['name'] = $itemDetails[$value[$itemHolder]['foreign_key']];
+				$requestPurchasingItem[$key]['RequestItem']['name'] = $itemDetails[$value[$itemHolder]['foreign_key']];
 
-				$requestPurchasingItem[$key][$itemHolder]['foreign_key'] = $value[$itemHolder]['foreign_key'];
+				$requestPurchasingItem[$key]['RequestItem']['foreign_key'] = $value[$itemHolder]['foreign_key'];
 
-				$requestPurchasingItem[$key][$itemHolder]['model'] = $value[$itemHolder]['model'];
+				$requestPurchasingItem[$key]['RequestItem']['model'] = $value[$itemHolder]['model'];
 
-				$requestPurchasingItem[$key][$itemHolder]['original_quantity'] = $value[$itemHolder]['quantity'];
+				$requestPurchasingItem[$key]['RequestItem']['original_quantity'] = $value[$itemHolder]['quantity'];
 
 				array_push($requestPurchasingItemArray, $itemDetails[$value[$itemHolder]['foreign_key']]);
 
-				foreach ($receivedItemData as $key2 => $receivedValue) {	
-
-						$conditions = array(); 
-
-		    			$deliveredQuantityArray = array();
-
-						$conditions = array_merge($conditions, array('ReceivedItem.model' => $modelHolder, 'ReceivedItem.foreign_key' => $foreignkeyHolder ));
-
-						$received_items_data = $this->ReceivedItem->find('all', array('conditions' => $conditions));
-
-
-						foreach ($received_items_data as $key1 => $value) {
-
-							array_push($deliveredQuantityArray, $value['ReceivedItem']['quantity']); 
-
-						} 
-
-						if($receivedValue['ReceivedItem']['model'] == 'CompoundSubstrate' && $receivedValue['ReceivedItem']['foreign_key'] == $foreignkeyHolder){
-							
-							$requestPurchasingItem[$key][$itemHolder]['original_quantity'] = $receivedValue['ReceivedItem']['original_quantity'];	
-
-							$requestPurchasingItem[$key][$itemHolder]['delivered_quantity'] = array_sum($deliveredQuantityArray);	
-
-						}
-        			}
-
 	        } 
 
-	        if($modelHolder == 'CorrugatedPaper'){
+	        if($value[$itemHolder]['model'] == 'CorrugatedPaper'){
 
 				$itemDetails = $this->CorrugatedPaper->find('list', array('fields' => array('CorrugatedPaper.id', 'CorrugatedPaper.name')
 																	));  
 
-				$requestPurchasingItem[$key][$itemHolder]['name'] = $itemDetails[$value[$itemHolder]['foreign_key']]; 
+				$requestPurchasingItem[$key]['RequestItem']['name'] = $itemDetails[$value[$itemHolder]['foreign_key']]; 
 
-				$requestPurchasingItem[$key][$itemHolder]['foreign_key'] = $value[$itemHolder]['foreign_key'];
+				$requestPurchasingItem[$key]['RequestItem']['foreign_key'] = $value[$itemHolder]['foreign_key'];
 
-				$requestPurchasingItem[$key][$itemHolder]['model'] = $value[$itemHolder]['model'];
+				$requestPurchasingItem[$key]['RequestItem']['model'] = $value[$itemHolder]['model'];
 
-				$requestPurchasingItem[$key][$itemHolder]['original_quantity'] = $value[$itemHolder]['quantity'];
+				$requestPurchasingItem[$key]['RequestItem']['original_quantity'] = $value[$itemHolder]['quantity'];
 
-				array_push($requestPurchasingItemArray, $itemDetails[$value[$itemHolder]['foreign_key']]);    
-
-				foreach ($receivedItemData as $key2 => $receivedValue) {	
-
-						$conditions = array(); 
-
-		    			$deliveredQuantityArray = array();
-
-						$conditions = array_merge($conditions, array('ReceivedItem.model' => $modelHolder, 'ReceivedItem.foreign_key' => $foreignkeyHolder ));
-
-						$received_items_data = $this->ReceivedItem->find('all', array('conditions' => $conditions));
-
-
-						foreach ($received_items_data as $key1 => $value) {
-
-							array_push($deliveredQuantityArray, $value['ReceivedItem']['quantity']); 
-
-						} 
-
-						if($receivedValue['ReceivedItem']['model'] == 'CorrugatedPaper' && $receivedValue['ReceivedItem']['foreign_key'] == $foreignkeyHolder){
-							
-							$requestPurchasingItem[$key][$itemHolder]['original_quantity'] = $receivedValue['ReceivedItem']['original_quantity'];	
-
-							$requestPurchasingItem[$key][$itemHolder]['delivered_quantity'] = array_sum($deliveredQuantityArray);	
-
-						}
-        			}                    
+				array_push($requestPurchasingItemArray, $itemDetails[$value[$itemHolder]['foreign_key']]);                        
 	        } 
 
         }
 
+        //pr($requestPurchasingItem); exit;
+
 		if (!empty($this->request->data)) {
 
+			// $this->request->data['quantity'] = $itemData[$itemHolder]['quantity'];
 			ksort($this->request->data['requestPurchasingItem']);
+
+		 	//pr($this->request->data); exit;
 
 			$receivedData = $this->ReceivedOrder->find('first', array('conditions' => array('ReceivedOrder.purchase_order_id' => $id)));
 
@@ -281,7 +167,7 @@ class ReceivingsController extends WareHouseAppController {
 
 				$this->PurchaseOrder->id = $id;
 
-			//	$this->PurchaseOrder->saveField('status', 10);
+				$this->PurchaseOrder->saveField('status_id', 10);
 
 			}else{
 
@@ -300,8 +186,6 @@ class ReceivingsController extends WareHouseAppController {
             ));  
 
 		}
-
-
 	
 		$this->set(compact('requestData', 'requestPurchasingItem', 'purchaseOrderData', 'supplierData', 'unitData', 'itemHolder'));
 
@@ -390,9 +274,9 @@ class ReceivingsController extends WareHouseAppController {
 
 		$receivedOrderData = $this->ReceivedOrder->find('first', array('conditions' => array('ReceivedOrder.purchase_order_id' => $purchaseOrderData['PurchaseOrder']['id'])));
 
-		$purchaseData = $this->PurchasingItem->find('all', array('conditions' => array('PurchasingItem.request_uuid' => $requestUUID)));
+		$requestData = $this->Request->find('first', array('conditions' => array('Request.uuid' => $requestUUID)));
 
-		if(empty($purchaseData[0]['PurchasingItem']['id'])){
+		if(empty($requestData['PurchaseItem'])){
 
 			$itemHolder = "RequestItem";
 
@@ -400,24 +284,17 @@ class ReceivingsController extends WareHouseAppController {
 
 		}else{
 
-			$itemHolder = "PurchasingItem";
+			$itemHolder = "PurchaseItem";
 
-			$itemData = $this->PurchasingItem->find('all', array('conditions' => array('PurchasingItem.request_uuid' => $requestUUID)));
+			$itemData = $this->PurchaseItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestUUID)));
 
 		}
 
-		$receivedItemData = $this->ReceivedItem->find('all', array('conditions' => array('ReceivedItem.received_orders_id' => $purchaseOrderData['PurchaseOrder']['id'])));
-		
+		$receivedItemData = $this->ReceivedItem->find('all', array('conditions' => array('ReceivedItem.received_orders_id' => $id)));
 
 		foreach ($itemData as $key1 => $value) {	
 
-			$modelName = $value[$itemHolder]['model'];
-
-				if($modelName == 'GeneralItem'){
-
-					$foreignkeyHolder = $value[$itemHolder]['foreign_key'];
-
-		        	$modelHolder = $value[$itemHolder]['model'];
+				if($value[$itemHolder]['model'] == 'GeneralItem'){
 
 					$itemDetails = $this->GeneralItem->find('list', array('fields' => array('GeneralItem.id', 'GeneralItem.name')
 																		));  
@@ -426,40 +303,20 @@ class ReceivingsController extends WareHouseAppController {
 
 					$requestPurchasingItem[$key1][$itemHolder]['model'] = $value[$itemHolder]['model'];
 
-					$requestPurchasingItem[$key1][$itemHolder]['quantity'] = $value[$itemHolder]['quantity'];	
+					$requestPurchasingItem[$key1][$itemHolder]['quantity'] = $value[$itemHolder]['quantity'];		
 
 					foreach ($receivedItemData as $key => $receivedValue) {	
 
-						$conditions = array(); 
-
-		    			$deliveredQuantityArray = array();
-
-						$conditions = array_merge($conditions, array('ReceivedItem.model' => $modelHolder, 'ReceivedItem.foreign_key' => $foreignkeyHolder ));
-
-						$received_items_data = $this->ReceivedItem->find('all', array('conditions' => $conditions));
-
-						foreach ($received_items_data as $key => $value) {
-
-							array_push($deliveredQuantityArray, $value['ReceivedItem']['quantity']);
-
-						}
-
-						if($receivedValue['ReceivedItem']['model'] == 'GeneralItem' && $receivedValue['ReceivedItem']['foreign_key'] == $foreignkeyHolder){
+						if($receivedValue['ReceivedItem']['model'] == 'GeneralItem' && $receivedValue['ReceivedItem']['foreign_key'] == $value[$itemHolder]['foreign_key']){
 							
 							$requestPurchasingItem[$key1][$itemHolder]['original_quantity'] = $receivedValue['ReceivedItem']['original_quantity'];	
-
-							$requestPurchasingItem[$key1][$itemHolder]['delivered_quantity'] = array_sum($deliveredQuantityArray);	
 
 						}
         			}
         			
 		        } 
 
-		        if($modelName == 'Substrate'){
-
-		        	$foreignkeyHolder = $value[$itemHolder]['foreign_key'];
-
-		        	$modelHolder = $value[$itemHolder]['model'];
+		        if($value[$itemHolder]['model'] == 'Substrate'){
 
 					$itemDetails = $this->Substrate->find('list', array('fields' => array('Substrate.id', 'Substrate.name')
 																		));     
@@ -472,36 +329,16 @@ class ReceivingsController extends WareHouseAppController {
 		        
 					foreach ($receivedItemData as $key => $receivedValue) {	
 
-						$conditions = array(); 
-
-		    			$deliveredQuantityArray = array();
-
-						$conditions = array_merge($conditions, array('ReceivedItem.model' => $modelHolder, 'ReceivedItem.foreign_key' => $foreignkeyHolder ));
-
-						$received_items_data = $this->ReceivedItem->find('all', array('conditions' => $conditions));
-
-						foreach ($received_items_data as $key => $value) {
-
-							array_push($deliveredQuantityArray, $value['ReceivedItem']['quantity']);
-
-						}
-
-
-						if($receivedValue['ReceivedItem']['model'] == 'Substrate' && $receivedValue['ReceivedItem']['foreign_key'] == $foreignkeyHolder){
+						if($receivedValue['ReceivedItem']['model'] == 'Substrate' && $receivedValue['ReceivedItem']['foreign_key'] == $value[$itemHolder]['foreign_key']){
 
 							$requestPurchasingItem[$key1][$itemHolder]['original_quantity'] = $receivedValue['ReceivedItem']['original_quantity'];	
 
-							$requestPurchasingItem[$key1][$itemHolder]['delivered_quantity'] = array_sum($deliveredQuantityArray);
 						}
 
         			}
 		        } 
 
-		        if($modelName == 'CompoundSubstrate'){
-
-		        	$foreignkeyHolder = $value[$itemHolder]['foreign_key'];
-
-		        	$modelHolder = $value[$itemHolder]['model'];
+		        if($value[$itemHolder]['model'] == 'CompoundSubstrate'){
 
 					$itemDetails = $this->CompoundSubstrate->find('list', array('fields' => array('CompoundSubstrate.id', 'CompoundSubstrate.name')
 																		)); 
@@ -514,36 +351,16 @@ class ReceivingsController extends WareHouseAppController {
 
 					foreach ($receivedItemData as $key => $receivedValue) {	
 
-						$conditions = array(); 
-
-		    			$deliveredQuantityArray = array();
-
-						$conditions = array_merge($conditions, array('ReceivedItem.model' => $modelHolder, 'ReceivedItem.foreign_key' => $foreignkeyHolder ));
-
-						$received_items_data = $this->ReceivedItem->find('all', array('conditions' => $conditions));
-
-						foreach ($received_items_data as $key => $value) {
-
-							array_push($deliveredQuantityArray, $value['ReceivedItem']['quantity']);
-
-						}
-
-
-						if($receivedValue['ReceivedItem']['model'] == 'CompoundSubstrate' && $receivedValue['ReceivedItem']['foreign_key'] == $foreignkeyHolder){
+						if($receivedValue['ReceivedItem']['model'] == 'CompoundSubstrate' && $receivedValue['ReceivedItem']['foreign_key'] == $value[$itemHolder]['foreign_key']){
 
 							$requestPurchasingItem[$key1][$itemHolder]['original_quantity'] = $receivedValue['ReceivedItem']['original_quantity'];	
 
-							$requestPurchasingItem[$key1][$itemHolder]['delivered_quantity'] = array_sum($deliveredQuantityArray);
 						}
 
         			}
 		        } 
 
-		        if($modelName == 'CorrugatedPaper'){
-
-		        	$foreignkeyHolder = $value[$itemHolder]['foreign_key'];
-
-		        	$modelHolder = $value[$itemHolder]['model'];
+		        if($value[$itemHolder]['model'] == 'CorrugatedPaper'){
 
 					$itemDetails = $this->CorrugatedPaper->find('list', array('fields' => array('CorrugatedPaper.id', 'CorrugatedPaper.name')
 																		));  
@@ -552,29 +369,14 @@ class ReceivingsController extends WareHouseAppController {
 
 					$requestPurchasingItem[$key1][$itemHolder]['model'] = $value[$itemHolder]['model'];
 
-					$requestPurchasingItem[$key1][$itemHolder]['quantity'] = $value[$itemHolder]['quantity'];   
-
+					$requestPurchasingItem[$key1][$itemHolder]['quantity'] = $value[$itemHolder]['quantity'];                    
+		    		
 		    		foreach ($receivedItemData as $key => $receivedValue) {	
 
-		    			$conditions = array(); 
-
-		    			$deliveredQuantityArray = array();
-
-						$conditions = array_merge($conditions, array('ReceivedItem.model' => $modelHolder, 'ReceivedItem.foreign_key' => $foreignkeyHolder ));
-
-						$received_items_data = $this->ReceivedItem->find('all', array('conditions' => $conditions));
-
-						foreach ($received_items_data as $key => $value) {
-
-							array_push($deliveredQuantityArray, $value['ReceivedItem']['quantity']);
-
-						}
-
-						if($receivedValue['ReceivedItem']['model'] == 'CorrugatedPaper' && $receivedValue['ReceivedItem']['foreign_key'] == $foreignkeyHolder){
+						if($receivedValue['ReceivedItem']['model'] == 'CorrugatedPaper' && $receivedValue['ReceivedItem']['foreign_key'] == $value[$itemHolder]['foreign_key']){
 
 							$requestPurchasingItem[$key1][$itemHolder]['original_quantity'] = $receivedValue['ReceivedItem']['original_quantity'];	
 
-							$requestPurchasingItem[$key1][$itemHolder]['delivered_quantity'] = array_sum($deliveredQuantityArray);
 						}
 
         			}
@@ -583,7 +385,7 @@ class ReceivingsController extends WareHouseAppController {
 
 
         }
- 
+       //pr($requestPurchasingItem);  exit;
 
    	$this->set(compact('purchaseOrderData', 'supplierData', 'firstName', 'lastName', 'requestData', 'itemDetails', 'requestPurchasingItem', 'itemData', 'receivedOrderData', 'type', 'requestItemData', 'itemHolder'));
 
@@ -618,9 +420,11 @@ class ReceivingsController extends WareHouseAppController {
 
     	$receivedData = $this->ReceivedOrder->find('first', array('conditions' => array('ReceivedOrder.id' => $id)));
 
+    	//pr($receivedData); exit;
+
 		if (!empty($this->request->data)) {
 
-			//pr($receivedData); exit;
+			//pr($this->request->data); exit;
 
 			$this->loadModel('WareHouse.InRecord');
 
@@ -628,9 +432,13 @@ class ReceivingsController extends WareHouseAppController {
 
 			$this->loadModel('WareHouse.Stock');
 
-			$idInRecord = $this->InRecord->saveInRecord($receivedData, $this->request->data, $userData['User']['id']);
+			//$this->ReceivedOrder->id = $id;
 
-			$this->ItemRecord->saveItemRecord($receivedData['ReceivedItem'], $idInRecord);
+			//$this->ReceivedOrder->saveField('status_id', 13);
+
+			//$inRecordId = $this->InRecord->saveInRecord($this->request->data['InRecord'],$userData['User']['id'],$id);
+
+			//$this->ItemRecord->saveItemRecord($inRecordId, $receivedData['ReceivedItem']);
 			
 			$this->Stock->saveStock($receivedData, $this->request->data);
 
@@ -646,26 +454,18 @@ class ReceivingsController extends WareHouseAppController {
 
     public function out_record() {
 
-    	$this->loadModel('Purchasing.Request');
+    	$this->loadModel('WareHouse.Stock');
 
-    	$this->loadModel('User');
+    	$this->loadModel('Supplier');
 
-    	$this->loadModel('Role');
+    	$stock_table = $this->Stock->find('all');
 
-    	$userNameList = $this->User->find('list', array('fields' => array('User.id', 'User.fullname'))
-													);
+    	$supplierData = $this->Supplier->find('list', array('fields' => array('Supplier.id', 'Supplier.name')
+																));
 
-    	$userROleList = $this->User->find('list', array('fields' => array('User.id', 'User.role_id'))
-													);
+    	//pr($supplierData); exit;
 
-    	$roleData = $this->Role->find('list', array('fields' => array('Role.id', 'Role.name'))
-													);
-
-    	$this->Request->bind(array('PurchasingType'));
-
-    	$requestData = $this->Request->find('all');
-
-    	$this->set(compact('requestData', 'userNameList', 'roleData', 'userROleList'));
+    	$this->set(compact('stock_table', 'supplierData'));
 
 
     }

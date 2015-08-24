@@ -42,12 +42,9 @@
                 <div class="main-box" >
                     <header class="main-box-header clearfix" >
 
-                        <h2 class="pull-left"  ><b>Purchase Order Details</b></h2>
+                        <h2 class="pull-left"><b>Purchase Order Details</b></h2>
                         
                     </header>
-
-
-
 
                     <div class="top-space"></div>                       
                     <div class="main-box-body clearfix">
@@ -184,7 +181,7 @@
                 <table class="table table-products table-hover">
                     <tbody>
 
-                         <?php foreach ($requestPurchasingItem as $requestDataList): ?>
+                         <?php  foreach ($requestPurchasingItem as $requestDataList): ?>
                         <tr>
                             <td>
                             <img src="<?php echo Router::url('/', true) ?>img/itemboxopen.png" alt="logo" style="width:60px;height:60px;padding-bottom:10;">
@@ -237,7 +234,7 @@
                     <tbody> 
 
                     <?php  
-
+                           
                          foreach ($requestPurchasingItem as $requestDataList):?>
                         <tr>
                             <td>
