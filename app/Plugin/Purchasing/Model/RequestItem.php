@@ -22,8 +22,8 @@ class RequestItem extends AppModel {
 			'belongsTo' => array(
 				'Request' => array(
 					'className' => 'Purchasing.Request',
-					'foreignKey' => 'uuid',
-					'dependent' => true
+					'foreignKey' => false,
+					'conditions' => array('RequestItem.request_uuid' => 'Request.uuid')
 				),
 			),
 

@@ -103,7 +103,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 
 							<?php } else if($lengthName >= 70  && $lengthName <= 80) { ?>
 
-								<td class="td-heigth" style = "border:1px solid black;width:200px;word-wrap: break-word;" ><span style="font-size:65%"; ><center><?php echo $value[$modelTable]['name']?></center></td>
+								<td class="td-heigth" style = "border:1px solid black;width:200px;word-wrap: break-word;" ><span style="font-size:50%"; ><center><?php echo $value[$modelTable]['name']?></center></td>
 
 							<?php } else if($lengthName >= 80 ) { ?>
 
@@ -288,7 +288,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 
 							<?php } else if($lengthName >= 70  && $lengthName <= 80) { ?>
 
-								<td class="td-heigth" style = "border:1px solid black;width:200px;word-wrap: break-word;" ><span style="font-size:65%"; ><center><?php echo $value[$modelTable]['name']?></center></td>
+								<td class="td-heigth" style = "border:1px solid black;width:200px;word-wrap: break-word;" ><span style="font-size:50%"; ><center><?php echo $value[$modelTable]['name']?></center></td>
 
 							<?php } else if($lengthName >= 80 ) { ?>
 
@@ -469,7 +469,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 
 							<?php } else if($lengthName >= 70  && $lengthName <= 80) { ?>
 
-								<td class="td-heigth" style = "border:1px solid black;width:200px;word-wrap: break-word;" ><span style="font-size:65%"; ><center><?php echo $value[$modelTable]['name']?></center></td>
+								<td class="td-heigth" style = "border:1px solid black;width:200px;word-wrap: break-word;" ><span style="font-size:50%"; ><center><?php echo $value[$modelTable]['name']?></center></td>
 
 							<?php } else if($lengthName >= 80 ) { ?>
 

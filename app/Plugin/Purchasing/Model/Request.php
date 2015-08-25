@@ -31,13 +31,13 @@ class Request extends AppModel {
 				'PurchasingItem' => array(
 					'className' => 'Purchasing.PurchasingItem',
 					'foreignKey' =>  false,
-					'conditions' => array('PurchasingItem.request_uuid = request_uuid')
+					'conditions' => array('PurchasingItem.request_uuid' => 'Request.uuid')
 				),
 
 				'RequestItem' => array(
 					'className' => 'Purchasing.RequestItem',
 					'foreignKey' =>  false,
-					'conditions' => array('RequestItem.request_uuid = request_uuid')
+					'conditions' => array('RequestItem.request_uuid' => 'Request.uuid')
 				),
 			)
 			
@@ -46,21 +46,20 @@ class Request extends AppModel {
 		$this->contain($model);
 	}
 
-	public function bindRequest() {
-		$this->bindModel(array(
-			'hasOne' => array(
-				'PurchasingItem' => array(
-					'className' => 'Purchasing.PurchasingItem',
-					'foreignKey' => false,
-					'conditions' => 'Request.uuid = PurchasingItem.request_uuid'
-				),		
+	// public function bindRequest() {
+	// 	$this->bindModel(array(
+	// 		'hasMany' => array(
+	// 			'PurchasingItem' => array(
+	// 				'className' => 'Purchasing.PurchasingItem',
+	// 				'foreignKey' => false,
+	// 				'conditions' => 'PurchasingItem.request_uuid = Request.uuid'
+	// 			),		
 				
-
-			)
-		));
-		$this->recursive = 1;
-		//$this->contain($giveMeTheTableRelationship);
-	}
+	// 		)
+	// 	));
+	// 	$this->recursive = 1;
+	// 	//$this->contain($giveMeTheTableRelationship);
+	// }
 
 	public function saveRequest($requestData = null, $auth = null){
 
