@@ -93,7 +93,6 @@
 
 		var url = $this;
 
-		
 		var attendance_id = $this.data('id');
 
 	  	$.ajax({
@@ -275,6 +274,7 @@ $(document).ready(function(){
     	$this =  $(this);
 
 		var url = $this.attr('action');
+        
 
 		$.ajax({
             type: "GET",

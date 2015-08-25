@@ -6,7 +6,13 @@
 
         <li class="dropdown hidden-xs">
            
-            <?php echo $this->Html->link("<span class='count'> Loans </span>", array('controller' => 'payroll_settings', 'action' => 'settings'),array('escape' => false,'class' => 'btn')); ?>
+            <?php echo $this->Html->link("<span class='count'> Deductions / Loans </span>", array('controller' => 'payroll_settings', 'action' => 'settings'),array('escape' => false,'class' => 'btn')); ?>
+           
+        </li>
+
+        <li class="dropdown hidden-xs">
+           
+            <?php echo $this->Html->link("<span class='count'> Contibutions </span>", array('controller' => 'payroll_settings', 'action' => 'contributions'),array('escape' => false,'class' => 'btn')); ?>
            
         </li>
 

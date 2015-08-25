@@ -101,8 +101,6 @@ $PHPWord->addTableStyle('secondTable', $styleTable, $styleFirstRow);
 
 $table = $section->addTable('secondTable');
 
-
-
 //deductions 
 $ca_fund = !empty($salary['ca_fund']) ? $salary['ca_fund'] : number_format(0,2);
 $sss_loan = !empty($salary['sss_loan']) ? $salary['sss_loan'] : number_format(0,2);

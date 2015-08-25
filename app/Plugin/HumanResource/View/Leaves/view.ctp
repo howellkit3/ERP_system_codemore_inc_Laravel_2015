@@ -66,7 +66,7 @@
                                       <div class="form-group">
                                         <label for="inputEmail1" class="col-lg-3 control-label strong">Type</label>
                                         <div class="col-lg-8 value"> 
-                                          <?php echo $leaveData['Type']['name'];   ?>
+                                          <?php echo $leaveData['LeaveType']['name'];   ?>
                                         </div>
                                       </div>
 

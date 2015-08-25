@@ -13,16 +13,15 @@ class ItemRecord extends AppModel {
     
   	public $name = 'ItemRecord';
 
-  	public function saveItemRecord($inrecordData , $id){
+  	public function saveItemRecord($inrecordData , $data){
 
-  	//	pr ($inrecordData); exit;
-  		foreach ($inrecordData as $key => $value)
+  		foreach ($data as $key => $value)
 		{
 			
 	  		$this->create();
 	  		
 	  		$inrecordItems['type_record'] = 0;
-	  		$inrecordItems['type_record_id'] = $id;
+	  		$inrecordItems['type_record_id'] = $inrecordData;
 	  		$inrecordItems['model'] = $value['model'];
 	  		$inrecordItems['foreign_key'] = $value['foreign_key'];
 	  		$inrecordItems['quantity'] = $value['quantity'];

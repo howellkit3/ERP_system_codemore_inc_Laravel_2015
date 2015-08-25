@@ -11,15 +11,21 @@ class SalaryComputationComponent extends Component
         	$Deduction = ClassRegistry::init('Deduction');
 
         	$OvertimeRate = ClassRegistry::init('OvertimeRate')->getOvertimeRate();
+
 			$Holidays = ClassRegistry::init('Holiday');
+
+        	$Contibutions = ClassRegistry::init('Contribution');
 
 			$holidays = $Holidays->find('all',array(
 			'conditions' => array('Holiday.year' => date('Y',strtotime($customDate['start']))),
 			'fields' => array('id','name','start_date','end_date','year','type')
 			));
 
+			$contributions = $Contibutions->find('list',array('fields' => array('id','schedules')));
+
 			$models['OvertimeRate'] = $OvertimeRate;
 			$models['Holiday'] = $holidays;
+			$models['Contibution'] = $contributions;
 
         	if (!empty($data)) {
 
@@ -36,6 +42,7 @@ class SalaryComputationComponent extends Component
         				$checkExisting = $SalaryReport->find('first',array(
         					'conditions' => $conditions
         				));
+
         				$models['GovernmentRecord'] = !empty($employee['GovernmentRecord']) ? $employee['GovernmentRecord'] : array();
         				$total_pay = 0;
         				$total_deduction = 0;
@@ -47,44 +54,38 @@ class SalaryComputationComponent extends Component
         				$salary[$key]['from'] = $customDate['start'];
         				$salary[$key]['to'] = $customDate['end'];
         				$salary[$key]['days'] = $gross['days'];
-      //   				$salary[$key]['total_hour_work'] = !empty( $gross['total_hours'] ) ?  $gross['total_hours'] : number_format(0,2);
-      //   				$salary[$key]['gross_pay'] = $gross['gross']; 
-						// $salary[$key]['ctpa'] = !empty($employee['Salary']['ctpa']) ? $gross['days'] * $employee['Salary']['ctpa'] : 0; 
-						// $salary[$key]['sea'] = !empty($employee['Salary']['sea']) ? $gross['days'] * $employee['Salary']['sea'] : 0;
-						// $salary[$key]['allowance'] = !empty($employee['Salary']['allowances'])  ? $employee['Salary']['allowances'] : 0;						
-						// $salary[$key]['sss'] = $this->sss_pay($employee['Attendance'],$employee['Salary'],$pay_sched,$gross['gross']);
-						// $salary[$key]['philhealth'] = $this->philhealth_pay($employee['Attendance'],$employee['Salary'],$pay_sched,$gross['gross']);
-						// $salary[$key]['regular_work'] =  !empty($gross['regular']) ? $gross['regular'] : number_format(0,2) ;
-						// $salary[$key]['regular_work_ot'] = !empty($gross['OT']) ? $gross['OT'] : number_format(0,2) ;
-						// $salary[$key]['night_diff'] = number_format($gross['night_diff'],2);
-						// $salary[$key]['night_diff'] = number_format($gross['night_diff_ot'],2);
-						// $salary[$key]['legal_holiday'] =  !empty($gross['legal_holiday']) ? $gross['legal_holiday'] : number_format(0,2);
-						// $salary[$key]['legal_holiday_work'] =  !empty($gross['legal_holiday_work']) ? $gross['legal_holiday_work'] : number_format(0,2);
-						// $salary[$key]['legal_holiday_work_ot'] =  number_format(0,2);
-						// $salary[$key]['legal_holiday_work_ot'] =  number_format(0,2);
-        			
+
         				$salary[$key]['sss'] = $this->sss_pay($employee['Attendance'],$employee['Salary'],$pay_sched,$gross['gross'], $models );
 						$salary[$key]['philhealth'] = $this->philhealth_pay($employee['Attendance'],$employee['Salary'],$pay_sched,$gross['gross'] , $models);
-						$salary[$key]['pagibig'] = $this->pagibig_pay($employee['Attendance'],$employee['Salary'],$pay_sched,$gross['gross'] , $models);
+						$salary[$key]['pagibig'] = $this->pagibig_pay($employee['Attendance'],$employee['Salary'],$pay_sched,$gross['gross'] , $models );
 						
 						//ctpa 
 						$salary[$key]['ctpa'] = !empty($employee['Salary']['ctpa']) ? $gross['days'] * $employee['Salary']['ctpa'] : 0; 
+						//sea
 						$salary[$key]['sea'] = !empty($employee['Salary']['sea']) ? $gross['days'] * $employee['Salary']['sea'] : 0;
 						
-
+						$salary[$key]['allowances'] =  $employee['Salary']['allowances'];
+						
 						foreach ($gross as $gross_key => $gross_value) {
 							$salary[$key][$gross_key] = $gross_value;
 						}
 
 						//additional income 
-						$salary[$key]['total_pay'] =  $gross['gross']; $total_pay = $gross['gross'];
+						$salary[$key]['total_pay'] = $gross['gross']; 
+
+						$total_pay = $gross['gross'];
 
 						//ctpa computations = 
-						$total_pay 	+= !empty($employee['Salary']['ctpa']) ? $employee['Salary']['ctpa'] : number_format(0,2);
-						$total_pay  += !empty($employee['Salary']['sea']) ? $employee['Salary']['sea'] : number_format(0.2);
+						$total_pay 	+= !empty($employee['Salary']['ctpa']) ? $salary[$key]['ctpa'] : number_format(0,2);
+						$total_pay  += !empty($employee['Salary']['sea']) ? $salary[$key]['sea'] : number_format(0.2);
 
 						$salary[$key]['gross_pay'] = $total_pay;
-						$total_pay  += $employee['Salary']['allowances'];
+						
+						$salary[$key]['total_earnings']  = $total_pay;
+						$salary[$key]['total_earnings']  += $employee['Salary']['allowances'];
+						$salary[$key]['total_earnings']  += !empty($employee['Salary']['incentives']) ? $employee['Salary']['incentives'] : 0.00;
+
+
 						//check deductions 
 						$deductions = $this->checkDeductions($employee['Employee']['id'],$customDate,$updateDatabase);
 
@@ -96,18 +97,38 @@ class SalaryComputationComponent extends Component
 							}							
 						}
 
+
 						$salary[$key]['total_deduction'] = $total_deduction; 
+
+						$salary[$key]['total_deduction'] += $salary[$key]['sss'];
+
+						$salary[$key]['total_deduction'] += $salary[$key]['philhealth'];
+
+						$salary[$key]['total_deduction'] += $salary[$key]['pagibig'];
 							
-						$total_pay  -= $total_deduction;
+						$total_pay  -= $salary[$key]['total_deduction'];
+
+						$salary[$key]['net_pay'] = $total_pay;
+
+						$total_pay  += $employee['Salary']['allowances'];
+
 						//$total_pay  -= $salary[$key]['sss'];
 						$salary[$key]['total_pay'] = $total_pay;
+						$salary[$key]['Employee'] = $employee['Employee'];
+						$salary[$key]['Department'] = !empty($employee['Department']) ? $employee['Department'] : array();
+						$salary[$key]['Position']	= !empty($employee['Position']) ? $employee['Position'] : array();
+
 
         		}
 
-
+        	
         		return $salary;
 
         	}
+
+
+
+        	exit();
     }
 
 
@@ -122,6 +143,7 @@ class SalaryComputationComponent extends Component
 		$data['OT'] = number_format(0,2);
 		$data['legal_holiday'] = number_format(0,2);
 		$data['legal_holiday_work'] = number_format(0,2);
+		$data['legal_holiday_work_ot'] = number_format(0,2);
 		$data['total'] =  number_format(0,2);
 		$data['total_hours'] =  number_format(0,2);
 		$data['hours_ot'] =  number_format(0,2);
@@ -133,34 +155,48 @@ class SalaryComputationComponent extends Component
 		$data['legal_holiday_work'] =  number_format(0,2);
 		$data['night_diff_legal_holiday'] =  number_format(0,2);
 		$data['night_diff_legal_holiday_work'] =  number_format(0,2);
-		$data['special_holday'] =  number_format(0,2);
-		$data['special_holday_work'] =  number_format(0,2);
-		$data['night_diff_special_holday'] =  number_format(0,2);
-		$data['night_diff_special_holday_work'] =  number_format(0,2);
+		$data['special_holiday'] =  number_format(0,2);
+		$data['special_holiday_work'] =  number_format(0,2);
+		$data['special_holiday_work_ot'] =  number_format(0,2);
+		$data['night_diff_special_holiday'] =  number_format(0,2);
+		$data['night_diff_special_holiday_work'] =  number_format(0,2);
 		$data['sunday_work'] =  number_format(0,2);
 		$data['sunday_work_ot'] =  number_format(0,2);
 		$data['night_diff_sunday_work'] =  number_format(0,2);
 		$data['night_diff_sunday_work_ot'] =  number_format(0,2);
+		$data['leave'] =  number_format(0,2);
+
+		$data['sunday_legal_holiday'] =  number_format(0,2);
+		$data['sunday_work_legal_holiday'] =  number_format(0,2);
+
 
 		if (!empty($attendance)) {
-
+			$countDays = 0;
 			foreach ($attendance as $key => $days) {
+
 				//$data['time_work'] += $days['total_hours'];
 				$work[$key] = $this->checkDays($days,$salaries, 8 , $models );
 
 				foreach ( $work[$key] as $pay_keys => $list) {
 
-						if (in_array($pay_keys,array('regular','OT','legal_holiday','legal_holiday_work','night_diff_legal_holiday', 'night_diff_legal_holiday_work', 'special_holday', 'special_holday_work', 'night_diff_special_holday', 'night_diff_special_holday_work','sunday_work','sunday_work_ot','night_diff_sunday_work','night_diff_sunday_work_ot'))) {
+						//if (in_array($pay_keys,array('total_hours','regular','OT','legal_holiday','legal_holiday_work','night_diff_legal_holiday', 'night_diff_legal_holiday_work', 'special_holday', 'special_holday_work', 'night_diff_special_holday', 'night_diff_special_holday_work','sunday_work','sunday_work_ot','night_diff_sunday_work','night_diff_sunday_work_ot','leave'))) {
 							$data[$pay_keys] += $list;
+						if (in_array($pay_keys,array('regular','OT','legal_holiday','legal_holiday_work','night_diff_legal_holiday', 'night_diff_legal_holiday_work', 'special_holiday', 'special_holiday_work', 'night_diff_special_holiday', 'night_diff_special_holiday_work','sunday_work','sunday_work_ot','night_diff_sunday_work','night_diff_sunday_work_ot','leave'))) {
+								
 							$data['gross'] += $list;
 						}
+				}
+				//check working days
+				if (!empty($days['Attendance']['in']) && !empty($days['Attendance']['out'])) {
+					$countDays++;
 				}
 				
 			}
 
-			$data['days'] = count($attendance);
+			$data['days'] = $countDays;
 
 		}
+
 		return $data;
 	}
 
@@ -169,24 +205,32 @@ class SalaryComputationComponent extends Component
 	$days = array();
 	
 	//get regular days
-	$days['total_hours'] = 0;
-	$days['hours_ot'] = 0;
-	$days['regular'] = 0;
-	$days['OT'] = 0;
-	$days['night_diff'] = 0;
-	$days['night_diff_ot'] = 0;
-	$days['legal_holiday'] = 0;
-	$days['legal_holiday_work'] = 0;
-	$days['night_diff_legal_holiday'] = 0;
-	$days['night_diff_legal_holiday_work'] = 0;
-	$days['special_holday'] = 0;
-	$days['special_holday_work'] = 0;
-	$days['night_diff_special_holday'] = 0;
-	$days['night_diff_special_holday_work'] = 0;
-	$days['sunday_work'] = 0;
-	$days['sunday_work_ot'] = 0;
-	$days['night_diff_sunday_work'] = 0;
-	$days['night_diff_sunday_work_ot'] = 0;
+	$days['total_hours'] = number_format(0,2);
+	$days['hours_ot'] =  number_format(0,2);
+	$days['regular'] =  number_format(0,2);
+	$days['OT'] = number_format(0,2);
+	$days['night_diff'] = number_format(0,2);
+	$days['night_diff_ot'] = number_format(0,2);
+	$days['legal_holiday'] = number_format(0,2);
+	$days['legal_holiday_work'] = number_format(0,2);
+	$days['night_diff_legal_holiday'] = number_format(0,2);
+	$days['night_diff_legal_holiday_work'] = number_format(0,2);
+	$days['special_holiday'] = number_format(0,2);
+	$days['special_holiday_work'] = number_format(0,2);
+	$days['special_holiday_work_ot'] = number_format(0,2);
+	$days['night_diff_special_holiday'] = number_format(0,2);
+	$days['night_diff_special_holiday_work'] = number_format(0,2);
+	$days['sunday_work'] = number_format(0,2);
+	$days['sunday_work_ot'] = number_format(0,2);
+	$days['night_diff_sunday_work'] = number_format(0,2);
+	$days['night_diff_sunday_work_ot'] = number_format(0,2);
+	$days['leave'] = number_format(0,2);
+	
+	//
+	if (!empty($data['Attendance']['leave_id'])) {
+
+		$days['leave'] = $salaries['basic_pay']; //($salaries['basic_pay'] * $days['total_hours'])	
+	}
 
 
 	if (!empty($data['Attendance']['in']) && !empty($data['Attendance']['out']) ) {
@@ -222,7 +266,7 @@ class SalaryComputationComponent extends Component
 			//check if OT
 			if (!empty($data['Attendance']['overtime_id'])) {
 					
-					$data['hours_ot'] = 0;
+					$data['hours_ot'] = number_format(0,2);
 					
 					//$Overtime = ClassRegistry::init('Overtime');
 
@@ -252,7 +296,8 @@ class SalaryComputationComponent extends Component
 
 			//check if OT
 			if (!empty($data['Attendance']['overtime_id'])) {
-				$data['hours_ot'] = 0;
+				
+				$data['hours_ot'] = number_format(0,2);
 				$Overtime = ClassRegistry::init('Overtime');
 
 				//$overtime = $Overtime->read(null,$data['Attendance']['overtime_id']);
@@ -279,7 +324,7 @@ class SalaryComputationComponent extends Component
 
 	foreach ($models['Holiday'] as $holiday_key => $holiday) {
 		
-		if ($today >= $holiday['Holiday']['start_date'] && $today >= $holiday['Holiday']['end_date']) {
+		if ($today >= $holiday['Holiday']['start_date'] && $today <= $holiday['Holiday']['end_date']) {
 		
 		$days['regular'] = 0.0;
 		
@@ -293,11 +338,11 @@ class SalaryComputationComponent extends Component
 
 		if ($holiday['Holiday']['type'] == 'special') {
 
-			$days['legal_holiday'] = ($salaries['basic_pay'] * $hours ) / $hours;
+			$days['special_holiday'] = ($salaries['basic_pay'] * $hours ) / $hours;
 			
 		}
 
-		//if employee work in legal holiday
+		//if employee work in legal or special holiday holiday
 		if (!empty($data['Attendance']['in']) && !empty($data['Attendance']['out']) ) {
 
 				if ($holiday['Holiday']['type'] == 'regular') {
@@ -305,7 +350,7 @@ class SalaryComputationComponent extends Component
 				}
 
 				if ($holiday['Holiday']['type'] == 'special') {
-					$days['legal_holiday_work'] = ($salaries['basic_pay'] * $days['total_hours']) / $hours;
+					$days['special_holiday_work'] = ($salaries['basic_pay'] * $days['total_hours']) / $hours;
 				}
 
 			}
@@ -313,8 +358,10 @@ class SalaryComputationComponent extends Component
 		}
 
 	}
+
+	//pr($days); 
 		
-		return $days;
+	return $days;
 
 
 	}
@@ -332,17 +379,76 @@ class SalaryComputationComponent extends Component
 				$government_record[$gov_values['agency_id']] = $gov_values['value'];
 			}
 		}
-		
-		if ( $gross_pay != 0 && (!empty($government_record[1])) ) {
-				
-				$SssRange = ClassRegistry::init('SssRange');
-				
-				$conditions = array('SssRange.range_from <=' => $gross_pay, 'SssRange.range_to >=' => $gross_pay);
-				
-				$range = $SssRange->find('first',array('conditions' => $conditions ));
+		$conditions = array();
 
-				$pay = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $pay;
+		//contribution schedules 
+		/*
+		1. semi monthly equal
+		2. first payroll
+		3. second payroll
+		*/
+		if (!empty($models['Contibution'][1])) {
+
+			switch ($models['Contibution'][1]) {
+				case '1':
+					
+				if ( $gross_pay != 0 && (!empty($government_record[1])) ) {
+						
+						$SssRange = ClassRegistry::init('SssRange');
+						
+						$conditions = array('SssRange.range_from <=' => $gross_pay, 'SssRange.range_to >=' => $gross_pay);
+						
+						$range = $SssRange->find('first',array('conditions' => $conditions ));
+
+						$pay = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $pay;
+				}	
+
+				break;
+				case '2':
+
+				if ( $gross_pay != 0 && (!empty($government_record[1])) && $sched == 'first' ) {
+						
+						$SssRange = ClassRegistry::init('SssRange');
+						
+						$conditions = array('SssRange.range_from <=' => $gross_pay, 'SssRange.range_to >=' => $gross_pay);
+						
+						$range = $SssRange->find('first',array('conditions' => $conditions ));
+
+						$pay = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $pay;
+				}
+				case '3':	
+				
+				if ( $gross_pay != 0 && (!empty($government_record[1])) && $sched == 'second' ) {
+						
+						$SssRange = ClassRegistry::init('SssRange');
+						
+						$conditions = array('SssRange.range_from <=' => $gross_pay, 'SssRange.range_to >=' => $gross_pay);
+						
+						$range = $SssRange->find('first',array('conditions' => $conditions ));
+
+						$pay = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $pay;
+				}
+				case '4':	
+				
+				if ( $gross_pay != 0 && (!empty($government_record[1]))) {
+						
+						$SssRange = ClassRegistry::init('SssRange');
+						
+						$conditions = array('SssRange.range_from <=' => $gross_pay, 'SssRange.range_to >=' => $gross_pay);
+						
+						$range = $SssRange->find('first',array('conditions' => $conditions ));
+
+						$pay = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $pay;
+				}
+				default:
+					# code...
+					break;
+			}
+		
+		
+
 		}
+
 
 		return $pay;
 
@@ -360,6 +466,19 @@ class SalaryComputationComponent extends Component
 			foreach ($models['GovernmentRecord'] as $key => $gov_values) {
 				$government_record[$gov_values['agency_id']] = $gov_values['value'];
 			}
+		}
+
+		//contribution schedules 
+		/*
+		1. semi monthly equal
+		2. first payroll
+		3. second payroll
+		*/
+
+
+		if (!empty($models['Contibution'][1])) {
+
+
 		}
 
 		if ( $gross_pay != 0 && (!empty($government_record[2])) ) {

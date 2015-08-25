@@ -25,6 +25,7 @@ class Leave extends AppModel {
 					'conditions' => array('LeaveType.id = Leave.type_id')
 				),
 				
+				
 			)
 			// 'hasMany' => array (
 			// 	'Attendance' => array(

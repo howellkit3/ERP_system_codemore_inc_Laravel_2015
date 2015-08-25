@@ -244,6 +244,6 @@ div.value {
   width: 100%;
 }
 
-.table-responsive {
+.table-responsive.overflow {
   overflow: auto;
 }

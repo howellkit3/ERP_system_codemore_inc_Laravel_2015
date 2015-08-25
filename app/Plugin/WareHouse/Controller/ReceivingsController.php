@@ -4,8 +4,6 @@ App::uses('SessionComponent', 'Controller/Component');
 
 class ReceivingsController extends WareHouseAppController {
 
-	public $uses = array('WareHouse.CustomField');
-
 	public function index() {
 
 		$this->loadModel('Purchasing.PurchaseOrder');
@@ -522,7 +520,6 @@ class ReceivingsController extends WareHouseAppController {
 
     }
 
-
     public function view_receive($id = null, $requestUUID = null, $type = null) {
 
 	 	$this->loadModel('Purchasing.PurchaseOrder');
@@ -578,8 +575,6 @@ class ReceivingsController extends WareHouseAppController {
 		}
 
 		$this->DeliveredOrder->bind('ReceivedItem', 'PurchaseOrder', 'ReceivedOrder');
-
-		//pr($id); exit;
 
 		$receivedItemData = $this->DeliveredOrder->find('all', array('conditions' => array('DeliveredOrder.id' => $id)));
 		
@@ -671,8 +666,7 @@ class ReceivingsController extends WareHouseAppController {
         }
 
 
-
-   	$this->set(compact('purchaseOrderData', 'supplierData', 'firstName', 'lastName', 'requestData', 'itemDetails', 'receiveItem', 'itemData', 'receivedOrderData', 'type', 'requestItemData', 'itemHolder', 'deliveredDataID'));
+   	$this->set(compact('purchaseOrderData', 'supplierData', 'firstName', 'lastName', 'requestData', 'itemDetails', 'receiveItem', 'itemData', 'receivedOrderData', 'type', 'requestItemData', 'itemHolder', 'deliveredDataID', 'receivedItemData'));
 
     }
 
@@ -681,13 +675,13 @@ class ReceivingsController extends WareHouseAppController {
 
 		$userData = $this->Session->read('Auth');
 
-		$this->loadModel('WareHouse.ReceivedOrder');
+		$this->loadModel('WareHouse.DeliveredOrder');
 
-		$this->ReceivedOrder->id = $id;
+		$this->DeliveredOrder->id = $id;
 
-		$this->ReceivedOrder->saveField('status_id', 1);
+		$this->DeliveredOrder->saveField('status_id', 1);
 
-		$this->Session->setFlash(__('Delivered Order has been Closed'), 'success');
+		$this->Session->setFlash(__('Delivered Order has been Approved'), 'success');
       
         $this->redirect( array(
             'controller' => 'receivings',   
@@ -696,15 +690,15 @@ class ReceivingsController extends WareHouseAppController {
 
     }
 
-    public function in_record($id = null) {
+    public function in_record($id = null, $DeliveredOrderId = null) {
 
-    	$this->loadModel('WareHouse.ReceivedOrder');
+    	$this->loadModel('WareHouse.DeliveredOrder');
 
     	$userData = $this->Session->read('Auth');
 
-    	$this->ReceivedOrder->bind(array('ReceivedItem'));
+    	$this->DeliveredOrder->bind('ReceivedItem', 'PurchaseOrder', 'ReceivedOrder');
 
-    	$receivedData = $this->ReceivedOrder->find('first', array('conditions' => array('ReceivedOrder.id' => $id)));
+    	$receivedData = $this->DeliveredOrder->find('first', array('conditions' => array('ReceivedOrder.id' => $id)));
 
     	//pr($receivedData); exit;
 
@@ -718,13 +712,13 @@ class ReceivingsController extends WareHouseAppController {
 
 			$this->loadModel('WareHouse.Stock');
 
-			//$this->ReceivedOrder->id = $id;
+			$this->DeliveredOrder->id = $DeliveredOrderId;
 
-			//$this->ReceivedOrder->saveField('status_id', 13);
+			$this->DeliveredOrder->saveField('status_id', 13);
 
-			//$inRecordId = $this->InRecord->saveInRecord($this->request->data['InRecord'],$userData['User']['id'],$id);
+			$inRecordId = $this->InRecord->saveInRecord($this->request->data['InRecord'],$receivedData['DeliveredOrder'],$userData['User']['id']);
 
-			//$this->ItemRecord->saveItemRecord($inRecordId, $receivedData['ReceivedItem']);
+			$this->ItemRecord->saveItemRecord($inRecordId, $receivedData['ReceivedItem']);
 			
 			$this->Stock->saveStock($receivedData, $this->request->data);
 
@@ -740,20 +734,32 @@ class ReceivingsController extends WareHouseAppController {
 
     public function out_record() {
 
-    	$this->loadModel('WareHouse.Stock');
+    	$this->loadModel('Purchasing.Request');
 
-    	$this->loadModel('Supplier');
+    	$this->loadModel('User');
 
-    	$stock_table = $this->Stock->find('all');
+    	$this->loadModel('Role');
 
-    	$supplierData = $this->Supplier->find('list', array('fields' => array('Supplier.id', 'Supplier.name')
-																));
+    	$this->Request->bind(array('PurchasingType', 'RequestItem'));
 
-    	//pr($supplierData); exit;
+    	$requestData = $this->Request->find('all');
 
-    	$this->set(compact('stock_table', 'supplierData'));
+    	$userNameList = $this->User->find('list', array('fields' => array('User.id', 'User.fullname')));
+
+    	$userRoleList = $this->User->find('list', array('fields' => array('User.id', 'User.role_id')));
+
+    	$roleData = $this->Role->find('list', array('fields' => array('Role.id', 'Role.name')));
+
+    	//pr($userRoleList); exit;
+
+    	$this->set(compact('requestData', 'userNameList', 'userRoleList', 'roleData'));
 
 
+    }
+
+        public function out_record_item() {
+
+   
     }
 
 }

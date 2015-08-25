@@ -187,5 +187,83 @@ class PayrollSettingsController extends AppController
 
 		$this->set(compact('days'));	
 	}
+
+
+	public function contributions(){
+		
+		$this->loadModel('Payroll.Contribution');
+
+		$limit = 10;
+
+        $conditions = array();
+
+        $this->paginate = array(
+            'conditions' => $conditions,
+            'order' => 'Contribution.name ASC',
+        );
+		
+		$schedules = array(
+				'1' => 'Semi Monthly(Equal)',
+				'2' => 'Semi Monthly(First Payroll)',
+				'3' => 'Semi Monthly(Second Payroll)',
+				'4' => 'Anytime'
+		);
+
+		$contributions = $this->paginate('Contribution');
+
+		$this->set(compact('contributions','schedules'));
+	}
+
+	public function contribution_add($id = null) {
+
+		$this->loadModel('Payroll.Contribution');
+
+		if ($this->request->is(array('put','post'))) {
+		
+			 if ($this->Contribution->save($this->request->data)) {
+
+                     $this->Session->setFlash(__('Saving data completed.'),'success');
+
+                        $this->redirect(
+                            array('controller' => 'payroll_settings', 'action' => 'contributions')
+                        );
+
+                } else {
+
+                        $this->Session->setFlash(__('There\'s an error saving data, Please try again'),'error');
+                }
+		}
+
+		if (!empty($id)) {
+
+			$this->request->data = $this->Contribution->read(null,$id);
+		}
+
+
+	}
+
+	public function contribution_delete($id) {
+
+		if (!empty($id)) {
+
+            $this->loadModel('Payroll.Contribution');
+           
+            if ($this->Contribution->delete($id)) {
+
+                $this->Session->setFlash(
+                    __('Successfully deleted.', h($id)), 'success'
+                );
+
+            } else {
+                $this->Session->setFlash(
+                    __('There\'s an error deleting the data', h($id)),'error'
+                );
+            }
+
+            return $this->redirect(array('action' => 'contributions'));
+        }
+
+	}
+
 } 
 ?>

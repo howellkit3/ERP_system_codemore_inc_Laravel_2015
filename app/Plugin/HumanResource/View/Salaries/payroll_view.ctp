@@ -59,12 +59,13 @@ echo $this->element('payroll_options');
 		                         	 )
                         	); 
 
-                            echo $this->Html->link('<i class="fa fa-file-text-o fa-lg"></i> Genereate Payslip', array(
+                            echo $this->Html->link('<i class="fa fa-file-text-o fa-lg"></i> Generate Payslip', array(
                          			'controller' => 'salaries',
                         			'action' => 'export_salaries',
                          			$payroll['Payroll']['id'],
                          			'payslip'
                          	), array(
+                         		'target' => '_blank',
                          		'escape' => false,
                          		'class' => 'ble-link btn btn-primary pull-right',
                          	 )
@@ -73,9 +74,22 @@ echo $this->element('payroll_options');
                         endif; ?>		
 						<?php if($payroll['Payroll']['status'] == 'pending') : ?>
                          
-                         <a title="Edit Information" data-process="reject" class=" table-link btn btn-primary pull-right overtime-process" href="/koufunet/human_resource/overtimes/process/8/reject">
-                         	<i class="fa fa-times fa-lg"></i> Delete 
-                         </a>
+             
+
+                         <?php 
+
+                         echo $this->Html->link('<i class="fa fa-trash-o fa-lg"></i> Reject', array(
+                         	'controller' => 'salaries',
+                         	'action' => 'reject_payroll',
+                         	$payroll['Payroll']['id']),
+                         	array(
+                         		'escape' => false,
+                         		'class' => 'table-link btn btn-primary pull-right',
+                         		'id' => 'rejectPayroll'
+                         	)
+                         );
+
+                         ?>
                       
                          <?php echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i> Process', array(
                          'controller' => 'salaries',
@@ -133,7 +147,7 @@ echo $this->element('payroll_options');
 
 			       		<div class="main-box-body clearfix">
 			            	<div id="result-table">
-			            		  <div class="table-responsive">
+			            		  <div class="table-responsive overflow">
 		                                <div class="table-responsive">
 		            					
 		                                	<div class="table-responsive">
@@ -157,19 +171,18 @@ echo $this->element('payroll_options');
 
 
 										<tbody aria-relevant="all" aria-live="polite" role="alert">
-															<?php  if(!empty($salaries)) { ?>
+															<?php  if(!empty($salariesList)) { ?>
 
-														           <?php foreach ($salaries as $key => $salary): ?>
+														           <?php foreach ($salariesList as $key => $salary): ?>
 																			
 																			<tr >
 																			<td> 
 																			<?php 
 
-																			$employee = $this->CustomEmployee->findEmployee($salary['employee_id']);
-																			echo !empty( $employee ) ?  $employee['Employee']['code'] : ''; ?>   
+																			echo !empty( $salary['Employee'] ) ?  $salary['Employee']['code'] : ''; ?>   
 																			</td>
 																				<td class="">
-														                          <?php echo $this->CustomText->getFullname($employee['Employee']);  ?>
+														                          <?php echo $this->CustomText->getFullname($salary['Employee']);  ?>
 														                        </td>
 
 														                         <td class="">
@@ -209,10 +222,25 @@ echo $this->element('payroll_options');
 														       <?php } ?> 
 										</tbody>
 										</table>
+
+								
+
+
+										</div>	
+
 										</div>
-										</div>
-							
-               					 </div>
+									</div>
+									    	<?php if (!empty($salarySplit) && count($salarySplit) > 0) : ?>
+												<div class="paging">
+												<span class="disable"><?php echo $this->Html->link(' &lt; First',array('controller' => 'salaries','action' => 'payroll_view',$payroll['Payroll']['id'],'page' =>0),array('escape' => false )); ?></span>
+
+												<?php for($i=1; $i < count($salarySplit); $i++): ?>
+												<span><?php echo $this->Html->link($i,array('controller' => 'salaries','action' => 'payroll_view',$payroll['Payroll']['id'],'page' => $i)); ?></span>
+
+												<?php endfor; ?>
+												</div>
+	                  						 <?php endif; ?>
+	                   
              				</div> 
              			</div>
 					</div>		

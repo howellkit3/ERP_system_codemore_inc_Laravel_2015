@@ -18,7 +18,9 @@
             </td>
 
             <td class="">
+
                 <?php echo $type[$requestList['Request']['pur_type_id']];?>
+                
             </td>
 
             <td class="text-center">

@@ -49,6 +49,18 @@ echo $this->Html->script(array(
 			                   <br><br>
 			               </div>
 			            </header>
+			              <div class="main-box-body clearfix">
+			            	<div class="box calendar_view">	
+				            		<ul class="legends">
+				            			<li> <div class="box-color green"></div> Regular Holiday  </li>
+				            			<li> <div class="box-color orange"></div> Special Holiday </li>
+				            		</ul>			
+
+			             		 <div id="calendarSchedule"></div>
+
+			            	</div>		
+			            
+						</div>
 
 			            <div class="main-box-body clearfix">
 

@@ -28,7 +28,7 @@
                             </tr>
                         </thead>
 
-                        <?php //echo $this->element('request_table'); ?>
+                        <?php echo $this->element('request_table'); ?>
 
                                                     
                      </table>

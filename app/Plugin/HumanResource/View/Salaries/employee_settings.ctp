@@ -129,19 +129,37 @@
 												<div class="story-author">
 														<div class="table-responsive">
 															<div class="col-lg-12">
+																<div class="form-group">
+							                                        <label for="inputEmail1" class="col-lg-2 control-label strong"> Employee salary type </label>
+								                                      <div class="col-lg-7 value">
+								                                      		<?php
+								                                      		 echo $this->Form->input('employee_salary_type',
+								                                      		 	array(
+								                                      		 		'options' => array(
+								                                      		 			'daily' => 'Daily',
+								                                      		 			'monthly' => 'Monthly'
+								                                      		 		),
+								                                      		 		'label' => false,
+								                                      		 		'class' => 'form-control'
+								                                      		 	));
+								                                      		 ?>
+								                                       </div>
+							                                     </div>
+							                                     <div class="clearfix"></div>
+
 					                                     		<div class="form-group">
 							                                        <label for="inputEmail1" class="col-lg-2 control-label strong"> Basic Salary / per Day </label>
 								                                      <div class="col-lg-7 value">
 								                                      		<?php
 								                                      		echo $this->Form->input('id');
-								                                      		 echo $this->Form->input('employee_id',array('type' => 'hidden' ,'value' => $employee['Employee']['id'])); 
+								                                      		echo $this->Form->input('employee_id',array('type' => 'hidden' ,'value' => $employee['Employee']['id'])); 
 								                                      		 echo $this->Form->input('basic_pay',array('label' => false,'class' => 'form-control'));
 								                                      		 ?>
 								                                       </div>
 							                                     </div>
 							                                     <div class="clearfix"></div>
 
-							                                      <div class="form-group">
+							                                     <div class="form-group">
 							                                        <label for="inputEmail1" class="col-lg-2 control-label strong"> Allowances </label>
 								                                      <div class="col-lg-7 value"> 
 								                                     		<?php echo $this->Form->input('allowances',array('label' => false,'class' => 'form-control')); ?>
@@ -149,8 +167,7 @@
 							                                     </div>
 							                                       <div class="clearfix"></div>
 
-
-							                                       <div class="form-group">
+							                                      <div class="form-group">
 							                                        <label for="inputEmail1" class="col-lg-2 control-label strong"> Incentives </label>
 								                                      <div class="col-lg-7 value"> 
 								                                     		<?php echo $this->Form->input('incentives',array('label' => false,'class' => 'form-control')); ?>
