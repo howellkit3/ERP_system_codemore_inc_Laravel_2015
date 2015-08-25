@@ -7,7 +7,7 @@ App::uses('AppModel', 'Model');
  */
 class RequestItem extends AppModel {
 
-    public $useDbConfig = 'koufu_purchasing';
+    public $useDbConfig = 'koufu_warehouse';
 
     public $name = 'RequestItem';
 
@@ -22,12 +22,10 @@ class RequestItem extends AppModel {
 			'belongsTo' => array(
 				'Request' => array(
 					'className' => 'Purchasing.Request',
-					'foreignKey' => false,
-					'conditions' => array('RequestItem.request_uuid' => 'Request.uuid')
+					'foreignKey' => 'uuid',
+					'dependent' => true
 				),
 			),
-
-		
 			
 		));
 

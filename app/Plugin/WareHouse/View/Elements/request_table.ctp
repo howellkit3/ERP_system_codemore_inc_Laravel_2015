@@ -1,66 +1,77 @@
-<?php   foreach ($requestData as $requestDataList ): ?>
+<?php  foreach ($requestData as $requestList ): ?>
+
 
         <tr class="">
 
             <td class="">
-                <?php echo ucfirst($requestDataList['Request']['uuid']) ?>  
+                <?php echo ucfirst($requestList['Request']['uuid']) ?>  
             </td>
 
             <td class="">
 
-                <?php echo ucfirst($requestDataList['Request']['name']) ?>
+                <?php if(!empty($requestList['Request']['name'])){ 
+
+                  echo ucfirst($requestList['Request']['name']); 
+
+                } ?>
 
             </td>
 
-            <td class="">
-                <?php echo ucfirst($requestDataList['PurchasingType']['name']) ?>
-            </td>
+            <td> 
 
-            <td >
-               
-                <span class='label label-default'>Waiting</span>
-                  
-            </td>
-
-            <td class="">
-
-                <?php echo ucwords($userNameList[$requestDataList['Request']['prepared_by']]) ?>
+                <?php echo ucfirst($userName[$requestList['Request']['created_by']]) ?>
 
             </td>
 
-            <td class="">
+            <td class="text-center">
 
-                <?php echo ucwords($roleData[$userRoleList[$requestDataList['Request']['prepared_by']]]) ?>
-
-            </td>
-
-
-             <td class="">
-
-                <?php echo date('M d, Y', strtotime($requestDataList['Request']['created'])); ?>
+                <?php 
+                    if($requestList['Request']['status_id'] == 8){ 
+                        echo "<span class='label label-default'>Waiting</span>";
+                    }
+                    if($requestList['Request']['status_id'] == 1){ 
+                        echo "<span class='label label-info'>Approved</span>";
+                    }
+                    if($requestList['Request']['status_id'] == 0){ 
+                        echo "<span class='label label-success'>Purchase Order</span>";
+                    }
+                ?>
 
             </td>
 
             <td>
+                <?php
+                    echo $this->Html->link('<span class="fa-stack">
+                        <i class="fa fa-square fa-stack-2x"></i>
+                        <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> View </font></span>
+                        </span> ', array('controller' => 'warehouse_requests', 'action' => 'view',$requestList['Request']['id']),array('class' =>' table-link','escape' => false,'title'=>'Review Request'));
+                ?>
 
-                 <?php
-                        echo $this->Html->link('<span class="fa-stack">
-                            <i class="fa fa-square fa-stack-2x"></i>
-                            <i class="fa fa-search fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> View</font></span>
-                            </span> ', array('controller' => 'receivings', 'action' => 'view', $requestDataList['Request']['id'], $requestDataList['Request']['uuid'], 0),array('class' =>' table-link','escape' => false,'title'=>'Review Inquiry'));
-                    ?>     
+                <?php
+                    echo $this->Html->link('<span class="fa-stack">
+                        <i class="fa fa-square fa-stack-2x"></i>
+                        <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> OutRecord </font></span>
+                        </span> ', array('controller' => 'warehouse_requests', 'action' => 'outrecord',$requestList['Request']['id']),array('class' =>' table-link','escape' => false,'title'=>'Review Request'));
+                ?>
 
-                      <?php
-                        echo $this->Html->link('<span class="fa-stack">
-                            <i class="fa fa-square fa-stack-2x"></i>
-                            <i class="fa fa-sign-in fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> OutRecord</font></span>
-                            </span> ', array('controller' => 'receivings', 'action' => 'out_record_item', $requestDataList['Request']['id'], $requestDataList['Request']['uuid'], 0),array('class' =>' table-link','escape' => false,'title'=>'Review Inquiry'));
-                    ?>                  
-
+                <?php /* <a href="<?php echo Router::url('/', true) . 'request/view/' . $requestList['Request']['id']; ?>">
+                    <span class="fa-stack">
+                        <i class="fa fa-square fa-stack-2x"></i>
+                        <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;
+                        <span class ="post"><font size = "1px"> View </font></span>
+                    </span>
+                </a> */ ?>
+               
+                <?php
+                    // echo $this->Html->link('<span class="fa-stack">
+                    // <i class="fa fa-square fa-stack-2x"></i>
+                    // <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                    // </span> ', array('controller' => 'customer_sales', 'action' => 'edit',$inquirylist['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Information'));
+                ?>
+             
+                
             </td>
-    
-<div class="md-overlay"></div>
+        </tr>
 
 
 <?php endforeach; ?> 
-

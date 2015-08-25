@@ -353,9 +353,15 @@ class ReceivingsController extends WareHouseAppController {
 
 		$receivedOrderData = $this->ReceivedOrder->find('first', array('conditions' => array('ReceivedOrder.purchase_order_id' => $purchaseOrderData['PurchaseOrder']['id'])));
 
+		//$this->Request->bind(array('PurchasingItem','RequestItem'));
+
+		//$this->Request->bindRequest();
+
 		$requestData = $this->Request->find('first', array('conditions' => array('Request.uuid' => $requestUUID)));
 
-		if(empty($requestData['PurchaseItem'])){
+		//pr($requestData); exit;
+
+		if(empty($requestData['PurchasingTypeItem'])){
 
 			$itemHolder = "RequestItem";
 
@@ -363,9 +369,9 @@ class ReceivingsController extends WareHouseAppController {
 
 		}else{
 
-			$itemHolder = "PurchaseItem";
+			$itemHolder = "PurchasingItem";
 
-			$itemData = $this->PurchaseItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestUUID)));
+			$itemData = $this->PurchasingItem->find('all', array('conditions' => array('PurchasingItem.request_uuid' => $requestUUID)));
 
 		}
 

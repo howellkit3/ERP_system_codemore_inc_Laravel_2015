@@ -7,7 +7,7 @@ App::uses('AppModel', 'Model');
  */
 class Request extends AppModel {
 
-    public $useDbConfig = 'koufu_purchasing';
+    public $useDbConfig = 'koufu_warehouse';
 
     public $name = 'Request';
 
@@ -31,13 +31,13 @@ class Request extends AppModel {
 				'PurchasingItem' => array(
 					'className' => 'Purchasing.PurchasingItem',
 					'foreignKey' =>  false,
-					'conditions' => array('PurchasingItem.request_uuid' => 'Request.uuid')
+					'conditions' => array('PurchasingItem.request_uuid = request_uuid')
 				),
 
 				'RequestItem' => array(
 					'className' => 'Purchasing.RequestItem',
 					'foreignKey' =>  false,
-					'conditions' => array('RequestItem.request_uuid' => 'Request.uuid')
+					'conditions' => array('RequestItem.request_uuid = request_uuid')
 				),
 			)
 			
@@ -46,20 +46,20 @@ class Request extends AppModel {
 		$this->contain($model);
 	}
 
-	// public function bindRequest() {
-	// 	$this->bindModel(array(
-	// 		'hasMany' => array(
-	// 			'PurchasingItem' => array(
-	// 				'className' => 'Purchasing.PurchasingItem',
-	// 				'foreignKey' => false,
-	// 				'conditions' => 'PurchasingItem.request_uuid = Request.uuid'
-	// 			),		
+	public function bindRequest() {
+		$this->bindModel(array(
+			'hasOne' => array(
+				'PurchasingItem' => array(
+					'className' => 'Purchasing.PurchasingItem',
+					'foreignKey' => false,
+					'conditions' => 'Request.uuid = PurchasingItem.request_uuid'
+				),		
 				
-	// 		)
-	// 	));
-	// 	$this->recursive = 1;
-	// 	//$this->contain($giveMeTheTableRelationship);
-	// }
+
+			)
+		));
+		$this->recursive = 1;
+	}
 
 	public function saveRequest($requestData = null, $auth = null){
 
@@ -81,8 +81,8 @@ class Request extends AppModel {
 
 		$requestData['uuid'] = $code;
 		$requestData['status_id'] = 8;
-		$requestData['prepared_by'] = $auth;
-		$requestData['approved_by'] = $auth;
+		$requestData['created_by'] = $auth;
+		$requestData['modified_by'] = $auth;
 
 		$this->save($requestData);
 
