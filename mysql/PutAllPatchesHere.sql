@@ -1560,6 +1560,8 @@ CREATE TABLE IF NOT EXISTS `payrolls` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 
+/* howell kit added this 8-19-2015 koufu WAREHOUSE */
+
 CREATE TABLE IF NOT EXISTS `in_records` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `remarks` TEXT NOT NULL,
@@ -1596,8 +1598,9 @@ CREATE TABLE IF NOT EXISTS `item_records` (
 /** bien added this 08/17/2015 TO HR DATABASE   */
 ALTER TABLE `cause_memos` ADD `noted_user_id` INT(11)  NULL  DEFAULT NULL  AFTER `modified`;
 
-/** howell kit added this 08/17/2015 TO HR DATABASE   */
+/** howell kit added this 08/17/2015 TO WAREHOUSE DATABASE   */
 ALTER TABLE `received_items` ADD `original_quantity` INT(11)  NULL  DEFAULT NULL  AFTER `quantity`;
+ALTER TABLE `received_items` ADD `reject_quantity` INT(11)  NULL  DEFAULT NULL  AFTER `quantity`;
 /** bien added this 08/20/2015 TO Koufu system DATABASE   */
 CREATE TABLE `banks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1691,7 +1694,7 @@ ALTER TABLE `stocks` ADD `size3` VARCHAR(30)  NULL  DEFAULT NULL  AFTER `size2_u
 ALTER TABLE `stocks` ADD `size3_unit_id` VARCHAR(30)  NULL  DEFAULT NULL  AFTER `size3`;
 ALTER TABLE `stocks` ADD `model` VARCHAR(35)  NULL  DEFAULT NULL  AFTER `uuid`;
 
-
+ALTER TABLE `in_records` ADD `received_orders_id` INT(11)  NULL  DEFAULT NULL  AFTER `id`;
 /* aldrin added this for HR database 8-24-15 */
 
 --
@@ -1718,7 +1721,7 @@ INSERT INTO `contributions` (`id`, `name`, `description`, `schedules`, `created_
 
 /* end */
 
-ALTER TABLE `in_records` ADD `received_orders_id` INT(11)  NULL  DEFAULT NULL  AFTER `id`;
+
 
 /** bien added this 08/24/2015 TO PRODUCTION DATABASE   */
 CREATE TABLE `machine_specifications` (
@@ -1746,3 +1749,52 @@ CREATE TABLE `machine_specifications` (
 /** bien added this 08/24/2015 TO System DATABASE   */
 ALTER TABLE `sub_processes` ADD `machine_id` INT(11)  NULL  DEFAULT NULL  AFTER `process_id`;
 
+
+/**howell kit added this 08/25/2015 TO WAREHOUSE DATABASE   */
+DROP TABLE IF EXISTS `delivered_orders`;
+
+CREATE TABLE `delivered_orders` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `received_orders_id` INT(11) DEFAULT NULL,
+  `purchase_orders_id` INT(11) DEFAULT NULL,
+  `uuid` VARCHAR(30) DEFAULT NULL,
+  `status_id` INT(11) DEFAULT NULL,
+  `created` DATETIME NOT NULL,
+  `modified` DATETIME NOT NULL,
+  `created_by` INT(11) DEFAULT NULL,
+  `modified_by` INT(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB AUTO_INCREMENT=68 DEFAULT CHARSET=latin1;
+
+
+DROP TABLE IF EXISTS `request_items`;
+
+CREATE TABLE `request_items` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `model` VARCHAR(30) DEFAULT NULL,
+  `foreign_key` INT(11) DEFAULT NULL,
+  `request_uuid` INT(11) DEFAULT NULL,
+  `size1` VARCHAR(80) DEFAULT NULL,
+  `size1_unit_id` INT(11) DEFAULT NULL,
+  `size2` VARCHAR(80) DEFAULT NULL,
+  `size2_unit_id` INT(11) DEFAULT NULL,
+  `size3` VARCHAR(80) DEFAULT NULL,
+  `size3_unit_id` INT(11) DEFAULT NULL,
+  `quantity` INT(11) DEFAULT NULL,
+  `quantity_unit_id` INT(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `requests`;
+
+CREATE TABLE `requests` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `uuid` INT(11) DEFAULT NULL,
+  `name` VARCHAR(80) DEFAULT NULL,
+  `status_id` INT(11) DEFAULT NULL,
+  `created` DATETIME NOT NULL,
+  `modified` DATETIME NOT NULL,
+  `created_by` INT(11) DEFAULT NULL,
+  `modified_by` INT(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB AUTO_INCREMENT=68 DEFAULT CHARSET=latin1;
