@@ -2,7 +2,6 @@
 App::uses('AppController', 'Controller');
 App::uses('SessionComponent', 'Controller/Component');
 
-
 App::import('Vendor', 'DOMPDF', true, array(), 'dompdf'.DS.'dompdf_config.inc.php', false);
 
 //App::import('PHPWord', 'Vendor');
@@ -83,8 +82,14 @@ class SalariesController  extends HumanResourceAppController {
 
 			$this->loadModel('HumanResource.Attendance');
 			$this->loadModel('HumanResource.Employee');
+			$this->loadModel('HumanResource.Department');
+			$this->loadModel('HumanResource.Position');
 			$this->loadModel('HumanResource.Salary');
 			$this->loadModel('HumanResource.GovernmentRecord');
+			$this->loadModel('HumanResource.Holiday');	
+			$this->loadModel('HumanResource.SalaryReport');	
+			$this->loadModel('Payroll.Payroll');	
+
 
 			$emp_conditions = array();//array('Employee.status NOT' => array('1'));
 			$this->Employee->bind(array('Salary','GovernmentRecord'));
@@ -137,15 +142,12 @@ class SalariesController  extends HumanResourceAppController {
 			}
 
 			//$this->Components->load('HumanResource.SalaryComputation');
-
-			$this->loadModel('HumanResource.SalaryReport');
-
 			$this->loadModel('Payroll.Deduction');
-
-			$this->loadModel('Payroll.Amortization');
+			$this->loadModel('Payroll.Amortization');			
 			$this->loadModel('Payroll.OvertimeRate');
+			$this->loadModel('Payroll.Contribution');
+			$this->loadModel('Payroll.Loan');
 
-			$this->loadModel('HumanResource.Holiday');
 
 			$updateDatabase = false;
 
@@ -703,7 +705,7 @@ class SalariesController  extends HumanResourceAppController {
 
 			$deductions = $this->Loan->find('list',array('fields' => array('id','name')));
 
-			$salarySplit = array_chunk($salaries , 2);
+			$salarySplit = array_chunk($salaries , 10);
 
 			if (!empty($this->params['named']['page'])) {
 
@@ -744,7 +746,13 @@ class SalariesController  extends HumanResourceAppController {
 
 				$json_data = json_encode($salaries);
 
-				file_put_contents("salaries/files/payroll-".$id.".txt", $json_data);
+					$folder_path = WWW_ROOT.'/salaries/files/';
+
+					if (!file_exists($folder_path)) {
+						mkdir($folder_path, 0777, true);
+					}
+
+					file_put_contents("salaries/files/payroll-".$id.".txt", $json_data);
 
 			}
 
@@ -893,9 +901,10 @@ class SalariesController  extends HumanResourceAppController {
 
 				case 'payslip':
 
+
 				//$this->render('Salaries/payslip/payslip');
 				
-				$this->layout = 'pdf';
+				//$this->layout = 'pdf';
 
 				$view = new View(null, false);
 
@@ -906,7 +915,7 @@ class SalariesController  extends HumanResourceAppController {
 				$view->viewPath = 'Salaries'.DS.'pdf';	
 		   	
 		        $output = $view->render('payslip', false);
-		   	
+
 		        $dompdf = new DOMPDF();
 		        $dompdf->set_paper("A4", 'portrait');
 		        $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));
@@ -924,7 +933,6 @@ class SalariesController  extends HumanResourceAppController {
 		      	$filePath = $filename.'.pdf';
 
 		        $file_to_save = WWW_ROOT .DS. $filePath;
-
 		        	
 		        // if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
 		        		
@@ -932,7 +940,10 @@ class SalariesController  extends HumanResourceAppController {
 		        // }
 
 			//$dompdf->render();
-				$dompdf->stream('payslip-'.$payroll['Payroll']['id'].'-'.str_replace(' ','-',strtolower($payrollDate)).'-'.time().'.pdf');
+				 if ($dompdf->stream('payslip-'.$payroll['Payroll']['id'].'-'.str_replace(' ','-',strtolower($payrollDate)).'-'.time().'.pdf')){
+
+				 	unlink($file_to_save);
+				}
 
 				exit();
                 break; 	

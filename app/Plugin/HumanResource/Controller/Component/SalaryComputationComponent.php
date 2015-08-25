@@ -115,8 +115,8 @@ class SalaryComputationComponent extends Component
 						//$total_pay  -= $salary[$key]['sss'];
 						$salary[$key]['total_pay'] = $total_pay;
 						$salary[$key]['Employee'] = $employee['Employee'];
-						$salary[$key]['Department'] = $employee['Department'];
-						$salary[$key]['Position']	= $employee['Position'];
+						$salary[$key]['Department'] = !empty($employee['Department']) ? $employee['Department'] : array();
+						$salary[$key]['Position']	= !empty($employee['Position']) ? $employee['Position'] : array();
 
 
         		}

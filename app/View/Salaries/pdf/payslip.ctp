@@ -16,9 +16,7 @@ header("Content-type: application/pdf");
 	<body>
 		<?php  foreach ($salaries as $key => $salary) :
 
-			// $employee = $this->CustomEmployee->findEmployee($salary['employee_id'],array('Department','Position'));
-
-			 $employee_name = $this->CustomText->getFullname($salary['Employee']);
+				$employee_name = $this->CustomText->getFullname($salary['Employee']);
 
 			 $payrollDate = date('F',strtotime($salary['from'])).' '.date('d',strtotime($salary['from'])).'-'.date('d',strtotime($salary['to'])).','.date('Y',strtotime($salary['from']));
 		 ?>
@@ -217,7 +215,8 @@ header("Content-type: application/pdf");
 										<?php echo !empty($salary['pagibig'])  ? number_format($salary['pagibig'],2) : '0.00'; ?>
 									</td>
 								</tr>
-							</table> </td>
+							</table>
+						 </td>
 						</tr>
 
 
@@ -258,8 +257,6 @@ header("Content-type: application/pdf");
 					</tr>
 				</table>
 				 <div style="page-break-before: always;"></div> 
-
-
 <?php endforeach; ?>
 	</body>
 </html>
