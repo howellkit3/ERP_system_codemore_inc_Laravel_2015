@@ -10,11 +10,14 @@ class DashboardsController  extends HumanResourceAppController {
 
 	public function index() {
 
-			$this->loadModel('HumanResource.WorkSchedule');
+	
+		$this->loadModel('HumanResource.WorkSchedule');
 
 		$this->loadModel('HumanResource.Employee');
 
 		$this->loadModel('HumanResource.Workshift');
+
+		$this->loadModel('HumanResource.Holiday');
 		
 		$date = date('Y-m-d');
 
@@ -33,8 +36,14 @@ class DashboardsController  extends HumanResourceAppController {
 		$conditions = array();
 
 		$absences = $this->Absence->find('all',array('conditions' => $conditions ,'limit' => 5,'order' => array('Absence.from DESC') ));
-	
-		$this->set(compact('attendances','absences'));
+
+		$conditions = array('Holiday.start_date >=' => date('Y-m-d'));
+
+		$holidays = $this->Holiday->find('all',array('conditions' => $conditions,'limit' => 5 ,'order' => array('Holiday.start_date ASC')));
+		
+		// pr($holidays);
+		// exit();
+		$this->set(compact('attendances','absences','holidays'));
 	}
 
 }

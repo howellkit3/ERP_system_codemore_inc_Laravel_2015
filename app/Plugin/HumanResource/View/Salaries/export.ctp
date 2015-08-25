@@ -77,7 +77,7 @@
                  ); ?>
 
 
-								<button href="#" id="computeSalaries" data-url="" class="btn btn-primary pull-right "><i class="fa fa-refresh fa-lg"></i> Generate </button>
+								<button href="#" id="computeSalaries" data-url="" class=" btn btn-primary pull-right "><i class="fa fa-refresh fa-lg"></i> Generate </button>
 							
 			               </div>
 			               </div>

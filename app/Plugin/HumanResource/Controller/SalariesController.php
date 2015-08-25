@@ -407,11 +407,85 @@ class SalariesController  extends HumanResourceAppController {
 		
 		$date = date('m-Y');
 
+		$monthly = $this->_getMonthlyReport();
 
-		$this->set(compact('date'));
+		$yearly = $this->_getYearlyReport();
+
+	
+		$this->set(compact('date','monthly','yearly'));
 
 		$this->render('Salaries/reports/reports');
 	}
+
+	private function _getMonthlyReport($date = null) {
+
+		$this->loadModel('Payroll.SalaryReport');
+
+		$this->Components->load('HumanResource.SalaryComputation');
+
+		$from =  date('Y-m-01');
+		$to =  date('Y-m-t');
+
+		if (!empty($date)) {
+		
+			$from = date('Y-m-d',strtotime('01-'.$date));
+			$to =  date('Y-m-t',strtotime('01-'.$date));
+		}
+
+		$conditions = array('AND' => array(
+			'SalaryReport.from >=' => $from,
+			'SalaryReport.to <='=> $to
+			));
+
+
+		$this->SalaryReport->bind(array('Employee'));
+
+		$salaries = $this->SalaryReport->find('all',array( 
+		'conditions' => $conditions ,
+		'group' => array('SalaryReport.id'), 
+		));
+
+		$employees = $this->SalaryComputation->computeMonthlySalary($salaries);
+
+		return $employees;
+
+	}
+
+
+	private function _getYearlyReport($date = null) {
+
+		$this->loadModel('Payroll.SalaryReport');
+
+		$this->Components->load('HumanResource.SalaryComputation');
+
+		$from =  date('Y-01-01');
+		$to =  date('Y-12-t');
+
+		if (!empty($date)) {
+
+			$from =  date($date.'-01-01');
+			$to =  date($date.'-12-t');
+
+		}
+
+		$conditions = array('AND' => array(
+			'SalaryReport.from >=' => $from,
+			'SalaryReport.to <='=> $to
+			));
+
+		$this->SalaryReport->bind(array('Employee'));
+
+		$salaries = $this->SalaryReport->find('all',array( 
+		'conditions' => $conditions ,
+		'group' => array('SalaryReport.id'), 
+		));
+
+		$employees = $this->SalaryComputation->computeYearlySalary($salaries);
+
+		return $employees;
+
+	}
+
 
 	public function getSalaries() {
 
@@ -421,7 +495,9 @@ class SalariesController  extends HumanResourceAppController {
 
 			$this->Components->load('HumanResource.SalaryComputation');
 
-			$this->loadModel('HumanResource.SalaryReport');
+			$this->loadModel('Payroll.SalaryReport');
+
+			if ($query['type'] == 'monthly') {
 
 			$conditions = array('AND' => array(
         					'SalaryReport.from >=' => date('Y-m-d',strtotime('01-'.$query['month'])),
@@ -440,9 +516,86 @@ class SalariesController  extends HumanResourceAppController {
 			$this->set(compact('employees'));				
 
 			$this->render('Salaries/ajax/monthly_salaries');
+
+			}
+
+			if ($query['type'] == 'yearly') {
+
+
+			$from =  date($query['year'].'-01-01');
+			$to =  date($query['year'].'-12-t');
+
+
+
+			$conditions = array('AND' => array(
+			'SalaryReport.from >=' => $from,
+			'SalaryReport.to <='=> $to
+			));
+
+
+
+			$this->SalaryReport->bind(array('Employee'));
+
+			$salaries = $this->SalaryReport->find('all',array( 
+			'conditions' => $conditions ,
+			'group' => array('SalaryReport.id'), 
+			));
+
+			$employees = $this->SalaryComputation->computeYearlySalary($salaries);
+
+
+			$this->set(compact('employees'));				
+
+			$this->render('Salaries/ajax/yearly_salaries');
+
+			}
+
+		
+
+		
 		}
 	}
 
+	public function export_reports() {
+
+		if (!empty($this->request->params['named']['type'])) {
+
+			if ($this->request->params['named']['type'] == 'monthly') {
+
+				$query = $this->request->query;
+
+				if (!empty($query)) {
+
+					$month = $query['month'];
+
+					$employees = $this->_getMonthlyReport($month);
+
+					$this->set(compact('employees','month'));
+
+					$this->render('Salaries/xls/monthly_salary_reports');
+				}
+
+			}
+
+			if ($this->request->params['named']['type'] == 'yearly') {
+
+				$query = $this->request->query;
+
+				if (!empty($query)) {
+
+					$year = $query['year'];
+
+					$employees = $this->_getYearlyReport($year);
+
+					$this->set(compact('employees','year'));
+
+					$this->render('Salaries/xls/yearly_salary_reports');
+				}
+
+			}
+		}
+		return $employees;
+	}
 
 
 	public function computeDeduction() {
@@ -455,7 +608,9 @@ class SalariesController  extends HumanResourceAppController {
 			if (!empty($query['range'])) {
 
 				$date = explode('-',$query['range']);
+				
 				$datetime1 = new DateTime(trim($date[0]));
+
 				$datetime2 = new DateTime(trim($date[1]));
 
 				$interval = $datetime1->diff($datetime2);	
@@ -463,6 +618,7 @@ class SalariesController  extends HumanResourceAppController {
 				$days = $interval->days;
 
 				$start_date = date('Y-m-d',strtotime($date[0]));
+
 				$end_date = date('Y-m-d',strtotime($date[1]));
 
 				$count = 1;
@@ -734,7 +890,10 @@ class SalariesController  extends HumanResourceAppController {
 
 		if (!empty($id)) {
 
+			$auth = $this->Session->read('Auth.User');
+
 			$this->loadModel('Payroll.Payroll');
+			$this->loadModel('Payroll.SalaryReport');
 
 			$payroll = $this->Payroll->findById($id);
 
@@ -746,14 +905,16 @@ class SalariesController  extends HumanResourceAppController {
 
 				$json_data = json_encode($salaries);
 
-					$folder_path = WWW_ROOT.'/salaries/files/';
+				$folder_path = WWW_ROOT.'/salaries/files/';
 
-					if (!file_exists($folder_path)) {
-						mkdir($folder_path, 0777, true);
-					}
+				if (!file_exists($folder_path)) {
+					mkdir($folder_path, 0777, true);
+				}
 
-					file_put_contents("salaries/files/payroll-".$id.".txt", $json_data);
+				file_put_contents("salaries/files/payroll-".$id.".txt", $json_data);
 
+				//save to salary report data
+				$this->SalaryReport->createReport($salaries,$auth);
 			}
 
 			if ($this->Payroll->save($payroll['Payroll']) ) {
@@ -882,7 +1043,7 @@ class SalariesController  extends HumanResourceAppController {
 
 			// $salaries = $this->Payroll->objectToArray($payroll['Payroll']['data']); 
 
-			$data =  file_get_contents("salaries/files/payroll-".$payroll_id.".txt");
+			$data = file_get_contents("salaries/files/payroll-".$payroll_id.".txt");
 
 			$salaries = $this->Payroll->objectToArray(json_decode($data)); 
 

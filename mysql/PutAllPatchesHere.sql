@@ -1798,3 +1798,21 @@ CREATE TABLE `requests` (
   `modified_by` INT(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB AUTO_INCREMENT=68 DEFAULT CHARSET=latin1;
+
+
+/* add salary report table for koufu_payroll */
+
+CREATE TABLE IF NOT EXISTS `salary_reports` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `days` int(11) NOT NULL,
+  `salary_type` varchar(255) NOT NULL,
+  `from` date NOT NULL,
+  `to` date NOT NULL,
+  `gross` decimal(8,2) NOT NULL,
+  `total_deduction` decimal(8,2) NOT NULL,
+  `allowances` decimal(8,2) NOT NULL,
+  `incentives` decimal(8,2) NOT NULL,
+  `total_pay` decimal(8,2) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
