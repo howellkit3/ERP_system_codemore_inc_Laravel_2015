@@ -4,8 +4,6 @@ App::uses('SessionComponent', 'Controller/Component');
 
 class ReceivingsController extends WareHouseAppController {
 
-	public $uses = array('WareHouse.CustomField');
-
 	public function index() {
 
 		$this->loadModel('Purchasing.PurchaseOrder');

@@ -118,6 +118,8 @@
                                         ?>
                                     </div>
                                 </div>
+
+                                <br><br>
                                 <br><br>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i> Submit</button>
