@@ -16,9 +16,7 @@ header("Content-type: application/pdf");
 	<body>
 		<?php  foreach ($salaries as $key => $salary) :
 
-			// $employee = $this->CustomEmployee->findEmployee($salary['employee_id'],array('Department','Position'));
-
-			 	$employee_name = $this->CustomText->getFullname($salary['Employee']);
+				$employee_name = $this->CustomText->getFullname($salary['Employee']);
 
 			 $payrollDate = date('F',strtotime($salary['from'])).' '.date('d',strtotime($salary['from'])).'-'.date('d',strtotime($salary['to'])).','.date('Y',strtotime($salary['from']));
 		 ?>
@@ -105,7 +103,7 @@ header("Content-type: application/pdf");
 							<table class="full-width border-right">	
 								<tr>
 									<td>Basic pay</td>
-									<td class="text-right"><?php echo number_format($salary['regular'],2) ?></td>
+									<td class="text-right"><?php echo number_format($salary['regular'],2); $total_earnings = 0.00; ?></td>
 								</tr>
 								<tr>
 									<td>OT</td>
@@ -113,7 +111,9 @@ header("Content-type: application/pdf");
 								</tr>
 								<tr>
 									<td>Sun</td>
-									<td class="text-right"><?php echo !empty($salary['sunday_work'])  ? number_format($salary['sunday_work'],2) : '0.00'; ?></td>
+									<td class="text-right">
+									<?php echo !empty($salary['sunday_work'])  ? number_format($salary['sunday_work'],2) : '0.00'; ?>
+									</td>
 								</tr>
 								<tr>
 									<td>Sun OT</td>
@@ -182,19 +182,15 @@ header("Content-type: application/pdf");
 							</td>
 							<td style="vertical-align:top"> 
 							<table class="full-width" >	
+								<?php foreach ($deductions as $deduction_key => $list) : ?>
 								<tr style="vertical-align:top">
-									<td>Basic pay</td>
-									<td class="text-right"><?php echo $salary['regular']?></td>
+									<td><?php echo $list; ?></td>
+									<td class="text-right"><?php 
+										$index = str_replace(' ','_',strtolower($list));
+										echo !empty($salary[$index]) ? number_format($salary[$index],2) : '0.00';
+									 ?></td>
 								</tr>
-								<tr>
-									<td>OT</td>
-									<td class="text-right"><?php echo $salary['OT']?></td>
-								</tr>
-								<tr>
-									<td>Sun</td>
-									<td class="text-right"><?php echo $salary['sunday_work']?></td>
-								</tr>
-
+							<?php endforeach; ?>
 
 								<tr>
 									<td  class="border-top"><strong>Tax </strong> </td>
@@ -219,7 +215,8 @@ header("Content-type: application/pdf");
 										<?php echo !empty($salary['pagibig'])  ? number_format($salary['pagibig'],2) : '0.00'; ?>
 									</td>
 								</tr>
-							</table> </td>
+							</table>
+						 </td>
 						</tr>
 
 
@@ -227,22 +224,38 @@ header("Content-type: application/pdf");
 							<td class="border-top">
 								<table class="full-width border-right">	
 									<tr>
-										<td><strong>Total</strong></td>
-										<td class="text-right"> <?php echo number_format($salary['total_pay'],2) ?> </td>
+										<td><strong>Total Earnings</strong></td>
+										<td class="text-right"> <?php echo number_format($salary['total_earnings'],2) ?> </td>
 									</tr>
 								</table>
 							</td>
 							<td class="border-top"><table class="full-width">	
 									<tr>
-										<td><strong>Total</strong></td>
+										<td><strong>Total Deductions</strong></td>
 										<td class="text-right"> <?php echo number_format($salary['total_deduction'],2) ?>  </td>
 									</tr>
 								</table></td>
 						</tr>
 
 				</table>
+				<br><br>
+				<table class="full-width border">
+					<tr>
+						<td colspan="2"> <strong>Total Net Pay : </strong> </td> 
+						<td class="text-right">
+						 	<strong><?php echo number_format($salary['total_pay'],2);	?></strong> 
+						 </td>
+					</tr>
+				</table>
+					<br><br>
+				<table class="full-width ">
+					<tr>
+						<td class="border-top"> Employee Signature </td> 
+						<td >  </td>
 
-
+						<td class="border-top"> Accounting Staff </td>
+					</tr>
+				</table>
 				 <div style="page-break-before: always;"></div> 
 <?php endforeach; ?>
 	</body>

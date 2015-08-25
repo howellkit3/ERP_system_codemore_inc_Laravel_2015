@@ -59,7 +59,7 @@ echo $this->element('payroll_options');
 		                         	 )
                         	); 
 
-                            echo $this->Html->link('<i class="fa fa-file-text-o fa-lg"></i> Genereate Payslip', array(
+                            echo $this->Html->link('<i class="fa fa-file-text-o fa-lg"></i> Generate Payslip', array(
                          			'controller' => 'salaries',
                         			'action' => 'export_salaries',
                          			$payroll['Payroll']['id'],

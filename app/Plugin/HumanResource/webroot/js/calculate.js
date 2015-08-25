@@ -102,9 +102,9 @@ $(document).ready(function(){
 
 	        	$result_table.html(data);
 	        	
-	        	$('#exportData').attr('style','display:block');
+	        	// $('#exportData').attr('style','display:block');
 
-	        	$('#GeneratePayslip').removeClass('hide')
+	        	// $('#GeneratePayslip').removeClass('hide')
 	        	},1000);
 
 	        }

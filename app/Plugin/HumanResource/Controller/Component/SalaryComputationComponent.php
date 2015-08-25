@@ -75,15 +75,17 @@ class SalaryComputationComponent extends Component
 
 						$total_pay = $gross['gross'];
 
-						
 						//ctpa computations = 
 						$total_pay 	+= !empty($employee['Salary']['ctpa']) ? $salary[$key]['ctpa'] : number_format(0,2);
 						$total_pay  += !empty($employee['Salary']['sea']) ? $salary[$key]['sea'] : number_format(0.2);
 
-							
-
 						$salary[$key]['gross_pay'] = $total_pay;
 						
+						$salary[$key]['total_earnings']  = $total_pay;
+						$salary[$key]['total_earnings']  += $employee['Salary']['allowances'];
+						$salary[$key]['total_earnings']  += !empty($employee['Salary']['incentives']) ? $employee['Salary']['incentives'] : 0.00;
+
+
 						//check deductions 
 						$deductions = $this->checkDeductions($employee['Employee']['id'],$customDate,$updateDatabase);
 
@@ -108,19 +110,18 @@ class SalaryComputationComponent extends Component
 
 						$salary[$key]['net_pay'] = $total_pay;
 
-
 						$total_pay  += $employee['Salary']['allowances'];
 
 						//$total_pay  -= $salary[$key]['sss'];
 						$salary[$key]['total_pay'] = $total_pay;
-
 						$salary[$key]['Employee'] = $employee['Employee'];
-						$salary[$key]['Department'] = $employee['Department'];
-						$salary[$key]['Position']	= $employee['Position'];
+						$salary[$key]['Department'] = !empty($employee['Department']) ? $employee['Department'] : array();
+						$salary[$key]['Position']	= !empty($employee['Position']) ? $employee['Position'] : array();
 
 
         		}
 
+        	
         		return $salary;
 
         	}
