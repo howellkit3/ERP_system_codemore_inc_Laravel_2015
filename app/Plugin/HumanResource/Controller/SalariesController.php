@@ -686,6 +686,8 @@ class SalariesController  extends HumanResourceAppController {
 	public function payroll_view($id = null) {
 
 		$this->loadModel('Payroll.Payroll');
+		
+		$this->loadModel('Payroll.Loan');
 
 		if (!empty($id)) {
 
@@ -699,11 +701,14 @@ class SalariesController  extends HumanResourceAppController {
 
 			$salaries = $this->Payroll->objectToArray(json_decode($data)); 
 
+			$deductions = $this->Loan->find('list',array('fields' => array('id','name')));
+
 			$salarySplit = array_chunk($salaries , 2);
 
 			if (!empty($this->params['named']['page'])) {
 
 				$salariesList = $salarySplit[$this->params['named']['page']];
+
 			} else {
 
 				$salariesList = $salarySplit[0];
@@ -719,7 +724,7 @@ class SalariesController  extends HumanResourceAppController {
 		
 		}
 
-		$this->set(compact('salaries','payroll','pages','salarySplit','salariesList'));
+		$this->set(compact('salaries','payroll','pages','salarySplit','salariesList','deductions'));
 
 	}
 
@@ -856,6 +861,8 @@ class SalariesController  extends HumanResourceAppController {
 		if (!empty($payroll_id)) {
 
 			$this->loadModel('Payroll.Payroll');
+			
+			$this->loadModel('Payroll.Loan');
 
 			$salaries = array();
 			
@@ -871,18 +878,19 @@ class SalariesController  extends HumanResourceAppController {
 
 			$salaries = $this->Payroll->objectToArray(json_decode($data)); 
 
+			$deductions = $this->Loan->find('list',array('fields' => array('id','name')));
+				
 			//pr($salaries); exit();
-
+				
 			ini_set('max_execution_time', 3600);
 			ini_set('memory_input_time', 1024);
 			ini_set('max_input_nesting_level', 1024);
 			ini_set('memory_limit', '1024M');
 
-			//pr($salaries); exit();
-
-			$this->set(compact('salaries','payroll','payrollDate'));
+			$this->set(compact('salaries','payroll','payrollDate','deductions'));
 
 			switch ($type) {
+
 				case 'payslip':
 
 				//$this->render('Salaries/payslip/payslip');
@@ -891,7 +899,7 @@ class SalariesController  extends HumanResourceAppController {
 
 				$view = new View(null, false);
 
-				$view->set(compact('salaries','payroll','payrollDate'));
+				$view->set(compact('salaries','payroll','payrollDate','deductions'));
 
 				$view->viewPath = 'Salaries'.DS.'pdf';	
 
@@ -924,7 +932,7 @@ class SalariesController  extends HumanResourceAppController {
 		        // }
 
 			//$dompdf->render();
-			$dompdf->stream('payslip-'.$payroll['Payroll']['id'].'-'.str_replace(' ','-',strtolower($payrollDate)).'-'.time().'.pdf');
+				$dompdf->stream('payslip-'.$payroll['Payroll']['id'].'-'.str_replace(' ','-',strtolower($payrollDate)).'-'.time().'.pdf');
 
 				exit();
                 break; 	
