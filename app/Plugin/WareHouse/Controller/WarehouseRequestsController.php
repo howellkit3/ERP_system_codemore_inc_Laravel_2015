@@ -67,8 +67,20 @@ class WarehouseRequestsController extends WareHouseAppController {
 			
 	}
 
-	public function view() {
+	public function view($id = null) {
 
+		$this->loadModel('WareHouse.WarehouseRequest');
+
+		$this->loadModel('User');
+
+		$warehouseRequestData = $this->WarehouseRequest->find('first', array('conditions' => array('WarehouseRequest.id' => $id)));
+
+		$fullname = $this->User->find('list', array('fields' => array('id', 'fullname')
+															));
+
+		//pr($fullname); exit;
+
+		$this->set(compact('warehouseRequestData','fullname'));
 
 	}
 
