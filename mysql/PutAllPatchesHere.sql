@@ -1817,3 +1817,8 @@ CREATE TABLE IF NOT EXISTS `salary_reports` (
   `total_pay` decimal(8,2) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+/**howell kit added this 08/26/2015 TO WAREHOUSE DATABASE   */
+RENAME TABLE `koufu_warehouse`.`requests` TO `koufu_warehouse`.`warehouse_requests`;
+ALTER TABLE `received_items` CHANGE COLUMN `item_uuid` `request_uuid` INT(11) NULL DEFAULT NULL;
+ALTER TABLE `koufu_warehouse`.`item_records` DROP COLUMN `quantity_unit_id` ;

@@ -19,7 +19,7 @@
                     </div>
                     <?php
 
-                         echo $this->Html->link('<i class="fa fa-plus-circle fa-lg"></i> Add Request ', array('controller' => 'requests', 'action' => 'create'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                         echo $this->Html->link('<i class="fa fa-plus-circle fa-lg"></i> Add Request ', array('controller' => 'warehouse_requests', 'action' => 'create'),array('class' =>'btn btn-primary pull-right','escape' => false));
                        
                     ?>
                 </div>
@@ -40,10 +40,7 @@
 
                         <tbody aria-relevant="all" aria-live="polite" class="requestFields" role="alert" >
                           
-                            <?php 
-                        echo $this->element('request_table'
-                            ); 
-                            ?>
+                        <?php echo $this->element('request_table'); ?>
                          
                         </tbody>
                         <tbody aria-relevant="all" aria-live="polite" class="searchAppend" role="alert" >
@@ -64,4 +61,13 @@
         </div>
     </div>
 </div>
+
+<script>
     
+    jQuery(document).ready(function(){
+        
+       setTimeout(function (){
+            location.reload();
+        }, 1000); 
+  
+</script>

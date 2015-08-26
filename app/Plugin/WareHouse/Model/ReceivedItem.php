@@ -31,6 +31,7 @@ class ReceivedItem extends AppModel {
 					$valueOfvalue['received_orders_id'] = $id;
 					$valueOfvalue['delivered_order_id'] = $uuid;
 					$valueOfvalue['reject_quantity'] = $valueOfvalue['rejectQuantity'];
+					$valueOfvalue['request_uuid'] = $data['ReceivedItems']['request_id'];
 			 		$this->save($valueOfvalue);
 				}
  

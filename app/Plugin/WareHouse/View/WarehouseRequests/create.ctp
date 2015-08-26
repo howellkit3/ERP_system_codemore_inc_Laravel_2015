@@ -21,14 +21,14 @@
 							Create Purchase Request
 						</h1>
 						<?php 
-	                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'requests', 'action' => 'create'),array('class' =>'btn btn-primary pull-right','escape' => false));
+	                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'warehouse_requests', 'action' => 'create'),array('class' =>'btn btn-primary pull-right','escape' => false));
 	                    ?>
 					</header>
 
 				</div>
 			</div>
 
-			<?php echo $this->Form->create('Request',array('url'=>(array('controller' => 'requests','action' => 'create'))));?>
+			<?php echo $this->Form->create('Request',array('url'=>(array('controller' => 'warehouse_requests','action' => 'create'))));?>
 				<div class="row">
 					<div class="col-lg-12">
 					  	<div class="main-box">

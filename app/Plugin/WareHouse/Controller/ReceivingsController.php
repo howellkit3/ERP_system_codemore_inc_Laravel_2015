@@ -66,8 +66,6 @@ class ReceivingsController extends WareHouseAppController {
 
 		$purchaseOrderData = $this->PurchaseOrder->find('first', array('conditions' => array('PurchaseOrder.id' => $id)));
 
-		//pr($requestData); exit;
-
 		if(empty($requestData['PurchasingItem'])){
 
 			$itemHolder = "RequestItem";
@@ -81,7 +79,6 @@ class ReceivingsController extends WareHouseAppController {
 			$itemData = $this->PurchasingItem->find('all', array('conditions' => array('PurchasingItem.request_uuid' => $requestUUID)));
 
 		}
-
 
 		$requestPurchasingItemArray = array();
 
@@ -243,6 +240,8 @@ class ReceivingsController extends WareHouseAppController {
 
 		if (!empty($this->request->data)) {
 
+			//pr($this->request->data); exit;
+
 			ksort($this->request->data['requestPurchasingItem']);
 
 			$receivedData = $this->ReceivedOrder->find('first', array('conditions' => array('ReceivedOrder.purchase_order_id' => $id)));
@@ -364,7 +363,7 @@ class ReceivingsController extends WareHouseAppController {
 
 		$requestData = $this->PurchasingItem->find('first', array('conditions' => array('PurchasingItem.request_uuid' => $requestUUID)));
 
-		if(!empty($requestData['PurchasingTypeItem'])){
+		if(empty($requestData['PurchasingItem'])){
 
 			$itemHolder = "RequestItem";
 
@@ -378,8 +377,7 @@ class ReceivingsController extends WareHouseAppController {
 
 		}
 
-		//pr($itemData); exit;
-
+		
 		$receivedItemData = $this->ReceivedItem->find('all', array('conditions' => array('ReceivedItem.received_orders_id' => $id)));
 
 		foreach ($itemData as $key1 => $value) {	
@@ -703,21 +701,116 @@ class ReceivingsController extends WareHouseAppController {
 
     }
 
-    public function in_record($id = null, $DeliveredOrderId = null) {
+    public function in_record($id = null, $DeliveredOrderId = null, $purchaseOrderId = null) {
 
     	$this->loadModel('WareHouse.DeliveredOrder');
 
+    	$this->loadModel('Purchasing.PurchasingItem');
+
     	$userData = $this->Session->read('Auth');
 
-    	$this->DeliveredOrder->bind('ReceivedItem', 'PurchaseOrder', 'ReceivedOrder');
+    	$this->DeliveredOrder->bind('ReceivedItem', 'PurchaseOrder', 'ReceivedOrder', 'Request');
 
     	$receivedData = $this->DeliveredOrder->find('first', array('conditions' => array('ReceivedOrder.id' => $id)));
 
-    	//pr($receivedData); exit;
+    	$requestItemData = $this->PurchasingItem->find('all', array('conditions' => array('PurchasingItem.request_uuid' => $receivedData['ReceivedItem'][0]['request_uuid'])));
+
+    	$itemHolder = "PurchasingItem";
+
+    	if(empty($requestItemData)){
+
+    		$this->loadModel('Purchasing.RequestItem');
+
+    		$requestItemData = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $receivedData['ReceivedItem'][0]['request_uuid'])));
+
+    		$itemHolder = "RequestItem";
+
+    	}
+
+    	//pr($requestItemData); exit;
+
+    	foreach ($receivedData['ReceivedItem'] as $key => $value) {	
+
+    		foreach ($requestItemData as $key => $valueOfRequestItem) {	
+
+    	 		if($value['model'] == 'GeneralItem' && $value['foreign_key'] == $valueOfRequestItem[$itemHolder]['foreign_key']){
+
+    	 			$receivedData['ReceivedItem'][$key]['size1'] = $valueOfRequestItem[$itemHolder]['size1'];
+
+    	 			$receivedData['ReceivedItem'][$key]['size1_unit_id'] = $valueOfRequestItem[$itemHolder]['size1_unit_id'];
+
+    	 			$receivedData['ReceivedItem'][$key]['size2'] = $valueOfRequestItem[$itemHolder]['size2'];
+
+    	 			$receivedData['ReceivedItem'][$key]['size2_unit_id'] = $valueOfRequestItem[$itemHolder]['size2_unit_id'];
+
+    	 			$receivedData['ReceivedItem'][$key]['size3'] = $valueOfRequestItem[$itemHolder]['size3'];
+
+    	 			$receivedData['ReceivedItem'][$key]['size3_unit_id'] = $valueOfRequestItem[$itemHolder]['size3_unit_id'];
+
+    	 			$receivedData['ReceivedItem'][$key]['quantity_unit_id'] = $valueOfRequestItem[$itemHolder]['quantity_unit_id'];
+
+    	 		}
+
+    	 		if($value['model'] == 'Substrate' && $value['foreign_key'] == $valueOfRequestItem[$itemHolder]['foreign_key']){
+
+    	 			$receivedData['ReceivedItem'][$key]['size1'] = $valueOfRequestItem[$itemHolder]['size1'];
+
+    	 			$receivedData['ReceivedItem'][$key]['size1_unit_id'] = $valueOfRequestItem[$itemHolder]['size1_unit_id'];
+
+    	 			$receivedData['ReceivedItem'][$key]['size2'] = $valueOfRequestItem[$itemHolder]['size2'];
+
+    	 			$receivedData['ReceivedItem'][$key]['size2_unit_id'] = $valueOfRequestItem[$itemHolder]['size2_unit_id'];
+
+    	 			$receivedData['ReceivedItem'][$key]['size3'] = $valueOfRequestItem[$itemHolder]['size3'];
+
+    	 			$receivedData['ReceivedItem'][$key]['size3_unit_id'] = $valueOfRequestItem[$itemHolder]['size3_unit_id'];
+
+    	 			$receivedData['ReceivedItem'][$key]['quantity_unit_id'] = $valueOfRequestItem[$itemHolder]['quantity_unit_id'];
+
+    	 		}
+
+    	 		if($value['model'] == 'CompoundSubstrate' && $value['foreign_key'] == $valueOfRequestItem[$itemHolder]['foreign_key']){
+
+    	 			$receivedData['ReceivedItem'][$key]['size1'] = $valueOfRequestItem[$itemHolder]['size1'];
+
+    	 			$receivedData['ReceivedItem'][$key]['size1_unit_id'] = $valueOfRequestItem[$itemHolder]['size1_unit_id'];
+
+    	 			$receivedData['ReceivedItem'][$key]['size2'] = $valueOfRequestItem[$itemHolder]['size2'];
+
+    	 			$receivedData['ReceivedItem'][$key]['size2_unit_id'] = $valueOfRequestItem[$itemHolder]['size2_unit_id'];
+
+    	 			$receivedData['ReceivedItem'][$key]['size3'] = $valueOfRequestItem[$itemHolder]['size3'];
+
+    	 			$receivedData['ReceivedItem'][$key]['size3_unit_id'] = $valueOfRequestItem[$itemHolder]['size3_unit_id'];
+
+    	 			$receivedData['ReceivedItem'][$key]['quantity_unit_id'] = $valueOfRequestItem[$itemHolder]['quantity_unit_id'];
+
+    	 		}
+
+    	 		if($value['model'] == 'CorrugatedPaper' && $value['foreign_key'] == $valueOfRequestItem[$itemHolder]['foreign_key']){
+
+    	 			$receivedData['ReceivedItem'][$key]['size1'] = $valueOfRequestItem[$itemHolder]['size1'];
+
+    	 			$receivedData['ReceivedItem'][$key]['size1_unit_id'] = $valueOfRequestItem[$itemHolder]['size1_unit_id'];
+
+    	 			$receivedData['ReceivedItem'][$key]['size2'] = $valueOfRequestItem[$itemHolder]['size2'];
+
+    	 			$receivedData['ReceivedItem'][$key]['size2_unit_id'] = $valueOfRequestItem[$itemHolder]['size2_unit_id'];
+
+    	 			$receivedData['ReceivedItem'][$key]['size3'] = $valueOfRequestItem[$itemHolder]['size3'];
+
+    	 			$receivedData['ReceivedItem'][$key]['size3_unit_id'] = $valueOfRequestItem[$itemHolder]['size3_unit_id'];
+
+    	 			$receivedData['ReceivedItem'][$key]['quantity_unit_id'] = $valueOfRequestItem[$itemHolder]['quantity_unit_id'];
+
+    	 		}
+    	 			
+
+    	 	}
+
+    	}
 
 		if (!empty($this->request->data)) {
-
-			//pr($this->request->data); exit;
 
 			$this->loadModel('WareHouse.InRecord');
 
@@ -732,8 +825,8 @@ class ReceivingsController extends WareHouseAppController {
 			$inRecordId = $this->InRecord->saveInRecord($this->request->data['InRecord'],$receivedData['DeliveredOrder'],$userData['User']['id']);
 
 			$this->ItemRecord->saveItemRecord($inRecordId, $receivedData['ReceivedItem']);
-			
-			$this->Stock->saveStock($receivedData, $this->request->data);
+		
+			$this->Stock->saveStock($receivedData, $this->request->data,$userData['User']['id']);
 
 			$this->Session->setFlash(__('Received Items has been moved to stocks'), 'success');
           

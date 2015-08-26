@@ -60,10 +60,6 @@ class DeliveredOrder extends AppModel {
 					'conditions' => array('DeliveredOrder.purchase_orders_id = PurchaseOrder.id')
 				),
 			)
-
 		));
-
-
 	}
-
 }

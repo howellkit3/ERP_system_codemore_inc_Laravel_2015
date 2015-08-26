@@ -38,6 +38,15 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                         ?>
 
                                         <?php 
+                                            echo $this->Form->input('ReceivedItems.request_id', array(
+                                                                            'class' => 'form-control item_type',
+                                                                            'type' => 'hidden',
+                                                                            'label' => false,       
+                                                                            'value' => $purchaseOrderData['Request']['uuid'],
+                                                                            'fields' =>array('name')));
+                                        ?>
+
+                                        <?php 
                                             echo $this->Form->input('PurchaseOrder.uuid', array(
                                                                             'class' => 'form-control item_type',
                                                                             'disabled' => true,
@@ -64,7 +73,7 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                     </div>
                                 </div>          
 
-                                <?php   foreach ($requestPurchasingItem as $key => $requestDataList): 
+                                <?php foreach ($requestPurchasingItem as $key => $requestDataList): 
 
                                 if(empty($requestDataList[$itemHolder]['delivered_quantity'])){
 
