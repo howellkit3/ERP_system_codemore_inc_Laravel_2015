@@ -64,7 +64,7 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                     </div>
                                 </div>          
 
-                                <?php  foreach ($requestPurchasingItem as $key => $requestDataList): 
+                                <?php   foreach ($requestPurchasingItem as $key => $requestDataList): 
 
                                 if(empty($requestDataList[$itemHolder]['delivered_quantity'])){
 
