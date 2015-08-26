@@ -166,6 +166,16 @@ class AttendancesController  extends HumanResourceAppController {
 	
 		$this->loadModel('HumanResource.Timekeep');
 
+		$this->loadModel('HumanResource.DailyInfo');
+
+		$this->loadModel('HumanResource.WorkSchedule');
+
+		$this->loadModel('HumanResource.Workshift');
+
+		$this->loadModel('HumanResource.WorkShiftBreak');
+
+		$this->loadModel('HumanResource.BreakTime');
+
 		$auth = $this->Session->read('Auth.User');
 
 		if (!empty($this->request->data)) {
@@ -183,7 +193,7 @@ class AttendancesController  extends HumanResourceAppController {
 
 			//update attendance
 			if (!empty($attendance)) {
-				
+
 				$this->Attendance->save($attendance);
 
 				if ($this->request->is('ajax')) {
@@ -198,12 +208,24 @@ class AttendancesController  extends HumanResourceAppController {
 						$attendance['Attendance']['out'] = date('h:i a',strtotime($attendance['Attendance']['out']));
 
 						$attendance['Attendance']['duration'] = $this->_getDuration($attendance['Attendance']['in'],$attendance['Attendance']['out']);
+						
+
 					}
 					 
 					echo json_encode($attendance);
-
 					exit();
-				}	
+				}
+
+				if (!empty($attendance['Attendance']['out'])) {
+
+						//update daily info
+						$this->Attendance->bindWorkshift();
+						$callAttendance = $this->Attendance->findById($data['Attendance']['id']);
+
+						$this->DailyInfo->updateDailyInfo($callAttendance,$attendance['Attendance']['employee_id'],$callAttendance ['Attendance']['date']);	
+
+				}
+
 			}
 
 			$this->Session->setFlash('Time in successfully','success');
@@ -717,6 +739,38 @@ public function daily_info() {
 
 		$this->render('Attendances/xls/dailyinfo_report');
 
+	}
+
+	public function findExisting($employee_id = null,$date = null) {
+
+		$this->autoRender = false;
+
+		if (!empty($employee_id)) {
+
+			$date = date('Y-m-d');
+
+			$date2 = date('Y-m-d', strtotime($date . ' +1 day'));
+
+			$conditions = array(
+			'Attendance.date <=' => $date,
+			'Attendance.date >=' => $date,
+			'Attendance.employee_id' => $employee_id,
+			);
+
+			$timekeep = $this->Attendance->find('first',array(
+				'conditions' => $conditions
+
+			));
+
+			if (!empty($timekeep)) {
+
+				return  json_encode($timekeep['Attendance']);	
+			}
+
+			
+			return json_encode($timekeep);	
+
+		}
 	}
 
 }

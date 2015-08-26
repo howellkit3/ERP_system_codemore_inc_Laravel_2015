@@ -215,6 +215,12 @@ header("Content-type: application/pdf");
 										<?php echo !empty($salary['pagibig'])  ? number_format($salary['pagibig'],2) : '0.00'; ?>
 									</td>
 								</tr>
+								<tr>
+									<td>Withholding Tax</td>
+									<td class="text-right">
+										<?php echo !empty($salary['with_holding_tax'])  ? number_format($salary['with_holding_tax'],2) : '0.00'; ?>
+									</td>
+								</tr>
 							</table>
 						 </td>
 						</tr>

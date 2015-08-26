@@ -337,7 +337,7 @@ class SalariesController  extends HumanResourceAppController {
 		$limit = 10;
 		$defaultId = current(array_flip($employeeList));
 
-        $conditions = array('Deduction.employee_id' => $defaultId);	
+        $conditions = array('Deduction.employee_id' => $defaultId, 'Deduction.is_deleted' => 0);	
 
         $params =  array(
 	            'conditions' => $conditions,
@@ -378,7 +378,6 @@ class SalariesController  extends HumanResourceAppController {
 			if ( $this->Deduction->save($this->request->data) ) {
 
 				//save amortization schedules
-
 				$this->Session->setFlash('Deduction save successfully','success');
 
 				$this->redirect( array(
@@ -644,8 +643,8 @@ class SalariesController  extends HumanResourceAppController {
 
 				foreach ($payment as $key => $pay) {
 
-					$payment[$key]['less'] = number_format($total_payment,2);
-					$payment[$key]['deduction'] = number_format($total,2);
+					$payment[$key]['less'] = $total_payment;
+					$payment[$key]['deduction'] = $total;
 					$total = $total - $total_payment;
 
 				}
@@ -877,8 +876,6 @@ class SalariesController  extends HumanResourceAppController {
 				$salariesList = $this->_checkPayroll($payroll);
 			
 			}
-
-			//pr($salaries); exit();
 		
 		}
 
@@ -893,11 +890,12 @@ class SalariesController  extends HumanResourceAppController {
 			$auth = $this->Session->read('Auth.User');
 
 			$this->loadModel('Payroll.Payroll');
+
 			$this->loadModel('Payroll.SalaryReport');
 
 			$payroll = $this->Payroll->findById($id);
 
-			$salaries = $this->_checkPayroll($payroll,true);
+			$salaries = $this->_checkPayroll($payroll);
 
 			if ($salaries) {
 
@@ -913,8 +911,11 @@ class SalariesController  extends HumanResourceAppController {
 
 				file_put_contents("salaries/files/payroll-".$id.".txt", $json_data);
 
+				$this->loadModel('Payroll.SalaryReport');
 				//save to salary report data
-				$this->SalaryReport->createReport($salaries,$auth);
+				if( $this->SalaryReport->createReport($salaries,$auth) ) {
+					$salaries = $this->_checkPayroll($payroll,true);
+				}
 			}
 
 			if ($this->Payroll->save($payroll['Payroll']) ) {
@@ -1013,7 +1014,11 @@ class SalariesController  extends HumanResourceAppController {
 			$this->loadModel('Payroll.Amortization');			
 			$this->loadModel('Payroll.OvertimeRate');
 			$this->loadModel('Payroll.Contribution');
-			$this->loadModel('Payroll.Loan');			
+			$this->loadModel('Payroll.Loan');	
+			//taxes tables		
+			$this->loadModel('Payroll.Tax');
+			$this->loadModel('Payroll.TaxDeduction');
+			$this->loadModel('Payroll.Wage');			
 
 			//$OvertimeRate = ClassRegistry::init('Amortization')->find('all');
 			$updateDatabase = !empty($update) && $update == true ? true : false;

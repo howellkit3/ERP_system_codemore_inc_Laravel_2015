@@ -11,6 +11,7 @@ echo $this->Html->script(array(
           'HumanResource.moment',
           'HumanResource.select2.min',
           'HumanResource.custom',
+          'sweet-alert.min',  
           'HumanResource.deductions',
           'datetimepicker/jquery.datetimepicker'
 
@@ -162,6 +163,11 @@ $active_tab = 'sss_table';
                                       <i class="fa fa-square fa-stack-2x"></i>
                                       <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit </font></span>
                                       </span> ', array('controller' => 'deductions', 'action' => 'edit',$deduction['Deduction']['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Information'));
+
+                                  echo $this->Html->link('<span class="fa-stack">
+                                      <i class="fa fa-square fa-stack-2x"></i>
+                                      <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Delete </font></span>
+                                      </span> ', array('controller' => 'deductions', 'action' => 'delete',$deduction['Deduction']['id']),array('class' =>' table-link delete_Deduction','escape' => false,'title'=>'Edit Information'));
                             ?>
                       </td>
                   </tr>
