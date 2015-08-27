@@ -812,6 +812,8 @@ class ReceivingsController extends WareHouseAppController {
 
 			$this->loadModel('WareHouse.Stock');
 
+			$stockData = $this->Stock->find('all');
+
 			$this->DeliveredOrder->id = $DeliveredOrderId;
 
 			$this->DeliveredOrder->saveField('status_id', 13);
@@ -820,7 +822,7 @@ class ReceivingsController extends WareHouseAppController {
 			
 			$this->ItemRecord->saveItemRecord($inRecordId, $receiveDataHolder['ReceivedItem']);
 		
-			$this->Stock->saveStock($receiveDataHolder, $this->request->data, $userData['User']['id'], $supplierId);
+			$this->Stock->saveStock($receiveDataHolder, $this->request->data, $userData['User']['id'], $supplierId, $stockData);
 
 			$this->Session->setFlash(__('Received Items has been moved to stocks'), 'success');
           

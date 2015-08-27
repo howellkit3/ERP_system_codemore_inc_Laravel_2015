@@ -13,7 +13,7 @@ class Stock extends AppModel {
     
   	public $name = 'Stock';
 
-  	public function saveStock($received, $data, $auth, $supplierId){
+  	public function saveStock($received,$data, $auth, $supplierId, $stockData){
 
 		$this->create();
 
@@ -23,10 +23,8 @@ class Stock extends AppModel {
 
 		
 
-		foreach ($received['ReceivedItem'] as $key => $value)
-		{
-			pr($received); exit;
-
+		foreach ($received['ReceivedItem'] as $key => $value) {
+			// pr($stockData); exit;
 
 			$month = date("m"); 
 		    $year = date("y");
@@ -37,26 +35,32 @@ class Stock extends AppModel {
 		        
 			$code =  $year. $month .$random;
 
-			$value['uuid'] = $code;
-			$value['model'] = $value['model'];
-			$value['item_id'] = $value['foreign_key'];
-			$value['supplier_id'] = $supplierId;
-			$value['quantity'] = $value['quantity'];
-			$value['size1'] = $value['size1'];
-			$value['location_id'] = $data['InRecord']['location'];
-			$value['size1_unit_id'] = $value['size1_unit_id'];
-			$value['size2'] = $value['size2'];
-			$value['size2_unit_id'] = $value['size2_unit_id'];
-			$value['size3'] = $value['size3'];
-			$value['size3_unit_id'] = $value['size3_unit_id'];
-			$value['quantity_unit_id'] = $value['quantity_unit_id'];
-			$value['created_by'] = $auth;
-			$value['modified_by'] = $auth;
+			foreach ($stockData as $key => $valueOfStock) {
 
+				//if(){
+					//pr($valueOfStock); exit;
 
-			$this->save($value);
+					$value['uuid'] = $code;
+					$value['model'] = $value['model'];
+					$value['item_id'] = $value['foreign_key'];
+					$value['supplier_id'] = $supplierId;
+					$value['quantity'] = $value['quantity'];
+					$value['size1'] = $value['size1'];
+					$value['location_id'] = $data['InRecord']['location'];
+					$value['size1_unit_id'] = $value['size1_unit_id'];
+					$value['size2'] = $value['size2'];
+					$value['size2_unit_id'] = $value['size2_unit_id'];
+					$value['size3'] = $value['size3'];
+					$value['size3_unit_id'] = $value['size3_unit_id'];
+					$value['quantity_unit_id'] = $value['quantity_unit_id'];
+					$value['created_by'] = $auth;
+					$value['modified_by'] = $auth;
 
-			//pr($value);
+					$this->save($value);
+				//}
+
+			}
+			
 		} 
 
 
