@@ -14,15 +14,37 @@ class Tax extends AppModel {
 
  	 public function bind($model = array('Group')){
  	 	
-		// $this->bindModel(
-		// 	array(
-		// 	'belongsTo' => array(
-		// 		'Employee' => array(
-		// 			'className' => 'HumanResource.Employee',
-		// 			'foreignKey' => 'employee_id')
-		// 						)
-		// 	),false);
+		$this->bindModel(
+			array(
+			'belongsTo' => array(
+				'TaxDeduction' => array(
+					'className' => 'Payroll.TaxDeduction',
+					'foreignKey' => false,
+					'conditions' => array('TaxDeduction.type' => 'Tax.type')
 
-		// $this->contain($model);
+					)
+								)
+			),false);
+
+		$this->contain($model);
+	}
+
+	public function getDeductions($data = null) {
+
+		if (!empty($data)) {
+			
+			$tax = array();
+
+			foreach ($data as $key => $value) {
+				
+				$tax[$key] = $value;
+				$deductions = $this->find('all',array('conditions' => array('Tax.type' => $value['TaxDeduction']['type'])));
+			
+				$tax[$key]['Tax'] = $deductions;
+			}
+		}
+
+		return $tax;
+		
 	}
 }

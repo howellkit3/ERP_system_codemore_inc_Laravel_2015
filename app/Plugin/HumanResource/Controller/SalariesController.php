@@ -1178,6 +1178,19 @@ class SalariesController  extends HumanResourceAppController {
 		}	
 	}
 
+	public function tax_table(){
+
+		$this->loadModel('Payroll.Tax');
+		
+		$this->loadModel('Payroll.TaxDeduction');
+
+		$taxes = $this->TaxDeduction->find('all');
+
+		$taxes = $this->Tax->getDeductions($taxes);
+
+		$this->set(compact('taxes'));
+	}
+
 
 
 
