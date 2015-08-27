@@ -14,7 +14,7 @@ function findEmployee($empId = null, $bind = array()) {
 	}		
 		
 
-	$total = [];
+	$total = array();
 
 	if (!empty($empId)) {
 

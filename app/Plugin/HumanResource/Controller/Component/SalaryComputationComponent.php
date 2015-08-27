@@ -37,7 +37,7 @@ class SalaryComputationComponent extends Component
 
         	if (!empty($data)) {
 
-        		$salary = [];
+        		$salary = array();
 
         		foreach ($data as $key => $employee) {
 
@@ -954,10 +954,10 @@ class SalaryComputationComponent extends Component
 
 			if (!empty($data)) {
 				
-				$empData = [];
+				$empData = array();
 
 				//sort by employee_id
-				$sorted = [];
+				$sorted = array();
 
 				foreach($data as $key => $item)
 				{
@@ -998,10 +998,10 @@ class SalaryComputationComponent extends Component
 
 			if (!empty($data)) {
 				
-				$empData = [];
+				$empData = array();
 
 				//sort by employee_id
-				$sorted = [];
+				$sorted = array();
 
 				foreach($data as $key => $item)
 				{
@@ -1068,7 +1068,7 @@ class SalaryComputationComponent extends Component
 
 				$amortizations = $Amortization->find('all',array('conditions' => $conditions ));	
 		
-				$amortizationIds = [];
+				$amortizationIds = array();
 
 				foreach ($amortizations as $amortization_key => $amortization) {
 						$amortizationIds[] = 	$amortization['Amortization']['id'];
