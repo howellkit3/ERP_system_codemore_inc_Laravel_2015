@@ -27,7 +27,7 @@
 
 	  	$.ajax({
             type: "GET",
-            url: serverPath + "human_resource/timekeeps/findExisting/"+$employee_id,
+            url: serverPath + "human_resource/attendances/findExisting/"+$employee_id,
             dataType: "json",
             success: function(data) {
                
@@ -36,12 +36,14 @@
 
             	$('.radio input').attr('disabled',false);
 
-            	if (data.type == 'in'){
+                       console.log(data.in);
+
+            	if (data.in != '' && data.in != '00:00:00' && data.in !== null){
                     
-                    $('#categoryRadio1').attr('disabled',true).next().text('Time-In: '+data.time);
+                    $('#categoryRadio1').attr('disabled',true).next().text('Time-In: '+data.in);
             		$('#categoryRadio2').click();
 
-                   
+             
             	
                 } else {
 

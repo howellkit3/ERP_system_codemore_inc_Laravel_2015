@@ -23,4 +23,48 @@ class Salary extends AppModel {
 
 		$this->contain($model);
 	}
+
+	public function saveSettings($data = null){
+
+		if (!empty($data)) {
+
+			$save = array();
+
+			// $settings = $this->find('first',array('conditions' => array('Salary.employee_id' => $data['Employee']['id'] )));
+
+			// $save['id'] = !empty($settings['Salary']['id']) ?  $settings['Salary']['id'] : '';
+
+			// $dependent = count($data['Dependent']);
+
+			// $status = $data['EmployeeAdditionalInformation']['status'];
+
+			// if ( $status == 'M' ) {
+
+			// 	if (empty($dependent)) {
+
+			// 	}
+			// 	if ($dependent == 1) {
+
+			// 	}
+			// 	if ($dependent == 2) {
+
+			// 	}
+			// 	if ($dependent == 3) {
+
+			// 	}
+			// 	if ($dependent >= 4) {
+
+			// 	}
+
+
+			// } else {
+
+			// }
+ 
+			// pr($data); exit();
+
+			// $save['tax_status'] = '';
+
+		}
+	}
 }

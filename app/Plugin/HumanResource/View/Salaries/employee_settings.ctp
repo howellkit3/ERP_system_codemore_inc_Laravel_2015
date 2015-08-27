@@ -145,10 +145,29 @@
 								                                      		 ?>
 								                                       </div>
 							                                     </div>
-							                                     <div class="clearfix"></div>
 
-					                                     		<div class="form-group">
-							                                        <label for="inputEmail1" class="col-lg-2 control-label strong"> Basic Salary / per Day </label>
+							                                     <div class="clearfix"></div>
+							                                     <div class="form-group">
+							                                        <label for="inputEmail1" class="col-lg-2 control-label strong">  </label>
+								                                      <div class="col-lg-7 value">
+								                                      	
+																	<div class="checkbox-nice">
+																	<?php 
+																		
+																		$checked = !empty($this->request->data['Salary']['wage']) && $this->request->data['Salary']['wage'] == 'minimum' ? 'checked' : ''; 
+
+																	?>	
+																	<input type="checkbox" <?php echo $checked  ?> name="data[Salary][wage]" id="isMinimum" value="minimum">
+																		<label for="isMinimum">
+																			Minimun Wage
+																		</label>
+																	</div>
+
+																	
+					                                    			 </div>
+							                                    <div class="col-lg-12">
+							                                    <div class="form-group">
+							                                        <label for="inputEmail1" class="col-lg-2 control-label strong"> Basic Salary  </label>
 								                                      <div class="col-lg-7 value">
 								                                      		<?php
 								                                      		echo $this->Form->input('id');
@@ -158,6 +177,35 @@
 								                                       </div>
 							                                     </div>
 							                                     <div class="clearfix"></div>
+																<div class="form-group">
+							                                        <label for="inputEmail1" class="col-lg-2 control-label strong"> Tax Status </label>
+								                                      <div class="col-lg-7 value">
+								                                      		<?php
+								                                      		 echo $this->Form->input('tax_status',
+								                                      		 	array(
+								                                      		 		'options' => array(
+								                                      		 			'S' => 'Single',
+								                                      		 			'S1' => 'Single 1 dependent',
+																						'S2' => 'Single 2 dependents',
+																						'S3' => 'Single 3 dependents',
+																						'S4' => 'Single 4 dependents',
+																						'ME' => 'Maried',
+																						'ME1' => 'Maried 1 dependent',
+																						'ME2' => 'Maried 2 dependents',
+																						'ME3' => 'Maried 3 dependents',
+																						'ME4' => 'Maried 4 dependents',
+																						'no_exemption' => 'No Exemption'	
+								                                      		 		),
+								                                      		 		'empty' => '--- select ---',
+								                                      		 		'label' => false,
+								                                      		 		'class' => 'form-control'
+								                                      		 	));
+								                                      		 ?>
+								                                       </div>
+							                                     </div>
+							                                     <div class="clearfix"></div>
+
+					                                     		
 
 							                                     <div class="form-group">
 							                                        <label for="inputEmail1" class="col-lg-2 control-label strong"> Allowances </label>
@@ -210,3 +258,40 @@
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+
+
+		$('body').on('click','#isMinimum',function(e){
+
+			$name = $(this).val();
+
+			$('#SalaryBasicPay').val('');
+
+			if ($(this).is(':checked') == true) {
+				$.ajax({
+					type: "GET",	
+					url: serverPath + "payroll_settings/findWage/"+$name,
+					dataType: "json",
+					success: function(data) {
+
+						try {
+
+							$('#SalaryBasicPay').val(data.Wage.amount);
+						} catch(e) {
+							console.log(e);
+						}	
+
+					}
+				});
+			} 
+
+
+
+			//e.preventDefault();
+
+
+		});
+	});
+</script>

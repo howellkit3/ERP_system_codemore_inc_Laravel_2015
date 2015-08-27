@@ -60,7 +60,7 @@ class Attendance extends AppModel {
 		
 		$this->bindModel(array(
 				'belongsTo' => array (
-				'WorkSchedule' => array(
+					'WorkSchedule' => array(
 						'className' => 'WorkSchedule',
 						'foreignKey' => false,
 						'conditions' => array('WorkSchedule.id = Attendance.schedule_id'),
@@ -249,7 +249,7 @@ class Attendance extends AppModel {
 				$attendance['Attendance']['out'] = trim($login[1]);
 					break;
 			}
-
+			
 			$attendance['Attendance']['notes'] = $data['Attendance']['notes']; 
 			$attendance['Attendance']['status'] = !empty($data['Attendance']['status']) ? $data['Attendance']['status'] : ''; 
 

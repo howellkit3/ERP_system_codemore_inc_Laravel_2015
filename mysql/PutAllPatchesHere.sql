@@ -1817,3 +1817,9 @@ CREATE TABLE IF NOT EXISTS `salary_reports` (
   `total_pay` decimal(8,2) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+/* koufu payroll deductions table aug 26 2015*/
+ALTER TABLE `deductions`  ADD `is_deleted` INT NULL DEFAULT '0'  AFTER `status`;
+
+/* koufu human_resource salaries table aug 26 2015*/
+ALTER TABLE `salaries`  ADD `tax_status` VARCHAR(255) NULL  AFTER `employee_salary_type`;

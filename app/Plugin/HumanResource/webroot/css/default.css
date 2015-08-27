@@ -247,3 +247,7 @@ div.value {
 .table-responsive.overflow {
   overflow: auto;
 }
+.error {
+  clear: both;
+  position: relative;
+}

@@ -196,7 +196,7 @@ echo $this->element('payroll_options');
 														                        </td>
 
 														                        <td class="">
-														                           <?php echo $salary['gross_pay']; ?>
+														                           <?php echo number_format($salary['gross_pay'],2); ?>
 														                        </td>
 														                        <td class="">
 														                       
@@ -207,10 +207,10 @@ echo $this->element('payroll_options');
 														                           <?php echo !empty($salary['philhealth']) ? $salary['philhealth'] : '0.00'; ?>
 														                        </td>
 														                        <td class="">
-														                            	0.00
+														                            	 <?php echo number_format($salary['with_holding_tax'],2); ?>
 														                        </td>
 														                        <td class="">
-														                          <?php echo $salary['total_deduction']; ?>
+														                          <?php echo number_format($salary['total_deduction'],2); ?>
 														                        </td>
 														                         <td class="">
 														                        </td>

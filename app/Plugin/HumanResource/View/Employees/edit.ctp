@@ -56,7 +56,7 @@ echo $this->Html->css(array(
                                 <div class="col-xs-2 col-md-2"></div>
                                 <div class="col-xs-2 col-md-2 2">
                                     <?php 
-                                        echo $this->Form->submit('Submit Customer Information', array('class' => 'btn btn-success pull-right',  'title' => 'Click here to add the customer'));
+                                        echo $this->Form->submit('Submit Employee Information', array('class' => 'btn btn-success pull-right',  'title' => 'Click here to add the customer'));
                                     ?>
                                   
                                 </div>
