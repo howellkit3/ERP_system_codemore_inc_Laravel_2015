@@ -1111,7 +1111,9 @@ class SalaryComputationComponent extends Component
 		$taxStatus = $data['Salary']['tax_status'];
 
 		$total_tax = 0;
+		if (!empty($minimumWage)) {
 
+		
 		if ($data['Salary']['basic_pay'] > $minimumWage['Wage']['amount']) {
 
 				$code = 'Z';
@@ -1171,7 +1173,7 @@ class SalaryComputationComponent extends Component
 
 
 				}
-
+			}
 		}
 
 		return $total_tax;
