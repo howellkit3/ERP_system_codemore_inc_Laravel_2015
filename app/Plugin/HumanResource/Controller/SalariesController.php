@@ -1188,6 +1188,7 @@ class SalariesController  extends HumanResourceAppController {
 
 		$taxes = $this->Tax->getDeductions($taxes);
 
+		//pr($taxes);
 		$this->set(compact('taxes'));
 	}
 

@@ -27,7 +27,7 @@ class ItemRecord extends AppModel {
 	  		$inrecordItems['quantity'] = $value['quantity'];
 	  		
 	  		 
-	  		//$this->save($inrecordItems);
+	  		$this->save($inrecordItems);
 
 	  		
 	  	}

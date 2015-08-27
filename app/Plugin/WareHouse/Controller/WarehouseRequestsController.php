@@ -78,15 +78,12 @@ class WarehouseRequestsController extends WareHouseAppController {
 		$fullname = $this->User->find('list', array('fields' => array('id', 'fullname')
 															));
 
-		//pr($fullname); exit;
-
 		$this->set(compact('warehouseRequestData','fullname'));
 
 	}
 
 	public function outrecord($requestID = null) {
 
-		//pr($requestID); exit;
 
 	}
 
