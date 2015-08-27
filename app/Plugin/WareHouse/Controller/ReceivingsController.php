@@ -600,17 +600,19 @@ class ReceivingsController extends WareHouseAppController {
 					$itemDetails = $this->GeneralItem->find('list', array('fields' => array('GeneralItem.id', 'GeneralItem.name')
 					 													));  
 
-					$receiveItem[$key1][$itemHolder]['name'] = $itemDetails[$valueOfValue['foreign_key']];	
+					$receiveItem[$key][$itemHolder]['name'] = $itemDetails[$valueOfValue['foreign_key']];	
 
-					$receiveItem[$key1][$itemHolder]['model'] = $valueOfValue['model'];
+					$receiveItem[$key][$itemHolder]['model'] = $valueOfValue['model'];
 
-					$receiveItem[$key1][$itemHolder]['quantity'] = $valueOfValue['quantity'];		
+					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];		
 
-			 		$receiveItem[$key1][$itemHolder]['original_quantity'] = $valueOfValue['original_quantity'];	
+			 		$receiveItem[$key][$itemHolder]['original_quantity'] = $valueOfValue['original_quantity'];	
 
-					$receiveItem[$key1][$itemHolder]['good_quantity'] = $valueOfValue['quantity'];
+					$receiveItem[$key][$itemHolder]['good_quantity'] = $valueOfValue['quantity'];
 					
-					$receiveItem[$key1][$itemHolder]['reject_quantity'] = $valueOfValue['reject_quantity'];
+					$receiveItem[$key][$itemHolder]['reject_quantity'] = $valueOfValue['reject_quantity'];
+
+
         			
 		        } 
 
@@ -619,17 +621,17 @@ class ReceivingsController extends WareHouseAppController {
 		        	$itemDetails = $this->Substrate->find('list', array('fields' => array('Substrate.id', 'Substrate.name')
 					 													));  
 
-					$receiveItem[$key1][$itemHolder]['name'] = $itemDetails[$valueOfValue['foreign_key']];	
+					$receiveItem[$key][$itemHolder]['name'] = $itemDetails[$valueOfValue['foreign_key']];	
 
-					$receiveItem[$key1][$itemHolder]['model'] = $valueOfValue['model'];
+					$receiveItem[$key][$itemHolder]['model'] = $valueOfValue['model'];
 
-					$receiveItem[$key1][$itemHolder]['quantity'] = $valueOfValue['quantity'];		
+					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];		
 
-			 		$receiveItem[$key1][$itemHolder]['original_quantity'] = $valueOfValue['original_quantity'];	
+			 		$receiveItem[$key][$itemHolder]['original_quantity'] = $valueOfValue['original_quantity'];	
 
-					$receiveItem[$key1][$itemHolder]['good_quantity'] = $valueOfValue['quantity'];
+					$receiveItem[$key][$itemHolder]['good_quantity'] = $valueOfValue['quantity'];
 					
-					$receiveItem[$key1][$itemHolder]['reject_quantity'] = $valueOfValue['reject_quantity'];
+					$receiveItem[$key][$itemHolder]['reject_quantity'] = $valueOfValue['reject_quantity'];
 
 		        	
 		        } 
@@ -639,17 +641,17 @@ class ReceivingsController extends WareHouseAppController {
 		        	$itemDetails = $this->CompoundSubstrate->find('list', array('fields' => array('CompoundSubstrate.id', 'CompoundSubstrate.name')
 					 													));  
 
-					$receiveItem[$key1][$itemHolder]['name'] = $itemDetails[$valueOfValue['foreign_key']];	
+					$receiveItem[$key][$itemHolder]['name'] = $itemDetails[$valueOfValue['foreign_key']];	
 
-					$receiveItem[$key1][$itemHolder]['model'] = $valueOfValue['model'];
+					$receiveItem[$key][$itemHolder]['model'] = $valueOfValue['model'];
 
-					$receiveItem[$key1][$itemHolder]['quantity'] = $valueOfValue['quantity'];		
+					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];		
 
-			 		$receiveItem[$key1][$itemHolder]['original_quantity'] = $valueOfValue['original_quantity'];	
+			 		$receiveItem[$key][$itemHolder]['original_quantity'] = $valueOfValue['original_quantity'];	
 
-					$receiveItem[$key1][$itemHolder]['good_quantity'] = $valueOfValue['quantity'];
+					$receiveItem[$key][$itemHolder]['good_quantity'] = $valueOfValue['quantity'];
 					
-					$receiveItem[$key1][$itemHolder]['reject_quantity'] = $valueOfValue['reject_quantity'];
+					$receiveItem[$key][$itemHolder]['reject_quantity'] = $valueOfValue['reject_quantity'];
 
 		        
 		        } 
@@ -659,17 +661,17 @@ class ReceivingsController extends WareHouseAppController {
 		        	$itemDetails = $this->CorrugatedPaper->find('list', array('fields' => array('CorrugatedPaper.id', 'CorrugatedPaper.name')
 					 													));  
 
-					$receiveItem[$key1][$itemHolder]['name'] = $itemDetails[$valueOfValue['foreign_key']];	
+					$receiveItem[$key][$itemHolder]['name'] = $itemDetails[$valueOfValue['foreign_key']];	
 
-					$receiveItem[$key1][$itemHolder]['model'] = $valueOfValue['model'];
+					$receiveItem[$key][$itemHolder]['model'] = $valueOfValue['model'];
 
-					$receiveItem[$key1][$itemHolder]['quantity'] = $valueOfValue['quantity'];		
+					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];		
 
-			 		$receiveItem[$key1][$itemHolder]['original_quantity'] = $valueOfValue['original_quantity'];	
+			 		$receiveItem[$key][$itemHolder]['original_quantity'] = $valueOfValue['original_quantity'];	
 
-					$receiveItem[$key1][$itemHolder]['good_quantity'] = $valueOfValue['quantity'];
+					$receiveItem[$key][$itemHolder]['good_quantity'] = $valueOfValue['quantity'];
 					
-					$receiveItem[$key1][$itemHolder]['reject_quantity'] = $valueOfValue['reject_quantity'];
+					$receiveItem[$key][$itemHolder]['reject_quantity'] = $valueOfValue['reject_quantity'];
 
 		        
 		   		 }
@@ -725,13 +727,11 @@ class ReceivingsController extends WareHouseAppController {
 
     		$itemHolder = "RequestItem";
 
-    	}
-
-    	//pr($requestItemData); exit;
+    	} 
 
     	foreach ($receivedData['ReceivedItem'] as $key => $value) {	
 
-    		foreach ($requestItemData as $key => $valueOfRequestItem) {	
+    		foreach ($requestItemData as $key1 => $valueOfRequestItem) {	
 
     	 		if($value['model'] == 'GeneralItem' && $value['foreign_key'] == $valueOfRequestItem[$itemHolder]['foreign_key']){
 
@@ -803,14 +803,15 @@ class ReceivingsController extends WareHouseAppController {
 
     	 			$receivedData['ReceivedItem'][$key]['quantity_unit_id'] = $valueOfRequestItem[$itemHolder]['quantity_unit_id'];
 
-    	 		}
+    	 		} 
     	 			
+    	 	}$receiveDataHolder = $receivedData; 
 
-    	 	}
-
-    	}
+    	} 
 
 		if (!empty($this->request->data)) {
+
+			
 
 			$this->loadModel('WareHouse.InRecord');
 
@@ -823,10 +824,10 @@ class ReceivingsController extends WareHouseAppController {
 			$this->DeliveredOrder->saveField('status_id', 13);
 
 			$inRecordId = $this->InRecord->saveInRecord($this->request->data['InRecord'],$receivedData['DeliveredOrder'],$userData['User']['id']);
-
-			$this->ItemRecord->saveItemRecord($inRecordId, $receivedData['ReceivedItem']);
+			//pr($receivedData['ReceivedItem']); exit;
+			$this->ItemRecord->saveItemRecord($inRecordId, $receiveDataHolder['ReceivedItem']);
 		
-			$this->Stock->saveStock($receivedData, $this->request->data,$userData['User']['id']);
+			$this->Stock->saveStock($receiveDataHolder, $this->request->data, $userData['User']['id']);
 
 			$this->Session->setFlash(__('Received Items has been moved to stocks'), 'success');
           
