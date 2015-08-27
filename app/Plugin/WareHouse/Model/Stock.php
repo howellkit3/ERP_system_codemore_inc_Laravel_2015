@@ -13,7 +13,7 @@ class Stock extends AppModel {
     
   	public $name = 'Stock';
 
-  	public function saveStock($received, $data, $auth){
+  	public function saveStock($received, $data, $auth, $supplierId){
 
 		$this->create();
 
@@ -21,11 +21,12 @@ class Stock extends AppModel {
 		$stock['location_id'] = $data['InRecord']['storekeeper'];
 		$stock['remarks'] = $data['InRecord']['remarks'];
 
-
+		
 
 		foreach ($received['ReceivedItem'] as $key => $value)
 		{
-		//
+			pr($received); exit;
+
 
 			$month = date("m"); 
 		    $year = date("y");
@@ -39,8 +40,10 @@ class Stock extends AppModel {
 			$value['uuid'] = $code;
 			$value['model'] = $value['model'];
 			$value['item_id'] = $value['foreign_key'];
+			$value['supplier_id'] = $supplierId;
 			$value['quantity'] = $value['quantity'];
 			$value['size1'] = $value['size1'];
+			$value['location_id'] = $data['InRecord']['location'];
 			$value['size1_unit_id'] = $value['size1_unit_id'];
 			$value['size2'] = $value['size2'];
 			$value['size2_unit_id'] = $value['size2_unit_id'];

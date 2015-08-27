@@ -77,12 +77,12 @@
 
                         <div class="modal-body">
 
-                            <?php $id = $requestOrderDataList['ReceivedOrder']['id'];
+                            <?php   $id = $requestOrderDataList['ReceivedOrder']['id'];
 
                                  $DeliveredOrderId = $requestOrderDataList['DeliveredOrder']['id'];
 
                                 echo $this->Form->create('InRecord',array(
-                                    'url'=>(array('controller' => 'receivings','action' => 'in_record', $id, $DeliveredOrderId,$requestOrderDataList['DeliveredOrder']['purchase_orders_id'])),'class' => 'form-horizontal')); 
+                                    'url'=>(array('controller' => 'receivings','action' => 'in_record', $id, $DeliveredOrderId,$requestOrderDataList['DeliveredOrder']['purchase_orders_id'],$requestOrderDataList['PurchaseOrder']['supplier_id'] )),'class' => 'form-horizontal')); 
                             ?>
 
                                 <div class="form-group" id="existing_items">
@@ -94,6 +94,25 @@
                                                 'label' => false,
                                                 'type' => 'select',
                                                 'options' => array($userNameList),
+                                                'required' => 'required',
+                                               
+                                                ));
+                                        ?>
+
+                                    </div>
+                                </div>
+
+                                <br><br>
+
+                                <div class="form-group" id="existing_items">
+                                    <label class="col-lg-2 control-label"><span style="color:red">*</span>Location</label>
+                                    <div class="col-lg-9">
+                                        <?php 
+                                            echo $this->Form->input('InRecord.location', array(
+                                                'class' => 'form-control item_type editable required',
+                                                'label' => false,
+                                                'type' => 'select',
+                                                'options' => array(1, 2, 3),
                                                 'required' => 'required',
                                                
                                                 ));

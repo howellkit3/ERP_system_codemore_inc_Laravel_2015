@@ -1838,4 +1838,5 @@ ALTER TABLE `sub_processes` DROP `machine_id`;
 /** bien added this 08/26/2015 TO production DATABASE   */
 ALTER TABLE `machines` ADD `sub_process_id` INT(11)  NULL  DEFAULT NULL  AFTER `section_id`;
 
-
+/** howell kit added this 08/27/2015 TO production DATABASE   */
+ALTER TABLE `koufu_warehouse`.`stocks` DROP COLUMN `remarks` ;

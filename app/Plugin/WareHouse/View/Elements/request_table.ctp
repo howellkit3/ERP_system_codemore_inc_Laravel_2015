@@ -55,22 +55,6 @@
                         <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> OutRecord </font></span>
                         </span> ', array('controller' => 'warehouse_requests', 'action' => 'outrecord',$requestList['WarehouseRequest']['id']),array('class' =>' table-link','escape' => false,'title'=>'Review Request'));
                 ?>
-
-                <?php /* <a href="<?php echo Router::url('/', true) . 'request/view/' . $requestList['Request']['id']; ?>">
-                    <span class="fa-stack">
-                        <i class="fa fa-square fa-stack-2x"></i>
-                        <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;
-                        <span class ="post"><font size = "1px"> View </font></span>
-                    </span>
-                </a> */ ?>
-               
-                <?php
-                    // echo $this->Html->link('<span class="fa-stack">
-                    // <i class="fa fa-square fa-stack-2x"></i>
-                    // <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-                    // </span> ', array('controller' => 'customer_sales', 'action' => 'edit',$inquirylist['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Information'));
-                ?>
-             
                 
             </td>
         </tr>

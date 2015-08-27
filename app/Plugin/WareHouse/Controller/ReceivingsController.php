@@ -357,10 +357,6 @@ class ReceivingsController extends WareHouseAppController {
 
 		$receivedOrderData = $this->ReceivedOrder->find('first', array('conditions' => array('ReceivedOrder.purchase_order_id' => $purchaseOrderData['PurchaseOrder']['id'])));
 
-		//$this->Request->bind(array('PurchasingItem','RequestItem'));
-
-		//$this->Request->bindRequest();
-
 		$requestData = $this->PurchasingItem->find('first', array('conditions' => array('PurchasingItem.request_uuid' => $requestUUID)));
 
 		if(empty($requestData['PurchasingItem'])){
@@ -377,7 +373,6 @@ class ReceivingsController extends WareHouseAppController {
 
 		}
 
-		
 		$receivedItemData = $this->ReceivedItem->find('all', array('conditions' => array('ReceivedItem.received_orders_id' => $id)));
 
 		foreach ($itemData as $key1 => $value) {	
@@ -703,7 +698,7 @@ class ReceivingsController extends WareHouseAppController {
 
     }
 
-    public function in_record($id = null, $DeliveredOrderId = null, $purchaseOrderId = null) {
+    public function in_record($id = null, $DeliveredOrderId = null, $purchaseOrderId = null, $supplierId = null) {
 
     	$this->loadModel('WareHouse.DeliveredOrder');
 
@@ -822,10 +817,10 @@ class ReceivingsController extends WareHouseAppController {
 			$this->DeliveredOrder->saveField('status_id', 13);
 
 			$inRecordId = $this->InRecord->saveInRecord($this->request->data['InRecord'],$receivedData['DeliveredOrder'],$userData['User']['id']);
-			//pr($receivedData['ReceivedItem']); exit;
+			
 			$this->ItemRecord->saveItemRecord($inRecordId, $receiveDataHolder['ReceivedItem']);
 		
-			$this->Stock->saveStock($receiveDataHolder, $this->request->data, $userData['User']['id']);
+			$this->Stock->saveStock($receiveDataHolder, $this->request->data, $userData['User']['id'], $supplierId);
 
 			$this->Session->setFlash(__('Received Items has been moved to stocks'), 'success');
           
