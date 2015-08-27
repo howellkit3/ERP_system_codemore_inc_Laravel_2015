@@ -59,5 +59,13 @@
 									'plugin' => 'human_resource'
 						)); ?>
 					</li> 
+					 <li class="<?php echo ($this->params['controller'] == 'salaries' && $this->params['action'] == 'philhealth_table') ? 'active' : '' ?>" alt="tab-type">
+						<?php echo $this->Html->link('Tax Table',array(
+									'controller' => 'salaries',
+									'action' => 'tax_table',
+									'tab' => 'tax_table',
+									'plugin' => 'human_resource'
+						)); ?>
+					</li> 
 					 
 </ul>

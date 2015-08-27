@@ -37,65 +37,12 @@ echo $this->Html->script(array(
 
 <div class="main-box">
 <header class="main-box-header clearfix">
-<h2 class="pull-left">Weekly Attendance</h2>
+<h2 class="pull-left">Upcoming Holidays / Events</h2>
 </header>
 <div class="main-box-body clearfix">
 <div class="row">
 <div class="col-md-9">
-<div id="graph-bar" style="height: 240px; padding: 0px; position: relative;">
-<canvas class="flot-base" width="963" height="240" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 963px; height: 240px;"></canvas>
-
-<div class="flot-text" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; font-size: smaller; color: rgb(84, 84, 84);">
-<div class="flot-x-axis flot-x1-axis xAxis x1Axis" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; display: block;">
-<div class="flot-tick-label tickLabel" style="position: absolute; max-width: 68px; top: 223px; left: 925px; text-align: center;">Dec</div>
-<div class="flot-tick-label tickLabel" style="position: absolute; max-width: 68px; top: 223px; left: 40px; text-align: center;">Jan</div>
-<div class="flot-tick-label tickLabel" style="position: absolute; max-width: 68px; top: 223px; left: 121px; text-align: center;">Feb</div>
-<div class="flot-tick-label tickLabel" style="position: absolute; max-width: 68px; top: 223px; left: 195px; text-align: center;">Mar</div>
-<div class="flot-tick-label tickLabel" style="position: absolute; max-width: 68px; top: 223px; left: 278px; text-align: center;">Apr</div>
-<div class="flot-tick-label tickLabel" style="position: absolute; max-width: 68px; top: 223px; left: 356px; text-align: center;">May</div>
-<div class="flot-tick-label tickLabel" style="position: absolute; max-width: 68px; top: 223px; left: 441px; text-align: center;">Jun</div>
-<div class="flot-tick-label tickLabel" style="position: absolute; max-width: 68px; top: 223px; left: 523px; text-align: center;">Jul</div>
-<div class="flot-tick-label tickLabel" style="position: absolute; max-width: 68px; top: 223px; left: 601px; text-align: center;">Aug</div>
-<div class="flot-tick-label tickLabel" style="position: absolute; max-width: 68px; top: 223px; left: 684px; text-align: center;">Sep</div>
-<div class="flot-tick-label tickLabel" style="position: absolute; max-width: 68px; top: 223px; left: 764px; text-align: center;">Oct</div>
-<div class="flot-tick-label tickLabel" style="position: absolute; max-width: 68px; top: 223px; left: 845px; text-align: center;">Nov</div>
-</div>
-<div class="flot-y-axis flot-y1-axis yAxis y1Axis" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; display: block;">
-<div class="flot-tick-label tickLabel" style="position: absolute; top: 209px; left: 20px; text-align: right;">0</div>
-<div class="flot-tick-label tickLabel" style="position: absolute; top: 168px; left: 7px; text-align: right;"></div>
-<div class="flot-tick-label tickLabel" style="position: absolute; top: 126px; left: 7px; text-align: right;">500</div>
-<div class="flot-tick-label tickLabel" style="position: absolute; top: 84px; left: 7px; text-align: right;">750</div>
-<div class="flot-tick-label tickLabel" style="position: absolute; top: 42px; left: 0px; text-align: right;">1000</div>
-<div class="flot-tick-label tickLabel" style="position: absolute; top: 1px; left: 0px; text-align: right;">1250</div>
-</div>
-</div>
-<canvas class="flot-overlay" width="963" height="240" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 963px; height: 240px;">
-	
-</canvas><div class="legend"><div style="position: absolute; width: 72px; height: 34px; top: 14px; right: 17px; opacity: 0.85; background-color: rgb(255, 255, 255);"> </div>
-<table style="position:absolute;top:14px;right:17px;;font-size:smaller;color:#545454">
-<tbody><tr><td class="legendColorBox"><div style="border:1px solid #000000;padding:1px">
-<div style="width:4px;height:0;border:5px solid rgb(3,169,244);overflow:hidden"></div></div></td><td class="legendLabel">Works</td></tr><tr><td class="legendColorBox"><div style="border:1px solid #000000;padding:1px"><div style="width:4px;height:0;border:5px solid #e84e40;overflow:hidden"></div></div></td><td class="legendLabel">Absenses</td></tr></tbody></table></div></div>
-</div>
-<div class="col-md-3">
-<div class="datepick homepage"></div>
-</div>
-</div>
-</div>
-</div>
-
-
-
-<div style="clear:both"></div>
-
-<div class="main-box">
-<header class="main-box-header clearfix">
-	<h2 class="pull-left">Events</h2>
-	</header>
-	<div class="main-box-body clearfix">
-	<div class="row">
-	<div class="col-md-12">
-	<div class="main-box-body clearfix">
-				            	<div class="table-responsive">
+	<div class="table-responsive">
 									<table class="table table-striped table-hover">
 										</thead>
 
@@ -142,11 +89,18 @@ echo $this->Html->script(array(
 									<?php } ?>
 
 								</div>
-	</div>
+</div>
+<div class="col-md-3">
+<div class="datepick homepage"></div>
 </div>
 </div>
 </div>
 </div>
+
+
+
+<div style="clear:both"></div>
+
 
 <div class="main-box">
 <header class="main-box-header clearfix">

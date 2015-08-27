@@ -26,8 +26,8 @@ class ItemRecord extends AppModel {
 	  		$inrecordItems['foreign_key'] = $value['foreign_key'];
 	  		$inrecordItems['quantity'] = $value['quantity'];
 	  		
-	  		
-	  		$this->save($inrecordItems);
+	  		 
+	  		//$this->save($inrecordItems);
 
 	  		
 	  	}

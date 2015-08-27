@@ -44,3 +44,14 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    
+    jQuery(document).ready(function(){
+        
+       setTimeout(function (){
+            location.reload();
+        }, 1000); 
+  
+</script>

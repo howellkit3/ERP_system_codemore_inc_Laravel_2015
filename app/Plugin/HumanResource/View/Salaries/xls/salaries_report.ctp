@@ -7,7 +7,7 @@
     $counter = 5;
     
     $objTpl->setActiveSheetIndex(0)
-    ->setCellValue('A2','Payroll ' )
+    ->setCellValue('A2','Payroll '.date('F d',strtotime($payroll['Payroll']['from'])).'-'.date('d',strtotime($payroll['Payroll']['to'])).' '. $payroll['Payroll']['year'])
 
     ->getStyle('A4:AK4')
     ->getFont()->setBold(true);
@@ -17,13 +17,10 @@
     $header = 4;
 
     $sheet = $objTpl->getActiveSheet();
-
-
     $address = 'Z'.$header;
 
     if (!empty($deductions)) {
               
-
               foreach ($deductions as $key => $list) {
                 
                 $split = PHPExcel_Cell::coordinateFromString($address);
@@ -116,9 +113,12 @@
           $sheet->setCellValue('W'.$counter,number_format($emp['philhealth'],2));
           $sheet->setCellValue('X'.$counter,number_format($emp['pagibig'],2));
 
+          $sheet->setCellValue('Y'.$counter,number_format($emp['with_holding_tax'],2));
+
           $total_deduction += $emp['sss'];
           $total_deduction += $emp['philhealth'];
           $total_deduction += $emp['pagibig'];
+          $total_deduction += $emp['with_holding_tax'];
 
            //deductions
          

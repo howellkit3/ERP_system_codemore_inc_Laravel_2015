@@ -94,6 +94,9 @@ class EmployeesController  extends HumanResourceAppController {
 
 			 $this->loadModel('HumanResource.Dependent');
 
+			 $this->loadModel('HumanResource.Salaries');
+
+
 			  $uploader = new ImageUploader;
         
 			 if(!empty($this->request->data)){
@@ -149,17 +152,20 @@ class EmployeesController  extends HumanResourceAppController {
 
 			 		$save = $this->Email->saveEmails($data['ContactPersonData']['Email'],$employeeId,'ContactPerson',$auth['id']);
 
+
+
 			 		//$save
-			 		$this->Session->setFlash('Saving employee information successfully','success');
+			 		$this->Session->setFlash('Saving employee information successfully, Please add Salary setting','success');
 			 		   $this->redirect( array(
                                  'controller' => 'employees', 
-                                 'action' => 'index'
+                                 'action' => 'view',
+                                 $this->Employee->id
                             ));
                 
                 	} else {
 
 			 		$this->Session->setFlash('There\'s an error saving employee information','error');
-			 	}
+			 		}
 
 			 } 
 		}
@@ -209,10 +215,15 @@ class EmployeesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Dependent');
 
+		$this->loadModel('HumanResource.Salary');
+
 		if ($this->request->is('put')) {
 			
-			foreach ($this->request->data['EducationIdHolder']['id'] as $key => $value) {
-				$this->EmployeeEducationalBackground->delete($value);
+			if (!empty($this->request->data['EducationIdHolder'])) {
+
+				foreach ($this->request->data['EducationIdHolder']['id'] as $key => $value) {
+					$this->EmployeeEducationalBackground->delete($value);
+				}
 			}
 			
 			$uploader = new ImageUploader;
@@ -252,17 +263,22 @@ class EmployeesController  extends HumanResourceAppController {
 					//save employee_goverment record
 			 		$save = $this->GovernmentRecord->saveRecord($data['EmployeeAgencyRecord'],$employeeId,$auth['id']);
 
-			 		//save educational background
-			 		$save = $this->EmployeeEducationalBackground->saveEducation($data['EmployeeEducationalBackground'],$employeeId);
+					if (!empty($data['EmployeeEducationalBackground'])) {
 
+					//save educational background
+					$save = $this->EmployeeEducationalBackground->saveEducation($data['EmployeeEducationalBackground'],$employeeId);
+
+					}
+					if (!empty($data['Dependent'])) {
 			 		//save dependent
 			 		$save = $this->Dependent->saveDependent($data['Dependent'],$employeeId,$auth['id']);
-
+			 		}
 			 		if (!empty($data['ContactPersonData'])) {
 						
 						$this->ContactPerson->saveContact($data['ContactPersonData'],$employeeId,$auth['id']);
 			 		}
-
+			 		//save salary settings
+			 		$this->Salary->saveSettings($data);
 					//save contactPerson emails
 			 		$save = $this->Email->saveEmails($employeeId,'ContactPerson',$data['ContactPersonData']['Email'],$auth['id']);
 
@@ -308,11 +324,12 @@ class EmployeesController  extends HumanResourceAppController {
 				'ContactPersonAddress',
 				'ContactPersonNumber',
 				'EmployeeEducationalBackground',
-				'Dependent'
+				'Dependent',
+				'Salary'
 				));
 
 			$this->request->data = $this->Employee->findById($id);
-			//pr($this->request->data);exit();
+
 			if (!empty($_GET['test'])) {
 				pr($this->request->data); exit();
 			}

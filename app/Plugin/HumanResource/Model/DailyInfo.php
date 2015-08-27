@@ -80,5 +80,63 @@ class DailyInfo extends AppModel {
 		}
 	}
 
+	public function updateDailyInfo($data = null,$employeeId = null, $date = null) {
+
+		if (!empty($data)) {
+
+			$conditions = array('DailyInfo.employee_id' => $employeeId, 'DailyInfo.date >= ' => $date, 'DailyInfo.date <=' => $date );
+
+			$dailyInfo = $this->find('first',array('conditions' => $conditions ));
+
+			$date = date('Y-m-d',strtotime($data['Attendance']['date']));
+
+			// $to_time = strtotime($date.' '.$data["Attendance"]['in']);
+
+			// $from_time = strtotime($date.' '.$data["Attendance"]['out']);
+
+			// $total_time = round(abs($to_time - $from_time) / 60,2);
+
+			//	pr($data);
+
+			//regular time
+			if (strtotime($data['Attendance']['in']) >= strtotime($data['WorkShift']['from'])) {
+						
+						$from = new DateTime($data['Attendance']['in']);
+						$to = new DateTime($data['Attendance']['out']);
+						
+						$total_time =  $from->diff($to)->format('%h.%i'); 
+
+							// pr($data['Attendance']['out']);
+							// pr($data['WorkShift']['to']);
+						if (empty($data['Attendance']['overtime_id']) && strtotime($data['Attendance']['out']) > strtotime($data['WorkShift']['to'])) {
+
+
+							$from = new DateTime($data['WorkShift']['to']);
+							$to = new DateTime($data['Attendance']['out']);
+
+							$total_excess_time = $to->diff($from)->format('%h.%i'); 
+
+
+							$total_time -= $total_excess_time;
+
+						}
+
+
+						if (!empty($data['BreakTime']['id'])) {
+							if (strtotime($data['Attendance']['out']) >= strtotime($data['BreakTime']['from']) && strtotime($data['Attendance']['out']) >= strtotime($data['BreakTime']['to'])) {
+						
+								$total_time -= 1;
+							}
+						}
+						
+						$dailyInfo['DailyInfo']['work'] = $total_time;
+			}
+
+			return $this->save($dailyInfo['DailyInfo']);
+
+			
+		}
+	}
+
 
 }

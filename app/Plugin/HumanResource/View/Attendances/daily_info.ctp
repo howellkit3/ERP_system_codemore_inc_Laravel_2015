@@ -89,12 +89,9 @@ echo $this->element('hr_options');
 								                   
 														<td> <?php echo date('Y/m/d',strtotime($daily['DailyInfo']['date'])); ?></td>
 								                    
-														<td> <?php 
-														$time = $this->CustomTime->getTotalWorks($daily['DailyInfo']['employee_id']);
-														echo !empty($time['total_time']) ? $time['total_time'] : '';
-														 ?></td>
+														<td>  <?php echo !empty($daily['DailyInfo']['work']) ? $daily['DailyInfo']['work'] : ''; ?> </td>
 								                   
-														<td> <?php //echo $daily['Employee']['code']; ?></td>
+														<td> </td>
 								                   
 														<td> <?php //echo $daily['Employee']['code']; ?></td>
 								                    

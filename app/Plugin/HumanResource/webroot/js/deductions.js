@@ -156,6 +156,37 @@ $( ".datepick" ).datepicker({
 
   });
 
+  $('body').on('click','.delete_Deduction',function(e){
+
+      
+    var url = $(this).attr('href');
+
+    //$(this).attr('href',url+'?days='+range+'&&month='+month);
+
+    swal({   title: "Delete Deduction",  
+     text: "This will remove deduction info from employee. CLick OK to continue",  
+     type: "info", 
+     showCancelButton: true,   
+     closeOnConfirm: false,   
+     showLoaderOnConfirm: true, },
+     function() {  
+        //$(this).attr('href',url+'?days='+range+'&&month='+month);
+        window.location.href =  url;
+          
+        var alert = $(".sweet-alert");
+
+        var cancelButton = alert.find('.cancel');
+
+        cancelButton.trigger("click");
+      });
+
+
+    e.preventDefault();
+
+
+
+  });
+
 
   $('body').on('keyup','.searchEmployee',function(){
 

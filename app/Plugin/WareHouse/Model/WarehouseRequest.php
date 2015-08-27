@@ -5,11 +5,11 @@ App::uses('AppModel', 'Model');
  * Supllier Model
  *
  */
-class Request extends AppModel {
+class WarehouseRequest extends AppModel {
 
     public $useDbConfig = 'koufu_warehouse';
 
-    public $name = 'Request';
+    public $name = 'WarehouseRequest';
 
 	public $recursive = -1;
 

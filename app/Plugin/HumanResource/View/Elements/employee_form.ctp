@@ -454,6 +454,116 @@
                 </div>
             </div>
 
+               <div class="row">
+	            <div class="col-lg-12">
+	                <div class="main-box">
+	                    <h1>Dependents</h1>
+	                    <!-- <div class="top-space"></div> -->
+	                    <div class="main-box-body clearfix">
+	                        <div class="main-box-body clearfix">
+	                        	
+
+                        		<?php if (!empty($this->request->data['Dependent'])) { ?>
+
+                        			<?php foreach ($this->request->data['Dependent'] as $key => $dependentlist) { ?>
+                        				<input name="data[DependentIdHolder][id][]" value="<?php echo $dependentlist['id']?>" type="hidden">
+                        				<section class="cloneMe dependent_section">
+		                        			<div class="form-horizontal">
+			                    
+				                                <div class="form-group">
+				                                    <label for="inputPassword1" class="col-lg-2 control-label">Dependent</label>
+				                                    <div class="col-lg-5">
+				                                        <?php 
+				                                            echo $this->Form->input('Dependent.'.$key.'.name',
+			                                                 array( 
+			                                                 	'class' => 'col-lg-6 form-control',
+			                                                	'label' => false,
+			                                                	'placeholder' => 'Dependent'
+			                                                	));
+
+				                                        ?>
+				                                       
+				                                    </div>
+				                                    
+				                                    <div class="col-lg-3">
+				                                        <?php 
+				                                            echo $this->Form->input('Dependent.'.$key.'.birth_date',
+			                                                 array( 
+			                                                 	'class' => 'form-control datepick',
+			                                                	'label' => false,
+			                                                	'placeholder' => 'Birth Date',
+			                                                	'data-date-viewmode' => 'years',
+		                                         				'data-date-minviewmode' => 'months'
+			                                                	));
+
+					                                            if ($key != 0 ) {
+					                                            	$showRemove = 'showRemoveButton';
+					                                            }else{
+					                                            	$showRemove = ' ';
+					                                            }
+
+					                                        ?>
+				                                         <!-- <span class="lighter-color">Ex. (02)-565-2056</span> -->
+				                                    </div>
+
+				                                    <div class="col-lg-2">
+				                                        <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneData('dependent_section',this)"><i class="fa fa-plus"></i></button>
+				                                        <button type="button" class="remove-field btn btn-danger remove <?php echo $showRemove ?>" onclick="removeClone('dependent_section')" style="display:none"><i class="fa fa-minus"></i> </button>
+				                                    </div>
+				                                </div>
+
+				                            </div>
+				                        </section>
+			                        <?php } ?>
+                        		<?php } else { ?>
+	                        		<section class="cloneMe dependent_section">
+			                            <div class="form-horizontal">
+			                    
+			                                <div class="form-group">
+			                                    <label for="inputPassword1" class="col-lg-2 control-label">Dependent</label>
+			                                    <div class="col-lg-5">
+			                                        <?php 
+			                                            echo $this->Form->input('Dependent.0.name',
+			                                                 array( 
+			                                                 	'class' => 'col-lg-6 form-control',
+			                                                	'label' => false,
+			                                                	'placeholder' => 'Dependent Name'
+			                                                	));
+
+			                                        ?>
+			                                       
+			                                    </div>
+			                                    
+			                                    <div class="col-lg-3">
+			                                        <?php 
+				                                        echo $this->Form->input('Dependent.0.birth_date',
+			                                                 array( 
+			                                                 	'class' => 'form-control datepick',
+			                                                	'label' => false,
+			                                                	'placeholder' => 'Birth Date',
+			                                                	'data-date-viewmode' => 'years',
+		                                         			'data-date-minviewmode' => 'months'
+			                                                	));
+				                                         
+				                                        ?>
+			                                         <!-- <span class="lighter-color">Ex. (02)-565-2056</span> -->
+			                                    </div>
+			                                    
+			                                    <div class="col-lg-2">
+			                                        <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneData('dependent_section',this)"><i class="fa fa-plus"></i></button>
+			                                        <button type="button" class="remove-field btn btn-danger remove" onclick="removeClone('dependent_section')" style="display:none"><i class="fa fa-minus"></i> </button>
+			                                    </div>
+			                                </div>
+
+			                            </div>
+			                        </section>
+		                        <?php } ?>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+
             <div class="row">
 	            <div class="col-lg-12">
 	                <div class="main-box">
@@ -461,9 +571,8 @@
 	                    <!-- <div class="top-space"></div> -->
 	                    <div class="main-box-body clearfix">
 	                        <div class="main-box-body clearfix">
-	                        	
-
-	                        		<?php if (!empty($this->request->data)) { ?>
+	 
+	                        		<?php if (!empty($this->request->data['EmployeeEducationalBackground'])) { ?>
 
 	                        			<?php foreach ($this->request->data['EmployeeEducationalBackground'] as $key => $educationlist) { ?>
 	                        				<input name="data[EducationIdHolder][id][]" value="<?php echo $educationlist['id']?>" type="hidden">
@@ -1000,110 +1109,6 @@
 		            </div>
 		        </div>
 		    </section>
-
-		    <div class="row">
-	            <div class="col-lg-12">
-	                <div class="main-box">
-	                    <h1>Dependents</h1>
-	                    <!-- <div class="top-space"></div> -->
-	                    <div class="main-box-body clearfix">
-	                        <div class="main-box-body clearfix">
-	                        	
-
-                        		<?php if (!empty($this->request->data)) { ?>
-
-                        			<?php foreach ($this->request->data['Dependent'] as $key => $dependentlist) { ?>
-                        				<input name="data[DependentIdHolder][id][]" value="<?php echo $dependentlist['id']?>" type="hidden">
-                        				<section class="cloneMe dependent_section">
-		                        			<div class="form-horizontal">
-			                    
-				                                <div class="form-group">
-				                                    <label for="inputPassword1" class="col-lg-2 control-label">Dependent</label>
-				                                    <div class="col-lg-5">
-				                                        <?php 
-				                                            echo $this->Form->input('Dependent.'.$key.'.name',
-			                                                 array( 
-			                                                 	'class' => 'col-lg-6 form-control',
-			                                                	'label' => false,
-			                                                	'placeholder' => 'Dependent'
-			                                                	));
-
-				                                        ?>
-				                                       
-				                                    </div>
-				                                    
-				                                    <div class="col-lg-3">
-				                                        <?php 
-				                                            echo $this->Form->input('Dependent.'.$key.'.birth_date',
-			                                                 array( 
-			                                                 	'class' => 'form-control datepick',
-			                                                	'label' => false,
-			                                                	'placeholder' => 'Birth Date',
-			                                                	'data-date-viewmode' => 'years',
-		                                         				'data-date-minviewmode' => 'months'
-			                                                	));
-
-				                                        ?>
-				                                         <!-- <span class="lighter-color">Ex. (02)-565-2056</span> -->
-				                                    </div>
-
-				                                    <div class="col-lg-2">
-				                                        <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneData('dependent_section',this)"><i class="fa fa-plus"></i></button>
-				                                        <button type="button" class="remove-field btn btn-danger remove <?php echo $showRemove ?>" onclick="removeClone('dependent_section')" style="display:none"><i class="fa fa-minus"></i> </button>
-				                                    </div>
-				                                </div>
-
-				                            </div>
-				                        </section>
-			                        <?php } ?>
-                        		<?php } else { ?>
-	                        		<section class="cloneMe dependent_section">
-			                            <div class="form-horizontal">
-			                    
-			                                <div class="form-group">
-			                                    <label for="inputPassword1" class="col-lg-2 control-label">Dependent</label>
-			                                    <div class="col-lg-5">
-			                                        <?php 
-			                                            echo $this->Form->input('Dependent.0.name',
-			                                                 array( 
-			                                                 	'class' => 'col-lg-6 form-control',
-			                                                	'label' => false,
-			                                                	'placeholder' => 'Dependent Name'
-			                                                	));
-
-			                                        ?>
-			                                       
-			                                    </div>
-			                                    
-			                                    <div class="col-lg-3">
-			                                        <?php 
-				                                        echo $this->Form->input('Dependent.0.birth_date',
-			                                                 array( 
-			                                                 	'class' => 'form-control datepick',
-			                                                	'label' => false,
-			                                                	'placeholder' => 'Birth Date',
-			                                                	'data-date-viewmode' => 'years',
-		                                         			'data-date-minviewmode' => 'months'
-			                                                	));
-				                                         
-				                                        ?>
-			                                         <!-- <span class="lighter-color">Ex. (02)-565-2056</span> -->
-			                                    </div>
-			                                    
-			                                    <div class="col-lg-2">
-			                                        <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneData('dependent_section',this)"><i class="fa fa-plus"></i></button>
-			                                        <button type="button" class="remove-field btn btn-danger remove" onclick="removeClone('dependent_section')" style="display:none"><i class="fa fa-minus"></i> </button>
-			                                    </div>
-			                                </div>
-
-			                            </div>
-			                        </section>
-		                        <?php } ?>
-	                        </div>
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
 
 	        <div class="row">
 	            <div class="col-lg-12">

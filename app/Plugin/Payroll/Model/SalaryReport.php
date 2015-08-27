@@ -39,15 +39,14 @@ class SalaryReport extends AppModel {
 				$report[$key]['to'] = $value['to'];
 				$report[$key]['gross'] = $value['gross'];
 				$report[$key]['total_deduction'] = $value['total_deduction'];
-				$report[$key]['allowances'] = $value['allowances'];
+				$report[$key]['allowances'] = !empty($value['allowances']) ? $value['allowances'] : 0 ;
 				$report[$key]['incentives'] = !empty($value['incentives']) ? $value['incentives'] : 0;
 				$report[$key]['total_pay'] = $value['total_pay'];
-
 				$report[$key]['created_by'] = $auth['id'];
 				$report[$key]['modified_by'] = $auth['id'];
 
 			}
-			
+
 			return $this->saveAll($report);
 		}
 	}

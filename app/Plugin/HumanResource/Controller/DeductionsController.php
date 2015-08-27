@@ -25,7 +25,7 @@ class DeductionsController extends HumanResourceAppController {
 					
 				}	
         }
-
+        $conditions = array('is_deleted' => 0);
         $params =  array(
 	            'conditions' => $conditions,
 	            'limit' => $limit,
@@ -38,7 +38,6 @@ class DeductionsController extends HumanResourceAppController {
 		$this->Deduction->bind(array('Employee'));
 
 		$deductions = $this->paginate('Deduction');
-		//pr($deductions); exit();
 
 		$this->set(compact('deductions','employeeList'));
 
@@ -51,7 +50,6 @@ class DeductionsController extends HumanResourceAppController {
 	public function view_amortization($deductionId = null) {
 
 		$this->LoadModel('Payroll.Amortization');
-
 
 		if (!empty($deductionId)) {
 
@@ -146,6 +144,28 @@ class DeductionsController extends HumanResourceAppController {
 		
 		$this->set(compact('employeeList'));
 			
+	}
+	public function delete($id = null) {
+
+		if (!empty($id)) {
+
+			$this->Deduction->id = $id;
+
+			if ($this->Deduction->saveField('is_deleted',1)) {
+
+				$this->Session->setFlash('Deduction delete successfully','success');
+
+			} else {
+
+				$this->Session->setFlash('There\'s an error deleting data','error');
+
+			}
+
+			$this->redirect( array(
+				     'controller' => 'salaries', 
+				     'action' => 'deductions',
+				));
+		}
 	}
 
 

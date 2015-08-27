@@ -1,5 +1,5 @@
-<?php  foreach ($purchaseOrderData as $purchaseOrderDataList ): ?>
-    
+
+<?php   foreach ($purchaseOrderData as $purchaseOrderDataList ): ?>
 
         <tr class="">
 
