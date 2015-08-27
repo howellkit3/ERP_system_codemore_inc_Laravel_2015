@@ -3,15 +3,35 @@
 <?php $this->Html->addCrumb('DieCutting', array('controller' => 'jobs', 'action' => 'diecutting')); 
 	$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
 ?>
+<?php echo $this->Html->css(array('HumanResource.default'));?>
+<?php echo $this->Html->script('Sales.jquery-sortable');?>
+<?php echo $this->Html->script('Sales.draggableproducts');?>
+<?php echo $this->Html->script(array(
+						'jquery.maskedinput.min',
+						'HumanResource.custom',
+                        'Production.machine_schedule'
+)); ?>
+<?php 	//echo $this->element('production_options'); ?>
+<div class="main-box">
+	<div class="main-box-body clearfix">
+		<div class="row">
+			<div class="col-md-12">
+				<br>
+				<?php 	//echo $this->element('production_options'); ?>
+				<?php 
+					$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
+				 	echo $this->element('tab/jobs',array('active_tab' => $active_tab)); 
+				 ?>
+			</div>
+		</div>
+	</div>
+</div>
 
-<?php 	echo $this->element('production_options'); ?>
-
-<br><br><br>
 
 <div class="row">
-    <div class="col-lg-12">
+	<div class="col-lg-12">
         <div class="main-box clearfix body-pad">
-    		<?php echo $this->element('tab/jobs',array('active_tab' => $active_tab)); ?>
+    		<div class="top-pad"></div>
 			<div class="main-box-body clearfix">
 			 
 				<div class="tabs-wrapper">
@@ -20,6 +40,7 @@
 							<header class="main-box-header clearfix">
 				                <h2 class="pull-left"><b>DieCutting</b> </h2>
 				                <div class="filter-block pull-right">
+
 				                 	<div class="form-group pull-left">
 				                        <?php //echo $this->Form->create('Quotation',array('controller' => 'quotations','action' => 'search', 'type'=> 'get')); ?>
 				                            <input placeholder="Search..." class="form-control searchDieCutting"  />
@@ -27,100 +48,77 @@
 				                         <?php //echo $this->Form->end(); ?>
 				                    </div>
 
-				                    <?php
-				                   // 		echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Add Machines', 
-							                // array('controller' => 'machines', 
-							                //         'action' => 'add',),
-							                // array('class' =>'btn btn-primary',
-							                //     'escape' => false)); 
-				                    ?> 
-				                  	
+				                    <div class="form-group pull-left">
+			                 	
+			                 			<input type="text" name="data[date]" id="changeDate" class="form-control datepick" value="<?php echo date('Y-m-d'); ?>">
+
+			                            <i class="fa fa fa-calendar calendar-icon"></i>
+
+			                    	</div>
+
 				                   <br><br>
 				               	</div>
 				            </header>
 
-				            <div class="main-box-body clearfix">
+							<div class="main-box-body clearfix">
 				            	<div class="table-responsive">
 									<table class="table table-striped table-hover">
 										<thead>
 											<tr>
-												<th><a href="#"><span>Schedule No.</span></a></th>
-												<th><a href="#"><span>Customer</span></a></th>
+												<th><a href="#"><span>Job Ticket No.</span></a></th>
 												<th><a href="#"><span>Product</span></a></th>
-												<!-- <th><a href="#" class="text-center"><span>Component</span></a></th>
-												<th><a href="#" class="text-center"><span>Part</span></a></th>
-												<th><a href="#" class="text-center"><span>Process</span></a></th> -->
+												<th><a href="#" class="text-center"><span>Quantity</span></a></th>
+												<th><a href="#" class="text-center"><span>Schedule</span></a></th>
+												<th><a href="#" class="text-center"><span>Start</span></a></th>
+												<th><a href="#" class="text-center"><span>End</span></a></th>
+												<th><a href="#" class="text-center"><span>Duration</span></a></th>
 												<th><a href="#"><span>Action</span></a></th>
 											</tr>
 										</thead>
 
 										<?php 
-									        //if(!empty($jobData)){
-									            //foreach ($jobData as $key => $jobList): ?>
+									        if(!empty($machineScheduleData)){
+									            foreach ($machineScheduleData as $key => $machineScheduleList): ?>
 													<tbody aria-relevant="all" aria-live="polite" role="alert">
 														<tr class="">
 
 															<td class="">
-									                           <?php //echo 'SCH - '.$jobList['ClientOrderDeliverySchedule']['uuid']; ?>
+									                           <?php echo $machineScheduleList['JobTicket']['uuid']; ?>
 									                        </td>
 
 									                        <td class="">
-									                           <?php //echo ucfirst($jobList['ClientData']['company_name']); ?>
+									                           <?php echo $machineScheduleList['JobTicket']['product_id']; ?>
 									                        </td>
 
 									                        <td class="">
-									                           <?php //echo ucfirst($jobList['ClientData']['product_name']); ?>
-									                        </td>
-
-															<!-- <td class="">
-									                           <?php //echo ucfirst($departmentList[$machineList['Machine']['department_id']]); ?>
+									                           <?php echo $machineScheduleList['MachineSchedule']['quantity']; ?>
 									                        </td>
 
 									                        <td class="">
-									                           <?php //echo ucfirst($sectionList[$machineList['Machine']['section_id']]); ?>
+									                           <?php echo $machineScheduleList['MachineSchedule']['date'].' '.$machineScheduleList['MachineSchedule']['from'].'-'.$machineScheduleList['MachineSchedule']['to']; ?>
 									                        </td>
 
 									                        <td class="">
-									                           <?php //echo ucfirst($sectionList[$machineList['Machine']['section_id']]); ?>
-									                        </td> -->
+									                           <?php echo !empty($machineScheduleList['MachineLog']['start']) ? $machineScheduleList['MachineLog']['start'] : ''; ?>
+									                        </td>
+
+									                        <td class="">
+									                           <?php echo !empty($machineScheduleList['MachineLog']['start']) ? $machineScheduleList['MachineLog']['end'] : ''; ?>
+									                        </td>
+
+															<td class="">
+									                           
+									                        </td>
 
 									                       	<td>
 									                      
-																<?php
-
-																	// echo $this->Html->link('<span class="fa-stack">
-	                //                                                          <i class="fa fa-square fa-stack-2x"></i>
-	                //                                                       <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;
-	                //                                                           <span class ="post"><font size = "1px">View</font></span>
-	                //                                                           </span> ', array('controller' => 'jobs', 
-	                //                                                                          'action' => 'view',
-	                //                                                          $jobList['ClientData']['client_order_id']),
-	                //                                                           array('class' =>' table-link small-link-icon ','escape' => false,'title'=>'View Information'
-	                //                                                      )); 
-
-																	// echo $this->Html->link('<span class="fa-stack">
-																	// 	<i class="fa fa-square fa-stack-2x"></i>
-																	// 	<i class="fa fa-calendar fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Schedule </font></span>
-																	// 	</span> ', array('controller' => 'jobs', 'action' => 'schedule',$jobList['ClientData']['client_order_id']),array('class' =>' table-link','escape' => false,'title'=>'Schedule Item'));
-
-
-																	// 	echo $this->Form->postLink('<span class="fa-stack">
-																	// 	<i class="fa fa-square fa-stack-2x"></i>
-																	// 	<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Delete </font></span>
-																	// 	</span> ', array('controller' => 'machines', 'action' => 'delete',$machineList['Machine']['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Information'),
-																	// 		 array('escape' => false), 
-														   //                              __('Are you sure you want to delete %s?', 
-														   //                              $machineList['Machine']['name'])
-																	// 	);
-
-																?>
 									                        </td>
 									                    </tr>
 
 									                </tbody>
 									        <?php 
-									            //endforeach; 
-									       // } ?>
+									            endforeach; 
+									        } ?>
 									</table>	
 
 									<hr>
@@ -136,6 +134,7 @@
 				                    </div>
 				                </div>
 							</div>
+
 				        </div>
 				    </div>
 				</div>
@@ -143,3 +142,50 @@
 		</div>
 	</div>
 </div>
+<style type="text/css">
+	.fa-stack{
+		color: #03a9f4;
+	}
+	.header-drag-section{
+		background: #03A9F4;
+		padding: 15px 1px 1px;
+	}
+	.sched-header{
+		color: white;
+	}
+	.dragField{
+		padding: 0px;
+	}
+	.table-link{
+		position: relative;
+		top: -17px;
+	}
+	.modal-header{
+		background: #03A9F4;
+		color: white;
+	}
+</style>
+<script>
+		
+	jQuery(document).ready(function($){
+
+		$("#MachineSchedulePlansForm").validate();
+		
+		$('.datepick').datepicker({
+			format: 'yyyy-mm-dd'
+		});
+
+		$('.timepicker').timepicker({
+		    minuteStep: 5,
+		    showSeconds: true,
+		    showMeridian: false,
+		    disableFocus: false,
+		    showWidget: true
+		}).focus(function() {
+		    $(this).next().trigger('click');
+		});
+		
+	});
+
+
+</script>
