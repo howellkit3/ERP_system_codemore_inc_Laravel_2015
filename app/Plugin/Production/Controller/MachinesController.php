@@ -12,9 +12,13 @@ class MachinesController extends ProductionAppController {
 
         $this->loadModel('Production.MachineSpecification');
 
+        $this->loadModel('SubProcess');
+
     	$departmentList = $this->Department->find('list',array('fields' => array('id','name')));
 
     	$sectionList = $this->Section->find('list',array('fields' => array('id','name')));
+
+        $subProcessList = $this->SubProcess->find('list',array('fields' => array('id','name')));
 
     	$auth = $this->Session->read('Auth.User');
 
@@ -34,7 +38,7 @@ class MachinesController extends ProductionAppController {
                 ));
 		}
 
-    	$this->set(compact('departmentList','sectionList'));
+    	$this->set(compact('departmentList','sectionList','subProcessList'));
 
     }
 

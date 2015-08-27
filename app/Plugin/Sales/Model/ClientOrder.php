@@ -61,12 +61,19 @@ class ClientOrder extends AppModel {
 					'foreignKey' => 'id',
 					'dependent' => true
 				),
+				
 
 			),
 			'hasMany' => array(
 				
 				'ClientOrderDeliverySchedule' => array(
 					'className' => 'Sales.ClientOrderDeliverySchedule',
+					'foreignKey' => 'client_order_id',
+					'dependent' => true
+				),
+
+				'JobTicket' => array(
+					'className' => 'Ticket.JobTicket',
 					'foreignKey' => 'client_order_id',
 					'dependent' => true
 				),

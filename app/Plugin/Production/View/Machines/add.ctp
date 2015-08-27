@@ -119,6 +119,22 @@
 
 	                                    <div class="form-group">
 
+											<label class="col-lg-2 control-label">Process</label>
+											<div class="col-lg-8">
+												<?php echo $this->Form->input('Machine.sub_process_id', array(
+													'options' => array($subProcessList),
+													'type' => 'select',
+													'label' => false,
+													'class' => 'form-control required',
+													'empty' => '-- Select Sub Process --',
+													'required' => true			                               
+												)); 
+												?>
+											</div>
+										</div>
+
+	                                    <div class="form-group">
+
 	                                        <label class="col-lg-2 control-label">Remarks</label>
 	                                        <div class="col-lg-8">
 	                                        	

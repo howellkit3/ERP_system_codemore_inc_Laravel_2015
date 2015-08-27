@@ -1393,8 +1393,6 @@ class SettingsController extends AppController
 
         $processDataDropList = $this->Process->find('list',  array('order' => 'Process.id DESC'));
 
-        $machineList = $this->Machine->find('list',  array('order' => 'Machine.id ASC'));
-
         $this->SubProcess->bind(array('Process',));
 
         $limit = 10;
@@ -1446,7 +1444,7 @@ class SettingsController extends AppController
                 }
             }
 
-        $this->set(compact('processData', 'processDataDropList', 'SubProcessData','machineList'));
+        $this->set(compact('processData', 'processDataDropList', 'SubProcessData'));
     }
 
      public function process_edit($id = null) {

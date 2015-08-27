@@ -38,37 +38,25 @@ class JobTicket extends AppModel {
 
 	public function bindJobTicket() {
 		$this->bindModel(array(
-			'hasOne' => array(
+			'belongsTo' => array(
+				'ClientOrder' => array(
+					'className' => 'Sales.ClientOrder',
+					'foreignKey' => 'client_order_id',
+					//'conditions' => 'JobTicket.client_order_id = ClientOrder.id'
+				),				
+				'Product' => array(
+					'className' => 'Sales.Product',
+					'foreignKey' => 'product_id',
+					//'conditions' => 'Company.id = Product.company_id'
+				),
 				'ClientOrderDeliverySchedule' => array(
 					'className' => 'Sales.ClientOrderDeliverySchedule',
-					'foreignKey' => 'client_order_id'
+					'foreignKey' => 'client_order_id',
+					//'conditions' => 'ClientOrderDeliverySchedule.client_order_id = ClientOrder.id'
 				)
-				,				
-				// 'ClientOrder' => array(
-				// 	'className' => 'Sales.ClientOrder',
-				// 	'foreignKey' => false,
-				// 	'conditions' => 'ClientOrder.id = ClientOrderDeliverySchedule.client_order_id'
-				// ),
-
-				// 'QuotationDetail' => array(
-				// 	'className' => 'Sales.QuotationDetail',
-				// 	'foreignKey' => false,
-				// 	'conditions' => 'QuotationDetail.quotation_id = ClientOrder.quotation_id'
-				// ),
-
-				// 'Product' => array(
-				// 	'className' => 'Sales.Product',
-				// 	'foreignKey' => false,
-				// 	'conditions' => 'Product.id = JobTicket.product_id'
-				// ),
-			
-				// 'QuotationItemDetail' => array(
-				// 	'className' => 'Sales.QuotationItemDetail',
-				// 	'foreignKey' => false,
-				// 	'conditions' => 'QuotationItemDetail.quotation_id = ClientOrder.quotation_id'
-				// ),
 
 			)
+			
 		));
 		$this->recursive = 1;
 		//$this->contain($giveMeTheTableRelationship);

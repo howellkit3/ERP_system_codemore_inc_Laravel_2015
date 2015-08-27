@@ -10,34 +10,73 @@ class JobsController extends ProductionAppController {
 
         $this->loadModel('Sales.ClientOrder');
 
+        $this->loadModel('Sales.Company');
+
+        $this->loadModel('Sales.ProductSpecificationProcess');
+
+        $this->loadModel('Sales.ProductSpecificationProcessHolder');
+
+        $companyData = $this->Company->find('list',array('fields' => array('id','company_name')));
+
         $this->JobTicket->bindJobTicket(); 
 
-        $jobData = $this->JobTicket->find('all',array('fields' => array('id','client_order_id','product_id')));
+        $jobData = $this->JobTicket->find('all',array('order' => 'JobTicket.id DESC'));
 
         foreach ($jobData as $key => $jobList) {
 
-            $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule','QuotationItemDetail','QuotationDetail','Product','Company'));
-
-            $clientData = $this->ClientOrder->find('first',array('conditions' => array('ClientOrder.id' => $jobList['JobTicket']['client_order_id'])));
-
-            $jobData[$key]['ClientData']['client_order_id'] = $clientData['ClientOrder']['id'];
-            $jobData[$key]['ClientData']['product_name'] = $clientData['Product']['name'];
-            $jobData[$key]['ClientData']['company_name'] = $clientData['Company']['company_name'];
-            //$jobData[$key]['ClientData']['shedule_no'] = $clientData['ClientOrderDeliverySchedule']['uuid'];
+            //find if product has specs
            
+            $formatData = $this->ProductSpecificationProcess->find('first',array('conditions' => array('product_id' => $jobList['Product']['id'])));
 
+            $processData = $this->ProductSpecificationProcessHolder->find('all',array('conditions' => array('product_specification_process_id' => $formatData['ProductSpecificationProcess']['id']),
+                                                    'fields' => array('id','product_specification_process_id','process_id','sub_process_id','order')));
+            
+            $jobData[$key]['Process'] = $processData;
+           
         }
-       
-        $this->set(compact('jobData'));
+        //pr($jobData);exit();
+        $this->set(compact('jobData','companyData'));
         
     }
 
-    public function view(){
+    public function printing(){
 
     }
 
-    public function schedule($clientId = null){
-        
+    public function coating(){
+
     }
-    
+
+    public function corrugated_lamination(){
+
+    }
+
+    public function diecutting(){
+
+    }
+
+    public function stripping(){
+
+    }
+
+    public function browsing(){
+
+    }
+
+    public function gluing(){
+
+    }
+
+    public function final_inspection(){
+
+    }
+
+    public function scrap_items(){
+
+    }
+
+    public function packing(){
+
+    }
+
 }

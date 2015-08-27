@@ -1817,3 +1817,14 @@ CREATE TABLE IF NOT EXISTS `salary_reports` (
   `total_pay` decimal(8,2) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+/** bien added this 08/26/2015 TO Ticket DATABASE   */
+ALTER TABLE `job_tickets` ADD `production_status` VARCHAR(120)  NULL  DEFAULT NULL  AFTER `remarks`;
+
+/** bien added this 08/26/2015 TO system DATABASE   */
+ALTER TABLE `sub_processes` DROP `machine_id`;
+
+/** bien added this 08/26/2015 TO production DATABASE   */
+ALTER TABLE `machines` ADD `sub_process_id` INT(11)  NULL  DEFAULT NULL  AFTER `section_id`;
+
+

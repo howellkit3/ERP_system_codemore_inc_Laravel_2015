@@ -16,16 +16,6 @@
             
             </td>
 
-            <td class="">
-
-                <?php 
-                    if (!empty($SubProcessDataList['SubProcess']['machine_id'])) {
-                        echo ucfirst($machineList[$SubProcessDataList['SubProcess']['machine_id']]) ;
-                    }
-                ?>
-            
-            </td>
-
             <td class="text-center">
                 
             
