@@ -13,9 +13,7 @@ class Stock extends AppModel {
     
   	public $name = 'Stock';
 
-  	public function saveStock($received, $data){
-
-  		//pr($received); exit;
+  	public function saveStock($received, $data, $auth){
 
 		$this->create();
 
@@ -40,6 +38,17 @@ class Stock extends AppModel {
 			$stock['model'] = $value['model'];
 			$stock['item_id'] = $value['foreign_key'];
 			$stock['quantity'] = $value['quantity'];
+			$stock['size1'] = $value['size1'];
+			$stock['size1_unit_id'] = $value['size1_unit_id'];
+			$stock['size2'] = $value['size2'];
+			$stock['size2_unit_id'] = $value['size2_unit_id'];
+			$stock['size3'] = $value['size3'];
+			$stock['size3_unit_id'] = $value['size3_unit_id'];
+			$stock['quantity_unit_id'] = $value['quantity_unit_id'];
+			$stock['created_by'] = $auth;
+			$stock['modified_by'] = $auth;
+
+
 			$this->save($stock);
 		}
 

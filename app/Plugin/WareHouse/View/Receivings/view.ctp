@@ -153,9 +153,8 @@
     </div>
 </div>
 
-  <?php 
-} 
-?> 
+<?php 
+} if(!empty($requestPurchasingItem)){ ?> 
 
 <div class="col-lg-6">
     <div class="main-box clearfix">
@@ -274,3 +273,5 @@
     </div>
 
 </div>
+
+<?php } ?> 

@@ -82,7 +82,7 @@
                                  $DeliveredOrderId = $requestOrderDataList['DeliveredOrder']['id'];
 
                                 echo $this->Form->create('InRecord',array(
-                                    'url'=>(array('controller' => 'receivings','action' => 'in_record', $id, $DeliveredOrderId)),'class' => 'form-horizontal')); 
+                                    'url'=>(array('controller' => 'receivings','action' => 'in_record', $id, $DeliveredOrderId,$requestOrderDataList['DeliveredOrder']['purchase_orders_id'])),'class' => 'form-horizontal')); 
                             ?>
 
                                 <div class="form-group" id="existing_items">

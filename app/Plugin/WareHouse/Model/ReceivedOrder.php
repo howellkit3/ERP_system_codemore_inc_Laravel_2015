@@ -39,6 +39,7 @@ class ReceivedOrder extends AppModel {
 		$this->create();
 
 		$data['received_by'] = $auth;
+		$data['approved_by'] = $auth;
 		$data['uuid'] = $code;
 		$data['purchase_order_id'] = $order_id;
 		$data['status_id'] = 11;

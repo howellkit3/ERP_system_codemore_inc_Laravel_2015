@@ -26,7 +26,7 @@ class Request extends AppModel {
 					'conditions' => array('PurchasingType.id = pur_type_id')
 				),
 			),
-			
+
 			'hasMany' => array(	
 				'PurchasingItem' => array(
 					'className' => 'Purchasing.PurchasingItem',

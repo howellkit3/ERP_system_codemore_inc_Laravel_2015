@@ -1818,8 +1818,14 @@ CREATE TABLE IF NOT EXISTS `salary_reports` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
+
 /* koufu payroll deductions table aug 26 2015*/
 ALTER TABLE `deductions`  ADD `is_deleted` INT NULL DEFAULT '0'  AFTER `status`;
 
 /* koufu human_resource salaries table aug 26 2015*/
 ALTER TABLE `salaries`  ADD `tax_status` VARCHAR(255) NULL  AFTER `employee_salary_type`;
+
+/**howell kit added this 08/26/2015 TO WAREHOUSE DATABASE   */
+RENAME TABLE `koufu_warehouse`.`requests` TO `koufu_warehouse`.`warehouse_requests`;
+ALTER TABLE `received_items` CHANGE COLUMN `item_uuid` `request_uuid` INT(11) NULL DEFAULT NULL;
+ALTER TABLE `koufu_warehouse`.`item_records` DROP COLUMN `quantity_unit_id` ;
