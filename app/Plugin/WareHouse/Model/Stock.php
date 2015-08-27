@@ -21,9 +21,11 @@ class Stock extends AppModel {
 		$stock['location_id'] = $data['InRecord']['storekeeper'];
 		$stock['remarks'] = $data['InRecord']['remarks'];
 
+
+
 		foreach ($received['ReceivedItem'] as $key => $value)
 		{
-			//pr($value); exit;
+		//
 
 			$month = date("m"); 
 		    $year = date("y");
@@ -34,28 +36,26 @@ class Stock extends AppModel {
 		        
 			$code =  $year. $month .$random;
 
-			$stock['uuid'] = $code;
-			$stock['model'] = $value['model'];
-			$stock['item_id'] = $value['foreign_key'];
-			$stock['quantity'] = $value['quantity'];
-			$stock['size1'] = $value['size1'];
-			$stock['size1_unit_id'] = $value['size1_unit_id'];
-			$stock['size2'] = $value['size2'];
-			$stock['size2_unit_id'] = $value['size2_unit_id'];
-			$stock['size3'] = $value['size3'];
-			$stock['size3_unit_id'] = $value['size3_unit_id'];
-			$stock['quantity_unit_id'] = $value['quantity_unit_id'];
-			$stock['created_by'] = $auth;
-			$stock['modified_by'] = $auth;
+			$value['uuid'] = $code;
+			$value['model'] = $value['model'];
+			$value['item_id'] = $value['foreign_key'];
+			$value['quantity'] = $value['quantity'];
+			$value['size1'] = $value['size1'];
+			$value['size1_unit_id'] = $value['size1_unit_id'];
+			$value['size2'] = $value['size2'];
+			$value['size2_unit_id'] = $value['size2_unit_id'];
+			$value['size3'] = $value['size3'];
+			$value['size3_unit_id'] = $value['size3_unit_id'];
+			$value['quantity_unit_id'] = $value['quantity_unit_id'];
+			$value['created_by'] = $auth;
+			$value['modified_by'] = $auth;
 
 
-			$this->save($stock);
-		}
+			$this->save($value);
 
-		
+			//pr($value);
+		} 
 
-
-		
 
 	}
 

@@ -811,8 +811,6 @@ class ReceivingsController extends WareHouseAppController {
 
 		if (!empty($this->request->data)) {
 
-			
-
 			$this->loadModel('WareHouse.InRecord');
 
 			$this->loadModel('WareHouse.ItemRecord');
