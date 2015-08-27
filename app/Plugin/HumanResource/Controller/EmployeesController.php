@@ -180,7 +180,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Contract');
 
-		$this->loadModel('HumanResource.Bank');
+		$this->loadModel('Bank');
 
 		$positionList = $this->Position->find('list',array('fields' => array('id','name')));
 
