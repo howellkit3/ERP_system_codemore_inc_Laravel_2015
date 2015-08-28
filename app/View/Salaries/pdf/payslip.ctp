@@ -1,5 +1,4 @@
 <?php
-
 header("Content-disposition: attachment; filename=".'payslip-'.$payroll['Payroll']['id'].'-'.time().".pdf");
 header("Content-type: application/pdf");
 ?>
@@ -44,7 +43,7 @@ header("Content-type: application/pdf");
 							<?php echo $employee_name; ?>
 							</td>
 							<td class="label-table">
-								<strong>Code : </strong>
+								<strong>Employee Number : </strong>
 							</td>
 							<td>
 								<?php echo $salary['Employee']['code']; ?>

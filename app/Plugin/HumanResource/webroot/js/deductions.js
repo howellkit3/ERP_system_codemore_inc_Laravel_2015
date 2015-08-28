@@ -32,6 +32,35 @@ function loadSummary(){
 
 }
 
+function checkEmployeeGross(employeeId) {
+
+      $month = $('.deduction_date').val();
+        
+      $amount = $('#DeductionAmount').val();
+
+      $container = $('.computations_gross');
+
+      $container.html('<img src="'+serverPath+'/img/loader.gif"/>');
+
+      $.ajax({
+            type: "POST",
+            url: serverPath + "human_resource/salaries/checkEmployeeGross/",
+            data: { 'date_range' :  $month ,'employee_id' :  employeeId    },
+            dataType: "html",
+            success: function(data) {
+
+                try {
+
+                  $container.html(data);
+                }   
+                catch(e) {
+
+                }
+
+            }
+        });
+}
+
 function loadDeduction (element){
   
     $month = $('#datepickerDateRange').val();
@@ -77,22 +106,23 @@ $( ".datepick" ).datepicker({
 
  $('.datepickerDateRange').daterangepicker();
  //datepicker
-        $('.datepick').datepicker({
-            
-            changeYear: false,
-            autoClose: true,
-            
-        });
+  $('.datepick').datepicker({
+      
+      changeYear: false,
+      autoClose: true,
+      
+  });
 
-        $("#HolidayDate").click(function() {
+  $("#HolidayDate").click(function() {
 
-            $(".datepicker-days .day").click(function() {
-                $('.datepicker').hide();
-            });
+      $(".datepicker-days .day").click(function() {
+          $('.datepicker').hide();
+      });
 
-        });
+  });
 
-        $('.datepickerDateRange').daterangepicker();
+  $('.datepickerDateRange').daterangepicker();
+
 
   $('body').on('click','.mode_type',function(e){
       $('.mode_type').removeAttr('checked');
@@ -152,12 +182,9 @@ $( ".datepick" ).datepicker({
 
             }
         });
-
-
   });
 
   $('body').on('click','.delete_Deduction',function(e){
-
       
     var url = $(this).attr('href');
 
@@ -183,7 +210,15 @@ $( ".datepick" ).datepicker({
 
     e.preventDefault();
 
+  });
 
+  $('body').on('change','#DeductionEmployeeId',function(e){
+
+
+    if ($(this).val() != '') {
+
+        checkEmployeeGross($(this).val());  
+    }
 
   });
 

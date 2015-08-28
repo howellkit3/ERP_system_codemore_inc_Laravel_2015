@@ -25,7 +25,6 @@
 													<tr >
 													<td> 
 													<?php 
-
 													$employee = $this->CustomEmployee->findEmployee($salary['employee_id']);
 													echo !empty( $employee ) ?  $employee['Employee']['code'] : ''; ?>   
 													</td>
@@ -44,7 +43,7 @@
 								                        </td>
 
 								                        <td class="">
-								                           <?php echo $salary['gross_pay']; ?>
+								                           <?php echo number_format($salary['gross_pay'],2); ?>
 								                        </td>
 								                        <td class="">
 								                       		<?php echo $salary['sss']; ?>

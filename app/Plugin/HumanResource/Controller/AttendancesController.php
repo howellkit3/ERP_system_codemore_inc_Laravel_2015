@@ -767,7 +767,6 @@ public function daily_info() {
 				return  json_encode($timekeep['Attendance']);	
 			}
 
-			
 			return json_encode($timekeep);	
 
 		}

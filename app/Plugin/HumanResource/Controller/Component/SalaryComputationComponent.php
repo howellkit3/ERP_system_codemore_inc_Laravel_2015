@@ -147,9 +147,8 @@ class SalaryComputationComponent extends Component
 						$salary[$key]['Employee'] = $employee['Employee'];
 						$salary[$key]['Department'] = !empty($employee['Department']) ? $employee['Department'] : array();
 						$salary[$key]['Position']	= !empty($employee['Position']) ? $employee['Position'] : array();
+						$salary[$key]['EmployeeAdditionalInformation']	= !empty($employee['EmployeeAdditionalInformation']) ? $employee['EmployeeAdditionalInformation'] : array();
 
-
-							
 
         		}
 

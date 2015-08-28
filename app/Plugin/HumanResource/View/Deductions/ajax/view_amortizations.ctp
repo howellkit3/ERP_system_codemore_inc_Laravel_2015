@@ -4,7 +4,7 @@
                   <th><a href="#"><span>Payroll Date</span></a></th>
                   <th><a class="desc" href="#"><span>Balance</span></a></th>
                   <th class="text-center"><a class="asc" href="#"><span>Deduction</a></span>
-                  <th class="text-center"><a class="asc" href="#"><span>No</a></span>
+                  <th class="text-center"><a class="asc" href="#"><span>Paid</a></span>
                  <!--  <th class="text-right"><span>Actions</span></th> -->
                 </tr>
                 </thead>

@@ -15,7 +15,7 @@ echo $this->Html->script(array(
 
 
 echo $this->element('payroll_options');
-$active_tab = 'sss_table';
+$active_tab = 'tax_table';
  ?>
 
  <div class="row">

@@ -81,7 +81,8 @@
         // $night += $emp['night_diff_sunday_work_ot'];
 
           $sheet = $objTpl->getActiveSheet();
-          $sheet->setCellValue('A'.$counter,$employee_name);
+          $sheet->setCellValue('A'.$counter,$emp['EmployeeAdditionalInformation']['bank_account_number']);
+          $sheet->setCellValue('B'.$counter,$employee_name);
       //$sheet->setCellValue('A'.$counter,$emp['employee_id']);
           $sheet->setCellValue('B'.$counter,$emp['days']);
           $sheet->setCellValue('C'.$counter,number_format($emp['regular'],2));

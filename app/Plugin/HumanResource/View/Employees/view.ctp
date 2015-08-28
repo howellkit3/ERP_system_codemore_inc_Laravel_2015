@@ -247,20 +247,21 @@
 					                                       	<?php echo $employee['Address'][0]['address_1']; ?>
 					                                       </div>
 				                                     </div>
+				                                     <div class="clearfix"></div>
 				                                     <div class="form-group">
 				                                        <label for="inputEmail1" class="col-lg-2 control-label strong">City</label>
 					                                      <div class="col-lg-9 value"> 
 					                                       	<?php echo $employee['Address'][0]['city']; ?>
 					                                       </div>
 				                                     </div>
-
+				                                     <div class="clearfix"></div>
 				                                      <div class="form-group">
 				                                        <label for="inputEmail1" class="col-lg-2 control-label strong">Department</label>
 					                                      <div class="col-lg-9 value"> 
 					                                      	<?php echo $employee['Address'][0]['city']; ?>
 					                                       </div>
 				                                     	</div>
-
+				                                     	<div class="clearfix"></div>
 				                                     	<div class="form-group">
 				                                        <label for="inputEmail1" class="col-lg-2 control-label strong">Position</label>
 					                                      <div class="col-lg-9 value"> 

@@ -36,15 +36,16 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="main-box">
-                        <h1>  &nbsp </h1>
                         <!-- <div class="top-space"></div> -->
                         <div class="main-box-body clearfix">
                             <div class="main-box-body clearfix">
                                 <div class="form-horizontal">
 
-                                <div class="form-group col-lg-12">
+                                <div class="form-group col-lg-6">
+                                    <br>
+                                     <legend class="title">Deduction Details</legend>
+                                     <br>
                                     <div class="form-group">
-                                       
                                         <div class="col-lg-11">
                                             <div class="form-group">
                                                 <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span> Employee Name </label>
@@ -52,6 +53,7 @@
                                                   <?php echo $this->Form->input('employee_id',  array(
                                                         'class' => 'autocomplete col-lg-6 required',
                                                         'options' => $employeeList,
+                                                        'empty' => '--- Select Employee ---',
                                                         'label' => false));
                                                     ?>
                                                 </div>
@@ -93,7 +95,7 @@
                                                         echo $this->Form->input('Deduction.from',
                                                             array(
                                                                 'type' => 'text',
-                                                                'class' => 'form-control col-lg-6 required datepick',
+                                                                'class' => 'form-control col-lg-6 required datepick deduction_date',
                                                                 'label' => false,
                                                                 'value' => date('Y-m-d')
                                                                 ));
@@ -114,7 +116,7 @@
                                                         echo $this->Form->input('Deduction.from',
                                                             array(
                                                                 'type' => 'text',
-                                                                'class' => 'form-control col-lg-6 required datepickerDateRange',
+                                                                'class' => 'form-control col-lg-6 required datepickerDateRange deduction_date',
                                                                 'label' => false,
                                                                 'disabled' => true,
                                                                 'value' => date('Y/m/01').' - '.date('Y/m/t')
@@ -181,7 +183,7 @@
                                                     <?php
 
                                                         echo $this->Form->input('reason', array(
-                                                            'class' => 'form-control col-lg-6 required',
+                                                            'class' => 'form-control col-lg-6',
                                                             'label' => false,
                                                             ));
                                                     ?>
@@ -192,9 +194,16 @@
 
                                 </div>
 
-                                <div class="form-group col-lg-12 computations">
-
-                                       
+                                <div class="form-group col-lg-6 ">
+                                    <br>
+                                         <legend class="title"> Amortization </legend>
+                                     <br>
+                                    <div class="computations_gross">
+                                         
+                                     </div>
+                                     <div class="computations">
+                                         
+                                     </div>
                                 </div>
                             </div>
                             </div>
@@ -242,5 +251,8 @@
     }
     .radio.inline-block {
   margin-left: 15px;
+}
+legend.title {
+    width: 95%;
 }
 </style>
