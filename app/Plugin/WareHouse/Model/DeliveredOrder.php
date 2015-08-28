@@ -38,12 +38,16 @@ class DeliveredOrder extends AppModel {
 
 	}
 
+
 	public function bind($model = array('Group')){
+
+
 		$this->bindModel(array(
 			'hasMany' => array(
 				'ReceivedItem' => array(
 					'className' => 'WareHouse.ReceivedItem',
 					'foreignKey' => 'delivered_order_id'
+					//'conditions' => 'ReceivedItem.delivered_order_id = DeliveredOrder.id'
 				),
 			),
 
@@ -61,5 +65,34 @@ class DeliveredOrder extends AppModel {
 				),
 			)
 		));
+	}
+
+	public function bindItem() {
+		$this->bindModel(array(
+
+			'hasOne' => array(
+				'ReceivedOrder' => array(
+					'className' => 'WareHouse.ReceivedOrder',
+					'foreignKey' => false,
+					'conditions' => 'ReceivedOrder.id = DeliveredOrder.received_orders_id'
+				),
+
+				'PurchaseOrder' => array(
+					'className' => 'Purchasing.PurchaseOrder',
+					'foreignKey' => false,
+					'conditions' => array('DeliveredOrder.purchase_orders_id = PurchaseOrder.id')
+				),
+			),
+
+			'hasMany' => array(
+				'ReceivedItem' => array(
+					'className' => 'WareHouse.ReceivedItem',
+					'foreignKey' => 'delivered_order_id'
+					//'conditions' => array('ReceivedItem.delivered_order_id = DeliveredOrder.id')
+				),
+			)
+		));
+		$this->recursive = 1;
+		//$this->contain($giveMeTheTableRelationship);
 	}
 }
