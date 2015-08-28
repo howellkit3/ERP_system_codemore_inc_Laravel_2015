@@ -8,8 +8,6 @@ class JobsController extends ProductionAppController {
 
         $this->loadModel('Ticket.JobTicket');
 
-        $this->loadModel('Production.MachineSchedule');
-
         $this->loadModel('Sales.ClientOrder');
 
         $this->loadModel('Sales.Company');
@@ -28,20 +26,21 @@ class JobsController extends ProductionAppController {
 
         $jobData = $this->JobTicket->find('all',array('order' => 'JobTicket.id DESC','conditions' => array('JobTicket.created >=' => date('Y-m-d'))));
 
-        foreach ($jobData as $key => $jobList) {
+        
+        // foreach ($jobData as $key => $jobList) {
 
-            //find if product has specs
+        //     //find if product has specs
            
-            $formatData = $this->ProductSpecificationProcess->find('first',array('conditions' => array('product_id' => $jobList['Product']['id'])));
+        //     $formatData = $this->ProductSpecificationProcess->find('first',array('conditions' => array('product_id' => $jobList['Product']['id'])));
 
-            $processData = $this->ProductSpecificationProcessHolder->find('all',array('conditions' => array('product_specification_process_id' => $formatData['ProductSpecificationProcess']['id']),
-                                                    'fields' => array('id','product_specification_process_id','process_id','sub_process_id','order')));
+        //     $processData = $this->ProductSpecificationProcessHolder->find('all',array('conditions' => array('product_specification_process_id' => $formatData['ProductSpecificationProcess']['id']),
+        //                                             'fields' => array('id','product_specification_process_id','process_id','sub_process_id','order')));
             
-            $jobData[$key]['Process'] = $processData;
+        //     $jobData[$key]['Process'] = $processData;
            
-        }
+        // }
         //pr($jobData);exit();
-        $this->set(compact('jobData','companyData','machineData'));
+        $this->set(compact('jobData','companyData','machineData','processDepartmentData'));
         
     }
 

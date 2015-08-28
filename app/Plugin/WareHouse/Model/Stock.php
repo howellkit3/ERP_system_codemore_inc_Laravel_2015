@@ -21,6 +21,7 @@ class Stock extends AppModel {
 		$stock['location_id'] = $data['InRecord']['storekeeper'];
 		$stock['remarks'] = $data['InRecord']['remarks'];
 
+
 		foreach ($received['ReceivedItem'] as $key => $value) {
 			// pr($stockData); exit;
 
@@ -37,19 +38,20 @@ class Stock extends AppModel {
 			$foreignkeyholder = $value['foreign_key'];
 			$model = $value['model'];
 			
-			if(!empty($stockData)){
-				foreach ($stockData as $key => $valueOfStock) {
+			//if(!empty($stockData)){
+				//foreach ($stockData as $key => $valueOfStock) {
 
-					//pr($valueOfStock); exit;//pr($valueOfStock['Stock']['item_id']);pr($model);pr($valueOfStock['Stock']['model']);
-					if($valueOfStock['Stock']['item_id'] == $foreignkeyholder && $valueOfStock['Stock']['model'] == $model){ 
+					
+					//if($valueOfStock['Stock']['item_id'] == $foreignkeyholder && $valueOfStock['Stock']['model'] == $model){ 
 
-						$sumQuantity = $valueOfStock['Stock']['quantity'] + $value['quantity'];
-						$value['id'] = $valueOfStock['Stock']['id'];
-						$value['quantity'] = $sumQuantity;
-						$this->save($value);
+						// $sumQuantity = $valueOfStock['Stock']['quantity'] + $value['quantity'];
+						// $value['id'] = $valueOfStock['Stock']['id'];
+						// $value['quantity'] = $sumQuantity;
+						// $this->save($value);
 
 
-					}else{
+				//	}else{
+						$value['quantity'] = $value['quantity'] + $value['addQuantity'];
 						$value['uuid'] = $code;
 						$value['model'] = $value['model'];
 						$value['item_id'] = $value['foreign_key'];
@@ -66,37 +68,34 @@ class Stock extends AppModel {
 						$value['created_by'] = $auth;
 						$value['modified_by'] = $auth;
 
-						pr('s'); 
-
-						//$this->save($value);
-					}
+					$this->save($value);
+				//	}
 
 				}
-			} else{
+		//	} else{
 
-						$value['uuid'] = $code;
-						$value['model'] = $value['model'];
-						$value['item_id'] = $value['foreign_key'];
-						$value['supplier_id'] = $supplierId;
-						$value['quantity'] = $value['quantity'];
-						$value['size1'] = $value['size1'];
-						$value['location_id'] = $data['InRecord']['location'];
-						$value['size1_unit_id'] = $value['size1_unit_id'];
-						$value['size2'] = $value['size2'];
-						$value['size2_unit_id'] = $value['size2_unit_id'];
-						$value['size3'] = $value['size3'];
-						$value['size3_unit_id'] = $value['size3_unit_id'];
-						$value['quantity_unit_id'] = $value['quantity_unit_id'];
-						$value['created_by'] = $auth;
-						$value['modified_by'] = $auth;
+				// $value['uuid'] = $code;
+				// $value['model'] = $value['model'];
+				// $value['item_id'] = $value['foreign_key'];
+				// $value['supplier_id'] = $supplierId;
+				// $value['quantity'] = $value['quantity'];
+				// $value['size1'] = $value['size1'];
+				// $value['location_id'] = $data['InRecord']['location'];
+				// $value['size1_unit_id'] = $value['size1_unit_id'];
+				// $value['size2'] = $value['size2'];
+				// $value['size2_unit_id'] = $value['size2_unit_id'];
+				// $value['size3'] = $value['size3'];
+				// $value['size3_unit_id'] = $value['size3_unit_id'];
+				// $value['quantity_unit_id'] = $value['quantity_unit_id'];
+				// $value['created_by'] = $auth;
+				// $value['modified_by'] = $auth;
 
-						$this->save($value);
+				// $this->save($value);
 
-			}
+			//}
 			
 		}  
 
-
 	}
 
-}
+//}

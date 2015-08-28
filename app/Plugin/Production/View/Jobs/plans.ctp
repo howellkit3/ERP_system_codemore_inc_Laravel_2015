@@ -4,8 +4,9 @@
 	$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
 ?>
 <?php echo $this->Html->css(array('HumanResource.default'));?>
-<?php echo $this->Html->script('Sales.jquery-sortable');?>
-<?php echo $this->Html->script('Sales.draggableproducts');?>
+<?php echo $this->Html->css(array('Production.default'));?>
+<?php //echo $this->Html->script('Sales.jquery-sortable');?>
+<?php //echo $this->Html->script('Sales.draggableproducts');?>
 <?php echo $this->Html->script(array(
 						'jquery.maskedinput.min',
 						'HumanResource.custom',
@@ -75,293 +76,296 @@
 				               	</div>
 				            </header>
 
-							<div class="form-horizontal">	
-								<!--text fields -->
-								<section class="label-draggable-section">
-									<section class="header-drag-section">
-								    	<div class="form-group">
-								    		<div class="col-lg-2 sched-header">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-												<b>Schedule No.</b>
-											</div>
-											<div class="col-lg-2 sched-header">
-												<b>Customer</b>
-											</div>
-											<div class="col-lg-2 sched-header">
-												<b>Product</b>
-											</div>
-											<div class="col-lg-2 sched-header">
-												<b>Quantity</b>
-											</div>
-											<div class="col-lg-2 sched-header">
-												<b>Production Status</b>
-											</div>
-											<div class="col-lg-2 sched-header">
-												<b>Action</b>
-											</div>
-										</div>
-									      
-									</section>
-									<ul id="sortable">
-										
+							<div class="main-box-body clearfix">
+				            	<div class="table-responsive">
+									<table class="table table-striped table-hover">
+										<thead>
+											<tr>
+												<th><a href="#"><span>Schedule No.</span></a></th>
+												<th><a href="#"><span>Customer</span></a></th>
+												<th><a href="#" class="text-center"><span>Product</span></a></th>
+												<th><a href="#" class="text-center"><span>Quantity</span></a></th>
+												<th><a href="#" class="text-center"><span>Production Status</span></a></th>
+												<th><a href="#"><span>Remarks</span></a></th>
+												<th><a href="#"><span>Action</span></a></th>
+											</tr>
+										</thead>
+
 										<?php 
 									        if(!empty($jobData)){
 									            foreach ($jobData as $key => $jobList): ?>
-													<li class="ui-state-default data-section">
-													  <section class="dragField">
-													    	<header class="dragHeader">
-													          	<a class="remove-section pull-right" href="#">
-																	<i class="fa fa-times-circle fa-fw fa-lg"></i>
+													<tbody aria-relevant="all" aria-live="polite" role="alert">
+														<tr class="">
+
+															<td class="">
+									                           <?php echo 'SCH - '.$jobList['ClientOrderDeliverySchedule']['uuid']; ?>
+									                        </td>
+
+									                        <td class="">
+									                           <?php echo ucfirst($companyData[$jobList['Product']['company_id']]); ?>
+									                        </td>
+
+									                        <td class="">
+									                           <?php echo ucfirst($jobList['Product']['name']); ?>
+									                        </td>
+
+									                        <td class="">
+									                           <?php echo $jobList['ClientOrderDeliverySchedule']['quantity']; ?>
+									                        </td>
+
+									                        <td class="">
+									                           <?php 
+									                           		if (empty($jobList['JobTicket']['production_status'])) {
+									                           			echo "<span class='label label-default'>Waiting For Schedule</span>";
+									                           		}else{
+									                           			if ($jobList['JobTicket']['production_status'] == 1) {
+									                           				echo "<span class='label label-success'>Sheeter / Cutting</span>";
+									                           			}
+									                           		}
+									                           	?>
+									                        </td>
+
+									                        <td class="">
+									                           <?php echo $jobList['JobTicket']['remarks']; ?>
+									                        </td>
+
+									                        <td class="">
+									                        	<a data-id="<?php echo $jobList['JobTicket']['id']; ?>" data-toggle="modal" title="Edit Information" data-url="/ticket_process_schedules/ticket_data_view/<?php echo $jobList['JobTicket']['id']; ?>" class="view_full_ticket_details table-link" href="#ticketDataFullDetails">
+										                       		<span class="fa-stack">
+																		<i class="fa fa-square fa-stack-2x"></i>
+																		<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;
+																		<span class="post"><font size="1px"> View </font></span>
+																	</span>
 																</a>
-													    	</header>
+									                           <?php if (empty($jobList['JobTicket']['production_status'])) { ?>
+									                           		<a data-id="<?php echo $jobList['JobTicket']['id']; ?>" data-toggle="modal" title="Edit Information" data-url="/ticket_process_schedules/ticket_data_view/<?php echo $jobList['JobTicket']['id']; ?>/schedule" class="view_full_ticket_details table-link" href="#ticketDataFullDetails">
+											                       		<span class="fa-stack">
+																			<i class="fa fa-square fa-stack-2x"></i>
+																			<i class="fa fa-calendar fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;
+																			<span class="post"><font size="1px"> Sched </font></span>
+																		</span>
+																	</a>
+																	<a data-toggle="modal" href="#myModalSchedule<?php echo $jobList['JobTicket']['id'] ?>" class="table-link">
+																		<i class="fa fa-lg "></i>
+																		<span class="fa-stack">
+						                        							<i class="fa fa-square fa-stack-2x "></i>
+						                        							<i class="fa  fa-calendar fa-stack-1x fa-inverse "></i>&nbsp;&nbsp;&nbsp;
+						                        							<span class ="post">
+						                        								<font size = "1px"> Sched </font>
+						                        							</span>
+						                        						</span>
+						                        					</a>
+						                        				<?php } else { ?>
+						                        					
+						                        				<?php } ?>
+						                        				<div class="modal fade" id="myModalSchedule<?php echo $jobList['JobTicket']['id'] ?>" role="dialog" >
+									                                <div class="modal-dialog">
+									                                    <div class="modal-content margintop">
 
-													    	<div class="form-group parent-div-<?php echo $jobList['JobTicket']['id'] ?>">
-													    		<div class="col-lg-2">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-																	<?php echo 'SCH - '.$jobList['ClientOrderDeliverySchedule']['uuid']; ?>
-																</div>
-																<div class="col-lg-2">
-																	<?php echo ucfirst($companyData[$jobList['Product']['company_id']]); ?>
-																</div>
-																<div class="col-lg-2">
-																	<?php echo ucfirst($jobList['Product']['name']); ?>
-																</div>
-																<div class="col-lg-2">
-																	<?php echo $jobList['ClientOrderDeliverySchedule']['quantity']; ?>
-																</div>
-																<div class="col-lg-2 status-append">
-																	<?php 
-										                           		if (empty($jobList['JobTicket']['production_status'])) {
-										                           			echo "<span class='label label-default'>Waiting For Schedule</span>";
-										                           		}else{
-										                           			if ($jobList['JobTicket']['production_status'] == 1) {
-										                           				echo "<span class='label label-success'>Sheeter / Cutting</span>";
-										                           			}
-										                           		}
-										                           	?>
-																</div>
-																<div class="col-lg-2">
+									                                        <div class="modal-header">
+									                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									                                            <h4 class="modal-title">Job Ticket / Machine Schedule</h4>
+									                                        </div> 
 
-																	<?php if (empty($jobList['JobTicket']['production_status'])) { ?>
-																		<a data-toggle="modal" href="#myModalSchedule<?php echo $jobList['JobTicket']['id'] ?>" class="table-link">
-																			<i class="fa fa-lg "></i>
-																			<span class="fa-stack">
-		                                            							<i class="fa fa-square fa-stack-2x "></i>
-		                                            							<i class="fa  fa-calendar fa-stack-1x fa-inverse "></i>&nbsp;&nbsp;&nbsp;
-		                                            							<span class ="post">
-		                                            								<font size = "1px"> Sched </font>
-		                                            							</span>
-		                                            						</span>
-		                                            					</a>
-		                                            				<?php } else { ?>
-		                                            					<a data-toggle="modal" href="#myModalScheduleView<?php echo $jobList['JobTicket']['id'] ?>" class="table-link">
-																			<i class="fa fa-lg "></i>
-																			<span class="fa-stack">
-		                                            							<i class="fa fa-square fa-stack-2x "></i>
-		                                            							<i class="fa  fa-search-plus fa-stack-1x fa-inverse "></i>&nbsp;&nbsp;&nbsp;
-		                                            							<span class ="post">
-		                                            								<font size = "1px"> View </font>
-		                                            							</span>
-		                                            						</span>
-		                                            					</a>
-		                                            				<?php } ?>
-	                                            					<div class="modal fade" id="myModalSchedule<?php echo $jobList['JobTicket']['id'] ?>" role="dialog" >
-										                                <div class="modal-dialog">
-										                                    <div class="modal-content margintop">
+									                                        <div class="modal-body">
+									                                            <?php 
 
-										                                        <div class="modal-header">
-										                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-										                                            <h4 class="modal-title">Job Ticket / Machine Schedule</h4>
-										                                        </div> 
+									                                                echo $this->Form->create('MachineSchedule',array(
+									                                                    'url'=>(array('controller' => 'machine_schedules','action' => 'add')),'class' => 'form-horizontal','id' => 'updateMachineSchedule')); 
+									                                            ?>
 
-										                                        <div class="modal-body">
-										                                            <?php 
+									                                                <div class="form-group">
+									                                                    <label class="col-lg-2 control-label">Schedule #</label>
+									                                                    <div class="col-lg-9">
 
-										                                                echo $this->Form->create('MachineSchedule',array(
-										                                                    'url'=>(array('controller' => 'machine_schedules','action' => 'add')),'class' => 'form-horizontal','id' => 'updateMachineSchedule')); 
-										                                            ?>
+									                                                        <?php 
+									                                                            echo $this->Form->input('MachineSchedule.schedule_no', array(
+									                                                                'class' => 'form-control required',
+									                                                                'label' => false,
+									                                                                'required' => 'required',
+									                                                                'disabled' => 'disabled',
+									                                                                'value' => $jobList['JobTicket']['uuid']
+									                                                                ));
 
-										                                                <div class="form-group">
-										                                                    <label class="col-lg-2 control-label">Schedule #</label>
-										                                                    <div class="col-lg-9">
+									                                                            echo $this->Form->input('MachineSchedule.job_ticket_id', array(
+									                                                                'class' => 'form-control required',
+									                                                                'label' => false,
+									                                                                'required' => 'required',
+									                                                                'type' => 'hidden',
+									                                                                'value' => $jobList['JobTicket']['id']
+									                                                                ));
+									                                                            echo $this->Form->input('MachineSchedule.status_ticket', array(
+									                                                                'class' => 'form-control required',
+									                                                                'label' => false,
+									                                                                'required' => 'required',
+									                                                                'type' => 'hidden',
+									                                                                'value' => 1
+									                                                                ));
 
-										                                                        <?php 
-										                                                            echo $this->Form->input('MachineSchedule.schedule_no', array(
-										                                                                'class' => 'form-control required',
-										                                                                'label' => false,
-										                                                                'required' => 'required',
-										                                                                'disabled' => 'disabled',
-										                                                                'value' => $jobList['JobTicket']['uuid']
-										                                                                ));
+									                                                        ?>
 
-										                                                            echo $this->Form->input('MachineSchedule.job_ticket_id', array(
-										                                                                'class' => 'form-control required',
-										                                                                'label' => false,
-										                                                                'required' => 'required',
-										                                                                'type' => 'hidden',
-										                                                                'value' => $jobList['JobTicket']['id']
-										                                                                ));
-										                                                            echo $this->Form->input('MachineSchedule.status_ticket', array(
-										                                                                'class' => 'form-control required',
-										                                                                'label' => false,
-										                                                                'required' => 'required',
-										                                                                'type' => 'hidden',
-										                                                                'value' => 1
-										                                                                ));
+									                                                    </div>
+									                                                </div>
 
-										                                                        ?>
+									                                                <div class="form-group">
+									                                                    <label class="col-lg-2 control-label">Customer</label>
+									                                                    <div class="col-lg-9">
 
-										                                                    </div>
-										                                                </div>
+									                                                        <?php 
 
-										                                                <div class="form-group">
-										                                                    <label class="col-lg-2 control-label">Customer</label>
-										                                                    <div class="col-lg-9">
+									                                                            echo $this->Form->input('MachineSchedule.customer', array(
+									                                                                'required' => 'required',
+									                                                                'class' => 'form-control item_type editable limitQuantity',
+									                                                                'label' => false,
+									                                                                'disabled' => 'disabled',
+									                                                                'value' => ucfirst($companyData[$jobList['Product']['company_id']])
+									                                                                ));
 
-										                                                        <?php 
+									                                                        ?>
+									                                                    </div>
+									                                                </div>
 
-										                                                            echo $this->Form->input('MachineSchedule.customer', array(
-										                                                                'required' => 'required',
-										                                                                'class' => 'form-control item_type editable limitQuantity',
-										                                                                'label' => false,
-										                                                                'disabled' => 'disabled',
-										                                                                'value' => ucfirst($companyData[$jobList['Product']['company_id']])
-										                                                                ));
+									                                                <div class="form-group">
+									                                                    <label class="col-lg-2 control-label">Item</label>
+									                                                    <div class="col-lg-9">
 
-										                                                        ?>
-										                                                    </div>
-										                                                </div>
+									                                                        <?php 
 
-										                                                <div class="form-group">
-										                                                    <label class="col-lg-2 control-label">Item</label>
-										                                                    <div class="col-lg-9">
+									                                                            echo $this->Form->input('MachineSchedule.item', array(
+									                                                                'required' => 'required',
+									                                                                'class' => 'form-control item_type editable limitQuantity',
+									                                                                'label' => false,
+									                                                                'disabled' => 'disabled',
+									                                                                'value' => ucfirst($jobList['Product']['name'])
+									                                                                ));
 
-										                                                        <?php 
+									                                                        ?>
+									                                                    </div>
+									                                                </div>
 
-										                                                            echo $this->Form->input('MachineSchedule.item', array(
-										                                                                'required' => 'required',
-										                                                                'class' => 'form-control item_type editable limitQuantity',
-										                                                                'label' => false,
-										                                                                'disabled' => 'disabled',
-										                                                                'value' => ucfirst($jobList['Product']['name'])
-										                                                                ));
+									                                                <div class="form-group">
+									                                                    <label class="col-lg-2 control-label">Quantity</label>
+									                                                    <div class="col-lg-9">
 
-										                                                        ?>
-										                                                    </div>
-										                                                </div>
+									                                                        <?php 
 
-										                                                <div class="form-group">
-										                                                    <label class="col-lg-2 control-label">Quantity</label>
-										                                                    <div class="col-lg-9">
+									                                                            echo $this->Form->input('MachineSchedule.quantity', array(
+									                                                                'required' => 'required',
+									                                                                'class' => 'form-control item_type',
+									                                                                'label' => false,
+									                                                                'readonly' => true,
+									                                                                'value' => $jobList['ClientOrderDeliverySchedule']['quantity']
+									                                                                ));
 
-										                                                        <?php 
+									                                                        ?>
+									                                                    </div>
+									                                                </div>
 
-										                                                            echo $this->Form->input('MachineSchedule.quantity', array(
-										                                                                'required' => 'required',
-										                                                                'class' => 'form-control item_type',
-										                                                                'label' => false,
-										                                                                'readonly' => true,
-										                                                                'value' => $jobList['ClientOrderDeliverySchedule']['quantity']
-										                                                                ));
+									                                                <hr>
 
-										                                                        ?>
-										                                                    </div>
-										                                                </div>
+									                                                <h4 class="modal-title">Machine Schedule</h4>
 
-										                                                <hr>
+									                                                <div class="form-group">
+									                                                    <label class="col-lg-2 control-label">Machine</label>
+									                                                    <div class="col-lg-9">
 
-										                                                <h4 class="modal-title">Machine Schedule</h4>
+									                                                        <?php 
 
-										                                                <div class="form-group">
-										                                                    <label class="col-lg-2 control-label">Machine</label>
-										                                                    <div class="col-lg-9">
+									                                                            echo $this->Form->input('MachineSchedule.machine_id', array(
+									                                                                'options' => array($machineData),
+									                                                                'class' => 'form-control required',
+									                                                                'label' => false,
+									                                                                'empty' => '-- select machine --'
+									                                                                ));
 
-										                                                        <?php 
+									                                                        ?>
+									                                                    </div>
+									                                                </div>
 
-										                                                            echo $this->Form->input('MachineSchedule.machine_id', array(
-										                                                                'options' => array($machineData),
-										                                                                'class' => 'form-control required',
-										                                                                'label' => false,
-										                                                                'empty' => '-- select machine --'
-										                                                                ));
+									                                                <div class="form-group">
+									                                                    <label class="col-lg-2 control-label">Date</label>
+									                                                    <div class="col-lg-9">
 
-										                                                        ?>
-										                                                    </div>
-										                                                </div>
+									                                                        <input type="date" name="data[MachineSchedule][date]" min="<?php echo date('Y-m-d'); ?>" id="changeDate" class="form-control datepick" value="<?php echo date('Y-m-d'); ?>">
+									                                                    </div>
+									                                                </div>
 
-										                                                <div class="form-group">
-										                                                    <label class="col-lg-2 control-label">Date</label>
-										                                                    <div class="col-lg-9">
+									                                                <div class="form-group">
+									                                                    <label class="col-lg-2 control-label">Time</label>
+									                                                    <div class="col-lg-4 bootstrap-timepicker input-append">
 
-										                                                        <input type="date" name="data[MachineSchedule][date]" min="<?php echo date('Y-m-d'); ?>" id="changeDate" class="form-control datepick" value="<?php echo date('Y-m-d'); ?>">
-										                                                    </div>
-										                                                </div>
+									                                                        <?php
+								                                                                echo $this->Form->input('MachineSchedule.from', array(
+								                                                                    'type' => 'text',    
+								                                                                    'class' => 'form-control col-lg-6 required timepicker workshift_from',
+								                                                                    'label' => false,
+								                                                                    ));
+									                                                         ?>
+									                                                    </div>
 
-										                                                <div class="form-group">
-										                                                    <label class="col-lg-2 control-label">Time</label>
-										                                                    <div class="col-lg-4 bootstrap-timepicker input-append">
+									                                                    <div class="col-lg-4 bootstrap-timepicker input-append">
 
-										                                                        <?php
-									                                                                echo $this->Form->input('MachineSchedule.from', array(
-									                                                                    'type' => 'text',    
-									                                                                    'class' => 'form-control col-lg-6 required timepicker workshift_from',
-									                                                                    'label' => false,
-									                                                                    ));
-										                                                         ?>
-										                                                    </div>
+									                                                        <?php
+								                                                                echo $this->Form->input('MachineSchedule.to', array(
+								                                                                    'type' => 'text',    
+								                                                                    'class' => 'form-control col-lg-6 required timepicker workshift_from',
+								                                                                    'label' => false,
+								                                                                    ));
+									                                                        ?>
 
-										                                                    <div class="col-lg-4 bootstrap-timepicker input-append">
+									                                                    </div>
+									                                                </div>
 
-										                                                        <?php
-									                                                                echo $this->Form->input('MachineSchedule.to', array(
-									                                                                    'type' => 'text',    
-									                                                                    'class' => 'form-control col-lg-6 required timepicker workshift_from',
-									                                                                    'label' => false,
-									                                                                    ));
-										                                                        ?>
+									                                                <div class="form-group">
+									                                                    <label class="col-lg-2 control-label">Remarks</label>
+									                                                    <div class="col-lg-9">
 
-										                                                    </div>
-										                                                </div>
+									                                                        <?php 
 
-										                                                <div class="form-group">
-										                                                    <label class="col-lg-2 control-label">Remarks</label>
-										                                                    <div class="col-lg-9">
+									                                                            echo $this->Form->input('MachineSchedule.remarks', array(
+									                                                                'class' => 'form-control',
+									                                                                'label' => false,
+									                                                                ));
 
-										                                                        <?php 
+									                                                        ?>
+									                                                    </div>
+									                                                </div>
 
-										                                                            echo $this->Form->input('MachineSchedule.remarks', array(
-										                                                                'class' => 'form-control',
-										                                                                'label' => false,
-										                                                                ));
+									                                                <div class="modal-footer">
 
-										                                                        ?>
-										                                                    </div>
-										                                                </div>
+									                                                    <button type="submit" class="btn btn-primary"><i class="fa fa-arrow-circle-right fa-lg"></i> Proceed to Sheeter</button>
+									                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
-										                                                <div class="modal-footer">
+									                                                </div>
+									                                            <?php echo $this->Form->end();  ?> 
+									                                        </div>
+									                                    </div>
+									                                </div>
+									                            </div>
 
-										                                                    <button type="submit" class="btn btn-primary"><i class="fa fa-arrow-circle-right fa-lg"></i> Proceed to Sheeter</button>
-										                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-										                                                </div>
-										                                            <?php echo $this->Form->end();  ?> 
-										                                        </div>
-										                                    </div>
-										                                </div>
-										                            </div>
-
-										                        	<div class="md-overlay"></div> 
-																</div>
+									                        	<div class="md-overlay"></div> 
+									                        </td>
 															
-															</div>
-													      
-													  </section>
-													</li>
-											<?php 
+									                    </tr>
+
+									                </tbody>
+									        <?php 
 									            endforeach; 
-									    } ?>
-										
-									</ul>
-								</section>
-								
+									        } ?>
+									</table>	
+
+									<hr>
+
+									<div class="paging" id="item_type_pagination">
+			                            <?php
+			                           
+				                            // echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'Employee','model' => 'Employee'), null, array('class' => 'disable','model' => 'ClientOrder'));
+				                            // echo $this->Paginator->numbers(array('separator' => '','paginate' => 'Employee'), array('paginate' => 'Employee'));
+				                            // echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'Employee','model' => 'Employee'), null, array('class' => 'disable'));
+
+			                            ?>
+				                    </div>
+				                </div>
 							</div>
 
 				        </div>
@@ -371,11 +375,14 @@
 		</div>
 	</div>
 </div>
+
+<?php echo $this->element('modals/ticket_full_details'); ?>
+
 <style type="text/css">
 	.fa-stack{
 		color: #03a9f4;
 	}
-	.header-drag-section{
+	.header-drag-section {
 		background: #03A9F4;
 		padding: 15px 1px 1px;
 	}
@@ -385,10 +392,11 @@
 	.dragField{
 		padding: 0px;
 	}
-	.table-link{
+	/*.table-link{
 		position: relative;
 		top: -17px;
-	}
+	}*/
+
 	.modal-header{
 		background: #03A9F4;
 		color: white;

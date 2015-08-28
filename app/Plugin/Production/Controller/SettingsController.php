@@ -31,7 +31,10 @@ class SettingsController extends ProductionAppController {
 
         $sectionList = $this->Section->find('list',array('fields' => array('id','name')));
 
-        $this->set(compact('machineData','departmentList','sectionList'));
+        $this->loadModel('Production.ProcessDepartment');
+        $processDepartmentData = $this->ProcessDepartment->find('list',array('fields' => array('id','name')));
+
+        $this->set(compact('machineData','departmentList','sectionList','processDepartmentData'));
 		
     }
 

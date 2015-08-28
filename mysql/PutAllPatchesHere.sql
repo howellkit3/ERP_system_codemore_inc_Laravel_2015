@@ -44,7 +44,6 @@ CHANGE COLUMN `type` `type` VARCHAR(60) NULL DEFAULT NULL;
 DROP TABLE `item_category_holders`;
 DROP TABLE `item_type_holders`;
 
-
 #NOTE: SELECT KOUFU SYSTEM DATABASE ----
 /** jRr added this 05/05/2015 03:58PM */
 CREATE TABLE IF NOT EXISTS `currencies` (
@@ -1840,3 +1839,16 @@ ALTER TABLE `machines` ADD `sub_process_id` INT(11)  NULL  DEFAULT NULL  AFTER `
 
 /** howell kit added this 08/27/2015 TO production DATABASE   */
 ALTER TABLE `koufu_warehouse`.`stocks` DROP COLUMN `remarks` ;
+
+#NOTE: SELECT KOUFU WAREHOUSE DATABASE ----
+/** howellkit added this 08/28/2015  */
+
+CREATE TABLE IF NOT EXISTS `area_warehouse` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(50) DEFAULT NULL,
+  `created` DATETIME NOT NULL,
+  `modified` DATETIME NOT NULL,
+  `created_by` INT(11) DEFAULT NULL,
+  `modified_by` INT(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB AUTO_INCREMENT=68 DEFAULT CHARSET=latin1;

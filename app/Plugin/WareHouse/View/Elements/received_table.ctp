@@ -113,7 +113,7 @@
                                                 'class' => 'form-control item_type editable required',
                                                 'label' => false,
                                                 'type' => 'select',
-                                                'options' => array(1, 2, 3),
+                                                'options' => array($areaList),
                                                 'required' => 'required',
                                                
                                                 ));

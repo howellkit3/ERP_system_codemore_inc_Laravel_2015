@@ -119,10 +119,10 @@
 
 	                                    <div class="form-group">
 
-											<label class="col-lg-2 control-label">Process</label>
+											<label class="col-lg-2 control-label">Process Department</label>
 											<div class="col-lg-8">
-												<?php echo $this->Form->input('Machine.sub_process_id', array(
-													'options' => array($subProcessList),
+												<?php echo $this->Form->input('Machine.department_process_id', array(
+													'options' => array($processDepartmentData),
 													'type' => 'select',
 													'label' => false,
 													'class' => 'form-control required',

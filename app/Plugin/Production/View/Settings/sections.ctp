@@ -4,14 +4,25 @@
 	$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
 ?>
 
-<?php 	echo $this->element('production_options'); ?>
-
-<br><br><br>
+<div class="main-box">
+	<div class="main-box-body clearfix">
+		<div class="row">
+			<div class="col-md-12">
+				<br>
+				<?php 	//echo $this->element('production_options'); ?>
+				<?php 
+					$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
+				 	echo $this->element('tab/jobs',array('active_tab' => $active_tab)); 
+				 ?>
+			</div>
+		</div>
+	</div>
+</div>
 
 <div class="row">
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
-    		<?php echo $this->element('tab/settings',array('active_tab' => $active_tab)); ?>
+    		<?php //echo $this->element('tab/settings',array('active_tab' => $active_tab)); ?>
 			<div class="main-box-body clearfix">
 			 
 				<div class="tabs-wrapper">
