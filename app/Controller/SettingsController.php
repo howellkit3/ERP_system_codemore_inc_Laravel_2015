@@ -2731,6 +2731,78 @@ class SettingsController extends AppController
             return $this->redirect(array('action' => 'banks'));
         }
 
+    public function area() {
+
+        $this->loadModel('Area');
+
+        $userData = $this->Session->read('Auth');
+
+        $limit = 10;
+
+        $conditions = array();
+
+        $this->paginate = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            'fields' => array('id', 'name','created'),
+            'order' => 'Area.id DESC',
+        );
+
+        $areaData = $this->paginate('Area');
+
+            if ($this->request->is('post')) {
+                
+                if (!empty($this->request->data)) {
+                   
+                    $this->Area->create();
+
+                    $this->id = $this->Area->saveArea($this->request->data['Area'], $userData['User']['id']);
+           
+                    $this->Session->setFlash(__('Add Unit Complete.'));
+
+                    $this->redirect(
+                        array('controller' => 'settings', 'action' => 'area')
+                    );
+                }
+            }
+
+        $this->set(compact('areaData'));
+    }
+
+     public function area_edit($id = null) {
+
+        $this->loadModel('Area');
+
+            if (!$id) {
+                throw new NotFoundException(__('Invalid post'));
+            }
+
+            $post = $this->Area->findById($id);
+            if (!$post) {
+                throw new NotFoundException(__('Invalid post'));
+            }
+
+            if ($this->request->is(array('post', 'put'))) {
+                $this->Area->id = $id;
+
+                if ($this->Area->save($this->request->data)) {
+
+                    $this->Area->save($this->request->data);
+
+                    $this->Session->setFlash(__('Area has been updated.'));
+
+                    return $this->redirect(array('action' => 'area'));
+                }
+
+                $this->Session->setFlash(__('Unable to update your post.'));
+            }
+
+            if (!$this->request->data) {
+
+                $this->request->data = $post;
+            }
+    }
+
 }
             
 

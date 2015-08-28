@@ -26,22 +26,6 @@ class Unit extends AppModel {
         )    
     );
 
-    // public function bind($model = array('Group')){
-
-    //     $this->bindModel(array(
-            
-    //         'belongsTo' => array(
-    //             'PackagingHolder' => array(
-    //                 'className' => 'PackagingHolder',
-    //                 'foreignKey' => 'packaging_holder_id',
-    //                 'dependent' => true
-    //             ),
-    //         )
-    //     ));
-
-    //     $this->contain($model);
-    // }
-
     public function saveUnit($unitData = null, $auth = null){
         
         $this->create();

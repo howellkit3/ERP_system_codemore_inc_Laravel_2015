@@ -41,4 +41,20 @@ class ReceivedItem extends AppModel {
 			
 		}
 	}
+
+		public function bind($model = array('Group')){
+
+
+		$this->bindModel(array(
+			'belongsTo' => array(
+				'DeliveredOrder' => array(
+					'className' => 'WareHouse.DeliveredOrder',
+					'foreignKey' => id
+				),
+			)
+		));
+	}
+
+
+
 }
