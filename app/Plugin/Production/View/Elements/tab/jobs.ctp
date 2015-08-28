@@ -110,4 +110,13 @@
 		)); ?>
 	</li>
 
+	<li class="<?php echo ($active_tab == 'settings') ? 'active' : '' ?>" alt="tab-controls">
+		<?php echo $this->Html->link('Settings',array(
+					'controller' => 'settings',
+					'action' => 'machines',
+					'tab' => 'machines',
+					'plugin' => 'production'
+		)); ?>
+	</li>
+
 </ul>
