@@ -20,7 +20,6 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 		$requestData = $this->WarehouseRequest->find('all', array('order' => array('WarehouseRequest.created' => 'DESC')));
 
-		
 
 		$this->set(compact('requestData','statusData','userName'));
 
@@ -49,9 +48,9 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 	 	if ($this->request->is(array('post','put'))) {
 
-			$requestUuid = $this->WarehouseRequest->saveRequest($this->request->data['Request'],$userData['User']['id']);
+			$requestId = $this->WarehouseRequest->saveRequest($this->request->data['Request'],$userData['User']['id']);
 
-			$this->RequestItem->saveRequestItem($this->request->data ,$requestUuid);
+			$this->RequestItem->saveRequestItem($this->request->data ,$requestId);
 		
 	 		$this->Session->setFlash(__('Request has been added.'));
 
@@ -67,18 +66,110 @@ class WarehouseRequestsController extends WareHouseAppController {
 			
 	}
 
-	public function view($id = null) {
+	// public function view($id = null) {
+
+	// 	$this->loadModel('WareHouse.WarehouseRequest');
+
+	// 	$this->loadModel('User');
+
+	// 	$fullname = $this->User->find('list', array('fields' => array('id', 'fullname')
+	// 														));
+
+	// 	$this->WarehouseRequest->bind('RequestItem');
+
+	// 	$requestData = $this->WarehouseRequest->find('first', array('conditions' => array('WarehouseRequest.id' => $id)));
+
+	// 	$this->set(compact('warehouseRequestData','fullname', 'requestData'));
+	// }
+
+	public function view($id = null){
+
+    	$userData = $this->Session->read('Auth');
+
+    	$this->loadModel('WareHouse.WarehouseRequest');
+
+	 	$this->loadModel('Unit');
+
+	 	$this->loadModel('Role');
+
+		$unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
+															'order' => array('Unit.unit' => 'ASC')
+															));
+
+		$roleData = $this->Role->find('list', array('fields' => array('id', 'name'),
+															'order' => array('Role.name' => 'ASC')
+															));
+
+    	$this->WarehouseRequest->bind('RequestItem');
+		
+		$requestData = $this->WarehouseRequest->find('first', array('conditions' => array('WarehouseRequest.id' => $id)));
+
+	    foreach ($requestData['RequestItem'] as $key => $value) {
+			
+			if($value['model'] == 'GeneralItem'){
+
+				$this->loadModel('GeneralItem');
+
+	 			$itemData = $this->GeneralItem->find('list',array('fields' => array('id', 'name')));
+
+	 			$requestData['RequestItem'][$key]['name'] = $itemData[$value['foreign_key']];
+	 		}
+
+	 		if($value['model'] == 'CorrugatedPaper'){
+
+	 			$this->loadModel('CorrugatedPaper');
+
+	 			$itemData = $this->CorrugatedPaper->find('list',array('fields' => array('id', 'name')));
+
+	 			$requestData['RequestItem'][$key]['name'] = $itemData[$value['foreign_key']];
+	 		}
+
+	 		if($value['model'] == 'Substrate'){
+
+	 			$this->loadModel('Substrate');
+
+	 			$itemData = $this->Substrate->find('list',array('fields' => array('id', 'name')));
+
+	 			$requestData['RequestItem'][$key]['name'] = $itemData[$value['foreign_key']];
+	 		}
+
+	 		if($value['model'] == 'CompoundSubstrate'){
+
+	 			$this->loadModel('CompoundSubstrate');
+
+	 			$itemData = $this->CompoundSubstrate->find('list',array('fields' => array('id', 'name')));
+	 			
+	 			$requestData['RequestItem'][$key]['name'] = $itemData[$value['foreign_key']];
+	 		}
+
+	    } 
+
+
+	    $this->loadModel('User');
+
+	    $preparedData = $this->User->find('first', array(
+														'conditions' => array('User.id' => $requestData['WarehouseRequest']['created_by']),
+														));
+	    
+    	$this->set(compact('requestId','requestData','userData','unitData','preparedData', 'roleData'));
+    }
+
+	public function approve($requestID = null) {
 
 		$this->loadModel('WareHouse.WarehouseRequest');
 
-		$this->loadModel('User');
+    	$this->WarehouseRequest->id = $requestID;
 
-		$warehouseRequestData = $this->WarehouseRequest->find('first', array('conditions' => array('WarehouseRequest.id' => $id)));
+    	$this->WarehouseRequest->saveField('status_id',1);
 
-		$fullname = $this->User->find('list', array('fields' => array('id', 'fullname')
-															));
+    	$this->Session->setFlash(__('Request has been approved.'));
 
-		$this->set(compact('warehouseRequestData','fullname'));
+        $this->redirect( array(
+                 'controller' => 'warehouse_requests', 
+                 'action' => 'index'
+
+         ));
+
 
 	}
 

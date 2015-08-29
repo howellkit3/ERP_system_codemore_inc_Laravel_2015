@@ -32,14 +32,14 @@ class RequestItem extends AppModel {
 		$this->contain($model);
 	}
 
-	public function saveRequestItem($requestData = null,$requestUuid = null)
+	public function saveRequestItem($requestData = null,$id = null)
 	{
 	
 		foreach ($requestData['RequestItem'] as $key => $requestValue)
 		{
 			$this->create();
 
-			$requestValue['request_uuid'] = $requestUuid;
+			$requestValue['request_id'] = $id;
 
 			$this->save($requestValue);
 		}
