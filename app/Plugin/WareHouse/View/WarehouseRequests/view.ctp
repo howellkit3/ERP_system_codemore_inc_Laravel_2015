@@ -5,12 +5,14 @@
 
 <?php echo $this->element('ware_house_option'); ?><br><br>
 
-    <div class = "pull-right">
-
-        <?php echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg " ></i>  Go Back ', array('controller' => 'warehouse_requests','action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+<div class="filter-block pull-right">
+                    
+    <?php 
+        
+         echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg " ></i>  Go Back ', array('controller' => 'warehouse_requests','action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
             ?> &nbsp;
 
-            <?php echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i>  Print ', array('controller' => 'warehouse_requests','action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+            <?php  echo $this->Html->link('<i class="fa fa-print fa-lg"></i>  Print ', array('controller' => 'warehouse_requests','action' => 'print_request', $requestData['WarehouseRequest']['id']),array('class' =>'btn btn-primary pull-right','escape' => false));
             ?>
      
         <?php 
@@ -19,11 +21,11 @@
 
                  echo $this->Html->link('<i class="fa fa-check fa-lg"></i> Approve ', array('controller' => 'warehouse_requests','action' => 'approve', $requestData['WarehouseRequest']['id']),array('class' =>'btn btn-primary pull-right','escape' => false));
 
-        } ?>
-        
-    </div>
+        } 
 
-<div class="filter-block pull-right">
+        echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit', array('controller' => 'warehouse_requests', 'action' => 'edit_request',$requestData['WarehouseRequest']['id']),array('class' =>'btn btn-primary pull-right','escape' => false));
+    ?>
+
                     
     
     <br><br>
