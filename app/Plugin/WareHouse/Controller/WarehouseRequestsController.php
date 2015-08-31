@@ -434,11 +434,25 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 			$this->loadModel('WareHouse.ItemRecord');
 
-			$requestId = $this->OutRecord->saveOutRecord($this->request->data['OutRecord'],$ID,$userData['User']['id']);
+			$this->loadModel('WareHouse.Stock');
 
-			$this->ItemRecord->saveOutItemRecord($this->request->data['ItemRecord'], $requestId);
-		
-	 		$this->Session->setFlash(__('Request Item has been removed to stocks.'));
+			//$requestId = $this->OutRecord->saveOutRecord($this->request->data['OutRecord'],$ID,$userData['User']['id']);
+
+			//$this->ItemRecord->saveOutItemRecord($this->request->data['ItemRecord'], $requestId);
+
+			$stockData = $this->Stock->find('all');
+
+			$condition = $this->Stock->saveOutRecordStock($this->request->data['ItemRecord'], $userData['User']['id'], $stockData );
+			
+			if($condition == 0){
+
+	 			$this->Session->setFlash(__('Request Item has been removed to stocks.'), 'success');
+
+	 		}else{
+
+	 			$this->Session->setFlash(__('Cannot be removed to stocks.'), 'error');
+
+	 		}
 
             $this->redirect( array(
                      'controller' => 'warehouse_requests', 
