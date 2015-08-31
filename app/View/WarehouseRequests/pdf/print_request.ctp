@@ -49,14 +49,13 @@ th, td {
 				<table style=" border:1px solid black;border-collapse:collapse; margin-bottom:0px;  ">
 					<tr>
 						<td align = "center" style="border:1px solid black; width:10px; font-size:70%;" ><b>No.</b></td>
-						<td align = "center" style =" width:180px; word-wrap: break-word;" ><b>Item Description</b></td>
+						<td align = "center" style =" width:230px; word-wrap: break-word;" ><b>Item Description</b></td>
 						<td align = "center" style="border:1px solid black; width:20px; font-size:70%;"><b>Qty Needed</b></td>
 						<td align = "center" style="border:1px solid black; width:35px; font-size:70%;"><b>UOM</b></td>
 						<td align = "center" style="border:1px solid black; width:35px; font-size:60%;"><b>Current Stock</b></td>
-						<td align = "center" style="border:1px solid black; width:40px; font-size:60%;"><b>For Purchasing</b></td>
 						<td align = "center" style="border:1px solid black; width:40px; font-size:60%;"><b>Date Needed</b></td>
 						<td align = "center" style="border:1px solid black; width:40px; font-size:60%;"><b>Purpose</b></td>
-						<td align = "center" style="border:1px solid black; width:40px; font-size:60%;"><b>Remarks</b></td>
+						<td align = "center" style="border:1px solid black; width:60px; font-size:60%;"><b>Remarks</b></td>
 					</tr>
 
 					<?php $ctr = 8;
@@ -95,8 +94,6 @@ th, td {
 
 						<td align = "center" style="border:1px solid black; font-size:80% "><?php ?></td>
 
-						<td align = "center" style="border:1px solid black; font-size:80% "><?php ?></td>
-
 						<?php $lengthRemarks = strlen($value['remarks'])?>
 
 						<?php if($lengthRemarks >= 35 && $lengthRemarks <= 70){ ?>
@@ -117,7 +114,6 @@ th, td {
 		   			 
 					<tr>
 						<td align = "center" style="border:1px solid black;  "></td>
-						<td style="border:1px solid black; "></td>
 						<td style="border:1px solid black; "></td>
 						<td style="border:1px solid black; "></td>
 						<td style="border:1px solid black; "></td>
@@ -202,19 +198,16 @@ th, td {
 				<table style=" border:1px solid black;border-collapse:collapse; margin-bottom:0px;  ">
 					<tr>
 						<td align = "center" style="border:1px solid black; width:10px; font-size:70%;" ><b>No.</b></td>
-						<td align = "center" style =" width:180px; word-wrap: break-word;" ><b>Item Description</b></td>
+						<td align = "center" style =" width:230px; word-wrap: break-word;" ><b>Item Description</b></td>
 						<td align = "center" style="border:1px solid black; width:20px; font-size:70%;"><b>Qty Needed</b></td>
 						<td align = "center" style="border:1px solid black; width:35px; font-size:70%;"><b>UOM</b></td>
 						<td align = "center" style="border:1px solid black; width:35px; font-size:60%;"><b>Current Stock</b></td>
-						<td align = "center" style="border:1px solid black; width:40px; font-size:60%;"><b>For Purchasing</b></td>
 						<td align = "center" style="border:1px solid black; width:40px; font-size:60%;"><b>Date Needed</b></td>
 						<td align = "center" style="border:1px solid black; width:40px; font-size:60%;"><b>Purpose</b></td>
-						<td align = "center" style="border:1px solid black; width:40px; font-size:60%;"><b>Remarks</b></td>
+						<td align = "center" style="border:1px solid black; width:60px; font-size:60%;"><b>Remarks</b></td>
 					</tr>
 
 					<?php $ctr = 8;
-
-					
 
 					foreach($request['RequestItem'] as $key=>$value) {  ?>
 
@@ -250,8 +243,6 @@ th, td {
 
 						<td align = "center" style="border:1px solid black; font-size:80% "><?php ?></td>
 
-						<td align = "center" style="border:1px solid black; font-size:80% "><?php ?></td>
-
 						<?php $lengthRemarks = strlen($value['remarks'])?>
 
 						<?php if($lengthRemarks >= 35 && $lengthRemarks <= 70){ ?>
@@ -272,7 +263,6 @@ th, td {
 		   			 
 					<tr>
 						<td align = "center" style="border:1px solid black;  "></td>
-						<td style="border:1px solid black; "></td>
 						<td style="border:1px solid black; "></td>
 						<td style="border:1px solid black; "></td>
 						<td style="border:1px solid black; "></td>
@@ -325,6 +315,8 @@ th, td {
 				</table>
 					
 				</div>
+
+				
 				
 			</div>
 	</div>	

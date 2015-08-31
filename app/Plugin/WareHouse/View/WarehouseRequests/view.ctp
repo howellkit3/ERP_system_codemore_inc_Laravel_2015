@@ -77,7 +77,6 @@
                             <th class="text-center">Qty Needed</th>
                             <th class="text-center">UOM</th>
                             <th class="text-center">Current Stock</th>
-                            <th class="text-center">For Purchasing</th>
                             <th class="text-center">Date Needed</th>
                             <th class="text-center">Purpose</th>
                             <th class="text-center">Remarks</th>
@@ -104,7 +103,7 @@
                                 <td class="text-center"></td>
                                 <td class="text-center"></td>
                                 <td class="text-center"></td>
-                                <td class="text-center"> </td><td class="text-center"><?php  
+                                <td class="text-center"><?php  
                                    if(!empty($requestData['remarks'])){ 
                                     echo$requestData['remarks'];
                                    } ?></td>
@@ -115,7 +114,6 @@
                         <tr>
                             <td> </td>
                             <td class="text-center">------END------</td>
-                            <td class="text-center"> </td>
                             <td class="text-center"> </td>
                             <td class="text-center"> </td>
                             <td class="text-center"> </td>

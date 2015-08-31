@@ -19,10 +19,63 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 		$userName = $this->User->find('list', array('fields' => array('User.id', 'User.fullname')));
 
+		$this->loadModel('Unit');
+
+		$unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
+															'order' => array('Unit.unit' => 'ASC')
+															));
+
+		$this->WarehouseRequest->bind('RequestItem');		
+
 		$requestData = $this->WarehouseRequest->find('all', array('order' => array('WarehouseRequest.created' => 'DESC')));
 
+		foreach ($requestData as $key => $value) {
 
-		$this->set(compact('requestData','statusData','userName'));
+			foreach ($value['RequestItem'] as $key1 => $valueOfRequest) {
+
+				//pr($requestData); exit;
+				
+				if($valueOfRequest['model'] == 'GeneralItem'){
+
+					$this->loadModel('GeneralItem');
+
+		 			$itemData = $this->GeneralItem->find('list',array('fields' => array('id', 'name')));
+
+		 			$requestData[$key]['RequestItem'][$key1]['name'] = $itemData[$valueOfRequest['foreign_key']];
+		 		}
+
+		 		if($valueOfRequest['model'] == 'CorrugatedPaper'){
+
+		 			$this->loadModel('CorrugatedPaper');
+
+		 			$itemData = $this->CorrugatedPaper->find('list',array('fields' => array('id', 'name')));
+
+		 			$requestData[$key]['RequestItem'][$key1]['name'] = $itemData[$valueOfRequest['foreign_key']];
+		 		}
+
+		 		if($valueOfRequest['model'] == 'Substrate'){
+
+		 			$this->loadModel('Substrate');
+
+		 			$itemData = $this->Substrate->find('list',array('fields' => array('id', 'name')));
+
+		 			$requestData[$key]['RequestItem'][$key1]['name'] = $itemData[$valueOfRequest['foreign_key']];
+		 		}
+
+		 		if($valueOfRequest['model'] == 'CompoundSubstrate'){
+
+		 			$this->loadModel('CompoundSubstrate');
+
+		 			$itemData = $this->CompoundSubstrate->find('list',array('fields' => array('id', 'name')));
+		 			
+		 			$requestData[$key]['RequestItem'][$key1]['name'] = $itemData[$valueOfRequest['foreign_key']];
+		 		}
+		 	}
+	    } 
+
+	  //  pr($requestData); exit;
+
+		$this->set(compact('requestData','statusData','userName', 'unitData'));
 
     }
 
@@ -351,7 +404,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 	 	if ($this->request->is(array('post','put'))) {
 
-	 		pr($this->request->data); exit;
+	 		//pr($this->request->data); exit;
 
 			$requestId = $this->WarehouseRequest->saveRequest($this->request->data['Request'],$userData['User']['id']);
 
@@ -370,5 +423,31 @@ class WarehouseRequestsController extends WareHouseAppController {
 		$this->set(compact('unitData','itemData', 'request'));
 			
 	 }
+
+	public function out_record($ID = null) {
+
+		if ($this->request->is(array('post','put'))) {
+
+			$userData = $this->Session->read('Auth');
+
+			$this->loadModel('WareHouse.OutRecord');
+
+			$this->loadModel('WareHouse.ItemRecord');
+
+			$requestId = $this->OutRecord->saveOutRecord($this->request->data['OutRecord'],$ID,$userData['User']['id']);
+
+			$this->ItemRecord->saveOutItemRecord($this->request->data['ItemRecord'], $requestId);
+		
+	 		$this->Session->setFlash(__('Request Item has been removed to stocks.'));
+
+            $this->redirect( array(
+                     'controller' => 'warehouse_requests', 
+                     'action' => 'index'
+    
+             ));
+
+        }
+
+	}
 
 }
