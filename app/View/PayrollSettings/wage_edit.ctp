@@ -46,7 +46,7 @@
 	                                            echo $this->Form->input('amount', array(
 	                                            								'class' => 'form-control item_type',
 							                                                    'label' => false,
-							                                                    'placeholder' => 'Description'));
+							                                                    'placeholder' => '0.00'));
                                             
                                             ?>
 
