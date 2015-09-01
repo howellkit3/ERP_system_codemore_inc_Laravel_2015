@@ -526,6 +526,8 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 			$this->loadModel('WareHouse.WarehouseRequestItem');
 
+			$this->loadModel('WareHouse.WarehouseRequest');
+
 			$this->loadModel('WareHouse.Stock');
 
 			$requestId = $this->OutRecord->saveOutRecord($this->request->data['OutRecord'],$ID,$userData['User']['id']);
@@ -536,24 +538,18 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 			$condition = $this->Stock->saveOutRecordStock($this->request->data['WarehouseRequestItem'], $userData['User']['id'], $stockData );
 			
-			if($condition == 0){
+			$this->WarehouseRequest->id = $ID;
 
-	 			$this->Session->setFlash(__('Request Item has been removed to stocks.'), 'success');
+    		$this->WarehouseRequest->saveField('status_id',12);
 
-	 		}else{
-
-	 			$this->Session->setFlash(__('Cannot be removed to stocks.'), 'error');
-
-	 		}
+			$this->Session->setFlash(__('Request Item has been deducted to stocks.'), 'success');
 
             $this->redirect( array(
                      'controller' => 'warehouse_requests', 
                      'action' => 'index'
     
-             ));
-
+            ));
         }
-
 	}
 
 	public function stock() {

@@ -34,6 +34,9 @@
                     if($requestList['WarehouseRequest']['status_id'] == 1){ 
                         echo "<span class='label label-info'>Approved</span>";
                     }
+                    if($requestList['WarehouseRequest']['status_id'] == 12){ 
+                        echo "<span class='label label-success'>Deducted</span>";
+                    }
                     if($requestList['WarehouseRequest']['status_id'] == 0){ 
                         echo "<span class='label label-success'>Purchase Order</span>";
                     }

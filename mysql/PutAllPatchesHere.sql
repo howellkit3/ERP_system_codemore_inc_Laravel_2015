@@ -1867,3 +1867,4 @@ ALTER TABLE `request_items`  ADD `date_needed` DATETIME NULL  AFTER `quantity_un
 ALTER TABLE `request_items`  ADD `purpose` VARCHAR(50) NULL  AFTER `date_needed`;
 ALTER TABLE `request_items`  ADD `remarks` VARCHAR(50) NULL  AFTER `purpose`;
 
+INSERT  INTO `status_field_holders`(`id`,`status`,`created_by`,`modified_by`,`created`,`modified`) VALUES (11,'Received',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(12,'Deducted',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03');
