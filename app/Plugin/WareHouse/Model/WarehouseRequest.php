@@ -20,8 +20,8 @@ class WarehouseRequest extends AppModel {
 		$this->bindModel(array(
 	
 			'hasMany' => array(	
-				'RequestItem' => array(
-					'className' => 'WareHouse.RequestItem',
+				'WarehouseRequestItem' => array(
+					'className' => 'WareHouse.WarehouseRequestItem',
 					'foreignKey' =>  'request_id'
 					//'conditions' => array('RequestItem.request_id = 69')
 				),

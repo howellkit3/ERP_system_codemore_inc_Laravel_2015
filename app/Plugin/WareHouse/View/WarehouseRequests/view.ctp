@@ -81,7 +81,7 @@
                             <th class="text-center">Purpose</th>
                             <th class="text-center">Remarks</th>
                         </thead>
-                        <?php   foreach ($requestData['RequestItem'] as $key => $value) { $key++ ?>
+                        <?php   foreach ($requestData['WarehouseRequestItem'] as $key => $value) { $key++ ?>
                            
                             <tr>
                                 <td><?php echo $key ?></td>

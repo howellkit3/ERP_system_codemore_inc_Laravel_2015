@@ -18,17 +18,17 @@
 					<header class="main-box-header clearfix">
 							                    
 						<h1 class="pull-left">
-							Create Purchase Request
+							Edit Purchase Request
 						</h1>
 						<?php 
-	                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'warehouse_requests', 'action' => 'create'),array('class' =>'btn btn-primary pull-right','escape' => false));
+	                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'warehouse_requests', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
 	                    ?>
 					</header>
 
 				</div>
 			</div>
 
-			<?php echo $this->Form->create('Request',array('url'=>(array('controller' => 'warehouse_requests','action' => 'create'))));?>
+			<?php echo $this->Form->create('WarehouseRequest',array('url'=>(array('controller' => 'warehouse_requests','action' => 'edit_request', $requestID))));?>
 				<div class="row">
 					<div class="col-lg-12">
 					  	<div class="main-box">
@@ -43,25 +43,23 @@
 		                                            echo $this->Form->input('Request.name', array(
 		                                            								'class' => 'form-control item_type',
 								                                                    'label' => false,
-								                                                    'value' => $request['WarehouseRequest']['name'],
+								                                                    $request['WarehouseRequest']['name'],
 								                                                    'placeholder' => 'Request Name'));
-	                                            ?>
-
-	                                            <?php 
 		                                            echo $this->Form->input('Request.id', array(
 		                                            								'class' => 'form-control item_type',
 								                                                    'label' => false,
-								                                                    'type' => 'hidden',
 								                                                    'value' => $request['WarehouseRequest']['id'],
-								                                                    'placeholder' => 'Request Name'));
+								                                                    'type' => 'hidden'));
 	                                            ?>
 											</div>
 										</div>
+
 									</div>
 								</div>
 							</div>
 						</div>
-				
+					
+
 						<div class="main-box">
 							<div class="top-space"></div>
 								<header class="main-box-header clearfix">
@@ -74,18 +72,11 @@
 
 								<div class="main-box-body clearfix">
 
-									<section class="cloneMe">
-										
-										<div class="main-box-body clearfix">
-
-										<div class="main-box-body clearfix">
-
 									
 
-									<?php foreach ($request['RequestItem'] as $key => $value) { ?>
+									<?php  foreach ($request['WarehouseRequestItem'] as $key => $value) { 
 
-										<?php 
-						                    echo $this->Form->input('RequestItem.0.name', 
+										   echo $this->Form->input('WarehouseRequestItem.'.$key.'.id', 
 															array( 
 												'class' => 'form-control required', 
 												'type' => 'hidden',
@@ -103,12 +94,12 @@
 
 															<?php $dataPlus = $key + 1; ?>
 
-											                <input type="text" class="form-control item_name required" name="data[RequestItem][<?php echo $key ?>][nameToShow]" value="<?php echo $value['name'] ?>" readonly>
+											                <input type="text" class="form-control item_name required" name="data[WarehouseRequestItem][<?php echo $key ?>][nameToShow]" value="<?php echo $value['name'] ?>" readonly>
 
-											                <input type="hidden" class="form-control item_name required" name="data[RequestItem][<?php echo $key ?>][name]" value="<?php echo $value['name'] ?>" readonly>
+											                <input type="hidden" class="form-control item_name required" name="data[WarehouseRequestItem][<?php echo $key ?>][name]" value="<?php echo $value['name'] ?>" readonly>
 
 											                <?php 
-											                    echo $this->Form->input('RequestItem.'.$key.'.foreign_key', 
+											                    echo $this->Form->input('WarehouseRequestItem.'.$key.'.foreign_key', 
 																				array( 
 																	'class' => 'form-control item_id required', 
 																	'type' => 'hidden',
@@ -119,7 +110,7 @@
 											                ?>
 
 											                <?php 
-											                    echo $this->Form->input('RequestItem.'.$key.'.model', 
+											                    echo $this->Form->input('WarehouseRequestItem.'.$key.'.model', 
 																				array( 
 																	'class' => 'form-control item_model required ', 
 																	'type' => 'hidden',
@@ -131,13 +122,12 @@
 
 											        	</div>
 
-														<div class="col-lg-3">
+														<div class="col-lg-4">
 
 															<a data-toggle="modal" href="#myModalItem" data-modal="<?php echo $dataPlus ?>" class="modal-button btn btn-primary mrg-b-lg pull-left  "><i class="fa fa-search-plus fa-lg"></i> Select Item</a>
-															&emsp;&emsp;&emsp;&emsp;
-															<button type="button" class="add-field1  table-link danger btn btn-success " onclick="cloneDatarequest('cloneMe', this)"><i class="fa fa-plus"></i></button>
-															<!-- <button type="button" class="add-field1sd proxy-counter add-request-section table-link danger btn btn-success" ><i class="fa fa-plus"></i></button> -->
-															&emsp;&emsp;&emsp;&emsp;
+															&emsp;
+															<button type="button" class="add-field1  table-link danger btn btn-success " style = "margin:0px;" onclick="cloneDatarequest('cloneMe', this)"><i class="fa fa-plus"></i></button>
+															
 															<?php 
 																if ($key == 0 ) { 
 																	$newClass = 'hide-remove';
@@ -145,7 +135,7 @@
 																	$newClass = ' ';
 																}
 															?>
-																<button type="button" class="remove remove-purchase-order btn btn-danger <?php echo $newClass ?>"><i class="fa fa-minus" ></i></button>
+																<button type="button" style = "margin:0px;" class="remove remove-purchase-order btn btn-danger <?php echo $newClass ?>"><i class="fa fa-minus" ></i></button>
 														
 														</div>
 
@@ -156,7 +146,7 @@
 														<label class="col-lg-2 control-label">Size</label>
 														<div class="col-lg-3">
 															<?php 
-											                    echo $this->Form->input('RequestItem.'.$key.'.size1', array(
+											                    echo $this->Form->input('WarehouseRequestItem.'.$key.'.size1', array(
 																	'class' => 'form-control item_type',
 											                        'label' => false,
 											                        'placeholder' => 'Size',
@@ -167,7 +157,7 @@
 
 														<div class="col-lg-3">
 															<?php 
-																echo $this->Form->input('RequestItem.'.$key.'.size1_unit_id', array(
+																echo $this->Form->input('WarehouseRequestItem.'.$key.'.size1_unit_id', array(
 											                        'options' => array($unitData),  
 											                        'label' => false,
 											                        'class' => 'form-control select-drop',
@@ -186,7 +176,7 @@
 														<label class="col-lg-2 control-label"> </label>
 														<div class="col-lg-3">
 															<?php 
-																echo $this->Form->input('RequestItem.'.$key.'.size2', array(
+																echo $this->Form->input('WarehouseRequestItem.'.$key.'.size2', array(
 																	'class' => 'form-control item_type',
 											                        'label' => false,
 											                        'placeholder' => 'Size',
@@ -198,7 +188,7 @@
 
 														<div class="col-lg-3">
 															<?php 
-																echo $this->Form->input('RequestItem.'.$key.'.size2_unit_id', array(
+																echo $this->Form->input('WarehouseRequestItem.'.$key.'.size2_unit_id', array(
 											                        'options' => array($unitData),  
 											                        'label' => false,
 											                        'class' => 'form-control select-drop',
@@ -217,7 +207,7 @@
 														<label class="col-lg-2 control-label"> </label>
 														<div class="col-lg-3">
 															<?php 
-																echo $this->Form->input('RequestItem.'.$key.'.size3', array(
+																echo $this->Form->input('WarehouseRequestItem.'.$key.'.size3', array(
 																	'class' => 'form-control item_type',
 											                        'label' => false,
 											                        'placeholder' => 'Size',
@@ -229,7 +219,7 @@
 
 														<div class="col-lg-3">
 															<?php 
-																echo $this->Form->input('RequestItem.'.$key.'.size3_unit_id', array(
+																echo $this->Form->input('WarehouseRequestItem.'.$key.'.size3_unit_id', array(
 											                        'options' => array($unitData),  
 											                        'label' => false,
 											                        'class' => 'form-control select-drop',
@@ -248,7 +238,7 @@
 														<label class="col-lg-2 control-label"><span style="color:red">*</span>Quantity</label>
 														<div class="col-lg-3">
 															<?php 
-																echo $this->Form->input('RequestItem.'.$key.'.quantity', array(
+																echo $this->Form->input('WarehouseRequestItem.'.$key.'.quantity', array(
 																	'class' => 'form-control item_type number select-drop required',
 																	'type' => 'number',
 											                        'label' => false,
@@ -261,7 +251,7 @@
 
 														<div class="col-lg-3">
 															<?php 
-																echo $this->Form->input('RequestItem.'.$key.'.quantity_unit_id', array(
+																echo $this->Form->input('WarehouseRequestItem.'.$key.'.quantity_unit_id', array(
 											                        'options' => array($unitData),  
 											                        'label' => false,
 											                        'class' => 'form-control select-drop required',
@@ -294,11 +284,6 @@
 											
 										</div>
 									</div>
-								</div>
-										    
-										</div>
-									</section>
-									
 								</div>
 							</div>
 						</div>
@@ -354,13 +339,12 @@
 			                            <th><a href="#"><span>Name</span></a></th>
 			                        </tr>
 			                    </thead>
-			                    <tbody class="tableProduct" aria-relevant="all" id="scrollTable" aria-live="polite" role="alert" >
+			                     <tbody class="tableProduct" aria-relevant="all" id="scrollTable" aria-live="polite" role="alert" >
 			                    </tbody>
 
 			                    <tbody class="Itemtable" aria-relevant="all" id="scrollTable" aria-live="polite" role="alert" >
 			                    </tbody>
 
-			                    
 			                </table>
 
 			                <div class="table-responsive">
@@ -386,11 +370,15 @@
 
 			<div class="md-overlay"></div>	
 			
+
+			
+
+
 	<script>
 		
 	jQuery(document).ready(function($){
 
-		$(".remove").hide();
+		$(".hide-remove").hide();
 
 		$("#QuotationCreateForm").validate();
 			//datepicker
@@ -417,14 +405,21 @@
 		$("body").on('change','.selectSpecProduct', function(e){
 	        var partName = $(this).val();
 	        var itemModel = $(this).attr('name');
+	        //var name = $data['Requests']['name'];
 	        var itemName = $(this).attr('data-name');
-
+	        //console.log(test);
+	        //alert(test);
 	        if ($(this).is(":checked")) {
 	            console.log(name);
 	            console.log($(this).attr('class'));
+	            // $('.item_model').val(itemModel);
+	            // $('.item_id').val(partName);
+	            // $('.item_name').val(itemName);
+	            // $('.item_model').val(itemModel);
 	            $(this).parents('.cloneMe').find('.item_model').val(itemModel);
 	            $(this).parents('.cloneMe').find('.item_name').val(itemName);
 	            $(this).parents('.cloneMe').find('.item_id').val(partName);
+	            //$(this).parents('.item_name').val(itemName);
 	            $( '.close' ).trigger( 'click' );
 	          
 
@@ -432,7 +427,8 @@
 	        
 	    });
 
-		$("body").on('keyup','.searchItem', function(e){
+
+	    $("body").on('keyup','.searchItem', function(e){
         var searchInput = $(this).val();
         var thisMe = $(this);
         var itemGroup = $('.ItemGroup').val();
@@ -441,12 +437,12 @@
 
             thisMe.parents('.modal-body').find('.tableProduct').hide();
             thisMe.parents('.modal-body').find('.Itemtable').show();
+            //alert('hide');
 
         }else{
-
             thisMe.parents('.modal-body').find('.tableProduct').show();
             thisMe.parents('.modal-body').find('.Itemtable').hide();
-        
+            //alert('show');
         }
 
         if(searchInput){
@@ -463,6 +459,7 @@
                          
                         thisMe.parents('.modal-body').find('.Itemtable').html('<font color="red"><b>No result..</b></font>'); 
                     }
+                    
                 }
             });
 

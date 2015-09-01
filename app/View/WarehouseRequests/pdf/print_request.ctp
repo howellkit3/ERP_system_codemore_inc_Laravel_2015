@@ -60,7 +60,7 @@ th, td {
 
 					<?php $ctr = 8;
 
-					foreach($request['RequestItem'] as $key=>$value) {  ?>
+					foreach($request['WarehouseRequestItem'] as $key=>$value) {  ?>
 
 					<tr>
 						<td  align = "center" style="border:1px solid black; width:10px;   word-wrap: break-word; "><span style="font-size:70%"; ><?php echo $key + 1 ?></span></td>
@@ -209,7 +209,7 @@ th, td {
 
 					<?php $ctr = 8;
 
-					foreach($request['RequestItem'] as $key=>$value) {  ?>
+					foreach($request['WarehouseRequestItem'] as $key=>$value) {  ?>
 
 					<tr>
 						<td  align = "center" style="border:1px solid black; width:10px;   word-wrap: break-word; "><span style="font-size:70%"; ><?php echo $key + 1 ?></span></td>
