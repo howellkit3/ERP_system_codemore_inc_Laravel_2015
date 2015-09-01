@@ -136,21 +136,8 @@
                                                 <div class="col-lg-9">
                                                   
                                                     <?php
-                                                        $deductions = array(
-                                                                'ca_fund' => 'CA_Fund',
-                                                                'ca_others' => 'CA_Others',
-                                                                'sss_loan' => 'SSS_Loan',
-                                                                'uniform' => 'Uniform',
-                                                                'medical' => 'Medical',
-                                                                'canteen' => 'Canteen',  
-                                                                'penalty' => 'Penalty',
-                                                                'sss_loan' => 'SSS Loan',
-                                                                'pagibig_loan_mpl' => 'PAGIBIG Loan (MPL)',
-                                                                'pagibig_loan_calamity' => 'PAGIBIG Loan (Calamity)',
-                                                                'bank_loan' => 'Bank Loan'
-                                                            );
-                                                        echo $this->Form->input('type', array(
-                                                            'options' => $deductions ,
+                                                        echo $this->Form->input('loan_id', array(
+                                                            'options' => $loanTypes,
                                                             'class' => 'form-control col-lg-6 required',
                                                             'label' => false,
                                                             'empty' => '-- Select Type --'
@@ -236,7 +223,7 @@
                                 </div>
                                 <div class="col-xs-2 col-md-2 2">
                                     <?php 
-                                        echo $this->Html->link('Cancel ', array('controller' => 'schedules', 'action' => 'holiday','plugin' => 'human_resorce'),array('class' =>'btn btn-default','escape' => false));
+                                        echo $this->Html->link('Cancel ', array('controller' => 'salaries', 'action' => 'deductions','plugin' => 'human_resource'),array('class' =>'btn btn-default','escape' => false));
                                     ?>
                                 </div>
                             </div>

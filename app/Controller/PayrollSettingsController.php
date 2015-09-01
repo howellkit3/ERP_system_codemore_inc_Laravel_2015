@@ -18,11 +18,10 @@ class PayrollSettingsController extends AppController
         );
 		
 		$schedules = array(
-			'0' => 'AnyTime',
-			'1' => 'Once',
-			'2' => 'Every Month',
-	        '3' => 'Twice a Month', 
-	        '4' => 'Yearly'
+			 '1' => 'Semi Monthly(Equal)',
+              '2' => 'Semi Monthly(First Payroll)',
+              '3' => 'Semi Monthly(Second Payroll)', 
+              '4' => 'Anytime'
 	      );
 
 		$loans = $this->paginate('Loan');

@@ -88,4 +88,32 @@ class Payroll extends AppModel {
         return $object;
     }
 
+
+    public function filterData($data = null,$employeeId = null) {
+
+    	$salaries = array();
+    	
+    	if (!empty($data)) {
+
+    		if (!empty($employeeId)) {
+
+    			foreach ($data as $key => $value) {
+    					
+    					if (in_array($value['Employee']['id'],$employeeId)) {
+
+    						$salaries[$key] = $value;
+    					}
+    			}
+    			
+    		}
+
+    	}
+
+    	return $salaries;
+    }
+
+    private function _byDepartment($data = null,$filterBy = null) {
+   	
+   		
+    }
 }

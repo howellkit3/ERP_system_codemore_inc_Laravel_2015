@@ -37,27 +37,28 @@ echo $this->element('payroll_options');
             			<div class="filter-block pull-right">
 
 						<?php echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back', array(
-		                         'controller' => 'salaries',
-		                         'action' => 'payroll',
-	                         	$payroll['Payroll']['id']),
-	                         	array(
-	                         	'escape' => false ,
-	                         	'class' => 'ble-link btn btn-primary pull-right',
-	                         	 )
+		                         	'controller' => 'salaries',
+		                         	'action' => 'payroll',
+	                         		$payroll['Payroll']['id']),
+		                         	array(
+		                         	'escape' => false ,
+		                         	'class' => 'ble-link btn btn-primary pull-right',
+		                         	 )
                          ); ?>
 
                         <?php if($payroll['Payroll']['status'] == 'process') : 
                     
-                          echo $this->Html->link('<i class="fa fa-file-text-o fa-lg"></i> Summary', array(
+                         /* echo $this->Html->link('<i class="fa fa-file-text-o fa-lg"></i> Summary', array(
                          			'controller' => 'salaries',
                          			'action' => 'export_salaries',
                          			$payroll['Payroll']['id'],
                          			'excel',
                          			),array(
 		                         	'escape' => false,
-		                         	'class' => 'ble-link btn btn-primary pull-right',
+		                         	'class' => 'ble-link btn btn-primary pull-right summary-btn',
+									'data-type' => 'excel',
 		                         	 )
-                        	); 
+                        	 ); 
 
                             echo $this->Html->link('<i class="fa fa-file-text-o fa-lg"></i> Generate Payslip', array(
                          			'controller' => 'salaries',
@@ -69,14 +70,29 @@ echo $this->element('payroll_options');
                          		'escape' => false,
                          		'class' => 'ble-link btn btn-primary pull-right',
                          	 )
-                         );
+                         ); */
 
-                        endif; ?>		
-						<?php if($payroll['Payroll']['status'] == 'pending') : ?>
-                         
-             
+							echo $this->Html->link('<i class="fa fa-file-text-o fa-lg"></i> Summary','#printPayslip',array(
+									                         	'escape' => false,
+									                         	'class' => 'ble-link btn btn-primary pull-right summary-btn',
+																'data-type' => 'excel',
+																'data-toggle' => 'modal',
+									                         	 )
+							                        	 ); 
 
-                         <?php 
+                         		echo $this->Html->link('<i class="fa fa-file-text-o fa-lg"></i> Generate Payslip','#printPayslip', array(
+	                         		'escape' => false,
+	                         		'data-type' => 'payslip',
+	                         		'class' => 'ble-link btn btn-primary pull-right summary-btn',
+	                         		'data-toggle' => 'modal',
+                         		 ));
+
+                        endif; 
+
+                        if($payroll['Payroll']['status'] == 'pending') : 
+
+
+                          
 
                          echo $this->Html->link('<i class="fa fa-trash-o fa-lg"></i> Reject', array(
                          	'controller' => 'salaries',
@@ -89,9 +105,7 @@ echo $this->element('payroll_options');
                          	)
                          );
 
-                         ?>
-                      
-                         <?php echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i> Process', array(
+                          echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i> Process', array(
                          'controller' => 'salaries',
                          'action' => 'process_payroll',
                          	$payroll['Payroll']['id']),
@@ -100,8 +114,10 @@ echo $this->element('payroll_options');
                          	'class' => 'ble-link btn btn-primary pull-right',
                          	'id' => 'updatePayroll'
                          	 )
-                         ); ?>
-                     	<?php endif; ?>
+                         );
+                         endif;
+
+                         ?>
 
 
                           </div>
@@ -162,20 +178,18 @@ echo $this->element('payroll_options');
 											<th><a href="#"><span>Gross</span></a></th>
 											<th><a href="#"><span>SSS</span></a></th>
 											<th><a href="#"><span>PhilHealth</span></a></th>
+											<th><a href="#"><span>Pagibig</span></a></th>
 											<th><a href="#"><span>WTax</span></a></th>
 											<th><a href="#"><span>Deductions</span></a></th>
 
 											<th><a href="#"><span>Remarks</span></a></th>
 										</tr>
 										</thead>
-
-
 										<tbody aria-relevant="all" aria-live="polite" role="alert">
 															<?php  if(!empty($salariesList)) { ?>
 
 														           <?php foreach ($salariesList as $key => $salary): ?>
-																			
-																			<tr >
+																			<tr>
 																			<td> 
 																			<?php 
 
@@ -203,8 +217,10 @@ echo $this->element('payroll_options');
 														                           <?php echo $salary['sss']; ?>
 														                        </td>
 														                        <td class="">
-
-														                           <?php echo !empty($salary['philhealth']) ? $salary['philhealth'] : '0.00'; ?>
+																					<?php echo !empty($salary['philhealth']) ? number_format($salary['philhealth'],2) : '0.00'; ?>
+														                        </td>
+														                        <td class="">
+																					<?php echo !empty($salary['pagibig']) ? number_format($salary['pagibig'],2) : '0.00'; ?>
 														                        </td>
 														                        <td class="">
 														                            	 <?php echo number_format($salary['with_holding_tax'],2); ?>
@@ -222,12 +238,7 @@ echo $this->element('payroll_options');
 														       <?php } ?> 
 										</tbody>
 										</table>
-
-								
-
-
-										</div>	
-
+										</div>
 										</div>
 									</div>
 									    	<?php if (!empty($salarySplit) && count($salarySplit) > 0) : ?>
@@ -250,3 +261,4 @@ echo $this->element('payroll_options');
 		 </div>
     </div>
 </div>
+<?php echo $this->element('modals/payslip'); ?>

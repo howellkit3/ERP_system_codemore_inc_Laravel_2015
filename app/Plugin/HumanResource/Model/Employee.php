@@ -160,6 +160,33 @@ class Employee extends AppModel {
 		//$this->contain($giveMeTheTableRelationship);
 	}
 
+	public function bindPrimary() {
+		$this->bindModel(array(
+			'belongsTo' => array(
+				'Position' => array(
+					'className' => 'HumanResource.Position',
+					'foreignKey' => 'position_id',
+					'conditions' => '',
+					),
+			),
+			'hasOne' => array(
+				'EmployeeAdditionalInformation' => array(
+					'className' => 'EmployeeAdditionalInformation',
+					'foreignKey' => 'employee_id',
+					'dependent' => true
+				),
+				'Salary' => array(
+					'className' => 'Salary',
+					'foreignKey' => false,
+					'conditions' => array('Salary.employee_id = Employee.id'),
+					'dependent' => true
+				),
+			)
+		));
+		$this->recursive = 1;
+		//$this->contain($giveMeTheTableRelationship);
+	}
+
 	public function getList($conditions = array()) {
 
 		return $this->find('list',array(
@@ -263,5 +290,23 @@ class Employee extends AppModel {
 
 	}
 
+
+	public function filter($conditions = array()) {
+
+			$employee = $this->find('all',array(
+								'conditions' => $conditions,
+								'order' => array('Employee.last_name ASC'),
+								'group' => array('Employee.id'),
+								'fields' => array(
+									'Employee.id',
+									'Employee.department_id',
+									'Salary.employee_salary_type',
+									'EmployeeAdditionalInformation.bank_account_number'
+								)
+							));
+
+			return  Set::classicExtract($employee,'{n}.Employee.id');
+
+	}
 
 }
