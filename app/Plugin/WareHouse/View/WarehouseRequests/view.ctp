@@ -31,7 +31,7 @@
 
         <?php if($requestData['WarehouseRequest']['status_id'] == 1){ ?>
 
-        <a data-toggle="modal" href="#myModalOutRecord<?php echo $requestData['WarehouseRequest']['id']?>" class="btn btn-primary mrg-b-lg pull-right addSchedButton "><i class="fa fa-plus-circle fa-lg"></i> Out Record</a>
+        <a data-toggle="modal" href="#myModalOutRecord<?php echo $requestData['WarehouseRequest']['id']?>" class="btn btn-primary mrg-b-lg pull-right addSchedButton "><i class="fa fa-plus-circle fa-lg tobeTrigger"></i> Out Record</a>
 
         <?php } ?>            
     
@@ -211,7 +211,7 @@
                                                                 'class' => 'form-control item_type toBeLimited',
                                                                 'label' => false,
                                                                 'fields' =>array('name'),
-                                                                'value' => $value['quantity']));
+                                                                'value' => $value['stock_quantity'] < $value['quantity'] ? $value['stock_quantity'] : $value['quantity']));
                                 ?>
 
                                 <?php 
