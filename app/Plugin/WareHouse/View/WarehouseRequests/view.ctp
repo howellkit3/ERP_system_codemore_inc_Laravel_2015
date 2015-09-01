@@ -81,7 +81,7 @@
                             <th class="text-center">Purpose</th>
                             <th class="text-center">Remarks</th>
                         </thead>
-                        <?php   foreach ($requestData['WarehouseRequestItem'] as $key => $value) { $key++ ?>
+                        <?php foreach ($requestData['WarehouseRequestItem'] as $key => $value) { $key++ ?>
                            
                             <tr>
                                 <td><?php echo $key ?></td>
@@ -101,11 +101,11 @@
                                    } ?>
                                 </td>
                                 <td class="text-center"></td>
-                                <td class="text-center"></td>
-                                <td class="text-center"></td>
+                                <td class="text-center"><?php echo date('M d, Y', strtotime($value['date_needed'])); ?></td>
+                                <td class="text-center"><?php echo $value['purpose']; ?></td>
                                 <td class="text-center"><?php  
-                                   if(!empty($requestData['remarks'])){ 
-                                    echo$requestData['remarks'];
+                                   if(!empty($value['remarks'])){ 
+                                    echo $value['remarks'];
                                    } ?></td>
                                 
                             </tr>

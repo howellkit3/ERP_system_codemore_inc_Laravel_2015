@@ -273,6 +273,45 @@
 
 												</div>
 
+												<div class="form-group">
+													<label class="col-lg-2 control-label">Date Needed</label>
+													<div class="col-lg-6">
+														<?php 
+                                   						 echo $this->Form->input('RequestItem.0.date_needed', array(
+					                                        'type' => 'text',
+					                                        'label' => false,
+					                                        'required' => 'required',
+					                                        'class' => 'form-control item_type datepick required',
+					                                        ));
+                              	
+			                                            ?>
+													</div>
+												</div>
+
+												<div class="form-group">
+													<label class="col-lg-2 control-label">Purpose</label>
+													<div class="col-lg-6">
+														<?php 
+				                                            echo $this->Form->textarea('RequestItem.0.purpose', array(
+				                                            								'class' => 'form-control item_type required',
+										                                                    'label' => false,
+										                                                    'placeholder' => 'Request Purpose'));
+			                                            ?>
+													</div>
+												</div>
+
+												<div class="form-group">
+													<label class="col-lg-2 control-label">Remarks</label>
+													<div class="col-lg-6">
+														<?php 
+				                                            echo $this->Form->textarea('RequestItem.0.remarks', array(
+				                                            								'class' => 'form-control item_type required',
+										                                                    'label' => false,
+										                                                    'placeholder' => 'Remarks'));
+			                                            ?>
+													</div>
+												</div>
+
 												<hr>
 
 											</div>

@@ -90,18 +90,12 @@ th, td {
 
 						<td align = "center" style="border:1px solid black; font-size:80% "><?php ?></td>
 
-						<td align = "center" style="border:1px solid black; font-size:80% "><?php ?></td>
+						<td align = "center" style="border:1px solid black; font-size:40% "><?php ?><?php echo date('M d, Y', strtotime($value['date_needed'])) ?></td>
 
-						<td align = "center" style="border:1px solid black; font-size:80% "><?php ?></td>
+						<td align = "center" style="border:1px solid black; font-size:40% "><?php ?><?php echo $value['purpose'] ?></td>
 
-						<?php $lengthRemarks = strlen($value['remarks'])?>
-
-						<?php if($lengthRemarks >= 35 && $lengthRemarks <= 70){ ?>
-							<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:65%"><?php echo  $value['remarks'] ?></td>
-						<?php 
-							}else{ ?>
-							<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:65%"><?php echo $value['remarks'] ?></td>
-						<?php } ?>	
+						<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:50%"><?php echo $value['remarks'] ?></td>
+					
 					</tr>
 
 					<?php 
@@ -239,18 +233,11 @@ th, td {
 
 						<td align = "center" style="border:1px solid black; font-size:80% "><?php ?></td>
 
-						<td align = "center" style="border:1px solid black; font-size:80% "><?php ?></td>
+						<td align = "center" style="border:1px solid black; font-size:40% "><?php ?><?php echo date('M d, Y', strtotime($value['date_needed'])) ?></td>
 
-						<td align = "center" style="border:1px solid black; font-size:80% "><?php ?></td>
+						<td align = "center" style="border:1px solid black; font-size:40% "><?php ?><?php echo $value['purpose'] ?></td>
 
-						<?php $lengthRemarks = strlen($value['remarks'])?>
-
-						<?php if($lengthRemarks >= 35 && $lengthRemarks <= 70){ ?>
-							<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:65%"><?php echo  $value['remarks'] ?></td>
-						<?php 
-							}else{ ?>
-							<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:65%"><?php echo $value['remarks'] ?></td>
-						<?php } ?>	
+						<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:50%"><?php echo $value['remarks'] ?></td>
 					</tr>
 
 					<?php 
@@ -315,9 +302,6 @@ th, td {
 				</table>
 					
 				</div>
-
-				
-				
 			</div>
 	</div>	
 </div>	

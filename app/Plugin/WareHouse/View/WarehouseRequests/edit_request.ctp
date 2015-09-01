@@ -264,6 +264,23 @@
 
 													</div>
 
+													<div class="form-group">
+														<label class="col-lg-2 control-label">Remarks</label>
+														
+
+														<div class="col-lg-6">
+															<?php 
+																echo $this->Form->textarea('WarehouseRequestItem.'.$key.'.remarks', array(
+											                        'label' => false,
+											                        'class' => 'form-control',
+											                        'default' => $value['remarks']
+											                         )); 
+
+											                ?>
+														</div>
+
+													</div>
+
 													<hr>
 
 												</div>
