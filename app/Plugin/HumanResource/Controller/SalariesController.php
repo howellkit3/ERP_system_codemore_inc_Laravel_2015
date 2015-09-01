@@ -133,7 +133,7 @@ class SalariesController  extends HumanResourceAppController {
 			$this->loadModel('HumanResource.Salary');
 			$this->loadModel('HumanResource.GovernmentRecord');
 			$this->loadModel('HumanResource.Holiday');	
-			$this->loadModel('HumanResource.SalaryReport');	
+			$this->loadModel('Payroll.SalaryReport');	
 			$this->loadModel('Payroll.Payroll');	
 
 

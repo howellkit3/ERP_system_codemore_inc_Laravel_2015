@@ -136,17 +136,21 @@
                                                 <div class="col-lg-9">
                                                   
                                                     <?php
-                                                        $holiday_types = array(
-                                                                'addition' => 'Addition',
+                                                        $deductions = array(
                                                                 'ca_fund' => 'CA_Fund',
                                                                 'ca_others' => 'CA_Others',
                                                                 'sss_loan' => 'SSS_Loan',
                                                                 'uniform' => 'Uniform',
+                                                                'medical' => 'Medical',
+                                                                'canteen' => 'Canteen',  
                                                                 'penalty' => 'Penalty',
-                                                                'pagibig_loan' => 'PAGIBIG_Loan',
+                                                                'sss_loan' => 'SSS Loan',
+                                                                'pagibig_loan_mpl' => 'PAGIBIG Loan (MPL)',
+                                                                'pagibig_loan_calamity' => 'PAGIBIG Loan (Calamity)',
+                                                                'bank_loan' => 'Bank Loan'
                                                             );
                                                         echo $this->Form->input('type', array(
-                                                            'options' => $holiday_types ,
+                                                            'options' => $deductions ,
                                                             'class' => 'form-control col-lg-6 required',
                                                             'label' => false,
                                                             'empty' => '-- Select Type --'
@@ -178,7 +182,7 @@
                                     <div class="form-group">
                                         <div class="col-lg-11">
                                             <div class="form-group">
-                                                <label for="inputEmail1" class="col-lg-3 control-label"> Reason </label>
+                                                <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span> Reason </label>
                                                 <div class="col-lg-9">
                                                     <?php
 

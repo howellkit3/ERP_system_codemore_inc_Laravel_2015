@@ -98,7 +98,7 @@ class AttendancesController  extends HumanResourceAppController {
 
 		$attendance = $this->Attendance->getAll($conditions,array('Employee'));
 
-		$employees = [];
+		$employees = array();
 
 		foreach ($attendance as $key => $people) {
 

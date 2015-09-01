@@ -88,6 +88,7 @@ echo $this->element('hr_options');
                     <th><a href="#"><span>Gross</span></a></th>
                     <th><a href="#"><span>SSS</span></a></th>
                     <th><a href="#"><span>PhilHealth</span></a></th>
+                    <th><a href="#"><span>PagIbig</span></a></th>
                     <th><a href="#"><span>WTax</span></a></th>
                     <th><a href="#"><span>Deductions</span></a></th>
 

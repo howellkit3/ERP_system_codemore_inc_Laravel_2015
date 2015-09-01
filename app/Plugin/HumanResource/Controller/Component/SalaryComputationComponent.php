@@ -127,10 +127,8 @@ class SalaryComputationComponent extends Component
 						$salary[$key]['total_deduction'] += $salary[$key]['pagibig'];
 						
 						//no tax
-						$net_pay_no_tax -= $salary[$key]['total_deduction'];
-					
 			
-						$salary[$key]['with_holding_tax'] = $this->computeTax($employee,$net_pay_no_tax,'semi_monthly',$minimumWage);
+						$salary[$key]['with_holding_tax'] = $this->computeTax($employee,$salary[$key]['gross_pay'],'semi_monthly',$minimumWage);
 						//add tax
 
 						$salary[$key]['total_deduction'] += $salary[$key]['with_holding_tax'];
@@ -410,7 +408,6 @@ class SalaryComputationComponent extends Component
 		$data['sunday_work_legal_holiday'] =  0;
 
 	
-
     	if (!empty($employee)) {
 
     	$hours_ot = 0;
@@ -505,15 +502,23 @@ class SalaryComputationComponent extends Component
     	}
     }
 
+    	//get daily rate
+
+    	$monthly = $employee['Salary']['basic_pay']  * 12 / 365 * 30.4165;
+
+    	//regular working hours = 48 hours per week
+    	//192 per month
+    	$daily = $monthly / 48;
+
 		$data['days'] = ($regular_days + $legal_holiday_days + $special_days);
 
 
-		$data['regular'] = ($employee['Salary']['basic_pay'] * $data['total_hours']) /  ($workingDays * $hours);
+		//$data['regular'] = ($employee['Salary']['basic_pay'] * $data['total_hours']) /  ($workingDays * $hours);
+		$data['regular'] = $daily * $data['total_hours'];
 
 		$data['OT'] = ($employee['Salary']['basic_pay'] * $hours_ot * 1.25 ) /  ($workingDays * $hours);
 
 		
-
 		if ($legal_holiday_days > 0) {
 			
 			$data['legal_holiday'] = ($employee['Salary']['basic_pay'] * $legal_holiday_hours ) /  ($workingDays * $hours);

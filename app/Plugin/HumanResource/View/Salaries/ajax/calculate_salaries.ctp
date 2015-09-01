@@ -10,6 +10,8 @@
 					<th><a href="#"><span>Gross</span></a></th>
 					<th><a href="#"><span>SSS</span></a></th>
 					<th><a href="#"><span>PhilHealth</span></a></th>
+
+					<th><a href="#"><span>Pagibig</span></a></th>
 					<th><a href="#"><span>WTax</span></a></th>
 					<th><a href="#"><span>Deductions</span></a></th>
 					<th><a href="#"><span>Remarks</span></a></th>
@@ -50,6 +52,9 @@
 								                        </td>
 								                        <td class="">
 															<?php echo !empty($salary['philhealth']) ? $salary['philhealth'] : '0.00'; ?>
+								                        </td>
+								                        <td class="">
+															<?php echo !empty($salary['pagibig']) ? $salary['pagibig'] : '0.00'; ?>
 								                        </td>
 								                        <td class="">
 								                            <?php echo number_format($salary['with_holding_tax'],2); ?>
