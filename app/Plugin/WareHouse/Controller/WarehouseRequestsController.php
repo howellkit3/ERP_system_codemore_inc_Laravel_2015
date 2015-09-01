@@ -348,8 +348,6 @@ class WarehouseRequestsController extends WareHouseAppController {
 															'WarehouseRequest.id' => $requestID)
 													));
 
-	 	//pr($request); exit;
-
 	 	foreach ($request['WarehouseRequestItem'] as $key => $value) {
 			
 			if($value['model'] == 'GeneralItem'){
@@ -394,7 +392,6 @@ class WarehouseRequestsController extends WareHouseAppController {
 															'order' => array('Unit.unit' => 'ASC')
 															));
 
-			//pr($this->request->data); exit;
 	 	if ($this->request->is(array('post','put'))) {
 
 
@@ -426,11 +423,17 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 			$this->loadModel('WareHouse.ItemRecord');
 
+			$this->loadModel('WareHouse.WarehouseRequestItem');
+
 			$this->loadModel('WareHouse.Stock');
+
+			$requestId = $this->OutRecord->saveOutRecord($this->request->data['OutRecord'],$ID,$userData['User']['id']);
+
+			$this->ItemRecord->saveOutItemRecord($this->request->data['WarehouseRequestItem'], $requestId);
 
 			$stockData = $this->Stock->find('all');
 
-			$condition = $this->Stock->saveOutRecordStock($this->request->data['ItemRecord'], $userData['User']['id'], $stockData );
+			$condition = $this->Stock->saveOutRecordStock($this->request->data['WarehouseRequestItem'], $userData['User']['id'], $stockData );
 			
 			if($condition == 0){
 
@@ -451,5 +454,116 @@ class WarehouseRequestsController extends WareHouseAppController {
         }
 
 	}
+
+	public function stock() {
+
+		$this->loadModel('WareHouse.Stock');
+
+		$this->loadModel('Area');
+
+		$stockData = $this->Stock->find('all');
+
+		$areaData = $this->Area->find('list',array('fields' => array('id', 'name')));
+
+		foreach ($stockData as $key => $value) {
+			
+			if($value['Stock']['model'] == 'GeneralItem'){
+
+				$this->loadModel('GeneralItem');
+
+	 			$itemData = $this->GeneralItem->find('list',array('fields' => array('id', 'name')));
+
+	 			$stockData[$key]['Stock']['name'] = $itemData[$value['Stock']['item_id']];
+	 		}
+
+	 		if($value['Stock']['model'] == 'CorrugatedPaper'){
+
+	 			$this->loadModel('CorrugatedPaper');
+
+	 			$itemData = $this->CorrugatedPaper->find('list',array('fields' => array('id', 'name')));
+
+	 			$stockData[$key]['Stock']['name'] = $itemData[$value['Stock']['item_id']];
+	 		}
+
+	 		if($value['Stock']['model'] == 'Substrate'){
+
+	 			$this->loadModel('Substrate');
+
+	 			$itemData = $this->Substrate->find('list',array('fields' => array('id', 'name')));
+
+	 			$stockData[$key]['Stock']['name'] = $itemData[$value['Stock']['item_id']];
+	 		}
+
+	 		if($value['Stock']['model'] == 'CompoundSubstrate'){
+
+	 			$this->loadModel('CompoundSubstrate');
+
+	 			$itemData = $this->CompoundSubstrate->find('list',array('fields' => array('id', 'name')));
+	 			
+	 			$stockData[$key]['Stock']['name'] = $itemData[$value['Stock']['item_id']];
+	 		}
+	    } 
+
+		$this->set(compact('stockData', 'areaData'));
+
+	}
+
+	public function stock_view($id = null){
+
+		$this->loadModel('WareHouse.Stock');
+
+		$this->loadModel('Unit');
+
+		$this->loadModel('Area');
+
+		$unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
+															'order' => array('Unit.unit' => 'ASC')
+															));
+
+		$areaData = $this->Area->find('list', array('fields' => array('id', 'name'),
+															'order' => array('Area.id' => 'ASC')
+															));
+
+		$stockData = $this->Stock->find('first', array('conditions' => array('Stock.id' => $id)));
+
+			if($stockData['Stock']['model'] == 'GeneralItem'){
+
+				$this->loadModel('GeneralItem');
+
+	 			$itemData = $this->GeneralItem->find('list',array('fields' => array('id', 'name')));
+
+	 			$stockData['Stock']['name'] = $itemData[$stockData['Stock']['item_id']];
+	 		}
+
+	 		if($stockData['Stock']['model'] == 'CorrugatedPaper'){
+
+	 			$this->loadModel('CorrugatedPaper');
+
+	 			$itemData = $this->CorrugatedPaper->find('list',array('fields' => array('id', 'name')));
+
+	 			$stockData['Stock']['name'] = $itemData[$stockData['Stock']['item_id']];
+	 		}
+
+	 		if($stockData['Stock']['model'] == 'Substrate'){
+
+	 			$this->loadModel('Substrate');
+
+	 			$itemData = $this->Substrate->find('list',array('fields' => array('id', 'name')));
+
+	 			$stockData['Stock']['name'] = $itemData[$stockData['Stock']['item_id']];
+	 		}
+
+	 		if($stockData['Stock']['model'] == 'CompoundSubstrate'){
+
+	 			$this->loadModel('CompoundSubstrate');
+
+	 			$itemData = $this->CompoundSubstrate->find('list',array('fields' => array('id', 'name')));
+	 			
+	 			$stockData['Stock']['name'] = $itemData[$stockData['Stock']['item_id']];
+	 		}
+
+		$this->set(compact('stockData', 'unitData', 'areaData'));
+    	
+    }
 
 }

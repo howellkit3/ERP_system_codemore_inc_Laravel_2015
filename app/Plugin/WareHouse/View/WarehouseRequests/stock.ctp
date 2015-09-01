@@ -17,18 +17,17 @@
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th><a href="#"><span>Request No</span></a></th>
-                                <th><a href="#"><span>Name</span></a></th>
-                                <th><a href="#"><span>Type</span></a></th>
-                                <th><a href="#"><span>Status</span></a></th>
-                                <th><a href="#"><span>Requested By</span></a></th>
-                                <th><a href="#"><span>Position</span></a></th>
-                                <th><a href="#"><span>Created</span></a></th>
+                                <th class = "text-center"><a href="#"><span>Stock No</span></a></th>
+                                <th class = "text-center"><a href="#"><span>Name</span></a></th>
+                                <th class = "text-center"><a href="#"><span>Quantity</span></a></th>
+                                <th class = "text-center"><a href="#"><span>Location</span></a></th>
+                                <!-- <th class = "text-center"><a href="#"><span>Status</span></a></th> -->
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
 
                         <?php echo $this->element('stocks_table'); ?>
+
                                                     
                      </table>
                     <hr>

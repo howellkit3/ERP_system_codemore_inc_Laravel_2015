@@ -67,7 +67,7 @@
 
                         <div class="modal-body">
 
-                            <?php //pr($requestList); exit;
+                            <?php 
 
                             $id = $requestList['WarehouseRequest']['id'];
 
@@ -77,13 +77,13 @@
 
                             <br>
 
-                            <?php foreach ($requestList['RequestItem'] as $key => $value) {?>
+                            <?php foreach ($requestList['WarehouseRequestItem'] as $key => $value) {?>
 
                                     <div class="form-group" id="existing_items">
                                         <label class="col-lg-2 control-label">Item</label>
                                         <div class="col-lg-9">
                                             <?php 
-                                                echo $this->Form->input('ItemRecord.'.$key.'.name', array(
+                                                echo $this->Form->input('WarehouseRequestItem.'.$key.'.name', array(
                                                                             'class' => 'form-control item_type',
                                                                             'label' => false,
                                                                             'readonly' => true,
@@ -99,7 +99,7 @@
                                         <label class="col-lg-2 control-label"></label>
                                         <div class="col-lg-6">
                                             <?php 
-                                                echo $this->Form->input('ItemRecord.'.$key.'.quantity', array(
+                                                echo $this->Form->input('WarehouseRequestItem.'.$key.'.quantity', array(
                                                                             'class' => 'form-control item_type toBeLimited',
                                                                             'label' => false,
                                                                             'fields' =>array('name'),
@@ -107,7 +107,7 @@
                                             ?>
 
                                             <?php 
-                                                echo $this->Form->input('ItemRecord.'.$key.'.quantitylimit', array(
+                                                echo $this->Form->input('WarehouseRequestItem.'.$key.'.quantitylimit', array(
                                                                             'class' => 'form-control quantityLimit',
                                                                             'label' => false,
                                                                             'type' => 'hidden',
@@ -116,7 +116,7 @@
                                             ?>
 
                                             <?php 
-                                                echo $this->Form->input('ItemRecord.'.$key.'.foreign_key', array(
+                                                echo $this->Form->input('WarehouseRequestItem.'.$key.'.foreign_key', array(
                                                                             'class' => 'form-control ',
                                                                             'label' => false,
                                                                             'type' => 'hidden',
@@ -125,7 +125,7 @@
                                             ?>
 
                                              <?php 
-                                                echo $this->Form->input('ItemRecord.'.$key.'.model', array(
+                                                echo $this->Form->input('WarehouseRequestItem.'.$key.'.model', array(
                                                                             'class' => 'form-control quantityLimit',
                                                                             'label' => false,
                                                                             'type' => 'hidden',
@@ -136,7 +136,7 @@
 
                                         <div class="col-lg-3">
                                             <?php 
-                                                echo $this->Form->input('ItemRecord.'.$key.'.quantity_unit', array(
+                                                echo $this->Form->input('WarehouseRequestItem.'.$key.'.quantity_unit', array(
                                                                             'class' => 'form-control item_type',
                                                                             'label' => false,
                                                                             'fields' =>array('name'),

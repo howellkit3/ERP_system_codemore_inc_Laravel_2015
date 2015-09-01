@@ -28,8 +28,8 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
         </li>
 
          <li class="dropdown hidden-xs active">
-           <?php $page =($active_page == 'receivings' && $active_action == 'out_record') ? 'active tab' : '' ?>
-            <?php echo $this->Html->link("<span class='count'>Out Record</span>", array('controller' => 'receivings', 'action' => 'out_record'),array('escape' => false,'class' => 'btn '.$page )); ?>
+           <?php $page =($active_page == 'warehouse_requests' && $active_action == 'stock') ? 'active tab' : '' ?>
+            <?php echo $this->Html->link("<span class='count'>Stocks</span>", array('controller' => 'warehouse_requests', 'action' => 'stock'),array('escape' => false,'class' => 'btn '.$page )); ?>
            
         </li>
 

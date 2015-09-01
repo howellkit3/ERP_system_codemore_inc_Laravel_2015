@@ -35,8 +35,10 @@ class ItemRecord extends AppModel {
 
   	public function saveOutItemRecord($requestData , $outRecordId){
 
+
+
    		foreach ($requestData as $key => $value)
-		 {
+		 {//pr($value); exit;
 	
 	  		$this->create();
 	  		
