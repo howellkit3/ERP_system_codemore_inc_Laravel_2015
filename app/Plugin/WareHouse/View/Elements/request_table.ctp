@@ -49,14 +49,14 @@
                         </span> ', array('controller' => 'warehouse_requests', 'action' => 'view',$requestList['WarehouseRequest']['id']),array('class' =>' table-link','escape' => false,'title'=>'Review Request'));
                 ?>
 
-                <a data-toggle="modal" href="#myModalOutRecord<?php echo $requestList['WarehouseRequest']['id'] ?>" class="table-link"><i class="fa fa-lg  "></i><span class="fa-stack ">
+                <!-- <a data-toggle="modal" href="#myModalOutRecord<?php echo $requestList['WarehouseRequest']['id'] ?>" class="table-link"><i class="fa fa-lg  "></i><span class="fa-stack ">
                                       <i class="fa fa-square fa-stack-2x "></i>
-                                      <i class="fa  fa-sign-in fa-stack-1x fa-inverse "></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> OutRecord </font></span></a>
+                                      <i class="fa  fa-sign-in fa-stack-1x fa-inverse "></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> OutRecord </font></span></a> -->
 
             
                     </td>
 
-            <div class="modal fade" id="myModalOutRecord<?php echo $requestList['WarehouseRequest']['id'] ?>" role="dialog" >
+            <!-- <div class="modal fade" id="myModalOutRecord<?php echo $requestList['WarehouseRequest']['id'] ?>" role="dialog" >
                 <div class="modal-dialog">
                     <div class="modal-content margintop">
 
@@ -179,7 +179,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </tr>
 
 

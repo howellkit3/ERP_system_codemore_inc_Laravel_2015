@@ -27,9 +27,11 @@
 
         echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit', array('controller' => 'warehouse_requests', 'action' => 'edit_request',$requestData['WarehouseRequest']['id']),array('class' =>'btn btn-primary pull-right','escape' => false)); ?>
 
+        <?php if($requestData['WarehouseRequest']['status_id'] == 1){ ?>
+
         <a data-toggle="modal" href="#myModalOutRecord<?php echo $requestData['WarehouseRequest']['id']?>" class="btn btn-primary mrg-b-lg pull-right addSchedButton "><i class="fa fa-plus-circle fa-lg"></i> Out Record</a>
 
-                    
+        <?php } ?>            
     
     <br><br>
 </div>
@@ -64,7 +66,7 @@
                 
                     <tr>
                         <td></td>
-                        <td><b>Position: </b><?php echo $roleData[$userData['User']['role_id']];?></td>
+                        <td><b>Department: </b><?php echo $roleName;?></td>
                         <td ></td>
                         <td align="right" style="line-height:8px;"><b>No: </b>RQ<?php echo $requestData['WarehouseRequest']['uuid']; ?><br><br><br><b>Date: </b><?php echo (new \DateTime())->format('d/m/Y') ?><br></td>
                     </tr>
@@ -74,6 +76,7 @@
             <br>
                 <div class="table-responsive">
                     <table class="table table-bordered">
+
                         <thead>
                             <th>#</th>
                             <th class="text-center">Item Decription</th>
@@ -84,6 +87,7 @@
                             <th class="text-center">Purpose</th>
                             <th class="text-center">Remarks</th>
                         </thead>
+
                         <?php foreach ($requestData['WarehouseRequestItem'] as $key => $value) { $key++ ?>
                            
                             <tr>
@@ -103,7 +107,7 @@
                                     echo $unitData[$value['quantity_unit_id']];
                                    } ?>
                                 </td>
-                                <td class="text-center"></td>
+                                <td class="text-center"><?php echo empty($value['stock_quantity']) ? 0 : $value['stock_quantity']; ?></td>
                                 <td class="text-center"><?php echo date('M d, Y', strtotime($value['date_needed'])); ?></td>
                                 <td class="text-center"><?php echo $value['purpose']; ?></td>
                                 <td class="text-center"><?php  

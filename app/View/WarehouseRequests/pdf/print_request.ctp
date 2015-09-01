@@ -37,7 +37,7 @@ th, td {
 					<tbody>
 					
 						<tr>
-							<td align="left" style="line-height:8px;"><span style="font-size:70%"; ><B>Department: </B></td>
+							<td align="left" style="line-height:8px;"><span style="font-size:70%"; ><B>Department: <?php echo $roleName ?> </B></td>
 							<td></td>
 							<td ></td>
 							<td align="right" style="line-height:8px;"><span style="font-size:70%"; ><b>No: </b>RQ<?php echo $request['WarehouseRequest']['uuid'] ?><br><br><b>Date: </b><?php echo (new \DateTime())->format('d/m/Y') ?></span></td>
@@ -88,7 +88,7 @@ th, td {
 						
 						<td align = "center" style="border:1px solid black; font-size:70% "><?php echo $unitData[$value['quantity_unit_id']]?></td>
 
-						<td align = "center" style="border:1px solid black; font-size:80% "><?php ?></td>
+						<td align = "center" style="border:1px solid black; font-size:80% "><?php echo empty($value['stock_quantity']) ? 0 : $value['stock_quantity'];?></td>
 
 						<td align = "center" style="border:1px solid black; font-size:40% "><?php ?><?php echo date('M d, Y', strtotime($value['date_needed'])) ?></td>
 
@@ -180,7 +180,7 @@ th, td {
 					<tbody>
 					
 						<tr>
-							<td align="left" style="line-height:8px;"><span style="font-size:70%"; ><B>Department: </B></td>
+							<td align="left" style="line-height:8px;"><span style="font-size:70%"; ><B>Department: <?php echo $roleName ?> </B></td>
 							<td></td>
 							<td ></td>
 							<td align="right" style="line-height:8px;"><span style="font-size:70%"; ><b>No: </b>RQ<?php echo $request['WarehouseRequest']['uuid'] ?><br><br><b>Date: </b><?php echo (new \DateTime())->format('d/m/Y') ?></span></td>
@@ -231,7 +231,7 @@ th, td {
 						
 						<td align = "center" style="border:1px solid black; font-size:70% "><?php echo $unitData[$value['quantity_unit_id']]?></td>
 
-						<td align = "center" style="border:1px solid black; font-size:80% "><?php ?></td>
+						<td align = "center" style="border:1px solid black; font-size:80% "><?php ?><?php echo empty($value['stock_quantity']) ? 0 : $value['stock_quantity'];?></td>
 
 						<td align = "center" style="border:1px solid black; font-size:40% "><?php ?><?php echo date('M d, Y', strtotime($value['date_needed'])) ?></td>
 

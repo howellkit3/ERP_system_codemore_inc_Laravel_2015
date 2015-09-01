@@ -116,23 +116,73 @@ class WarehouseRequestsController extends WareHouseAppController {
 
     	$this->loadModel('WareHouse.WarehouseRequest');
 
+    	$this->loadModel('WareHouse.Stock');
+
 	 	$this->loadModel('Unit');
 
-	 	$this->loadModel('Role');
+	 	
+
+	 	//pr($userData); exit;
 
 		$unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
 															'order' => array('Unit.unit' => 'ASC')
 															));
 
-		$roleData = $this->Role->find('list', array('fields' => array('id', 'name'),
-															'order' => array('Role.name' => 'ASC')
-															));
+
+		if($userData['User']['role_id'] == 1 ){
+
+			$roleName =  "Super Admin";
+
+		} else if($userData['User']['role_id'] == 2){
+
+			$roleName =  "CEO";
+
+		} else if($userData['User']['role_id'] == 3 || $userData['User']['role_id'] == 8){
+
+			$roleName =  "Sales";
+
+		} else if($userData['User']['role_id'] == 4){
+
+			$roleName =  "Warehouse";
+
+		} else if($userData['User']['role_id'] == 5){
+
+			$roleName =  "Delivery";
+
+		} else if($userData['User']['role_id'] == 6 || $userData['User']['role_id'] == 9 || $userData['User']['role_id'] == 10 || $userData['User']['role_id'] == 11 ){
+
+			$roleName =  "Accounting";
+
+		} else if($userData['User']['role_id'] == 7){
+
+			$roleName =  "Purchasing";
+
+		} else if($userData['User']['role_id'] == 12){
+
+			$roleName =  "Human Resource";
+
+		} else {
+
+			$roleName =  "Staff";
+		}
 
     	$this->WarehouseRequest->bind('WarehouseRequestItem');
 		
 		$requestData = $this->WarehouseRequest->find('first', array('conditions' => array('WarehouseRequest.id' => $id)));
 
+		$stockData = $this->Stock->find('all');
+
 	    foreach ($requestData['WarehouseRequestItem'] as $key => $value) {
+
+	    	foreach ($stockData as $key1 => $valueofStock) {
+
+	    		if($valueofStock['Stock']['model'] == $value['model'] && $valueofStock['Stock']['item_id'] == $value['foreign_key']){
+
+	    			$requestData['WarehouseRequestItem'][$key]['stock_quantity'] = $valueofStock['Stock']['quantity'];
+	    			 
+	    		}
+
+	    	} 
 			
 			if($value['model'] == 'GeneralItem'){
 
@@ -179,7 +229,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 														'conditions' => array('User.id' => $requestData['WarehouseRequest']['created_by']),
 														));
 	    
-    	$this->set(compact('requestId','requestData','userData','unitData','preparedData', 'roleData'));
+    	$this->set(compact('requestId','requestData','userData','unitData','preparedData','roleName'));
     }
 
 	public function approve($requestID = null) {
@@ -206,7 +256,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 		$this->loadModel('WareHouse.WarehouseRequest');
 
-		$this->loadModel('WareHouse.WarehouseRequestItem');
+		$this->loadModel('WareHouse.Stock');
 
 		$this->loadModel('Unit');
 
@@ -216,8 +266,59 @@ class WarehouseRequestsController extends WareHouseAppController {
 														'conditions' => array( 
 															'WarehouseRequest.id' => $requestID)
 													));
+
+		$userData = $this->Session->read('Auth');
+
+		$stockData = $this->Stock->find('all');
+
+		if($userData['User']['role_id'] == 1 ){
+
+			$roleName =  "Super Admin";
+
+		} else if($userData['User']['role_id'] == 2){
+
+			$roleName =  "CEO";
+
+		} else if($userData['User']['role_id'] == 3 || $userData['User']['role_id'] == 8){
+
+			$roleName =  "Sales";
+
+		} else if($userData['User']['role_id'] == 4){
+
+			$roleName =  "Warehouse";
+
+		} else if($userData['User']['role_id'] == 5){
+
+			$roleName =  "Delivery";
+
+		} else if($userData['User']['role_id'] == 6 || $userData['User']['role_id'] == 9 || $userData['User']['role_id'] == 10 || $userData['User']['role_id'] == 11 ){
+
+			$roleName =  "Accounting";
+
+		} else if($userData['User']['role_id'] == 7){
+
+			$roleName =  "Purchasing";
+
+		} else if($userData['User']['role_id'] == 12){
+
+			$roleName =  "Human Resource";
+
+		} else {
+
+			$roleName =  "Staff";
+		}
 		
 		foreach($request['WarehouseRequestItem'] as $key=>$value) {
+
+			foreach ($stockData as $key1 => $valueofStock) {
+
+	    		if($valueofStock['Stock']['model'] == $value['model'] && $valueofStock['Stock']['item_id'] == $value['foreign_key']){
+
+	    			$request['WarehouseRequestItem'][$key]['stock_quantity'] = $valueofStock['Stock']['quantity'];
+	    			 
+	    		}
+
+	    	} 
 
 			if($value['model'] == 'GeneralItem'){
 
@@ -259,7 +360,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 	  		}
 
 	  		
-		}
+		} 
 
 		$unitData = $this->Unit->find('list',array('fields' => array('id', 'unit')));
 
@@ -302,7 +403,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 		$view = new View(null, false);
 
-		$view->set(compact('request', 'preparedFullName', 'department', 'requestItem', 'itemData', 'unitData'));
+		$view->set(compact('request', 'preparedFullName', 'department', 'requestItem', 'itemData', 'unitData', 'roleName'));
         
 		$view->viewPath = 'WarehouseRequests'.DS.'pdf';	
    

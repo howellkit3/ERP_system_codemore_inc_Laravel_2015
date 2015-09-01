@@ -33,20 +33,6 @@ class WarehouseRequest extends AppModel {
 		$this->contain($model);
 	}
 
-	// public function bindRequest() {
-	// 	$this->bindModel(array(
-	// 		'hasOne' => array(
-	// 			'PurchasingItem' => array(
-	// 				'className' => 'Purchasing.PurchasingItem',
-	// 				'foreignKey' => false,
-	// 				'conditions' => 'Request.id = PurchasingItem.request_id'
-	// 			),		
-				
-
-	// 		)
-	// 	));
-	// 	$this->recursive = 1;
-	// }
 
 	public function saveRequest($requestData = null, $auth = null){
 
