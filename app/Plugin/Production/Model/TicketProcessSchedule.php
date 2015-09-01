@@ -34,15 +34,19 @@ class TicketProcessSchedule extends AppModel {
 	}
 
 	public function saveTicketProcessSchedule($data,$auth){
-
-		$this->create();
+			
+		foreach ($data['TicketProcessSchedule'] as $key => $value) {
+			
+			$this->create();
 		 
-		$data['MachineSchedule']['created_by'] = $auth;
-		$data['MachineSchedule']['modified_by'] = $auth;
-		$data['MachineSchedule']['process_status'] = 1;
-		$this->save($data);
+			$value['created_by'] = $auth;
+			$value['modified_by'] = $auth;
+			$this->save($value);
 
-		return $this->id;
+			//return $this->id;
+
+		}
+		
 		
 	}
 	

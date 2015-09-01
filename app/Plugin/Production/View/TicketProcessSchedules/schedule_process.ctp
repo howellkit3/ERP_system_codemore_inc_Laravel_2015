@@ -99,14 +99,14 @@
 						      			<label class="col-lg-1 control-label"><?php echo $no ?></label>
 										<div class="col-lg-3">
 											<?php 
-                                                echo $this->Form->input('process', array(
+                                                echo $this->Form->input('Ticket.process', array(
                                                     'class' => 'form-control ',
                                                     'label' => false,
                                                     'readonly' => true,
                                                     'value' => ucfirst($subProcess[$processList['ProductSpecificationProcessHolder']['sub_process_id']])
                                                     ));
                                                 //hidden data
-                                                echo $this->Form->input('TicketProcessSchedule.'.$key.'.job_ticket_id', array(
+                                                echo $this->Form->input('Ticket.job_ticket_id', array(
                                                     'class' => 'form-control ',
                                                     'label' => false,
                                                     'type' => 'hidden',
