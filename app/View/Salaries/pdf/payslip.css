@@ -5,6 +5,7 @@ body {
 	height: 100%;
 	padding: 0px;
 	margin: 0px;
+	font-size: 12px;
 }
 @page { margin: 20px; }
 .table {
@@ -28,7 +29,9 @@ body {
 .border-top {
 	border-top: 1px solid #000;
 }
-
+.container {
+	width: 100%;
+}
 .full-width {
 	width: 100%;
 }
@@ -39,5 +42,11 @@ body {
 	text-align: right;
 }
 .label-table {
-	width: 150px;
+	width: 20%;
+}
+.medium-font {
+	font-size: 10px;
+}
+.small-font {
+	font-size: 7px;
 }

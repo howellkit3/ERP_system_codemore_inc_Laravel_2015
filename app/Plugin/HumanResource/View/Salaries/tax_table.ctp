@@ -65,7 +65,7 @@ $active_tab = 'tax_table';
                 <tbody>
                 <tr>
                  <?php for($tax=1;$tax<= 8; $tax++) : ?>
-                    <td><?php echo $value['TaxDeduction']['tax_'.$tax]; ?></td>
+                    <td><?php echo number_format($value['TaxDeduction']['tax_'.$tax],2); ?></td>
                  <?php endfor; ?>
                 </tr>
                    
@@ -101,32 +101,32 @@ $active_tab = 'tax_table';
                         <?php echo $range['Tax']['code']?>
                       </td>
                       <td class="text-center">
-                        <?php echo $range['Tax']['exempt_rate']?>
+                        <?php echo number_format($range['Tax']['exempt_rate'],2) ?>
                       </td>
                       <td class="text-center">
-                        <?php echo $range['Tax']['taxes_1']?>
+                        <?php echo number_format($range['Tax']['taxes_1'],2) ?>
                       </td>
 
                       <td class="text-center">
-                        <?php echo $range['Tax']['taxes_2']?>
+                        <?php echo number_format($range['Tax']['taxes_2'],2) ?>
                       </td class="text-center">
                       <td class="text-center">
-                        <?php echo $range['Tax']['taxes_3']?>
+                        <?php echo number_format($range['Tax']['taxes_3'],2) ?>
                       </td>
                       <td class="text-right">
-                      <?php echo $range['Tax']['taxes_4']?>
+                      <?php echo number_format($range['Tax']['taxes_4'],2) ?>
                       </td>
                       <td class="text-right">
-                      <?php echo $range['Tax']['taxes_5']?>
+                      <?php echo number_format($range['Tax']['taxes_5'],2) ?>
                       </td>
                       <td class="text-right">
-                      <?php echo $range['Tax']['taxes_6']?>
+                      <?php echo number_format($range['Tax']['taxes_6'],2) ?>
                       </td>
                       <td class="text-right">
-                      <?php echo $range['Tax']['taxes_7']?>
+                      <?php echo number_format($range['Tax']['taxes_7'],2) ?>
                       </td>
                       <td class="text-right">
-                      <?php echo $range['Tax']['taxes_8']?>
+                      <?php echo number_format($range['Tax']['taxes_8'],2) ?>
                       </td>
                   </tr>
                   <?php } ?>

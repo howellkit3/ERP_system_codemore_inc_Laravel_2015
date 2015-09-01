@@ -54,6 +54,7 @@ class EmployeesController  extends HumanResourceAppController {
 		$positions = $this->Position->find('list',array('fields' => array('id','name')));
 
 		$departments = $this->Department->find('list',array('fields' => array('id','name')));
+		
         $this->loadModel('HumanResource.Employee');
 
         $employeeList = $this->Employee->find('list',array('fields' => array('id','fullname')));

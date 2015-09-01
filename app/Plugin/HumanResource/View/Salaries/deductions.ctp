@@ -101,6 +101,7 @@ $active_tab = 'sss_table';
                 <tr>
                   <th><a href="#"><span>Code</span></a></th>
                   <th><a href="#" class="desc"><span>Name</span></a></th>
+                  <th><a href="#" class="desc"><span>Deduction</span></a></th>
                   <th class="text-center"><a href="#" class="asc"><span>From</span></a></th>
                   <th class="text-center"><span>To</span></th>
                   <th class="text-center"><span>Mode</span></th>
@@ -121,9 +122,10 @@ $active_tab = 'sss_table';
                         echo !empty( $employee ) ?  $employee['Employee']['code'] : ''; ?>  
                       </td>
                       <td>  
-                        <?php 
-                        
-                        echo $this->CustomText->getFullname($employee['Employee']); ?>  
+                        <?php echo $this->CustomText->getFullname($employee['Employee']); ?>  
+                      </td>
+                      <td>  
+                        <?php echo !empty($deduction['Loan']['name']) ? $deduction['Loan']['name'] : '' ?>  
                       </td>
                       <td class="text-center">
                        <?php echo !empty($deduction['Deduction']['from']) && $deduction['Deduction']['from'] != '00:00:00' ? date('Y-m-d', strtotime($deduction['Deduction']['from'])) : ''; ?>  
@@ -137,7 +139,7 @@ $active_tab = 'sss_table';
                         <?php echo ucwords($deduction['Deduction']['mode'])?>   
                       </td>
                       <td class="text-center">
-                        <?php echo $deduction['Deduction']['amount']?>   
+                        <?php echo number_format($deduction['Deduction']['amount'],2); ?>   
                       </td>
                       
                         <td class="text-center">

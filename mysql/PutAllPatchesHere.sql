@@ -1855,3 +1855,60 @@ CREATE TABLE IF NOT EXISTS `areas` (
 
 /** howellkit added this 08/29/2015  */
 ALTER TABLE `request_items` CHANGE COLUMN `request_uuid` `request_id` INT(11) NULL DEFAULT NULL;
+
+
+/* Select KOUFU PAYROLL */
+
+ALTER TABLE `deductions` CHANGE `type` `type` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL;
+
+ALTER TABLE `deductions`  ADD `loan_id` INT NULL  AFTER `type`;
+
+
+
+CREATE TABLE IF NOT EXISTS `philhealth_ranges` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `range_from` decimal(8,2) NOT NULL,
+  `range_to` decimal(8,2) NOT NULL,
+  `condition` varchar(45) DEFAULT NULL,
+  `salary_base` decimal(8,2) NOT NULL,
+  `employer` decimal(8,2) NOT NULL,
+  `employee` decimal(8,2) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `accounting_philhealth_ranges`
+--
+
+INSERT INTO `philhealth_ranges` (`id`, `range_from`, `range_to`, `condition`, `salary_base`, `employer`, `employee`, `created_by`, `modified_by`, `created`, `modified`) VALUES
+(3, '8999.99', '0.00', 'below', '8000.00', '100.00', '100.00', 4, 4, '2015-08-12 04:05:41', '2015-08-12 04:05:41'),
+(4, '9000.00', '9999.99', NULL, '9000.00', '112.50', '112.50', 4, 4, '2015-08-12 04:06:25', '2015-08-12 04:06:25');
+
+CREATE TABLE IF NOT EXISTS `sss_ranges` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `range_from` decimal(8,2) NOT NULL,
+  `range_to` decimal(8,2) NOT NULL,
+  `bounds` decimal(8,2) NOT NULL,
+  `credits` decimal(8,2) NOT NULL,
+  `employers` decimal(8,2) NOT NULL,
+  `employees` decimal(8,2) NOT NULL,
+  `employee_compensations` decimal(8,2) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `accounting_sss_ranges`
+--
+
+INSERT INTO `sss_ranges` (`id`, `range_from`, `range_to`, `bounds`, `credits`, `employers`, `employees`, `employee_compensations`, `created_by`, `modified_by`, `created`, `modified`) VALUES
+(3, '1250.00', '1749.99', '0.00', '1500.00', '110.50', '54.50', '10.00', 4, 4, '2015-08-12 02:33:19', '2015-08-12 03:05:32'),
+(4, '1000.00', '1249.99', '0.00', '1000.00', '73.70', '36.30', '10.00', 4, 4, '2015-08-12 08:53:43', '2015-08-12 08:53:43'),
+(5, '1750.00', '2249.99', '0.00', '2000.00', '147.30', '72.70', '10.00', 4, 4, '2015-08-24 06:39:01', '2015-08-24 06:39:01');

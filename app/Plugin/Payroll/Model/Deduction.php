@@ -26,8 +26,14 @@ class Deduction extends AppModel {
 					'foreignKey' => false,
 					'conditions' => array('Employee.id = Deduction.employee_id')
 				),
+				'Loan' => array(
+					'className' => 'Loan',
+					'foreignKey' => 'loan_id',
+					//'conditions' => array('Loan.id = Deduction.employee_id')
+				),
 				
 			),
+
 		),false);
 
 		$this->contain($model);
