@@ -116,11 +116,9 @@
                                 </td>
                                 <td class="text-center"></td>
                                 <td class="text-center"></td>
-                                <td class="text-center"></td>
-                                <td class="text-center"> </td><td class="text-center"><?php  
-                                    if(!empty($unitData[$requestData['Request']['remarks']])){ 
-                                    echo $unitData[$requestData['Request']['remarks']];
-                                   } ?></td>
+                                <td class="text-center"><?php echo $value['RequestItem']['date_needed'] ?></td>
+                                <td class="text-center"><?php echo $value['RequestItem']['purpose'] ?></td>
+                                <td class="text-center"><?php echo $value['RequestItem']['remarks'] ?></td>
                                 
                             </tr>
                         <?php 

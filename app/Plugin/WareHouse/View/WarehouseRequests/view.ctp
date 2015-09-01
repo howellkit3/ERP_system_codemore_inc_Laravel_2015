@@ -6,14 +6,16 @@
 <?php echo $this->element('ware_house_option'); ?><br><br>
 
 <div class="filter-block pull-right">
-                    
+
+
     <?php 
         
-         echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg " ></i>  Go Back ', array('controller' => 'warehouse_requests','action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg " ></i>  Go Back ', array('controller' => 'warehouse_requests','action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
             ?> &nbsp;
 
-            <?php  echo $this->Html->link('<i class="fa fa-print fa-lg"></i>  Print ', array('controller' => 'warehouse_requests','action' => 'print_request', $requestData['WarehouseRequest']['id']),array('class' =>'btn btn-primary pull-right','escape' => false));
-            ?>
+        <?php  echo $this->Html->link('<i class="fa fa-print fa-lg"></i>  Print ', array('controller' => 'warehouse_requests','action' => 'print_request', $requestData['WarehouseRequest']['id']),array('class' =>'btn btn-primary pull-right','escape' => false));
+        ?>
+
      
         <?php 
 
@@ -23,10 +25,13 @@
 
         } 
 
-        echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit', array('controller' => 'warehouse_requests', 'action' => 'edit_request',$requestData['WarehouseRequest']['id']),array('class' =>'btn btn-primary pull-right','escape' => false));
-    ?>
+        echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit', array('controller' => 'warehouse_requests', 'action' => 'edit_request',$requestData['WarehouseRequest']['id']),array('class' =>'btn btn-primary pull-right','escape' => false)); ?>
 
-                    
+        <?php if($requestData['WarehouseRequest']['status_id'] == 1){ ?>
+
+        <a data-toggle="modal" href="#myModalOutRecord<?php echo $requestData['WarehouseRequest']['id']?>" class="btn btn-primary mrg-b-lg pull-right addSchedButton "><i class="fa fa-plus-circle fa-lg"></i> Out Record</a>
+
+        <?php } ?>            
     
     <br><br>
 </div>
@@ -61,7 +66,7 @@
                 
                     <tr>
                         <td></td>
-                        <td><b>Position: </b><?php echo $roleData[$userData['User']['role_id']];?></td>
+                        <td><b>Department: </b><?php echo $roleName;?></td>
                         <td ></td>
                         <td align="right" style="line-height:8px;"><b>No: </b>RQ<?php echo $requestData['WarehouseRequest']['uuid']; ?><br><br><br><b>Date: </b><?php echo (new \DateTime())->format('d/m/Y') ?><br></td>
                     </tr>
@@ -71,6 +76,7 @@
             <br>
                 <div class="table-responsive">
                     <table class="table table-bordered">
+
                         <thead>
                             <th>#</th>
                             <th class="text-center">Item Decription</th>
@@ -81,7 +87,8 @@
                             <th class="text-center">Purpose</th>
                             <th class="text-center">Remarks</th>
                         </thead>
-                        <?php   foreach ($requestData['RequestItem'] as $key => $value) { $key++ ?>
+
+                        <?php foreach ($requestData['WarehouseRequestItem'] as $key => $value) { $key++ ?>
                            
                             <tr>
                                 <td><?php echo $key ?></td>
@@ -100,12 +107,12 @@
                                     echo $unitData[$value['quantity_unit_id']];
                                    } ?>
                                 </td>
-                                <td class="text-center"></td>
-                                <td class="text-center"></td>
-                                <td class="text-center"></td>
+                                <td class="text-center"><?php echo empty($value['stock_quantity']) ? 0 : $value['stock_quantity']; ?></td>
+                                <td class="text-center"><?php echo date('M d, Y', strtotime($value['date_needed'])); ?></td>
+                                <td class="text-center"><?php echo $value['purpose']; ?></td>
                                 <td class="text-center"><?php  
-                                   if(!empty($requestData['remarks'])){ 
-                                    echo$requestData['remarks'];
+                                   if(!empty($value['remarks'])){ 
+                                    echo $value['remarks'];
                                    } ?></td>
                                 
                             </tr>
@@ -155,3 +162,128 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="myModalOutRecord<?php echo $requestData['WarehouseRequest']['id']?>" role="dialog" >
+                <div class="modal-dialog">
+                    <div class="modal-content margintop">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Out Record</h4>
+                        </div> 
+
+                        <div class="modal-body">
+
+                            <?php 
+
+                            $id = $requestData['WarehouseRequest']['id'];
+
+                                echo $this->Form->create('OutRecord',array(
+                                    'url'=>(array('controller' => 'warehouse_requests','action' => 'out_record', $id)),'class' => 'form-horizontal')); 
+                            ?>
+
+                            <br>
+
+                            <?php  foreach ($requestData['WarehouseRequestItem'] as $key => $value) {?>
+
+                                    <div class="form-group" id="existing_items">
+                                        <label class="col-lg-2 control-label">Item</label>
+                                        <div class="col-lg-9">
+                                            <?php 
+                                                echo $this->Form->input('WarehouseRequestItem.'.$key.'.name', array(
+                                                                            'class' => 'form-control item_type',
+                                                                            'label' => false,
+                                                                            'readonly' => true,
+                                                                            'fields' =>array('name'),
+                                                                            'value' => $value['name']));
+                                            ?>
+                                        </div>
+                                    </div>
+
+                                    <br>
+
+                                     <div class="form-group" id="existing_items">
+                                        <label class="col-lg-2 control-label"></label>
+                                        <div class="col-lg-6">
+                                            <?php 
+                                                echo $this->Form->input('WarehouseRequestItem.'.$key.'.quantity', array(
+                                                                            'class' => 'form-control item_type toBeLimited',
+                                                                            'label' => false,
+                                                                            'fields' =>array('name'),
+                                                                            'value' => $value['quantity']));
+                                            ?>
+
+                                            <?php 
+                                                echo $this->Form->input('WarehouseRequestItem.'.$key.'.quantitylimit', array(
+                                                                            'class' => 'form-control quantityLimit',
+                                                                            'label' => false,
+                                                                            'type' => 'hidden',
+                                                                            'fields' =>array('name'),
+                                                                            'value' => $value['quantity']));
+                                            ?>
+
+                                            <?php 
+                                                echo $this->Form->input('WarehouseRequestItem.'.$key.'.foreign_key', array(
+                                                                            'class' => 'form-control ',
+                                                                            'label' => false,
+                                                                            'type' => 'hidden',
+                                                                            'fields' =>array('name'),
+                                                                            'value' => $value['foreign_key']));
+                                            ?>
+
+                                             <?php 
+                                                echo $this->Form->input('WarehouseRequestItem.'.$key.'.model', array(
+                                                                            'class' => 'form-control quantityLimit',
+                                                                            'label' => false,
+                                                                            'type' => 'hidden',
+                                                                            'fields' =>array('name'),
+                                                                            'value' => $value['model']));
+                                            ?>
+                                        </div>
+
+                                        <div class="col-lg-3">
+                                            <?php 
+                                                echo $this->Form->input('WarehouseRequestItem.'.$key.'.quantity_unit', array(
+                                                                            'class' => 'form-control item_type',
+                                                                            'label' => false,
+                                                                            'fields' =>array('name'),
+                                                                            'options' => array($unitData),
+                                                                            'value' => $value['quantity_unit_id']));
+                                            ?>
+                                        </div>
+
+
+                                    </div>
+                                    
+
+                                    <br><br>
+
+                                <?php } ?>
+
+                                <div class="form-group" id="existing_items">
+                                    <label class="col-lg-2 control-label">Remarks</label>
+                                    <div class="col-lg-9">
+                                        <?php 
+                                            echo $this->Form->textarea('OutRecord.remarks', array(
+                                                'empty' => 'None',
+                                                'required' => 'required',
+                                                'class' => 'form-control item_type editable limitQuantity',
+                                                'label' => false
+                                               
+                                            ));
+                                        ?>
+                                    </div>
+                                </div>
+
+                                <br><br>
+                                <br><br>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i> Submit</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                                </div>
+                            <?php echo $this->Form->end();  ?> 
+                        </div>
+                    </div>
+                </div>
+            </div>

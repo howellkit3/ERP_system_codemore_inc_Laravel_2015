@@ -18,15 +18,15 @@ class ReceivingsController extends WareHouseAppController {
 																));
 		$this->PurchaseOrder->bind(array('Request'));
 
-		$purchaseOrderData = $this->PurchaseOrder->find('all', array('conditions' => array('PurchaseOrder.status' => 1)));
+		$purchaseOrderData = $this->PurchaseOrder->find('all', array('conditions' => array('PurchaseOrder.status' => 1),
+															'order' => array('PurchaseOrder.id' => 'DESC')
+															));
 	
 		$this->set(compact('purchaseOrderData', 'supplierData'));
 
     }
 
     public function receive_order($id = null, $requestUUID = null) {
-
-
 
     	$this->loadModel('WareHouse.ReceivedOrder');
 
@@ -856,30 +856,30 @@ class ReceivingsController extends WareHouseAppController {
 		}
     }
 
-    public function out_record() {
+    // public function out_record() {
 
-    	$this->loadModel('Purchasing.Request');
+    // 	$this->loadModel('Purchasing.Request');
 
-    	$this->loadModel('User');
+    // 	$this->loadModel('User');
 
-    	$this->loadModel('Role');
+    // 	$this->loadModel('Role');
 
-    	$this->Request->bind(array('PurchasingType', 'RequestItem'));
+    // 	$this->Request->bind(array('PurchasingType', 'RequestItem'));
 
-    	$requestData = $this->Request->find('all');
+    // 	$requestData = $this->Request->find('all');
 
-    	$userNameList = $this->User->find('list', array('fields' => array('User.id', 'User.fullname')));
+    // 	$userNameList = $this->User->find('list', array('fields' => array('User.id', 'User.fullname')));
 
-    	$userRoleList = $this->User->find('list', array('fields' => array('User.id', 'User.role_id')));
+    // 	$userRoleList = $this->User->find('list', array('fields' => array('User.id', 'User.role_id')));
 
-    	$roleData = $this->Role->find('list', array('fields' => array('Role.id', 'Role.name')));
+    // 	$roleData = $this->Role->find('list', array('fields' => array('Role.id', 'Role.name')));
 
-    	//pr($userRoleList); exit;
+    // 	//pr($userRoleList); exit;
 
-    	$this->set(compact('requestData', 'userNameList', 'userRoleList', 'roleData'));
+    // 	$this->set(compact('requestData', 'userNameList', 'userRoleList', 'roleData'));
 
 
-    }
+    // }
 
         public function out_record_item() {
 

@@ -37,7 +37,7 @@ th, td {
 					<tbody>
 					
 						<tr>
-							<td align="left" style="line-height:8px;"><span style="font-size:70%"; ><B>Department: </B></td>
+							<td align="left" style="line-height:8px;"><span style="font-size:70%"; ><B>Department: <?php echo $roleName ?> </B></td>
 							<td></td>
 							<td ></td>
 							<td align="right" style="line-height:8px;"><span style="font-size:70%"; ><b>No: </b>RQ<?php echo $request['WarehouseRequest']['uuid'] ?><br><br><b>Date: </b><?php echo (new \DateTime())->format('d/m/Y') ?></span></td>
@@ -60,7 +60,7 @@ th, td {
 
 					<?php $ctr = 8;
 
-					foreach($request['RequestItem'] as $key=>$value) {  ?>
+					foreach($request['WarehouseRequestItem'] as $key=>$value) {  ?>
 
 					<tr>
 						<td  align = "center" style="border:1px solid black; width:10px;   word-wrap: break-word; "><span style="font-size:70%"; ><?php echo $key + 1 ?></span></td>
@@ -88,20 +88,14 @@ th, td {
 						
 						<td align = "center" style="border:1px solid black; font-size:70% "><?php echo $unitData[$value['quantity_unit_id']]?></td>
 
-						<td align = "center" style="border:1px solid black; font-size:80% "><?php ?></td>
+						<td align = "center" style="border:1px solid black; font-size:80% "><?php echo empty($value['stock_quantity']) ? 0 : $value['stock_quantity'];?></td>
 
-						<td align = "center" style="border:1px solid black; font-size:80% "><?php ?></td>
+						<td align = "center" style="border:1px solid black; font-size:40% "><?php ?><?php echo date('M d, Y', strtotime($value['date_needed'])) ?></td>
 
-						<td align = "center" style="border:1px solid black; font-size:80% "><?php ?></td>
+						<td align = "center" style="border:1px solid black; font-size:40% "><?php ?><?php echo $value['purpose'] ?></td>
 
-						<?php $lengthRemarks = strlen($value['remarks'])?>
-
-						<?php if($lengthRemarks >= 35 && $lengthRemarks <= 70){ ?>
-							<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:65%"><?php echo  $value['remarks'] ?></td>
-						<?php 
-							}else{ ?>
-							<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:65%"><?php echo $value['remarks'] ?></td>
-						<?php } ?>	
+						<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:50%"><?php echo $value['remarks'] ?></td>
+					
 					</tr>
 
 					<?php 
@@ -186,7 +180,7 @@ th, td {
 					<tbody>
 					
 						<tr>
-							<td align="left" style="line-height:8px;"><span style="font-size:70%"; ><B>Department: </B></td>
+							<td align="left" style="line-height:8px;"><span style="font-size:70%"; ><B>Department: <?php echo $roleName ?> </B></td>
 							<td></td>
 							<td ></td>
 							<td align="right" style="line-height:8px;"><span style="font-size:70%"; ><b>No: </b>RQ<?php echo $request['WarehouseRequest']['uuid'] ?><br><br><b>Date: </b><?php echo (new \DateTime())->format('d/m/Y') ?></span></td>
@@ -209,7 +203,7 @@ th, td {
 
 					<?php $ctr = 8;
 
-					foreach($request['RequestItem'] as $key=>$value) {  ?>
+					foreach($request['WarehouseRequestItem'] as $key=>$value) {  ?>
 
 					<tr>
 						<td  align = "center" style="border:1px solid black; width:10px;   word-wrap: break-word; "><span style="font-size:70%"; ><?php echo $key + 1 ?></span></td>
@@ -237,20 +231,13 @@ th, td {
 						
 						<td align = "center" style="border:1px solid black; font-size:70% "><?php echo $unitData[$value['quantity_unit_id']]?></td>
 
-						<td align = "center" style="border:1px solid black; font-size:80% "><?php ?></td>
+						<td align = "center" style="border:1px solid black; font-size:80% "><?php ?><?php echo empty($value['stock_quantity']) ? 0 : $value['stock_quantity'];?></td>
 
-						<td align = "center" style="border:1px solid black; font-size:80% "><?php ?></td>
+						<td align = "center" style="border:1px solid black; font-size:40% "><?php ?><?php echo date('M d, Y', strtotime($value['date_needed'])) ?></td>
 
-						<td align = "center" style="border:1px solid black; font-size:80% "><?php ?></td>
+						<td align = "center" style="border:1px solid black; font-size:40% "><?php ?><?php echo $value['purpose'] ?></td>
 
-						<?php $lengthRemarks = strlen($value['remarks'])?>
-
-						<?php if($lengthRemarks >= 35 && $lengthRemarks <= 70){ ?>
-							<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:65%"><?php echo  $value['remarks'] ?></td>
-						<?php 
-							}else{ ?>
-							<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:65%"><?php echo $value['remarks'] ?></td>
-						<?php } ?>	
+						<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:50%"><?php echo $value['remarks'] ?></td>
 					</tr>
 
 					<?php 
@@ -315,9 +302,6 @@ th, td {
 				</table>
 					
 				</div>
-
-				
-				
 			</div>
 	</div>	
 </div>	

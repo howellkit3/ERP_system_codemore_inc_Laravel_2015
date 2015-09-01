@@ -25,15 +25,13 @@ class WarehouseRequestsController extends WareHouseAppController {
 															'order' => array('Unit.unit' => 'ASC')
 															));
 
-		$this->WarehouseRequest->bind('RequestItem');		
+		$this->WarehouseRequest->bind('WarehouseRequestItem');		
 
 		$requestData = $this->WarehouseRequest->find('all', array('order' => array('WarehouseRequest.created' => 'DESC')));
 
 		foreach ($requestData as $key => $value) {
 
-			foreach ($value['RequestItem'] as $key1 => $valueOfRequest) {
-
-				//pr($requestData); exit;
+			foreach ($value['WarehouseRequestItem'] as $key1 => $valueOfRequest) {
 				
 				if($valueOfRequest['model'] == 'GeneralItem'){
 
@@ -41,7 +39,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 		 			$itemData = $this->GeneralItem->find('list',array('fields' => array('id', 'name')));
 
-		 			$requestData[$key]['RequestItem'][$key1]['name'] = $itemData[$valueOfRequest['foreign_key']];
+		 			$requestData[$key]['WarehouseRequestItem'][$key1]['name'] = $itemData[$valueOfRequest['foreign_key']];
 		 		}
 
 		 		if($valueOfRequest['model'] == 'CorrugatedPaper'){
@@ -50,7 +48,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 		 			$itemData = $this->CorrugatedPaper->find('list',array('fields' => array('id', 'name')));
 
-		 			$requestData[$key]['RequestItem'][$key1]['name'] = $itemData[$valueOfRequest['foreign_key']];
+		 			$requestData[$key]['WarehouseRequestItem'][$key1]['name'] = $itemData[$valueOfRequest['foreign_key']];
 		 		}
 
 		 		if($valueOfRequest['model'] == 'Substrate'){
@@ -59,7 +57,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 		 			$itemData = $this->Substrate->find('list',array('fields' => array('id', 'name')));
 
-		 			$requestData[$key]['RequestItem'][$key1]['name'] = $itemData[$valueOfRequest['foreign_key']];
+		 			$requestData[$key]['WarehouseRequestItem'][$key1]['name'] = $itemData[$valueOfRequest['foreign_key']];
 		 		}
 
 		 		if($valueOfRequest['model'] == 'CompoundSubstrate'){
@@ -68,12 +66,10 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 		 			$itemData = $this->CompoundSubstrate->find('list',array('fields' => array('id', 'name')));
 		 			
-		 			$requestData[$key]['RequestItem'][$key1]['name'] = $itemData[$valueOfRequest['foreign_key']];
+		 			$requestData[$key]['WarehouseRequestItem'][$key1]['name'] = $itemData[$valueOfRequest['foreign_key']];
 		 		}
 		 	}
 	    } 
-
-	  //  pr($requestData); exit;
 
 		$this->set(compact('requestData','statusData','userName', 'unitData'));
 
@@ -85,7 +81,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 		$this->loadModel('WareHouse.WarehouseRequest');
 
-		$this->loadModel('WareHouse.RequestItem');
+		$this->loadModel('WareHouse.WarehouseRequestItem');
 
 	 	$this->loadModel('Unit');
 
@@ -97,7 +93,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 			$requestId = $this->WarehouseRequest->saveRequest($this->request->data['Request'],$userData['User']['id']);
 
-			$this->RequestItem->saveRequestItem($this->request->data ,$requestId);
+			$this->WarehouseRequestItem->saveRequestItem($this->request->data ,$requestId);
 		
 	 		$this->Session->setFlash(__('Request has been added.'));
 
@@ -120,23 +116,73 @@ class WarehouseRequestsController extends WareHouseAppController {
 
     	$this->loadModel('WareHouse.WarehouseRequest');
 
+    	$this->loadModel('WareHouse.Stock');
+
 	 	$this->loadModel('Unit');
 
-	 	$this->loadModel('Role');
+	 	
+
+	 	//pr($userData); exit;
 
 		$unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
 															'order' => array('Unit.unit' => 'ASC')
 															));
 
-		$roleData = $this->Role->find('list', array('fields' => array('id', 'name'),
-															'order' => array('Role.name' => 'ASC')
-															));
 
-    	$this->WarehouseRequest->bind('RequestItem');
+		if($userData['User']['role_id'] == 1 ){
+
+			$roleName =  "Super Admin";
+
+		} else if($userData['User']['role_id'] == 2){
+
+			$roleName =  "CEO";
+
+		} else if($userData['User']['role_id'] == 3 || $userData['User']['role_id'] == 8){
+
+			$roleName =  "Sales";
+
+		} else if($userData['User']['role_id'] == 4){
+
+			$roleName =  "Warehouse";
+
+		} else if($userData['User']['role_id'] == 5){
+
+			$roleName =  "Delivery";
+
+		} else if($userData['User']['role_id'] == 6 || $userData['User']['role_id'] == 9 || $userData['User']['role_id'] == 10 || $userData['User']['role_id'] == 11 ){
+
+			$roleName =  "Accounting";
+
+		} else if($userData['User']['role_id'] == 7){
+
+			$roleName =  "Purchasing";
+
+		} else if($userData['User']['role_id'] == 12){
+
+			$roleName =  "Human Resource";
+
+		} else {
+
+			$roleName =  "Staff";
+		}
+
+    	$this->WarehouseRequest->bind('WarehouseRequestItem');
 		
 		$requestData = $this->WarehouseRequest->find('first', array('conditions' => array('WarehouseRequest.id' => $id)));
 
-	    foreach ($requestData['RequestItem'] as $key => $value) {
+		$stockData = $this->Stock->find('all');
+
+	    foreach ($requestData['WarehouseRequestItem'] as $key => $value) {
+
+	    	foreach ($stockData as $key1 => $valueofStock) {
+
+	    		if($valueofStock['Stock']['model'] == $value['model'] && $valueofStock['Stock']['item_id'] == $value['foreign_key']){
+
+	    			$requestData['WarehouseRequestItem'][$key]['stock_quantity'] = $valueofStock['Stock']['quantity'];
+	    			 
+	    		}
+
+	    	} 
 			
 			if($value['model'] == 'GeneralItem'){
 
@@ -144,7 +190,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 	 			$itemData = $this->GeneralItem->find('list',array('fields' => array('id', 'name')));
 
-	 			$requestData['RequestItem'][$key]['name'] = $itemData[$value['foreign_key']];
+	 			$requestData['WarehouseRequestItem'][$key]['name'] = $itemData[$value['foreign_key']];
 	 		}
 
 	 		if($value['model'] == 'CorrugatedPaper'){
@@ -153,7 +199,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 	 			$itemData = $this->CorrugatedPaper->find('list',array('fields' => array('id', 'name')));
 
-	 			$requestData['RequestItem'][$key]['name'] = $itemData[$value['foreign_key']];
+	 			$requestData['WarehouseRequestItem'][$key]['name'] = $itemData[$value['foreign_key']];
 	 		}
 
 	 		if($value['model'] == 'Substrate'){
@@ -162,7 +208,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 	 			$itemData = $this->Substrate->find('list',array('fields' => array('id', 'name')));
 
-	 			$requestData['RequestItem'][$key]['name'] = $itemData[$value['foreign_key']];
+	 			$requestData['WarehouseRequestItem'][$key]['name'] = $itemData[$value['foreign_key']];
 	 		}
 
 	 		if($value['model'] == 'CompoundSubstrate'){
@@ -171,7 +217,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 	 			$itemData = $this->CompoundSubstrate->find('list',array('fields' => array('id', 'name')));
 	 			
-	 			$requestData['RequestItem'][$key]['name'] = $itemData[$value['foreign_key']];
+	 			$requestData['WarehouseRequestItem'][$key]['name'] = $itemData[$value['foreign_key']];
 	 		}
 
 	    } 
@@ -183,7 +229,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 														'conditions' => array('User.id' => $requestData['WarehouseRequest']['created_by']),
 														));
 	    
-    	$this->set(compact('requestId','requestData','userData','unitData','preparedData', 'roleData'));
+    	$this->set(compact('requestId','requestData','userData','unitData','preparedData','roleName'));
     }
 
 	public function approve($requestID = null) {
@@ -210,18 +256,69 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 		$this->loadModel('WareHouse.WarehouseRequest');
 
-		$this->loadModel('WareHouse.RequestItem');
+		$this->loadModel('WareHouse.Stock');
 
 		$this->loadModel('Unit');
 
-		$this->WarehouseRequest->bind('RequestItem');
+		$this->WarehouseRequest->bind('WarehouseRequestItem');
 
 		$request = $this->WarehouseRequest->find('first', array(
 														'conditions' => array( 
 															'WarehouseRequest.id' => $requestID)
 													));
+
+		$userData = $this->Session->read('Auth');
+
+		$stockData = $this->Stock->find('all');
+
+		if($userData['User']['role_id'] == 1 ){
+
+			$roleName =  "Super Admin";
+
+		} else if($userData['User']['role_id'] == 2){
+
+			$roleName =  "CEO";
+
+		} else if($userData['User']['role_id'] == 3 || $userData['User']['role_id'] == 8){
+
+			$roleName =  "Sales";
+
+		} else if($userData['User']['role_id'] == 4){
+
+			$roleName =  "Warehouse";
+
+		} else if($userData['User']['role_id'] == 5){
+
+			$roleName =  "Delivery";
+
+		} else if($userData['User']['role_id'] == 6 || $userData['User']['role_id'] == 9 || $userData['User']['role_id'] == 10 || $userData['User']['role_id'] == 11 ){
+
+			$roleName =  "Accounting";
+
+		} else if($userData['User']['role_id'] == 7){
+
+			$roleName =  "Purchasing";
+
+		} else if($userData['User']['role_id'] == 12){
+
+			$roleName =  "Human Resource";
+
+		} else {
+
+			$roleName =  "Staff";
+		}
 		
-		foreach($request['RequestItem'] as $key=>$value) {
+		foreach($request['WarehouseRequestItem'] as $key=>$value) {
+
+			foreach ($stockData as $key1 => $valueofStock) {
+
+	    		if($valueofStock['Stock']['model'] == $value['model'] && $valueofStock['Stock']['item_id'] == $value['foreign_key']){
+
+	    			$request['WarehouseRequestItem'][$key]['stock_quantity'] = $valueofStock['Stock']['quantity'];
+	    			 
+	    		}
+
+	    	} 
 
 			if($value['model'] == 'GeneralItem'){
 
@@ -229,7 +326,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 	 			$itemData = $this->GeneralItem->find('list',array('fields' => array('id', 'name')));
 
-	 			$request['RequestItem'][$key]['name'] = $itemData[$value['foreign_key']];
+	 			$request['WarehouseRequestItem'][$key]['name'] = $itemData[$value['foreign_key']];
 	 		}
 
 	 		if($value['model'] == 'CorrugatedPaper'){
@@ -238,7 +335,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 	 			$itemData = $this->CorrugatedPaper->find('list',array('fields' => array('id', 'name')));
 
-	 			$request['RequestItem'][$key]['name'] = $itemData[$value['foreign_key']];
+	 			$request['WarehouseRequestItem'][$key]['name'] = $itemData[$value['foreign_key']];
 	 	
 	 		}
 
@@ -248,7 +345,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 	 			$itemData = $this->Substrate->find('list',array('fields' => array('id', 'name')));
 
-	 			$request['RequestItem'][$key]['name'] = $itemData[$value['foreign_key']];
+	 			$request['WarehouseRequestItem'][$key]['name'] = $itemData[$value['foreign_key']];
 	 	
 	 		}
 
@@ -258,15 +355,12 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 	 			$itemData = $this->CompoundSubstrate->find('list',array('fields' => array('id', 'name')));
 	 			
-	 			$request['RequestItem'][$key]['name'] = $itemData[$value['foreign_key']];
+	 			$request['WarehouseRequestItem'][$key]['name'] = $itemData[$value['foreign_key']];
 	 	
 	  		}
 
 	  		
-		}
-
-
-
+		} 
 
 		$unitData = $this->Unit->find('list',array('fields' => array('id', 'unit')));
 
@@ -309,7 +403,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 		$view = new View(null, false);
 
-		$view->set(compact('request', 'preparedFullName', 'department', 'requestItem', 'itemData', 'unitData'));
+		$view->set(compact('request', 'preparedFullName', 'department', 'requestItem', 'itemData', 'unitData', 'roleName'));
         
 		$view->viewPath = 'WarehouseRequests'.DS.'pdf';	
    
@@ -344,18 +438,18 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 		$this->loadModel('WareHouse.WarehouseRequest');
 
-		$this->loadModel('WareHouse.RequestItem');
+		$this->loadModel('WareHouse.WarehouseRequestItem');
 
 	 	$this->loadModel('Unit');
 
-	 	$this->WarehouseRequest->bind('RequestItem');
+	 	$this->WarehouseRequest->bind('WarehouseRequestItem');
 
 	 	$request = $this->WarehouseRequest->find('first', array(
 														'conditions' => array( 
 															'WarehouseRequest.id' => $requestID)
 													));
 
-	 	foreach ($request['RequestItem'] as $key => $value) {
+	 	foreach ($request['WarehouseRequestItem'] as $key => $value) {
 			
 			if($value['model'] == 'GeneralItem'){
 
@@ -363,7 +457,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 	 			$itemData = $this->GeneralItem->find('list',array('fields' => array('id', 'name')));
 
-	 			$request['RequestItem'][$key]['name'] = $itemData[$value['foreign_key']];
+	 			$request['WarehouseRequestItem'][$key]['name'] = $itemData[$value['foreign_key']];
 	 		}
 
 	 		if($value['model'] == 'CorrugatedPaper'){
@@ -372,7 +466,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 	 			$itemData = $this->CorrugatedPaper->find('list',array('fields' => array('id', 'name')));
 
-	 			$request['RequestItem'][$key]['name'] = $itemData[$value['foreign_key']];
+	 			$request['WarehouseRequestItem'][$key]['name'] = $itemData[$value['foreign_key']];
 	 		}
 
 	 		if($value['model'] == 'Substrate'){
@@ -381,7 +475,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 	 			$itemData = $this->Substrate->find('list',array('fields' => array('id', 'name')));
 
-	 			$request['RequestItem'][$key]['name'] = $itemData[$value['foreign_key']];
+	 			$request['WarehouseRequestItem'][$key]['name'] = $itemData[$value['foreign_key']];
 	 		}
 
 	 		if($value['model'] == 'CompoundSubstrate'){
@@ -390,25 +484,21 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 	 			$itemData = $this->CompoundSubstrate->find('list',array('fields' => array('id', 'name')));
 	 			
-	 			$request['RequestItem'][$key]['name'] = $itemData[$value['foreign_key']];
+	 			$request['WarehouseRequestItem'][$key]['name'] = $itemData[$value['foreign_key']];
 	 		}
 
 	    } 
-
-	  //  pr($request); exit;
 
 		$unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
 															'order' => array('Unit.unit' => 'ASC')
 															));
 
-
 	 	if ($this->request->is(array('post','put'))) {
 
-	 		//pr($this->request->data); exit;
 
 			$requestId = $this->WarehouseRequest->saveRequest($this->request->data['Request'],$userData['User']['id']);
 
-			$this->RequestItem->saveRequestItem($this->request->data ,$requestId);
+			$this->WarehouseRequestItem->saveRequestItem($this->request->data ,$requestId);
 		
 	 		$this->Session->setFlash(__('Request has been added.'));
 
@@ -420,7 +510,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 
         }
 
-		$this->set(compact('unitData','itemData', 'request'));
+		$this->set(compact('unitData','itemData', 'request', 'requestID'));
 			
 	 }
 
@@ -434,15 +524,17 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 			$this->loadModel('WareHouse.ItemRecord');
 
+			$this->loadModel('WareHouse.WarehouseRequestItem');
+
 			$this->loadModel('WareHouse.Stock');
 
-			//$requestId = $this->OutRecord->saveOutRecord($this->request->data['OutRecord'],$ID,$userData['User']['id']);
+			$requestId = $this->OutRecord->saveOutRecord($this->request->data['OutRecord'],$ID,$userData['User']['id']);
 
-			//$this->ItemRecord->saveOutItemRecord($this->request->data['ItemRecord'], $requestId);
+			$this->ItemRecord->saveOutItemRecord($this->request->data['WarehouseRequestItem'], $requestId);
 
 			$stockData = $this->Stock->find('all');
 
-			$condition = $this->Stock->saveOutRecordStock($this->request->data['ItemRecord'], $userData['User']['id'], $stockData );
+			$condition = $this->Stock->saveOutRecordStock($this->request->data['WarehouseRequestItem'], $userData['User']['id'], $stockData );
 			
 			if($condition == 0){
 
@@ -463,5 +555,116 @@ class WarehouseRequestsController extends WareHouseAppController {
         }
 
 	}
+
+	public function stock() {
+
+		$this->loadModel('WareHouse.Stock');
+
+		$this->loadModel('Area');
+
+		$stockData = $this->Stock->find('all');
+
+		$areaData = $this->Area->find('list',array('fields' => array('id', 'name')));
+
+		foreach ($stockData as $key => $value) {
+			
+			if($value['Stock']['model'] == 'GeneralItem'){
+
+				$this->loadModel('GeneralItem');
+
+	 			$itemData = $this->GeneralItem->find('list',array('fields' => array('id', 'name')));
+
+	 			$stockData[$key]['Stock']['name'] = $itemData[$value['Stock']['item_id']];
+	 		}
+
+	 		if($value['Stock']['model'] == 'CorrugatedPaper'){
+
+	 			$this->loadModel('CorrugatedPaper');
+
+	 			$itemData = $this->CorrugatedPaper->find('list',array('fields' => array('id', 'name')));
+
+	 			$stockData[$key]['Stock']['name'] = $itemData[$value['Stock']['item_id']];
+	 		}
+
+	 		if($value['Stock']['model'] == 'Substrate'){
+
+	 			$this->loadModel('Substrate');
+
+	 			$itemData = $this->Substrate->find('list',array('fields' => array('id', 'name')));
+
+	 			$stockData[$key]['Stock']['name'] = $itemData[$value['Stock']['item_id']];
+	 		}
+
+	 		if($value['Stock']['model'] == 'CompoundSubstrate'){
+
+	 			$this->loadModel('CompoundSubstrate');
+
+	 			$itemData = $this->CompoundSubstrate->find('list',array('fields' => array('id', 'name')));
+	 			
+	 			$stockData[$key]['Stock']['name'] = $itemData[$value['Stock']['item_id']];
+	 		}
+	    } 
+
+		$this->set(compact('stockData', 'areaData'));
+
+	}
+
+	public function stock_view($id = null){
+
+		$this->loadModel('WareHouse.Stock');
+
+		$this->loadModel('Unit');
+
+		$this->loadModel('Area');
+
+		$unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
+															'order' => array('Unit.unit' => 'ASC')
+															));
+
+		$areaData = $this->Area->find('list', array('fields' => array('id', 'name'),
+															'order' => array('Area.id' => 'ASC')
+															));
+
+		$stockData = $this->Stock->find('first', array('conditions' => array('Stock.id' => $id)));
+
+			if($stockData['Stock']['model'] == 'GeneralItem'){
+
+				$this->loadModel('GeneralItem');
+
+	 			$itemData = $this->GeneralItem->find('list',array('fields' => array('id', 'name')));
+
+	 			$stockData['Stock']['name'] = $itemData[$stockData['Stock']['item_id']];
+	 		}
+
+	 		if($stockData['Stock']['model'] == 'CorrugatedPaper'){
+
+	 			$this->loadModel('CorrugatedPaper');
+
+	 			$itemData = $this->CorrugatedPaper->find('list',array('fields' => array('id', 'name')));
+
+	 			$stockData['Stock']['name'] = $itemData[$stockData['Stock']['item_id']];
+	 		}
+
+	 		if($stockData['Stock']['model'] == 'Substrate'){
+
+	 			$this->loadModel('Substrate');
+
+	 			$itemData = $this->Substrate->find('list',array('fields' => array('id', 'name')));
+
+	 			$stockData['Stock']['name'] = $itemData[$stockData['Stock']['item_id']];
+	 		}
+
+	 		if($stockData['Stock']['model'] == 'CompoundSubstrate'){
+
+	 			$this->loadModel('CompoundSubstrate');
+
+	 			$itemData = $this->CompoundSubstrate->find('list',array('fields' => array('id', 'name')));
+	 			
+	 			$stockData['Stock']['name'] = $itemData[$stockData['Stock']['item_id']];
+	 		}
+
+		$this->set(compact('stockData', 'unitData', 'areaData'));
+    	
+    }
 
 }

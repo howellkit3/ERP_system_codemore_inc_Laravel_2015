@@ -1765,9 +1765,9 @@ CREATE TABLE `delivered_orders` (
 ) ENGINE=INNODB AUTO_INCREMENT=68 DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `request_items`;
+DROP TABLE IF EXISTS `warehouse_request_items`;
 
-CREATE TABLE `request_items` (
+CREATE TABLE `warehouse_request_items` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `model` VARCHAR(30) DEFAULT NULL,
   `foreign_key` INT(11) DEFAULT NULL,
@@ -1798,7 +1798,7 @@ CREATE TABLE `requests` (
 ) ENGINE=INNODB AUTO_INCREMENT=68 DEFAULT CHARSET=latin1;
 
 
-ALTER TABLE `request_items` ADD `remarks` TEXT  NULL  DEFAULT NULL  AFTER `quantity_unit_id`;
+ALTER TABLE `warehouse_request_items` ADD `remarks` TEXT  NULL  DEFAULT NULL  AFTER `quantity_unit_id`;
 
 /* add salary report table for koufu_payroll */
 
@@ -1853,8 +1853,19 @@ CREATE TABLE IF NOT EXISTS `areas` (
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB AUTO_INCREMENT=68 DEFAULT CHARSET=latin1;
 
+
+
 /** howellkit added this 08/29/2015  */
-ALTER TABLE `request_items` CHANGE COLUMN `request_uuid` `request_id` INT(11) NULL DEFAULT NULL;
+#NOTE: SELECT KOUFU WAREHOUSE DATABASE ----
+ALTER TABLE `warehouse_request_items` CHANGE COLUMN `request_uuid` `request_id` INT(11) NULL DEFAULT NULL;
+ALTER TABLE `warehouse_requests`  ADD `date_needed` DATETIME NULL  AFTER `quantity_unit_id`;
+ALTER TABLE `warehouse_requests`  ADD `purpose` VARCHAR(50) NULL  AFTER `date_needed`;
+
+#NOTE: SELECT KOUFU PURCHASING DATABASE ----
+
+ALTER TABLE `request_items`  ADD `date_needed` DATETIME NULL  AFTER `quantity_unit_id`;
+ALTER TABLE `request_items`  ADD `purpose` VARCHAR(50) NULL  AFTER `date_needed`;
+ALTER TABLE `request_items`  ADD `remarks` VARCHAR(50) NULL  AFTER `purpose`;
 
 
 /* Select KOUFU PAYROLL */

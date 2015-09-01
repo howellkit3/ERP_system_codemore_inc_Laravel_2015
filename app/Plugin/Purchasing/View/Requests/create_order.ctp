@@ -283,14 +283,14 @@
 
 								        	</div>
 
-											<div class="col-lg-3">
+											<div class="col-lg-4">
 
 												<a data-toggle="modal" href="#myModalItem" data-modal="<?php echo $dataPlus ?>" class="modal-button btn btn-primary mrg-b-lg pull-left  "><i class="fa fa-search-plus fa-lg"></i> Select Item</a>
 
-												&emsp;&emsp;&emsp;&emsp;
+												&emsp;
 												<button type="button" class="add-field1  table-link danger btn btn-success " onclick="cloneDatarequest('cloneMe', this)"><i class="fa fa-plus"></i></button>
 												<!-- <button type="button" class="add-field1sd proxy-counter add-request-section table-link danger btn btn-success" ><i class="fa fa-plus"></i></button> -->
-												&emsp;&emsp;&emsp;&emsp;
+												
 												<?php 
 													if ($key == 0 ) { 
 														$newClass = 'hide-remove';
