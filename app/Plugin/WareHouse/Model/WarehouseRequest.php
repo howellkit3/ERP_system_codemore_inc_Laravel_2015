@@ -18,27 +18,14 @@ class WarehouseRequest extends AppModel {
  	public function bind($model = array('Group')){
 
 		$this->bindModel(array(
-
-			'hasOne' => array(	
-				'PurchasingType' => array(
-					'className' => 'Purchasing.PurchasingType',
-					'foreignKey' =>  false,
-					'conditions' => array('PurchasingType.id = pur_type_id')
-				),
-			),
-			
+	
 			'hasMany' => array(	
-				'PurchasingItem' => array(
-					'className' => 'Purchasing.PurchasingItem',
-					'foreignKey' =>  false,
-					'conditions' => array('PurchasingItem.request_uuid = request_uuid')
+				'RequestItem' => array(
+					'className' => 'WareHouse.RequestItem',
+					'foreignKey' =>  'request_id'
+					//'conditions' => array('RequestItem.request_id = 69')
 				),
 
-				'RequestItem' => array(
-					'className' => 'Purchasing.RequestItem',
-					'foreignKey' =>  false,
-					'conditions' => array('RequestItem.request_uuid = request_uuid')
-				),
 			)
 			
 		));
@@ -46,20 +33,20 @@ class WarehouseRequest extends AppModel {
 		$this->contain($model);
 	}
 
-	public function bindRequest() {
-		$this->bindModel(array(
-			'hasOne' => array(
-				'PurchasingItem' => array(
-					'className' => 'Purchasing.PurchasingItem',
-					'foreignKey' => false,
-					'conditions' => 'Request.uuid = PurchasingItem.request_uuid'
-				),		
+	// public function bindRequest() {
+	// 	$this->bindModel(array(
+	// 		'hasOne' => array(
+	// 			'PurchasingItem' => array(
+	// 				'className' => 'Purchasing.PurchasingItem',
+	// 				'foreignKey' => false,
+	// 				'conditions' => 'Request.id = PurchasingItem.request_id'
+	// 			),		
 				
 
-			)
-		));
-		$this->recursive = 1;
-	}
+	// 		)
+	// 	));
+	// 	$this->recursive = 1;
+	// }
 
 	public function saveRequest($requestData = null, $auth = null){
 
@@ -86,7 +73,9 @@ class WarehouseRequest extends AppModel {
 
 		$this->save($requestData);
 
-		return $requestData['uuid'];
+		//return $requestData['uuid'];
+
+		return $this->id;
 		
 	}
 	

@@ -1244,7 +1244,7 @@ ALTER TABLE `attendances`  ADD `leave_id` INT NULL  AFTER `is_holiday`;
 /** howell kit added this 08/08/2015 TO WAREHOUSE DATABASE   */
 ALTER TABLE `received_items`  ADD `foreign_key` INT(11) NULL  AFTER `received_orders_id`;
 ALTER TABLE `received_items`  ADD `model` VARCHAR(30) DEFAULT NULL AFTER `received_orders_id`;
-
+ALTER TABLE `received_items`  ADD `delivered_order_id` INT(11) NULL  AFTER `received_orders_id`;
 
 
 /* added 08/13/2015 human resource */
@@ -1840,10 +1840,10 @@ ALTER TABLE `machines` ADD `sub_process_id` INT(11)  NULL  DEFAULT NULL  AFTER `
 /** howell kit added this 08/27/2015 TO production DATABASE   */
 ALTER TABLE `koufu_warehouse`.`stocks` DROP COLUMN `remarks` ;
 
-#NOTE: SELECT KOUFU WAREHOUSE DATABASE ----
+#NOTE: SELECT KOUFU SYSTEm DATABASE ----
 /** howellkit added this 08/28/2015  */
 
-CREATE TABLE IF NOT EXISTS `area_warehouse` (
+CREATE TABLE IF NOT EXISTS `areas` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(50) DEFAULT NULL,
   `created` DATETIME NOT NULL,
@@ -1852,3 +1852,6 @@ CREATE TABLE IF NOT EXISTS `area_warehouse` (
   `modified_by` INT(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB AUTO_INCREMENT=68 DEFAULT CHARSET=latin1;
+
+/** howellkit added this 08/29/2015  */
+ALTER TABLE `request_items` CHANGE COLUMN `request_uuid` `request_id` INT(11) NULL DEFAULT NULL;

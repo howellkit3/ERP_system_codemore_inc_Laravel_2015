@@ -32,6 +32,19 @@
            
         </li>
         
+        <li class="dropdown hidden-xs">
+           
+            <?php echo $this->Html->link("<span class='count'> SSS Table </span>", array('controller' => 'payroll_settings', 'action' => 'sss_ranges'),array('escape' => false,'class' => 'btn')); ?>
+           
+        </li>
+        
+         <li class="dropdown hidden-xs">
+           
+            <?php echo $this->Html->link("<span class='count'> PhilHealth Table </span>", array('controller' => 'payroll_settings', 'action' => 'philhealth_ranges'),array('escape' => false,'class' => 'btn')); ?>
+           
+        </li>
+            
+        
     </ul>
 
 

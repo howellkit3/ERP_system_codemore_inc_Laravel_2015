@@ -1,235 +1,157 @@
-<?php $this->Html->addCrumb('Ware House', array('controller' => 'ware_house_systems', 'action' => 'index')); ?>
-<div style="clear:both"></div>
-<?php  echo $this->element('ware_house_option');?>
-    
-    <div class = "pull-right";>
+<?php $this->Html->addCrumb('Request List', array('controller' => 'requests', 'action' => 'request_list')); ?>
+<?php $this->Html->addCrumb('View', array('controller' => 'requests', 'action' => 'view')); ?>
 
-        <?php echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i>  Go Back ', array('controller' => 'receivings','action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+<div style="clear:both"></div>
+
+<?php echo $this->element('ware_house_option'); ?><br><br>
+
+<div class="filter-block pull-right">
+                    
+    <?php 
+        
+         echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg " ></i>  Go Back ', array('controller' => 'warehouse_requests','action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+            ?> &nbsp;
+
+            <?php  echo $this->Html->link('<i class="fa fa-print fa-lg"></i>  Print ', array('controller' => 'warehouse_requests','action' => 'print_request', $requestData['WarehouseRequest']['id']),array('class' =>'btn btn-primary pull-right','escape' => false));
             ?>
      
         <?php 
 
-            if($warehouseRequestData['WarehouseRequest']['status_id'] == 11){
+            if($requestData['WarehouseRequest']['status_id'] == 8){
 
-                 echo $this->Html->link('<i class="fa fa-check fa-lg"></i> Approve ', array('controller' => 'receivings','action' => 'purchase_approve', $warehouseRequestData['WarehouseRequest']['id']),array('class' =>'btn btn-primary pull-right','escape' => false));
+                 echo $this->Html->link('<i class="fa fa-check fa-lg"></i> Approve ', array('controller' => 'warehouse_requests','action' => 'approve', $requestData['WarehouseRequest']['id']),array('class' =>'btn btn-primary pull-right','escape' => false));
 
-        } ?>
-        
-    </div>
+        } 
 
-<br><br>
-<?php if(!empty($warehouseRequestData)){ ?>
+        echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit', array('controller' => 'warehouse_requests', 'action' => 'edit_request',$requestData['WarehouseRequest']['id']),array('class' =>'btn btn-primary pull-right','escape' => false));
+    ?>
 
+                    
+    
+    <br><br>
+</div>
 
 <div class="row">
     <div class="col-lg-12">
-        
-        <div class="row">
-            <div class="col-lg-12">
-                <header class="main-box-header clearfix">
-                    
-                            
-                </header>
+        <div class="main-box">
+            
+            <br><br>
 
-            </div>
-        </div>
-                <?php echo $this->Form->create('WarehouseRequest',array('url'=>(array('controller' => 'warehouse_request','action' => 'view'))));?>      
-
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="main-box" >
-                    <header class="main-box-header clearfix" >
-
-                        <h2 class="pull-left"><b>Warehouse Request</b></h2>
+               <table width = "100%">
+                    <tr>
+                        <td >
+                            <img src="<?php echo Router::url('/', true) ?>img/koufu_logo.jpg" alt="logo" style="width:248px;height:45px;padding-bottom:10;">
+                        </td>
+                        <td width = "65%">
                         
-                    </header>
+                            <h1 style = "margin-bottom:0px; margin-top:0px; padding-top:0px;"><b>REQUISITION SLIP</b></h1>
+                        
+                        </td>
+                    </tr>
 
-                    <div class="top-space"></div>                       
-                    <div class="main-box-body clearfix">
-                        <div class="main-box-body clearfix">
-                            <div class="form-horizontal">                                   
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label">Warehouse Request Number</label>
-                                    
-                                    <div class="col-lg-8">
-                                        <?php 
-                                            echo $this->Form->input('WarehouseRequest.uuid', array(
-                                                                            'class' => 'form-control item_type',
-                                                                            'disabled' => true,
-                                                                            'label' => false,       
-                                                                            'value' => $warehouseRequestData['WarehouseRequest']['uuid'],
-                                                                            'fields' =>array('name')));
+                </table>    
+               
+               <br><br>
+                
+            <div class="main-box-body clearfix">
+                
+
+            <table border="0" width="100%" style = "margin:0px; padding:0px; line-height:0px;">
+                <tbody>
+                
+                    <tr>
+                        <td></td>
+                        <td><b>Position: </b><?php echo $roleData[$userData['User']['role_id']];?></td>
+                        <td ></td>
+                        <td align="right" style="line-height:8px;"><b>No: </b>RQ<?php echo $requestData['WarehouseRequest']['uuid']; ?><br><br><br><b>Date: </b><?php echo (new \DateTime())->format('d/m/Y') ?><br></td>
+                    </tr>
+
+                </tbody>
+            </table>
+            <br>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <th>#</th>
+                            <th class="text-center">Item Decription</th>
+                            <th class="text-center">Qty Needed</th>
+                            <th class="text-center">UOM</th>
+                            <th class="text-center">Current Stock</th>
+                            <th class="text-center">Date Needed</th>
+                            <th class="text-center">Purpose</th>
+                            <th class="text-center">Remarks</th>
+                        </thead>
+                        <?php   foreach ($requestData['RequestItem'] as $key => $value) { $key++ ?>
+                           
+                            <tr>
+                                <td><?php echo $key ?></td>
+                                <td class="text-center"><?php echo $value['name']?></td>
+                                <td class="text-center">
+                                    <?php  
+                                    if(!empty($value['quantity'])){ 
+                                        echo $value['quantity']?>
+                                <?php } ?>
+
+                                </td>
+
+                                 <td class="text-center">
+                                    <?php  
+                                    if(!empty($unitData[$value['quantity_unit_id']])){ 
+                                    echo $unitData[$value['quantity_unit_id']];
+                                   } ?>
+                                </td>
+                                <td class="text-center"></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"><?php  
+                                   if(!empty($requestData['remarks'])){ 
+                                    echo$requestData['remarks'];
+                                   } ?></td>
+                                
+                            </tr>
+                        <?php 
+                            } ?>
+                        <tr>
+                            <td> </td>
+                            <td class="text-center">------END------</td>
+                            <td class="text-center"> </td>
+                            <td class="text-center"> </td>
+                            <td class="text-center"> </td>
+                            <td class="text-center"> </td>
+                            <td class="text-center"> </td>
+                            <td class="text-center"> </td>
 
 
-                                        ?>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label">Name</label>
-                                    <div class="col-lg-8">
-                                        <?php 
-                                            echo $this->Form->input('WarehouseRequest.name', array(
-                                                                            'class' => 'form-control item_type',
-                                                                            'label' => false,
-                                                                            'disabled' => true,
-                                                                            'fields' =>array('name'),
-                                                                            'value' => ucwords($warehouseRequestData['WarehouseRequest']['name'])));
-                                        ?>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label">Created by</label>
-                                    <div class="col-lg-8">
-                                        <?php 
-
-                                            $name = ucfirst($fullname[$warehouseRequestData['WarehouseRequest']['created_by']]); 
-
-                                            
-
-                                            echo $this->Form->input('WarehouseRequest.createdBy', array(
-                                                                            'class' => 'form-control item_type',
-                                                                            'label' => false,
-                                                                            'disabled' => true,
-                                                                            'fields' =>array('name'),
-                                                                            'value' => $name));
-                                        ?>
-                                    </div>
-                                </div>
 
 
-                            </div>
-                        </div>
-                    </div>
+                        </tr>
+                    </table>
+                       
+                    <table class="table table-bordered">
+                        <thead>
+                            <th class="text-center">Requested by :</th>
+                            <th class="text-center">Approved by :</th>
+                            <th class="text-center">Issued by :</th>
+                            <th class="text-center">Received by :</th>
+                        </thead>
+                        
+                        <tr>
+                            <td class="text-center"><?php echo ucfirst($preparedData['User']['first_name'])?> <?php echo ucfirst($preparedData['User']['last_name'])?></td>
+                            <td class="text-center">Shou Yi Yu</td>
+                            <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        </tr>
+
+
+                        
+                    </table>
+                    <div class = " pull-right ">
+                        <label font-size:60%;>
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KP-FR-LG1-001 R0 <br>Effective Date: 10 Aug 2015 
+                        </label>
+                    </div> 
                 </div>
             </div>
         </div>
-
-   
-        <?php echo $this->Form->end(); ?>   
     </div>
 </div>
-
-<?php 
-} if(!empty($requestPurchasingItem)){ ?> 
-
-<div class="col-lg-6">
-    <div class="main-box clearfix">
-
-    <header class="main-box-header clearfix">
-    <h2>Purchased Item List</h2>
-    <span style = "font-size:10px;">
-    <I>
-        <span class="price table table-products table-hover">
-            <i class="fa fa-tags" style = "color:#52D017;"></i>&nbsp; Model
-            </span>
-                                
-
-        <span class="warranty">
-            <i class="fa fa-certificate" style = "color:orange;"></i>&nbsp; Purchased Item
-        </span>
-    </I>
-    </span>
-    </header>
-
-        <div class="main-box-body clearfix">
-            <div class="table-responsive">
-                <table class="table table-products table-hover">
-                    <tbody>
-
-                         <?php  foreach ($requestPurchasingItem as $requestDataList): ?>
-                        <tr>
-                            <td>
-                            <img src="<?php echo Router::url('/', true) ?>img/itemboxopen.png" alt="logo" style="width:60px;height:60px;padding-bottom:10;">
-                            </td>
-                            <td>
-                                <span class="name">
-                                <?php echo $requestDataList[$itemHolder]['name'] ?>
-                                </span>
-                                <span class="price">
-                                <i class="fa fa-tags"></i>&nbsp;<?php echo $requestDataList[$itemHolder]['model'] ?> 
-                                </span>
-                                <span class="warranty">
-                                <i class="fa fa-certificate"></i>&nbsp; <?php echo $requestDataList[$itemHolder]['quantity'] ?> pcs
-                                </span>
-                            </td>
-                        </tr>
-
-                    <?php  endforeach;  ?>
-                    
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="col-lg-6">
-    <div class="main-box clearfix">
-
-    <header class="main-box-header clearfix">
-    <h2>Delivered Item List</h2> 
-    <span style = "font-size:10px;">
-    <I>
-        <span class="price table table-products table-hover">
-            <i class="fa fa-certificate" style = "color:#52D017;"></i>&nbsp; Good
-            </span>
-                                
-
-        <span class="warranty">
-            <i class="fa fa-certificate" style = "color:orange;"></i>&nbsp; Rejected
-        </span>
-    </I>
-    </span>
-
-    </header>
-
-        <div class="main-box-body clearfix">
-            <div class="table-responsive">
-                <table class="table table-products table-hover">
-                    <tbody> 
-
-                    <?php  
-                         foreach ($requestPurchasingItem as $requestDataList):?>
-                        <tr>
-                            <td>
-                            <img src="<?php echo Router::url('/', true) ?>img/itembox.png" alt="logo" style="width:85px;height:60px;padding-bottom:10;">
-                            </td>
-                            <td>
-                                <span class="name">
-                                <?php echo $requestDataList[$itemHolder]['name'] ?>
-                                </span>
-                                <span class="price">
-                                <i class="fa fa-certificate"></i>&nbsp; <?php 
-
-                                if(!empty($requestDataList[$itemHolder]['good_quantity'])){
-
-                                 echo $requestDataList[$itemHolder]['good_quantity'] ?> pcs
-
-                                <?php } ?>
-                                </span>
-                                <span class="warranty">
-                                <i class="fa fa-certificate"></i>&nbsp; <?php 
-
-                                if(!empty($requestDataList[$itemHolder]['reject_quantity'])){
-
-                                 echo $requestDataList[$itemHolder]['reject_quantity'] ?> pcs
-
-                                <?php } ?>
-                                </span>
-                                
-                            </td>
-                        </tr>
-
-                    <?php  endforeach;  ?>
-                    
-                    </tbody>
-                </table>
-            </div> 
-        </div>
-    </div>
-
-</div>
-
-<?php } ?> 

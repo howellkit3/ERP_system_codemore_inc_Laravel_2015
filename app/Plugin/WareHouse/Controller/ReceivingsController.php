@@ -331,14 +331,6 @@ class ReceivingsController extends WareHouseAppController {
 
 	 	$this->loadModel('User');
 
-	 	$this->loadModel('GeneralItem');
-
-	 	$this->loadModel('Substrate');
-
-	 	$this->loadModel('CorrugatedPaper');
-
-	 	$this->loadModel('CompoundSubstrate');
-
 	 	$this->loadModel('Purchasing.PurchasingItem');
 
 		$this->loadModel('Purchasing.RequestItem');
@@ -386,6 +378,8 @@ class ReceivingsController extends WareHouseAppController {
 
 					$arrayRejectQuantity = array();
 
+					$this->loadModel('GeneralItem');
+
 					$itemDetails = $this->GeneralItem->find('list', array('fields' => array('GeneralItem.id', 'GeneralItem.name')
 																		));  
 
@@ -422,6 +416,8 @@ class ReceivingsController extends WareHouseAppController {
 
 					$arrayRejectQuantity = array();
 
+					$this->loadModel('Substrate');
+
 					$itemDetails = $this->Substrate->find('list', array('fields' => array('Substrate.id', 'Substrate.name')
 																		));     
 
@@ -457,6 +453,8 @@ class ReceivingsController extends WareHouseAppController {
 
 					$arrayRejectQuantity = array();
 
+					$this->loadModel('CompoundSubstrate');
+
 					$itemDetails = $this->CompoundSubstrate->find('list', array('fields' => array('CompoundSubstrate.id', 'CompoundSubstrate.name')
 																		)); 
 
@@ -491,6 +489,8 @@ class ReceivingsController extends WareHouseAppController {
 		        	$arrayGoodQuantity = array();
 
 					$arrayRejectQuantity = array();
+
+					$this->loadModel('CorrugatedPaper');
 
 					$itemDetails = $this->CorrugatedPaper->find('list', array('fields' => array('CorrugatedPaper.id', 'CorrugatedPaper.name')
 																		));  

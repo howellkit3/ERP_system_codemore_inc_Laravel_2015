@@ -94,7 +94,42 @@ class Stock extends AppModel {
 
 			//}
 			
-		}  
+		}
+
+	public function saveOutRecordStock($data, $auth, $stockData){  
+
+		foreach ($data as $key => $value) {
+
+			foreach ($stockData as $key => $valueOfStock) {
+
+				$modelHolder = $valueOfStock['Stock']['model'];
+
+				$foreign_keyHolder = $valueOfStock['Stock']['item_id'];
+
+				if($value['model'] == $modelHolder && $value['foreign_key'] == $foreign_keyHolder){
+
+					$deductedQuantity = $valueOfStock['Stock']['quantity'] - $value['quantity'];
+
+					$stock['id'] = $valueOfStock['Stock']['id'];
+
+					$stock['quantity'] = $deductedQuantity;
+
+					$this->save($stock);
+
+					return "0";
+
+				}else{
+
+					return "1";
+				}
+
+
+			}
+
+		}
+
+
+	}
 
 	}
 

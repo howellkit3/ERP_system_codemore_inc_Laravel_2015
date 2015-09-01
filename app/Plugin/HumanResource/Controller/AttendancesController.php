@@ -98,7 +98,7 @@ class AttendancesController  extends HumanResourceAppController {
 
 		$attendance = $this->Attendance->getAll($conditions,array('Employee'));
 
-		$employees = [];
+		$employees = array();
 
 		foreach ($attendance as $key => $people) {
 
@@ -767,7 +767,6 @@ public function daily_info() {
 				return  json_encode($timekeep['Attendance']);	
 			}
 
-			
 			return json_encode($timekeep);	
 
 		}

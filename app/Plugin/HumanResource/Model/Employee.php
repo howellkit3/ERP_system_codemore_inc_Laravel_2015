@@ -83,12 +83,12 @@ class Employee extends AppModel {
 						'conditions' => '',
 						'dependent' => true,
 					),	
-				'Tooling' => array(
-						'className' => 'Tooling',
-						'foreignKey' => 'employee_id',
-						'conditions' => '',
-						'dependent' => true,
-					),	
+				// 'Tooling' => array(
+				// 		'className' => 'Tooling',
+				// 		'foreignKey' => 'employee_id',
+				// 		'conditions' => '',
+				// 		'dependent' => true,
+				// 	),	
 			),
 			'hasMany' => array(
 				'Email' => array(

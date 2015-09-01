@@ -77,6 +77,12 @@ class Payroll extends AppModel {
 	    			
 	    		}
 
+			if (is_object($value) && !empty($value->EmployeeAdditionalInformation)) {
+
+	    		$object[$key]['EmployeeAdditionalInformation'] = (array)$value->EmployeeAdditionalInformation;
+	    			
+	    		}
+
 	    	}
    		 
         return $object;
