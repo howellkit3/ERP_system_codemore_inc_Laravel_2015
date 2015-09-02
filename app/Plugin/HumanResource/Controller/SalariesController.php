@@ -37,7 +37,6 @@ class SalariesController  extends HumanResourceAppController {
 			} else {
 
 				$this->Session->setFlash('There\'s an error saving','error');
-
 			}
 
 			$this->redirect( array(
@@ -1251,6 +1250,7 @@ class SalariesController  extends HumanResourceAppController {
 			//$this->Components->load('HumanResource.SalaryComputation');
 			$this->loadModel('HumanResource.SalaryReport');
 			$this->loadModel('HumanResource.Holiday');
+			$this->loadModel('HumanResource.Overtime');
 			$this->loadModel('Payroll.Deduction');
 			$this->loadModel('Payroll.Amortization');			
 			$this->loadModel('Payroll.OvertimeRate');

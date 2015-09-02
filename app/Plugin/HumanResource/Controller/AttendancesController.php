@@ -208,8 +208,6 @@ class AttendancesController  extends HumanResourceAppController {
 						$attendance['Attendance']['out'] = date('h:i a',strtotime($attendance['Attendance']['out']));
 
 						$attendance['Attendance']['duration'] = $this->_getDuration($attendance['Attendance']['in'],$attendance['Attendance']['out']);
-						
-
 					}
 					 
 					echo json_encode($attendance);
@@ -221,8 +219,7 @@ class AttendancesController  extends HumanResourceAppController {
 						//update daily info
 						$this->Attendance->bindWorkshift();
 						$callAttendance = $this->Attendance->findById($data['Attendance']['id']);
-
-						$this->DailyInfo->updateDailyInfo($callAttendance,$attendance['Attendance']['employee_id'],$callAttendance ['Attendance']['date']);	
+						$this->DailyInfo->updateDailyInfo($callAttendance,$attendance['Attendance']['employee_id'],$callAttendance['Attendance']['date']);	
 
 				}
 

@@ -32,7 +32,7 @@ $active_tab = 'pendings';
                         <header class="main-box-header clearfix">                          
                         <div class="filter-block pull-left">
                              <div class="form-group pull-left">
-                                <?php echo $this->Form->create('Overtime',array('controller' => 'overtimes','action' => 'index', 'type'=> 'get')); ?>
+                                <?php echo $this->Form->create('Overtime',array('controller' => 'overtimes','action' => 'pendings', 'type'=> 'get')); ?>
                                     <input type="text" name="date" id="changeDate" class="form-control datepick" value="<?php echo $date ?>">
 
                                         <i class="fa fa fa-calendar calendar-icon"></i>
