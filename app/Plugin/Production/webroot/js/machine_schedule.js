@@ -13,7 +13,7 @@ $(document).ready(function(){
 
                 $parent = $('.parent-div-'+data.JobTicket.id);
                 
-                $parent.find('.status-append').html('<span class="label label-success">Sheeter / Cutting</span>');
+                $parent.find('.status-append').html('<span class="label label-success">data.JobTicket.id</span>');
                
                 $('.close').click();
 

@@ -61,7 +61,7 @@ class JobsController extends ProductionAppController {
         $productName = $this->Product->find('list',array('fields' => array('id','name')));
 
         //calling data
-        $machineScheduleData = $this->_find_machine_schedule_data(1);
+      //  $machineScheduleData = $this->_find_machine_schedule_data(1);
         //pr($machineScheduleData);exit();
         $this->set(compact('machineScheduleData','companyData','machineData','productName'));
 
@@ -80,7 +80,7 @@ class JobsController extends ProductionAppController {
         $machineData = $this->Machine->find('list',array('fields' => array('id','name')));
 
         //calling data
-        $machineScheduleData = $this->_find_machine_schedule_data(2);
+       // $machineScheduleData = $this->_find_machine_schedule_data(2);
         //pr($machineScheduleData);exit();
         $this->set(compact('machineScheduleData','companyData','machineData'));
 
@@ -99,7 +99,7 @@ class JobsController extends ProductionAppController {
         $machineData = $this->Machine->find('list',array('fields' => array('id','name')));
 
         //calling data
-        $machineScheduleData = $this->_find_machine_schedule_data(3);
+        //$machineScheduleData = $this->_find_machine_schedule_data(3);
         //pr($machineScheduleData);exit();
         $this->set(compact('machineScheduleData','companyData','machineData'));
 
@@ -118,7 +118,7 @@ class JobsController extends ProductionAppController {
         $machineData = $this->Machine->find('list',array('fields' => array('id','name')));
 
         //calling data
-        $machineScheduleData = $this->_find_machine_schedule_data(4);
+     // $machineScheduleData = $this->_find_machine_schedule_data(4);
         //pr($machineScheduleData);exit();
         $this->set(compact('machineScheduleData','companyData','machineData'));
 
@@ -137,7 +137,7 @@ class JobsController extends ProductionAppController {
         $machineData = $this->Machine->find('list',array('fields' => array('id','name')));
 
         //calling data
-        $machineScheduleData = $this->_find_machine_schedule_data(5);
+        //$machineScheduleData = $this->_find_machine_schedule_data(5);
         //pr($machineScheduleData);exit();
         $this->set(compact('machineScheduleData','companyData','machineData'));
 
@@ -156,7 +156,7 @@ class JobsController extends ProductionAppController {
         $machineData = $this->Machine->find('list',array('fields' => array('id','name')));
 
         //calling data
-        $machineScheduleData = $this->_find_machine_schedule_data(6);
+       // $machineScheduleData = $this->_find_machine_schedule_data(6);
         //pr($machineScheduleData);exit();
         $this->set(compact('machineScheduleData','companyData','machineData'));
 
@@ -175,7 +175,7 @@ class JobsController extends ProductionAppController {
         $machineData = $this->Machine->find('list',array('fields' => array('id','name')));
 
         //calling data
-        $machineScheduleData = $this->_find_machine_schedule_data(7);
+      //  $machineScheduleData = $this->_find_machine_schedule_data(7);
         //pr($machineScheduleData);exit();
         $this->set(compact('machineScheduleData','companyData','machineData'));
 
@@ -194,7 +194,7 @@ class JobsController extends ProductionAppController {
         $machineData = $this->Machine->find('list',array('fields' => array('id','name')));
 
         //calling data
-        $machineScheduleData = $this->_find_machine_schedule_data(8);
+      //  $machineScheduleData = $this->_find_machine_schedule_data(8);
         //pr($machineScheduleData);exit();
         $this->set(compact('machineScheduleData','companyData','machineData'));
 
@@ -213,7 +213,7 @@ class JobsController extends ProductionAppController {
         $machineData = $this->Machine->find('list',array('fields' => array('id','name')));
 
         //calling data
-        $machineScheduleData = $this->_find_machine_schedule_data(9);
+       // $machineScheduleData = $this->_find_machine_schedule_data(9);
         //pr($machineScheduleData);exit();
         $this->set(compact('machineScheduleData','companyData','machineData'));
 
@@ -232,7 +232,7 @@ class JobsController extends ProductionAppController {
         $machineData = $this->Machine->find('list',array('fields' => array('id','name')));
 
         //calling data
-        $machineScheduleData = $this->_find_machine_schedule_data(10);
+       // $machineScheduleData = $this->_find_machine_schedule_data(10);
         //pr($machineScheduleData);exit();
         $this->set(compact('machineScheduleData','companyData','machineData'));
 
@@ -251,7 +251,7 @@ class JobsController extends ProductionAppController {
         $machineData = $this->Machine->find('list',array('fields' => array('id','name')));
 
         //calling data
-        $machineScheduleData = $this->_find_machine_schedule_data(11);
+     //   $machineScheduleData = $this->_find_machine_schedule_data(11);
         //pr($machineScheduleData);exit();
         $this->set(compact('machineScheduleData','companyData','machineData'));
 

@@ -36,6 +36,7 @@ class RequestItem extends AppModel {
 
 	public function saveRequestItem($requestData = null,$requestUuid = null)
 	{
+		//pr($requestData); exit;
 	
 		foreach ($requestData['RequestItem'] as $key => $requestValue)
 		{
@@ -52,7 +53,7 @@ class RequestItem extends AppModel {
 
 	public function saveRequestItemPrice($priceData = null)
 	{
-	
+	 //pr($priceData); exit;
 		foreach ($priceData['RequestItem'] as $key => $priceDataValue)
 		{
 			$this->create();

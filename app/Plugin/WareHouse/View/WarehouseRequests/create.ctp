@@ -12,7 +12,7 @@
 					<header class="main-box-header clearfix">
 							                    
 						<h1 class="pull-left">
-							Create Purchase Request
+							Create Request
 						</h1>
 						<?php 
 	                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'warehouse_requests', 'action' => 'create'),array('class' =>'btn btn-primary pull-right','escape' => false));
@@ -53,7 +53,7 @@
 								<header class="main-box-header clearfix">
 								                    
 									<h1 class="pull-left">
-										Purchase Item
+										Request Item
 									</h1>
 									<input type="hidden" value="1" name="getCounter" class="get-counter" />
 								</header>
@@ -225,14 +225,27 @@
 
 													<div class="col-lg-3">
 														<?php 
-															echo $this->Form->input('WarehouseRequestItem.0.quantity_unit_id', array(
-										                        'options' => array($unitData),  
+															echo $this->Form->input('WarehouseRequestItem.0.quantity_unit', array(
+										                        'options' => array($unitData), 
+										                        'value' => 14,
+										                        'disabled' => 'disabled',
 										                        'label' => false,
 										                        'class' => 'form-control required',
 										                        'empty' => '---Select Unit---'
 										                         )); 
 
+															echo $this->Form->input('WarehouseRequestItem.0.quantity_unit', array(
+										                        //'options' => array($unitData), 
+										                        'value' => 14,
+										                        'type' => 'hidden',
+										                        'label' => false,
+										                        'class' => 'form-control required',
+										                        'empty' => '---Select Unit---'
+										                         ));
+
 										                ?>
+
+										               
 													</div>
 
 												</div>

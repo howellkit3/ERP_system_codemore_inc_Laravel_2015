@@ -3,21 +3,25 @@
 <?php  echo $this->element('ware_house_option');?>
 
 
-    <div class = "pull-right";>
+    <div class="filter-block pull-right">
 
-        <?php 
 
-            echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i>  Go Back ', array('controller' => 'receivings','action' => 'receive'),array('class' =>'btn btn-primary pull-right','escape' => false));
+    <?php 
         
-        if($receivedItemData[0]['DeliveredOrder']['status_id'] != 1) {
+        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i>  Go Back ', array('controller' => 'receivings','action' => 'receive'),array('class' =>'btn btn-primary pull-right','escape' => false)); 
+            ?> &nbsp;
+
+          <?php  if($receivedItemData[0]['DeliveredOrder']['status_id'] != 1) {
                 if ($receivedItemData[0]['DeliveredOrder']['status_id'] != 13){    
         
-            echo $this->Html->link('<i class="fa fa-check fa-lg"></i> Approve ', array('controller' => 'receivings','action' => 'purchase_approve', $deliveredDataID),array('class' =>'btn btn-primary pull-right ' ,'escape' => false));  
-
+            echo $this->Html->link('<i class="fa fa-check fa-lg"></i> Approve ', array('controller' => 'receivings','action' => 'purchase_approve', $deliveredDataID),array('class' =>'btn btn-primary  pull-right' ,'escape' => false));  
             }
-        } ?>
-
-    </div> 
+        }  ?>   
+ 
+    <br><br>
+</div>
+    
+   
 
 <br><br>
 

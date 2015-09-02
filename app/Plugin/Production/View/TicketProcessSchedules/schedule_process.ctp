@@ -149,8 +149,8 @@
 					<?php } ?>
 					<hr>
 					<div class="form-group">
-		      			<label class="col-lg-6 control-label"></label>
-						<div class="col-lg-3">
+		      			<label class="col-lg-5 control-label"></label>
+						<div class="col-lg-5">
                             <?php 
                                 echo $this->Form->submit('Submit Job Ticket Process Schedule', array('class' => 'btn btn-success pull-left',  'title' => 'Click here to add Process Schedule'));
                             ?>

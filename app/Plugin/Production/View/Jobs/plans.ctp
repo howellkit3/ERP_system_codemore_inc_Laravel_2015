@@ -12,23 +12,13 @@
 						'HumanResource.custom',
                         'Production.machine_schedule'
 )); ?>
-<?php 	//echo $this->element('production_options'); ?>
-<div class="main-box">
-	<div class="main-box-body clearfix">
-		<div class="row">
-			<div class="col-md-12">
-				<br>
-				<?php 	//echo $this->element('production_options'); ?>
-				<?php 
-					$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
-				 	echo $this->element('tab/jobs',array('active_tab' => $active_tab)); 
-				 ?>
-			</div>
-		</div>
-	</div>
-</div>
 
-
+				
+<?php 
+$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
+	echo $this->element('tab/jobs',array('active_tab' => $active_tab)); 
+?>
+			
 <div class="row">
 	<div class="col-lg-12">
         <div class="main-box clearfix body-pad">
@@ -113,14 +103,14 @@
 									                           <?php echo $jobList['ClientOrderDeliverySchedule']['quantity']; ?>
 									                        </td>
 
-									                        <td class="">
+									                        <td class="text-center">
 									                           <?php 
-									                           		if (empty($jobList['JobTicket']['production_status'])) {
+									                           		if (empty($jobList['JobTicket']['status_production_id'])) {
 									                           			echo "<span class='label label-default'>Waiting For Schedule</span>";
 									                           		}else{
-									                           			if ($jobList['JobTicket']['production_status'] == 1) {
+									                           			if ($jobList['JobTicket']['status_production_id'] == 1) {
 									                           				echo "<span class='label label-success'>Sheeter / Cutting</span>";
-									                           			}
+									                           			} 
 									                           		}
 									                           	?>
 									                        </td>
@@ -145,16 +135,7 @@
 																			<span class="post"><font size="1px"> Sched </font></span>
 																		</span>
 																	</a>
-																	<a data-toggle="modal" href="#myModalSchedule<?php echo $jobList['JobTicket']['id'] ?>" class="table-link">
-																		<i class="fa fa-lg "></i>
-																		<span class="fa-stack">
-						                        							<i class="fa fa-square fa-stack-2x "></i>
-						                        							<i class="fa  fa-calendar fa-stack-1x fa-inverse "></i>&nbsp;&nbsp;&nbsp;
-						                        							<span class ="post">
-						                        								<font size = "1px"> Sched </font>
-						                        							</span>
-						                        						</span>
-						                        					</a>
+																	
 						                        				<?php } else { ?>
 						                        					
 						                        				<?php } ?>

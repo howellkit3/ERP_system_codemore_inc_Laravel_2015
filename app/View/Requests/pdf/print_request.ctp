@@ -93,7 +93,7 @@ th, td {
 
 						<td align = "center" style="border:1px solid black; font-size:80% "><?php ?></td>
 
-						<td align = "center" style="border:1px solid black; font-size:50% "><?php echo $value['RequestItem']['date_needed'] ?></td>
+						<td align = "center" style="border:1px solid black; font-size:50% "><?php echo date("Y-m-d", strtotime($value['RequestItem']['date_needed'])) ?></td>
 
 						<td align = "center" style="border:1px solid black; font-size:50% "><?php echo $value['RequestItem']['purpose'] ?></td>
 
@@ -233,7 +233,7 @@ th, td {
 
 						<td align = "center" style="border:1px solid black; font-size:80% "><?php ?></td>
 
-						<td align = "center" style="border:1px solid black; font-size:50% "><?php echo $value['RequestItem']['date_needed'] ?></td>
+						<td align = "center" style="border:1px solid black; font-size:50% "><?php echo date("Y-m-d", strtotime($value['RequestItem']['date_needed'])) ?></td>
 
 						<td align = "center" style="border:1px solid black; font-size:50% "><?php echo $value['RequestItem']['purpose'] ?></td>
 

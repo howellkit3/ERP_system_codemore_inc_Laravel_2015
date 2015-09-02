@@ -72,7 +72,7 @@
 											</div>
 										</div>
 
-										<div class="form-group">
+										<!-- <div class="form-group">
 											<label for="inputPassword1" class="col-lg-2 control-label"> Remarks</label>
 											<div class="col-lg-8">
 												<?php 
@@ -83,7 +83,7 @@
 												?>
 
 											</div>
-										</div>
+										</div> -->
 									</div>
 								</div>
 							</div>
@@ -295,6 +295,48 @@
 														</div>
 
 													</div>
+
+													<div class="form-group">
+													<label class="col-lg-2 control-label"><span style="color:red">*</span>Date Needed</label>
+													<div class="col-lg-6">
+														<?php 
+                                   						 echo $this->Form->input('RequestItem.'.$key.'.date_needed', array(
+					                                        'type' => 'text',
+					                                        'label' => false,
+					                                        'required' => 'required',
+					                                        'class' => 'form-control item_type datepick required',
+					                                        'value' => date("Y-m-d", strtotime($value['RequestItem']['date_needed']))));
+					                                        
+                              	
+			                                            ?>
+													</div>
+												</div>
+
+												<div class="form-group">
+													<label class="col-lg-2 control-label"><span style="color:red">*</span>Purpose</label>
+													<div class="col-lg-6">
+														<?php 
+				                                            echo $this->Form->textarea('RequestItem.'.$key.'.purpose', array(
+				                                            								'class' => 'form-control item_type required',
+										                                                    'label' => false,
+										                                                    'placeholder' => 'Request Purpose',
+										                                                    'value' => $value['RequestItem']['purpose']));
+			                                            ?>
+													</div>
+												</div>
+
+												<div class="form-group">
+													<label class="col-lg-2 control-label">Remarks</label>
+													<div class="col-lg-6">
+														<?php 
+				                                            echo $this->Form->textarea('RequestItem.'.$key.'.remarks', array(
+				                                            								'class' => 'form-control item_type ',
+										                                                    'label' => false,
+										                                                    'placeholder' => 'Remarks',
+										                                                    'value' => $value['RequestItem']['remarks']));
+			                                            ?>
+													</div>
+												</div>
 
 													<hr>
 

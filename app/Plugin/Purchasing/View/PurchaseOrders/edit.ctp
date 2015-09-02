@@ -288,13 +288,13 @@
 
 											        	</div>
 
-											        	<div class="col-lg-3">
+											        	<div class="col-lg-4">
 
 															<a data-toggle="modal" href="#myModalItem" data-modal="<?php echo $dataPlus ?>" class="modal-button btn btn-primary mrg-b-lg pull-left  "><i class="fa fa-search-plus fa-lg"></i> Select Item</a>
-															&emsp;&emsp;&emsp;&emsp;
+															&emsp;
 															<button type="button" class="add-field1  table-link danger btn btn-success " onclick="cloneDatarequest('cloneMe', this)"><i class="fa fa-plus"></i></button>
 															<!-- <button type="button" class="add-field1sd proxy-counter add-request-section table-link danger btn btn-success" ><i class="fa fa-plus"></i></button> -->
-															&emsp;&emsp;&emsp;&emsp;
+															
 															<?php 
 																if ($key == 0 ) { 
 																	$newClass = 'hide-remove';
@@ -406,35 +406,54 @@
 													</div>
 
 													<div class="form-group">
-														<label class="col-lg-2 control-label"><span style="color:red">*</span>Quantity</label>
-														<div class="col-lg-3">
-															<?php 
-																echo $this->Form->input('PurchasingItem.'.$key.'.quantity', array(
-																	'class' => 'form-control item_type number required select-drop',
-																	'type' => 'number',
-											                        'label' => false,
-											                        'disabled' => false,
-											                        'placeholder' => 'Quantity',
-											                        'value' => $value[$modelTable]['quantity']));
+													<label class="col-lg-2 control-label"><span style="color:red">*</span>Quantity</label>
+													<div class="col-lg-6">
+														<?php 
+															echo $this->Form->input('PurchasingItem.'.$key.'.quantity', array(
+																'class' => 'form-control item_type number  select-drop required',
+																'type' => 'number',
+										                        'label' => false,
+										                        'data' => 0,
+										                        'placeholder' => 'Quantity',
+										                        'value' => $value[$modelTable]['quantity']));
 
-											                ?>
-														</div>
+										                ?>
+													</div>
+												</div>
 
-														<div class="col-lg-3">
-															<?php 
-																echo $this->Form->input('PurchasingItem.'.$key.'.quantity_unit_id', array(
-											                        'options' => array($unitData),  
-											                        'label' => false,
-											                        'disabled' => false,
-											                        'class' => 'form-control required select-drop',
-											                        'empty' => '---Select Unit---',
-											                        'default' => $value[$modelTable]['quantity_unit_id']
-											                         )); 
+												<div class="form-group">
+														<label class="col-lg-2 control-label"><span style="color:red">*</span>Pieces</label>
 
-											                ?>
-														</div>
+													<div class="col-lg-3">
+														<?php 
+															echo $this->Form->input('PurchasingItem.'.$key.'.pieces', array(
+																'class' => 'form-control item_type number  select-drop required',
+																'type' => 'number',
+										                        'label' => false,
+										                        'data' => 0,
+										                        'placeholder' => 'Pieces', 
+										                        'value' => $value[$modelTable]['pieces']
+											                         ));
+
+										                ?>
 
 													</div>
+
+													<div class="col-lg-3">
+														<?php 
+															echo $this->Form->input('PurchasingItem.'.$key.'.quantity_unit_id', array(
+										                        'options' => array($unitData),  
+										                        'label' => false,
+										                        'class' => 'form-control required',
+										                        'empty' => '---Select Unit---',
+										                        'default' => $value[$modelTable]['quantity_unit_id']
+											                         )); 
+
+										            ?>
+
+													</div>
+
+												</div>
 
 													<div class="form-group">
 														<label class="col-lg-2 control-label"><span style="color:red">*</span>Price</label>
