@@ -59,8 +59,6 @@ class RequestsController extends PurchasingAppController {
 
 	 	if ($this->request->is(array('post','put'))) {
 
-	 		//pr($this->request->data); exit;
-
 			$requestUuid = $this->Request->saveRequest($this->request->data['Request'],$userData['User']['id']);
 
 			$this->RequestItem->saveRequestItem($this->request->data ,$requestUuid);
@@ -310,6 +308,8 @@ class RequestsController extends PurchasingAppController {
 		$requestData = $this->Request->find('first', array('conditions' => array('Request.id' => $requestId)));
 		
 		$requestRequestItem = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestData['Request']['uuid'])));
+
+		//pr($requestRequestItem); exit;
 
 	    foreach ($requestRequestItem as $key => $value) {
 			

@@ -2,7 +2,7 @@
     
         <tr class="">
 
-            <td class="">
+            <td class="text-center">
                 <?php echo 'WIO' . ucfirst($stockTableList['Stock']['uuid']) ?>  
             </td>
 
@@ -11,7 +11,7 @@
             </td>
 
 
-            <td class="">
+            <td class="text-center">
                 <?php echo ucfirst($stockTableList['Stock']['quantity']) ?>
             </td>
 

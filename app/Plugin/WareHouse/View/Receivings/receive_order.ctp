@@ -195,7 +195,15 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                               
                                  ?>
 
-                         
+                            <div class="form-group ">
+                                <label class="col-lg-2 control-label"></label>
+
+                                <div class="col-lg-6">
+                                    <label><I>*Please note that the quantity should be in pieces(pc/s)</I></label>
+
+                                </div>
+                            </div>
+                            
                         
                             <div class="form-group">
                                 <label for="inputPassword1" class="col-lg-2 control-label">Remarks</label>
@@ -278,23 +286,23 @@ jQuery("body").ready(function(){
 
    var RemainingQuantity =  parseInt(limiter) -  parseInt(rejectQuantity);
 
-    if(parseInt(limiter) < parseInt(totalQuantity)){
+  //  if(parseInt(limiter) < parseInt(totalQuantity)){
 
-            alert('Sum of Good and Reject Items Exceeds'); 
+    //        alert('Sum of Good and Reject Items Exceeds'); 
 
-            if(parseInt(RemainingQuantity) < 0){
+           // if(parseInt(RemainingQuantity) < 0){
 
-                $(this).parents('.modal-main-body').find('.limitQuantity').val(0);
+              //  $(this).parents('.modal-main-body').find('.limitQuantity').val(0);
 
-                $(this).parents('.modal-main-body').find('.reject').val(0);
+               // $(this).parents('.modal-main-body').find('.reject').val(0);
 
             
-            }else{
+         //   }else{
 
-                $(this).parents('.modal-main-body').find('.limitQuantity').val(RemainingQuantity);
+           //     $(this).parents('.modal-main-body').find('.limitQuantity').val(RemainingQuantity);
 
-            }
-        }
+           // }
+       // }
 
     });
 

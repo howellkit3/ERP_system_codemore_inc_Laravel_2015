@@ -1925,3 +1925,9 @@ INSERT INTO `sss_ranges` (`id`, `range_from`, `range_to`, `bounds`, `credits`, `
 (3, '1250.00', '1749.99', '0.00', '1500.00', '110.50', '54.50', '10.00', 4, 4, '2015-08-12 02:33:19', '2015-08-12 03:05:32'),
 (4, '1000.00', '1249.99', '0.00', '1000.00', '73.70', '36.30', '10.00', 4, 4, '2015-08-12 08:53:43', '2015-08-12 08:53:43'),
 (5, '1750.00', '2249.99', '0.00', '2000.00', '147.30', '72.70', '10.00', 4, 4, '2015-08-24 06:39:01', '2015-08-24 06:39:01');
+
+
+/** howellkit added this 09/02/2015  */
+#NOTE: SELECT KOUFU PURCHASING DATABASE ----
+ALTER TABLE `request_items`  ADD `pieces` INT(11) NULL  AFTER `quantity`;
+ALTER TABLE `purchasing_items`  ADD `pieces` INT(11) NULL  AFTER `quantity`;
