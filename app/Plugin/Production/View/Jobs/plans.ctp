@@ -103,14 +103,14 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 									                           <?php echo $jobList['ClientOrderDeliverySchedule']['quantity']; ?>
 									                        </td>
 
-									                        <td class="">
+									                        <td class="text-center">
 									                           <?php 
-									                           		if (empty($jobList['JobTicket']['production_status'])) {
+									                           		if (empty($jobList['JobTicket']['status_production_id'])) {
 									                           			echo "<span class='label label-default'>Waiting For Schedule</span>";
 									                           		}else{
-									                           			if ($jobList['JobTicket']['production_status'] == 1) {
+									                           			if ($jobList['JobTicket']['status_production_id'] == 1) {
 									                           				echo "<span class='label label-success'>Sheeter / Cutting</span>";
-									                           			}
+									                           			} 
 									                           		}
 									                           	?>
 									                        </td>
@@ -135,16 +135,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																			<span class="post"><font size="1px"> Sched </font></span>
 																		</span>
 																	</a>
-																	<a data-toggle="modal" href="#myModalSchedule<?php echo $jobList['JobTicket']['id'] ?>" class="table-link">
-																		<i class="fa fa-lg "></i>
-																		<span class="fa-stack">
-						                        							<i class="fa fa-square fa-stack-2x "></i>
-						                        							<i class="fa  fa-calendar fa-stack-1x fa-inverse "></i>&nbsp;&nbsp;&nbsp;
-						                        							<span class ="post">
-						                        								<font size = "1px"> Sched </font>
-						                        							</span>
-						                        						</span>
-						                        					</a>
+																	
 						                        				<?php } else { ?>
 						                        					
 						                        				<?php } ?>

@@ -7,6 +7,13 @@
 	padding:0px;
 }
 
+#config-tool{
+	width: 200px;
+}
+
+#config-tool.closed {
+    right: -200px;
+}
 
 </style>
 
@@ -15,7 +22,7 @@
 			<i class="fa fa-cog"></i>
 		</a>
 		
-		<div id="config-tool-options">
+		<div align = "left" id="config-tool-options" >
 			<h4>Production Process</h4>
 			<ul>
 				<li>

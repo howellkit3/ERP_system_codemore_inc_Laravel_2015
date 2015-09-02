@@ -6,34 +6,57 @@ class TicketProcessSchedulesController extends ProductionAppController {
 
     public function add() {
 
+       // pr($this->request->data); exit;
+
         $auth = $this->Session->read('Auth.User');
+
+        //pr($auth); exit;
 
         $this->loadModel('Ticket.JobTicket');
 
         $this->loadModel('Production.MachineLog');
 
+        $this->loadModel('Production.ProcessDepartment');
+
     	if (!empty($this->request->data)) {
-            // /pr($this->request->data);exit();
+
+           // pr($this->request->data);exit();
+          
             $data = $this->request->data;
 
+           // fin list department procee
+
+            $departmentData = $this->ProcessDepartment->find('list', array('fields' => array('id', 'name')));
+
             $departmentProcess = $data['TicketProcessSchedule'][0]['department_process_id'];
-            
+
+            $departmentName = $departmentData[$data['TicketProcessSchedule'][0]['department_process_id']];
+
             //update status of jobticket
             $this->JobTicket->id = $data['Ticket']['job_ticket_id'];
-            $this->JobTicket->saveField('production_status',$departmentProcess);
+            $this->JobTicket->saveField('status_production_id',$departmentProcess);
 
-            $TtcketProcessScheduleID = $this->TicketProcessSchedule->saveTicketProcessSchedule($data,$auth['id']);
+            $TicketProcessScheduleID = $this->TicketProcessSchedule->saveTicketProcessSchedule($data,$auth['id']);
 
-            $this->MachineLog->saveMachineLog($TtcketProcessScheduleID);
+            $this->MachineLog->saveMachineLog($TicketProcessScheduleID, $auth['id']);
 
             if ($this->request->is('ajax')) {
-                
+
                 $ajaxData['JobTicket']['status'] = 1;
                 $ajaxData['JobTicket']['id'] = $data['Ticket']['job_ticket_id'];
+                $ajaxData['JobTicket']['process_name'] = $departmentName;
 
                 echo json_encode($ajaxData);
                 exit();
             }
+
+            $this->Session->setFlash(__('Process/es has been logged to machine.'));
+
+            $this->redirect( array(
+                     'controller' => 'jobs', 
+                     'action' => 'plans'
+    
+             ));
             
         }
 

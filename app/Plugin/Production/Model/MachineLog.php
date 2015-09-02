@@ -26,16 +26,21 @@ class MachineLog extends AppModel {
 	// 	$this->contain($model);
 	// }
 
-	public function saveMachineLog($ticketProcessScheduleID = null){
+	public function saveMachineLog($ticketProcessScheduleID = null, $auth =null){
 
-		$this->create();
-		 
-		$data['MachineLog']['ticket_process_schedule_id'] = $ticketProcessScheduleID;
-		
-		$this->save($data);
+		foreach ($ticketProcessScheduleID as $key => $value) {
+			
+			$this->create();
 
-		return $this->id;
-		
+			$timeHolder = date("H:i:s");
+			 
+			$data['MachineLog']['ticket_process_schedule_id'] = $value;
+			$data['MachineLog']['start'] = $timeHolder;
+			$data['MachineLog']['start_by'] = $auth;
+			//pr($data); exit;
+			$this->save($data);
+
+		} 
 	}
 	
 }

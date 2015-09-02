@@ -1931,3 +1931,6 @@ INSERT INTO `sss_ranges` (`id`, `range_from`, `range_to`, `bounds`, `credits`, `
 #NOTE: SELECT KOUFU PURCHASING DATABASE ----
 ALTER TABLE `request_items`  ADD `pieces` INT(11) NULL  AFTER `quantity`;
 ALTER TABLE `purchasing_items`  ADD `pieces` INT(11) NULL  AFTER `quantity`;
+
+#NOTE: SELECT KOUFU JOB TICKET DATABASE ----
+ALTER TABLE `job_tickets`  ADD `status_production_id` INT(11) NULL  AFTER `po_number`;
