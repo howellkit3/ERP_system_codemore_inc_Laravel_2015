@@ -67,7 +67,7 @@
 											</tr>
 										</thead>
 
-										<?php 
+										<?php pr($machineScheduleData); 
 									        if(!empty($machineScheduleData)){
 									            foreach ($machineScheduleData as $key => $machineScheduleList): ?>
 													<tbody aria-relevant="all" aria-live="polite" role="alert">

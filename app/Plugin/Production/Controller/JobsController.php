@@ -52,6 +52,8 @@ class JobsController extends ProductionAppController {
 
         $this->loadModel('Production.Machine');
 
+        $this->loadModel('Production.MachineLog');
+
         $this->loadModel('Sales.Product');
 
         $companyData = $this->Company->find('list',array('fields' => array('id','company_name')));
@@ -60,9 +62,13 @@ class JobsController extends ProductionAppController {
 
         $productName = $this->Product->find('list',array('fields' => array('id','name')));
 
+        $this->MachineLog->bindTicket(); 
+
+        $machineScheduleData = $this->MachineLog->find('all');
+
         //calling data
-      //  $machineScheduleData = $this->_find_machine_schedule_data(1);
-        //pr($machineScheduleData);exit();
+        //$machineScheduleData = $this->_find_machine_schedule_data(1);
+        pr($machineScheduleData);exit();
         $this->set(compact('machineScheduleData','companyData','machineData','productName'));
 
     }
@@ -258,6 +264,8 @@ class JobsController extends ProductionAppController {
     }
 
     public function _find_machine_schedule_data($conditionsProcess){
+
+      //  pr($conditionsProcess); exit;
 
         $this->loadModel('Production.MachineSchedule');
 

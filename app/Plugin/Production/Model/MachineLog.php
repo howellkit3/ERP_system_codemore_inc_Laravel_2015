@@ -26,6 +26,22 @@ class MachineLog extends AppModel {
 	// 	$this->contain($model);
 	// }
 
+	public function bindTicket() {
+		$this->bindModel(array(
+			'hasOne' => array(
+				'TicketProcessSchedule' => array(
+					'className' => 'Production.TicketProcessSchedule',
+					'foreignKey' => false,
+					'conditions' => 'TicketProcessSchedule.id = MachineLog.ticket_process_schedule_id'
+				),		
+				
+
+			)
+		));
+		$this->recursive = 1;
+		//$this->contain($giveMeTheTableRelationship);
+	}
+
 	public function saveMachineLog($ticketProcessScheduleID = null, $auth =null){
 
 		foreach ($ticketProcessScheduleID as $key => $value) {
