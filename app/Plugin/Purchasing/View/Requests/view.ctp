@@ -116,7 +116,7 @@
                                 </td>
                                 <td class="text-center"></td>
                                 <td class="text-center"></td>
-                                <td class="text-center"><?php echo $value['RequestItem']['date_needed'] ?></td>
+                                <td class="text-center" style ="font-size:70%;"><?php echo date("Y-m-d", strtotime($value['RequestItem']['date_needed'])) ?></td>
                                 <td class="text-center"><?php echo $value['RequestItem']['purpose'] ?></td>
                                 <td class="text-center"><?php echo $value['RequestItem']['remarks'] ?></td>
                                 

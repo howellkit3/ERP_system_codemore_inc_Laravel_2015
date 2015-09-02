@@ -516,40 +516,55 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 	public function out_record($ID = null) {
 
-		if ($this->request->is(array('post','put'))) {
+		if(!empty($this->request->data['WarehouseRequestItem'])){
 
-			$userData = $this->Session->read('Auth');
+			pr('f'); exit;
 
-			$this->loadModel('WareHouse.OutRecord');
+			if ($this->request->is(array('post','put'))) {
 
-			$this->loadModel('WareHouse.ItemRecord');
+				$userData = $this->Session->read('Auth');
 
-			$this->loadModel('WareHouse.WarehouseRequestItem');
+				$this->loadModel('WareHouse.OutRecord');
 
-			$this->loadModel('WareHouse.WarehouseRequest');
+				$this->loadModel('WareHouse.ItemRecord');
 
-			$this->loadModel('WareHouse.Stock');
+				$this->loadModel('WareHouse.WarehouseRequestItem');
 
-			$requestId = $this->OutRecord->saveOutRecord($this->request->data['OutRecord'],$ID,$userData['User']['id']);
+				$this->loadModel('WareHouse.WarehouseRequest');
 
-			$this->ItemRecord->saveOutItemRecord($this->request->data['WarehouseRequestItem'], $requestId);
+				$this->loadModel('WareHouse.Stock');
 
-			$stockData = $this->Stock->find('all');
+				pr($this->request->data); exit;
 
-			$condition = $this->Stock->saveOutRecordStock($this->request->data['WarehouseRequestItem'], $userData['User']['id'], $stockData );
-			
-			$this->WarehouseRequest->id = $ID;
+				$requestId = $this->OutRecord->saveOutRecord($this->request->data['OutRecord'],$ID,$userData['User']['id']);
 
-    		$this->WarehouseRequest->saveField('status_id',12);
+				$this->ItemRecord->saveOutItemRecord($this->request->data['WarehouseRequestItem'], $requestId);
 
-			$this->Session->setFlash(__('Request Item has been deducted to stocks.'), 'success');
+				$stockData = $this->Stock->find('all');
 
-            $this->redirect( array(
-                     'controller' => 'warehouse_requests', 
-                     'action' => 'index'
-    
-            ));
-        }
+				$condition = $this->Stock->saveOutRecordStock($this->request->data['WarehouseRequestItem'], $userData['User']['id'], $stockData );
+				
+				$this->WarehouseRequest->id = $ID;
+
+	    		$this->WarehouseRequest->saveField('status_id',12);
+
+				$this->Session->setFlash(__('Request Item has been deducted to stocks.'), 'success');
+
+	            $this->redirect( array(
+	                     'controller' => 'warehouse_requests', 
+	                     'action' => 'index'
+	    
+	            ));
+	        }
+	    } else{
+
+	    	$this->Session->setFlash(__('Unable to deduct the request items from stocks.'), 'error');
+
+	        $this->redirect( array(
+	                     'controller' => 'warehouse_requests', 
+	                     'action' => 'index'));
+
+	    }
 	}
 
 	public function stock() {

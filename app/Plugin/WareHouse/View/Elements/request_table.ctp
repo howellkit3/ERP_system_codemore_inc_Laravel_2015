@@ -17,11 +17,16 @@
 
                 } ?>
 
+          
             </td>
 
             <td> 
 
                 <?php echo ucfirst($userName[$requestList['WarehouseRequest']['created_by']]) ?>
+
+            </td>
+
+            <td>
 
             </td>
 

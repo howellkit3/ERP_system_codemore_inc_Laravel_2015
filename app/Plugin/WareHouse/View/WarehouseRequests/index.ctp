@@ -33,6 +33,7 @@
                                 <th>Request #</th>
                                 <th>Name</th>
                                 <th>Prepared By</th>
+                                <th>Deducted</th>
                                 <th class="text-center">Status</th>
                                 <th>Action</th>
                             </tr>

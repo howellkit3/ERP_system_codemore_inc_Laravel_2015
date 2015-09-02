@@ -357,7 +357,7 @@ jQuery(document).ready(function($){
             if (parseInt(stockDifference) < 0) {
 
                 alert('Insufficient Stock Quantity');
-                $(this).parents('.clone').find('.toBeLimited').val(quantitylimit);
+                $(this).parents('.clone').find('.toBeLimited').val(stockQuantity);
 
             }
             
