@@ -518,8 +518,6 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 		if(!empty($this->request->data['WarehouseRequestItem'])){
 
-			pr('f'); exit;
-
 			if ($this->request->is(array('post','put'))) {
 
 				$userData = $this->Session->read('Auth');
