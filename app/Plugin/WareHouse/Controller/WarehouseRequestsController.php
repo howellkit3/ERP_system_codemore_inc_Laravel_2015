@@ -532,7 +532,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 				$this->loadModel('WareHouse.Stock');
 
-				pr($this->request->data); exit;
+				//pr($this->request->data); exit;
 
 				$requestId = $this->OutRecord->saveOutRecord($this->request->data['OutRecord'],$ID,$userData['User']['id']);
 

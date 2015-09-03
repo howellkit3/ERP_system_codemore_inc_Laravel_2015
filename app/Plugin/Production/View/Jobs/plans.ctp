@@ -82,13 +82,13 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 										</thead>
 
 										<?php 
-									        if(!empty($jobData)){
-									            foreach ($jobData as $key => $jobList): ?>
+									        if(!empty($jobData)){ 
+									            foreach ($jobData as $key => $jobList):   ?>
 													<tbody aria-relevant="all" aria-live="polite" role="alert">
 														<tr class="">
 
 															<td class="">
-									                           <?php echo 'SCH - '.$jobList['ClientOrderDeliverySchedule']['uuid']; ?>
+									                           <?php  echo 'SCH - '.$jobList['ClientOrderDeliverySchedule']['uuid']; ?>
 									                        </td>
 
 									                        <td class="">

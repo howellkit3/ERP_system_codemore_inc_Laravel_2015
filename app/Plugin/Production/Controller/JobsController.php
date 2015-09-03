@@ -26,7 +26,7 @@ class JobsController extends ProductionAppController {
 
         $jobData = $this->JobTicket->find('all',array('order' => 'JobTicket.id DESC','conditions' => array('JobTicket.created >=' => date('Y-m-d'))));
 
-        
+        //pr($jobData ); exit;
         // foreach ($jobData as $key => $jobList) {
 
         //     //find if product has specs
@@ -68,7 +68,7 @@ class JobsController extends ProductionAppController {
 
         //calling data
         //$machineScheduleData = $this->_find_machine_schedule_data(1);
-        pr($machineScheduleData);exit();
+     //   pr($machineScheduleData);exit();
         $this->set(compact('machineScheduleData','companyData','machineData','productName'));
 
     }
