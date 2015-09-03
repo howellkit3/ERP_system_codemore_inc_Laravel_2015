@@ -19,7 +19,7 @@ class Contact extends AppModel {
 
     			if (!empty($data[0])) {
 
-  					$contacts = [];
+  					$contacts = array();
   				
     				foreach ($data as $key => $value) {
     						$contacts[$key] = $value;

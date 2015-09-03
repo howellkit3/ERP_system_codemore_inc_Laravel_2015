@@ -57,7 +57,7 @@ class ContactPerson extends AppModel {
 	public function saveContact($data, $employee_id = null,$auth_id = null)
 	{	
 
-		$contact_person = [];		
+		$contact_person = array();		
 
 		if (!empty($data)){
 			$contact_person = $data[0];
@@ -71,7 +71,7 @@ class ContactPerson extends AppModel {
 
 			if (!empty($data['Contact'])) {
 				
-				$contacts = [];
+				$contacts = array();
 
 				foreach ($data['Contact'] as $key => $value) {
 					$contacts[$key] = $value;
@@ -88,7 +88,7 @@ class ContactPerson extends AppModel {
 
 			if (!empty($data['Email'])) {
 				
-				$contacts = [];
+				$contacts = array();
 
 				foreach ($data['Contact'] as $key => $value) {
 					$contacts[$key] = $value;
@@ -105,7 +105,7 @@ class ContactPerson extends AppModel {
 
 			if (!empty($data['Address'])) {
 				
-				$address = [];
+				$address = array();
 
 				foreach ($data['Address'] as $key => $value) {
 					$address[$key] = $value;

@@ -43,6 +43,15 @@
 						)); ?>
 					</li> 
 
+					<li class="<?php echo ($this->params['controller'] == 'salaries' && $this->params['action'] == 'deductions') ? 'active' : '' ?>" alt="tab-type">
+						<?php echo $this->Html->link('Adjustments',array(
+									'controller' => 'salaries',
+									'action' => 'adjustments',
+									'tab' => 'adjustments',
+									'plugin' => 'human_resource'
+						)); ?>
+					</li> 
+
 					 <li class="<?php echo ($this->params['controller'] == 'salaries' && $this->params['action'] == 'sss_table') ? 'active' : '' ?>" alt="tab-type">
 						<?php echo $this->Html->link('SSS',array(
 									'controller' => 'salaries',

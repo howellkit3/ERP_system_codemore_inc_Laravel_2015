@@ -30,7 +30,8 @@ class Timekeep extends AppModel {
 		
 		if (!empty($data)) {
 			
-			$time = [];
+			$time = array();
+
 			$date = !empty($data['Attendance']['time']) ? explode(',',$data['Attendance']['time']) : '';
 	
 			$time['Timekeep']['employee_id'] = $data['Attendance']['employee_id'];
@@ -40,8 +41,7 @@ class Timekeep extends AppModel {
 			$time['Timekeep']['type'] = $data['Attendance']['type'];
 			$time['Timekeep']['created_by'] = $authId;
 			$time['Timekeep']['modified_by'] = $authId;
-
-
+			
 			return $this->save($time);
 		
 		}

@@ -19,7 +19,7 @@ class Email extends AppModel {
 
   				if (!empty($data[0])) {
             
-  					$emails = [];
+  					$emails = array();
   				  
   					foreach ($data as $key => $value) {
   						$emails[$key] = $value;

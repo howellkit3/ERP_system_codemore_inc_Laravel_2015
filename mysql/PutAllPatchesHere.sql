@@ -1935,3 +1935,20 @@ ALTER TABLE `job_tickets`  ADD `status_production_id` INT(11) NULL  AFTER `po_nu
 /** howellkit added this 09/02/2015  */
 /* human resource table */
 ALTER TABLE `attendances` CHANGE `in` `in` DATETIME NULL DEFAULT NULL, CHANGE `out` `out` DATETIME NULL DEFAULT NULL;
+
+
+/** aldrin added this 09/03/2015  */
+#NOTE: SELECT KOUFU Payroll DATABASE ----
+
+CREATE TABLE IF NOT EXISTS `adjustments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `payroll_date` date NOT NULL,
+  `amount` decimal(8,2) NOT NULL,
+  `reasons` text NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
