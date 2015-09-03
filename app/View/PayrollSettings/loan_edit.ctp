@@ -9,7 +9,7 @@
 						Deduction Settings
 					</h1>
 					<?php 
-                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'settings', 'action' => 'sss_ranges'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'payroll_settings', 'action' => 'settings'),array('class' =>'btn btn-primary pull-right','escape' => false));
                     ?>
 				</header>
 
@@ -61,10 +61,10 @@
 	                                            echo $this->Form->input('schedules', 
 	                                            	array(
 	                                            		'options' => array(
-	                                            		  '1' => 'Once',
-	                                            		  '2' => 'Every Month',
-	                                            		  '3' => 'Twice a Month', 
-	                                            		  '4' => 'Yearly'
+	                                            		  '1' => 'Semi Monthly(Equal)',
+	                                            		  '2' => 'Semi Monthly(First Payroll)',
+	                                            		  '3' => 'Semi Monthly(Second Payroll)', 
+	                                            		  '4' => 'Anytime'
 	                                            		  ),
 	                                            		'class' => 'form-control item_type',
 	                                            		'empty' => '---- Select Type -----',

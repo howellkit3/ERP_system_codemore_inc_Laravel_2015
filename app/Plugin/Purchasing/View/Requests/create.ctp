@@ -109,7 +109,7 @@
 																// 'options' => array($itemData),  
 																'class' => 'form-control item_name required', 
 										    					'label' => false,
-										    					'readonly' => false,
+										    					'readonly' => true,
 										    					'placeholder' => 'Item',
 										    					));
 										                ?>
@@ -146,13 +146,12 @@
 
 										        	</div>
 
-													<div class="col-lg-3">
+													<div class="col-lg-4">
 
 														<a data-toggle="modal" href="#myModalItem" data-modal="1" class="modal-button btn btn-primary mrg-b-lg pull-left  "><i class="fa fa-search-plus fa-lg"></i> Select Item</a>
-														&emsp;&emsp;&emsp;&emsp;
+														&emsp;
 														<button type="button" class="add-field1  table-link danger btn btn-success " onclick="cloneDatarequest('cloneMe', this)"><i class="fa fa-plus"></i></button>
-														<!-- <button type="button" class="add-field1sd proxy-counter add-request-section table-link danger btn btn-success" ><i class="fa fa-plus"></i></button> -->
-														&emsp;&emsp;&emsp;&emsp;
+														
 														<button type="button" class="remove btn btn-danger " onclick="removeClone('cloneMe')"><i class="fa fa-minus" ></i></button>
 
 													</div>
@@ -272,6 +271,45 @@
 										                ?>
 													</div>
 
+												</div>
+
+												<div class="form-group">
+													<label class="col-lg-2 control-label"><span style="color:red">*</span>Date Needed</label>
+													<div class="col-lg-6">
+														<?php 
+                                   						 echo $this->Form->input('RequestItem.0.date_needed', array(
+					                                        'type' => 'text',
+					                                        'label' => false,
+					                                        'required' => 'required',
+					                                        'class' => 'form-control item_type datepick required',
+					                                        ));
+                              	
+			                                            ?>
+													</div>
+												</div>
+
+												<div class="form-group">
+													<label class="col-lg-2 control-label"><span style="color:red">*</span>Purpose</label>
+													<div class="col-lg-6">
+														<?php 
+				                                            echo $this->Form->textarea('RequestItem.0.purpose', array(
+				                                            								'class' => 'form-control item_type required',
+										                                                    'label' => false,
+										                                                    'placeholder' => 'Request Purpose'));
+			                                            ?>
+													</div>
+												</div>
+
+												<div class="form-group">
+													<label class="col-lg-2 control-label">Remarks</label>
+													<div class="col-lg-6">
+														<?php 
+				                                            echo $this->Form->textarea('RequestItem.0.remarks', array(
+				                                            								'class' => 'form-control item_type ',
+										                                                    'label' => false,
+										                                                    'placeholder' => 'Remarks'));
+			                                            ?>
+													</div>
 												</div>
 
 												<hr>

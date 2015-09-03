@@ -14,12 +14,14 @@
 					</td>
 					<td>
 					<div class="input text"><label for="AmortizationPayrollDate">Balance</label>
-						<input type="text" id="AmortizationPayrollDate" value="<?php echo $emp['deduction'] ?>"   class="form-control" name="data[Amortization][<?php echo $key ?>][amount]">
+						<input type="text" id="AmortizationPayrollDate" value="<?php echo number_format($emp['deduction'],2) ?>"   class="form-control" name="data[Amortization][<?php echo $key ?>][amount_view]">
+						<input type="hidden" id="AmortizationPayrollDate" value="<?php echo $emp['deduction'] ?>"   class="form-control" name="data[Amortization][<?php echo $key ?>][amount]">
 					</div>
 					</td>
 					<td>
 					<div class="input text"><label for="AmortizationPayrollDate">Deduction</label>
-						<input type="text" id="AmortizationPayrollDate" value="<?php echo $emp['less'] ?>" class="form-control" name="data[Amortization][<?php echo $key ?>][deduction]">
+						<input type="text" id="AmortizationPayrollDate" value="<?php echo number_format($emp['less'],2) ?>" class="form-control" name="data[Amortization][<?php echo $key ?>][deduction_view]">
+						<input type="hidden" id="AmortizationPayrollDate" value="<?php echo $emp['less'] ?>" class="form-control" name="data[Amortization][<?php echo $key ?>][deduction]">
 					</div>
 					</td>
 					</tr>	

@@ -8,7 +8,7 @@ function getTotalWorks($empId = null) {
 
 	$attendance = ClassRegistry::init('Attendance');
 
-	$total = [];
+	$total = array();
 
 	if (!empty($empId)) {
 

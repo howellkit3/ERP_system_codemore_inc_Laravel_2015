@@ -44,7 +44,8 @@ class Holiday extends AppModel {
 		
 		$holidays = $this->find('all',$params);
 
-		$list = [];
+		$list = array();
+		
 			foreach ($holidays as $key => $holiday) {
 				if (!empty($holiday['Holiday']['start_date']) && $holiday['Holiday']['start_date'] != '00-00-00') {
 					$list[$key]['title'] = $holiday['Holiday']['name'];

@@ -13,4 +13,21 @@ class OutRecord extends AppModel {
     
   	public $name = 'OutRecord';
 
+  	public function saveOutRecord($data, $requestID, $auth){
+
+  	$this->create();
+
+  	
+  	$dataHolder['request_id'] = $requestID;
+  	$dataHolder['remarks'] = $data['remarks'];
+    $dataHolder['created_by'] = $auth;
+    $dataHolder['modified_by'] = $auth;
+  	
+
+	$this->save($dataHolder);
+
+	return $this->id;
+
+  	}
+
 }

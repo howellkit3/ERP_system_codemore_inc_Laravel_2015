@@ -1,4 +1,4 @@
-<?php foreach ($received_orders as $requestOrderDataList ): ?>
+<?php   foreach ($received_orders as $requestOrderDataList ): ?>
     
         <tr class="">
 
@@ -59,14 +59,14 @@
                           <i class="fa  fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> View</font></span>
                           </span> ', array('controller' => 'receivings', 'action' => 'view_receive', $requestOrderDataList['DeliveredOrder']['id']),array('class' =>' table-link ','escape' => false,'title'=>'Print Transmittal Receipt')); ?>
 
-                    <a data-toggle="modal" href="#myModalInRecord<?php echo $requestOrderDataList['PurchaseOrder']['id'], $uuid ?>" class="table-link <?php echo $disableButton ?>"><i class="fa fa-lg  "></i><span class="fa-stack ">
+                    <a data-toggle="modal" href="#myModalInRecord<?php echo $requestOrderDataList['DeliveredOrder']['id'], $uuid ?>" class="table-link <?php echo $disableButton ?>"><i class="fa fa-lg  "></i><span class="fa-stack ">
                                       <i class="fa fa-square fa-stack-2x "></i>
                                       <i class="fa  fa-sign-in fa-stack-1x fa-inverse "></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> InRecord </font></span></a>
 
-            </td>
+            
+                    </td>
 
-
-            <div class="modal fade" id="myModalInRecord<?php echo $requestOrderDataList['PurchaseOrder']['id'], $uuid ?>" role="dialog" >
+            <div class="modal fade" id="myModalInRecord<?php echo $requestOrderDataList['DeliveredOrder']['id'], $uuid ?>" role="dialog" >
                 <div class="modal-dialog">
                     <div class="modal-content margintop">
 
@@ -77,23 +77,43 @@
 
                         <div class="modal-body">
 
-                            <?php $id = $requestOrderDataList['ReceivedOrder']['id'];
+                            <?php   $id = $requestOrderDataList['ReceivedOrder']['id'];
 
                                  $DeliveredOrderId = $requestOrderDataList['DeliveredOrder']['id'];
 
+
                                 echo $this->Form->create('InRecord',array(
-                                    'url'=>(array('controller' => 'receivings','action' => 'in_record', $id, $DeliveredOrderId,$requestOrderDataList['DeliveredOrder']['purchase_orders_id'])),'class' => 'form-horizontal')); 
+                                    'url'=>(array('controller' => 'receivings','action' => 'in_record', $id, $DeliveredOrderId,$requestOrderDataList['DeliveredOrder']['purchase_orders_id'],$requestOrderDataList['PurchaseOrder']['supplier_id'] )),'class' => 'form-horizontal')); 
                             ?>
 
                                 <div class="form-group" id="existing_items">
                                     <label class="col-lg-2 control-label"><span style="color:red">*</span>Store Keeper</label>
                                     <div class="col-lg-9">
-                                        <?php 
+                                        <?php  
                                             echo $this->Form->input('InRecord.storekeeper', array(
                                                 'class' => 'form-control item_type editable required',
                                                 'label' => false,
                                                 'type' => 'select',
                                                 'options' => array($userNameList),
+                                                'required' => 'required',
+                                               
+                                                ));
+                                        ?>
+
+                                    </div>
+                                </div>
+
+                                <br><br>
+
+                                <div class="form-group" id="existing_items">
+                                    <label class="col-lg-2 control-label"><span style="color:red">*</span>Location</label>
+                                    <div class="col-lg-9">
+                                        <?php 
+                                            echo $this->Form->input('InRecord.location', array(
+                                                'class' => 'form-control item_type editable required',
+                                                'label' => false,
+                                                'type' => 'select',
+                                                'options' => array($areaList),
                                                 'required' => 'required',
                                                
                                                 ));
@@ -131,7 +151,7 @@
                     </div>
                 </div>
             </div>
-
+        
         </tr>
 
 <?php endforeach; ?> 

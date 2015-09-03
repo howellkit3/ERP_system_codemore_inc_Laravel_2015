@@ -40,7 +40,7 @@ class WorkShiftBreak extends AppModel {
 			//$data = ['WorkshiftBreak'];
 			$breaks = $data['breakids'];
 
-			$breakData = [];
+			$breakData = array();
 
 			foreach ($breaks as $key => $break) {
 
@@ -65,7 +65,7 @@ class WorkShiftBreak extends AppModel {
 
 		if (!empty($data['Workshift']['breakids'])) {
 
-			$workShiftBreak = [];
+			$workShiftBreak = array();
 
 			$this->create();
 

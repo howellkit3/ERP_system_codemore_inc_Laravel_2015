@@ -29,8 +29,8 @@ echo $this->element('hr_options');
 			<div class="tabs-wrapper">
 				<div class="tab-content">
 					<div class="tab-pane active" id="tab-calendar">
-						<header class="main-box-header clearfix">
 			                <h2 class="pull-left"><b>Attendances</b> </h2>
+						<header class="main-box-header clearfix">
 			                <div class="filter-block pull-right">
 			                 <div class="form-group pull-left">
 			                 	<?php echo $this->Form->create('Attendance',array('controller' => 'attendances','action' => 'index', 'type'=> 'get')); ?>
@@ -277,7 +277,7 @@ echo $this->element('hr_options');
                             <?php 
                                    echo $this->Form->input('Attendance.from_date', array(
                                                                 'label' => false,
-                                                                'class' => 'form-control  datepick required',
+                                                                'class' => 'form-control datepick required',
                                                                 'placeholder' => 'Date'
 
                                                               ));

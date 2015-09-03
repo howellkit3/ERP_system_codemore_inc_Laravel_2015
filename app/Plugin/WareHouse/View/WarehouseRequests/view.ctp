@@ -1,235 +1,369 @@
-<?php $this->Html->addCrumb('Ware House', array('controller' => 'ware_house_systems', 'action' => 'index')); ?>
-<div style="clear:both"></div>
-<?php  echo $this->element('ware_house_option');?>
-    
-    <div class = "pull-right";>
+<?php $this->Html->addCrumb('Request List', array('controller' => 'requests', 'action' => 'request_list')); ?>
+<?php $this->Html->addCrumb('View', array('controller' => 'requests', 'action' => 'view')); ?>
 
-        <?php echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i>  Go Back ', array('controller' => 'receivings','action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
-            ?>
+<div style="clear:both"></div>
+
+<?php echo $this->element('ware_house_option'); ?><br><br>
+
+<div class="filter-block pull-right">
+
+
+    <?php 
+        
+        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg " ></i>  Go Back ', array('controller' => 'warehouse_requests','action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+            ?> &nbsp;
+
+        <?php  echo $this->Html->link('<i class="fa fa-print fa-lg"></i>  Print ', array('controller' => 'warehouse_requests','action' => 'print_request', $requestData['WarehouseRequest']['id']),array('class' =>'btn btn-primary pull-right','escape' => false));
+        ?>
+
      
         <?php 
 
-            if($warehouseRequestData['WarehouseRequest']['status_id'] == 11){
+            if($requestData['WarehouseRequest']['status_id'] == 8){
 
-                 echo $this->Html->link('<i class="fa fa-check fa-lg"></i> Approve ', array('controller' => 'receivings','action' => 'purchase_approve', $warehouseRequestData['WarehouseRequest']['id']),array('class' =>'btn btn-primary pull-right','escape' => false));
+                 echo $this->Html->link('<i class="fa fa-check fa-lg"></i> Approve ', array('controller' => 'warehouse_requests','action' => 'approve', $requestData['WarehouseRequest']['id']),array('class' =>'btn btn-primary pull-right','escape' => false));
+
+                  echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit', array('controller' => 'warehouse_requests', 'action' => 'edit_request',$requestData['WarehouseRequest']['id']),array('class' =>'btn btn-primary pull-right','escape' => false)); 
 
         } ?>
-        
-    </div>
 
-<br><br>
-<?php if(!empty($warehouseRequestData)){ ?>
+       
 
+        <?php if($requestData['WarehouseRequest']['status_id'] == 1){ ?>
+
+        <a data-toggle="modal" href="#myModalOutRecord<?php echo $requestData['WarehouseRequest']['id']?>" class="btn btn-primary mrg-b-lg pull-right addSchedButton "><i class="fa fa-plus-circle fa-lg tobeTrigger"></i> Out Record</a>
+
+        <?php } ?>            
+    
+    <br><br>
+</div>
 
 <div class="row">
     <div class="col-lg-12">
-        
-        <div class="row">
-            <div class="col-lg-12">
-                <header class="main-box-header clearfix">
-                    
-                            
-                </header>
+        <div class="main-box">
+            
+            <br><br>
 
-            </div>
-        </div>
-                <?php echo $this->Form->create('WarehouseRequest',array('url'=>(array('controller' => 'warehouse_request','action' => 'view'))));?>      
-
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="main-box" >
-                    <header class="main-box-header clearfix" >
-
-                        <h2 class="pull-left"><b>Warehouse Request</b></h2>
+               <table width = "100%">
+                    <tr>
+                        <td >
+                            <img src="<?php echo Router::url('/', true) ?>img/koufu_logo.jpg" alt="logo" style="width:248px;height:45px;padding-bottom:10;">
+                        </td>
+                        <td width = "65%">
                         
-                    </header>
+                            <h1 style = "margin-bottom:0px; margin-top:0px; padding-top:0px;"><b>REQUISITION SLIP</b></h1>
+                        
+                        </td>
+                    </tr>
 
-                    <div class="top-space"></div>                       
-                    <div class="main-box-body clearfix">
-                        <div class="main-box-body clearfix">
-                            <div class="form-horizontal">                                   
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label">Warehouse Request Number</label>
-                                    
-                                    <div class="col-lg-8">
-                                        <?php 
-                                            echo $this->Form->input('WarehouseRequest.uuid', array(
-                                                                            'class' => 'form-control item_type',
-                                                                            'disabled' => true,
-                                                                            'label' => false,       
-                                                                            'value' => $warehouseRequestData['WarehouseRequest']['uuid'],
-                                                                            'fields' =>array('name')));
+                </table>    
+               
+               <br><br>
+                
+            <div class="main-box-body clearfix">
+                
+
+            <table border="0" width="100%" style = "margin:0px; padding:0px; line-height:0px;">
+                <tbody>
+                
+                    <tr>
+                        <td></td>
+                        <td><b>Department: </b><?php echo $roleName;?></td>
+                        <td ></td>
+                        <td align="right" style="line-height:8px;"><b>No: </b>RQ<?php echo $requestData['WarehouseRequest']['uuid']; ?><br><br><br><b>Date: </b><?php echo (new \DateTime())->format('d/m/Y') ?><br></td>
+                    </tr>
+
+                </tbody>
+            </table>
+            <br>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+
+                        <thead>
+                            <th>#</th>
+                            <th class="text-center">Item Decription</th>
+                            <th class="text-center">Qty Needed</th>
+                            <th class="text-center">UOM</th>
+                            <th class="text-center">Current Stock</th>
+                            <th class="text-center">Date Needed</th>
+                            <th class="text-center">Purpose</th>
+                            <th class="text-center">Remarks</th>
+                        </thead>
+
+                        <?php foreach ($requestData['WarehouseRequestItem'] as $key => $value) { $key++ ?>
+                           
+                            <tr>
+                                <td><?php echo $key ?></td>
+                                <td class="text-center"><?php echo $value['name']?></td>
+                                <td class="text-center">
+                                    <?php  
+                                    if(!empty($value['quantity'])){ 
+                                        echo $value['quantity']?>
+                                <?php } ?>
+
+                                </td>
+
+                                 <td class="text-center">
+                                    <?php  
+                                    if(!empty($unitData[$value['quantity_unit_id']])){ 
+                                    echo $unitData[$value['quantity_unit_id']];
+                                   } ?>
+                                </td>
+                                <td class="text-center"><?php echo empty($value['stock_quantity']) ? 0 : $value['stock_quantity']; ?></td>
+                                <td class="text-center"><?php echo date('M d, Y', strtotime($value['date_needed'])); ?></td>
+                                <td class="text-center"><?php echo $value['purpose']; ?></td>
+                                <td class="text-center"><?php  
+                                   if(!empty($value['remarks'])){ 
+                                    echo $value['remarks'];
+                                   } ?></td>
+                                
+                            </tr>
+                        <?php 
+                            } ?>
+                        <tr>
+                            <td> </td>
+                            <td class="text-center">------END------</td>
+                            <td class="text-center"> </td>
+                            <td class="text-center"> </td>
+                            <td class="text-center"> </td>
+                            <td class="text-center"> </td>
+                            <td class="text-center"> </td>
+                            <td class="text-center"> </td>
 
 
-                                        ?>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label">Name</label>
-                                    <div class="col-lg-8">
-                                        <?php 
-                                            echo $this->Form->input('WarehouseRequest.name', array(
-                                                                            'class' => 'form-control item_type',
-                                                                            'label' => false,
-                                                                            'disabled' => true,
-                                                                            'fields' =>array('name'),
-                                                                            'value' => ucwords($warehouseRequestData['WarehouseRequest']['name'])));
-                                        ?>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label">Created by</label>
-                                    <div class="col-lg-8">
-                                        <?php 
-
-                                            $name = ucfirst($fullname[$warehouseRequestData['WarehouseRequest']['created_by']]); 
-
-                                            
-
-                                            echo $this->Form->input('WarehouseRequest.createdBy', array(
-                                                                            'class' => 'form-control item_type',
-                                                                            'label' => false,
-                                                                            'disabled' => true,
-                                                                            'fields' =>array('name'),
-                                                                            'value' => $name));
-                                        ?>
-                                    </div>
-                                </div>
 
 
-                            </div>
-                        </div>
-                    </div>
+                        </tr>
+                    </table>
+                       
+                    <table class="table table-bordered">
+                        <thead>
+                            <th class="text-center">Requested by :</th>
+                            <th class="text-center">Approved by :</th>
+                            <th class="text-center">Issued by :</th>
+                            <th class="text-center">Received by :</th>
+                        </thead>
+                        
+                        <tr>
+                            <td class="text-center"><?php echo ucfirst($preparedData['User']['first_name'])?> <?php echo ucfirst($preparedData['User']['last_name'])?></td>
+                            <td class="text-center">Shou Yi Yu</td>
+                            <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        </tr>
+
+
+                        
+                    </table>
+                    <div class = " pull-right ">
+                        <label font-size:60%;>
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KP-FR-LG1-001 R0 <br>Effective Date: 10 Aug 2015 
+                        </label>
+                    </div> 
                 </div>
             </div>
         </div>
-
-   
-        <?php echo $this->Form->end(); ?>   
     </div>
 </div>
 
-<?php 
-} if(!empty($requestPurchasingItem)){ ?> 
+<div class="modal fade" id="myModalOutRecord<?php echo $requestData['WarehouseRequest']['id']?>" role="dialog" >
+    <div class="modal-dialog">
+        <div class="modal-content margintop">
 
-<div class="col-lg-6">
-    <div class="main-box clearfix">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Out Record</h4>
+            </div> 
 
-    <header class="main-box-header clearfix">
-    <h2>Purchased Item List</h2>
-    <span style = "font-size:10px;">
-    <I>
-        <span class="price table table-products table-hover">
-            <i class="fa fa-tags" style = "color:#52D017;"></i>&nbsp; Model
-            </span>
-                                
+            <div class="modal-body">
 
-        <span class="warranty">
-            <i class="fa fa-certificate" style = "color:orange;"></i>&nbsp; Purchased Item
-        </span>
-    </I>
-    </span>
-    </header>
+                <?php 
 
-        <div class="main-box-body clearfix">
-            <div class="table-responsive">
-                <table class="table table-products table-hover">
-                    <tbody>
+                $id = $requestData['WarehouseRequest']['id'];
 
-                         <?php  foreach ($requestPurchasingItem as $requestDataList): ?>
-                        <tr>
-                            <td>
-                            <img src="<?php echo Router::url('/', true) ?>img/itemboxopen.png" alt="logo" style="width:60px;height:60px;padding-bottom:10;">
-                            </td>
-                            <td>
-                                <span class="name">
-                                <?php echo $requestDataList[$itemHolder]['name'] ?>
-                                </span>
-                                <span class="price">
-                                <i class="fa fa-tags"></i>&nbsp;<?php echo $requestDataList[$itemHolder]['model'] ?> 
-                                </span>
-                                <span class="warranty">
-                                <i class="fa fa-certificate"></i>&nbsp; <?php echo $requestDataList[$itemHolder]['quantity'] ?> pcs
-                                </span>
-                            </td>
-                        </tr>
+                    echo $this->Form->create('OutRecord',array(
+                        'url'=>(array('controller' => 'warehouse_requests','action' => 'out_record', $id)),'class' => 'form-horizontal')); 
+                ?>
 
-                    <?php  endforeach;  ?>
-                    
-                    </tbody>
-                </table>
+                <?php foreach ($requestData['WarehouseRequestItem'] as $key => $value) {
+
+                if(!empty($value['stock_quantity'])){ ?>
+
+                    <div class = "clone">
+                        <div class="form-group" id="existing_items">
+                            <label class="col-lg-2 control-label">Item</label>
+                            <div class="col-lg-9">
+                                <?php 
+                                    echo $this->Form->input('WarehouseRequestItem.'.$key.'.name', array(
+                                                                'class' => 'form-control item_type',
+                                                                'label' => false,
+                                                                'readonly' => true,
+                                                                'fields' =>array('name'),
+                                                                'value' => $value['name']));
+                                ?>
+                            </div>
+                        </div>
+
+                         <div class="form-group" id="existing_items">
+                            <label class="col-lg-2 control-label"></label>
+                            <div class="col-lg-6">
+                                <?php 
+                                    echo $this->Form->input('WarehouseRequestItem.'.$key.'.quantity', array(
+                                                                'class' => 'form-control item_type toBeLimited',
+                                                                'label' => false,
+                                                                'fields' =>array('name'),
+                                                                'value' => $value['stock_quantity'] < $value['quantity'] ? $value['stock_quantity'] : $value['quantity']));
+                                ?>
+
+                                <?php 
+                                    echo $this->Form->input('WarehouseRequestItem.'.$key.'.quantitylimit', array(
+                                                                'class' => 'form-control quantityLimit',
+                                                                'label' => false,
+                                                                'type' => 'hidden',
+                                                                'fields' =>array('name'),
+                                                                'value' => $value['quantity']));
+                                ?>
+
+                                 <?php 
+                                    echo $this->Form->input('WarehouseRequestItem.'.$key.'.stockQuantity', array(
+                                                                'class' => 'form-control stockQuantity',
+                                                                'label' => false,
+                                                                'type' => 'hidden',
+                                                                'fields' =>array('name'),
+                                                                'value' => empty($value['stock_quantity']) ? 0 : $value['stock_quantity']));
+                                ?>
+
+                                <?php 
+                                    echo $this->Form->input('WarehouseRequestItem.'.$key.'.foreign_key', array(
+                                                                'class' => 'form-control ',
+                                                                'label' => false,
+                                                                'type' => 'hidden',
+                                                                'fields' =>array('name'),
+                                                                'value' => $value['foreign_key']));
+                                ?>
+
+                                 <?php 
+                                    echo $this->Form->input('WarehouseRequestItem.'.$key.'.model', array(
+                                                                'class' => 'form-control ',
+                                                                'label' => false,
+                                                                'type' => 'hidden',
+                                                                'fields' =>array('name'),
+                                                                'value' => $value['model']));
+                                ?>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <?php 
+                                    echo $this->Form->input('WarehouseRequestItem.'.$key.'.quantity_unit', array(
+                                                                'class' => 'form-control item_type',
+                                                                'label' => false,
+                                                                'fields' =>array('name'),
+                                                                'options' => array($unitData),
+                                                                'value' => $value['quantity_unit_id']));
+                                ?>
+                            </div>
+                        </div>
+                    </div>    
+
+                    <?php }else{ ?>
+
+                     <div class="form-group" id="existing_items">
+                            <label class="col-lg-2 control-label"></label>
+                            <div class="col-lg-9">
+
+                            <?php echo $this->Form->input('WarehouseRequestItem.'.$key.'.nostocks', array(
+                                                                'class' => 'form-control item_type',
+                                                                'label' => false,
+                                                                'disabled' => true,
+                                                                'fields' =>array('name'),
+                                                                'value' => $value['name'])); ?>
+
+                            </div>
+                    </div>
+
+                    <div class="form-group" id="existing_items">
+                            <label class="col-lg-2 control-label"></label>
+                            <div class="col-lg-9">
+
+                            <?php echo "<span class='label label-danger'>No Stocks</span>"; ?>
+
+                            </div>
+                    </div>
+
+                    <?php } ?> 
+
+                        <?php  } ?>
+
+                    <div class="form-group" id="existing_items">
+                        <label class="col-lg-2 control-label">Remarks</label>
+                        <div class="col-lg-9">
+                            <?php 
+                                echo $this->Form->textarea('OutRecord.remarks', array(
+                                    'empty' => 'None',
+                                    'required' => 'required',
+                                    'class' => 'form-control item_type editable',
+                                    'label' => false
+                                   
+                                ));
+                            ?>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i> Submit</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                    </div>
+                <?php echo $this->Form->end();  ?> 
             </div>
         </div>
     </div>
 </div>
 
-<div class="col-lg-6">
-    <div class="main-box clearfix">
+<script>
 
-    <header class="main-box-header clearfix">
-    <h2>Delivered Item List</h2> 
-    <span style = "font-size:10px;">
-    <I>
-        <span class="price table table-products table-hover">
-            <i class="fa fa-certificate" style = "color:#52D017;"></i>&nbsp; Good
-            </span>
-                                
+jQuery(document).ready(function($){
+      
+    $("body").on('change','.toBeLimited', function(e){
 
-        <span class="warranty">
-            <i class="fa fa-certificate" style = "color:orange;"></i>&nbsp; Rejected
-        </span>
-    </I>
-    </span>
+            var toBeLimited = $(this).val();
+            var quantitylimit = $(this).parents('.clone').find('.quantityLimit').val();
+            var stockQuantity = $(this).parents('.clone').find('.stockQuantity').val();
+           
+            var requestDifference = parseInt(quantitylimit) - parseInt(toBeLimited);
 
-    </header>
+            // if (parseInt(stockQuantity) == 0) {
 
-        <div class="main-box-body clearfix">
-            <div class="table-responsive">
-                <table class="table table-products table-hover">
-                    <tbody> 
+            //     alert('No Stocks for the Item');
+            //     $(this).parents('.clone').find('.toBeLimited').val(quantitylimit);
 
-                    <?php  
-                         foreach ($requestPurchasingItem as $requestDataList):?>
-                        <tr>
-                            <td>
-                            <img src="<?php echo Router::url('/', true) ?>img/itembox.png" alt="logo" style="width:85px;height:60px;padding-bottom:10;">
-                            </td>
-                            <td>
-                                <span class="name">
-                                <?php echo $requestDataList[$itemHolder]['name'] ?>
-                                </span>
-                                <span class="price">
-                                <i class="fa fa-certificate"></i>&nbsp; <?php 
+            // }
 
-                                if(!empty($requestDataList[$itemHolder]['good_quantity'])){
+            if (parseInt(toBeLimited) < 1) {
 
-                                 echo $requestDataList[$itemHolder]['good_quantity'] ?> pcs
+                alert('Quantity should not be less than or equal to zero.');
+                $(this).parents('.clone').find('.toBeLimited').val(quantitylimit);
 
-                                <?php } ?>
-                                </span>
-                                <span class="warranty">
-                                <i class="fa fa-certificate"></i>&nbsp; <?php 
+            }
 
-                                if(!empty($requestDataList[$itemHolder]['reject_quantity'])){
+            if (parseInt(requestDifference) < 0) {
 
-                                 echo $requestDataList[$itemHolder]['reject_quantity'] ?> pcs
+                alert('Quantity should not be exceeded to requested value.');
+                $(this).parents('.clone').find('.toBeLimited').val(quantitylimit);
 
-                                <?php } ?>
-                                </span>
-                                
-                            </td>
-                        </tr>
+            }
 
-                    <?php  endforeach;  ?>
-                    
-                    </tbody>
-                </table>
-            </div> 
-        </div>
-    </div>
+            var stockDifference = parseInt(stockQuantity) - parseInt(toBeLimited);
 
-</div>
+            if (parseInt(stockDifference) < 0) {
 
-<?php } ?> 
+                alert('Insufficient Stock Quantity');
+                $(this).parents('.clone').find('.toBeLimited').val(stockQuantity);
+
+            }
+            
+        });
+
+});
+
+
+</script>

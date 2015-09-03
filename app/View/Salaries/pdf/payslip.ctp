@@ -1,5 +1,4 @@
 <?php
-
 header("Content-disposition: attachment; filename=".'payslip-'.$payroll['Payroll']['id'].'-'.time().".pdf");
 header("Content-type: application/pdf");
 ?>
@@ -18,24 +17,25 @@ header("Content-type: application/pdf");
 
 				$employee_name = $this->CustomText->getFullname($salary['Employee']);
 
-			 $payrollDate = date('F',strtotime($salary['from'])).' '.date('d',strtotime($salary['from'])).'-'.date('d',strtotime($salary['to'])).','.date('Y',strtotime($salary['from']));
+			 	$payrollDate = date('F',strtotime($salary['from'])).' '.date('d',strtotime($salary['from'])).'-'.date('d',strtotime($salary['to'])).','.date('Y',strtotime($salary['from']));
 		 ?>
-			<table class="center full-width">
+		 <div class="container">
+			<table class="center container">
 						<tr>
 						<td>
-						<?php echo $this->Html->image($siteUrl.'/img/koufu_logo.jpg',array('width' => '240px')); ?>
+						<?php echo $this->Html->image($siteUrl.'/img/koufu_logo.jpg',array('width' => '80px')); ?>
 						</td>
 						<td class="text-right">
 						Lot 4-5 Blk 3 Ph2 Mountview Industrial Complex 
 						Brgy. Bancal Carmona Cavite
 						<br>
-						Tel: +632-5844928; +6346-4301576  <br> Fax: +632-5844952
+						Tel: +632-5844928; +6346-4301576 <br> Fax: +632-5844952
 						</td>
 						</tr>
 				</table>
 				<br><br>
 
-				<table class="center full-width ">
+				<table class="center container medium-font">
 						<tr>
 							<td class="label-table">
 								<strong>Employee Name : </strong>
@@ -44,7 +44,7 @@ header("Content-type: application/pdf");
 							<?php echo $employee_name; ?>
 							</td>
 							<td class="label-table">
-								<strong>Code : </strong>
+								<strong>Employee Number : </strong>
 							</td>
 							<td>
 								<?php echo $salary['Employee']['code']; ?>
@@ -75,13 +75,13 @@ header("Content-type: application/pdf");
 								<strong>Position : </strong>
 							</td>
 							<td>
-								<?php echo ucwords($salary['Position']['name']) ; ?>
+								<?php echo !empty($salary['Position']['name']) ? ucwords($salary['Position']['name']) : '' ; ?>
 							</td>
 						</tr>
 				</table>
 				<br>
 				<br>
-				<table class="border full-width center">
+				<table class="border container center">
 						<tr>
 							<td class="border-bottom">
 								<table class="full-width border-right">	
@@ -245,7 +245,7 @@ header("Content-type: application/pdf");
 
 				</table>
 				<br><br>
-				<table class="full-width border">
+				<table class="container border">
 					<tr>
 						<td colspan="2"> <strong>Total Net Pay : </strong> </td> 
 						<td class="text-right">
@@ -253,15 +253,16 @@ header("Content-type: application/pdf");
 						 </td>
 					</tr>
 				</table>
-					<br><br>
-				<table class="full-width ">
+					<br><br><!-- 
+				<table class="container">
 					<tr>
 						<td class="border-top"> Employee Signature </td> 
 						<td >  </td>
 
 						<td class="border-top"> Accounting Staff </td>
 					</tr>
-				</table>
+				</table> -->
+			</div>
 				 <div style="page-break-before: always;"></div> 
 <?php endforeach; ?>
 	</body>

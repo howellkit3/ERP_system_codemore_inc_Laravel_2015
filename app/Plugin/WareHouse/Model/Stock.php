@@ -1,3 +1,4 @@
+
 <?php
 App::uses('AppModel', 'Model');
 App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
@@ -13,7 +14,7 @@ class Stock extends AppModel {
     
   	public $name = 'Stock';
 
-  	public function saveStock($received, $data, $auth){
+  	public function saveStock($received,$data, $auth, $supplierId, $stockData){
 
 		$this->create();
 
@@ -22,10 +23,8 @@ class Stock extends AppModel {
 		$stock['remarks'] = $data['InRecord']['remarks'];
 
 
-
-		foreach ($received['ReceivedItem'] as $key => $value)
-		{
-		//
+		foreach ($received['ReceivedItem'] as $key => $value) {
+			// pr($stockData); exit;
 
 			$month = date("m"); 
 		    $year = date("y");
@@ -36,27 +35,103 @@ class Stock extends AppModel {
 		        
 			$code =  $year. $month .$random;
 
-			$value['uuid'] = $code;
-			$value['model'] = $value['model'];
-			$value['item_id'] = $value['foreign_key'];
-			$value['quantity'] = $value['quantity'];
-			$value['size1'] = $value['size1'];
-			$value['size1_unit_id'] = $value['size1_unit_id'];
-			$value['size2'] = $value['size2'];
-			$value['size2_unit_id'] = $value['size2_unit_id'];
-			$value['size3'] = $value['size3'];
-			$value['size3_unit_id'] = $value['size3_unit_id'];
-			$value['quantity_unit_id'] = $value['quantity_unit_id'];
-			$value['created_by'] = $auth;
-			$value['modified_by'] = $auth;
+			
+			$foreignkeyholder = $value['foreign_key'];
+			$model = $value['model'];
+			
+			//if(!empty($stockData)){
+				//foreach ($stockData as $key => $valueOfStock) {
+
+					
+					//if($valueOfStock['Stock']['item_id'] == $foreignkeyholder && $valueOfStock['Stock']['model'] == $model){ 
+
+						// $sumQuantity = $valueOfStock['Stock']['quantity'] + $value['quantity'];
+						// $value['id'] = $valueOfStock['Stock']['id'];
+						// $value['quantity'] = $sumQuantity;
+						// $this->save($value);
 
 
-			$this->save($value);
+				//	}else{
+						$value['quantity'] = $value['quantity'] + $value['addQuantity'];
+						$value['uuid'] = $code;
+						$value['model'] = $value['model'];
+						$value['item_id'] = $value['foreign_key'];
+						$value['supplier_id'] = $supplierId;
+						$value['quantity'] = $value['quantity'];
+						$value['size1'] = $value['size1'];
+						$value['location_id'] = $data['InRecord']['location'];
+						$value['size1_unit_id'] = $value['size1_unit_id'];
+						$value['size2'] = $value['size2'];
+						$value['size2_unit_id'] = $value['size2_unit_id'];
+						$value['size3'] = $value['size3'];
+						$value['size3_unit_id'] = $value['size3_unit_id'];
+						$value['quantity_unit_id'] = $value['quantity_unit_id'];
+						$value['created_by'] = $auth;
+						$value['modified_by'] = $auth;
 
-			//pr($value);
-		} 
+					$this->save($value);
+				//	}
+
+				}
+		//	} else{
+
+				// $value['uuid'] = $code;
+				// $value['model'] = $value['model'];
+				// $value['item_id'] = $value['foreign_key'];
+				// $value['supplier_id'] = $supplierId;
+				// $value['quantity'] = $value['quantity'];
+				// $value['size1'] = $value['size1'];
+				// $value['location_id'] = $data['InRecord']['location'];
+				// $value['size1_unit_id'] = $value['size1_unit_id'];
+				// $value['size2'] = $value['size2'];
+				// $value['size2_unit_id'] = $value['size2_unit_id'];
+				// $value['size3'] = $value['size3'];
+				// $value['size3_unit_id'] = $value['size3_unit_id'];
+				// $value['quantity_unit_id'] = $value['quantity_unit_id'];
+				// $value['created_by'] = $auth;
+				// $value['modified_by'] = $auth;
+
+				// $this->save($value);
+
+			//}
+			
+		}
+
+	public function saveOutRecordStock($data, $auth, $stockData){  
+
+		foreach ($data as $key => $value) {
+
+			foreach ($stockData as $key => $valueOfStock) {
+
+				$modelHolder = $valueOfStock['Stock']['model'];
+
+				$foreign_keyHolder = $valueOfStock['Stock']['item_id'];
+
+				if($value['model'] == $modelHolder && $value['foreign_key'] == $foreign_keyHolder){
+
+					$deductedQuantity = $valueOfStock['Stock']['quantity'] - $value['quantity'];
+
+					$stock['id'] = $valueOfStock['Stock']['id'];
+
+					$stock['quantity'] = $deductedQuantity;
+
+					$this->save($stock);
+
+					return "0";
+
+				}else{
+
+					return "1";
+				}
+
+
+			}
+
+		}
 
 
 	}
 
-}
+	}
+
+//}

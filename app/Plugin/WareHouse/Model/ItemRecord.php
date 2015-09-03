@@ -33,4 +33,25 @@ class ItemRecord extends AppModel {
 	  	}
   	}
 
+  	public function saveOutItemRecord($requestData , $outRecordId){
+
+
+
+   		foreach ($requestData as $key => $value)
+		 {//pr($value); exit;
+	
+	  		$this->create();
+	  		
+	  		$inrecordItems['type_record'] = 1;
+	  		$inrecordItems['type_record_id'] = $outRecordId;
+	  		$inrecordItems['model'] = $value['model'];
+	  		$inrecordItems['foreign_key'] = $value['foreign_key'];
+	  		$inrecordItems['quantity'] = $value['quantity'];
+	  		
+	  		$this->save($inrecordItems);
+
+	  		
+	  	}
+  	}
+
 }

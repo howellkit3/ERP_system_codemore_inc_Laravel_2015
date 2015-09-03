@@ -184,7 +184,7 @@ class OvertimesController  extends HumanResourceAppController {
 
 				//workhift break
 				$workshiftBreak = $this->WorkshiftBreak->createWorkshiftBreak($data,0,$overtime_id,$auth['id']);
-
+				
 				//update overtime in attendance
 				foreach ($data['Attendance']['id'] as $key => $value) {
 					//$updateOverTime = $this->Attendance->find('first',array('conditions' => array('Attendance.id' => $value)));
@@ -455,9 +455,8 @@ class OvertimesController  extends HumanResourceAppController {
 					if (!empty($otId)) {
 					//workhift workschedule
 					$workSchedule = $this->WorkSchedule->createSchedule($overtime,$workshift['id'],$otId,$auth['id']);
-			
-					//$attendance = $this->Attendance->saveRecord($workSchedule);
 
+					$attendance = $this->Attendance->saveRecord($workSchedule);
 
 					foreach($workSchedule as $data) :
 

@@ -209,5 +209,10 @@ $('#MonthPayrollIndex').change(function(){
 
 	});
 
+$body.on('click','.summary-btn', function(e) {
+
+	$('#ExportPayrollViewForm #exportType').val($(this).data('type'));
+});	
+
 
 });

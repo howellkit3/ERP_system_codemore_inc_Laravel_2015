@@ -41,7 +41,7 @@ class DailyInfo extends AppModel {
 
 	public function saveDailyInfo($data) {
 
-		$info = [];
+		$info = array();
 
 		if (!empty($data)) {
 

@@ -59,8 +59,6 @@ class RequestsController extends PurchasingAppController {
 
 	 	if ($this->request->is(array('post','put'))) {
 
-	 		//pr($this->request->data); exit;
-
 			$requestUuid = $this->Request->saveRequest($this->request->data['Request'],$userData['User']['id']);
 
 			$this->RequestItem->saveRequestItem($this->request->data ,$requestUuid);
@@ -311,6 +309,8 @@ class RequestsController extends PurchasingAppController {
 		
 		$requestRequestItem = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestData['Request']['uuid'])));
 
+		//pr($requestRequestItem); exit;
+
 	    foreach ($requestRequestItem as $key => $value) {
 			
 			if($value['RequestItem']['model'] == 'GeneralItem'){
@@ -484,6 +484,8 @@ class RequestsController extends PurchasingAppController {
     	$this->loadModel('Purchasing.Request');
 
     	$this->loadModel('Purchasing.RequestItem');
+
+    //	pr($this->request->data); exit;
 
     	if (!empty($this->request->data)) {
     		

@@ -93,18 +93,12 @@ th, td {
 
 						<td align = "center" style="border:1px solid black; font-size:80% "><?php ?></td>
 
-						<td align = "center" style="border:1px solid black; font-size:80% "><?php ?></td>
+						<td align = "center" style="border:1px solid black; font-size:50% "><?php echo date("Y-m-d", strtotime($value['RequestItem']['date_needed'])) ?></td>
 
-						<td align = "center" style="border:1px solid black; font-size:80% "><?php ?></td>
+						<td align = "center" style="border:1px solid black; font-size:50% "><?php echo $value['RequestItem']['purpose'] ?></td>
 
-						<?php $lengthRemarks = strlen($request['Request']['remarks'])?>
-
-						<?php if($lengthRemarks >= 35 && $lengthRemarks <= 70){ ?>
-							<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:65%"><?php echo $request['Request']['remarks'] ?></td>
-						<?php 
-							}else{ ?>
-							<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:65%"><?php echo $request['Request']['remarks'] ?></td>
-						<?php } ?>	
+						<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:65%"><?php echo $value['RequestItem']['remarks'] ?></td>
+						
 					</tr>
 
 					<?php 
@@ -239,18 +233,11 @@ th, td {
 
 						<td align = "center" style="border:1px solid black; font-size:80% "><?php ?></td>
 
-						<td align = "center" style="border:1px solid black; font-size:80% "><?php ?></td>
+						<td align = "center" style="border:1px solid black; font-size:50% "><?php echo date("Y-m-d", strtotime($value['RequestItem']['date_needed'])) ?></td>
 
-						<td align = "center" style="border:1px solid black; font-size:80% "><?php ?></td>
+						<td align = "center" style="border:1px solid black; font-size:50% "><?php echo $value['RequestItem']['purpose'] ?></td>
 
-						<?php $lengthRemarks = strlen($request['Request']['remarks'])?>
-
-						<?php if($lengthRemarks >= 35 && $lengthRemarks <= 70){ ?>
-							<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:65%">d<?php echo $request['Request']['remarks'] ?></td>
-						<?php 
-							}else{ ?>
-							<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:65%">d<?php echo $request['Request']['remarks'] ?></td>
-						<?php } ?>	
+						<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:65%"><?php echo $value['RequestItem']['remarks'] ?></td>	
 					</tr>
 
 					<?php 

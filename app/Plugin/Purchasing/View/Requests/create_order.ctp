@@ -60,7 +60,7 @@
 					                                'type' => 'select',
 					                                'label' => false,
 					                                'class' => 'form-control required supplier-select',
-					                                'empty' => '---Select Payment Term---'
+					                                'empty' => '---Select Supplier Name---'
 					                                 )); 
 
 					                            ?>
@@ -100,7 +100,7 @@
 									</div>
 
 									<div class="form-group">
-	                                	<label class="col-lg-2 control-label">PUO No.</label>
+	                                	<label class="col-lg-2 control-label"><span style="color:red">*</span>PUO No.</label>
 										<div class="col-lg-8">
 											<?php 
 	                                            echo $this->Form->input('PurchaseOrder.po_number',array( 
@@ -130,7 +130,7 @@
 									</div>
 
 									<div class="form-group">
-	                                	<label class="col-lg-2 control-label">Payment Terms</label>
+	                                	<label class="col-lg-2 control-label"><span style="color:red">*</span>Payment Terms</label>
 										<div class="col-lg-8">
 											
 				                            <?php echo $this->Form->input('PurchaseOrder.payment_term', array(
@@ -146,7 +146,7 @@
 									</div>
 
 									<div class="form-group">
-	                                	<label class="col-lg-2 control-label">Delivery Date</label>
+	                                	<label class="col-lg-2 control-label"><span style="color:red">*</span>Delivery Date</label>
 										<div class="col-lg-8">
 											<?php 
 	                                            echo $this->Form->input('PurchaseOrder.delivery_date',array( 
@@ -228,6 +228,7 @@
 									
 									<?php foreach ($requestItem as $key => $value) { ?>
 										
+										<div class = "cloneMe">
 
 										<?php $dataPlus = $key + 1; ?>
 
@@ -252,6 +253,20 @@
 								                <input type="hidden" class="form-control item_name required" name="data[RequestItem][<?php echo $key ?>][name]" value="<?php echo $value['RequestItem']['name'] ?>" readonly>
 
 								                <?php 
+
+								                $uuid = $value['RequestItem']['request_uuid']; 
+
+								               // pr($value['RequestItem']['id']);
+
+							                	   echo $this->Form->input('RequestItem.'.$key.'.request_uuid', 
+																array( 
+													'class' => 'form-control  required ', 
+													'type' => 'hidden',
+							    					'label' => false,
+							    					'readonly' => 'readonly',
+							    					'value' => $value['RequestItem']['request_uuid']
+							    					));
+
 								                    echo $this->Form->input('RequestItem.'.$key.'.foreign_key', 
 																	array( 
 														'class' => 'form-control item_id required', 
@@ -271,26 +286,19 @@
 								    					'readonly' => 'readonly',
 								    					'value' => $value['RequestItem']['model']
 								    					));
-								                    echo $this->Form->input('RequestItem.'.$key.'.request_uuid', 
-																	array( 
-														'class' => 'form-control item_model required ', 
-														'type' => 'hidden',
-								    					'label' => false,
-								    					'readonly' => 'readonly',
-								    					'value' => $value['RequestItem']['request_uuid']
-								    					));
+								                 
 								                ?>
 
 								        	</div>
 
-											<div class="col-lg-3">
+											<div class="col-lg-4">
 
 												<a data-toggle="modal" href="#myModalItem" data-modal="<?php echo $dataPlus ?>" class="modal-button btn btn-primary mrg-b-lg pull-left  "><i class="fa fa-search-plus fa-lg"></i> Select Item</a>
 
-												&emsp;&emsp;&emsp;&emsp;
+												&emsp;
 												<button type="button" class="add-field1  table-link danger btn btn-success " onclick="cloneDatarequest('cloneMe', this)"><i class="fa fa-plus"></i></button>
 												<!-- <button type="button" class="add-field1sd proxy-counter add-request-section table-link danger btn btn-success" ><i class="fa fa-plus"></i></button> -->
-												&emsp;&emsp;&emsp;&emsp;
+												
 												<?php 
 													if ($key == 0 ) { 
 														$newClass = 'hide-remove';
@@ -405,35 +413,54 @@
 										</div>
 
 										<div class="form-group">
-											<label class="col-lg-2 control-label"><span style="color:red">*</span>Quantity</label>
-											<div class="col-lg-3">
-												<?php 
-													echo $this->Form->input('RequestItem.'.$key.'.quantity', array(
-														'class' => 'form-control item_type number required',
-														'type' => 'number',
-								                        'label' => false,
-								                        'disabled' => false,
-								                        'placeholder' => 'Quantity',
-								                        'value' => $value['RequestItem']['quantity']));
+													<label class="col-lg-2 control-label"><span style="color:red">*</span>Quantity</label>
+													<div class="col-lg-6">
+														<?php 
+															echo $this->Form->input('RequestItem.'.$key.'.quantity', array(
+																'class' => 'form-control item_type number  select-drop required',
+																'type' => 'number',
+										                        'label' => false,
+										                        'data' => 0,
+										                        'placeholder' => 'Quantity',
+										                        'value' => $value['RequestItem']['quantity']));
 
-								                ?>
-											</div>
+										                ?>
+													</div>
+												</div>
 
-											<div class="col-lg-3">
-												<?php 
-													echo $this->Form->input('RequestItem.'.$key.'.quantity_unit_id', array(
-								                        'options' => array($unitData),  
-								                        'label' => false,
-								                        'disabled' => false,
-								                        'class' => 'form-control required',
-								                        'empty' => '---Select Unit---',
-								                        'default' => $value['RequestItem']['quantity_unit_id']
-								                         )); 
+												<div class="form-group">
+														<label class="col-lg-2 control-label"><span style="color:red">*</span>Pieces</label>
 
-								                ?>
-											</div>
+													<div class="col-lg-3">
+														<?php 
+															echo $this->Form->input('RequestItem.'.$key.'.pieces', array(
+																'class' => 'form-control item_type number  select-drop required',
+																'type' => 'number',
+										                        'label' => false,
+										                        'data' => 0,
+										                        'placeholder' => 'Pieces', 
+										                        'value' => $value['RequestItem']['pieces']
+											                         ));
 
-										</div>
+										                ?>
+
+													</div>
+
+													<div class="col-lg-3">
+														<?php 
+															echo $this->Form->input('RequestItem.'.$key.'.quantity_unit_id', array(
+										                        'options' => array($unitData),  
+										                        'label' => false,
+										                        'class' => 'form-control required',
+										                        'empty' => '---Select Unit---',
+										                        'default' => $value['RequestItem']['quantity_unit_id']
+											                         )); 
+
+										            ?>
+
+													</div>
+
+												</div>
 
 										<div class="form-group">
 											<label class="col-lg-2 control-label"><span style="color:red">*</span>Price</label>
@@ -463,6 +490,8 @@
 										</div>
 
 										<hr>
+
+									</div>
 									<?php } ?>
 
 								</div>

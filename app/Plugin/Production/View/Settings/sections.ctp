@@ -4,9 +4,12 @@
 	$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
 ?>
 
-<?php 	echo $this->element('production_options'); ?>
 
-<br><br><br>
+<?php 
+	$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
+ 	echo $this->element('tab/jobs',array('active_tab' => $active_tab)); 
+ ?>
+	
 
 <div class="row">
     <div class="col-lg-12">

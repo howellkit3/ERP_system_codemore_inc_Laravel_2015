@@ -4,9 +4,10 @@
 	$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
 ?>
 
-<?php 	echo $this->element('production_options'); ?>
-
-<br><br><br>
+<?php 
+	$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
+ 	echo $this->element('tab/jobs',array('active_tab' => $active_tab)); 
+ ?>
 
 <div class="row">
     <div class="col-lg-12">
@@ -49,6 +50,7 @@
 												<th><a href="#"><span>Area</span></a></th>
 												<th><a href="#" class="text-center"><span>Department</span></a></th>
 												<th><a href="#" class="text-center"><span>Section</span></a></th>
+												<th><a href="#" class="text-center"><span>Department Process</span></a></th>
 												<th><a href="#"><span>Action</span></a></th>
 											</tr>
 										</thead>
@@ -72,11 +74,27 @@
 									                        </td>
 
 															<td class="">
-									                           <?php echo ucfirst($departmentList[$machineList['Machine']['department_id']]); ?>
+									                           	<?php 
+									                           		if (!empty($machineList['Machine']['department_id'])) {
+									                           			echo ucfirst($departmentList[$machineList['Machine']['department_id']]); 
+									                           		}
+									                           	?>
 									                        </td>
 
 									                        <td class="">
-									                           <?php echo ucfirst($sectionList[$machineList['Machine']['section_id']]); ?>
+									                        	<?php 
+									                           		if (!empty($machineList['Machine']['section_id'])) {
+									                           			echo ucfirst($sectionList[$machineList['Machine']['section_id']]); 
+									                           		}
+									                           	?>
+									                        </td>
+
+									                        <td class="">
+									                        	<?php 
+									                           		if (!empty($machineList['Machine']['department_process_id'])) {
+									                           			echo ucfirst($processDepartmentData[$machineList['Machine']['department_process_id']]); 
+									                           		}
+									                           	?>
 									                        </td>
 
 									                       	<td>

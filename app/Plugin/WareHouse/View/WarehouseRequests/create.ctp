@@ -4,12 +4,6 @@
 <?php  //echo $this->Html->script('Purchasing.request_section');?>
 <?php echo $this->element('ware_house_option'); ?><br><br>
 
-<?php if(!empty($inquiry['Inquiry']['id'])) {
-
-	echo $this->element('inquiry_quotation');
-
-} else { ?>
-	
 	<div class="row">
 		<div class="col-lg-12">
 			
@@ -18,7 +12,7 @@
 					<header class="main-box-header clearfix">
 							                    
 						<h1 class="pull-left">
-							Create Purchase Request
+							Create Request
 						</h1>
 						<?php 
 	                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'warehouse_requests', 'action' => 'create'),array('class' =>'btn btn-primary pull-right','escape' => false));
@@ -36,6 +30,7 @@
 							<div class="main-box-body clearfix">
 								<div class="main-box-body clearfix">
 									<div class="form-horizontal">
+
 	                                    <div class="form-group">
 											<label class="col-lg-2 control-label">Name</label>
 											<div class="col-lg-8">
@@ -47,6 +42,7 @@
 	                                            ?>
 											</div>
 										</div>
+
 									</div>
 								</div>
 							</div>
@@ -57,7 +53,7 @@
 								<header class="main-box-header clearfix">
 								                    
 									<h1 class="pull-left">
-										Purchase Item
+										Request Item
 									</h1>
 									<input type="hidden" value="1" name="getCounter" class="get-counter" />
 								</header>
@@ -73,7 +69,7 @@
 													<label class="col-lg-2 control-label"><span style="color:red">*</span>Item</label>
 													<div class="col-lg-5">
 														<?php 
-										                    echo $this->Form->input('RequestItem.0.nameToShow', 
+										                    echo $this->Form->input('WarehouseRequestItem.0.nameToShow', 
 																			array( 
 																'class' => 'form-control item_name required', 
 										    					'label' => false,
@@ -83,7 +79,7 @@
 										                ?>
 
 										                <?php 
-										                    echo $this->Form->input('RequestItem.0.name', 
+										                    echo $this->Form->input('WarehouseRequestItem.0.name', 
 																			array( 
 																 'type' => 'hidden',  
 																'class' => 'form-control item_name required', 
@@ -93,7 +89,7 @@
 										                ?>
 
 										                <?php 
-										                    echo $this->Form->input('RequestItem.0.foreign_key', 
+										                    echo $this->Form->input('WarehouseRequestItem.0.foreign_key', 
 																			array( 
 																'class' => 'form-control item_id required', 
 																'type' => 'hidden',
@@ -103,7 +99,7 @@
 										                ?>
 
 										                <?php 
-										                    echo $this->Form->input('RequestItem.0.model', 
+										                    echo $this->Form->input('WarehouseRequestItem.0.model', 
 																			array( 
 																'class' => 'form-control item_model required ', 
 																'type' => 'hidden',
@@ -114,13 +110,12 @@
 
 										        	</div>
 
-													<div class="col-lg-3">
+													<div class="col-lg-4">
 
 														<a data-toggle="modal" href="#myModalItem" data-modal="1" class="modal-button btn btn-primary mrg-b-lg pull-left  "><i class="fa fa-search-plus fa-lg"></i> Select Item</a>
-														&emsp;&emsp;&emsp;&emsp;
+														&emsp;
 														<button type="button" class="add-field1  table-link danger btn btn-success " onclick="cloneDatarequest('cloneMe', this)"><i class="fa fa-plus"></i></button>
-														<!-- <button type="button" class="add-field1sd proxy-counter add-request-section table-link danger btn btn-success" ><i class="fa fa-plus"></i></button> -->
-														&emsp;&emsp;&emsp;&emsp;
+														
 														<button type="button" class="remove btn btn-danger " onclick="removeClone('cloneMe')"><i class="fa fa-minus" ></i></button>
 
 													</div>
@@ -132,7 +127,7 @@
 													<label class="col-lg-2 control-label">Size</label>
 													<div class="col-lg-3">
 														<?php 
-										                    echo $this->Form->input('RequestItem.0.size1', array(
+										                    echo $this->Form->input('WarehouseRequestItem.0.size1', array(
 																'class' => 'form-control item_type',
 										                        'label' => false,
 										                        'type' => 'number',
@@ -142,7 +137,7 @@
 
 													<div class="col-lg-3">
 														<?php 
-															echo $this->Form->input('RequestItem.0.size1_unit_id', array(
+															echo $this->Form->input('WarehouseRequestItem.0.size1_unit_id', array(
 										                        'options' => array($unitData),  
 										                        'label' => false,
 										                        'class' => 'form-control ',
@@ -160,7 +155,7 @@
 													<label class="col-lg-2 control-label"> </label>
 													<div class="col-lg-3">
 														<?php 
-															echo $this->Form->input('RequestItem.0.size2', array(
+															echo $this->Form->input('WarehouseRequestItem.0.size2', array(
 																'class' => 'form-control item_type',
 										                        'label' => false,
 										                        'type' => 'number',
@@ -171,7 +166,7 @@
 
 													<div class="col-lg-3">
 														<?php 
-															echo $this->Form->input('RequestItem.0.size2_unit_id', array(
+															echo $this->Form->input('WarehouseRequestItem.0.size2_unit_id', array(
 										                        'options' => array($unitData),  
 										                        'label' => false,
 										                        'class' => 'form-control ',
@@ -189,7 +184,7 @@
 													<label class="col-lg-2 control-label"> </label>
 													<div class="col-lg-3">
 														<?php 
-															echo $this->Form->input('RequestItem.0.size3', array(
+															echo $this->Form->input('WarehouseRequestItem.0.size3', array(
 																'class' => 'form-control item_type',
 										                        'label' => false,
 										                        'type' => 'number',
@@ -200,7 +195,7 @@
 
 													<div class="col-lg-3">
 														<?php 
-															echo $this->Form->input('RequestItem.0.size3_unit_id', array(
+															echo $this->Form->input('WarehouseRequestItem.0.size3_unit_id', array(
 										                        'options' => array($unitData),  
 										                        'label' => false,
 										                        'class' => 'form-control ',
@@ -218,7 +213,7 @@
 													<label class="col-lg-2 control-label"><span style="color:red">*</span>Quantity</label>
 													<div class="col-lg-3">
 														<?php 
-															echo $this->Form->input('RequestItem.0.quantity', array(
+															echo $this->Form->input('WarehouseRequestItem.0.quantity', array(
 																'class' => 'form-control item_type number  select-drop required',
 																'type' => 'number',
 										                        'label' => false,
@@ -230,31 +225,73 @@
 
 													<div class="col-lg-3">
 														<?php 
-															echo $this->Form->input('RequestItem.0.quantity_unit_id', array(
-										                        'options' => array($unitData),  
+															echo $this->Form->input('WarehouseRequestItem.0.quantity_unit', array(
+										                        'options' => array($unitData), 
+										                        'value' => 14,
+										                        'disabled' => 'disabled',
 										                        'label' => false,
 										                        'class' => 'form-control required',
 										                        'empty' => '---Select Unit---'
 										                         )); 
 
+															echo $this->Form->input('WarehouseRequestItem.0.quantity_unit', array(
+										                        //'options' => array($unitData), 
+										                        'value' => 14,
+										                        'type' => 'hidden',
+										                        'label' => false,
+										                        'class' => 'form-control required',
+										                        'empty' => '---Select Unit---'
+										                         ));
+
 										                ?>
+
+										               
 													</div>
 
 												</div>
 
-													<div class="form-group">
-														<label for="inputPassword1" class="col-lg-2 control-label"> Remarks</label>
-														<div class="col-lg-6">
-															<?php 
-
-															echo $this->Form->textarea('RequestItem.0.remarks', array(
-										                        'label' => false,
-										                        'class' => 'form-control',
-																'rows' => '2'));
-															?>
-
-														</div>
+												<div class="form-group">
+													<label class="col-lg-2 control-label">Date Needed</label>
+													<div class="col-lg-6">
+														<?php 
+                                   						 echo $this->Form->input('WarehouseRequestItem.0.date_needed', array(
+					                                        'type' => 'text',
+					                                        'label' => false,
+					                                        'required' => 'required',
+					                                        'class' => 'form-control item_type datepick required',
+					                                        ));
+                              	
+			                                            ?>
 													</div>
+												</div>
+
+												<div class="form-group">
+													<label class="col-lg-2 control-label">Purpose</label>
+													<div class="col-lg-6">
+														<?php 
+				                                            echo $this->Form->textarea('WarehouseRequestItem.0.purpose', array(
+				                                            								'class' => 'form-control item_type required',
+										                                                    'label' => false,
+										                                                    'placeholder' => 'Request Purpose'));
+			                                            ?>
+													</div>
+												</div>
+
+												<div class="form-group">
+													<label for="inputPassword1" class="col-lg-2 control-label"> Remarks</label>
+													<div class="col-lg-6">
+														<?php 
+
+														echo $this->Form->textarea('WarehouseRequestItem.0.remarks', array(
+									                        'label' => false,
+									                        'class' => 'form-control',
+															'rows' => '2'));
+														?>
+
+													</div>
+												</div>
+
+
 
 												<hr>
 
@@ -367,7 +404,7 @@
 
 		$(".remove").hide();
 
-		$("#QuotationCreateForm").validate();
+		$("#RequestCreateForm").validate();
 			//datepicker
 			$('.datepick').datepicker({
 				format: 'yyyy-mm-dd'
@@ -446,8 +483,4 @@
     });
 
 	 </script>
-
-
-		
-<?php } ?>
 

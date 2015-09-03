@@ -15,7 +15,7 @@ echo $this->Html->script(array(
 
 
 echo $this->element('payroll_options');
-$active_tab = 'sss_table';
+$active_tab = 'tax_table';
  ?>
 
  <div class="row">
@@ -41,41 +41,96 @@ $active_tab = 'sss_table';
 			            	<div id="result-table">
 			            		   <div class="table-responsive">
                                 <div class="table-responsive">
-                <table class="table table-bordered">
+
+                        <?php foreach ($taxes as $key => $value) : ?>
+                          <strong><?php echo ucwords(str_replace('_',' ',$value['TaxDeduction']['type'] )); ?></strong>
+                          <br>
+                          <p> Deductions  </p>
+
+                        
+             <table class="table table-bordered">
                 <thead>
                 <tr>
-                  <th><a href="#"><span>Range of compensations</span></a></th>
-                  <th><a href="#" class="desc"><span>Credit</span></a></th>
-                  <th><a href="#" class="asc"><span>Employer</span></a></th>
-                  <th class="text-center"><span>Employee</span></th>
-                  <th class="text-center"><span>Employee Compensations</span></th>
-                  <th class="text-right"><span>Total Contibution</span></th>
+                  <th>1</th>
+                  <th>2</th>
+                  <th>3</th>
+                  <th>4</th>
+                  <th>5</th>
+                  <th>6</th>
+                  <th>7</th>
+                  <th>8</th>
+                  
                 </tr>
                 </thead>
                 <tbody>
-                  <?php foreach ($ranges as $key => $range) { ?>
+                <tr>
+                 <?php for($tax=1;$tax<= 8; $tax++) : ?>
+                    <td><?php echo number_format($value['TaxDeduction']['tax_'.$tax],2); ?></td>
+                 <?php endfor; ?>
+                </tr>
+                   
+                </tbody>
+               </table>
+
+
+                <?php endforeach; ?>
+                <table class="table table-bordered">
+                <thead>
+                <tr>
+                  <th><a href="#"><span>Code</span></a></th>
+                  <th><a href="#" class="desc"><span>Exempt Rate</span></a></th>
+                  <th><a href="#" class="asc"><span>1</span></a></th>
+                  <th class="text-center"><span>2</span></th>
+                  <th class="text-center"><span>3</span></th>
+                  <th class="text-right"><span>4</span></th>
+
+                  <th class="text-right"><span>5</span></th>
+
+                  <th class="text-right"><span>6</span></th>
+
+                  <th class="text-right"><span>7</span></th>
+
+                  <th class="text-right"><span>8</span></th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php if(!empty($value['Tax'])) :  ?>
+                  <?php foreach ($value['Tax'] as $key => $range) { ?>
                     <tr>
-                      <td>
-                        <?php echo $range['SssRange']['range_from'] ?>  - <?php echo $range['SssRange']['range_to'] ?>  
+                      <td class="text-center">
+                        <?php echo $range['Tax']['code']?>
                       </td>
-                      <td>
-                        <?php echo $range['SssRange']['credits']; ; ?> 
+                      <td class="text-center">
+                        <?php echo number_format($range['Tax']['exempt_rate'],2) ?>
                       </td>
-                      <td>
-                        <?php echo $range['SssRange']['employers']; $total = $range['SssRange']['employers']?> 
+                      <td class="text-center">
+                        <?php echo number_format($range['Tax']['taxes_1'],2) ?>
                       </td>
 
                       <td class="text-center">
-                        <?php echo $range['SssRange']['employees']; $total += $range['SssRange']['employees']?> 
+                        <?php echo number_format($range['Tax']['taxes_2'],2) ?>
                       </td class="text-center">
                       <td class="text-center">
-                        <?php echo $range['SssRange']['employee_compensations']; $total += $range['SssRange']['employee_compensations']?>   
+                        <?php echo number_format($range['Tax']['taxes_3'],2) ?>
                       </td>
                       <td class="text-right">
-                        <?php echo $total; ?> 
+                      <?php echo number_format($range['Tax']['taxes_4'],2) ?>
+                      </td>
+                      <td class="text-right">
+                      <?php echo number_format($range['Tax']['taxes_5'],2) ?>
+                      </td>
+                      <td class="text-right">
+                      <?php echo number_format($range['Tax']['taxes_6'],2) ?>
+                      </td>
+                      <td class="text-right">
+                      <?php echo number_format($range['Tax']['taxes_7'],2) ?>
+                      </td>
+                      <td class="text-right">
+                      <?php echo number_format($range['Tax']['taxes_8'],2) ?>
                       </td>
                   </tr>
                   <?php } ?>
+                <?php endif; ?>
                   </tbody>
                 </table>
                 </div>

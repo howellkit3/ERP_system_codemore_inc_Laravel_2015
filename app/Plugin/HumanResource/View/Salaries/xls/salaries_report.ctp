@@ -3,52 +3,100 @@
     $this->PhpExcel->createWorksheet()
         ->setDefaultFont('Calibri', 10);
 
-    $objTpl = PHPExcel_IOFactory::load("./img/salaries/salaries.xls");
+    $objTpl = PHPExcel_IOFactory::load("./img/salaries/salaries_edited.xls");
     $counter = 5;
     
-    $objTpl->setActiveSheetIndex(0)
-    ->setCellValue('A2','Payroll '.date('F d',strtotime($payroll['Payroll']['from'])).'-'.date('d',strtotime($payroll['Payroll']['to'])).' '. $payroll['Payroll']['year'])
 
-    ->getStyle('A4:AK4')
-    ->getFont()->setBold(true);
+
+    $objTpl->setActiveSheetIndex(0)
+    ->setCellValue('A2','Payroll '.date('F d',strtotime($payroll['Payroll']['from'])).'-'.date('d',strtotime($payroll['Payroll']['to'])).' '. $payroll['Payroll']['year']);
+
+    // ->getStyle('A4:AK4')
+    // ->getFont()->setBold(true);
             
+    $styleArrayHeader = array(
+                  'font'  => array(
+                  'color' => array('rgb' => '0070C0'),
+                  'bold' =>true
+                  ));
+
 
     $counter = 6;
     $header = 4;
+    $next_header = 5;
 
     $sheet = $objTpl->getActiveSheet();
-    $address = 'Z'.$header;
+    $address = 'AH'.$header;
+    //next row
 
     if (!empty($deductions)) {
               
+            $styleArray = array(
+                'borders' => array(
+                  'allborders' => array(
+                    'style' => PHPExcel_Style_Border::BORDER_THIN
+                  )
+                )
+              );
+
               foreach ($deductions as $key => $list) {
                 
                 $split = PHPExcel_Cell::coordinateFromString($address);
                 ++$split[0];
+                $nextRow = preg_replace('/\d/', $next_header ,$address);
+                $sheet->mergeCells($address.":".$nextRow);
+
                 $sheet->setCellValue( $address, $list );
+                $sheet->getStyle($address.':'.$nextRow)->applyFromArray($styleArray);
+                $sheet->getStyle($address.':'.$nextRow)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+                $sheet->getStyle($address.':'.$nextRow)->applyFromArray($styleArrayHeader);
                 $address = implode($split);
 
               }
     }
 
+     $styleArray = array(
+                'borders' => array(
+                  'allborders' => array(
+                    'style' => PHPExcel_Style_Border::BORDER_THIN
+                  )
+                )
+              );
+     
       //total decuction
      $sheet->setCellValue( $address, 'Total Deduction' );
 
       //net pay's and total
      $fields = array('Net Pay','Allowances','Incentives/ Adj','Total Pay');
 
-     $next_field = PHPExcel_Cell::coordinateFromString($address);
-                  ++$split[0];
-     $next_field = implode($split);
+     $next_field = $address;
 
-     foreach ($fields as $key => $list) {              
+
+
+     foreach ($fields as $key => $list) {             
                   $split = PHPExcel_Cell::coordinateFromString($next_field);
                   ++$split[0];
+
+                  $nextRow = preg_replace('/\d/', $next_header ,$next_field);
+                  $sheet->mergeCells($next_field.":".$nextRow);
+
                   $sheet->setCellValue( $next_field, $list );
+                  
+
+                  $sheet->getStyle($next_field.':'.$nextRow)->applyFromArray($styleArray);
+                  $sheet->getStyle($next_field.':'.$nextRow)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+                  $sheet->getStyle($next_field.':'.$nextRow)->applyFromArray($styleArrayHeader);
                   $next_field = implode($split);
 
       }
 
+    //add color if value is negative
+    $styleArray = array(
+                'font'  => array(
+                'color' => array('rgb' => 'F122CB'),
+                ));
+
+    $countEmp = 1;
 
     foreach ($salaries as $key => $emp) {
         $key++;
@@ -81,10 +129,14 @@
         // $night += $emp['night_diff_sunday_work_ot'];
 
           $sheet = $objTpl->getActiveSheet();
-          $sheet->setCellValue('A'.$counter,$employee_name);
+         // $sheet->setCellValue('A'.$counter,$emp['EmployeeAdditionalInformation']['bank_account_number']);
+          $sheet->setCellValue('A'.$counter,  $countEmp );
+          $sheet->setCellValue('B'.$counter,$emp['EmployeeAdditionalInformation']['bank_account_number']);
+          $sheet->setCellValue('C'.$counter,$employee_name);
       //$sheet->setCellValue('A'.$counter,$emp['employee_id']);
-          $sheet->setCellValue('B'.$counter,$emp['days']);
-          $sheet->setCellValue('C'.$counter,number_format($emp['regular'],2));
+          $sheet->setCellValue('D'.$counter,$emp['days']);
+          $sheet->setCellValue('E'.$counter,$emp['hours']);
+          $sheet->setCellValue('E'.$counter,number_format($emp['regular'],2));
           $sheet->setCellValue('D'.$counter,number_format($emp['OT'],2));
           $sheet->setCellValue('E'.$counter,number_format($emp['sunday_work'],2));
           $sheet->setCellValue('F'.$counter,number_format($emp['sunday_work_ot'],2));
@@ -126,10 +178,12 @@
               
               $innerAddress = 'Z'.$counter;
 
+
               foreach ($deductions as $key => $list) {
                 
                 $split = PHPExcel_Cell::coordinateFromString($innerAddress);
                 ++$split[0];
+
                 $index = str_replace(' ','_',strtolower($list));
                 $value =  !empty($salary[$index]) ? number_format($salary[$index],2) : number_format(0,2);
                 $sheet->setCellValue( $innerAddress, $value );
@@ -150,14 +204,25 @@
                       ++$split[0];
           $next_field_inner = implode($split);
 
+
           foreach ($fields as $fieldsKey => $list) {     
 
                       $split = PHPExcel_Cell::coordinateFromString($next_field_inner);
                       ++$split[0];
+
                       $cellValue = !empty($emp[$fieldsKey]) ? number_format($emp[$fieldsKey],2) : '0.00'; 
-                      $sheet->setCellValue( $next_field_inner, $cellValue );
+
+                     $sheet->setCellValue( $next_field_inner, $cellValue );
+                    
+                     if ($cellValue < 0) {
+
+                        $sheet->getStyle($next_field_inner)->applyFromArray($styleArray);
+                      
+                      }
+
                       $next_field_inner = implode($split);
           }
+
 
           // $sheet->setCellValue('Z'.$counter,number_format($ca_fund,2));
           // $sheet->setCellValue('AA'.$counter,number_format($sss_loan,2));
@@ -179,6 +244,7 @@
 
           //$sheet->setCellValue('AM'.$counter,number_format($emp['total_pay'],2));
          $counter++;  
+        $countEmp++; 
         
     }
 

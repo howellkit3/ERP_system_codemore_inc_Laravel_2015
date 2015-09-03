@@ -8,7 +8,7 @@
         <div class="main-box clearfix body-pad">
             <header class="main-box-header clearfix">
 
-                <h2 class="pull-left"><b>Request List</b></h2>
+                <h2 class="pull-left"><b>Stock List</b></h2>
 
             </header>
             
@@ -28,8 +28,7 @@
                             </tr>
                         </thead>
 
-                        <?php //echo $this->element('request_table'); ?>
-
+                        <?php echo $this->element('stocks_table'); ?>
                                                     
                      </table>
                     <hr>

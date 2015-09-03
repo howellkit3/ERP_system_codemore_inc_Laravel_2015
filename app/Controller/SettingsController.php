@@ -2527,143 +2527,7 @@ class SettingsController extends AppController
         }
 
 
-        public function sss_ranges(){
-
-            $this->loadModel('SssRange');
-            $conditions = array();
-            $ranges = $this->SssRange->find('all',array(
-                'conditions' => $conditions,
-                'order' => array('SssRange.range_from ASC')
-                 ));
-            $this->set(compact('ranges'));
-
-            $this->render('accounting/sss_ranges');
-        }
-
-
-        public function sss_ranges_add($id = null){
-
-            $this->loadModel('SssRange');
-           
-            if ($this->request->is(array('post','put'))) {
-
-                $auth = $this->Session->read('Auth');
-
-                $data = $this->SssRange->formatData($this->request->data,$auth);
-
-
-                if ($this->SssRange->save($data)) {
-
-                     $this->Session->setFlash(__('Saving data completed.'),'success');
-
-                        $this->redirect(
-                            array('controller' => 'settings', 'action' => 'sss_ranges')
-                        );
-
-                } else {
-
-                        $this->Session->setFlash(__('There\'s an error saving data, Please try again'),'error');
-                }
-
-            }
-
-            if (!empty($id)) {
-
-                $this->request->data = $this->SssRange->read(null,$id);
-            }
-
-             $this->render('accounting/sss_ranges_add');
-        }
-
-        public function sss_ranges_delete($id){
-
-
-            $this->loadModel('SssRange');
-           
-            if ($this->SssRange->delete($id)) {
-                   $this->Session->setFlash(
-                    __('Successfully deleted.', h($id)), 'success'
-                );
-            } else {
-                $this->Session->setFlash(
-                    __('There\'s an erro deleting the data', h($id))
-                );
-            }
-
-            return $this->redirect(array('action' => 'sss_ranges'));
-        }
-
-        public function philhealth_ranges(){
-
-            $this->loadModel('PhilHealthRange');
-
-            $conditions = array();
-
-            $ranges = $this->PhilHealthRange->find('all',array(
-                'conditions' => $conditions,
-                'order' => array('PhilHealthRange.range_from ASC')
-                 ));
-
-            //pr($ranges); exit();
-            $this->set(compact('ranges'));
-
-            $this->render('accounting/philhealth_ranges');
-        }
-
-
-        public function philhealth_ranges_add($id = null){
-
-            $this->loadModel('PhilHealthRange');
-           
-            if ($this->request->is(array('post','put'))) {
-
-                $auth = $this->Session->read('Auth');
-
-                $data = $this->PhilHealthRange->formatData($this->request->data,$auth);
-
-                if ($this->PhilHealthRange->save($data)) {
-
-                     $this->Session->setFlash(__('Saving data completed.'),'success');
-
-                        $this->redirect(
-                            array('controller' => 'settings', 'action' => 'philhealth_ranges')
-                        );
-
-                } else {
-
-                        $this->Session->setFlash(__('There\'s an error saving data, Please try again'),'error');
-                }
-
-            }
-
-            if (!empty($id)) {
-
-                $this->request->data = $this->PhilHealthRange->read(null,$id);
-            }
-
-             $this->render('accounting/philhealth_ranges_add');
-        }
-
-         public function philhealth_ranges_delete($id){
-
-
-            $this->loadModel('PhilHealthRange');
-           
-            if ($this->PhilHealthRange->delete($id)) {
-
-                $this->Session->setFlash(
-                    __('Successfully deleted.', h($id)), 'success'
-                );
-
-            } else {
-                $this->Session->setFlash(
-                    __('There\'s an error deleting the data', h($id)),'error'
-                );
-            }
-
-            return $this->redirect(array('action' => 'philhealth_ranges'));
-        }
-
+      
         public function banks($id = null){
 
             $this->loadModel('Bank');
@@ -2730,6 +2594,78 @@ class SettingsController extends AppController
 
             return $this->redirect(array('action' => 'banks'));
         }
+
+    public function area() {
+
+        $this->loadModel('Area');
+
+        $userData = $this->Session->read('Auth');
+
+        $limit = 10;
+
+        $conditions = array();
+
+        $this->paginate = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            'fields' => array('id', 'name','created'),
+            'order' => 'Area.id DESC',
+        );
+
+        $areaData = $this->paginate('Area');
+
+            if ($this->request->is('post')) {
+                
+                if (!empty($this->request->data)) {
+                   
+                    $this->Area->create();
+
+                    $this->id = $this->Area->saveArea($this->request->data['Area'], $userData['User']['id']);
+           
+                    $this->Session->setFlash(__('Add Unit Complete.'));
+
+                    $this->redirect(
+                        array('controller' => 'settings', 'action' => 'area')
+                    );
+                }
+            }
+
+        $this->set(compact('areaData'));
+    }
+
+     public function area_edit($id = null) {
+
+        $this->loadModel('Area');
+
+            if (!$id) {
+                throw new NotFoundException(__('Invalid post'));
+            }
+
+            $post = $this->Area->findById($id);
+            if (!$post) {
+                throw new NotFoundException(__('Invalid post'));
+            }
+
+            if ($this->request->is(array('post', 'put'))) {
+                $this->Area->id = $id;
+
+                if ($this->Area->save($this->request->data)) {
+
+                    $this->Area->save($this->request->data);
+
+                    $this->Session->setFlash(__('Area has been updated.'));
+
+                    return $this->redirect(array('action' => 'area'));
+                }
+
+                $this->Session->setFlash(__('Unable to update your post.'));
+            }
+
+            if (!$this->request->data) {
+
+                $this->request->data = $post;
+            }
+    }
 
 }
             

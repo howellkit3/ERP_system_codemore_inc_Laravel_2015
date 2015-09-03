@@ -72,7 +72,7 @@
 											</div>
 										</div>
 
-										<div class="form-group">
+										<!-- <div class="form-group">
 											<label for="inputPassword1" class="col-lg-2 control-label"> Remarks</label>
 											<div class="col-lg-8">
 												<?php 
@@ -83,7 +83,7 @@
 												?>
 
 											</div>
-										</div>
+										</div> -->
 									</div>
 								</div>
 							</div>
@@ -153,13 +153,13 @@
 
 											        	</div>
 
-														<div class="col-lg-3">
+														<div class="col-lg-4">
 
 															<a data-toggle="modal" href="#myModalItem" data-modal="<?php echo $dataPlus ?>" class="modal-button btn btn-primary mrg-b-lg pull-left  "><i class="fa fa-search-plus fa-lg"></i> Select Item</a>
-															&emsp;&emsp;&emsp;&emsp;
+															&emsp;
 															<button type="button" class="add-field1  table-link danger btn btn-success " onclick="cloneDatarequest('cloneMe', this)"><i class="fa fa-plus"></i></button>
-															<!-- <button type="button" class="add-field1sd proxy-counter add-request-section table-link danger btn btn-success" ><i class="fa fa-plus"></i></button> -->
-															&emsp;&emsp;&emsp;&emsp;
+															
+															
 															<?php 
 																if ($key == 0 ) { 
 																	$newClass = 'hide-remove';
@@ -295,6 +295,48 @@
 														</div>
 
 													</div>
+
+													<div class="form-group">
+													<label class="col-lg-2 control-label"><span style="color:red">*</span>Date Needed</label>
+													<div class="col-lg-6">
+														<?php 
+                                   						 echo $this->Form->input('RequestItem.'.$key.'.date_needed', array(
+					                                        'type' => 'text',
+					                                        'label' => false,
+					                                        'required' => 'required',
+					                                        'class' => 'form-control item_type datepick required',
+					                                        'value' => date("Y-m-d", strtotime($value['RequestItem']['date_needed']))));
+					                                        
+                              	
+			                                            ?>
+													</div>
+												</div>
+
+												<div class="form-group">
+													<label class="col-lg-2 control-label"><span style="color:red">*</span>Purpose</label>
+													<div class="col-lg-6">
+														<?php 
+				                                            echo $this->Form->textarea('RequestItem.'.$key.'.purpose', array(
+				                                            								'class' => 'form-control item_type required',
+										                                                    'label' => false,
+										                                                    'placeholder' => 'Request Purpose',
+										                                                    'value' => $value['RequestItem']['purpose']));
+			                                            ?>
+													</div>
+												</div>
+
+												<div class="form-group">
+													<label class="col-lg-2 control-label">Remarks</label>
+													<div class="col-lg-6">
+														<?php 
+				                                            echo $this->Form->textarea('RequestItem.'.$key.'.remarks', array(
+				                                            								'class' => 'form-control item_type ',
+										                                                    'label' => false,
+										                                                    'placeholder' => 'Remarks',
+										                                                    'value' => $value['RequestItem']['remarks']));
+			                                            ?>
+													</div>
+												</div>
 
 													<hr>
 

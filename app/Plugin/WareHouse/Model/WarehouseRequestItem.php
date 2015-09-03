@@ -5,11 +5,11 @@ App::uses('AppModel', 'Model');
  * Supllier Model
  *
  */
-class RequestItem extends AppModel {
+class WarehouseRequestItem extends AppModel {
 
     public $useDbConfig = 'koufu_warehouse';
 
-    public $name = 'RequestItem';
+    public $name = 'WarehouseRequestItem';
 
 	public $recursive = -1;
 
@@ -32,14 +32,16 @@ class RequestItem extends AppModel {
 		$this->contain($model);
 	}
 
-	public function saveRequestItem($requestData = null,$requestUuid = null)
-	{
+	public function saveRequestItem($requestData = null,$id = null)
+	{	
+
+		//pr($requestData); exit; 
 	
-		foreach ($requestData['RequestItem'] as $key => $requestValue)
+		foreach ($requestData['WarehouseRequestItem'] as $key => $requestValue)
 		{
 			$this->create();
 
-			$requestValue['request_uuid'] = $requestUuid;
+			$requestValue['request_id'] = $id;
 
 			$this->save($requestValue);
 		}
@@ -51,7 +53,7 @@ class RequestItem extends AppModel {
 	public function saveRequestItemPrice($priceData = null)
 	{
 	
-		foreach ($priceData['RequestItem'] as $key => $priceDataValue)
+		foreach ($priceData['WarehouseRequestItem'] as $key => $priceDataValue)
 		{
 			$this->create();
 			

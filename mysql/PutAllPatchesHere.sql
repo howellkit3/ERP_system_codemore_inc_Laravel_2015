@@ -44,7 +44,6 @@ CHANGE COLUMN `type` `type` VARCHAR(60) NULL DEFAULT NULL;
 DROP TABLE `item_category_holders`;
 DROP TABLE `item_type_holders`;
 
-
 #NOTE: SELECT KOUFU SYSTEM DATABASE ----
 /** jRr added this 05/05/2015 03:58PM */
 CREATE TABLE IF NOT EXISTS `currencies` (
@@ -1245,7 +1244,7 @@ ALTER TABLE `attendances`  ADD `leave_id` INT NULL  AFTER `is_holiday`;
 /** howell kit added this 08/08/2015 TO WAREHOUSE DATABASE   */
 ALTER TABLE `received_items`  ADD `foreign_key` INT(11) NULL  AFTER `received_orders_id`;
 ALTER TABLE `received_items`  ADD `model` VARCHAR(30) DEFAULT NULL AFTER `received_orders_id`;
-
+ALTER TABLE `received_items`  ADD `delivered_order_id` INT(11) NULL  AFTER `received_orders_id`;
 
 
 /* added 08/13/2015 human resource */
@@ -1766,9 +1765,9 @@ CREATE TABLE `delivered_orders` (
 ) ENGINE=INNODB AUTO_INCREMENT=68 DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `request_items`;
+DROP TABLE IF EXISTS `warehouse_request_items`;
 
-CREATE TABLE `request_items` (
+CREATE TABLE `warehouse_request_items` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `model` VARCHAR(30) DEFAULT NULL,
   `foreign_key` INT(11) DEFAULT NULL,
@@ -1799,7 +1798,7 @@ CREATE TABLE `requests` (
 ) ENGINE=INNODB AUTO_INCREMENT=68 DEFAULT CHARSET=latin1;
 
 
-ALTER TABLE `request_items` ADD `remarks` TEXT  NULL  DEFAULT NULL  AFTER `quantity_unit_id`;
+ALTER TABLE `warehouse_request_items` ADD `remarks` TEXT  NULL  DEFAULT NULL  AFTER `quantity_unit_id`;
 
 /* add salary report table for koufu_payroll */
 
@@ -1838,4 +1837,104 @@ ALTER TABLE `sub_processes` DROP `machine_id`;
 /** bien added this 08/26/2015 TO production DATABASE   */
 ALTER TABLE `machines` ADD `sub_process_id` INT(11)  NULL  DEFAULT NULL  AFTER `section_id`;
 
+/** howell kit added this 08/27/2015 TO production DATABASE   */
+ALTER TABLE `koufu_warehouse`.`stocks` DROP COLUMN `remarks` ;
 
+#NOTE: SELECT KOUFU SYSTEm DATABASE ----
+/** howellkit added this 08/28/2015  */
+
+CREATE TABLE IF NOT EXISTS `areas` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(50) DEFAULT NULL,
+  `created` DATETIME NOT NULL,
+  `modified` DATETIME NOT NULL,
+  `created_by` INT(11) DEFAULT NULL,
+  `modified_by` INT(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB AUTO_INCREMENT=68 DEFAULT CHARSET=latin1;
+
+
+
+/** howellkit added this 08/29/2015  */
+#NOTE: SELECT KOUFU WAREHOUSE DATABASE ----
+ALTER TABLE `warehouse_request_items` CHANGE COLUMN `request_uuid` `request_id` INT(11) NULL DEFAULT NULL;
+ALTER TABLE `warehouse_requests`  ADD `date_needed` DATETIME NULL  AFTER `quantity_unit_id`;
+ALTER TABLE `warehouse_requests`  ADD `purpose` VARCHAR(50) NULL  AFTER `date_needed`;
+
+#NOTE: SELECT KOUFU PURCHASING DATABASE ----
+
+ALTER TABLE `request_items`  ADD `date_needed` DATETIME NULL  AFTER `quantity_unit_id`;
+ALTER TABLE `request_items`  ADD `purpose` VARCHAR(50) NULL  AFTER `date_needed`;
+ALTER TABLE `request_items`  ADD `remarks` VARCHAR(50) NULL  AFTER `purpose`;
+
+INSERT  INTO `status_field_holders`(`id`,`status`,`created_by`,`modified_by`,`created`,`modified`) VALUES (11,'Received',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03'),(12,'Deducted',1,1,'2015-04-27 23:22:03','2015-04-27 23:22:03');
+
+
+/* Select KOUFU PAYROLL */
+
+ALTER TABLE `deductions` CHANGE `type` `type` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL;
+
+ALTER TABLE `deductions`  ADD `loan_id` INT NULL  AFTER `type`;
+
+
+
+CREATE TABLE IF NOT EXISTS `philhealth_ranges` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `range_from` decimal(8,2) NOT NULL,
+  `range_to` decimal(8,2) NOT NULL,
+  `condition` varchar(45) DEFAULT NULL,
+  `salary_base` decimal(8,2) NOT NULL,
+  `employer` decimal(8,2) NOT NULL,
+  `employee` decimal(8,2) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `accounting_philhealth_ranges`
+--
+
+INSERT INTO `philhealth_ranges` (`id`, `range_from`, `range_to`, `condition`, `salary_base`, `employer`, `employee`, `created_by`, `modified_by`, `created`, `modified`) VALUES
+(3, '8999.99', '0.00', 'below', '8000.00', '100.00', '100.00', 4, 4, '2015-08-12 04:05:41', '2015-08-12 04:05:41'),
+(4, '9000.00', '9999.99', NULL, '9000.00', '112.50', '112.50', 4, 4, '2015-08-12 04:06:25', '2015-08-12 04:06:25');
+
+CREATE TABLE IF NOT EXISTS `sss_ranges` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `range_from` decimal(8,2) NOT NULL,
+  `range_to` decimal(8,2) NOT NULL,
+  `bounds` decimal(8,2) NOT NULL,
+  `credits` decimal(8,2) NOT NULL,
+  `employers` decimal(8,2) NOT NULL,
+  `employees` decimal(8,2) NOT NULL,
+  `employee_compensations` decimal(8,2) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `accounting_sss_ranges`
+--
+
+INSERT INTO `sss_ranges` (`id`, `range_from`, `range_to`, `bounds`, `credits`, `employers`, `employees`, `employee_compensations`, `created_by`, `modified_by`, `created`, `modified`) VALUES
+(3, '1250.00', '1749.99', '0.00', '1500.00', '110.50', '54.50', '10.00', 4, 4, '2015-08-12 02:33:19', '2015-08-12 03:05:32'),
+(4, '1000.00', '1249.99', '0.00', '1000.00', '73.70', '36.30', '10.00', 4, 4, '2015-08-12 08:53:43', '2015-08-12 08:53:43'),
+(5, '1750.00', '2249.99', '0.00', '2000.00', '147.30', '72.70', '10.00', 4, 4, '2015-08-24 06:39:01', '2015-08-24 06:39:01');
+
+
+/** howellkit added this 09/02/2015  */
+#NOTE: SELECT KOUFU PURCHASING DATABASE ----
+ALTER TABLE `request_items`  ADD `pieces` INT(11) NULL  AFTER `quantity`;
+ALTER TABLE `purchasing_items`  ADD `pieces` INT(11) NULL  AFTER `quantity`;
+
+#NOTE: SELECT KOUFU JOB TICKET DATABASE ----
+ALTER TABLE `job_tickets`  ADD `status_production_id` INT(11) NULL  AFTER `po_number`;
+
+/** howellkit added this 09/02/2015  */
+/* human resource table */
+ALTER TABLE `attendances` CHANGE `in` `in` DATETIME NULL DEFAULT NULL, CHANGE `out` `out` DATETIME NULL DEFAULT NULL;

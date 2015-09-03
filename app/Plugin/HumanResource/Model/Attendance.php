@@ -111,6 +111,7 @@ class Attendance extends AppModel {
 						
 						$attendance = $this->find('first',array('conditions' => array('employee_id' => $dataList['foreign_key'], 'schedule_id' => $dataList['id'])));
 
+						pr($attendance);
 						$sched['Attendance']['id'] = !empty($attendance['Attendance']['id']) ? $attendance['Attendance']['id'] : '';
 					}
 					
@@ -128,6 +129,7 @@ class Attendance extends AppModel {
 					if ($dataList['overtime_id']) {
 
 						$sched['Attendance']['type'] = 'overtime work';
+						$sched['Attendance']['overtime_id'] = $dataList['overtime_id'];
 					}
 
 					$this->save($sched);	
@@ -243,10 +245,10 @@ class Attendance extends AppModel {
 
 			switch ($data['Attendance']['type']) {
 				case 'in':
-				$attendance['Attendance']['in'] = trim($login[1]);
+				$attendance['Attendance']['in'] = trim($date.$login[1]);
 					break;
 				case 'out':
-				$attendance['Attendance']['out'] = trim($login[1]);
+				$attendance['Attendance']['out'] = trim($date.$login[1]);
 					break;
 			}
 			
