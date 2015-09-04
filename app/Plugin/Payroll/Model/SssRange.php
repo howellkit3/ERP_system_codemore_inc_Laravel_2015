@@ -7,11 +7,11 @@ App::uses('AppModel', 'Model');
  */
 class SssRange extends AppModel {
 
-	public $useDbConfig = 'default';
+	public $useDbConfig = 'koufu_payrolls';
 
     public $name = 'SssRange';
 
-    var $useTable = 'accounting_sss_ranges';
+    var $useTable = 'sss_ranges';
 
     public $recursive = -1;
     

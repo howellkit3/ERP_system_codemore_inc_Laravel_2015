@@ -138,4 +138,4 @@ public function formaTime($time = null, $separator = null) {
 	}
 }
 
-}s
+}

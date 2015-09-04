@@ -210,7 +210,7 @@ echo $this->element('payroll_options');
 														                        </td>
 
 														                        <td class="">
-														                           <?php echo number_format($salary['gross_pay'],2); ?>
+														                           <?php echo number_format($salary['gross'],2); ?>
 														                        </td>
 														                        <td class="">
 														                       

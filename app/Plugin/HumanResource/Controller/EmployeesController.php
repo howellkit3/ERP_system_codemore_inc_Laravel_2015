@@ -666,25 +666,45 @@ class EmployeesController  extends HumanResourceAppController {
 	public function getCode(){
 
 		if ($this->request->is('ajax')) {
+
 			$this->loadModel('HumanResource.Department');
 			//add position if ever
 			if (!empty($this->request->data['department'])) {
+
 				$department = $this->Department->find('first',array(
 					'conditions' => array('Department.id' => $this->request->data['department']),
 					'fields' => array('id','prefix')
 					)); 
 
 			}
-
+			
 			$employee = $this->Employee->find('count',array('conditions' => array('Employee.department_id' => $this->request->data['department'] )));
 
 			$employee_number = str_pad($employee + 1, 3, '0', STR_PAD_LEFT);
 
-			echo json_encode(array('emp_number' => $department['Department']['prefix'].'-'.$employee_number ));
-			
+			$empCode = 'E-'.$department['Department']['prefix'].'-'.$employee_number;
 
+			if (!empty($this->request->data['date-hired'])) {
+
+				$date = explode('-', $this->request->data['date-hired'] );
+				$empCode = 'E'.$department['Department']['prefix'].'-'.substr($date[0], -2).'-'.$date[1].'-'.$employee_number;
+			}
+			echo json_encode(array('emp_number' => $empCode ));
 			exit();
 			
+		}
+	}
+
+	public function checkExistingCode() {
+
+		if (!empty($this->request->data)) {
+
+			$code = $this->request->data['emp_code'];
+
+			$employee = $this->Employee->find('count',array('conditions' => array('Employee.code' => $code  )));
+
+			echo json_encode(array('result' => $employee ));
+			exit();
 		}
 	}
 

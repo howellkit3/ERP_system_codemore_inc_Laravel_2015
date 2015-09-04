@@ -89,7 +89,6 @@ class DailyInfo extends AppModel {
 			$dailyInfo = $this->find('first',array('conditions' => $conditions ));
 
 			$date = date('Y-m-d',strtotime($data['Attendance']['date']));
-
 			// $to_time = strtotime($date.' '.$data["Attendance"]['in']);
 
 			// $from_time = strtotime($date.' '.$data["Attendance"]['out']);

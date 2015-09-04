@@ -123,6 +123,8 @@ class SalaryComputationComponent extends Component
 							);
 						$nightDiffTotal = 0;
 
+						$salary[$key]['night_diff_total'] = 0;
+
 						foreach ($nightDiff as $nightkey => $night) {
 
 							$salary[$key]['night_diff_total'] += $night;
@@ -155,7 +157,6 @@ class SalaryComputationComponent extends Component
 
 						$total_pay  -= $salary[$key]['total_deduction'];
 
-
 						$salary[$key]['net_pay'] = $total_pay;
 
 						$total_pay  += $employee['Salary']['allowances'];
@@ -168,6 +169,7 @@ class SalaryComputationComponent extends Component
 						$salary[$key]['EmployeeAdditionalInformation']	= !empty($employee['EmployeeAdditionalInformation']) ? $employee['EmployeeAdditionalInformation'] : array();
 
         		}
+
         		return $salary;
 
         	}
@@ -1332,11 +1334,9 @@ class SalaryComputationComponent extends Component
 				
 				if ( $gross_pay != 0 && (!empty($government_record[1])) ) {
 						
+						$conditions = array('SssRange.credits <=' => $gross_pay );
 						
-						
-						$conditions = array('SssRange.range_from <=' => $gross_pay, 'SssRange.range_to >=' => $gross_pay);
-						
-						$range = $SssRange->find('first',array('conditions' => $conditions ));
+						$range = $SssRange->find('first',array('conditions' => $conditions ,'order' => 'SssRange.credits DESC'));
 
 						$pay = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $pay;
 				}	
@@ -1346,9 +1346,10 @@ class SalaryComputationComponent extends Component
 
 				if ( $gross_pay != 0 && (!empty($government_record[1])) && $sched == 'first' ) {;
 						
-						$conditions = array('SssRange.range_from <=' => $gross_pay, 'SssRange.range_to >=' => $gross_pay);
+						$conditions = array('SssRange.credits <=' => $gross_pay );
 						
-						$range = $SssRange->find('first',array('conditions' => $conditions ));
+						$range = $SssRange->find('first',array('conditions' => $conditions ,'order' => 'SssRange.credits DESC'));
+
 
 						$pay = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $pay;
 				}
@@ -1356,9 +1357,10 @@ class SalaryComputationComponent extends Component
 				
 				if ( $gross_pay != 0 && (!empty($government_record[1])) && $sched == 'second' ) {
 						
-						$conditions = array('SssRange.range_from <=' => $gross_pay, 'SssRange.range_to >=' => $gross_pay);
+						$conditions = array('SssRange.credits <=' => $gross_pay );
 						
-						$range = $SssRange->find('first',array('conditions' => $conditions ));
+						$range = $SssRange->find('first',array('conditions' => $conditions ,'order' => 'SssRange.credits DESC'));
+
 
 						$pay = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $pay;
 				}
@@ -1366,10 +1368,10 @@ class SalaryComputationComponent extends Component
 				
 				if ( $gross_pay != 0 && (!empty($government_record[1]))) {
 						
+						$conditions = array('SssRange.credits <=' => $gross_pay );
 						
-						$conditions = array('SssRange.range_from <=' => $gross_pay, 'SssRange.range_to >=' => $gross_pay);
-						
-						$range = $SssRange->find('first',array('conditions' => $conditions ));
+						$range = $SssRange->find('first',array('conditions' => $conditions ,'order' => 'SssRange.credits DESC'));
+
 
 						$pay = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $pay;
 				}

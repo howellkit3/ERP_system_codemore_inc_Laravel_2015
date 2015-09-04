@@ -113,14 +113,14 @@ echo $this->element('hr_options');
 								                         </td>
 								                        <td class="text-center time-in"> 
 								                           <?php 
-								                           $timeIn = (!empty($schedule['Attendance']['in']) && $schedule['Attendance']['in']  != '00:00:00') ? date('h:i a',strtotime($schedule['Attendance']['in'])) : '';
+								                           $timeIn = (!empty($schedule['Attendance']['in']) && $schedule['Attendance']['in']  != '0000-00-00 00:00:00') ? date('h:i a',strtotime($schedule['Attendance']['in'])) : '';
 															echo $timeIn;
 								                            ?> 
 								                        </td>
 								                        </td>
 								                        <td class="text-center time-out"> 
 								                           <?php 
-								                           $timeOut = (!empty($schedule['Attendance']['out']) && $schedule['Attendance']['out']  != '00:00:00') ? date('h:i a',strtotime($schedule['Attendance']['out'])) : '';
+								                           $timeOut = (!empty($schedule['Attendance']['out']) && $schedule['Attendance']['out']  != '0000-00-00 00:00:00') ? date('h:i a',strtotime($schedule['Attendance']['out'])) : '';
 
 								                           	echo $timeOut;
 								                           ?> 
@@ -136,8 +136,10 @@ echo $this->element('hr_options');
 
 									                           			$diff = $ex2[1] - $ex1[1];
 									                           			
-									                           			echo ' + '. $diff .' hr/s ' ; 
+									                           			echo ' + '. $diff .' hr/s ';
+
 									                           		}else {
+									                           			
 									                           			echo "-----";
 									                           		}
 

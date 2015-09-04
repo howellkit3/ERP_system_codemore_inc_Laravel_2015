@@ -7,11 +7,11 @@ App::uses('AppModel', 'Model');
  */
 class PhilHealthRange extends AppModel {
 
-	public $useDbConfig = 'default';
+    public $useDbConfig = 'koufu_payrolls';
 
     public $name = 'PhilHealthRange';
 
-    var $useTable = 'accounting_philhealth_ranges';
+    var $useTable = 'philhealth_ranges';
 
     public $recursive = -1;
     

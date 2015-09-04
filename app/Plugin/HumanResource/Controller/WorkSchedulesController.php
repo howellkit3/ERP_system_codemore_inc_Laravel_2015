@@ -20,6 +20,8 @@ class WorkSchedulesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Holiday');
 
+		$this->loadModel('HumanResource.OvertimeLimit');
+
 		$conditions = array();
 		$employees = $this->Employee->getList($conditions);
 
@@ -28,12 +30,15 @@ class WorkSchedulesController  extends HumanResourceAppController {
 
 		$conditions = array('Holiday.year' => date('Y'));
 
+		$auth = $this->Session->read('Auth.User');
+
 		$holidays = $this->Holiday->find('all',array('conditions' => $conditions ,'order' =>  array('Holiday.start_date ASC'),'fields' => array('id','name','type','start_date','end_date','year') ));
 
 
 		if ($this->request->is('post')) {	
 				//save attendance
 			$create_schedules = $this->WorkSchedule->formatData($this->request->data,$holidays);
+
 
 			// pr($create_schedules);exit();
 
@@ -43,11 +48,14 @@ class WorkSchedulesController  extends HumanResourceAppController {
 
 			// $this->Attendance->find('all',)
 
-
+		
 			if ($this->WorkSchedule->saveAll($create_schedules['WorkSchedule'])) {
 
 				$attendance = $this->Attendance->saveRecord($this->request->data['WorkSchedule'],$this->WorkSchedule->id,$holidays);
-
+				
+				//create ovetime limit
+				$this->OvertimeLimit->createLimit($this->request->data['WorkSchedule'],$auth);
+				
 				$data['employee_id'] = $this->request->data['WorkSchedule']['foreign_key'];
 				$data['date'] = $this->request->data['WorkSchedule']['day'];
 				$data['type'] = $this->request->data['WorkSchedule']['type'];

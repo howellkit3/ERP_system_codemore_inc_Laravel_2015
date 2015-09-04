@@ -4,7 +4,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title"> Print Payslip </h4>
+                    <h4 class="modal-title"> Filter Report </h4>
                 </div>
                 <div class="modal-body">
                     <?php echo $this->Form->create('Export',array('url' => array('controller' => 'salaries','action' => 'export_salaries'),'type' => 'get')); ?>
@@ -77,11 +77,10 @@
                         <div class="clearfix"></div>   
                 </div>
 
-                  <div class="modal-footer">
-                             <button type="submit" class="btn btn-primary"><i class="fa icon-save"></i> Go </button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            
-                        </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-file-text"></i> Export </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times-circle"></i>  Close</button>
+                </div>
 
               </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

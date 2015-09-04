@@ -176,11 +176,21 @@ class AttendancesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.BreakTime');
 
+		$this->loadModel('HumanResource.OvertimeLimit');
+
+		$this->loadModel('HumanResource.OvertimeExcess');
+
+		$this->loadModel('HumanResource.Overtime');
+
+		$this->loadModel('HumanResource.Employee');
+
 		$auth = $this->Session->read('Auth.User');
 
 		if (!empty($this->request->data)) {
 
 			$data = $this->request->data;
+
+			$this->Attendance->bind(array('Overtime'));	
 			
 			$attendance = $this->Attendance->getAttendance($this->request->data);
 
@@ -208,6 +218,7 @@ class AttendancesController  extends HumanResourceAppController {
 						$attendance['Attendance']['out'] = date('h:i a',strtotime($attendance['Attendance']['out']));
 
 						$attendance['Attendance']['duration'] = $this->_getDuration($attendance['Attendance']['in'],$attendance['Attendance']['out']);
+					
 					}
 					 
 					echo json_encode($attendance);
@@ -219,7 +230,20 @@ class AttendancesController  extends HumanResourceAppController {
 						//update daily info
 						$this->Attendance->bindWorkshift();
 						$callAttendance = $this->Attendance->findById($data['Attendance']['id']);
+						
 						$this->DailyInfo->updateDailyInfo($callAttendance,$attendance['Attendance']['employee_id'],$callAttendance['Attendance']['date']);	
+
+						if (!empty($attendance['Attendance']['overtime_id'])) {
+							
+							//check if its overtime
+							$overtime = $this->OvertimeLimit->checkIfConsumed($attendance);
+
+							if (!empty($overtime['Overtime']['id'])) {
+
+								$limit = $this->OvertimeExcess->saveExcess($overtime,$attendance,$auth);
+							}
+
+						}
 
 				}
 

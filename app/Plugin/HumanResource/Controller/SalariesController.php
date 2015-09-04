@@ -1064,9 +1064,6 @@ class SalariesController  extends HumanResourceAppController {
 
 			$deductions = $this->Loan->find('list',array('fields' => array('id','name')));
 		
-			// pr($salaries);
-			// exit();
-			
 			$salarySplit = array_chunk($salaries , 10);
 
 			if (!empty($this->params['named']['page'])) {
@@ -1079,7 +1076,7 @@ class SalariesController  extends HumanResourceAppController {
 			}
 
 			} else {
-
+				
 				$salariesList = $this->_checkPayroll($payroll);
 			
 			}
@@ -1261,7 +1258,7 @@ class SalariesController  extends HumanResourceAppController {
 			//taxes tables		
 			$this->loadModel('Payroll.Tax');
 			$this->loadModel('Payroll.TaxDeduction');
-			$this->loadModel('Payroll.Wage');			
+			$this->loadModel('Payroll.Wage');
 
 			//$OvertimeRate = ClassRegistry::init('Amortization')->find('all');
 			$updateDatabase = !empty($update) && $update == true ? true : false;

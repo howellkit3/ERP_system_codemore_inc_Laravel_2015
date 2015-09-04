@@ -20,7 +20,7 @@ header("Content-type: application/pdf");
 			 	$payrollDate = date('F',strtotime($salary['from'])).' '.date('d',strtotime($salary['from'])).'-'.date('d',strtotime($salary['to'])).','.date('Y',strtotime($salary['from']));
 		 ?>
 		 <div class="container">
-			<table class="center container">
+			<table class="center container medium-font">
 						<tr>
 						<td>
 						<?php echo $this->Html->image($siteUrl.'/img/koufu_logo.jpg',array('width' => '80px')); ?>
@@ -65,12 +65,8 @@ header("Content-type: application/pdf");
 							</td>
 						</tr>
 						<tr>
-							<td class="label-table">
-								<strong>Days Work :</strong>
-							</td>
-							<td>
-								<?php echo $salary['days']; ?>
-							</td>
+							<td class="label-table"></td>
+							<td></td>
 							<td class="label-table">
 								<strong>Position : </strong>
 							</td>
@@ -87,11 +83,13 @@ header("Content-type: application/pdf");
 								<table class="full-width border-right">	
 									<tr>
 										<td><strong>Earnings</strong></td>
+										<td class="text-right"> Hours </td>
 										<td class="text-right"> Amount </td>
 									</tr>
 								</table>
 							</td>
-							<td class="border-bottom"><table class="full-width">	
+							<td class="border-bottom">
+							<table class="full-width">	
 									<tr>
 										<td><strong>Deductions</strong></td>
 										<td class="text-right"> Amount </td>
@@ -102,80 +100,108 @@ header("Content-type: application/pdf");
 							<td>
 							<table class="full-width border-right">	
 								<tr>
-									<td>Basic pay</td>
+									<td>Basic pay (Days : <?php echo $salary['days']; ?>)</td>
+									<td class="text-right"><?php echo $salary['hours_regular']; $total_hours = $salary['hours_regular'];  ?></td>
 									<td class="text-right"><?php echo number_format($salary['regular'],2); $total_earnings = 0.00; ?></td>
 								</tr>
 								<tr>
 									<td>OT</td>
+									<td class="text-right"><?php echo !empty($salary['hours_ot']) ?  $salary['hours_ot'] : 0; 
+									$total_hours += $salary['hours_ot'];?></td>
 									<td class="text-right"><?php echo number_format($salary['OT'],2) ?></td>
 								</tr>
 								<tr>
 									<td>Sun</td>
+									<td class="text-right"><?php echo !empty($salary['hours_sunday_work']) ?  $salary['hours_sunday_work'] : 0; 
+										$total_hours +=  $salary['hours_sunday_work'];
+									?></td>
 									<td class="text-right">
 									<?php echo !empty($salary['sunday_work'])  ? number_format($salary['sunday_work'],2) : '0.00'; ?>
 									</td>
 								</tr>
 								<tr>
 									<td>Sun OT</td>
+									<td class="text-right"><?php echo !empty($salary['hours_sunday_work_ot']) ?  $salary['hours_sunday_work_ot'] : 0; 
+										$total_hours +=  $salary['hours_sunday_work_ot'];
+									?></td>
 									<td class="text-right"><?php echo !empty($salary['sunday_work_ot'])  ? number_format($salary['sunday_work_ot'],2) : '0.00'; ?></td>
 								</tr>
 								<tr>
 									<td>LH</td>
+
+									<td class="text-right"></td>
 									<td class="text-right"><?php echo !empty($salary['legal_holiday'])  ? number_format($salary['legal_holiday'],2) : '0.00'; ?></td>
 								</tr>
 								<tr>
 									<td>LH Work</td>
+									<td class="text-right"><?php echo !empty($salary['hours_legal_holiday_work']) ?  $salary['hours_legal_holiday_work'] : 0; $total_hours +=  $salary['hours_legal_holiday_work']; ?></td>
 									<td class="text-right"><?php echo !empty($salary['legal_holiday_work'])  ? number_format($salary['legal_holiday_work'],2) : '0.00'; ?></td>
 								</tr>
 								<tr>
 									<td>LH OT</td>
+									<td class="text-right"><?php echo !empty($salary['hours_legal_holiday_work_ot']) ?  $salary['hours_legal_holiday_work_ot'] : 0;  $total_hours +=  $salary['hours_legal_holiday_work_ot'];  ?></td>	
 									<td class="text-right"><?php echo !empty($salary['legal_holiday_work_ot'])  ? number_format($salary['legal_holiday_work_ot'],2) : '0.00'; ?></td>
 								</tr>
 								<tr>
 									<td>LH Sunday Work</td>
+									<td class="text-right"><?php echo !empty($salary['hours_legal_holiday_sunday_work']) ?  $salary['hours_legal_holiday_sunday_work'] : 0; $total_hours +=  $salary['hours_legal_holiday_sunday_work'];?></td>		
 									<td class="text-right"><?php echo !empty($salary['legal_holiday_sunday_work'])  ? number_format($salary['legal_holiday_sunday_work'],2) : '0.00'; ?></td>
 								</tr>
 								<tr>
 									<td>LH Sunday OT</td>
+									<td class="text-right"><?php echo !empty($salary['hours_legal_holiday_sunday_work_ot']) ?  $salary['hours_legal_holiday_sunday_work_ot'] : 0; $total_hours += $salary['hours_legal_holiday_sunday_work_ot']; ?></td>
 									<td class="text-right"><?php echo !empty($salary['legal_holiday_sunday_work_ot'])  ? number_format($salary['legal_holiday_sunday_work_ot'],2) : '0.00'; ?></td>
 								</tr>
 								<tr>
 									<td>Special Holiday</td>
+									<td></td>
 									<td class="text-right"><?php echo !empty($salary['special_holiday'])  ? number_format($salary['special_holiday'],2) : '0.00'; ?></td>
 								</tr>
 								<tr>
 									<td>Special Holiday Work</td>
+									<td class="text-right"><?php echo !empty($salary['hours_special_holiday_work']) ?  $salary['hours_special_holiday_work'] : 0; $total_hours += $salary['hours_special_holiday_work'];?></td>
 									<td class="text-right"><?php echo !empty($salary['special_holiday_work'])  ? number_format($salary['special_holiday_work'],2) : '0.00'; ?></td>
 								</tr>
 									<tr>
 									<td>Special Holiday OT</td>
+									<td class="text-right"><?php echo !empty($salary['hours_special_holiday_work_ot']) ?  $salary['hours_special_holiday_work_ot'] : 0; $total_hours += $salary['hours_special_holiday_work_ot'];?></td>
 									<td class="text-right"><?php echo !empty($salary['special_holiday_work_ot'])  ? number_format($salary['special_holiday_work_ot'],2) : '0.00'; ?></td>
 								</tr>
 								<tr>
 									<td>Night Diff</td>
+									<td class="text-right"></td>
 									<td class="text-right"><?php echo !empty($salary['night_diff'])  ? number_format($salary['night_diff'],2) : '0.00'; ?></td>
 								</tr>
 								<tr>
 									<td>Vacation Leave</td>
+
+									<td class="text-right"></td>
 									<td class="text-right"><?php echo !empty($salary['leave'])  ? number_format($salary['leave'],2) : '0.00'; ?></td>
 								</tr>
 
 								<tr>
 									<td>CTPA + SEA</td>
+
+									<td class="text-right"></td>
 									<td class="text-right"> <?php echo !empty($salary['ctpa'])  ? $salary['ctpa'] : '0.00'; $additional = $salary['ctpa'];  ?> +  <?php echo !empty($salary['sea'])  ? $salary['sea'] : '0.00';   $additional += $salary['sea'];  ?> = <?php echo  number_format($additional,2) ?></td>
 								</tr>
+
 								<tr>
 									<td  class="border-top"><strong>Adjustments </strong> </td>
+									<td class="border-top text-right"> </td>
 									<td class="border-top text-right"> </td>
 								</tr>
 
 								<tr>
 									<td>Allowances</td>
+
+									<td class="text-right"></td>
 									<td class="text-right"><?php echo !empty($salary['allowances'])  ? number_format($salary['allowances'],2) : '0.00'; ?></td>
 								</tr>
 
 								<tr>
 									<td>Incentives</td>
+									<td class="text-right"></td>
 									<td class="text-right"><?php echo !empty($salary['incentives'])  ? number_format($salary['incentives'],2) : '0.00'; ?></td>
 								</tr>
 							</table>
@@ -230,7 +256,8 @@ header("Content-type: application/pdf");
 							<td class="border-top">
 								<table class="full-width border-right">	
 									<tr>
-										<td><strong>Total Earnings</strong></td>
+										<td><strong>Total</strong></td>
+										<td class="text-right"><?php echo $total_hours; ?> hrs</td>
 										<td class="text-right"> <?php echo number_format($salary['total_earnings'],2) ?> </td>
 									</tr>
 								</table>

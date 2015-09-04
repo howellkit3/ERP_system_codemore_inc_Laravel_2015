@@ -43,7 +43,7 @@
 						)); ?>
 					</li> 
 
-					<li class="<?php echo ($this->params['controller'] == 'salaries' && $this->params['action'] == 'deductions') ? 'active' : '' ?>" alt="tab-type">
+					<li class="<?php echo ($this->params['controller'] == 'salaries' && $this->params['action'] == 'adjustments') ? 'active' : '' ?>" alt="tab-type">
 						<?php echo $this->Html->link('Adjustments',array(
 									'controller' => 'salaries',
 									'action' => 'adjustments',

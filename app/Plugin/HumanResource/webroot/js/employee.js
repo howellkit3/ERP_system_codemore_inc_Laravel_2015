@@ -51,26 +51,41 @@ var checkexistingDept = function(thisElement){
 
 var getCode = function(element){
 
+
    $this = $(element);
 
     $('.error-appended').remove();
+    
+    $('.appended-label').remove();
+
 
     $department = $('#EmployeeDepartmentId').val();
     $position = $('#EmployeePositionId').val();
+    $dateHired = $('#EmployeeDateHired').val();
 
    if ($this.is(':checked')) {
 
     if ($department == '') {
-        $('#EmployeeCode').after('<label class="error error-appended" for="EmployeeFirstName">Please Select Department</label>');
+       
+         $('#EmployeeCode').after('<label class="error error-appended" for="EmployeeFirstName">Please Select Department</label>');
     
-        }  else {
+    }
+    else if($dateHired == '') {
+
+              $('#EmployeeCode').after('<label class="error error-appended" for="EmployeeFirstName">Please add Date Hired</label>');
+    }     
+
+    else {
          $.ajax({
             type: "POST",
-            data : {'department' :  $department, 'position' : $position },
+            data : {'department' :  $department, 'position' : $position, 'date-hired' :  $dateHired},
             url: serverPath + "human_resource/employees/getCode/",
             dataType: "json",
             success: function(data) {
+
                 $('#EmployeeCode').val(data.emp_number);
+                checkExistingCode( '#EmployeeCode' );
+
             }
         });
       }   
@@ -78,6 +93,36 @@ var getCode = function(element){
 
         $('#EmployeeCode').val(''); 
     }  
+}
+
+var checkExistingCode = function(element){
+
+
+    $('.appended-label').remove();
+
+    $this = $(element);
+    if ($this.val() != '') {
+
+         $.ajax({
+            type: "POST",
+            data : {'emp_code' : $this.val() },
+            url: serverPath + "human_resource/employees/checkExistingCode/",
+            dataType: "json",
+            success: function(data) {
+                
+               
+                if (data.result > 0) {
+                    
+                   $('#EmployeeCode').after('<label class="label label-danger error-appended appended-label" for="EmployeeFirstName" style="position:relative; top:8px"> <i class="fa fa-times"></i> This Emp Number is already taken </label>');
+
+                } else {
+
+                    $('#EmployeeCode').after('<label class="label label-success appended-label" for="EmployeeFirstName" style="position:relative; top:8px">  <i class="fa fa-check"></i> Emp Number is available</label>');  
+                }
+            }
+        });
+    }
+
 }
 
 $(document).ready(function(){
@@ -103,13 +148,28 @@ $('#EmployeeAddForm').submit(function(e){
 
 });
 
+
+
 $body.on('change','#EmployeeDepartmentId',function(e) {
+
 
 
     if ($('#checkbox-generate').is(':checked')) {
 
+
             getCode('#checkbox-generate');
        
+    }
+
+});
+
+$body.on('change','#EmployeeCode',function(e) {
+
+
+    $('.appended-label').remove();
+
+    if ($(this).val() != '') {
+        checkExistingCode('#checkbox-generate');  
     }
 
 });

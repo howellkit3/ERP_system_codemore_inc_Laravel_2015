@@ -26,7 +26,7 @@
     $next_header = 5;
 
     $sheet = $objTpl->getActiveSheet();
-    $address = 'AH'.$header;
+    $address = 'AI'.$header;
     //next row
 
     if (!empty($deductions)) {
@@ -141,108 +141,182 @@
           $sheet->setCellValue('A'.$counter,  $countEmp );
           $sheet->getStyle('A'.$counter)->applyFromArray($styleArrayBorder);
 
-          $sheet->setCellValue('B'.$counter,$emp['EmployeeAdditionalInformation']['bank_account_number']);
+          $sheet->setCellValue('B'.$counter,  $emp['Employee']['code'] );
           $sheet->getStyle('B'.$counter)->applyFromArray($styleArrayBorder);
 
-          $sheet->setCellValue('C'.$counter,$employee_name);
+          $sheet->setCellValue('C'.$counter,$emp['EmployeeAdditionalInformation']['bank_account_number']);
           $sheet->getStyle('C'.$counter)->applyFromArray($styleArrayBorder);
+
+          $sheet->setCellValue('D'.$counter,$employee_name);
+          $sheet->getStyle('D'.$counter)->applyFromArray($styleArrayBorder);
   
       //$sheet->setCellValue('A'.$counter,$emp['employee_id']);
-          $sheet->setCellValue('D'.$counter,$emp['days']);
-          $sheet->getStyle('D'.$counter)->applyFromArray($styleArrayBorder);
-
-          $sheet->setCellValue('E'.$counter,$emp['hours_regular']);
+          $sheet->setCellValue('E'.$counter,$emp['days']);
           $sheet->getStyle('E'.$counter)->applyFromArray($styleArrayBorder);
 
-          $sheet->setCellValue('F'.$counter,$emp['regular']);
+          $sheet->setCellValue('F'.$counter,$emp['hours_regular']);
           $sheet->getStyle('F'.$counter)->applyFromArray($styleArrayBorder);
-          $sheet->getStyle('F'.$counter)->getNumberFormat()->setFormatCode('#,##0.00');
 
-          $sheet->setCellValue('G'.$counter,$emp['OT']);
+          $sheet->setCellValue('G'.$counter,$emp['regular']);
           $sheet->getStyle('G'.$counter)->applyFromArray($styleArrayBorder);
-          $sheet->getStyle('G'.$counter)->getNumberFormat()->setFormatCode('#,##0.00'); 
+          $sheet->getStyle('G'.$counter)->getNumberFormat()->setFormatCode('#,##0.00');
 
-          $sheet->setCellValue('H'.$counter,$emp['hours_sunday_work']);
+          $sheet->setCellValue('H'.$counter,$emp['OT']);
           $sheet->getStyle('H'.$counter)->applyFromArray($styleArrayBorder);
+          $sheet->getStyle('H'.$counter)->getNumberFormat()->setFormatCode('#,##0.00'); 
 
-
-          $sheet->setCellValue('I'.$counter,$emp['sunday_work']);
+          $sheet->setCellValue('I'.$counter,$emp['hours_sunday_work']);
           $sheet->getStyle('I'.$counter)->applyFromArray($styleArrayBorder);
-          $sheet->getStyle('I'.$counter)->getNumberFormat()->setFormatCode('#,##0.00');
 
-          $sheet->setCellValue('J'.$counter,$emp['sunday_work_ot']);
+
+          $sheet->setCellValue('J'.$counter,$emp['sunday_work']);
           $sheet->getStyle('J'.$counter)->applyFromArray($styleArrayBorder);
           $sheet->getStyle('J'.$counter)->getNumberFormat()->setFormatCode('#,##0.00');
 
-          $sheet->setCellValue('K'.$counter,$emp['legal_holiday']);
+          $sheet->setCellValue('K'.$counter,$emp['sunday_work_ot']);
           $sheet->getStyle('K'.$counter)->applyFromArray($styleArrayBorder);
           $sheet->getStyle('K'.$counter)->getNumberFormat()->setFormatCode('#,##0.00');
 
-          $sheet->setCellValue('L'.$counter,$emp['hours_legal_holiday_work']);
+          $sheet->setCellValue('L'.$counter,$emp['legal_holiday']);
           $sheet->getStyle('L'.$counter)->applyFromArray($styleArrayBorder);
-          
-          $sheet->setCellValue('M'.$counter,$emp['legal_holiday_work']);
-          $sheet->getStyle('M'.$counter)->applyFromArray($styleArrayBorder);
-          $sheet->getStyle('M'.$counter)->getNumberFormat()->setFormatCode('#,##0.00');
+          $sheet->getStyle('L'.$counter)->getNumberFormat()->setFormatCode('#,##0.00');
 
-          $sheet->setCellValue('N'.$counter,$emp['legal_holiday_work_ot']);
+          $sheet->setCellValue('M'.$counter,$emp['hours_legal_holiday_work']);
+          $sheet->getStyle('M'.$counter)->applyFromArray($styleArrayBorder);
+          
+          $sheet->setCellValue('N'.$counter,$emp['legal_holiday_work']);
           $sheet->getStyle('N'.$counter)->applyFromArray($styleArrayBorder);
           $sheet->getStyle('N'.$counter)->getNumberFormat()->setFormatCode('#,##0.00');
 
-          $sheet->setCellValue('O'.$counter,$emp['hours_legal_holiday_work']);
+          $sheet->setCellValue('O'.$counter,$emp['legal_holiday_work_ot']);
           $sheet->getStyle('O'.$counter)->applyFromArray($styleArrayBorder);
+          $sheet->getStyle('O'.$counter)->getNumberFormat()->setFormatCode('#,##0.00');
 
-          $sheet->setCellValue('P'.$counter,$emp['legal_holiday_sunday_work']);
+          $sheet->setCellValue('P'.$counter,$emp['hours_legal_holiday_sunday_work']);
           $sheet->getStyle('P'.$counter)->applyFromArray($styleArrayBorder);
-          $sheet->getStyle('P'.$counter)->getNumberFormat()->setFormatCode('#,##0.00');
 
-          $sheet->setCellValue('Q'.$counter,$emp['legal_holiday_sunday_work_ot']);
+          $sheet->setCellValue('Q'.$counter,$emp['legal_holiday_sunday_work']);
           $sheet->getStyle('Q'.$counter)->applyFromArray($styleArrayBorder);
           $sheet->getStyle('Q'.$counter)->getNumberFormat()->setFormatCode('#,##0.00');
-          
-          $sheet->setCellValue('R'.$counter,$emp['special_holiday']);
+
+          $sheet->setCellValue('R'.$counter,$emp['legal_holiday_sunday_work_ot']);
           $sheet->getStyle('R'.$counter)->applyFromArray($styleArrayBorder);
           $sheet->getStyle('R'.$counter)->getNumberFormat()->setFormatCode('#,##0.00');
-
-          $sheet->setCellValue('R'.$counter,$emp['hours_special_holiday_work']);
-          $sheet->getStyle('R'.$counter)->applyFromArray($styleArrayBorder);
-
-          $sheet->setCellValue('S'.$counter,$emp['special_holiday_work']);
+          
+          $sheet->setCellValue('S'.$counter,$emp['special_holiday']);
           $sheet->getStyle('S'.$counter)->applyFromArray($styleArrayBorder);
+          $sheet->getStyle('S'.$counter)->getNumberFormat()->setFormatCode('#,##0.00');
 
-          $sheet->setCellValue('T'.$counter,$emp['special_holiday_work_ot']);
+          $sheet->setCellValue('T'.$counter,$emp['hours_special_holiday_work']);
           $sheet->getStyle('T'.$counter)->applyFromArray($styleArrayBorder);
 
-          $sheet->setCellValue('U'.$counter,$emp['hours_special_holiday_sunday_work']);
+          $sheet->setCellValue('U'.$counter,$emp['special_holiday_work']);
           $sheet->getStyle('U'.$counter)->applyFromArray($styleArrayBorder);
 
-          $sheet->setCellValue('V'.$counter,$emp['special_holiday_sunday_work']);
+          $sheet->setCellValue('V'.$counter,$emp['special_holiday_work_ot']);
           $sheet->getStyle('V'.$counter)->applyFromArray($styleArrayBorder);
 
-          $sheet->setCellValue('W'.$counter,$emp['special_holiday_sunday_work_ot']);
+          $sheet->setCellValue('W'.$counter,$emp['hours_special_holiday_sunday_work']);
           $sheet->getStyle('W'.$counter)->applyFromArray($styleArrayBorder);
 
           $sheet->setCellValue('X'.$counter,$emp['special_holiday_sunday_work']);
           $sheet->getStyle('X'.$counter)->applyFromArray($styleArrayBorder);
 
-          $sheet->setCellValue('Y'.$counter,$emp['night_diff_total']);
+          $sheet->setCellValue('Y'.$counter,$emp['special_holiday_sunday_work_ot']);
           $sheet->getStyle('Y'.$counter)->applyFromArray($styleArrayBorder);
 
           $sheet->setCellValue('Z'.$counter,$emp['night_diff_total']);
           $sheet->getStyle('Z'.$counter)->applyFromArray($styleArrayBorder);
 
-          //ctpa dn sea
-
-          $sheet->setCellValue('AA'.$counter, $emp['ctpa']);
+          $sheet->setCellValue('AA'.$counter,$emp['leave']);
           $sheet->getStyle('AA'.$counter)->applyFromArray($styleArrayBorder);
-          $sheet->getStyle('AA'.$counter)->getNumberFormat()->setFormatCode('#,##0.00');
 
-          $sheet->setCellValue('AB'.$counter,$emp['sea']);
+          $sheet->setCellValue('AB'.$counter,$emp['ctpa']);
           $sheet->getStyle('AB'.$counter)->applyFromArray($styleArrayBorder);
 
-          $sheet->setCellValue('AC'.$counter,$emp['gross']);
+          //ctpa dn sea
+          $sheet->setCellValue('AC'.$counter, $emp['sea']);
           $sheet->getStyle('AC'.$counter)->applyFromArray($styleArrayBorder);
+          $sheet->getStyle('AC'.$counter)->getNumberFormat()->setFormatCode('#,##0.00');
 
+          $sheet->setCellValue('AD'.$counter,$emp['gross']);
+          $sheet->getStyle('AD'.$counter)->applyFromArray($styleArrayBorder);
+
+          $value = !empty($emp['sss']) ? $emp['sss'] : '-';
+          $sheet->setCellValue('AE'.$counter,$value);
+          $sheet->getStyle('AE'.$counter)->applyFromArray($styleArrayBorder);
+
+          $value = !empty($emp['philhealth']) ? $emp['philhealth'] : '-';
+          $sheet->setCellValue('AF'.$counter, $value );
+          $sheet->getStyle('AF'.$counter)->applyFromArray($styleArrayBorder);
+          $sheet->getStyle('AF'.$counter)->getNumberFormat()->setFormatCode('#,##0.00');
+
+          $value = !empty($emp['pagibig']) ? $emp['pagibig'] : '-';
+          $sheet->setCellValue('AG'.$counter, $value );
+          $sheet->getStyle('AG'.$counter)->applyFromArray($styleArrayBorder);
+          $sheet->getStyle('AG'.$counter)->getNumberFormat()->setFormatCode('#,##0.00');
+
+          $value = !empty($emp['with_holding_tax']) ? $emp['with_holding_tax'] : '-';
+          $sheet->setCellValue('AH'.$counter, $value );
+          $sheet->getStyle('AH'.$counter)->applyFromArray($styleArrayBorder);
+          $sheet->getStyle('AH'.$counter)->getNumberFormat()->setFormatCode('#,##0.00');
+
+
+          $total_deduction += $emp['sss'];
+          $total_deduction += $emp['philhealth'];
+          $total_deduction += $emp['pagibig'];
+          $total_deduction += $emp['with_holding_tax'];
+
+
+          //all deductions
+          //deductions
+         if (!empty($deductions)) {
+              
+              $innerAddress = 'AI'.$counter;
+
+                foreach ($deductions as $key => $list) {
+                
+                  $split = PHPExcel_Cell::coordinateFromString($innerAddress);
+                  ++$split[0];
+                  $index = str_replace(' ','_',strtolower($list));
+                  $value = !empty($salary[$index]) ? $salary[$index] : '-';
+                  $sheet->setCellValue( $innerAddress, $value );
+                  $sheet->getStyle($innerAddress)->applyFromArray($styleArrayBorder);
+                  $sheet->getStyle($innerAddress)->getNumberFormat()->setFormatCode('#,##0.00');
+                  $innerAddress = implode($split);
+                  $total_deduction += $value;
+                
+              }
+
+          }
+
+
+             //net pay's and total
+          $fields = array('net_pay' => 'Net Pay', 'allowances' => 'Allowances', 'incentives' => 'Incentives/ Adj','total_pay' => 'Total Pay');
+
+          $next_field_inner = $innerAddress;
+
+
+          foreach ($fields as $fieldsKey => $list) {     
+
+                      $split = PHPExcel_Cell::coordinateFromString($next_field_inner);
+                      ++$split[0];
+
+                      $cellValue = !empty($emp[$fieldsKey]) ? number_format($emp[$fieldsKey],2) : '0.00'; 
+
+                     $sheet->setCellValue( $next_field_inner, $cellValue );
+                    
+                     if ($cellValue < 0) {
+
+                        $sheet->getStyle($next_field_inner)->applyFromArray($styleArray);
+                      
+                      }
+
+                  $sheet->getStyle($next_field_inner)->applyFromArray($styleArrayBorder);
+                  $sheet->getStyle($next_field_inner)->getNumberFormat()->setFormatCode('#,##0.00');
+
+                  $next_field_inner = implode($split);
+          }
 
           // $sheet->setCellValue('E'.$counter,number_format($emp['regular'],2));
           // $sheet->setCellValue('D'.$counter,number_format($emp['OT'],2));
@@ -274,11 +348,6 @@
           // $sheet->setCellValue('X'.$counter,number_format($emp['pagibig'],2));
 
           // $sheet->setCellValue('Y'.$counter,number_format($emp['with_holding_tax'],2));
-
-          $total_deduction += $emp['sss'];
-          $total_deduction += $emp['philhealth'];
-          $total_deduction += $emp['pagibig'];
-          $total_deduction += $emp['with_holding_tax'];
 
            //deductions
          
