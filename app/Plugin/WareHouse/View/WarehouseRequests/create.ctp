@@ -234,7 +234,7 @@
 										                        'empty' => '---Select Unit---'
 										                         )); 
 
-															echo $this->Form->input('WarehouseRequestItem.0.quantity_unit', array(
+															echo $this->Form->input('WarehouseRequestItem.0.quantity_unit_id', array(
 										                        //'options' => array($unitData), 
 										                        'value' => 14,
 										                        'type' => 'hidden',

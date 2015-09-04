@@ -17,7 +17,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
         
         <li class="dropdown hidden-xs active">
            <?php $page =($active_page == 'receivings' && $active_action == 'receive') ? 'active tab' : '' ?>
-            <?php echo $this->Html->link("<span class='count'>In Record</span>", array('controller' => 'receivings', 'action' => 'receive'),array('escape' => false,'class' => 'btn '.$page )); ?>
+            <?php echo $this->Html->link("<span class='count'>In-Record</span>", array('controller' => 'receivings', 'action' => 'receive'),array('escape' => false,'class' => 'btn '.$page )); ?>
            
         </li>
 
@@ -30,6 +30,12 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
          <li class="dropdown hidden-xs active">
            <?php $page =($active_page == 'warehouse_requests' && $active_action == 'stock') ? 'active tab' : '' ?>
             <?php echo $this->Html->link("<span class='count'>Stocks</span>", array('controller' => 'warehouse_requests', 'action' => 'stock'),array('escape' => false,'class' => 'btn '.$page )); ?>
+           
+        </li>
+
+        <li class="dropdown hidden-xs active">
+           <?php $page =($active_page == 'warehouse_requests' && $active_action == 'outrecord_list') ? 'active tab' : '' ?>
+            <?php echo $this->Html->link("<span class='count'>Out-Record List</span>", array('controller' => 'warehouse_requests', 'action' => 'outrecord_list'),array('escape' => false,'class' => 'btn '.$page )); ?>
            
         </li>
 

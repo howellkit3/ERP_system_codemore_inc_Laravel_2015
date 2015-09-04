@@ -109,7 +109,7 @@
                                     echo $unitData[$value['quantity_unit_id']];
                                    } ?>
                                 </td>
-                                <td class="text-center"><?php ?><?php echo empty($itemRecordData[0]['ItemRecord']['id']) ? (!empty($value['stock_quantity'])? $value['stock_quantity']: 0) : $itemRecordData[$key-1]['ItemRecord']['stock_quantity'];  ?></td>
+                                <td class="text-center"><?php echo empty($outRecordData['ItemRecord'][$key-1]['stock_quantity']) ? (!empty($value['stock_quantity'])? $value['stock_quantity']: 0) : $outRecordData['ItemRecord'][$key-1]['stock_quantity'];  ?></td>
                                
                                 <td class="text-center"><?php echo date('M d, Y', strtotime($value['date_needed'])); ?></td>
                                 <td class="text-center"><?php echo $value['purpose']; ?></td>
@@ -130,9 +130,6 @@
                             <td class="text-center"> </td>
                             <td class="text-center"> </td>
                             <td class="text-center"> </td>
-
-
-
 
                         </tr>
                     </table>
