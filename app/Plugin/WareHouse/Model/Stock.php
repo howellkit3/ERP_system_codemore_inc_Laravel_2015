@@ -117,11 +117,11 @@ class Stock extends AppModel {
 
 					$this->save($stock);
 
-					return "0";
+				// 	return "0";
 
-				}else{
+				// }else{
 
-					return "1";
+				// 	return "1";
 				}
 
 

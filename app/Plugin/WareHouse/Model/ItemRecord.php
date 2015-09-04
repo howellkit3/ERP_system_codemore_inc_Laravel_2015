@@ -33,25 +33,45 @@ class ItemRecord extends AppModel {
 	  	}
   	}
 
-  	public function saveOutItemRecord($requestData , $outRecordId){
+  	public function saveOutItemRecord($requestData , $outRecordId, $stockData){
 
-
+  	//	pr('$stockData'); exit;
 
    		foreach ($requestData as $key => $value)
-		 {//pr($value); exit;
+		 { //pr($value); exit;
+
+		 	$value['stock_quantity'] = 0;
+
+			foreach ($stockData as $key => $valueOfStock) {
+
+				$modelHolder = $valueOfStock['Stock']['model'];
+
+				$foreign_keyHolder = $valueOfStock['Stock']['item_id'];
+
+				$this->create();
+
+				if($value['model'] == $modelHolder && $value['foreign_key'] == $foreign_keyHolder){
+
+					$value['stock_quantity'] = $valueOfStock['Stock']['quantity'];
+
+				}
+				
+			}
+
+
 	
 	  		$this->create();
 	  		
-	  		$inrecordItems['type_record'] = 1;
-	  		$inrecordItems['type_record_id'] = $outRecordId;
-	  		$inrecordItems['model'] = $value['model'];
-	  		$inrecordItems['foreign_key'] = $value['foreign_key'];
-	  		$inrecordItems['quantity'] = $value['quantity'];
+	  		$value['type_record'] = 1;
+	  		$value['type_record_id'] = $outRecordId;
+	  		// $value['model'] = $value['model'];
+	  		// $value['foreign_key'] = $value['foreign_key'];
+	  		// $value['quantity'] = $value['quantity'];
 	  		
-	  		$this->save($inrecordItems);
-
+	  		$this->save($value);
+	  		//pr($value); 
 	  		
-	  	}
+	  	}  
   	}
 
 }

@@ -225,7 +225,7 @@
 
 													<div class="col-lg-3">
 														<?php 
-															echo $this->Form->input('WarehouseRequestItem.0.quantity_unit', array(
+															echo $this->Form->input('WarehouseRequestItem.0.unit', array(
 										                        'options' => array($unitData), 
 										                        'value' => 14,
 										                        'disabled' => 'disabled',

@@ -281,7 +281,7 @@ class ReceivingsController extends WareHouseAppController {
 
     	$this->loadModel('WareHouse.DeliveredOrder');
 
-    	$this->loadModel('Area');
+    	//$this->loadModel('Area');
 
     	$this->loadModel('Supplier');
 
@@ -297,15 +297,15 @@ class ReceivingsController extends WareHouseAppController {
 		$supplierData = $this->Supplier->find('list', array('fields' => array('Supplier.id', 'Supplier.name')
 																));
 
-		$areaList = $this->Area->find('list', array('fields' => array('Area.id', 'Area.name')
-																));
+		// $areaList = $this->Area->find('list', array('fields' => array('Area.id', 'Area.name')
+		// 														));
 
 		$receiveData = $this->Request->find('list', array('fields' => array('Request.id', 'Request.uuid')
 																));
 
-		$userNameList = $this->User->find('list', array('fields' => array('User.id', 'User.fullname'),
-														'conditions' => array( 
-															'User.role_id' => 4)));
+		// $userNameList = $this->User->find('list', array('fields' => array('User.id', 'User.fullname'),
+		// 												'conditions' => array( 
+		// 													'User.role_id' => 4)));
 
 		$this->DeliveredOrder->bind('ReceivedItem', 'PurchaseOrder', 'ReceivedOrder');
 
@@ -539,13 +539,7 @@ class ReceivingsController extends WareHouseAppController {
 
 	 	$this->loadModel('User');
 
-	 	$this->loadModel('GeneralItem');
-
-	 	$this->loadModel('Substrate');
-
-	 	$this->loadModel('CorrugatedPaper');
-
-	 	$this->loadModel('CompoundSubstrate');
+	 	$this->loadModel('Area');
 
 	 	$this->loadModel('Purchasing.PurchasingItem');
 
@@ -569,6 +563,13 @@ class ReceivingsController extends WareHouseAppController {
 
 		$requestData = $this->Request->find('first', array('conditions' => array('Request.uuid' => $requestUUID)));
 
+		$areaList = $this->Area->find('list', array('fields' => array('Area.id', 'Area.name')
+		 														));
+
+		$userNameList = $this->User->find('list', array('fields' => array('User.id', 'User.fullname'),
+		 												'conditions' => array( 
+		 													'User.role_id' => 4)));
+
 		if(empty($requestData['PurchaseItem'])){
 
 			$itemHolder = "ReceivedItem";
@@ -587,6 +588,8 @@ class ReceivingsController extends WareHouseAppController {
 
 		$receivedItemData = $this->DeliveredOrder->find('all', array('conditions' => array('DeliveredOrder.id' => $id)));
 		
+	//	pr($receivedItemData); exit;
+
 		$deliveredDataID = $receivedItemData[0]['DeliveredOrder']['id'];
 
 		foreach ($receivedItemData as $key1 => $value) {
@@ -594,6 +597,8 @@ class ReceivingsController extends WareHouseAppController {
 			foreach ($value['ReceivedItem'] as $key => $valueOfValue) {	
 
 				if($valueOfValue['model'] == 'GeneralItem'){
+
+					$this->loadModel('GeneralItem');
 
 					$itemDetails = $this->GeneralItem->find('list', array('fields' => array('GeneralItem.id', 'GeneralItem.name')
 					 													));  
@@ -616,6 +621,8 @@ class ReceivingsController extends WareHouseAppController {
 
 		        if($valueOfValue['model'] == 'Substrate'){
 
+		        	$this->loadModel('Substrate');
+
 		        	$itemDetails = $this->Substrate->find('list', array('fields' => array('Substrate.id', 'Substrate.name')
 					 													));  
 
@@ -636,6 +643,8 @@ class ReceivingsController extends WareHouseAppController {
 
 		        if($valueOfValue['model'] == 'CompoundSubstrate'){
 
+		        	$this->loadModel('CompoundSubstrate');
+
 		        	$itemDetails = $this->CompoundSubstrate->find('list', array('fields' => array('CompoundSubstrate.id', 'CompoundSubstrate.name')
 					 													));  
 
@@ -655,6 +664,8 @@ class ReceivingsController extends WareHouseAppController {
 		        } 
 
 		        if($valueOfValue['model'] == 'CorrugatedPaper'){
+
+		        	$this->loadModel('CorrugatedPaper');
 
 		        	$itemDetails = $this->CorrugatedPaper->find('list', array('fields' => array('CorrugatedPaper.id', 'CorrugatedPaper.name')
 					 													));  
@@ -677,7 +688,7 @@ class ReceivingsController extends WareHouseAppController {
         }
 
 
-   	$this->set(compact('purchaseOrderData', 'supplierData', 'firstName', 'lastName', 'requestData', 'itemDetails', 'receiveItem', 'itemData', 'receivedOrderData', 'type', 'requestItemData', 'itemHolder', 'deliveredDataID', 'receivedItemData'));
+   	$this->set(compact('purchaseOrderData', 'supplierData', 'firstName', 'lastName', 'requestData', 'itemDetails', 'receiveItem', 'itemData', 'receivedOrderData', 'type', 'requestItemData', 'itemHolder', 'deliveredDataID', 'receivedItemData', 'areaList', 'userNameList'));
 
     }
 
