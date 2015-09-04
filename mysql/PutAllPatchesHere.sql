@@ -1957,3 +1957,36 @@ CREATE TABLE IF NOT EXISTS `adjustments` (
 #NOTE: SELECT KOUFU WAREHOUSE DATABASE ----
 
 ALTER TABLE `warehouse_request_items`  ADD `stock_quantity` INT(11) NULL  AFTER `quantity_unit_id`;
+
+
+/** aldrin added this 09/04/2015  */
+#NOTE: SELECT KOUFU HUMAN RESOURCE DATABASE ----
+
+
+CREATE TABLE IF NOT EXISTS `overtime_excess` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `overtime_id` int(11) NOT NULL,
+  `from` datetime NOT NULL,
+  `to` datetime NOT NULL,
+  `used_time` decimal(8,2) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+CREATE TABLE IF NOT EXISTS `overtime_limits` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `from` datetime NOT NULL,
+  `to` datetime NOT NULL,
+  `limit` decimal(8,2) NOT NULL DEFAULT '12.00',
+  `used` decimal(8,2) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
