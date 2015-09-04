@@ -18,6 +18,9 @@ class SalaryComputationComponent extends Component
 
         	$Wage = ClassRegistry::init('Wage');
 
+        	$Overtime = ClassRegistry::init('Overtime');
+
+
 			$holidays = $Holidays->find('all',array(
 			'conditions' => array('Holiday.year' => date('Y',strtotime($customDate['start']))),
 			'fields' => array('id','name','start_date','end_date','year','type')
@@ -105,7 +108,26 @@ class SalaryComputationComponent extends Component
 						$salary[$key]['total_earnings']  += $employee['Salary']['allowances'];
 						$salary[$key]['total_earnings']  += !empty($employee['Salary']['incentives']) ? $employee['Salary']['incentives'] : 0.00;
 
+						//total night diff
+						$nightDiff = array(
+							'night_diff',
+							'night_diff_ot',
+							'night_diff_legal_holiday',
+							'night_diff_legal_holiday_work',
+						//	'night_diff_legal_holiday_work_ot',
+							'night_diff_sunday_work',
+							//'night_diff_sunday_work_ot',
+							'night_diff_special_holiday',
+							'night_diff_special_holiday_work'
+							//'night_diff_special_holiday_work_ot'
+							);
+						$nightDiffTotal = 0;
 
+						foreach ($nightDiff as $nightkey => $night) {
+
+							$salary[$key]['night_diff_total'] += $night;
+							
+						}
 						//check deductions 
 						$deductions = $this->checkDeductions($employee['Employee']['id'],$customDate,$updateDatabase);
 
@@ -126,7 +148,6 @@ class SalaryComputationComponent extends Component
 						$salary[$key]['total_deduction'] += $salary[$key]['pagibig'];
 						
 						//no tax
-			
 						$salary[$key]['with_holding_tax'] = $this->computeTax($employee,$salary[$key]['gross_pay'],'semi_monthly',$minimumWage);
 						//add tax
 
@@ -147,12 +168,9 @@ class SalaryComputationComponent extends Component
 						$salary[$key]['EmployeeAdditionalInformation']	= !empty($employee['EmployeeAdditionalInformation']) ? $employee['EmployeeAdditionalInformation'] : array();
 
         		}
-
         		return $salary;
 
         	}
-
-        	exit();
     }
 
         private function workingDays($date = null) {
@@ -460,7 +478,6 @@ class SalaryComputationComponent extends Component
 										//sunday legal holiday night_diff
 
 										$data['hours_legal_holiday_sunday_work_night_diff'] += $this->_nightDiff($days);
-
 										$data['hours_legal_holiday_sunday_work_night_diff_ot'] += $overtime['night_diff'];
 										
 
@@ -1601,8 +1618,8 @@ class SalaryComputationComponent extends Component
 		$taxStatus = $data['Salary']['tax_status'];
 
 		$total_tax = 0;
-		if (!empty($minimumWage)) {
 
+		if (!empty($minimumWage)) {
 		
 		if ($data['Salary']['basic_pay'] > $minimumWage['Wage']['amount']) {
 
@@ -1650,14 +1667,12 @@ class SalaryComputationComponent extends Component
 
 				$taxDeductList = $TaxDeduction->find('first',array('conditions' => $conditions));
 
-				
-
+			
 				//computations
 				if (!empty($taxKey)) {
 
 					//$total_tax = $netPay - $range / $taxDeductList['TaxDeduction']['tax_'.$taxKey.'_percent'];
 					$total_tax = (double)$netPay - (double)$range;
-			
 					$total_tax = $total_tax * (str_replace('%','',$taxDeductList['TaxDeduction']['tax_'.$taxKey.'_percent']) / 100);
 					$total_tax = $total_tax +  $taxDeductList['TaxDeduction']['tax_'.$taxKey];
 

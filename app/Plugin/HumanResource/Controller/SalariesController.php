@@ -1063,8 +1063,10 @@ class SalariesController  extends HumanResourceAppController {
 			$salaries = $this->Payroll->objectToArray(json_decode($data)); 
 
 			$deductions = $this->Loan->find('list',array('fields' => array('id','name')));
+		
+			// pr($salaries);
+			// exit();
 			
-	
 			$salarySplit = array_chunk($salaries , 10);
 
 			if (!empty($this->params['named']['page'])) {
@@ -1271,6 +1273,7 @@ class SalariesController  extends HumanResourceAppController {
 				$this->Session->setFlash(__('There\'s an error Processing Payroll'),'error');
 				$this->redirect(array('controller' => 'salaries','action' => 'payroll'));
 			}
+
 		} 
 
 		return $salaries;
