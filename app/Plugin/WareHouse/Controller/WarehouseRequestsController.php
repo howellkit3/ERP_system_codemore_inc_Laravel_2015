@@ -706,11 +706,15 @@ class WarehouseRequestsController extends WareHouseAppController {
 
     	$this->loadModel('WareHouse.OutRecord');
 
+    	$this->loadModel('User');
+
     	$this->OutRecord->bindItem(); 		
 
 		$outRecordData = $this->OutRecord->find('all', array('order' => array('OutRecord.created' => 'DESC')));
 
-		$this->set(compact('outRecordData'));
+		$userName = $this->User->find('list',array('fields' => array('id', 'fullname')));
+
+		$this->set(compact('outRecordData','userName'));
 
     }
 
@@ -721,8 +725,39 @@ class WarehouseRequestsController extends WareHouseAppController {
     	$this->OutRecord->bindItem(); 		
 
 		$outRecordData = $this->OutRecord->find('first', array('conditions' => array('OutRecord.id' => $id_outrecord)));
-		//pr($outRecordData); exit;
+
 		$this->set(compact('outRecordData'));
+
+    }
+
+    public function print_deducted_summary($id_outrecord = null){
+
+    	pr(':D'); exit;
+
+    }
+
+    public function out_record_report($from = null, $to = null){
+
+        $this->loadModel('WareHouse.OutRecord');
+
+    	$this->loadModel('User');
+
+    	$this->OutRecord->bindItem(); 		
+
+		$outRecordData = $this->OutRecord->find('all', array(
+            'conditions' => array(
+                'AND' => array(
+                    'OutRecord.created BETWEEN ? AND ?' => array($from.' '.'00:00:00:', $to.' '.'23:00:00:')
+                ),
+            ),
+            'order' => 'OutRecord.id DESC'
+        ));
+
+		$userName = $this->User->find('list',array('fields' => array('id', 'fullname')));
+
+		$this->set(compact('outRecordData','userName'));
+        
+        $this->render('summary_deducted');
 
     }
 
