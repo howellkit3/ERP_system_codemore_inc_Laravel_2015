@@ -1853,8 +1853,6 @@ CREATE TABLE IF NOT EXISTS `areas` (
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB AUTO_INCREMENT=68 DEFAULT CHARSET=latin1;
 
-
-
 /** howellkit added this 08/29/2015  */
 #NOTE: SELECT KOUFU WAREHOUSE DATABASE ----
 ALTER TABLE `warehouse_request_items` CHANGE COLUMN `request_uuid` `request_id` INT(11) NULL DEFAULT NULL;
@@ -1862,7 +1860,6 @@ ALTER TABLE `warehouse_requests`  ADD `date_needed` DATETIME NULL  AFTER `quanti
 ALTER TABLE `warehouse_requests`  ADD `purpose` VARCHAR(50) NULL  AFTER `date_needed`;
 
 #NOTE: SELECT KOUFU PURCHASING DATABASE ----
-
 ALTER TABLE `request_items`  ADD `date_needed` DATETIME NULL  AFTER `quantity_unit_id`;
 ALTER TABLE `request_items`  ADD `purpose` VARCHAR(50) NULL  AFTER `date_needed`;
 ALTER TABLE `request_items`  ADD `remarks` VARCHAR(50) NULL  AFTER `purpose`;
