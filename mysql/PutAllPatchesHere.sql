@@ -1952,3 +1952,8 @@ CREATE TABLE IF NOT EXISTS `adjustments` (
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+/** howellkit added this 09/03/2015  */
+#NOTE: SELECT KOUFU WAREHOUSE DATABASE ----
+
+ALTER TABLE `warehouse_request_items`  ADD `stock_quantity` INT(11) NULL  AFTER `quantity_unit_id`;

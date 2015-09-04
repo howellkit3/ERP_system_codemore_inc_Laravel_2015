@@ -4,10 +4,8 @@
 
 
     <div class="filter-block pull-right">
-
-
     <?php 
-        
+
         echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i>  Go Back ', array('controller' => 'receivings','action' => 'receive'),array('class' =>'btn btn-primary pull-right','escape' => false)); 
             ?> &nbsp;
 
@@ -17,7 +15,13 @@
             echo $this->Html->link('<i class="fa fa-check fa-lg"></i> Approve ', array('controller' => 'receivings','action' => 'purchase_approve', $deliveredDataID),array('class' =>'btn btn-primary  pull-right' ,'escape' => false));  
             }
         }  ?>   
- 
+
+        <?php  if ($receivedItemData[0]['DeliveredOrder']['status_id'] != 13){  ?>
+
+        <a data-toggle="modal" href="#myModalInRecord<?php echo $receivedItemData[0]['DeliveredOrder']['id'] ?>" class="btn btn-primary mrg-b-lg pull-right addSchedButton "><i class="fa fa-plus-circle fa-lg tobeTrigger"></i> In Record</a>
+    
+        <?php } ?>
+
     <br><br>
 </div>
     
@@ -272,3 +276,83 @@
     </div>
 
 </div>
+
+<div class="modal fade" id="myModalInRecord<?php echo $receivedItemData[0]['DeliveredOrder']['id'] ?>" role="dialog" >
+                <div class="modal-dialog">
+                    <div class="modal-content margintop">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">In Record</h4>
+                        </div> 
+
+                        <div class="modal-body">
+
+                            <?php  $id = $receivedItemData[0]['ReceivedOrder']['id'];
+
+                                 $DeliveredOrderId = $receivedItemData[0]['DeliveredOrder']['id'];
+
+
+                                echo $this->Form->create('InRecord',array(
+                                    'url'=>(array('controller' => 'receivings','action' => 'in_record', $id, $DeliveredOrderId,$receivedItemData[0]['DeliveredOrder']['purchase_orders_id'],$receivedItemData[0]['PurchaseOrder']['supplier_id'] )),'class' => 'form-horizontal')); 
+                            ?>
+
+                                <div class="form-group" id="existing_items">
+                                    <label class="col-lg-2 control-label"><span style="color:red">*</span>Store Keeper</label>
+                                    <div class="col-lg-9">
+                                        <?php  
+                                            echo $this->Form->input('InRecord.storekeeper', array(
+                                                'class' => 'form-control item_type editable required',
+                                                'label' => false,
+                                                'type' => 'select',
+                                                'options' => array($userNameList),
+                                                'required' => 'required',
+                                               
+                                                ));
+                                        ?>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group" id="existing_items">
+                                    <label class="col-lg-2 control-label"><span style="color:red">*</span>Location</label>
+                                    <div class="col-lg-9">
+                                        <?php 
+                                            echo $this->Form->input('InRecord.location', array(
+                                                'class' => 'form-control item_type editable required',
+                                                'label' => false,
+                                                'type' => 'select',
+                                                'options' => array($areaList),
+                                                'required' => 'required',
+                                               
+                                                ));
+                                        ?>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group" id="existing_items">
+                                    <label class="col-lg-2 control-label">Remarks</label>
+                                    <div class="col-lg-9">
+                                        <?php 
+                                            echo $this->Form->textarea('InRecord.remarks', array(
+                                                'empty' => 'None',
+                                                'required' => 'required',
+                                                'class' => 'form-control item_type editable limitQuantity',
+                                                'label' => false
+                                               
+                                            ));
+                                        ?>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i> Submit</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                                </div>
+                            <?php echo $this->Form->end();  ?> 
+                        </div>
+                    </div>
+                </div>
+            </div>

@@ -118,16 +118,15 @@ class WarehouseRequestsController extends WareHouseAppController {
 
     	$this->loadModel('WareHouse.Stock');
 
+    	$this->loadModel('WareHouse.OutRecord');
+
+    	$this->loadModel('WareHouse.ItemRecord');
+
 	 	$this->loadModel('Unit');
-
-	 	
-
-	 	//pr($userData); exit;
 
 		$unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
 															'order' => array('Unit.unit' => 'ASC')
 															));
-
 
 		if($userData['User']['role_id'] == 1 ){
 
@@ -171,6 +170,19 @@ class WarehouseRequestsController extends WareHouseAppController {
 		$requestData = $this->WarehouseRequest->find('first', array('conditions' => array('WarehouseRequest.id' => $id)));
 
 		$stockData = $this->Stock->find('all');
+
+		$this->OutRecord->bindItem(); 	
+
+		$outRecordData = $this->OutRecord->find('first', array('conditions' => array('OutRecord.request_id' => $id)));
+
+		//pr($outRecordData); exit;
+
+		// if(!empty($outRecordData)){
+
+		// 	$itemRecordData = $this->ItemRecord->find('all', array('conditions' => array('ItemRecord.type_record_id' => $outRecordData['OutRecord']['id'], 'ItemRecord.type_record' => 1 )));
+
+		// }
+	//	pr($itemRecordData); exit;
 
 	    foreach ($requestData['WarehouseRequestItem'] as $key => $value) {
 
@@ -229,7 +241,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 														'conditions' => array('User.id' => $requestData['WarehouseRequest']['created_by']),
 														));
 	    
-    	$this->set(compact('requestId','requestData','userData','unitData','preparedData','roleName'));
+    	$this->set(compact('requestId','requestData','userData','unitData','preparedData','roleName', 'outRecordData'));
     }
 
 	public function approve($requestID = null) {
@@ -258,6 +270,10 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 		$this->loadModel('WareHouse.Stock');
 
+		$this->loadModel('WareHouse.OutRecord');
+
+		$this->loadModel('WareHouse.ItemRecord');
+
 		$this->loadModel('Unit');
 
 		$this->WarehouseRequest->bind('WarehouseRequestItem');
@@ -266,6 +282,16 @@ class WarehouseRequestsController extends WareHouseAppController {
 														'conditions' => array( 
 															'WarehouseRequest.id' => $requestID)
 													));
+
+		$this->OutRecord->bindItem();
+
+		$outRecordData = $this->OutRecord->find('first', array('conditions' => array('OutRecord.request_id' => $requestID)));
+
+		// if(!empty($outRecordData)){
+
+		// 	$itemRecordData = $this->ItemRecord->find('all', array('conditions' => array('ItemRecord.type_record_id' => $outRecordData['OutRecord']['id'], 'ItemRecord.type_record' => 1 )));
+
+		// }
 
 		$userData = $this->Session->read('Auth');
 
@@ -403,7 +429,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 		$view = new View(null, false);
 
-		$view->set(compact('request', 'preparedFullName', 'department', 'requestItem', 'itemData', 'unitData', 'roleName'));
+		$view->set(compact('request', 'preparedFullName', 'department', 'requestItem', 'itemData', 'unitData', 'roleName', 'outRecordData'));
         
 		$view->viewPath = 'WarehouseRequests'.DS.'pdf';	
    
@@ -532,15 +558,15 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 				$this->loadModel('WareHouse.Stock');
 
-				//pr($this->request->data); exit;
+				$stockData = $this->Stock->find('all');
+
+			//	pr($stockData); exit;
 
 				$requestId = $this->OutRecord->saveOutRecord($this->request->data['OutRecord'],$ID,$userData['User']['id']);
 
-				$this->ItemRecord->saveOutItemRecord($this->request->data['WarehouseRequestItem'], $requestId);
+				$this->ItemRecord->saveOutItemRecord($this->request->data['WarehouseRequestItem'], $requestId, $stockData );
 
-				$stockData = $this->Stock->find('all');
-
-				$condition = $this->Stock->saveOutRecordStock($this->request->data['WarehouseRequestItem'], $userData['User']['id'], $stockData );
+				$condition = $this->Stock->saveOutRecordStock($this->request->data['WarehouseRequestItem'], $userData['User']['id'], $stockData);
 				
 				$this->WarehouseRequest->id = $ID;
 
@@ -674,6 +700,30 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 		$this->set(compact('stockData', 'unitData', 'areaData'));
     	
+    }
+
+    public function outrecord_list(){
+
+    	$this->loadModel('WareHouse.OutRecord');
+
+    	$this->OutRecord->bindItem(); 		
+
+		$outRecordData = $this->OutRecord->find('all', array('order' => array('OutRecord.created' => 'DESC')));
+
+		$this->set(compact('outRecordData'));
+
+    }
+
+    public function out_record_view($id_outrecord = null){
+
+    	$this->loadModel('WareHouse.OutRecord');
+
+    	$this->OutRecord->bindItem(); 		
+
+		$outRecordData = $this->OutRecord->find('first', array('conditions' => array('OutRecord.id' => $id_outrecord)));
+		//pr($outRecordData); exit;
+		$this->set(compact('outRecordData'));
+
     }
 
 }
