@@ -1,5 +1,6 @@
 <?php $this->Html->addCrumb('Ware House', array('controller' => 'ware_house_systems', 'action' => 'index')); ?>
 <div style="clear:both"></div>
+<?php  echo $this->Html->script('WareHouse.date_range');?>
 <?php echo $this->element('ware_house_option');?>
 
 
@@ -9,6 +10,18 @@
             <header class="main-box-header clearfix">
 
                 <h2 class="pull-left"><b>Out-Record List</b></h2>
+
+                <div class="form-group col-md-3 pull-left">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                <input placeholder="Date Filter" name="from_date" data="1" type="text" class="form-control myDateRange datepickerDateRange" id="datepickerDateRange" >
+                                            </div>
+                                        </div>
+
+                 <?php
+                     echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Export ', array('controller' => 'warehouse_requests', 'action' => 'print_deducted_summary'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                       
+                    ?>
 
             </header>
             
@@ -26,8 +39,12 @@
                             </tr>
                         </thead>
 
-                        <?php echo $this->element('out_record_table'); ?>
+                          <tbody aria-relevant="all" class="dateRangeAppend" >
+                        </tbody> 
 
+                        <tbody aria-relevant="all" class="summaryReport"> 
+                             <?php echo $this->element('out_record_table'); ?>
+                        </tbody> 
                                                     
                      </table>
                     <hr>
@@ -46,3 +63,28 @@
         </div>
     </div>
 </div>
+
+<script>
+        
+    jQuery(document).ready(function($){
+
+        $('.daterange').datepicker({
+            format: 'yyyy-mm-dd'
+        });
+        $('.datepickerDateRange').daterangepicker();
+
+    
+    });
+
+
+</script>
+
+<style>
+
+    .summayReport{
+
+
+    }
+
+</style>
+
