@@ -219,7 +219,14 @@ echo $this->element('payroll_options');
 
 															                          				if (!empty($monthly)) {
 
+															                          					if (is_array($monthly)) {
 															                          						$totalPay += $monthly['SalaryReport']['basic_pay_month'];
+															                          					} else {
+
+															                          						$totalPay += $monthly->SalaryReport->basic_pay_month;
+															                          					}
+
+															                          						
 
 
 															                          				}
@@ -232,7 +239,11 @@ echo $this->element('payroll_options');
 															                          		
 
 															                          ?>
+															                         <?php if($payroll['Payroll']['status'] != 'process') : ?>
 																						<input type="text" class="form-control input-value" value="<?php echo number_format($totalPay,2); ?>">
+																					<?php else : ?>	
+																						<?php echo number_format($totalPay,2); ?>
+																					<?php endif; ?>
 															                        </td>
 															                        
 														                        <?php } ?>

@@ -1294,10 +1294,21 @@ class SalariesController  extends HumanResourceAppController {
 
 			$payroll['Payroll']['data'] = json_decode($payroll['Payroll']['data']);
 
-			$data =  file_get_contents("salaries/files/payroll-".$id.".txt");
+			if ($payroll['Payroll']['type'] == '13_month') {
 
-			$salaries = $this->Payroll->objectToArray(json_decode($data)); 
+				$data =  file_get_contents("salaries/files/payroll-thirteen-month-".$id.".txt");
 
+				$salaries = $this->Payroll->objectToArray(json_decode($data)); 
+	
+			} else {
+
+				$data =  file_get_contents("salaries/files/payroll-".$id.".txt");
+
+				$salaries = $this->Payroll->objectToArray(json_decode($data)); 
+
+			}
+
+			
 			$deductions = $this->Loan->find('list',array('fields' => array('id','name')));
 		
 			$salarySplit = array_chunk($salaries , 10);
@@ -1360,36 +1371,66 @@ class SalariesController  extends HumanResourceAppController {
 
 			$payroll = $this->Payroll->findById($id);
 
-			$salaries = $this->_checkPayroll($payroll);
+			 if ($payroll['Payroll']['type'] == '13_month') {
+
+			 	$salaries = $this->_checkThirteenPayroll($payroll);
+
+
+			 } else {
+
+			 	$salaries = $this->_checkPayroll($payroll);
+			 }
 
 			// /pr($salaries);
-
-
 			if ($salaries) {
 
 				$this->loadModel('Payroll.SalaryReport');
 				//save to salary report data
 
-				if( $this->_createReport($salaries,$auth) ) {
+			 	if ($payroll['Payroll']['type'] == '13_month') {
+				
+					// if( $this->_createReport($salaries,$auth) ) {
 
-					$salaries = $this->_checkPayroll($payroll,true);
+					// 	$salaries = $this->_checkPayroll($payroll,true);
+					// }
+
+					$payroll['Payroll']['status'] = 'process';
+
+					$json_data = json_encode($salaries);
+
+					$folder_path = WWW_ROOT.'/salaries/files/';
+
+					if (!file_exists($folder_path)) {
+						mkdir($folder_path, 0777, true);
+					}
+
+					file_put_contents("salaries/files/payroll-thirteen-month-".$id.".txt", $json_data);
+
+
+				} else {
+
+					if( $this->_createReport($salaries,$auth) ) {
+
+						$salaries = $this->_checkPayroll($payroll,true);
+					}
+
+					$payroll['Payroll']['status'] = 'process';
+
+					$json_data = json_encode($salaries);
+
+					$folder_path = WWW_ROOT.'/salaries/files/';
+
+					if (!file_exists($folder_path)) {
+						mkdir($folder_path, 0777, true);
+					}
+
+					//update adjustments
+					$this->Adjustment->updatePayroll($salaries);
+
+					file_put_contents("salaries/files/payroll-".$id.".txt", $json_data);
+
 				}
-
-
-				$payroll['Payroll']['status'] = 'process';
-
-				$json_data = json_encode($salaries);
-
-				$folder_path = WWW_ROOT.'/salaries/files/';
-
-				if (!file_exists($folder_path)) {
-					mkdir($folder_path, 0777, true);
-				}
-
-				//update adjustments
-				$this->Adjustment->updatePayroll($salaries);
-
-				file_put_contents("salaries/files/payroll-".$id.".txt", $json_data);
+				
 
 			}
 

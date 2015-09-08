@@ -105,6 +105,24 @@ class Payroll extends AppModel {
 	    			
 	    		}
 
+		    	if (is_object($value) && !empty($value->Salaries)) {
+
+		    		$object[$key]['Salaries'] = (array)$value->Salaries;
+		    			
+		    			foreach ($object[$key]['Salaries'] as $innerKey => $value) {
+
+		    				// //$object[$key]['Salaries'][$innerKey] = (array)$value;
+
+		    				// if (is_array($value)) {
+
+		    				// 	foreach ($value as $subKey => $innerValue) {
+
+
+		    				// 	}
+		    				// }
+
+		    			}
+		    	}
 	    	}
    		 
         return $object;
