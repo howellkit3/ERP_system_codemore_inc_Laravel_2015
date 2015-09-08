@@ -20,7 +20,6 @@
                   'bold' =>true
                   ));
 
-
     $counter = 6;
     $header = 4;
     $next_header = 5;
@@ -295,7 +294,7 @@
 
 
              //net pay's and total
-          $fields = array('net_pay' => 'Net Pay','excess_ot' => 'Irrg OT','allowances' => 'Allowances', 'incentives' => 'Incentives/ Adj','total_pay' => 'Total Pay');
+          $fields = array('net_pay' => 'Net Pay','excess_ot' => 'Irrg OT','allowances' => 'Allowances', 'adjustment' => 'Incentives/ Adj','total_pay' => 'Total Pay');
 
           $next_field_inner = $innerAddress;
 

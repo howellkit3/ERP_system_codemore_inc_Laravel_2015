@@ -153,7 +153,7 @@ $('#PayrollMonthYear').change(function(){
 
 $('#PayrollPayrollCreateForm').submit(function(e){
 
-	$error = $('span.label-danger').length;
+	$error = $('span.label-danger:visible').length;
 
 	if ($error == 0) {
 
@@ -210,9 +210,48 @@ $('#MonthPayrollIndex').change(function(){
 	});
 
 $body.on('click','.summary-btn', function(e) {
-
+	
 	$('#ExportPayrollViewForm #exportType').val($(this).data('type'));
+
 });	
 
+$('.payroll_type').each(function(){
 
+	if ($(this).is(':visible')) {
+		
+	} else {
+		console.log($(this).find('input').attr('id'));
+	}
+
+});
+
+$body.on('change','#PayrollType',function(){
+
+	$this = $(this);
+	
+	$('.payroll_type').addClass('hide');
+
+	$('.'+$this.val()).removeClass('hide');
+
+});
+
+	$body.on('click','.view-thirteen-summary',function(){
+
+		$employee_id = $(this).data('id');
+		$year = $(this).data('year');
+		$result = $('.result-table');
+		$.ajax({
+	        type: "POST",
+	        url: serverPath + "human_resource/salaries/view_sumarry/",
+	        data : {'employee_id' : $employee_id,'year' : $year},
+	        dataType: "html",
+	        success: function(data) {
+
+
+	     	   $result.html(data);  
+
+	        }
+	    });	
+
+	});
 });

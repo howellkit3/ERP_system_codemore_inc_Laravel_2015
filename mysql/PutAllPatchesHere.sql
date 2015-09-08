@@ -1997,7 +1997,7 @@ CREATE TABLE IF NOT EXISTS `overtime_limits` (
 ALTER TABLE `overtime_excess` ADD `employee_id` INT NULL AFTER `overtime_id`;
 ALTER TABLE `overtime_excess`  ADD `attendance_id` INT NULL  AFTER `overtime_id`;
 
-/* aldrin added this / adjustments  / koufu payrolls table */
+/* aldrin added this 9/7/15 / adjustments  / koufu payrolls table */
 CREATE TABLE IF NOT EXISTS `adjustments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_id` int(11) NOT NULL,
@@ -2010,3 +2010,7 @@ CREATE TABLE IF NOT EXISTS `adjustments` (
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+
+/* aldrin added this 9/8/15 / adjustments  / koufu payrolls table */
+
+ALTER TABLE `adjustments`  ADD `is_process` INT NOT NULL DEFAULT '0'  AFTER `reason`;

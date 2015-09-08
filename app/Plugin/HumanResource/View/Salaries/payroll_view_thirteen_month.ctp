@@ -166,74 +166,106 @@ echo $this->element('payroll_options');
 			            		  <div class="table-responsive overflow">
 		                                <div class="table-responsive">
 		            					
-		                                	<div class="table-responsive">
+		                                <div class="table-responsive">
 										<table class="table table-bordered table-hover">
 										<thead>
 										<tr>
 											<th><a href="#"><span>Code</span></a></th>
 											<th><a href="#"><span>Employee</span></a></th>
-											<th><a href="#"><span>Pay Date</span></a></th>
-											<th><a href="#" class="text-center"><span>From</span></a></th>
-											<th><a href="#" class="text-center"><span>To</span></a></th>
-											<th><a href="#"><span>Gross</span></a></th>
-											<th><a href="#"><span>SSS</span></a></th>
-											<th><a href="#"><span>PhilHealth</span></a></th>
-											<th><a href="#"><span>Pagibig</span></a></th>
-											<th><a href="#"><span>WTax</span></a></th>
-											<th><a href="#"><span>Deductions</span></a></th>
+											<?php 
+											$months = array( '01' => 'January','02' => 'February','03' => 'March','04' => 'April','05' => 'May','06' => 'June','07' => 'July','08' => 'August','09' =>'September', '10' =>'October','11' => 'November','12' => 'December');
 
-											<th><a href="#"><span>Remarks</span></a></th>
+											foreach ($months as $key => $list) {
+												
+												echo '<th><a href="#"><span>'.$list.'</span></a></th>';
+											}
+
+											?>
+
+											<th><a href="#"><span>Total</span></a></th>
+											<th><a href="#"><span> 13 Month</span></a></th>
+											<th><a href="#"><span> Actions </span></a></th>
+
 										</tr>
 										</thead>
+										
 										<tbody aria-relevant="all" aria-live="polite" role="alert">
 															<?php  if(!empty($salariesList)) { ?>
 
 														           <?php foreach ($salariesList as $key => $salary): ?>
 																			<tr>
-																			<td> 
-																			<?php 
-
-																			echo !empty( $salary['Employee'] ) ?  $salary['Employee']['code'] : ''; ?>   
-																			</td>
+																				<td> 
+																				<?php echo !empty( $salary['Employee'] ) ?  $salary['Employee']['code'] : ''; ?>   
+																				</td>
 																				<td class="">
 														                          <?php echo $this->CustomText->getFullname($salary['Employee']);  ?>
 														                        </td>
 
-														                         <td class="">
-														                          <?php echo date('Y/m/d')  ?>
-														                        </td>
-														                          <td class="">
-														                          <?php echo !empty($salary['from']) ? date('Y/m/d',strtotime($salary['from'])) : '' ?>
-														                        </td>
-														                          <td class="">
-														                           <?php echo !empty($salary['to']) ? date('Y/m/d',strtotime($salary['to'])) : '' ?>
-														                        </td>
+														                        <?php
+														                      	$salary['grand_total'] = 0;
+														                        $grandTotal = 0;
 
-														                        <td class="">
-														                           <?php echo number_format($salary['gross'],2); ?>
-														                        </td>
-														                        <td class="">
-														                       
-														                           <?php echo $salary['sss']; ?>
-														                        </td>
-														                        <td class="">
-																					<?php echo !empty($salary['philhealth']) ? number_format($salary['philhealth'],2) : '0.00'; ?>
-														                        </td>
-														                        <td class="">
-																					<?php echo !empty($salary['pagibig']) ? number_format($salary['pagibig'],2) : '0.00'; ?>
-														                        </td>
-														                        <td class="">
-														                            	 <?php echo number_format($salary['with_holding_tax'],2); ?>
-														                        </td>
-														                        <td class="">
-														                          <?php echo number_format($salary['total_deduction'],2); ?>
-														                        </td>
-														                         <td class="">
-														                        </td>
-														                      
+														                        foreach ($months as $innerkey => $list) { ?>
+															                        <td class="">
+															                          <?php
+															                          		$totalPay = 0;
+
+															                          		if (!empty($salary['Salaries'][$list])) {
+
+															                          		
+															                          		foreach ($salary['Salaries'][$list] as $subkey => $monthly) {
+															                          				
+															                          
+
+															                          				if (!empty($monthly)) {
+
+															                          						$totalPay += $monthly['SalaryReport']['basic_pay_month'];
+
+
+															                          				}
+															                          				
+
+															                          		}
+															                          	} 
+															                          		
+															                          	$salary['grand_total'] += $totalPay;
+															                          		
+
+															                          ?>
+																						<input type="text" class="form-control input-value" value="<?php echo number_format($totalPay,2); ?>">
+															                        </td>
+															                        
+														                        <?php } ?>
+														                         <td class="text-right">
+															                         	<?php echo number_format($salary['grand_total'],2); ?>
+															                        </td>
+															                        <td class="text-right">
+															                         	<?php 
+															                         	$thirteen = $salary['grand_total'] / 12;
+																							echo number_format($thirteen,2);
+															                         	  ?>
+															                        </td>
+
+															                        <td class="text-right">
+															                         	<?php 
+																							
+																							echo $this->Html->link('<span class="fa-stack">
+																								<i class="fa fa-square fa-stack-2x"></i>
+																								<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> View </font></span>
+																								</span> ','#viewSummary',
+																							array('class' =>'view-thirteen-summary table-link',
+																								'escape' => false,
+																								'title' => 'view summary' ,
+																								'data-toggle' => 'modal',
+																								'data-id' => $salary['Employee']['id'],
+																								'data-year' => date('Y')
+																								//'onClick' => 'getEmployeeData(this,'.$schedule['Attendance']['id'].')'
+																							));
+
+															                         	?>
+															                        </td>
 														                    </tr>
 
-														                
 														        <?php  endforeach;  ?>
 														       <?php } ?> 
 										</tbody>

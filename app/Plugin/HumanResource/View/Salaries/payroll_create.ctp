@@ -46,7 +46,8 @@
                                                   <?php 
                                                         echo $this->Form->input('type', array(
                                                         'options' => array(
-                                                            'normal' => 'Normal Payroll'
+                                                            'normal' => 'Normal Payroll',
+                                                            '13_month' => '13th Month'
                                                             ),
                                                         'class' => 'form-control col-lg-6 required',
                                                         'value' => date('m-Y'),
@@ -56,6 +57,7 @@
                                              </div>
                                         </div>
                                     </div> 
+                                    <div class="payroll_type normal">
 
                                      <div class="form-group">
                                        <div class="col-lg-11">
@@ -98,6 +100,63 @@
                                              </div>
                                         </div>      
                                     </div>
+                                 </div>
+
+                                 <div class="payroll_type 13_month hide" >
+
+                                 <div class="form-group">
+                                       
+                                       <div class="col-lg-11">
+                                            <div class="form-group">
+                                                <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span> Year </label>
+                                            <div class="col-lg-9">
+                                            <?php 
+
+                                                $firstYear = (int)date('Y') - 10;
+                                                $lastYear = $firstYear + 20;
+                                                $years = array();
+                                                for($i=$firstYear;$i<=$lastYear;$i++)
+                                                {
+                                                $years[$i]  = $i;
+                                                }
+
+
+                                            echo $this->Form->input('year', array(
+                                                'alt' => 'month',
+                                                'label' => false,
+                                                'options' => $years,
+                                                'class' => 'form-control pull-left',
+                                                'default' => date('Y'),
+                                                'data-name' => 'Address'
+                                             ));
+                                            ?>
+                                                </div>
+                                             </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="form-group">
+                                       
+                                       <div class="col-lg-11">
+                                            <div class="form-group">
+                                                <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span> Payroll Date</label>
+                                                <div class="col-lg-9">
+                                                  <?php 
+                                                        echo $this->Form->input('payroll_date',  array(
+                                                        'class' => 'form-control col-lg-6 required datepick',
+                                                        'value' => date('Y-m-d'),
+                                                        'type' => 'text',
+                                                        'label' => false));
+                                                    ?>
+                                                </div>
+                                             </div>
+                                        </div>
+
+                                    </div>  
+
+                                 </div>
 
                                     <div class="form-group">
                                        <div class="col-lg-11">

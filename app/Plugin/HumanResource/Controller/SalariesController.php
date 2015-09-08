@@ -6,8 +6,6 @@ App::import('Vendor', 'DOMPDF', true, array(), 'dompdf'.DS.'dompdf_config.inc.ph
 
 //App::import('PHPWord', 'Vendor');
 App::import('Vendor', 'PHPWord', array('file' => 'PHPWord'.DS.'PHPWord.php'));
-
-
 //App::import('PHPReader', 'Vendor');
 App::import('Vendor', 'PhpExcelReader', array('file' => 'PhpExcelReader'.DS.'excel_reader2.php'));
 
@@ -727,12 +725,12 @@ class SalariesController  extends HumanResourceAppController {
 			$params = array(
 			'id'        => 'mass_adjustment_template.xls',
 			'name'      => 'mass_adjustment_template',
-			'extension' => 'xls',
-			
+			'extension' => 'xlsx',
+			'download'  => true,
 	        'mimeType'  => array(
 	            'xls' =>  "application/vnd.ms-excel"
 	        ),
-       		 'path'      => 'files' . DS
+       		'path'      => 'files' . DS
 			);
 			$this->set($params);
 	}
@@ -1196,7 +1194,7 @@ class SalariesController  extends HumanResourceAppController {
 	            'conditions' => $conditions,
 	            'limit' => $limit,
 	            //'fields' => array('id', 'status','created'),
-	            'order' => 'Payroll.date DESC',
+	            'order' => 'Payroll.date ASC',
 	    );
 
 		$this->paginate = $params;
@@ -1204,6 +1202,7 @@ class SalariesController  extends HumanResourceAppController {
 		//$this->Payroll->bind(array('Payroll'));
 
 		$payrolls = $this->paginate('Payroll');
+
 
 		$this->set(compact('date','payrolls'));
 	}
@@ -1222,12 +1221,10 @@ class SalariesController  extends HumanResourceAppController {
 		if ($this->request->is('post')) {
 
 			$data = $this->Payroll->createPayroll($this->request->data,$auth);
-
 				
 			if ($this->Payroll->save($data)) {
 
 				//make data save in file
-
                  $this->Session->setFlash(__('Saving data completed.'),'success');
 
                 $this->redirect(
@@ -1316,7 +1313,16 @@ class SalariesController  extends HumanResourceAppController {
 
 			} else {
 				
-				$salariesList = $this->_checkPayroll($payroll);
+				switch ($payroll['Payroll']['type']) {
+					case 'normal':
+						$salariesList = $this->_checkPayroll($payroll);
+					break;
+					case '13_month':
+						$salariesList = $this->_checkThirteenPayroll($payroll);
+
+					break;
+										
+				}
 			
 			}
 
@@ -1325,6 +1331,18 @@ class SalariesController  extends HumanResourceAppController {
 		}
 		
 		$this->set(compact('salaries','payroll','pages','salarySplit','salariesList','deductions','departments'));
+
+		switch ($payroll['Payroll']['type']) {
+					case 'normal':
+						
+					break;
+					case '13_month':
+					
+						$this->render('Salaries/payroll_view_thirteen_month');
+
+					break;
+										
+			}
 
 	}
 
@@ -1338,19 +1356,25 @@ class SalariesController  extends HumanResourceAppController {
 
 			$this->loadModel('Payroll.SalaryReport');
 
+			$this->loadModel('Payroll.Adjustment');
+
 			$payroll = $this->Payroll->findById($id);
 
 			$salaries = $this->_checkPayroll($payroll);
 
-			if ($salaries) {
+			// /pr($salaries);
 
+
+			if ($salaries) {
 
 				$this->loadModel('Payroll.SalaryReport');
 				//save to salary report data
 
 				if( $this->_createReport($salaries,$auth) ) {
+
 					$salaries = $this->_checkPayroll($payroll,true);
 				}
+
 
 				$payroll['Payroll']['status'] = 'process';
 
@@ -1362,9 +1386,13 @@ class SalariesController  extends HumanResourceAppController {
 					mkdir($folder_path, 0777, true);
 				}
 
+				//update adjustments
+				$this->Adjustment->updatePayroll($salaries);
+
 				file_put_contents("salaries/files/payroll-".$id.".txt", $json_data);
 
 			}
+
 
 			if ($this->Payroll->save($payroll['Payroll']) ) {
 
@@ -1393,7 +1421,22 @@ class SalariesController  extends HumanResourceAppController {
 			$report = array();
 
 			foreach ($salaryData as $key => $value) {
-				
+
+				if ($value['employee_salary_type'] == 'monthly') {
+
+					$report[$key]['basic_pay_month'] = $value['regular'];
+					$report[$key]['basic_pay_month'] += $value['special_holiday'];
+					$report[$key]['basic_pay_month'] += $value['sunday_work'];
+					$report[$key]['basic_pay_month'] += $value['legal_holiday'];
+					$report[$key]['basic_pay_month'] += $value['leave'];	
+
+				} else {
+
+					$report[$key]['basic_pay_month'] = $value['regular'];
+					$report[$key]['basic_pay_month'] += $value['leave'];	
+
+				}
+	
 				$report[$key]['employee_id'] = $value['employee_id'];
 				$report[$key]['salary_type'] = $value['salary_type'];
 				$report[$key]['days']	=	$value['days'];
@@ -1409,7 +1452,12 @@ class SalariesController  extends HumanResourceAppController {
 
 			}
 
-			return $this->SalaryReport->saveAll($report);
+			if ($this->SalaryReport->saveAll($report) ) {
+
+				return true;
+			}
+
+			//return 
 		}
 	}
 
@@ -1437,6 +1485,7 @@ class SalariesController  extends HumanResourceAppController {
 	}
 
 	private function _checkPayroll($payroll = null , $update = false ){
+		$salaries = '';
 
 		if (!empty($payroll)) {
 
@@ -1481,37 +1530,41 @@ class SalariesController  extends HumanResourceAppController {
 
 			if (!empty($employees)) {
 
-				foreach ($employees as $key => $emp) {
-					
-					$conditions =  array_merge($conditions,array('Attendance.employee_id' => $emp['Employee']['id']));
-					$this->Attendance->bindWorkshift(); 
-					$employees[$key]['Attendance'] = $this->Attendance->computeAttendance($conditions);
-					
-			}
+					foreach ($employees as $key => $emp) {
+							
+							$conditions =  array_merge($conditions,array('Attendance.employee_id' => $emp['Employee']['id']));
+							$this->Attendance->bindWorkshift(); 
+							$employees[$key]['Attendance'] = $this->Attendance->computeAttendance($conditions);
+							
+					}
 
-			//$this->Components->load('HumanResource.SalaryComputation');
-			$this->loadModel('HumanResource.SalaryReport');
-			$this->loadModel('HumanResource.Holiday');
-			$this->loadModel('HumanResource.Overtime');
-			$this->loadModel('Payroll.Deduction');
-			$this->loadModel('Payroll.Amortization');			
-			$this->loadModel('Payroll.OvertimeRate');
-			$this->loadModel('Payroll.Contribution');
-			$this->loadModel('Payroll.Loan');	
-			//taxes tables		
-			$this->loadModel('Payroll.Tax');
-			$this->loadModel('Payroll.TaxDeduction');
-			$this->loadModel('Payroll.Wage');
+					//$this->Components->load('HumanResource.SalaryComputation');
+					$this->loadModel('HumanResource.SalaryReport');
+					$this->loadModel('HumanResource.Holiday');
+					$this->loadModel('HumanResource.Overtime');
+					$this->loadModel('Payroll.Deduction');
+					$this->loadModel('Payroll.Amortization');			
+					$this->loadModel('Payroll.OvertimeRate');
+					$this->loadModel('Payroll.Contribution');
+					$this->loadModel('Payroll.Loan');
 
-			//$OvertimeRate = ClassRegistry::init('Amortization')->find('all');
-			$updateDatabase = !empty($update) && $update == true ? true : false;
-			
-			$salaries = $this->SalaryComputation->calculateBenifits($employees,$payScheds,$customDate,$updateDatabase);
+					$this->loadModel('Payroll.Adjustment');	
+
+					//taxes tables		
+					$this->loadModel('Payroll.Tax');
+					$this->loadModel('Payroll.TaxDeduction');
+					$this->loadModel('Payroll.Wage');
+
+					//$OvertimeRate = ClassRegistry::init('Amortization')->find('all');
+					$updateDatabase = !empty($update) && $update == true ? true : false;
+					
+					$salaries = $this->SalaryComputation->calculateBenifits($employees,$payScheds,$customDate,$updateDatabase);
+
 			}
 			else {
 
-				$this->Session->setFlash(__('There\'s an error Processing Payroll'),'error');
-				$this->redirect(array('controller' => 'salaries','action' => 'payroll'));
+					$this->Session->setFlash(__('There\'s an error Processing Payroll'),'error');
+					$this->redirect(array('controller' => 'salaries','action' => 'payroll'));
 			}
 
 		} 
@@ -1680,6 +1733,75 @@ class SalariesController  extends HumanResourceAppController {
 		$taxes = $this->Tax->getDeductions($taxes);
 
 		$this->set(compact('taxes'));
+	}
+
+	public function view_sumarry() {
+
+		if (!empty($this->request->data)) {
+				
+				$this->loadModel('HumanResource.Employee');
+
+				$this->loadModel('Payroll.SalaryReport');
+
+				$emp_conditions = array('Employee.id' => $this->request->data['employee_id']);
+
+				$employees = $this->Employee->find('first',array(
+							'conditions' => $emp_conditions,
+							'order' => array('Employee.last_name ASC'),
+							'group' => array('Employee.id'),
+							'fields' => array('id','date_hired','full_name','code','first_name','middle_name','last_name'),
+				));
+
+
+				//get Salary in time	
+				$params['employee_id']  = $employees['Employee']['id'];
+				$params['year'] = $this->request->data['year'];
+				$employees['Salaries'] = $this->SalaryReport->computeSalary($params);
+				
+		}
+
+		//pr($employees); exit();
+
+		$this->set(compact('employees'));
+
+		$this->render('Salaries/ajax/monthly_summary');
+
+	}
+
+
+	public function _checkThirteenPayroll($payroll = null) {
+
+	$this->loadModel('HumanResource.Attendance');
+
+	$this->loadModel('HumanResource.Employee');
+
+	$this->loadModel('HumanResource.OvertimeExcess');
+
+	$this->loadModel('Payroll.SalaryReport');
+
+	$emp_conditions = array();//array('Employee.status NOT' => array('1'));
+
+	$employees = $this->Employee->find('all',array(
+						'conditions' => $emp_conditions,
+						'order' => array('Employee.last_name ASC'),
+						'group' => array('Employee.id'),
+						'fields' => array('id','date_hired','full_name','code','first_name','middle_name','last_name'),
+		));
+
+
+	foreach ($employees as $key => $employee) {
+		
+		//get Salary in time	
+		$params['employee_id']  = $employee['Employee']['id'];
+		$params['year'] = $payroll['Payroll']['year'];
+		$employees[$key]['Salaries'] = $this->SalaryReport->computeSalary($params);
+	}
+
+	// pr($employees); exit();
+
+	return $employees;
+
+
 	}
 
 

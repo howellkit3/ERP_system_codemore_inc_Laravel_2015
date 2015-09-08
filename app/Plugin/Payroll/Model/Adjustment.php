@@ -24,5 +24,38 @@ class Adjustment extends AppModel {
 		 // $this->contain($model);
 	}
 
+	public function updatePayroll($data = null) {
+
+		$update = '';
+		$saveData = '';
+
+
+
+		foreach ($data as $key => $list) {
+			
+			if (!empty($list['adjustment_ids'])) {
+
+				$ids = (array)json_decode($list['adjustment_ids']);
+
+				foreach ($ids as $key => $value) {
+
+					if (!empty($value)) {
+
+						$saveData['is_process'] = 1;
+						$saveData['id'] = $value;
+
+						$update = $this->save($saveData);
+					}
+
+					
+				}
+
+			}
+		}
+
+
+		return $update;
+	}
+
 
 }

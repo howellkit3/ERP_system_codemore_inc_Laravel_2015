@@ -209,6 +209,12 @@ header("Content-type: application/pdf");
 									<td class="text-right"></td>
 									<td class="text-right"><?php echo !empty($salary['incentives'])  ? number_format($salary['incentives'],2) : '0.00'; ?></td>
 								</tr>
+
+								<tr>
+									<td>Adjustment</td>
+									<td class="text-right"></td>
+									<td class="text-right"><?php echo !empty($salary['adjustment'])  ? number_format($salary['adjustment'],2) : '0.00'; ?></td>
+								</tr>
 							</table>
 							</td>
 							<td style="vertical-align:top"> 

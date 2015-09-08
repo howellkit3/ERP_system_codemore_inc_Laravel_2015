@@ -254,3 +254,7 @@ div.value {
 .text-center.time-in, .text-center.time-out {
   width: 105px;
 }
+
+.input-value {
+  min-width: 100px;
+}

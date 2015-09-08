@@ -4,18 +4,18 @@ var init = function() {
 }
 function loadSummary(){
 
-    $month = $('#monthly #DeductionFrom').val();
+    $month = $('#datepickerDateRange').val();
       
     $amount = $('#DeductionAmount').val();
 
-    $container = $('.computations');
+    $container = $('#result-cont');
 
     $container.html('<img src="'+serverPath+'/img/loader.gif"/>');
 
       $.ajax({
             type: "POST",
-            url: serverPath + "human_resource/salaries/computeDeduction/",
-            data: { 'range' :  $month ,'amount' :  $amount    },
+            url: serverPath + "human_resource/adjustments/index/",
+            data: { 'range' :  $month ,   },
             dataType: "html",
             success: function(data) {
 
@@ -29,9 +29,7 @@ function loadSummary(){
 
             }
         });
-
 }
-
 function checkEmployeeGross(employeeId) {
 
       $month = $('.deduction_date').val();
@@ -61,7 +59,7 @@ function checkEmployeeGross(employeeId) {
         });
 }
 
-function loadDeduction (element){
+function loadAdjustment(element){
   
     $month = $('#datepickerDateRange').val();
       
@@ -77,8 +75,8 @@ function loadDeduction (element){
     
     $.ajax({
             type: "POST",
-            url: serverPath + "human_resource/deductions/index/",
-            data : {'employee_code' :  $code, 'employee_id' : $employee , 'date_range' :  $month  },
+            url: serverPath + "human_resource/adjustments/index/",
+            data : {'employee_code' :  $code, 'employee_id' : $employee , 'range' :  $month  },
             dataType: "html",
             success: function(data) {
                 try {
@@ -225,7 +223,7 @@ $( ".datepick" ).datepicker({
 
   $('body').on('keyup','.searchEmployee',function(){
 
-    loadDeduction();
+    loadAdjustment();
 
   });
 

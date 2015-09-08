@@ -20,15 +20,22 @@ class SalaryComputationComponent extends Component
 
         	$Overtime = ClassRegistry::init('Overtime');
 
-        	$ExcessOt = ClassRegistry::init('OvertimeExcess');
+        	$Adjustments = ClassRegistry::init('Adjustment');
 
 			$holidays = $Holidays->find('all',array(
 			'conditions' => array('Holiday.year' => date('Y',strtotime($customDate['start']))),
 			'fields' => array('id','name','start_date','end_date','year','type')
 			));
 
-			//excess overtimne
+			$conditions = array(
+				'date(Adjustment.payroll_date) BETWEEN ? AND ?' => array($customDate['start'],$customDate['end']), 
+			);
 
+			$adjustments = $Adjustments->find('all',array(
+				'conditions' =>$conditions
+			));
+
+			//excess overtimne
 			$minimumWage = $Wage->find('first', array(
 				'conditions' => array('Wage.name like' => 'Minimum')
 			));
@@ -39,6 +46,7 @@ class SalaryComputationComponent extends Component
 			$models['Holiday'] = $holidays;
 			$models['Contibution'] = $contributions;
 			$workingDays = $this->workingDays($customDate);
+
 
         	if (!empty($data)) {
 
@@ -72,6 +80,7 @@ class SalaryComputationComponent extends Component
 
         				$salary[$key]['id'] = !empty($checkExisting['SalaryReport']['id']) ? $checkExisting['SalaryReport']['id'] : '';
         				$salary[$key]['employee_id'] = $employee['Employee']['id'];
+        				$salary[$key]['employee_salary_type'] = $employee['Salary']['employee_salary_type'];
         				$salary[$key]['salary_type'] = ($pay_sched == 'first') ? 'first' : 'second';
         				$salary[$key]['from'] = $customDate['start'];
         				$salary[$key]['to'] = $customDate['end'];
@@ -86,7 +95,6 @@ class SalaryComputationComponent extends Component
 						$salary[$key]['ctpa'] = !empty($employee['Salary']['ctpa']) ? $gross['days'] * $employee['Salary']['ctpa'] : 0; 
 						//sea
 						$salary[$key]['sea'] = !empty($employee['Salary']['sea']) ? $gross['days'] * $employee['Salary']['sea'] : 0;
-						
 						$salary[$key]['allowances'] =  $employee['Salary']['allowances'];
 						
 						// foreach ($gross as $gross_key => $gross_value) {
@@ -105,10 +113,20 @@ class SalaryComputationComponent extends Component
 
 
 						$total_pay = $salary[$key]['gross_pay'];
-						
+
 						$salary[$key]['total_earnings']  = $salary[$key]['gross_pay'];
 						$salary[$key]['total_earnings']  += $employee['Salary']['allowances'];
 						$salary[$key]['total_earnings']  += !empty($employee['Salary']['incentives']) ? $employee['Salary']['incentives'] : 0.00;
+
+
+						//check adjustments 
+
+						$adjust = $this->_checkAdjustments($adjustments,$employee);	
+
+						$salary[$key]['adjustment'] = $adjust['amount'];
+						$salary[$key]['adjustment_ids'] = $adjust['ids'];
+
+						$salary[$key]['total_earnings']  += !empty($salary[$key]['adjustment']) ? $salary[$key]['adjustment'] : 0.00;
 
 						//total night diff
 						$nightDiff = array(
@@ -123,8 +141,8 @@ class SalaryComputationComponent extends Component
 							'night_diff_special_holiday_work'
 							//'night_diff_special_holiday_work_ot'
 							);
-						$nightDiffTotal = 0;
 
+						$nightDiffTotal = 0;
 						$salary[$key]['night_diff_total'] = 0;
 
 						foreach ($nightDiff as $nightkey => $night) {
@@ -132,6 +150,7 @@ class SalaryComputationComponent extends Component
 							$salary[$key]['night_diff_total'] += $night;
 							
 						}
+						
 						//check deductions 
 						$deductions = $this->checkDeductions($employee['Employee']['id'],$customDate,$updateDatabase);
 
@@ -144,7 +163,7 @@ class SalaryComputationComponent extends Component
 						}
 
 						$salary[$key]['total_deduction'] = $total_deduction; 
-
+						
 						$salary[$key]['total_deduction'] += $salary[$key]['sss'];
 
 						$salary[$key]['total_deduction'] += $salary[$key]['philhealth'];
@@ -164,7 +183,10 @@ class SalaryComputationComponent extends Component
 						$total_pay  += $employee['Salary']['allowances'];
 
 						//add irregular ot
-						$total_pay += $salary[$key]['excess_ot'];	
+						$total_pay += $salary[$key]['excess_ot'];
+
+
+						$total_pay += $salary[$key]['adjustment'];
 
 						//$total_pay  -= $salary[$key]['sss'];
 						$salary[$key]['total_pay'] = $total_pay;
@@ -172,10 +194,12 @@ class SalaryComputationComponent extends Component
 						$salary[$key]['Department'] = !empty($employee['Department']) ? $employee['Department'] : array();
 						$salary[$key]['Position']	= !empty($employee['Position']) ? $employee['Position'] : array();
 						$salary[$key]['EmployeeAdditionalInformation']	= !empty($employee['EmployeeAdditionalInformation']) ? $employee['EmployeeAdditionalInformation'] : array();
-        		}
-        		return $salary;
+        			
 
-        	}
+        		}
+        		
+        		return $salary;
+			}
     }
 
     private function workingDays($date = null) {
@@ -1682,7 +1706,6 @@ class SalaryComputationComponent extends Component
 
 				$taxes = $Tax->find('first',array('conditions' => $conditions )); 
 
-
 				$count = 1;
 
 				$range = 0;
@@ -1697,12 +1720,10 @@ class SalaryComputationComponent extends Component
 					}
 				}
 
-
 				$conditions = array('TaxDeduction.type' => $type);
 
 				$taxDeductList = $TaxDeduction->find('first',array('conditions' => $conditions));
 
-			
 				//computations
 				if (!empty($taxKey)) {
 
@@ -1718,6 +1739,31 @@ class SalaryComputationComponent extends Component
 
 		return $total_tax;
 
+	}
+
+	private function  _checkAdjustments($adjustments = array(),$employee) {
+
+		$adjust['amount'] = 0;
+
+		$adjust['ids'] = '';
+
+		if ( !empty($adjustments) ) {
+
+			foreach ($adjustments as $key => $list) {
+					
+					if ($list['Adjustment']['employee_id'] == $employee['Employee']['id'] && $list['Adjustment']['is_process'] == 0) {
+						
+						$adjust['amount'] += $list['Adjustment']['amount'];	
+
+						$adjust['ids'][] = $list['Adjustment']['id'];
+					
+					}
+			}
+
+			$adjust['ids'] = json_encode($adjust['ids']);
+		}
+
+		return $adjust;
 	}
 
 

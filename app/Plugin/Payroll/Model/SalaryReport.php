@@ -50,4 +50,39 @@ class SalaryReport extends AppModel {
 			return $this->saveAll($report);
 		}
 	}
+
+	public function computeSalary($params = array()) {
+
+		if (!empty($params)) {
+		
+			$reports = '';
+
+			$months = array( '01' => 'January','02' => 'February','03' => 'March','04' => 'April','05' => 'May','06' => 'June','07' => 'July','08' => 'August','09' =>'September', '10' =>'October','11' => 'November','12' => 'December');
+
+			foreach ($months as $key => $list) {
+					
+					$conditions = array(
+						'SalaryReport.employee_id' => $params['employee_id'],
+					);
+
+					$from = $params['year'].'-'.$key.'-01';
+					$to = $params['year'].'-'.$key.'-31';
+
+					$conditions = array_merge($conditions,array(
+						'date(SalaryReport.from) BETWEEN ? AND ?' => array($from,$to), 
+					));
+
+				
+
+					$reports[$list] = $this->find('all',array(
+						'conditions' => $conditions,
+						'order' => 'SalaryReport.from ASC'
+					));
+
+
+			}
+
+			return $reports;
+		}
+	}
 }
