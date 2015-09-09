@@ -52,6 +52,8 @@
 $(document).ready(function(){
 
 
+        $('.daterange').daterangepicker();
+
 	$body = $('body');
 
 	$body.on('click','#updatePayroll',function(e){

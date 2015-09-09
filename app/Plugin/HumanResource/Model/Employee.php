@@ -186,7 +186,47 @@ class Employee extends AppModel {
 		$this->recursive = 1;
 		//$this->contain($giveMeTheTableRelationship);
 	}
+	public function bindSSS() {
+		$this->bindModel(array(
+			'belongsTo' => array(
+				'GovernmentRecord' => array(
+					'className' => 'GovernmentRecord',
+					'foreignKey' => false,
+					'conditions' => array('GovernmentRecord.employee_id = Employee.id','GovernmentRecord.agency_id' => 1)
+					),
+			),
+			'hasOne' => array(
+				'EmployeeAdditionalInformation' => array(
+					'className' => 'EmployeeAdditionalInformation',
+					'foreignKey' => 'employee_id',
+					'dependent' => true
+				)
+			)
+		));
 
+		$this->recursive = 1;
+	}
+
+	public function bindPagibig() {
+		$this->bindModel(array(
+			'belongsTo' => array(
+				'GovernmentRecord' => array(
+					'className' => 'GovernmentRecord',
+					'foreignKey' => false,
+					'conditions' => array('GovernmentRecord.employee_id = Employee.id','GovernmentRecord.agency_id' => 2)
+					),
+			),
+			'hasOne' => array(
+				'EmployeeAdditionalInformation' => array(
+					'className' => 'EmployeeAdditionalInformation',
+					'foreignKey' => 'employee_id',
+					'dependent' => true
+				)
+			)
+		));
+
+		$this->recursive = 1;
+	}
 	public function getList($conditions = array()) {
 
 		return $this->find('list',array(
@@ -239,10 +279,11 @@ class Employee extends AppModel {
 
 									if ($dateNow >= $holiday['Holiday']['start_date'] && $dateNow <= $holiday['Holiday']['end_date'] ) {
 
-											$list[$list_key]['title'] = date('h:i a',strtotime($workshift['WorkShift']['from'])) . ' - ' .  date('h:i a',strtotime($workshift['WorkShift']['to']));
-											$list[$list_key]['start'] = $days1[0].'-'.$days1[1].'-'.sprintf("%02d",$days_count).' '.date('h:i:s',strtotime($workshift['WorkShift']['from']));
-											$list[$list_key]['end']  = $days1[0].'-'.$days1[1].'-'.sprintf("%02d",$days_count).' '.date('h:i:s',strtotime($workshift['WorkShift']['to']));
-											$list[$list_key]['color'] = '#F57821';
+									$list[$list_key]['title'] = date('h:i a',strtotime($workshift['WorkShift']['from'])) . ' - ' .  date('h:i a',strtotime($workshift['WorkShift']['to']));
+									$list[$list_key]['start'] = $days1[0].'-'.$days1[1].'-'.sprintf("%02d",$days_count).' '.date('h:i:s',strtotime($workshift['WorkShift']['from']));
+									$list[$list_key]['end']  = $days1[0].'-'.$days1[1].'-'.sprintf("%02d",$days_count).' '.date('h:i:s',strtotime($workshift['WorkShift']['to']));
+									$list[$list_key]['color'] = '#F57821';
+
 									} 
 								}
 

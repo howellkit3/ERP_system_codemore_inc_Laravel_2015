@@ -61,15 +61,14 @@ class Payroll extends AppModel {
 			if ($data[$this->alias]['type'] == '13_month') {
 
 				$date = date('Y-m-d',strtotime($data[$this->alias]['payroll_date']));
-
-				$data[$this->alias]['from'] = $date;
-				$data[$this->alias]['to'] = $date;
+				$date = explode('-',$data[$this->alias]['payroll_range']);
+				$data[$this->alias]['from'] = date('Y-m-d',strtotime($date[0]));
+				$data[$this->alias]['to'] = date('Y-m-d',strtotime($date[1]));
 				$data[$this->alias]['date'] = date('Y-m-d');
-				$data[$this->alias]['transaction_date'] = $date;
+				$data[$this->alias]['transaction_date'] = $data[$this->alias]['payroll_date'];
 				$data[$this->alias]['year'] = $data[$this->alias]['year'];
 
 			}
-
 
 			
 		}

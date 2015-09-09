@@ -48,7 +48,39 @@
     });
 
 
+    $body.on('click','#filterEmp',function(e){
 
+      $type = $(this).data('type');
+
+      $container = $('#'+$type+'-result-cont');
+   
+      $container.html('<img src="'+serverPath+'/img/loader.gif"/>');
+
+      $status = $('#status').val();
+
+
+      $.ajax({
+            type: "GET",
+            url: serverPath + "human_resource/salaries/reports_filter/",
+            data: { 'status' :  $status , 'type' : $type  },
+            dataType: "html",
+            success: function(data) {
+
+                try {
+
+                    $container.html(data);
+                }   
+                catch(e) {
+
+                }
+
+            }
+        }); 
+    
+
+        e.preventDefault();
+
+    });
 
     $body.on('click','#SSSReports',function(e){
 
@@ -75,6 +107,15 @@
       var year = $('#changeDateYear').val();
 
       $(this).attr('href',url+'?year='+year);
+    });
+
+     $body.on('click','#exportReport',function(e){
+
+      var url = $(this).attr('href');
+        
+      var month = $('#status').val();
+
+      $(this).attr('href',url+'?status='+month);
     });
 
   });

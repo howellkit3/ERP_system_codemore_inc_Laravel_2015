@@ -457,7 +457,6 @@ class ReceivingsController extends WareHouseAppController {
 
 					$itemDetails = $this->CompoundSubstrate->find('list', array('fields' => array('CompoundSubstrate.id', 'CompoundSubstrate.name')
 																		)); 
-
 					$requestPurchasingItem[$key1][$itemHolder]['name'] = $itemDetails[$value[$itemHolder]['foreign_key']];
 
 					$requestPurchasingItem[$key1][$itemHolder]['model'] = $value[$itemHolder]['model'];
@@ -515,9 +514,9 @@ class ReceivingsController extends WareHouseAppController {
 
 					}  		 
 
-							$requestPurchasingItem[$key1][$itemHolder]['good_quantity'] = array_sum($arrayGoodQuantity);
-							
-							$requestPurchasingItem[$key1][$itemHolder]['reject_quantity'] = array_sum($arrayRejectQuantity);
+					$requestPurchasingItem[$key1][$itemHolder]['good_quantity'] = array_sum($arrayGoodQuantity);
+					
+					$requestPurchasingItem[$key1][$itemHolder]['reject_quantity'] = array_sum($arrayRejectQuantity);
  	
 		    }
 

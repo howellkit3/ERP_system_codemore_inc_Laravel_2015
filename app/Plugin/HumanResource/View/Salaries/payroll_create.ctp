@@ -156,6 +156,24 @@
 
                                     </div>  
 
+                                    <div class="form-group">
+                                       
+                                       <div class="col-lg-11">
+                                            <div class="form-group">
+                                                <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span> From / To</label>
+                                                <div class="col-lg-9">
+                                                  <?php echo $this->Form->input('payroll_range',  array(
+                                                        'class' => 'form-control col-lg-6 required daterange',
+                                                        'value' => date('Y/01/01').'-'.date('Y/12/31'),   
+                                                        'type' => 'text',
+                                                        'label' => false));
+                                                    ?>
+                                                </div>
+                                             </div>
+                                        </div>
+
+                                    </div>  
+
                                  </div>
 
                                     <div class="form-group">

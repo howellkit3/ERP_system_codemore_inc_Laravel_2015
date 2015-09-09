@@ -127,7 +127,7 @@
 
 				 	<li class="<?php echo ($this->params['plugin'] == 'human_resource' && !in_array($this->params['controller'],array('salaries')))  ? 'active' : '' ?>">
 
-						<?php  if($userData['User']['role_id'] == 12 OR $userData['User']['role_id'] == 13){
+						<?php  if($userData['User']['role_id'] == 1 OR $userData['User']['role_id'] == 12 OR $userData['User']['role_id'] == 13){
 
 						
 	 						echo $this->Html->link( " <i class='fa fa-user'></i> <span>Human Resource</span>",   array('controller' =>'dashboards','action'=>'index','plugin' => 'human_resource'),
