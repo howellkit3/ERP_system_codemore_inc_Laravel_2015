@@ -114,7 +114,7 @@
 
 						<?php 
 
-						if($userData['User']['role_id'] == 1 OR $userData['User']['role_id'] == 2 OR $userData['User']['role_id'] == 6 OR $userData['User']['role_id'] == 9 OR $userData['User']['role_id'] == 10 OR $userData['User']['role_id'] == 11){
+						if($userData['User']['role_id'] == 1 OR $userData['User']['role_id'] == 13){
 
 
 	 						echo $this->Html->link( " <i class='fa fa-money'></i> <span> Payroll </span>",   array('controller' =>'salaries',
@@ -127,7 +127,7 @@
 
 				 	<li class="<?php echo ($this->params['plugin'] == 'human_resource' && !in_array($this->params['controller'],array('salaries')))  ? 'active' : '' ?>">
 
-						<?php  if($userData['User']['role_id'] == 1 OR $userData['User']['role_id'] == 2){
+						<?php  if($userData['User']['role_id'] == 12 OR $userData['User']['role_id'] == 13){
 
 						
 	 						echo $this->Html->link( " <i class='fa fa-user'></i> <span>Human Resource</span>",   array('controller' =>'dashboards','action'=>'index','plugin' => 'human_resource'),

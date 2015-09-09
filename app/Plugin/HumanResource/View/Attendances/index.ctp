@@ -115,7 +115,7 @@ echo $this->element('hr_options');
 								                           <?php 
 								                        	 echo (!empty($schedule['Attendance']['in']) && $schedule['Attendance']['in']  != '0000-00-00 00:00:00') ? date('y/m/d h:i a',strtotime($schedule['Attendance']['in'])) : '';
 															 $timeIn;
-								                            $timeIn = date('Y/m/d h:i a',strtotime($schedule['Attendance']['in']));
+								                            $timeIn = !empty($schedule['Attendance']['in']) ? date('Y/m/d h:i a',strtotime($schedule['Attendance']['in'])) : '';
 								                            ?> 
 								                        </td>
 								                        </td>
@@ -123,7 +123,7 @@ echo $this->element('hr_options');
 								                           <?php 
 								                          echo  (!empty($schedule['Attendance']['out']) && $schedule['Attendance']['out']  != '0000-00-00 00:00:00') ? date('y/m/d h:i a',strtotime($schedule['Attendance']['out'])) : '';
 
-								                            $timeOut = date('Y/m/d h:i a',strtotime($schedule['Attendance']['out']));
+								                            $timeOut = !empty($schedule['Attendance']['out']) ? date('Y/m/d h:i a',strtotime($schedule['Attendance']['out'])) : '' ;
 								                           ?> 
 								                        </td>
 								                        <td class="text-center" > 
