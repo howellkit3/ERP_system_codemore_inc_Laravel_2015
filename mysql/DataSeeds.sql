@@ -2524,10 +2524,18 @@ VALUES
 
  /* added aug 13 2015 human resource department*/
 
- INSERT INTO `agencies` (`id`, `name`, `field`, `description`, `created_by`, `modified_by`, `created`, `modified`) VALUES
+INSERT INTO `agencies` (`id`, `name`, `field`, `description`, `created_by`, `modified_by`, `created`, `modified`) VALUES
 (1, 'SSS', 'number', 'sss number', 4, 4, '2015-08-13 06:01:35', '2015-08-13 06:01:35'),
 (2, 'TIN', 'number', 'tin number', 4, 4, '2015-08-13 06:01:47', '2015-08-13 06:01:47'),
 (3, 'Phil Health', 'number', 'description', 4, 4, '2015-08-13 06:02:02', '2015-08-13 06:02:02'),
 (4, 'PAGIBIG', 'number', 'pagibig number', 4, 4, '2015-08-13 06:04:35', '2015-08-13 06:04:35');
 
 /* end */
+
+
+/* tax deductions */
+INSERT INTO `taxes_deductions` (`id`, `type`, `tax_1`, `tax_1_percent`, `tax_2`, `tax_2_percent`, `tax_3`, `tax_3_percent`, `tax_4`, `tax_4_percent`, `tax_5`, `tax_5_percent`, `tax_6`, `tax_6_percent`, `tax_7`, `tax_7_percent`, `tax_8`, `tax_8_percent`, `created`, `modified`, `created_by`, `modified_by`) VALUES
+(1, 'semi_monthly', '0.00', '0%', '0.00', '5%', '20.83', '10%', '104.17', '15%', '354.17', '20%', '937.50', '25%', '2.00', '30%', '5.00', '32%', '2015-08-26 12:00:00', '2015-08-26 12:00:00', 1, 1),
+(1, 'monthly', '0.00', '0%', '0.00', '5%', '20.83', '10%', '104.17', '15%', '354.17', '20%', '937.50', '25%', '2.00', '30%', '5.00', '32%', '2015-08-26 12:00:00', '2015-08-26 12:00:00', 1, 1),
+
+;

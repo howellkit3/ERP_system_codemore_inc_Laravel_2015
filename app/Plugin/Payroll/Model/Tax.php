@@ -47,4 +47,17 @@ class Tax extends AppModel {
 		return $tax;
 		
 	}
+
+	public function saveTax($deductionId,$data) {
+
+		if (!empty($data['Tax'])) {
+
+			foreach ($data['Tax'] as $key => $tax) {
+					
+					$data['Tax'][$key]['id'] = !empty($tax['id']) ? $tax['id'] : '';
+
+					$this->save($data);
+			}
+		}
+	}
 }
