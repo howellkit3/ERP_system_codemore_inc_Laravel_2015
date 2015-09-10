@@ -512,6 +512,9 @@ class PayrollSettingsController extends AppController
             return $this->redirect(array('action' => 'philhealth_ranges'));
         }
 
+        public function tax_settings() {
+            
+        }
 
 } 
 ?>

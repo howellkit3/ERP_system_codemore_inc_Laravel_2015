@@ -1467,7 +1467,6 @@ class SalaryComputationComponent extends Component
 		3. second payroll
 		*/
 
-
 		if (!empty($models['Contibution'][1])) {
 
 
@@ -1490,7 +1489,7 @@ class SalaryComputationComponent extends Component
 
 	public function pagibig_pay($attendance = null,$salaries = null,$sched = 'first',$gross_pay = 0,$models = array()){
 
-		//sss agency id = 2;
+		//pagibig agency id = 2;
 		$pay = 0;
 		$government_record = array();
 
@@ -1501,13 +1500,15 @@ class SalaryComputationComponent extends Component
 			}
 		}
 		
-		if ( ($gross_pay != 0 && !empty($attendance['Agency'])) && in_array(2,$attendance['Agency'])) {
+		if ( $gross_pay != 0 && !empty($government_record['2'])) {
 				
-				$phRange = ClassRegistry::init('PhilHealthRange');
-				$conditions = array('PhilHealthRange.range_from >=' => $gross_pay);
-				$range = $phRange->find('first',array('conditions' => $conditions ));
-				$pay = !empty($range['PhilHealthRange']['employee']) ? $range['PhilHealthRange']['employee'] : $pay;
-				$pay = $range['PhilHealthRange']['employees'];
+				// $phRange = ClassRegistry::init('PhilHealthRange');
+				// $conditions = array('PhilHealthRange.range_from >=' => $gross_pay);
+				// $range = $phRange->find('first',array('conditions' => $conditions ));
+				// $pay = !empty($range['PhilHealthRange']['employee']) ? $range['PhilHealthRange']['employee'] : $pay;
+				// $pay = $range['PhilHealthRange']['employees'];
+
+			$pay = '100.00';
 		}
 
 		return $pay;

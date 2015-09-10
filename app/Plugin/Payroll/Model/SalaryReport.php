@@ -73,7 +73,6 @@ class SalaryReport extends AppModel {
 					));
 
 				
-
 					$reports[$list] = $this->find('all',array(
 						'conditions' => $conditions,
 						'order' => 'SalaryReport.from ASC'

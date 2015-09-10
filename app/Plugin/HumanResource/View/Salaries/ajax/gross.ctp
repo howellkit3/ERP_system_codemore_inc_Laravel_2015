@@ -1,6 +1,6 @@
 <header class="clearfix">
 <h2 class="pull-left">
-<b>Monthly Gross</b> </h2>
+<b>Expected Gross</b> </h2>
 <div class="clearfix"></div>
 <p>Month : <?php echo date('F',strtotime($salary['first_half']['payroll_date'])); ?></p>
 <div class="clearfix"></div> </header><br>
@@ -15,7 +15,7 @@
 					<label for="AmortizationPayrollDate"> <?php echo Inflector::humanize($key)  ?></label>
 					</td>
 					<td>
-						<?php echo number_format($emp['total_pay'],2) ?>
+						<?php echo number_format($emp['gross'],2) ?>
 					</td>
 					</tr>	
 			<?php } ?>

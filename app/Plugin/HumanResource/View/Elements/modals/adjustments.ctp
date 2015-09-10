@@ -98,7 +98,8 @@
                                         'label' => false,
 										'options' => $years,
 										'class' => 'form-control pull-left',
-                                        'data-name' => 'Address'
+                                        'data-name' => 'Address',
+                                        'default' => date('Y')
                                     ));
                                 ?>
                             </div>

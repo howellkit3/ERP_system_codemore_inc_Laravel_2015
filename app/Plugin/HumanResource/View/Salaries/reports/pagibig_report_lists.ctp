@@ -159,42 +159,39 @@ $active_tab = 'gross_reports';
 
 
                           <table class="table">
-                                      <thead>
-                                      <tr>
-                                        <th><a href="#"><span>Code</span></a></th>
-                                        <th><a href="#" class="desc"><span>Name</span></a></th>
-                                        <th class="text-center"><a href="#" class="asc"><span>Total Deduction</span></a></th>
-                                        <th class="text-center"><span>Total Earnings</span></th>
-                                      </tr>
-                                      </thead>
+                                    
+                                    <thead>
+                                        <tr>
+                                          <th><a href="#"><span>Code</span></a></th>
+                                          <th><a href="#" class="desc"><span>Name</span></a></th>
+                                          <th class="text-center"><a href="#" class="asc"><span>Total Deduction</span></a></th>
+                                          <th class="text-center"><span>Total Earnings</span></th>
+                                        </tr>
+                                    </thead>
 
                                       <tbody id="yearly-result-cont">
                                     
-                                           <?php  if(!empty($yearly)) { ?>
+                                      <?php  if(!empty($yearly)) { ?>
 
-                                      <?php foreach ($yearly as $key => $employee): ?>
+                                        <?php foreach ($yearly as $key => $employee): ?>
 
-                                      <tr >
-                                        <td> <?php echo $employee['Employee']['code']; ?></td>
-                                        <td class="">
-                                        <?php echo $this->CustomText->getFullname($employee['Employee']);  ?>
-                                          </td>
-                                          <td class="text-center">
-                                          <?php echo $employee['total_deduction']; ?>
-                                          </td>
-                                          <td class="text-center">
-                                          <?php echo $employee['total_pay']; ?>
-                                          </td>
+                                        <tr >
+                                          <td> <?php echo $employee['Employee']['code']; ?></td>
+                                            <td class="">
+                                              <?php echo $this->CustomText->getFullname($employee['Employee']);  ?>
+                                            </td>
+                                            <td class="text-center">
+                                              <?php echo $employee['total_deduction']; ?>
+                                            </td>
+                                            <td class="text-center">
+                                              <?php echo $employee['total_pay']; ?>
+                                            </td>
+                                        </tr>
 
-                                      </tr>
+                                        <?php  endforeach;  ?>
+                                       <?php } ?>
 
-
-                                      <?php  endforeach;  ?>
-                                      <?php } ?> 
-
-
-
-                                      </tbody>
+                                     </tbody>
                          </table>
     </div>
    

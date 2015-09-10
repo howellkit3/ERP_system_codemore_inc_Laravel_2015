@@ -13,11 +13,39 @@ class DeductionsController extends HumanResourceAppController {
 		$limit = 10;
 
         if (!empty($this->request->data)) {
+        		
+
+        		if (!empty($this->request->data['date_range'])) {
+
+        			$dateRange = explode('-', $this->request->data['date_range'] );
+
+        			$from = date('Y-m-d',strtotime(trim($dateRange[0])));
+        			
+        			$to = date('Y-m-d',strtotime(trim($dateRange[1])));
+
+        			$conditions = array_merge($conditions,array(
+						'date(Deduction.from) BETWEEN ? AND ?' => array($from,$to), 
+					));
+
+			
+        		}
+
 				if (!empty($this->request->data['employee_id'])) {
 					$conditions = array_merge($conditions,array('Deduction.employee_id' => $this->request->data['employee_id']));
 				}
 				if (!empty($this->request->data['employee_code'])) {
-					$employee = $this->Employee->find('first',array('conditions' => array('Employee.code like' =>'%'.$this->request->data['employee_code'].'%')));
+
+					$filter = $this->request->data['employee_code'];
+
+					$employee = $this->Employee->find('first',array(
+						'conditions' => array(
+							'OR' => array (
+								'Employee.code like' =>'%'.$filter.'%',
+								'Employee.first_name like' => '%'.$filter .'%',
+								'Employee.last_name like' => '%'.$filter.'%',
+								'Employee.middle_name like' => '%'.$filter.'%'
+							))
+						));
 
 					if (!empty($employee)) {
 						$conditions = array_merge($conditions,array('Deduction.employee_id' => $employee['Employee']['id']));
@@ -25,7 +53,9 @@ class DeductionsController extends HumanResourceAppController {
 					
 				}	
         }
-        $conditions = array('is_deleted' => 0);
+        
+        $conditions = array_merge($conditions, array('is_deleted' => 0));
+
         $params =  array(
 	            'conditions' => $conditions,
 	            'limit' => $limit,
@@ -49,19 +79,41 @@ class DeductionsController extends HumanResourceAppController {
 	}
 	public function view_amortization($deductionId = null) {
 
-		$this->LoadModel('Payroll.Amortization');
+		$this->loadModel('HumanResource.Employee');
+
+		$this->loadModel('Payroll.Deduction');
+
+		$this->loadModel('Payroll.Amortization');
+
+		$this->loadModel('Payroll.Loan');
+
 
 		if (!empty($deductionId)) {
 
-			$amortizations = $this->Amortization->find('all',array(
-					'conditions' => array('Amortization.deduction_id' => $deductionId),
-					'order' => array('Amortization.payroll_date ASC')
+		$this->Deduction->bind(array('Loan'));
 
-			));
+		$deduction = $this->Deduction->findById($deductionId);
 
-			$this->set(compact('amortizations'));
-		//if ($this->request->is('ajax')) {
-			$this->render('Deductions/ajax/view_amortizations');
+		$employees = $this->Employee->findById($deduction['Deduction']['employee_id']);
+
+		$limit = 10;
+
+		$conditions = array('Amortization.deduction_id' => $deductionId );
+        
+        $params =  array(
+	            'conditions' => $conditions,
+	            'limit' => $limit,
+	            //'fields' => array('id', 'status','created'),
+	            'order' => 'Amortization.payroll_date ASC',
+	    );
+
+		$this->paginate = $params;
+
+		$amortizations = $this->paginate('Amortization');
+
+		$this->set(compact('amortizations','deduction','employees'));
+	//if ($this->request->is('ajax')) {
+		$this->render('Deductions/ajax/view_amortizations');
 		//}
 		}
 	}

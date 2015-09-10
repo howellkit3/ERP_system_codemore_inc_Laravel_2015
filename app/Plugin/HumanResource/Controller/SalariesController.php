@@ -81,7 +81,9 @@ class SalariesController  extends HumanResourceAppController {
 	public function checkEmployeeGross() {
 
 		if (!empty($this->request->data)) {
+
 			$employeeId = $this->request->data['employee_id'];
+			
 			$dateRange = $this->request->data['date_range'];
 
 			$salary = array(
@@ -92,7 +94,6 @@ class SalariesController  extends HumanResourceAppController {
 			$salaryDate = array();
 
 			foreach ($salary as $key => $value) {
-
 			
 			if (strpos($dateRange, '-') !== false) {
 
@@ -144,7 +145,7 @@ class SalariesController  extends HumanResourceAppController {
 			$emp_conditions = array();//array('Employee.status NOT' => array('1'));
 
 			if (!empty($employeeId)) {
-				array('Employee.id' => $employeeId);	
+			$emp_conditions = array('Employee.id' => $employeeId);	
 			}
 
 			$this->Employee->bind(array('Salary','GovernmentRecord'));
@@ -231,6 +232,8 @@ class SalariesController  extends HumanResourceAppController {
 			$this->loadModel('Payroll.Tax');
 			$this->loadModel('Payroll.TaxDeduction');
 			$this->loadModel('Payroll.Wage');	
+
+			$this->loadModel('Payroll.Adjustment');	
 
 
 			$updateDatabase = false;
@@ -786,16 +789,19 @@ class SalariesController  extends HumanResourceAppController {
 	public function deductions() {
 
 		$this->loadModel('Payroll.Deduction');
+
 		$this->loadModel('Payroll.Loan');
+		
 		$this->loadModel('HumanResource.Employee');
 
 		$conditions = array();
+		
 		$employeeList = $this->Employee->getList($conditions);	
 
 		$limit = 10;
 		$defaultId = current(array_flip($employeeList));
 
-        $conditions = array('Deduction.employee_id' => $defaultId, 'Deduction.is_deleted' => 0);	
+        $conditions = array('Deduction.is_deleted' => 0);	
 
         $params =  array(
 	            'conditions' => $conditions,
@@ -1475,13 +1481,12 @@ class SalariesController  extends HumanResourceAppController {
 				$data =  file_get_contents("salaries/files/payroll-thirteen-month-".$id.".txt");
 
 				$salaries = $this->Payroll->objectToArray(json_decode($data)); 
-	
+
 			} else {
 
 				$data =  file_get_contents("salaries/files/payroll-".$id.".txt");
 
 				$salaries = $this->Payroll->objectToArray(json_decode($data)); 
-
 			}
 
 			
@@ -1513,7 +1518,6 @@ class SalariesController  extends HumanResourceAppController {
 			
 			}
 
-			//pr($salariesList); exit();
 			
 		}
 		
@@ -1550,14 +1554,12 @@ class SalariesController  extends HumanResourceAppController {
 			 if ($payroll['Payroll']['type'] == '13_month') {
 
 			 	$salaries = $this->_checkThirteenPayroll($payroll);
-
-
+			 
 			 } else {
-
-			 	$salaries = $this->_checkPayroll($payroll);
+				
+				$salaries = $this->_checkPayroll($payroll);
 			 }
 
-			// /pr($salaries);
 			if ($salaries) {
 
 				$this->loadModel('Payroll.SalaryReport');
@@ -1565,10 +1567,10 @@ class SalariesController  extends HumanResourceAppController {
 
 			 	if ($payroll['Payroll']['type'] == '13_month') {
 				
-					// if( $this->_createReport($salaries,$auth) ) {
+					if( $this->_createReport($salaries,$auth) ) {
 
-					// 	$salaries = $this->_checkPayroll($payroll,true);
-					// }
+						$salaries = $this->_checkThirteenPayroll($payroll,true);
+					}
 
 					$payroll['Payroll']['status'] = 'process';
 
@@ -1585,7 +1587,13 @@ class SalariesController  extends HumanResourceAppController {
 
 				} else {
 
-					if( $this->_createReport($salaries,$auth) ) {
+
+
+					$createReport = $this->_createReport($salaries,$auth);
+
+
+
+					if(!empty($createReport)) {
 
 						$salaries = $this->_checkPayroll($payroll,true);
 					}
@@ -1615,14 +1623,18 @@ class SalariesController  extends HumanResourceAppController {
 
 				$this->Session->setFlash(__('Payroll Process Completed.'),'success');
 
+
+			 $this->redirect(
+	                array('controller' => 'salaries', 'action' => 'payroll_view',$id)
+	            );
+
+
 			} else {
 
                  $this->Session->setFlash(__('There\'s an error Processing Payroll, Please try again'),'error');
 			}
 
-			 $this->redirect(
-	                array('controller' => 'salaries', 'action' => 'payroll_view',$id)
-	            );
+		
 		}
 
 		$this->set(compact('salaries','payroll'));
@@ -1672,6 +1684,8 @@ class SalariesController  extends HumanResourceAppController {
 			if ($this->SalaryReport->saveAll($report) ) {
 
 				return true;
+			} else {
+				return false;
 			}
 
 			//return 
@@ -1827,7 +1841,14 @@ class SalariesController  extends HumanResourceAppController {
 
 			// $salaries = $this->Payroll->objectToArray($payroll['Payroll']['data']); 
 
-			$data = file_get_contents("salaries/files/payroll-".$payroll_id.".txt");
+			if ($payroll['Payroll']['type'] == '13_month') {
+
+				$data = file_get_contents("salaries/files/payroll-thirteen-month-".$payroll_id.".txt");
+			} else {
+
+
+				$data = file_get_contents("salaries/files/payroll-".$payroll_id.".txt");
+			}
 
 			$salaries = $this->Payroll->objectToArray(json_decode($data)); 
 
@@ -1985,12 +2006,15 @@ class SalariesController  extends HumanResourceAppController {
 
 	}
 
-
 	public function _checkThirteenPayroll($payroll = null) {
 
 	$this->loadModel('HumanResource.Attendance');
 
 	$this->loadModel('HumanResource.Employee');
+
+	$this->loadModel('HumanResource.Salary');
+
+	$this->loadModel('HumanResource.Department');
 
 	$this->loadModel('HumanResource.OvertimeExcess');
 
@@ -1998,29 +2022,88 @@ class SalariesController  extends HumanResourceAppController {
 
 	$emp_conditions = array();//array('Employee.status NOT' => array('1'));
 
+	$this->Employee->bind(array('Salary','Department'));
+
 	$employees = $this->Employee->find('all',array(
 						'conditions' => $emp_conditions,
 						'order' => array('Employee.last_name ASC'),
 						'group' => array('Employee.id'),
-						'fields' => array('id','date_hired','full_name','code','first_name','middle_name','last_name'),
+						'fields' => array('id','date_hired','full_name','code','first_name','middle_name','last_name',
+						'Salary.employee_salary_type',
+						'Salary.basic_pay',
+						'Department.name',
+						'Department.prefix',
+						'Department.id'
+						),
 		));
 
+	$additional_fields = array(
+				'gross','time_work','days','total_hours','hours_ot',
+				'regular','OT','legal_holiday','legal_holiday_work',
+				'legal_holiday_work_ot','total','night_diff','night_diff_ot',
+				'sunday_night_diff','night_diff_legal_holiday','night_diff_legal_holiday_work',
+				'special_holiday','special_holiday_work','special_holiday_work_ot','night_diff_special_holiday',
+				'night_diff_special_holiday_work','sunday_work','sunday_work_ot','night_diff_sunday_work',
+				'night_diff_sunday_work_ot','leave','sunday_legal_holiday','sunday_work_legal_holiday',
+				'regular_hours','hours_regular','hours_night_diff','hours_night_diff_ot','hours_sunday_work','hours_sunday_work_ot',
+				'hours_sunday_night_diff','hours_sunday_night_diff_ot','sunday_ot','hours_legal_holiday_work','hours_legal_holiday_work_ot',
+				'hours_legal_holiday_work_night_diff','hours_legal_holiday_work_night_diff_ot','hours_legal_holiday_sunday_work',
+				'hours_legal_holiday_sunday_work_ot','hours_legal_holiday_sunday_work_night_diff','hours_legal_holiday_sunday_work_night_diff_ot',
+				'hours_special_holiday_work','hours_special_holiday_work_ot','hours_special_holiday_work_night_diff','hours_special_holiday_work_night_diff_ot',
+				'hours_special_holiday_sunday_work','hours_special_holiday_sunday_work_ot','hours_special_holiday_sunday_work_night_diff','hours_special_holiday_sunday_work_night_diff_ot',
+				'excess_ot','hours_excess_ot','id','employee_id','employee_salary_type','salary_type','from','to',
+				'sss','philhealth','ctpa','sea','allowances','gross_pay','total_earnings','adjustment','adjustment_ids',
+				'night_diff_total','total_deduction','with_holding_tax','net_pay','total_pay',
+	);
 
 	foreach ($employees as $key => $employee) {
-		
+			
 		//get Salary in time	
 		$params['employee_id']  = $employee['Employee']['id'];
 		$params['year'] = $payroll['Payroll']['year'];
+
+		foreach ($additional_fields as $fieldkey => $fields) {
+
+			if ($fields == 'employee_id') {
+
+				$employees[$key][$fields] = $employee['Employee']['id']; 
+
+			}  else {
+
+				$employees[$key][$fields] = 0;
+			}
+
+		}
+
 		$employees[$key]['Salaries'] = $this->SalaryReport->computeSalary($params);
+
+		$totalPay = 0;
+		//compute total pay
+		foreach($employees[$key]['Salaries'] as $salaryKey => $salary) {
+				
+			if (!empty($salary) && is_array($salary)) {
+
+				foreach ($salary as $salaryKey => $monthly) {
+						if (!empty($monthly)) {
+
+								if (is_array($monthly)) {
+									$totalPay += $monthly['SalaryReport']['basic_pay_month'];
+								} else {
+
+									$totalPay += $monthly['SalaryReport']['basic_pay_month'];
+								}
+						}
+				}
+			}
+
+		
+		}
+
+		$employees[$key]['total_pay'] = $employees[$key]['thirteen_month'] = $totalPay / 12;
+
 	}
 
-	// pr($employees); exit();
 
 	return $employees;
-
-
 	}
-
-
-
 }

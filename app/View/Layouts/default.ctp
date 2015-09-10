@@ -84,6 +84,7 @@
 								            <div class="pull-left">
 
 								                <h1>Dashboards</h1>
+								                
 								                <ol class="breadcrumb">
 								                    <?php 
 									                    echo $this->Html->getCrumbs(' > ', array(
@@ -112,6 +113,7 @@
 								                    <div class="graph-content spark-revenues"></div>
 								                </div>
 								            </div> -->
+								            
 								        </div>
 								    </div>
 								</div>

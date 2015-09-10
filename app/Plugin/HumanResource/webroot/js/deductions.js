@@ -155,7 +155,16 @@ $( ".datepick" ).datepicker({
   $('body').on('click','.ranges .applyBtn ',function(e){
   
     if ($('#DeductionAmount').val() != ''){
-      loadSummary();  
+        loadSummary();  
+    }
+     
+  });
+
+  
+  $('body').on('click','.daterangepicker .applyBtn ',function(e){
+  
+    if ($('#DeductionAmount').val() != ''){
+        loadDeduction();  
     }
      
   });

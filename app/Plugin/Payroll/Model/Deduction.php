@@ -30,9 +30,16 @@ class Deduction extends AppModel {
 					'className' => 'Loan',
 					'foreignKey' => 'loan_id',
 					//'conditions' => array('Loan.id = Deduction.employee_id')
-				),
-				
+				),				
+			
 			),
+			'hasMany' => array(
+				'Amortization' => array(
+					'className' => 'Amortization',
+					'foreignKey' => 'deduction_id',
+					'conditions' => ''
+				)
+			)
 
 		),false);
 
