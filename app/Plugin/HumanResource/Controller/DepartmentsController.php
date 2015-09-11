@@ -96,4 +96,32 @@ class DepartmentsController  extends HumanResourceAppController {
 		}
 	}
 
+	public function search() {
+
+			$query = $this->request->query;
+
+			$conditions = array();
+
+			if (!empty($query['department'])) {
+
+				$conditions = array('OR' => array(
+							'Department.name LIKE' => '%'. $query['department'] . '%'
+				));
+
+			}
+
+			$departmentData = $this->Department->find('all',array(
+				'conditions' => $conditions,
+				'order' => 'Department.name',
+				'group' => 'Department.id'
+			));
+
+			$this->set(compact('departmentData'));
+
+			if ($this->request->is('ajax')) {
+
+				$this->render('Departments/ajax/search');
+			}
+	}
+
 }

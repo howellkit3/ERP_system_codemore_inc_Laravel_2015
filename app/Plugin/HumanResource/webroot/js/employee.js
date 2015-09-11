@@ -159,7 +159,6 @@ $body.on('change','#EmployeeDepartmentId',function(e) {
 
     if ($('#checkbox-generate').is(':checked')) {
 
-
             getCode('#checkbox-generate');
        
     }
@@ -167,8 +166,7 @@ $body.on('change','#EmployeeDepartmentId',function(e) {
 });
 
 $body.on('change','#EmployeeCode',function(e) {
-
-
+    
     $('.appended-label').remove();
 
     if ($(this).val() != '') {
@@ -325,6 +323,7 @@ $('body').on('click','.select-status',function(e){
     }
    
 });
+
 
 function ajaxCallSearchEmployee(DepartmentId,thisStatus,inputSearch){
 

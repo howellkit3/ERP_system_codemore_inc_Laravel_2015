@@ -58,6 +58,26 @@ class Employee extends AppModel {
 					'conditions' => array('Salary.employee_id = Employee.id'),
 					'dependent' => true
 				),
+					'SSS' => array(
+					'className' => 'GovernmentRecord',
+					'foreignKey' => false,
+					'conditions' => array('SSS.employee_id = Employee.id','SSS.agency_id' => 1)
+						),
+				'PhilHealth' => array(
+					'className' => 'GovernmentRecord',
+					'foreignKey' => false,
+					'conditions' => array('PhilHealth.employee_id = Employee.id','PhilHealth.agency_id' => 3)
+						),
+				'TIN' => array(
+					'className' => 'GovernmentRecord',
+					'foreignKey' => false,
+					'conditions' => array('TIN.employee_id = Employee.id','TIN.agency_id' => 2)
+						),
+				'Pagibig' => array(
+					'className' => 'GovernmentRecord',
+					'foreignKey' => false,
+					'conditions' => array('Pagibig.employee_id = Employee.id','Pagibig.agency_id' => 4)
+						),	
 			
 			),
 			'belongsTo' => array(
@@ -88,7 +108,8 @@ class Employee extends AppModel {
 				// 		'foreignKey' => 'employee_id',
 				// 		'conditions' => '',
 				// 		'dependent' => true,
-				// 	),	
+				// 	),
+			
 			),
 			'hasMany' => array(
 				'Email' => array(
@@ -213,7 +234,7 @@ class Employee extends AppModel {
 				'GovernmentRecord' => array(
 					'className' => 'GovernmentRecord',
 					'foreignKey' => false,
-					'conditions' => array('GovernmentRecord.employee_id = Employee.id','GovernmentRecord.agency_id' => 2)
+					'conditions' => array('GovernmentRecord.employee_id = Employee.id','GovernmentRecord.agency_id' => 4)
 					),
 			),
 			'hasOne' => array(

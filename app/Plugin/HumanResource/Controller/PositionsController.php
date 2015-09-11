@@ -99,4 +99,33 @@ class PositionsController  extends HumanResourceAppController {
 		}
 	}
 
+	public function search() {
+
+			$query = $this->request->query;
+
+			$conditions = array();
+
+			if (!empty($query['position'])) {
+
+				$conditions = array('OR' => array(
+							'Position.name LIKE' => '%'. $query['position'] . '%'
+				));
+
+			}
+
+			$positionData = $this->Position->find('all',array(
+				'conditions' => $conditions,
+				'order' => 'Position.name',
+				'group' => 'Position.id'
+			));
+
+			$this->set(compact('positionData'));
+
+			if ($this->request->is('ajax')) {
+
+				$this->render('Positions/ajax/search');
+			}
+	}
+
+
 }

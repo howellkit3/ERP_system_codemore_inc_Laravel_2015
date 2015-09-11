@@ -1,10 +1,12 @@
 <?php $this->Html->addCrumb('Settings', array('controller' => 'settings', 'action' => 'department')); ?>
 <?php $this->Html->addCrumb('Position', array('controller' => 'settings', 'action' => 'position','tab'=>'position')); ?>
-<?php echo $this->element('hr_options');
-    $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : ' ';
+<?php 
+echo $this->element('hr_options');
+$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : ' ';
 
- ?>
+echo $this->Html->script('HumanResource.position');
 
+?>
  <div class="row">
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
@@ -22,7 +24,7 @@
                                     <div class="filter-block pull-right">
                                      <div class="form-group pull-left">
                                             <?php //echo $this->Form->create('Quotation',array('controller' => 'quotations','action' => 'search', 'type'=> 'get')); ?>
-                                                <input placeholder="Search..." class="form-control searchCustomer"  />
+                                                <input placeholder="Search..." class="form-control searchPosition"  />
                                                 <i class="fa fa-search search-icon"></i>
                                              <?php //echo $this->Form->end(); ?>
                                         </div>
@@ -50,9 +52,10 @@
                                                     <th><a href="#"><span>Actions</span></a></th>
                                                 </tr>
                                             </thead>
+
+                                             <tbody aria-relevant="all" aria-live="polite" role="alert" class="append-table-position">
                                               <?php if(!empty($positionData)) {
                                                     foreach ($positionData as $key => $positionList): $key++ ?>
-                                                            <tbody aria-relevant="all" aria-live="polite" role="alert">
                                                                 <tr class="">
                                                                     <td class="">
                                                                         <?php echo $key;?> 
@@ -104,10 +107,10 @@
                                                                     </td>
                                                                 </tr>
 
-                                                            </tbody>
                                                 <?php 
                                                     endforeach; 
-                                                } ?>  
+                                                } ?>
+                                                </tbody>
                                         
                                         </table>    
 

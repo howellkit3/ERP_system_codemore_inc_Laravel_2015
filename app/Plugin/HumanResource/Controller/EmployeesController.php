@@ -569,14 +569,20 @@ class EmployeesController  extends HumanResourceAppController {
 			//pr($this->request->data);exit();
 			$this->loadModel('HumanResource.Position');
 			$this->loadModel('HumanResource.Department');
+			$this->loadModel('HumanResource.EmployeeAdditionalInformation');
+			$this->loadModel('HumanResource.Salary');
 			$this->loadModel('HumanResource.Status');
+			$this->loadModel('HumanResource.GovernmentRecord');
+			$this->loadModel('HumanResource.Address');
+			$this->loadModel('HumanResource.Contact');
+			$this->loadModel('HumanResource.Email');
 
 			// ini_set('max_execution_time', 3600);
 			// ini_set('memory_input_time', 1024);
 			// ini_set('max_input_nesting_level', 1024);
 			// ini_set('memory_limit', '1024M');
 
-			$this->Employee->bind(array('Position','Department','Status'));
+			$this->Employee->bind(array('Position','Department','Contact','Status','EmployeeAdditionalInformation','Address','Salary','SSS','PhilHealth','TIN','Pagibig','Email'));
 
 			$conditions = array();
 
@@ -603,8 +609,14 @@ class EmployeesController  extends HumanResourceAppController {
 
 			}
 
-			$employeeData = $this->Employee->find('all',array('conditions' => $conditions));
+			$employeeData = $this->Employee->find('all',array(
+				'conditions' => $conditions,
+				'order' => array('Employee.last_name','Employee.first_name'),
+				'group' => 'Employee.id'
+			));
+			
 			//pr($employeeData);exit();
+			
 			$this->set(compact('employeeData'));
 			
 			$this->render('Employees/xls/employee_report');
@@ -821,7 +833,8 @@ class EmployeesController  extends HumanResourceAppController {
 			$conditions = array_merge($conditions,array(
 									'OR' => array(
 										array('Employee.first_name LIKE' => '%' . $hintKey . '%'),
-										array('Employee.last_name LIKE' => '%' . $hintKey . '%')
+										array('Employee.last_name LIKE' => '%' . $hintKey . '%'),
+										array('Employee.code LIKE' => '%'. $hintKey .'%')
 									)
 								));
 

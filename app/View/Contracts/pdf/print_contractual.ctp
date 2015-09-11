@@ -83,7 +83,7 @@
 						<td style="width:123px;font-family: Calibri;">NAME OF SPOUSE</td>
 						<td style="width:20px;">:</td>
 						<td style="width:200px;">
-							<?php //echo $employeeData['EmployeeAdditionalInformation']['birth_place'] ?>
+							<?php echo !empty($employeeData['EmployeeAdditionalInformation']['spouse']) ? $employeeData['EmployeeAdditionalInformation']['spouse'] : '';  ?>
 						</td>
 						
 					</tr>
@@ -92,13 +92,13 @@
 						<td style="width:123px;font-family: Calibri;">SSS NO</td>
 						<td style="width:20px;">:</td>
 						<td style="width:200px;">
-							<?php //echo $employeeData['Status']['name'] ?>
+							<?php echo !empty($employeeData['SSS']['value']) ? $employeeData['SSS']['value'] : ''; ?> 
 						</td>
 
 						<td style="width:123px;font-family: Calibri;">TIN NO</td>
 						<td style="width:20px;">:</td>
 						<td style="width:200px;">
-							<?php //echo $employeeData['EmployeeAdditionalInformation']['birth_place'] ?>
+							<?php echo !empty($employeeData['TIN']['value']) ? $employeeData['TIN']['value'] : ''; ?> 
 						</td>
 						
 					</tr>
@@ -107,7 +107,7 @@
 						<td style="width:123px;font-family: Calibri;">POSITION</td>
 						<td style="width:20px;">:</td>
 						<td style="width:200px;">
-							<?php echo ucfirst($employeeData['Position']['name']) ?>/<?php echo ucfirst($employeeData['Department']['name']) ?>
+							<?php echo ucfirst($employeeData['Position']['name']) ?> / <?php echo ucfirst($employeeData['Department']['name']) ?>
 						</td>
 
 						<td style="width:123px;font-family: Calibri;">HIRING DURATION</td>
@@ -132,11 +132,31 @@
 						<td class="td-heigth" style="vertical-align: center;border:1px solid black;"><center><b>SEA</b></center></td>
 					</tr>
 					<tr>
-						<td class="td-heigth" style=" vertical-align: center;  border:1px solid black;"><center>-</td>
-						<td class="td-heigth" style=" vertical-align: center;  border:1px solid black;"><center>-</center></td>
-						<td class="td-heigth" style="vertical-align: center;border:1px solid black;"><center>-</center></td>
-						<td class="td-heigth" style="vertical-align: center;border:1px solid black;"><center>-</center></td>
-						<td class="td-heigth" style="vertical-align: center;border:1px solid black;"><center><b>-</b></center></td>
+						<td class="td-heigth" style=" vertical-align: center;  border:1px solid black;">
+						<center> 
+							-
+						</center> 
+						</td>
+						<td class="td-heigth" style=" vertical-align: center;  border:1px solid black;">
+							<center> 
+								<?php echo !empty($employeeData['Salary']['basic_pay']) ? number_format($employeeData['Salary']['basic_pay'],2) : '-';?>
+							</center> 
+						</td>
+						<td class="td-heigth" style="vertical-align: center;border:1px solid black;">
+							<center>
+								<?php echo !empty($employeeData['Salary']['allowance']) ? number_format($employeeData['Salary']['allowance'],2) : '-';?>
+							</center>
+						</td>
+						<td class="td-heigth" style="vertical-align: center;border:1px solid black;">
+							<center>
+								<?php echo !empty($employeeData['Salary']['ctpa']) ? number_format($employeeData['Salary']['ctpa'],2) : '-';?>
+							</center>
+						</td>
+						<td class="td-heigth" style="vertical-align: center;border:1px solid black;">
+							<center>
+								<?php echo !empty($employeeData['Salary']['ctpa']) ? number_format($employeeData['Salary']['sea'],2) : '-';?>
+							</center>
+						</td>
 					</tr>
 				</thead>
 			</table>
