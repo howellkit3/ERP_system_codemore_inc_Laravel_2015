@@ -5,21 +5,10 @@
 
     $objTpl = PHPExcel_IOFactory::load("./img/salaries/salaries_edited.xls");
     $counter = 5;
-    
 
-    if ($payroll['Payroll']['type'] == '13_month') {
-
-       $objTpl->setActiveSheetIndex(0)
-    ->setCellValue('A2','13th Month Pay for '.date('F d',strtotime($payroll['Payroll']['from'])).'-'.date('F d',strtotime($payroll['Payroll']['to'])).' '. $payroll['Payroll']['year']);
-
-
-    } else {
-       $objTpl->setActiveSheetIndex(0)
+    $objTpl->setActiveSheetIndex(0)
     ->setCellValue('A2','Payroll '.date('F d',strtotime($payroll['Payroll']['from'])).'-'.date('d',strtotime($payroll['Payroll']['to'])).' '. $payroll['Payroll']['year']);
 
-
-    }
-   
     // ->getStyle('A4:AK4')
     // ->getFont()->setBold(true);
             
@@ -301,14 +290,9 @@
 
           }
 
-           //net pay's and total
-          $fields = array('net_pay' => 'Net Pay','excess_ot' => 'Irrg OT','allowances' => 'Allowances', 'adjustment' => 'Incentives/ Adj');
 
-          if ($payroll['Payroll']['type'] == 'thirteen_month' && !empty($emp['thirteen_month'])) {
-
-          }
-
-          $fields = array_merge($fields,array('total_pay' => 'Total Pay'));
+             //net pay's and total
+          $fields = array('net_pay' => 'Net Pay','excess_ot' => 'Irrg OT','allowances' => 'Allowances', 'adjustment' => 'Incentives/ Adj','total_pay' => 'Total Pay');
 
           $next_field_inner = $innerAddress;
 

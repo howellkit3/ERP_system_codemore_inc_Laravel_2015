@@ -1724,7 +1724,7 @@ class SalaryComputationComponent extends Component
 				$conditions = array('TaxDeduction.type' => $type);
 
 				$taxDeductList = $TaxDeduction->find('first',array('conditions' => $conditions));
-
+				
 				//computations
 				if (!empty($taxKey)) {
 
@@ -1732,7 +1732,6 @@ class SalaryComputationComponent extends Component
 					$total_tax = (double)$netPay - (double)$range;
 					$total_tax = $total_tax * (str_replace('%','',$taxDeductList['TaxDeduction']['tax_'.$taxKey.'_percent']) / 100);
 					$total_tax = $total_tax +  $taxDeductList['TaxDeduction']['tax_'.$taxKey];
-
 
 				}
 			}
