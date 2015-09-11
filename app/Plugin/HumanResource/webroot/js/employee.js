@@ -100,7 +100,10 @@ var checkExistingCode = function(element){
 
     $('.appended-label').remove();
 
-    $this = $(element);
+    $this = $('#EmployeeCode');
+
+
+
     if ($this.val() != '') {
 
          $.ajax({
