@@ -97,8 +97,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 			 $this->loadModel('HumanResource.Salaries');
 
-
-			  $uploader = new ImageUploader;
+			 $uploader = new ImageUploader;
         
 			 if(!empty($this->request->data)){
 			 	
@@ -109,7 +108,6 @@ class EmployeesController  extends HumanResourceAppController {
 
 					$file = $this->request->data['Employee']['file'];
               
-
                     if ($this->request->data['Employee']['file']['error'] == 0 ) {
                        $time = time();
                        $file['name'] = $uploader->resize($file, $time,'employee');
@@ -153,13 +151,11 @@ class EmployeesController  extends HumanResourceAppController {
 
 			 		$save = $this->Email->saveEmails($data['ContactPersonData']['Email'],$employeeId,'ContactPerson',$auth['id']);
 
-
-
 			 		//$save
 			 		$this->Session->setFlash('Saving employee information successfully, Please add Salary setting','success');
 			 		   $this->redirect( array(
-                                 'controller' => 'employees', 
-                                 'action' => 'view',
+                                 'controller' => 'salaries', 
+                                 'action' => 'employee_settings',
                                  $this->Employee->id
                             ));
                 
@@ -701,7 +697,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 			$code = $this->request->data['emp_code'];
 
-			$employee = $this->Employee->find('count',array('conditions' => array('Employee.code' => $code  )));
+			$employee = $this->Employee->find('count',array('conditions' => array('Employee.code' => $code )));
 
 			echo json_encode(array('result' => $employee ));
 			exit();

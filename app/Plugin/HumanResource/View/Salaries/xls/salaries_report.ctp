@@ -5,8 +5,6 @@
 
     $objTpl = PHPExcel_IOFactory::load("./img/salaries/salaries_edited.xls");
     $counter = 5;
-    
-
 
     $objTpl->setActiveSheetIndex(0)
     ->setCellValue('A2','Payroll '.date('F d',strtotime($payroll['Payroll']['from'])).'-'.date('d',strtotime($payroll['Payroll']['to'])).' '. $payroll['Payroll']['year']);
