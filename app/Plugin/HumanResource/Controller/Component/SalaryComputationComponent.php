@@ -20,11 +20,14 @@ class SalaryComputationComponent extends Component
 
         	$Overtime = ClassRegistry::init('Overtime');
 
+        	$ExcessOt = ClassRegistry::init('OvertimeExcess');
 
 			$holidays = $Holidays->find('all',array(
 			'conditions' => array('Holiday.year' => date('Y',strtotime($customDate['start']))),
 			'fields' => array('id','name','start_date','end_date','year','type')
 			));
+
+			//excess overtimne
 
 			$minimumWage = $Wage->find('first', array(
 				'conditions' => array('Wage.name like' => 'Minimum')
@@ -35,7 +38,6 @@ class SalaryComputationComponent extends Component
 			$models['OvertimeRate'] = $OvertimeRate;
 			$models['Holiday'] = $holidays;
 			$models['Contibution'] = $contributions;
-
 			$workingDays = $this->workingDays($customDate);
 
         	if (!empty($data)) {
@@ -78,7 +80,7 @@ class SalaryComputationComponent extends Component
         				$salary[$key]['sss'] = $this->sss_pay($employee['Attendance'],$employee['Salary'],$pay_sched,$salary[$key]['gross'], $models );
 						$salary[$key]['philhealth'] = $this->philhealth_pay($employee['Attendance'],$employee['Salary'],$pay_sched,$salary[$key]['gross'],$models);
 						$salary[$key]['pagibig'] = $this->pagibig_pay($employee['Attendance'],$employee['Salary'],$pay_sched,$salary[$key]['gross'] , $models );
-						
+							
 
 						//ctpa 
 						$salary[$key]['ctpa'] = !empty($employee['Salary']['ctpa']) ? $gross['days'] * $employee['Salary']['ctpa'] : 0; 
@@ -161,21 +163,22 @@ class SalaryComputationComponent extends Component
 
 						$total_pay  += $employee['Salary']['allowances'];
 
+						//add irregular ot
+						$total_pay += $salary[$key]['excess_ot'];	
+
 						//$total_pay  -= $salary[$key]['sss'];
 						$salary[$key]['total_pay'] = $total_pay;
 						$salary[$key]['Employee'] = $employee['Employee'];
 						$salary[$key]['Department'] = !empty($employee['Department']) ? $employee['Department'] : array();
 						$salary[$key]['Position']	= !empty($employee['Position']) ? $employee['Position'] : array();
 						$salary[$key]['EmployeeAdditionalInformation']	= !empty($employee['EmployeeAdditionalInformation']) ? $employee['EmployeeAdditionalInformation'] : array();
-
         		}
-
         		return $salary;
 
         	}
     }
 
-        private function workingDays($date = null) {
+    private function workingDays($date = null) {
 
 
     	if (!empty($date)) {
@@ -355,7 +358,6 @@ class SalaryComputationComponent extends Component
 		$data['legal_holiday_work_ot'] = 0;
 		$data['total'] =  0;
 		$data['total_hours'] =  0;
-		$data['hours_ot'] =  0;
 		$data['regular'] =  0;
 		$data['OT'] =  0;
 		$data['night_diff'] =  0;
@@ -376,10 +378,6 @@ class SalaryComputationComponent extends Component
 		$data['leave'] =  0;
 		$data['sunday_legal_holiday'] =  0;
 		$data['sunday_work_legal_holiday'] =  0;
-
-    	if (!empty($employee)) {
-
-
 
     	$data['hours_regular'] = 0;
     	$data['hours_ot'] = 0;
@@ -419,6 +417,12 @@ class SalaryComputationComponent extends Component
     	$data['hours_special_holiday_sunday_work_night_diff'] = 0;
     	$data['hours_special_holiday_sunday_work_night_diff_ot'] = 0;
 	
+    	$data['excess_ot'] = 0;
+    	$data['hours_excess_ot'] = 0;
+
+    	if (!empty($employee)) {
+
+
 
 		$daysGet = array();
 
@@ -575,6 +579,10 @@ class SalaryComputationComponent extends Component
 
 					}
 				}	
+
+			//check excess_ot on regular days
+			$data['hours_excess_ot'] += $this->_excessOvertime($days);
+
     	}
 
 		$data['regular'] = ($employee['Salary']['basic_pay'] * $data['hours_regular']) / $hours;
@@ -671,12 +679,31 @@ class SalaryComputationComponent extends Component
 
 		$data['days'] = $countDays;
 
+		//excess overtime
+		if ($data['hours_excess_ot'] > 0) {
+			$data['excess_ot']  = ($employee['Salary']['basic_pay'] * $data['hours_excess_ot'] * 1.25) / $workingDays;
+		}
+
 		$data['gross'] = $data['gross'];
 
     	}
 
     	return $data;
     }
+
+    private function _excessOvertime($attendance = null) {
+
+		//$data['hours_excess_ot'] += $this->_excessOvertime($days,$models['OvertimeExcess']);
+    	$hours_excess = 0;
+
+    	if (!empty($attendance['OvertimeExcess']['id'])) {
+
+    		$hours_excess = $attendance['OvertimeExcess']['used_time'];
+    	}
+			
+		return $hours_excess;
+	}
+
 
 
      private function _monthlyRate($employee = null, $models = array() ,$hours = 8, $workingDays = 26) {
@@ -709,6 +736,7 @@ class SalaryComputationComponent extends Component
 		$data['hours_ot'] =  0;
 		$data['regular'] =  0;
 		$data['OT'] =  0;
+
 		$data['night_diff'] =  0;
 
 		$data['night_diff_ot'] =  0;
@@ -731,16 +759,9 @@ class SalaryComputationComponent extends Component
 		$data['sunday_legal_holiday'] =  0;
 		$data['sunday_work_legal_holiday'] =  0;
 		$data['regular_hours'] = 0;
-	
-    	if (!empty($employee)) {
-
-    	$hours_ot = 0;
-
-    	if (!empty($employee['Attendance'])) {
 
 
     	$data['hours_regular'] = 0;
-    	$data['hours_ot'] = 0;
 
     	$data['hours_night_diff'] = 0;
     	$data['hours_night_diff_ot'] = 0;
@@ -776,6 +797,16 @@ class SalaryComputationComponent extends Component
 
     	$data['hours_special_holiday_sunday_work_night_diff'] = 0;
     	$data['hours_special_holiday_sunday_work_night_diff_ot'] = 0;
+
+    	$data['excess_ot'] = 0;
+    	$data['hours_excess_ot'] = 0;
+
+		
+    	if (!empty($employee)) {
+
+    	$hours_ot = 0;
+
+    	if (!empty($employee['Attendance'])) {
 
 
 		$daysGet = array();
@@ -830,14 +861,10 @@ class SalaryComputationComponent extends Component
 										$overtime = $this->_checkOvertime($days);
 										$data['hours_legal_holiday_sunday_work_ot'] = $overtime['total_hours'];
 
-
 										//sunday legal holiday night_diff
-
 										$data['hours_legal_holiday_sunday_work_night_diff'] += $this->_nightDiff($days);
-
 										$data['hours_legal_holiday_sunday_work_night_diff_ot'] += $overtime['night_diff'];
 										
-
 									} else {
 
 										$data['hours_legal_holiday_work'] = $this->_total_hours($days);
@@ -905,7 +932,6 @@ class SalaryComputationComponent extends Component
 					}
 
 
-		
 				}
 				//sunday work
 				if (date("w",strtotime($today)) == 0 && in_array($today, $daysGet)) {
@@ -928,7 +954,11 @@ class SalaryComputationComponent extends Component
 
 					}
 				}
-			
+		
+
+		//check excess_ot on regular days
+		$data['hours_excess_ot'] += $this->_excessOvertime($days);
+
     	}
 
     	
@@ -1048,10 +1078,14 @@ class SalaryComputationComponent extends Component
 			}
 		}
 
+		//excess overtime
+		if ($data['hours_excess_ot'] > 0) {
+			$data['excess_ot']  = ($employee['Salary']['basic_pay'] * $data['hours_excess_ot'] * 1.25) / $workingDays;
+		}
+
 		$data['gross'] = $data['gross'];
 
     	}
-
 
     }
 
@@ -1372,7 +1406,6 @@ class SalaryComputationComponent extends Component
 						
 						$range = $SssRange->find('first',array('conditions' => $conditions ,'order' => 'SssRange.credits DESC'));
 
-
 						$pay = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $pay;
 				}
 				default:
@@ -1686,6 +1719,7 @@ class SalaryComputationComponent extends Component
 		return $total_tax;
 
 	}
+
 
 
 }

@@ -29,6 +29,7 @@ function loadSummary(){
 
             }
         });
+
 }
 
 function checkEmployeeGross(employeeId) {
@@ -160,7 +161,7 @@ $( ".datepick" ).datepicker({
      
   });
 
-  $('body').on('click','.view_amortization',function(){
+  $('body').on('click','.edit_adjustment',function(){
 
     $deductionId = $(this).data('id');
 
@@ -168,12 +169,12 @@ $( ".datepick" ).datepicker({
 
     $.ajax({
             type: "GET",
-            url: serverPath + "human_resource/deductions/view_amortization/"+$deductionId,
+            url: serverPath + "human_resource/salaries/adjustments_edit/"+$deductionId,
             dataType: "html",
             success: function(data) {
               
               try {
-                 $('#result_container').html(data);
+                 $('.ajax-result').html(data);
               } catch (e) {
 
                 console.log(e);
@@ -189,7 +190,7 @@ $( ".datepick" ).datepicker({
 
     //$(this).attr('href',url+'?days='+range+'&&month='+month);
 
-    swal({   title: "Delete Deduction",  
+    swal({   title: "Delete Adjustment",  
      text: "This will remove deduction info from employee. CLick OK to continue",  
      type: "info", 
      showCancelButton: true,   

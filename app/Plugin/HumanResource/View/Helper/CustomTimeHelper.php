@@ -30,8 +30,8 @@ function getDuration($time1 = null,$time2 = null)
 	if (!empty($time1) && $time2) {
 
 		$date = date('Y-m-d');
-		$date1 = new DateTime($date.' '.$time1);
-		$date2 = new DateTime($date.' '.$time2);
+		$date1 = new DateTime($time1);
+		$date2 = new DateTime($time2);
 
 		$interval = $date1->diff($date2);
 

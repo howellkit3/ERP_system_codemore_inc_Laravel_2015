@@ -67,11 +67,9 @@
      $sheet->setCellValue( $address, 'Total Deduction' );
 
       //net pay's and total
-     $fields = array('Net Pay','Allowances','Incentives/ Adj','Total Pay');
+     $fields = array('Net Pay','Irrg OT','Allowances','Incentives/ Adj','Total Pay');
 
      $next_field = $address;
-
-
 
      foreach ($fields as $key => $list) {             
                   $split = PHPExcel_Cell::coordinateFromString($next_field);
@@ -82,14 +80,19 @@
 
                   $sheet->setCellValue( $next_field, $list );
                   
-
                   $sheet->getStyle($next_field.':'.$nextRow)->applyFromArray($styleArray);
                   $sheet->getStyle($next_field.':'.$nextRow)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
                   $sheet->getStyle($next_field.':'.$nextRow)->applyFromArray($styleArrayHeader);
+
+                 if ($list == 'Irrg OT') {
+                  $column = preg_replace('/[0-9]+/', '', $next_field);
+                  $sheet->getColumnDimension($column)->setVisible(false);
+                 }
+                  
+                 
                   $next_field = implode($split);
 
       }
-
     //add color if value is negative
     $styleArray = array(
                 'font'  => array(
@@ -239,7 +242,7 @@
           $sheet->getStyle('AC'.$counter)->applyFromArray($styleArrayBorder);
           $sheet->getStyle('AC'.$counter)->getNumberFormat()->setFormatCode('#,##0.00');
 
-          $sheet->setCellValue('AD'.$counter,$emp['gross']);
+          $sheet->setCellValue('AD'.$counter,$emp['gross_pay']);
           $sheet->getStyle('AD'.$counter)->applyFromArray($styleArrayBorder);
 
           $value = !empty($emp['sss']) ? $emp['sss'] : '-';
@@ -292,7 +295,7 @@
 
 
              //net pay's and total
-          $fields = array('net_pay' => 'Net Pay', 'allowances' => 'Allowances', 'incentives' => 'Incentives/ Adj','total_pay' => 'Total Pay');
+          $fields = array('net_pay' => 'Net Pay','excess_ot' => 'Irrg OT','allowances' => 'Allowances', 'incentives' => 'Incentives/ Adj','total_pay' => 'Total Pay');
 
           $next_field_inner = $innerAddress;
 

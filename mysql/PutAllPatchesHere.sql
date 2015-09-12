@@ -1990,3 +1990,23 @@ CREATE TABLE IF NOT EXISTS `overtime_limits` (
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
+
+
+/* aldrin added this / overtime excess / koufu humnan resource table */
+
+ALTER TABLE `overtime_excess` ADD `employee_id` INT NULL AFTER `overtime_id`;
+ALTER TABLE `overtime_excess`  ADD `attendance_id` INT NULL  AFTER `overtime_id`;
+
+/* aldrin added this / adjustments  / koufu payrolls table */
+CREATE TABLE IF NOT EXISTS `adjustments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `amount` decimal(8,2) NOT NULL,
+  `payroll_date` datetime NOT NULL,
+  `reason` text NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modifiy_id` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;

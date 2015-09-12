@@ -251,3 +251,6 @@ div.value {
   clear: both;
   position: relative;
 }
+.text-center.time-in, .text-center.time-out {
+  width: 105px;
+}

@@ -108,7 +108,12 @@ header("Content-type: application/pdf");
 									<td>OT</td>
 									<td class="text-right"><?php echo !empty($salary['hours_ot']) ?  $salary['hours_ot'] : 0; 
 									$total_hours += $salary['hours_ot'];?></td>
-									<td class="text-right"><?php echo number_format($salary['OT'],2) ?></td>
+									<td class="text-right"><?php 
+									$total_overtime = $salary['OT'];
+									//add excess overtime
+									$total_overtime += $salary['excess_ot'];
+
+									echo number_format($total_overtime,2) ?></td>
 								</tr>
 								<tr>
 									<td>Sun</td>
@@ -250,8 +255,6 @@ header("Content-type: application/pdf");
 							</table>
 						 </td>
 						</tr>
-
-
 						<tr>
 							<td class="border-top">
 								<table class="full-width border-right">	
@@ -262,12 +265,14 @@ header("Content-type: application/pdf");
 									</tr>
 								</table>
 							</td>
-							<td class="border-top"><table class="full-width">	
+							<td class="border-top">
+								<table class="full-width">	
 									<tr>
 										<td><strong>Total Deductions</strong></td>
 										<td class="text-right"> <?php echo number_format($salary['total_deduction'],2) ?>  </td>
 									</tr>
-								</table></td>
+								</table>
+							</td>
 						</tr>
 
 				</table>

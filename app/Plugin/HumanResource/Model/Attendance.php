@@ -83,8 +83,17 @@ class Attendance extends AppModel {
 						'foreignKey' => false,
 						'dependent' => false,
 						'conditions' => array('BreakTime.id = WorkShiftBreak.breaktime_id')
+					)
+				),
+				'hasOne' => array(
+
+					'OvertimeExcess' => array(
+						'className' => 'OvertimeExcess',
+						'foreignKey' => 'attendance_id',
+						'dependent' => false,
 					),
-			)));
+				)
+		));
 		$this->recursive = 1;
 	}
 
@@ -111,7 +120,6 @@ class Attendance extends AppModel {
 						
 						$attendance = $this->find('first',array('conditions' => array('employee_id' => $dataList['foreign_key'], 'schedule_id' => $dataList['id'])));
 
-						pr($attendance);
 						$sched['Attendance']['id'] = !empty($attendance['Attendance']['id']) ? $attendance['Attendance']['id'] : '';
 					}
 					

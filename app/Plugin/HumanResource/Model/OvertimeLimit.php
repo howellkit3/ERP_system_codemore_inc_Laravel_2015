@@ -49,8 +49,6 @@ class OvertimeLimit extends AppModel {
 
 					if ( date("w",strtotime($current)) != 0) {
 						$limit[$key] = $current;
-
-
 					} else {
 						$limit[]['sunday'] = $current;
 						$key++; 
@@ -60,26 +58,35 @@ class OvertimeLimit extends AppModel {
 
 		}
 
+		$index = 0;
+		$saveData = array();
+		end($limit);
 
-			$index = 0;
-			$saveData = array();
+		$lastKey = key($limit);
+
 			foreach ($limit as $key => $value) {
 				
 				if ($index == 0) {
 					$saveData[$key]['from'] = $begin->format("Y-m-d");
 				} else {
 
-					pr($lastDate);
 					$last = new DateTime($lastDate);
 					$last = $last->modify('+2 day');
 
 					$saveData[$key]['from'] = $last->format("Y-m-d");
 				}	
 				
-				$saveData[$key]['to'] = $value;
-				
-				$lastDate = $saveData[$key]['to'];
+				$saveData[$key]['to'] =  $value;
 
+				if ($key !=  $lastKey) {
+					
+					$toDate =  new DateTime($value);
+					$to = $toDate->modify('+1 day');
+					$saveData[$key]['to'] =  $to->format("Y-m-d");
+				}
+			
+				$lastDate = $saveData[$key]['to'];
+				
 				$saveData[$key]['employee_id'] = $data['foreign_key'];
 				
 				if ( $data['model'] == 'Employee' ) {
@@ -97,9 +104,7 @@ class OvertimeLimit extends AppModel {
 			}
 
 			return $this->saveAll($saveData);
-
 			// $this->save($data);
-
 		}
 	}
 
@@ -117,13 +122,12 @@ class OvertimeLimit extends AppModel {
 				$from = new DateTime($data['Overtime']['from']);
 				$to = new DateTime($data['Attendance']['out']);
 				
-				if ($to > $data['Overtime']['to']) {
+				if ($data['Attendance']['out'] > $data['Overtime']['to']) {
 
 					$to = new DateTime($data['Overtime']['to']);
 				}
-
+				
 				$saveData['total_hours'] =  $from->diff($to)->format('%h.%i'); 
-
 			}
 			
 			//find limit whe date is belong
@@ -143,10 +147,16 @@ class OvertimeLimit extends AppModel {
 
 				$total_consumed = $limit['OvertimeLimit']['used'] + $saveData['total_hours'];
 
+				$consumed = $saveData['total_hours'];
+
+				if ($limit['OvertimeLimit']['used'] < 12) {
+					$consumed = $total_consumed - 12;
+				}
+
 				$this->saveField('used',$total_consumed);
 
 				if ($total_consumed > 12) {
-					$limit['OvertimeLimit']['used'] = $saveData['total_hours'];
+									$limit['OvertimeLimit']['used'] = $consumed;
 					return $limit;
 				}	
 				

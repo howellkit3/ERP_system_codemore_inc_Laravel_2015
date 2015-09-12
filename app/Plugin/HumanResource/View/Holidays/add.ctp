@@ -10,7 +10,6 @@
 <?php echo $this->element('hr_options'); ?><br><br>
 <?php echo $this->Form->create('Holiday',array('url'=>(array('controller' => 'holidays','action' => 'add')),
 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data' ));?>
-
     <div class="row">
         <div class="col-lg-12">
         	<div class="row">

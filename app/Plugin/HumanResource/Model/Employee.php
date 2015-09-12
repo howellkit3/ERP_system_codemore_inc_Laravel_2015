@@ -309,4 +309,11 @@ class Employee extends AppModel {
 
 	}
 
+	public function findbyCode($code = null,$type = 'first',$fields = array(),$conditions = array()) {
+
+		$conditions = array('Employee.code' => $code );
+		return $this->find($type,array('conditions' => $conditions,'fields' => $fields));
+
+	}
+
 }

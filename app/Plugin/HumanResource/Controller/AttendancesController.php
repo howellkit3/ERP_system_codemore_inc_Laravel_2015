@@ -88,11 +88,10 @@ class AttendancesController  extends HumanResourceAppController {
 		if (!empty($query['date'])) {
 
 			$date = $query['date'];
-
 		}
 
 		$conditions = array(
-			'Attendance.date <=' => $date,
+			//'Attendance.date <=' => $date,
 			 'Attendance.date >=' => $date
 		);
 
@@ -107,6 +106,8 @@ class AttendancesController  extends HumanResourceAppController {
 			}
 			
 		}
+		// pr($employees);
+		// pr($conditions); exit();
 
 		$conditions = array(
 			'Timekeep.date <=' => $date,
@@ -238,7 +239,9 @@ class AttendancesController  extends HumanResourceAppController {
 							//check if its overtime
 							$overtime = $this->OvertimeLimit->checkIfConsumed($attendance);
 
-							if (!empty($overtime['Overtime']['id'])) {
+							$limit = '';
+
+							if (!empty($overtime['OvertimeLimit']['id'])) {
 
 								$limit = $this->OvertimeExcess->saveExcess($overtime,$attendance,$auth);
 							}
@@ -791,6 +794,75 @@ public function daily_info() {
 			return json_encode($timekeep);	
 
 		}
+	}
+
+
+	public function irreg_ot() {
+
+		$this->loadModel('HumanResource.Employee');
+
+		$this->loadModel('HumanResource.Attendance');
+
+		$this->loadModel('HumanResource.OvertimeLimit');
+
+		$this->loadModel('HumanResource.OvertimeExcess');
+
+		$date = date('Y-m-d');
+
+		$search = '';
+		
+		$limit = 10;
+		
+		$conditions = array();
+
+		if (!empty($this->request->query)) {
+
+			$query = $this->request->query;
+
+				if (!empty($query['data']['date'])) {
+
+					$date = explode('-', $query['data']['date']);
+					
+					$conditions = array_merge($conditions,array(
+					'OvertimeExcess.from >=' => date('Y-m-d 00:00:00', strtotime(trim($date[0]))),
+					//'OvertimeExcess.to <=' => date('Y-m-d 00:00:00', strtotime(trim($date[1])))
+					));
+
+					$date = $query['data']['date'];
+				}
+				
+				if (!empty($query['data']['name'])) {
+						$search = $query['data']['name'];
+						$conditions = array_merge($conditions,array(
+								'OR' => array(
+								'Employee.first_name LIKE' => '%'.$search.'%',
+								'Employee.last_name LIKE' => '%'.$search.'%',
+								'Employee.middle_name' => '%'.$search.'%',
+						)));
+				}
+							
+		} else {
+
+			$conditions = array('OvertimeExcess.from >=' => $date);
+		}
+
+		$params =  array(
+	            'conditions' => $conditions,
+	            'limit' => $limit,
+	            //'fields' => array('id', 'status','created'),
+	            'order' => 'OvertimeExcess.from ASC',
+	    );
+
+		$this->paginate = $params;
+
+		$this->OvertimeExcess->bind(array('Employee'));
+		
+		$overtimes = $this->paginate('OvertimeExcess');
+
+		//pr($overtimes); exit();
+
+		$this->set(compact('date','overtimes','search'));
+
 	}
 
 }

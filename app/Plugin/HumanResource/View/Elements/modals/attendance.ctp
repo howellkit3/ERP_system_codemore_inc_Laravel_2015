@@ -42,9 +42,9 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Time :   </label>
+                            <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Time : </label>
                             <div class="col-lg-9">
-                                 <?php 
+                                <?php 
                                     echo $this->Form->input('Attendance.time',
                                          array(
                                         'class' => 'item_type required form-control time_input',  

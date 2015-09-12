@@ -8,6 +8,10 @@ App::import('Vendor', 'DOMPDF', true, array(), 'dompdf'.DS.'dompdf_config.inc.ph
 App::import('Vendor', 'PHPWord', array('file' => 'PHPWord'.DS.'PHPWord.php'));
 
 
+//App::import('PHPReader', 'Vendor');
+App::import('Vendor', 'PhpExcelReader', array('file' => 'PhpExcelReader'.DS.'excel_reader2.php'));
+
+
 class SalariesController  extends HumanResourceAppController {
 
 	var $helpers = array('HumanResource.Salaries','HumanResource.PhpExcel','HumanResource.CustomEmployee','HumanResource.CustomText');
@@ -133,7 +137,10 @@ class SalariesController  extends HumanResourceAppController {
 			$this->loadModel('HumanResource.GovernmentRecord');
 			$this->loadModel('HumanResource.Holiday');	
 			$this->loadModel('Payroll.SalaryReport');	
-			$this->loadModel('Payroll.Payroll');	
+			$this->loadModel('Payroll.Payroll');
+
+			$this->loadModel('HumanResource.Overtime');
+			$this->loadModel('HumanResource.OvertimeExcess');	
 
 
 			$emp_conditions = array();//array('Employee.status NOT' => array('1'));
@@ -519,6 +526,238 @@ class SalariesController  extends HumanResourceAppController {
 
 		$this->render('/Salaries/philhealth_table');
 
+	}
+	public function adjustments() {
+
+
+		$this->loadModel('HumanResource.Employee');
+
+		$this->loadModel('Payroll.Adjustment');
+
+		$conditions = array();
+
+		$employeeList = $this->Employee->getList($conditions);
+
+		$defaultId = current(array_flip($employeeList));
+
+		$limit = 10;
+
+		$conditions = array();
+
+        $params =  array(
+	            'conditions' => $conditions,
+	            'limit' => $limit,
+	            //'fields' => array('id', 'status','created'),
+	            'order' => 'Adjustment.payroll_date ASC',
+	    );
+
+		$this->paginate = $params;
+
+		$adjustments = $this->paginate('Adjustment');
+		
+		$this->set(compact('employeeList','defaultId','adjustments'));	
+	}
+
+	public function adjustments_add() {
+
+		$this->loadModel('Payroll.Adjustment');
+
+		$auth = $this->Session->read('Auth');
+
+		if (!empty($this->request->data)) {
+
+			if (!empty($this->request->data)) {
+				$data = $this->request->data;
+
+				$days = explode(':', $this->request->data['Adjustment']['days']);
+
+				$date = $data['Adjustment']['year'].'-'.$data['Adjustment']['month'].'-'.sprintf("%02d", $days[0] );
+				$this->request->data['Adjustment']['payroll_date'] = $date;
+			}
+
+			$this->request->data['Adjustment']['created_by'] = 
+			$this->request->data['Adjustment']['modified_by'] = $auth['User']['id'];
+
+			if ( $this->Adjustment->save($this->request->data) ) {
+
+				//save adjustment
+				$this->Session->setFlash('Adjustment save successfully','success');
+			
+			} else {
+
+				$this->Session->setFlash('There\'s an error saving','error');
+
+			}
+
+			$this->redirect( array(
+				     'controller' => 'salaries', 
+				     'action' => 'adjustments',
+				));
+	 		
+
+		}
+	}
+
+	public function adjustments_add_bulk() {
+
+		if (!empty($this->request->data)) {
+
+			$this->loadModel('HumanResource.Employee');
+
+			$this->loadModel('Payroll.Adjustment');
+
+			$data = new Spreadsheet_Excel_Reader();
+
+			$data->setOutputEncoding('CP1251');
+
+			$excelReader = $data->read($this->data['Adjustment']['file']['tmp_name']);
+
+			$headings = array();
+
+			$xls_data = array();
+
+			for ($i = 1; $i <= $data->sheets[0]['numRows']; $i++) {
+					$row_data = array();
+					for ($j = 1; $j <= $data->sheets[0]['numCols']; $j++) {
+						if($i == 1) {
+						//this is the headings row, each column (j) is a header
+							$headings[$j] = $data->sheets[0]['cells'][$i][$j];
+						} else {
+						//column of data
+						$row_data[$headings[$j]] = isset($data->sheets[0]['cells'][$i][$j]) ? $data->sheets[0]['cells'][$i][$j] : '';
+						}
+					}
+
+				if($i > 1) {
+					$xls_data['Adjustment'][] = $row_data;
+				}
+			}
+
+			$employeeData = array();
+
+			foreach ($xls_data['Adjustment'] as $key => $list) {
+				
+				$employees = $this->Employee->findbyCode($list['Employee Code'],'first',array('id','first_name','last_name'));
+
+				$employeeData[$key]['id'] = '';
+				$employeeData[$key]['employee_id'] = 	$employees['Employee']['id'];
+
+				$employeeData[$key]['amount'] = $list['Amount'];
+				$employeeData[$key]['reason'] =  $list['Reason'];
+				$employeeData[$key]['payroll_date'] = date('Y-m-d',strtotime($list['Payroll-date']));
+
+			
+			}
+
+			if ($this->Adjustment->saveAll($employeeData)) {
+
+				//save adjustment
+				$this->Session->setFlash('Adjustment save successfully','success');
+			} else {
+
+				$this->Session->setFlash('There\'s an error saving','error');
+
+			}
+
+			$this->redirect( array(
+				     'controller' => 'salaries', 
+				     'action' => 'adjustments',
+				));
+		}
+	}
+	public function adjustments_edit($id = null) {
+
+		$this->loadModel('HumanResource.Employee');
+
+		$this->loadModel('Payroll.Adjustment');
+
+
+		$auth = $this->Session->read('Auth');
+
+		if (!empty($this->request->data)) {
+
+			if (!empty($this->request->data)) {
+				$data = $this->request->data;
+
+				$days = explode(':', $this->request->data['Adjustment']['days']);
+
+				$date = $data['Adjustment']['year'].'-'.$data['Adjustment']['month'].'-'.sprintf("%02d", $days[0] );
+				$this->request->data['Adjustment']['payroll_date'] = $date;
+			}
+
+			$this->request->data['Adjustment']['created_by'] = 
+			$this->request->data['Adjustment']['modified_by'] = $auth['User']['id'];
+
+			if ( $this->Adjustment->save($this->request->data) ) {
+
+				//save adjustment
+				$this->Session->setFlash('Adjustment save successfully','success');
+			
+			} else {
+
+				$this->Session->setFlash('There\'s an error saving','error');
+
+			}
+
+			$this->redirect( array(
+				     'controller' => 'salaries', 
+				     'action' => 'adjustments',
+				));
+		}
+
+		$conditions = array();
+		$employeeList = $this->Employee->getList($conditions);
+
+		$this->loadModel('HumanResource.Employee');
+
+		$defaultId = current(array_flip($employeeList));
+
+		if (!empty($id)) {
+
+			$this->request->data = $this->Adjustment->findById($id);
+		}
+		$this->set(compact('employeeList','defaultId'));
+		$this->render('/Salaries/ajax/adjustments');
+	}
+
+	public function download_adjustment_excel() {
+
+			$this->viewClass = 'Media';
+			// Render app/webroot/files/example.docx
+			$params = array(
+			'id'        => 'mass_adjustment_template.xls',
+			'name'      => 'mass_adjustment_template',
+			'extension' => 'xls',
+			
+	        'mimeType'  => array(
+	            'xls' =>  "application/vnd.ms-excel"
+	        ),
+       		 'path'      => 'files' . DS
+			);
+			$this->set($params);
+	}
+
+	public function adjustment_delete($id = null) {
+
+		if (!empty($id)) {
+		 
+		 	$this->loadModel('Payroll.Adjustment');
+           
+            if ($this->Adjustment->delete($id)) {
+
+                $this->Session->setFlash(
+                    __('Adjustment have been deleted.', h($id)), 'success'
+                );
+
+            } else {
+
+                $this->Session->setFlash(
+                    __('There\'s an error deleting the data', h($id)),'error'
+                );
+            }
+
+            return $this->redirect(array('action' => 'adjustments'));
+		}
 	}
 
 	public function deductions() {
@@ -1080,6 +1319,8 @@ class SalariesController  extends HumanResourceAppController {
 				$salariesList = $this->_checkPayroll($payroll);
 			
 			}
+
+			//pr($salariesList); exit();
 			
 		}
 		
@@ -1211,6 +1452,8 @@ class SalariesController  extends HumanResourceAppController {
 			$this->loadModel('HumanResource.WorkShiftBreak');
 			$this->loadModel('HumanResource.BreakTime');
 
+			$this->loadModel('HumanResource.OvertimeExcess');
+
 			$emp_conditions = array();//array('Employee.status NOT' => array('1'));
 			$this->Employee->bind(array('Salary','GovernmentRecord','Department','Position','EmployeeAdditionalInformation'));
 
@@ -1236,14 +1479,14 @@ class SalariesController  extends HumanResourceAppController {
 					'Attendance.date <=' => $customDate['end'] 
 				));
 
-		if (!empty($employees)) {
+			if (!empty($employees)) {
 
-			foreach ($employees as $key => $emp) {
-				
-				$conditions =  array_merge($conditions,array('Attendance.employee_id' => $emp['Employee']['id']));
-				$this->Attendance->bindWorkshift(); 
-				$employees[$key]['Attendance'] = $this->Attendance->computeAttendance($conditions);
-				
+				foreach ($employees as $key => $emp) {
+					
+					$conditions =  array_merge($conditions,array('Attendance.employee_id' => $emp['Employee']['id']));
+					$this->Attendance->bindWorkshift(); 
+					$employees[$key]['Attendance'] = $this->Attendance->computeAttendance($conditions);
+					
 			}
 
 			//$this->Components->load('HumanResource.SalaryComputation');
@@ -1280,7 +1523,6 @@ class SalariesController  extends HumanResourceAppController {
 
 
 		$query = $this->request->query;
-
 
 		if (!empty($query)) {
 
@@ -1417,12 +1659,9 @@ class SalariesController  extends HumanResourceAppController {
 				$this->render('Salaries/xls/salaries_report');
                 break;
             case 'csv':
-
-                break;
+				break;
             case 'pdf':
-				
-			
-                break;
+				break;
             
         }
 
