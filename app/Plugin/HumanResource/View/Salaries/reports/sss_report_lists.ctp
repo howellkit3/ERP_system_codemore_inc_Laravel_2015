@@ -11,6 +11,7 @@ echo $this->Html->script(array(
 					'HumanResource.moment',
           'HumanResource.select2.min',
 					'HumanResource.custom',
+          'HumanResource.reports',
 					'HumanResource.reports',
 
 )); 
@@ -42,28 +43,63 @@ $active_tab = 'gross_reports';
                                
                     <div class="tabs-wrapper">
                         <ul class="nav nav-tabs">
-                          <li class="active"><a href="#tab-home" data-toggle="tab">Monthly</a></li>
+                          <li class="active"><a href="#tab-home" data-toggle="tab">Employee List</a></li>
+                           <li ><a href="#tab-contribution" data-toggle="tab">Contributions</a></li>
                         </ul>
                         <div class="tab-content">
 
 
                         <div class="tab-pane fade active in" id="tab-home">
 
-                          <header class="main-box-header clearfix"><!-- 
+                          <header class="clearfix"><!-- 
                                           <h2 class="pull-left"><b>Salaries</b> </h2> -->
-                                    <div class="filter-block pull-left">
+                                   <!--  <div class="filter-block pull-left">
                                         <div class="form-group pull-left">
                                             <input type="text" type="date" name="range[month]" id="changeDate" class="form-control monthpick" value="<?php echo $date ?>">
                                            <i class="fa fa fa-calendar calendar-icon"></i>
                                         </div>
-                                    </div>
+                                    </div> -->
+
                                     <div class="filter-block pull-left">
                                         <div class="form-group pull-left">
-                                           <!--  <button href="#" id="SSSReports"  data-type="monthly" data-url="" class="btn btn-primary pull-right "><i class="fa fa-refresh fa-lg"></i> Generate </button> -->
+                                            <?php echo $this->Form->input('status',array(
+                                                'options' => array(
+                                                      '' => 'All',
+                                                      '1' => 'Employed',
+                                                      '2' => 'Resigned',
+                                                  ),
+                                                'class' => 'form-control',
+                                                'label' => false
+                                            )); ?>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="filter-block pull-left">
+                                        <div class="form-group pull-left">
+                                            
+                                          <div class="checkbox-nice checkbox-inline">
+                                            <input type="checkbox" value="employee_contribution" id="checkboxContibution">
+                                            <label for="checkboxContibution">
+                                            Employer Contribution
+                                            </label>
+                                          </div>
+
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="filter-block pull-left">
+                                        <div class="form-group pull-left">
+                                            <button href="#" id="filterEmp"  data-type="sss" data-url="" class="btn btn-primary pull-right "><i class="fa fa-refresh fa-lg"></i> Generate </button>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="filter-block pull-right">
+                                        <div class="form-group pull-left">
 
                                           <?php 
 
-                                           echo $this->Html->link('<i class="fa fa-refresh fa-lg"></i> Generate',
+                                           echo $this->Html->link('<i class="fa fa-file-text-o fa-lg"></i> Export',
                                             array('controller' => 'salaries', 
                                               'actions' => 'sss_report_lists',
                                               'data-type' => 'monthly', 'excel'),
@@ -78,6 +114,32 @@ $active_tab = 'gross_reports';
                           </header>
 
 
+                          <table class="table table-bordered">
+                                      <thead>
+                                      <tr>
+                                        <th><a href="#"><span>SSS Number</span></a></th>
+                                        <th class="text-center"><a href="#" class="asc"><span>Last Name</span></a></th>
+                                        <th class="text-center"><span>First Name</span></th>
+                                        <th class="text-center"><span>Middle Initial</span></th>
+                                        <th class="text-center"><span>Date of Birth</span></th>
+                                      </tr>
+                                      </thead>
+
+                                      <tbody id="pagibig-result-cont">
+                                      <?php if(!empty($employees)) : ?>
+                                        <?php foreach ($employees as $key => $emp) : ?>
+                                          <tr>
+                                              <td> <?php echo $emp['GovernmentRecord']['value']; ?></td>
+                                              <td class="text-center"> <?php echo ucwords($emp['Employee']['first_name']); ?></td>
+                                              <td class="text-center"> <?php echo ucwords($emp['Employee']['last_name']); ?> </td>
+                                              <td class="text-center"> <?php echo ucwords($emp['Employee']['middle_name'][1]); ?> </td>
+                                              <td class="text-center"> <?php echo !empty($emp['EmployeeAdditionalInformation']['birthday']) ? date('F/d/Y',strtotime($emp['EmployeeAdditionalInformation']['birthday'])) : ''  ?> </td>
+                                          </tr>
+                                        <?php endforeach; ?>
+                                      <?php endif; ?>
+                                 </tbody>
+                            </table>
+                                   
                          <!--  <table class="table table-bordered">
                                       <thead>
                                       <tr>
@@ -91,13 +153,13 @@ $active_tab = 'gross_reports';
 
                                       <tbody id="monthly-result-cont"></tbody>
                          </table> -->
-    </div>
-                        <div class="tab-pane fade" id="tab-help">
+                     </div>
+                        <div class="tab-pane fade" id="tab-contribution">
                               <header class="main-box-header clearfix"><!-- 
                                             <h2 class="pull-left"><b>Salaries</b> </h2> -->
                                       <div class="filter-block pull-left">
                                           <div class="form-group pull-left">
-                                              <input type="text" type="date" name="range[month]" id="changeDate" class="form-control monthpick" value="<?php echo $date ?>">
+                                              <input type="text" type="date" name="range[month]" id="changeDate" class="form-control monthpick" value="<?php echo date('m-Y') ?>">
                                              <i class="fa fa fa-calendar calendar-icon"></i>
                                           </div>
                                       </div>
@@ -106,7 +168,27 @@ $active_tab = 'gross_reports';
                                               <button href="#" id="computeSalaries"  data-type="monthly" data-url="" class="btn btn-primary pull-right "><i class="fa fa-refresh fa-lg"></i> Generate </button>
                                           </div>
                                       </div>
+
+                                        <div class="filter-block pull-right">
+                                        <div class="form-group pull-left">
+
+                                          <?php 
+
+                                           echo $this->Html->link('<i class="fa fa-file-text-o fa-lg"></i> Export',
+                                            array('controller' => 'salaries', 
+                                              'actions' => 'sss_report_contributions',
+                                              'data-type' => 'monthly', 'excel'),
+                                            array('class' => 'btn btn-primary pull-right',
+                                                  'id' => 'SSSReports',
+                                                  'escape' => false,
+                                                  'target' => '_blank'
+                                              ));
+                                           ?>
+                                        </div>
+                                    </div>
                           </header>
+
+
                       </div>
 
                       </div>

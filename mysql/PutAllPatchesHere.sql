@@ -2016,3 +2016,6 @@ CREATE TABLE IF NOT EXISTS `adjustments` (
 ALTER TABLE `adjustments`  ADD `is_process` INT NOT NULL DEFAULT '0'  AFTER `reason`;
 
 ALTER TABLE `salary_reports`  ADD `basic_pay_month` DECIMAL(8,2) NULL ,  ADD `basic_pay_month_with_holiday` DECIMAL(8,2) NULL ;
+
+/* aldrin added this 9/14/15 / adjustments  / koufu payrolls table */
+ALTER TABLE `taxes`  ADD `tax_deduction_id` INT NULL  AFTER `type`;

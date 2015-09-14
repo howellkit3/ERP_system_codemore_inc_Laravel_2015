@@ -114,14 +114,14 @@
 
 						<?php 
 
-						if($userData['User']['role_id'] == 1 OR $userData['User']['role_id'] == 13){
+					//	if($userData['User']['role_id'] == 1 OR $userData['User']['role_id'] == 13){
 
 
 	 						echo $this->Html->link( " <i class='fa fa-money'></i> <span> Payroll </span>",   array('controller' =>'salaries',
 	 											'action'=>'export',
 	 											'plugin' => 'human_resource'),
 	 											array('escape' => false) );
-	 					}
+	 				//	}
 	 					?>
 					</li>
 

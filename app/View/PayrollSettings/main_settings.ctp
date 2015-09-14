@@ -75,8 +75,8 @@
 	                                            		'options' => array(
 	                                            			'daily' => 'Daily',
 	                                            			'weekly' => 'Weekly',
-	                                            			'semi_montly' => 'Semi Monthly',
-	                                            			'montly' => 'Monthly',
+	                                            			'semi_monthly' => 'Semi Monthly',
+	                                            			'monthly' => 'Monthly',
 	                                            		),
 	                                            		'class' => 'form-control item_type',
 	                                            		'empty' => '---- Select Type -----',

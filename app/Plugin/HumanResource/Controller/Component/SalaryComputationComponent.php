@@ -3,7 +3,7 @@ App::uses('Component', 'Controller');
 
 class SalaryComputationComponent extends Component 
 {
-    public function calculateBenifits($data = null , $pay_sched = null,$customDate = null, $updateDatabase = null, $models = array())
+    public function calculateBenifits($data = null , $pay_sched = null,$customDate = null, $updateDatabase = null, $payrollSettings = array())
     {
         		
         	$SalaryReport = ClassRegistry::init('SalaryReport');
@@ -37,8 +37,9 @@ class SalaryComputationComponent extends Component
 
 			//excess overtimne
 			$minimumWage = $Wage->find('first', array(
-				'conditions' => array('Wage.name like' => 'Minimum')
+				'conditions' => array('Wage.name like' => '%Minimum%')
 			));
+
 
 			$contributions = $Contibutions->find('list',array('fields' => array('id','schedules')));
 
@@ -157,7 +158,7 @@ class SalaryComputationComponent extends Component
 						if (!empty($deductions)) {
 
 							foreach ($deductions as $deductionKey => $value) {
-								$salary[$key][$value['type']] = $value['amount'];
+								// //$salary[$key][$value['type']] = $value['amount'];
 								$total_deduction += $value['amount'];
 							}							
 						}
@@ -171,9 +172,11 @@ class SalaryComputationComponent extends Component
 						$salary[$key]['total_deduction'] += $salary[$key]['pagibig'];
 						
 						//no tax
-						$salary[$key]['with_holding_tax'] = $this->computeTax($employee,$salary[$key]['gross_pay'],'semi_monthly',$minimumWage);
-						//add tax
+						$taxType = !empty($payrollSettings['Setting']['tax_pay']) ? $payrollSettings['Setting']['tax_pay'] : '';
 
+						$salary[$key]['with_holding_tax'] = $this->computeTax($employee,$salary[$key]['gross_pay'],$taxType,$minimumWage);	
+
+						//add tax
 						$salary[$key]['total_deduction'] += $salary[$key]['with_holding_tax'];
 
 						$total_pay  -= $salary[$key]['total_deduction'];
@@ -195,9 +198,8 @@ class SalaryComputationComponent extends Component
 						$salary[$key]['Position']	= !empty($employee['Position']) ? $employee['Position'] : array();
 						$salary[$key]['EmployeeAdditionalInformation']	= !empty($employee['EmployeeAdditionalInformation']) ? $employee['EmployeeAdditionalInformation'] : array();
         			
-
         		}
-        		
+
         		return $salary;
 			}
     }
@@ -1638,7 +1640,7 @@ class SalaryComputationComponent extends Component
 				$amortizationIds = array();
 
 				foreach ($amortizations as $amortization_key => $amortization) {
-						$amortizationIds[] = 	$amortization['Amortization']['id'];
+						$amortizationIds[] = $amortization['Amortization']['id'];
 						$my_deductions[$deduction_key]['amount'] += $amortization['Amortization']['deduction'];
 						if ($update == true) {
 							$save['id'] = $amortization['Amortization']['id'];
@@ -1668,7 +1670,7 @@ class SalaryComputationComponent extends Component
 
 
 
-	public function computeTax($data = null,$netPay = null,$type = 'semi_monthly',$minimumWage = null) {
+	public function computeTax($data = null,$grossPay = null,$type = 'semi_monthly',$minimumWage = null) {
 
 		
 		$Tax = ClassRegistry::init('Tax');
@@ -1680,7 +1682,7 @@ class SalaryComputationComponent extends Component
 		$total_tax = 0;
 
 		if (!empty($minimumWage)) {
-		
+
 		if ($data['Salary']['basic_pay'] > $minimumWage['Wage']['amount']) {
 
 				$code = 'Z';
@@ -1714,8 +1716,9 @@ class SalaryComputationComponent extends Component
 				$taxKey = '';
 
 				for ($i=1; $i < 8 ; $i++) { 
-					
-					if ( ( $netPay >= $taxes['Tax']['taxes_'.$i] ) && $netPay > $taxes['Tax']['exempt_rate']) {
+						
+						//pr($taxes['Tax']['taxes_'.$i]);
+					if ( ( $grossPay >= $taxes['Tax']['taxes_'.$i] ) && $grossPay > $taxes['Tax']['exempt_rate']) {
 						$range = $taxes['Tax']['taxes_'.$i];
 						$taxKey = $i;
 					}
@@ -1724,17 +1727,19 @@ class SalaryComputationComponent extends Component
 				$conditions = array('TaxDeduction.type' => $type);
 
 				$taxDeductList = $TaxDeduction->find('first',array('conditions' => $conditions));
-				
+
 				//computations
 				if (!empty($taxKey)) {
 
 					//$total_tax = $netPay - $range / $taxDeductList['TaxDeduction']['tax_'.$taxKey.'_percent'];
-					$total_tax = (double)$netPay - (double)$range;
+					$total_tax = (double)$grossPay - (double)$range;
 					$total_tax = $total_tax * (str_replace('%','',$taxDeductList['TaxDeduction']['tax_'.$taxKey.'_percent']) / 100);
 					$total_tax = $total_tax +  $taxDeductList['TaxDeduction']['tax_'.$taxKey];
 
 				}
+
 			}
+
 		}
 
 		return $total_tax;

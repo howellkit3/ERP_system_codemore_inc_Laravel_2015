@@ -1213,8 +1213,6 @@ class SalariesController  extends HumanResourceAppController {
 
 		$date = date('Y-m-d');
 
-		if (!empty($type) && $type == 'excel') {
-
 			$this->loadModel('HumanResource.EmployeeAdditionalInformation');
 
 			$this->loadModel('HumanResource.GovernmentRecord');
@@ -1222,10 +1220,16 @@ class SalariesController  extends HumanResourceAppController {
 			$this->loadModel('HumanResource.Employee');
 			
 			$this->Employee->bindSSS();
-			
-			$conditions = array(
-						'Employee.status' => array('1','2')
-				);
+
+			$conditions = array();
+
+			if (!empty($type) && $type == 'excel') {
+
+				$conditions = array(
+							'Employee.status' => array('1','2')
+					);
+		
+			} 
 
 			$employees = $this->Employee->find('all',array(
 				'conditions' => $conditions,
@@ -1233,15 +1237,28 @@ class SalariesController  extends HumanResourceAppController {
 				'order' => 'Employee.last_name ASC'
 			));
 
-
-			$this->set(compact('date','employees'));
-
-			$this->render('Salaries/xls/sss_report_list');
-		} 
-
-		$this->set(compact('date'));
+		$this->set(compact('date','employees'));
 
 		$this->render('Salaries/reports/sss_report_lists');
+	}
+
+	public function sss_report_contributions($type) {
+
+		$this->loadModel('HumanResource.Employee');	
+		$this->loadModel('Payroll.SalaryReport');
+
+		$conditions = array();
+		$query = $this->request->query();
+
+		if (!empty($query['month'])) {
+
+			pr($query);
+			ext();
+		}
+		
+		$SalaryReport  = $this->SalaryReport->find('all',array(
+			'conditions' => $conditions
+		));
 	}
 
 	public function pagibig_reports() {
@@ -1731,7 +1748,6 @@ class SalariesController  extends HumanResourceAppController {
 			$this->loadModel('HumanResource.WorkShift');
 			$this->loadModel('HumanResource.WorkShiftBreak');
 			$this->loadModel('HumanResource.BreakTime');
-
 			$this->loadModel('HumanResource.OvertimeExcess');
 
 			$emp_conditions = array();//array('Employee.status NOT' => array('1'));
@@ -1785,11 +1801,14 @@ class SalariesController  extends HumanResourceAppController {
 					$this->loadModel('Payroll.Tax');
 					$this->loadModel('Payroll.TaxDeduction');
 					$this->loadModel('Payroll.Wage');
+					$this->loadModel('Payroll.Setting');
 
 					//$OvertimeRate = ClassRegistry::init('Amortization')->find('all');
 					$updateDatabase = !empty($update) && $update == true ? true : false;
-					
-					$salaries = $this->SalaryComputation->calculateBenifits($employees,$payScheds,$customDate,$updateDatabase);
+
+					$payrollSettings = $this->Setting->find('first');
+
+					$salaries = $this->SalaryComputation->calculateBenifits($employees,$payScheds,$customDate,$updateDatabase,$payrollSettings);
 
 			}
 			else {
@@ -1966,9 +1985,10 @@ class SalariesController  extends HumanResourceAppController {
 		
 		$this->loadModel('Payroll.TaxDeduction');
 
-		$taxes = $this->TaxDeduction->find('all');
-		
-		$taxes = $this->Tax->getDeductions($taxes);
+        $this->TaxDeduction->bind(array('Tax'));
+
+        $taxes= $this->TaxDeduction->getByType('all');
+		//$taxes = $this->Tax->getDeductions($taxes);
 
 		$this->set(compact('taxes'));
 	}

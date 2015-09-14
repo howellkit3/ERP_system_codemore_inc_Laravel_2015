@@ -41,9 +41,6 @@ $active_tab = 'gross_reports';
 			            		   <div class="table-responsive">
                                 <div class="table-responsive">
                                
-
-
-
                     <div class="tabs-wrapper">
                         <ul class="nav nav-tabs">
                           <li class="active"><a href="#tab-home" data-toggle="tab">List</a></li>
@@ -71,11 +68,13 @@ $active_tab = 'gross_reports';
 
                                         </div>
                                     </div>
+                                    
                                     <div class="filter-block pull-left">
                                         <div class="form-group pull-left">
                                             <button href="#" id="filterEmp"  data-type="pagibig" data-url="" class="btn btn-primary pull-right "><i class="fa fa-refresh fa-lg"></i> Generate </button>
                                         </div>
                                     </div>
+                                    
                                     <div class="filter-block pull-right">
                                         <div class="form-group pull-left">
                                             <!-- <button href="#" id="exportMonthlyReport"  data-type="monthly" data-url="" class="btn btn-primary pull-right "><i class="fa fa-file-text-o fa-lg"></i> Export </button> -->
@@ -93,6 +92,7 @@ $active_tab = 'gross_reports';
                                               ?>
                                         </div>
                                     </div>
+                                    
                           </header>
 
 

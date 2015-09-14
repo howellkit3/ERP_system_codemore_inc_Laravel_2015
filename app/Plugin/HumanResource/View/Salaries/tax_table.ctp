@@ -42,38 +42,36 @@ $active_tab = 'tax_table';
 			            		   <div class="table-responsive">
                                 <div class="table-responsive">
 
-                        <?php foreach ($taxes as $key => $value) : ?>
-                          <strong><?php echo ucwords(str_replace('_',' ',$value['TaxDeduction']['type'] )); ?></strong>
-                          <br>
-                          <p> Deductions  </p>
+            <?php foreach ($taxes as $key => $value) : ?>
+              <strong><?php echo ucwords($key); ?></strong>
+              <br>
+              <p> Deductions  </p>
 
                         
              <table class="table table-bordered">
                 <thead>
-                <tr>
-                  <th>1</th>
-                  <th>2</th>
-                  <th>3</th>
-                  <th>4</th>
-                  <th>5</th>
-                  <th>6</th>
-                  <th>7</th>
-                  <th>8</th>
-                  
-                </tr>
+                  <tr>
+                    <th>1</th>
+                    <th>2</th>
+                    <th>3</th>
+                    <th>4</th>
+                    <th>5</th>
+                    <th>6</th>
+                    <th>7</th>
+                    <th>8</th>
+                  </tr>
                 </thead>
                 <tbody>
                 <tr>
-                 <?php for($tax=1;$tax<= 8; $tax++) : ?>
-                    <td><?php echo number_format($value['TaxDeduction']['tax_'.$tax],2); ?></td>
-                 <?php endfor; ?>
+                   <?php for($tax=1;$tax<= 8; $tax++) : ?>
+                      <td><?php echo number_format($value['TaxDeduction']['tax_'.$tax],2); ?></td>
+                   <?php endfor; ?>
                 </tr>
-                   
                 </tbody>
                </table>
 
 
-                <?php endforeach; ?>
+           
                 <table class="table table-bordered">
                 <thead>
                 <tr>
@@ -98,41 +96,43 @@ $active_tab = 'tax_table';
                   <?php foreach ($value['Tax'] as $key => $range) { ?>
                     <tr>
                       <td class="text-center">
-                        <?php echo $range['Tax']['code']?>
+                        <?php echo $range['code']?>
                       </td>
                       <td class="text-center">
-                        <?php echo number_format($range['Tax']['exempt_rate'],2) ?>
+                        <?php echo number_format($range['exempt_rate'],2) ?>
                       </td>
                       <td class="text-center">
-                        <?php echo number_format($range['Tax']['taxes_1'],2) ?>
+                        <?php echo number_format($range['taxes_1'],2) ?>
                       </td>
 
                       <td class="text-center">
-                        <?php echo number_format($range['Tax']['taxes_2'],2) ?>
+                        <?php echo number_format($range['taxes_2'],2) ?>
                       </td class="text-center">
                       <td class="text-center">
-                        <?php echo number_format($range['Tax']['taxes_3'],2) ?>
+                        <?php echo number_format($range['taxes_3'],2) ?>
                       </td>
                       <td class="text-right">
-                      <?php echo number_format($range['Tax']['taxes_4'],2) ?>
+                      <?php echo number_format($range['taxes_4'],2) ?>
                       </td>
                       <td class="text-right">
-                      <?php echo number_format($range['Tax']['taxes_5'],2) ?>
+                      <?php echo number_format($range['taxes_5'],2) ?>
                       </td>
                       <td class="text-right">
-                      <?php echo number_format($range['Tax']['taxes_6'],2) ?>
+                      <?php echo number_format($range['taxes_6'],2) ?>
                       </td>
                       <td class="text-right">
-                      <?php echo number_format($range['Tax']['taxes_7'],2) ?>
+                      <?php echo number_format($range['taxes_7'],2) ?>
                       </td>
                       <td class="text-right">
-                      <?php echo number_format($range['Tax']['taxes_8'],2) ?>
+                      <?php echo number_format($range['taxes_8'],2) ?>
                       </td>
                   </tr>
                   <?php } ?>
                 <?php endif; ?>
                   </tbody>
                 </table>
+
+                     <?php endforeach; ?>
                 </div>
              </div> 
              </div>

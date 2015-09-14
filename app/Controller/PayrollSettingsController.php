@@ -553,28 +553,53 @@ class PayrollSettingsController extends AppController
 
         if (!empty($this->request->data)) {
 
-
             $this->request->data['TaxDeduction']['created_by'] = $auth['id'];
             
             $this->request->data['TaxDeduction']['modified_by'] = $auth['id'];
 
 
             if ($this->TaxDeduction->save($this->request->data)) {
+                
+                $data = $this->request->data;
 
                 $lastId = $this->TaxDeduction->id;
                 
-                $this->Tax->saveTax($lastId,$this->request->data);
+                //$this->Tax->saveTax($lastId,$this->request->data);
 
+                     foreach ($data['Tax'] as $key => $tax) {
+                            
+                            $data['Tax'][$key]['id'] = !empty($data['Tax'][$key]['id']) ?  $data['Tax'][$key]['id'] : '';
 
-                 $this->redirect(
-                            array('controller' => 'payroll_settings', 'action' => 'tax_settings')
-                        );
+                            $data['Tax'][$key]['tax_deduction_id'] = !empty( $lastId ) ?  $lastId : '';
+
+                            $data['Tax'][$key]['created_by'] = $auth['id'];
+            
+                            $data['Tax'][$key]['modified_by'] = $auth['id'];
+
+                            if ($this->Tax->save($data['Tax'][$key])) {
+                            } else {
+                                pr($this->Tax->validationErrors);
+                            }
+                    }
+
+                    $this->Session->setFlash(__('Tax Setting\'s Successfully Saved'));
+
+                    $this->redirect(
+                        array('controller' => 'payroll_settings', 'action' => 'tax_settings')
+                    );
+
             } else {
 
                         $this->Session->setFlash(__('There\'s an error saving data, Please try again'),'error');
             }
      
         }
+
+        $this->TaxDeduction->bind(array('Tax'));
+
+        $taxes= $this->TaxDeduction->getByType('all');
+
+        $this->set(compact('taxes'));
 
     }
 
