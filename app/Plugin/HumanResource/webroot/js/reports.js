@@ -86,9 +86,9 @@
 
       var url = $(this).attr('href');
       
-      var month = $('#changeDate').val();
+      var status = $('#status').val();
 
-      $(this).attr('href',url+'?month='+month);
+      $(this).attr('href',url+'?status='+status);
     });
     
    $body.on('click','#exportMonthlyReport',function(e){
@@ -111,11 +111,12 @@
 
      $body.on('click','#exportReport',function(e){
 
-      var url = $(this).attr('href');
+      var url = $(this).data('url');
         
-      var month = $('#status').val();
+      var status = $('#status').val();
 
-      $(this).attr('href',url+'?status='+month);
+      $(this).attr('href',url+'?status='+status);
+
     });
 
   });

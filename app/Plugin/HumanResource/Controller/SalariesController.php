@@ -1204,8 +1204,56 @@ class SalariesController  extends HumanResourceAppController {
 	        		unlink($file_to_save);
 	        }
 	    }
+
+	    $this->loadModel('HumanResource.Employee');
+
+		if (!empty($this->params['named']['type']) && $this->params['named']['type'] == 'excel') {
+
+				$query = $this->request->query;
+
+				if (!empty($query['status'])) {
+					
+					$conditions = array(
+							'Employee.status' => $this->request->query('status')
+						);
+
+				}
+		
+		}
+	
+
+		$limit = 10;
+
+        $params =  array(
+	            'conditions' => $conditions,
+	            'limit' => $limit,
+	            //'fields' => array('id', 'status','created'),
+	            'order' => 'Employee.last_name ASC',
+	            'group' => 'Employee.id'
+	    );
+
+		$this->paginate = $params;
+
+		$employees =  $this->paginate('Employee');
+
+		$status = array(
+			'1' => 'Employed',
+			'2'	=> 'Resigned'
+		);
+
+		$this->set(compact('date','employees','status'));
+
+		if (!empty($this->params['named']['type']) && $this->params['named']['type'] == 'excel') {
+
+			$this->render('Salaries/xls/sss_report_list');
+
+		} else {
+
+			//$this->render('Salaries/reports/pagibig_report_lists');
 			
- 		$this->render('Salaries/reports/sss_reports');
+ 			$this->render('Salaries/reports/sss_reports');
+		}
+			
 
 	}
 	
@@ -1279,7 +1327,9 @@ class SalariesController  extends HumanResourceAppController {
 
 		if (!empty($this->params['named']['type']) && $this->params['named']['type'] == 'excel') {
 
-				if (!empty($this->request->query('status'))) {
+				$query = $this->request->query;
+
+				if (!empty($query['status'])) {
 					
 					$conditions = array(
 							'Employee.status' => $this->request->query('status')

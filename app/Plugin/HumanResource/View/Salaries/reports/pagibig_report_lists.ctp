@@ -79,12 +79,17 @@ $active_tab = 'gross_reports';
                                         <div class="form-group pull-left">
                                             <!-- <button href="#" id="exportMonthlyReport"  data-type="monthly" data-url="" class="btn btn-primary pull-right "><i class="fa fa-file-text-o fa-lg"></i> Export </button> -->
 
-                                            <?php echo $this->Html->link('<i class="fa fa-file-text-o fa-lg"></i> Export ',
+                                            <?php 
+                                            
+                                            $url = $this->Html->url('/',true);
+
+                                            echo $this->Html->link('<i class="fa fa-file-text-o fa-lg"></i> Export ',
                                              array(
                                               'controller' => 'salaries',
                                               'action' => 'pagibig_reports',
                                               'type' => 'excel'),
                                                array(
+                                                'data-url' => $url.'/human_resource/salaries/pagibig_reports/type:excel',
                                                 'escape' => false,
                                                 'class' => 'btn btn-primary pull-right',
                                                 'id' => 'exportReport'

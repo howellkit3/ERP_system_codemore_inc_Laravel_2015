@@ -11,8 +11,7 @@ echo $this->Html->script(array(
 					'HumanResource.moment',
           'HumanResource.select2.min',
 					'HumanResource.custom',
-          'HumanResource.reports',
-					'HumanResource.reports',
+          'HumanResource.reports'
 
 )); 
 
@@ -74,7 +73,7 @@ $active_tab = 'gross_reports';
                                         </div>
                                     </div>
                                     
-                                    <div class="filter-block pull-left">
+                                   <!--  <div class="filter-block pull-left">
                                         <div class="form-group pull-left">
                                             
                                           <div class="checkbox-nice checkbox-inline">
@@ -85,7 +84,7 @@ $active_tab = 'gross_reports';
                                           </div>
 
                                         </div>
-                                    </div>
+                                    </div> -->
                                     
                                     <div class="filter-block pull-left">
                                         <div class="form-group pull-left">
@@ -98,15 +97,19 @@ $active_tab = 'gross_reports';
                                         <div class="form-group pull-left">
 
                                           <?php 
-
-                                           echo $this->Html->link('<i class="fa fa-file-text-o fa-lg"></i> Export',
-                                            array('controller' => 'salaries', 
-                                              'actions' => 'sss_report_lists',
-                                              'data-type' => 'monthly', 'excel'),
-                                            array('class' => 'btn btn-primary pull-right',
-                                                  'id' => 'SSSReports',
-                                                  'escape' => false,
-                                                  'target' => '_blank'
+                                          $url = $this->Html->url('/',true);
+                                           
+                                          echo $this->Html->link('<i class="fa fa-file-text-o fa-lg"></i> Export',
+                                            array(
+                                              'controller' => 'salaries', 
+                                              'action' => 'sss_reports',
+                                              'type' => 'excel'),
+                                            array(
+                                              'data-url' => $url.'/human_resource/salaries/sss_reports/type:excel',
+                                              'class' => 'btn btn-primary pull-right',
+                                              'id' => 'SSSReports',
+                                              'escape' => false,
+                                              'target' => '_blank'
                                               ));
                                            ?>
                                         </div>
@@ -125,7 +128,7 @@ $active_tab = 'gross_reports';
                                       </tr>
                                       </thead>
 
-                                      <tbody id="pagibig-result-cont">
+                                      <tbody id="sss-result-cont">
                                       <?php if(!empty($employees)) : ?>
                                         <?php foreach ($employees as $key => $emp) : ?>
                                           <tr>
