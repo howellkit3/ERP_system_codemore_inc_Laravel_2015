@@ -771,8 +771,8 @@ class SalariesController  extends HumanResourceAppController {
 			$this->viewClass = 'Media';
 			// Render app/webroot/files/example.docx
 			$params = array(
-			'id'        => 'mass_adjustment_template.xls',
-			'name'      => 'mass_adjustment_template',
+			'id'        => 'mass_deduction_template.xls',
+			'name'      => 'mass_deduction_template',
 			'extension' => 'xlsx',
 			'download'  => true,
 	        'mimeType'  => array(

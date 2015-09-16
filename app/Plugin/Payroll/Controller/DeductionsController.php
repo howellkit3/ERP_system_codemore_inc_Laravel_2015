@@ -99,7 +99,6 @@ class DeductionsController extends PayrollAppController {
 
 			if (!empty($this->request->data)) {
 
-				pr($this->request->data);
 			$allowed = array('xls','xlsx');
 			$filename = $this->request->data['Deduction']['file']['name'];
 			$fileData = pathinfo($filename);
@@ -118,18 +117,23 @@ class DeductionsController extends PayrollAppController {
 			$this->loadModel('HumanResource.Employee');
 
 			$this->loadModel('Payroll.Deduction');
+			
+			$this->loadModel('Payroll.Amortization');
 
 			$data = new Spreadsheet_Excel_Reader();
 
 			$data->setOutputEncoding('CP1251');
 
 			$excelReader = $data->read($this->data['Deduction']['file']['tmp_name']);
+			
 			$headings = array();
 
 			$xls_data = array();
 
 			for ($i = 1; $i <= $data->sheets[0]['numRows']; $i++) {
+					
 					$row_data = array();
+					
 					for ($j = 1; $j <= $data->sheets[0]['numCols']; $j++) {
 						if($i == 1) {
 						//this is the headings row, each column (j) is a header
@@ -140,7 +144,7 @@ class DeductionsController extends PayrollAppController {
 						}
 					}
 
-				if($i > 1) {
+				if ($i > 1) {
 					$xls_data['Deduction'][] = $row_data;
 				}
 			}
@@ -164,9 +168,13 @@ class DeductionsController extends PayrollAppController {
 
 						$employeeData[$key]['mode'] = 'installment';
 
+						//count months and divide the payment
+
 					} else {
 
 						$employeeData[$key]['mode'] = 'once';
+
+						//save single date
 
 					}
 					$employeeData[$key]['from'] = date('Y-m-d',strtotime($list['From']));
@@ -175,16 +183,15 @@ class DeductionsController extends PayrollAppController {
 					$employeeData[$key]['status'] = $list['Status'];
 				}
 
-			
 			}
 
 			$this->Deduction->create();
 
 			if (!empty($employeeData)) {
 
-
 				if ($this->Deduction->saveAll($employeeData)) {
 
+					
 					//save adjustment
 					$this->Session->setFlash('Deduction\'s save successfully','success');
 				} else {

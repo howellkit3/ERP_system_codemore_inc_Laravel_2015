@@ -49,7 +49,7 @@
                             <label for="inputEmail1" class="col-lg-5 control-label"> <span style="color:red">*</span> Download Gudide / Template </label>
                             <div class="col-lg-7">
                             <?php echo $this->Html->link('<i class="fa fa-download fa-fw"></i> Download Excel File' ,
-                             array('controller' => 'salaries' ,'action' => 'download_adjustment_excel')
+                             array('controller' => 'salaries' ,'action' => 'download_deduction_excel')
                             , array(
                             'escape' => false,
                             'class' => 'btn btn-default'
