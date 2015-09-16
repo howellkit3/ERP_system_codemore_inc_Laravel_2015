@@ -128,7 +128,7 @@ $('.mode_type').click(function(){
 
             var description = 'Payroll for: ';
 
-            $('#PayrollDescription').val(description + $(this).val() + ' ' + $('#PayrollMonthYear').val() );
+           // $('#PayrollDescription').val(description + + ' ' + $('#PayrollMonthYear').val() );
 
 			var type = $('#PayrollType').val();
 

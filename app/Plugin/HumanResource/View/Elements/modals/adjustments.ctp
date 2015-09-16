@@ -148,7 +148,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" > Add Mass Add Employee Adjustments </h4>
+                    <h4 class="modal-title" > Upload Employee Adjustments </h4>
                 </div>
                  <?php echo $this->Form->create('Adjustment',array('url' => array('controller' => 'salaries','action' => 'adjustments_add_bulk'), 'type' => 'file')); ?>
                        <div class="form-group">

@@ -15,7 +15,7 @@
       </tr>
       <tr>
         <td> Amount : </td>
-        <td> <?php echo $deduction['Deduction']['amount']; ?></td>
+        <td> <?php echo $deduction['Deduction']['amount']; ?>( - <?php echo $deduction['Deduction']['paid_amount']; ?> ) </td>
       </tr>
 
       <tr>

@@ -1,4 +1,9 @@
 <?php
+
+
+App::import('Vendor', 'PhpExcelReader', array('file' => 'PhpExcelReader'.DS.'excel_reader2.php'));
+
+
 class DeductionsController extends PayrollAppController {
 
 
@@ -88,6 +93,120 @@ class DeductionsController extends PayrollAppController {
 		
 		$this->set(compact('employeeList'));
 			
+	}
+
+	public function bulk_upload() {
+
+			if (!empty($this->request->data)) {
+
+				pr($this->request->data);
+			$allowed = array('xls','xlsx');
+			$filename = $this->request->data['Deduction']['file']['name'];
+			$fileData = pathinfo($filename);
+
+			if (!in_array( $fileData['extension'] , $allowed)) {
+
+				$this->Session->setFlash('Invalid File Type','error');
+
+				$this->redirect( array(
+				     'controller' => 'salaries', 
+				     'action' => 'deductions',
+				     'plugin' => 'human_resource'
+				));
+			}
+
+			$this->loadModel('HumanResource.Employee');
+
+			$this->loadModel('Payroll.Deduction');
+
+			$data = new Spreadsheet_Excel_Reader();
+
+			$data->setOutputEncoding('CP1251');
+
+			$excelReader = $data->read($this->data['Deduction']['file']['tmp_name']);
+			$headings = array();
+
+			$xls_data = array();
+
+			for ($i = 1; $i <= $data->sheets[0]['numRows']; $i++) {
+					$row_data = array();
+					for ($j = 1; $j <= $data->sheets[0]['numCols']; $j++) {
+						if($i == 1) {
+						//this is the headings row, each column (j) is a header
+							$headings[$j] = $data->sheets[0]['cells'][$i][$j];
+						} else {
+						//column of data
+						$row_data[$headings[$j]] = isset($data->sheets[0]['cells'][$i][$j]) ? $data->sheets[0]['cells'][$i][$j] : '';
+						}
+					}
+
+				if($i > 1) {
+					$xls_data['Deduction'][] = $row_data;
+				}
+			}
+
+			$employeeData = array();
+
+			if (!empty($xls_data['Deduction'])) {
+
+
+			foreach ($xls_data['Deduction'] as $key => $list) {
+				
+				$employees = $this->Employee->findbyCode($list['Employee Code'],'first',array('id','first_name','last_name'));
+				
+				if (!empty($employees['Employee']['id'])) {
+
+					$employeeData[$key]['id'] = '';
+					$employeeData[$key]['employee_id'] = $employees['Employee']['id'];
+					$employeeData[$key]['amount'] = $list['Amount'];
+
+					if ($list['Amount'] == 1) {
+
+						$employeeData[$key]['mode'] = 'installment';
+
+					} else {
+
+						$employeeData[$key]['mode'] = 'once';
+
+					}
+					$employeeData[$key]['from'] = date('Y-m-d',strtotime($list['From']));
+					$employeeData[$key]['to'] = date('Y-m-d',strtotime($list['To']));
+					$employeeData[$key]['reason'] =  $list['Reason'];
+					$employeeData[$key]['status'] = $list['Status'];
+				}
+
+			
+			}
+
+			$this->Deduction->create();
+
+			if (!empty($employeeData)) {
+
+
+				if ($this->Deduction->saveAll($employeeData)) {
+
+					//save adjustment
+					$this->Session->setFlash('Deduction\'s save successfully','success');
+				} else {
+
+					$this->Session->setFlash('There\'s an error saving','error');
+
+				}
+			} 
+			else {
+
+					$this->Session->setFlash('No Employee Found','error');
+
+			}
+		}
+
+			$this->redirect( array(
+				     'controller' => 'salaries', 
+				     'action' => 'deductions',
+				     'plugin' => 'human_resource'
+				));
+		}
+
 	}
 
 

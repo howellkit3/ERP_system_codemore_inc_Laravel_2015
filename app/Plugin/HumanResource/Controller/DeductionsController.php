@@ -199,6 +199,8 @@ class DeductionsController extends HumanResourceAppController {
 	}
 	public function delete($id = null) {
 
+		$this->loadModel('Payroll.Deduction');
+
 		if (!empty($id)) {
 
 			$this->Deduction->id = $id;

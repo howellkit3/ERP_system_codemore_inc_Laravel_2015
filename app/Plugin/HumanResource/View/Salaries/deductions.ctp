@@ -78,10 +78,17 @@ $active_tab = 'sss_table';
                          <br><br>
                      </div>
 
-                     <div class="form-group pull-right">
+                    <!--  <div class="form-group pull-right">
 
                       <?php
-                         
+
+                          echo $this->Html->link('<i class="fa fa-upload fa-fw"></i> Import Data','#addDeductionImport',
+                                  array(
+                                    'class' =>'btn btn-primary',
+                                    'escape' => false,
+                                    'data-toggle' => 'modal'
+                                      )); 
+
                               echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Add', 
                                   array('controller' => 'salaries', 
                                           'action' => 'deductions_add',),
@@ -89,7 +96,29 @@ $active_tab = 'sss_table';
                                       'escape' => false)); 
 
                           ?>
+                     </div> -->
+
+                       <div class="form-group pull-right">
+                       <?php
+                          echo $this->Html->link('<i class="fa fa-upload fa-fw"></i> Import Data','#addDeductionImport',
+                                  array(
+                                    'class' =>'btn btn-primary',
+                                    'escape' => false,
+                                    'data-toggle' => 'modal'
+                                      )); 
+
+                          ?>
+                      <?php
+                         echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Add', 
+                                  array('controller' => 'salaries', 
+                                          'action' => 'deductions_add',),
+                                  array('class' =>'btn btn-primary',
+                                      'escape' => false)); 
+
+                          ?>
                      </div>
+
+                     
             </header>
 
              <div class="main-box-body clearfix">
@@ -106,6 +135,8 @@ $active_tab = 'sss_table';
                   <th class="text-center"><span>To</span></th>
                   <th class="text-center"><span>Mode</span></th>
                   <th class="text-center"><span>Amount</span></th>
+
+                  <th class="text-center"><span>Paid Amount</span></th>
                   <th class="text-center"><span>Paid</span></th>
                   <th class="text-right"><span>Reason</span></th>
                   <th class="text-right"><span>Action</span></th>
@@ -141,7 +172,11 @@ $active_tab = 'sss_table';
                       <td class="text-center">
                         <?php echo number_format($deduction['Deduction']['amount'],2); ?>   
                       </td>
-                      
+                        
+                      <td class="text-center">
+                        <?php echo number_format($deduction['Deduction']['paid_amount'],2); ?>   
+                      </td>
+
                         <td class="text-center">
 
                         <?php echo !empty($deduction['Deduction']['status']) && $deduction['Deduction']['status'] == 1  ? '<span class="label label-success">Yes</span>' : '<span class="label label-danger">No</span>' ?>

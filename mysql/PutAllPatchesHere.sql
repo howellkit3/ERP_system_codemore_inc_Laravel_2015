@@ -2019,3 +2019,8 @@ ALTER TABLE `salary_reports`  ADD `basic_pay_month` DECIMAL(8,2) NULL ,  ADD `ba
 
 /* aldrin added this 9/14/15 / adjustments  / koufu payrolls table */
 ALTER TABLE `taxes`  ADD `tax_deduction_id` INT NULL  AFTER `type`;
+
+
+/*aldrin added this 9/16/15 koufu payroll */
+ALTER TABLE `salary_reports`  ADD `sss_employees` DECIMAL(8,2) NULL  AFTER `basic_pay_month_with_holiday`,  ADD `sss_employers` DECIMAL(8,2) NULL  AFTER `sss_employees`,  ADD `sss_compensation` DECIMAL(8,2) NOT NULL  AFTER `sss_employers`;
+ALTER TABLE `deductions`  ADD `paid_amount` DECIMAL(8,2) NOT NULL DEFAULT '0'  AFTER `amount`;

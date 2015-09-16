@@ -59,6 +59,7 @@
       $status = $('#status').val();
 
 
+
       $.ajax({
             type: "GET",
             url: serverPath + "human_resource/salaries/reports_filter/",
@@ -72,6 +73,7 @@
                 }   
                 catch(e) {
 
+                  console.loG(e);
                 }
 
             }
@@ -116,6 +118,81 @@
       var status = $('#status').val();
 
       $(this).attr('href',url+'?status='+status);
+
+    });
+    
+    $body.on('click','#item_type_pagination a',function(e){
+
+      $result_cont = $(this).parents('#item_type_pagination').data('result');
+
+      $url = $(this).attr('href');
+
+      $( $result_cont ).html('<img class="loading" src="'+serverPath+'/img/loader.gif"/>');
+
+       $.ajax({
+            type: "GET",
+            url:  $url,
+            dataType: "html",
+            success: function(data) {
+
+                try {
+
+                    $( $result_cont ).html($(data).find('#sss-result-cont').html());
+                }   
+                catch(e) {
+
+                   $( $result_cont ).html('<label style="color:red">There\'s an error loading data</label>');
+                  console.log(e);
+                }
+
+            }
+        }); 
+
+
+      e.preventDefault();
+     
+    });
+
+    $body.on('click','#SSSMonthlyContribution',function(e){
+
+      $url = serverPath+'human_resource/salaries/sss_get_contibution';
+
+      $month = $('#tab-contribution #changeDate').val();
+
+      $result_cont = $('#sss-contribution-result-cont'); 
+
+      $result_cont.html('<img src="'+serverPath+'/img/loader.gif"/>');
+
+      $.ajax({
+            type: "GET",
+            url:  $url,
+            data : {'month' :  $month },
+            dataType: "html",
+            success: function(data) {
+
+                try {
+                  
+                  $result_cont.html($(data).find('#sss-result-cont').html());
+                }   
+                catch(e) {
+
+                   $result_cont.html('<label style="color:red">There\'s an error loading data</label>');
+                  console.log(e);
+                }
+
+            }
+        }); 
+    });
+
+    $body.on('click','#SSSContributionReports',function(e){
+
+
+      var url = $(this).data('url');
+      
+      var month = $('#tab-contribution #changeDate').val();
+
+      $(this).attr('href',url+'?month='+month);
+
 
     });
 

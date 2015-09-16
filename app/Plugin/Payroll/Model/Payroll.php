@@ -40,6 +40,7 @@ class Payroll extends AppModel {
 		if (!empty($data)) {
 
 
+
 			$data[$this->alias]['status'] = 'pending';
 			$data[$this->alias]['created_by'] = $auth['id'];
 			$data[$this->alias]['modified_by'] = $auth['id'];
@@ -52,7 +53,13 @@ class Payroll extends AppModel {
 				}
 
 				$data[$this->alias]['from'] = date('Y-m-d',strtotime($dates[0].'-'.$data[$this->alias]['month_year']));
-				$data[$this->alias]['to'] = date('Y-m-d',strtotime($dates[1].'-'.$data[$this->alias]['month_year']));
+				if ($dates[1] >= 16) {
+					$data[$this->alias]['to'] = date('Y-m-t',strtotime('01'.'-'.$data[$this->alias]['month_year']));	
+				} else {
+					$data[$this->alias]['to'] = date('Y-m-d',strtotime($dates[1].'-'.$data[$this->alias]['month_year']));	
+				}
+
+			
 				$data[$this->alias]['date'] = date('Y-m-d');
 				$data[$this->alias]['transaction_date'] = date('Y-m-d');
 				$data[$this->alias]['year'] = date('Y',strtotime($dates[1].'-'.$data[$this->alias]['month_year']));

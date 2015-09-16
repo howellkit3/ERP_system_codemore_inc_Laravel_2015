@@ -76,7 +76,7 @@ class SalaryComputationComponent extends Component
 						}
 						if ($employee['Salary']['employee_salary_type'] == 'monthly') {
 
-							$salary[$key] = $this->_monthlyRate($employee,$models,8,$workingDays);
+							$salary[$key] = $this->_monthlyRate($employee,$models,8,$workingDays,$payrollSettings);
 						}
 
         				$salary[$key]['id'] = !empty($checkExisting['SalaryReport']['id']) ? $checkExisting['SalaryReport']['id'] : '';
@@ -87,11 +87,17 @@ class SalaryComputationComponent extends Component
         				$salary[$key]['to'] = $customDate['end'];
         				$salary[$key]['days'] = $gross['days'];
 
-        				$salary[$key]['sss'] = $this->sss_pay($employee['Attendance'],$employee['Salary'],$pay_sched,$salary[$key]['gross'], $models );
+        				//sss contribution
+        				$contribution = $this->sss_pay($employee['Attendance'],$employee['Salary'],$pay_sched,$salary[$key]['gross'], $models);	
+        				$salary[$key]['sss'] = !empty($contribution['sss_employees']) ? $contribution['sss_employees'] : 0;
+        				$salary[$key]['sss_employer'] = !empty($contribution['sss_employer']) ? $contribution['sss_employer'] : 0;
+        				$salary[$key]['sss_compensation'] = !empty($contribution['sss_compensation']) ? $contribution['sss_compensation'] : 0;
+						$salary[$key]['sss_id'] = !empty($contribution['sss_id']) ? $contribution['sss_id'] : 0;
+
+						
 						$salary[$key]['philhealth'] = $this->philhealth_pay($employee['Attendance'],$employee['Salary'],$pay_sched,$salary[$key]['gross'],$models);
 						$salary[$key]['pagibig'] = $this->pagibig_pay($employee['Attendance'],$employee['Salary'],$pay_sched,$salary[$key]['gross'] , $models );
 							
-
 						//ctpa 
 						$salary[$key]['ctpa'] = !empty($employee['Salary']['ctpa']) ? $gross['days'] * $employee['Salary']['ctpa'] : 0; 
 						//sea
@@ -114,19 +120,15 @@ class SalaryComputationComponent extends Component
 
 
 						$total_pay = $salary[$key]['gross_pay'];
-
 						$salary[$key]['total_earnings']  = $salary[$key]['gross_pay'];
 						$salary[$key]['total_earnings']  += $employee['Salary']['allowances'];
 						$salary[$key]['total_earnings']  += !empty($employee['Salary']['incentives']) ? $employee['Salary']['incentives'] : 0.00;
 
-
 						//check adjustments 
 
 						$adjust = $this->_checkAdjustments($adjustments,$employee);	
-
 						$salary[$key]['adjustment'] = $adjust['amount'];
 						$salary[$key]['adjustment_ids'] = $adjust['ids'];
-
 						$salary[$key]['total_earnings']  += !empty($salary[$key]['adjustment']) ? $salary[$key]['adjustment'] : 0.00;
 
 						//total night diff
@@ -158,9 +160,10 @@ class SalaryComputationComponent extends Component
 						if (!empty($deductions)) {
 
 							foreach ($deductions as $deductionKey => $value) {
-								// //$salary[$key][$value['type']] = $value['amount'];
+								$salary[$key][strtolower(str_replace(' ','_',$value['name']))] = $value['amount'];
 								$total_deduction += $value['amount'];
-							}							
+							}
+
 						}
 
 						$salary[$key]['total_deduction'] = $total_deduction; 
@@ -448,8 +451,6 @@ class SalaryComputationComponent extends Component
 
     	if (!empty($employee)) {
 
-
-
 		$daysGet = array();
 
     	foreach ($employee['Attendance'] as $key => $days) {
@@ -486,7 +487,6 @@ class SalaryComputationComponent extends Component
 				$legal_holiday_work = 0.00;
 				$special_holiday_work = 0.00;
 
-
 				foreach ($models['Holiday'] as $holiday_key => $holiday) {
 
 					if ($today >= $holiday['Holiday']['start_date'] && $today <= $holiday['Holiday']['end_date']) {	
@@ -508,7 +508,6 @@ class SalaryComputationComponent extends Component
 
 
 										//sunday legal holiday night_diff
-
 										$data['hours_legal_holiday_sunday_work_night_diff'] += $this->_nightDiff($days);
 										$data['hours_legal_holiday_sunday_work_night_diff_ot'] += $overtime['night_diff'];
 										
@@ -525,7 +524,6 @@ class SalaryComputationComponent extends Component
 
 									}
 									
-
 								}
 
 							if ($holiday['Holiday']['type'] == 'special') {
@@ -707,7 +705,9 @@ class SalaryComputationComponent extends Component
 
 		//excess overtime
 		if ($data['hours_excess_ot'] > 0) {
+
 			$data['excess_ot']  = ($employee['Salary']['basic_pay'] * $data['hours_excess_ot'] * 1.25) / $workingDays;
+		
 		}
 
 		$data['gross'] = $data['gross'];
@@ -732,7 +732,7 @@ class SalaryComputationComponent extends Component
 
 
 
-     private function _monthlyRate($employee = null, $models = array() ,$hours = 8, $workingDays = 26) {
+     private function _monthlyRate($employee = null, $models = array() ,$hours = 8, $workingDays = 26,$payrollSettings = array()) {
 
      	$countDays = 0;
      	$regular_days = 0;
@@ -990,15 +990,139 @@ class SalaryComputationComponent extends Component
     	
     }
 
-    	//get daily rate
-		$monthly = $employee['Salary']['basic_pay']  * 12 / 365 * 30.4165;
+
+    	$data['days'] = ($regular_days + $legal_holiday_days + $special_days);
+
+
+    	if ($payrollSettings['Setting']['payment_type'] == 'month') {
+
+	    	//daily 
+			
+			$data['regular'] = ( $employee['Salary']['basic_pay']  /  ($workingDays * $hours) ) * $data['hours_regular'];
+			
+			$data['OT'] = ( $employee['Salary']['basic_pay']  /  ($workingDays * $hours) )  *  $data['hours_ot'] * 1.25; //($employee['Salary']['basic_pay'] * $data['hours_ot'] * 1.25 ) /  ($workingDays * $hours);
+
+			//night differential
+			// if ( $data['hours_night_diff'] > 0) {
+
+			// 		$data['night_diff'] = $daily * 0.10 * $data['hours_night_diff'];
+			// 	}
+				
+			// if ( $data['hours_night_diff_ot'] > 0) {
+
+			// 	$data['night_diff_ot'] = $daily * 1.25 * 1.1 * $data['hours_night_diff_ot'];
+
+			// }
+
+
+				//sunday work
+			if ($sunday_days > 0) {
+
+				$data['sunday_work'] =  ( $employee['Salary']['basic_pay']  /  ($workingDays * $hours) )  * $data['hours_sunday_work'] * 1.3;  //($employee['Salary']['basic_pay'] * $data['hours_sunday_work'] * 1.3) /  ($workingDays * $hours);
+
+				$data['sunday_work_ot'] = ( $employee['Salary']['basic_pay']  /  ($workingDays * $hours) ) * $data['hours_sunday_work'] * 1.3 * 1.3;
+
+				//sunday night diff
+				$data['sunday_night_diff'] = ( $employee['Salary']['basic_pay']  /  ($workingDays * $hours) ) * $data['hours_sunday_night_diff'] * 1.3 * 0.1;
+			}
+
+
+			if ($legal_holiday_days > 0) {
+			
+				$data['legal_holiday'] = ($employee['Salary']['basic_pay'] /  ($workingDays * $hours)) * $hours;
+
+				$data['legal_holiday_work'] = ($employee['Salary']['basic_pay'] / ($workingDays * $hours)) * $data['hours_legal_holiday_work']; //($employee['Salary']['basic_pay'] * $legal_holiday_work )  / ($workingDays * 8);
+
+				$data['legal_holiday_work_ot'] = ($employee['Salary']['basic_pay'] / ($workingDays * $hours)) * $data['hours_sunday_work_ot'] * 2.30;
+
+				//legal holiday sunday work
+				if ($data['hours_legal_holiday_sunday_work']  > 0) {
+					
+					$data['legal_holiday_sunday_work'] = ($employee['Salary']['basic_pay'] / ($workingDays * $hours)) * $data['hours_legal_holiday_sunday_work'] * 2 * 1.3;
+				}
+				
+				//legal holiday sunday ot
+				if ($data['hours_legal_holiday_sunday_work_ot']  > 0) {
+					
+					$data['legal_holiday_sunday_work_ot'] = ($employee['Salary']['basic_pay'] / ($workingDays * $hours)) * $data['hours_legal_holiday_sunday_work_ot'] * 2.6 * 1.3;
+				}
+
+				//legal holiday work night diff
+				if ($data['hours_legal_holiday_work_night_diff'] > 0) {
+
+					$data['legal_holiday_work_night_diff'] = ($employee['Salary']['basic_pay'] / ($workingDays * $hours)) * $data['hours_legal_holiday_work_night_diff'] * 2.0 * 0.1;	
+				}
+
+				//legal holiday sunday work night diff
+				if ($data['hours_legal_holiday_sunday_work_night_diff'] > 0) {
+
+					$data['legal_holiday_sunday_work_night_diff'] = ($employee['Salary']['basic_pay'] / ($workingDays * $hours)) *  $data['hours_legal_holiday_sunday_work_night_diff'] * 2.6 * 1.3 * 1.1;//$daily * 2.6 * 1.3 * 1.1 * $data['hours_legal_holiday_sunday_work_night_diff'];
+				}
+				
+				//legal holiday sunday work night diff ot	
+				if ($data['hours_legal_holiday_sunday_work_night_diff_ot'] > 0) {
+
+					$data['legal_holiday_sunday_work_night_diff_ot'] = ($employee['Salary']['basic_pay'] / ($workingDays * $hours)) *  $data['hours_legal_holiday_sunday_work_night_diff'] * 2.6 * 1.3 * 1.1;
+				}
+			
+			//$data['legal_holiday_work_new'] = ($employee['Salary']['basic_pay'] * $legal_holiday_work )  / ($workingDays * 8);
+			}
+
+			if ($special_days > 0) {
+
+				$data['special_holiday'] = ($employee['Salary']['basic_pay'] /  ($workingDays * $hours)) * $hours;
+
+				//$data['special_holiday_new'] = ($employee['Salary']['basic_pay'] * $special_holiday_hours ) /  ($workingDays * $hours);
+
+				$data['special_holiday_work'] = ($employee['Salary']['basic_pay'] /  ($workingDays * $hours)) * $data['hours_special_holiday_work']; //($employee['Salary']['basic_pay'] * $special_holiday_work )  / ($workingDays * 8);
+				
+				$data['special_holiday_work_ot'] = ($employee['Salary']['basic_pay'] / ($workingDays * $hours)) * $data['hours_special_holiday_work_ot'] * 1.3 * 1.3;
+
+				if ($data['hours_special_holiday_sunday_work']  > 0) {
+					
+					$data['special_holiday_sunday_work'] = ($employee['Salary']['basic_pay'] /  ($workingDays * $hours)) * $data['hours_special_holiday_sunday_work'] * 1.5;
+				}
+
+				if ($data['hours_special_holiday_sunday_work_ot']  > 0) {
+					
+					$data['special_holiday_sunday_work_ot'] = ($employee['Salary']['basic_pay'] /  ($workingDays * $hours)) * $data['hours_special_holiday_sunday_work_ot'] * 1.3 * 1.3;
+				}
+
+				if ($data['hours_special_holiday_sunday_work_night_diff'] > 0) {
+					
+					$data['special_holiday_sunday_work_night_diff'] = ($employee['Salary']['basic_pay'] /  ($workingDays * $hours)) *  $data['hours_special_holiday_sunday_work_night_diff'] * 1.3 * 0.1;
+				}
+
+				if ($data['hours_special_holiday_sunday_work_night_diff_ot'] > 0) {
+
+					$data['legal_special_sunday_work_night_diff_ot'] = ($employee['Salary']['basic_pay'] /  ($workingDays * $hours)) * $data['hours_special_holiday_sunday_work_night_diff_ot'] * 1.5 * 1.3 * 1.1;
+				}
+			}
+
+			foreach ($data as $pay_keys => $list) {
+				
+				if (in_array($pay_keys,array('regular','OT','legal_holiday','legal_holiday_work','night_diff_legal_holiday', 'night_diff_legal_holiday_work', 'special_holiday', 'special_holiday_work', 'night_diff_special_holiday', 'night_diff_special_holiday_work','sunday_work','sunday_work_ot','night_diff_sunday_work','night_diff_sunday_work_ot','legal_special_sunday_work_night_diff_ot','leave'))) {
+								
+					$data['gross'] += $list;
+
+				}
+			}
+
+			//excess overtime
+			if ($data['hours_excess_ot'] > 0) {
+				$data['excess_ot']  = ($employee['Salary']['basic_pay'] /  ($workingDays * $hours) ) * $data['hours_excess_ot'] * 1.25;
+			}
+
+ 
+
+    	} else {
+
+    	$monthly = $employee['Salary']['basic_pay']  * 12 / 365 * 30.4165;
 		
 		//regular working hours = 48 hours per week
     	//96 per half month
     	//192 per month
     	$daily = $monthly / 192;
-
-		$data['days'] = ($regular_days + $legal_holiday_days + $special_days);
 
 		//$data['regular'] = ($employee['Salary']['basic_pay'] * $data['total_hours']) /  ($workingDays * $hours);
 		$data['regular'] = $daily * $data['hours_regular'];
@@ -1109,6 +1233,11 @@ class SalaryComputationComponent extends Component
 			$data['excess_ot']  = ($employee['Salary']['basic_pay'] * $data['hours_excess_ot'] * 1.25) / $workingDays;
 		}
 
+
+
+    	}
+    	//get daily rate
+		
 		$data['gross'] = $data['gross'];
 
     	}
@@ -1368,15 +1497,29 @@ class SalaryComputationComponent extends Component
 		
 
 		//sss agency id = 1;
-		$pay = 0;
+		$employees = 0;
+		$employer = 0;
+		$compensation = 0;
+		$pay = array();
+
 		$government_record = array();
 
 		if  (!empty($models['GovernmentRecord'])) {
 
 			foreach ($models['GovernmentRecord'] as $key => $gov_values) {
-				$government_record[$gov_values['agency_id']] = $gov_values['value'];
+			//pr($gov_values['agency_id']);	
+			
+				if ($gov_values['agency_id'] == 1) {
+					
+					$government_record[$gov_values['id']] = $gov_values['value'];
+				
+				}
+			
 			}
 		}
+		
+
+		// pr($government_record);
 		$conditions = array();
 
 		//contribution schedules 
@@ -1385,6 +1528,7 @@ class SalaryComputationComponent extends Component
 		2. first payroll
 		3. second payroll
 		*/
+
 		if (!empty($models['Contibution'][1])) {
 
 			$SssRange = ClassRegistry::init('Payroll.SssRange');
@@ -1396,20 +1540,19 @@ class SalaryComputationComponent extends Component
 						
 						$conditions = array('SssRange.credits <=' => $gross_pay );
 						
-						$range = $SssRange->find('first',array('conditions' => $conditions ,'order' => 'SssRange.credits DESC'));
+						$range = $SssRange->find('first',array('conditions' => $conditions, 'order' => 'SssRange.credits DESC'));
 
-						$pay = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $pay;
+					//	$pay = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $pay;
 				}	
-
 				break;
+
 				case '2':
 
-				if ( $gross_pay != 0 && (!empty($government_record[1])) && $sched == 'first' ) {;
+				if ( $gross_pay != 0 && (!empty($government_record[1])) && $sched == 'first' ) {
 						
 						$conditions = array('SssRange.credits <=' => $gross_pay );
 						
 						$range = $SssRange->find('first',array('conditions' => $conditions ,'order' => 'SssRange.credits DESC'));
-
 
 						$pay = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $pay;
 				}
@@ -1420,7 +1563,6 @@ class SalaryComputationComponent extends Component
 						$conditions = array('SssRange.credits <=' => $gross_pay );
 						
 						$range = $SssRange->find('first',array('conditions' => $conditions ,'order' => 'SssRange.credits DESC'));
-
 
 						$pay = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $pay;
 				}
@@ -1434,18 +1576,24 @@ class SalaryComputationComponent extends Component
 
 						$pay = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $pay;
 				}
-				default:
-					# code...
-					break;
 			}
 		
-		
-
 		}
 
+		$pay['sss_employees'] = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $employees;
 
+		$pay['sss_employer'] = !empty($range['SssRange']['employers']) ? $range['SssRange']['employers'] : $employer;
+
+		$pay['sss_compensation'] = !empty($range['SssRange']['employee_compensations']) ? $range['SssRange']['employee_compensations'] : $compensation;
+
+		foreach ($government_record as $key => $list) {
+			
+				$pay['sss_id'] = $key;
+		
+		 //!empty($list['SssRange']['employee_compensations']) ? $range['SssRange']['employee_compensations'] : $compensation;
+		}
+		
 		return $pay;
-
 	}
 
 	public function philhealth_pay($attendance = null,$salaries = null,$sched = 'first',$gross_pay = 0 ,$models = array()){
@@ -1617,14 +1765,24 @@ class SalaryComputationComponent extends Component
 				'Deduction.is_deleted' => 0
 				);
 
-			$deductions = $Deduction->find('all',array('conditions' => $conditions ));
-		
+			$Deduction->bind(array('Loan'));
+
+			$deductions = $Deduction->find('all',
+				array(
+					'conditions' => $conditions,
+					'group' => array('Deduction.id') 
+					)
+				);
+			
+
 			$my_deductions = array();
 
 			foreach ($deductions as $deduction_key => $deduct) {
 				
 				$my_deductions[$deduction_key]['id'] =  $deduct['Deduction']['id'];
 				$my_deductions[$deduction_key]['type'] =  $deduct['Deduction']['type'];
+
+				$my_deductions[$deduction_key]['name'] =  $deduct['Loan']['name'];
 				$my_deductions[$deduction_key]['mode'] =  $deduct['Deduction']['mode'];
 				$my_deductions[$deduction_key]['amount'] = 0;
 				
@@ -1639,27 +1797,48 @@ class SalaryComputationComponent extends Component
 		
 				$amortizationIds = array();
 
+				$deductAmount = 0;
+
 				foreach ($amortizations as $amortization_key => $amortization) {
+
 						$amortizationIds[] = $amortization['Amortization']['id'];
+
 						$my_deductions[$deduction_key]['amount'] += $amortization['Amortization']['deduction'];
+
+						$deductAmount += $my_deductions[$deduction_key]['amount'];
+
 						if ($update == true) {
+							
 							$save['id'] = $amortization['Amortization']['id'];
-							$save['status'] = 1;
+							
+							$save['balance'] = $amortization['Amortization']['balance'] + $my_deductions[$deduction_key]['amount'];
+
+							if ($save['balance'] == $my_deductions[$deduction_key]['amount']) {
+								
+								$save['status'] = 1;
+							}
+
 							$Amortization->save($save);
 						}
-						
 				}
-
 				//check if no amortization left
 				$amort = $Amortization->find('all',array( 
 					'conditions' => array('Amortization.deduction_id' => $deduct['Deduction']['id'], 'status' => 0)));
 					
 				if (empty($amort) &&  $update == true) {
 
-					$save['id'] = $deduct['Deduction']['id'];
 					$save['status'] = 1;
+					
+				}
+
+				if ($update == true) {
+
+					$save['id'] = $deduct['Deduction']['id'];
+					$save['paid_amount'] = $deduct['Deduction']['paid_amount'] + $deductAmount;
+
 					$Deduction->save($save);
 				}
+
 
 			}
 
@@ -1769,6 +1948,62 @@ class SalaryComputationComponent extends Component
 		}
 
 		return $adjust;
+	}
+
+
+	public function getMonlyContibution($data = array(), $type = 'sss') {
+
+	if (!empty($data)) {
+				
+				$empData = array();
+
+				//sort by employee_id
+				$sorted = array();
+
+				foreach($data as $key => $item)
+				{
+					$sorted[$item['SalaryReport']['employee_id']][$key] = $item;
+				}
+
+				ksort($sorted, SORT_NUMERIC);
+
+
+				foreach ($sorted as $sortedKey => $emp) {
+
+					
+						$empData[$sortedKey]['employee_id'] = $sortedKey;
+
+						foreach ($emp as $empKey => $salary) {
+
+
+
+						if ($type == 'sss') {
+
+							if ($salary['SalaryReport']['salary_type'] == 'first') {
+								$empData[$sortedKey]['SSS']['first_half'] = $salary['SalaryReport']['sss_employees'];
+								$empData[$sortedKey]['SSS']['first_half_employer'] = $salary['SalaryReport']['sss_employers'];
+								$empData[$sortedKey]['SSS']['number'] = $salary['SSS']['value'];
+								$empData[$sortedKey]['SSS']['first_half_compensation'] = $salary['SalaryReport']['sss_employers'];
+							}
+							if ($salary['SalaryReport']['salary_type'] == 'second') {
+								$empData[$sortedKey]['SSS']['second_half'] = $salary['SalaryReport']['sss_employees'];
+								$empData[$sortedKey]['SSS']['second_half_employer'] = $salary['SalaryReport']['sss_employers'];
+								$empData[$sortedKey]['SSS']['number'] = $salary['SSS']['value'];
+								$empData[$sortedKey]['SSS']['second_half_compensation'] = $salary['SalaryReport']['sss_compensation'];
+							}
+							
+						}
+
+							$empData[$sortedKey]['Employee'] = $salary['Employee'];
+
+							
+						}				
+				}
+
+
+				return $empData;
+			
+			}
 	}
 
 

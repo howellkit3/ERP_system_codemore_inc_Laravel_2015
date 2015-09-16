@@ -137,6 +137,7 @@ class SalariesController  extends HumanResourceAppController {
 			$this->loadModel('HumanResource.Holiday');	
 			$this->loadModel('Payroll.SalaryReport');	
 			$this->loadModel('Payroll.Payroll');
+			$this->loadModel('Payroll.Setting');
 
 			$this->loadModel('HumanResource.Overtime');
 			$this->loadModel('HumanResource.OvertimeExcess');	
@@ -238,8 +239,9 @@ class SalariesController  extends HumanResourceAppController {
 
 			$updateDatabase = false;
 
+			$payrollSettings = $this->Setting->find('first');
 
-			$salaries = $this->SalaryComputation->calculateBenifits($employees,$payScheds,$customDate,$updateDatabase);
+			$salaries = $this->SalaryComputation->calculateBenifits($employees,$payScheds,$customDate,$updateDatabase,$payrollSettings);
 
 
 			//save for salary report
@@ -763,6 +765,24 @@ class SalariesController  extends HumanResourceAppController {
 			$this->set($params);
 	}
 
+
+	public function download_deduction_excel() {
+
+			$this->viewClass = 'Media';
+			// Render app/webroot/files/example.docx
+			$params = array(
+			'id'        => 'mass_adjustment_template.xls',
+			'name'      => 'mass_adjustment_template',
+			'extension' => 'xlsx',
+			'download'  => true,
+	        'mimeType'  => array(
+	            'xls' =>  "application/vnd.ms-excel"
+	        ),
+       		'path'      => 'files' . DS
+			);
+			$this->set($params);
+	}
+
 	public function adjustment_delete($id = null) {
 
 		if (!empty($id)) {
@@ -1207,6 +1227,8 @@ class SalariesController  extends HumanResourceAppController {
 
 	    $this->loadModel('HumanResource.Employee');
 
+	    $this->loadModel('HumanResource.Status');
+
 		if (!empty($this->params['named']['type']) && $this->params['named']['type'] == 'excel') {
 
 				$query = $this->request->query;
@@ -1236,10 +1258,7 @@ class SalariesController  extends HumanResourceAppController {
 
 		$employees =  $this->paginate('Employee');
 
-		$status = array(
-			'1' => 'Employed',
-			'2'	=> 'Resigned'
-		);
+		$status = $this->Status->getAllStatus();
 
 		$this->set(compact('date','employees','status'));
 
@@ -1256,7 +1275,60 @@ class SalariesController  extends HumanResourceAppController {
 			
 
 	}
-	
+
+	public function sss_get_contibution() {
+
+		$this->Components->load('HumanResource.SalaryComputation');
+
+		$this->loadModel('HumanResource.Employee');
+
+		$this->loadModel('HumanResource.Status');
+
+		$this->loadModel('Payroll.SalaryReport');
+
+		$this->render('Salaries/ajax/sss_contibution');
+
+		$query = $this->request->query;
+
+		$date = date('Y-m');
+
+		$from = date('Y-m-01');
+
+		$to = date('Y-m-t');
+		
+		$conditions = array();
+
+		if (!empty($query['month'])) {
+
+			$date = explode('-',$query['month']);
+
+			$from = date('Y-m-01',strtotime(trim($date[1]).'-'.$date[0].'-01'));
+
+			$to = date('Y-m-t',strtotime(trim($date[1]).'-'.$date[0].'-01'));
+
+		}
+
+		$conditions = array_merge($conditions,array(
+			'date(SalaryReport.from) BETWEEN ? AND ?' => array($from,$to), 
+		));
+
+
+		$this->SalaryReport->bind(array('Employee','SSS'));
+
+		$reports = $this->SalaryReport->find('all',array(
+			'conditions' => $conditions
+		));
+
+
+		$statuses = $this->Status->getAllStatus();
+
+		$employees = $this->SalaryComputation->getMonlyContibution($reports,'sss');
+
+		$this->set(compact('employees','statuses'));
+
+		$this->render('Salaries/ajax/sss_contibution');
+	}
+ 	
 	public function sss_report_lists($type = null) {
 
 		$date = date('Y-m-d');
@@ -1266,47 +1338,92 @@ class SalariesController  extends HumanResourceAppController {
 			$this->loadModel('HumanResource.GovernmentRecord');
 
 			$this->loadModel('HumanResource.Employee');
-			
-			$this->Employee->bindSSS();
+
+			$this->loadModel('HumanResource.Status');
+
+			$this->Employee->bindSSS(array('Status'));
 
 			$conditions = array();
 
 			if (!empty($type) && $type == 'excel') {
 
 				$conditions = array(
-							'Employee.status' => array('1','2')
+						'Employee.status' => array('1','2')
 					);
-		
 			} 
 
-			$employees = $this->Employee->find('all',array(
-				'conditions' => $conditions,
-				'group' => array('Employee.id'),
-				'order' => 'Employee.last_name ASC'
-			));
+			$limit = 10;
 
-		$this->set(compact('date','employees'));
+	        $params =  array(
+		            'conditions' => $conditions,
+		            'limit' => $limit,
+		            //'fields' => array('id', 'status','created'),
+		            'order' => 'Employee.last_name ASC',
+		            'group' => 'Employee.id'
+		    );
 
-		$this->render('Salaries/reports/sss_report_lists');
+			$this->paginate = $params;
+
+			$employees =  $this->paginate('Employee');
+
+			$statuses = $this->Status->getAllStatus();
+
+			$this->set(compact('date','employees','statuses'));
+
+			$this->render('Salaries/reports/sss_report_lists');
 	}
 
-	public function sss_report_contributions($type) {
+	public function sss_report_contributions($type = null) {
 
-		$this->loadModel('HumanResource.Employee');	
+	
+		$this->loadModel('HumanResource.EmployeeAdditionalInformation');
+
+		$this->loadModel('HumanResource.GovernmentRecord');
+
+		$this->loadModel('HumanResource.Employee');
+
+		$this->loadModel('HumanResource.Status');
+		
 		$this->loadModel('Payroll.SalaryReport');
 
+		$this->Employee->bindSSS(array('Status'));
+
 		$conditions = array();
-		$query = $this->request->query();
+
+		$query = $_GET;
 
 		if (!empty($query['month'])) {
 
-			pr($query);
-			ext();
+			$date = explode('-',$query['month']);
+
+			$from = date('Y-m-01',strtotime(trim($date[1]).'-'.$date[0].'-01'));
+
+			$to = date('Y-m-t',strtotime(trim($date[1]).'-'.$date[0].'-01'));
+
+			$conditions = array_merge($conditions,array(
+			'date(SalaryReport.from) BETWEEN ? AND ?' => array($from,$to), 
+		));
+
+
 		}
+
+		$this->SalaryReport->bind(array('Employee','SSS')); 
 		
-		$SalaryReport  = $this->SalaryReport->find('all',array(
+		$reports  = $this->SalaryReport->find('all',array(
 			'conditions' => $conditions
 		));
+
+
+		$employees = $this->SalaryComputation->getMonlyContibution($reports,'sss');
+
+		// pr($employees);
+		// exit();
+
+		$statuses = $this->Status->getAllStatus();
+
+		$this->set(compact('date','employees','statuses'));
+
+		$this->render('Salaries/xls/sss_contribution');
 	}
 
 	public function pagibig_reports() {
@@ -1318,6 +1435,9 @@ class SalariesController  extends HumanResourceAppController {
 		$this->loadModel('HumanResource.GovernmentRecord');
 
 		$this->loadModel('HumanResource.Employee');
+
+
+		$this->loadModel('HumanResource.Status');
 		
 		$this->Employee->bindPagibig();
 		
@@ -1353,11 +1473,8 @@ class SalariesController  extends HumanResourceAppController {
 		$this->paginate = $params;
 
 		$employees =  $this->paginate('Employee');
-
-		$status = array(
-			'1' => 'Employed',
-			'2'	=> 'Resigned'
-		);
+		
+		$status = $this->Status->getAllStatus();
 
 		$this->set(compact('date','employees','status'));
 
@@ -1385,6 +1502,8 @@ class SalariesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Employee');
 
+		$this->loadModel('HumanResource.Status');
+
 			switch ($query['type']) {
 				case 'pagibig':
 					$this->Employee->bindPagibig();
@@ -1398,7 +1517,6 @@ class SalariesController  extends HumanResourceAppController {
 
 		if (!empty($query['status'])) {
 
-
 			$conditions = array(
 				'Employee.status' => $query['status']
 			);
@@ -1408,7 +1526,7 @@ class SalariesController  extends HumanResourceAppController {
 
         $params =  array(
 	            'conditions' => $conditions,
-	           // 'limit' => $limit,
+	            'limit' => $limit,
 	            //'fields' => array('id', 'status','created'),
 	            'order' => 'Employee.last_name ASC',
 	            'group' => 'Employee.id'
@@ -1418,10 +1536,7 @@ class SalariesController  extends HumanResourceAppController {
 
 		$employees =  $this->paginate('Employee');
 
-		$status = array(
-			'1' => 'Employed',
-			'2'	=> 'Resigned'
-		);
+		$status = $this->Status->getAllStatus();
 
 		$this->set(compact('date','employees','status'));
 
@@ -1628,13 +1743,11 @@ class SalariesController  extends HumanResourceAppController {
 			 }
 
 			if ($salaries) {
-
-				$this->loadModel('Payroll.SalaryReport');
 				//save to salary report data
 
 			 	if ($payroll['Payroll']['type'] == '13_month') {
 				
-					if( $this->_createReport($salaries,$auth) ) {
+					if ($this->SalaryReport->createMultipleReport($salaries,$auth)) {
 
 						$salaries = $this->_checkThirteenPayroll($payroll,true);
 					}
@@ -1655,45 +1768,38 @@ class SalariesController  extends HumanResourceAppController {
 				} else {
 
 
-
-					$createReport = $this->_createReport($salaries,$auth);
-
-
-
-					if(!empty($createReport)) {
+					if( $this->SalaryReport->createMultipleReport($salaries,$auth)) {
 
 						$salaries = $this->_checkPayroll($payroll,true);
-					}
 
-					$payroll['Payroll']['status'] = 'process';
+						$payroll['Payroll']['status'] = 'process';
 
-					$json_data = json_encode($salaries);
+						$json_data = json_encode($salaries);
 
-					$folder_path = WWW_ROOT.'/salaries/files/';
+						$folder_path = WWW_ROOT.'/salaries/files/';
 
-					if (!file_exists($folder_path)) {
+						if (!file_exists($folder_path)) {
 						mkdir($folder_path, 0777, true);
+						}
+
+						//update adjustments
+						$this->Adjustment->updatePayroll($salaries);
+
+						file_put_contents("salaries/files/payroll-".$id.".txt", $json_data);
 					}
-
-					//update adjustments
-					$this->Adjustment->updatePayroll($salaries);
-
-					file_put_contents("salaries/files/payroll-".$id.".txt", $json_data);
 
 				}
 				
 
 			}
 
-
 			if ($this->Payroll->save($payroll['Payroll']) ) {
 
 				$this->Session->setFlash(__('Payroll Process Completed.'),'success');
-
-
-			 $this->redirect(
-	                array('controller' => 'salaries', 'action' => 'payroll_view',$id)
-	            );
+				
+				$this->redirect(
+		                array('controller' => 'salaries', 'action' => 'payroll_view',$id)
+		            );
 
 
 			} else {
@@ -1708,57 +1814,7 @@ class SalariesController  extends HumanResourceAppController {
 	}
 
 
-	private function _createReport($salaryData = null,$auth = null) {
-
-		$this->loadModel('Payroll.SalaryReport');
-
-		if (!empty($salaryData)) {
-
-			$report = array();
-
-			foreach ($salaryData as $key => $value) {
-
-				if ($value['employee_salary_type'] == 'monthly') {
-
-					$report[$key]['basic_pay_month'] = $value['regular'];
-					$report[$key]['basic_pay_month'] += $value['special_holiday'];
-					$report[$key]['basic_pay_month'] += $value['sunday_work'];
-					$report[$key]['basic_pay_month'] += $value['legal_holiday'];
-					$report[$key]['basic_pay_month'] += $value['leave'];	
-
-				} else {
-
-					$report[$key]['basic_pay_month'] = $value['regular'];
-					$report[$key]['basic_pay_month'] += $value['leave'];	
-
-				}
 	
-				$report[$key]['employee_id'] = $value['employee_id'];
-				$report[$key]['salary_type'] = $value['salary_type'];
-				$report[$key]['days']	=	$value['days'];
-				$report[$key]['from'] = $value['from'];
-				$report[$key]['to'] = $value['to'];
-				$report[$key]['gross'] = $value['gross'];
-				$report[$key]['total_deduction'] = $value['total_deduction'];
-				$report[$key]['allowances'] = !empty($value['allowances']) ? $value['allowances'] : 0 ;
-				$report[$key]['incentives'] = !empty($value['incentives']) ? $value['incentives'] : 0;
-				$report[$key]['total_pay'] = $value['total_pay'];
-				$report[$key]['created_by'] = $auth['id'];
-				$report[$key]['modified_by'] = $auth['id'];
-
-			}
-
-			if ($this->SalaryReport->saveAll($report) ) {
-
-				return true;
-			} else {
-				return false;
-			}
-
-			//return 
-		}
-	}
-
 	public function reject_payroll($id) {
 
 		if (!empty($id)) {
@@ -1783,6 +1839,7 @@ class SalariesController  extends HumanResourceAppController {
 	}
 
 	private function _checkPayroll($payroll = null , $update = false ){
+		
 		$salaries = '';
 
 		if (!empty($payroll)) {

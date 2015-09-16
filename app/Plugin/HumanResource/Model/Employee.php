@@ -207,7 +207,7 @@ class Employee extends AppModel {
 		$this->recursive = 1;
 		//$this->contain($giveMeTheTableRelationship);
 	}
-	public function bindSSS() {
+	public function bindSSS($group = array()) {
 		$this->bindModel(array(
 			'belongsTo' => array(
 				'GovernmentRecord' => array(
@@ -215,6 +215,12 @@ class Employee extends AppModel {
 					'foreignKey' => false,
 					'conditions' => array('GovernmentRecord.employee_id = Employee.id','GovernmentRecord.agency_id' => 1)
 					),
+				'Status' => array(
+					'className' => 'HumanResource.Status',
+					'foreignKey' => 'status',
+					'conditions' => '',
+					),
+
 			),
 			'hasOne' => array(
 				'EmployeeAdditionalInformation' => array(
@@ -224,8 +230,14 @@ class Employee extends AppModel {
 				)
 			)
 		));
+		if (!empty($group)) {
+			$group = array_merge($group,array('GovernmentRecord','EmployeeAdditionalInformation'));
 
-		$this->recursive = 1;
+			$this->contain($group);
+
+		}
+		//$this->recursive = 1;
+
 	}
 
 	public function bindPagibig() {

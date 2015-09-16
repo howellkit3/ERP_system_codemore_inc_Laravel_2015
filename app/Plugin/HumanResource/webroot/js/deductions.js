@@ -4,6 +4,8 @@ var init = function() {
 }
 function loadSummary(){
 
+    $('.error.appended-amount').remove();
+
     $month = $('#monthly #DeductionFrom').val();
       
     $amount = $('#DeductionAmount').val();
@@ -12,7 +14,24 @@ function loadSummary(){
 
     $container.html('<img src="'+serverPath+'/img/loader.gif"/>');
 
-      $.ajax({
+    $paidAmount =  $('#DeductionPaidAmount').val();
+
+    console.log($paidAmount);
+
+    console.log($amount);
+    
+    if ( parseInt($paidAmount) > parseInt($amount) ) {
+        $('#DeductionPaidAmount').after('<label class="error appended-amount lbl-danger"><i class="fa fa-exclamation-triangle"></i> Warning ! paid amount must be lower or equal to deduction amount </label>');
+       //  swal("Warning ! paid amount must be lower pr equal to deduction amount");
+    }
+
+    if (parseInt($amount) > 0) {
+
+      $amount = $amount - $paidAmount;
+
+    }
+
+    $.ajax({
             type: "POST",
             url: serverPath + "human_resource/salaries/computeDeduction/",
             data: { 'range' :  $month ,'amount' :  $amount    },
@@ -146,6 +165,12 @@ $( ".datepick" ).datepicker({
 
 
  $('body').on('keyup','#DeductionAmount',function(e){
+
+      if ($('.mode_type:checked').val() == 'installment'){
+          loadSummary();  
+     }
+  });
+ $('body').on('keyup','#DeductionPaidAmount',function(e){
 
       if ($('.mode_type:checked').val() == 'installment'){
           loadSummary();  

@@ -20,7 +20,7 @@ echo $this->element('payroll_options');
 $active_tab = 'gross_reports';
  ?>
 
- <div class="row">
+ <div class="row" id="sss-result-main-cont">
   <div class="col-lg-12">
     <div class="main-box clearfix body-pad">
     		<?php echo $this->element('tab/salary_reports',array('active_tab' => $active_tab)); ?>
@@ -29,6 +29,7 @@ $active_tab = 'gross_reports';
 			<div class="tabs-wrapper">
 				<div class="tab-content">
 					<div class="tab-pane active" id="tab-calendar">
+
 						<header class="main-box-header clearfix">
 			                <h2 class="pull-left"><b>SSS Report</b> </h2>
                       <div class="clearfix"></div>
@@ -46,11 +47,9 @@ $active_tab = 'gross_reports';
                            <li ><a href="#tab-contribution" data-toggle="tab">Contributions</a></li>
                         </ul>
                         <div class="tab-content">
-
-
                         <div class="tab-pane fade active in" id="tab-home">
-
-                          <header class="clearfix"><!-- 
+                            
+                            <header class="clearfix"><!-- 
                                           <h2 class="pull-left"><b>Salaries</b> </h2> -->
                                    <!--  <div class="filter-block pull-left">
                                         <div class="form-group pull-left">
@@ -62,12 +61,9 @@ $active_tab = 'gross_reports';
                                     <div class="filter-block pull-left">
                                         <div class="form-group pull-left">
                                             <?php echo $this->Form->input('status',array(
-                                                'options' => array(
-                                                      '' => 'All',
-                                                      '1' => 'Employed',
-                                                      '2' => 'Resigned',
-                                                  ),
+                                                'options' => $statuses,
                                                 'class' => 'form-control',
+                                                'empty' => '---- All ----',
                                                 'label' => false
                                             )); ?>
                                         </div>
@@ -97,6 +93,7 @@ $active_tab = 'gross_reports';
                                         <div class="form-group pull-left">
 
                                           <?php 
+                                          
                                           $url = $this->Html->url('/',true);
                                            
                                           echo $this->Html->link('<i class="fa fa-file-text-o fa-lg"></i> Export',
@@ -116,34 +113,48 @@ $active_tab = 'gross_reports';
                                     </div>
                           </header>
 
-
-                          <table class="table table-bordered">
-                                      <thead>
-                                      <tr>
-                                        <th><a href="#"><span>SSS Number</span></a></th>
-                                        <th class="text-center"><a href="#" class="asc"><span>Last Name</span></a></th>
-                                        <th class="text-center"><span>First Name</span></th>
-                                        <th class="text-center"><span>Middle Initial</span></th>
-                                        <th class="text-center"><span>Date of Birth</span></th>
-                                      </tr>
-                                      </thead>
-
-                                      <tbody id="sss-result-cont">
-                                      <?php if(!empty($employees)) : ?>
-                                        <?php foreach ($employees as $key => $emp) : ?>
+                          <div id="sss-result-cont">
+                            <table class="table table-bordered">
+                                        <thead>
                                           <tr>
-                                              <td> <?php echo $emp['GovernmentRecord']['value']; ?></td>
-                                              <td class="text-center"> <?php echo ucwords($emp['Employee']['first_name']); ?></td>
-                                              <td class="text-center"> <?php echo ucwords($emp['Employee']['last_name']); ?> </td>
-                                              <td class="text-center"> <?php echo ucwords($emp['Employee']['middle_name'][1]); ?> </td>
-                                              <td class="text-center"> <?php echo !empty($emp['EmployeeAdditionalInformation']['birthday']) ? date('F/d/Y',strtotime($emp['EmployeeAdditionalInformation']['birthday'])) : ''  ?> </td>
+                                            <th><a href="#"><span>SSS Number</span></a></th>
+                                            <th class="text-center"><a href="#" class="asc"><span>Last Name</span></a></th>
+                                            <th class="text-center"><span>First Name</span></th>
+                                            <th class="text-center"><span>Middle Initial</span></th>
+                                            <th class="text-center"><span>Date of Birth</span></th>
+                                            <th class="text-center"><span>Emp Status</span></th>
                                           </tr>
-                                        <?php endforeach; ?>
-                                      <?php endif; ?>
-                                 </tbody>
-                            </table>
+                                        </thead>
+
+                                      <tbody>
+                                        <?php if(!empty($employees)) : ?>
+                                          <?php foreach ($employees as $key => $emp) : ?>
+                                            <tr>
+                                                <td> <?php echo $emp['GovernmentRecord']['value']; ?></td>
+                                                <td class="text-center"> <?php echo ucwords($emp['Employee']['first_name']); ?></td>
+                                                <td class="text-center"> <?php echo ucwords($emp['Employee']['last_name']); ?> </td>
+                                                <td class="text-center"> <?php echo ucwords($emp['Employee']['middle_name'][1]); ?> </td>
+                                                <td class="text-center"> <?php echo !empty($emp['EmployeeAdditionalInformation']['birthday']) ? date('F/d/Y',strtotime($emp['EmployeeAdditionalInformation']['birthday'])) : ''  ?> </td>
+                                                <td class="text-center"> 
+                                                <?php echo !empty($emp['Status']['name']) ? '<span class="label label-success">'.ucwords($emp['Status']['name']) .'</span>' : ''; ?>
+                                                </td>
+                                            </tr>
+                                          <?php endforeach; ?>
+                                        <?php endif; ?>
+                                   </tbody>
+                              </table>
+
+                            <div class="paging" id="item_type_pagination" data-result="#sss-result-cont">
+                              <?php
+                                  echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
+                                  echo $this->Paginator->numbers(array('separator' => ''));
+                                  echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
+                              ?>
+                            </div>
+
+                           </div>
                                    
-                         <!--  <table class="table table-bordered">
+                         <!-- <table class="table table-bordered">
                                       <thead>
                                       <tr>
                                         <th><a href="#"><span>Code</span></a></th>
@@ -156,9 +167,10 @@ $active_tab = 'gross_reports';
 
                                       <tbody id="monthly-result-cont"></tbody>
                          </table> -->
+
                      </div>
                         <div class="tab-pane fade" id="tab-contribution">
-                              <header class="main-box-header clearfix"><!-- 
+                              <header class="clearfix"><!-- 
                                             <h2 class="pull-left"><b>Salaries</b> </h2> -->
                                       <div class="filter-block pull-left">
                                           <div class="form-group pull-left">
@@ -168,7 +180,7 @@ $active_tab = 'gross_reports';
                                       </div>
                                       <div class="filter-block pull-left">
                                           <div class="form-group pull-left">
-                                              <button href="#" id="computeSalaries"  data-type="monthly" data-url="" class="btn btn-primary pull-right "><i class="fa fa-refresh fa-lg"></i> Generate </button>
+                                              <button href="#" id="SSSMonthlyContribution"  data-type="monthly" data-url="" class="btn btn-primary pull-right "><i class="fa fa-refresh fa-lg"></i> Generate </button>
                                           </div>
                                       </div>
 
@@ -176,21 +188,26 @@ $active_tab = 'gross_reports';
                                         <div class="form-group pull-left">
 
                                           <?php 
-
-                                           echo $this->Html->link('<i class="fa fa-file-text-o fa-lg"></i> Export',
+                                            
+                                            $url = $this->Html->url('/',true);
+                                            echo $this->Html->link('<i class="fa fa-file-text-o fa-lg"></i> Export',
                                             array('controller' => 'salaries', 
-                                              'actions' => 'sss_report_contributions',
-                                              'data-type' => 'monthly', 'excel'),
-                                            array('class' => 'btn btn-primary pull-right',
-                                                  'id' => 'SSSReports',
-                                                  'escape' => false,
-                                                  'target' => '_blank'
+                                              'action' => 'sss_report_contributions', 
+                                              'excel'),
+                                            array(
+                                                'class' => 'btn btn-primary pull-right',
+                                                'data-url' => $url.'/human_resource/salaries/sss_report_contributions/type:excel',
+                                                'id' => 'SSSContributionReports',
+                                                'escape' => false,
+                                                'target' => '_blank'
                                               ));
                                            ?>
                                         </div>
                                     </div>
                           </header>
 
+                           <div id="sss-contribution-result-cont">
+                           </div>
 
                       </div>
 
