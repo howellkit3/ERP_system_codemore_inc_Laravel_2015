@@ -57,7 +57,7 @@
 
                 $sheet->setCellValue('L'.$counter, $number['mobile'] );
 
-                $sheet->setCellValue('M'.$counter,$employeeList['Address'][0]['zipcode']);
+                $sheet->setCellValue('M'.$counter,$employeeList['Address']);
 
                 $sheet->setCellValue('N'.$counter,$employeeList['Address'][0]['zipcode']);
                     

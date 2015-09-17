@@ -15,6 +15,8 @@ class DailyInfo extends AppModel {
 
 	public $name = 'DailyInfo';
 
+	public $useTable = 'daily_infos';
+
 	public $actsAs = array('Containable');
     
     public function bind($model = array('Group')){

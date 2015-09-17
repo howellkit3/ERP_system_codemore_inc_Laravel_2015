@@ -10,30 +10,35 @@ class EmployeesController  extends HumanResourceAppController {
 	//,'HumanResource.Country'
 	public function index() {
 
+		$this->loadModel('HumanResource.Tooling');
 		$this->loadModel('HumanResource.Position');
 		$this->loadModel('HumanResource.Department');
-		$this->loadModel('HumanResource.Tooling');
 		$this->loadModel('HumanResource.Status');
+
+		$this->Employee->bind(array('Position','Department','Status'));
+
 		//array_push($departmentData, "All");
 		$limit = 10;
 
         $conditions = array();
 
 	 	if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'Employee' ) {
+	 		
 	 		$this->Employee->bind(array('Position','Department','Status'));
 
 	        $this->paginate = array(
 	            'conditions' => $conditions,
 	            'limit' => $limit,
 	            //'fields' => array('id', 'status','created'),
+	            'recursive' => -1,
 	            'order' => 'Employee.id DESC',
 	        );
 
 	        $employees = $this->paginate();
+
+
 	    }
 
-        $this->loadModel('HumanResource.Tooling');
- 
 	    if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'Tooling' ) {
 			//toolings
 	       	$conditions = array();    
@@ -43,6 +48,7 @@ class EmployeesController  extends HumanResourceAppController {
 	            'limit' => $limit,
 	            //'fields' => array('id', 'status','created'),
 	            'order' => 'Tooling.id DESC',
+	            'recursive' => -1
 	        );
 
 
@@ -55,21 +61,60 @@ class EmployeesController  extends HumanResourceAppController {
 
 		$departments = $this->Department->find('list',array('fields' => array('id','name')));
 		
-        $this->loadModel('HumanResource.Employee');
-
         $employeeList = $this->Employee->find('list',array('fields' => array('id','fullname')));
-
-        $this->loadModel('HumanResource.Department');
 
         $departmentData = $this->Department->find('list',array('fields' => array('id','name')));
 
-		$this->loadModel('HumanResource.Tool');
 
-		$toolList = $this->Tool->find('list',array('fields' => array('id','name')));
+		//$toolList = $this->Tool->find('list',array('fields' => array('id','name')));
 
 		$statusList = $this->Status->find('list',array('fields' => array('id','name')));
 
         $this->set(compact('employees','departments','positions','toolings','toolList','employeeList', 'departmentData','statusList'));
+	}
+
+
+	public function search_by_department($departmentId = null , $status = null,$hintKey = null){
+
+		$this->loadModel('HumanResource.Position');
+		$this->loadModel('HumanResource.Department');
+		$this->loadModel('HumanResource.Status');
+
+		$this->Employee->bind(array('Position','Department','Status'));
+
+		$conditions = array();
+
+		if ($status != 0) {
+
+			$conditions = array_merge($conditions,array('Employee.status' => $status ));
+
+		}
+
+		if ($departmentId != 0) {
+
+			$conditions = array_merge($conditions,array('Employee.department_id' => $departmentId ));
+
+		}
+
+		if (!empty($hintKey)) {
+
+			$conditions = array_merge($conditions,array(
+									'OR' => array(
+										array('Employee.first_name LIKE' => '%' . $hintKey . '%'),
+										array('Employee.last_name LIKE' => '%' . $hintKey . '%'),
+										array('Employee.code LIKE' => '%'. $hintKey .'%')
+									)
+								));
+
+		}
+
+		$employeeData = $this->Employee->find('all',array('conditions' => $conditions));
+
+		$this->set(compact('employeeData'));
+		
+    	$this->render('search_by_department');
+    	
+
 	}
 
 	public function add () {
@@ -806,46 +851,5 @@ class EmployeesController  extends HumanResourceAppController {
 
 	}
 	
-	public function search_by_department($departmentId = null , $status = null,$hintKey = null){
-
-		$this->loadModel('HumanResource.Position');
-		$this->loadModel('HumanResource.Department');
-		$this->loadModel('HumanResource.Status');
-
-		$this->Employee->bind(array('Position','Department','Status'));
-
-		$conditions = array();
-
-		if ($status != 0) {
-
-			$conditions = array_merge($conditions,array('Employee.status' => $status ));
-
-		}
-
-		if ($departmentId != 0) {
-
-			$conditions = array_merge($conditions,array('Employee.department_id' => $departmentId ));
-
-		}
-
-		if (!empty($hintKey)) {
-
-			$conditions = array_merge($conditions,array(
-									'OR' => array(
-										array('Employee.first_name LIKE' => '%' . $hintKey . '%'),
-										array('Employee.last_name LIKE' => '%' . $hintKey . '%'),
-										array('Employee.code LIKE' => '%'. $hintKey .'%')
-									)
-								));
-
-		}
-
-		$employeeData = $this->Employee->find('all',array('conditions' => $conditions));
-
-		$this->set(compact('employeeData'));
-		
-    	$this->render('search_by_department');
-    	
-
-	}
+	
 }
