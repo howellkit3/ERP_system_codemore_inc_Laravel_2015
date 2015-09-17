@@ -59,5 +59,48 @@ class Department extends AppModel {
 
 	}
 
+	public function createDepartment($data = array() , $auth = null) {
+
+		$departmentData = array();
+
+		if (!empty($data)) {
+
+			$departmentData['Department']['name']  = $data['Employee']['department_id_others'];
+			$initial = '';	
+
+			$aName = explode(" ", $data['Employee']['department_id_others']);
+
+			if (count($aName) > 1) {
+
+				foreach ($aName as $key => $list) {
+					$initial .= strtoupper($list{0});
+				}
+
+			} else {
+
+				$initial = strtoupper($aName[0]{0}.$aName[0]{2});
+			}
+
+			$departmentData['Department']['prefix'] = $initial;
+
+			$departmentData['Department']['description'] = $data['Employee']['department_id_others'];
+
+			$departmentData['Department']['specification'] = $data['Employee']['department_id_others'];
+
+			$departmentData['Department']['notes'] = '';
+			
+			$departmentData['Department']['created_by'] = $auth['id'];
+
+			$departmentData['Department']['modified_by'] = $auth['id'];
+
+			if ($this->save($departmentData) ) {
+
+				return $this->id;
+			}
+
+
+		}
+	}
+
 
 }

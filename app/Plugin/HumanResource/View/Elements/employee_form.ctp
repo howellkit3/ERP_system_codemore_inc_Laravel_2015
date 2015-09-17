@@ -86,8 +86,11 @@
 				                                            
 				                                            	$department = array($departmentList);
 
+				                                            	$department = array_merge($department,array('other' => 'Others'));
 				                                            ?>
-				                                            <?php echo $this->Form->input('Employee.department_id',
+				                                            <?php 
+
+				                                            echo $this->Form->input('Employee.department_id',
 							                                         array('class' => 'autocomplete required',
 							                                        'options' => $department,
 							                                        'placeholder' => 'Department name',
@@ -99,6 +102,22 @@
 							                                ?>
 			                                          </div>
 
+			                                           <div class="form-group department-other hide">
+			                                        	 <label class="col-lg-4 control-label">
+			                                        	 <span style="color:red">*</span> Department Name</label>
+			                                            	
+				                                            <?php 
+
+				                                            echo $this->Form->input('Employee.department_id_others',
+							                                         array('class' => 'form-control required',
+							                                        'placeholder' => 'Other Name',
+							                                        'div' => 'col-lg-7',
+							                                        'label' => false));
+
+							                                ?>
+			                                          </div>
+
+
 			                                          <div class="form-group">
 			                                        	 <label class="col-lg-4 control-label">
 			                                        	 <span style="color:red">*</span>Position</label>
@@ -106,12 +125,29 @@
 				                                            	
 				                                            	$position = array($positionList);
 
+				                                            	$position = array_merge($department,array('other' => 'Others'));
+
 				                                            	echo $this->Form->input('Employee.position_id',
 							                                         array('class' => 'autocomplete required',
 							                                        'options' => $position,
 							                                        'placeholder' => 'Position name',
 							                                        'empty' => 'Select Position',
 							                                        'default' => !empty($employeeData['Employee']['position_id']) ? $employeeData['Employee']['position_id'] : '',
+							                                        'div' => 'col-lg-7',
+							                                        'label' => false));
+
+							                                ?>
+			                                          </div>
+
+			                                           <div class="form-group position-other hide">
+			                                        	 <label class="col-lg-4 control-label">
+			                                        	 <span style="color:red">*</span> Position Name</label>
+			                                            	
+				                                            <?php 
+
+				                                            echo $this->Form->input('Employee.position_id_others',
+							                                         array('class' => 'form-control required',
+							                                        'placeholder' => 'Other Name',
 							                                        'div' => 'col-lg-7',
 							                                        'label' => false));
 

@@ -134,6 +134,8 @@ class EmployeesController  extends HumanResourceAppController {
 
 			 $this->loadModel('HumanResource.Department');
 
+			 $this->loadModel('HumanResource.Position');
+
 			 $this->loadModel('HumanResource.Dependent');
 
 			 $this->loadModel('HumanResource.Salaries');
@@ -160,9 +162,35 @@ class EmployeesController  extends HumanResourceAppController {
 
             	$this->Employee->create();
 
+            
+
+            	//check department
+
+            	if (!empty($this->request->data['Employee']['department_id_others']) && $this->request->data['Employee']['department_id'] == 'other') {
+
+            		$department = $this->Department->createDepartment($this->request->data,$auth);
+            		
+            		if (!empty($department)) {
+
+            			 $data['Employee']['department_id'] = $department;
+            		}
+            	}
+
+				//check Position
+            		
+            	if (!empty($this->request->data['Employee']['position_id_others']) && $this->request->data['Employee']['position_id'] == 'other') {
+
+            		$position = $this->Position->createPosition($this->request->data,$auth);
+            		
+            		if (!empty($position)) {
+
+            			 $data['Employee']['position_id'] = $position;
+            		}
+            	}
+
+            		
 			 	if ($this->Employee->save($data)) {
-
-
+		
 			 		$employeeId = $this->Employee->id;
 			 		//save additional info
 			 		$save = $this->EmployeeAdditionalInformation->saveInfo($employeeId,$data['EmployeeAdditionalInformation']);

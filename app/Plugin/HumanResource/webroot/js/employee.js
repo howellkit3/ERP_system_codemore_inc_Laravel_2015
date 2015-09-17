@@ -324,6 +324,38 @@ $('body').on('click','.select-status',function(e){
    
 });
 
+//select other department
+
+$('body').on('change','#EmployeeDepartmentId',function(){
+
+    if ($(this).val() == 'other') {
+
+        $('.department-other').removeClass('hide');
+
+        $('.department-other').find('input').attr('disabled',false);
+    } else {
+         $('.department-other').addClass('hide');
+
+        $('.department-other').find('input').attr('disabled','disabled');
+    }
+
+});
+
+$('body').on('change','#EmployeePositionId',function(){
+
+    if ($(this).val() == 'other') {
+
+        $('.position-other').removeClass('hide');
+
+        $('.position-other').find('input').attr('disabled',false);
+    } else {
+         $('.position-other').addClass('hide');
+
+        $('.position-other').find('input').attr('disabled','disabled');
+    }
+
+});
+
 
 function ajaxCallSearchEmployee(DepartmentId,thisStatus,inputSearch){
 
