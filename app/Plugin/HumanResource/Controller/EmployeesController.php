@@ -35,8 +35,6 @@ class EmployeesController  extends HumanResourceAppController {
 	        );
 
 	        $employees = $this->paginate();
-
-
 	    }
 
 	    if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'Tooling' ) {
@@ -55,7 +53,6 @@ class EmployeesController  extends HumanResourceAppController {
 	        $toolings = $this->paginate('Tooling');
 		       
 	    }
-
         
 		$positions = $this->Position->find('list',array('fields' => array('id','name')));
 
@@ -64,7 +61,6 @@ class EmployeesController  extends HumanResourceAppController {
         $employeeList = $this->Employee->find('list',array('fields' => array('id','fullname')));
 
         $departmentData = $this->Department->find('list',array('fields' => array('id','name')));
-
 
 		//$toolList = $this->Tool->find('list',array('fields' => array('id','name')));
 
@@ -851,5 +847,62 @@ class EmployeesController  extends HumanResourceAppController {
 
 	}
 	
+	public function delete($id = null) {
+
+		if (!empty($id)) {
+
+
+			$this->loadModel('HumanResource.EmployeeAdditionalInformation');
+
+			 $this->loadModel('HumanResource.Email');
+
+			 $this->loadModel('HumanResource.Address');
+
+			 $this->loadModel('HumanResource.GovernmentRecord');
+
+			 $this->loadModel('HumanResource.Contact');
+
+			 $this->loadModel('HumanResource.ContactPerson');
+
+			 $this->loadModel('HumanResource.EmployeeEducationalBackground');
+
+			if ($this->Employee->delete($id)) {
+
+
+					//delete all additional info
+					$this->EmployeeAdditionalInformation->deleteAll(array('EmployeeAdditionalInformation.employee_id' => $id), false);
+
+					//delete all Email
+					$this->Email->deleteAll(array('Email.foreign_key' => $id,'Email.model' => 'Employee'), false);
+
+					//delete all Address
+					$this->Address->deleteAll(array('Address.foreign_key' => $id,'Address.model' => 'Employee'), false);
+
+					//delete all government Record
+					$this->GovernmentRecord->deleteAll(array('GovernmentRecord.employee_id' => $id), false);
+
+					//delete all EmployeeEducationalBackground Record
+					$this->EmployeeEducationalBackground->deleteAll(array('EmployeeEducationalBackground.employee_id' => $id), false);
+					
+					//delete all EmployeeEducationalBackground Record
+					$this->ContactPerson->deleteAll(array('ContactPerson.employee_id' => $id), false);
+			
+				$this->Session->setFlash(
+                      __('Employee Successfully deleted.', h($id), 'sucess')
+                  );
+             } else {
+                  $this->Session->setFlash(
+                    __('Employee cannot be deleted.', h($id), 'sucess')
+                 );
+            }
+
+            $this->redirect( array(
+                                 'controller' => 'employees', 
+                                 'action' => 'index',
+                                 $this->Employee->id
+                            ));
+
+		}	
+	}
 	
 }
