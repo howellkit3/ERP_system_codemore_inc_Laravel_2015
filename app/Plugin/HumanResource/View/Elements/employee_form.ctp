@@ -125,7 +125,7 @@
 				                                            	
 				                                            	$position = array($positionList);
 
-				                                            	$position = array_merge($department,array('other' => 'Others'));
+				                                            	$position = array_merge($position,array('other' => 'Others'));
 
 				                                            	echo $this->Form->input('Employee.position_id',
 							                                         array('class' => 'autocomplete required',
