@@ -14,8 +14,7 @@ class DeductionsController extends HumanResourceAppController {
 
         if (!empty($this->request->data)) {
         		
-
-        		if (!empty($this->request->data['date_range'])) {
+			if (!empty($this->request->data['date_range'])) {
 
         			$dateRange = explode('-', $this->request->data['date_range'] );
 
@@ -26,9 +25,7 @@ class DeductionsController extends HumanResourceAppController {
         			$conditions = array_merge($conditions,array(
 						'date(Deduction.from) BETWEEN ? AND ?' => array($from,$to), 
 					));
-
-			
-        		}
+				}
 
 				if (!empty($this->request->data['employee_id'])) {
 					$conditions = array_merge($conditions,array('Deduction.employee_id' => $this->request->data['employee_id']));
@@ -36,7 +33,6 @@ class DeductionsController extends HumanResourceAppController {
 				if (!empty($this->request->data['employee_code'])) {
 
 					$filter = $this->request->data['employee_code'];
-
 					$employee = $this->Employee->find('first',array(
 						'conditions' => array(
 							'OR' => array (

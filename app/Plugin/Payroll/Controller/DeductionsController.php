@@ -153,29 +153,25 @@ class DeductionsController extends PayrollAppController {
 
 			if (!empty($xls_data['Deduction'])) {
 
+		
 
 			foreach ($xls_data['Deduction'] as $key => $list) {
+
+				$total_payment = $list['Amount'];
 				
-				$employees = $this->Employee->find('first'); //$this->Employee->findbyCode(trim($list['Employee Code']),'first',array('id','first_name','last_name'));
+				$employees = $this->Employee->findbyCode(trim($list['Employee Code']),'first',array('id','first_name','last_name'));
 				
+
 				if (!empty($employees['Employee']['id'])) {
 
 					$employeeData[$key]['id'] = '';
 					$employeeData[$key]['employee_id'] = $employees['Employee']['id'];
 					$employeeData[$key]['amount'] = $list['Amount'];
+					$employeeData[$key]['paid_amount'] = $list['Amount_Paid'];
 
-					if ($list['Deduction Mode'] == 1) {
-
+					if ($list['Deduction_Mode'] == 1) {
 						$employeeData[$key]['mode'] = 'installment';
-
-						//count months and divide the payment
-
-						//$date = explode('-',$query['range']);
-					
-						
-
 					} else {
-
 						$employeeData[$key]['mode'] = 'once';
 
 						//save single date
@@ -185,13 +181,16 @@ class DeductionsController extends PayrollAppController {
 					$employeeData[$key]['to'] = date('Y-m-d',strtotime($list['To']));
 					$employeeData[$key]['reason'] =  $list['Reason'];
 					$employeeData[$key]['status'] = $list['Status'];
-				}
+				}	
 
-				if ($this->Deduction->save($employeeData[$key])) {
+				if (!empty($employeeData[$key])) {
+
+
+				if ($saveDeduction = $this->Deduction->save($employeeData[$key])) {
 
 						$deductionLastId = $this->Deduction->id;
 
-						if ($list['Deduction Mode'] == 1) {
+						if ($list['Deduction_Mode'] == 1) {
 
 						$start_date = date('Y-m-d',strtotime($list['From']));
 
@@ -218,7 +217,6 @@ class DeductionsController extends PayrollAppController {
 							
 							$amortizationData = array();
 
-
 							$total_payment = $list['Amount'] / count($payment);
 
 							$total = $list['Amount'];
@@ -226,7 +224,6 @@ class DeductionsController extends PayrollAppController {
 							foreach ($payment as $amkey => $pay) {
 
 								$payment[$amkey]['deduction_id'] = $deductionLastId;
-
 								$payment[$amkey]['amount'] = $total_payment;
 								$payment[$amkey]['payroll_date'] = $pay['date'];
 								$payment[$amkey]['deduction'] = $total;
@@ -242,35 +239,30 @@ class DeductionsController extends PayrollAppController {
 						}
 						} else {
 
-								$payment[$amkey]['deduction_id'] = $deductionLastId;
+								$payment['deduction_id'] = $deductionLastId;
 
-								$payment[$amkey]['amount'] = $total_payment;
-								$payment[$amkey]['payroll_date'] = date('Y-m-d',strtotime($list['From']));
-								$payment[$amkey]['deduction'] = $total;
+								$payment['amount'] = $total_payment;
 
-								$payment[$amkey]['status'] = 0;
+								$payment['payroll_date'] = date('Y-m-d',strtotime($list['From']));
+								$payment['deduction'] = $total;
+
+								$payment['status'] = 0;
 								$total = $total - $total_payment;
 
 								$this->Amortization->save($payment[$amkey]);	
 
 						}
+					}
 				}
 			}
 
 			$this->Deduction->create();
 
-			if (!empty($employeeData)) {
-
-				if ($this->Deduction->saveAll($employeeData)) {
-
-					
-					//save adjustment
-					$this->Session->setFlash('Deduction\'s save successfully','success');
-				} else {
-
-					$this->Session->setFlash('There\'s an error saving','error');
-
-				}
+			if ($saveDeduction) {
+		
+			//save adjustment
+			$this->Session->setFlash('Deduction\'s save successfully','success');
+		
 			} 
 			else {
 

@@ -275,6 +275,8 @@ class EmployeesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Contact');
 
+		$this->loadModel('HumanResource.HumanResourceContactPerson');
+
 		//$this->loadModel('HumanResource.ContactPerson');
 
 		$this->loadModel('HumanResource.EmployeeEducationalBackground');
@@ -337,11 +339,13 @@ class EmployeesController  extends HumanResourceAppController {
 					}
 					if (!empty($data['Dependent'])) {
 			 		//save dependent
-			 		$save = $this->Dependent->saveDependent($data['Dependent'],$employeeId,$auth['id']);
+			 			$save = $this->Dependent->saveDependent($data['Dependent'],$employeeId,$auth['id']);
+
 			 		}
 			 		if (!empty($data['ContactPersonData'])) {
-						
-						$this->ContactPerson->saveContact($data['ContactPersonData'],$employeeId,$auth['id']);
+
+			 			$this->HumanResourceContactPerson->saveContact($data['ContactPersonData'],$employeeId,$auth['id']);
+				
 			 		}
 			 		//save salary settings
 			 		$this->Salary->saveSettings($data);
@@ -388,7 +392,7 @@ class EmployeesController  extends HumanResourceAppController {
 				'GovernmentRecord',
 				'Address',
 				'Contact',
-				'ContactPerson',
+				//'ContactPerson',
 				'HumanResourceContactPerson',
 				'ContactPersonEmail',
 				'ContactPersonAddress',
@@ -455,6 +459,8 @@ class EmployeesController  extends HumanResourceAppController {
 
 		 $this->loadModel('HumanResource.ContactPerson');
 
+		 $this->loadModel('HumanResource.HumanResourceContactPerson');
+
 		 $this->loadModel('HumanResource.Position');
 
 		 $this->loadModel('HumanResource.Department');
@@ -476,6 +482,7 @@ class EmployeesController  extends HumanResourceAppController {
 				'Address',
 				'Contact',
 				'ContactPerson',
+				'HumanResourceContactPerson',
 				'ContactPersonEmail',
 				'ContactPersonAddress',
 				'ContactPersonNumber',
