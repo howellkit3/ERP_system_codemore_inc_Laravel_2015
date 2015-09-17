@@ -275,7 +275,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Contact');
 
-		$this->loadModel('HumanResource.ContactPerson');
+		//$this->loadModel('HumanResource.ContactPerson');
 
 		$this->loadModel('HumanResource.EmployeeEducationalBackground');
 
@@ -377,6 +377,9 @@ class EmployeesController  extends HumanResourceAppController {
 		 $this->loadModel('HumanResource.Contact');
 
 		 $this->loadModel('HumanResource.ContactPerson');
+
+		 $this->loadModel('HumanResource.HumanResourceContactPerson');
+
 		 $this->loadModel('HumanResource.EmployeeEducationalBackground');
 
 			$this->Employee->bind(array(
@@ -386,6 +389,7 @@ class EmployeesController  extends HumanResourceAppController {
 				'Address',
 				'Contact',
 				'ContactPerson',
+				'HumanResourceContactPerson',
 				'ContactPersonEmail',
 				'ContactPersonAddress',
 				'ContactPersonNumber',

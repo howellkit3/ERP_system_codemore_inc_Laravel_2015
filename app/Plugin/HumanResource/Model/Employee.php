@@ -30,25 +30,31 @@ class Employee extends AppModel {
 					'conditions' => '',
 					'dependent' => true
 				),
+				'HumanResourceContactPerson' =>  array(
+					'className' => 'HumanResourceContactPerson',
+					'foreignKey' => 'employee_id',
+					'conditions' => '',
+					'dependent' => true
+				),
 
 				'ContactPersonAddress' =>  array(
 					'className' => 'Address',
 					'foreignKey' => false,
-					'conditions' => array('ContactPersonAddress.foreign_key = ContactPerson.id',
+					'conditions' => array('ContactPersonAddress.foreign_key = HumanResourceContactPerson.id',
 										'ContactPersonAddress.model' => 'ContactPerson'),
 					'dependent' => true
 				),
 				'ContactPersonNumber' =>  array(
 					'className' => 'Contact',
 					'foreignKey' => false,
-					'conditions' => array('ContactPersonNumber.foreign_key = ContactPerson.id',
+					'conditions' => array('ContactPersonNumber.foreign_key = HumanResourceContactPerson.id',
 						'ContactPersonNumber.model' => 'ContactPerson'),
 					'dependent' => true
 				),
 				'ContactPersonEmail' => array(
 					'className' => 'Email',
 					'foreignKey' => false,
-					'conditions' => array('ContactPersonEmail.foreign_key = ContactPerson.id',
+					'conditions' => array('ContactPersonEmail.foreign_key = HumanResourceContactPerson.id',
 						'ContactPersonEmail.model' => 'ContactPerson'),
 					'dependent' => true
 				),
