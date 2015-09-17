@@ -156,7 +156,7 @@ class DeductionsController extends PayrollAppController {
 
 			foreach ($xls_data['Deduction'] as $key => $list) {
 				
-				$employees = $this->Employee->findbyCode($list['Employee Code'],'first',array('id','first_name','last_name'));
+				$employees = $this->Employee->find('first'); //$this->Employee->findbyCode(trim($list['Employee Code']),'first',array('id','first_name','last_name'));
 				
 				if (!empty($employees['Employee']['id'])) {
 
@@ -164,11 +164,15 @@ class DeductionsController extends PayrollAppController {
 					$employeeData[$key]['employee_id'] = $employees['Employee']['id'];
 					$employeeData[$key]['amount'] = $list['Amount'];
 
-					if ($list['Amount'] == 1) {
+					if ($list['Deduction Mode'] == 1) {
 
 						$employeeData[$key]['mode'] = 'installment';
 
 						//count months and divide the payment
+
+						//$date = explode('-',$query['range']);
+					
+						
 
 					} else {
 
@@ -183,6 +187,74 @@ class DeductionsController extends PayrollAppController {
 					$employeeData[$key]['status'] = $list['Status'];
 				}
 
+				if ($this->Deduction->save($employeeData[$key])) {
+
+						$deductionLastId = $this->Deduction->id;
+
+						if ($list['Deduction Mode'] == 1) {
+
+						$start_date = date('Y-m-d',strtotime($list['From']));
+
+						$end_date = date('Y-m-d',strtotime($list['To']));
+
+						$count = 1;
+
+						$keys = 0;
+
+						while (strtotime($start_date) <= strtotime($end_date)) {
+
+						if (in_array($start_date, array(date('Y-m-15',strtotime($start_date)),date('Y-m-t',strtotime($start_date))))) {
+
+							$payment[$keys]['date'] = $start_date;
+							$count++;
+							$keys++; 
+						}
+
+						$start_date = date ("Y-m-d", strtotime("+1 days", strtotime($start_date)));
+
+						}
+
+						if (!empty($payment)) {
+							
+							$amortizationData = array();
+
+
+							$total_payment = $list['Amount'] / count($payment);
+
+							$total = $list['Amount'];
+
+							foreach ($payment as $amkey => $pay) {
+
+								$payment[$amkey]['deduction_id'] = $deductionLastId;
+
+								$payment[$amkey]['amount'] = $total_payment;
+								$payment[$amkey]['payroll_date'] = $pay['date'];
+								$payment[$amkey]['deduction'] = $total;
+
+								$payment[$amkey]['status'] = 0;
+								$total = $total - $total_payment;
+
+								$this->Amortization->save($payment[$amkey]);
+
+							}
+
+							
+						}
+						} else {
+
+								$payment[$amkey]['deduction_id'] = $deductionLastId;
+
+								$payment[$amkey]['amount'] = $total_payment;
+								$payment[$amkey]['payroll_date'] = date('Y-m-d',strtotime($list['From']));
+								$payment[$amkey]['deduction'] = $total;
+
+								$payment[$amkey]['status'] = 0;
+								$total = $total - $total_payment;
+
+								$this->Amortization->save($payment[$amkey]);	
+
+						}
+				}
 			}
 
 			$this->Deduction->create();
