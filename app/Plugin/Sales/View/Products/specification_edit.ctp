@@ -247,11 +247,11 @@
 												  	<section class="dragField">
 													    <header class="main-box-header dragHeader clearfix">
 													        <h2 class="pull-left"> <?php echo $specLists['ProductSpecificationDetail']['model'] ?> </h2>
-													        <?php if ($key > 2) { ?>
+													        <?php //if ($key > 2) { ?>
 														        <a href="#" class="remove_field pull-right editMeBtn" style="display:none;">
 														            <i class="fa fa-times-circle fa-fw fa-lg"></i>
 														        </a>
-														    <?php } ?>
+														    <?php// } ?>
 													    </header>
 													    <input name="data[IdHolder][ProductSpecificationDetail][<?php echo $key ;?>][id]" value="<?php echo $specLists['ProductSpecificationDetail']['id'] ?>" class="form-control" type="hidden" />
 												      	<?php
