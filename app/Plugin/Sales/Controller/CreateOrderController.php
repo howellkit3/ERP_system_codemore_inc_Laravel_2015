@@ -136,7 +136,9 @@
 			if ($this->request->is('post')) {
 
 	            if (!empty($this->request->data)) {
-	            	
+
+
+	      
 	            	$this->ClientOrder->bind(array('ClientOrderDeliverySchedule','ClientOrderItemDetail'));
 
 	            	$clientOrderId = $this->ClientOrder->saveClientOrder($this->request->data, $userData['User']['id']);

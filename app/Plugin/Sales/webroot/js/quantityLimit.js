@@ -40,4 +40,35 @@ $( document ).ready(function() {
 		}
 
 	});
+	$("body").on('keyup','#quantity_proxy', function(e){
+
+		$('.error-appended').remove();
+
+			$orginalLimit = $('.original_quantity').data('quantity');
+
+			$this = $(this);
+
+			if ($this.val() > 0 && $this.val() < $orginalLimit) {
+				$(this).after('<label id="CompanyCompanyName-error" style="color:#FF0000" class="error-appended" for="CompanyCompanyName"> You cannnot enter less than ' + $orginalLimit + '</label>');
+				//$this.val($orginalLimit);
+			} else {
+				$('#quantity').val($this.val())
+			}
+	});
+
+	$("#QuotationIndexForm").submit(function(e) {
+
+
+		if ($('.error-appended').length > 0) {
+
+			$('html, body').animate({
+			scrollTop: ($('.error-appended').offset().top - 300)
+			}, 100);
+
+			return false;
+			e.preventDefault();
+		}
+
+	});
+
 });

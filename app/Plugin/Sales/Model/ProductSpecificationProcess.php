@@ -53,7 +53,8 @@ class ProductSpecificationProcess extends AppModel {
 
 		$this->bind(array('Sales.ProductSpecificationProcessHolder'));
 		$Ids = array();
-		
+		if (!empty($processdata[$this->name])) {
+
 		foreach ($processdata[$this->name] as $key1 => $processList) {
 			
 			$this->create();
@@ -63,10 +64,9 @@ class ProductSpecificationProcess extends AppModel {
 			$processList['product_specification_id'] = $specId;
 			$processList['product_id'] = $processdata['Product']['id'];
 			$this->save($processList);
-			if (!empty($processList['order'])) {
-				array_push($Ids, $this->id.'-'.$processList['order'].'-'.'Process');
-			}
-
+			
+			array_push($Ids, $this->id.'-'.$processList['order'].'-'.'Process');
+			
 			unset($processdata[$this->name][$key1]['order']);
 			
 			$holder = 'ProductSpecificationProcessHolder';
@@ -91,16 +91,23 @@ class ProductSpecificationProcess extends AppModel {
 			//$this->ProductSpecificationProcessHolder->saveProcessHolder($processdata,$this->id,$auth);
 			
 		}
-		
-		return $Ids;
+	}
+	
+	return $Ids;
+
 
 	}
 
 	public function deleteData($processData = null){
 
-		foreach ($processData['ProductSpecificationProcess'] as $key => $deleteMe) {
-			$this->delete($deleteMe);
+		if (!empty($processData['ProductSpecificationProcess'] )) {
+
+			foreach ($processData['ProductSpecificationProcess'] as $key => $deleteMe) {
+				$this->delete($deleteMe);
+			}
+
 		}
+		
 
 	}
 }

@@ -258,7 +258,7 @@
 												<table  class = "tbl">
 													<tr>														
 														<td height ="37px" valign ="top"  style = "border-color:#E8E8E8;" class ="column3 col-md-10"> 
-															<div class="col-lg-12">
+															<div class="col-lg-12 original_quantity" data-quantity="<?php echo $itemDetail['quantity']; ?>">
 																
 																<?php echo (!empty($itemDetail['quantity']) && is_numeric($itemDetail['quantity'])) ? number_format($itemDetail['quantity']) : '';
 																?>
@@ -366,7 +366,7 @@
                                                 						'class' => 'form-control item_type ', 
                                                     					'label' => false, 
                                                     					'placeholder' => 'Quantity',
-                                                    					'disabled' => 'disabled',
+                                                    					//'disabled' => 'disabled',
                                                     					'id' => 'quantity_proxy',
                                                     					'value' => number_format($quotationData['QuotationItemDetail'][0]['quantity'])
                                                     					));

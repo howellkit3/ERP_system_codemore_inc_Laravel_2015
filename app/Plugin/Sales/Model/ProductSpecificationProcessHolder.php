@@ -56,9 +56,14 @@ class ProductSpecificationProcessHolder extends AppModel {
 	}
 
 	public function deleteData($processData = null){
+		
 
-		foreach ($processData['ProcessHolder'] as $key => $deleteMe) {
-			$this->delete($deleteMe);
+		if (!empty($processData['ProcessHolder'] )) {
+
+			foreach ($processData['ProcessHolder'] as $key => $deleteMe) {
+				$this->delete($deleteMe);
+			}
+
 		}
 
 	}

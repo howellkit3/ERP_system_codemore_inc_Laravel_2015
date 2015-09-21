@@ -40,6 +40,11 @@ class ProductSpecificationComponent extends AppModel {
 	public function saveComponent($componentdata = null , $auth = null,$specId = null){
 		
 		$Ids = array();
+
+
+		
+
+		if (!empty($componentdata[$this->name])) {
 		
 		foreach ($componentdata[$this->name] as $key => $componentList) {
 			$this->create();
@@ -49,22 +54,27 @@ class ProductSpecificationComponent extends AppModel {
 			$componentList['product_specification_id'] = $specId;
 			$componentList['product_id'] = $componentdata['Product']['id'];
 			
+			
 			$this->save($componentList);
-			if (!empty($componentList['order'])) {
 
-				array_push($Ids, $this->id.'-'.$componentList['order'].'-'.'Component');
-			}
-		}
+			array_push($Ids, $this->id.'-'.$componentList['order'].'-'.'Component');
 		
-		return $Ids;
+		}
+
+	}
+	return $Ids;
 
 	}
 
 	public function deleteData($componentData = null){
 
-		foreach ($componentData['ProductSpecificationComponent'] as $key => $deleteMe) {
-			$this->delete($deleteMe);
+		if (!empty($componentData['ProductSpecificationComponent'])) {
+
+			foreach ($componentData['ProductSpecificationComponent'] as $key => $deleteMe) {
+				$this->delete($deleteMe);
+			}
 		}
+		
 
 	}
 
