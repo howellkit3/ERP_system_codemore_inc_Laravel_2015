@@ -50,7 +50,10 @@ class ProductSpecificationComponent extends AppModel {
 			$componentList['product_id'] = $componentdata['Product']['id'];
 			
 			$this->save($componentList);
-			array_push($Ids, $this->id.'-'.$componentList['order'].'-'.'Component');
+			if (!empty($componentList['order'])) {
+
+				array_push($Ids, $this->id.'-'.$componentList['order'].'-'.'Component');
+			}
 		}
 		
 		return $Ids;
