@@ -63,8 +63,9 @@ class ProductSpecificationProcess extends AppModel {
 			$processList['product_specification_id'] = $specId;
 			$processList['product_id'] = $processdata['Product']['id'];
 			$this->save($processList);
-
-			array_push($Ids, $this->id.'-'.$processList['order'].'-'.'Process');
+			if (!empty($processList['order'])) {
+				array_push($Ids, $this->id.'-'.$processList['order'].'-'.'Process');
+			}
 
 			unset($processdata[$this->name][$key1]['order']);
 			

@@ -99,7 +99,7 @@ class ProductSpecificationDetail extends AppModel {
 					break;
 			}
 			
-			if ($model){
+			if (!empty($model)){
 				$data = $this->$model->find('first',
 				array('conditions' => array('id' => $list['ProductSpecificationDetail']['foreign_key'])));
 				

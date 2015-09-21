@@ -47,7 +47,10 @@ class ProductSpecificationPart extends AppModel {
 			$partList['product_id'] = $partdata['Product']['id'];
 			
 			$this->save($partList);
+			if (!empty($partList['order'])) {
+				
 			array_push($Ids, $this->id.'-'.$partList['order'].'-'.'Part');
+			}
 		}
 		return $Ids;
 
