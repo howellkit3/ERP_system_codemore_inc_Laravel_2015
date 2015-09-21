@@ -131,6 +131,8 @@
 
 			$this->loadModel('Sales.ProductSpecification');
 
+			$this->loadModel('Sales.QuotationItemDetail');
+
 			//pr($this->request->data); exit;
 		
 			if ($this->request->is('post')) {
@@ -138,17 +140,19 @@
 	            if (!empty($this->request->data)) {
 
 
-	      
+
 	            	$this->ClientOrder->bind(array('ClientOrderDeliverySchedule','ClientOrderItemDetail'));
 
 	            	$clientOrderId = $this->ClientOrder->saveClientOrder($this->request->data, $userData['User']['id']);
 	            	
 	            	$this->ClientOrder->ClientOrderDeliverySchedule->saveClientOrderDeliverySchedule($this->request->data, $userData['User']['id'], $clientOrderId);
 	            		
-	            	$checkSpec = $this->ProductSpecification->find('first',array(
+	            	$specksData =  $checkSpec = $this->ProductSpecification->find('first',array(
 	            										'conditions' => array(
 	            											'ProductSpecification.product_id' => 
 	            													$this->request->data['Product']['id'])));
+
+
 
 	            	if(empty($checkSpec)){
 
@@ -160,6 +164,21 @@
 	            		$this->JobTicket->saveTicket($this->request->data, $userData['User']['id'], $clientOrderId);
 	            		
 	            	}
+
+
+	            	//update quotation details
+	            	$quotationDetails = $this->request->data['QuotationItemDetail'];
+
+	            	$this->QuotationItemDetail->save($quotationDetails, array('validate'=>false, 'callbacks'=>false));
+
+
+	            	//update productSpecification details
+	            	$specificatonDetails = $specksData;
+	            	$specificatonDetails['ProductSpecification']['quantity'] = $quotationDetails['quantity'];
+	            	
+
+	            	$this->ProductSpecification->save($specificatonDetails, array('validate'=>false, 'callbacks'=>false));
+
 
 	            	$this->Session->setFlash(__('Client Order was successfully added in the system.'));
 
@@ -201,7 +220,8 @@
 
 			//set to cache in first load
 			$unitData = Cache::read('unitData');
-			
+
+
 			if (!$unitData) {
 				
 				$unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
@@ -232,11 +252,16 @@
 
 			$productData = $this->Product->findById($productId);
 
+
+			
+
 			$specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productData['Product']['id'])));
+			
 			//find if product has specs
 			$formatDataSpecs = $this->ProductSpecificationDetail->findData($productData['Product']['uuid']);
 
 			$noPermission = ' '; 
+
 
 			$this->set(compact('noPermission','clientOrderData','companyData','processData','specs','productId','productData','clientOrderId','formatDataSpecs','unitData','subProcess'));
 

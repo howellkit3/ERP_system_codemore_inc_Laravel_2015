@@ -40,7 +40,7 @@ $( document ).ready(function() {
 		}
 
 	});
-	$("body").on('keyup','#quantity_proxy', function(e){
+	$("body").on('keyup','#quantity', function(e){
 
 		$('.error-appended').remove();
 
@@ -51,9 +51,7 @@ $( document ).ready(function() {
 			if ($this.val() > 0 && $this.val() < $orginalLimit) {
 				$(this).after('<label id="CompanyCompanyName-error" style="color:#FF0000" class="error-appended" for="CompanyCompanyName"> You cannnot enter less than ' + $orginalLimit + '</label>');
 				//$this.val($orginalLimit);
-			} else {
-				$('#quantity').val($this.val())
-			}
+			} 
 	});
 
 	$("#QuotationIndexForm").submit(function(e) {

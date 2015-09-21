@@ -353,23 +353,23 @@
 										<div class="col-lg-8">
 											<?php 
                                                 echo $this->Form->input('QuotationItemDetail.quantity',array( 
-                                                						'type' => 'hidden',
+                                                						//'type' => 'hidden',
                                                 						'class' => 'form-control item_type ', 
                                                     					'label' => false, 
                                                     					'placeholder' => 'Quantity',
-                                                    					'readonly' => 'readonly',
+                                                    					//'readonly' => 'readonly',
                                                     					'id' => 'quantity',
                                                     					'value' => $quotationData['QuotationItemDetail'][0]['quantity']
                                                     					));
                                                 
-                                                echo $this->Form->input('QuotationItemDetail.quantity_proxy',array( 
-                                                						'class' => 'form-control item_type ', 
-                                                    					'label' => false, 
-                                                    					'placeholder' => 'Quantity',
-                                                    					//'disabled' => 'disabled',
-                                                    					'id' => 'quantity_proxy',
-                                                    					'value' => number_format($quotationData['QuotationItemDetail'][0]['quantity'])
-                                                    					));
+                                                // echo $this->Form->input('QuotationItemDetail.quantity_proxy',array( 
+                                                // 						'class' => 'form-control item_type ', 
+                                                //     					'label' => false, 
+                                                //     					'placeholder' => 'Quantity',
+                                                //     					//'disabled' => 'disabled',
+                                                //     					'id' => 'quantity_proxy',
+                                                //     					'value' => number_format($quotationData['QuotationItemDetail'][0]['quantity'])
+                                                //     					));
                                                     					
 
                                             ?>
@@ -382,24 +382,24 @@
 										<div class="col-lg-8">
 											<?php 
                                                 echo $this->Form->input('QuotationItemDetail.unit_price',array( 
-                                                						'type' => 'hidden',
+                                                						//'type' => 'hidden',
                                                 						'class' => 'form-control item_type ', 
                                                     					'label' => false, 
                                                     					'placeholder' => 'Unit Price',
-                                                    					'readonly' => 'readonly',
+                                                    					//'readonly' => 'readonly',
                                                     					'id' => 'unit_price',
                                                     					'value' => $quotationData['QuotationItemDetail'][0]['unit_price']
                                                     					));
                                                     					
-                                                echo $this->Form->input('QuotationItemDetail.unit_price_proxy',array( 
-                                                						'type' => 'text',
-                                                						'class' => 'form-control item_type ', 
-                                                    					'label' => false, 
-                                                    					'placeholder' => 'Unit Price',
-                                                    					'disabled' => 'disabled',
-                                                    					'id' => 'unit_price_proxy',
-                                                    					'value' => number_format($quotationData['QuotationItemDetail'][0]['unit_price'],4)
-                                                    					));
+                                                // echo $this->Form->input('QuotationItemDetail.unit_price_proxy',array( 
+                                                // 						'type' => 'text',
+                                                // 						'class' => 'form-control item_type ', 
+                                                //     					'label' => false, 
+                                                //     					'placeholder' => 'Unit Price',
+                                                //     					//'disabled' => 'disabled',
+                                                //     					'id' => 'unit_price_proxy',
+                                                //     					'value' => number_format($quotationData['QuotationItemDetail'][0]['unit_price'],4)
+                                                //     					));
                                             ?>
 										</div>
 									</div>
@@ -409,23 +409,23 @@
 										<div class="col-lg-8">
 											<?php 
                                                 echo $this->Form->input('QuotationItemDetail.vat_price',array( 
-                                                						'type' => 'hidden',
+                                                					//	'type' => 'hidden',
                                                 						'class' => 'form-control item_type ', 
                                                     					'label' => false, 
                                                     					'placeholder' => 'Vat Price',
-                                                    					'readonly' => 'readonly',
+                                                    					//'readonly' => 'readonly',
                                                     					'id' => 'vat_price',
                                                     					'value' => $quotationData['QuotationItemDetail'][0]['vat_price']
                                                     					));
-                                                echo $this->Form->input('QuotationItemDetail.vat_price_proxy',array( 
-                                                						'type' => 'text',
-                                                						'class' => 'form-control item_type ', 
-                                                    					'label' => false, 
-                                                    					'placeholder' => 'Vat Price',
-                                                    					'disabled' => 'disabled',
-                                                    					'id' => 'vat_price_proxy',
-                                                    					'value' => number_format($quotationData['QuotationItemDetail'][0]['vat_price'],4)
-                                                    					));
+                                                // echo $this->Form->input('QuotationItemDetail.vat_price_proxy',array( 
+                                                // 						'type' => 'text',
+                                                // 						'class' => 'form-control item_type ', 
+                                                //     					'label' => false, 
+                                                //     					'placeholder' => 'Vat Price',
+                                                //     					//'disabled' => 'disabled',
+                                                //     					'id' => 'vat_price_proxy',
+                                                //     					'value' => number_format($quotationData['QuotationItemDetail'][0]['vat_price'],4)
+                                                //     					));
                                             ?>
 										</div>
 									</div>
