@@ -84,6 +84,34 @@ class Contact extends AppModel {
 		
 	}
 
+	public function saveContactMultiple($contactData, $contact_id)
+
+	{
+		$contactValue = array();
+
+
+		//pr($contactData	);
+
+			unset($contactData['ContactPerson']);
+			$this->create();
+			if (!empty($contactData['Contact'])) {
+
+
+				foreach ($contactData[$this->name] as $key => $contactValue) 
+				{
+					pr($contactData['Contact']);
+					$contactValue['id'] = !empty($contactValue['id']) ? $contactValue['id'] : '';
+					$contactValue['model'] = "ContactPerson";
+					$contactValue['foreign_key'] = $contact_id;
+					//$this->save($contactValue);
+				}
+				
+			}
+
+			//return $this->id;
+
+	}
+
 	public function beforeSave($options = array())
 	{
 		$userId = AuthComponent::user('id'); 

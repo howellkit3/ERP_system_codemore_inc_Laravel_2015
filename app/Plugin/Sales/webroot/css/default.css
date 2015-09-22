@@ -10,3 +10,8 @@
 .margintop{
     margin-top : 10%;
 }
+
+.inner_title {
+  margin: 10px 0;
+  padding: 0;
+}

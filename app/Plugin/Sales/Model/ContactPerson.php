@@ -139,6 +139,33 @@ class ContactPerson extends AppModel {
 		return $this->id;
 		
 	}
+	public function saveContactMultiple($data, $company_id)
+	{
+
+		$contactPerson = array();
+
+		$this->create();
+		if (!empty($data)) {
+
+		
+			foreach ($data[$this->name] as $key => $contactPersonValue) 
+			{
+				
+				if(!empty($contactPersonValue['firstname'] ) || !empty($contactPersonValue['lastname'])){
+					$contactPersonValue['id'] = !empty($contactPersonData[$this->name][$key]['id']) ? $contactPersonData[$this->name][$key]['id'] : '';
+					$contactPersonValue['model'] = "Company";
+					$contactPersonValue['company_id'] = $company_id;
+				}
+				
+					
+				
+			}
+		}
+
+		$this->save($contactPersonValue);
+		return $this->id;
+
+	}
 
 	public function saveContactPerson($data = null, $companyId = null, $auth = null){
 		

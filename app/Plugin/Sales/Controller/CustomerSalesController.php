@@ -89,7 +89,6 @@ class CustomerSalesController extends SalesAppController {
 		if ($this->request->is('post')) {
 
 
-
             if (!empty($this->request->data)) {
 
             	$this->Company->bind(array('Address','Contact','Email','ContactPerson'));
@@ -104,13 +103,21 @@ class CustomerSalesController extends SalesAppController {
             	
             	if ($this->Company->saveAssociated($this->request->data)) {
 
-            		if (!empty($this->request->data['ContactPersonData'][0]['ContactPerson'][0]['firstname'])) {
-					
-						$contactPersonId = $this->Company->ContactPerson->saveContact($this->request->data['ContactPersonData'], $this->Company->id);
-	            		
-	            		$this->Company->Contact->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
+            		if (!empty($this->request->data['ContactPersonData'])) {
 
-	            		$this->Company->Email->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
+            					
+            				foreach ($this->request->data['ContactPersonData'] as $key => $contacts) {
+
+            						//pr($contacts);
+
+            						$contactPersonId = $this->Company->ContactPerson->saveContactMultiple($contacts, $this->Company->id);
+
+	            					$this->Company->Contact->saveContactMultiple($contacts, $contactPersonId);
+
+	            					$this->Company->Email->saveContactMultiple($contacts, $contactPersonId);	
+            				}
+
+						
             		}
 
 					if($this->request->is('ajax')){
