@@ -115,10 +115,9 @@ class SuppliersController extends PurchasingAppController {
 
         	if ($this->Supplier->saveAssociated($this->request->data)) {
 
-               //    pr($this->request->data['ContactPersonData']);
-
+        
         		$contactPersonId = $this->Supplier->SupplierContactPerson->saveContact($this->request->data['ContactPersonData'], $this->Supplier->id,$userData['User']['id']);
-        	     
+
                 if ($contactPersonId) {
 
                     $this->Supplier->Contact->saveContact($this->request->data['ContactPersonData'], $contactPersonId);

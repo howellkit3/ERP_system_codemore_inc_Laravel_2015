@@ -96,15 +96,14 @@ class SupplierContactPerson extends AppModel {
 		foreach ($data as $key => $contactPersonData)
 		{
 
-		
-			foreach ($contactPersonData['SupplierContactPerson'] as $innerkey => $contactPersonValue) 
+			foreach ($contactPersonData['ContactPerson'] as $innerkey => $contactPersonValue) 
 			{
 				 	
 				$contactPersonValue['model'] = "Supplier";
 				$contactPersonValue['supplier_id'] = $supplier_id;
 				$contactPersonValue['created_by'] = $auth;
 				$contactPersonValue['modified_by'] = $auth;	
-						
+				
 				$this->save($contactPersonValue);
 				
 			}
