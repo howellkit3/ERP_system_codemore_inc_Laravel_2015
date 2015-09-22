@@ -91,23 +91,29 @@ class SupplierContactPerson extends AppModel {
 	
 	public function saveContact($data, $supplier_id,$auth) {
 
+		$model = $this->name;
 
-			
 		foreach ($data as $key => $contactPersonData)
 		{
 
-			foreach ($contactPersonData['ContactPerson'] as $innerkey => $contactPersonValue) 
-			{
-				 	
-				$contactPersonValue['model'] = "Supplier";
-				$contactPersonValue['supplier_id'] = $supplier_id;
-				$contactPersonValue['created_by'] = $auth;
-				$contactPersonValue['modified_by'] = $auth;	
-				
-				$this->save($contactPersonValue);
-				
-			}
-
+		if (!empty($contactPersonData['SupplierContactPerson'])) {
+			$model = 'SupplierContactPerson';
+		}
+		if (!empty($contactPersonData['ContactPerson'])) { 
+			$model = 'ContactPerson';
+		}
+			
+		foreach ($contactPersonData[$model] as $innerkey => $contactPersonValue) 
+		{
+			 	
+			$contactPersonValue['model'] = "Supplier";
+			$contactPersonValue['supplier_id'] = $supplier_id;
+			$contactPersonValue['created_by'] = $auth;
+			$contactPersonValue['modified_by'] = $auth;	
+			
+			$this->save($contactPersonValue);
+			
+		}
 			return $this->id;
 		}
 

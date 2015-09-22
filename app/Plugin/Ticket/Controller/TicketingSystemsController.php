@@ -85,7 +85,6 @@ class TicketingSystemsController extends TicketAppController {
             $unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
                                                             'order' => array('Unit.unit' => 'ASC')
                                                             ));
-
             Cache::write('unitData', $unitData);
         }
 
