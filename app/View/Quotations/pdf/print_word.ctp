@@ -317,7 +317,8 @@
 			<div style="display:inline-block; vertical-align: bottom;text-align:left; margin-left:30px;">
 					<font size ="9px">
 						Doc No.: KP-FR-SD1-002<br>
-						REV. No.: 0
+						REV. No.: 0<br>
+						Effective 17 Aug 2015
 					</font>				
 			</div>
 			<br><br>
