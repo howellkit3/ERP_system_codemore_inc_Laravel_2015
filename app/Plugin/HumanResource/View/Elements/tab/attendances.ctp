@@ -8,6 +8,15 @@
 		)); ?>
 	</li>
 
+	<li class="<?php echo ($this->params['controller'] == 'attendances' && $this->params['action'] == 'irreg_ot') ? 'active' : '' ?>" alt="tab-type">
+		<?php echo $this->Html->link('Irregular OT',array(
+					'controller' => 'attendances',
+					'action' => 'irreg_ot',
+					'tab' => 'irreg_ot',
+					'plugin' => 'human_resource'
+		)); ?>
+	</li>
+
 	<li class="<?php echo ($active_tab == 'timekeep') || $this->params['action'] == 'timekeep' ? 'active' : '' ?>" alt="tab-type">
 		<?php echo $this->Html->link('Sign I/O',array(
 					'controller' => 'attendances',

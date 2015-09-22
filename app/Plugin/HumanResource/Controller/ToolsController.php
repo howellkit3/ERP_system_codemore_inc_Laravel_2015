@@ -105,7 +105,7 @@ class ToolsController  extends HumanResourceAppController {
 
 		if (!empty($id)) {
 
-			if ($this->Position->delete($id)) {
+			if ($this->Tool->delete($id)) {
                 $this->Session->setFlash(
                     __('Tool Successfully deleted.', h($id))
                 );

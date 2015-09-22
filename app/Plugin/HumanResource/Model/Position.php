@@ -28,4 +28,33 @@ class Position extends AppModel {
 		
 	}
 
+	public function createPosition($data = array() , $auth = null) {
+
+		$positionData = array();
+
+		if (!empty($data)) {
+
+			$positionData['Position']['name']  = $data['Employee']['position_id_others'];
+
+			$positionData['Position']['description'] = $data['Employee']['position_id_others'];
+
+			$positionData['Position']['specification'] = $data['Employee']['position_id_others'];
+
+			$positionData['Position']['notes'] = '';
+
+			$positionData['Position']['created_by'] = $auth['id'];
+
+			$positionData['Position']['modified_by'] = $auth['id'];
+			
+
+			if ($this->save($positionData) ) {
+
+				return $this->id;
+			}
+
+
+		}
+	}
+
+
 }

@@ -30,25 +30,31 @@ class Employee extends AppModel {
 					'conditions' => '',
 					'dependent' => true
 				),
+				'HumanResourceContactPerson' =>  array(
+					'className' => 'HumanResourceContactPerson',
+					'foreignKey' => 'employee_id',
+					'conditions' => '',
+					'dependent' => true
+				),
 
 				'ContactPersonAddress' =>  array(
 					'className' => 'Address',
 					'foreignKey' => false,
-					'conditions' => array('ContactPersonAddress.foreign_key = ContactPerson.id',
+					'conditions' => array('ContactPersonAddress.foreign_key = HumanResourceContactPerson.id',
 										'ContactPersonAddress.model' => 'ContactPerson'),
 					'dependent' => true
 				),
 				'ContactPersonNumber' =>  array(
 					'className' => 'Contact',
 					'foreignKey' => false,
-					'conditions' => array('ContactPersonNumber.foreign_key = ContactPerson.id',
+					'conditions' => array('ContactPersonNumber.foreign_key = HumanResourceContactPerson.id',
 						'ContactPersonNumber.model' => 'ContactPerson'),
 					'dependent' => true
 				),
 				'ContactPersonEmail' => array(
 					'className' => 'Email',
 					'foreignKey' => false,
-					'conditions' => array('ContactPersonEmail.foreign_key = ContactPerson.id',
+					'conditions' => array('ContactPersonEmail.foreign_key = HumanResourceContactPerson.id',
 						'ContactPersonEmail.model' => 'ContactPerson'),
 					'dependent' => true
 				),
@@ -58,6 +64,26 @@ class Employee extends AppModel {
 					'conditions' => array('Salary.employee_id = Employee.id'),
 					'dependent' => true
 				),
+					'SSS' => array(
+					'className' => 'GovernmentRecord',
+					'foreignKey' => false,
+					'conditions' => array('SSS.employee_id = Employee.id','SSS.agency_id' => 1)
+						),
+				'PhilHealth' => array(
+					'className' => 'GovernmentRecord',
+					'foreignKey' => false,
+					'conditions' => array('PhilHealth.employee_id = Employee.id','PhilHealth.agency_id' => 3)
+						),
+				'TIN' => array(
+					'className' => 'GovernmentRecord',
+					'foreignKey' => false,
+					'conditions' => array('TIN.employee_id = Employee.id','TIN.agency_id' => 2)
+						),
+				'Pagibig' => array(
+					'className' => 'GovernmentRecord',
+					'foreignKey' => false,
+					'conditions' => array('Pagibig.employee_id = Employee.id','Pagibig.agency_id' => 4)
+						),	
 			
 			),
 			'belongsTo' => array(
@@ -88,7 +114,8 @@ class Employee extends AppModel {
 				// 		'foreignKey' => 'employee_id',
 				// 		'conditions' => '',
 				// 		'dependent' => true,
-				// 	),	
+				// 	),
+			
 			),
 			'hasMany' => array(
 				'Email' => array(
@@ -186,7 +213,59 @@ class Employee extends AppModel {
 		$this->recursive = 1;
 		//$this->contain($giveMeTheTableRelationship);
 	}
+	public function bindSSS($group = array()) {
+		$this->bindModel(array(
+			'belongsTo' => array(
+				'GovernmentRecord' => array(
+					'className' => 'GovernmentRecord',
+					'foreignKey' => false,
+					'conditions' => array('GovernmentRecord.employee_id = Employee.id','GovernmentRecord.agency_id' => 1)
+					),
+				'Status' => array(
+					'className' => 'HumanResource.Status',
+					'foreignKey' => 'status',
+					'conditions' => '',
+					),
 
+			),
+			'hasOne' => array(
+				'EmployeeAdditionalInformation' => array(
+					'className' => 'EmployeeAdditionalInformation',
+					'foreignKey' => 'employee_id',
+					'dependent' => true
+				)
+			)
+		));
+		if (!empty($group)) {
+			$group = array_merge($group,array('GovernmentRecord','EmployeeAdditionalInformation'));
+
+			$this->contain($group);
+
+		}
+		//$this->recursive = 1;
+
+	}
+
+	public function bindPagibig() {
+		$this->bindModel(array(
+			'belongsTo' => array(
+				'GovernmentRecord' => array(
+					'className' => 'GovernmentRecord',
+					'foreignKey' => false,
+					'conditions' => array('GovernmentRecord.employee_id = Employee.id','GovernmentRecord.agency_id' => 4)
+					),
+			),
+			'hasOne' => array(
+				'EmployeeAdditionalInformation' => array(
+					'className' => 'EmployeeAdditionalInformation',
+					'foreignKey' => 'employee_id',
+					'dependent' => true
+				)
+			)
+		));
+
+		$this->recursive = 1;
+	}
 	public function getList($conditions = array()) {
 
 		return $this->find('list',array(
@@ -239,10 +318,11 @@ class Employee extends AppModel {
 
 									if ($dateNow >= $holiday['Holiday']['start_date'] && $dateNow <= $holiday['Holiday']['end_date'] ) {
 
-											$list[$list_key]['title'] = date('h:i a',strtotime($workshift['WorkShift']['from'])) . ' - ' .  date('h:i a',strtotime($workshift['WorkShift']['to']));
-											$list[$list_key]['start'] = $days1[0].'-'.$days1[1].'-'.sprintf("%02d",$days_count).' '.date('h:i:s',strtotime($workshift['WorkShift']['from']));
-											$list[$list_key]['end']  = $days1[0].'-'.$days1[1].'-'.sprintf("%02d",$days_count).' '.date('h:i:s',strtotime($workshift['WorkShift']['to']));
-											$list[$list_key]['color'] = '#F57821';
+									$list[$list_key]['title'] = date('h:i a',strtotime($workshift['WorkShift']['from'])) . ' - ' .  date('h:i a',strtotime($workshift['WorkShift']['to']));
+									$list[$list_key]['start'] = $days1[0].'-'.$days1[1].'-'.sprintf("%02d",$days_count).' '.date('h:i:s',strtotime($workshift['WorkShift']['from']));
+									$list[$list_key]['end']  = $days1[0].'-'.$days1[1].'-'.sprintf("%02d",$days_count).' '.date('h:i:s',strtotime($workshift['WorkShift']['to']));
+									$list[$list_key]['color'] = '#F57821';
+
 									} 
 								}
 
@@ -306,6 +386,13 @@ class Employee extends AppModel {
 							));
 
 			return  Set::classicExtract($employee,'{n}.Employee.id');
+
+	}
+
+	public function findbyCode($code = null,$type = 'first',$fields = array(),$conditions = array()) {
+
+		$conditions = array('Employee.code' => $code );
+		return $this->find($type,array('conditions' => $conditions,'fields' => $fields));
 
 	}
 

@@ -46,7 +46,8 @@
                                                   <?php 
                                                         echo $this->Form->input('type', array(
                                                         'options' => array(
-                                                            'normal' => 'Normal Payroll'
+                                                            'normal' => 'Normal Payroll',
+                                                            '13_month' => '13th Month'
                                                             ),
                                                         'class' => 'form-control col-lg-6 required',
                                                         'value' => date('m-Y'),
@@ -56,6 +57,7 @@
                                              </div>
                                         </div>
                                     </div> 
+                                    <div class="payroll_type normal">
 
                                      <div class="form-group">
                                        <div class="col-lg-11">
@@ -82,15 +84,15 @@
                                                 <div class="col-lg-9">
                                                    <div class="form-group pull-left">
                                                     <div class="radio inline-block">
-                                                    <input type="radio" checked="checked" value="1:15" data-key="1-15" class="mode_type required" id="optionsRadios1" name="data[Payroll][date]">
+                                                    <input type="radio" checked="checked" value="1:15" data-key="First Half ( 1- 15 )" class="mode_type required" id="optionsRadios1" name="data[Payroll][date]">
                                                         <label for="optionsRadios1">
-                                                             1 - 15
+                                                            First Half ( 1- 15)
                                                         </label>
                                                     </div>
                                                     <div class="radio inline-block">
-                                                    <input type="radio" class="mode_type required" value="16:31" data-key="16-31" id="optionsRadios2" name="data[Payroll][date]">
+                                                    <input type="radio" class="mode_type required" value="16:31" data-key="Second Half ( 16 - 30 / 31 ) " id="optionsRadios2" name="data[Payroll][date]">
                                                         <label for="optionsRadios2">
-                                                           16 - 31
+                                                            Second Half ( 16 - 30 / 31 )
                                                         </label>
                                                     </div>
                                                     </div>
@@ -98,14 +100,89 @@
                                              </div>
                                         </div>      
                                     </div>
+                                 </div>
+
+                                 <div class="payroll_type 13_month hide" >
+
+                                 <div class="form-group">
+                                       
+                                       <div class="col-lg-11">
+                                            <div class="form-group">
+                                                <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span> Year </label>
+                                            <div class="col-lg-9">
+                                            <?php 
+
+                                                $firstYear = (int)date('Y') - 10;
+                                                $lastYear = $firstYear + 20;
+                                                $years = array();
+                                                for($i=$firstYear;$i<=$lastYear;$i++)
+                                                {
+                                                $years[$i]  = $i;
+                                                }
+
+
+                                            echo $this->Form->input('year', array(
+                                                'alt' => 'month',
+                                                'label' => false,
+                                                'options' => $years,
+                                                'class' => 'form-control pull-left',
+                                                'default' => date('Y'),
+                                                'data-name' => 'Address'
+                                             ));
+                                            ?>
+                                                </div>
+                                             </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="form-group">
+                                       
+                                       <div class="col-lg-11">
+                                            <div class="form-group">
+                                                <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span> Payroll Date</label>
+                                                <div class="col-lg-9">
+                                                  <?php 
+                                                        echo $this->Form->input('payroll_date',  array(
+                                                        'class' => 'form-control col-lg-6 required datepick',
+                                                        'value' => date('Y-m-d'),
+                                                        'type' => 'text',
+                                                        'label' => false));
+                                                    ?>
+                                                </div>
+                                             </div>
+                                        </div>
+
+                                    </div>  
+
+                                    <div class="form-group">
+                                       
+                                       <div class="col-lg-11">
+                                            <div class="form-group">
+                                                <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span> From / To</label>
+                                                <div class="col-lg-9">
+                                                  <?php echo $this->Form->input('payroll_range',  array(
+                                                        'class' => 'form-control col-lg-6 required daterange',
+                                                        'value' => date('Y/01/01').'-'.date('Y/12/31'),   
+                                                        'type' => 'text',
+                                                        'label' => false));
+                                                    ?>
+                                                </div>
+                                             </div>
+                                        </div>
+
+                                    </div>  
+
+                                 </div>
 
                                     <div class="form-group">
                                        <div class="col-lg-11">
                                             <div class="form-group">
-                                                <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span> Description </label>
+                                                <label for="inputEmail1" class="col-lg-3 control-label"> Description </label>
                                                 <div class="col-lg-9">
                                                   <?php echo $this->Form->input('description', array(
-                                                        'class' => 'form-control col-lg-6 required',
+                                                        'class' => 'form-control col-lg-6',
                                                         'label' => false));
                                                     ?>
                                                 </div>

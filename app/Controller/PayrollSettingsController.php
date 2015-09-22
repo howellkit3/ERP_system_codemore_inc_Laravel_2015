@@ -512,6 +512,96 @@ class PayrollSettingsController extends AppController
             return $this->redirect(array('action' => 'philhealth_ranges'));
         }
 
+        public function main_settings() {
+
+            $this->loadModel('Payroll.Setting');
+
+            $auth = $this->Session->read('Auth.User');
+
+            if (!empty($this->request->data)) {
+
+                $this->request->data['Setting']['created_by'] = $auth['id'];
+                
+                $this->request->data['Setting']['modified_by'] = $auth['id'];
+
+                if ($this->Setting->save($this->request->data)) {
+
+                     $this->Session->setFlash(__('Payroll Settings Save'),'success');
+
+                        $this->redirect(
+                            array('controller' => 'payroll_settings', 'action' => 'main_settings')
+                        );
+
+                } else {
+
+                        $this->Session->setFlash(__('There\'s an error saving data, Please try again'),'error');
+                }
+
+            }
+
+            $this->request->data = $this->Setting->find('first');
+
+        }
+
+
+    public function tax_settings() {
+
+        $this->loadModel('Payroll.TaxDeduction');
+        $this->loadModel('Payroll.Tax');
+
+        $auth = $this->Session->read('Auth.User');
+
+        if (!empty($this->request->data)) {
+
+            $this->request->data['TaxDeduction']['created_by'] = $auth['id'];
+            
+            $this->request->data['TaxDeduction']['modified_by'] = $auth['id'];
+
+
+            if ($this->TaxDeduction->save($this->request->data)) {
+                
+                $data = $this->request->data;
+
+                $lastId = $this->TaxDeduction->id;
+                
+                //$this->Tax->saveTax($lastId,$this->request->data);
+
+                     foreach ($data['Tax'] as $key => $tax) {
+                            
+                            $data['Tax'][$key]['id'] = !empty($data['Tax'][$key]['id']) ?  $data['Tax'][$key]['id'] : '';
+
+                            $data['Tax'][$key]['tax_deduction_id'] = !empty( $lastId ) ?  $lastId : '';
+
+                            $data['Tax'][$key]['created_by'] = $auth['id'];
+            
+                            $data['Tax'][$key]['modified_by'] = $auth['id'];
+
+                            if ($this->Tax->save($data['Tax'][$key])) {
+                            } else {
+                                pr($this->Tax->validationErrors);
+                            }
+                    }
+
+                    $this->Session->setFlash(__('Tax Setting\'s Successfully Saved'));
+
+                    $this->redirect(
+                        array('controller' => 'payroll_settings', 'action' => 'tax_settings')
+                    );
+
+            } else {
+
+                        $this->Session->setFlash(__('There\'s an error saving data, Please try again'),'error');
+            }
+     
+        }
+
+        $this->TaxDeduction->bind(array('Tax'));
+
+        $taxes= $this->TaxDeduction->getByType('all');
+
+        $this->set(compact('taxes'));
+
+    }
 
 } 
 ?>

@@ -10,30 +10,33 @@ class EmployeesController  extends HumanResourceAppController {
 	//,'HumanResource.Country'
 	public function index() {
 
+		$this->loadModel('HumanResource.Tooling');
 		$this->loadModel('HumanResource.Position');
 		$this->loadModel('HumanResource.Department');
-		$this->loadModel('HumanResource.Tooling');
 		$this->loadModel('HumanResource.Status');
+
+		$this->Employee->bind(array('Position','Department','Status'));
+
 		//array_push($departmentData, "All");
 		$limit = 10;
 
         $conditions = array();
 
 	 	if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'Employee' ) {
+	 		
 	 		$this->Employee->bind(array('Position','Department','Status'));
 
 	        $this->paginate = array(
 	            'conditions' => $conditions,
 	            'limit' => $limit,
 	            //'fields' => array('id', 'status','created'),
+	            'recursive' => -1,
 	            'order' => 'Employee.id DESC',
 	        );
 
 	        $employees = $this->paginate();
 	    }
 
-        $this->loadModel('HumanResource.Tooling');
- 
 	    if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'Tooling' ) {
 			//toolings
 	       	$conditions = array();    
@@ -43,33 +46,71 @@ class EmployeesController  extends HumanResourceAppController {
 	            'limit' => $limit,
 	            //'fields' => array('id', 'status','created'),
 	            'order' => 'Tooling.id DESC',
+	            'recursive' => -1
 	        );
 
 
 	        $toolings = $this->paginate('Tooling');
 		       
 	    }
-
         
 		$positions = $this->Position->find('list',array('fields' => array('id','name')));
 
 		$departments = $this->Department->find('list',array('fields' => array('id','name')));
 		
-        $this->loadModel('HumanResource.Employee');
-
         $employeeList = $this->Employee->find('list',array('fields' => array('id','fullname')));
-
-        $this->loadModel('HumanResource.Department');
 
         $departmentData = $this->Department->find('list',array('fields' => array('id','name')));
 
-		$this->loadModel('HumanResource.Tool');
-
-		$toolList = $this->Tool->find('list',array('fields' => array('id','name')));
+		//$toolList = $this->Tool->find('list',array('fields' => array('id','name')));
 
 		$statusList = $this->Status->find('list',array('fields' => array('id','name')));
 
         $this->set(compact('employees','departments','positions','toolings','toolList','employeeList', 'departmentData','statusList'));
+	}
+
+
+	public function search_by_department($departmentId = null , $status = null,$hintKey = null){
+
+		$this->loadModel('HumanResource.Position');
+		$this->loadModel('HumanResource.Department');
+		$this->loadModel('HumanResource.Status');
+
+		$this->Employee->bind(array('Position','Department','Status'));
+
+		$conditions = array();
+
+		if ($status != 0) {
+
+			$conditions = array_merge($conditions,array('Employee.status' => $status ));
+
+		}
+
+		if ($departmentId != 0) {
+
+			$conditions = array_merge($conditions,array('Employee.department_id' => $departmentId ));
+
+		}
+
+		if (!empty($hintKey)) {
+
+			$conditions = array_merge($conditions,array(
+									'OR' => array(
+										array('Employee.first_name LIKE' => '%' . $hintKey . '%'),
+										array('Employee.last_name LIKE' => '%' . $hintKey . '%'),
+										array('Employee.code LIKE' => '%'. $hintKey .'%')
+									)
+								));
+
+		}
+
+		$employeeData = $this->Employee->find('all',array('conditions' => $conditions));
+
+		$this->set(compact('employeeData'));
+		
+    	$this->render('search_by_department');
+    	
+
 	}
 
 	public function add () {
@@ -93,12 +134,13 @@ class EmployeesController  extends HumanResourceAppController {
 
 			 $this->loadModel('HumanResource.Department');
 
+			 $this->loadModel('HumanResource.Position');
+
 			 $this->loadModel('HumanResource.Dependent');
 
 			 $this->loadModel('HumanResource.Salaries');
 
-
-			  $uploader = new ImageUploader;
+			 $uploader = new ImageUploader;
         
 			 if(!empty($this->request->data)){
 			 	
@@ -109,7 +151,6 @@ class EmployeesController  extends HumanResourceAppController {
 
 					$file = $this->request->data['Employee']['file'];
               
-
                     if ($this->request->data['Employee']['file']['error'] == 0 ) {
                        $time = time();
                        $file['name'] = $uploader->resize($file, $time,'employee');
@@ -121,9 +162,35 @@ class EmployeesController  extends HumanResourceAppController {
 
             	$this->Employee->create();
 
+            
+
+            	//check department
+
+            	if (!empty($this->request->data['Employee']['department_id_others']) && $this->request->data['Employee']['department_id'] == 'other') {
+
+            		$department = $this->Department->createDepartment($this->request->data,$auth);
+            		
+            		if (!empty($department)) {
+
+            			 $data['Employee']['department_id'] = $department;
+            		}
+            	}
+
+				//check Position
+            		
+            	if (!empty($this->request->data['Employee']['position_id_others']) && $this->request->data['Employee']['position_id'] == 'other') {
+
+            		$position = $this->Position->createPosition($this->request->data,$auth);
+            		
+            		if (!empty($position)) {
+
+            			 $data['Employee']['position_id'] = $position;
+            		}
+            	}
+
+            		
 			 	if ($this->Employee->save($data)) {
-
-
+		
 			 		$employeeId = $this->Employee->id;
 			 		//save additional info
 			 		$save = $this->EmployeeAdditionalInformation->saveInfo($employeeId,$data['EmployeeAdditionalInformation']);
@@ -153,13 +220,11 @@ class EmployeesController  extends HumanResourceAppController {
 
 			 		$save = $this->Email->saveEmails($data['ContactPersonData']['Email'],$employeeId,'ContactPerson',$auth['id']);
 
-
-
 			 		//$save
 			 		$this->Session->setFlash('Saving employee information successfully, Please add Salary setting','success');
 			 		   $this->redirect( array(
-                                 'controller' => 'employees', 
-                                 'action' => 'view',
+                                 'controller' => 'salaries', 
+                                 'action' => 'employee_settings',
                                  $this->Employee->id
                             ));
                 
@@ -210,7 +275,9 @@ class EmployeesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Contact');
 
-		$this->loadModel('HumanResource.ContactPerson');
+		$this->loadModel('HumanResource.HumanResourceContactPerson');
+
+		//$this->loadModel('HumanResource.ContactPerson');
 
 		$this->loadModel('HumanResource.EmployeeEducationalBackground');
 
@@ -272,11 +339,13 @@ class EmployeesController  extends HumanResourceAppController {
 					}
 					if (!empty($data['Dependent'])) {
 			 		//save dependent
-			 		$save = $this->Dependent->saveDependent($data['Dependent'],$employeeId,$auth['id']);
+			 			$save = $this->Dependent->saveDependent($data['Dependent'],$employeeId,$auth['id']);
+
 			 		}
 			 		if (!empty($data['ContactPersonData'])) {
-						
-						$this->ContactPerson->saveContact($data['ContactPersonData'],$employeeId,$auth['id']);
+
+			 			$this->HumanResourceContactPerson->saveContact($data['ContactPersonData'],$employeeId,$auth['id']);
+				
 			 		}
 			 		//save salary settings
 			 		$this->Salary->saveSettings($data);
@@ -312,6 +381,9 @@ class EmployeesController  extends HumanResourceAppController {
 		 $this->loadModel('HumanResource.Contact');
 
 		 $this->loadModel('HumanResource.ContactPerson');
+
+		 $this->loadModel('HumanResource.HumanResourceContactPerson');
+
 		 $this->loadModel('HumanResource.EmployeeEducationalBackground');
 
 			$this->Employee->bind(array(
@@ -320,7 +392,8 @@ class EmployeesController  extends HumanResourceAppController {
 				'GovernmentRecord',
 				'Address',
 				'Contact',
-				'ContactPerson',
+				//'ContactPerson',
+				'HumanResourceContactPerson',
 				'ContactPersonEmail',
 				'ContactPersonAddress',
 				'ContactPersonNumber',
@@ -352,6 +425,7 @@ class EmployeesController  extends HumanResourceAppController {
 		$bankList = $this->Bank->find('list',array('fields' => array('id','code')));
 
 		$positionList = $this->Position->find('list',array('fields' => array('id','name')));
+
 
 		$departmentList = $this->Department->find('list',array('fields' => array('id','name')));
 
@@ -385,6 +459,8 @@ class EmployeesController  extends HumanResourceAppController {
 
 		 $this->loadModel('HumanResource.ContactPerson');
 
+		 $this->loadModel('HumanResource.HumanResourceContactPerson');
+
 		 $this->loadModel('HumanResource.Position');
 
 		 $this->loadModel('HumanResource.Department');
@@ -406,6 +482,7 @@ class EmployeesController  extends HumanResourceAppController {
 				'Address',
 				'Contact',
 				'ContactPerson',
+				'HumanResourceContactPerson',
 				'ContactPersonEmail',
 				'ContactPersonAddress',
 				'ContactPersonNumber',
@@ -573,14 +650,20 @@ class EmployeesController  extends HumanResourceAppController {
 			//pr($this->request->data);exit();
 			$this->loadModel('HumanResource.Position');
 			$this->loadModel('HumanResource.Department');
+			$this->loadModel('HumanResource.EmployeeAdditionalInformation');
+			$this->loadModel('HumanResource.Salary');
 			$this->loadModel('HumanResource.Status');
+			$this->loadModel('HumanResource.GovernmentRecord');
+			$this->loadModel('HumanResource.Address');
+			$this->loadModel('HumanResource.Contact');
+			$this->loadModel('HumanResource.Email');
 
 			// ini_set('max_execution_time', 3600);
 			// ini_set('memory_input_time', 1024);
 			// ini_set('max_input_nesting_level', 1024);
 			// ini_set('memory_limit', '1024M');
 
-			$this->Employee->bind(array('Position','Department','Status'));
+			$this->Employee->bind(array('Position','Department','Contact','Status','EmployeeAdditionalInformation','Address','Salary','SSS','PhilHealth','TIN','Pagibig','Email'));
 
 			$conditions = array();
 
@@ -607,8 +690,14 @@ class EmployeesController  extends HumanResourceAppController {
 
 			}
 
-			$employeeData = $this->Employee->find('all',array('conditions' => $conditions));
+			$employeeData = $this->Employee->find('all',array(
+				'conditions' => $conditions,
+				'order' => array('Employee.last_name','Employee.first_name'),
+				'group' => 'Employee.id'
+			));
+			
 			//pr($employeeData);exit();
+			
 			$this->set(compact('employeeData'));
 			
 			$this->render('Employees/xls/employee_report');
@@ -701,7 +790,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 			$code = $this->request->data['emp_code'];
 
-			$employee = $this->Employee->find('count',array('conditions' => array('Employee.code' => $code  )));
+			$employee = $this->Employee->find('count',array('conditions' => array('Employee.code' => $code )));
 
 			echo json_encode(array('result' => $employee ));
 			exit();
@@ -798,45 +887,62 @@ class EmployeesController  extends HumanResourceAppController {
 
 	}
 	
-	public function search_by_department($departmentId = null , $status = null,$hintKey = null){
+	public function delete($id = null) {
 
-		$this->loadModel('HumanResource.Position');
-		$this->loadModel('HumanResource.Department');
-		$this->loadModel('HumanResource.Status');
+		if (!empty($id)) {
 
-		$this->Employee->bind(array('Position','Department','Status'));
 
-		$conditions = array();
+			$this->loadModel('HumanResource.EmployeeAdditionalInformation');
 
-		if ($status != 0) {
+			 $this->loadModel('HumanResource.Email');
 
-			$conditions = array_merge($conditions,array('Employee.status' => $status ));
+			 $this->loadModel('HumanResource.Address');
 
-		}
+			 $this->loadModel('HumanResource.GovernmentRecord');
 
-		if ($departmentId != 0) {
+			 $this->loadModel('HumanResource.Contact');
 
-			$conditions = array_merge($conditions,array('Employee.department_id' => $departmentId ));
+			 $this->loadModel('HumanResource.ContactPerson');
 
-		}
+			 $this->loadModel('HumanResource.EmployeeEducationalBackground');
 
-		if (!empty($hintKey)) {
+			if ($this->Employee->delete($id)) {
 
-			$conditions = array_merge($conditions,array(
-									'OR' => array(
-										array('Employee.first_name LIKE' => '%' . $hintKey . '%'),
-										array('Employee.last_name LIKE' => '%' . $hintKey . '%')
-									)
-								));
 
-		}
+					//delete all additional info
+					$this->EmployeeAdditionalInformation->deleteAll(array('EmployeeAdditionalInformation.employee_id' => $id), false);
 
-		$employeeData = $this->Employee->find('all',array('conditions' => $conditions));
+					//delete all Email
+					$this->Email->deleteAll(array('Email.foreign_key' => $id,'Email.model' => 'Employee'), false);
 
-		$this->set(compact('employeeData'));
-		
-    	$this->render('search_by_department');
-    	
+					//delete all Address
+					$this->Address->deleteAll(array('Address.foreign_key' => $id,'Address.model' => 'Employee'), false);
 
+					//delete all government Record
+					$this->GovernmentRecord->deleteAll(array('GovernmentRecord.employee_id' => $id), false);
+
+					//delete all EmployeeEducationalBackground Record
+					$this->EmployeeEducationalBackground->deleteAll(array('EmployeeEducationalBackground.employee_id' => $id), false);
+					
+					//delete all EmployeeEducationalBackground Record
+					$this->ContactPerson->deleteAll(array('ContactPerson.employee_id' => $id), false);
+			
+				$this->Session->setFlash(
+                      __('Employee Successfully deleted.', h($id), 'sucess')
+                  );
+             } else {
+                  $this->Session->setFlash(
+                    __('Employee cannot be deleted.', h($id), 'sucess')
+                 );
+            }
+
+            $this->redirect( array(
+                                 'controller' => 'employees', 
+                                 'action' => 'index',
+                                 $this->Employee->id
+                            ));
+
+		}	
 	}
+	
 }

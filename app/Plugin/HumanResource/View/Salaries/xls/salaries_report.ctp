@@ -5,8 +5,6 @@
 
     $objTpl = PHPExcel_IOFactory::load("./img/salaries/salaries_edited.xls");
     $counter = 5;
-    
-
 
     $objTpl->setActiveSheetIndex(0)
     ->setCellValue('A2','Payroll '.date('F d',strtotime($payroll['Payroll']['from'])).'-'.date('d',strtotime($payroll['Payroll']['to'])).' '. $payroll['Payroll']['year']);
@@ -20,7 +18,6 @@
                   'bold' =>true
                   ));
 
-
     $counter = 6;
     $header = 4;
     $next_header = 5;
@@ -28,6 +25,11 @@
     $sheet = $objTpl->getActiveSheet();
     $address = 'AI'.$header;
     //next row
+
+   // pr($deductions);
+
+    //excemption
+    $exemption = array('Pagibig Loan (Calamity)','Pagibig Loan (MPL)');
 
     if (!empty($deductions)) {
               
@@ -44,16 +46,38 @@
                 $split = PHPExcel_Cell::coordinateFromString($address);
                 ++$split[0];
                 $nextRow = preg_replace('/\d/', $next_header ,$address);
-                $sheet->mergeCells($address.":".$nextRow);
+                
+                if (in_array($list, $exemption)) {
 
-                $sheet->setCellValue( $address, $list );
+                  $fields = explode(' ', $list);
+
+
+                $sheet->setCellValue( $address, $fields[0].' '.$fields[1]);
+                $sheet->getStyle($address)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+                $sheet->setCellValue( $nextRow, $fields[2]);
+                $sheet->getStyle($nextRow)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+                 
+                } else {
+                   $sheet->mergeCells($address.":".$nextRow);
+
+                 $sheet->setCellValue( $address, $list );
+                }
+
+
                 $sheet->getStyle($address.':'.$nextRow)->applyFromArray($styleArray);
+
+               
+
                 $sheet->getStyle($address.':'.$nextRow)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+               
                 $sheet->getStyle($address.':'.$nextRow)->applyFromArray($styleArrayHeader);
                 $address = implode($split);
 
               }
     }
+
+   // exit();
 
      $styleArray = array(
                 'borders' => array(
@@ -67,11 +91,9 @@
      $sheet->setCellValue( $address, 'Total Deduction' );
 
       //net pay's and total
-     $fields = array('Net Pay','Allowances','Incentives/ Adj','Total Pay');
+     $fields = array('Net Pay','Irrg OT','Allowances','Incentives/ Adj','Total Pay');
 
      $next_field = $address;
-
-
 
      foreach ($fields as $key => $list) {             
                   $split = PHPExcel_Cell::coordinateFromString($next_field);
@@ -82,14 +104,19 @@
 
                   $sheet->setCellValue( $next_field, $list );
                   
-
                   $sheet->getStyle($next_field.':'.$nextRow)->applyFromArray($styleArray);
                   $sheet->getStyle($next_field.':'.$nextRow)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
                   $sheet->getStyle($next_field.':'.$nextRow)->applyFromArray($styleArrayHeader);
+
+                 if ($list == 'Irrg OT') {
+                  $column = preg_replace('/[0-9]+/', '', $next_field);
+                  $sheet->getColumnDimension($column)->setVisible(false);
+                 }
+                  
+                 
                   $next_field = implode($split);
 
       }
-
     //add color if value is negative
     $styleArray = array(
                 'font'  => array(
@@ -195,7 +222,9 @@
           $sheet->setCellValue('P'.$counter,$emp['hours_legal_holiday_sunday_work']);
           $sheet->getStyle('P'.$counter)->applyFromArray($styleArrayBorder);
 
-          $sheet->setCellValue('Q'.$counter,$emp['legal_holiday_sunday_work']);
+          $legalHolidaySunday = !empty($emp['legal_holiday_sunday_work']) ? $emp['legal_holiday_sunday_work'] : 0;
+
+          $sheet->setCellValue('Q'.$counter, $legalHolidaySunday);
           $sheet->getStyle('Q'.$counter)->applyFromArray($styleArrayBorder);
           $sheet->getStyle('Q'.$counter)->getNumberFormat()->setFormatCode('#,##0.00');
 
@@ -239,7 +268,7 @@
           $sheet->getStyle('AC'.$counter)->applyFromArray($styleArrayBorder);
           $sheet->getStyle('AC'.$counter)->getNumberFormat()->setFormatCode('#,##0.00');
 
-          $sheet->setCellValue('AD'.$counter,$emp['gross']);
+          $sheet->setCellValue('AD'.$counter,$emp['gross_pay']);
           $sheet->getStyle('AD'.$counter)->applyFromArray($styleArrayBorder);
 
           $value = !empty($emp['sss']) ? $emp['sss'] : '-';
@@ -279,20 +308,19 @@
                   $split = PHPExcel_Cell::coordinateFromString($innerAddress);
                   ++$split[0];
                   $index = str_replace(' ','_',strtolower($list));
-                  $value = !empty($salary[$index]) ? $salary[$index] : '-';
+                  $value = !empty($emp[$index]) ? $emp[$index] : '-';
                   $sheet->setCellValue( $innerAddress, $value );
                   $sheet->getStyle($innerAddress)->applyFromArray($styleArrayBorder);
                   $sheet->getStyle($innerAddress)->getNumberFormat()->setFormatCode('#,##0.00');
                   $innerAddress = implode($split);
                   $total_deduction += $value;
-                
+                  
               }
 
           }
 
-
              //net pay's and total
-          $fields = array('net_pay' => 'Net Pay', 'allowances' => 'Allowances', 'incentives' => 'Incentives/ Adj','total_pay' => 'Total Pay');
+          $fields = array('net_pay' => 'Net Pay','excess_ot' => 'Irrg OT','allowances' => 'Allowances', 'adjustment' => 'Incentives/ Adj','total_pay' => 'Total Pay');
 
           $next_field_inner = $innerAddress;
 

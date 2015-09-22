@@ -28,4 +28,13 @@ class Status extends AppModel {
 		
 	}
 
+	public function getAllStatus($conditions = array(),$fields = array('id','name')) {
+
+
+		$statuses = $this->find('list',array('conditions' => $conditions, 'fields' => $fields));
+
+		return array_map('ucfirst', $statuses);
+
+	}
+
 }

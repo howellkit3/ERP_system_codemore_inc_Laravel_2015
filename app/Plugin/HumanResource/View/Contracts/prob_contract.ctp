@@ -63,6 +63,8 @@
 					<div class="form-group">
 						<div class="col-lg-1"> </div>
 						<div class="col-lg-1">&emsp;&emsp;&emsp;&emsp;TO &emsp;:&emsp;</div>
+
+						<div class="col-lg-10"><?php echo !empty($employeeData['Employee']['full_name']) ? ucwords($employeeData['Employee']['full_name']) : ''; ?></div>
 					</div>
 
 					<div class="form-group">
@@ -82,35 +84,56 @@
 						<div class="col-lg-1"> </div>
 						<div class="col-lg-2">&emsp;&emsp;&emsp;&emsp;Title/Position</div>
 						<div class="col-lg-1">:</div>
-						<div class="col-lg-8"><?php echo ucfirst($employeeData['Position']['name']) ?>/<?php echo ucfirst($employeeData['Department']['name']) ?></div>
+						<div class="col-lg-8"><?php echo ucfirst($employeeData['Position']['name']) ?> / <?php echo ucfirst($employeeData['Department']['name']) ?></div>
 					</div>
 
 					<div class="form-group">
 						<div class="col-lg-1"> </div>
 						<div class="col-lg-2">&emsp;&emsp;&emsp;&emsp;Salary</div>
 						<div class="col-lg-1">:</div>
-						<div class="col-lg-8"> </div>
+						<div class="col-lg-8"> 
+							<?php
+
+								switch ($employeeData['Salary']['employee_salary_type']) {
+									case 'daily':
+											echo !empty($employeeData['Salary']['basic_pay']) ? number_format($employeeData['Salary']['basic_pay'],2).' / per Day ' : '';
+										break;
+									case 'monthly':
+											
+											echo !empty($employeeData['Salary']['basic_pay']) ? number_format($employeeData['Salary']['basic_pay'],2).' / per Month ' : '';
+										break;
+									default:
+										# code...
+										break;
+								}
+
+							?>
+						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="col-lg-1"> </div>
 						<div class="col-lg-2">&emsp;&emsp;&emsp;&emsp;Allowance</div>
 						<div class="col-lg-1">:</div>
-						<div class="col-lg-8"> </div>
+						<div class="col-lg-8">
+							<?php 
+								echo !empty($employeeData['Salary']['allowances']) ? $employeeData['Salary']['allowances'] : '';
+							?>
+						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="col-lg-1"> </div>
 						<div class="col-lg-4">&emsp;&emsp;&emsp;&emsp;Conditional Temporary Productivity Allowance (CTPA)</div>
 						<div class="col-lg-1">:</div>
-						<div class="col-lg-6"> </div>
+						<div class="col-lg-6"> <?php echo !empty($employeeData['Salary']['ctpa']) ? number_format($employeeData['Salary']['ctpa'],2) : '';?> </div>
 					</div>
 
 					<div class="form-group">
 						<div class="col-lg-1"> </div>
 						<div class="col-lg-4">&emsp;&emsp;&emsp;&emsp;Socio-Economic Allowance</div>
 						<div class="col-lg-1">:</div>
-						<div class="col-lg-6"> </div>
+						<div class="col-lg-6"> <?php echo !empty($employeeData['Salary']['sea']) ? number_format($employeeData['Salary']['sea'],2) : '';?> </div>
 					</div>
 
 					<div class="form-group">
@@ -185,7 +208,7 @@
 
 				<div class="form-group">
 					<div class="col-lg-6"><center>APPROVED</center></div>
-					<div class="col-lg-6"><center>Conforme</center></div><br><br><br>
+					<div class="col-lg-6"><center>CONFORME</center></div><br><br><br>
 					<div class="col-lg-6"><center>___________________________________________</center></div>
 					<div class="col-lg-6"><center>___________________________________________</center></div>
 					<div class="col-lg-6"><center>KOU FU PACKAGING CORP.</center></div>

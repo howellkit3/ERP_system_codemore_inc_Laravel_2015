@@ -4,6 +4,12 @@
   
     <ul style="margin-left:0" class="nav navbar-nav pull-left">
 
+       <li class="dropdown hidden-xs">
+           
+            <?php echo $this->Html->link("<span class='count'> Settings </span>", array('controller' => 'payroll_settings', 'action' => 'main_settings'),array('escape' => false,'class' => 'btn')); ?>
+        </li>
+            
+
         <li class="dropdown hidden-xs">
            
             <?php echo $this->Html->link("<span class='count'> Deductions / Loans </span>", array('controller' => 'payroll_settings', 'action' => 'settings'),array('escape' => false,'class' => 'btn')); ?>
@@ -43,7 +49,14 @@
             <?php echo $this->Html->link("<span class='count'> PhilHealth Table </span>", array('controller' => 'payroll_settings', 'action' => 'philhealth_ranges'),array('escape' => false,'class' => 'btn')); ?>
            
         </li>
-            
+
+
+         <li class="dropdown hidden-xs">
+           
+            <?php echo $this->Html->link("<span class='count'> Tax Settings </span>", array('controller' => 'payroll_settings', 'action' => 'tax_settings' ),array('escape' => false,'class' => 'btn')); ?>
+           
+        </li>
+
         
     </ul>
 

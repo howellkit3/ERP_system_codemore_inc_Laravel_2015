@@ -13,11 +13,21 @@ header("Content-type: application/pdf");
 	<title>Payslip</title>
 </head>
 	<body>
-		<?php  foreach ($salaries as $key => $salary) :
+		<?php  
+				
+				foreach ($salaries as $key => $salary) :
 
 				$employee_name = $this->CustomText->getFullname($salary['Employee']);
+				
+				if ($payroll['Payroll']['type'] == '13_month') {
 
-			 	$payrollDate = date('F',strtotime($salary['from'])).' '.date('d',strtotime($salary['from'])).'-'.date('d',strtotime($salary['to'])).','.date('Y',strtotime($salary['from']));
+					$payrollDate = date('F d',strtotime($payroll['Payroll']['from'])).'-'.date('F d',strtotime($payroll['Payroll']['to'])).','.date('Y',strtotime($payroll['Payroll']['from']));
+
+				} else {
+
+					$payrollDate = date('F',strtotime($payroll['Payroll']['from'])).'-'.date('d',strtotime($payroll['Payroll']['to'])).','.date('Y',strtotime($payroll['Payroll']['from']));
+				}
+
 		 ?>
 		 <div class="container">
 			<table class="center container medium-font">
@@ -108,7 +118,12 @@ header("Content-type: application/pdf");
 									<td>OT</td>
 									<td class="text-right"><?php echo !empty($salary['hours_ot']) ?  $salary['hours_ot'] : 0; 
 									$total_hours += $salary['hours_ot'];?></td>
-									<td class="text-right"><?php echo number_format($salary['OT'],2) ?></td>
+									<td class="text-right"><?php 
+									$total_overtime = $salary['OT'];
+									//add excess overtime
+									$total_overtime += $salary['excess_ot'];
+
+									echo number_format($total_overtime,2) ?></td>
 								</tr>
 								<tr>
 									<td>Sun</td>
@@ -204,6 +219,22 @@ header("Content-type: application/pdf");
 									<td class="text-right"></td>
 									<td class="text-right"><?php echo !empty($salary['incentives'])  ? number_format($salary['incentives'],2) : '0.00'; ?></td>
 								</tr>
+
+								<tr>
+									<td>Adjustment</td>
+									<td class="text-right"></td>
+									<td class="text-right"><?php echo !empty($salary['adjustment'])  ? number_format($salary['adjustment'],2) : '0.00'; ?></td>
+								</tr>
+
+								<?php if ($payroll['Payroll']['type'] == '13_month') : ?>
+
+								<tr>
+									<td>13 Month</td>
+									<td class="text-right"></td>
+									<td class="text-right"><?php echo !empty($salary['thirteen_month'])  ? number_format($salary['thirteen_month'],2) : '0.00'; ?></td>
+								</tr>
+
+								<?php endif; ?>	
 							</table>
 							</td>
 							<td style="vertical-align:top"> 
@@ -250,8 +281,6 @@ header("Content-type: application/pdf");
 							</table>
 						 </td>
 						</tr>
-
-
 						<tr>
 							<td class="border-top">
 								<table class="full-width border-right">	
@@ -262,12 +291,14 @@ header("Content-type: application/pdf");
 									</tr>
 								</table>
 							</td>
-							<td class="border-top"><table class="full-width">	
+							<td class="border-top">
+								<table class="full-width">	
 									<tr>
 										<td><strong>Total Deductions</strong></td>
 										<td class="text-right"> <?php echo number_format($salary['total_deduction'],2) ?>  </td>
 									</tr>
-								</table></td>
+								</table>
+							</td>
 						</tr>
 
 				</table>
@@ -280,15 +311,7 @@ header("Content-type: application/pdf");
 						 </td>
 					</tr>
 				</table>
-					<br><br><!-- 
-				<table class="container">
-					<tr>
-						<td class="border-top"> Employee Signature </td> 
-						<td >  </td>
-
-						<td class="border-top"> Accounting Staff </td>
-					</tr>
-				</table> -->
+					<br><br>
 			</div>
 				 <div style="page-break-before: always;"></div> 
 <?php endforeach; ?>

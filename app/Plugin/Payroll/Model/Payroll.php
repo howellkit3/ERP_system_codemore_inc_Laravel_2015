@@ -39,17 +39,45 @@ class Payroll extends AppModel {
 
 		if (!empty($data)) {
 
+
+
 			$data[$this->alias]['status'] = 'pending';
 			$data[$this->alias]['created_by'] = $auth['id'];
 			$data[$this->alias]['modified_by'] = $auth['id'];
-			if (!empty($data[$this->alias]['date']) ){
-				$dates = explode(':', $data[$this->alias]['date'] );
+
+			if ($data[$this->alias]['type'] == 'normal') {
+
+				if (!empty($data[$this->alias]['date']) ){
+
+					$dates = explode(':', $data[$this->alias]['date'] );
+				}
+
+				$data[$this->alias]['from'] = date('Y-m-d',strtotime($dates[0].'-'.$data[$this->alias]['month_year']));
+				if ($dates[1] >= 16) {
+					$data[$this->alias]['to'] = date('Y-m-t',strtotime('01'.'-'.$data[$this->alias]['month_year']));	
+				} else {
+					$data[$this->alias]['to'] = date('Y-m-d',strtotime($dates[1].'-'.$data[$this->alias]['month_year']));	
+				}
+
+			
+				$data[$this->alias]['date'] = date('Y-m-d');
+				$data[$this->alias]['transaction_date'] = date('Y-m-d');
+				$data[$this->alias]['year'] = date('Y',strtotime($dates[1].'-'.$data[$this->alias]['month_year']));
 			}
-			$data[$this->alias]['from'] = date('Y-m-d',strtotime($dates[0].'-'.$data[$this->alias]['month_year']));
-			$data[$this->alias]['to'] = date('Y-m-d',strtotime($dates[1].'-'.$data[$this->alias]['month_year']));
-			$data[$this->alias]['date'] = date('Y-m-d');
-			$data[$this->alias]['transaction_date'] = date('Y-m-d');
-			$data[$this->alias]['year'] = date('Y',strtotime($dates[1].'-'.$data[$this->alias]['month_year']));
+
+			if ($data[$this->alias]['type'] == '13_month') {
+
+				$date = date('Y-m-d',strtotime($data[$this->alias]['payroll_date']));
+				$date = explode('-',$data[$this->alias]['payroll_range']);
+				$data[$this->alias]['from'] = date('Y-m-d',strtotime($date[0]));
+				$data[$this->alias]['to'] = date('Y-m-d',strtotime($date[1]));
+				$data[$this->alias]['date'] = date('Y-m-d');
+				$data[$this->alias]['transaction_date'] = $data[$this->alias]['payroll_date'];
+				$data[$this->alias]['year'] = $data[$this->alias]['year'];
+
+			}
+
+			
 		}
 
 		return $data;
@@ -83,6 +111,24 @@ class Payroll extends AppModel {
 	    			
 	    		}
 
+		    	if (is_object($value) && !empty($value->Salaries)) {
+
+		    		$object[$key]['Salaries'] = (array)$value->Salaries;
+		    			
+		    			foreach ($object[$key]['Salaries'] as $innerKey => $value) {
+
+		    				// //$object[$key]['Salaries'][$innerKey] = (array)$value;
+
+		    				// if (is_array($value)) {
+
+		    				// 	foreach ($value as $subKey => $innerValue) {
+
+
+		    				// 	}
+		    				// }
+
+		    			}
+		    	}
 	    	}
    		 
         return $object;

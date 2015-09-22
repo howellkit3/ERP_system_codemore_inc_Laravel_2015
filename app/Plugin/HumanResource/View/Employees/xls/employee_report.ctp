@@ -5,7 +5,7 @@
     $this->PhpExcel->createWorksheet()
         ->setDefaultFont('Calibri', 12);
 
-    $objTpl = PHPExcel_IOFactory::load("./img/emp_filter.xls");
+    $objTpl = PHPExcel_IOFactory::load("./img/reports/employee_report.xls");
 
     $addRow = 0;
     foreach ($employeeData as $key => $employeeList) {
@@ -14,22 +14,52 @@
 
     $objTpl->setActiveSheetIndex(0)->insertNewRowBefore(11,$addRow);
 
-    $counter = 10;
+      $objTpl->setActiveSheetIndex(0)
+                    ->setCellValue('B3',(new \DateTime())->format('m/d/Y'));
+
+    $counter = 6;
+
+    $sheet = $objTpl->getActiveSheet();
+
+    $number['tel'] = 0;
+    $number['fax'] = 0;
+
+    $number['mobile'] = 0;
+
     foreach ($employeeData as $key => $employeeList) {
         $key++;
-       
-        $objTpl->setActiveSheetIndex(0)
-                    ->setCellValue('C8',(new \DateTime())->format('m/d/Y'))
-                    ->setCellValue('A'.$counter, $key)
-                    ->setCellValue('B'.$counter, $employeeList['Employee']['code'])
-                    ->setCellValue('C'.$counter, $employeeList['Department']['name'])
-                    ->setCellValue('D'.$counter, $employeeList['Position']['name'])
-                    ->setCellValue('E'.$counter, $employeeList['Employee']['last_name'])
-                    ->setCellValue('F'.$counter, $employeeList['Employee']['first_name'])
-                    ->setCellValue('G'.$counter, $employeeList['Employee']['middle_name'])
-                    ->setCellValue('H'.$counter, $employeeList['Employee']['suffix'])
-                    ->setCellValue('I'.$counter, $employeeList['Status']['name'])
-                    ->setCellValue('J'.$counter, date('m/d/Y', strtotime($employeeList['Status']['date_hired'])));
+        
+                $sheet->setCellValue('A'.$counter, $key);
+                $sheet->setCellValue('B'.$counter, $employeeList['Employee']['code']);
+                $sheet->setCellValue('C'.$counter, $employeeList['Employee']['last_name']);
+                $sheet->setCellValue('D'.$counter, $employeeList['Employee']['first_name']);
+                $sheet->setCellValue('E'.$counter, $employeeList['Employee']['middle_name']);
+                $sheet->setCellValue('F'.$counter, $employeeList['EmployeeAdditionalInformation']['gender']);
+                $sheet->setCellValue('G'.$counter, $employeeList['EmployeeAdditionalInformation']['status']);
+                $sheet->setCellValue('H'.$counter, $employeeList['Address'][0]['address1']);
+                $sheet->setCellValue('I'.$counter, $employeeList['Address'][0]['city']);
+                $sheet->setCellValue('J'.$counter, $employeeList['Address'][0]['zipcode']);
+
+
+                //contact
+                foreach ($employeeList['Contact'] as $key => $contact) {
+                    if (!$contact['type'] == 0) {
+                        $number['tel'] = $contact['number'];
+                    }
+                    if (!$contact['type'] == 1) {
+                        $number['fax'] = $contact['number'];
+                    }
+                    if (!$contact['type'] == 2) {
+                        $number['mobile'] = $contact['number'];
+                    }
+                }
+                $sheet->setCellValue('K'.$counter, $number['tel'] );
+
+                $sheet->setCellValue('L'.$counter, $number['mobile'] );
+
+                $sheet->setCellValue('M'.$counter,$employeeList['Address']);
+
+                $sheet->setCellValue('N'.$counter,$employeeList['Address'][0]['zipcode']);
                     
         $counter++;  
         
@@ -37,7 +67,7 @@
     
             
     //prepare download
-    $filename = mt_rand(1,100000).'.xls'; //just some random filename
+    $filename = 'employee_reports_'.date('Ymdhis').'.xls'; //just some random filename
     //header('Content-Type: application/vnd.ms-office');
     header('Content-Type: application/vnd.ms-office');
     

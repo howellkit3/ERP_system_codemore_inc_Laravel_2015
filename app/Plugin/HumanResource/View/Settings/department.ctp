@@ -4,7 +4,9 @@
     $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : 'department';
 
  ?>
-
+<?php echo $this->Html->script(array(
+    'HumanResource.department'
+)); ?>
  <div class="row">
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
@@ -51,11 +53,10 @@
                                                 <th><a href="#"><span>Actions</span></a></th>
                                             </tr>
                                         </thead>
-
+                                         <tbody aria-relevant="all" aria-live="polite" role="alert" class="append-table-department">
                                         <?php 
                                             if(!empty($departmentData)){
                                                 foreach ($departmentData as $key => $departmentList): $key++ ?>
-                                                    <tbody aria-relevant="all" aria-live="polite" role="alert">
                                                         <tr class="">
                                                             <td class="">
                                                                 <?php echo $key;?> 
@@ -107,11 +108,11 @@
                                                             </td>
                                                         </tr>
 
-                                                    </tbody>
+                                                   
                                             <?php 
                                                 endforeach; 
                                             } ?> 
-                                    
+                                         </tbody>
                                     </table>    
 
                                     <hr>

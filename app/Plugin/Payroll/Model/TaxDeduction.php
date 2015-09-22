@@ -19,8 +19,8 @@ class TaxDeduction extends AppModel {
 			'hasMany' => array(
 				'Tax' => array(
 					'className' => 'Payroll.Tax',
-					'foreignKey' => false,
-					'conditions' => array('Tax.type' => 'TaxDeduction.type')	
+					'foreignKey' => 'tax_deduction_id',
+					'conditions' => '',//array('Tax.type' => 'TaxDeduction.type')	
 					)
 								)
 			),false);
@@ -44,5 +44,25 @@ class TaxDeduction extends AppModel {
 
 		return $tax;
 		
+	}
+
+	public function getByType() {
+
+		$this->bind(array('Tax'));
+
+		$type = array('daily','weekly','semi_monthly','monthly');
+
+		$TaxDeduction = array();
+
+		foreach ($type as $key => $value) {
+
+			$TaxDeduction[$value] = $this->find('first',array(
+											'conditions' => array(
+												'TaxDeduction.type' => $value
+												)
+											));
+		}
+
+		return $TaxDeduction;
 	}
 }

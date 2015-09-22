@@ -148,7 +148,10 @@
 			                                        Birthday</label>
 				                                      <div class="col-lg-9 value"> 
 				                                       <i class="fa fa-cake"></i>
-				                                       <?php echo date('Y-m-d',strtotime($employee['EmployeeAdditionalInformation']['birthday']))  ?>
+				                                       <?php echo 
+				                                       !empty($employee['EmployeeAdditionalInformation']['birthday']) && $employee['EmployeeAdditionalInformation']['birthday'] != '0000-00-00' ? 
+				                                       date('F d, Y',strtotime($employee['EmployeeAdditionalInformation']['birthday']))
+				                                        : '';  ?>
 				                                       </div>
 			                                     </div>
 			                                     <div class="clearfix"></div>
@@ -409,7 +412,7 @@
 						                           	?>
 
 						                           	<div class="form-group">
-								                                        <label for="inputEmail1" class="col-lg-2 control-label strong"> <?php echo 	$nameList[$data['agency_id']]['name'] ?> <?php echo $nameList[$data['agency_id']]['field'] ?> </label>
+								                                        <label for="inputEmail1" class="col-lg-2 control-label strong"> <?php echo ucwords($nameList[$data['agency_id']]['name']) ?> <?php echo $nameList[$data['agency_id']]['field'] ?> </label>
 									                                      <div class="col-lg-9 value"> 
 									                                       	<?php echo $data['value'] ?>
 									                                       </div>

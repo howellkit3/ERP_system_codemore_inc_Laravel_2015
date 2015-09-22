@@ -77,22 +77,22 @@
 						<div class="col-lg-2">&emsp;&emsp;&emsp;&emsp;STATUS</div>
 						<div class="col-lg-1">:</div>
 						<div class="col-lg-3"><?php echo $employeeData['Status']['name'] ?></div>
-						<div class="col-lg-5">NAME OF SPOUSE &emsp;&emsp;:</div>
+						<div class="col-lg-5">NAME OF SPOUSE &emsp;&emsp;: &emsp;&emsp;<?php echo !empty($employeeData['EmployeeAdditionalInformation']['spouse']) ? $employeeData['EmployeeAdditionalInformation']['spouse'] : '';  ?></div>
 					</div>
 
 					<div class="form-group">
 						<div class="col-lg-1"> </div>
 						<div class="col-lg-2">&emsp;&emsp;&emsp;&emsp;SSS NO</div>
 						<div class="col-lg-1">:</div>
-						<div class="col-lg-3"><?php //echo $employeeData['Employee']['last_name'] ?></div>
-						<div class="col-lg-5">TIN NO &emsp;&emsp; :</div>
+						<div class="col-lg-3">  <?php echo !empty($employeeData['SSS']['value']) ? $employeeData['SSS']['value'] : ''; ?>  </div>
+						<div class="col-lg-5">TIN NO &emsp;&emsp;:&emsp;&emsp; <?php echo !empty($employeeData['TIN']['value']) ? $employeeData['TIN']['value'] : ''; ?></div>
 					</div>
 
 					<div class="form-group">
 						<div class="col-lg-1"> </div>
 						<div class="col-lg-2">&emsp;&emsp;&emsp;&emsp;POSITION</div>
 						<div class="col-lg-1">:</div>
-						<div class="col-lg-3"><?php echo ucfirst($employeeData['Position']['name']) ?>/<?php echo ucfirst($employeeData['Department']['name']) ?></div>
+						<div class="col-lg-3"><?php echo ucfirst($employeeData['Position']['name']) ?> / <?php echo ucfirst($employeeData['Department']['name']) ?></div>
 						<div class="col-lg-5">HIRING DURATION&emsp;&emsp;</div>
 					</div>
 
@@ -116,10 +116,21 @@
 										</tr>
 										<tr>
 											<td><center>- </center></td>
-											<td><center> -</center></td>
-											<td><center> -</center></td>
-											<td><center> -</center></td>
-											<td><center> -</center></td>
+											<td><center> 
+												<?php echo !empty($employeeData['Salary']['basic_pay']) ? number_format($employeeData['Salary']['basic_pay'],2) : '-';?>
+												</center>
+											</td>
+											<td><center> 
+												<?php echo !empty($employeeData['Salary']['allowances']) ? number_format($employeeData['Salary']['allowances'],2) : '-';?>
+												 </center>
+											</td>
+											<td><center> 
+												<?php echo !empty($employeeData['Salary']['ctpa']) ? number_format($employeeData['Salary']['ctpa'],2) : '-';?>
+												<center>
+											</td>
+											<td><center> <?php echo !empty($employeeData['Salary']['sea']) ? number_format($employeeData['Salary']['sea'],2) : '-';?>
+
+											</center></td>
 										</tr>
 									</thead>
 								</table>
@@ -144,27 +155,31 @@
 							<div class="col-lg-10">
 								<ol>
 									<li>
-										This contract is related and valid only for the duration mentioned above, unless sooner terminated as provided in paragraph 8 below.
+										This contract is related and valid only for the duration mentioned above, unless sooner terminated as provided in paragraph 8 below. <br>
 										Ang Kasunduang ito ay kaugnay at pinagtitibay sa panahon na nakatakda sa itaas, maliban lamang kung ito ay putulin ng mas maaga ayon sa nakasulat sa ika-8 talata sa ibaba.
 									</li>
 									<li>
-										Your relation with the Company and co-employees shall be governed by law, company policies and rules and regulations.
+										Your relation with the Company and co-employees shall be governed by law, company policies and rules and regulations.<br>
 										Ang iyong pakikipag-ugnayan sa Kompanya at sa iyong mga kapwa manggagawa ay nasasaklaw ng batas, mga patakaran, pamamalakad at alintuntunin ng kompanya.
 									</li>
 									<li>
 										Pursuant to the provisions of the Labor Code of the Philippines, you will be rendering a total of forty-eight (48) hours of regular work in a week.  Any work rendered in excess of the said 48 hours will be duly compensated.
+										<br>
 										Sang-ayon sa alituntunin ng Labor Code of the Philippines, ikaw ay maglilingkod ng apatnapu’t walong (48) oras sa loob ng isang linggo.  Anumang paglilingkod na hihigit sa nasabing 48 oras ay babayaran ng karamptang kabayaran.
 									</li>
 									<li>
 										The “no-work, no-pay” principle shall apply in the payment of wages and other related compensation.
+										<br>
 										Ang patakarang “walang-gawa, walang-bayad” ay gagamitin sa pagtakda ng hustong kabayaran.
 									</li>
 									<li>
 										All violations of the Company Rules and Regulations and of Company policies, as well as of existing policies on behavior and conduct shall be considered a violation of the terms and conditions of this contract.
+										<br>
 										Lahat ng paglabag sa mga patakaran at kautusan ng kompanya pati na rin sa mga alituntunin ugnay sa pagpapairal ng kaayusan ay itinuturing na paglabag sa mga alituntunin at mga batayan ng kasunduang ito.
 									</li>
 									<li>
-										If circumstances warrant, you agree to be assigned to any position or place of work or shift schedule that the company may wish to assign to you. 
+										If circumstances warrant, you agree to be assigned to any position or place of work or shift schedule that the company may wish to assign to you.
+										<br> 
 										Kung kinakailangan, ikaw ay pumapayag na idistino o ilalagay o ihalili sa saan mang lugar o anumang gawain na nanaisin ng Kompanya.
 									</li>
 									<li>
@@ -172,31 +187,38 @@
 										Ang iyong paglilingkod sa kompanyang ito ay makasalalay sa iyong pangagatawan at pangkaisipang kalagayan na nararapat sa iyong tungkulin.
 									</li>
 									<li>
-										The Company reserves the right to terminate your services at any time prior to the expiration of your contract in the event that the services you have been assigned to perform for the Company are no longer required.  
+										The Company reserves the right to terminate your services at any time prior to the expiration of your contract in the event that the services you have been assigned to perform for the Company are no longer required. 
+										<br> 
 										Ang Kumpanya ay may karapatang tapusin and iyong pamamasukan anumang oras bago matapos and kasunduang ito kung sakaling ang serbisyong itinalaga na iyong gampanan para sa kumpanya ay hindi na kailangan.
 									</li>
 									<li>
 										This Contract shall take effect on the date you will actually report for work and will end on the date indicated above, unless the Contract is sooner terminated.
+										<br>
 										Ang kasunduang ito ay magkakabisa sa anumang araw ng iyong panunungkulan sa kumpanya at magtatapos sa petsang nakatakda sa itaas, maliban na lamang kung ang kasunduang ito ay mas maagang ipawalangbisa.
 									</li>
 									<li>
 										The Company expects that you will faithfully perform duties assigned to you to the best of your ability, to devote your full and undivided time to your duties and not to engage or be employed in any other work during your employment with the Company.
+										<br>
 										Ang Kompanya ay umaasa na ikaw ay maglilingkod ng may buong katapatan at magbibigay ng serbisyo hanggang sa iyong kakayahan, at hindi kailanman makikipagkasundo o tumanggap ng magtrabaho sa ibang kumpanya habang konektado sa Kompanya.
 									</li>
 									<li>
 										You affirm the truthfulness and correctness of all the information contained in your application for employment, which forms an integral part of this appointment, and any misrepresentation or false information therein shall be sufficient ground for immediate termination of this Contract.
+										<br>
 										Pinatotohanan mo ang mga nakasaad sa inyong “application for employment o bio-data” at nauunawaan mo na ang iyong pagbigay ng maling impormasyon ay sapat na dahilan upang ipawalambisa ang Kasunduang ito.
 									</li>
 									<li>
 										At the end of the contracted period specified in this agreement your services shall be terminated without any further notice.
+										<br>
 										Sa pagtatapos ng takdang araw ng kontratang pinagkasunduan, ang iyong trabaho/serbisyo sa kumpanya ay kailangang itigil na kahit walang abiso o anumang pagbibilin.
 									</li>
 									<li>
 										You have read and understood the terms and conditions of employment as set forth in this Contract, and the same has been read and explained to you in the dialect you understand and you hereby accept the terms and conditions stipulated above.
+										<br>
 										Nabasa at naunawaan mo ang mga patakaran at kautusan na nasasaad sa Kasunduang ito at mga ito ay binasa at ipinaliwanag sa iyo sa wika na iyong naiintindihan, at tinatanggap mo ang nabanggit na mga patakaran at kautusan.
 									</li>
 									<li>
 										You affirm that the information you gave in the course of your application for employment with the company are the truth, and any false information you have given shall be sufficient ground for your termination from employment.
+										<br>
 										Iyong pinatutunayan na ang lahat na impormasyon na binigay mo kaugnay sa iyong pag-apply ng trabaho sa Kumpanya ay pawang katotohanan, at anumang maling impormasyon na binigay mo ay sapat na dahilan upang ikaw ay tanggalin sa trabaho.
 									</li>
 									

@@ -62,8 +62,6 @@
                             'id' => 'createPayroll',
                             'escape' => false)	
     								 ); ?>
-
-               
 			               </div>
 			               </div>
 
@@ -107,7 +105,7 @@
                                                            <?php echo $payroll['Payroll']['description'] ?>
                                                         </td>
                                                         <td class="">
-                                                           <?php echo 'Normal' ?>
+                                                          <?php echo Inflector::humanize($payroll['Payroll']['type']); ?> 
                                                         </td>
 
                                                         <td class="text-center" >

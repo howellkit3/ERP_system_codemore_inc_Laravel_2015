@@ -135,7 +135,7 @@ echo $this->element('payroll_options');
 		            					</tr>
 		            					<tr>
 		            						<td> Type : </td>
-		            						<td> Normal </td>
+		            						<td> <?php echo Inflector::humanize($payroll['Payroll']['type']); ?> </td>
 		            					</tr>
 		            					<tr>
 		            						<td> Status : </td>

@@ -456,7 +456,7 @@ class OvertimesController  extends HumanResourceAppController {
 					//workhift workschedule
 					$workSchedule = $this->WorkSchedule->createSchedule($overtime,$workshift['id'],$otId,$auth['id']);
 
-					$attendance = $this->Attendance->saveRecord($workSchedule);
+					//$attendance = $this->Attendance->saveRecord($workSchedule);
 
 					foreach($workSchedule as $data) :
 

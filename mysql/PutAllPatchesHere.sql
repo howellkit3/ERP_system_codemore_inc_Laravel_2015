@@ -1957,3 +1957,70 @@ CREATE TABLE IF NOT EXISTS `adjustments` (
 #NOTE: SELECT KOUFU WAREHOUSE DATABASE ----
 
 ALTER TABLE `warehouse_request_items`  ADD `stock_quantity` INT(11) NULL  AFTER `quantity_unit_id`;
+
+
+/** aldrin added this 09/04/2015  */
+#NOTE: SELECT KOUFU HUMAN RESOURCE DATABASE ----
+
+
+CREATE TABLE IF NOT EXISTS `overtime_excess` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `overtime_id` int(11) NOT NULL,
+  `from` datetime NOT NULL,
+  `to` datetime NOT NULL,
+  `used_time` decimal(8,2) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+CREATE TABLE IF NOT EXISTS `overtime_limits` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `from` datetime NOT NULL,
+  `to` datetime NOT NULL,
+  `limit` decimal(8,2) NOT NULL DEFAULT '12.00',
+  `used` decimal(8,2) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
+
+
+/* aldrin added this / overtime excess / koufu humnan resource table */
+
+ALTER TABLE `overtime_excess` ADD `employee_id` INT NULL AFTER `overtime_id`;
+ALTER TABLE `overtime_excess`  ADD `attendance_id` INT NULL  AFTER `overtime_id`;
+
+/* aldrin added this 9/7/15 / adjustments  / koufu payrolls table */
+CREATE TABLE IF NOT EXISTS `adjustments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `amount` decimal(8,2) NOT NULL,
+  `payroll_date` datetime NOT NULL,
+  `reason` text NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modifiy_id` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+
+/* aldrin added this 9/8/15 / adjustments  / koufu payrolls table */
+
+ALTER TABLE `adjustments`  ADD `is_process` INT NOT NULL DEFAULT '0'  AFTER `reason`;
+
+ALTER TABLE `salary_reports`  ADD `basic_pay_month` DECIMAL(8,2) NULL ,  ADD `basic_pay_month_with_holiday` DECIMAL(8,2) NULL ;
+
+/* aldrin added this 9/14/15 / adjustments  / koufu payrolls table */
+ALTER TABLE `taxes`  ADD `tax_deduction_id` INT NULL  AFTER `type`;
+
+
+/*aldrin added this 9/16/15 koufu payroll */
+ALTER TABLE `salary_reports`  ADD `sss_employees` DECIMAL(8,2) NULL  AFTER `basic_pay_month_with_holiday`,  ADD `sss_employers` DECIMAL(8,2) NULL  AFTER `sss_employees`,  ADD `sss_compensation` DECIMAL(8,2) NOT NULL  AFTER `sss_employers`;
+ALTER TABLE `deductions`  ADD `paid_amount` DECIMAL(8,2) NOT NULL DEFAULT '0'  AFTER `amount`;

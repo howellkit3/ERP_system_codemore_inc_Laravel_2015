@@ -52,6 +52,9 @@
 				<thead>
 					<tr>
 						<td style="font-family: Calibri;">TO : </td>
+						<td style="font-family: Calibri;"> 
+							<?php echo !empty($employeeData['Employee']['full_name']) ? ucwords($employeeData['Employee']['full_name']) : ''; ?>
+						</td>
 						
 					</tr>
 
@@ -88,7 +91,22 @@
 						<td style="width:123px;font-family: Calibri;">Salary</td>
 						<td style="width:20px;">:</td>
 						<td style="width:200px;">
-						
+							<?php
+
+								switch ($employeeData['Salary']['employee_salary_type']) {
+									case 'daily':
+											echo !empty($employeeData['Salary']['basic_pay']) ? number_format($employeeData['Salary']['basic_pay'],2).' / per Day ' : '';
+										break;
+									case 'monthly':
+											
+											echo !empty($employeeData['Salary']['basic_pay']) ? number_format($employeeData['Salary']['basic_pay'],2).' / per Month ' : '';
+										break;
+									default:
+										# code...
+										break;
+								}
+
+							?>
 						</td>
 					</tr>
 
@@ -96,7 +114,7 @@
 						<td style="width:123px;font-family: Calibri;">Allowance</td>
 						<td style="width:20px;">:</td>
 						<td style="width:200px;">
-							
+							<?php echo !empty($employeeData['Salary']['allowance']) ? number_format($employeeData['Salary']['allowance'],2) : ''; ?>
 						</td>
 					</tr>
 				</thead>
@@ -108,7 +126,7 @@
 						<td style="width:230px;font-family: Calibri;">Conditional Temporary Productivity Allowance (CTPA)</td>
 						<td style="width:20px;">:</td>
 						<td style="width:200px;">
-							
+						<?php echo !empty($employeeData['Salary']['ctpa']) ? number_format($employeeData['Salary']['ctpa'],2) : ''; ?>	
 						</td>
 					</tr>
 
@@ -116,7 +134,7 @@
 						<td style="width:230px;font-family: Calibri;">Socio-Economic Allowance</td>
 						<td style="width:20px;">:</td>
 						<td style="width:200px;">
-							
+							<?php echo !empty($employeeData['Salary']['sea']) ? number_format($employeeData['Salary']['sea'],2) : ''; ?>
 						</td>
 					</tr>
 				</thead>
@@ -212,21 +230,35 @@
 
 			<br><br>
 
-			<div class="one">
+			<table style="width:100%; text-align:center;">
+				<tr>
+					<td style="width:100%; text-align:center;">
+							<b><p>APPROVED</p></b>
+						<div class="col-lg-12" style="width:100%;"><center>_________________________________</center></div>
+						<div style="font-size:12px; width:100%;" >KOU FU PACKAGING CORP.</div>
+					</td>
+					<td style="width:100%; text-align:center;">
+						<b><p>CONFORME</p></b>
+						<div class="col-lg-12" style="width:100%;"><center>_________________________________</center></div>
+						<div style="font-size:12px;width:100%;">PRINT NAME AND SIGN.</div>	
+					</td>
+				</tr>
+
+			</table>
+
+			<!-- <div class="one col-lg-6">
 				<div class="form-group">
-					<div class="col-lg-12"><center>_________________________________</center></div>
+					<div class="col-lg-10"><center>_________________________________</center></div>
 					<div style="font-size:12px;width:230px;">KOU FU PACKAGING CORP.</div>
-					
 				</div>
 			</div>
 
-			<div class="one">
+			<div class="one col-lg-6">
 				<div class="form-group">
 					<div class="col-lg-6"><center>__________________________________</center></div>
 					<div style="font-size:12px">PRINT NAME AND SIGN</div>
-					
 				</div>
-			</div>
+			</div> -->
 			
 			<div class="form-group">
 				<div class="col-lg-1" style="font-size:12px;width:230px;">Date : </div><br><br>
