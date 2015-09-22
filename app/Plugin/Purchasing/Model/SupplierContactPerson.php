@@ -116,12 +116,10 @@ class SupplierContactPerson extends AppModel {
 		$data['SupplierContactPerson']['created_by'] = $auth;
 		$data['SupplierContactPerson']['modified_by'] = $auth;
 		$data['SupplierContactPerson']['supplier_id'] = $supplierId;
-		
-    	if($this->save($data['SupplierContactPerson'])){
 
-            return $this->id;
+    	$this->save($data['SupplierContactPerson']);
+		return $this->id;
 
-        } 
 	}
 	
 }

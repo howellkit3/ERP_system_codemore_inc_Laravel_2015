@@ -43,12 +43,14 @@ class SuppliersController extends PurchasingAppController {
             	$this->request->data['Supplier']['uuid'] = time();
             	$this->request->data['Supplier']['created_by'] = $userData['User']['id'];
             	$this->request->data['Supplier']['modified_by'] = $userData['User']['id'];
+
             	if ($this->Supplier->saveAssociated($this->request->data)) {
             		
             		$supplierId = $this->Supplier->id;
-            	//	pr($this->request->data); exit;
+
             	 	$contactPersonId = $this->Supplier->SupplierContactPerson->saveContact($this->request->data['ContactPersonData'], $supplierId,$userData['User']['id']);
-            		$this->Supplier->Contact->saveContact($this->request->data['ContactPersonData'], $contactPersonId, $userData['User']['id']);
+            	   
+                	$this->Supplier->Contact->saveContact($this->request->data['ContactPersonData'], $contactPersonId, $userData['User']['id']);
             		//$this->Supplier->Address->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
             		$this->Supplier->Email->saveContact($this->request->data['ContactPersonData'], $contactPersonId,$userData['User']['id']);
 
