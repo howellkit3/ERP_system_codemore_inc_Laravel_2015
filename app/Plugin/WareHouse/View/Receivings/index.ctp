@@ -1,7 +1,6 @@
 <?php $this->Html->addCrumb('Ware House', array('controller' => 'ware_house_systems', 'action' => 'index')); ?>
 <div style="clear:both"></div>
-<?php echo $this->element('ware_house_option');?>
-
+<?php echo $this->element('ware_house_option');  ?>
 
 <div class="row">
     <div class="col-lg-12">

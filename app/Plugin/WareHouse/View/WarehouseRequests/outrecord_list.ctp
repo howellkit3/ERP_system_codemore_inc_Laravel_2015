@@ -11,17 +11,23 @@
 
                 <h2 class="pull-left"><b>Out-Record List</b></h2>
 
-                <div class="form-group col-md-3 pull-left">
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                <input placeholder="Date Filter" name="from_date" data="1" type="text" class="form-control myDateRange datepickerDateRange" id="datepickerDateRange" >
-                                            </div>
-                                        </div>
+                <?php echo $this->Form->create('OutRecord',array('url'=>(array('controller' => 'warehouse_requests','action' => 'print_deducted_summary'))));?>   
 
-                 <?php
+                <div class="form-group col-md-3 pull-left">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input placeholder="Date Filter" name="from_date" data="1" type="text" class="form-control myDateRange datepickerDateRange" id="datepickerDateRange" >
+                    </div>
+                </div>
+                <div class = "dateRange">
+                <!--  <?php
+
                      echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Export ', array('controller' => 'warehouse_requests', 'action' => 'print_deducted_summary'),array('class' =>'btn btn-primary pull-right','escape' => false));
-                       
-                    ?>
+                ?>
+
+ -->
+                </div>
+            <?php echo $this->Form->submit('Export',array('class' => 'btn btn-primary pull-right','div' => false,'name' => 'submit','value' => 'pending')); ?>
 
             </header>
             
@@ -73,8 +79,16 @@
         });
         $('.datepickerDateRange').daterangepicker();
 
-    
     });
+
+
+
+    $('.dateRange').click(function() {
+  // Check input( $( this ).val() ) for validity here
+        alert('d');
+
+    });
+   
 
 
 </script>

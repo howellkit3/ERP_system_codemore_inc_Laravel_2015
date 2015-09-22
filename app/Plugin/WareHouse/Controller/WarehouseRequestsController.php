@@ -730,9 +730,9 @@ class WarehouseRequestsController extends WareHouseAppController {
 
     }
 
-    public function print_deducted_summary($id_outrecord = null){
+    public function print_deducted_summary($outrecord = null){
 
-    	pr(':D'); exit;
+    	//pr($this->request->data); exit;
 
     }
 

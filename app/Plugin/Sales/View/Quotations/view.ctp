@@ -448,7 +448,8 @@
 					
 					<font size ="1">
 						Doc No.: KP-FR-SD1-002<br>
-						REV. No.: 0
+						REV. No.: 0<br>
+						Effective 17 Aug 2015
 					</font>
 					
 				</div>
