@@ -12,8 +12,6 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<header class="main-box-header clearfix">
-					
-                    
 					<h1 class="pull-left">
 						Create Order
 					</h1>
@@ -386,7 +384,7 @@
                                                 						'class' => 'form-control item_type ', 
                                                     					'label' => false, 
                                                     					'placeholder' => 'Unit Price',
-                                                    					//'readonly' => 'readonly',
+                                                    					'readonly' => 'readonly',
                                                     					'id' => 'unit_price',
                                                     					'value' => $quotationData['QuotationItemDetail'][0]['unit_price']
                                                     					));
@@ -400,6 +398,24 @@
                                                 //     					'id' => 'unit_price_proxy',
                                                 //     					'value' => number_format($quotationData['QuotationItemDetail'][0]['unit_price'],4)
                                                 //     					));
+                                            ?>
+										</div>
+									</div>
+
+									<div class="form-group">
+                                    	<label class="col-lg-2 control-label">Total</label>
+										<div class="col-lg-8">
+											<?php 
+                                              
+                                                echo $this->Form->input('QuotationItemDetail.total_price',array( 
+                                                						'type' => 'text',
+                                                						'class' => 'form-control item_type ', 
+                                                    					'label' => false, 
+                                                    					'placeholder' => 'Unit Price',
+                                                    					'disabled' => 'disabled',
+                                                    					'id' => 'unit_price_total',
+                                                    					'value' => '0.00'
+                                                    					));
                                             ?>
 										</div>
 									</div>

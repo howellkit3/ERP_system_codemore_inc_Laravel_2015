@@ -51,8 +51,29 @@ $( document ).ready(function() {
 			if ($this.val() > 0 && $this.val() < $orginalLimit) {
 				$(this).after('<label id="CompanyCompanyName-error" style="color:#FF0000" class="error-appended" for="CompanyCompanyName"> You cannnot enter less than ' + $orginalLimit + '</label>');
 				//$this.val($orginalLimit);
-			} 
-	});
+
+				//get total
+		
+
+				
+			}
+
+			if ($this.val() > 0 ) {
+				$unit_price = $('#unit_price').val();
+
+				$total_price = parseFloat($this.val()) *  parseFloat($unit_price);
+
+				$('#unit_price_total').val($total_price.toFixed(2)) 
+
+
+				if ($('#ClientOrderDeliverySchedule0DeliveryType').val() == 'Once') {
+
+					$('#totalQuantity').val($this.val());
+				}
+			}	
+
+			
+	}).trigger('keyup');
 
 	$("#QuotationIndexForm").submit(function(e) {
 
