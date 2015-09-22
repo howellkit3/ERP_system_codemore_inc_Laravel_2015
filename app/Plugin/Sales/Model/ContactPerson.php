@@ -145,22 +145,23 @@ class ContactPerson extends AppModel {
 		$contactPerson = array();
 
 		$this->create();
-		if (!empty($data)) {
 
+		if (!empty($data)) {
 		
 			foreach ($data[$this->name] as $key => $contactPersonValue) 
 			{
 				
-				if(!empty($contactPersonValue['firstname'] ) || !empty($contactPersonValue['lastname'])){
-					$contactPersonValue['id'] = !empty($contactPersonData[$this->name][$key]['id']) ? $contactPersonData[$this->name][$key]['id'] : '';
+				if (!empty($contactPersonValue['firstname'] ) || !empty($contactPersonValue['lastname'])) {
+					
+					$contactPersonValue['id'] = !empty($contactPersonValue['id']) ? $contactPersonValue['id'] : '';
 					$contactPersonValue['model'] = "Company";
 					$contactPersonValue['company_id'] = $company_id;
+				
 				}
-				
-					
-				
+
 			}
 		}
+
 
 		$this->save($contactPersonValue);
 		return $this->id;

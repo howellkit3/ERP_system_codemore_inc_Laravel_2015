@@ -35,6 +35,11 @@ function fieldReset($form, section)
         {
             $this.val('');
         }
+
+         if(type == 'hidden')
+        {
+            $this.val('');
+        }
          if(type == "checkbox")
         {
              $this.prop('checked', false);

@@ -89,9 +89,6 @@ class Contact extends AppModel {
 	{
 		$contactValue = array();
 
-
-		//pr($contactData	);
-
 			unset($contactData['ContactPerson']);
 			$this->create();
 			if (!empty($contactData['Contact'])) {
@@ -99,11 +96,12 @@ class Contact extends AppModel {
 
 				foreach ($contactData[$this->name] as $key => $contactValue) 
 				{
-					pr($contactData['Contact']);
+					//pr($contactData['Contact']);
 					$contactValue['id'] = !empty($contactValue['id']) ? $contactValue['id'] : '';
 					$contactValue['model'] = "ContactPerson";
 					$contactValue['foreign_key'] = $contact_id;
-					//$this->save($contactValue);
+					
+					$this->save($contactValue);
 				}
 				
 			}

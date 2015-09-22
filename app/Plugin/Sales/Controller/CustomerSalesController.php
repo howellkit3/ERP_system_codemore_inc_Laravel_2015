@@ -67,7 +67,7 @@ class CustomerSalesController extends SalesAppController {
 	    }else{
 	    	$noPermission = ' ';
 	    }
-	
+
 		$this->set(compact('company','paymentTermData','noPermission'));
 		
 	}
@@ -100,12 +100,13 @@ class CustomerSalesController extends SalesAppController {
             	$this->request->data['Company']['created_by'] = $userData['User']['id'];
             	
             	$this->request->data['Company']['modified_by'] = $userData['User']['id'];
+
             	
             	if ($this->Company->saveAssociated($this->request->data)) {
 
             		if (!empty($this->request->data['ContactPersonData'])) {
 
-            					
+            						
             				foreach ($this->request->data['ContactPersonData'] as $key => $contacts) {
 
             						//pr($contacts);
@@ -171,11 +172,19 @@ class CustomerSalesController extends SalesAppController {
 
             	if ($this->Company->saveAssociated($this->request->data)) {
 
-					$contactPersonId = $this->Company->ContactPerson->saveContact($this->request->data['ContactPersonData'], $this->Company->id);
-					
-					$this->Company->Contact->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
-            		//$this->Company->Address->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
-            		$this->Company->Email->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
+            		$lastId =  $this->Company->id;
+
+			    if (!empty($this->request->data['ContactPersonData'])) {
+										
+					foreach ($this->request->data['ContactPersonData'] as $key => $contacts) {
+
+						$contactPersonId = $this->Company->ContactPerson->saveContactMultiple($contacts, $lastId );
+
+						$this->Company->Contact->saveContactMultiple($contacts, $contactPersonId);
+
+						$this->Company->Email->saveContactMultiple($contacts, $contactPersonId);	
+					}
+				}		
 
 					if($this->request->is('ajax')){
  							echo $this->Company->getLastInsertID();
@@ -187,7 +196,7 @@ class CustomerSalesController extends SalesAppController {
 	                    array('controller' => 'customer_sales', 'action' => 'index')
 	                );
                   
-	            }else{
+	            } else {
 
 	            	$this->Session->setFlash(
                         __('The invalid data. Please, try again.')

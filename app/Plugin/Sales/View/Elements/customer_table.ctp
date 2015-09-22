@@ -17,11 +17,17 @@ foreach ($company as $customerlist): ?>
                 <?php 
                     if(!empty($customerlist['ContactPerson'])) { 
                         
-                        echo ucfirst($customerlist['ContactPerson'][0]['firstname']);  
-                        echo '&nbsp';
-                        echo ucfirst($customerlist['ContactPerson'][0]['middlename']); 
-                        echo '&nbsp';
-                        echo ucfirst($customerlist['ContactPerson'][0]['lastname']); 
+                        foreach ($customerlist['ContactPerson'] as $key => $value) {
+                                echo ucfirst($value['firstname']);  
+                                echo '&nbsp';
+                                echo ucfirst($value['middlename']); 
+                                echo '&nbsp';
+                                echo ucfirst($value['lastname']); 
+                                if (count($customerlist['ContactPerson']) > 1) {
+                                    echo "<br>";
+                                }
+                            }    
+                       
                     } 
                 ?>
                 </div>

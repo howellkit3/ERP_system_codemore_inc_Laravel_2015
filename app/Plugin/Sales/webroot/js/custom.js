@@ -114,11 +114,13 @@ jQuery(function($) {
 });
 function cloneData(whatSection, thisElement)
 {
+
+  
     
     var parentSection = $(thisElement).parents('.' + whatSection);
 
     var data = $(parentSection).first().clone();
-    console.log(data);
+  
     data = fieldReset(data, whatSection);
     $('.' + whatSection).last().after(data);
 
@@ -132,6 +134,12 @@ function fieldReset($form, section)
             nameProp = $this.prop('name'),
             newIndex = count;
             type = $this.prop('type');
+
+       if(type == "hidden")
+        {
+            $this.val('');
+        }
+
         if(type == "text")
         {
             $this.val('');

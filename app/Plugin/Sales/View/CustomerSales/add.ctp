@@ -288,7 +288,7 @@
             </div>
         </div>
     </section>
-     <section class="cloneMe1 contactPerson_section">
+ <section class="cloneMe1 contactPerson_section">
     <div class="row">
         <div class="col-lg-12">
             <div class="main-box">
@@ -416,7 +416,7 @@
 
         </div>
     </div>
-    </section>
+</section>
 
 
     <div class="row">
