@@ -12,7 +12,7 @@
 ?>
 <div id="CompanyTable">
 <?php echo $this->element('sales_option');?><br><br>
-        
+        <?php echo phpversion()  ?>
 <div class="row">
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
