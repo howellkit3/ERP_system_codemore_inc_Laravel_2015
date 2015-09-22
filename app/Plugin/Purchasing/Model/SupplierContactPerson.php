@@ -61,18 +61,18 @@ class SupplierContactPerson extends AppModel {
 				'message' => 'Required fields.',
 			),
 		),
-		'lastname' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				'message' => 'Required fields.',
-			),
-		),	
-		'position' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				'message' => 'Required fields.',
-			),
-		)	
+		// 'lastname' => array(
+		// 	'notEmpty' => array(
+		// 		'rule' => array('notEmpty'),
+		// 		'message' => 'Required fields.',
+		// 	),
+		// ),	
+		// 'position' => array(
+		// 	'notEmpty' => array(
+		// 		'rule' => array('notEmpty'),
+		// 		'message' => 'Required fields.',
+		// 	),
+		// )	
 	
 	);
 
@@ -91,34 +91,45 @@ class SupplierContactPerson extends AppModel {
 	
 	public function saveContact($data, $supplier_id,$auth) {
 
+
+			
 		foreach ($data as $key => $contactPersonData)
 		{
-			foreach ($contactPersonData as $key => $contactPersonValue) 
+
+		
+			foreach ($contactPersonData['SupplierContactPerson'] as $innerkey => $contactPersonValue) 
 			{
-				 
+				 	
 				$contactPersonValue['model'] = "Supplier";
 				$contactPersonValue['supplier_id'] = $supplier_id;
 				$contactPersonValue['created_by'] = $auth;
 				$contactPersonValue['modified_by'] = $auth;	
-				
+						
 				$this->save($contactPersonValue);
 				
 			}
 
 			return $this->id;
 		}
+
 		
 	}
 
 	public function saveContactPerson($data = null, $supplierId = null, $auth = null){
 		
 		$this->create();
+
+
+		if (!empty($data['SupplierContactPerson']['first_name'])) {
+
 		$data['SupplierContactPerson']['created_by'] = $auth;
 		$data['SupplierContactPerson']['modified_by'] = $auth;
 		$data['SupplierContactPerson']['supplier_id'] = $supplierId;
 
     	$this->save($data['SupplierContactPerson']);
 		return $this->id;
+		}
+		
 
 	}
 	

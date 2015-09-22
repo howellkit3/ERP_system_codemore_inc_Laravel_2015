@@ -37,18 +37,24 @@ class Contact extends AppModel {
 	
 	public function saveContact($data = null , $contact_id = null)
 	{
+
 		foreach ($data as $key => $contactData)
 		{
 			$this->create();
 			foreach ($contactData[$this->name] as $key => $contactValue) 
 			{
-				$contactValue['model'] = "ContactPerson";
-				$contactValue['foreign_key'] = $contact_id;	
+					if (!empty($contactValue['firstname'])) {
+
+						$contactValue['model'] = "ContactPerson";
+						$contactValue['foreign_key'] = $contact_id;	
+					}
 				
 			}
 			//pr($contactValue);
-			$this->saveAll($contactValue);
+			
 		}
+
+		$this->saveAll($contactValue);
 		
 	}
 

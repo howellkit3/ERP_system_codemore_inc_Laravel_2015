@@ -115,13 +115,17 @@ class SuppliersController extends PurchasingAppController {
 
         	if ($this->Supplier->saveAssociated($this->request->data)) {
 
+               //    pr($this->request->data['ContactPersonData']);
+
         		$contactPersonId = $this->Supplier->SupplierContactPerson->saveContact($this->request->data['ContactPersonData'], $this->Supplier->id,$userData['User']['id']);
+        	     
+                if ($contactPersonId) {
+
+                    $this->Supplier->Contact->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
+                    //$this->Supplier->Address->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
+                    $this->Supplier->Email->saveContact($this->request->data['ContactPersonData'], $contactPersonId);  
+                }
         		
-        		$this->Supplier->Contact->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
-        		//$this->Supplier->Address->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
-        		$this->Supplier->Email->saveContact($this->request->data['ContactPersonData'], $contactPersonId);
-
-
 				$this->Session->setFlash('Edit Supplier Successfully','success');
 
             	return $this->redirect(array('action' => 'index'));

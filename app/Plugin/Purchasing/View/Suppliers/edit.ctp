@@ -540,9 +540,7 @@
                 </section>
 
         <?php endif; ?>
-                <?php
-
-                 if (!empty($this->request->data['ContactPersonData'])) : ?>
+                <?php if (!empty($this->request->data['ContactPersonData'])) : ?>
                 <?php foreach ($this->request->data['ContactPersonData'] as $key => $value) { 
                                     
                     echo $this->Form->input('ContactPersonData.'.$key.'.ContactPerson.'.$key.'.id', array('class' => 'form-control item_type',
@@ -565,8 +563,9 @@
                                                 <label for="inputPassword1" class="col-lg-2 control-label">Firstname</label>
                                                 <div class="col-lg-9">
                                                     <?php 
-                                                        echo $this->Form->input('ContactPersonData.0.ContactPerson.0.firstname', array('type' => 'hidden'));
-                                                        echo $this->Form->input('ContactPersonData.0.ContactPerson.0.firstname', array('class' => 'form-control','label' => false,'value' => !empty($value['SupplierContactPerson']['firstname']) ? $value['SupplierContactPerson']['firstname'] : ''));
+                                                        echo $this->Form->input('ContactPersonData.'.$key.'.ContactPerson.'.$key.'.id', array('type' => 'hidden',
+                                                            'value' => !empty($value['SupplierContactPerson']['id']) ? $value['SupplierContactPerson']['id'] : ''));
+                                                        echo $this->Form->input('ContactPersonData.'.$key.'.ContactPerson.'.$key.'.firstname', array('class' => 'form-control','label' => false,'value' => !empty($value['SupplierContactPerson']['firstname']) ? $value['SupplierContactPerson']['firstname'] : ''));
                                                     ?>
                                                 </div>
                                             </div>
@@ -575,7 +574,7 @@
                                                 <label for="inputPassword1" class="col-lg-2 control-label">Middlename</label>
                                                 <div class="col-lg-9">
                                                     <?php 
-                                                        echo $this->Form->input('ContactPersonData.0.ContactPerson.0.middlename', array('class' => 'form-control','label' => false,'value' => !empty($value['SupplierContactPerson']['middlename']) ? $value['SupplierContactPerson']['middlename'] : ''));
+                                                        echo $this->Form->input('ContactPersonData.'.$key.'.ContactPerson.'.$key.'.middlename', array('class' => 'form-control','label' => false,'value' => !empty($value['SupplierContactPerson']['middlename']) ? $value['SupplierContactPerson']['middlename'] : ''));
                                                     ?>
                                                 </div>
                                             </div>
@@ -584,7 +583,7 @@
                                                 <label for="inputPassword1" class="col-lg-2 control-label">Lastname</label>
                                                 <div class="col-lg-9">
                                                     <?php 
-                                                        echo $this->Form->input('ContactPersonData.0.ContactPerson.0.lastname', array('class' => 'form-control','label' => false,'value' => !empty($value['SupplierContactPerson']['lastname']) ? $value['SupplierContactPerson']['lastname'] : ''));
+                                                        echo $this->Form->input('ContactPersonData.'.$key.'.ContactPerson.'.$key.'.lastname', array('class' => 'form-control','label' => false,'value' => !empty($value['SupplierContactPerson']['lastname']) ? $value['SupplierContactPerson']['lastname'] : ''));
                                                     ?>
                                                 </div>
                                             </div>
@@ -593,7 +592,7 @@
                                                 <label for="inputPassword1" class="col-lg-2 control-label">Position</label>
                                                 <div class="col-lg-9">
                                                     <?php 
-                                                        echo $this->Form->input('ContactPersonData.0.ContactPerson.0.position', array('class' => 'form-control','label' => false,'value' => !empty($value['SupplierContactPerson']['position']) ? $value['SupplierContactPerson']['position'] : ''));
+                                                        echo $this->Form->input('ContactPersonData.'.$key.'.ContactPerson.'.$key.'.position', array('class' => 'form-control','label' => false,'value' => !empty($value['SupplierContactPerson']['position']) ? $value['SupplierContactPerson']['position'] : ''));
                                                     ?>
                                                 </div>
                                             </div>
