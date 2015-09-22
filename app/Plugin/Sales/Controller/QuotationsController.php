@@ -1216,6 +1216,10 @@ class QuotationsController extends SalesAppController {
     	
     	$this->loadModel('Sales.Company');
 
+    	$this->loadModel('RolesPermission');
+
+    	$this->loadModel('User');
+
 		$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail','ProductDetail', 'Product','Company'));
 
 		$quotationData = $this->Quotation->find('all',array(
@@ -1238,8 +1242,20 @@ class QuotationsController extends SalesAppController {
 											array('Product.name LIKE' => '%' . $hint . '%')
 											)
 										),
-									'limit' => 10
-									));
+									'limit' => 10,
+									'group' => 'Quotation.id'
+								)
+		);
+
+		$userData = $this->User->read(null,$this->Session->read('Auth.User.id'));
+
+		$rolesPermissionData = $this->RolesPermission->find('list', array(
+														'fields' => array('RolesPermission.id', 'RolesPermission.permission_id'),
+														'conditions' => array( 
+															'RolesPermission.role_id' => $userData['User']['role_id'])
+													));
+
+
 		// $limit = 10;
 
 		// $conditions = array();
@@ -1298,7 +1314,7 @@ class QuotationsController extends SalesAppController {
             Cache::write('inquiryId', $inquiryId);
        // }
 		
-		$this->set(compact('companyData','quotationData','inquiryId','salesStatus'));
+		$this->set(compact('companyData','quotationData','inquiryId','salesStatus','rolesPermissionData'));
 		//pr($quotationData);exit();
 		
 		if ($hint == ' ') {
