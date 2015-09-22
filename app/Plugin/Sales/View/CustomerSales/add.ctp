@@ -288,7 +288,7 @@
             </div>
         </div>
     </section>
-
+     <section class="cloneMe1 contactPerson_section">
     <div class="row">
         <div class="col-lg-12">
             <div class="main-box">
@@ -331,14 +331,27 @@
                                         echo $this->Form->input('ContactPersonData.0.ContactPerson.0.position', array('class' => 'form-control','label' => false));
                                     ?>
                                 </div>
+                                
                             </div>
+                            
+                            <!-- <div class="form-group">
+                            <label for="inputPassword1" class="col-lg-2 control-label"></label>
+                                <div class="col-lg-9">
+                                        <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneContactData('contactPerson_section', this)"><i class="fa fa-plus"></i></button>
+                                        <button type="button" class="remove-field btn btn-danger remove" onclick="removeClone('contactPerson_section')"><i class="fa fa-minus"></i> </button>
+                                    </div>
+                            </div> -->
+
+
+                                    
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+    </section>
+    
     <section class="cloneMe1 contactPersonNumber_section">
         <div class="row">
             <div class="col-lg-12">

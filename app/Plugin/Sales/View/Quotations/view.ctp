@@ -136,7 +136,7 @@
 				<br>
 				<header class="main-box-header clearfix" >
 					<img src="<?php echo Router::url('/', true) ?>img/koufu_logo.jpg" alt="logo" style="width:240px;height:50px;padding-bottom:10;"> <br><br>
-					<label style="padding-bottom:0px; font-size:12px;">Lot 4-5 Blk 3 Ph2 Mountview Industrial Complex</label> <br>
+					<label style="padding-bottom:0px; font-size:12px;">Lot 3-4 Blk 4 Mountview Industrial Complex</label> <br>
 					<label style="padding-bottom:0px; font-size:12px;">Brgy. Bancal Carmona Cavite</label><br>
 					<label style="padding-bottom:0px; font-size:12px;">Tel: +632-5844928; &nbsp; +6346-4301576 &nbsp; Fax: +632-5844952</label><br><br>
 						
@@ -415,30 +415,32 @@
 				<div class="form-group">
 					<div class="col-lg-1"></div>
 					<div class="col-lg-2" style = "padding-bottom:0px;">
+						<div class="approved" style="margin: auto; text-align: left; width: 200px; float:left">
 
 						<?php echo ucfirst($user['User']['first_name']) ?>&nbsp;
 						<?php echo ucfirst($user['User']['last_name'])?>
 						<hr style="height:1px; border:none; text-align: left; width: 200px; color:#b2b2b2; background-color:#b2b2b2;">
 					</div>
+					</div>
 
 					<div class="col-lg-2"></div>
 					<div class="col-lg-6" style = " padding-bottom:0px;">
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						
+						<div class="approved" style="margin: auto; text-align: left; width: 200px;">
 							<?php if(!empty($approvedUser)){ ?>
-							<?php echo ucfirst($approvedUser['User']['first_name']);
+							<?php 
+							echo 'Carryll';//ucfirst($approvedUser['User']['first_name']);
 							echo '&nbsp';
-						 	echo ucfirst($approvedUser['User']['last_name']);
+						 	echo 'Yu';//ucfirst($approvedUser['User']['last_name']);
 
 							}else{
 								echo "Note: Not yet approved. ";
 							} ?>
 
 							<?php if(!empty($approvedUser)){  ?>
-						<hr style="height:1px; border:none; text-align: left; width: 200px; color:#b2b2b2; background-color:#b2b2b2;">
+								<hr style="height:1px; border:none; text-align: left; width: 200px; color:#b2b2b2; background-color:#b2b2b2;">
+								CEO
 							<?php  }?>
+						</div>	
 					</div>
 				</div>
 

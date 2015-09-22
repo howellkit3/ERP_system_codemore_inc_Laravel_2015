@@ -9,7 +9,7 @@
 			<center>
 				<header class="main-box-header clearfix" >
 					<img src="<?php echo Router::url('/', true) ?>img/koufu_logo.jpg" alt="logo" style="width:225px;height:40px;padding-bottom:10;"> <br>
-					<label style="padding-bottom:8px; font-size:14px;">Lot 4-5 Blk 3 Ph2 Mountview Industrial Complex</label> <br>
+					<label style="padding-bottom:8px; font-size:14px;">Lot 3-4 Blk 4 Mountview Industrial Complex</label> <br>
 					<label style="padding-bottom:8px; font-size:14px;">Brgy. Bancal Carmona Cavite</label><br>
 					<label style="padding-bottom:8px; font-size:14px;">Tel: +632-5844928; &nbsp; +6346-4301576 &nbsp; Fax: +632-5844952</label><br><br>
 						
@@ -302,13 +302,13 @@
 
 						<td style="width:200px;">
 							<?php 
-
-								echo ucfirst($approvedUser['User']['first_name']);
+								echo 'Carryll';//ucfirst($approvedUser['User']['first_name']);
 								echo ' ';
-							 	echo ucfirst($approvedUser['User']['last_name']);
+							 	echo 'Yu';//ucfirst($approvedUser['User']['last_name']);
 
 							?>
 							<hr style="height:1px; border:none; text-align: left;  width: 200px; color:#b2b2b2; background-color:#b2b2b2;">
+							CEO
 						</td>
 					</tr>
 				
