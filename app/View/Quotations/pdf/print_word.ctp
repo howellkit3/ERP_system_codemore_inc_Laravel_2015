@@ -316,8 +316,8 @@
 
 			<div style="display:inline-block; vertical-align: bottom;text-align:left; margin-left:30px;">
 					<font size ="9px">
-						Doc No.: KFP-FR-MKT-07<br>
-						REV. No.: 01	
+						Doc No.: KP-FR-SD1-002<br>
+						REV. No.: 0
 					</font>				
 			</div>
 			<br><br>

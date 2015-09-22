@@ -447,8 +447,8 @@
 				<div style=" text-align:left; margin-left:90px;">
 					
 					<font size ="1">
-						Doc No.: KFP-FR-MKT-07<br>
-						REV. No.: 01
+						Doc No.: KP-FR-SD1-002<br>
+						REV. No.: 0
 					</font>
 					
 				</div>
