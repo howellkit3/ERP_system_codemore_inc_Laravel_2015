@@ -26,7 +26,11 @@
 					        	'action' => 'excel_ticket',$productData['Product']['uuid'],$ticketData['JobTicket']['uuid'],$clientOrderId),
 					        	array('class' =>'btn btn-info pull-right '.$noPermissionSales,'escape' => false));
 						?>
+
+						<!-- <a href="#" class="btn btn-primary mrg-b-lg pull-right <?php echo $noPermissionSales; ?>"> <i class="fa fa-file"></i> Export </a> -->
+
 	                    <a data-toggle="modal" href="#myModalRemarks" class="btn btn-primary mrg-b-lg pull-right <?php echo $noPermissionSales; ?>"><i class="fa fa-pencil fa-lg"></i> <?php echo $buttonName ;?></a>
+
                     </div>
 				</header>
 			</div>
@@ -102,7 +106,12 @@
 									?>
 								</div>
 								<div class="col-lg-4">
-									Delivery Date : <?php echo date('M d, Y', strtotime($delData['ClientOrderDeliverySchedule'][0]['schedule'])); ?>
+									Delivery Date : <?php 
+
+									if (!empty($delData['ClientOrderDeliverySchedule'][0]['schedule'])) {
+										echo date('M d, Y', strtotime($delData['ClientOrderDeliverySchedule'][0]['schedule'])); 
+									}
+									?>
 								</div>
 							</div>
 
