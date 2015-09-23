@@ -255,7 +255,7 @@
 
 		                                        	</div>
 
-		                                        	<button class="btn btn-success upload-image"> Uplad Photo</button>
+		                                        	<button class="btn btn-success upload-image"> Upload Photo</button>
 		                                     	</div>
 
 

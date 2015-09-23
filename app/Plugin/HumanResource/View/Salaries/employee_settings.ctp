@@ -84,7 +84,7 @@
 				                                     <div class="form-group">
 				                                        <label for="inputEmail1" class="col-lg-12 control-label strong">Employee #</label>
 					                                      <div class="col-lg-12 value"> 
-					                                       <?php echo rand(1000,80000);  ?>
+					                                      <?php echo !empty($employee['Employee']['code']) ? $employee['Employee']['code'] : ''; //rand(1000,80000);  ?>
 					                                       </div>
 				                                     </div>
 
