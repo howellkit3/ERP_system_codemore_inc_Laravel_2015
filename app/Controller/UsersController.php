@@ -1,6 +1,8 @@
 <?php
 App::uses('AppController', 'Controller');
 
+App::uses('ImageUploader', 'Vendor');
+
 class UsersController extends AppController
 {
     
@@ -99,5 +101,59 @@ class UsersController extends AppController
 	}
 	public function logout() {
         $this->redirect($this->Auth->logout());
+    }
+
+
+    public function profile_settings() {
+
+        $this->loadModel('User');
+
+        $userData = $this->Session->read('Auth.User');
+
+        if (!empty($this->request->data)) {
+               if (!empty($this->request->data['User']['file']['name'])) {
+
+                    $file = $this->request->data['User']['file'];
+                    
+                    $uploader = new ImageUploader;
+
+                    if ($this->request->data['User']['file']['error'] == 0 ) {
+                       $time = time();
+                       $file['name'] = $uploader->resize($file, $time,'users');
+                        
+                    }
+               
+                    $this->request->data['User']['image'] = $file['name'];
+                }
+
+
+                if ($this->User->save($this->request->data)) {
+
+                 
+                    $user = $this->User->read(null,$userData['id']);
+
+                    $this->Auth->login($user['User']);
+
+                    $this->Session->setFlash(__('Profile successfully update.'));
+
+                    $this->redirect(
+                        array('controller' => 'users', 'action' => 'profile_settings')
+                    );
+
+                } else {
+
+                    $this->Session->setFlash(
+                        __('The invalid data. Please, try again.')
+                    );
+                }
+        }
+
+        if (!empty($userData)) {
+            $this->User->bind(array('Role'));
+            $userData = $this->User->read(null,$userData['id']);
+
+        }
+        
+        $this->set(compact('userData'));
     }
 }

@@ -3,8 +3,8 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
-
-            <header class="main-box-header clearfix">
+		
+			<header class="main-box-header clearfix">
                 <h2 class="pull-left"><b>Sales Invoice List</b></h2>
                 <div class="filter-block pull-right">
                    <?php
@@ -16,8 +16,7 @@
                                 'escape' => false));
 
                     ?> 
-                  
-                   <br><br>
+                  <br><br>
                </div>
             </header>
              

@@ -154,7 +154,6 @@ class EmployeesController  extends HumanResourceAppController {
                     if ($this->request->data['Employee']['file']['error'] == 0 ) {
                        $time = time();
                        $file['name'] = $uploader->resize($file, $time,'employee');
-                        
                     }
                
                 	$data['Employee']['image'] = $file['name'];
