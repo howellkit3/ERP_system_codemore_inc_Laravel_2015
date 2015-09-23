@@ -39,6 +39,21 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
            
         </li>
 
+        <!-- <li class="dropdown hidden-xs active">
+           <?php $page =($active_page == 'consumables' && $active_action == 'index') ? 'active tab' : '' ?>
+            <?php echo $this->Html->link("<span class='count'>Consumables Item</span>", array('controller' => 'consumables', 'action' => 'xml_get_current_byte_index(parser)'),array('escape' => false,'class' => 'btn '.$page )); ?>
+           
+        </li>
+
+
+         <li class="dropdown hidden-xs active">
+           <?php $page =($active_page == 'warehouse_systems' && $active_action == 'settings') ? 'active tab' : '' ?>
+            <?php echo $this->Html->link("<span class='count'>Settings</span>", array('controller' => 'warehouse_systems', 'action' => 'settings'),array('escape' => false,'class' => 'btn '.$page )); ?>
+           
+        </li> -->
+
+        
+
     </ul>
 </div>
 <br><br>

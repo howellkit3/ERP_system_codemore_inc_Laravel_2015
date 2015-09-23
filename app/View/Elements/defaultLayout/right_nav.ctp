@@ -2,7 +2,25 @@
 	<section id="col-left" class="col-left-nano">
 		<div id="col-left-inner" class="col-left-nano-content">
 			<div id="user-left-box" class="clearfix hidden-sm hidden-xs dropdown profile2-dropdown">
-			<?php echo $this->Html->image('samples/icon-user-default.png',array('alt' => 'scarlet-159'));  ?>
+
+				<?php 
+					$serverPath = $this->Html->url('/',true);
+
+				  if (!empty($userData['User']['image'])) {
+	
+			                            $background =  $serverPath.'img/uploads/users/'.$userData['User']['image'];	
+			                            $style = 'background:url('.$background.')';
+	                 }  else {
+
+	                 		$style = "background:url('".$serverPath ."img/samples/icon-user-default.png'); background-size:100%";
+
+	                 }
+
+				?>
+				<div class="image_profile" style="<?php echo $style; ?>; min-width:70px;border-radius: 8px;height: 100px; max-width: 100px;">
+
+					<?php //echo $this->Html->image('',array('alt' => 'scarlet-159'));  ?>	
+				</div>
 				<div class="user-box">
 					<span class="name">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -73,7 +91,8 @@
 
 						<?php  if($userData['User']['role_id'] == 1 OR $userData['User']['role_id'] == 2 OR $userData['User']['role_id'] == 4 OR $userData['User']['role_id'] == 7){
 
-	 						 echo $this->Html->link( " <i class='fa fa-archive'></i> <span>Ware House</span>",   array('controller' =>'receivings','action'=>'index','plugin' => 'ware_house'),array('escape' => false) );
+	 						  echo $this->Html->link( " <i class='fa fa-archive'></i> <span>Ware House</span>",   array('controller' =>'receivings','action'=>'index','plugin' => 'ware_house'),array('escape' => false) );
+								// echo $this->Html->link( " <i class='fa fa-archive'></i> <span>Ware House</span>",   array('controller' =>'ware_house_systems','action'=>'dashboard','plugin' => 'ware_house'),array('escape' => false) );
 	 						}
 	 					?>
 					</li>

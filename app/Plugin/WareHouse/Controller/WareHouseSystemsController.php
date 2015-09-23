@@ -6,6 +6,10 @@ class WareHouseSystemsController extends WareHouseAppController {
 	public $useDbConfig = array('koufu_warehouse');
 	public $uses = array('WareHouse.CustomField');
 
+	public function dashboard() {
+
+	}
+	
 	public function beforeFilter() {
 
         parent::beforeFilter();
@@ -20,8 +24,14 @@ class WareHouseSystemsController extends WareHouseAppController {
 
 	public function index(){
 
-		
+	
+	}
+	
+	public function settings() {
 
 	}
 
+	public function departments() {
+
+	}
 }

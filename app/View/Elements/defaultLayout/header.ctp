@@ -252,6 +252,13 @@
 			 					?>
 			 				</li>
 			 			<?php } ?>
+
+
+						<li>
+							<?php
+		 						echo $this->Html->link( "<i class='fa fa-user'></i> Profile Settings ",   array('controller' =>'users','action'=>'profile_settings','plugin' => null),array('escape' => false) );
+		 					?>
+						</li>
 						<!-- <li><a href="#"><i class="fa fa-envelope-o"></i>Messages</a></li> -->
 						<li>
 							<?php
