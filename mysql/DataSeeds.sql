@@ -2514,6 +2514,8 @@ insert  into `permissions`(`id`,`name`,`created_by`,`updated_by`,`created`,`modi
 
 insert  into `roles`(`id`,`name`,`created_by`,`updated_by`,`created`,`modified`) values (1,'Super Admin',2,2,'2015-05-12 10:20:35','2015-05-12 11:26:22'),(2,'Administrator',2,2,'2015-05-12 10:21:48','2015-05-12 11:26:23'),(3,'Sales',2,2,'2015-05-12 10:22:01','2015-05-12 11:26:23'),(4,'Guest',2,2,'2015-05-12 10:22:22','2015-05-12 11:26:25'),(5,'Staff',2,2,'2015-05-12 10:22:22','2015-05-12 11:26:25');
 
+insert  into `roles`(`id`,`name`,`created_by`,`updated_by`,`created`,`modified`) values (NULL,'Encoder',2,2,'2015-05-12 10:22:22','2015-05-12 11:26:25');
+
 
 /* addedd aug 12 2015 */
 INSERT INTO `contracts` (`id`, `name`, `description`, `created_by`, `modified_by`, `created`, `modified`)
