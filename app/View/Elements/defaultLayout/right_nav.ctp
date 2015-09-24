@@ -9,7 +9,7 @@
 				  if (!empty($userData['User']['image'])) {
 	
 			                            $background =  $serverPath.'img/uploads/users/'.$userData['User']['image'];	
-			                            $style = 'background:url('.$background.')';
+			                            $style = 'background:url('.$background.'); background-size:cover;bacground-position:center';
 	                 }  else {
 
 	                 		$style = "background:url('".$serverPath ."img/samples/icon-user-default.png'); background-size:100%";
