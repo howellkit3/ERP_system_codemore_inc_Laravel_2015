@@ -2559,3 +2559,7 @@ INSERT INTO `taxes_deductions` (`id`, `type`, `tax_1`, `tax_1_percent`, `tax_2`,
 (1, 'monthly', '0.00', '0%', '0.00', '5%', '20.83', '10%', '104.17', '15%', '354.17', '20%', '937.50', '25%', '2.00', '30%', '5.00', '32%', '2015-08-26 12:00:00', '2015-08-26 12:00:00', 1, 1),
 
 ;
+
+
+/* 9/24/15 aldrin added this koufu_warehouse*/
+insert  into `item_categories`(`id`,`name`,`description`,`created_by`,`modified_by`,`created`,`modified`) values (1,'Consumables','consumemables',1,1,NULL,NULL),(2,'Raw Materials',NULL,NULL,NULL,NULL,NULL),(3,'Finished Goods',NULL,NULL,NULL,NULL,NULL);
