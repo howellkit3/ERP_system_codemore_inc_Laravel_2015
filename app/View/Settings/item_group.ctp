@@ -1,4 +1,14 @@
-<?php echo $this->element('setting_option');?><br><br>
+<?php 
+
+
+if($indicator == "purchasing"){
+		 echo $this->element('Purchasing.purchasings_option');?><br><br> <?php 
+	}else{
+
+	 echo $this->element('setting_option');?><br><br><?php
+	 $indicator == "setting";
+} ?>
+
 <?php echo $this->Html->script(array(
 									'AddSubstrate',
 									'AddGeneralItem',
@@ -13,7 +23,7 @@
 
 $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : 'tab-general-items';
 ?>
-
+<?php //pr($indicator); exit; ?>
 <div class="row">
 	<div class="col-lg-12">
 		<div class="main-box clearfix">
@@ -64,6 +74,17 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																		                            'required' => 'required',
 																		                            'placeholder' => 'Name General Item'));
 																		?>
+
+																		<?php 
+																		echo $this->Form->input('GeneralItem.indicator', array(
+																									'class' => 'form-control ',
+																		                            'label' => false,
+																		                            'type' => 'hidden',
+																		                            'value' => $indicator));
+																		?>
+
+
+																	
 																</div>
 															</div>
 
@@ -246,6 +267,14 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 													                            'label' => false,
 													                            'placeholder' => 'Name General Item'));
 																			?>
+
+																			<?php  echo $this->Form->input('indicator', array( 
+																						'class' => 'form-control', 
+																						'type' => 'hidden',
+																    					'label' => false,
+																    					'value' => $indicator
+																    					));
+																            ?>
 																	</div>
 																</div>
 
@@ -435,6 +464,14 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 														                            'label' => false,
 														                            'placeholder' => 'Compound Substrate Name'));
 																			?>
+
+																			<?php  echo $this->Form->input('indicator', array( 
+																						'class' => 'form-control', 
+																						'type' => 'hidden',
+																    					'label' => false,
+																    					'value' => $indicator
+																    					));
+																                ?>
 																	</div>
 																</div>
 
@@ -624,6 +661,14 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 													                            'label' => false,
 													                            'placeholder' => 'Corrugated Paper Name'));
 																			?>
+
+																			<?php  echo $this->Form->input('indicator', array( 
+																						'class' => 'form-control', 
+																						'type' => 'hidden',
+																    					'label' => false,
+																    					'value' => $indicator
+																    					));
+																                ?>
 																	</div>
 																</div>
 
