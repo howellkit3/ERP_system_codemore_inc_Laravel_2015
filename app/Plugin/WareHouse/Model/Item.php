@@ -13,6 +13,21 @@ class Item extends AppModel {
     
   	public $name = 'Item';
 
-  
+    public $actsAs = array('Containable');
+
+	public function bind($model = array('Group')){
+
+	     $this->bindModel(array(
+	     'belongsTo' => array(
+	       'ItemCategory' => array(
+	          'className' => 'WareHouse.ItemCategory',
+	          'foreignKey' => 'category_type_id'
+	        ),
+	      )
+
+	    ), false);
+
+	     $this->contain($model);
+	  }
 
 }

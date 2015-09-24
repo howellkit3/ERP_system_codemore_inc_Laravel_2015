@@ -14,4 +14,16 @@ class Department extends AppModel {
   	public $name = 'Department';
 
 
+  	public function saveDepartment($supplierData = null, $auth = null){
+		
+		$this->create();
+
+        $supplierData['created_by'] = $auth;
+        $supplierData['modified_by'] = $auth;
+
+    	if($this->save($supplierData)){
+    		return $this->id;
+    	}
+	} 
+
 }

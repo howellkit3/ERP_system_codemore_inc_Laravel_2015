@@ -2024,3 +2024,32 @@ ALTER TABLE `taxes`  ADD `tax_deduction_id` INT NULL  AFTER `type`;
 /*aldrin added this 9/16/15 koufu payroll */
 ALTER TABLE `salary_reports`  ADD `sss_employees` DECIMAL(8,2) NULL  AFTER `basic_pay_month_with_holiday`,  ADD `sss_employers` DECIMAL(8,2) NULL  AFTER `sss_employees`,  ADD `sss_compensation` DECIMAL(8,2) NOT NULL  AFTER `sss_employers`;
 ALTER TABLE `deductions`  ADD `paid_amount` DECIMAL(8,2) NOT NULL DEFAULT '0'  AFTER `amount`;
+
+
+/* aldrin added this 9/24/15 koufu_warehouse */
+create table `koufu_warehouse`.`items`( 
+   `id` int NOT NULL AUTO_INCREMENT , 
+   `name` varchar(500) , 
+   `measure` varchar(500) , 
+   `department_id` int , 
+   `category_type_id` int , 
+   `supplier` int , 
+   `remaining_stocks` int , 
+   `description` text , 
+   `created_by` int , 
+   `modified_by` int , 
+   `created` datetime , 
+   `modified` datetime , 
+   PRIMARY KEY (`id`)
+ )
+
+create table `koufu_warehouse`.`departments`( 
+   `id` int NOT NULL AUTO_INCREMENT , 
+   `name` varchar(500) , 
+   `description` text , 
+   `created_by` int , 
+   `modified_by` int , 
+   `created` datetime , 
+   `modified` datetime , 
+   PRIMARY KEY (`id`)
+ )

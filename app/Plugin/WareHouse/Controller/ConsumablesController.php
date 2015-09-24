@@ -53,22 +53,24 @@ class ConsumablesController extends WareHouseAppController {
 	
 		$this->loadModel('WareHouse.ItemCategory');
 
+		$this->loadModel('ItemCategoryHolder');
+
 		$this->loadModel('WareHouse.Item');
 
 		$this->loadModel('WareHouse.Department');
 
 		$this->loadModel('Supplier');
 
+		$categoryDataDropList = $this->ItemCategoryHolder->find('list',  array('order' => 'ItemCategoryHolder.name ASC'));
+
 		$itemsCategory = $this->ItemCategory->find('list',array('fields' => array('id','name') ,'order' => array('ItemCategory.name ASC')));
 
 		$departments = $this->Department->find('list',array('fields' => array('id','name') ,'order' => array('Department.name ASC')));
 
-		$items = $this->Item->find('all',array('conditions' => array('Item.category_id' => 1) ));
-
-		$suppliers = $this->Supplier->find('list');
+		$suppliers = $this->Supplier->find('list',  array('order' => 'Supplier.name ASC'));
 		//consumebles items
 
-		$this->set(compact('itemsCategory','departments','suppliers'));
+		$this->set(compact('itemsCategory','departments','suppliers','categoryDataDropList'));
 
 	}
 
