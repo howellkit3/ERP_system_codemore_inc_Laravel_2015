@@ -46,10 +46,10 @@
                                         <thead>
                                             <tr>
                                                 <th><a href="#"><span>#</span></a></th>
-                                                <th><a href="#"><span>Name</span></a></th>
-                                                <th class="text-center"><a href="#"><span>Description</span></a></th>
-                                                <th class="text-center"><a href="#"><span>Specification</span></a></th>
-                                                <th class="text-center"><a href="#"><span>Notes</span></a></th>
+                                                <th><a href="#"><span>Department</span></a></th>
+                                                <th class="text-center"><a href="#"><span>Section</span></a></th>
+                                                <th class="text-center"><a href="#"><span>Subsection</span></a></th>
+                                                <th class="text-center"><a href="#"><span>Short Description</span></a></th>
                                                 <th><a href="#"><span>Actions</span></a></th>
                                             </tr>
                                         </thead>

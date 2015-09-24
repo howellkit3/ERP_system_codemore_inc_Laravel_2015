@@ -33,7 +33,7 @@
                                  </div>
 
                                  <div class="form-group">
-                                    <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span>Description</label>
+                                    <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span>Section</label>
                                     <div class="col-lg-8">
                                         <?php
                                             echo $this->Form->input('Department.description', array('class' => 'form-control col-lg-6 required','label' => false));
@@ -44,16 +44,16 @@
 
 
                                  <div class="form-group">
-                                    <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Specification</label>
+                                    <label for="inputEmail1" class="col-lg-2 control-label"> Subsection</label>
                                         <div class="col-lg-8">
                                             <?php
-                                                echo $this->Form->input('Department.specification', array('class' => 'form-control col-lg-6 required','label' => false));
+                                                echo $this->Form->input('Department.specification', array('class' => 'form-control col-lg-6 ','label' => false));
                                             ?>
                                         </div>
                                  </div>
 
                                   <div class="form-group">
-                                    <label for="inputEmail1" class="col-lg-2 control-label"> Notes</label>
+                                    <label for="inputEmail1" class="col-lg-2 control-label">Short Description</label>
                                         <div class="col-lg-8">
                                             <?php
                                                 echo $this->Form->input('Department.notes', array('class' => 'form-control col-lg-6','label' => false));
