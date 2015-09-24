@@ -79,13 +79,13 @@ class StatusesController  extends HumanResourceAppController {
 
 		if (!empty($posId)) {
 
-			if ($this->Position->delete($posId)) {
+			if ($this->Status->delete($posId)) {
                 $this->Session->setFlash(
-                    __('Position Successfully deleted.', h($posId))
+                    __('Status Successfully deleted.', h($posId))
                 );
             } else {
                 $this->Session->setFlash(
-                    __('Position cannot be deleted.', h($posId))
+                    __('Status cannot be deleted.', h($posId))
                 );
             }
 
