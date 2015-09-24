@@ -2027,29 +2027,57 @@ ALTER TABLE `deductions`  ADD `paid_amount` DECIMAL(8,2) NOT NULL DEFAULT '0'  A
 
 
 /* aldrin added this 9/24/15 koufu_warehouse */
-create table `koufu_warehouse`.`items`( 
-   `id` int NOT NULL AUTO_INCREMENT , 
+CREATE TABLE IF NOT EXISTS `items`( 
+   `id` int(11) NOT NULL AUTO_INCREMENT, 
    `name` varchar(500) , 
    `measure` varchar(500) , 
-   `department_id` int , 
-   `category_type_id` int , 
-   `supplier` int , 
-   `remaining_stocks` int , 
+   `department_id` int(11) , 
+   `category_type_id` int(11) , 
+   `supplier` int(11) , 
+   `remaining_stocks` int(11) , 
    `description` text , 
-   `created_by` int , 
-   `modified_by` int , 
+   `created_by` int(11) , 
+   `modified_by` int(11) , 
    `created` datetime , 
    `modified` datetime , 
    PRIMARY KEY (`id`)
  )
 
-create table `koufu_warehouse`.`departments`( 
-   `id` int NOT NULL AUTO_INCREMENT , 
-   `name` varchar(500) , 
+CREATE TABLE IF NOT EXISTS `departments`( 
+   `id` int(11) NOT NULL AUTO_INCREMENT  
+   `name` varchar(500), 
    `description` text , 
-   `created_by` int , 
-   `modified_by` int , 
-   `created` datetime , 
-   `modified` datetime , 
+   `created_by` int(11) , 
+   `modified_by` int(11) , 
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
    PRIMARY KEY (`id`)
  )
+
+
+CREATE TABLE IF NOT EXISTS `departments` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(50) DEFAULT NULL,
+  `description` text , 
+  `created` DATETIME NOT NULL,
+  `modified` DATETIME NOT NULL,
+  `created_by` INT(11) DEFAULT NULL,
+  `modified_by` INT(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB AUTO_INCREMENT=68 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `item_categories`;
+
+
+
+CREATE TABLE `item_categories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(1500) DEFAULT NULL,
+  `description` text,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
