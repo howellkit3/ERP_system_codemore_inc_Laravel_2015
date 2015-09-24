@@ -106,7 +106,7 @@
 								                           							'alt' => 'type',
 															    					'label' => false,
 															   						'class' => 'form-control',
-															   						'empty' => '--- Select Department ---'
+															   						'empty' => '--- Select Category ---'
 																			));
 						                        ?>
 													<span class="help-block" style= "color:white"> &nbsp </span>
