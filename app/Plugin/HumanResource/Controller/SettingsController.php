@@ -41,7 +41,7 @@ class SettingsController  extends HumanResourceAppController {
 	            'conditions' => $conditions,
 	            'limit' => $limit,
 	            //'fields' => array('id', 'status','created'),
-	            'order' => 'Position.id DESC',
+	            'order' => 'Position.name ASC',
 	        );
 
 	    $positionData = $this->paginate('Position');

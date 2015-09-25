@@ -20,14 +20,14 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span>Limit Hours</label>
                                     <div class="col-lg-8">
                                         <?php
                                            echo $this->Form->input('LeaveType.limit', array('class' => 'form-control col-lg-6 required number','label' => false));
                                         ?>
                                     </div>
-                                </div>
+                                </div> -->
 
                              </div>
                         </div>

@@ -249,7 +249,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 		$positionList = $this->Position->find('list',array('fields' => array('id','name')));
 
-		$departmentList = $this->Department->find('list',array('fields' => array('id','name')));
+		$departmentList = $this->Department->find('list',array('fields' => array('id','notes'), 'order' => 'notes ASC'));
 
 		$statusList = $this->Status->find('list',array('fields' => array('id','name')));
 
