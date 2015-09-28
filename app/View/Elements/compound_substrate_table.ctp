@@ -37,7 +37,7 @@
                         </span> ', array(
                                         'controller' => 'settings', 
                                         'action' => 'view_compound_substrate',
-                                        $compoundSubstrateDataList['CompoundSubstrate']['id'],$indicator), array(
+                                        $compoundSubstrateDataList['CompoundSubstrate']['id'], $indicator), array(
                                                                             'class' =>' table-link small-link-icon',
                                                                             'escape' => false, 
                                                                             'title'=>'View Information'));

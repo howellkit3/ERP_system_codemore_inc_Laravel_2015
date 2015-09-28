@@ -1,4 +1,13 @@
-<?php echo $this->element('setting_option');?><br><br>
+<?php if($indicator == "purchasing"){
+	
+		 echo $this->element('Purchasing.purchasings_option');?><br><br> <?php 
+	}else{
+
+	 echo $this->element('setting_option');?><br><br><?php
+	 
+
+} ?><br><br>
+
 <?php echo $this->Html->script('substrate'); ?>
 
 <div class="row">

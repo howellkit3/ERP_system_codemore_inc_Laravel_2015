@@ -1,4 +1,12 @@
-<?php echo $this->element('setting_option');?><br><br>
+<?php if($indicator == "purchasing"){
+	
+		 echo $this->element('Purchasing.purchasings_option');?><br><br> <?php 
+	}else{
+
+	 echo $this->element('setting_option');?><br><br><?php
+	 
+
+} ?><br><br>
 <?php echo $this->Html->script('general_item'); ?>
 <div class="row">
 	<div class="col-lg-12">
@@ -36,6 +44,11 @@
 	                                                    'label' => false,
 	                                                    'required' => 'required',
 	                                                    'placeholder' => 'General Item Name'));
+	                                            echo $this->Form->input('GeneralItem.indicator', array(
+																		'class' => 'form-control ',
+											                            'label' => false,
+											                            'type' => 'hidden',
+											                            'value' => $indicator));
                                             ?>
 
 										</div>

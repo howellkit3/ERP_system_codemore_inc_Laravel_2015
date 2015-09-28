@@ -672,7 +672,11 @@ class SettingsController extends AppController
     //     return $this->redirect(array(' controller' => 'products', 'action' => 'index'));
     // }
 
-      public function item_group($indicator = null) {
+      public function item_group($indicators = null) {
+
+       //pr($indicators); exit;
+
+        $indicator = substr($indicators, 0, -10);  
 
         $this->loadModel('Supplier');
 
@@ -760,10 +764,11 @@ class SettingsController extends AppController
 
 
        if ($this->request->is('post')) {
-       
+                
                $generalItemDetails = $this->request->data;
           
             if (!empty($generalItemDetails)) {
+
 
                 $userData = $this->Session->read('Auth');
                 $generalItemDetails['GeneralItem']['uuid'] = time();
@@ -774,8 +779,17 @@ class SettingsController extends AppController
 
                 $this->Session->setFlash(__('Adding General Item Complete.'));
 
-                return $this->redirect(array('action' => 'item_group',$this->request->data['GeneralItem']['indicator']));
+                if(!empty($this->request->data['GeneralItem']['indicator'])){
 
+                    return $this->redirect(array('controller' => 'settings', 'action' => 'item_group' ,'purchasing?'.rand(1000,9999).'='.date("is")));
+
+                }else{
+
+                    return $this->redirect(array('action' => 'item_group'));
+
+                }
+
+                
             }
         }
 
@@ -784,6 +798,7 @@ class SettingsController extends AppController
     }
 
     public function deleteGeneralItem($id, $indicator = null) {
+
 
         $this->loadModel('GeneralItem');
       
@@ -798,10 +813,22 @@ class SettingsController extends AppController
             );
         }
 
-        return $this->redirect(array(' controller' => 'settings', 'action' => 'item_group', $indicator));
+        if(empty($indicator)){
+
+            return $this->redirect(array('action' => 'item_group'));
+          
+        }else{
+
+            return $this->redirect(array('controller' => 'settings', 'action' => 'item_group' ,'purchasing?'.rand(1000,9999).'='.date("is")));
+
+        }
+
+        
     } 
 
     public function general_item_edit($id = null , $indicator = null) {
+
+        //pr($indicator); exit;
 
         $this->loadModel('Supplier');
 
@@ -835,13 +862,23 @@ class SettingsController extends AppController
             if ($this->request->is(array('post', 'put'))) {
                 $this->GeneralItem->id = $id;
 
+             //   pr($this->request->data); exit;
+
                 if ($this->GeneralItem->save($this->request->data)) {
 
                     $this->GeneralItem->save($this->request->data);
 
                     $this->Session->setFlash(__('General Item has been updated.'));
 
-                    return $this->redirect(array('action' => 'item_group', $indicator));
+                    if(empty($this->request->data['GeneralItem']['indicator'])){
+
+                        return $this->redirect(array('action' => 'item_group'));
+                      
+                    }else{
+
+                        return $this->redirect(array('controller' => 'settings', 'action' => 'item_group' ,'purchasing?'.rand(1000,9999).'='.date("is")));
+
+                    }
                 }
                 $this->Session->setFlash(__('Unable to update your post.'));
             }
@@ -850,7 +887,7 @@ class SettingsController extends AppController
                 $this->request->data = $post;
             }
 
-            $this->set(compact('generalItemData', 'categoryData' , 'typeData', 'supplierData' ));
+            $this->set(compact('generalItemData', 'categoryData' , 'typeData', 'supplierData', 'indicator' ));
     }
 
     public function view_general_item($id, $indicator= null){
@@ -896,6 +933,8 @@ class SettingsController extends AppController
                 
                 if (!empty($substrateDetails)) {
 
+                    //pr($this->request->data); exit;
+
                     $userData = $this->Session->read('Auth');
                     $substrateDetails['Substrate']['uuid'] = time();
                     $substrateDetails['Substrate']['created_by'] = $userData['User']['id'];
@@ -905,8 +944,17 @@ class SettingsController extends AppController
            
                     $this->Session->setFlash(__('Adding Substrate Complete.'));
 
-                    return $this->redirect(array('action' => 'item_group',$this->request->data['Substrate']['indicator'],'tab' => 'tab-substrates'));
-                   
+                    if(!empty($this->request->data['Substrate']['indicator'])){
+
+                        return $this->redirect(array('controller' => 'settings', 'action' => 'item_group' ,'purchasing?'.rand(1000,9999).'='.date("is"),'tab' => 'tab-substrates'));
+
+                    }else{
+
+                        return $this->redirect(array('action' => 'item_group','tab' => 'tab-substrates'));
+
+                    }
+
+                    
 
                 }
             }
@@ -956,8 +1004,18 @@ class SettingsController extends AppController
 
                     $this->Session->setFlash(__('Substrate has been updated.'));
 
-                    return $this->redirect(array('action' => 'item_group', $indicator,'tab' => 'tab-substrates'));
+                    if(!empty($indicator)){
+
+                        return $this->redirect(array('action' => 'item_group','tab' => 'tab-substrates'));
+                      
+                    }else{
+
+                        return $this->redirect(array('action' => 'item_group','purchasing?'.rand(1000,9999).'='.date("is"),'tab' => 'tab-substrates'));
+                       
+                    }
+
                 }
+
                 $this->Session->setFlash(__('Unable to update your post.'));
             }
 
@@ -966,10 +1024,11 @@ class SettingsController extends AppController
             }
 
 
-            $this->set(compact( 'categoryData' , 'typeData', 'supplierData' ));
+            $this->set(compact( 'categoryData' , 'typeData', 'supplierData', 'indicator' ));
     }
 
     public function deleteSubstrate($id, $indicator) {
+
 
         $this->loadModel('Substrate');
       
@@ -984,11 +1043,19 @@ class SettingsController extends AppController
             );
         }
 
-        return $this->redirect(array(' controller' => 'settings', 'action' => 'item_group', $indicator,'tab' => 'tab-substrate'));
+        if(empty($indicator)){
+
+            return $this->redirect(array('action' => 'item_group','tab' => 'tab-substrates'));
+          
+        }else{
+
+            return $this->redirect(array('action' => 'item_group','purchasing?'.rand(1000,9999).'='.date("is"),'tab' => 'tab-substrates'));
+           
+        }
     } 
 
-
-    public function view_substrate($id , $indicator){
+    public function view_substrate($id, $indicator = null){
+       //pr($indicator); exit;
 
         $this->loadModel('Supplier');
 
@@ -1055,8 +1122,19 @@ class SettingsController extends AppController
                     $this->Session->setFlash(__('Adding Compound Substrate Complete.'),'success');
 
                 }
-            
-                return $this->redirect(array('action' => 'item_group',$this->request->data['CompoundSubstrate']['indicator'],'tab' => 'tab-compound_substrates'));
+
+                if(!empty($this->request->data['CompoundSubstrate']['indicator'])){
+
+                        return $this->redirect(array('controller' => 'settings', 'action' => 'item_group' ,'purchasing?'.rand(1000,9999).'='.date("is"),'tab' => 'tab-compound_substrates'));
+
+                    }else{
+
+                        return $this->redirect(array('action' => 'item_group','tab' => 'tab-compound_substrates'));
+
+                }
+
+        
+                //return $this->redirect(array('action' => 'item_group',$this->request->data['CompoundSubstrate']['indicator'],'tab' => 'tab-compound_substrates'));
                 
 
             }
@@ -1064,6 +1142,7 @@ class SettingsController extends AppController
             $this->set(compact('compoundSubstrateData'));
     
     }
+
     public function compound_substrate_edit($id = null, $indicator = null) {
 
         $this->loadModel('Supplier');
@@ -1102,8 +1181,9 @@ class SettingsController extends AppController
 
             if ($this->request->is(array('post', 'put'))) {
 
-                pr($this->request->data);exit;
+                //pr($this->request->data['ItemGroupLayer']); exit;
 
+                
                 $paperHolderId = array();
 
                 foreach ($this->request->data['ItemGroupLayer']['substrate'] as $key => $idList) {
@@ -1111,8 +1191,6 @@ class SettingsController extends AppController
                 }
 
                 $this->CompoundSubstrate->id = $id;
-
-               
 
                 $this->CompoundSubstrate->save($this->request->data);
 
@@ -1122,7 +1200,6 @@ class SettingsController extends AppController
 
                         if(in_array($paper['ItemGroupLayer']['id'], $paperHolderId)){
 
-                            //pr($this->request->data['ItemGroupLayer']['substrate'][$key]);
                             $this->ItemGroupLayer->save($this->request->data['ItemGroupLayer']['substrate'][$key]);
                             
                         }else{
@@ -1131,11 +1208,18 @@ class SettingsController extends AppController
                         }
                     }
 
-                   // $this->CompoundSubstrate->save_substrate($this->request->data,$this->CompoundSubstrate->id); 
-
                     $this->Session->setFlash(__('Compound Substrate has been updated.'));
 
-                    return $this->redirect(array('action' => 'item_group',$indicator,'tab' => 'tab-compound_substrates'));
+                    if(empty($indicator)){
+
+                        return $this->redirect(array('action' => 'item_group','tab' => 'tab-compound_substrates'));
+                      
+                    }else{
+
+                        return $this->redirect(array('action' => 'item_group','purchasing?'.rand(1000,9999).'='.date("is"),'tab' => 'tab-compound_substrates'));
+                       
+                    }
+
                 }
                 $this->Session->setFlash(__('Unable to update your post.'));
             }
@@ -1144,11 +1228,12 @@ class SettingsController extends AppController
                 $this->request->data = $post;
             }
 
-            $this->set(compact( 'categoryData' , 'typeData', 'supplierData' ));
+            $this->set(compact( 'categoryData' , 'typeData', 'supplierData' , 'indicator'));
     }
 
 
-    public function deleteCompoundSubstrate($id) {
+    public function deleteCompoundSubstrate($id,$indicator ) {
+
 
         $this->loadModel('CompoundSubstrate');
       
@@ -1162,11 +1247,21 @@ class SettingsController extends AppController
                 __('The post cannot be deleted.', h($id))
             );
         }
+ 
+        if(empty($indicator)){
 
-        return $this->redirect(array(' controller' => 'settings', 'action' => 'item_group',$indicator,'tab' => 'tab-compound_substrates'));
+            return $this->redirect(array('action' => 'item_group','tab' => 'tab-compound_substrates'));
+          
+        }else{
+
+            return $this->redirect(array('action' => 'item_group','purchasing?'.rand(1000,9999).'='.date("is"),'tab' => 'tab-compound_substrates'));
+           
+        }
+
     }
 
-    public function view_compound_substrate($id){
+    public function view_compound_substrate($id, $indicator = null){
+       // pr($indicator); exit;
 
         $this->loadModel('Supplier');
 
@@ -1198,7 +1293,7 @@ class SettingsController extends AppController
                 $this->request->data = $compoundData;
             }
 
-            $this->set(compact( 'categoryData' , 'typeData', 'supplierData','compoundLayer' ));
+            $this->set(compact( 'categoryData' , 'typeData', 'supplierData','compoundLayer', 'indicator' ));
     }
 
 
@@ -1238,8 +1333,16 @@ class SettingsController extends AppController
 
             }
             
-            return $this->redirect(array('action' => 'item_group',$this->request->data['CorrugatedPaper']['indicator'],'tab' => 'tab-corrugated_papers'));
+            
+            if(empty($this->request->data['CorrugatedPaper']['indicator'])){
 
+                return $this->redirect(array('action' => 'item_group','tab' => 'tab-corrugated_papers'));
+              
+            }else{
+
+                return $this->redirect(array('action' => 'item_group','purchasing?'.rand(1000,9999).'='.date("is"),'tab' => 'tab-corrugated_papers'));
+               
+            }
         }
 
         $this->set(compact('corrugatedPaperData'));    
@@ -1316,7 +1419,15 @@ class SettingsController extends AppController
 
                     $this->Session->setFlash(__('Corrugated Paper has been updated.'));
 
-                    return $this->redirect(array('action' => 'item_group', $indicator, 'tab' => 'tab-corrugated_papers'));
+                    if(empty($this->request->data['CorrugatedPaper']['indicator'])){
+
+                        return $this->redirect(array('action' => 'item_group','tab' => 'tab-corrugated_papers'));
+                      
+                    }else{
+
+                        return $this->redirect(array('action' => 'item_group','purchasing?'.rand(1000,9999).'='.date("is"),'tab' => 'tab-corrugated_papers'));
+                       
+                    }
 
                 $this->Session->setFlash(__('Unable to update your post.'));
             }
@@ -1325,7 +1436,7 @@ class SettingsController extends AppController
                 $this->request->data = $post;
             }
 
-            $this->set(compact( 'categoryData','typeData','supplierData', 'itemGroupLayerData' ));
+            $this->set(compact( 'categoryData','typeData','supplierData', 'itemGroupLayerData', 'indicator' ));
     }
 
      public function deleteCorrugatedPaper($id , $indicator = null) {
@@ -1343,8 +1454,16 @@ class SettingsController extends AppController
             );
         }
 
-        return $this->redirect(array(' controller' => 'settings', 'action' => 'item_group', $indicator, 'tab' => 'tab-corrugated_papers'));
-    }
+        if(empty($indicator)){
+
+                return $this->redirect(array('action' => 'item_group','tab' => 'tab-corrugated_papers'));
+              
+            }else{
+
+                return $this->redirect(array('action' => 'item_group','purchasing?'.rand(1000,9999).'='.date("is"),'tab' => 'tab-corrugated_papers'));
+               
+            }
+        }
 
     public function view_corrugated_paper($id , $indicator= null){
 
