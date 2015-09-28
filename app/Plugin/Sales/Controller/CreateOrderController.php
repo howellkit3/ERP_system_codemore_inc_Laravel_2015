@@ -411,7 +411,7 @@
 					$this->request->data['ProductSpecificationProcess'][$key]['order'] = $processArray[$key];
 				}
 
-				$getIds = [];
+				$getIds = array();
 
 				$thisComponentIds = $this->ProductSpecificationComponent->saveComponent($this->request->data,$userData['User']['id'],$specId);
 				$getIds = array_merge($getIds,$thisComponentIds);
