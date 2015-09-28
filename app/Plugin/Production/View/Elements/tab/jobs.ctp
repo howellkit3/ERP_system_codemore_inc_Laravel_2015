@@ -28,7 +28,7 @@
 				<li>
 					<?php echo $this->Html->link('Planner',array(
 					'controller' => 'jobs',
-					'action' => 'plans',
+					'action' => 'plans?'.rand(1000,9999).'='.date("is"),
 					'tab' => 'plans',
 					'plugin' => 'production')); ?>
 					
@@ -36,7 +36,7 @@
 				<li>
 					<?php echo $this->Html->link('Sheeting / Cutting',array(
 					'controller' => 'jobs',
-					'action' => 'sheeting',
+					'action' => 'sheeting?'.rand(1000,9999).'='.date("is"),
 					'tab' => 'sheeting',
 					'plugin' => 'production'
 					)); ?>
@@ -44,21 +44,21 @@
 				<li>
 					<?php echo $this->Html->link('Printing',array(
 					'controller' => 'jobs',
-					'action' => 'printing',
+					'action' => 'printing?'.rand(1000,9999).'='.date("is"),
 					'tab' => 'printing',
 					'plugin' => 'production')); ?>
 				</li>
 				<li>
 					<?php echo $this->Html->link('Coating',array(
 					'controller' => 'jobs',
-					'action' => 'coating',
+					'action' => 'coating?'.rand(1000,9999).'='.date("is"),
 					'tab' => 'coating',
 					'plugin' => 'production')); ?>
 				</li>
 				<li>
 					<?php echo $this->Html->link('Corrugated Lamination',array(
 					'controller' => 'jobs',
-					'action' => 'corrugated_lamination',
+					'action' => 'corrugated_lamination?'.rand(1000,9999).'='.date("is"),
 					'tab' => 'corrugated_lamination',
 					'plugin' => 'production')); ?>
 				</li>
@@ -66,7 +66,7 @@
 				<li>
 					<?php echo $this->Html->link('DieCutting',array(
 					'controller' => 'jobs',
-					'action' => 'diecutting',
+					'action' => 'diecutting?'.rand(1000,9999).'='.date("is"),
 					'tab' => 'diecutting',
 					'plugin' => 'production')); ?>
 				</li>
@@ -74,7 +74,7 @@
 				<li>
 					<?php echo $this->Html->link('Stripping',array(
 					'controller' => 'jobs',
-					'action' => 'stripping',
+					'action' => 'stripping?'.rand(1000,9999).'='.date("is"),
 					'tab' => 'stripping',
 					'plugin' => 'production'
 					)); ?>
@@ -83,7 +83,7 @@
 				<li>
 					<?php echo $this->Html->link('Browsing',array(
 					'controller' => 'jobs',
-					'action' => 'browsing',
+					'action' => 'browsing?'.rand(1000,9999).'='.date("is"),
 					'tab' => 'browsing',
 					'plugin' => 'production')); ?>
 				</li>
@@ -91,7 +91,7 @@
 				<li>
 					<?php echo $this->Html->link('Gluing',array(
 					'controller' => 'jobs',
-					'action' => 'gluing',
+					'action' => 'gluing?'.rand(1000,9999).'='.date("is"),
 					'tab' => 'gluing',
 					'plugin' => 'production')); ?>
 				</li>
@@ -99,7 +99,7 @@
 				<li>
 					<?php echo $this->Html->link('Final Inspection',array(
 					'controller' => 'jobs',
-					'action' => 'final_inspection',
+					'action' => 'final_inspection?'.rand(1000,9999).'='.date("is"),
 					'tab' => 'final_inspection',
 					'plugin' => 'production')); ?>
 				</li>
@@ -107,7 +107,7 @@
 				<li>
 					<?php echo $this->Html->link('Scrap Items',array(
 					'controller' => 'jobs',
-					'action' => 'scrap_items',
+					'action' => 'scrap_items?'.rand(1000,9999).'='.date("is"),
 					'tab' => 'scrap_items',
 					'plugin' => 'production')); ?>
 				</li>
@@ -115,7 +115,7 @@
 				<li>
 					<?php echo $this->Html->link('Packing',array(
 					'controller' => 'jobs',
-					'action' => 'packing',
+					'action' => 'packing?'.rand(1000,9999).'='.date("is"),
 					'tab' => 'packing',
 					'plugin' => 'production')); ?>
 				</li>
@@ -123,7 +123,7 @@
 				<li>
 					<?php echo $this->Html->link('Settings',array(
 					'controller' => 'settings',
-					'action' => 'machines',
+					'action' => 'machines?'.rand(1000,9999).'='.date("is"),
 					'tab' => 'machines',
 					'plugin' => 'production')); ?>
 				</li>
