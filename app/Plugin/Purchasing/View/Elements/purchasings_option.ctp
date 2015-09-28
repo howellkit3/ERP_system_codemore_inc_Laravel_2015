@@ -11,19 +11,25 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
 
         <li class="dropdown hidden-xs">
            <?php $page =($active_page == 'suppliers' && $active_action == 'index') ? 'active tab' : '' ?>
-            <?php echo $this->Html->link("<span class='count'>Supplier Info</span>", array('controller' => 'suppliers', 'action' => 'index'),array('escape' => false,'class' => 'btn '.$page )); ?>
+            <?php echo $this->Html->link("<span class='count'>Supplier Info</span>", array('plugin' => 'purchasing', 'controller' => 'suppliers', 'action' => 'index'),array('escape' => false,'class' => 'btn '.$page )); ?>
            
         </li>
    		
    		<li class="dropdown hidden-xs active">
            <?php $page =($active_page == 'requests' && $active_action == 'request_list') ? 'active tab' : '' ?>
-            <?php echo $this->Html->link("<span class='count'>Request List</span>", array('controller' => 'requests', 'action' => 'request_list'),array('escape' => false,'class' => 'btn '.$page )); ?>
+            <?php echo $this->Html->link("<span class='count'>Request List</span>", array('plugin' => 'purchasing', 'controller' => 'requests', 'action' => 'request_list'),array('escape' => false,'class' => 'btn '.$page )); ?>
            
         </li>
 
         <li class="dropdown hidden-xs active">
            <?php $page =($active_page == 'purchase_orders' && $active_action == 'index') ? 'active tab' : '' ?>
-            <?php echo $this->Html->link("<span class='count'>Purchase Order</span>", array('controller' => 'purchase_orders', 'action' => 'index'),array('escape' => false,'class' => 'btn '.$page )); ?>
+            <?php echo $this->Html->link("<span class='count'>Purchase Order</span>", array('plugin' => 'purchasing', 'controller' => 'purchase_orders', 'action' => 'index'),array('escape' => false,'class' => 'btn '.$page )); ?>
+           
+        </li>
+
+        <li class="dropdown hidden-xs active">
+           <?php $page =($active_page == 'settings' && $active_action == 'item_group') ? 'active tab' : '' ?>
+            <?php echo $this->Html->link("<span class='count'>Item Group</span>", array('controller' => 'settings', 'action' => 'item_group' , 'plugin' => false, 'purchasing'),array('escape' => false,'class' => 'btn')); ?>
            
         </li>
     </ul>
