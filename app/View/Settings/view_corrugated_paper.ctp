@@ -5,7 +5,7 @@
 		 echo $this->element('Purchasing.purchasings_option');?><?php 
 	}else{
 
-	 echo $this->element('setting_option');?><?php
+	 echo $this->element('setting_option');?><br><br><?php
 	 
 
 } ?>
