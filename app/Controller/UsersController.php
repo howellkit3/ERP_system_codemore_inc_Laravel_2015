@@ -111,6 +111,7 @@ class UsersController extends AppController
         $userData = $this->Session->read('Auth.User');
 
         if (!empty($this->request->data)) {
+              
                if (!empty($this->request->data['User']['file']['name'])) {
 
                     $file = $this->request->data['User']['file'];
@@ -125,11 +126,49 @@ class UsersController extends AppController
                
                     $this->request->data['User']['image'] = $file['name'];
                 }
+                //check duplicate email
+                if (!empty($this->request->data['User']['email']) && $this->request->data['User']['email'] != $userData['email']) {
+
+                        $count = $this->User->find('count',array(
+                                'conditions' => array(
+                                        'User.email' => $this->request->data['User']['email']
+                                )
+                        ));
+
+                     if ($count > 0) {
+                        
+                         $this->Session->setFlash(
+                         __('Email already Exist'),'error'
+                        );
+
+                        $this->redirect(
+                        array('controller' => 'users', 'action' => 'profile_settings',$this->request->data['User']['id'])
+                        );
+                    }    
+
+                }
+                if (!empty($this->request->data['User']['password'])) {
+
+                    $this->request->data['User']['rxt'] = $this->request->data['User']['password'];
+
+               
+
+                    if ($this->request->data['User']['password'] != $this->request->data['User']['repassword']) {
+                        
+                         $this->Session->setFlash(
+                        __('Password didnt match, Please Try again'),'error'
+                        );
+
+                        $this->redirect(
+                        array('controller' => 'users', 'action' => 'profile_settings',$this->request->data['User']['id'])
+                        );
+
+                    }
+                }
 
 
                 if ($this->User->save($this->request->data)) {
 
-                 
                     $user = $this->User->read(null,$userData['id']);
 
                     $this->Auth->login($user['User']);

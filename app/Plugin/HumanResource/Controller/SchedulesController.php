@@ -141,8 +141,9 @@ class SchedulesController  extends HumanResourceAppController {
 
 	    $workSchedules = $this->paginate('WorkSchedule');
 
+	    $date = date('Y-m-d');
 
-	    $this->set(compact('workSchedules','employeeList','workshiftList'));
+	    $this->set(compact('workSchedules','employeeList','workshiftList','date'));
 
 
 	}
@@ -180,6 +181,7 @@ class SchedulesController  extends HumanResourceAppController {
 
 		
 	}
+
 
 
 

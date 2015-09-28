@@ -64,3 +64,11 @@ h1 {
 .strong {
 	font-weight: bold;
 }
+.border-bottom-dashed {
+
+	border-bottom:1px dashed #ccc;
+
+}
+.large-padding {
+	padding: 10px;
+}

@@ -2,11 +2,14 @@
  echo $this->Html->css(array(
                     'HumanResource.default',
                     'HumanResource.select2.css',
-                    'timepicker'
+                    'timepicker',
+                    
+                    'datetimepicker/jquery.datetimepicker'
 )); 
 
 echo $this->Html->script(array(
-					'jquery.maskedinput.min',
+                    'datetimepicker/jquery.datetimepicker',
+                    'jquery.maskedinput.min',
 					'HumanResource.moment',
 					'HumanResource.custom',
                     'HumanResource.select2.min',
@@ -17,7 +20,7 @@ echo $this->Html->script(array(
 
 echo $this->element('hr_options');
 
-	$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
+$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
  ?>
 
  <div class="row">
@@ -51,10 +54,16 @@ echo $this->element('hr_options');
 			                    	 <button class="btn btn-success">Go</button> 
 			                     </div>
 
-			                     <a data-toggle="modal" href="#myAttendance" class="btn btn-primary pull-right "><i class="fa fa-share-square-o fa-lg"></i> Export</a>
-			                     
-			                    <?php echo $this->Form->end(); ?>
+			                     <a data-toggle="modal" href="#myAttendance" class="btn btn-primary pull-right"><i class="fa fa-share-square-o fa-lg"></i> Export</a>
+			                     	
+			                   	 <?php echo $this->Form->end(); ?>
+
+			                     <div class="form-group pull-left">
+			                    	 <a data-toggle="modal" class="btn btn-success" href="#timeKeep"> <i class="fa fa-clock-o"></i> Add Attendances </a> 
+			                     </div>
+
 			                   <br><br>
+
 			               </div>
 			            </header>
 
@@ -202,8 +211,8 @@ echo $this->element('hr_options');
 																</span> ','#timeKeep',
 																array('class' =>'add-timekeep table-link',
 																	   'escape' => false,
-																	   'title' => $title ,
-																	   'data-toggle' => 'modal',
+																	   'title' => $title,
+																	   'data-toggle' =>'modal',
 																	   'data-id' => $schedule['Attendance']['id'],
 																	   'onClick' => 'getEmployeeData(this,'.$schedule['Attendance']['id'].')'
 																	));
@@ -242,9 +251,9 @@ echo $this->element('hr_options');
 		 </div>
     </div>
 </div>
-<?php echo $this->element('modals/personnal_attendance'); ?>
+<?php echo $this->element('modals/personnal_attendance',array('employeeList' => $employeeList)); ?>
 
-<?php echo $this->element('modals/time_in_attendance'); ?>
+<?php echo $this->element('modals/time_in_attendance',array('employeeList' => $employeeList)); ?>
 
 <div class="modal fade" id="myAttendance" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -307,6 +316,10 @@ echo $this->element('hr_options');
 		});
 
 		$('#AttendanceIndexForm').validate();
+
+
+       
+
 	});
 </script>
 <style type="text/css">
