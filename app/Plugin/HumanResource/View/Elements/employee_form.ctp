@@ -850,14 +850,14 @@
 		                                            ));
 		                               ?>
 		                                <div class="form-group">
-		                                    <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Address(1)</label>
+		                                    <label for="inputEmail1" class="col-lg-2 control-label">Address(1)</label>
 		                                    <div class="col-lg-2">
 		                                        <?php 
 		                                            echo $this->Form->input('Address.0.type', array(
 		                                                'options' => array('Work', 'Home', 'Business','Plant'),
 		                                                'alt' => 'type',
 		                                                'label' => false,
-		                                                'class' => 'form-control col-lg-4 required',
+		                                                'class' => 'form-control col-lg-4 ',
 		                                                'empty' => false,
 		                                                'data-name' => 'Address'
 		                                            ));
@@ -866,7 +866,7 @@
 		                                    </div>
 		                                    <div class="col-lg-7">
 		                                        <?php 
-		                                            echo $this->Form->input('Address.0.address_1', array('class' => 'form-control item_type required',
+		                                            echo $this->Form->input('Address.0.address_1', array('class' => 'form-control item_type ',
 		                                                'alt' => 'address1',
 		                                                'label' => false));
 		                                        ?>

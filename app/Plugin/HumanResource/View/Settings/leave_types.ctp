@@ -43,9 +43,9 @@
                                             <thead>
                                                 <tr>
                                                     <th><a href="#"><span>#</span></a></th>
-                                                    <th><a href="#"><span>Name</span></a></th>
-                                                    <th class="text-center"><a href="#"><span>Limit</span></a></th>
-                                                    <th><a href="#"><span>Actions</span></a></th>
+                                                    <th class = "text-center"><a href="#"><span>Name</span></a></th>
+                                                    <!-- <th class="text-center"><a href="#"><span>Limit</span></a></th> -->
+                                                    <th class = "text-center"><a href="#"><span>Actions</span></a></th>
                                                 </tr>
                                             </thead>
                                               <?php if(!empty($leavetypeData)) {
@@ -55,19 +55,19 @@
                                                                     <td class="">
                                                                         <?php echo $key;?> 
                                                                     </td>
-                                                                    <td class="">
+                                                                    <td class = "text-center">
                                                                         <?php echo ucfirst($leavetypeList['LeaveType']['name']);  ?>
                                                                     </td>
                                                                     
-                                                                    <td class="text-center">
+                                                                    <!-- <td class="text-center">
                                                                        <?php echo number_format($leavetypeList['LeaveType']['limit'],2);  ?> Hour/s
-                                                                    </td>
+                                                                    </td> -->
 
-                                                                    <td>
+                                                                    <td class = "text-center">
                                                                         <?php 
-                                                                        echo $this->Html->link('<span class="fa-stack">
-                                                                            <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> View </font></span></span> ', array('controller' => 'leave_types', 'action' => 'view',$leavetypeList['LeaveType']['id']), array('class' =>' table-link','escape' => false, 'title'=>'View Leave Type'
-                                                                            ));
+                                                                        // echo $this->Html->link('<span class="fa-stack">
+                                                                        //     <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> View </font></span></span> ', array('controller' => 'leave_types', 'action' => 'view',$leavetypeList['LeaveType']['id']), array('class' =>' table-link','escape' => false, 'title'=>'View Leave Type'
+                                                                        //     ));
 
                                                                         ?>
 

@@ -672,7 +672,7 @@ class SettingsController extends AppController
     //     return $this->redirect(array(' controller' => 'products', 'action' => 'index'));
     // }
 
-      public function item_group() {
+      public function item_group($indicator = null) {
 
         $this->loadModel('Supplier');
 
@@ -760,7 +760,7 @@ class SettingsController extends AppController
 
 
        if ($this->request->is('post')) {
-               
+       
                $generalItemDetails = $this->request->data;
           
             if (!empty($generalItemDetails)) {
@@ -774,18 +774,16 @@ class SettingsController extends AppController
 
                 $this->Session->setFlash(__('Adding General Item Complete.'));
 
-                $this->redirect(
+                return $this->redirect(array('action' => 'item_group',$this->request->data['GeneralItem']['indicator']));
 
-                    array('controller' => 'settings', 'action' => 'item_group')
-                );
             }
         }
 
-        $this->set(compact('categoryDataDropList', 'categoryData','typeData', 'supplierData', 'generalItemData','substrateData', 'compoundSubstrateData', 'corrugatedPaperData'));
+        $this->set(compact('categoryDataDropList', 'categoryData','typeData', 'supplierData', 'generalItemData','substrateData', 'compoundSubstrateData', 'corrugatedPaperData', 'indicator'));
 
     }
 
-    public function deleteGeneralItem($id) {
+    public function deleteGeneralItem($id, $indicator = null) {
 
         $this->loadModel('GeneralItem');
       
@@ -800,10 +798,10 @@ class SettingsController extends AppController
             );
         }
 
-        return $this->redirect(array(' controller' => 'settings', 'action' => 'item_group'));
+        return $this->redirect(array(' controller' => 'settings', 'action' => 'item_group', $indicator));
     } 
 
-    public function general_item_edit($id = null) {
+    public function general_item_edit($id = null , $indicator = null) {
 
         $this->loadModel('Supplier');
 
@@ -843,7 +841,7 @@ class SettingsController extends AppController
 
                     $this->Session->setFlash(__('General Item has been updated.'));
 
-                    return $this->redirect(array('action' => 'item_group'));
+                    return $this->redirect(array('action' => 'item_group', $indicator));
                 }
                 $this->Session->setFlash(__('Unable to update your post.'));
             }
@@ -855,7 +853,7 @@ class SettingsController extends AppController
             $this->set(compact('generalItemData', 'categoryData' , 'typeData', 'supplierData' ));
     }
 
-    public function view_general_item($id){
+    public function view_general_item($id, $indicator= null){
 
         $this->loadModel('Supplier');
 
@@ -881,7 +879,7 @@ class SettingsController extends AppController
                 $this->request->data = $post;
             }
 
-            $this->set(compact( 'categoryData' , 'typeData', 'supplierData' ));
+            $this->set(compact( 'categoryData' , 'typeData', 'supplierData', 'indicator' ));
     }
 
     public function substrate() {
@@ -907,14 +905,16 @@ class SettingsController extends AppController
            
                     $this->Session->setFlash(__('Adding Substrate Complete.'));
 
-                    return $this->redirect(array('action' => 'item_group','tab' => 'tab-substrates'));
+                    return $this->redirect(array('action' => 'item_group',$this->request->data['Substrate']['indicator'],'tab' => 'tab-substrates'));
+                   
+
                 }
             }
 
             $this->set(compact('substrateData'));
     }
 
-    public function substrate_edit($id = null) {
+    public function substrate_edit($id = null, $indicator= null) {
 
         $this->loadModel('Substrate');
 
@@ -956,7 +956,7 @@ class SettingsController extends AppController
 
                     $this->Session->setFlash(__('Substrate has been updated.'));
 
-                    return $this->redirect(array('action' => 'item_group','tab' => 'tab-substrates'));
+                    return $this->redirect(array('action' => 'item_group', $indicator,'tab' => 'tab-substrates'));
                 }
                 $this->Session->setFlash(__('Unable to update your post.'));
             }
@@ -969,7 +969,7 @@ class SettingsController extends AppController
             $this->set(compact( 'categoryData' , 'typeData', 'supplierData' ));
     }
 
-    public function deleteSubstrate($id) {
+    public function deleteSubstrate($id, $indicator) {
 
         $this->loadModel('Substrate');
       
@@ -984,11 +984,11 @@ class SettingsController extends AppController
             );
         }
 
-        return $this->redirect(array(' controller' => 'settings', 'action' => 'item_group','tab' => 'tab-substrate'));
+        return $this->redirect(array(' controller' => 'settings', 'action' => 'item_group', $indicator,'tab' => 'tab-substrate'));
     } 
 
 
-    public function view_substrate($id){
+    public function view_substrate($id , $indicator){
 
         $this->loadModel('Supplier');
 
@@ -1014,7 +1014,7 @@ class SettingsController extends AppController
                 $this->request->data = $post;
             }
 
-            $this->set(compact( 'categoryData' , 'typeData', 'supplierData' ));
+            $this->set(compact( 'categoryData' , 'typeData', 'supplierData', 'indicator' ));
     }
 
     public function compound_substrate() {
@@ -1031,7 +1031,10 @@ class SettingsController extends AppController
 
             if (!empty($this->request->data)) {
 
+
                 if(!empty($this->request->data['IdHolder'])){
+
+
                 
                     foreach ($this->request->data['IdHolder'] as $key => $value) {
                         $this->ItemGroupLayer->delete($value);
@@ -1053,14 +1056,15 @@ class SettingsController extends AppController
 
                 }
             
-                return $this->redirect(array('action' => 'item_group','tab' => 'tab-compound_substrates'));
+                return $this->redirect(array('action' => 'item_group',$this->request->data['CompoundSubstrate']['indicator'],'tab' => 'tab-compound_substrates'));
+                
 
             }
 
             $this->set(compact('compoundSubstrateData'));
     
     }
-    public function compound_substrate_edit($id = null) {
+    public function compound_substrate_edit($id = null, $indicator = null) {
 
         $this->loadModel('Supplier');
 
@@ -1098,7 +1102,7 @@ class SettingsController extends AppController
 
             if ($this->request->is(array('post', 'put'))) {
 
-                //pr($this->request->data);exit;
+                pr($this->request->data);exit;
 
                 $paperHolderId = array();
 
@@ -1131,7 +1135,7 @@ class SettingsController extends AppController
 
                     $this->Session->setFlash(__('Compound Substrate has been updated.'));
 
-                    return $this->redirect(array('action' => 'item_group','tab' => 'tab-compound_substrates'));
+                    return $this->redirect(array('action' => 'item_group',$indicator,'tab' => 'tab-compound_substrates'));
                 }
                 $this->Session->setFlash(__('Unable to update your post.'));
             }
@@ -1159,7 +1163,7 @@ class SettingsController extends AppController
             );
         }
 
-        return $this->redirect(array(' controller' => 'settings', 'action' => 'item_group','tab' => 'tab-compound_substrates'));
+        return $this->redirect(array(' controller' => 'settings', 'action' => 'item_group',$indicator,'tab' => 'tab-compound_substrates'));
     }
 
     public function view_compound_substrate($id){
@@ -1218,6 +1222,8 @@ class SettingsController extends AppController
 
             }
 
+            // pr($this->request->data['GeneralItem']['indicator']); exit;
+
             $this->id = $this->CorrugatedPaper->saveCorrugated($this->request->data,$userData['User']['id']);
 
             $this->ItemGroupLayer->addItemgroupLayer($this->request->data,$this->id);
@@ -1232,7 +1238,7 @@ class SettingsController extends AppController
 
             }
             
-            return $this->redirect(array('action' => 'item_group','tab' => 'tab-corrugated_papers'));
+            return $this->redirect(array('action' => 'item_group',$this->request->data['CorrugatedPaper']['indicator'],'tab' => 'tab-corrugated_papers'));
 
         }
 
@@ -1241,7 +1247,7 @@ class SettingsController extends AppController
     }
 
 
-     public function corrugated_paper_edit($id = null) {
+     public function corrugated_paper_edit($id = null, $indicator = null) {
 
         //pr($id); exit;
 
@@ -1267,9 +1273,6 @@ class SettingsController extends AppController
         //$itemGroupLayerData = $this->ItemGroupLayer->find('all', array('conditions' => array('ItemGroupLayer.foreign_key' => 'CorrugatedPaper.id')));
 
         //foreach ($this->request->data['ItemGroupLayer'] as $key => $itemGroupData): 
-
-       
-
 
             if (!$id) {
                 throw new NotFoundException(__('Invalid post'));
@@ -1313,7 +1316,7 @@ class SettingsController extends AppController
 
                     $this->Session->setFlash(__('Corrugated Paper has been updated.'));
 
-                    return $this->redirect(array('action' => 'item_group','tab' => 'tab-corrugated_papers'));
+                    return $this->redirect(array('action' => 'item_group', $indicator, 'tab' => 'tab-corrugated_papers'));
 
                 $this->Session->setFlash(__('Unable to update your post.'));
             }
@@ -1325,7 +1328,7 @@ class SettingsController extends AppController
             $this->set(compact( 'categoryData','typeData','supplierData', 'itemGroupLayerData' ));
     }
 
-     public function deleteCorrugatedPaper($id) {
+     public function deleteCorrugatedPaper($id , $indicator = null) {
 
         $this->loadModel('CorrugatedPaper');
       
@@ -1340,10 +1343,10 @@ class SettingsController extends AppController
             );
         }
 
-        return $this->redirect(array(' controller' => 'settings', 'action' => 'item_group','tab' => 'tab-corrugated_papers'));
+        return $this->redirect(array(' controller' => 'settings', 'action' => 'item_group', $indicator, 'tab' => 'tab-corrugated_papers'));
     }
 
-    public function view_corrugated_paper($id){
+    public function view_corrugated_paper($id , $indicator= null){
 
 
         $this->loadModel('Supplier');
@@ -1378,7 +1381,7 @@ class SettingsController extends AppController
             $this->request->data = $corrugatedData;
         }
 
-        $this->set(compact( 'categoryData','typeData' , 'supplierData','corrugatedLayer'));
+        $this->set(compact( 'categoryData','typeData' , 'supplierData','corrugatedLayer' , 'indicator'));
     }
 
     public function process() {

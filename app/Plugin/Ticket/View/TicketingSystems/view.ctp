@@ -21,9 +21,15 @@
 	                        	$buttonName = 'Add Remarks';
 	                        }
 	                       
-							echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> Export ', array(
+							echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> EXCEL ', array(
 					        	'controller' => 'ticketing_systems', 
 					        	'action' => 'excel_ticket',$productData['Product']['uuid'],$ticketData['JobTicket']['uuid'],$clientOrderId),
+					        	array('class' =>'btn btn-info pull-right '.$noPermissionSales,'escape' => false));
+
+
+							echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> PDF ', array(
+					        	'controller' => 'ticketing_systems', 
+					        	'action' => 'print_ticket_export',$productData['Product']['uuid'],$ticketData['JobTicket']['uuid'],$clientOrderId,'pdf'),
 					        	array('class' =>'btn btn-info pull-right '.$noPermissionSales,'escape' => false));
 						?>
 
@@ -55,7 +61,7 @@
 								<div class="col-lg-2"></div>
 								<div class="col-lg-6"></div>
 								<div class="col-lg-4">&emsp;&emsp;&nbsp;&nbsp;&nbsp;
-									Date : <?php echo (new \DateTime())->format('l, F d, Y '); ?>
+									Date : <?php //echo (new \DateTime())->format('l, F d, Y '); ?>
 								</div>
 							</div>
 

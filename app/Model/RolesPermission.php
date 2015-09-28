@@ -43,7 +43,7 @@ class RolesPermission extends AppModel {
 
         $approved = !empty($ids['Permission']['approved']) ? $ids['Permission']['approved'] : array() ;
         
-        $saveData = [];
+        $saveData = array();
 
         foreach ($data['Permission'] as $key => $dataList) {
 
