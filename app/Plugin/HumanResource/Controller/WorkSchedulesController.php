@@ -25,7 +25,7 @@ class WorkSchedulesController  extends HumanResourceAppController {
 		$conditions = array();
 		$employees = $this->Employee->getList($conditions);
 
-		$conditions = array();
+		$conditions = array('overtime_id' => NULL);
 		$workshifts = $this->Workshift->getList($conditions);
 
 		$conditions = array('Holiday.year' => date('Y'));
@@ -48,10 +48,11 @@ class WorkSchedulesController  extends HumanResourceAppController {
 
 			// $this->Attendance->find('all',)
 
-		
-			if ($this->WorkSchedule->saveAll($create_schedules['WorkSchedule'])) {
+			if (!empty($create_schedules)) {
 
-				$attendance = $this->Attendance->saveRecord($this->request->data['WorkSchedule'],$this->WorkSchedule->id,$holidays);
+				if ($this->WorkSchedule->saveAll($create_schedules['WorkSchedule'])) {
+
+				//$attendance = $this->Attendance->saveRecord($this->request->data['WorkSchedule'],$this->WorkSchedule->id,$holidays);
 				
 				//create ovetime limit
 				$this->OvertimeLimit->createLimit($this->request->data['WorkSchedule'],$auth);
@@ -63,16 +64,21 @@ class WorkSchedulesController  extends HumanResourceAppController {
 				$dailynfo = $this->DailyInfo->saveDailyInfo($data);
 
 				$this->Session->setFlash('Work Schedule saved successfully','success');
-		 		   $this->redirect( array(
-                             'controller' => 'schedules', 
-                             'action' => 'work_schedules',
-                             'tab'	=> 'work_schedules'
-                        ));
+	 		   
+	 		   	$this->redirect( array(
+                         'controller' => 'schedules', 
+                         'action' => 'work_schedules',
+                         'tab'	=> 'work_schedules'
+                    ));
 			} else  {
 
-				$this->Session->setFlash('There\'s an error saving Schedule','success');
+				$this->Session->setFlash('There\'s an error saving Schedule','error');
 
 			}
+		} else {
+				$this->Session->setFlash('There\'s an error saving Schedule','error');
+		}
+			
 			
 		}
 
@@ -224,6 +230,46 @@ class WorkSchedulesController  extends HumanResourceAppController {
 	    $this->render('WorkSchedules/ajax/work_schedules');
 
 
+		}
+	}
+
+
+	public function search_schedules() {
+
+		$query = $this->request->query;
+
+		if (!empty($query)) {
+
+			$conditions = array();
+
+			if (!empty($query['employee_id'])) {
+
+				$conditions  = array_merge($conditions, array('WorkSchedule.model' => 'Employee','WorkSchedule.foreign_key' => $query['employee_id']));
+			}
+
+			if (!empty($query['from']) && !empty($query['to'])) {
+
+				// $conditions  = array_merge($conditions,array(
+				// 	'WorkSchedule.from >=' => $query['from'],
+				// 	'WorkSchedule.to <=' => $query['to'],
+				// 	));
+
+				$conditions = array_merge($conditions,array(
+					'date(WorkSchedule.from) BETWEEN ? AND ?' => array($query['from'],$query['to']), 
+				));
+			}
+
+			$params['conditions'] = $conditions;
+			$params['order'] = array('WorkSchedule.from ASC');
+
+			$this->WorkSchedule->bind(array('WorkShift','Employee'));
+
+	    	$workSchedules = $this->WorkSchedule->find('all',$params);
+
+	    	$this->set(compact('workSchedules'));
+
+	  		$this->render('WorkSchedules/ajax/work_schedules');
+  
 		}
 	}
 

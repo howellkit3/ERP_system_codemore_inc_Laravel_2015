@@ -14,9 +14,10 @@ echo $this->Html->script(array(
 
 )); 
 
-	echo $this->element('hr_options');
+echo $this->element('hr_options');
 
-	$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
+$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
+
  ?>
 
  <div class="row">
@@ -30,8 +31,25 @@ echo $this->Html->script(array(
 						<div class="tab-pane active" id="tab-calendar">
 							<header class="main-box-header clearfix">
 				                <h2 class="pull-left"><b>Work Schedules</b> </h2>
+
 				                <div class="filter-block pull-right">
-				                 	
+				                	 <?php
+
+				                   	echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Add', 
+				                            array('controller' => 'work_schedules', 
+				                                    'action' => 'add'),
+				                            array('class' =>'btn btn-primary',
+				                                'escape' => false));
+
+				                    ?> 
+				                  	
+				                  	<a data-toggle="modal" href="#myWorkSched" class="btn btn-primary pull-right "><i class="fa fa-share-square-o fa-lg"></i> Export</a>
+				                  	
+				                </div>
+				                <div class="clearfix"></div>
+				                <?php echo $this->Form->create('Schedule',array('url' => array( 'controller' => 'schedules','action' => 'search_schedules') , 'id' => 'search_schedules','type' => 'GET')) ?>
+				                <div class="filter-block pull-left">
+				                 
 						             <div class="form-group pull-left">
 										<div class="radio inline-block">
 											<input type="radio" checked="" value="employee" id="optionsRadios1" name="by">
@@ -50,20 +68,42 @@ echo $this->Html->script(array(
 				                 			'id' => 'selectEmployee'
 				                 		)); ?>
 				                    </div>
-				                    <?php
+				                   
 
-				                   	echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Add', 
-				                            array('controller' => 'work_schedules', 
-				                                    'action' => 'add'),
-				                            array('class' =>'btn btn-primary',
-				                                'escape' => false));
+				                   	<div class="form-group pull-left">
 
-				                    ?> 
-				                  	
-				                  	<a data-toggle="modal" href="#myWorkSched" class="btn btn-primary pull-right "><i class="fa fa-share-square-o fa-lg"></i> Export</a>
-				                  	
-				                   <br><br>
+				                 	<!-- date range -->
+				                 	
+									<div class="form-group pull-left">
+
+											<input type="text" name="from" id="changeDate" class="form-control datepick" value="<?php echo $date ?>">
+
+										    <i class="fa fa fa-calendar calendar-icon"></i>
+
+											
+									</div>
+
+									<div class="form-group pull-left">
+										-
+									</div>
+
+									<div class="form-group pull-left">
+										
+											<input type="text" name="to" id="changeDate" class="form-control datepick" value="<?php echo $date ?>">
+
+									    	<i class="fa fa fa-calendar calendar-icon"></i>
+
+									</div>
+									<div class="form-group pull-left">
+										
+										<button class="btn btn-success">Go</button>
+
+									</div>
+
+
+				                 	</div>
 				               </div>
+				               <?php echo $this->Form->end(); ?>
 				            </header>
 
 				            <div class="main-box-body clearfix">

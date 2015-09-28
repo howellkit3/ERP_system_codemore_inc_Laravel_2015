@@ -30,7 +30,7 @@
 							echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> PDF ', array(
 					        	'controller' => 'ticketing_systems', 
 					        	'action' => 'print_ticket_export',$productData['Product']['uuid'],$ticketData['JobTicket']['uuid'],$clientOrderId,'pdf'),
-					        	array('class' =>'btn btn-info pull-right '.$noPermissionSales,'escape' => false));
+					        	array('class' =>'btn btn-info pull-right '.$noPermissionSales,'target' => '_blank','escape' => false));
 						?>
 
 						<!-- <a href="#" class="btn btn-primary mrg-b-lg pull-right <?php echo $noPermissionSales; ?>"> <i class="fa fa-file"></i> Export </a> -->
@@ -149,7 +149,8 @@
 							<div class="table-responsive">
 								<table class="table table-bordered">
 									<thead>
-										<?php foreach ($formatDataSpecs as $key => $specLists) { ?>
+										<?php
+										 foreach ($formatDataSpecs as $key => $specLists) { ?>
 							
 											<?php
 

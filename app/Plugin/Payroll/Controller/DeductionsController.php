@@ -5,29 +5,34 @@ App::import('Vendor', 'PhpExcelReader', array('file' => 'PhpExcelReader'.DS.'exc
 
 
 class DeductionsController extends PayrollAppController {
-
-
+	
 	public function index($employee_id = null) {
 
 		$this->loadModel('Payroll.Deduction');
+		
 		$this->loadModel('HumanResource.Employee');
 
 		$conditions = array();
+		
 		$employeeList = $this->Employee->getList($conditions);	
 
 		$limit = 10;
 
         if (!empty($this->request->data)) {
+				
 				if (!empty($this->request->data['employee_id'])) {
+
 					$conditions = array_merge($conditions,array('Deduction.employee_id' => $this->request->data['employee_id']));
 				}
+
 				if (!empty($this->request->data['employee_code'])) {
+					
 					$employee = $this->Employee->find('first',array('conditions' => array('Employee.code like' =>'%'.$this->request->data['employee_code'].'%')));
 
 					if (!empty($employee)) {
-						$conditions = array_merge($conditions,array('Deduction.employee_id' => $employee['Employee']['id']));
+							$conditions = array_merge($conditions,array('Deduction.employee_id' => $employee['Employee']['id']));
 					}
-					
+
 				}	
         }
 

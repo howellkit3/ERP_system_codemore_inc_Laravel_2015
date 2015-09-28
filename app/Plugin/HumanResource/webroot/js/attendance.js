@@ -36,23 +36,27 @@
 
             	$('.radio input').attr('disabled',false);
 
-                       console.log(data.in);
+                if (typeof(data.in) === 'undefined') {
 
-            	if (data.in != '' && data.in != '00:00:00' && data.in !== null){
-                    
-                    $('#categoryRadio1').attr('disabled',true).next().text('Time-In: '+data.in);
-            		$('#categoryRadio2').click();
-
-             
-            	
                 } else {
 
-            		$('#categoryRadio2').attr('checked',false);
-            		$('#categoryRadio1').click().attr('disabled',false).next().text('In');
+                     if (data.in != '' && data.in != '00:00:00' && data.in !== null){
+                        
+                        $('#categoryRadio1').attr('disabled',true).next().text('Time-In: '+data.in);
+                        $('#categoryRadio2').click();
 
-                   // $('#AttendanceNotes').val('');
+                 
+                    
+                    } else {
 
-            	}
+                        $('#categoryRadio2').attr('checked',false);
+                        $('#categoryRadio1').click().attr('disabled',false).next().text('In');
+
+                       // $('#AttendanceNotes').val('');
+
+                    } 
+                }
+            	
 
 
             }
@@ -298,6 +302,7 @@ $(document).ready(function(){
 
     	e.preventDefault();
     });
+
 
      
         $('.datepick').datepicker({

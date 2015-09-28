@@ -2081,3 +2081,6 @@ CREATE TABLE `item_categories` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+/* aldrin added this spet 28 2015*/
+ALTER TABLE `work_schedules`  ADD `from` DATETIME NULL  AFTER `day`,  ADD `to` DATETIME NULL  AFTER `from`;

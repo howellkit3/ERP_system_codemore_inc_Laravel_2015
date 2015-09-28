@@ -3,7 +3,6 @@
 <?php echo $this->Html->script('HumanResource.custom');?>
 <?php echo $this->Html->script('profile');?>
 <div style="clear:both"></div>
-
 <div class="row">
     <div class="col-lg-12">
 		<div class="row" id="user-profile">
@@ -19,7 +18,8 @@
 						</center>
 					</header>
 					<?php echo $this->Form->create('User',array(
-					'url' => array('controller' => 'users','action' => 'profile_settings',$userData['User']['id']),
+					'url' => array('controller' => 'users',
+					'action' => 'profile_settings',$userData['User']['id']),
 					'enctype' => 'multipart/form-data')); ?>	
 					<div class="main-box-body clearfix">
 
@@ -45,10 +45,8 @@
 				                         	'onchange' => 'readURL(this,"image_profile")',
 				                         	'label' => false));
 				                    	?>
-
-
-		                       </div>
-		                       <button class="btn btn-success upload-image"> Uplad Photo</button>
+				                </div>
+		                       <button class="btn btn-success upload-image"> Uplad Photo </button>
 	                        </center>
 						</div>
 
@@ -103,10 +101,7 @@
 						</ul>
 						
 						<div class="tab-content">
-							
-									<div class="tab-pane fade active in" id="tab-ainfo">
-
-								        
+								<div class="tab-pane fade active in" id="tab-ainfo">
 										<div class="story-content remove-pad">
 											<header class="story-header">
 											
@@ -142,9 +137,7 @@
 									                                     		)); ?>
 								                                       </div>
 							                                     </div>
-							                                       <div class="clearfix"></div>
-
-							                                    
+							                                     <div class="clearfix"></div>
 
 							                                     <div class="form-group">
 							                                        <label for="inputEmail1" class="col-lg-2 control-label strong"> Email Address </label>
@@ -156,7 +149,41 @@
 								                                     		)); ?>
 								                                       </div>
 							                                     </div>
+							                                     <div class="clearfix"></div>
+
+							                                      <a href="#" class="changePass">Change Password</a>
+							                                      <br>
+							                                       <br>
+							                                       <div class="clearfix"></div>
+							                                      <div class="ChangePassword hide">
+
+							                                       <div class="form-group">
+							                                        <label for="inputEmail1" class="col-lg-2 control-label strong"> Password </label>
+								                                      <div class="col-lg-7 value"> 
+								                                     		<?php echo $this->Form->input('password',array(
+								                                     		'label' => false,
+								                                     		'type' => 'password',
+								                                     		'class' => 'form-control',
+								                                     		'value' => $userData['User']['rxt']
+								                                     		)); ?>
+								                                       </div>
+							                                     	</div>
+
 							                                      <div class="clearfix"></div>
+							                                        <div class="form-group">
+							                                        <label for="inputEmail1" class="col-lg-2 control-label strong"> Password </label>
+								                                      <div class="col-lg-7 value"> 
+								                                     		<?php echo $this->Form->input('repassword',array(
+								                                     		'label' => false,
+								                                     		'type' => 'password',
+								                                     		'class' => 'form-control',
+								                                     		)); ?>
+								                                       </div>
+							                                     	</div>
+							                                     	
+							                                      <div class="clearfix"></div>
+
+							                                      </div>
 			                                    			</div>
 														</div>
 												</div>
@@ -178,3 +205,28 @@
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+	$(document).ready(function(e){
+
+		$('.ChangePassword').find('input').attr('disabled','disabled');
+
+		$('.changePass').click(function(){
+
+			if ($('.ChangePassword').hasClass('hide') == true) {
+				
+				$('.ChangePassword').removeClass('hide');
+
+				$('.ChangePassword').find('input').attr('disabled',false);
+
+			} else {
+
+				$('.ChangePassword').addClass('hide');
+
+				$('.ChangePassword').find('input').attr('disabled','disabled');
+			}
+
+		});
+
+	});
+</script>

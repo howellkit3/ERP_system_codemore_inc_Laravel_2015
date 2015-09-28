@@ -336,5 +336,9 @@ class Attendance extends AppModel {
 			}
 		}
 	}
+
+	public function createAttendance($data = null) {
+
+	}	
 	
   }

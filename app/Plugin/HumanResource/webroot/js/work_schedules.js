@@ -52,7 +52,32 @@
                 }
           });
       }
-    })
+    });
+
+
+    $body.on('submit','#search_schedules',function(e){
+
+      $append_cont = $('.result-cont');
+
+      $append_cont.html('<img src="'+serverPath+'/img/loader.gif"/>');
+      
+        $.ajax({
+                type: "GET",
+                url: serverPath + "human_resource/work_schedules/search_schedules/" ,
+                dataType: "html",
+                data: $('#search_schedules').serialize(),
+                success: function(data) {
+                
+                 $append_cont.html(data)
+
+                },
+                error: function(){
+                }
+          });
+
+      e.preventDefault();
+
+    });
 
 
 });
