@@ -1,6 +1,14 @@
 <div style="clear:both"></div>
 
-<?php echo $this->element('setting_option');?><br><br>
+<?php if($indicator == "purchasing"){
+	
+		 echo $this->element('Purchasing.purchasings_option');?><?php 
+	}else{
+
+	 echo $this->element('setting_option');?><?php
+	 
+
+} ?>
 
 <div class="row">
 	<div class="col-lg-12">

@@ -1,4 +1,12 @@
-<?php echo $this->element('setting_option');?><br><br>
+<?php if($indicator == "purchasing"){
+	
+		 echo $this->element('Purchasing.purchasings_option');?><br><br> <?php 
+	}else{
+
+	 echo $this->element('setting_option');?><br><br><?php
+	 
+
+} ?><br><br>
 <?php echo $this->Html->script(array(
 									'jquery',
 									'compound_substrate',
@@ -45,6 +53,12 @@
 								                                        'label' => false,
 								                                        'hidden' => 'hidden'
 																		)); 
+												echo $this->Form->input('CompoundSubstrate.indicator', array(
+																		'class' => 'form-control ',
+											                            'label' => false,
+											                            'type' => 'hidden',
+											                            'value' => $indicator));
+																		
                                             ?>
 
 										</div>
