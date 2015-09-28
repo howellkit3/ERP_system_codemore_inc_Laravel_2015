@@ -29,7 +29,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
 
         <li class="dropdown hidden-xs active">
            <?php $page =($active_page == 'settings' && $active_action == 'item_group') ? 'active tab' : '' ?>
-            <?php echo $this->Html->link("<span class='count'>Item Group</span>", array('controller' => 'settings', 'action' => 'item_group?'.rand(1000,9999).'='.date("is") , 'plugin' => false, 'purchasing'),array('escape' => false,'class' => 'btn')); ?>
+            <?php echo $this->Html->link("<span class='count'>Item Group</span>", array('controller' => 'settings', 'action' => 'item_group' ,'purchasing','plugin' => false),array('escape' => false,'class' => 'btn')); ?>
            
         </li>
  

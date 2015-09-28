@@ -674,6 +674,8 @@ class SettingsController extends AppController
 
       public function item_group($indicator = null) {
 
+       // pr($indicator); exit;
+
         $this->loadModel('Supplier');
 
         $this->loadModel('GeneralItem');
