@@ -70,7 +70,7 @@
 			                                            <?php
 			                                                echo $this->Form->input('Employee.suffix', array('class' => 'form-control','label' => false,'div' => 'col-lg-12'));
 			                                            ?>
-			                                        </div>
+			                                        </div>	
 		                                     </div>
 
 		                                 </div>

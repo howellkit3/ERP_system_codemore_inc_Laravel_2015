@@ -51,8 +51,8 @@ class JobTicket extends AppModel {
 				),
 				'ClientOrderDeliverySchedule' => array(
 					'className' => 'Sales.ClientOrderDeliverySchedule',
-					'foreignKey' => 'client_order_id',
-					//'conditions' => 'ClientOrderDeliverySchedule.client_order_id = ClientOrder.id'
+					//'foreignKey' => 'client_order_id',
+					'conditions' => 'ClientOrderDeliverySchedule.client_order_id => 11'
 				)
 
 			)
@@ -61,6 +61,32 @@ class JobTicket extends AppModel {
 		$this->recursive = 1;
 		//$this->contain($giveMeTheTableRelationship);
 	}
+
+	public function bindTicketJob() {
+		$this->bindModel(array(
+			'belongsTo' => array(
+				'ClientOrder' => array(
+					'className' => 'Sales.ClientOrder',
+					'foreignKey' => 'client_order_id',
+					//'conditions' => 'JobTicket.client_order_id = ClientOrder.id'
+				),				
+				'Product' => array(
+					'className' => 'Sales.Product',
+					'foreignKey' => 'product_id',
+					//'conditions' => 'Company.id = Product.company_id'
+				),
+				// 'ClientOrderDeliverySchedule' => array(
+				// 	'className' => 'Sales.ClientOrderDeliverySchedule',
+				// 	'foreignKey' => false,
+				// 	'conditions' => array('ClientOrderDeliverySchedule.client_order_id = client_order_id')
+				// )
+			)
+			
+		));
+		$this->recursive = 1;
+		//$this->contain($giveMeTheTableRelationship);
+	}
+
 
 	public $validate = array(
 
