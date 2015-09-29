@@ -65,7 +65,7 @@
                             <tr>
                                 <th><a href="#"><span>Name</span></a></th>
                                 <th><a href="#"><span>Description</span></a></th>
-                                <th><a href="#"><span>Messure</span></a></th>
+                                <th><a href="#"><span>Measure</span></a></th>
                                 <th><a href="#"><span>Type</span></a></th>
                                 <th><a href="#"><span>Stocks</span></a></th>
                                 <th class="text-center">Action</th>

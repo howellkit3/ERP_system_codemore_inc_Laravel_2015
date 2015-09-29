@@ -223,9 +223,6 @@
 	                                                             </div>
 	                                                        </div> 
 			                                          </div>
-
-
-
 			                                          
 		                                        </div>
 		                                        <div class="col-lg-4">
@@ -360,7 +357,7 @@
 	                                        	<label class="col-lg-2 control-label">
 	                                        	<span style="color:red">*</span>Gender</label>
 	                                           	<div class="radio col-lg-7">
-													<input type="radio" name="data[EmployeeAdditionalInformation][gender]" id="categoryRadio1" value="M" <?php echo $maleCheck ?> >
+													<input type="radio" name="data[EmployeeAdditionalInformation][gender]"  id="categoryRadio1" value="M" <?php echo $maleCheck ?> >
 													<label for="categoryRadio1">Male
 													</label>
 													<input type="radio" name="data[EmployeeAdditionalInformation][gender]" id="categoryRadio2" value="F" <?php echo $fmaleCheck ?> >

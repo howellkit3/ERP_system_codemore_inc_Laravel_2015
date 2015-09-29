@@ -44,10 +44,10 @@
 			                        </div>    
 
 			                        <div class="form-group">
-                                                <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span> Measure </label>
+                                                <label for="inputPassword1" class="col-lg-2 control-label"> Measure </label>
                                                 <div class="col-lg-9">
                                                    <?php 
-                                                        echo $this->Form->input('measure', array('class' => 'form-control required','label' => false,'type' => 'text'));
+                                                        echo $this->Form->input('measure', array('class' => 'form-control','label' => false,'type' => 'text'));
                                                     ?>
                                                 </div>
                                             </div>
@@ -116,7 +116,7 @@
 
 
 									   <div class="form-group">
-						                <label for="inputPassword1" class="col-lg-2 control-label"> <span style="color:red">*</span> Supplier </label>
+						                <label for="inputPassword1" class="col-lg-2 control-label">Supplier </label>
 						                <div class="col-lg-9"> 
 												   <?php
 					                           		
@@ -165,7 +165,7 @@
                                                 <label for="inputPassword1" class="col-lg-2 control-label">Description</label>
                                                 <div class="col-lg-9">
                                                      <?php 
-                                                        echo $this->Form->textarea('description', array('class' => 'form-control required','label' => false));
+                                                        echo $this->Form->textarea('description', array('class' => 'form-control ','label' => false));
                                                     ?>
                                                 </div>
                                             </div>
