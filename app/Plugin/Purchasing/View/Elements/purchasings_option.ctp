@@ -34,11 +34,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
            
         </li>
  
-        <!-- <li class="dropdown hidden-xs active">
-           <?php $page =($active_page == 'settings' && $active_action == 'items') ? 'active tab' : '' ?>
-            <?php echo $this->Html->link("<span class='count'>Items</span>", array('controller' => 'settings', 'action' => 'item_group' , 'plugin' => false, 'purchasing'),array('escape' => false,'class' => 'btn')); ?>
-           
-        </li> -->
+    
     </ul>
 </div>
 <br><br>
