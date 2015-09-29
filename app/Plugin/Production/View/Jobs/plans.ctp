@@ -88,7 +88,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 														<tr class="">
 
 															<td class="">
-									                           <?php  echo 'SCH - '.$jobList['ClientOrderDeliverySchedule']['uuid']; ?>
+									                           <?php  echo 'SCH - '.$clientOrderUUID[$jobList['JobTicket']['client_order_id']]; ?>
 									                        </td>
 
 									                        <td class="">
@@ -100,7 +100,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 									                        </td>
 
 									                        <td class="">
-									                           <?php echo $jobList['ClientOrderDeliverySchedule']['quantity']; ?>
+									                           <?php echo $clientOrderQuantity[$jobList['JobTicket']['client_order_id']]; ?>
 									                        </td>
 
 									                        <td class="text-center">

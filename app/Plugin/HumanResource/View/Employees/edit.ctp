@@ -13,6 +13,7 @@ echo $this->Html->css(array(
 
 )); 
 ?>
+
 <div style="clear:both"></div>
 
 <?php echo $this->element('hr_options'); ?><br><br>

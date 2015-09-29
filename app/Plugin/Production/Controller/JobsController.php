@@ -8,23 +8,29 @@ class JobsController extends ProductionAppController {
 
         $this->loadModel('Ticket.JobTicket');
 
-        $this->loadModel('Sales.ClientOrder');
+        $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
         $this->loadModel('Sales.Company');
 
         $this->loadModel('Production.Machine');
 
-        $this->loadModel('Sales.ProductSpecificationProcess');
+        // $this->loadModel('Sales.ProductSpecificationProcess');
 
-        $this->loadModel('Sales.ProductSpecificationProcessHolder');
+        // $this->loadModel('Sales.ProductSpecificationProcessHolder');
 
         $companyData = $this->Company->find('list',array('fields' => array('id','company_name')));
 
         $machineData = $this->Machine->find('list',array('fields' => array('id','name')));
 
-        $this->JobTicket->bindJobTicket(); 
+        $this->JobTicket->bindTicketJob(); 
+
+        //$this->JobTicket->bind(array('ClientOrder', 'Product', 'ClientOrderDeliverySchedule'));
 
         $jobData = $this->JobTicket->find('all',array('order' => 'JobTicket.id DESC','conditions' => array('JobTicket.created >=' => date('Y-m-d'))));
+
+        $clientOrderUUID = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('client_order_id','uuid')));
+
+        $clientOrderQuantity = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('client_order_id','quantity')));
 
         //pr($jobData ); exit;
         // foreach ($jobData as $key => $jobList) {
@@ -40,7 +46,7 @@ class JobsController extends ProductionAppController {
            
         // }
         //pr($jobData);exit();
-        $this->set(compact('jobData','companyData','machineData','processDepartmentData'));
+        $this->set(compact('jobData','companyData','machineData','processDepartmentData', 'clientOrderUUID', 'clientOrderQuantity'));
         
     }
 
