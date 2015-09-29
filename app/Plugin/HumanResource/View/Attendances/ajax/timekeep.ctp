@@ -39,7 +39,9 @@
                  array(
                 'class' => 'item_type required form-control time_input',  
                 'type' => 'text',
+                'id' => 'datetimepickerTime',
                 'placeholder' => 'Time',
+                'value' => date('Y-m-d h:i'),
                 'label' => false));
         ?>
     </div>
@@ -84,3 +86,13 @@
     </div>
 </div>
 
+<script type="text/javascript">
+    $(document).ready(function(){
+         $("#datetimepickerTime,#AttendanceTime").datetimepicker( {
+            format:'Y-m-d H:i',
+        });
+
+    });
+   
+
+</script>

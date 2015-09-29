@@ -40,9 +40,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 			                 		<input type="text" name="data[date]" id="changeDate" class="form-control datepick" value="<?php echo $date ?>">
 
 			                            <i class="fa fa fa-calendar calendar-icon"></i>
-
-			                 		
-			                    </div>
+								</div>
 			                    <div class="form-group pull-left">
 			                 		 <input placeholder="Search..." class="form-control searchCustomer" value="<?php echo $search ?>" name="data[name]" />
 			                            <i class="fa fa-search search-icon"></i>
@@ -96,16 +94,15 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 														<td> <?php echo $schedule['Employee']['code']; ?></td>
 														<td class="">
 								                          <?php 
-								                          if ($schedule['WorkSchedule']['model'] == 'Employee') {
+									                        //  if ($schedule['WorkSchedule']['model'] == 'Employee') {
 
-								                          		echo $this->CustomText->getFullname($schedule['Employee']);
+									                          		echo $this->CustomText->getFullname($schedule['Employee']);
 
-								                          } else if ($schedule['WorkSchedule']['model'] == 'Department') {
+									                        //  } else if ($schedule['WorkSchedule']['model'] == 'Department') {
 
-								                          		echo "Department";
-								                          }
-								                          
-								                           ?>
+									                          	//	echo "Department";
+									                        //  }
+									                        ?>
 								                        </td>
 								                        <td class="text-center"> 
 
@@ -190,25 +187,26 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 															));
 
 														if ($schedule['Attendance']['type'] != 'leave') {
+															
 															if (!empty($timeIn)) {
 
-																$sign = 'fa-sign-out';
-															
-																$title = 'Time Out';
+																	$sign = 'fa-sign-out';
+																
+																	$title = 'Time Out';
 
-															} else {
+																} else {
 
-																$sign =  'fa-sign-in';
+																	$sign =  'fa-sign-in';
 
-																$title = 'Time In';
+																	$title = 'Time In';
 															}
-														
+															
 															if (empty($timeIn) || empty($timeOut)) {
 
 																echo $this->Html->link('<span class="fa-stack">
 																<i class="fa fa-square fa-stack-2x"></i>
 																<i class="fa '.$sign.' fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Log </font></span>
-																</span> ','#timeKeep',
+																</span> ','#timeKeepAttendance',
 																array('class' =>'add-timekeep table-link',
 																	   'escape' => false,
 																	   'title' => $title,
@@ -218,7 +216,6 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																	));
 
 															}
-
 
 															
 														}
@@ -254,6 +251,8 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 <?php echo $this->element('modals/personnal_attendance',array('employeeList' => $employeeList)); ?>
 
 <?php echo $this->element('modals/time_in_attendance',array('employeeList' => $employeeList)); ?>
+
+<?php echo $this->element('modals/time_in_attendance_log',array('employeeList' => $employeeList)); ?>
 
 <div class="modal fade" id="myAttendance" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -316,9 +315,6 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 		});
 
 		$('#AttendanceIndexForm').validate();
-
-
-       
 
 	});
 </script>

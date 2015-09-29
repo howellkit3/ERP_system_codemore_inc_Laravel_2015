@@ -337,15 +337,17 @@ class Attendance extends AppModel {
 		}
 	}
 
-	public function createAttendance($data = null) {
+	public function createAttendance($data = null, $WorkSchedule = array()) {
 
 		$Holiday = ClassRegistry::init('Holiday');
+
+		$Worschedule = ClassRegistry::init('WorkSchedule');
 
 		$holidayList = $Holiday->find('all',array(
 			'conditions' => array(),
 			'order' => array('Holiday.start_date ASC')
 		));
-
+		
 		$dateNow = date('Y-m-d');
 
 		foreach ($holidayList as $key => $holiday) {
@@ -356,11 +358,7 @@ class Attendance extends AppModel {
 			} 
 		}
 
-
-
 		$data['Attendance'] = $data['Attendance'];
-
-		$data['Attendance']['id'] = !empty($attendance['id']) ? $attendance['id'] : '';
 
 		$data['Attendance']['date'] = date('Y-m-d').' 00:00:00';
 

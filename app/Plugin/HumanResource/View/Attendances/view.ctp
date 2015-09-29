@@ -75,14 +75,10 @@
 								<td> <?php echo $schedule['Employee']['code']; ?></td>
 								<td class="">
 		                          <?php 
-		                          if ($schedule['WorkSchedule']['model'] == 'Employee') {
+		                          if (!empty($schedule['Employee'])) {
 
 		                          		echo $this->CustomText->getFullname($schedule['Employee']);
-
-		                          } else if ($schedule['WorkSchedule']['model'] == 'Department') {
-
-		                          		echo "Department";
-		                          }
+									}
 		                          
 		                           ?>
 		                        </td>

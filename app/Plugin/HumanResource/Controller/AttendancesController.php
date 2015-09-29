@@ -65,7 +65,9 @@ class AttendancesController  extends HumanResourceAppController {
 		$departmentList = $this->Department->getList();
 		
 		$conditions = array();
+
 		$employeeList = $this->Employee->getList($conditions);
+
 
 		$this->set(compact('attendances','date','search','departmentList','employeeList'));
 
@@ -203,13 +205,37 @@ class AttendancesController  extends HumanResourceAppController {
 			// 	$attendance['Attendance']['modified_by'] = $auth['id'];
 			// }
 
-			$this->LoadModel('HumanResource.Holiday');		
+			$this->LoadModel('HumanResource.Holiday');	
 
+			$this->LoadModel('HumanResource.WorkSchedule');		
+
+			$dateSplit = explode(' ', $data['Attendance']['time']);	
+
+			$WorkSchedule = $this->WorkSchedule->find('first',array(
+					'conditions' => array(
+					'WorkSchedule.model' => 'Employee',
+					'WorkSchedule.foreign_key'=> $data['Attendance']['employee_id'],
+					'WorkSchedule.day' => $dateSplit[0]
+				)
+			));
+
+			if (empty($WorkSchedule['WorkSchedule']['id'])) {
+
+				//rediect  
+				$this->Session->setFlash('You dont have schedule for today','error');
+
+				$this->redirect( array(
+                         'controller' => 'attendances', 
+                         'action' => 'index',
+                         'tab' => 'attendance',
+                         'plugin' => 'human_resource'
+				));
+			} 
+		
 			if ($this->Timekeep->saveTime($data,null,$auth['id'])) {
 
 			//create attendance
-			
-			$attendance = $this->Attendance->createAttendance($data);
+			$attendance = $this->Attendance->createAttendance($data,$WorkSchedule);	
 
 			//update attendance
 			if (!empty($attendance)) {
@@ -240,8 +266,9 @@ class AttendancesController  extends HumanResourceAppController {
 						//update daily info
 						$this->Attendance->bindWorkshift();
 						$callAttendance = $this->Attendance->findById($data['Attendance']['id']);
-						
-						$this->DailyInfo->updateDailyInfo($callAttendance,$attendance['Attendance']['employee_id'],$callAttendance['Attendance']['date']);	
+
+
+						//$this->DailyInfo->updateDailyInfo($attendance,$attendance['Attendance']['employee_id'],$attendance['Attendance']['date']);	
 
 						if (!empty($attendance['Attendance']['overtime_id'])) {
 							
@@ -277,8 +304,7 @@ class AttendancesController  extends HumanResourceAppController {
 
 			$this->redirect( array(
                          'controller' => 'attendances', 
-                         'action' => 'timekeep',
-                         'tab' => 'timekeep',
+                         'action' => 'index',
                          'plugin' => 'human_resource'
 
                     ));	
@@ -791,21 +817,31 @@ public function daily_info() {
 
 		$this->autoRender = false;
 
-		if (!empty($employee_id)) {
+		$query = $this->request->query;
 
-			$date = date('Y-m-d');
+		if (!empty($query['employee_id'])) {
 
-			$date2 = date('Y-m-d', strtotime($date . ' +1 day'));
+			if (!empty($query['date'])) {
+
+				$dateSplit = explode(' ',$query['date']);
+		
+				$date = trim($dateSplit[0]);
+
+			} else {
+
+				$date = date('Y-m-d');
+
+				$date2 = date('Y-m-d', strtotime($date . ' +1 day'));
+			}
 
 			$conditions = array(
-			'Attendance.date <=' => $date,
-			'Attendance.date >=' => $date,
-			'Attendance.employee_id' => $employee_id,
+				'Attendance.date <=' => $date,
+				'Attendance.date >=' => $date,
+				'Attendance.employee_id' => $query['employee_id'],
 			);
 
 			$timekeep = $this->Attendance->find('first',array(
 				'conditions' => $conditions
-
 			));
 
 			if (!empty($timekeep)) {

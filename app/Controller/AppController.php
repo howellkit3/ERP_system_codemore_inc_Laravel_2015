@@ -37,6 +37,17 @@ class AppController extends Controller {
 public function beforeFilter(){
 	$userData = $this->Session->read('Auth');
 	$this->set(compact('userData'));
+
+	//clear cache every time
+
+    Cache::clear();
+    // clear core cache
+    $cachePaths = array('views', 'persistent', 'models');
+    foreach($cachePaths as $config) {
+        clearCache(null, $config);
+    }
+
+
 	}
 	
 	public $components = array(

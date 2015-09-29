@@ -6,18 +6,38 @@
 				<?php 
 					$serverPath = $this->Html->url('/',true);
 
-				  if (!empty($userData['User']['image'])) {
+
+				  // if (!empty($userData['User']['image']) && file_exists($serverPath.'img/uploads/users/'.$userData['User']['image'])) {
 	
-			                            $background =  $serverPath.'img/uploads/users/'.$userData['User']['image'];	
-			                            $style = 'background:url('.$background.'); background-size:cover;bacground-position:center';
-	                 }  else {
+			   //                          $background =  $serverPath.'img/uploads/users/'.$userData['User']['image'];	
+			   //                          $style = 'background:url('.$background.'); background-size:cover;bacground-position:center';
+	     //             }  else {
 
-	                 		$style = "background:url('".$serverPath ."img/samples/icon-user-default.png'); background-size:100%";
+	     //             		$style = "background:url('".$serverPath ."img/samples/icon-user-default.png'); background-size:100%";
 
-	                 }
+	     //             }
+
+
+	                    $style = '';
+
+                     $serverPath = $this->Html->url('/',true);
+
+                     $file = 'img/uploads/users/'.$userData['User']['image'];  // 'images/'.$file (physical path)
+
+                 
+                    if (!empty($userData['User']['image']) && file_exists($file) == true) {
+
+                        $background =  $serverPath.'img/uploads/users/'.$userData['User']['image'];	
+                        
+                    } else {
+
+                    	 $background =  $serverPath.'img/samples/icon-user-default.png';		
+                    }
+
+                    $style = 'background:url('.$background.')';
 
 				?>
-				<div class="image_profile" style="<?php echo $style; ?>; min-width:70px;border-radius: 8px;height: 100px; max-width: 100px;">
+				<div class="image_profile" style="<?php echo $style; ?>; min-width:70px;border-radius: 8px;height: 100px; max-width: 100px; background-position:center">
 
 					<?php //echo $this->Html->image('',array('alt' => 'scarlet-159'));  ?>	
 				</div>

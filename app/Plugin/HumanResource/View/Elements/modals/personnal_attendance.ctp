@@ -8,9 +8,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="result_append"></div>
-                        
                 </div>
-                
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->  

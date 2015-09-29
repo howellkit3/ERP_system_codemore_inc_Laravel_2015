@@ -30,11 +30,19 @@
 
 			                         $serverPath = $this->Html->url('/',true);
 
-		                            if (!empty($userData['User']['image'])) {
+			                         $file = 'img/uploads/users/'.$userData['User']['image'];  // 'images/'.$file (physical path)
+
+                                 
+		                            if (!empty($userData['User']['image']) && file_exists($file) == true) {
 	
 			                            $background =  $serverPath.'img/uploads/users/'.$userData['User']['image'];	
-			                            $style = 'background:url('.$background.')';
-		                            } 
+			                            
+		                            } else {
+
+		                            	 $background =  $serverPath.'img/samples/icon-user-default.png';		
+		                            }
+
+		                            $style = 'background:url('.$background.')';
 
 		                        ?>
 	                            <div class="image_profile" style="<?php echo $style; ?>">

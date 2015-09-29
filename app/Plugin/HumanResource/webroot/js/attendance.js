@@ -13,9 +13,16 @@
 		    setInterval(update, 1000);
 
 		    $('.item_type.autocomplete').change();
-	}
-
-	var checkexisting = function(thisElement){
+    	}
+        function isEmptyObject(obj) {
+          for (var key in obj) {
+            if (Object.prototype.hasOwnProperty.call(obj, key)) {
+              return false;
+            }
+          }
+          return true;
+        }
+	var checkexisting = function(thisElement,date){
 
 		$('.dynamic-input').remove();
 
@@ -25,9 +32,22 @@
 
 		$employee_id = $(thisElement).val();
 
+        $date = $('#datetimepickerTime').val(); //date;
+
+        
+         var url = serverPath + "human_resource/attendances/findExisting/";
+
+        // if ($date != '' && typeof $date != 'undefined') {
+        //   var url = serverPath + "human_resource/attendances/findExisting/"+$employee_id+'/'+$date;
+        // } else {
+
+        //   var url =  serverPath + "human_resource/attendances/findExisting/"+$employee_id;
+        // }
+
 	  	$.ajax({
             type: "GET",
-            url: serverPath + "human_resource/attendances/findExisting/"+$employee_id,
+            url: url,
+            data : {'employee_id' : $employee_id , 'date' : $date},
             dataType: "json",
             success: function(data) {
                
@@ -36,7 +56,11 @@
 
             	$('.radio input').attr('disabled',false);
 
-                if (typeof(data.in) === 'undefined') {
+                if (typeof(data.in) === 'undefined' || isEmptyObject(data)) {
+
+                    $('#categoryRadio1').click().attr('disabled',false).next().text('In');
+                    $('#categoryRadio1').next().text('In');
+                    $('#categoryRadio2').next().text('Out');
 
                 } else {
 
@@ -44,15 +68,25 @@
                         
                         $('#categoryRadio1').attr('disabled',true).next().text('Time-In: '+data.in);
                         $('#categoryRadio2').click();
-
-                 
                     
+                        
+                    } else {
+                        
+                        $('#categoryRadio2').attr('checked',false);
+                        $('#categoryRadio1').click().attr('disabled',false).next().text('In');
+
+                    }
+
+                    if (data.out != '' && data.out != '00:00:00' && data.out !== null) {
+
+                        $('#categoryRadio2').attr('disabled',true).next().text('Time-out: '+data.out);
+
                     } else {
 
                         $('#categoryRadio2').attr('checked',false);
                         $('#categoryRadio1').click().attr('disabled',false).next().text('In');
 
-                       // $('#AttendanceNotes').val('');
+                       $('#AttendanceNotes').val('');
 
                     } 
                 }
@@ -72,8 +106,7 @@
 
         $this = $(thisElement);
 
-
-        $append_cont = $('#result_container');
+        $append_cont = $('#timeKeepAttendance #result_container_append');
 
         $append_cont.html('<img src="'+serverPath+'/img/loader.gif"/>');
 
@@ -85,9 +118,11 @@
             dataType: "html",
             success: function(data) {
 
-                if( $append_cont.html(data)) {
-                     updateTime();
-                } 
+                if( $append_cont.html(data) ) {
+
+                   //  updateTime();
+                }
+
             }
         });
 
@@ -128,7 +163,7 @@ $(document).ready(function(){
 
         //$('#personalAttendance').modal('open');
 
-        $this =  $(this);
+        $this = $(this);
 
         var url = $this.data('url');
 
@@ -337,5 +372,53 @@ $(document).ready(function(){
 
         // 	return $return;
         // });
+
+
+     $("#datetimepickerTime,#AttendanceTime").datetimepicker( {
+            format:'Y-m-d H:i',
+        });
+
+        $('body').on('submit','#TimeInAttendance',function(e){
+
+        $('.error_appended').remove();
+        
+        console.log($('#AttendanceEmployeeId').val());
+
+        $error = 0;
+
+        $(this).find('input.required,select.required').each(function(){
+        
+            if ($(this).val() == '') {
+
+                  $(this).after('<span class="error_appended" style="color:#D5292B; position:absolute"> This field is required </span>')
+                  $error++;
+
+              }
+
+        });
+
+        if ($('#AttendanceEmployeeId').val() == '') {
+            
+            $('#s2id_AttendanceEmployeeId').after('<span class="error_appended" style="color:#D5292B; position:absolute"> This field is required </span>');
+            
+            e.preventDefault();
+        }
+        
+        if ($error > 0) {
+           
+            e.preventDefault();
+        }
+        
+      
+      });
+    
+    $('body').on('change','#datetimepickerTime',function(){
+        
+        var date = $(this).val();
+
+        checkexisting('#AttendanceEmployeeId',date);
+
+    });
+
 
 });
