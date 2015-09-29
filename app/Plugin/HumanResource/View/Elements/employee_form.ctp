@@ -1,4 +1,8 @@
- <?php $employeeData = !empty($this->request->data) ? $this->request->data : ''; ?>
+
+<?php $employeeData = !empty($this->request->data) ? $this->request->data : '';
+$active_action = !empty($this->params['action']) ? $this->params['action'] : '';  ?>
+
+
  <div class="row">
                 <div class="col-lg-12">
                     <div class="main-box">
@@ -22,7 +26,6 @@
 					                                        'default' => !empty($employeeData['Employee']['contract_id']) ? $employeeData['Employee']['contract_id'] : '',
 					                                        'div' => 'col-lg-12',
 					                                        'label' => false));
-
 					                                ?>
 
 		                                        </div>
@@ -211,7 +214,24 @@
 														 </div>
 			                                          </div>
 
-			                                          <div class="form-group">
+			                                         <?php if($active_action == "edit"){ ?>
+
+			                                         	<div class="form-group">
+				                                          <div class="col-lg-4">	
+	                                                        </div> 
+	                                                        <div class="col-lg-5">		
+																<div class="checkbox-nice">
+	                                                                    <input type="checkbox" id="checkbox-generate" onclick="getCode(this)" name="generate_code" <?php // echo $checkMe ?> >
+	                                                                    <label for="checkbox-generate">
+	                                                                    Generate Code
+	                                                                    </label>
+	                                                             </div>
+	                                                        </div> 
+			                                        	</div>
+			                                          
+			                                          <?php }else{  ?>
+
+			                                          	<div class="form-group">
 				                                          <div class="col-lg-4">	
 	                                                        </div> 
 	                                                        <div class="col-lg-5">		
@@ -222,7 +242,9 @@
 	                                                                    </label>
 	                                                             </div>
 	                                                        </div> 
-			                                          </div>
+			                                         	</div>
+
+			                                          <?php } ?>
 			                                          
 		                                        </div>
 		                                        <div class="col-lg-4">
