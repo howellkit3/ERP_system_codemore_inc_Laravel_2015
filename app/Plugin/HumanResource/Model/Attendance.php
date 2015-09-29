@@ -339,6 +339,63 @@ class Attendance extends AppModel {
 
 	public function createAttendance($data = null) {
 
+		$Holiday = ClassRegistry::init('Holiday');
+
+		$holidayList = $Holiday->find('all',array(
+			'conditions' => array(),
+			'order' => array('Holiday.start_date ASC')
+		));
+
+		$dateNow = date('Y-m-d');
+
+		foreach ($holidayList as $key => $holiday) {
+			
+			if ($dateNow >= $holiday['Holiday']['start_date'] && $dateNow <= $holiday['Holiday']['end_date'] ) {
+				
+				$data['Attendance']['is_holiday'] = $holiday['Holiday']['id'];	
+			} 
+		}
+
+
+
+		$data['Attendance'] = $data['Attendance'];
+
+		$data['Attendance']['id'] = !empty($attendance['id']) ? $attendance['id'] : '';
+
+		$data['Attendance']['date'] = date('Y-m-d').' 00:00:00';
+
+
+		if ($data['Attendance']['type'] == 'in') {
+
+			$data['Attendance']['in'] = date('Y-m-d h:i:s',strtotime($data['Attendance']['time'])); 
+		
+		}
+
+		if ($data['Attendance']['type'] == 'out') {
+
+			$data['Attendance']['out'] = date('Y-m-d h:i:s',strtotime($data['Attendance']['time'])); 
+		
+		}
+
+		if ( date("w",strtotime($dateNow)) == 0) {
+
+			$data['Attendance']['type'] = 'rest_day';
+
+		} else {
+			$data['Attendance']['type'] = 'work';
+		}
+
+		$attendance = $this->save($data);
+
+		$attendance = $this->find('first',array(
+			'conditions' => array('Attendance.id' => $this->id)
+		));
+
+		return $attendance;
+		 
+
 	}	
 	
   }
+
+

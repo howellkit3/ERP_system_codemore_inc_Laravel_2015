@@ -166,7 +166,7 @@ class AttendancesController  extends HumanResourceAppController {
 	}
 
 
-	public function add() {
+	public function add($timekeep = false) {
 	
 		$this->loadModel('HumanResource.Timekeep');
 
@@ -203,64 +203,77 @@ class AttendancesController  extends HumanResourceAppController {
 			// 	$attendance['Attendance']['modified_by'] = $auth['id'];
 			// }
 
+			$this->LoadModel('HumanResource.Holiday');		
+
 			if ($this->Timekeep->saveTime($data,null,$auth['id'])) {
 
 			//create attendance
-			$this->Attendance->createAttendance($data);		
-
 			
+			$attendance = $this->Attendance->createAttendance($data);
 
 			//update attendance
-			// if (!empty($attendance)) {
+			if (!empty($attendance)) {
 
-			// 	$this->Attendance->save($attendance);
+				$this->Attendance->save($attendance);
 
-			// 	if ($this->request->is('ajax')) {
+				if ($this->request->is('ajax')) {
 
-			// 		if (!empty($attendance['Attendance']['in'])) {
+					if (!empty($attendance['Attendance']['in'])) {
 
-			// 			$attendance['Attendance']['in'] = date('h:i a',strtotime($attendance['Attendance']['in']));
-			// 		}
+						$attendance['Attendance']['in'] = date('h:i a',strtotime($attendance['Attendance']['in']));
+					}
 
-			// 		if (!empty($attendance['Attendance']['out'])) {
+					if (!empty($attendance['Attendance']['out'])) {
 
-			// 			$attendance['Attendance']['out'] = date('h:i a',strtotime($attendance['Attendance']['out']));
+						$attendance['Attendance']['out'] = date('h:i a',strtotime($attendance['Attendance']['out']));
 
-			// 			$attendance['Attendance']['duration'] = $this->_getDuration($attendance['Attendance']['in'],$attendance['Attendance']['out']);
+						$attendance['Attendance']['duration'] = $this->_getDuration($attendance['Attendance']['in'],$attendance['Attendance']['out']);
 					
-			// 		}
+					}
 					 
-			// 		echo json_encode($attendance);
-			// 		exit();
-			// 	}
+					echo json_encode($attendance);
+					exit();
+				}
 
-			// 	if (!empty($attendance['Attendance']['out'])) {
+				if (!empty($attendance['Attendance']['out'])) {
 
-			// 			//update daily info
-			// 			$this->Attendance->bindWorkshift();
-			// 			$callAttendance = $this->Attendance->findById($data['Attendance']['id']);
+						//update daily info
+						$this->Attendance->bindWorkshift();
+						$callAttendance = $this->Attendance->findById($data['Attendance']['id']);
 						
-			// 			$this->DailyInfo->updateDailyInfo($callAttendance,$attendance['Attendance']['employee_id'],$callAttendance['Attendance']['date']);	
+						$this->DailyInfo->updateDailyInfo($callAttendance,$attendance['Attendance']['employee_id'],$callAttendance['Attendance']['date']);	
 
-			// 			if (!empty($attendance['Attendance']['overtime_id'])) {
+						if (!empty($attendance['Attendance']['overtime_id'])) {
 							
-			// 				//check if its overtime
-			// 				$overtime = $this->OvertimeLimit->checkIfConsumed($attendance);
+							//check if its overtime
+							$overtime = $this->OvertimeLimit->checkIfConsumed($attendance);
 
-			// 				$limit = '';
+							$limit = '';
 
-			// 				if (!empty($overtime['OvertimeLimit']['id'])) {
+							if (!empty($overtime['OvertimeLimit']['id'])) {
 
-			// 					$limit = $this->OvertimeExcess->saveExcess($overtime,$attendance,$auth);
-			// 				}
+								$limit = $this->OvertimeExcess->saveExcess($overtime,$attendance,$auth);
+							}
 
-			// 			}
+						}
 
-			// 	}
+				}
 
-			// }
+			}
 
 			$this->Session->setFlash('Time in successfully','success');
+
+			if (!empty($timekeep)) {
+
+			$this->redirect( array(
+                         'controller' => 'attendances', 
+                         'action' => 'timekeep',
+                         'tab' => 'timekeep',
+                         'plugin' => 'human_resource'
+
+                    ));
+
+			} else {
 
 			$this->redirect( array(
                          'controller' => 'attendances', 
@@ -269,6 +282,7 @@ class AttendancesController  extends HumanResourceAppController {
                          'plugin' => 'human_resource'
 
                     ));	
+			}
 
 			} else {
 
