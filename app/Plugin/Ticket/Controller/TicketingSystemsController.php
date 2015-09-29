@@ -477,4 +477,128 @@ class TicketingSystemsController extends TicketAppController {
         }
     }
 
+
+    public function print_process($processId = null,$productUuid = null,$ticketUuid = null) {
+
+        if (!empty($processId) && !empty($productUuid)) {
+
+        $userData = $this->Session->read('Auth');
+
+        $this->loadModel('Sales.ProductSpecification');
+
+        $this->loadModel('Sales.ProductSpecificationDetail');
+
+        $this->loadModel('Sales.Company');
+
+        $this->loadModel('Sales.Product');
+
+        $this->loadModel('Sales.ClientOrder');
+
+        $this->loadModel('Unit');
+
+
+        $this->ClientOrder->bind(array('ClientOrderDeliverySchedule'));
+
+       //$delData = $this->ClientOrder->find('first',array('ClientOrder.id' => $clientOrderId));
+       
+        $productData = $this->Product->find('first',array(
+            'conditions' => array('Product.uuid' => $productUuid)));
+
+        // $ticketData = $this->JobTicket->find('first',array(
+        //     'conditions' => array('JobTicket.uuid' => $ticketUuid)));
+
+        $specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productData['Product']['id'])));
+
+    
+        //find if product has specs
+        $formatDataSpecs = $this->ProductSpecificationDetail->findData($productUuid);
+
+        $this->loadModel('SubProcess');
+
+        $subProcess = $this->SubProcess->find('list',
+                                            array('fields' => 
+                                                array('SubProcess.id',
+                                                    'SubProcess.name'
+                                                 )
+                                                ));
+
+        //set to cache in first load
+        $companyData = Cache::read('companyData');
+
+        //if (!$companyData) {
+        $companyData = $this->Company->find('list', array(
+                                            'fields' => array( 
+                                                'id','company_name')
+                                        ));
+
+        Cache::write('companyData', $companyData);
+        // }
+
+        //set to cache in first load
+        $unitData = Cache::read('unitData');
+
+
+        $view = new View(null, false);
+
+        $view->viewPath = 'TicketingSystem'.DS.'pdf';  
+
+        $view->set(compact('userData','ticketData','formatDataSpecs','productData','specs','companyData','unitData','subProcess','ticketUuid','delData','processId'));
+        
+        $output = $view->render('print_process', false);
+
+        $dompdf = new DOMPDF();
+        $dompdf->set_paper("A5", 'landscape');
+        $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));
+        $dompdf->render();
+        $canvas = $dompdf->get_canvas();
+        $font = Font_Metrics::get_font("helvetica", "bold");
+        $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
+
+        $output = $dompdf->output();
+        $random = rand(0, 1000000) . '-' . time();
+
+        if (empty($filename)) {
+            $filename = 'payslip-record'.time();
+        }
+        $filePath = $filename.'.pdf';
+
+        $file_to_save = WWW_ROOT .DS. $filePath;
+            
+        if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
+                
+                unlink($file_to_save);
+        }
+
+        $dompdf->render();
+        
+        if ($dompdf->stream('payslip-'.$ticketUuid.'-.pdf',array( 'Attachment'=>0 ))) {
+            unlink($file_to_save);
+        }
+
+
+        if (empty($filename)) {
+            $filename = 'pdf_reports'.time();
+        }
+        $filePath = $filename.'.pdf';
+
+        $file_to_save = WWW_ROOT .DS. $filePath;
+            
+        if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
+                
+                unlink($file_to_save);
+        }
+
+        $dompdf->render();
+         if ($dompdf->stream('payslip-'.$ticketUuid.'-.pdf')){
+
+            unlink($file_to_save);
+        }
+
+        exit();
+        break;  
+
+
+        }
+    }
+
 }

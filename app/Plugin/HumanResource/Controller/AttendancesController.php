@@ -63,6 +63,9 @@ class AttendancesController  extends HumanResourceAppController {
 		$attendances = $this->paginate();
 		
 		$departmentList = $this->Department->getList();
+		
+		$conditions = array();
+		$employeeList = $this->Employee->getList($conditions);
 
 		$this->set(compact('attendances','date','search','departmentList','employeeList'));
 
@@ -163,7 +166,7 @@ class AttendancesController  extends HumanResourceAppController {
 	}
 
 
-	public function add() {
+	public function add($timekeep = false) {
 	
 		$this->loadModel('HumanResource.Timekeep');
 
@@ -191,16 +194,22 @@ class AttendancesController  extends HumanResourceAppController {
 
 			$data = $this->request->data;
 
-			$this->Attendance->bind(array('Overtime'));	
+			// $this->Attendance->bind(array('Overtime'));	
 			
-			$attendance = $this->Attendance->getAttendance($this->request->data);
+			// $attendance = $this->Attendance->getAttendance($this->request->data);
 
-			if (!empty($attendance)) {
+			// if (!empty($attendance)) {
 				
-				$attendance['Attendance']['modified_by'] = $auth['id'];
-			}
+			// 	$attendance['Attendance']['modified_by'] = $auth['id'];
+			// }
+
+			$this->LoadModel('HumanResource.Holiday');		
 
 			if ($this->Timekeep->saveTime($data,null,$auth['id'])) {
+
+			//create attendance
+			
+			$attendance = $this->Attendance->createAttendance($data);
 
 			//update attendance
 			if (!empty($attendance)) {
@@ -254,6 +263,18 @@ class AttendancesController  extends HumanResourceAppController {
 
 			$this->Session->setFlash('Time in successfully','success');
 
+			if (!empty($timekeep)) {
+
+			$this->redirect( array(
+                         'controller' => 'attendances', 
+                         'action' => 'timekeep',
+                         'tab' => 'timekeep',
+                         'plugin' => 'human_resource'
+
+                    ));
+
+			} else {
+
 			$this->redirect( array(
                          'controller' => 'attendances', 
                          'action' => 'timekeep',
@@ -261,6 +282,7 @@ class AttendancesController  extends HumanResourceAppController {
                          'plugin' => 'human_resource'
 
                     ));	
+			}
 
 			} else {
 

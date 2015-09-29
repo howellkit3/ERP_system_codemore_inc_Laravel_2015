@@ -29,16 +29,16 @@
 					<td >
 						<table class="medium-font full-width">
 							<tr>
-								<td> <?php echo !empty($companyData[$productData['Product']['company_id']]) ? ucwords($companyData[$productData['Product']['company_id']]) : '';  ?> </td>
-								<td class="text-right"><label class="strong">Schedule No</label> <?php echo $ticketUuid; ?></td>
+								<td class="border-bottom-dashed"> <?php echo !empty($companyData[$productData['Product']['company_id']]) ? ucwords($companyData[$productData['Product']['company_id']]) : '';  ?> </td>
+								<td class="text-right border-bottom-dashed"><label class="strong">Schedule No</label> <?php echo $ticketUuid; ?></td>
 							</tr>
 							<tr>
-								<td><label class="strong">Item</label> <?php echo $productData['Product']['name']; ?></td>
-								<td class="text-right"><label>   </label> <?php echo $ticketData['JobTicket']['po_number']; ?> </td>
+								<td class="border-bottom-dashed"><label class="strong">Item</label> <?php echo $productData['Product']['name']; ?></td>
+								<td class="text-right border-bottom-dashed"><label>   </label> <?php echo $ticketData['JobTicket']['po_number']; ?> </td>
 							</tr>
 							
 							<tr>
-								<td><label class="strong">Item Size</label> <?php echo $specs['ProductSpecification']['size1'].' x '.$specs['ProductSpecification']['size2'].' x '.$specs['ProductSpecification']['size3'] ?></td>
+								<td ><label class="strong">Item Size</label> <?php echo $specs['ProductSpecification']['size1'].' x '.$specs['ProductSpecification']['size2'].' x '.$specs['ProductSpecification']['size3'] ?></td>
 								<td class="text-right"><label class="strong">Del Date</label> <?php 
 								echo !empty($delData['ClientOrderDeliverySchedule'][0]['schedule']) ? date('M d, Y', strtotime($delData['ClientOrderDeliverySchedule'][0]['schedule'])) : ''; ?> </td>
 							</tr>
@@ -77,25 +77,29 @@
 							<div class="border">
 								<table class="table medium-font">
 									<thead>
-										<?php $countSpecs = count($formatDataSpecs);  foreach ($formatDataSpecs as $key => $specLists) { ?>
+										<?php $countSpecs = count($formatDataSpecs);  
+
+										foreach ($formatDataSpecs as $key => $specLists) { ?>
 							
 											<?php
 
 										      	if($specLists['ProductSpecificationDetail']['model'] == 'Component'){
 
-										      		echo $this->element('Specs/reports/component', array('formatDataSpecs' => $formatDataSpecs[$key],'key' => $componentCounter));
+										      		echo $this->element('Specs/reports/component', array('formatDataSpecs' => $formatDataSpecs[$key],'key' => $componentCounter,'ticketUuid' => $ticketUuid));
 										      		$componentCounter++;
 										      	}
 										      	if($specLists['ProductSpecificationDetail']['model'] == 'Part'){
 										      		
-										      		echo $this->element('Specs/reports/part', array('formatDataSpecs' => $formatDataSpecs[$key],'key' => $partCounter));
+										      		echo $this->element('Specs/reports/part', array('formatDataSpecs' => $formatDataSpecs[$key],'key' => $partCounter,'ticketUuid' => $ticketUuid));
 										      		$partCounter++;
 										      		
 										      	}
 										      	if($specLists['ProductSpecificationDetail']['model'] == 'Process'){
 										      		
-										      		echo $this->element('Specs/reports/process', array('formatDataSpecs' => $formatDataSpecs[$key],'key' => $processCounter));
+										      		echo $this->element('Specs/reports/process', array('formatDataSpecs' => $formatDataSpecs[$key],'key' => $processCounter,'ticketUuid' => $ticketUuid));
 										      		$processCounter++;
+
+										      		$countSpecs = count($formatDataSpecs[$key]['ProductSpecificationProcess']['ProcessHolder']);
 
 										      	}
 									      	?>
@@ -103,11 +107,10 @@
 										<?php } ?>
 
 
-										<?php  if ($countSpecs < 20) : 
+										<?php 
+										 if ($countSpecs < 24) : 
 
-										$minimunTd = 20;
-
-										$addTable = $minimunTd - $countSpecs;
+										$minimunTd = 24;
 
 										for ($i=$countSpecs; $i <= $minimunTd ; $i++) { ?>
 									
@@ -133,11 +136,11 @@
 										<table class="medium-font full-width">
 											
 											<tr>
-												<td><label class="strong">Packing Option</label></td>
+												<td class="border-bottom-dashed"><label class="strong">Packing Option</label></td>
 
 											</tr>
 											<tr>
-												<td><label class="strong">Labels</label></td>
+												<td class="border-bottom-dashed"><label class="strong">Labels</label></td>
 
 											</tr>
 										</table>
@@ -162,6 +165,5 @@
 									</td>
 								</tr>
 						</table>
-
 </body>
 </html>

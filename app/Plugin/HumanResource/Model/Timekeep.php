@@ -32,7 +32,8 @@ class Timekeep extends AppModel {
 			
 			$time = array();
 
-			$date = !empty($data['Attendance']['time']) ? explode(',',$data['Attendance']['time']) : '';
+			$date = !empty($data['Attendance']['time']) ? explode(' ',$data['Attendance']['time']) : '';
+
 	
 			$time['Timekeep']['employee_id'] = $data['Attendance']['employee_id'];
 			$time['Timekeep']['date'] = !empty($date[0]) ? date('Y-m-d',strtotime($date[0])) : date('Y-m-d');

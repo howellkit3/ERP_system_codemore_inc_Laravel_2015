@@ -13,7 +13,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
             <?php $page =($active_page == 'sales_invoice' && $active_action == 'index') ? 'active' : '' ?>
             <?php echo $this->Html->link("<span class='count'>Invoice</span>",
              array('controller' => 'sales_invoice',
-              'action' => 'index'),
+              'action' => 'index?'.rand(1000,9999).'='.date("is")),
               array('escape' => false,
                 'class' => 'btn '.$page .' '.$noPermissionPay
               )); ?>
@@ -24,7 +24,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
             <?php $page =($active_page == 'sales_invoice' && $active_action == 'statement') ? 'active' : '' ?>
             <?php echo $this->Html->link("<span class='count'>Statement</span>",
              array('controller' => 'sales_invoice',
-              'action' => 'statement'),
+              'action' => 'statement?'.rand(1000,9999).'='.date("is")),
               array('escape' => false,
                 'class' => 'btn '.$page .' '.$noPermissionPay
               )); ?>
@@ -35,7 +35,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
             <?php $page =($active_page == 'sales_invoice' && $active_action == 'receivable') ? 'active' : '' ?>
             <?php echo $this->Html->link("<span class='count'>Receivable</span>",
              array('controller' => 'sales_invoice',
-              'action' => 'receivable'),
+              'action' => 'receivable?'.rand(1000,9999).'='.date("is")),
               array('escape' => false,
                 'class' => 'btn '.$page .' '.$noPermissionPay
               )); ?>
@@ -46,7 +46,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
             <?php $page =($active_page == 'sales_invoice' && $active_action == 'payable') ? 'active' : '' ?>
             <?php echo $this->Html->link("<span class='count'>Payable</span>",
              array('controller' => 'sales_invoice',
-              'action' => 'payable'),
+              'action' => 'payable?'.rand(1000,9999).'='.date("is")),
               array('escape' => false,
                 'class' => 'btn '.$page .' '.$noPermissionReciv
               )); ?>

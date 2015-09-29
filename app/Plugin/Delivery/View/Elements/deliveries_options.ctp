@@ -14,7 +14,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
             <?php $page =($active_page == 'deliveries' && $active_action == 'index') ? 'active tab' : '' ?>
             <?php echo $this->Html->link("<span class='count'>DR Monitoring</span>", array(
                                                                                             'controller' => 'deliveries', 
-                                                                                            'action' => 'index',
+                                                                                            'action' => 'index?'.rand(1000,9999).'='.date("is")
                                                                                             ),
                                                                                      array(
                                                                                             'escape' => false,
@@ -28,7 +28,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
             <?php $page =($active_page == 'deliveries' && $active_action == 'delivery_replacing') ? 'active tab' : '' ?>
             <?php echo $this->Html->link("<span class='count'>DR Replacing</span>", array(
                                                                                    'controller' => 'deliveries', 
-                                                                                    'action' => 'delivery_replacing',
+                                                                                    'action' => 'delivery_replacing?'.rand(1000,9999).'='.date("is")
                                                                                     ),
                                                                             array(
                                                                                    'escape' => false,
@@ -42,7 +42,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
             <?php $page =($active_page == 'deliveries' && $active_action == 'dr_record') ? 'active tab' : '' ?>
             <?php echo $this->Html->link("<span class='count'>DR Records</span>", array(
                                                                                    'controller' => 'deliveries', 
-                                                                                    'action' => 'dr_record',
+                                                                                    'action' => 'dr_record?'.rand(1000,9999).'='.date("is")
                                                                                     ),
                                                                             array(
                                                                                    'escape' => false,
@@ -56,7 +56,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
             <?php $page =($active_page == 'deliveries' && $active_action == 'delivery_transmittal_record') ? 'active tab' : '' ?>
             <?php echo $this->Html->link("<span class='count'>Transmittal Records</span>", array(
                                                                                    'controller' => 'deliveries', 
-                                                                                    'action' => 'delivery_transmittal_record',
+                                                                                    'action' => 'delivery_transmittal_record?'.rand(1000,9999).'='.date("is")
                                                                                     ),
                                                                             array(
                                                                                    'escape' => false,
@@ -70,7 +70,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
             <?php $page =($active_page == 'deliveries' && $active_action == 'gate_pass') ? 'active tab' : '' ?>
             <?php echo $this->Html->link("<span class='count'>Trucks Gatepass</span>", array(
                                                                                    'controller' => 'deliveries', 
-                                                                                    'action' => 'gate_pass',
+                                                                                    'action' => 'gate_pass?'.rand(1000,9999).'='.date("is")
                                                                                     ),
                                                                             array(
                                                                                    'escape' => false,

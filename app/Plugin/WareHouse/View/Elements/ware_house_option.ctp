@@ -11,37 +11,37 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
 
         <li class="dropdown hidden-xs">
            <?php $page =($active_page == 'receivings' && $active_action == 'index') ? 'active tab' : '' ?>
-            <?php echo $this->Html->link("<span class='count'>Receivings</span>", array('controller' => 'receivings', 'action' => 'index'),array('escape' => false,'class' => 'btn '.$page )); ?>
+            <?php echo $this->Html->link("<span class='count'>Receivings</span>", array('controller' => 'receivings', 'action' => 'index?'.rand(1000,9999).'='.date("is")),array('escape' => false,'class' => 'btn '.$page )); ?>
            
         </li>
         
         <li class="dropdown hidden-xs active">
            <?php $page =($active_page == 'receivings' && $active_action == 'receive') ? 'active tab' : '' ?>
-            <?php echo $this->Html->link("<span class='count'>In-Record</span>", array('controller' => 'receivings', 'action' => 'receive'),array('escape' => false,'class' => 'btn '.$page )); ?>
+            <?php echo $this->Html->link("<span class='count'>In-Record</span>", array('controller' => 'receivings', 'action' => 'receive?'.rand(1000,9999).'='.date("is")),array('escape' => false,'class' => 'btn '.$page )); ?>
            
         </li>
 
         <li class="dropdown hidden-xs active">
            <?php $page =($active_page == 'warehouse_requests' && $active_action == 'index') ? 'active tab' : '' ?>
-            <?php echo $this->Html->link("<span class='count'>Request</span>", array('controller' => 'warehouse_requests', 'action' => 'index'),array('escape' => false,'class' => 'btn '.$page )); ?>
+            <?php echo $this->Html->link("<span class='count'>Request</span>", array('controller' => 'warehouse_requests', 'action' => 'index?'.rand(1000,9999).'='.date("is")),array('escape' => false,'class' => 'btn '.$page )); ?>
            
         </li>
 
          <li class="dropdown hidden-xs active">
            <?php $page =($active_page == 'warehouse_requests' && $active_action == 'stock') ? 'active tab' : '' ?>
-            <?php echo $this->Html->link("<span class='count'>Stocks</span>", array('controller' => 'warehouse_requests', 'action' => 'stock'),array('escape' => false,'class' => 'btn '.$page )); ?>
+            <?php echo $this->Html->link("<span class='count'>Stocks</span>", array('controller' => 'warehouse_requests', 'action' => 'stock?'.rand(1000,9999).'='.date("is")),array('escape' => false,'class' => 'btn '.$page )); ?>
            
         </li>
 
         <li class="dropdown hidden-xs active">
            <?php $page =($active_page == 'warehouse_requests' && $active_action == 'outrecord_list') ? 'active tab' : '' ?>
-            <?php echo $this->Html->link("<span class='count'>Out-Record List</span>", array('controller' => 'warehouse_requests', 'action' => 'outrecord_list'),array('escape' => false,'class' => 'btn '.$page )); ?>
+            <?php echo $this->Html->link("<span class='count'>Out-Record List</span>", array('controller' => 'warehouse_requests', 'action' => 'outrecord_list?'.rand(1000,9999).'='.date("is")),array('escape' => false,'class' => 'btn '.$page )); ?>
            
         </li>
 
         <li class="dropdown hidden-xs active">
            <?php $page =($active_page == 'consumables' && $active_action == 'index') ? 'active tab' : '' ?>
-            <?php echo $this->Html->link("<span class='count'>Items</span>", array('controller' => 'items', 'action' => 'index'),array('escape' => false,'class' => 'btn '.$page )); ?>
+            <?php echo $this->Html->link("<span class='count'>Items</span>", array('controller' => 'items', 'action' => 'index?'.rand(1000,9999).'='.date("is")),array('escape' => false,'class' => 'btn '.$page )); ?>
            
         </li>
 
