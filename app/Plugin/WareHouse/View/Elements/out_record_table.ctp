@@ -20,11 +20,11 @@
                 <?php echo ucfirst($userName[$outRecordDataList['OutRecord']['created_by']]) ?>
             </td>
 
-           <!--  <td class="">
+      <!-- <td class="">
                <?php echo "<span class='label label-success'>:)</span>"; ?>
             </td> -->
 
-             <td class="text-center">
+            <td class="text-center">
                 <?php echo date('M d, Y', strtotime($outRecordDataList['OutRecord']['created'])) ?>
             </td>
 

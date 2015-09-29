@@ -165,7 +165,7 @@
                                                 <label for="inputPassword1" class="col-lg-2 control-label">Description</label>
                                                 <div class="col-lg-9">
                                                      <?php 
-                                                        echo $this->Form->textarea('description', array('class' => 'form-control required','label' => false));
+                                                        echo $this->Form->textarea('description', array('class' => 'form-control ','label' => false));
                                                     ?>
                                                 </div>
                                             </div>
