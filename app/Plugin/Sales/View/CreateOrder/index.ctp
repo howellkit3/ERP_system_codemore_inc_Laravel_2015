@@ -406,7 +406,8 @@
                                     	<label class="col-lg-2 control-label">Total</label>
 										<div class="col-lg-8">
 											<?php 
-                                              
+                                              	$total = $quotationData['QuotationItemDetail'][0]['unit_price'] * $quotationData['QuotationItemDetail'][0]['quantity'];
+
                                                 echo $this->Form->input('QuotationItemDetail.total_price',array( 
                                                 						'type' => 'text',
                                                 						'class' => 'form-control item_type ', 
@@ -414,7 +415,7 @@
                                                     					'placeholder' => 'Unit Price',
                                                     					'disabled' => 'disabled',
                                                     					'id' => 'unit_price_total',
-                                                    					'value' => '0.00'
+                                                    					'value' => number_format((float)$total, 2, '.', '')
                                                     					));
                                             ?>
 										</div>
