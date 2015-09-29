@@ -237,23 +237,28 @@ $body.on('change','#PayrollType',function(){
 
 });
 
-	$body.on('click','.view-thirteen-summary',function(){
+$body.on('click','.view-thirteen-summary',function(){
 
-		$employee_id = $(this).data('id');
-		$year = $(this).data('year');
-		$result = $('.result-table');
-		$.ajax({
-	        type: "POST",
-	        url: serverPath + "human_resource/salaries/view_sumarry/",
-	        data : {'employee_id' : $employee_id,'year' : $year},
-	        dataType: "html",
-	        success: function(data) {
+	$employee_id = $(this).data('id');
+	$year = $(this).data('year');
+	$result = $('.result-table');
+	$.ajax({
+        type: "POST",
+        url: serverPath + "human_resource/salaries/view_sumarry/",
+        data : {'employee_id' : $employee_id,'year' : $year},
+        dataType: "html",
+        success: function(data) {
 
 
-	     	   $result.html(data);  
+     	   $result.html(data);  
 
-	        }
-	    });	
+        }
+    });	
 
+});
+
+	$('#selectAll').click(function(){
+
+		 $('.employee_select:checkbox').not(this).prop('checked', this.checked);
 	});
 });

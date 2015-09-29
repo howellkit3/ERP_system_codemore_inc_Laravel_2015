@@ -258,3 +258,8 @@ div.value {
 .input-value {
   min-width: 100px;
 }
+
+.employee-cont {
+  max-height: 456px;
+  overflow: auto;
+}
