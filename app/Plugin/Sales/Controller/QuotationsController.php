@@ -731,6 +731,8 @@ class QuotationsController extends SalesAppController {
 		$this->loadModel('User');
 		$userData = $this->User->read(null,$this->Session->read('Auth.User.id'));
 
+		$company = $companyId;
+
 		//start///call Role permission
 		$actionName = 'Edit Quotation';
 		$this->_rolePermission($actionName);
@@ -793,7 +795,8 @@ class QuotationsController extends SalesAppController {
 															));
 		
 		if(!empty($quotationId)){
-			
+
+
 			//$this->request->data = $this->Quotation->read(null,$quotationId);
 
 			$userData = $this->Session->read('Auth');
@@ -814,6 +817,8 @@ class QuotationsController extends SalesAppController {
 
 		            
 		            if ($this->request->is(array('post', 'put'))) {
+
+		            	//pr($quotationId); pr($companyId); exit;
 		                $this->Quotation->id = $quotationId;
 		                $this->Quotation->QuotationDetail->quotation_id = $quotationId;
 		                $this->Quotation->QuotationItemDetail->quotation_id = $quotationId;
@@ -825,7 +830,7 @@ class QuotationsController extends SalesAppController {
 		              		$this->Quotation->QuotationDetail->save($this->request->data, $userData['User']['id'], $this->id);
             				$this->Quotation->QuotationItemDetail->save($this->request->data, $this->id);	
 		                    $this->Session->setFlash(__('Quotation has been updated.'));
-		                    return $this->redirect(array('action' => 'view'));
+		                    return $this->redirect(array('action' => 'view', $quotationId, $companyId));
 		                }
 		                $this->Session->setFlash(__('Unable to update your post.'));
 		            }
@@ -837,7 +842,7 @@ class QuotationsController extends SalesAppController {
 		     }
 		$noPermission = ' ';
 		    //pr($productData); exit;
-		$this->set(compact('noPermission','quotationData','itemDetailData','unitData','currencyData','companyData','customField','itemCategoryData', 'paymentTermData','itemTypeData','productData'));
+		$this->set(compact('noPermission','quotationData','itemDetailData','unitData','currencyData','companyData','customField','itemCategoryData', 'paymentTermData','itemTypeData','productData', 'quotationId', 'company'));
 	}
 
 		//pr($this->request->data);
