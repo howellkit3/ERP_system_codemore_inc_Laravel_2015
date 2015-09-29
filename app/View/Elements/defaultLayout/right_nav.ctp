@@ -37,7 +37,7 @@
                     $style = 'background:url('.$background.')';
 
 				?>
-				<div class="image_profile" style="<?php echo $style; ?>; min-width:70px;border-radius: 8px;height: 100px; max-width: 100px; background-position:center">
+				<div class="image_profile" style="<?php echo $style; ?>; min-width:70px;border-radius: 8px;height: 100px; max-width: 100px; background-position:center;background-size:100%;">
 
 					<?php //echo $this->Html->image('',array('alt' => 'scarlet-159'));  ?>	
 				</div>

@@ -28,8 +28,7 @@ class ProcessField extends AppModel {
 	// 	$this->contain($model);
 	// }
 
-   public function saveProcess($data,$auth)
-	{
+   public function saveProcess($data,$auth) {
 		
 		$this->create();
 		
@@ -41,6 +40,7 @@ class ProcessField extends AppModel {
 		
 		
 	}
+
     public function deleteItem($name){
     	
     	$this->id = $this->find('first',array(
@@ -56,8 +56,6 @@ class ProcessField extends AppModel {
 		}
 
 		return $this->id;	
-
-		
 
     }
 }

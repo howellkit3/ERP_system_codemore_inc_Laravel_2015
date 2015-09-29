@@ -35,14 +35,22 @@ class Payroll extends AppModel {
 	}
 		
 
-	public function createPayroll($data = null , $auth = null) {
+	public function createPayroll($data = null , $auth = null,$status = 3) {
 
 		if (!empty($data)) {
 
+		//status 
+		/*
+		1. completed
+		2. pending
+		3. select employee
 
+		*/
 
-			$data[$this->alias]['status'] = 'pending';
+			$data[$this->alias]['status'] = $status;
+
 			$data[$this->alias]['created_by'] = $auth['id'];
+			
 			$data[$this->alias]['modified_by'] = $auth['id'];
 
 			if ($data[$this->alias]['type'] == 'normal') {

@@ -382,8 +382,6 @@ $(document).ready(function(){
 
         $('.error_appended').remove();
         
-        console.log($('#AttendanceEmployeeId').val());
-
         $error = 0;
 
         $(this).find('input.required,select.required').each(function(){

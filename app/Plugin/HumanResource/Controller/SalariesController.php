@@ -1585,15 +1585,17 @@ class SalariesController  extends HumanResourceAppController {
 		if ($this->request->is('post')) {
 
 			$data = $this->Payroll->createPayroll($this->request->data,$auth);
+
+			//redirect to employee selection
 				
 			if ($this->Payroll->save($data)) {
 
 				//make data save in file
                  $this->Session->setFlash(__('Saving data completed.'),'success');
 
-                $this->redirect(
-                    array('controller' => 'salaries', 'action' => 'payroll_view',$this->Payroll->id)
-                );
+	                $this->redirect(
+	                    array('controller' => 'salaries', 'action' => 'employee_select',$this->Payroll->id)
+	                );
 
             } else {
 
@@ -1601,6 +1603,38 @@ class SalariesController  extends HumanResourceAppController {
             }
 
 		}	
+	}
+
+	public function process_payroll_save() {
+		
+		if (!empty($this->request->data)) {
+
+			pr($this->request->data);
+			exit();
+		}
+	}
+
+	public function employee_select($id = null) {
+
+		$this->loadModel('Payroll.Payroll');
+
+		$this->loadModel('HumanResource.Employee');
+
+		if (!empty($id)) {
+
+			$payroll = $this->Payroll->findById($id);
+
+			$conditions = array();
+
+			$employees = $this->Employee->find('all',array(
+				'conditions' => $conditions,
+				'order' => array('Employee.last_name ASC'),
+				'fields' => array('id','code','full_name')
+				));
+
+			$this->set(compact('employees','payroll'));
+
+		}
 	}
 
 	public function payroll_edit($id = null ) {
@@ -1670,7 +1704,6 @@ class SalariesController  extends HumanResourceAppController {
 
 				$salaries = $this->Payroll->objectToArray(json_decode($data)); 
 			}
-
 			
 			$deductions = $this->Loan->find('list',array('fields' => array('id','name')));
 		

@@ -98,7 +98,6 @@ class DailyInfo extends AppModel {
 			// $total_time = round(abs($to_time - $from_time) / 60,2);
 
 			//	pr($data);
-
 			//regular time
 			if (strtotime($data['Attendance']['in']) >= strtotime($data['WorkShift']['from'])) {
 						
