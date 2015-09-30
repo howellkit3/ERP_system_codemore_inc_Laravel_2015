@@ -1609,8 +1609,11 @@ class SalariesController  extends HumanResourceAppController {
 		
 		if (!empty($this->request->data)) {
 
-			pr($this->request->data);
-			exit();
+			$data = $this->request->data;
+			
+			if( $this->process_payroll($data['Payroll']['payroll_id'],$data['Payroll']['emp'])) {
+
+			}
 		}
 	}
 
@@ -1686,6 +1689,15 @@ class SalariesController  extends HumanResourceAppController {
 
 			$payroll = $this->Payroll->findById($id);
 			
+			if ($payroll['Payroll']['status'] == 3) {
+				  $this->redirect(
+                    array(
+                    	'controller' => 'salaries',
+                    	'action' => 'employee_select',
+                    	$payroll['Payroll']['id']
+                    )
+                );
+			}
 			$departments = $this->Department->find('list',array('fields' => array('id','name')));
 
 			if ($payroll['Payroll']['status'] == 'process') {
@@ -1752,7 +1764,7 @@ class SalariesController  extends HumanResourceAppController {
 
 	}
 
-	public function process_payroll($id = null){
+	public function process_payroll($id = null, $employeeId = array()){
 
 		if (!empty($id)) {
 
@@ -1766,14 +1778,16 @@ class SalariesController  extends HumanResourceAppController {
 
 			$payroll = $this->Payroll->findById($id);
 
-			 if ($payroll['Payroll']['type'] == '13_month') {
 
-			 	$salaries = $this->_checkThirteenPayroll($payroll);
+			if ($payroll['Payroll']['type'] == '13_month') {
+
+			 	$salaries = $this->_checkThirteenPayroll($payroll,$employeeId);
 			 
-			 } else {
+			} else {
 				
-				$salaries = $this->_checkPayroll($payroll);
-			 }
+				$salaries = $this->_checkPayroll($payroll,null,$employeeId);
+			}
+
 
 			if ($salaries) {
 				//save to salary report data
@@ -1782,7 +1796,7 @@ class SalariesController  extends HumanResourceAppController {
 				
 					if ($this->SalaryReport->createMultipleReport($salaries,$auth)) {
 
-						$salaries = $this->_checkThirteenPayroll($payroll,true);
+						//$salaries = $this->_checkThirteenPayroll($payroll,true);
 					}
 
 					$payroll['Payroll']['status'] = 'process';
@@ -1801,10 +1815,10 @@ class SalariesController  extends HumanResourceAppController {
 				} else {
 
 
+
 					if( $this->SalaryReport->createMultipleReport($salaries,$auth)) {
 
-						$salaries = $this->_checkPayroll($payroll,true);
-
+					
 						$payroll['Payroll']['status'] = 'process';
 
 						$json_data = json_encode($salaries);
@@ -1871,7 +1885,7 @@ class SalariesController  extends HumanResourceAppController {
 		}
 	}
 
-	private function _checkPayroll($payroll = null , $update = false ){
+	private function _checkPayroll($payroll = null , $update = false , $empConditions = array() ){
 		
 		$salaries = '';
 
@@ -1890,11 +1904,15 @@ class SalariesController  extends HumanResourceAppController {
 			$this->loadModel('HumanResource.BreakTime');
 			$this->loadModel('HumanResource.OvertimeExcess');
 
-			$emp_conditions = array();//array('Employee.status NOT' => array('1'));
-			$this->Employee->bind(array('Salary','GovernmentRecord','Department','Position','EmployeeAdditionalInformation'));
+			$this->Employee->bind(array('Salary','GovernmentRecord','Department','Position','EmployeeAdditionalInformation'));	
+
+			if (!empty($empConditions)) {
+
+				$empConditions = array_merge($empConditions,array('Employee.id' => $empConditions));
+			}
 
 			$employees = $this->Employee->find('all',array(
-								'conditions' => $emp_conditions,
+								'conditions' => $empConditions,
 								'order' => array('Employee.last_name ASC'),
 								//'fields' => array('')
 								'group' => array('Employee.id')
@@ -2166,7 +2184,7 @@ class SalariesController  extends HumanResourceAppController {
 
 	}
 
-	public function _checkThirteenPayroll($payroll = null) {
+	public function _checkThirteenPayroll($payroll = null,$employeeId = null) {
 
 	$this->loadModel('HumanResource.Attendance');
 
@@ -2180,7 +2198,14 @@ class SalariesController  extends HumanResourceAppController {
 
 	$this->loadModel('Payroll.SalaryReport');
 
-	$emp_conditions = array();//array('Employee.status NOT' => array('1'));
+	$emp_conditions = array();
+
+	if (!empty($employeeId)) {
+
+		$emp_conditions = array_merge($emp_conditions,array('Employee.id' => $employeeId));
+	}
+
+	//array('Employee.status NOT' => array('1'));
 
 	$this->Employee->bind(array('Salary','Department'));
 
@@ -2196,6 +2221,7 @@ class SalariesController  extends HumanResourceAppController {
 						'Department.id'
 						),
 		));
+
 
 	$additional_fields = array(
 				'gross','time_work','days','total_hours','hours_ot',

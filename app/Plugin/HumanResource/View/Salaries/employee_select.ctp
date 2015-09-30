@@ -219,7 +219,7 @@ echo $this->element('payroll_options');
 
 											<?php echo $this->Form->create('Payroll',array('url' => array('controller' => 'salaries','action' => 'process_payroll_save') ));  ?>
 
-											<?php echo $this->Form->input('payroll_id',array('value' => $payroll['Payroll']['id'] )); ?>
+											<?php echo $this->Form->input('payroll_id',array('type' => 'hidden','value' => $payroll['Payroll']['id'] )); ?>
 												<table class="table table-bordered table-hover" style="margin:0px;">
 													<thead>
 													<tr>
