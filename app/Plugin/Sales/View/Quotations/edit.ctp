@@ -34,7 +34,7 @@
 
 				</div>
 			</div>
-			<?php echo $this->Form->create('Quotation',array('url'=>(array('controller' => 'quotations','action' => 'add'))));?>
+			<?php echo $this->Form->create('Quotation',array('url'=>(array('controller' => 'quotations','action' => 'edit', $quotationId, $company))));?>
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="main-box">
