@@ -18,7 +18,7 @@ if($indicator == "purchasing"){
 									 'AddLayerCompoundSubstrate',
 									 'AddLayerCorrugatedPaper',	
 									'ajax_pagination'
-							)); ?>
+)); ?>
 
 <?php 
 
@@ -83,7 +83,15 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																		                            'type' => 'hidden',
 																		                            'value' => $indicator));
 																		?>
+																		<?php 
 
+																		
+																		echo $this->Form->input('GeneralItem.params', array(
+																									'class' => 'form-control params ',
+																		                            'label' => false,
+																		                            'type' => 'hidden',
+																		                            'value' => substr($this->params['pass'][0], 0, 10)));
+																		?>
 
 																	
 																</div>
@@ -184,9 +192,27 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 										<div class="row" id="general-item-table">
 											<div class="col-lg-12">
 												<div class="main-box">
+
 												<header class="main-box-header clearfix">
-												<h1>General Item List</h1>
+
+													<div class="row">
+													  <div class="col-xs-6"><h1>General Item List </h1></div>
+													 	<div class="col-xs-6">
+
+															<div class="filter-block pull-right">
+										                        <div class="form-group pull-left">
+										                            
+										                                <input placeholder="Search..." class="form-control searchOrder "  />
+										                                <i class="fa fa-search search-icon"></i>
+										                            
+										                        </div>
+										                        
+										                    </div>
+							                    		</div>
+													</div>
+												
 												</header>
+
 													<div class="main-box-body clearfix">
 														<div class="table-responsive">
 														<table class="table table-striped table-hover">
@@ -203,7 +229,13 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 														</tr>
 														</thead>
 
-														<?php echo $this->element('general_item_table'); ?>
+														<tbody aria-relevant="all" aria-live="polite" class="requestFields" role="alert" >
+                          
+								                                <?php echo $this->element('general_item_table'); ?>
+								                         
+								                        </tbody>
+								                        <tbody aria-relevant="all" aria-live="polite" class="searchAppend" role="alert" >
+								                        </tbody>
 
 														</table>
 														<hr>
@@ -384,7 +416,23 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 											<div class="col-lg-12">
 												<div class="main-box">
 												<header class="main-box-header clearfix">
-												<h1>Substrate List</h1>
+
+													<div class="row">
+													  <div class="col-xs-6"><h1>Substrate List </h1></div>
+													 	<div class="col-xs-6">
+
+															<div class="filter-block pull-right">
+										                        <div class="form-group pull-left">
+										                            
+										                                <input placeholder="Search..." class="form-control searchOrder "  />
+										                                <i class="fa fa-search search-icon"></i>
+										                            
+										                        </div>
+										                        
+										                    </div>
+							                    		</div>
+													</div>
+												
 												</header>
 													<div class="main-box-body clearfix">
 														<div class="table-responsive">
@@ -403,9 +451,14 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																</tr>
 																</thead>
 
-																<?php
-																	 echo $this->element('substrate_table'); 
-																  ?>
+																<tbody aria-relevant="all" aria-live="polite" class="requestFields" role="alert" >
+                          
+								                               		 <?php echo $this->element('substrate_table');  ?>
+								                         
+										                        </tbody>
+
+										                        <tbody aria-relevant="all" aria-live="polite" class="searchAppend" role="alert" >
+										                        </tbody>
 
 															</table>
 															<hr>
@@ -588,8 +641,24 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 										<div class="col-lg-12">
 											<div class="main-box">
 											<header class="main-box-header clearfix">
-											<h1>Compound Substrate List</h1>
-											</header>
+
+													<div class="row">
+													  <div class="col-xs-6"><h1>Compound Substrate List </h1></div>
+													 	<div class="col-xs-6">
+
+															<div class="filter-block pull-right">
+										                        <div class="form-group pull-left">
+										                            
+										                                <input placeholder="Search..." class="form-control searchOrder "  />
+										                                <i class="fa fa-search search-icon"></i>
+										                            
+										                        </div>
+										                        
+										                    </div>
+							                    		</div>
+													</div>
+												
+												</header>
 												<div class="main-box-body clearfix">
 													<div class="table-responsive">
 													<table class="table table-striped table-hover">
@@ -605,7 +674,14 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 													</tr>
 													</thead>
 
-													<?php echo $this->element('compound_substrate_table'); ?>
+													<tbody aria-relevant="all" aria-live="polite" class="requestFields" role="alert" >
+                          
+					                               		 <?php echo $this->element('compound_substrate_table'); ?>
+					                         
+							                        </tbody>
+
+							                        <tbody aria-relevant="all" aria-live="polite" class="searchAppend" role="alert" >
+							                        </tbody>
 
 													</table>
 													<hr>
@@ -828,8 +904,24 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 										<div class="col-lg-12">
 											<div class="main-box">
 											<header class="main-box-header clearfix">
-											<h1>Corrugated Paper Lists</h1>
-											</header>
+
+													<div class="row">
+													  <div class="col-xs-6"><h1>Corrugated List </h1></div>
+													 	<div class="col-xs-6">
+
+															<div class="filter-block pull-right">
+										                        <div class="form-group pull-left">
+										                            
+										                                <input placeholder="Search..." class="form-control searchOrder "  />
+										                                <i class="fa fa-search search-icon"></i>
+										                            
+										                        </div>
+										                        
+										                    </div>
+							                    		</div>
+													</div>
+												
+												</header>
 												<div class="main-box-body clearfix">
 													<div class="table-responsive">
 														<table class="table table-striped table-hover">
@@ -844,8 +936,15 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																	<th style="width:140px">Action</th>
 																</tr>
 															</thead>
-															
-															<?php echo $this->element('corrugated_paper_table'); ?>
+
+															<tbody aria-relevant="all" aria-live="polite" class="requestFields" role="alert" >
+                          
+							                               		<?php echo $this->element('corrugated_paper_table'); ?>
+							                         
+									                        </tbody>
+
+									                        <tbody aria-relevant="all" aria-live="polite" class="searchAppend" role="alert" >
+									                        </tbody>
 
 														</table>
 														<hr>
@@ -875,42 +974,46 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 </div>
 
 <script>
-	// jQuery(document).ready(function($){
- //  		$("#CorrugatedPaperItemGroupForm").validate();
- //  		$("#CompoundSubstrateItemGroupForm").validate();
- //  		$("#SubstrateItemGroupForm").validate();
 
-  		
+    $("body").on('keyup','.searchOrder', function(e){
 
-	// 	var option = $(this).val();$('#SubstrateCategoryId').change(function(){
-	// 			$('.option-append').remove();
-			
-	// 			 var selected = $('#SubstrateCategoryId').val();
-	// 			$.ajax({
-	// 				url: serverPath + "settings/ajax_categ/"+option,
-	// 				type: "get",
-	// 				async: false,
-	// 				dataType: "json",
-	// 				success: function(data) {
+        var searchInput = $(this).val();
+    	var params = $('.params').val();
+    	
+        if(searchInput != ''){
 
-	// 					$.each(data, function(key, value) {
+            $('.requestFields').hide();
+            $('.searchAppend').show();
+            //alert('hide');
 
-	// 						if (value.id == selected) {
+        }else{
+            $('.requestFields').show();
+            $('.searchAppend').hide();
+            //alert('show');
+        }
+        
+        $.ajax({
+            type: "GET",
+            url: serverPath + "settings/search_order/"+searchInput+"/"+params,
+            dataType: "html",
+            success: function(data) {
 
-	// 							$option = "<option class='option-append' selected value="+value.ItemTypeHolder.id+">"+value.ItemTypeHolder.name+"</option>";	
+                //alert(data);
 
-	// 						} else {
+                if(data){
 
-	// 							$option = "<option class='option-append'  value="+value.ItemTypeHolder.id+">"+value.ItemTypeHolder.name+"</option>";
-								
-	// 						}
-	// 					     $('#SubstrateTypeId').append($option);
-	// 					});			
-	// 				}
-	// 			});			
+                    $('.searchAppend').html(data);
 
-	// 	}).trigger('change');
-	// });
+                } 
+                if (data.length < 5 ) {
 
+                    $('.searchAppend').html('<font color="red"><b>No result..</b></font>');
+                     
+                }
+                
+            }
+        });
+
+    });
 
 </script>

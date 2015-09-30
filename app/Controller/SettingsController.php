@@ -2789,6 +2789,59 @@ class SettingsController extends AppController
             }
     }
 
+    public function search_order($hint = null, $indicator = null ){
+
+        $this->loadModel('Supplier');
+
+        $this->loadModel('GeneralItem');
+
+        $this->loadModel('ItemCategoryHolder');
+
+        $this->loadModel('ItemTypeHolder');
+
+        $indicator = $indicator;
+        //pr($indicator); exit;
+
+        $supplierData = $this->Supplier->find('list', array(
+                                                        'fields' => array('Supplier.id', 'Supplier.name'),
+                                                        ));
+
+        $categoryData = $this->ItemCategoryHolder->find('list', array(
+                                                        'fields' => array('ItemCategoryHolder.id', 'ItemCategoryHolder.name'),
+                                                        ));
+
+        $typeData = $this->ItemTypeHolder->find('list', array(
+                                                        'fields' => array('ItemTypeHolder.id', 'ItemTypeHolder.name'),
+                                                        ));
+
+      //  pr($supplierData); exit;
+        
+        //$this->GeneralItem->bind(array('ItemCategoryHolder', 'ItemTypeHolder', 'Supplier'));
+
+        $generalItemData = $this->GeneralItem->find('all',array('order' => 'GeneralItem.id DESC'));
+
+
+
+        $generalItemData = $this->GeneralItem->find('all',array(
+                      'conditions' => array(
+                        'OR' => array(
+                        array('GeneralItem.id LIKE' => '%' . $hint . '%'),
+                        array('GeneralItem.name LIKE' => '%' . $hint . '%')
+                          )
+                        ),
+                      'limit' => 10
+                      )); 
+
+
+         $this->set(compact('generalItemData','supplierData','typeData','categoryData', 'indicator'));
+
+        if ($hint == ' ') {
+            $this->render('index');
+        }else{
+            $this->render('search_order');
+        }
+    }
+
 }
             
 

@@ -1,3 +1,9 @@
+<?php 
+$active_page = !empty($this->params['controller']) ? $this->params['controller'] : '';
+$active_action = !empty($this->params['action']) ? $this->params['action'] : '';
+?>
+
+
 <?php foreach ($generalItemData as $generalItemDataList ):?>
     
   
@@ -13,15 +19,15 @@
             </td>
 
             <td class="text-center">
-                <?php echo ucfirst($generalItemDataList['ItemCategoryHolder']['name']) ?>
+                <?php echo ucfirst($categoryData[$generalItemDataList['GeneralItem']['category_id']]) ?>
             </td>
 
             <td class="text-center">
-                <?php echo ucfirst($generalItemDataList['ItemTypeHolder']['name']) ?>
+                <?php echo ucfirst($typeData[$generalItemDataList['GeneralItem']['type_id']]) ?>
             </td>
 
             <td class="text-center">
-                <?php echo ucfirst($generalItemDataList['Supplier']['name']) ?>
+                <?php echo ucfirst($supplierData[$generalItemDataList['GeneralItem']['manufacturer_id']]) ?>
             </td>
 
             <td class="text-center">
