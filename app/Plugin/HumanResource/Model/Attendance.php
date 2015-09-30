@@ -341,13 +341,12 @@ class Attendance extends AppModel {
 
 		$Holiday = ClassRegistry::init('Holiday');
 
-		$Worschedule = ClassRegistry::init('WorkSchedule');
-
 		$holidayList = $Holiday->find('all',array(
 			'conditions' => array(),
 			'order' => array('Holiday.start_date ASC')
 		));
-		
+
+
 		$dateNow = date('Y-m-d');
 
 		foreach ($holidayList as $key => $holiday) {
@@ -357,6 +356,8 @@ class Attendance extends AppModel {
 				$data['Attendance']['is_holiday'] = $holiday['Holiday']['id'];	
 			} 
 		}
+
+		$data['Attendance']['schedule_id'] = $WorkSchedule['WorkSchedule']['id'];
 
 		$data['Attendance'] = $data['Attendance'];
 
