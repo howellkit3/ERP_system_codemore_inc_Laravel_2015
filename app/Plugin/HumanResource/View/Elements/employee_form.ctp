@@ -1,7 +1,7 @@
 
 <?php $employeeData = !empty($this->request->data) ? $this->request->data : '';
-$active_action = !empty($this->params['action']) ? $this->params['action'] : '';  ?>
-
+$active_action = !empty($this->params['action']) ? $this->params['action'] : '';
+ ?>
 
  <div class="row">
                 <div class="col-lg-12">

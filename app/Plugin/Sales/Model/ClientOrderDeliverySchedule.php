@@ -75,19 +75,19 @@ class ClientOrderDeliverySchedule extends AppModel {
 				),
 				'Company' => array(
 					'className' => 'Sales.Company',
-					'foreignKey' => 'company_id',
+					'foreignKey' => 'company_id', 
 					'dependent' => true
 				),
 				
-				'hasOne' => array(
+				// 'hasOne' => array(
 
-					'JobTicket' => array(
-						'className' => 'Ticket.JobTicket',
-						'foreignKey' => false,
-						'conditions' => array('JobTicket.client_order_id = ClientOrderDeliverySchedule.client_order_id'),
-						'dependent' => true
-					),
-				),
+				// 	'JobTicket' => array(
+				// 		'className' => 'Ticket.JobTicket',
+				// 		'foreignKey' => false,
+				// 		'conditions' => array('JobTicket.client_order_id = ClientOrderDeliverySchedule.client_order_id'),
+				// 		'dependent' => true
+				// 	),
+				// ),
 
 			),
 			
