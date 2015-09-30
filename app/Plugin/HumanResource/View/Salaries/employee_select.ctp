@@ -175,22 +175,33 @@ echo $this->element('payroll_options');
 												<header class="clearfix pull-left">
 													<h2 class="pull-left"><b>Employee</b> </h2>
 												</header>
-												<div class="pull-right" style="margin:5px 0px;"><button class="btn btn-success" id="selectEmployee">ADD</button></div>
+												 <div class="filter-block pull-right">
+
+													<div class="form-group pull-left">
+															<?php //echo $this->Form->create('Quotation',array('controller' => 'quotations','action' => 'search', 'type'=> 'get')); ?>
+															<input placeholder="Search..." class="form-control searchEmployee"  />
+															<i class="fa fa-search search-icon"></i>
+															<?php //echo $this->Form->end(); ?>
+													</div>
+													<div class="pull-right"><button class="btn btn-success" id="selectEmployee">ADD</button></div>
+
+
+												 </div>
 												<br>
 													<table class="table table-bordered table-hover" style="margin:0px;">
 														<thead>
-														<tr>
-															<th style="width:50px"><input type="checkbox" id="selectAll" name=""></th>
-															<th style="width:112px"><a href="#"><span>Code</span></a></th>
-															<th><a href="#"><span>Employee</span></a></th>
-														</tr>
+															<tr>
+																<th style="width:50px"><input type="checkbox" id="selectAll" name=""></th>
+																<th style="width:112px"><a href="#"><span>Code</span></a></th>
+																<th><a href="#"><span> Employee </span></a></th>
+															</tr>
 														</thead>
 													</table>
 													<div class="employee-cont">
 
 				                                		<table class="table table-bordered table-hover">
 																
-																<tbody aria-relevant="all" aria-live="polite" role="alert" id="employee_orig_cont">
+																<tbody aria-relevant="all" aria-live="polite" role="alert" class="tbody_cont" id="employee_orig_cont">
 																			
 																			<?php if (!empty($employees)) :  ?>
 																				<?php foreach ($employees as $key => $value) : ?>
@@ -198,8 +209,8 @@ echo $this->element('payroll_options');
 																						<td style="width:50px">
 																						<input type="checkbox" class="employee_select" value="<?php echo $value['Employee']['id']; ?>" name="data[Payroll][emp][]">
 																						</td>
-																						<td style="width:110px"><?php echo $value['Employee']['code']; ?></td>
-																						<td><?php echo $value['Employee']['full_name']; ?></td>
+																						<td style="width:110px" class="code"><?php echo $value['Employee']['code']; ?></td>
+																						<td class="name"><?php echo $value['Employee']['full_name']; ?></td>
 																					</tr>
 																				<?php endforeach; ?>	
 																			<?php endif; ?>
@@ -214,12 +225,24 @@ echo $this->element('payroll_options');
 												<h2 class="pull-left"><b>Selected</b> </h2>
 											</header>
 		                                	
-											<div class="pull-right" style="margin:5px 0px;"><button class="btn btn-success" id="removeEmployee">Remove</button></div>
+											
+											<div class="filter-block pull-right">
+
+													<div class="form-group pull-left">
+															<?php //echo $this->Form->create('Quotation',array('controller' => 'quotations','action' => 'search', 'type'=> 'get')); ?>
+															<input placeholder="Search..." class="form-control searchEmployee"  />
+															<i class="fa fa-search search-icon"></i>
+															<?php //echo $this->Form->end(); ?>
+													</div>
+													<div class="pull-right"><button class="btn btn-success" id="removeEmployee">Remove</button></div>
+											</div>
+
+
 											<div class="clearfix"></div>
 
 											<?php echo $this->Form->create('Payroll',array('url' => array('controller' => 'salaries','action' => 'process_payroll_save') ));  ?>
 
-											<?php echo $this->Form->input('payroll_id',array('value' => $payroll['Payroll']['id'] )); ?>
+											<?php echo $this->Form->input('payroll_id',array('type' => 'hidden','value' => $payroll['Payroll']['id'] )); ?>
 												<table class="table table-bordered table-hover" style="margin:0px;">
 													<thead>
 													<tr>
@@ -233,7 +256,7 @@ echo $this->element('payroll_options');
 												<div class="employee-cont">
 
 				                                	<table id="appendTable" class="table table-bordered table-hover">
-														<tbody aria-relevant="all" aria-live="polite" role="alert" id="result-table"></tbody>				
+														<tbody aria-relevant="all" aria-live="polite" role="alert" class="tbody_cont" id="result-table"></tbody>				
 													</table>
 
 												</div>
@@ -264,3 +287,26 @@ echo $this->element('payroll_options');
     </div>
 </div>
 <?php echo $this->element('modals/payslip'); ?>
+
+<script type="text/javascript">
+	
+$('.searchEmployee').on('keyup', function(e) {
+    if ('' != this.value) {
+        var reg = new RegExp(this.value, 'i'); // case-insesitive
+        $table = $(this).parents('.employees').find('.tbody_cont');
+
+        $table.find('tr').each(function() {
+            var $me = $(this);
+            if (!$me.children('.name').text().match(reg)) {
+                $me.hide();
+            } else {
+                $me.show();
+            }
+        });
+    } else {
+        $('.table tbody').find('tr').show();
+    }
+});
+
+
+</script>

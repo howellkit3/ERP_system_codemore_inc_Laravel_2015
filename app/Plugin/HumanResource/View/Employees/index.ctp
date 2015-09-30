@@ -63,8 +63,7 @@ $page = !empty($this->params['named']['page']) ? $this->params['named']['page'] 
 					                 		'empty'=> '-- Select Status --'
 
 					                 		)); 
-
-					                ?>
+										?>
 			                    </div>
 			                 	<div class="form-group pull-left">
 			                        <?php //echo $this->Form->create('Quotation',array('controller' => 'quotations','action' => 'search', 'type'=> 'get')); ?>

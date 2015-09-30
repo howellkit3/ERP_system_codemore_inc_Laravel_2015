@@ -163,8 +163,6 @@ class EmployeesController  extends HumanResourceAppController {
 
             	$this->Employee->create();
 
-            
-
             	//check department
 
             	if (!empty($this->request->data['Employee']['department_id_others']) && $this->request->data['Employee']['department_id'] == 'other') {
@@ -202,7 +200,9 @@ class EmployeesController  extends HumanResourceAppController {
 			 		//save employee contact
 			 		//$this->loadModel('HumanResource.Contact');
 
-			 		//$save = $this->Contact->saveContact($data['Contact'],$employeeId,'Employee',$auth['id']);
+			 		$this->loadModel('HumanResource.HumanResourceContactPerson');
+
+			 		$save = $this->HumanResourceContactPerson->saveContact($data['Contact'],$employeeId,'Employee',$auth['id']);
 					//save employee_goverment record
 			 		$save = $this->GovernmentRecord->saveRecord($data['EmployeeAgencyRecord'],$employeeId,$auth['id']);
 
@@ -214,12 +214,12 @@ class EmployeesController  extends HumanResourceAppController {
 
 			 		if (!empty($data['ContactPersonData'])) {
 						
-					//	$this->ContactPerson->saveContact($data['ContactPersonData'],$employeeId,$auth['id']);
+						$this->HumanResourceContactPerson->saveContact($data['ContactPersonData'],$employeeId,$auth['id']);
 			 		}
 					//save contactPerson emails
-			 		//$save = $this->Email->saveEmails($employeeId,'ContactPerson',$data['ContactPersonData']['Email'],$auth['id']);
+			 		$save = $this->Email->saveEmails($employeeId,'ContactPerson',$data['ContactPersonData']['Email'],$auth['id']);
 
-			 		//$save = $this->Email->saveEmails($data['ContactPersonData']['Email'],$employeeId,'ContactPerson',$auth['id']);
+			 		$save = $this->Email->saveEmails($data['ContactPersonData']['Email'],$employeeId,'ContactPerson',$auth['id']);
 
 			 		//$save
 			 		$this->Session->setFlash('Saving employee information successfully, Please add Salary setting','success');
@@ -479,28 +479,29 @@ class EmployeesController  extends HumanResourceAppController {
 
 		$departments = $this->Department->getList();
 
-			$this->Employee->bind(array(
-				'EmployeeAdditionalInformation',
-				'Email',
-				'GovernmentRecord',
-				'Address',
-				'Contact',
-				//'ContactPerson',
-				// //'HumanResourceContactPerson',
-				// 'ContactPersonEmail',
-				// 'ContactPersonAddress',
-				// 'ContactPersonNumber',
-			));
+		$this->Employee->bind(array(
+			'EmployeeAdditionalInformation',
+			'Email',
+			'GovernmentRecord',
+			'Address',
+			'Contact',
+			'ContactPerson',
+			// 'HumanResourceContactPerson',
+			'ContactPersonEmail',
+			'ContactPersonAddress',
+			'ContactPersonNumber',
+		));
 
-			$employee = $this->Employee->findById($id);
+		$employee = $this->Employee->findById($id);
 
-			$agencyList = $this->Agency->find('all',array('fields' => array('id','name','field')));
 
-			$nameList = array();
-			foreach ($agencyList as $key => $value) {
+		$agencyList = $this->Agency->find('all',array('fields' => array('id','name','field')));
+
+		$nameList = array();
+		foreach ($agencyList as $key => $value) {
 			$nameList[$value['Agency']['id']] = array('name' => $value['Agency']['name'],'field' =>$value['Agency']['field']);
-			}
-			
+		}
+		
 
 			$this->set(compact('employee','departments','positions','nameList','contractList'));
 		}

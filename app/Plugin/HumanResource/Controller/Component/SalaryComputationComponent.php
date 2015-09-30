@@ -70,6 +70,7 @@ class SalaryComputationComponent extends Component
         				$total_deduction = 0;
         				$gross = $this->gross_pay($employee['Attendance'],$employee['Salary'],8,$models);
 
+
         				if ($employee['Salary']['employee_salary_type'] == 'daily') {
 
 							$salary[$key] = $this->_dailyRate($employee,$models);
@@ -79,6 +80,7 @@ class SalaryComputationComponent extends Component
 							$salary[$key] = $this->_monthlyRate($employee,$models,8,$workingDays,$payrollSettings);
 						}
 
+
         				$salary[$key]['id'] = !empty($checkExisting['SalaryReport']['id']) ? $checkExisting['SalaryReport']['id'] : '';
         				$salary[$key]['employee_id'] = $employee['Employee']['id'];
         				$salary[$key]['employee_salary_type'] = $employee['Salary']['employee_salary_type'];
@@ -86,6 +88,8 @@ class SalaryComputationComponent extends Component
         				$salary[$key]['from'] = $customDate['start'];
         				$salary[$key]['to'] = $customDate['end'];
         				$salary[$key]['days'] = $gross['days'];
+        				
+        				if (!empty($salary[$key]['gross'])) {
 
         				//sss contribution
         				$contribution = $this->sss_pay($employee['Attendance'],$employee['Salary'],$pay_sched,$salary[$key]['gross'], $models);	
@@ -97,6 +101,20 @@ class SalaryComputationComponent extends Component
 						
 						$salary[$key]['philhealth'] = $this->philhealth_pay($employee['Attendance'],$employee['Salary'],$pay_sched,$salary[$key]['gross'],$models);
 						$salary[$key]['pagibig'] = $this->pagibig_pay($employee['Attendance'],$employee['Salary'],$pay_sched,$salary[$key]['gross'] , $models );
+        				} else {
+
+
+        				//sss contribution
+        			//	$contribution = $this->sss_pay($employee['Attendance'],$employee['Salary'],$pay_sched,$salary[$key]['gross'], $models);	
+        				$salary[$key]['sss'] = 0;
+        				$salary[$key]['sss_employer'] =  0;
+        				$salary[$key]['sss_compensation'] =  0;
+						$salary[$key]['sss_id'] =  0;
+
+						
+						$salary[$key]['philhealth'] = 0;
+						$salary[$key]['pagibig'] =  0;
+        				}
 							
 						//ctpa 
 						$salary[$key]['ctpa'] = !empty($employee['Salary']['ctpa']) ? $gross['days'] * $employee['Salary']['ctpa'] : 0; 
@@ -202,6 +220,7 @@ class SalaryComputationComponent extends Component
 						$salary[$key]['EmployeeAdditionalInformation']	= !empty($employee['EmployeeAdditionalInformation']) ? $employee['EmployeeAdditionalInformation'] : array();
         			
         		}
+
 
         		return $salary;
 			}
