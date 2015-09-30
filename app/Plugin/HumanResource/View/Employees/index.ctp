@@ -59,8 +59,7 @@ echo $this->Html->css(array(
 					                 		'empty'=> '-- Select Status --'
 
 					                 		)); 
-
-					                ?>
+										?>
 			                    </div>
 			                 	<div class="form-group pull-left">
 			                        <?php //echo $this->Form->create('Quotation',array('controller' => 'quotations','action' => 'search', 'type'=> 'get')); ?>

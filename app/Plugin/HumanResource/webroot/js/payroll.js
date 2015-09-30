@@ -6,27 +6,27 @@
                     dataType: "json",
                     success: function(data) {
                         
-                        if (data != '') {
-                        	$mode = $('.mode_type:checked');
+                        // if (data != '') {
 
-                            $mode.attr('disabled','disabled').next().html($mode.data('key')  + ' <span class="label label-danger">Already Process </span> ');
+                        // 	$mode = $('.mode_type:checked');
 
-                            $('.mode_type').attr('checked',true);
+                        //     $mode.attr('disabled','disabled').next().html($mode.data('key')  + ' <span class="label label-danger">Already Process </span> ');
 
-                        }  else {
+                        //     $('.mode_type').attr('checked',true);
 
-                           $('.mode_type').each(function(){
+                        // }  else {
 
-                                $(this).attr('disabled',false);
-                                $(this).next().text($(this).data('key'));
-                           });
+                        //    $('.mode_type').each(function(){
 
-                            //  $('.mode_type').attr('disabled',false);
+                        //         $(this).attr('disabled',false);
+                        //         $(this).next().text($(this).data('key'));
 
-                        }
+                        //    });
+
+                        //     //  $('.mode_type').attr('disabled',false);
+                        // }
                     }
                 });
-
 
 }
 
@@ -42,8 +42,7 @@
             dataType: "html",
             success: function(data) {
 
-
-            $result.html(data);  
+				$result.html(data);  
 
             }
         });
@@ -52,7 +51,7 @@
 $(document).ready(function(){
 
 
-        $('.daterange').daterangepicker();
+    $('.daterange').daterangepicker();
 
 	$body = $('body');
 

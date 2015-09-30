@@ -1591,15 +1591,15 @@ class SalariesController  extends HumanResourceAppController {
 			if ($this->Payroll->save($data)) {
 
 				//make data save in file
-                 $this->Session->setFlash(__('Saving data completed.'),'success');
+                $this->Session->setFlash(__('Saving data completed.'),'success');
 
-	                $this->redirect(
-	                    array('controller' => 'salaries', 'action' => 'employee_select',$this->Payroll->id)
-	                );
+                $this->redirect(
+                    array('controller' => 'salaries', 'action' => 'employee_select',$this->Payroll->id)
+                );
 
             } else {
 
-                    $this->Session->setFlash(__('There\'s an error saving data, Please try again'),'error');
+                $this->Session->setFlash(__('There\'s an error saving data, Please try again'),'error');
             }
 
 		}	
