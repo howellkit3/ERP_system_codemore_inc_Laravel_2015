@@ -1,7 +1,7 @@
-  <?php 
+  <?php  //pr($orderDeliveryList); exit;
        
                         if(!empty($clientsOrder)){
-                       
+                              
 ?>
                                 <?php foreach ($clientsOrder as $scheduleDataList): ?>
 
@@ -42,13 +42,12 @@
                                           <?php 
                                             
                                             $uuidClients = $scheduleDataList['ClientOrderDeliverySchedule']['uuid'];
-                                               
                                                 $arrholder = array();
 
                                                  foreach ($deliveryStatus as $key => $value) {
 
                                                   $IdClientsOrder = $orderListHelper[$value['Delivery']['clients_order_id']];
-  
+                                                               
                                                     if($value['Delivery']['schedule_uuid'] == $orderDeliveryList[$uuidClients]  ){  
 
                                                       if($value['DeliveryDetail']['status'] != 5){

@@ -12,12 +12,16 @@ echo $this->Html->css(array(
                     'HumanResource.employee',
 
 )); 
+
+ $page = !empty($this->params['named']['page']) ? $this->params['named']['page'] : ''; 
+
 ?>
+
 
 <div style="clear:both"></div>
 
 <?php echo $this->element('hr_options'); ?><br><br>
-<?php echo $this->Form->create('Employee',array('url'=>(array('controller' => 'employees','action' => 'edit')),
+<?php echo $this->Form->create('Employee',array('url'=>(array('controller' => 'employees','action' => 'edit','page' => $page)),
 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data' ));?>
 <?php echo $this->Form->input('Employee.id'); ?>
     <div class="row">

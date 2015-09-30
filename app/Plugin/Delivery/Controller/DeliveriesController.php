@@ -46,26 +46,30 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->ClientOrder->recursive = 1;
 
-        $limit = 5;
+        $limit = 10;
 
         $conditions = array();
 
-        $this->ClientOrder->paginate = array(
+        $this->paginate = array(
             'conditions' => $conditions,
             'limit' => $limit,
             'fields' => array(
-              'ClientOrder.uuid',
-              'ClientOrder.po_number',
-              'Company.company_name',  
-              'Product.name', 
-              'ClientOrderDeliverySchedule.quantity', 
-              'ClientOrderDeliverySchedule.location', 
-              'ClientOrderDeliverySchedule.schedule'
-              ),
+                'ClientOrder.uuid',
+                'ClientOrder.po_number',
+                'Company.company_name',  
+                'Product.name', 
+                'ClientOrderDeliverySchedule.quantity', 
+                'ClientOrderDeliverySchedule.location', 
+                'ClientOrderDeliverySchedule.schedule',
+                'ClientOrderDeliverySchedule.uuid',
+                'ClientOrderDeliverySchedule.id',
+                'QuotationDetail.quotation_id'),
             'order' => 'ClientOrder.id DESC',
         );
 
         $clientsOrder = $this->paginate('ClientOrder');
+
+        //pr($clientsOrder); exit;
 
         //no permission sales/Receivable Staff/Accounting Head
         if ($userData['User']['role_id'] == 3 || $userData['User']['role_id'] == 6 || $userData['User']['role_id'] == 9) {
@@ -81,7 +85,8 @@ class DeliveriesController extends DeliveryAppController {
 
     public function add($deliveryScheduleId = null,$quotationId = null, $clientsOrderUuid = null){
 
-      $userData = $this->Session->read('Auth');
+
+        $userData = $this->Session->read('Auth');
       
         $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
@@ -92,8 +97,6 @@ class DeliveriesController extends DeliveryAppController {
                                                                           'ClientOrderDeliverySchedule.id' => $deliveryScheduleId
                                                                         )
                                                                     ));
-
-       // pr($scheduleInfo);exit;
 
         $DRdata = $this->Delivery->find('first', array(
                     'conditions' => array(
@@ -263,8 +266,8 @@ class DeliveriesController extends DeliveryAppController {
         //}
     }
 
-    public function add_schedule($idDelivery = null,$idDeliveryDetail = null,$deliveryScheduleId = null, $quotationId = null, $clientsOrderUuid = null) {
-
+    public function add_schedule($idDelivery = null, $idDeliveryDetail = null,$deliveryScheduleId = null, $quotationId = null, $clientsOrderUuid = null) {
+        //pr($idDelivery); pr($idDeliveryDetail); pr($deliveryScheduleId); pr($quotationId); pr($clientsOrderUuid); exit;
         $userData = $this->Session->read('Auth');
 
         $this->loadModel('Delivery.DeliveryDetail');

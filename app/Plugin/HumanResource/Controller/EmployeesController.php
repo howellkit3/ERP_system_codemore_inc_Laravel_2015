@@ -353,10 +353,13 @@ class EmployeesController  extends HumanResourceAppController {
 					//save contactPerson emails
 			 		//$save = $this->Email->saveEmails($employeeId,'ContactPerson',$data['ContactPersonData']['Email'],$auth['id']);
 
+
 			 		$this->Session->setFlash('Saving employee information successfully','success');
 			 		   $this->redirect( array(
                                  'controller' => 'employees', 
-                                 'action' => 'index'
+                                 'action' => 'index',
+                                 'page' => !empty($this->request->params['named']['page']) ? $this->request->params['named']['page'] : '',
+                                 'model' => 'Employee'
                             ));
                 
                 	} else {

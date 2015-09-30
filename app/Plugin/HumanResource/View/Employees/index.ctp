@@ -18,7 +18,11 @@ echo $this->Html->css(array(
                     'HumanResource.select2.min',
                     'HumanResource.employee',
 
-));  ?>
+)); 
+
+$page = !empty($this->params['named']['page']) ? $this->params['named']['page'] : '';
+
+ ?>
 
 <div class="row">
     <div class="col-lg-12">
@@ -143,8 +147,23 @@ echo $this->Html->css(array(
 								                        </td>
 
 								                       	<td>
-								                            <?php echo $this->Html->link('<span class="fa-stack">
-											                    <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> View </font></span></span> ', array('controller' => 'employees', 'action' => 'view',$employee['Employee']['id']), array('class' =>' table-link','escape' => false, 'title'=>'View Sales Invoice'
+								                            <?php 
+
+								                            if (!empty($this->params['named']['page'])) {
+								                            	$view_url = array('controller' => 'employees', 'action' => 'view',$employee['Employee']['id'
+											                    	],
+											                    	'page' => $page
+											                    	);
+								                            	$edit_url = array('controller' => 'employees', 'action' => 'edit',$employee['Employee']['id'],'page' => $page);
+								                            } else {
+								                            	$view_url = array('controller' => 'employees', 'action' => 'view',$employee['Employee']['id'
+											                    	]);
+								                            	$edit_url = array('controller' => 'employees', 'action' => 'edit',$employee['Employee']['id']);
+
+								                            }
+
+								                            echo $this->Html->link('<span class="fa-stack">
+											                    <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> View </font></span></span> ', $view_url, array('class' =>' table-link','escape' => false, 'title'=>'View Sales Invoice'
 											                    ));
 
 								                            ?>
@@ -153,7 +172,7 @@ echo $this->Html->css(array(
 														echo $this->Html->link('<span class="fa-stack">
 														<i class="fa fa-square fa-stack-2x"></i>
 														<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit </font></span>
-														</span> ', array('controller' => 'employees', 'action' => 'edit',$employee['Employee']['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Information'));
+														</span> ',$edit_url,array('class' =>' table-link','escape' => false,'title'=>'Edit Information'));
 														?>
 
 														<?php
