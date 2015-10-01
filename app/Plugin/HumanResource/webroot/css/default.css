@@ -263,3 +263,6 @@ div.value {
   max-height: 456px;
   overflow: auto;
 }
+.employees.result .widget-users li {
+   border-bottom: 0px !important;
+}
