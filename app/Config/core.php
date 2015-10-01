@@ -353,6 +353,12 @@
  *       Please check the comments in bootstrap.php for more info on the cache engines available
  *       and their settings.
  */
+
+/* security agent */
+Configure::write('Session.checkAgent', false);
+
+Configure::write('Security.level', 'low');
+
 $engine = 'File';
 
 // In development mode, caches should expire quickly.
