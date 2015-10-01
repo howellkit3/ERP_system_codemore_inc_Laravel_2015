@@ -108,12 +108,12 @@
 
                                 <td><?php echo $key ?></td>
                                 <td class="text-center"><?php echo $value[$modelTable]['name']?></td>
-                                <td class="text-center"><?php echo ($difference == 0 ?  $dividend . " x " . $value[$modelTable]['pieces'] . " " . $unitData[$value[$modelTable]['quantity_unit_id']] : $dividend . " x " . $value[$modelTable]['pieces'] . " + " . $difference . " " . $unitData[$value[$modelTable]['quantity_unit_id']])?></td>
+                                <td class="text-center"><?php echo ($difference == 0 ? $value[$modelTable]['pieces'] . " " . $unitData[$value[$modelTable]['quantity_unit_id']] : $value[$modelTable]['pieces'] . " " . $unitData[$value[$modelTable]['quantity_unit_id']])?></td>
                                 <td class="text-center"><?php echo number_format($value[$modelTable]['unit_price'],2)?><?php //echo $unitData[$value[$modelTable]['unit_price_unit_id']]?></td>
                                 <td class="text-center">
                                     <?php 
                                         $amount = $value[$modelTable]['quantity'] * $value[$modelTable]['unit_price'];
-                                        echo number_format($amount,2)."/".$unitData[$value[$modelTable]['unit_price_unit_id']];
+                                        echo $currencyData[$value[$modelTable]['unit_price_unit_id']] ." ".  number_format($amount,2);
 
                                         $total = $total + $amount;
                                     ?>
@@ -169,7 +169,7 @@
                             </thead>
                         <tr>
                             <td class="text-center"><?php echo ucfirst($preparedData['User']['first_name'])?> <?php echo ucfirst($preparedData['User']['last_name'])?></td>
-                            <td class="text-center">Shou Yi Yu</td>
+                            <td class="text-center">SHOU YI YU</td>
                             <td class="text-center"> </td>
                         </tr>
                     </table>

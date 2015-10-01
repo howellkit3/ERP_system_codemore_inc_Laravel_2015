@@ -828,7 +828,27 @@ class QuotationsController extends SalesAppController {
 		                if ($this->Quotation->save($this->request->data)) {
 		                    $this->Quotation->save($this->request->data);
 		              		$this->Quotation->QuotationDetail->save($this->request->data, $userData['User']['id'], $this->id);
-            				$this->Quotation->QuotationItemDetail->save($this->request->data, $this->id);	
+            				//$this->Quotation->QuotationItemDetail->save($this->request->data, $this->id);	
+		              		//remove quotaionItemDetail
+
+		              		//$this->Quotation->Quotation->deleteAll();
+
+								//delete All QuotationDetails
+								$this->Quotation->QuotationItemDetail->deleteAll(array(
+									'QuotationItemDetail.quotation_id' => $quotationId
+								)); 
+
+								foreach ($this->request->data['QuotationItemDetail'] as $key => $save) {
+									$save['id'] ='';
+									$save['quotation_id'] = $quotationId; 
+									$this->Quotation->QuotationItemDetail->save($save); 
+								}
+
+
+
+            				//$this->Quotation->QuotationItemDetail->saveAll($this->request->data['QuotationItemDetail']);
+
+
 		                    $this->Session->setFlash(__('Quotation has been updated.'));
 		                    return $this->redirect(array('action' => 'view', $quotationId, $companyId));
 		                }

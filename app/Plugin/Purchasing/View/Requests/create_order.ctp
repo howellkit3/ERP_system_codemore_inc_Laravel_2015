@@ -318,7 +318,7 @@
 											<div class="col-lg-3">
 												<?php 
 								                    echo $this->Form->input('RequestItem.'.$key.'.size1', array(
-														'class' => 'form-control item_type required',
+														'class' => 'form-control item_type ',
 								                        'label' => false,
 								                        'placeholder' => 'Size',
 								                        'disabled' => false,
@@ -332,7 +332,7 @@
 													echo $this->Form->input('RequestItem.'.$key.'.size1_unit_id', array(
 								                        'options' => array($unitData),  
 								                        'label' => false,
-								                        'class' => 'form-control required',
+								                        'class' => 'form-control ',
 								                        'empty' => '---Select Unit---',
 								                        'disabled' => false,
 								                        'value' => $value['RequestItem']['size1_unit_id']
@@ -351,7 +351,7 @@
 											<div class="col-lg-3">
 												<?php 
 													echo $this->Form->input('RequestItem.'.$key.'.size2', array(
-														'class' => 'form-control item_type required',
+														'class' => 'form-control item_type ',
 								                        'label' => false,
 								                        'placeholder' => 'Size',
 								                        'disabled' => false,
@@ -366,7 +366,7 @@
 													echo $this->Form->input('RequestItem.'.$key.'.size2_unit_id', array(
 								                        'options' => array($unitData),  
 								                        'label' => false,
-								                        'class' => 'form-control required',
+								                        'class' => 'form-control ',
 								                        'empty' => '---Select Unit---',
 								                        'disabled' => false,
 								                        'default' => $value['RequestItem']['size2_unit_id']
@@ -384,7 +384,7 @@
 											<div class="col-lg-3">
 												<?php 
 													echo $this->Form->input('RequestItem.'.$key.'.size3', array(
-														'class' => 'form-control item_type required',
+														'class' => 'form-control item_type ',
 								                        'label' => false,
 								                        'placeholder' => 'Size',
 								                        'disabled' => false,
@@ -399,7 +399,7 @@
 													echo $this->Form->input('RequestItem.'.$key.'.size3_unit_id', array(
 								                        'options' => array($unitData),  
 								                        'label' => false,
-								                        'class' => 'form-control required',
+								                        'class' => 'form-control ',
 								                        'empty' => '---Select Unit---',
 								                        'disabled' => false,
 								                        'default' => $value['RequestItem']['size3_unit_id']
@@ -417,7 +417,7 @@
 													<div class="col-lg-6">
 														<?php 
 															echo $this->Form->input('RequestItem.'.$key.'.quantity', array(
-																'class' => 'form-control item_type number  select-drop required',
+																'class' => 'form-control item_type number  select-drop ',
 																'type' => 'number',
 										                        'label' => false,
 										                        'data' => 0,
@@ -434,7 +434,7 @@
 													<div class="col-lg-3">
 														<?php 
 															echo $this->Form->input('RequestItem.'.$key.'.pieces', array(
-																'class' => 'form-control item_type number  select-drop required',
+																'class' => 'form-control item_type number  select-drop ',
 																'type' => 'number',
 										                        'label' => false,
 										                        'data' => 0,

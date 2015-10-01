@@ -38,7 +38,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 				<thead>
 					<tr>
 						<td style="width:110px;">Supplier </td>
-						<td style="width:183px;" class="border-bot">:<?php echo ucfirst($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]); ?></td>
+						<td style="width:250px; font-size:70%;" class="border-bot">:<?php echo ucfirst($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]); ?></td>
 						
 						<td align = "right" style="width:80px;"> 
 						<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -53,7 +53,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 			<table class="" style ="line-height: 13px; width:750px; padding:1px; border:1px solid black;">
 					<tr>
 						<td style="width:110px;" >Contact Person</td>
-						<td style="width:183px;" class="border-bot">:<?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']); ?> <?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
+						<td style="width:250px;" class="border-bot">:<?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']); ?> <?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
 						
 						<td align = "right" style="width:80px;"> 
 						<td  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -69,7 +69,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 			<table class="" style ="line-height: 13px; width:750px; padding:1px; border:1px solid black;">
 					<tr>
 						<td style="width:110px;" >Telephone</td>
-						<td style="width:183px;" class="border-bot">:<?php echo $purchaseOrderData['Contact']['number']; ?></td>
+						<td style="width:200px;" class="border-bot">:<?php echo $purchaseOrderData['Contact']['number']; ?></td>
 						
 						<td align = "right" style="width:80px;"> 
 						<td  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -118,13 +118,13 @@ for ($x = 0; $x <= 1; $x++) { ?>
 
 							<?php } ?>
 
-							<td class="td-heigth" style="border:1px solid black;"><center><?php echo ($difference == 0 ?  $dividend . " x " . $value[$modelTable]['pieces'] . " " . $unitData[$value[$modelTable]['quantity_unit_id']] : $dividend . " x " . $value[$modelTable]['pieces'] . " + " . $difference . " " . $unitData[$value[$modelTable]['quantity_unit_id']])?></center></td>
+							<td class="td-heigth" style="border:1px solid black;"><center><?php echo ($difference == 0 ? $value[$modelTable]['pieces'] . " " . $unitData[$value[$modelTable]['quantity_unit_id']] : $value[$modelTable]['pieces'] . " + " . $difference . " " . $unitData[$value[$modelTable]['quantity_unit_id']])?></center></td>
 							<td class="td-heigth" style="border:1px solid black;"><center><?php echo number_format($value[$modelTable]['unit_price'],2)?> / <?php echo $unitData[$value[$modelTable]['unit_price_unit_id']]?></center></td>
 							<td class="td-heigth" style="border:1px solid black;">
 								<center>
 									<?php 
 	                                    $amount = $value[$modelTable]['quantity'] * $value[$modelTable]['unit_price'];
-	                                    echo number_format($amount,2)."/".$unitData[$value[$modelTable]['unit_price_unit_id']];
+	                                    echo $currencyData[$value[$modelTable]['unit_price_unit_id']] ." ".  number_format($amount,2);
 
 	                                    $total = $total + $amount;
 	                                ?>
@@ -177,7 +177,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 				<thead>
 					<tr>
 						<td class="td-heigth" style="width:200px;border:1px solid #FFF;">Requested by : <br>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						
 						<?php echo ucfirst($preparedData['User']['first_name'])?> <?php echo ucfirst($preparedData['User']['last_name'])?></td>
 						<td class="td-heigth" style="vertical-align:top; width:200px;border:1px solid #FFF;">Approved by : <br></td>
 						<td class="td-heigth" style="vertical-align:top; width:200px;border:1px solid #FFF;">Purchase by : <br></td>
@@ -221,7 +221,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 				<thead>
 					<tr>
 						<td style="width:110px;">Supplier</td>
-						<td style="width:183px;" class="border-bot">:<?php echo ucfirst($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]); ?></td>
+						<td style="width:250px; font-size:70%;" class="border-bot">:<?php echo ucfirst($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]); ?></td>
 						
 						<td align = "right" style="width:80px;"> 
 						<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -236,7 +236,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 			<table class="" style ="line-height: 13px; width:750px; padding:1px; border:1px solid black;">
 					<tr>
 						<td style="width:110px;" >Contact Person</td>
-						<td style="width:183px;" class="border-bot">:<?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']); ?> <?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
+						<td style="width:250px;" class="border-bot">:<?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']); ?> <?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
 						
 						<td align = "right" style="width:80px;"> 
 						<td  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -252,7 +252,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 			<table class="" style ="line-height: 13px; width:750px; padding:1px; border:1px solid black;">
 					<tr>
 						<td style="width:110px;" >Telephone</td>
-						<td style="width:183px;" class="border-bot">:<?php echo $purchaseOrderData['Contact']['number']; ?></td>
+						<td style="width:200px;" class="border-bot">:<?php echo $purchaseOrderData['Contact']['number']; ?></td>
 						
 						<td align = "right" style="width:80px;"> 
 						<td  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -365,7 +365,6 @@ for ($x = 0; $x <= 1; $x++) { ?>
 				<thead>
 					<tr>
 						<td class="td-heigth" style="width:200px;border:1px solid #FFF;">Requested by : <br>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<?php echo ucfirst($preparedData['User']['first_name'])?> <?php echo ucfirst($preparedData['User']['last_name'])?></td>
 						<td class="td-heigth" style="vertical-align:top; width:200px;border:1px solid #FFF;">Approved by : <br></td>
 						<td class="td-heigth" style="vertical-align:top; width:200px;border:1px solid #FFF;">Purchase by : <br></td>
@@ -405,7 +404,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 				<thead>
 					<tr>
 						<td style="width:110px;">Supplier </td>
-						<td style="width:183px;" class="border-bot">:<?php echo ucfirst($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]); ?></td>
+						<td style="width:250px; font-size:70%;" class="border-bot">:<?php echo ucfirst($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]); ?></td>
 						
 						<td align = "right" style="width:80px;"> 
 						<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -420,7 +419,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 			<table class="" style ="line-height: 13px; width:750px; padding:1px; border:1px solid black;">
 					<tr>
 						<td style="width:110px;" >Contact Person</td>
-						<td style="width:183px;" class="border-bot">:<?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']); ?> <?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
+						<td style="width:250px;" class="border-bot">:<?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']); ?> <?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
 						
 						<td align = "right" style="width:80px;"> 
 						<td  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -436,7 +435,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 			<table class="" style ="line-height: 13px; width:750px; padding:1px; border:1px solid black;">
 					<tr>
 						<td style="width:110px;" >Telephone</td>
-						<td style="width:183px;" class="border-bot">:<?php echo $purchaseOrderData['Contact']['number']; ?></td>
+						<td style="width:200px;" class="border-bot">:<?php echo $purchaseOrderData['Contact']['number']; ?></td>
 						
 						<td align = "right" style="width:80px;"> 
 						<td  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -543,7 +542,6 @@ for ($x = 0; $x <= 1; $x++) { ?>
 				<thead>
 					<tr>
 						<td class="td-heigth" style="width:200px;border:1px solid #FFF;">Requested by : <br>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<?php echo ucfirst($preparedData['User']['first_name'])?> <?php echo ucfirst($preparedData['User']['last_name'])?></td>
 						<td class="td-heigth" style="vertical-align:top; width:200px;border:1px solid #FFF;">Approved by : <br></td>
 						<td class="td-heigth" style="vertical-align:top; width:200px;border:1px solid #FFF;">Purchase by : <br></td>
