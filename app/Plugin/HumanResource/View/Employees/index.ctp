@@ -39,8 +39,9 @@ $page = !empty($this->params['named']['page']) ? $this->params['named']['page'] 
 			                <h2 class="pull-left"><b>Employee List</b></h2>
 
 			               <div class="pull-right">
-			               		Total Employee : <?php echo $totalEmployee; ?>
+			               		Total Employee : <span class="total_emp"><?php echo $totalEmployee; ?></span>
 			               </div> 
+			               <div class="clearfix"></div>
 			                <div class="filter-block pull-right">
 			                	<div class="form-group pull-left search-dropdown">
 			                 		<?php 

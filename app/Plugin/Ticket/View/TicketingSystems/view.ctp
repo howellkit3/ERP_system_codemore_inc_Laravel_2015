@@ -20,14 +20,20 @@
 	                        }else{
 	                        	$buttonName = 'Add Remarks';
 	                        }
+
+	                        	echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> (Pre-Press) PDF ', array(
+					        	'controller' => 'ticketing_systems', 
+					        	'action' => 'prepress_ticket',$productData['Product']['uuid'],$ticketData['JobTicket']['uuid'],$clientOrderId),
+					        	array('class' =>'btn btn-info pull-right '.$noPermissionSales,'escape' => false,'target' => '_blank'));
+
 	                       
-							echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> EXCEL ', array(
+							echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> (Job Ticket) EXCEL ', array(
 					        	'controller' => 'ticketing_systems', 
 					        	'action' => 'excel_ticket',$productData['Product']['uuid'],$ticketData['JobTicket']['uuid'],$clientOrderId),
 					        	array('class' =>'btn btn-info pull-right '.$noPermissionSales,'escape' => false));
 
 
-							echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> PDF ', array(
+							echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> (Job Ticket) PDF ', array(
 					        	'controller' => 'ticketing_systems', 
 					        	'action' => 'print_ticket_export',$productData['Product']['uuid'],$ticketData['JobTicket']['uuid'],$clientOrderId,'pdf'),
 					        	array('class' =>'btn btn-info pull-right '.$noPermissionSales,'target' => '_blank','escape' => false));

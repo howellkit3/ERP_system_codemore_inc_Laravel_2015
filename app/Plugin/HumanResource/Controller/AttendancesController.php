@@ -36,14 +36,16 @@ class AttendancesController  extends HumanResourceAppController {
 			//$fromDate =
 
 			$date = explode('-', $query['data']['date']); 
-			pr($query);
-			exit();
+
+			$date1 = date('Y-m-d',strtotime($date[0]));
+
+			$date2 = date('Y-m-d',strtotime($date[1]));
 
 			$conditions = array_merge($conditions,array(
-  						'date(Attendance.date) BETWEEN ? AND ?' => array($date,$date), 
+  						'date(Attendance.date) BETWEEN ? AND ?' => array($date1,$date2), 
   			));
 
-			$date = $query['data']['date'];
+			//$date = $query['data']['date'];
 		}
 	
 		// $conditions = array(
