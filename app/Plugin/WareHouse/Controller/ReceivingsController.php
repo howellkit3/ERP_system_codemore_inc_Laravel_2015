@@ -307,16 +307,44 @@ class ReceivingsController extends WareHouseAppController {
 		// 												'conditions' => array( 
 		// 													'User.role_id' => 4)));
 
+		
+
+		//$received_orders = $this->DeliveredOrder->find('all',array('order' => 'DeliveredOrder.id DESC'));
+
+	
 		$this->DeliveredOrder->bind('ReceivedItem', 'PurchaseOrder', 'ReceivedOrder');
 
-		$received_orders = $this->DeliveredOrder->find('all',array('order' => 'DeliveredOrder.id DESC'));
+        $this->DeliveredOrder->recursive = 1;
 
-		if(!empty($received_orders[0]['PurchaseOrder']['request_id'])){
+        $limit = 10;
+
+        $conditions = array();
+
+        $this->paginate = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            'fields' => array(
+                'ReceivedOrder.uuid',
+                'ReceivedOrder.created',
+                'ReceivedOrder.id',  
+                // 'PurchaseOrder.uuid', 
+                // 'PurchaseOrder.supplier_id', 
+                // 'PurchaseOrder.request_id',
+                'DeliveredOrder.uuid', 
+                'DeliveredOrder.status_id',
+                'DeliveredOrder.id',
+                'DeliveredOrder.purchase_orders_id'),
+            'order' => 'DeliveredOrder.id DESC',
+        );
+
+        $received_orders = $this->paginate('DeliveredOrder');
+
+        if(!empty($received_orders[0]['PurchaseOrder']['request_id'])){
 
 			$uuid = $receiveData[$received_orders[0]['PurchaseOrder']['request_id']];
 
 		}
-	
+
 		$this->set(compact('received_orders', 'supplierData', 'userName', 'uuid', 'userName', 'userNameList', 'areaList'));
 
     }

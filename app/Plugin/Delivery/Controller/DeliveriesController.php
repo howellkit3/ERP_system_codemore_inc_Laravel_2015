@@ -20,9 +20,7 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
-        $deliveryData = $this->Delivery->find('list',array('fields' => array('schedule_uuid','status')));
-
-        $this->ClientOrder->bindDelivery(); 
+        $deliveryData = $this->Delivery->find('list',array('fields' => array('schedule_uuid','status'))); 
         
         $this->ClientOrder->bindDelivery();
         $clientsStatus = $this->ClientOrder->find('all',array( 'conditions' => array(

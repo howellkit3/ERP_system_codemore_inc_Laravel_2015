@@ -50,5 +50,25 @@ class QuotationItemDetail extends AppModel {
 		return $this->id;
 
 	}
+
+	public function edit($quotationData = null, $quotationId = null){
+		
+		
+
+		$this->create();
+
+		foreach ($quotationData as $key => $quotationItem) 
+		{
+			
+			
+			$quotationItem['quotation_id'] = $quotationId;
+			//pr($quotationItem);
+			$this->saveAll($quotationItem);
+			
+		}  //exit;
+		
+		return $this->id;
+
+	}
 	
 }
