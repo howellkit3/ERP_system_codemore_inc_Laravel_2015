@@ -19,9 +19,10 @@ class Dependent extends AppModel {
  				$record[$key]['employee_id'] = $employeeId;
  				$record[$key]['created_by'] = $auth;
  				$record[$key]['modified_by'] = $auth;
+ 				$this->save($record[$key]);
  			}
  			
-			$this->saveAll($record);
+			
  		}
  	}
 }

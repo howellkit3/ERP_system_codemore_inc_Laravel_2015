@@ -35,6 +35,10 @@ class EmployeesController  extends HumanResourceAppController {
 	        );
 
 	        $employees = $this->paginate();
+
+	        $totalEmployee = $this->Employee->find('count',array('conditions' => $conditions, 'group' => array('Employee.id'), 'recursive' => -1));
+	
+
 	    }
 
 	    if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'Tooling' ) {
@@ -66,7 +70,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 		$statusList = $this->Status->find('list',array('fields' => array('id','name')));
 
-        $this->set(compact('employees','departments','positions','toolings','toolList','employeeList', 'departmentData','statusList'));
+        $this->set(compact('employees','departments','positions','toolings','toolList','employeeList', 'departmentData','statusList','totalEmployee'));
 	}
 
 

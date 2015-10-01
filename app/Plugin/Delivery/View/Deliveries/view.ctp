@@ -181,7 +181,7 @@ $totalremaining = 0;
 
 
                                                     <?php               
-                                                    if(strtotime($Scheddate) < strtotime($Currentdate))
+                                                    if(strtotime($Scheddate) <= strtotime($Currentdate))
                                                     {
                                                         echo "<span class='label label-danger'>Due</span>"; 
                                                     } 

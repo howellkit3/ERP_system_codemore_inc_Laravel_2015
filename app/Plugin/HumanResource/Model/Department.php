@@ -10,6 +10,9 @@ class Department extends AppModel {
 
     public $actsAs = array('Containable');
 
+    	public $virtualFields = array(
+		'department_position' => 'CONCAT_WS(" - ",Department.name , Department.description )',
+	);
     
 	public function saveDepartment($departmentData = null , $userId){
 
@@ -55,7 +58,7 @@ class Department extends AppModel {
 
 	public function getList($conditions = array()) {
 
-		return  $this->find('list',array('conditions' => $conditions,'fields' => array('id','name')));
+		return  $this->find('list',array('conditions' => $conditions,'fields' => array('id','department_position')));
 
 	}
 

@@ -1,4 +1,30 @@
 jQuery(function($){
+    
+    $('body').on('keyup','.searchClientOrder',function(){
+
+        $this = $(this);
+
+        $container = $('.result_client_table');
+
+        $container.html('<img src="'+serverPath+'/img/loader.gif"/>');
+
+
+        $.ajax({
+
+            url: serverPath + "sales/sales_orders/index/",
+            type: "GET",
+            dataType: "html",
+            data : {'name' : $this.val() },
+            success: function(data) {
+              	
+
+                $container.html(data); 
+                
+                }
+        });
+
+    });
+
 	$.ajax({
 
 		url: serverPath + "sales/products/get_product/"+$('#company_id').val(),

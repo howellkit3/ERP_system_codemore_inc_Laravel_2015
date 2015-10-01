@@ -469,6 +469,20 @@ class QuotationsController extends SalesAppController {
 															'Quotation.id' => $quotationId)
 													));
 
+
+		$clientOrders = array();
+
+		if (!empty($quotation['ClientOrder'])) {
+
+			$clientOrders = Set::classicExtract($quotation['ClientOrder'], '{n}.client_order_item_details_id');
+
+
+			foreach ($quotation['ClientOrder'] as $key => $clients) {
+				# code...
+			}
+
+		}
+
 		$quotationDetailData = $this->Quotation->ClientOrder->find('first', array(
 														'conditions' => array( 
 															'ClientOrder.quotation_id' => $quotationId)
@@ -823,33 +837,26 @@ class QuotationsController extends SalesAppController {
 		                $this->Quotation->QuotationDetail->quotation_id = $quotationId;
 		                $this->Quotation->QuotationItemDetail->quotation_id = $quotationId;
 
-		               
-
 		                if ($this->Quotation->save($this->request->data)) {
 		                    $this->Quotation->save($this->request->data);
 		              		$this->Quotation->QuotationDetail->save($this->request->data, $userData['User']['id'], $this->id);
-            				//$this->Quotation->QuotationItemDetail->save($this->request->data, $this->id);	
-		              		//remove quotaionItemDetail
+            			
+	
+		              		//delete All QuotationDetails
+		              		$this->Quotation->QuotationItemDetail->deleteAll(array(
+		              				'QuotationItemDetail.quotation_id' => $quotationId
+		              		)); 
+		              		
 
-		              		//$this->Quotation->Quotation->deleteAll();
+		              		foreach ($this->request->data['QuotationItemDetail'] as $key => $save) {
+		              			$save['id'] ='';
+		              			$save['quotation_id'] = $quotationId;	
+		              			$this->Quotation->QuotationItemDetail->save($save);	
+		              		}
+		              		
 
-								//delete All QuotationDetails
-								$this->Quotation->QuotationItemDetail->deleteAll(array(
-									'QuotationItemDetail.quotation_id' => $quotationId
-								)); 
-
-								foreach ($this->request->data['QuotationItemDetail'] as $key => $save) {
-									$save['id'] ='';
-									$save['quotation_id'] = $quotationId; 
-									$this->Quotation->QuotationItemDetail->save($save); 
-								}
-
-
-
-            				//$this->Quotation->QuotationItemDetail->saveAll($this->request->data['QuotationItemDetail']);
-
-
-		                    $this->Session->setFlash(__('Quotation has been updated.'));
+		            
+            				$this->Session->setFlash(__('Quotation has been updated.'));
 		                    return $this->redirect(array('action' => 'view', $quotationId, $companyId));
 		                }
 		                $this->Session->setFlash(__('Unable to update your post.'));
@@ -1031,8 +1038,6 @@ class QuotationsController extends SalesAppController {
 			// $mail->Password = 'MANDRILL_APIKEY';                  // SMTP password
 			$email->SMTPSecure = 'tls';       
 
-
-
 			//$email->Port = 587;465
 			//$email->Port = 587;
 			$email->from($userData['User']['email']);
@@ -1048,6 +1053,7 @@ class QuotationsController extends SalesAppController {
 			$filename =  $this->request->data['Quotation']['pdf'];
 			
 			$attachment = $this->_createPdf($qouteId,$companyId,$filename);
+
 
 			if ($attachment ) {
 
@@ -1093,6 +1099,8 @@ class QuotationsController extends SalesAppController {
 
 		$this->loadModel('Sales.Company');
 		$this->loadModel('Sales.PaymentTermHolder');
+
+		$this->loadModel('Sales.Address');
 		// $userData = $this->Session->read('Auth');
 		$this->Company->bind(array('Address','Contact','Email','Inquiry','Quotation'));
 
@@ -1116,8 +1124,24 @@ class QuotationsController extends SalesAppController {
 		$contactInfo = $this->Company->ContactPerson->find('first', array(
 																'conditions' => array( 
 																	'ContactPerson.company_id' => $companyId 
-																)
-															));
+																)));
+		
+
+
+		$addressData = $this->Address->find('list', array(
+     													'fields' => array(
+     														'foreign_key','address1')
+     													));
+
+		$cityData = $this->Address->find('list', array(
+     													'fields' => array(
+     														'foreign_key','city')
+     													));
+
+		$provinceData = $this->Address->find('list', array(
+     													'fields' => array(
+     														'foreign_key','state_province')
+     													));
 
 		$this->loadModel('Currency');
 		$currencies = $this->Currency->getList();
@@ -1161,7 +1185,7 @@ class QuotationsController extends SalesAppController {
 								));
 	
 
- 		$view->set(compact('paymentTerm','approvedUser','companyData','units','currencies','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','productName','user','quotationDetailData'));
+ 		$view->set(compact('paymentTerm','approvedUser','companyData','units','currencies','quotation','inquiryId','user','contactInfo','quotationFieldInfo','field','productName','user','quotationDetailData','addressData','provinceData','cityData'));
         
        	$view->viewPath = 'Quotations'.DS.'pdf';	
    

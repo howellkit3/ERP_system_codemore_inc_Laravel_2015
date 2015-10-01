@@ -277,7 +277,10 @@ class ProductsController extends SalesAppController {
 
 		$product = $this->request->data =  $this->Product->findById($id);
 
-		$this->request->data['Company'] = $this->Company->read(null,$product['Product']['company_id'])['Company'];
+
+		$companyData = $this->Company->read(null,$product['Product']['company_id']);
+
+		$this->request->data['Company'] = $companyData ['Company'];
 
 		$productData = $this->Product->find('first',array(
 			'conditions' => array('id' => $id),
@@ -733,7 +736,9 @@ class ProductsController extends SalesAppController {
 		//find if product has specs
 		$formatDataSpecs = $this->ProductSpecificationDetail->findData($product['Product']['uuid']);
 
-		$this->request->data['Company'] = $this->Company->read(null,$product['Product']['company_id'])['Company'];
+		$companyData = $this->Company->read(null,$product['Product']['company_id']);
+
+		$this->request->data['Company'] = $companyData['Company'];
 
 		$productData = $this->Product->find('all',array(
     		'order' => array('Product.id DESC')));	
@@ -930,7 +935,7 @@ class ProductsController extends SalesAppController {
 				}
 
 			}
-			$getIds = [];
+			$getIds = array();
 
 
 
@@ -1114,8 +1119,12 @@ class ProductsController extends SalesAppController {
 		//find if product has specs
 		$formatDataSpecs = $this->ProductSpecificationDetail->findData($product['Product']['uuid']);
 
-		$this->request->data['Company'] = $this->Company->read(null,$product['Product']['company_id'])['Company'];
 
+		$companyData = $this->Company->read(null,$product['Product']['company_id']);
+		
+		$this->request->data['Company'] = $companyData['Company'];
+
+	
 		$productData = $this->Product->find('all',array(
     		'order' => array('Product.id DESC')));	
 
