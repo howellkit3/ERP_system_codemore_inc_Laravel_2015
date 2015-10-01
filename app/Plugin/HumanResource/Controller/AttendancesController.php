@@ -28,15 +28,30 @@ class AttendancesController  extends HumanResourceAppController {
 		$date = date('Y-m-d');
 
 		$date2 = date('Y-m-d', strtotime($date . ' +1 day'));
-
+		
+		$conditions = array();
+		
 		if (!empty($query['data']['date'])) {
+
+			//$fromDate =
+
+			$date = explode('-', $query['data']['date']); 
+			pr($query);
+			exit();
+
+			$conditions = array_merge($conditions,array(
+  						'date(Attendance.date) BETWEEN ? AND ?' => array($date,$date), 
+  			));
+
 			$date = $query['data']['date'];
 		}
 	
-		$conditions = array(
-			'Attendance.date <=' => $date,
-		 	'Attendance.date >=' => $date
-		);
+		// $conditions = array(
+		// 	'Attendance.date <=' => $date,
+		//  	'Attendance.date >=' => $date
+		// );
+
+	
 
 		if (!empty($query['data']['name'])) {
 			$search = $query['data']['name'];
@@ -55,7 +70,7 @@ class AttendancesController  extends HumanResourceAppController {
 	            'conditions' => $conditions,
 	            'limit' => $limit,
 	            //'fields' => array('id', 'status','created'),
-	            'order' => 'Attendance.date ASC',
+	            'order' => 'Attendance.in DESC',
 	    );
 
 		$this->paginate = $params;

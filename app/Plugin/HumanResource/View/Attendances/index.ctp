@@ -34,20 +34,22 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 					<div class="tab-pane active" id="tab-calendar">
 			                <h2 class="pull-left"><b>Attendances</b> </h2>
 						<header class="main-box-header clearfix">
-			                <div class="filter-block pull-right">
-			                 <div class="form-group pull-left">
-			                 	<?php echo $this->Form->create('Attendance',array('controller' => 'attendances','action' => 'index', 'type'=> 'get')); ?>
-			                 		<input type="text" name="data[date]" id="changeDate" class="form-control datepick" value="<?php echo $date ?>">
+							<br>
+			                <div class="filter-block">
 
-			                            <i class="fa fa fa-calendar calendar-icon"></i>
-								</div>
+
+			                 	<?php echo $this->Form->create('Attendance',array('controller' => 'attendances','action' => 'index', 'type'=> 'get')); ?>
+			                 <div class="form-group pull-left">
+			                 	<div class="input-group">
+	                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+	                                <input placeholder="Date Range" name="data[date]" data="1" type="text" class="form-control myDateRange" >
+	                            </div>
+							</div>
+
 			                    <div class="form-group pull-left">
 			                 		 <input placeholder="Search..." class="form-control searchCustomer" value="<?php echo $search ?>" name="data[name]" />
 			                            <i class="fa fa-search search-icon"></i>
-
-			                           
-			                         
-			                    </div>
+								</div>
 			                     <div class="form-group pull-left">
 			                    	 <button class="btn btn-success">Go</button> 
 			                     </div>
@@ -73,8 +75,9 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 											<th><a href="#"><span>Code</span></a></th>
 											<th><a href="#"><span>Employee Name</span></a></th>
 											<th><a href="#"><span>Type</span></a></th>
-											<th><a href="#" class="text-center"><span>From</span></a></th>
-											<th><a href="#" class="text-center"><span>To</span></a></th>
+											<!-- <th><a href="#" class="text-center"><span>From</span></a></th>
+											<th><a href="#" class="text-center"><span>To</span></a></th> -->
+											<th>Schedule</th>
 											<th><a href="#"><span>In</span></a></th>
 											<th><a href="#"><span>Out</span></a></th>
 											<th><a href="#"><span>OT</span></a></th>
@@ -110,13 +113,23 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 															<span class="label <?php echo $schedule['Attendance']['type'] == 'work' ? 'label-success' : 'label-default' ?>"><?php echo Inflector::humanize($schedule['Attendance']['type']) ?></span>
 
 								                        </td>
-														<td> 
+														<!-- <td> 
 								                           <?php echo date('Y/m/d',strtotime($schedule['Attendance']['date'])).' '.date('h:i a',strtotime($schedule['WorkShift']['from'])); ?> 
 								                        </td>
 								                        <td > 
 								                           <?php echo date('Y/m/d',strtotime($schedule['Attendance']['date'])).' '.date('h:i a',strtotime($schedule['WorkShift']['to'])); ?> 
+								                        </td> -->
+
+								                        <td>
+								                        <?php if (!empty($schedule['WorkShift']['to'])) : ?>
+
+								                          <?php echo date('Y/m/d',strtotime($schedule['Attendance']['date'])).' '.date('h:i a',strtotime($schedule['WorkShift']['from'])); ?> 
+								                          - 
+								                          <?php echo date('Y/m/d',strtotime($schedule['Attendance']['date'])).' '.date('h:i a',strtotime($schedule['WorkShift']['to'])); ?> 
+								                    	<?php else : ?>
+								                    		<span class="label label-default"> No Sched </span>
+								                        <?php endif; ?>
 								                        </td>
-								                         </td>
 								                        <td class="text-center time-in"> 
 								                           <?php 
 								                        	 echo (!empty($schedule['Attendance']['in']) && $schedule['Attendance']['in']  != '0000-00-00 00:00:00') ? date('y/m/d h:i a',strtotime($schedule['Attendance']['in'])) : '';
@@ -315,6 +328,8 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 		});
 
 		$('#AttendanceIndexForm').validate();
+
+		$('.myDateRange').daterangepicker();
 
 	});
 </script>

@@ -46,19 +46,19 @@ echo $this->Html->script(array(
 
                         echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back', array('controller' => 'overtimes', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
                         
-                        // echo $this->Html->link('<i class="fa fa-times fa-lg"></i> Rejected ', array('controller' => 'overtimes', 'action' => 'process',$this->request->data['Overtime']['id'],'reject'),
-                        //     array('class' =>' table-link btn btn-primary pull-right overtime-process',
-                        //     'escape' => false,
-                        //     'data-process' => 'reject',  
-                        //     'title'=>'Edit Information',
-                        //     ));
+                        echo $this->Html->link('<i class="fa fa-times fa-lg"></i> Rejected ', array('controller' => 'overtimes', 'action' => 'process',$this->request->data['Overtime']['id'],'reject'),
+                            array('class' =>' table-link btn btn-primary pull-right overtime-process',
+                            'escape' => false,
+                            'data-process' => 'reject',  
+                            'title'=>'Edit Information',
+                            ));
 
-                        // echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i> Approved ', array('controller' => 'overtimes',
-                        //     'action' => 'process',
-                        //     $this->request->data['Overtime']['id'],'approved'),
-                        //     array('class' =>' table-link btn btn-primary pull-right overtime-process',
-                        //           'data-process' => 'approved',   
-                        //           'escape' => false));
+                        echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i> Approved ', array('controller' => 'overtimes',
+                            'action' => 'process',
+                            $this->request->data['Overtime']['id'],'approved'),
+                            array('class' =>' table-link btn btn-primary pull-right overtime-process',
+                                  'data-process' => 'approved',   
+                                  'escape' => false));
                                             
                         ?>
                         </div>
@@ -113,7 +113,8 @@ echo $this->Html->script(array(
                                                         <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span>  <b>Date </b> </label>
                                                         <div class="col-lg-9">
 
-                                                               <?php echo $this->Form->input('Overtime.date', array(
+                                                               <?php
+                                                                echo $this->Form->input('Overtime.date', array(
                                                                             'class' => 'form-control col-lg-6 required datepick',
                                                                             'type' => 'text',
                                                                             'label' => false,
@@ -129,22 +130,27 @@ echo $this->Html->script(array(
 
                                                              <div class="col-lg-5 input-append bootstrap-timepicker">
                                                                 <?php
-                                                                        echo $this->Form->input('Overtime.from', array(
-                                                                            'class' => 'form-control col-lg-6 required datetimepick',
-                                                                            'type' => 'text',
-                                                                            'label' => false
-                                                                            ));
+                                                                        // echo $this->Form->input('Overtime.from', array(
+                                                                        //     'class' => 'form-control col-lg-6 required datetimepick',
+                                                                        //     'type' => 'text',
+                                                                        //     'label' => false
+                                                                        //     ));
+
+                                                                echo date('Y/m/d h:i:a',strtotime($this->request->data['Overtime']['from']))
                                                                  ?>
 
                                                              </div>
                                                                 <div class="col-lg-2 text-center date-range-to">  <b> To </b> </div>
                                                               <div class="col-lg-5 input-append bootstrap-timepicker">
                                                                 <?php
-                                                                    echo $this->Form->input('Overtime.to', array(
-                                                                        'class' => 'form-control col-lg-6 required datetimepick',
-                                                                        'type' => 'text',    
-                                                                        'label' => false
-                                                                        ));
+                                                                    // echo $this->Form->input('Overtime.to', array(
+                                                                    //     'class' => 'form-control col-lg-6 required datetimepick',
+                                                                    //     'type' => 'text',    
+                                                                    //     'label' => false
+                                                                    //     ));
+
+                                                                    echo date('Y/m/d h:i:a',strtotime($this->request->data['Overtime']['to']))
+
                                                                 ?>
                                                              </div>
                                                           
@@ -313,7 +319,7 @@ echo $this->Html->script(array(
 
       </div>
     </div>
-      <div class="row">
+   <!--    <div class="row">
         <div class="col-lg-12">
             <div class="main-box">
                
@@ -340,7 +346,7 @@ echo $this->Html->script(array(
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 <?php echo $this->Form->end(); ?>
 <script>
          $(document).ready(function(){

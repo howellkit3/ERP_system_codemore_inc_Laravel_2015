@@ -7,8 +7,9 @@
 
         		if (!empty($subProcess[$processList['ProductSpecificationProcessHolder']['sub_process_id']])) {
 
+                    $process = array('Wood Mould','Cutting');
 
-        			if ($subProcess[$processList['ProductSpecificationProcessHolder']['sub_process_id']] == 'Wood Mould') {
+        			if (in_array($subProcess[$processList['ProductSpecificationProcessHolder']['sub_process_id']],$process)) {
 
         					echo $this->Html->link($subProcess[$processList['ProductSpecificationProcessHolder']['sub_process_id']], 
         					array(
