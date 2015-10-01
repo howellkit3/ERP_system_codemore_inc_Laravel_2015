@@ -165,7 +165,7 @@ class Quotation extends AppModel {
 
 	);
 
-	//new function for saving quotation
+	//new function for saving quotation 
 	public function addQuotation($quotationData = null,$auth){
 	
 	    $month = date("m"); 
@@ -197,6 +197,17 @@ class Quotation extends AppModel {
 
 		return $this->id;
 
+	}
+
+	public function QuotationDetail($data, $quotationId, $userId)
+	{
+
+		pr($data); exit;	
+			
+		
+		//$this->saveAll($data);
+		
+	
 	}
 
 	public function saveInquiry($data,$auth)
