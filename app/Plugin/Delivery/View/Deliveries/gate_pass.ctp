@@ -18,7 +18,7 @@
 
             </div>
         </div>
-        <?php echo $this->Form->create('GatePass',array('url'=>(array('controller' => 'deliveries','action' => 'add_gatepass'))));?>
+        <?php echo $this->Form->create('GatePass',array('url'=>(array('controller' => 'deliveries','action' => 'add_gatepass')), 'target' => '_blank'));?>
             
             <div class="row">
                 <div class="col-lg-12">
@@ -222,7 +222,7 @@
                                     <div class="form-group">
                                         <div class="col-lg-2"></div>
                                         <div class="col-lg-8">
-                                            <button type="submit" class=" btn btn-primary pull-left redirectMe">Submit</button>&nbsp;
+                                            <button type="submit" class=" btn btn-primary pull-left">Submit</button>&nbsp;
                                             <?php 
                                                 echo $this->Html->link('Cancel', array('controller' => 'deliveries', 'action' => 'index'),array('class' =>'btn btn-default','escape' => false));
                                             ?>
@@ -242,10 +242,37 @@
 <script>
     
     jQuery(document).ready(function(){
+
+        // $('#GatePassGatePassForm').on('submit',function(e) {
+
+        // $this = $(this);
+
+        // $url = $(this).attr('action');
+
+        // alert('wewe');
+
+        //   e.preventDefault();
+
+        // // $.ajax({
+        // //     url: $url,
+        // //     type: "POST",
+        // //      data: $this.serialize() ,
+        // //     //dataType: "json",
+        // //     success: function(data) {
+
+        // //          //window.location.href = $url
+
+        // //         }
+        // //     });
+
+   
+
+   // });
+
         
         $("#GatePassGatePassForm").validate();
 
-         type = $('.gateType').val();
+         var type = $('.gateType').val();
 
        if(type == 1){
 
@@ -266,7 +293,7 @@
 
     $('.gateType').on("change",function(){
         
-       type = $('.gateType').val();
+       var type = $('.gateType').val();
 
        if(type == 1){
 
@@ -283,9 +310,6 @@
        }
         
     });
-
-
-    gateType
 
 </script>
 <style type="text/css">

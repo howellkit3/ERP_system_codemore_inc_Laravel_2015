@@ -44,7 +44,6 @@
                     
 
                     ->setCellValue('J'.'4', '')
-                    ->setCellValue('I'.'6', $drData['Delivery']['id'])
                     ->setCellValue('C'.'6', ucwords($companyData['Company']['company_name']))
                     ->setCellValue('A'.'9', $clientData['ClientOrder']['po_number'])
                     ->setCellValue('C'.'7', ucwords($drData['DeliveryDetail']['location']))
@@ -59,13 +58,13 @@
 
         $objTpl->setActiveSheetIndex(0)
                     
-                    ->setCellValue('H'.'9', $drData['DeliveryDetail']['pieces'] . " x " .  floor($dividend) . " / " . $measureList[$drData['DeliveryDetail']['measure']] );
+                    ->setCellValue('H'.'9', floor($dividend) . " x " .   $drData['DeliveryDetail']['pieces'] . " / " . $measureList[$drData['DeliveryDetail']['measure']] );
 
         }else{
 
         $objTpl->setActiveSheetIndex(0)
                     
-                    ->setCellValue('H'.'9', $drData['DeliveryDetail']['pieces'] . " x " .  floor($dividend)  . " + " . floor($difference) . " / " . $measureList[$drData['DeliveryDetail']['measure']] );
+                    ->setCellValue('H'.'9', floor($dividend) . " x " .   $drData['DeliveryDetail']['pieces'] . " + " . floor($difference) . " / " . $measureList[$drData['DeliveryDetail']['measure']] );
 
         }
 

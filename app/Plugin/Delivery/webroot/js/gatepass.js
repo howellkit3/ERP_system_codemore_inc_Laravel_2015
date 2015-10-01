@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+
+
 	$("body").on('click','.redirectMe', function(e){
 		var one = $('.one').val();
 		var two = $('.two').val();
