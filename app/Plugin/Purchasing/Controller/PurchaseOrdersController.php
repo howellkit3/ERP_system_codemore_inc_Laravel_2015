@@ -43,11 +43,19 @@ class PurchaseOrdersController extends PurchasingAppController {
 
 		$this->loadModel('Unit');
 
+		$this->loadModel('Currency');
+
 		$this->loadModel('Sales.PaymentTermHolder');
 
 		$unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
 															'order' => array('Unit.unit' => 'ASC')
 															));
+
+		$currencyData = $this->Currency->find('list', array('fields' => array('id', 'name'),
+															'order' => array('Currency.name' => 'ASC')
+															));
+
+		//pr($currencyData); exit;
 		//set to cache in first load
 		$paymentTermData = Cache::read('paymentTerms');
 		
@@ -116,7 +124,7 @@ class PurchaseOrdersController extends PurchasingAppController {
 														'conditions' => array('User.id' => $purchaseOrderData['PurchaseOrder']['created_by']),
 														));
 		
-		$this->set(compact('modelTable','purchaseOrderData','supplierData','purchaseOrderid','unitData','paymentTermData','purchaseItemData','preparedData'));
+		$this->set(compact('modelTable','purchaseOrderData','supplierData','purchaseOrderid','unitData','paymentTermData','purchaseItemData','preparedData', 'currencyData'));
 
     }
 
@@ -300,11 +308,17 @@ class PurchaseOrdersController extends PurchasingAppController {
 
 		$this->loadModel('Unit');
 
+		$this->loadModel('Currency');
+
 		$this->loadModel('Sales.PaymentTermHolder');
 
 		$unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
 															'order' => array('Unit.unit' => 'ASC')
 															));
+		$currencyData = $this->Currency->find('list', array('fields' => array('id', 'name'),
+															'order' => array('Currency.name' => 'ASC')
+															));
+
 		//set to cache in first load
 		$paymentTermData = Cache::read('paymentTerms');
 		
@@ -373,7 +387,7 @@ class PurchaseOrdersController extends PurchasingAppController {
 
     	$view = new View(null, false);
 
-		$view->set(compact('modelTable','purchaseOrderData','supplierData','purchaseOrderId','unitData','paymentTermData','purchaseItemData','preparedData'));
+		$view->set(compact('modelTable','purchaseOrderData','supplierData','purchaseOrderId','unitData','paymentTermData','purchaseItemData','preparedData', 'currencyData'));
 		
 		$view->viewPath = 'PurchaseOrder'.DS.'pdf';	
    

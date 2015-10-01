@@ -89,27 +89,6 @@
 
                                                     }  
                                                     
-
-                                                    //pr($arr);
-                                                    // $dataholder = 0;
-                                                    // foreach ($arr as $key => $value) {
-
-                                                    //    if ($value == '2' ) {
-                                                    //     //pr('ff');
-                                                    //      $dataholder = 1;
-                                                    //    }
-
-                                                    //    if ($value == '5' ) {
-                                                    //     //pr('ff');
-                                                    //      $dataholder = 1;
-                                                    //    }
-
-                                                    //    if ($value == '' ) {
-                                                    //    // pr('s');
-                                                    //      $dataholder = 1;
-                                                    //    }
-                                                    // }
-                                                    
                                                   }
 
                                                   $arrDelivered = array();
@@ -134,34 +113,36 @@
 
                                                 $Scheddate = str_replace('-', '', $Scheddate);
                                                 
-                                                $Currentdate = str_replace('-', '', $Currentdate);   
+                                                $Currentdate = str_replace('-', '', $Currentdate); // pr($deliveryData);  
 
                                                   if (!empty($deliveryData[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']]) || !empty($deliveryList[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']])) {   
 
-                                                   
                                                     if (array_sum($arr) == $scheduleDataList['ClientOrderDeliverySchedule']['quantity']){ 
 
-                                                            echo "<span class='label label-success'>Completed</span>";
+                                                        echo "<span class='label label-success'>Completed</span>";
 
                                                     }elseif ($sumDelivered == $scheduleDataList['ClientOrderDeliverySchedule']['quantity']){
 
                                                             echo "<span class='label label-success'>Delivered</span>";
 
                                                     }elseif ($deliveryData[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']] == '1') { 
-                                                        
-                                                             echo "<span class='label label-warning'>Approved</span>"; ?> &nbsp<?php
+                                                    
+                                                         echo "<span class='label label-warning'>Approved</span>"; ?> &nbsp<?php
                                                     } 
-      
-                                                    }else{
-                                                               echo "<span class='label label-default'>Waiting</span>"; ?> &nbsp
+  
+                                                }else{
+
+                                                    echo "<span class='label label-default'>Waiting</span>"; ?> &nbsp
 
 
-                                                    <?php                if(strtotime($Scheddate) < strtotime($Currentdate))
-                                                                {
-                                                                    echo "<span class='label label-danger'>Due</span>"; 
-                                                                }  
+                                                    <?php               
+                                                    if(strtotime($Scheddate + 1) <= strtotime($Currentdate))
+                                                    {
+                                                        echo "<span class='label label-danger'>Due</span>"; 
+                                                    } 
 
-                                                 } ?>
+                                                     
+                                            } ?>
 
                                                 
                                    

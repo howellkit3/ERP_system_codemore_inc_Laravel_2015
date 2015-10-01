@@ -44,11 +44,10 @@
 	}
 
     $objTpl->setActiveSheetIndex(0)
-                ->setCellValue('I6', $invoiceData['SalesInvoice']['sales_invoice_no'])
                 ->setCellValue('C7', ucfirst($companyData['Company']['company_name']))
                 ->setCellValue('I7', (new \DateTime())->format('m/d/Y'))
                 ->setCellValue('I8', $companyData['Company']['tin'])
-                ->setCellValue('C9', ucfirst($companyData['Address'][0]['address1']))
+                ->setCellValue('C8', ucfirst($companyData['Address'][0]['address1']))
                 ->setCellValue('I9', $paymentTermData[$clientData['ClientOrder']['payment_terms']])
                 ->setCellValue('A12', $clientData['ClientOrder']['po_number'])
                 ->setCellValue('C12', ucfirst($clientData['Product']['name']))
@@ -56,11 +55,10 @@
                 ->setCellValue('H12', $clientData['QuotationItemDetail']['unit_price'])
                 ->setCellValue('J12', number_format($totalQty,2))
                 ->setCellValue('C22', 'DR#'.$drData['Delivery']['dr_uuid'])
-                ->setCellValue('C23', 'REF#'.$drData['Delivery']['id'])
-                ->setCellValue('I29', $vatSale)
-                ->setCellValue('I31', $vatExem)
-                ->setCellValue('I32', $vat12)
-                ->setCellValue('I33', $currency.' '.$totalAmount);
+                ->setCellValue('J26', $vatSale)
+                ->setCellValue('J31', $vatExem)
+                ->setCellValue('J32', $vat12)
+                ->setCellValue('J33', $currency.' '.$totalAmount);
       
     //prepare download
     $filename = mt_rand(1,100000).'.xlsx'; //just some random filename

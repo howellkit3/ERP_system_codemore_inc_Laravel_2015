@@ -125,7 +125,7 @@
 							</tr>
 							<tr>
 								<td></td>
-								<td>REF#<?php echo ucfirst($drData['Delivery']['id'])?></td>
+								<td></td>
 								<td></td>
 								<td></td>
 								<td></td>

@@ -34,12 +34,12 @@ $totalremaining = 0;
                 <?php }}else{ 
 
                     $Scheddate = $scheduleInfo['ClientOrderDeliverySchedule']['schedule'];
-                    $Currentdate = date("Y-m-d H:i:s");
+                    $Currentdate = date("Y-m-d");
 
                     $Scheddate = str_replace('-', '', $Scheddate);
                     $Currentdate = str_replace('-', '', $Currentdate);  
 
-                    if(strtotime($Scheddate) >= strtotime($Currentdate)) { ?>
+                    if(strtotime($Scheddate + 1) > strtotime($Currentdate)) { ?>
 
                         <a data-toggle="modal" href="#myModalApprove" class="btn btn-primary mrg-b-lg pull-right "><i class="fa fa-edit fa-lg"></i>Approve Schedule</a>
 
@@ -181,7 +181,7 @@ $totalremaining = 0;
 
 
                                                     <?php               
-                                                    if(strtotime($Scheddate) <= strtotime($Currentdate))
+                                                    if(strtotime($Scheddate + 1) <= strtotime($Currentdate))
                                                     {
                                                         echo "<span class='label label-danger'>Due</span>"; 
                                                     } 
