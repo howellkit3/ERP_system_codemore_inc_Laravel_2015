@@ -909,6 +909,81 @@ class DeliveriesController extends DeliveryAppController {
 
     }
 
+     public function apc($dr_uuid = null,$schedule_uuid) {
+
+        $this->loadModel('Sales.ClientOrder');
+
+        $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule','QuotationItemDetail','QuotationDetail','Product'));
+        
+        $this->loadModel('Sales.Company');
+
+        $this->loadModel('Accounting.SalesInvoice');
+
+        $this->loadModel('Delivery.DeliveryReceipt');
+
+        $this->loadModel('Unit');
+        $units = $this->Unit->getList();
+
+        $this->Company->bind('Address');
+
+        $this->Delivery->bindDelivery();
+        $drData = $this->Delivery->find('first', array(
+                                            'conditions' => array('Delivery.dr_uuid' => $dr_uuid
+                                            )));
+
+        $clientData = $this->ClientOrder->find('first', array(
+                                            'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
+                                            )));
+        
+        $companyData = $this->Company->find('first', array(
+                                            'conditions' => array('Company.id' => $clientData['ClientOrder']['company_id']
+                                            )));
+
+        $userData = $this->Session->read('Auth');
+
+        $this->Delivery->bindDelivery();
+        $drDataHolder = $this->Delivery->find('first', array(
+                                            'conditions' => array('Delivery.dr_uuid' => $dr_uuid
+                                            )));
+
+        $this->loadModel('Delivery.Measure');
+
+        $measureList = $this->Measure->find('list',array('fields' => array('id', 'name')));
+
+        $this->loadModel('User');
+
+        $this->loadModel('Delivery.DeliveryReceipt');
+
+        $this->Delivery->bindDelivery();
+
+        $this->DeliveryReceipt->bind('Delivery');
+      
+        $DRRePrint = $this->DeliveryReceipt->find('all', array(
+                                            'conditions' => array('DeliveryReceipt.dr_uuid' => $drData['Delivery']['dr_uuid'])
+                                         ));
+
+        $this->request->data['DeliveryReceipt']['printed_by'] = $userData['User']['id'];
+
+        $this->request->data['DeliveryReceipt']['dr_uuid'] = $drData['Delivery']['dr_uuid'];
+
+        $this->request->data['DeliveryReceipt']['schedule'] = $drData['DeliveryDetail']['schedule'];
+
+        $this->request->data['DeliveryReceipt']['approved_by'] = $drData['DeliveryDetail']['created_by'];
+
+        $this->request->data['DeliveryReceipt']['printed'] = date("y-m-d");
+
+        $prepared = $userData;
+
+        $approved = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
+                                                                'conditions' => array('User.id' => $drDataHolder['Delivery']['created_by'])
+                                                                ));  
+
+        $this->set(compact('drData','clientData','companyData','units','approved','prepared', 'DRRePrint', 'drQuantity','drRemarks', 'measureList'));
+
+        $this->render('apc'); 
+
+    }
+
     public function tr($dr_uuid = null,$schedule_uuid) {
 
         $this->loadModel('Delivery.Transmittal');

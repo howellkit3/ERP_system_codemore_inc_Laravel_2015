@@ -4,6 +4,8 @@
 $pushRemaining  = array();
 $totaldifference = 0; 
 $totalremaining = 0;
+
+
 ?>
 <div class="row1">
     <div class="col-lg-12">
@@ -435,11 +437,21 @@ $totalremaining = 0;
                                                 <i class="fa fa-square fa-stack-2x"></i>
                                                 <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit</font></span>
                                                 </span> ', array('controller' => 'deliveries', 'action' => 'delivery_edit',$deliveryDataList['Delivery']['dr_uuid'], $scheduleInfo['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link not-active','escape' => false,'title'=>'Review Inquiry'));
+
+                                            if($scheduleInfo['ClientOrder']['company_id'] == '1223'){        
+
+                                                    echo $this->Html->link('<span class="fa-stack">
+                                                        <i class="fa fa-square fa-stack-2x"></i>
+                                                        <i class="fa fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> APC</font></span>
+                                                        </span>', array('controller' => 'deliveries', 'action' => 'apc',$deliveryDataList['Delivery']['dr_uuid'],$scheduleInfo['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link  ','escape' => false,'title'=>'Print Delivery Receipt')); 
+                                                }    
                               
                                             echo $this->Html->link('<span class="fa-stack">
                                                 <i class="fa fa-square fa-stack-2x"></i>
                                                 <i class="fa fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Print </font></span>
-                                                </span>', array('controller' => 'deliveries', 'action' => 'dr',$deliveryDataList['Delivery']['dr_uuid'],$scheduleInfo['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link  refresh','escape' => false,'title'=>'Print Delivery Receipt')); ?>
+                                                </span>', array('controller' => 'deliveries', 'action' => 'dr',$deliveryDataList['Delivery']['dr_uuid'],$scheduleInfo['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link  refresh','escape' => false,'title'=>'Print Delivery Receipt')); 
+
+                                            ?>
 
                                              <a data-toggle="modal" href="#myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" class="table-link"><i class="fa fa-lg "></i><span class="fa-stack">
                                             <i class="fa fa-square fa-stack-2x "></i>
@@ -453,11 +465,20 @@ $totalremaining = 0;
                                                 <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit</font></span>
                                                 </span> ', array('controller' => 'deliveries', 'action' => 'delivery_edit',$deliveryDataList['Delivery']['dr_uuid'], $scheduleInfo['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link','escape' => false,'title'=>'Review Inquiry'));
                                         
+                                                if($scheduleInfo['ClientOrder']['company_id'] == '1223'){        
 
-                                        echo $this->Html->link('<span class="fa-stack">
-                                            <i class="fa fa-square fa-stack-2x"></i>
-                                            <i class="fa fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Print </font></span>
-                                            </span>', array('controller' => 'deliveries', 'action' => 'dr',$deliveryDataList['Delivery']['dr_uuid'],$scheduleInfo['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link refresh','escape' => false,'title'=>'Print Delivery Receipt')); ?>
+                                                    echo $this->Html->link('<span class="fa-stack">
+                                                        <i class="fa fa-square fa-stack-2x"></i>
+                                                        <i class="fa fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> APC</font></span>
+                                                        </span>', array('controller' => 'deliveries', 'action' => 'apc',$deliveryDataList['Delivery']['dr_uuid'],$scheduleInfo['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link  ','escape' => false,'title'=>'Print Delivery Receipt')); 
+                                                }       
+
+                                            echo $this->Html->link('<span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Print </font></span>
+                                                </span>', array('controller' => 'deliveries', 'action' => 'dr',$deliveryDataList['Delivery']['dr_uuid'],$scheduleInfo['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link refresh','escape' => false,'title'=>'Print Delivery Receipt')); 
+
+                                                ?>
 
                                         <a data-toggle="modal" href="#myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" class="table-link not-active"><i class="fa fa-lg "></i><span class="fa-stack">
                                             <i class="fa fa-square fa-stack-2x "></i>
@@ -465,7 +486,6 @@ $totalremaining = 0;
 
                                        } 
 
-                                         
 
                                              }?>
                                                                     
