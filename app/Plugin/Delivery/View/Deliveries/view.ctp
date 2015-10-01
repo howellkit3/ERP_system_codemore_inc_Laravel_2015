@@ -39,7 +39,7 @@ $totalremaining = 0;
                     $Scheddate = str_replace('-', '', $Scheddate);
                     $Currentdate = str_replace('-', '', $Currentdate);  
 
-                    if(strtotime($Scheddate) > strtotime($Currentdate)) { ?>
+                    if(strtotime($Scheddate) >= strtotime($Currentdate)) { ?>
 
                         <a data-toggle="modal" href="#myModalApprove" class="btn btn-primary mrg-b-lg pull-right "><i class="fa fa-edit fa-lg"></i>Approve Schedule</a>
 
