@@ -15,3 +15,11 @@
   margin: 10px 0;
   padding: 0;
 }
+.pull-right.remove-contact-person {
+  color: red;
+  font-size: 25px;
+}
+.remove-contact-person {
+  color: red !important;
+  font-size: 25px;
+}

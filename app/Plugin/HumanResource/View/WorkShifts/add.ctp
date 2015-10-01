@@ -23,7 +23,7 @@
                             Add Workshift
                             </h1>
                         </center>
-                        <?php  echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'schedules', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                        <?php  echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'schedules', 'action' => 'workshifts'),array('class' =>'btn btn-primary pull-right','escape' => false));
                         ?>
                     </header>
 

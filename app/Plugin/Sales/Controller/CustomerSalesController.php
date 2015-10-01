@@ -662,4 +662,35 @@ class CustomerSalesController extends SalesAppController {
     		$this->render('search_customer');
     	}
 	}
+
+	public function remove_contact($id = null) {
+
+		$this->loadModel('Sales.ContactPerson');
+		$this->loadModel('Sales.Contact');
+		$this->loadModel('Sales.Email');
+
+
+		if (!empty($id)) {
+
+			$contactPerson = $this->ContactPerson->findById($id);
+			
+
+			if ($this->ContactPerson->delete($id)) {
+
+				//delete emaiil
+				//delete all Email
+				$this->Email->deleteAll(array('Email.foreign_key' => $id,'Email.model' => 'ContactPerson'), false);
+				//delete all Contact
+				$this->Contact->deleteAll(array('Contact.foreign_key' => $id,'Contact.model' => 'ContactPerson'), false);
+				
+				echo "1";
+			
+			} else {
+				echo "0";
+			}
+
+		}
+
+		exit();
+	}
 }

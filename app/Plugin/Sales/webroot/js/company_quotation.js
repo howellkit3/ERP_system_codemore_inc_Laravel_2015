@@ -177,6 +177,49 @@ jQuery(function($){
 	$(".maskedPhone").mask("(99)-999-9999");
 	$(".maskedPhone2").mask("(99)-999-9999");
 	$('.form-group.addButton').wrapAll('<div class="addValues"></div>');
+
+	$('body').on('click','.remove-contact-person',function(e){
+		
+		var contactId = $(this).data('id');
+        swal({
+            title: "Are you sure?",
+            text: "You want to delete this contact? ",
+            type: "warning",
+            showCancelButton: true,
+            timer: 2000,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, approve it!",
+            cancelButtonText: "No, cancel",
+            closeOnConfirm: false,
+            closeOnCancel: false 
+        },
+        function (isConfirm) {
+
+            if (isConfirm) {
+				
+				$.ajax({
+                    url: serverPath + "sales/customer_sales/remove_contact/"+contactId,
+                    success: function(data) {
+
+                    	if (data == 1) {
+							swal("Successful!","Contact Person deleted.", "success");
+                        location.reload(true);
+                    	}  else {
+                    		swal("Cancelled", "Transaction error.", "error");
+                    	}
+                        //console.log(data);                   
+                    }
+
+                });
+
+                return false;
+
+            } else {
+                swal("Cancelled", "Transaction error.", "error");
+            }
+        });
+		e.preventDefault();
+	});
 	
 });
 

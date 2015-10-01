@@ -31,7 +31,7 @@ class EmployeesController  extends HumanResourceAppController {
 	            'limit' => $limit,
 	            //'fields' => array('id', 'status','created'),
 	            'recursive' => -1,
-	            'order' => 'Employee.id DESC',
+	            'order' => 'Employee.code DESC',
 	        );
 
 	        $employees = $this->paginate();
@@ -104,7 +104,10 @@ class EmployeesController  extends HumanResourceAppController {
 
 		}
 
-		$employeeData = $this->Employee->find('all',array('conditions' => $conditions));
+		$employeeData = $this->Employee->find('all',array(
+			'conditions' => $conditions,
+			'order' => array('Employee.code DESC')
+			));
 
 		$this->set(compact('employeeData'));
 		
@@ -580,8 +583,12 @@ class EmployeesController  extends HumanResourceAppController {
 
 				$conditions = array();
 
-				$conditions = array_merge($conditions,array('Attendance.date' => date('Y-m-d')));
+				$date = date('Y-m-d');
 
+				$conditions = array_merge($conditions,array(
+  						'date(Attendance.date) BETWEEN ? AND ?' => array($date,$date), 
+  				));
+  				
 				$conditions = array_merge($conditions,array('Attendance.in !=' => ' '));
 
 				$conditions = array_merge($conditions,array('Employee.department_id' => $id));

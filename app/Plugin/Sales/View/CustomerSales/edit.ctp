@@ -344,6 +344,23 @@
                             <div class="main-box-body clearfix">
                                 <div class="main-box-body clearfix">
                                     <div class="form-horizontal">
+                                            <?php if($key > 0) : ?>
+                                            <div class="pull-right ">
+                                               
+
+                                                <?php 
+                                                    echo $this->Html->link(' <i class="fa fa-times-circle"></i> ', array(
+                                                        'controller' => 'customer_sales',
+                                                        'action' => 'remove_contact',
+                                                        $value['ContactPerson']['id']
+                                                        ),array(
+                                                        'escape' => false,
+                                                        'data-id' => $value['ContactPerson']['id'],
+                                                        'class' => 'remove-contact-person',
+                                                        ));
+                                                 ?>
+                                            </div>
+                                            <?php endif; ?>
                                         <div class="form-group">
                                             <label for="inputPassword1" class="col-lg-2 control-label">Firstname</label>
                                             <div class="col-lg-9">
