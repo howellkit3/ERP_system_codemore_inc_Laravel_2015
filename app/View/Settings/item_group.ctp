@@ -85,12 +85,14 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																		?>
 																		<?php 
 
-																		
-																		echo $this->Form->input('GeneralItem.params', array(
-																									'class' => 'form-control params ',
-																		                            'label' => false,
-																		                            'type' => 'hidden',
-																		                            'value' => substr($this->params['pass'][0], 0, 10)));
+																		if(!empty($this->params['pass'][0])){
+
+																			echo $this->Form->input('GeneralItem.params', array(
+																										'class' => 'form-control params ',
+																			                            'label' => false,
+																			                            'type' => 'hidden',
+																			                            'value' => substr($this->params['pass'][0], 0, 10)));
+																			}
 																		?>
 
 																	
@@ -130,16 +132,15 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 															</div>
 
 															<div class="form-group">
-																<label class="col-lg-2 control-label"><span style="color:red">*</span>Manufacturer</label>
+																<label class="col-lg-2 control-label">Manufacturer</label>
 																<div class="col-lg-8">
 																	<input type="hidden" id="selected_type" value="">
 																	<?php echo $this->Form->input('GeneralItem.manufacturer_id', array(
 																	'options' => array($supplierData),
 																	'type' => 'select',
 																	'label' => false,
-																	'class' => 'form-control required categorylist',
-																	'empty' => '---Select Supplier---',
-																	'required' => 'required'
+																	'class' => 'form-control  categorylist',
+																	'empty' => '---Select Supplier---'
 																	)); 
 																?>
 																</div>
@@ -343,29 +344,17 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																</div>
 
 																<div class="form-group">
-																	<label class="col-lg-2 control-label"><span style="color:red">*</span>Manufacturer</label>
+																	<label class="col-lg-2 control-label">Manufacturer</label>
 																	<div class="col-lg-8">
 																		<input type="hidden" id="selected_type" value="">
 																		<?php echo $this->Form->input('Substrate.manufacturer_id', array(
 																		'options' => array($supplierData),
 																		'type' => 'select',
 																		'label' => false,
-																		'class' => 'form-control required categorylist',
+																		'class' => 'form-control categorylist',
 																		'empty' => '---Select Supplier---'
 																		)); 
 																	?>
-																	</div>
-																</div>
-
-																<div class="form-group"> <br>
-																<label class="col-lg-2 control-label"><span style="color:red">*</span>Type</label>
-																	<div class="col-lg-8">
-																		<?php 
-																		echo $this->Form->input('Substrate.type', array(
-																			'class' => 'form-control item_type required',
-												                            'label' => false,
-												                            'placeholder' => 'Type'));
-																		?>
 																	</div>
 																</div>
 
@@ -562,7 +551,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																</div>
 
 																<div class="form-group">
-																	<label class="col-lg-2 control-label"><span style="color:red">*</span>Manufacturer</label>
+																	<label class="col-lg-2 control-label">Manufacturer</label>
 																	<div class="col-lg-8">
 																		<input type="hidden" id="selected_type" value="">
 																		<?php
@@ -570,7 +559,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																				'options' => array($supplierData),
 																				'type' => 'select',
 																				'label' => false,
-																				'class' => 'form-control required supplier',
+																				'class' => 'form-control  supplier',
 																				'empty' => '---Select Supplier---'
 																				)); 
 																	?>
@@ -782,7 +771,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																</div>
 
 																<div class="form-group">
-																	<label class="col-lg-2 control-label"><span style="color:red">*</span>Manufacturer</label>
+																	<label class="col-lg-2 control-label">Manufacturer</label>
 																	<div class="col-lg-8">
 																		<input type="hidden" id="selected_type" value="">
 																		<?php 
@@ -790,9 +779,8 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																			'options' => array($supplierData),
 																			'type' => 'select',
 																			'label' => false,
-																			'class' => 'form-control required categorylist',
-																			'empty' => '---Select Supplier---',
-																			'required' => 'required'
+																			'class' => 'form-control categorylist',
+																			'empty' => '---Select Supplier---'
 																			)); 
 																	?>
 																	</div>
