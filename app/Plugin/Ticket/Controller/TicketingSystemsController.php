@@ -635,12 +635,14 @@ class TicketingSystemsController extends TicketAppController {
 
         $this->set(compact('companyData','productData','userData','ticketUuid'));
 
+         $ticketData = $this->JobTicket->find('first',array(
+            'conditions' => array('JobTicket.uuid' => $ticketUuid)));
 
         $view = new View(null, false);
 
         $view->viewPath = 'TicketingSystem'.DS.'pdf';  
 
-        $view->set(compact('companyData','productData','userData','ticketUuid'));
+        $view->set(compact('companyData','productData','userData','ticketUuid','ticketData'));
         
         $output = $view->render('print_prepress', false);
 
@@ -649,8 +651,8 @@ class TicketingSystemsController extends TicketAppController {
         $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));
         $dompdf->render();
         $canvas = $dompdf->get_canvas();
-        $font = Font_Metrics::get_font("Arial", "bold");
-        $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
+        // $font = Font_Metrics::get_font("Arial", "bold");
+        // $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
 
         $output = $dompdf->output();
         $random = rand(0, 1000000) . '-' . time();
