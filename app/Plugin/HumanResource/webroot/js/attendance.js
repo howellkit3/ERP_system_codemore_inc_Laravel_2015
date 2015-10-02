@@ -98,6 +98,7 @@
 
 	}
 
+
     var getEmployeeData = function(thisElement,attendance_id){
 
         $('.dynamic-input').remove();
@@ -112,9 +113,18 @@
 
         $date = $('#changeDate').val();
 
+        $date2 = $this.parents('tbody').find('.time-in').text();
+
+        var url = serverPath + "human_resource/attendances/getEmployeeData";
+
+        if (typeof $date2 != 'undefined') {
+           $date =  $date2;
+        } 
+
         $.ajax({
-            type: "GET",
-            url: serverPath + "human_resource/attendances/getEmployeeData/"+attendance_id+'/'+ $date,
+            type: "POST",
+            url: url,
+            data : {'attendanceId' :attendance_id, 'date' : $date.trim() },
             dataType: "html",
             success: function(data) {
 

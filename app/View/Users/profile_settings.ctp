@@ -54,7 +54,7 @@
 				                         	'label' => false));
 				                    	?>
 				                </div>
-		                       <button class="btn btn-success upload-image"> Uplad Photo </button>
+		                       <button class="btn btn-success upload-image"> Upload Photo </button>
 	                        </center>
 						</div>
 

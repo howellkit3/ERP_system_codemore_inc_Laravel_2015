@@ -138,7 +138,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 							<?php } ?>
 
 							<td class="td-heigth" style="border:1px solid black;"><center><?php echo ($difference == 0 ? $value[$modelTable]['pieces'] . " " . $unitData[$value[$modelTable]['quantity_unit_id']] : $value[$modelTable]['pieces'] . " + " . $difference . " " . $unitData[$value[$modelTable]['quantity_unit_id']])?></center></td>
-							<td class="td-heigth" style="border:1px solid black;"><center><?php echo number_format($value[$modelTable]['unit_price'],2)?> / <?php echo $unitData[$value[$modelTable]['unit_price_unit_id']]?></center></td>
+							<td class="td-heigth" style="border:1px solid black;"><center><?php echo number_format($value[$modelTable]['unit_price'],2)?>  <?php !empty($value[$modelTable]['unit_price_unit_id']) ? '/'.$unitData[$value[$modelTable]['unit_price_unit_id']] : ''; ?></center></td>
 							<td class="td-heigth" style="border:1px solid black;">
 								<center>
 									<?php 
@@ -343,13 +343,13 @@ for ($x = 0; $x <= 1; $x++) { ?>
 
 							
 
-							<td class="td-heigth" style="border:1px solid black;"><center><?php echo ($difference == 0 ?  $dividend . " x " . $value[$modelTable]['pieces'] . " " . $unitData[$value[$modelTable]['quantity_unit_id']] : $dividend . " x " . $value[$modelTable]['pieces'] . " + " . $difference . " " . $unitData[$value[$modelTable]['quantity_unit_id']])?></center></td>
-							<td class="td-heigth" style="border:1px solid black;"><center><?php echo number_format($value[$modelTable]['unit_price'],2)?> / <?php echo $unitData[$value[$modelTable]['unit_price_unit_id']]?></center></td>
+								<td class="td-heigth" style="border:1px solid black;"><center><?php echo ($difference == 0 ? $value[$modelTable]['pieces'] . " " . $unitData[$value[$modelTable]['quantity_unit_id']] : $value[$modelTable]['pieces'] . " + " . $difference . " " . $unitData[$value[$modelTable]['quantity_unit_id']])?></center></td>
+							<td class="td-heigth" style="border:1px solid black;"><center><?php echo number_format($value[$modelTable]['unit_price'],2)?> <?php !empty($value[$modelTable]['unit_price_unit_id']) ? '/'.$unitData[$value[$modelTable]['unit_price_unit_id']] : ''; ?></center></td>
 							<td class="td-heigth" style="border:1px solid black;">
 								<center>
 									<?php 
 	                                    $amount = $value[$modelTable]['quantity'] * $value[$modelTable]['unit_price'];
-	                                    echo number_format($amount,2)."/".$unitData[$value[$modelTable]['unit_price_unit_id']];
+	                                    echo $currencyData[$value[$modelTable]['unit_price_unit_id']] ." ".  number_format($amount,2);
 
 	                                    $total = $total + $amount;
 	                                ?>
@@ -513,7 +513,8 @@ for ($x = 0; $x <= 1; $x++) { ?>
 						<td class="td-heigth" style="line-height:15px;  verticalline-height:10px; -align: center;  border:1px solid black;"><center><b>Unit Price</b></center></td>
 						<td class="td-heigth" style="line-height:15px;  verticalline-height:10px; -align: center;  border:1px solid black;"><center><b>Amount</b></center></td>
 					</tr>
-					<?php $total = 0; $addRow2 = 8; foreach ($purchaseItemData as $key => $value) {  $key++; $addRow2 = $addRow2 - 1; 
+					<?php 
+						$total = 0; $addRow2 = 8; foreach ($purchaseItemData as $key => $value) {  $key++; $addRow2 = $addRow2 - 1; 
 						$dividend = floor($value[$modelTable]['quantity'] / $value[$modelTable]['pieces']);
                    		$difference = $value[$modelTable]['quantity'] - (floor($dividend) * $value[$modelTable]['pieces']);?>
 						<tr>
@@ -539,13 +540,13 @@ for ($x = 0; $x <= 1; $x++) { ?>
 
 							<?php } ?>
 
-							<td class="td-heigth" style="border:1px solid black;"><center><?php echo ($difference == 0 ?  $dividend . " x " . $value[$modelTable]['pieces'] . " " . $unitData[$value[$modelTable]['quantity_unit_id']] : $dividend . " x " . $value[$modelTable]['pieces'] . " + " . $difference . " " . $unitData[$value[$modelTable]['quantity_unit_id']])?></center></td>
-							<td class="td-heigth" style="border:1px solid black;"><center><?php // echo number_format($value[$modelTable]['unit_price'],2)?><?php // echo $unitData[$value[$modelTable]['unit_price_unit_id']]?></center></td>
+								<td class="td-heigth" style="border:1px solid black;"><center><?php echo ($difference == 0 ? $value[$modelTable]['pieces'] . " " . $unitData[$value[$modelTable]['quantity_unit_id']] : $value[$modelTable]['pieces'] . " + " . $difference . " " . $unitData[$value[$modelTable]['quantity_unit_id']])?></center></td>
+							<td class="td-heigth" style="border:1px solid black;"><center><?php echo number_format($value[$modelTable]['unit_price'],2)?> <?php !empty($value[$modelTable]['unit_price_unit_id']) ? '/'.$unitData[$value[$modelTable]['unit_price_unit_id']] : ''; ?></center></td>
 							<td class="td-heigth" style="border:1px solid black;">
 								<center>
 									<?php 
 	                                    $amount = $value[$modelTable]['quantity'] * $value[$modelTable]['unit_price'];
-	                                   // echo number_format($amount,2)."/".$unitData[$value[$modelTable]['unit_price_unit_id']];
+	                                    echo $currencyData[$value[$modelTable]['unit_price_unit_id']] ." ".  number_format($amount,2);
 
 	                                    $total = $total + $amount;
 	                                ?>
@@ -580,7 +581,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 	                </td>
 	                <td style="width:230px;">Version : <?php echo $purchaseOrderData['PurchaseOrder']['version']; ?></th></td> -->
 	                <td align = "right" style="width:300px;" class="border-bot">TOTAL AMOUNT</th>
-	                 <td align ="center" style="width:70px;" class="border-bot">: PHP 0.00<?php // echo number_format($total,2)?></td>
+	                 <td align ="center" style="width:70px;" class="border-bot">: <?php echo number_format($total,2)?></td>
 	            </tr>
 	        </table>
 
