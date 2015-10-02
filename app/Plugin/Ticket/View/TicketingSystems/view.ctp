@@ -1,6 +1,6 @@
 <?php $this->Html->addCrumb('Ticketing System', array('controller' => 'ticketing_systems', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('View', array('controller' => 'ticketing_systems', 'action' => 'view')); ?>
-
+<?php echo $this->Html->script('Ticket.ticket'); ?>
 <div class="row">
 	<div class="col-lg-12">	
 
@@ -67,7 +67,7 @@
 								<div class="col-lg-2"></div>
 								<div class="col-lg-6"></div>
 								<div class="col-lg-4">&emsp;&emsp;&nbsp;&nbsp;&nbsp;
-									Date : <?php //echo (new \DateTime())->format('l, F d, Y '); ?>
+									Date : <?php echo date('M d, Y'); ?>
 								</div>
 							</div>
 
@@ -146,8 +146,22 @@
 									Stock Quantity : <?php if(!empty($specs['ProductSpecification']['stock'])){ echo $specs['ProductSpecification']['stock']; }?>
 								</div>
 							</div>
+<!-- 
+							<div class="filter-block pull-left">
+								<?php 
+								echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> (Pre-Press) PDF ', array(
+					        	'controller' => 'ticketing_systems', 
+					        	'action' => 'prepress_ticket',$productData['Product']['uuid'],$ticketData['JobTicket']['uuid'],$clientOrderId),
+					        	array('class' =>'btn btn-info pull-right '.$noPermissionSales,'escape' => false,'target' => '_blank'));
 
+
+								?>
+							</div> -->
+
+							<div class="clearfix"></div>	
 							<hr>
+
+
 
 							<?php $componentCounter = 1?>
 							<?php $partCounter = 1?>
@@ -270,6 +284,25 @@
                     </div>
                 </form>
                 
+            </div>
+            
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+<div class="modal fade" id="processModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Add Remarks</h4>
+            </div>
+            <div class="modal-body">
+            	<div id="result-table">
+
+            	</div>
             </div>
             
         </div><!-- /.modal-content -->
