@@ -163,6 +163,8 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
+         $this->loadModel('Sales.ProductSpecification');
+
         $this->loadModel('Sales.ClientOrder');
 
         $this->loadModel('Sales.Address');
@@ -172,12 +174,22 @@ class DeliveriesController extends DeliveryAppController {
         $this->loadModel('Delivery.Measure');
 
         $this->ClientOrder->bindDelivery();
+
+      
+
         $scheduleInfo = $this->ClientOrder->find('first', array(
                                          'conditions' => array(
                                           'ClientOrderDeliverySchedule.id' => $deliveryScheduleId
                                         )
                                     ));
+           $productSpecification = $this->ProductSpecification->find('first',array('conditions' => array(
+                    'ProductSpecification.product_id' => $scheduleInfo['QuotationDetail']['product_id']
+        )));
 
+
+          // pr($productSpecification);
+
+       // pr( $scheduleInfo );
         $this->Delivery->bindDelivery();
         $deliveryDetailsData = $this->Delivery->find('all',array('order' => 'Delivery.id DESC'));
 
@@ -255,7 +267,9 @@ class DeliveriesController extends DeliveryAppController {
 
         $noPermissionSales = ' ';
 
-        $this->set(compact('noPermissionSales','driverList','helperList','truckList','deliveryScheduleId','quotationId','clientsOrderUuid','scheduleInfo','deliveryData', 'quantityInfo','deliveryDataID','deliveryDetailsData', 'deliveryEdit', 'deliveryDetailList','deliveryList','deliveryStatus', 'orderList', 'orderListHelper', 'orderDeliveryList', 'clientsOrder', 'companyAddress', 'drData', 'deliveryDetailsData', 'DeliveryReceiptData', 'measureList'));
+       // pr($productSpecification['ProductSpecification']['quantity']);
+
+        $this->set(compact('noPermissionSales','driverList','helperList','productSpecification','truckList','deliveryScheduleId','quotationId','clientsOrderUuid','scheduleInfo','deliveryData', 'quantityInfo','deliveryDataID','deliveryDetailsData', 'deliveryEdit', 'deliveryDetailList','deliveryList','deliveryStatus', 'orderList', 'orderListHelper', 'orderDeliveryList', 'clientsOrder', 'companyAddress', 'drData', 'deliveryDetailsData', 'DeliveryReceiptData', 'measureList'));
         
         //if ($gatepass == 1) {
           

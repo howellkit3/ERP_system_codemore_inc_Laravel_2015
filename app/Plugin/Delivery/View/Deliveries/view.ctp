@@ -70,6 +70,12 @@ $totalremaining = 0;
                                     </tr>
 
                                     <tr>
+                                        <td>Delivery Type</td>
+                                        <td><?php echo  $scheduleInfo['ClientOrderDeliverySchedule']['delivery_type']; ?></td>
+                                    </tr>
+                                    
+
+                                    <tr>
                                         <td>P.O. Number</td>
                                         <td><?php echo  $scheduleInfo['ClientOrder']['po_number']; 
                                        ?></td>
@@ -103,9 +109,19 @@ $totalremaining = 0;
                                         <td>Schedule</td>
                                         <td><?php echo date('M d, Y', strtotime($scheduleInfo['ClientOrderDeliverySchedule']['schedule'])); ?></td>
                                     </tr>
+                                     <tr>
+                                        <td>Total Quantity</td>
+                                        <td>
+                                            <?php if(!empty($productSpecification['ProductSpecification']['quantity'])) : ?>
+                                                <?php echo  number_format($productSpecification['ProductSpecification']['quantity'],2); ?>
+                                            <?php endif; ?>
+                                            <?php //echo $scheduleInfo['ClientOrderDeliverySchedule']['quantity']; ?></td>
+                                    </tr>
+
                                     <tr>
-                                        <td>Quantity</td>
-                                        <td><?php echo  $scheduleInfo['ClientOrderDeliverySchedule']['quantity']; ?></td>
+                                        <td>Schedule Quantity</td>
+                                        <td>
+                                            <?php echo number_format($scheduleInfo['ClientOrderDeliverySchedule']['quantity'],2); ?></td>
                                     </tr>
                                     <tr>
                                         <td>Location</td>

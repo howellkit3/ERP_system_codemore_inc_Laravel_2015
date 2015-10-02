@@ -356,7 +356,8 @@ class TicketingSystemsController extends TicketAppController {
 
         $this->ClientOrder->bind(array('ClientOrderDeliverySchedule'));
 
-        $delData = $this->ClientOrder->find('first',array('ClientOrder.id' => $clientOrderId));
+        $delData = $this->ClientOrder->find('first',array('conditions' => array('id' => $clientOrderId)));
+
        
         $productData = $this->Product->find('first',array(
             'conditions' => array('Product.uuid' => $productUuid)));
