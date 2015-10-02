@@ -1,11 +1,7 @@
-<?php 
-if (count($clientOrder) > 0) : ?>
-
-<tbody aria-relevant="all" aria-live="polite" role="alert" class="result_client_table">
-<?php foreach ($clientOrder as $clientOderData):  ?>
-    <?php //foreach ($clientOder['ClientOrder'] as $clientOderlist):?>
-
-            <tr class="">
+<?php
+    if (count($clientOrder) > 0) : 
+ foreach ($clientOrder as $clientOderData):  ?>
+    <tr class="">
                 <td class="">
                     <?php echo "CO"."-".$clientOderData['ClientOrder']['uuid'] ?>  
                 </td>
@@ -53,9 +49,9 @@ if (count($clientOrder) > 0) : ?>
                     ?>
                 </td>
             </tr>
-
-        
     <?php //endforeach; ?> 
-<?php endforeach; ?>
-    </tbody>
-<?php endif;?> 
+<?php endforeach; 
+?> 
+<?php else : ?>
+   <font color="red"><b>No result..</b></font>
+<?php endif; ?>

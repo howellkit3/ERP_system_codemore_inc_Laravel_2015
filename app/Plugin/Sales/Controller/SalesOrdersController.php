@@ -24,7 +24,41 @@ class SalesOrdersController extends SalesAppController {
 		
 		$this->Quotation->bind(array('ClientOrder'));
 
-		$clientOrder = $this->Quotation->ClientOrder->find('all', array('order' => 'ClientOrder.id DESC'));
+		//$clientOrder = $this->Quotation->ClientOrder->find('all', array('order' => 'ClientOrder.id DESC'));
+    $this->Quotation->ClientOrder->bind(array('QuotationItemDetail','Company'));
+
+    $limit = 10;
+
+    $conditions = array();
+
+
+    if ($this->request->is('ajax')) {
+
+      $query = $this->request->query;
+
+      $conditions = array_merge($conditions,array(
+        'OR' => array(
+
+            'ClientOrder.uuid like' => '%'. $query['name'] . '%',
+            'ClientOrder.po_number like' => '%'. $query['name'] . '%',
+           // 'Company.company_name like' => '%'. $query['name'] . '%',
+
+
+          )
+        
+      ));
+
+    }
+
+    $this->paginate = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            'order' => 'ClientOrder.uuid DESC',
+            'group' => 'ClientOrder.id'
+        );
+
+    $clientOrder = $this->paginate('ClientOrder');
+
 
 		$this->loadModel('Sales.Company');
 
@@ -50,6 +84,12 @@ class SalesOrdersController extends SalesAppController {
     }
 		
 		$this->set(compact('clientOrder','quoteName','companyData','inquiryId','noPermission'));
+
+     if ($this->request->is('ajax')) {
+      
+      $this->render('SalesOrders/ajax/index');
+     
+     }
 	}
 
 	public function view($clientOrderId = null){

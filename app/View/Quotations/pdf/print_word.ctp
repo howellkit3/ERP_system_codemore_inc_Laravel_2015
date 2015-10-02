@@ -45,7 +45,7 @@
 					<tr>
 						<td style="width:123px;font-family: Calibri;">Address</td>
 						<td style="width:20px;">:</td>
-						<td><?php echo !empty($quotation['Quotation']['company_id']) ? ucfirst($addressData[$quotation['Quotation']['company_id']])  : ucfirst($addressData[$inquiryId[$quotation['Quotation']['inquiry_id']]])  ?> 
+						<td style="line-height:1"><?php echo !empty($quotation['Quotation']['company_id']) ? ucfirst($addressData[$quotation['Quotation']['company_id']])  : ucfirst($addressData[$inquiryId[$quotation['Quotation']['inquiry_id']]])  ?> 
 
 							<?php if(!empty($cityData[$quotation['Quotation']['company_id']])){ echo ucfirst($cityData[$quotation['Quotation']['company_id']]);   }?>
 
