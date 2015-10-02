@@ -24,24 +24,24 @@
 	                        	echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> (Pre-Press) PDF ', array(
 					        	'controller' => 'ticketing_systems', 
 					        	'action' => 'prepress_ticket',$productData['Product']['uuid'],$ticketData['JobTicket']['uuid'],$clientOrderId),
-					        	array('class' =>'btn btn-info pull-right '.$noPermissionSales,'escape' => false,'target' => '_blank'));
+					        	array('class' =>'btn btn-info pull-right','escape' => false,'target' => '_blank'));
 
 	                       
 							echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> (Job Ticket) EXCEL ', array(
 					        	'controller' => 'ticketing_systems', 
 					        	'action' => 'excel_ticket',$productData['Product']['uuid'],$ticketData['JobTicket']['uuid'],$clientOrderId),
-					        	array('class' =>'btn btn-info pull-right '.$noPermissionSales,'escape' => false));
+					        	array('class' =>'btn btn-info pull-right ','escape' => false));
 
 
 							echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> (Job Ticket) PDF ', array(
 					        	'controller' => 'ticketing_systems', 
 					        	'action' => 'print_ticket_export',$productData['Product']['uuid'],$ticketData['JobTicket']['uuid'],$clientOrderId,'pdf'),
-					        	array('class' =>'btn btn-info pull-right '.$noPermissionSales,'target' => '_blank','escape' => false));
+					        	array('class' =>'btn btn-info pull-right','target' => '_blank','escape' => false));
 						?>
 
 						<!-- <a href="#" class="btn btn-primary mrg-b-lg pull-right <?php echo $noPermissionSales; ?>"> <i class="fa fa-file"></i> Export </a> -->
 
-	                    <a data-toggle="modal" href="#myModalRemarks" class="btn btn-primary mrg-b-lg pull-right <?php echo $noPermissionSales; ?>"><i class="fa fa-pencil fa-lg"></i> <?php echo $buttonName ;?></a>
+	                    <a data-toggle="modal" href="#myModalRemarks" class="btn btn-primary mrg-b-lg pull-right "><i class="fa fa-pencil fa-lg"></i> <?php echo $buttonName ;?></a>
 
                     </div>
 				</header>

@@ -50,6 +50,21 @@ for ($x = 0; $x <= 1; $x++) { ?>
 					</tr>
 			</table>
 
+			<?php if ($purchaseOrderData['PurchaseOrder']['payment_term'] == 10) { ?> 
+			<table class="" style ="line-height: 13px; width:750px; padding:1px; border:1px solid black;">
+					<tr>
+						<td style="width:110px;" >Contact Person</td>
+						<td style="width:150px;" class="border-bot">:<?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']); ?> <?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
+						
+						<td align = "right" style="width:80px;">Terms :  
+						</td>
+						<td style="width:250px; font-size:10px" class="border-bot"><?php echo $paymentTermData[$purchaseOrderData['PurchaseOrder']['payment_term']]; ?>	
+						</td>
+						
+					</tr>
+				</thead>
+			</table>
+			<?php } else { ?>
 			<table class="" style ="line-height: 13px; width:750px; padding:1px; border:1px solid black;">
 					<tr>
 						<td style="width:110px;" >Contact Person</td>
@@ -65,6 +80,10 @@ for ($x = 0; $x <= 1; $x++) { ?>
 					</tr>
 				</thead>
 			</table>
+
+
+			<?php } ?>
+			
 
 			<table class="" style ="line-height: 13px; width:750px; padding:1px; border:1px solid black;">
 					<tr>
@@ -233,6 +252,22 @@ for ($x = 0; $x <= 1; $x++) { ?>
 					</tr>
 			</table>
 
+			<?php if ($purchaseOrderData['PurchaseOrder']['payment_term'] == 10) { ?> 
+		<table class="" style ="line-height: 13px; width:750px; padding:1px; border:1px solid black;">
+					<tr>
+						<td style="width:110px;" >Contact Person</td>
+						<td style="width:150px;" class="border-bot">:<?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']); ?> <?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
+						
+						<td align = "right" style="width:80px;">Terms :  
+						</td>
+						<td style="width:250px; font-size:10px" class="border-bot"><?php echo $paymentTermData[$purchaseOrderData['PurchaseOrder']['payment_term']]; ?>	
+						</td>
+						
+					</tr>
+				</thead>
+			</table>
+
+			<?php } else { ?>
 			<table class="" style ="line-height: 13px; width:750px; padding:1px; border:1px solid black;">
 					<tr>
 						<td style="width:110px;" >Contact Person</td>
@@ -249,6 +284,8 @@ for ($x = 0; $x <= 1; $x++) { ?>
 				</thead>
 			</table>
 
+
+			<?php } ?>
 			<table class="" style ="line-height: 13px; width:750px; padding:1px; border:1px solid black;">
 					<tr>
 						<td style="width:110px;" >Telephone</td>
@@ -416,6 +453,22 @@ for ($x = 0; $x <= 1; $x++) { ?>
 					</tr>
 			</table>
 
+			<?php if ($purchaseOrderData['PurchaseOrder']['payment_term'] == 10) { ?> 
+			<table class="" style ="line-height: 13px; width:750px; padding:1px; border:1px solid black;">
+					<tr>
+						<td style="width:110px;" >Contact Person</td>
+						<td style="width:150px;" class="border-bot">:<?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']); ?> <?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
+						
+						<td align = "right" style="width:80px;">Terms :  
+						</td>
+						<td style="width:250px; font-size:10px" class="border-bot"><?php echo $paymentTermData[$purchaseOrderData['PurchaseOrder']['payment_term']]; ?>	
+						</td>
+						
+					</tr>
+				</thead>
+			</table>
+
+			<?php } else { ?>
 			<table class="" style ="line-height: 13px; width:750px; padding:1px; border:1px solid black;">
 					<tr>
 						<td style="width:110px;" >Contact Person</td>
@@ -431,6 +484,9 @@ for ($x = 0; $x <= 1; $x++) { ?>
 					</tr>
 				</thead>
 			</table>
+
+
+			<?php } ?>
 
 			<table class="" style ="line-height: 13px; width:750px; padding:1px; border:1px solid black;">
 					<tr>
