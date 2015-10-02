@@ -37,6 +37,10 @@ $page = !empty($this->params['named']['page']) ? $this->params['named']['page'] 
 					<div class="tab-pane fade  <?php echo ($active_tab == 'tab-employee') ? 'in active' : '' ?>" id="tab-employee">
 						<header class="main-box-header clearfix">
 			                <h2 class="pull-left"><b>Employee List</b></h2>
+
+			               <div class="pull-right">
+			               		Total Employee : <?php echo $totalEmployee; ?>
+			               </div> 
 			                <div class="filter-block pull-right">
 			                	<div class="form-group pull-left search-dropdown">
 			                 		<?php 
