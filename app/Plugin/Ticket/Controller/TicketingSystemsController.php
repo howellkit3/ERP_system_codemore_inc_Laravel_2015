@@ -488,6 +488,8 @@ class TicketingSystemsController extends TicketAppController {
 
         $this->loadModel('Sales.ProductSpecificationDetail');
 
+        $this->loadModel('Sales.ProductSpecificationPart');
+
         $this->loadModel('Sales.Company');
 
         $this->loadModel('Sales.Product');
@@ -509,10 +511,16 @@ class TicketingSystemsController extends TicketAppController {
 
         $specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productData['Product']['id'])));
 
-    
+       // pr($productUuid);
         //find if product has specs
-        $formatDataSpecs = $this->ProductSpecificationDetail->findData($productUuid);
 
+        //find process part
+
+        $processData = $this->ProductSpecificationPart->findById($processId);
+
+
+     //   pr($processData); exit();
+     
         $this->loadModel('SubProcess');
 
         $subProcess = $this->SubProcess->find('list',
@@ -542,10 +550,16 @@ class TicketingSystemsController extends TicketAppController {
 
         $view->viewPath = 'TicketingSystem'.DS.'pdf';  
 
-        $view->set(compact('userData','ticketData','formatDataSpecs','productData','specs','companyData','unitData','subProcess','ticketUuid','delData','processId'));
+        $view->set(compact('userData','ticketData','formatDataSpecs','productData','specs','companyData','unitData','subProcess','ticketUuid','delData','processId','processData'));
         
-        $output = $view->render('print_process', false);
 
+        if (in_array($processId,array('11','61'))) {
+
+                     $output = $view->render('print_process_cutting', false);
+        } else {
+                     $output = $view->render('print_process', false);
+        }
+    
         $dompdf = new DOMPDF();
         $dompdf->set_paper("A5", 'landscape');
         $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));

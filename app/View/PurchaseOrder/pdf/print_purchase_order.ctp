@@ -119,7 +119,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 							<?php } ?>
 
 							<td class="td-heigth" style="border:1px solid black;"><center><?php echo ($difference == 0 ? $value[$modelTable]['pieces'] . " " . $unitData[$value[$modelTable]['quantity_unit_id']] : $value[$modelTable]['pieces'] . " + " . $difference . " " . $unitData[$value[$modelTable]['quantity_unit_id']])?></center></td>
-							<td class="td-heigth" style="border:1px solid black;"><center><?php echo number_format($value[$modelTable]['unit_price'],2)?> / <?php echo $unitData[$value[$modelTable]['unit_price_unit_id']]?></center></td>
+							<td class="td-heigth" style="border:1px solid black;"><center><?php echo number_format($value[$modelTable]['unit_price'],2)?> / <?php echo $unitData[$value[$modelTable]['unit_price_unit_id']] ?></center></td>
 							<td class="td-heigth" style="border:1px solid black;">
 								<center>
 									<?php 

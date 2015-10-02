@@ -63,6 +63,17 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
               )); ?>
            
         </li>
+
+        <li class="">
+            <?php $page =($active_page == 'settings'  ) ? 'active' : '' ?>
+            <?php echo $this->Html->link("<span class='count'>Settings</span>",
+             array('controller' => 'settings',
+              'action' => 'category'),
+              array('escape' => false,
+                'class' => 'btn '.$page .' '.$noPermission
+              )); ?>
+           
+        </li>
    
     </ul>
 </div>

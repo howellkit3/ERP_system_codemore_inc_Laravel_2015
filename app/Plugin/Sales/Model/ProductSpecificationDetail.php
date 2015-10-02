@@ -66,14 +66,22 @@ class ProductSpecificationDetail extends AppModel {
 		return $this->id;
 	}
 
-	public function findData($productUuid = null){
+	public function findData($productUuid = null,$specificProcess = null){
+		
+		$conditions = array('ProductSpecificationDetail.product_id' => $productUuid);	
 
+		if (!empty($specificProcess)) {
+			$conditions = array_merge($conditions, array(
+					'ProductSpecificationDetail.model' => $specificProcess
+
+			));
+		}
 		$specsList = $this->find('all',array(
-						'conditions' => array(
-							'ProductSpecificationDetail.product_id' => $productUuid),
+						'conditions' => $conditions,
 						'order' => 'ProductSpecificationDetail.order ASC'
 						// 'contain' => ''
 						));
+
 
 		$dataArray = array();
 
