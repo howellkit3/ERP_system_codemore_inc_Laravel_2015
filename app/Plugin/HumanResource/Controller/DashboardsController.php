@@ -25,7 +25,7 @@ class DashboardsController  extends HumanResourceAppController {
 
 		$this->Attendance->bind(array('WorkSchedule','Employee','WorkShift'));
 
-		$attendances = $this->Attendance->find('all',array('conditions' => $conditions ,'limit' => 5));
+		$attendances = $this->Attendance->find('all',array('conditions' => $conditions ,'limit' => 5, 'order' => array('Attendance.date DESC')));
 
 		
 		$this->Absence->bind(array('Employee'));
