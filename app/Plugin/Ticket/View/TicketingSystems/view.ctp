@@ -172,8 +172,10 @@
 										      		
 										      	}
 										      	if($specLists['ProductSpecificationDetail']['model'] == 'Process'){
-										      		
-										      		echo $this->element('Specs/process', array('formatDataSpecs' => $formatDataSpecs[$key],'key' => $processCounter));
+
+										      		echo $this->element('Specs/process', array('dataSpecs' => $formatDataSpecs[$key]
+										      			,'key' => $processCounter));
+
 										      		$processCounter++;
 
 										      	}

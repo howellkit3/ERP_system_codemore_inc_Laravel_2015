@@ -1,6 +1,4 @@
-<?php 
-
-foreach ($company as $customerlist): ?>
+<?php foreach ($company as $customerlist): ?>
    
         <tr class="">
             <td class="">

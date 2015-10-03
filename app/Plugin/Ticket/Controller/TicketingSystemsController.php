@@ -68,14 +68,18 @@ class TicketingSystemsController extends TicketAppController {
                                                  )
                                                 ));
 
-        $productData = $this->Product->find('first',array('conditions' => array('Product.uuid' => $productUuid )));
+        $productData = $this->Product->find('first',array('conditions' => array('Product.uuid' => $productUuid) ,'order' => 'Product.id DESC'));
 
-        $subProcess = $this->SubProcess->find('list',
+
+         // pr( $productData );
+
+        $subProcessData = $this->SubProcess->find('list',
                                             array('fields' => 
                                                 array('SubProcess.id',
                                                     'SubProcess.name'
                                                  )
                                                 ));
+        //$subProcess =  $subProcess['SubProcess'];
 
         //set to cache in first load
         $unitData = Cache::read('unitData');
@@ -101,7 +105,7 @@ class TicketingSystemsController extends TicketAppController {
         }
 
 		
-		$this->set(compact('userData','delData','ticketData','formatDataSpecs','specs','unitData','subProcess','productData','companyData','clientOrderId','noPermissionSales'));
+		$this->set(compact('userData','delData','ticketData','formatDataSpecs','specs','unitData','subProcess','productData','companyData','clientOrderId','noPermissionSales','subProcessData'));
 	}
 
 	public function updatePendingStatus($ticketId = null) {
@@ -370,6 +374,7 @@ class TicketingSystemsController extends TicketAppController {
         //find if product has specs
         $formatDataSpecs = $this->ProductSpecificationDetail->findData($productUuid);
 
+
         $this->loadModel('SubProcess');
 
         $subProcess = $this->SubProcess->find('list',
@@ -378,6 +383,7 @@ class TicketingSystemsController extends TicketAppController {
                                                     'SubProcess.name'
                                                  )
                                                 ));
+        $subProcess =  $subProcess['SubProcess'];
 
         //set to cache in first load
         $companyData = Cache::read('companyData');
