@@ -40,7 +40,11 @@
 							<tr>
 								<td ><label class="strong">Item Size</label> <?php echo $specs['ProductSpecification']['size1'].' x '.$specs['ProductSpecification']['size2'].' x '.$specs['ProductSpecification']['size3'] ?></td>
 								<td class="text-right"><label class="strong">Del Date</label> <?php 
-								echo !empty($delData['ClientOrderDeliverySchedule'][0]['schedule']) ? date('M d, Y', strtotime($delData['ClientOrderDeliverySchedule'][0]['schedule'])) : ''; ?> </td>
+								echo !empty($delData['ClientOrderDeliverySchedule'][0]['schedule']) ? date('M d, Y', strtotime($delData['ClientOrderDeliverySchedule'][0]['schedule'])) : ''; ?>
+
+							
+
+								 </td>
 							</tr>
 						</table>
 					</td>

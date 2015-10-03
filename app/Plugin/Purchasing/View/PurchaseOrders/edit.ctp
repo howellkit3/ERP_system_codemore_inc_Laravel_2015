@@ -252,9 +252,9 @@
 														<label class="col-lg-2 control-label"><span style="color:red">*</span>Item</label>
 														<div class="col-lg-5">
 															
-											                <input type="text" class="form-control item_name required" name="data[PurchasingItem][<?php echo $key ?>][nameToShow]" value="<?php echo $value[$modelTable]['name'] ?>" readonly>
+											                <input type="text" class="form-control item_name" name="data[PurchasingItem][<?php echo $key ?>][nameToShow]" value="<?php echo $value[$modelTable]['name'] ?>" readonly>
 
-											                <input type="hidden" class="form-control item_name required" name="data[PurchasingItem][<?php echo $key ?>][name]" value="<?php echo $value[$modelTable]['name'] ?>" readonly>
+											                <input type="hidden" class="form-control item_name " name="data[PurchasingItem][<?php echo $key ?>][name]" value="<?php echo $value[$modelTable]['name'] ?>" readonly>
 
 											                <?php 
 
@@ -267,7 +267,7 @@
 											                	
 											                    echo $this->Form->input('PurchasingItem.'.$key.'.foreign_key', 
 																				array( 
-																	'class' => 'form-control item_id required', 
+																	'class' => 'form-control item_id ', 
 																	'type' => 'hidden',
 											    					'label' => false,
 											    					'readonly' => 'readonly',
@@ -278,7 +278,7 @@
 											                <?php 
 											                    echo $this->Form->input('PurchasingItem.'.$key.'.model', 
 																				array( 
-																	'class' => 'form-control item_model required ', 
+																	'class' => 'form-control item_model ', 
 																	'type' => 'hidden',
 											    					'label' => false,
 											    					'readonly' => 'readonly',
@@ -314,7 +314,7 @@
 														<div class="col-lg-3">
 															<?php 
 											                    echo $this->Form->input('PurchasingItem.'.$key.'.size1', array(
-																	'class' => 'form-control item_type required',
+																	'class' => 'form-control item_type ',
 											                        'label' => false,
 											                        'placeholder' => 'Size',
 											                        'disabled' => false,
@@ -327,7 +327,7 @@
 																echo $this->Form->input('PurchasingItem.'.$key.'.size1_unit_id', array(
 											                        'options' => array($unitData),  
 											                        'label' => false,
-											                        'class' => 'form-control required select-drop',
+											                        'class' => 'form-control select-drop',
 											                        'empty' => '---Select Unit---',
 											                        'disabled' => false,
 											                        'value' => $value[$modelTable]['size1_unit_id']
@@ -346,7 +346,7 @@
 														<div class="col-lg-3">
 															<?php 
 																echo $this->Form->input('PurchasingItem.'.$key.'.size2', array(
-																	'class' => 'form-control item_type required',
+																	'class' => 'form-control item_type',
 											                        'label' => false,
 											                        'placeholder' => 'Size',
 											                        'disabled' => false,
@@ -360,7 +360,7 @@
 																echo $this->Form->input('PurchasingItem.'.$key.'.size2_unit_id', array(
 											                        'options' => array($unitData),  
 											                        'label' => false,
-											                        'class' => 'form-control required select-drop',
+											                        'class' => 'form-control  select-drop',
 											                        'empty' => '---Select Unit---',
 											                        'disabled' => false,
 											                        'default' => $value[$modelTable]['size2_unit_id']
@@ -378,7 +378,7 @@
 														<div class="col-lg-3">
 															<?php 
 																echo $this->Form->input('PurchasingItem.'.$key.'.size3', array(
-																	'class' => 'form-control item_type required',
+																	'class' => 'form-control item_type',
 											                        'label' => false,
 											                        'placeholder' => 'Size',
 											                        'disabled' => false,
@@ -392,7 +392,7 @@
 																echo $this->Form->input('PurchasingItem.'.$key.'.size3_unit_id', array(
 											                        'options' => array($unitData),  
 											                        'label' => false,
-											                        'class' => 'form-control required select-drop',
+											                        'class' => 'form-control  select-drop',
 											                        'empty' => '---Select Unit---',
 											                        'disabled' => false,
 											                        'default' => $value[$modelTable]['size3_unit_id']
@@ -410,7 +410,7 @@
 													<div class="col-lg-6">
 														<?php 
 															echo $this->Form->input('PurchasingItem.'.$key.'.quantity', array(
-																'class' => 'form-control item_type number  select-drop required',
+																'class' => 'form-control item_type number  select-drop required quantity_input',
 																'type' => 'number',
 										                        'label' => false,
 										                        'data' => 0,
@@ -419,15 +419,17 @@
 
 										                ?>
 													</div>
-												</div>
+												</div>	
 
 												<div class="form-group">
-														<label class="col-lg-2 control-label"><span style="color:red">*</span>Pieces</label>
+														<!--<label class="col-lg-2 control-label"><span style="color:red">*</span>Pieces</label> -->
+
+														<label class="col-lg-2 control-label"><span style="color:red">*</span>Quantity</label>
 
 													<div class="col-lg-3">
 														<?php 
 															echo $this->Form->input('PurchasingItem.'.$key.'.pieces', array(
-																'class' => 'form-control item_type number  select-drop required',
+																'class' => 'form-control item_type quantityInput number  select-drop required',
 																'type' => 'number',
 										                        'label' => false,
 										                        'data' => 0,
@@ -608,6 +610,17 @@
 <div class="md-overlay"></div>
 <script>
 	$(document).ready(function() {
+
+
+		// $('body').on('keyPress','.quantityInput',function(){
+
+		// 		$tickets = $(this).val();
+
+		// 		$(this).parent().parent().parent().parent().find(
+		// 			'.quantity_input'
+		// 			).val($tickets);
+
+		// });
 
 		$(".hide-remove").hide();
 
