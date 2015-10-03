@@ -362,7 +362,7 @@ class SettingsController extends AppController
             'conditions' => $conditions,
             'limit' => $limit,
             'fields' => array('id', 'name', 'description','created'),
-            'order' => 'Supplier.id DESC',
+            'order' => 'Supplier.name ASC',
         );
 
         $supplierData = $this->paginate('Supplier');
