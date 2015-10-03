@@ -23,17 +23,52 @@ class TicketingSystemsController extends TicketAppController {
 	    	    
 	public function index() {
 
-        $this->JobTicket->bindTicket();
+        $this->loadModel('Sales.Company');
 
-        $ticketData = $this->JobTicket->find('all', array(
-                                        'order' => 'JobTicket.id DESC'
-                                        ));
+        $limit = 10;
 
-		$this->loadModel('Sales.Company');
+        $conditions = array();
+
+              $this->JobTicket->bindTicket();
+
+        $query = $this->request->query;
+
+        if (!empty($query)) {
+
+            if (!empty($query['name'])){
+
+                $conditions = array_merge($conditions,array(
+                    'OR' => array(
+                          'JobTicket.uuid like' => '%'.$query['name'].'%',
+                          'JobTicket.po_number like' => '%'.$query['name'].'%',
+                          //'Product.name like' => '%'.$query['name'].'%',
+                        )
+                      
+                ));
+            }
+
+        }
+
+   
+
+        $this->paginate = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            //'fields' => array('id', 'status','created'),
+            'order' => 'JobTicket.id DESC',
+        );
+
+
+        $ticketData = $this->paginate('JobTicket');
 
 		$companyData = $this->Company->find('list',array('fields' => array('id','company_name')));
 
 		$this->set(compact('ticketData','companyData'));
+
+        if ($this->request->is('ajax')) {
+
+            $this->render('TicketingSystems/ajax/index');
+        }
 	
 	}
 
@@ -148,6 +183,21 @@ class TicketingSystemsController extends TicketAppController {
         
 		return $this->redirect(array('controller' => 'ticketing_systems', 'action' => 'index'));
 	}
+
+    public function find_process($processId = null, $productId = null , $ticketId = null) {
+
+        $query = $this->request->query;
+
+        pr($this->request->data);
+
+        exit();
+
+        if (!empty($processId) && !empty($productId) && !empty($productId)) {
+
+            pr($query);
+            exit();
+        }
+    }
 
 	public function print_ticket($productUuid = null,$ticketUuid = null, $clientOrderId = null ){
 
