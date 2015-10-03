@@ -77,6 +77,7 @@ class SalesInvoiceController extends AccountingAppController {
 
     public function view($invoiceId = null,$saNo = null){
 
+       //pr($saNo); exit;
         $userData = $this->Session->read('Auth');
 
         $this->loadModel('Sales.ClientOrder');
@@ -123,20 +124,31 @@ class SalesInvoiceController extends AccountingAppController {
                                             'conditions' => array('SalesInvoice.id' => $invoiceId
                                             )));
 
+
         $prepared = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
                                                             'conditions' => array('User.id' => $invoiceData['SalesInvoice']['created_by'])
                                                             )); 
         
         $this->Delivery->bindDelivery();
 
-        $drData = $this->Delivery->find('first', array(
-                                            'conditions' => array('Delivery.dr_uuid' => $invoiceData['SalesInvoice']['dr_uuid']
-                                            )));
-       
+        if(!empty($invoiceData['SalesInvoice']['dr_uuid'])){
+
+            $drData = $this->Delivery->find('first', array(
+                                                'conditions' => array('Delivery.dr_uuid' => $invoiceData['SalesInvoice']['dr_uuid']
+                                                )));
+        }else{
+
+            $drData = " ";
+        }
+
+       // pr($invoiceData); exit;
+
         $clientData = $this->ClientOrder->find('first', array(
                                             'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
                                             )));
+
         
+        //pr($clientData); exit;
         $companyData = $this->Company->find('first', array(
                                             'conditions' => array('Company.id' => $clientData['ClientOrder']['company_id']
                                             )));
@@ -145,7 +157,7 @@ class SalesInvoiceController extends AccountingAppController {
 
         $noPermissionReciv = "";
 
-        $this->set(compact('invoiceId','prepared','approved','drData','clientData','companyData','units','invoiceData','paymentTermData','currencyData', 'noPermissionPay', 'noPermissionReciv'));
+        $this->set(compact('invoiceId','prepared','approved','drData','clientData','companyData','units','invoiceData','paymentTermData','currencyData', 'noPermissionPay', 'noPermissionReciv','quotationData'));
         
         if (!empty($saNo)) {
 
@@ -232,12 +244,99 @@ class SalesInvoiceController extends AccountingAppController {
 
     }
 
+    public function add_invoice(){
+
+        $this->loadModel('Delivery.Delivery');
+
+        $userData = $this->Session->read('Auth');
+
+        //pr($this->request->data); exit;
+
+       // if(!empty($this->request->data['SalesInvoice']['dr_uuid'])){
+
+        $DRdata = $this->SalesInvoice->find('first', array(
+            'conditions' => array(
+                'SalesInvoice.dr_uuid' => $this->request->data['SalesInvoice']['dr_uuid'])
+            ));
+
+        //}
+
+        if (!empty($DRdata)) {
+
+            $this->Session->setFlash(__('This Delivery No. already have a Sales Invoice No. '), 'error');
+            $this->redirect( array(
+                         'controller' => 'salesInvoice', 
+                         'action' => 'add'
+                    ));
+        }
+
+        if(!empty($this->request->data['SalesInvoice']['dr_uuid'])){
+
+            $findDRdata = $this->Delivery->find('first', array(
+                        'conditions' => array(
+                            'Delivery.dr_uuid' => $this->request->data['SalesInvoice']['dr_uuid'])
+                        ));
+
+        }
+    
+        if (!empty($findDRdata)) {
+
+            $this->SalesInvoice->addSalesInvoice($this->request->data, $userData['User']['id']);
+
+            $this->Session->setFlash(__(' Sales Invoice No. completed. '), 'success');
+            $this->redirect( array(
+                         'controller' => 'sales_invoice', 
+                         'action' => 'index'
+                    ));
+
+        }else{
+
+            //pr($this->request->data ); exit;
+
+            //$this->request->data = $this->request->data['SalesInvoice']['dr_uuid'];
+
+            $this->SalesInvoice->addSalesInvoice($this->request->data, $userData['User']['id']);
+
+            $this->Session->setFlash(__(' Sales Invoice No. completed. '), 'success');
+            $this->redirect( array(
+                         'controller' => 'sales_invoice', 
+                         'action' => 'index'
+                    ));
+
+            // $this->Session->setFlash(__(' Delivery No. not matched in our system. '), 'error');
+            // $this->redirect( array(
+            //              'controller' => 'salesInvoice', 
+            //              'action' => 'add'
+            //         ));
+        }
+        
+
+    }
+
 	public function add(){
 
 		$userData = $this->Session->read('Auth');
 
 		$this->loadModel('Delivery.Delivery');
-       
+
+        $this->loadModel('Sales.ClientOrder');
+
+        $this->loadModel('Sales.Company');
+
+       // $this->Delivery->bindInvoice('ClientOrder');
+
+        $deliveryData = $this->Delivery->find('all');
+
+        //$clientData = $this->ClientOrder->find('all');
+
+        //pr($clientData); exit;
+
+        $poNumber = $this->ClientOrder->find('list', array('fields' => array('uuid', 'po_number')));
+
+        $companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')));
+
+        //pr($deliveryData); exit;
+
         $seriesNo = $this->SalesInvoice->find('first', array(
                 'order' => array('SalesInvoice.sales_invoice_no DESC')));
 
@@ -253,57 +352,57 @@ class SalesInvoiceController extends AccountingAppController {
 
         }
         
-        if($this->request->is('post')){
+        // if($this->request->is('post')){
 
-            if(!empty($this->request->data)){
+        //     if(!empty($this->request->data)){
             	
-            	$DRdata = $this->SalesInvoice->find('first', array(
-            				'conditions' => array(
-            					'SalesInvoice.dr_uuid' => $this->request->data['SalesInvoice']['dr_uuid'])
-            				));
+        //     	$DRdata = $this->SalesInvoice->find('first', array(
+        //     				'conditions' => array(
+        //     					'SalesInvoice.dr_uuid' => $this->request->data['SalesInvoice']['dr_uuid'])
+        //     				));
 
-            	if (!empty($DRdata)) {
+        //     	if (!empty($DRdata)) {
 
-            		$this->Session->setFlash(__('This Delivery No. already have a Sales Invoice No. '), 'error');
-	        		$this->redirect( array(
-                                 'controller' => 'salesInvoice', 
-                                 'action' => 'add'
-                            ));
-            	}
+        //     		$this->Session->setFlash(__('This Delivery No. already have a Sales Invoice No. '), 'error');
+	       //  		$this->redirect( array(
+        //                          'controller' => 'salesInvoice', 
+        //                          'action' => 'add'
+        //                     ));
+        //     	}
 
-            	$findDRdata = $this->Delivery->find('first', array(
-            				'conditions' => array(
-            					'Delivery.dr_uuid' => $this->request->data['SalesInvoice']['dr_uuid'])
-            				));
+        //     	$findDRdata = $this->Delivery->find('first', array(
+        //     				'conditions' => array(
+        //     					'Delivery.dr_uuid' => $this->request->data['SalesInvoice']['dr_uuid'])
+        //     				));
           	
-            	if (!empty($findDRdata)) {
+        //     	if (!empty($findDRdata)) {
 
-            		$this->SalesInvoice->addSalesInvoice($this->request->data, $userData['User']['id']);
+        //     		$this->SalesInvoice->addSalesInvoice($this->request->data, $userData['User']['id']);
 
-            		$this->Session->setFlash(__(' Sales Invoice No. completed. '), 'success');
-	        		$this->redirect( array(
-                                 'controller' => 'sales_invoice', 
-                                 'action' => 'index'
-                            ));
+        //     		$this->Session->setFlash(__(' Sales Invoice No. completed. '), 'success');
+	       //  		$this->redirect( array(
+        //                          'controller' => 'sales_invoice', 
+        //                          'action' => 'index'
+        //                     ));
 
-            	}else{
+        //     	}else{
 
-            		$this->request->data = $this->request->data['SalesInvoice']['dr_uuid'];
+        //     		$this->request->data = $this->request->data['SalesInvoice']['dr_uuid'];
 
-            		$this->Session->setFlash(__(' Delivery No. not matched in our system. '), 'error');
-	        		$this->redirect( array(
-                                 'controller' => 'salesInvoice', 
-                                 'action' => 'add'
-                            ));
-            	}
+        //     		$this->Session->setFlash(__(' Delivery No. not matched in our system. '), 'error');
+	       //  		$this->redirect( array(
+        //                          'controller' => 'salesInvoice', 
+        //                          'action' => 'add'
+        //                     ));
+        //     	}
             	
-	        }
-        }
+	       //  }
+        // }
 
         $noPermissionPay = "";
         $noPermissionReciv = "";
 
-        $this->set(compact('seriesSalesNo', 'noPermissionPay', 'noPermissionReciv'));
+        $this->set(compact('seriesSalesNo', 'noPermissionPay', 'noPermissionReciv', 'deliveryData', 'clientOrderData', 'companyData', 'poNumber'));
 		
 	}
 
@@ -911,6 +1010,40 @@ class SalesInvoiceController extends AccountingAppController {
            'controller' => 'sales_invoice',   
            'action' => 'view',$id 
         ));  
+
+    }
+
+    public function search_order($hint = null){
+
+
+        $this->loadModel('Delivery.Delivery');
+
+        $this->loadModel('Sales.ClientOrder');
+
+        $this->loadModel('Sales.Company');
+        //$deliveryData = $this->Delivery->find('all');
+
+        $deliveryData = $this->Delivery->find('all',array(
+                      'conditions' => array(
+                        'OR' => array(
+                        array('Delivery.clients_order_id LIKE' => '%' . $hint . '%'),
+                          array('Delivery.dr_uuid LIKE' => '%' . $hint . '%')
+                          )
+                        ),
+                      'limit' => 10
+                      )); 
+
+
+        $poNumber = $this->ClientOrder->find('list', array('fields' => array('uuid', 'po_number')));
+
+        $companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')));
+        $this->set(compact('seriesSalesNo', 'noPermissionPay', 'noPermissionReciv', 'deliveryData', 'clientOrderData', 'companyData', 'poNumber'));
+        
+        if ($hint == ' ') {
+            $this->render('index');
+        }else{
+            $this->render('search_order');
+        }
 
     }
 
