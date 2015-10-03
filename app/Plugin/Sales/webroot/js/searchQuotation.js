@@ -1,37 +1,62 @@
 $(document).ready(function() {
 
-   	$("body").on('keyup','.searchQuotation', function(e){
-        var searchInput = $(this).val();
 
-        if(searchInput){
+    function searchQuotation(searchInput) {
+
+    $this = $('.searchQuotation');
+
+    $container = $('.searchAppend');
+
+    var searchInput = $('.searchQuotation').val();
+    
+      if(searchInput){
             $('.quotationFields').hide();
             $('.searchAppend').show();
         }else{
             $('.quotationFields').show();
             $('.searchAppend').hide();
         }
-         
-        $.ajax({
-            type: "GET",
-            url: serverPath + "sales/quotations/search_quotation/"+searchInput,
-            dataType: "html",
-            success: function(data) {
 
-                if(data){
 
-                	$('.searchAppend').html(data);
-                    
-                } 
-                if (data.length < 5 ) {
+    $container.html('<img src="'+serverPath+'/img/loader.gif"/>');
 
-                	$('.searchAppend').html('<font color="red"><b>No result..</b></font>');
-                     
-                }
+    $.ajax({
+        type: "GET",
+        url: serverPath + "sales/quotations/search_quotation/"+searchInput,
+        dataType: "html",
+        success: function(data) {
+
+            console.lo
+            if(data){
+
+                $container.html(data);
                 
-            }
-        });
+            } 
+            if (data.length < 5 ) {
 
+                 $container.html('<font color="red"><b>No result..</b></font>');
+                 
+            }
+            
+        }
     });
+}
+
+var timeout;
+
+$('.searchQuotation').keypress(function() {
+
+
+    if(timeout) {
+        clearTimeout(timeout);
+        timeout = null;
+    }
+
+    timeout = setTimeout(searchQuotation,400)
+})
+
+
+
 
     //search customer list
     $("body").on('keyup','.searchCustomer', function(e){

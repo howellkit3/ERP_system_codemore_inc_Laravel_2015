@@ -219,6 +219,10 @@ class TicketingSystemsController extends TicketAppController {
 
         $this->loadModel('Ticket.WoodMoldJobTicket');
 
+        $this->loadModel('Ticket.CuttingJobTicket');
+
+        $auth = $this->Session->read('Auth.User');
+
         if (!empty($this->request->data)) {
 
             $type = $this->params['named']['type'];
@@ -231,14 +235,25 @@ class TicketingSystemsController extends TicketAppController {
 
                      $data['WoodMoldJobTicket'] = $this->request->data['JobTicketProcess'];
 
+                   
+
                     break;
-                    
+                    case 'cutting':
+                     $model = 'CuttingJobTicket';  
+
+                     $data['CuttingJobTicket'] = $this->request->data['JobTicketProcess'];
+
+                    break;    
                     default:
                         # code...
-                        break;
+                    break;
                 }
 
+
                 if (!empty($model)) {
+
+                      $data[$model]['created_by'] = $auth['id'];
+                      $data[$model]['modified_by'] = $auth['id'];
 
                     if ( $this->$model->save($data)) {
 
@@ -247,9 +262,9 @@ class TicketingSystemsController extends TicketAppController {
                         $this->redirect(array(
                             'controller' => 'ticketing_systems', 
                             'action' => 'print_process',
-                            $data['WoodMoldJobTicket']['process_id'],
-                            $data['WoodMoldJobTicket']['product_id'],
-                            $data['WoodMoldJobTicket']['job_ticket_id'],
+                            $data[$model]['process_id'],
+                            $data[$model]['product_id'],
+                            $data[$model]['job_ticket_id'],
                             $model,
                             $lastID));
                        

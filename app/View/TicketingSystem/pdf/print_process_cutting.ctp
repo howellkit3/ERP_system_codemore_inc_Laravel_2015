@@ -19,7 +19,7 @@
 					<td><h2>Koufu Packaging Corp.</h2></td>
 				</tr>	
 				<tr>
-					<td><strong><?php echo $subProcess[$processId] ?> Job Ticket</strong></td>
+					<td><strong><?php //echo $subProcess[$processId] ?> Paper Request Job Ticket</strong></td>
 					<td class="text-right">
 						<label class="strong">Date</label>
 						<?php echo date('Y/m/d'); ?>
@@ -202,9 +202,9 @@
 				<td style="vertical-align:top">
 						<h2 style="font-size:12px">Remarks</h2>
 					<br>
-					<?php  if (!empty($jobProcess['JobProcess']['remarks']))  {
+					<?php  if (!empty($modelData['CuttingJobTicket']['remarks']))  {
 
-						echo $jobProcess['JobProcess']['remarks'];
+						echo $modelData['CuttingJobTicket']['remarks'];
 
 					}?>	
 				</td>

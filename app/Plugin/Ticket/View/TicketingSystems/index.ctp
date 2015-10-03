@@ -63,9 +63,9 @@
     
     $('document').ready(function(e){
 
-        $('body').on('keyup','.searchTickets',function(){
+function searchJobTicket() {
 
-        $this = $(this);
+        $this = $('.searchTickets');
 
         $container = $('.result_ticket_table');
 
@@ -80,12 +80,29 @@
         success: function(data) {
             
 
-            $container.html(data); 
+             $container.html(data); 
             
             }
-        });
+        }); 
+}
 
-        });
+var timeout;
+
+$('.searchTickets').keypress(function() {
+    if(timeout) {
+        clearTimeout(timeout);
+        timeout = null;
+    }
+
+    timeout = setTimeout(searchJobTicket,400)
+})
+
+
+
+        // $('body').on('keyup','.searchTickets',function(){
+
+
+        // });
 
 
      });

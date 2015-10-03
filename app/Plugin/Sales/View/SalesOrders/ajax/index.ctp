@@ -11,8 +11,8 @@
                 <td class="">
                     <?php echo $companyData[$clientOderData['ClientOrder']['company_id']] ?>
                 </td>
-                  <td class="">
-                    <?php echo !empty($clientOderData['QuotationItemDetail']['material']) ? $clientOderData['QuotationItemDetail']['material'] : ''; ?>
+                   <td class="">
+                    <?php echo !empty($clientOderData['Product']['name']) ? $clientOderData['Product']['name'] : ''; ?>
                 </td> 
                 <td class="text-center">
                     <?php //echo $clientOderlist['SalesOrder']['status'] != (0) ? '<span class="label label-success">Approved</span>' : '<span class="label label-danger">Pending</span>' ; ?>
