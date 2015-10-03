@@ -35,6 +35,9 @@ class SalesOrdersController extends SalesAppController {
 
       $query = $this->request->query;
 
+
+      if (!empty($query['name'])) {
+
       $conditions = array_merge($conditions,array(
         'OR' => array(
            // 'ClientOrder.uuid like' => '%'. $query['name'] . '%',
@@ -42,6 +45,8 @@ class SalesOrdersController extends SalesAppController {
             'Product.name like' => '%'. $query['name'] . '%',
           )
       ));
+
+    }
 
     }
 

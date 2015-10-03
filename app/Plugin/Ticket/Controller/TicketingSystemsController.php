@@ -499,14 +499,14 @@ class TicketingSystemsController extends TicketAppController {
 
         $delData = $this->ClientOrder->find('first',array('conditions' => array('id' => $clientOrderId)));
 
-       
-        $productData = $this->Product->find('first',array(
-            'conditions' => array('Product.uuid' => $productUuid)));
+        $productData = $this->Product->find('first',array('conditions' => array('Product.uuid' => $productUuid) ,'order' => 'Product.id DESC'));
+
 
         $ticketData = $this->JobTicket->find('first',array(
             'conditions' => array('JobTicket.uuid' => $ticketUuid)));
 
         $specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productData['Product']['id'])));
+
 
         //find if product has specs
         $formatDataSpecs = $this->ProductSpecificationDetail->findData($productUuid);
@@ -520,13 +520,13 @@ class TicketingSystemsController extends TicketAppController {
                                                     'SubProcess.name'
                                                  )
                                                 ));
-        $subProcess =  $subProcess['SubProcess'];
+        //$subProcess =  $subProcess['SubProcess'];
 
         //set to cache in first load
         $companyData = Cache::read('companyData');
         
         //if (!$companyData) {
-            $companyData = $this->Company->find('list', array(
+        $companyData = $this->Company->find('list', array(
                                                 'fields' => array( 
                                                     'id','company_name')
                                             ));
@@ -545,6 +545,7 @@ class TicketingSystemsController extends TicketAppController {
 
             Cache::write('unitData', $unitData);
         }
+
 
         $this->set(compact('userData','ticketData','formatDataSpecs','productData','specs','companyData','unitData','subProcess','ticketUuid','delData'));
         
@@ -657,8 +658,8 @@ class TicketingSystemsController extends TicketAppController {
 
        //$delData = $this->ClientOrder->find('first',array('ClientOrder.id' => $clientOrderId));
        
-        $productData = $this->Product->find('first',array(
-            'conditions' => array('Product.uuid' => $productUuid)));
+   
+        $productData = $this->Product->find('first',array('conditions' => array('Product.uuid' => $productUuid) ,'order' => 'Product.id DESC'));
 
         // $ticketData = $this->JobTicket->find('first',array(
         //     'conditions' => array('JobTicket.uuid' => $ticketUuid)));
@@ -671,10 +672,21 @@ class TicketingSystemsController extends TicketAppController {
 
         //find process part
 
-        $processData = $this->ProductSpecificationPart->findById($processId);
-     
+        $processData = $this->ProductSpecificationDetail->find('first',array(
+            'conditions' => array(
+                    'ProductSpecificationDetail.product_id' => $productUuid,
+                    'ProductSpecificationDetail.model' => 'Part'
+            )
+        ));
 
-     //   pr($processData); exit();
+        $part = $this->ProductSpecificationPart->find('first',array(
+            'conditions' => array(
+                    'ProductSpecificationPart.id' => $processData['ProductSpecificationDetail']['foreign_key']
+            )
+        ));
+
+        $formatDataSpecs = $this->ProductSpecificationDetail->findData($productUuid);
+       //pr($formatDataSpecs);
      
         $this->loadModel('SubProcess');
 
@@ -698,14 +710,22 @@ class TicketingSystemsController extends TicketAppController {
         // }
 
         //set to cache in first load
+        //set to cache in first load
         $unitData = Cache::read('unitData');
-
+        
+        if (!$unitData) {
+            
+            $unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
+                                                            'order' => array('Unit.unit' => 'ASC')
+                                                            ));
+            Cache::write('unitData', $unitData);
+        }
 
         $view = new View(null, false);
 
         $view->viewPath = 'TicketingSystem'.DS.'pdf';  
 
-        $view->set(compact('userData','ticketData','modelData','formatDataSpecs','productData','specs','companyData','unitData','subProcess','ticketUuid','delData','processId','processData',' modelData'));
+        $view->set(compact('userData','ticketData','modelData','formatDataSpecs','productData','specs','companyData','unitData','subProcess','ticketUuid','delData','processId','processData',' modelData','part'));
         
 
         if (in_array($processId,array('11','61'))) {

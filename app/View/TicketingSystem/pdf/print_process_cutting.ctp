@@ -27,22 +27,27 @@
 				</tr>				
 		</table>
 		<br>
+
+		<?php $outs = floatval($part['ProductSpecificationPart']['outs1']) * floatval($part['ProductSpecificationPart']['outs2']);
+        ?>
+
+
 		<table class="full-width border" style="font-family:sans-serif;">
 				<tr>
 					<td>
-						Customer <?php echo !empty($companyData[$productData['Product']['company_id']]) ? ucwords($companyData[$productData['Product']['company_id']]) : '';  ?>
+						<strong>CUSTOMER</strong> &nbsp;&nbsp; <?php echo !empty($companyData[$productData['Product']['company_id']]) ? ucwords($companyData[$productData['Product']['company_id']]) : '';  ?>
 					</td>
 					<td class="text-right">
-						Schedule No <?php echo $ticketUuid; ?>
+						<strong>SCHED No</strong>&nbsp;&nbsp; <?php echo $ticketUuid; ?>
 					</td>
 					
 				</tr>
 				<tr>
 					<td>
-						Item  <?php echo $productData['Product']['name']; ?>
+						<strong>ITEM</strong>&nbsp;&nbsp; <?php echo $productData['Product']['name']; ?>
 					</td>
 					<td class="text-right">
-						Description <?php echo $productData['Product']['remarks']  ?>
+						<strong>DESCRIPTION</strong>&nbsp;&nbsp; <?php echo $productData['Product']['remarks']  ?>
 					</td>
 				</tr>	
 					<!-- <tr>
@@ -67,9 +72,28 @@
 										<table style="border-left:1px solid #000">
 											<tr>
 												<td ><strong>PO qty</strong></td>
-												<td style="width:100px">pc(s)</td>
+												<td style="width:100px"> 
+										<?php 
+
+										$po_quantity = 0;
+
+										if (!empty($specs['ProductSpecification']['quantity'])) {
+											$po_quantity = $specs['ProductSpecification']['quantity']; 
+											echo $po_quantity;
+											echo " ";
+											echo $unitData[$specs['ProductSpecification']['quantity_unit_id']];
+										} else {
+											echo "pc(s)";
+										}
+											
+												
+												 //pc(s)
+										?>
+												
+
+												</td>
 												<td><strong>Outs</strong></td>
-												<td> </td>
+												<td> <?php echo $outs; ?></td>
 											</tr>
 										</table>
 								</td>
@@ -88,18 +112,32 @@
 
 
 			</table>
+
+	
+
+
 			<table class="full-width border" style="font-family:sans-serif;">
 						<tr>
 							<td> 
-								<?php echo $processData['ProductSpecificationPart']['material']?>, 
-								<?php echo $processData['ProductSpecificationPart']['size1']?> x
-								<?php echo $processData['ProductSpecificationPart']['size2']?> >>
-								<?php //echo $outs ?> Outs >>
-								<?php echo $processData['ProductSpecificationPart']['paper_quantity'] ?> 
-								<?php if(!empty($processData['ProductSpecificationPart']['allowance'])){ ?>
-								+ <?php echo $processData['ProductSpecificationPart']['allowance'] ?>
+								<?php echo $part['ProductSpecificationPart']['material']?>, 
+								<?php echo $part['ProductSpecificationPart']['size1']?> x
+								<?php echo $part['ProductSpecificationPart']['size2']?> >
+								<?php  
+								$outs = $po_quantity / $outs;  
+								echo round($outs); $total = $outs; ?> 
+								<?php if(!empty($part['ProductSpecificationPart']['paper_quantity'])) : ?>
+								+ 
+								<?php echo $part['ProductSpecificationPart']['paper_quantity']; +  $total += $part['ProductSpecificationPart']['paper_quantity']?>  
+							<?php endif; ?>
+								<?php if(!empty($part['ProductSpecificationPart']['allowance'])){ ?>
+								+ <?php echo $part['ProductSpecificationPart']['allowance']; 
+								$total += $part['ProductSpecificationPart']['allowance']?>
 
 								<?php } ?>
+
+								<?php echo " = ".round($total); echo $unitData[$specs['ProductSpecification']['quantity_unit_id']]; ?>
+
+
 							</td>
 						</tr>
 			</table>

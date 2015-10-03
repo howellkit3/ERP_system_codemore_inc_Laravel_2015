@@ -133,6 +133,19 @@ class SalesInvoiceController extends AccountingAppController {
                                             'conditions' => array('Delivery.dr_uuid' => $invoiceData['SalesInvoice']['dr_uuid']
                                             )));
        
+
+        if (!empty($_GET['test'])) {
+
+            pr($drData);
+            pr('invoice');
+            pr($invoiceData);
+
+            pr('paymentTerm');
+            pr($paymentTermData);
+        }
+      //  pr($drData);
+
+
         $clientData = $this->ClientOrder->find('first', array(
                                             'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
                                             )));

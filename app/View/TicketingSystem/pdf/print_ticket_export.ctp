@@ -11,9 +11,9 @@
 <head>
 	<title> Print Main Job Ticket</title>
 </head>
-<body>
+<body style="font-family:sans-serif;">
 
-		<table class="border full-width">
+		<table class="border full-width" style="">
 				<tr>
 						<td><h2>Koufu Packaging Corp.</h2></td>
 				</tr>
@@ -38,7 +38,12 @@
 							</tr>
 							
 							<tr>
-								<td ><label class="strong">Item Size</label> <?php echo $specs['ProductSpecification']['size1'].' x '.$specs['ProductSpecification']['size2'].' x '.$specs['ProductSpecification']['size3'] ?></td>
+								<td ><label class="strong">Item Size</label> 
+									<?php echo !empty($specs['ProductSpecification']['size1']) ? $specs['ProductSpecification']['size1'] : '0' ?>
+									X 
+									<?php echo !empty($specs['ProductSpecification']['size2']) ? $specs['ProductSpecification']['size2'] : '0' ?>
+									X
+									<?php echo !empty($specs['ProductSpecification']['size3']) ? $specs['ProductSpecification']['size3'] : '0' ?></td>
 								<td class="text-right"><label class="strong">Del Date</label> <?php 
 								echo !empty($delData['ClientOrderDeliverySchedule'][0]['schedule']) ? date('M d, Y', strtotime($delData['ClientOrderDeliverySchedule'][0]['schedule'])) : ''; ?>
 
@@ -62,7 +67,8 @@
 								<?php echo !empty( $specs['ProductSpecification']['quantity'] ) ?  $specs['ProductSpecification']['quantity'] : ''
 								?>
 
-								<?php echo !empty($unitData[$specs['ProductSpecification']['quantity_unit_id']]) ?  $unitData[$specs['ProductSpecification']['quantity_unit_id']] : ''
+								<?php 
+								echo !empty($specs['ProductSpecification']['quantity_unit_id']) ?  $unitData[$specs['ProductSpecification']['quantity_unit_id']] : ''
 								?>
 							</td>
 								<td class="text-right"><label class="strong">Stock Quantity </label> <?php 
@@ -112,9 +118,11 @@
 
 
 										<?php 
-										 if ($countSpecs < 24) : 
+										 if ($countSpecs < 20) : 
 
-										$minimunTd = 24;
+										$minimunTd = !empty($ticketData['JobTicket']['remarks']) ?  20 : 22;
+
+
 
 										for ($i=$countSpecs; $i <= $minimunTd ; $i++) { ?>
 									
@@ -131,7 +139,36 @@
 										<?php endif; ?>
 									</thead>
 							    </table>
+
+
 						   	</div> 
+						   	<?php if (!empty($ticketData['JobTicket']['remarks'])) : ?>
+						   		<table class="border full-width">
+
+								<tr class="">
+									<td>
+										<table class="medium-font full-width" style="vertical-align:top">
+											
+											<tr>
+												<td>
+													<label class="strong">Remarks</label>
+
+													 <?php 
+													if (strlen($ticketData['JobTicket']['remarks']) > 70) { ?>
+													<p style="text-align:center; font-size:50%"><?php echo $ticketData['JobTicket']['remarks']; ?></p>
+													<?php } else { ?>
+													<p style="text-align:center"><?php echo $ticketData['JobTicket']['remarks']; ?></p>
+													<?php } ?>	
+
+												</td>
+
+											</tr>
+											
+										</table>
+									</td>
+								</tr>
+						</table>
+					<?php endif; ?>
 
 						<table class="border full-width">
 
