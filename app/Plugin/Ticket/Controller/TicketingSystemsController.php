@@ -188,14 +188,86 @@ class TicketingSystemsController extends TicketAppController {
 
         $query = $this->request->query;
 
-        pr($this->request->data);
-
-        exit();
-
         if (!empty($processId) && !empty($productId) && !empty($productId)) {
 
-            pr($query);
-            exit();
+            $parameter['processId'] = $processId;
+
+            $parameter['productId'] = $productId;
+
+            $parameter['ticketId'] = $ticketId;
+
+            $this->set(compact('parameter'));
+
+            if (in_array($processId,array('11','61'))) {
+
+                 $this->render('TicketingSystems/forms/cutting', false);
+
+            }
+
+             else if (in_array($processId,array('20'))) {
+                 $this->render('TicketingSystems/forms/wood_mould', false);
+             } else {
+
+                echo "no Forms Yet";
+             }
+
+        }
+    }
+
+
+    public function save_job_ticket_process() {
+
+        $this->loadModel('Ticket.WoodMoldJobTicket');
+
+        if (!empty($this->request->data)) {
+
+            $type = $this->params['named']['type'];
+
+            if (!empty($type)) {
+                $data = array();
+                switch ($type) {
+                    case 'wood_mold':
+                     $model = 'WoodMoldJobTicket';  
+
+                     $data['WoodMoldJobTicket'] = $this->request->data['JobTicketProcess'];
+
+                    break;
+                    
+                    default:
+                        # code...
+                        break;
+                }
+
+                if (!empty($model)) {
+
+                    if ( $this->$model->save($data)) {
+
+                        $lastID = $this->$model->id;
+
+                        $this->redirect(array(
+                            'controller' => 'ticketing_systems', 
+                            'action' => 'print_process',
+                            $data['WoodMoldJobTicket']['process_id'],
+                            $data['WoodMoldJobTicket']['product_id'],
+                            $data['WoodMoldJobTicket']['job_ticket_id'],
+                            $model,
+                            $lastID));
+                       
+                    }
+                } else {
+
+          $this->Session->setFlash(
+            __('Job Ticket failed', 'error')
+        );
+
+        return $this->redirect(array('controller' => 'ticketing_systems', 
+                'action' => 'view',
+                  $data['WoodMoldJobTicket']['product_id'],
+                $data['WoodMoldJobTicket']['job_ticket_id'],
+                $this->request->data['JobTicket']['client_order_id']));
+                }
+            }
+
         }
     }
 
@@ -529,7 +601,7 @@ class TicketingSystemsController extends TicketAppController {
     }
 
 
-    public function print_process($processId = null,$productUuid = null,$ticketUuid = null) {
+    public function print_process($processId = null,$productUuid = null,$ticketUuid = null, $model = null , $lastId = null) {
 
         if (!empty($processId) && !empty($productUuid)) {
 
@@ -549,6 +621,16 @@ class TicketingSystemsController extends TicketAppController {
 
         $this->loadModel('Unit');
 
+        $modelData = array();
+
+        if (!empty($model)) {
+              $this->loadModel('Ticket.'.$model);
+
+
+            $modelData = $this->$model->findById( $lastId );
+        }
+
+
 
         $this->ClientOrder->bind(array('ClientOrderDeliverySchedule'));
 
@@ -562,13 +644,14 @@ class TicketingSystemsController extends TicketAppController {
 
         $specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productData['Product']['id'])));
 
+
        // pr($productUuid);
         //find if product has specs
 
         //find process part
 
         $processData = $this->ProductSpecificationPart->findById($processId);
-
+     
 
      //   pr($processData); exit();
      
@@ -601,14 +684,18 @@ class TicketingSystemsController extends TicketAppController {
 
         $view->viewPath = 'TicketingSystem'.DS.'pdf';  
 
-        $view->set(compact('userData','ticketData','formatDataSpecs','productData','specs','companyData','unitData','subProcess','ticketUuid','delData','processId','processData'));
+        $view->set(compact('userData','ticketData','modelData','formatDataSpecs','productData','specs','companyData','unitData','subProcess','ticketUuid','delData','processId','processData',' modelData'));
         
 
         if (in_array($processId,array('11','61'))) {
 
-                     $output = $view->render('print_process_cutting', false);
+            $output = $view->render('print_process_cutting', false);
+        }  else if (in_array($processId,array('20'))) {
+
+            $output = $view->render('print_process_woodmold', false);
         } else {
-                     $output = $view->render('print_process', false);
+            
+            $output = $view->render('print_process', false);
         }
     
         $dompdf = new DOMPDF();

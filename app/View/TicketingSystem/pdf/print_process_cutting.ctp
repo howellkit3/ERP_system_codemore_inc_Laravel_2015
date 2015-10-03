@@ -11,12 +11,12 @@
 <head>
 	<title>Print Process</title>
 </head>
-<body>	
+<body style="font-family:sans-serif;">	
 
 <div class="large-padding">
-		<table class="full-width">
+		<table class="full-width" style="font-family:sans-serif;">
 				<tr>
-					<td><h2>Koufu Packaging</h2></td>
+					<td><h2>Koufu Packaging Corp.</h2></td>
 				</tr>	
 				<tr>
 					<td><strong><?php echo $subProcess[$processId] ?> Job Ticket</strong></td>
@@ -27,7 +27,7 @@
 				</tr>				
 		</table>
 		<br>
-		<table class="full-width border">
+		<table class="full-width border" style="font-family:sans-serif;">
 				<tr>
 					<td>
 						Customer <?php echo !empty($companyData[$productData['Product']['company_id']]) ? ucwords($companyData[$productData['Product']['company_id']]) : '';  ?>
@@ -52,9 +52,9 @@
 		</table>
 
 
-		<table class="full-width border">
+		<table class="full-width border" style="font-family:sans-serif;">
 							<tr>
-								<td>
+								<td style="width:350px">
 										<table>
 											<tr>
 												<td><strong>Material Type </strong></td>
@@ -76,7 +76,7 @@
 							</tr>
 		</table>
 
-		<table class="border full-width" style="font-family:'arial','helvatica'">
+		<table class="border full-width" style="font-family:sans-serif;">
 						<tr>
 							<td> GSM </td>
 							<td> Material </td>
@@ -88,7 +88,7 @@
 
 
 			</table>
-			<table class="full-width border" style="font-family:'arial','helvatica'">
+			<table class="full-width border" style="font-family:sans-serif;">
 						<tr>
 							<td> 
 								<?php echo $processData['ProductSpecificationPart']['material']?>, 
@@ -104,9 +104,9 @@
 						</tr>
 			</table>
 
-			<table class="full-width border" style="font-family:'arial','helvatica'">
+			<table class="full-width border" style="font-family:sans-serif;">
 							<tr>
-								<td>
+								<td style="width:350px">
 										<table>
 											<tr>
 												<td><strong><strong>FOR SHEETS</strong></td>
@@ -124,39 +124,96 @@
 										</table>
 								</td>
 							</tr>
-		</table>	
+			</table>	
 
 
-		<table class="full-width border">
+		<table class="full-width border" style="font-family:sans-serif; vertical-alin:top" >
+							<tr>
+								<td style="width:350px;vertical-align:top">
+										<table style="font-family:sans-serif; vertical-align:top">
+											<tr>
+												<td style="vertical-align:top">
+
+													<strong>Supplier Name</strong>
+													<br>	<br>
+													<strong>Paper Lot No</strong>
+
+
+													<p> PAPER SIZE: </p>
+												</td>
+												
+											</tr>
+										</table>
+								</td>
+								<td>
+
+											<table  style="border-left:1px solid #000; font-family:sans-serif; vertical-align:top">
+											<tr>
+												<td>
+
+													<strong>Supplier Name</strong>
+													<br>	<br>
+
+													<strong>Paper Lot No</strong>
+
+
+													<p> Roll Width </p>
+
+													<p> Roll Cut </p>
+												</td>
+
+												
+											</tr>
+										</table>
+
+										<table class="full-width" style="border-left:1px solid #000; font-family:sans-serif; vertical-align:top">
+											<tr>
+												<td style="width:180px">
+													Qty = 
+												</td>
+
+												<td>
+													PCS.
+												</td>
+											</tr>
+										</table>
+
+										<table class="full-width" style="border-left:1px solid #000; font-family:sans-serif; vertical-align:top">
+											<tr>
+												<td style="width:180px">
+													
+												</td>
+
+												<td>
+													TOTAL
+												</td>
+
+												<td>
+													PCS.
+												</td>
+											</tr>
+										</table>
+								</td>
+							</tr>
+			</table>
+
+			<table class="full-width border" style="height:80px">
 				<tr>
-					<td>
-						Sample
-					</td>
-					<td class="text-right">
-						<strong>Supplier</strong>
-					</td>
+				<td style="vertical-align:top">
+						<h2 style="font-size:12px">Remarks</h2>
+					<br>
+					<?php  if (!empty($jobProcess['JobProcess']['remarks']))  {
+
+						echo $jobProcess['JobProcess']['remarks'];
+
+					}?>	
+				</td>
+				</tr>	
 					
-				</tr>
-				<tr>
-					<td>
-						Item  <?php echo $productData['Product']['name']; ?>
-					</td>
-					<td class="text-right">
-						
-					</td>
-				</tr>
-					<tr>
-					<td >Item Size <?php echo $specs['ProductSpecification']['size1'].' x '.$specs['ProductSpecification']['size2'].' x '.$specs['ProductSpecification']['size3'] ?></td>
-					<td class="text-right"><label class="">Outs</label> </td>
-		</tr>
-		</table>
-
-			<table class="full-width border" style="height:280px">
-
 			</table>
 			<table class="full-width">
 			<tr>
-			<td>Sales : <?php echo $userData['User']['first_name'].', '.$userData['User']['last_name'] ?></td>
+			<td>Prepared by : <?php echo $userData['User']['first_name'].', '.$userData['User']['last_name'] ?></td>
 			<td>Approved By: </td>
 			</tr>
 			</table>		

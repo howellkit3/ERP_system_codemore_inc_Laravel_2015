@@ -8,6 +8,8 @@ $(document).ready(function(){
 
 		$ticketUuid =  $(this).data('ticket_uuid');
 
+		$container = $('#result-table');
+
 		$.ajax({
         url: serverPath + "ticket/ticketing_systems/find_process/"+$processId+'/'+$productId+'/'+$ticketUuid,
         type: "GET",
@@ -15,7 +17,7 @@ $(document).ready(function(){
        // data : { 'processId' : $processId , 'subProcess' : $subProcess , 'ticketId' : $ticketUuid },
         success: function(data) {
             
-           	// $container.html(data); 
+           	$container.html(data); 
             
             }
         });
