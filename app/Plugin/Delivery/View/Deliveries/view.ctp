@@ -34,12 +34,13 @@ $totalremaining = 0;
                 <?php }}else{ 
 
                     $Scheddate = $scheduleInfo['ClientOrderDeliverySchedule']['schedule'];
-                    $Currentdate = date("Y-m-d");
+                    $Currentdate = date("Y-m-d h:i:s");
 
-                    $Scheddate = str_replace('-', '', $Scheddate);
-                    $Currentdate = str_replace('-', '', $Currentdate);  
+                   // $Scheddate = str_replace('-', '', $Scheddate);
 
-                    if(strtotime($Scheddate + 1) > strtotime($Currentdate)) { ?>
+                    $Scheddate = date('Y-m-d',strtotime($Scheddate)).' 23:00:00';
+
+                    if(strtotime($Scheddate) > strtotime($Currentdate)) { ?>
 
                         <a data-toggle="modal" href="#myModalApprove" class="btn btn-primary mrg-b-lg pull-right "><i class="fa fa-edit fa-lg"></i>Approve Schedule</a>
 
@@ -172,9 +173,6 @@ $totalremaining = 0;
                                                 
                                                 $Currentdate = date("Y-m-d H:i:s");
 
-                                                $Scheddate = str_replace('-', '', $Scheddate);
-                                                
-                                                $Currentdate = str_replace('-', '', $Currentdate);
 
                                                 if (!empty($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']]) || !empty($deliveryList[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']])) {   
 
@@ -196,8 +194,10 @@ $totalremaining = 0;
                                                     echo "<span class='label label-default'>Waiting</span>"; ?> &nbsp
 
 
-                                                    <?php               
-                                                    if(strtotime($Scheddate + 1) <= strtotime($Currentdate))
+                                                    <?php  
+                                                     $Scheddate = date('Y-m-d',strtotime($Scheddate)).' 23:00:00';
+
+                                                    if(strtotime($Currentdate) >= strtotime( $Scheddate ))
                                                     {
                                                         echo "<span class='label label-danger'>Due</span>"; 
                                                     } 

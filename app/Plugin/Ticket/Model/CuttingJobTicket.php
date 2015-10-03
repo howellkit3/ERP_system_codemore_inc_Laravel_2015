@@ -6,15 +6,13 @@ App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
  * User Model
  *
  */
-class WoodMoldJobTicket extends AppModel {
+class CuttingJobTicket extends AppModel {
 
 	public $useDbConfig = 'koufu_ticketing';
-    
     public $actsAs = array('Containable');
+    public $name = 'CuttingJobTicket';
 
-    public $name = 'WoodMoldJobTicket';
-
-    public $useTable = 'wood_mold_job_tickets';
+    public $useTable = 'cutting_job_tickets';
 
     public function bind($model = array('Group')){
 

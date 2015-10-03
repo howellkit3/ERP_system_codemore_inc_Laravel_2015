@@ -21,16 +21,13 @@ class DashboardsController  extends HumanResourceAppController {
 		
 		$date = date('Y-m-d');
 
-		$conditions = array(
-			'Attendance.date <=' => $date,
-		 	'Attendance.date >=' => $date
-		);
+		$conditions = 	array('date(Attendance.date) BETWEEN ? AND ?' => array($date,$date));
 
 		$this->Attendance->bind(array('WorkSchedule','Employee','WorkShift'));
 
-		$attendances = $this->Attendance->find('all',array('conditions' => $conditions ,'limit' => 5));
+		$attendances = $this->Attendance->find('all',array('conditions' => $conditions ,'limit' => 5, 'order' => array('Attendance.date DESC')));
 
-		
+			
 		$this->Absence->bind(array('Employee'));
 		
 		$conditions = array();

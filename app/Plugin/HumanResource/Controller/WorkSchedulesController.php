@@ -40,7 +40,7 @@ class WorkSchedulesController  extends HumanResourceAppController {
 			$create_schedules = $this->WorkSchedule->formatData($this->request->data,$holidays);
 
 
-			// pr($create_schedules);exit();
+			//pr($create_schedules);exit();
 
 			// $conditionAttendance = array();
 

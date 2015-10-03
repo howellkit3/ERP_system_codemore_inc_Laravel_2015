@@ -135,15 +135,8 @@ echo $this->Html->script(array(
 														<td> <?php echo $schedule['Employee']['code']; ?></td>
 														<td class="">
 								                          <?php 
-								                          if ($schedule['WorkSchedule']['model'] == 'Employee') {
+								                          echo $this->CustomText->getFullname($schedule['Employee']);
 
-								                          		echo $this->CustomText->getFullname($schedule['Employee']);
-
-								                          } else if ($schedule['WorkSchedule']['model'] == 'Department') {
-
-								                          		echo "Department";
-								                          }
-								                          
 								                           ?>
 								                        </td>
 								                        <td class="text-center"> 

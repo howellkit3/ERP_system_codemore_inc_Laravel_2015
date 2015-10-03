@@ -46,7 +46,7 @@
 					</td>
 				</tr>
 					<tr>
-					<td >Item Size <?php echo $specs['ProductSpecification']['size1'].' x '.$specs['ProductSpecification']['size2'].' x '.$specs['ProductSpecification']['size3'] ?></td>
+					<td >Item Size <?php echo !empty($specs['ProductSpecification']['size1']) ? $specs['ProductSpecification']['size1'].' x '.$specs['ProductSpecification']['size2'].' x '.$specs['ProductSpecification']['size3'] : '' ?></td>
 					<td class="text-right"><label class="">Outs</label> </td>
 					</tr>
 		</table>

@@ -29,8 +29,13 @@ class AttendancesController  extends HumanResourceAppController {
 
 		$date2 = date('Y-m-d', strtotime($date . ' +1 day'));
 		
-		$conditions = array();
+		$conditions = 	array('date(Attendance.date) BETWEEN ? AND ?' => array($date,$date2));
 		
+		if (!empty($query['data'])) {
+
+			$conditions = array();
+		}
+
 		if (!empty($query['data']['date'])) {
 
 			//$fromDate =
@@ -53,7 +58,6 @@ class AttendancesController  extends HumanResourceAppController {
 		//  	'Attendance.date >=' => $date
 		// );
 
-	
 
 		if (!empty($query['data']['name'])) {
 			$search = $query['data']['name'];
@@ -66,6 +70,8 @@ class AttendancesController  extends HumanResourceAppController {
 		}
 
 		$this->Attendance->bind(array('WorkSchedule','Employee','WorkShift','Overtime'));
+
+
 
 		//$conditions = array();
 		$params =  array(
@@ -236,7 +242,7 @@ class AttendancesController  extends HumanResourceAppController {
 				)
 			));
 
-			if (empty($WorkSchedule['WorkSchedule']['id'])) {
+			/* if (empty($WorkSchedule['WorkSchedule']['id'])) {
 
 				//rediect  
 				$this->Session->setFlash('You dont have schedule for today','error');
@@ -247,7 +253,7 @@ class AttendancesController  extends HumanResourceAppController {
                          'tab' => 'attendance',
                          'plugin' => 'human_resource'
 				));
-			} 
+			} */
 		
 			if ($this->Timekeep->saveTime($data,null,$auth['id'])) {
 
@@ -592,7 +598,9 @@ public function getEmployeeData($attendaceId = null,$date = null) {
 
 	$this->layout = false;
 	
-	if (!empty($attendaceId)) {
+	$query = $this->request->data;
+
+	if (!empty($query['attendanceId'])) {
 
 		$this->loadModel('HumanResource.WorkSchedule');
 
@@ -600,23 +608,33 @@ public function getEmployeeData($attendaceId = null,$date = null) {
 
 		$this->loadModel('HumanResource.Employee');
 		
-		if (empty($date)){
+		$conditions = array(
+		 'Attendance.id' => $query['attendanceId'],
+		);
 
-			$date = date('Y-m-d');
+		$attendance = $this->Attendance->find('first',array(
+			'conditions' => $conditions
+		));
+
+
+		$date = date('Y-m-d');
+
+		if (!empty($attendance['Attendance']['in'])){
+			$date = date('Y-m-d',strtotime($attendance['Attendance']['in']));
 		}
 
-		$conditions = array(
-		'Attendance.date <=' => $date,
-		 'Attendance.date >=' => $date,
-		 'Attendance.id' => $attendaceId,
-		);
+	
+		$conditions = array_merge($conditions,array(
+						'date(Attendance.date) BETWEEN ? AND ?' => array($date,$date), 
+						 'Attendance.id' => $query['attendanceId'],
+			));
 
 		$this->Attendance->bind(array('Employee','WorkSchedule','WorkShift'));
 
 		$attendance = $this->Attendance->find('first',array(
 			'conditions' => $conditions
 		));
-
+		
 		$this->set(compact('attendance'));
 
 		$this->render('Attendances/ajax/timekeep');

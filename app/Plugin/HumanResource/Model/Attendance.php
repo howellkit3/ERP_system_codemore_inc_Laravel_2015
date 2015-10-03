@@ -357,7 +357,7 @@ class Attendance extends AppModel {
 			} 
 		}
 
-		$data['Attendance']['schedule_id'] = $WorkSchedule['WorkSchedule']['id'];
+		$data['Attendance']['schedule_id'] = !empty($WorkSchedule['WorkSchedule']['id']) ? $WorkSchedule['WorkSchedule']['id'] : 0 ;
 
 		$data['Attendance'] = $data['Attendance'];
 

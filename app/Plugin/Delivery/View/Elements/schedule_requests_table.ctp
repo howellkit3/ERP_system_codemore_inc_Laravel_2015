@@ -135,12 +135,15 @@
                                                     echo "<span class='label label-default'>Waiting</span>"; ?> &nbsp
 
 
-                                                    <?php               
-                                                    if(strtotime($Scheddate + 1) <= strtotime($Currentdate))
+                                                    <?php    
+
+                                                      $Scheddate = date('Y-m-d',strtotime($Scheddate)).' 23:00:00';
+
+                                                    if(strtotime($Currentdate) >= strtotime( $Scheddate ))
                                                     {
                                                         echo "<span class='label label-danger'>Due</span>"; 
                                                     } 
-
+                                                      
                                                      
                                             } ?>
 

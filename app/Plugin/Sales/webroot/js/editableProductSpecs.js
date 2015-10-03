@@ -61,6 +61,7 @@ $(document).ready(function() {
        
         var paperqty = parseInt(paperQtyVal) / parseInt(outs);
 
+
         $(this).parents('.parentSection').find('.paper_qtyMe').val(paperqty);
        
     });

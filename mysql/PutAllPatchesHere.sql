@@ -2084,3 +2084,42 @@ CREATE TABLE `item_categories` (
 
 /* aldrin added this spet 28 2015*/
 ALTER TABLE `work_schedules`  ADD `from` DATETIME NULL  AFTER `day`,  ADD `to` DATETIME NULL  AFTER `from`;
+
+
+/* aldrin added this oct - 3 2015 */
+
+DROP TABLE IF EXISTS `cutting_job_tickets`;
+
+CREATE TABLE `cutting_job_tickets` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `job_ticket_id` int(11) DEFAULT NULL,
+  `process_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `remarks` text,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `wood_mold_job_tickets`;
+
+CREATE TABLE `wood_mold_job_tickets` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `process_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `job_ticket_id` int(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  `category` varchar(255) DEFAULT NULL,
+  `crease` varchar(255) DEFAULT NULL,
+  `knife` varchar(255) DEFAULT NULL,
+  `style` varchar(255) DEFAULT NULL,
+  `remarks` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1; 
+
+/* end */

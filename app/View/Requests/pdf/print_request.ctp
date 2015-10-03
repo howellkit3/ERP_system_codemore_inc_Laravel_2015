@@ -97,7 +97,7 @@ th, td {
 
 						<td align = "center" style="border:1px solid black; font-size:50% "><?php echo $value['RequestItem']['purpose'] ?></td>
 
-						<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:65%"><?php echo $value['RequestItem']['remarks'] ?></td>
+						<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:50%"><?php echo $value['RequestItem']['remarks'] ?></td>
 						
 					</tr>
 
@@ -137,7 +137,9 @@ th, td {
 
 					<tr>
 						<td align = "center" style=" width:183px; vertical-align: bottom; height:10px; margin:0px;"><?php echo ucwords($preparedFullName )?><br>____________________</td>
-						<td align = "center" style=" width:183px; vertical-align: bottom; height:10px; margin:0px; ">Shou Yi Yu <br>____________________</td>
+						<td align = "center" style=" width:183px; vertical-align: bottom; height:10px; margin:0px; "> 
+							Ms. Carryl Yu
+						<br>____________________</td>
 						<td align = "center" style=" width:183px; vertical-align: bottom; height:15px;margin:0px; ">____________________<br></td>
 					</tr>
 
@@ -237,7 +239,7 @@ th, td {
 
 						<td align = "center" style="border:1px solid black; font-size:50% "><?php echo $value['RequestItem']['purpose'] ?></td>
 
-						<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:65%"><?php echo $value['RequestItem']['remarks'] ?></td>	
+						<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:50%"><?php echo $value['RequestItem']['remarks'] ?></td>	
 					</tr>
 
 					<?php 
@@ -276,7 +278,8 @@ th, td {
 
 					<tr>
 						<td align = "center" style=" width:183px; vertical-align: bottom; height:10px; margin:0px;"><?php echo ucwords($preparedFullName )?><br>____________________</td>
-						<td align = "center" style=" width:183px; vertical-align: bottom; height:10px; margin:0px; ">Shou Yi Yu <br>____________________</td>
+						<td align = "center" style=" width:183px; vertical-align: bottom; height:10px; margin:0px; ">
+							Ms. Carryl Yu <br>____________________</td>
 						<td align = "center" style=" width:183px; vertical-align: bottom; height:15px;margin:0px; ">____________________<br></td>
 					</tr>
 

@@ -3,6 +3,7 @@
 <?php $this->Html->addCrumb('Product', array('controller' => 'products', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Specification', array('controller' => 'products', 'action' => 'Specification',$product['Product']['id'])); ?>
 <?php echo $this->Html->script('Sales.jquery-sortable');?>
+<?php echo $this->Html->script('Sales.custom_sales');?>
 <div style="clear:both"></div>
 
 <?php echo $this->element('sales_option');

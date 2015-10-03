@@ -68,35 +68,35 @@ $(document).ready(function() {
 
     });
     
-    $("body").on('keyup','#ProductSpecificationQuantity', function(e){
-        var quantitySpec = $(this).val();
-        $('.stockQuantity').val('');
-        $('#ProductSpecificationQuantity').attr('value',quantitySpec);
-        $('#ProductSpecificationQuantity').attr('data',quantitySpec);
-        $('.allQuantity').val(quantitySpec);
-        $('.allPaperQuantity').val(quantitySpec);
-        
-        if(!$.isNumeric(quantitySpec)) {
+            $("body").on('keyup','#ProductSpecificationQuantity', function(e){
+                var quantitySpec = $(this).val();
+                $('.stockQuantity').val('');
+                $('#ProductSpecificationQuantity').attr('value',quantitySpec);
+                $('#ProductSpecificationQuantity').attr('data',quantitySpec);
+                $('.allQuantity').val(quantitySpec);
+                $('.allPaperQuantity').val(quantitySpec);
+                
+                if(!$.isNumeric(quantitySpec)) {
 
-            //alert('Quantity is required');
-            $('#ProductSpecificationQuantity').focus();
-            
-            $('.stockQuantity').prop('readonly', true);
-            //return false;
+                    //alert('Quantity is required');
+                    $('#ProductSpecificationQuantity').focus();
+                    
+                    $('.stockQuantity').prop('readonly', true);
+                    //return false;
 
-        }
+                }
 
-        if(quantitySpec <= 0){
+                if(quantitySpec <= 0){
 
-            alert('You must enter a positive number');
-            $('#ProductSpecificationQuantity').val('');
-            //return false;
+                    alert('You must enter a positive number');
+                    $('#ProductSpecificationQuantity').val('');
+                    //return false;
 
-        }else{
-            $('.stockQuantity').prop('readonly', false);
-        }
-       
-    });
+                }else{
+                    $('.stockQuantity').prop('readonly', false);
+                }
+               
+            });
 
     var max_fields      = 100; //maximum input boxes allowed
     var wrapper         = $("#sortable"); //Fields wrapper
@@ -312,9 +312,13 @@ $(document).ready(function() {
                 var paperQtyVal = parseInt(quantitySpec) * parseInt(rateval);
                 $('.quantity'+varCounter).val(paperQtyVal);
                 var outs = $('.outs'+varCounter).val();
+
+                console.log(paperQtyVal);
                
                 var paperqty = parseInt(paperQtyVal) / parseInt(outs);
                 $('.paper_qty'+varCounter).val(paperqty);
+
+                 console.log(paperqty);
                 
             });
             

@@ -103,14 +103,18 @@ class TicketingSystemsController extends TicketAppController {
                                                  )
                                                 ));
 
-        $productData = $this->Product->find('first',array('conditions' => array('Product.uuid' => $productUuid )));
+        $productData = $this->Product->find('first',array('conditions' => array('Product.uuid' => $productUuid) ,'order' => 'Product.id DESC'));
 
-        $subProcess = $this->SubProcess->find('list',
+
+         // pr( $productData );
+
+        $subProcessData = $this->SubProcess->find('list',
                                             array('fields' => 
                                                 array('SubProcess.id',
                                                     'SubProcess.name'
                                                  )
                                                 ));
+        //$subProcess =  $subProcess['SubProcess'];
 
         //set to cache in first load
         $unitData = Cache::read('unitData');
@@ -136,7 +140,7 @@ class TicketingSystemsController extends TicketAppController {
         }
 
 		
-		$this->set(compact('userData','delData','ticketData','formatDataSpecs','specs','unitData','subProcess','productData','companyData','clientOrderId','noPermissionSales'));
+		$this->set(compact('userData','delData','ticketData','formatDataSpecs','specs','unitData','subProcess','productData','companyData','clientOrderId','noPermissionSales','subProcessData'));
 	}
 
 	public function updatePendingStatus($ticketId = null) {
@@ -219,6 +223,10 @@ class TicketingSystemsController extends TicketAppController {
 
         $this->loadModel('Ticket.WoodMoldJobTicket');
 
+        $this->loadModel('Ticket.CuttingJobTicket');
+
+        $auth = $this->Session->read('Auth.User');
+
         if (!empty($this->request->data)) {
 
             $type = $this->params['named']['type'];
@@ -231,14 +239,25 @@ class TicketingSystemsController extends TicketAppController {
 
                      $data['WoodMoldJobTicket'] = $this->request->data['JobTicketProcess'];
 
+                   
+
                     break;
-                    
+                    case 'cutting':
+                     $model = 'CuttingJobTicket';  
+
+                     $data['CuttingJobTicket'] = $this->request->data['JobTicketProcess'];
+
+                    break;    
                     default:
                         # code...
-                        break;
+                    break;
                 }
 
+
                 if (!empty($model)) {
+
+                      $data[$model]['created_by'] = $auth['id'];
+                      $data[$model]['modified_by'] = $auth['id'];
 
                     if ( $this->$model->save($data)) {
 
@@ -247,9 +266,9 @@ class TicketingSystemsController extends TicketAppController {
                         $this->redirect(array(
                             'controller' => 'ticketing_systems', 
                             'action' => 'print_process',
-                            $data['WoodMoldJobTicket']['process_id'],
-                            $data['WoodMoldJobTicket']['product_id'],
-                            $data['WoodMoldJobTicket']['job_ticket_id'],
+                            $data[$model]['process_id'],
+                            $data[$model]['product_id'],
+                            $data[$model]['job_ticket_id'],
                             $model,
                             $lastID));
                        
@@ -480,17 +499,18 @@ class TicketingSystemsController extends TicketAppController {
 
         $delData = $this->ClientOrder->find('first',array('conditions' => array('id' => $clientOrderId)));
 
-       
-        $productData = $this->Product->find('first',array(
-            'conditions' => array('Product.uuid' => $productUuid)));
+        $productData = $this->Product->find('first',array('conditions' => array('Product.uuid' => $productUuid) ,'order' => 'Product.id DESC'));
+
 
         $ticketData = $this->JobTicket->find('first',array(
             'conditions' => array('JobTicket.uuid' => $ticketUuid)));
 
         $specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productData['Product']['id'])));
 
+
         //find if product has specs
         $formatDataSpecs = $this->ProductSpecificationDetail->findData($productUuid);
+
 
         $this->loadModel('SubProcess');
 
@@ -500,12 +520,13 @@ class TicketingSystemsController extends TicketAppController {
                                                     'SubProcess.name'
                                                  )
                                                 ));
+        //$subProcess =  $subProcess['SubProcess'];
 
         //set to cache in first load
         $companyData = Cache::read('companyData');
         
         //if (!$companyData) {
-            $companyData = $this->Company->find('list', array(
+        $companyData = $this->Company->find('list', array(
                                                 'fields' => array( 
                                                     'id','company_name')
                                             ));
@@ -524,6 +545,7 @@ class TicketingSystemsController extends TicketAppController {
 
             Cache::write('unitData', $unitData);
         }
+
 
         $this->set(compact('userData','ticketData','formatDataSpecs','productData','specs','companyData','unitData','subProcess','ticketUuid','delData'));
         
@@ -636,8 +658,8 @@ class TicketingSystemsController extends TicketAppController {
 
        //$delData = $this->ClientOrder->find('first',array('ClientOrder.id' => $clientOrderId));
        
-        $productData = $this->Product->find('first',array(
-            'conditions' => array('Product.uuid' => $productUuid)));
+   
+        $productData = $this->Product->find('first',array('conditions' => array('Product.uuid' => $productUuid) ,'order' => 'Product.id DESC'));
 
         // $ticketData = $this->JobTicket->find('first',array(
         //     'conditions' => array('JobTicket.uuid' => $ticketUuid)));
@@ -650,10 +672,21 @@ class TicketingSystemsController extends TicketAppController {
 
         //find process part
 
-        $processData = $this->ProductSpecificationPart->findById($processId);
-     
+        $processData = $this->ProductSpecificationDetail->find('first',array(
+            'conditions' => array(
+                    'ProductSpecificationDetail.product_id' => $productUuid,
+                    'ProductSpecificationDetail.model' => 'Part'
+            )
+        ));
 
-     //   pr($processData); exit();
+        $part = $this->ProductSpecificationPart->find('first',array(
+            'conditions' => array(
+                    'ProductSpecificationPart.id' => $processData['ProductSpecificationDetail']['foreign_key']
+            )
+        ));
+
+        $formatDataSpecs = $this->ProductSpecificationDetail->findData($productUuid);
+       //pr($formatDataSpecs);
      
         $this->loadModel('SubProcess');
 
@@ -677,14 +710,22 @@ class TicketingSystemsController extends TicketAppController {
         // }
 
         //set to cache in first load
+        //set to cache in first load
         $unitData = Cache::read('unitData');
-
+        
+        if (!$unitData) {
+            
+            $unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
+                                                            'order' => array('Unit.unit' => 'ASC')
+                                                            ));
+            Cache::write('unitData', $unitData);
+        }
 
         $view = new View(null, false);
 
         $view->viewPath = 'TicketingSystem'.DS.'pdf';  
 
-        $view->set(compact('userData','ticketData','modelData','formatDataSpecs','productData','specs','companyData','unitData','subProcess','ticketUuid','delData','processId','processData',' modelData'));
+        $view->set(compact('userData','ticketData','modelData','formatDataSpecs','productData','specs','companyData','unitData','subProcess','ticketUuid','delData','processId','processData',' modelData','part'));
         
 
         if (in_array($processId,array('11','61'))) {
