@@ -144,7 +144,7 @@
                         
                         <tr>
                             <td class="text-center"><?php echo ucfirst($preparedData['User']['first_name'])?> <?php echo ucfirst($preparedData['User']['last_name'])?></td>
-                            <td class="text-center">Shou Yi Yu</td>
+                            <td class="text-center">Ms. Carryl Yu</td>
                             <td class="text-center"></td>
                             <td class="text-center"></td>
                         </tr>
