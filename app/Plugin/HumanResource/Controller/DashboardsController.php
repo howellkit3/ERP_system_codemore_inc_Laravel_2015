@@ -27,7 +27,7 @@ class DashboardsController  extends HumanResourceAppController {
 
 		$attendances = $this->Attendance->find('all',array('conditions' => $conditions ,'limit' => 5, 'order' => array('Attendance.date DESC')));
 
-		
+			
 		$this->Absence->bind(array('Employee'));
 		
 		$conditions = array();

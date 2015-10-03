@@ -29,7 +29,12 @@ class AttendancesController  extends HumanResourceAppController {
 
 		$date2 = date('Y-m-d', strtotime($date . ' +1 day'));
 		
-		$conditions = array();
+		$conditions = 	array('date(Attendance.date) BETWEEN ? AND ?' => array($date,$date2));
+		
+		if (!empty($query['data'])) {
+
+			$conditions = array();
+		}
 
 		if (!empty($query['data']['date'])) {
 
@@ -46,8 +51,6 @@ class AttendancesController  extends HumanResourceAppController {
   			));
 
 			//$date = $query['data']['date'];
-		} else {
-			$conditions = 	array('date(Attendance.date) BETWEEN ? AND ?' => array($date,$date2));
 		}
 	
 		// $conditions = array(
@@ -55,7 +58,6 @@ class AttendancesController  extends HumanResourceAppController {
 		//  	'Attendance.date >=' => $date
 		// );
 
-	
 
 		if (!empty($query['data']['name'])) {
 			$search = $query['data']['name'];
@@ -68,6 +70,8 @@ class AttendancesController  extends HumanResourceAppController {
 		}
 
 		$this->Attendance->bind(array('WorkSchedule','Employee','WorkShift','Overtime'));
+
+
 
 		//$conditions = array();
 		$params =  array(
