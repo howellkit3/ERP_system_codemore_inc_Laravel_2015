@@ -25,12 +25,11 @@ class SalesOrdersController extends SalesAppController {
 		$this->Quotation->bind(array('ClientOrder'));
 
 		//$clientOrder = $this->Quotation->ClientOrder->find('all', array('order' => 'ClientOrder.id DESC'));
-    $this->Quotation->ClientOrder->bind(array('QuotationItemDetail','Company'));
+    $this->Quotation->ClientOrder->bind(array('QuotationItemDetail','QuotationDetail','Company','Product'));
 
     $limit = 10;
 
     $conditions = array();
-
 
     if ($this->request->is('ajax')) {
 
@@ -38,14 +37,10 @@ class SalesOrdersController extends SalesAppController {
 
       $conditions = array_merge($conditions,array(
         'OR' => array(
-
-            'ClientOrder.uuid like' => '%'. $query['name'] . '%',
-            'ClientOrder.po_number like' => '%'. $query['name'] . '%',
-           // 'Company.company_name like' => '%'. $query['name'] . '%',
-
-
+           // 'ClientOrder.uuid like' => '%'. $query['name'] . '%',
+            'Company.company_name like' => '%'. $query['name'] . '%',
+            'Product.name like' => '%'. $query['name'] . '%',
           )
-        
       ));
 
     }
@@ -83,6 +78,12 @@ class SalesOrdersController extends SalesAppController {
       $noPermission = ' ';
     }
 		
+
+
+   // pr($clientOrder);
+    //exit();
+
+
 		$this->set(compact('clientOrder','quoteName','companyData','inquiryId','noPermission'));
 
      if ($this->request->is('ajax')) {

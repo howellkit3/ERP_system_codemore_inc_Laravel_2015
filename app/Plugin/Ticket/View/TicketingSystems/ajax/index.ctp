@@ -1,9 +1,6 @@
-<style type="text/css">.table a.table-link {margin: 0 7px ;}.post {left: -5px;}
-</style>
-
-
-    <tbody aria-relevant="all" aria-live="polite" role="alert" class="result_ticket_table">
-<?php foreach ($ticketData as $ticketDataList): ?>
+<?php
+    if (count($ticketData) > 0) : 
+    foreach ($ticketData as $ticketDataList): ?>
         <tr class="">
 
             <td class="">
@@ -38,4 +35,6 @@
         </tr>
 
 <?php endforeach; ?> 
-    </tbody>
+<?php else : ?>
+   <font color="red"><b>No result..</b></font>
+<?php endif; ?>

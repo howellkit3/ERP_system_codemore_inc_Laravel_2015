@@ -11,7 +11,7 @@
 <head>
 	<title>Print Process</title>
 </head>
-<body style="font-family:sans-serif;">	
+<body style="font-family:sans-serif; font-size:13px">	
 
 <div class="large-padding">
 		<table class="full-width">
@@ -52,30 +52,46 @@
 		</table>
 		<table class="full-width border">
 				<tr>
-					<td>
+					<td style="width:350px">
 						Sample
 					</td>
-					<td class="text-right">
+					<td>
 						<strong>Supplier</strong>
 					</td>
 					
 				</tr>
 				<tr>
 					<td>
-						Item  <?php echo $productData['Product']['name']; ?>
+						<?php echo $processData['ProductSpecificationPart']['material']; ?>
 					</td>
 					<td class="text-right">
 						
 					</td>
+					</tr>
+				<tr>
+					<td >
+						<?php if (!empty($modelData['WoodMoldJobTicket']['category'])) {
+
+							echo $modelData['WoodMoldJobTicket']['category'];
+						 } ?>
+
+					</td>
+					<td >
+						<?php if (!empty($modelData['WoodMoldJobTicket']['style'])) {
+
+							echo $modelData['WoodMoldJobTicket']['style'];
+						 } ?>
+						</td>
 				</tr>
-					<tr>
-					<td >Item Size <?php echo $specs['ProductSpecification']['size1'].' x '.$specs['ProductSpecification']['size2'].' x '.$specs['ProductSpecification']['size3'] ?></td>
-					<td class="text-right"><label class="">Outs</label> </td>
-		</tr>
 		</table>
 
-			<table class="full-width border" style="height:280px">
-
+			<table class="full-width border" style="height:260px">
+				<tr>
+					<td style="vertical-align:top">
+						<p>Crease   <?php echo !empty($modelData['WoodMoldJobTicket']['crease']) ? $modelData['WoodMoldJobTicket']['crease'] : '' ?></p>
+						<p>Knife  <?php echo !empty($modelData['WoodMoldJobTicket']['crease']) ? $modelData['WoodMoldJobTicket']['crease'] : '' ?> </p>
+					</td>
+				</tr>
 			</table>
 			<table class="full-width">
 			<tr>

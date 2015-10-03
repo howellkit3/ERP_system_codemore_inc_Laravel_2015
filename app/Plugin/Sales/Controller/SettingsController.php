@@ -123,6 +123,44 @@ class SettingsController extends SalesAppController {
 		
 	}
 
+	public function category() {
+
+		$this->loadModel('Sales.ProcessCategory');
+
+		$categories = $this->ProcessCategory->find('all');
+
+		$this->set(compact('categories'));
+
+		$noPermission = ' '; 
+
+		$this->set(compact('noPermission','categories'));
+
+		$this->render('Settings/process/category');
+
+	}
+
+
+	public function add_category() {
+
+		$this->loadModel('Sales.ProcessCategory');
+
+		if ($this->request->is('post')) {
+
+			if ($this->ProcessCategory->save($this->request->data)) {
+
+					$this->Session->setFlash(__('Category Has been saved'));
+					$this->redirect(
+					array('controller' => 'settings', 'action' => 'category')
+				);
+
+			} else {
+
+				$this->Session->setFlash(__('Error Deleting Information.'));
+		
+			}
+		}
+	}
 	
-	
+
+
 }
