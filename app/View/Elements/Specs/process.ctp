@@ -11,18 +11,31 @@
 
         			if (in_array($subProcess[$processList['ProductSpecificationProcessHolder']['sub_process_id']],$process)) {
 
-        					echo $this->Html->link($subProcess[$processList['ProductSpecificationProcessHolder']['sub_process_id']], 
-        					array(
-        					'controller' => 'ticketing_systems','action' => 'print_process',
-        					$processList['ProductSpecificationProcessHolder']['sub_process_id'],
-        					$formatDataSpecs['ProductSpecificationDetail']['product_id'],
-                            $ticketData['JobTicket']['uuid']
-        					),
-        					array(
-        						'title' => 'Print '. $subProcess[$processList['ProductSpecificationProcessHolder']['sub_process_id']],
-                                'target' => '_blank'
-        					)
-        					);
+        					// echo $this->Html->link($subProcess[$processList['ProductSpecificationProcessHolder']['sub_process_id']], 
+        					// array(
+            	// 				'controller' => 'ticketing_systems','action' => 'print_process',
+            	// 				$processList['ProductSpecificationProcessHolder']['sub_process_id'],
+            	// 				$formatDataSpecs['ProductSpecificationDetail']['product_id'],
+             //                $ticketData['JobTicket']['uuid']
+        					// ),
+        					// array(
+        					// 	'title' => 'Print '. $subProcess[$processList['ProductSpecificationProcessHolder']['sub_process_id']],
+             //                    'target' => '_blank'
+        					// )
+        					// );
+
+                        echo $this->Html->link($subProcess[$processList['ProductSpecificationProcessHolder']['sub_process_id']], 
+                            '#processModal',
+                            array(
+                                'title' => 'Print '. $subProcess[$processList['ProductSpecificationProcessHolder']['sub_process_id']],
+                                //'target' => '_blank',
+                                'data-processId' => $processList['ProductSpecificationProcessHolder']['sub_process_id'],
+                                'data-productId' => $formatDataSpecs['ProductSpecificationDetail']['product_id'],
+                                'data-ticket_uuid' =>  $ticketData['JobTicket']['uuid'],
+                                'data-toggle' => 'modal',
+                                'class' => 'process_link',
+                            )
+                            );
         			} else  {
 
         				echo  $subProcess[$processList['ProductSpecificationProcessHolder']['sub_process_id']];
