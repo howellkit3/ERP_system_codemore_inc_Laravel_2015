@@ -21,10 +21,7 @@ class DashboardsController  extends HumanResourceAppController {
 		
 		$date = date('Y-m-d');
 
-		$conditions = array(
-			'Attendance.date <=' => $date,
-		 	'Attendance.date >=' => $date
-		);
+		$conditions = 	array('date(Attendance.date) BETWEEN ? AND ?' => array($date,$date));
 
 		$this->Attendance->bind(array('WorkSchedule','Employee','WorkShift'));
 

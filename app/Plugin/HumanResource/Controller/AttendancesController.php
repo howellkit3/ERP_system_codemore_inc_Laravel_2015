@@ -30,7 +30,7 @@ class AttendancesController  extends HumanResourceAppController {
 		$date2 = date('Y-m-d', strtotime($date . ' +1 day'));
 		
 		$conditions = array();
-		
+
 		if (!empty($query['data']['date'])) {
 
 			//$fromDate =
@@ -46,6 +46,8 @@ class AttendancesController  extends HumanResourceAppController {
   			));
 
 			//$date = $query['data']['date'];
+		} else {
+			$conditions = 	array('date(Attendance.date) BETWEEN ? AND ?' => array($date,$date2));
 		}
 	
 		// $conditions = array(
