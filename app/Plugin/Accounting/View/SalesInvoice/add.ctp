@@ -46,14 +46,15 @@
                     </table>
                     <hr>
 
-                <div class="paging">
-                <?php
+                <div class="paging" id="dr_pagination">
+                        <?php
 
-                echo $this->Paginator->prev('< ' . __('previous'), null, null, array('class' => 'disable'));
-                echo $this->Paginator->numbers(array('separator' => ''));
-                echo $this->Paginator->next(__('next') . ' >', null, null, array('class' => 'disable'));
-                ?>
-                </div>
+                        echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'Delivery','model' => 'Delivery'), null, array('class' => 'disable','model' => 'Delivery'));
+                        echo $this->Paginator->numbers(array('separator' => '','paginate' => 'Delivery'), array('paginate' => 'Delivery'));
+                        echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'Delivery','model' => 'Delivery'), null, array('class' => 'disable'));
+                        ?>
+
+                        </div>
                 <?php //echo $this->Html->image('loader.gif', array('class' => 'hide', 'id' => 'loader')); ?>
                 <?php //echo $this->Js->writeBuffer(); ?>
                 </div>
@@ -127,46 +128,47 @@
 	});
 
 
-	 // $("body").on('keyup','.searchOrder', function(e){
+	 $("body").on('keyup','.searchOrder', function(e){
 
-  //       var searchInput = $(this).val();
+        var searchInput = $(this).val();
+
+        var view = "add";
     
+        //alert(searchInput);
+        if(searchInput != ''){
+
+            $('.OrderFields').hide();
+            $('.searchAppend').show();
+            //alert('hide');
+
+        }else{
+            $('.OrderFields').show();
+            $('.searchAppend').hide();
+            //alert('show');
+        }
         
-  //       //alert(searchInput);
-  //       if(searchInput != ''){
+        $.ajax({
+            type: "GET",
+            url: serverPath + "accounting/sales_invoice/search_order/"+searchInput+"/"+view,
+            dataType: "html",
+            success: function(data) {
 
-  //           $('.OrderFields').hide();
-  //           $('.searchAppend').show();
-  //           //alert('hide');
+                //alert(data);
 
-  //       }else{
-  //           $('.OrderFields').show();
-  //           $('.searchAppend').hide();
-  //           //alert('show');
-  //       }
-        
-  //       $.ajax({
-  //           type: "GET",
-  //           url: serverPath + "accounting/sales_invoice/search_order/"+searchInput,
-  //           dataType: "html",
-  //           success: function(data) {
+                if(data){
 
-  //               //alert(data);
+                    $('.searchAppend').html(data);
 
-  //               if(data){
+                } 
+                if (data.length < 5 ) {
 
-  //                   $('.searchAppend').html(data);
-
-  //               } 
-  //               if (data.length < 5 ) {
-
-  //                   $('.searchAppend').html('<font color="red"><b>No result..</b></font>');
+                    $('.searchAppend').html('<font color="red"><b>No result..</b></font>');
                      
-  //               }
+                }
                 
-  //           }
-  //       });
+            }
+        });
 
-  //   });
+    });
 
 </script>

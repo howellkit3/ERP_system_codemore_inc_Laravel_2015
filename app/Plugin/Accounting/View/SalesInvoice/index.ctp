@@ -16,6 +16,15 @@
                                 'escape' => false));
 
                     ?> 
+
+                    <div class="form-group pull-left">
+                
+                        <input placeholder="Search..." class="form-control searchOrder"  />
+                        <i class="fa fa-search search-icon"></i>
+                    
+                	</div>
+
+
                   <br><br>
                </div>
             </header>
@@ -34,10 +43,12 @@
 							</tr>
 						</thead>
 						<?php 
-					        if(!empty($invoiceData)){
-					            foreach ($invoiceData as $invoiceDataList): ?>
+					        if(!empty($invoiceData)){ ?>
+					           
 
-					                <tbody aria-relevant="all" aria-live="polite" role="alert">
+					            	<tbody aria-relevant="all" aria-live="polite" class="OrderFields" role="alert" >
+
+					            		<?php foreach ($invoiceData as $invoiceDataList): ?>
 
 					                    <tr class="">
 
@@ -80,13 +91,73 @@
 					                        </td>
 					                    </tr>
 
-					                </tbody>
-					        <?php 
-					            endforeach; 
-					        } ?> 
-					</table>	
+					                <?php endforeach; } ?> 
+
+					               </tbody>
+			                        <tbody aria-relevant="all" aria-live="polite" class="searchAppend" role="alert" >
+			                        
+			                           </tbody>
+					        
+					</table>
+					<hr>
+                        <div class="paging" id="dr_pagination">
+                        <?php
+
+                        echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'SalesInvoice','model' => 'SalesInvoice'), null, array('class' => 'disable','model' => 'SalesInvoice'));
+                        echo $this->Paginator->numbers(array('separator' => '','paginate' => 'SalesInvoice'), array('paginate' => 'SalesInvoice'));
+                        echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'SalesInvoice','model' => 'SalesInvoice'), null, array('class' => 'disable'));
+                        ?>
+
+                        </div>	
 				</div>
 			</div>
 	    </div>
     </div>
 </div>
+
+<script>
+		
+	 $("body").on('keyup','.searchOrder', function(e){
+
+        var searchInput = $(this).val();
+
+        var view = "index";
+    
+        //alert(searchInput);
+        if(searchInput != ''){
+
+            $('.OrderFields').hide();
+            $('.searchAppend').show();
+            //alert('hide');
+
+        }else{
+            $('.OrderFields').show();
+            $('.searchAppend').hide();
+            //alert('show');
+        }
+        
+        $.ajax({
+            type: "GET",
+            url: serverPath + "accounting/sales_invoice/search_order/"+searchInput+"/"+view,
+            dataType: "html",
+            success: function(data) {
+
+                //alert(data);
+
+                if(data){
+
+                    $('.searchAppend').html(data);
+
+                } 
+                if (data.length < 5 ) {
+
+                    $('.searchAppend').html('<font color="red"><b>No result..</b></font>');
+                     
+                }
+                
+            }
+        });
+
+    });
+
+</script>

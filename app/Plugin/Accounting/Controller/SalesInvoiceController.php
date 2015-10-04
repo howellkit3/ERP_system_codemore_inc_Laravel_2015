@@ -12,16 +12,39 @@ class SalesInvoiceController extends AccountingAppController {
         
         $userData = $this->Session->read('Auth');
 
-        $invoiceData = $this->SalesInvoice->find('all', array(
-                                                    'fields' => array(
-                                                        'id','sales_invoice_no',
-                                                        'dr_uuid','statement_no',
-                                                        'status'),
-                                                    'conditions' => array(
-                                                        'NOT' => array(
-                                                            'SalesInvoice.status' => 2) ),
-                                                    'order' => 'SalesInvoice.id DESC'
-                                                ));
+
+
+        $limit = 10;
+
+        $conditions = array('NOT' => array('SalesInvoice.status' => 2) );
+
+        $this->paginate = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            'fields' => array(
+                'SalesInvoice.id',
+                'SalesInvoice.sales_invoice_no',
+                'SalesInvoice.statement_no',  
+                'SalesInvoice.dr_uuid', 
+                'SalesInvoice.status',
+                ),
+            'order' => 'SalesInvoice.id DESC',
+        );
+
+        $invoiceData = $this->paginate('SalesInvoice');
+
+
+
+        // $invoiceData = $this->SalesInvoice->find('all', array(
+        //                                             'fields' => array(
+        //                                                 'id','sales_invoice_no',
+        //                                                 'dr_uuid','statement_no',
+        //                                                 'status'),
+        //                                             'conditions' => array(
+        //                                                 'NOT' => array(
+        //                                                     'SalesInvoice.status' => 2) ),
+        //                                             'order' => 'SalesInvoice.id DESC'
+        //                                         ));
         
         if ($userData['User']['role_id'] == 9 ) {
             $noPermissionReciv = 'disabled not-active';
@@ -323,9 +346,27 @@ class SalesInvoiceController extends AccountingAppController {
 
         $this->loadModel('Sales.Company');
 
+        $limit = 10;
+
+        $conditions = array();
+
+        $this->paginate = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            'fields' => array(
+                'Delivery.id',
+                'Delivery.clients_order_id',
+                'Delivery.company_id',  
+                'Delivery.dr_uuid', 
+                ),
+            'order' => 'Delivery.id DESC',
+        );
+
+        $deliveryData = $this->paginate('Delivery');
+
        // $this->Delivery->bindInvoice('ClientOrder');
 
-        $deliveryData = $this->Delivery->find('all');
+        //$deliveryData = $this->Delivery->find('all');
 
         //$clientData = $this->ClientOrder->find('all');
 
@@ -1013,38 +1054,63 @@ class SalesInvoiceController extends AccountingAppController {
 
     }
 
-    public function search_order($hint = null){
+    public function search_order($hint = null, $view = null){
+
+        if($view == 'add'){
+
+            $this->loadModel('Delivery.Delivery');
+
+            $this->loadModel('Sales.ClientOrder');
+
+            $this->loadModel('Sales.Company');
+            //$deliveryData = $this->Delivery->find('all');
+
+            $deliveryData = $this->Delivery->find('all',array(
+                          'conditions' => array(
+                            'OR' => array(
+                            array('Delivery.clients_order_id LIKE' => '%' . $hint . '%'),
+                              array('Delivery.dr_uuid LIKE' => '%' . $hint . '%')
+                              )
+                            ),
+                          'limit' => 10
+                          )); 
 
 
-        $this->loadModel('Delivery.Delivery');
+            $poNumber = $this->ClientOrder->find('list', array('fields' => array('uuid', 'po_number')));
 
-        $this->loadModel('Sales.ClientOrder');
+            $companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')));
+            $this->set(compact('seriesSalesNo', 'noPermissionPay', 'noPermissionReciv', 'deliveryData', 'clientOrderData', 'companyData', 'poNumber'));
+            
+            if ($hint == ' ') {
+                $this->render('index');
+            }else{
+                $this->render('search_order');
+            }
 
-        $this->loadModel('Sales.Company');
-        //$deliveryData = $this->Delivery->find('all');
-
-        $deliveryData = $this->Delivery->find('all',array(
-                      'conditions' => array(
-                        'OR' => array(
-                        array('Delivery.clients_order_id LIKE' => '%' . $hint . '%'),
-                          array('Delivery.dr_uuid LIKE' => '%' . $hint . '%')
-                          )
-                        ),
-                      'limit' => 10
-                      )); 
-
-
-        $poNumber = $this->ClientOrder->find('list', array('fields' => array('uuid', 'po_number')));
-
-        $companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')));
-        $this->set(compact('seriesSalesNo', 'noPermissionPay', 'noPermissionReciv', 'deliveryData', 'clientOrderData', 'companyData', 'poNumber'));
-        
-        if ($hint == ' ') {
-            $this->render('index');
         }else{
-            $this->render('search_order');
-        }
 
+            $userData = $this->Session->read('Auth');
+
+            $invoiceData = $this->SalesInvoice->find('all',array(
+                          'conditions' => array(
+                            'OR' => array(
+                            array('SalesInvoice.sales_invoice_no LIKE' => '%' . $hint . '%'),
+                              array('SalesInvoice.dr_uuid LIKE' => '%' . $hint . '%')
+                              )
+                            ),
+                          'limit' => 10
+                          )); 
+
+
+            $this->set(compact('invoiceData','noPermissionReciv','noPermissionPay'));
+
+            if ($hint == ' ') {
+                $this->render('index');
+            }else{
+                $this->render('search_order_index');
+            }
+
+        }
     }
 
 }
