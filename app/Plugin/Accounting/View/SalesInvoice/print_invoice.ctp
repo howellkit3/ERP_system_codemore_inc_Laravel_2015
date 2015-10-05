@@ -49,7 +49,7 @@
                 ->setCellValue('J8', $companyData['Company']['tin'])
                 ->setCellValue('C8', ucfirst($companyData['Address'][0]['address1']))
                 ->setCellValue('J9', $paymentTermData[$clientData['ClientOrder']['payment_terms']])
-                ->setCellValue('B12', $clientData['ClientOrder']['po_number'])
+                ->setCellValue('A12', $clientData['ClientOrder']['po_number'])
                 ->setCellValue('F12', ucfirst($clientData['Product']['name']))
                 ->setCellValue('D12', number_format($drData['DeliveryDetail']['quantity']))
                 ->setCellValue('I12', $clientData['QuotationItemDetail']['unit_price'])
