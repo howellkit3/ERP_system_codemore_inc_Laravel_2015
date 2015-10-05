@@ -5,47 +5,24 @@ App::import('Vendor', 'DOMPDF', true, array(), 'dompdf'.DS.'dompdf_config.inc.ph
 
 class SalesInvoiceController extends AccountingAppController {
 
-    public $uses = array('Accounting.SalesInvoice');
+	public $uses = array('Accounting.SalesInvoice');
     public $helpers = array('Accounting.PhpExcel');
 
-    public function index(){
-        
+	public function index(){
+		
         $userData = $this->Session->read('Auth');
 
-
-
-        $limit = 10;
-
-        $conditions = array('NOT' => array('SalesInvoice.status' => 2) );
-
-        $this->paginate = array(
-            'conditions' => $conditions,
-            'limit' => $limit,
-            'fields' => array(
-                'SalesInvoice.id',
-                'SalesInvoice.sales_invoice_no',
-                'SalesInvoice.statement_no',  
-                'SalesInvoice.dr_uuid', 
-                'SalesInvoice.status',
-                ),
-            'order' => 'SalesInvoice.id DESC',
-        );
-
-        $invoiceData = $this->paginate('SalesInvoice');
-
-
-
-        // $invoiceData = $this->SalesInvoice->find('all', array(
-        //                                             'fields' => array(
-        //                                                 'id','sales_invoice_no',
-        //                                                 'dr_uuid','statement_no',
-        //                                                 'status'),
-        //                                             'conditions' => array(
-        //                                                 'NOT' => array(
-        //                                                     'SalesInvoice.status' => 2) ),
-        //                                             'order' => 'SalesInvoice.id DESC'
-        //                                         ));
-        
+      	$invoiceData = $this->SalesInvoice->find('all', array(
+                                          			'fields' => array(
+                                              			'id','sales_invoice_no',
+                                                        'dr_uuid','statement_no',
+                                                        'status'),
+                                                    'conditions' => array(
+                                                        'NOT' => array(
+                                                            'SalesInvoice.status' => 2) ),
+                                                    'order' => 'SalesInvoice.id DESC'
+                                        		));
+      	
         if ($userData['User']['role_id'] == 9 ) {
             $noPermissionReciv = 'disabled not-active';
         } else {
@@ -65,7 +42,7 @@ class SalesInvoiceController extends AccountingAppController {
 
         $this->set(compact('invoiceData','noPermissionReciv','noPermissionPay'));
 
-    }
+	}
 
     public function statement(){
         
@@ -154,6 +131,7 @@ class SalesInvoiceController extends AccountingAppController {
         
         $this->Delivery->bindDelivery();
 
+<<<<<<< HEAD
         if(!empty($invoiceData['SalesInvoice']['dr_uuid'])){
 
             $drData = $this->Delivery->find('first', array(
@@ -165,6 +143,24 @@ class SalesInvoiceController extends AccountingAppController {
         }
 
        // pr($invoiceData); exit;
+=======
+        $drData = $this->Delivery->find('first', array(
+                                            'conditions' => array('Delivery.dr_uuid' => $invoiceData['SalesInvoice']['dr_uuid']
+                                            )));
+       
+
+        if (!empty($_GET['test'])) {
+
+            pr($drData);
+            pr('invoice');
+            pr($invoiceData);
+
+            pr('paymentTerm');
+            pr($paymentTermData);
+        }
+      //  pr($drData);
+
+>>>>>>> 00147dc8583cc17d7af1f09eca8bea08fe5a7c54
 
         $clientData = $this->ClientOrder->find('first', array(
                                             'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
@@ -336,37 +332,19 @@ class SalesInvoiceController extends AccountingAppController {
 
     }
 
-    public function add(){
+	public function add(){
 
-        $userData = $this->Session->read('Auth');
+		$userData = $this->Session->read('Auth');
 
-        $this->loadModel('Delivery.Delivery');
+		$this->loadModel('Delivery.Delivery');
 
         $this->loadModel('Sales.ClientOrder');
 
         $this->loadModel('Sales.Company');
 
-        $limit = 10;
-
-        $conditions = array();
-
-        $this->paginate = array(
-            'conditions' => $conditions,
-            'limit' => $limit,
-            'fields' => array(
-                'Delivery.id',
-                'Delivery.clients_order_id',
-                'Delivery.company_id',  
-                'Delivery.dr_uuid', 
-                ),
-            'order' => 'Delivery.id DESC',
-        );
-
-        $deliveryData = $this->paginate('Delivery');
-
        // $this->Delivery->bindInvoice('ClientOrder');
 
-        //$deliveryData = $this->Delivery->find('all');
+        $deliveryData = $this->Delivery->find('all');
 
         //$clientData = $this->ClientOrder->find('all');
 
@@ -396,69 +374,69 @@ class SalesInvoiceController extends AccountingAppController {
         // if($this->request->is('post')){
 
         //     if(!empty($this->request->data)){
-                
-        //      $DRdata = $this->SalesInvoice->find('first', array(
-        //                  'conditions' => array(
-        //                      'SalesInvoice.dr_uuid' => $this->request->data['SalesInvoice']['dr_uuid'])
-        //                  ));
+            	
+        //     	$DRdata = $this->SalesInvoice->find('first', array(
+        //     				'conditions' => array(
+        //     					'SalesInvoice.dr_uuid' => $this->request->data['SalesInvoice']['dr_uuid'])
+        //     				));
 
-        //      if (!empty($DRdata)) {
+        //     	if (!empty($DRdata)) {
 
-        //          $this->Session->setFlash(__('This Delivery No. already have a Sales Invoice No. '), 'error');
-           //       $this->redirect( array(
+        //     		$this->Session->setFlash(__('This Delivery No. already have a Sales Invoice No. '), 'error');
+	       //  		$this->redirect( array(
         //                          'controller' => 'salesInvoice', 
         //                          'action' => 'add'
         //                     ));
-        //      }
+        //     	}
 
-        //      $findDRdata = $this->Delivery->find('first', array(
-        //                  'conditions' => array(
-        //                      'Delivery.dr_uuid' => $this->request->data['SalesInvoice']['dr_uuid'])
-        //                  ));
-            
-        //      if (!empty($findDRdata)) {
+        //     	$findDRdata = $this->Delivery->find('first', array(
+        //     				'conditions' => array(
+        //     					'Delivery.dr_uuid' => $this->request->data['SalesInvoice']['dr_uuid'])
+        //     				));
+          	
+        //     	if (!empty($findDRdata)) {
 
-        //          $this->SalesInvoice->addSalesInvoice($this->request->data, $userData['User']['id']);
+        //     		$this->SalesInvoice->addSalesInvoice($this->request->data, $userData['User']['id']);
 
-        //          $this->Session->setFlash(__(' Sales Invoice No. completed. '), 'success');
-           //       $this->redirect( array(
+        //     		$this->Session->setFlash(__(' Sales Invoice No. completed. '), 'success');
+	       //  		$this->redirect( array(
         //                          'controller' => 'sales_invoice', 
         //                          'action' => 'index'
         //                     ));
 
-        //      }else{
+        //     	}else{
 
-        //          $this->request->data = $this->request->data['SalesInvoice']['dr_uuid'];
+        //     		$this->request->data = $this->request->data['SalesInvoice']['dr_uuid'];
 
-        //          $this->Session->setFlash(__(' Delivery No. not matched in our system. '), 'error');
-           //       $this->redirect( array(
+        //     		$this->Session->setFlash(__(' Delivery No. not matched in our system. '), 'error');
+	       //  		$this->redirect( array(
         //                          'controller' => 'salesInvoice', 
         //                          'action' => 'add'
         //                     ));
-        //      }
-                
-           //  }
+        //     	}
+            	
+	       //  }
         // }
 
         $noPermissionPay = "";
         $noPermissionReciv = "";
 
         $this->set(compact('seriesSalesNo', 'noPermissionPay', 'noPermissionReciv', 'deliveryData', 'clientOrderData', 'companyData', 'poNumber'));
-        
-    }
+		
+	}
 
-    public function find_data($id = null){
+	public function find_data($id = null){
 
-        $this->layout = false;
+		$this->layout = false;
 
-        $this->loadModel('Delivery.Schedule');
+		$this->loadModel('Delivery.Schedule');
 
-        $scheduleInfo = $this->Schedule->find('first', array(
-                                                'conditions' => array(
-                                                    'sales_order_id' => $id)
-                                            ));
+		$scheduleInfo = $this->Schedule->find('first', array(
+												'conditions' => array(
+													'sales_order_id' => $id)
+											));
 
-        $this->loadModel('Sales.Quotation');
+		$this->loadModel('Sales.Quotation');
 
         $this->Quotation->bind(array('QuotationField','Product'));
 
@@ -493,25 +471,25 @@ class SalesInvoiceController extends AccountingAppController {
         $this->loadModel('Delivery.Delivery');
 
         $deliveryDetails = $this->Delivery->find('all', array(
-                                                    'conditions' => array(
-                                                        'sales_order_id' => $id),
-                                                    'order' => array(
-                                                        'delivery_details_id ASC'
-                                                    )
-                                                ));
+		                                            'conditions' => array(
+		                                                'sales_order_id' => $id),
+		                                            'order' => array(
+		                                            	'delivery_details_id ASC'
+		                                            )
+		                                        ));
 
-        $data = array($scheduleInfo, $ticketDetails, $companyName, $deliveryDetails);
-        
-        echo json_encode($data);
+		$data = array($scheduleInfo, $ticketDetails, $companyName, $deliveryDetails);
+		
+		echo json_encode($data);
 
-        $this->autoRender = false;
-    }
+		$this->autoRender = false;
+	}
 
-    public function get_data(){ }
+	public function get_data(){ }
 
-    public function create_sales_invoice(){ }
+	public function create_sales_invoice(){ }
  
-    public function print_invoice($invoiceId = null ,$saNo = null) {
+	public function print_invoice($invoiceId = null ,$saNo = null) {
 
         $userData = $this->Session->read('Auth');
 
@@ -1054,63 +1032,38 @@ class SalesInvoiceController extends AccountingAppController {
 
     }
 
-    public function search_order($hint = null, $view = null){
-
-        if($view == 'add'){
-
-            $this->loadModel('Delivery.Delivery');
-
-            $this->loadModel('Sales.ClientOrder');
-
-            $this->loadModel('Sales.Company');
-            //$deliveryData = $this->Delivery->find('all');
-
-            $deliveryData = $this->Delivery->find('all',array(
-                          'conditions' => array(
-                            'OR' => array(
-                            array('Delivery.clients_order_id LIKE' => '%' . $hint . '%'),
-                              array('Delivery.dr_uuid LIKE' => '%' . $hint . '%')
-                              )
-                            ),
-                          'limit' => 10
-                          )); 
+    public function search_order($hint = null){
 
 
-            $poNumber = $this->ClientOrder->find('list', array('fields' => array('uuid', 'po_number')));
+        $this->loadModel('Delivery.Delivery');
 
-            $companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')));
-            $this->set(compact('seriesSalesNo', 'noPermissionPay', 'noPermissionReciv', 'deliveryData', 'clientOrderData', 'companyData', 'poNumber'));
-            
-            if ($hint == ' ') {
-                $this->render('index');
-            }else{
-                $this->render('search_order');
-            }
+        $this->loadModel('Sales.ClientOrder');
 
+        $this->loadModel('Sales.Company');
+        //$deliveryData = $this->Delivery->find('all');
+
+        $deliveryData = $this->Delivery->find('all',array(
+                      'conditions' => array(
+                        'OR' => array(
+                        array('Delivery.clients_order_id LIKE' => '%' . $hint . '%'),
+                          array('Delivery.dr_uuid LIKE' => '%' . $hint . '%')
+                          )
+                        ),
+                      'limit' => 10
+                      )); 
+
+
+        $poNumber = $this->ClientOrder->find('list', array('fields' => array('uuid', 'po_number')));
+
+        $companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')));
+        $this->set(compact('seriesSalesNo', 'noPermissionPay', 'noPermissionReciv', 'deliveryData', 'clientOrderData', 'companyData', 'poNumber'));
+        
+        if ($hint == ' ') {
+            $this->render('index');
         }else{
-
-            $userData = $this->Session->read('Auth');
-
-            $invoiceData = $this->SalesInvoice->find('all',array(
-                          'conditions' => array(
-                            'OR' => array(
-                            array('SalesInvoice.sales_invoice_no LIKE' => '%' . $hint . '%'),
-                              array('SalesInvoice.dr_uuid LIKE' => '%' . $hint . '%')
-                              )
-                            ),
-                          'limit' => 10
-                          )); 
-
-
-            $this->set(compact('invoiceData','noPermissionReciv','noPermissionPay'));
-
-            if ($hint == ' ') {
-                $this->render('index');
-            }else{
-                $this->render('search_order_index');
-            }
-
+            $this->render('search_order');
         }
+
     }
 
 }

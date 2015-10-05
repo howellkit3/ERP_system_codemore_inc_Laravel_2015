@@ -59,11 +59,15 @@ class SalesInvoice extends AppModel {
   
 	public function addSalesInvoice($invoiceData = null, $auth = null){
 
+
+
 		$this->create();
 		
 		$invoiceData[$this->name]['created_by'] = $auth;
 		$invoiceData[$this->name]['modified_by'] = $auth;
 		$invoiceData[$this->name]['modified_by'] = $auth;
+
+		//pr($invoiceData); exit;
 		$this->save($invoiceData);
 
 		return $this->id;

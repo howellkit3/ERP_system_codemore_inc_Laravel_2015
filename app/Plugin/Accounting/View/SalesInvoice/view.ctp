@@ -103,7 +103,20 @@
 								<td><center><?php echo ucfirst($clientData['Product']['name'])?></center></td>
 								<td><center><?php echo number_format($drData['DeliveryDetail']['quantity'])?></center></td>
 								<td><center><?php echo number_format($clientData['QuotationItemDetail']['unit_price'],2)?></center></td>
-								<td><center><?php  $totalQty = $drData['DeliveryDetail']['quantity'] * number_format($clientData['QuotationItemDetail']['unit_price'],2)?>
+								<td><center><?php 
+
+								if(!empty($drData['DeliveryDetail']['quantity'])){
+
+								  	$totalQty = $drData['DeliveryDetail']['quantity'] * number_format($clientData['QuotationItemDetail']['unit_price'],2);
+
+								}else{
+
+
+
+									$totalQty = $clientData['ClientOrderDeliverySchedule'][0]['quantity'] * number_format($clientData['QuotationItemDetail']['unit_price'],2);
+								}
+
+								  ?>
 							<?php echo number_format($totalQty,2) ;
 
 							
