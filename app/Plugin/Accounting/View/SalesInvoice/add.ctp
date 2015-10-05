@@ -31,7 +31,7 @@
                             <tr> 
                                 <th><a href="#"><span>Client Order Number</span></a></th>
                                 <th><a href="#"><span>PO Number</span></a></th>
-                                <th><a href="#"><span>Item Name</span></a></th>
+                                <th><a href="#"><span>Company</span></a></th>
                                 <th><a href="#"><span>DR Number</span></a></th>
                                 <th>Action</th>
                             </tr>
