@@ -44,21 +44,20 @@
 	}
 
     $objTpl->setActiveSheetIndex(0)
-                ->setCellValue('C7', ucfirst($companyData['Company']['company_name']))
-                ->setCellValue('I7', (new \DateTime())->format('m/d/Y'))
-                ->setCellValue('I8', $companyData['Company']['tin'])
+                ->setCellValue('J7', (new \DateTime())->format('m/d/Y'))
+                ->setCellValue('J8', $companyData['Company']['tin'])
                 ->setCellValue('C8', ucfirst($companyData['Address'][0]['address1']))
-                ->setCellValue('I9', $paymentTermData[$clientData['ClientOrder']['payment_terms']])
+                ->setCellValue('J9', $paymentTermData[$clientData['ClientOrder']['payment_terms']])
                 ->setCellValue('A12', $clientData['ClientOrder']['po_number'])
-                ->setCellValue('C12', ucfirst($clientData['Product']['name']))
-                ->setCellValue('F12', number_format($drData['DeliveryDetail']['quantity']))
-                ->setCellValue('H12', $clientData['QuotationItemDetail']['unit_price'])
-                ->setCellValue('J12', number_format($totalQty,2))
-                ->setCellValue('C22', 'DR#'.$drData['Delivery']['dr_uuid'])
-                ->setCellValue('J26', $vatSale)
-                ->setCellValue('J31', $vatExem)
-                ->setCellValue('J32', $vat12)
-                ->setCellValue('J33', $currency.' '.$totalAmount);
+                ->setCellValue('F12', ucfirst($clientData['Product']['name']))
+                ->setCellValue('D12', number_format($drData['DeliveryDetail']['quantity']))
+                ->setCellValue('I12', $clientData['QuotationItemDetail']['unit_price'])
+                ->setCellValue('K12', number_format($totalQty,2))
+                ->setCellValue('D26', 'DR#'.$drData['Delivery']['dr_uuid'])
+                ->setCellValue('K30', $vatSale)
+                ->setCellValue('K31', $vatExem)
+                ->setCellValue('K32', $vat12)
+                ->setCellValue('K33', $currency.' '.$totalAmount);
       
     //prepare download
     $filename = mt_rand(1,100000).'.xlsx'; //just some random filename
