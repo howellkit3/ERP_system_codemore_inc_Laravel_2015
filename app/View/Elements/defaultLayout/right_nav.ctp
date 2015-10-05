@@ -111,7 +111,7 @@
 					
 					<li class="<?php echo ($this->params['plugin'] == 'ware_house') ? 'active' : '' ?>">
 
-						<?php  if($userData['User']['role_id'] == 1 OR $userData['User']['role_id'] == 2 OR $userData['User']['role_id'] == 4 OR $userData['User']['role_id'] == 7 OR $userData['User']['role_id'] == 15){
+						<?php  if($userData['User']['role_id'] == 1 OR $userData['User']['role_id'] == 2 OR $userData['User']['role_id'] == 4 OR $userData['User']['role_id'] == 7 OR $userData['User']['role_id'] == 15 OR $userData['User']['role_id'] == 8){
 
 	 						  echo $this->Html->link( " <i class='fa fa-archive'></i> <span>Ware House</span>",   array('controller' =>'receivings','action'=>'index?'.rand(1000,9999).'='.date("is"),'plugin' => 'ware_house'),array('escape' => false) );
 								// echo $this->Html->link( " <i class='fa fa-archive'></i> <span>Ware House</span>",   array('controller' =>'ware_house_systems','action'=>'dashboard','plugin' => 'ware_house'),array('escape' => false) );
@@ -128,7 +128,7 @@
 					<!-- </li> -->
 					<li class="<?php echo ($this->params['plugin'] == 'delivery') ? 'active' : '' ?>">
 
-						<?php  if($userData['User']['role_id'] == 1 OR $userData['User']['role_id'] == 2 OR $userData['User']['role_id'] == 5 OR $userData['User']['role_id'] == 3 OR $userData['User']['role_id'] == 9 OR $userData['User']['role_id'] == 6 OR $userData['User']['role_id'] == 15){
+						<?php  if($userData['User']['role_id'] == 1 OR $userData['User']['role_id'] == 2 OR $userData['User']['role_id'] == 5 OR $userData['User']['role_id'] == 3 OR $userData['User']['role_id'] == 9 OR $userData['User']['role_id'] == 6 OR $userData['User']['role_id'] == 15 OR $userData['User']['role_id'] == 8){
 
 						
 	 						echo $this->Html->link( " <i class='fa fa-truck'></i> <span>Delivery</span>",   array('controller' =>'deliveries',

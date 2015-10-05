@@ -44,6 +44,7 @@
 	}
 
     $objTpl->setActiveSheetIndex(0)
+                // ->setCellValue('C7', ucfirst($companyData['Company']['company_name']))
                 ->setCellValue('J7', (new \DateTime())->format('m/d/Y'))
                 ->setCellValue('J8', $companyData['Company']['tin'])
                 ->setCellValue('C8', ucfirst($companyData['Address'][0]['address1']))

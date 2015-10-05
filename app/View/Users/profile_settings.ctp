@@ -65,7 +65,7 @@
                                         <label for="inputEmail1" class="col-lg-12 control-label strong">Name</label>
 	                                      <div class="col-lg-12 value">
 
-	                                      		<?php 
+	                                      		<?php 	
 
 													if(isset($userData)){
 														echo $userData['User']['first_name'].' '.$userData['User']['last_name'];

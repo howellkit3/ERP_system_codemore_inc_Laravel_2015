@@ -123,6 +123,22 @@ class Delivery extends AppModel {
 		//$this->contain($giveMeTheTableRelationship);
 	}
 
+	public function bindInvoice() {
+		$this->bindModel(array(
+			'hasOne' => array(
+				'ClientOrder' => array(
+					'className' => 'Sales.ClientOrder',
+					'foreignKey' => false,
+					'conditions' => 'Delivery.clients_order_id = ClientOrder.uuid'
+				),		
+			)
+		));
+		$this->recursive = 1;
+		//$this->contain($giveMeTheTableRelationship);
+	}
+
+	
+
 	// public function bind($model = array('Group')){
 
 	// 	$this->bindModel(array(

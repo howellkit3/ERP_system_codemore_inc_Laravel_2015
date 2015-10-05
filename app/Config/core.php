@@ -357,7 +357,7 @@
 /* security agent */
 Configure::write('Session.checkAgent', false);
 
-Configure::write('Session.timeout', '86400');
+//Configure::write('Session.timeout', '86400');
 
 $engine = 'File';
 
