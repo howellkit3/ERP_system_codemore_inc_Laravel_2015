@@ -86,7 +86,22 @@ class RequestsController extends PurchasingAppController {
 
 		$this->loadModel('Purchasing.PurchasingType');
 
-		$requestData = $this->Request->find('all', array('order' => array('Request.created' => 'DESC')));
+		//$requestData = $this->Request->find('all', array('order' => array('Request.created' => 'DESC')));
+
+		$limit = 1;
+
+		$conditions = array('Request.status >' => 0);
+
+		$params =  array(
+	            'conditions' => $conditions,
+	            'limit' => $limit,
+	            //'fields' => array('id', 'status','created'),
+	            'order' => 'Request.created DESC',
+	    );
+
+		$this->paginate = $params;
+
+		$requestData = $this->paginate('Request');
 		
 		$statusData = $this->StatusFieldHolder->find('list', array('fields' => array('id', 'status'),
 															'order' => array('StatusFieldHolder.status' => 'ASC')
@@ -775,6 +790,37 @@ class RequestsController extends PurchasingAppController {
 		$this->render('searched_item_details');
 
     }
+
+    public function delete($id = null) {
+
+    	if (!empty($id)) {
+
+    		$this->loadModel('Purchasing.Request');
+
+    		//update request
+
+    		$status = 0;
+
+    		$this->Request->id = $id;
+
+    		if ( $this->Request->saveField('status', $status) ) {
+
+    			$this->Session->setFlash(__('Request Termination sucess.'),'success');
+
+    		} else {
+    			$this->Session->setFlash(__('Request Termination Failes.'),'error');
+
+    		}
+
+
+	        $this->redirect( array(
+	                 'controller' => 'requests', 
+	                 'action' => 'request_list'
+
+	        ));
+    	}
+
+    } 
 
 
 }
