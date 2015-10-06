@@ -10,6 +10,7 @@ echo $this->Html->css(array(
                     'jquery.maskedinput.min',
                     'HumanResource.select2.min',
                     'HumanResource.employee',
+                    'HumanResource.webcam_master/jquery.webcam'
 
 )); 
 

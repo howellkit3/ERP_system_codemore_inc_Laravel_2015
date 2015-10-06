@@ -274,7 +274,9 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
 
 		                                        	</div>
 
-		                                        	<button class="btn btn-success upload-image"> Upload Photo</button>
+		                                        	<button class="btn btn-success upload-image"> <i class="fa fa-picture-o"></i> Upload Photo</button>
+
+		                                        	<a href="#Camera" data-toggle="modal" class="btn btn-success" style="margin-left: 5px; margin-top: 5px;"> <i class="fa fa-camera-retro"></i>  Take A Picture</a>
 		                                     	</div>
 
 
@@ -1453,3 +1455,22 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
     	$('.showMarriedSection').show();
 
     </script>
+
+
+
+<div class="modal fade" id="Camera" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Take A Picture</h4>
+            </div>
+            <div class="modal-body">
+            	<div id="result-table">
+            			<div id="webcam"></div>
+            	</div>
+            </div>
+            
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
