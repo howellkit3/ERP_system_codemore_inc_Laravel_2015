@@ -96,6 +96,12 @@ class WorkSchedule extends AppModel {
 			$sched = array();
 			$keys = 0;
 
+			//check if employee had a schedule already
+
+
+		
+
+
 			if ($data['WorkSchedule']['type'] == 'monthly') {
 
 				$date = explode('-',$data['WorkSchedule']['day']);
@@ -103,17 +109,22 @@ class WorkSchedule extends AppModel {
 				$start_date = date('Y-m-d',strtotime(trim($date[0])));
 				$end_date = date('Y-m-d',strtotime(trim($date[1])));
 
+				// $employees = $this->find('all',array('conditions' => array(
+				// 'WorkSchedule.model' => 'Employee',
+				// 'WorkSchedule.foreign_key' => $data['WorkSchedule']['foreign_key'],
+				// 'date(WorkSchedule.day) BETWEEN ? AND ?' => array($start_date,$end_date)
+
+				// )));
+
 				$conditions = array(
 				'WorkSchedule.foreign_key' => $data['WorkSchedule']['foreign_key'],
 				'date(WorkSchedule.day) BETWEEN ? AND ?' => array($start_date,$end_date)
 				);
 				//check available schedules
 				$myschedules = $this->find('list',array('conditions' => $conditions,
-				'fields' => array('id','day')
+				'fields' => array('day','id')
 
 				));
-
-
 					// $data['WorkSchedule']['id'] = !empty($data['WorkSchedule']['id']) ? $data['WorkSchedule']['id'] : '';
 					// $data['WorkSchedule']['from'] = date('Y-m-d',strtotime($date[0]));
 					// $data['WorkSchedule']['to'] = date('Y-m-d',strtotime($date[1]));	
@@ -122,8 +133,9 @@ class WorkSchedule extends AppModel {
 
 					while (strtotime($start_date) <= strtotime($end_date)) {
 
-						if (!in_array( $start_date ,$myschedules)) {
-
+						//if (!empty($myschedules[$start_date])) {
+						
+						//} 
 
 						$timestamp = strtotime($start_date);
 						
@@ -131,15 +143,14 @@ class WorkSchedule extends AppModel {
 						if ( date("w",strtotime($start_date)) != 0) {
 
  							$sched['WorkSchedule'][$keys] = $data['WorkSchedule'];
-							$sched['WorkSchedule'][$keys]['id'] = !empty($data['WorkSchedule']['id']) ? $data['WorkSchedule']['id'] : '';
- 							$sched['WorkSchedule'][$keys]['day'] = $start_date;
+							$sched['WorkSchedule'][$keys]['day'] = $start_date;
  							$sched['WorkSchedule'][$keys]['type'] = 'Work';
 
 
 						} else if (date("w",strtotime($start_date)) == 0) {
 
 							$sched['WorkSchedule'][$keys] = $data['WorkSchedule'];
-							$sched['WorkSchedule'][$keys]['id'] = !empty($data['WorkSchedule']['id']) ? $data['WorkSchedule']['id'] : '';
+							
 
  							$sched['WorkSchedule'][$keys]['day'] = $start_date;
 
@@ -162,54 +173,18 @@ class WorkSchedule extends AppModel {
 							$sched['WorkSchedule'][$keys]['to'] = $start_date;
 
 
+						if (!empty($myschedules[$start_date])) {
+							
+							$sched['WorkSchedule'][$keys]['id'] = $myschedules[$start_date];
+						}
+						
 						$keys++;
 
-						
+						$start_date = date ("Y-m-d", strtotime("+1 days", strtotime($start_date)));
 
 					}
 
-
-					$start_date = date ("Y-m-d", strtotime("+1 days", strtotime($start_date)));
 						
-					}
-
-
-					// for ( $days_count = $days1[2];$days_count <= $days2[2]; $days_count++ ) :
-
-					// 	$checkDate = $days1[0].'-'.$days1[1].'-'.sprintf("%02d",$days_count);
-
-					// 	if ( date("w",strtotime($checkDate)) != 0) {
-
- 				// 			$sched['WorkSchedule'][$keys] = $data['WorkSchedule'];
-					// 		$sched['WorkSchedule'][$keys]['id'] = !empty($data['WorkSchedule']['id']) ? $data['WorkSchedule']['id'] : '';
-
- 				// 			$sched['WorkSchedule'][$keys]['day'] = $days1[0].'-'.$days1[1].'-'.sprintf("%02d",$days_count);
-
- 				// 			$sched['WorkSchedule'][$keys]['type'] = 'Work';
-
-					// 	} else if (date("w",strtotime($checkDate)) == 0) {
-
-					// 		$sched['WorkSchedule'][$keys] = $data['WorkSchedule'];
-					// 		$sched['WorkSchedule'][$keys]['id'] = !empty($data['WorkSchedule']['id']) ? $data['WorkSchedule']['id'] : '';
-
- 				// 			$sched['WorkSchedule'][$keys]['day'] = $days1[0].'-'.$days1[1].'-'.sprintf("%02d",$days_count);
-
- 				// 			$sched['WorkSchedule'][$keys]['type'] = 'Rest Day';
-
-					// 	}
-
-					// foreach ($holidays as $key => $holiday) {
-
-					// 		if ($checkDate >= $holiday['Holiday']['start_date'] && $checkDate <= $holiday['Holiday']['end_date'] ) {
-
-					// 			$sched['WorkSchedule'][$keys]['type'] = $holiday['Holiday']['type'];
-					// 			$sched['WorkSchedule'][$keys]['holiday'] = $holiday['Holiday']['id'];
-					// 		} 
-
-					// }
-
-
-					// $keys++;
 					// endfor;
 
 			} else {

@@ -21,7 +21,7 @@ class ItemsController extends WareHouseAppController {
 		
 		$this->Item->bind(array('ItemCategory'));	
 
-		$limit = 10;
+		$limit = 1;
 
 		$conditions = array();
 
@@ -151,7 +151,16 @@ class ItemsController extends WareHouseAppController {
 			if ($this->Item->save($this->request->data['Item'])) {
 
 				$this->Session->setFlash('Item updated!','success');
-		  		 $this->redirect( array('controller' => 'items', 'action' => 'index'));
+					
+					if (!empty($this->params['named']['page'])) {
+
+						$this->redirect( array('controller' => 'items', 'action' => 'index','page' => $this->params['named']['page']));
+
+					} else {
+
+			  		 	$this->redirect( array('controller' => 'items', 'action' => 'index'));
+					}
+				
 	 
 			} else {
 

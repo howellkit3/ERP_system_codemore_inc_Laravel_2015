@@ -85,7 +85,9 @@ class AttendancesController  extends HumanResourceAppController {
 		
 		$attendances = $this->paginate();
 		
-		$departmentList = $this->Department->getList();
+		$conditions = array();
+		
+		$departmentList =  $this->Department->find('list',array('conditions' => $conditions,'fields' => array('id','department_position')));
 		
 		$conditions = array();
 

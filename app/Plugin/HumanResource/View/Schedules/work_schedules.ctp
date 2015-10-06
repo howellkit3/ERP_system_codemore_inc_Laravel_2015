@@ -41,6 +41,13 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 				                            array('class' =>'btn btn-primary',
 				                                'escape' => false));
 
+
+				                   	echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Chage Sched', 
+				                            array('controller' => 'work_schedules', 
+				                                    'action' => 'change_schedule'),
+				                            array('class' =>'btn btn-primary',
+				                                'escape' => false));
+
 				                    ?> 
 				                  	
 				                  	<a data-toggle="modal" href="#myWorkSched" class="btn btn-primary pull-right "><i class="fa fa-share-square-o fa-lg"></i> Export</a>
