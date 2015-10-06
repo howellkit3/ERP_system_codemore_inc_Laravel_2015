@@ -872,9 +872,6 @@ class ProductsController extends SalesAppController {
 				
 		if (!empty($this->request->data)) {
 
-		
-			pr($this->request->data);
-
 
 			if(!empty($this->request->data['IdHolder'])){
 				
@@ -965,7 +962,6 @@ class ProductsController extends SalesAppController {
 				
 
 			}
-
 
 			$this->ProductSpecificationDetail->saveSpecDetail($saveArray,$userData['User']['id'],$this->request->data['Product']['uuid']);
 			

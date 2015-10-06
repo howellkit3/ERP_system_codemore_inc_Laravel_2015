@@ -35,9 +35,10 @@
                             ', 
                             array(
                               'controller' => 'ticketing_systems','action' => 'print_process',
+                              'productId' => !empty( $parameter['product']) ?  $parameter['product'] : '',
                               $parameter['processId'],
                               $parameter['productId'],
-                              $parameter['ticketId']
+                              $parameter['ticketId'],
                             ),
                             array(
                              //'title' => 'Print '. $subProcess[$processList['ProductSpecificationProcessHolder']['sub_process_id']],

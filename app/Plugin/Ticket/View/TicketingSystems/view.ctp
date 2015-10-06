@@ -169,26 +169,46 @@
 							<div class="table-responsive">
 								<table class="table table-bordered">
 									<thead>
-										<?php
-										 foreach ($formatDataSpecs as $key => $specLists) { ?>
-							
+										<?php 
+										
+										$product = array();
+
+										foreach ($formatDataSpecs as $key => $specLists) { ?>
+											
 											<?php
+
+												$component  = '';
 
 										      	if($specLists['ProductSpecificationDetail']['model'] == 'Component'){
 
 										      		echo $this->element('Specs/component', array('formatDataSpecs' => $formatDataSpecs[$key],'key' => $componentCounter));
 										      		$componentCounter++;
+
+
+										      		$component = $formatDataSpecs[$key];
 										      	}
+
+										   
+
 										      	if($specLists['ProductSpecificationDetail']['model'] == 'Part'){
+										      			
+
 										      		
-										      		echo $this->element('Specs/part', array('formatDataSpecs' => $formatDataSpecs[$key],'key' => $partCounter));
+										      		echo $this->element('Specs/part', array('formatDataSpecs' => $formatDataSpecs[$key],
+										      			'key' => $partCounter,
+										      			'component' => $component
+										      			 ));
 										      		$partCounter++;
+
+										      		$product = $specLists['ProductSpecificationDetail'];
 										      		
 										      	}
 										      	if($specLists['ProductSpecificationDetail']['model'] == 'Process'){
 
 										      		echo $this->element('Specs/process', array('dataSpecs' => $formatDataSpecs[$key]
-										      			,'key' => $processCounter));
+										      			,'key' => $processCounter,
+										      			'product' => $product
+										      			));
 
 										      		$processCounter++;
 

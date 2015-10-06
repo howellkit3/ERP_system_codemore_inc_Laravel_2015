@@ -188,7 +188,7 @@ class TicketingSystemsController extends TicketAppController {
 		return $this->redirect(array('controller' => 'ticketing_systems', 'action' => 'index'));
 	}
 
-    public function find_process($processId = null, $productId = null , $ticketId = null) {
+    public function find_process($processId = null, $productId = null , $ticketId = null,$product = null) {
 
         $query = $this->request->query;
 
@@ -199,6 +199,9 @@ class TicketingSystemsController extends TicketAppController {
             $parameter['productId'] = $productId;
 
             $parameter['ticketId'] = $ticketId;
+
+
+            $parameter['product'] = $product;
 
             $this->set(compact('parameter'));
 
@@ -672,16 +675,31 @@ class TicketingSystemsController extends TicketAppController {
 
         //find process part
 
-        $processData = $this->ProductSpecificationDetail->find('first',array(
-            'conditions' => array(
+        $processCond = array(
                     'ProductSpecificationDetail.product_id' => $productUuid,
-                    'ProductSpecificationDetail.model' => 'Part'
-            )
+                    'ProductSpecificationDetail.model' => 'Part',
+                   
+            );
+        if (!empty($this->params['named']['productId'])) {
+            
+              $foreign_key = $this->params['named']['productId'];
+
+        } else {
+
+         $processData = $this->ProductSpecificationDetail->find('first',array(
+            'conditions' =>  $processCond
+
         ));
 
+         $foreign_key = $processData['ProductSpecificationDetail']['foreign_key'];
+    
+
+        }
+
+       
         $part = $this->ProductSpecificationPart->find('first',array(
             'conditions' => array(
-                    'ProductSpecificationPart.id' => $processData['ProductSpecificationDetail']['foreign_key']
+                    'ProductSpecificationPart.id' => $foreign_key
             )
         ));
 
