@@ -4,9 +4,6 @@
 
 <?php echo $this->Html->script('Accounting.accounting');?>
 
-
-
-
 <div class="row">
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
