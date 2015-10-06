@@ -17,6 +17,10 @@
                 <?php echo ucfirst($supplierData[$purchaseOrderDataList['PurchaseOrder']['supplier_id']]) ?>
             </td>
 
+            <td class="">
+                <?php echo ucfirst($userName[$purchaseOrderDataList['PurchaseOrder']['created_by']]) ?>
+            </td>
+
             <td class="text-center">
                 <?php 
                     if($purchaseOrderDataList['PurchaseOrder']['status'] == 8){ 
