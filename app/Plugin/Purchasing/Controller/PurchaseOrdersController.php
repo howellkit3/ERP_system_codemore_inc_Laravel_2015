@@ -13,13 +13,18 @@ class PurchaseOrdersController extends PurchasingAppController {
 
 		$this->loadModel('Supplier');
 
+		$this->loadModel('User');
+
     	$supplierData = $this->Supplier->find('list', array(
 														'fields' => array('Supplier.id', 'Supplier.name'),
 														));
 
+    	$userName = $this->User->find('list', array('fields' => array('id', 'fullname')
+															));
+
 		$purchaseOrderData = $this->PurchaseOrder->find('all',array('order' => 'PurchaseOrder.id DESC'));
 
-		$this->set(compact('purchaseOrderData','supplierData'));
+		$this->set(compact('purchaseOrderData','supplierData', 'userName'));
 
     }
 

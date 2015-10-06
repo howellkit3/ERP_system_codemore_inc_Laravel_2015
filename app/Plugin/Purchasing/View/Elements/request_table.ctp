@@ -23,6 +23,12 @@
                 
             </td>
 
+            <td class="">
+
+                <?php echo $userName[$requestList['Request']['prepared_by']];?>
+                
+            </td>
+
             <td class="text-center">
 
                 <?php 
