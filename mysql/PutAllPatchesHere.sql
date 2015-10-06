@@ -2123,3 +2123,9 @@ CREATE TABLE `wood_mold_job_tickets` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1; 
 
 /* end */
+
+
+/* added oct 5 2015 */
+
+ALTER TABLE `koufu_purchasing`.`requests`   
+  CHANGE `status` `status` INT(11) DEFAULT 1  NOT NULL  AFTER `status_id`;

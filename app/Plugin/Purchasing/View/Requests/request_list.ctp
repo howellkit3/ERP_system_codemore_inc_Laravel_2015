@@ -44,7 +44,7 @@
                         <tbody aria-relevant="all" aria-live="polite" class="requestFields" role="alert" >
                           
                             <?php 
-                        echo $this->element('request_table'
+                                echo $this->element('request_table'
                             ); 
                             ?>
                          
@@ -55,13 +55,13 @@
                     <hr>
                 </div>
 
-            <ul class="pagination pull-right">
-                    <?php 
-                     echo $this->Paginator->prev('< ' . __('previous'), array('before' => 'a','tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'prev disabled'));
-                     echo $this->Paginator->numbers(array('separator' => '','tag' => 'li'));
-                     echo $this->Paginator->next(__('next') . ' >', array('tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'next disabled')); ?>
-               
-              </ul>
+          <div class="paging" id="item_type_pagination">
+                                <?php
+                                echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
+                                echo $this->Paginator->numbers(array('separator' => ''));
+                                echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
+                                ?>
+                                </div>
               
             </div>
         </div>

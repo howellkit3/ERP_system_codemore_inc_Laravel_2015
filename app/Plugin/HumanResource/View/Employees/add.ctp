@@ -10,8 +10,9 @@ echo $this->Html->css(array(
  echo $this->Html->script(array(
                     'jquery.maskedinput.min',
                     'HumanResource.select2.min',
+
+                    //'HumanResource.webcam_master/jquery.webcam'
                     'HumanResource.employee',
-                    'HumanResource.webcam_master/jquery.webcam'
 
 ));  ?>
 <div style="clear:both"></div>
