@@ -125,10 +125,10 @@
 								<?php  
 								$outs = $po_quantity / $outs;  
 								echo round($outs); $total = $outs; ?> 
-								<?php if(!empty($part['ProductSpecificationPart']['paper_quantity'])) : ?>
-								<!-- +  -->
+								<?php //if(!empty($part['ProductSpecificationPart']['paper_quantity'])) : ?>
+<!-- 								<!-- + --> 
 								<?php //echo $part['ProductSpecificationPart']['paper_quantity']; +  $total += $part['ProductSpecificationPart']['paper_quantity']?>  
-							<?php endif; ?>
+							<?php //endif; ?>
 								<?php if(!empty($part['ProductSpecificationPart']['allowance'])){ ?>
 								+ <?php echo $part['ProductSpecificationPart']['allowance']; 
 								$total += $part['ProductSpecificationPart']['allowance']?>

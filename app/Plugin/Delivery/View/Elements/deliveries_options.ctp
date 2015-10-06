@@ -28,7 +28,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
             <?php $page =($active_page == 'deliveries' && $active_action == 'delivery_replacing') ? 'active tab' : '' ?>
             <?php echo $this->Html->link("<span class='count'>DR Replacing</span>", array(
                                                                                    'controller' => 'deliveries', 
-                                                                                    'action' => 'delivery_replacing?'.rand(1000,9999).'='.date("is")
+                                                                                    'action' => 'delivery_replacing'
                                                                                     ),
                                                                             array(
                                                                                    'escape' => false,
