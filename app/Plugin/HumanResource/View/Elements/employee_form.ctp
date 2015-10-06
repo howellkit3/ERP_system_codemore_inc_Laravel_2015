@@ -1,10 +1,29 @@
 <script>
 
+var pos = 0;
+var ctx = null;
+var cam = null;
+var image = null;
+
+var filter_on = false;
+var filter_id = 0;
+
+function changeFilter() {
+ if (filter_on) {
+ filter_id = (filter_id + 1) & 7;
+ }
+}
+
+function toggleFilter(obj) {
+ if (filter_on =!filter_on) {
+ obj.parentNode.style.borderColor = "#c00";
+ } else {
+ obj.parentNode.style.borderColor = "#333";
+ }
+}
 
 
-	function loadCam() {
-
-
+function loadCam () {
 jQuery("#webcam").webcam({
 
  width: 320,
@@ -110,6 +129,8 @@ jQuery("#webcam").webcam({
  ctx.putImageData(img, 0, 0);
  pos = 0;
  }
+
+
  },
 
  onCapture: function () {
@@ -129,17 +150,104 @@ jQuery("#webcam").webcam({
 
  var cams = webcam.getCameraList();
  for(var i in cams) {
-
  jQuery("#cams").append("<li>" + cams[i] + "</li>");
  }
  }
 });
 
-
-
 }
 
-loadCam()
+function copy() {
+	var url = serverPath + '/human_resource/employee/saveImage/';
+
+	webcam.save(url);
+
+    var imgData = ctx.getImageData(10, 10, 50, 50);
+
+   	console.log(imgData);
+
+    ctx.putImageData(imgData, 10, 70);
+}
+
+
+function getPageSize() {
+
+ var xScroll, yScroll;
+
+ if (window.innerHeight && window.scrollMaxY) {
+ xScroll = window.innerWidth + window.scrollMaxX;
+ yScroll = window.innerHeight + window.scrollMaxY;
+ } else if (document.body.scrollHeight > document.body.offsetHeight){ // all but Explorer Mac
+ xScroll = document.body.scrollWidth;
+ yScroll = document.body.scrollHeight;
+ } else { // Explorer Mac...would also work in Explorer 6 Strict, Mozilla and Safari
+ xScroll = document.body.offsetWidth;
+ yScroll = document.body.offsetHeight;
+ }
+
+ var windowWidth, windowHeight;
+
+ if (self.innerHeight) { // all except Explorer
+ if(document.documentElement.clientWidth){
+ windowWidth = document.documentElement.clientWidth;
+ } else {
+ windowWidth = self.innerWidth;
+ }
+ windowHeight = self.innerHeight;
+ } else if (document.documentElement && document.documentElement.clientHeight) { // Explorer 6 Strict Mode
+ windowWidth = document.documentElement.clientWidth;
+ windowHeight = document.documentElement.clientHeight;
+ } else if (document.body) { // other Explorers
+ windowWidth = document.body.clientWidth;
+ windowHeight = document.body.clientHeight;
+ }
+
+ // for small pages with total height less then height of the viewport
+ if(yScroll < windowHeight){
+ pageHeight = windowHeight;
+ } else {
+ pageHeight = yScroll;
+ }
+
+ // for small pages with total width less then width of the viewport
+ if(xScroll < windowWidth){
+ pageWidth = xScroll;
+ } else {
+ pageWidth = windowWidth;
+ }
+
+ return [pageWidth, pageHeight];
+}
+
+window.addEventListener("load", function() {
+
+ jQuery("body").append("<div id=\"flash\"></div>");
+
+ var canvas = document.getElementById("canvas");
+
+ if (canvas.getContext) {
+ ctx = document.getElementById("canvas").getContext("2d");
+ ctx.clearRect(0, 0, 320, 240);
+
+ var img = new Image();
+ img.src = "/image/logo.gif";
+ img.onload = function() {
+ ctx.drawImage(img, 129, 89);
+ }
+ image = ctx.getImageData(0, 0, 320, 240);
+ }
+ 
+ var pageSize = getPageSize();
+ jQuery("#flash").css({ height: pageSize[1] + "px" });
+
+}, false);
+
+window.addEventListener("resize", function() {
+
+ var pageSize = getPageSize();
+ jQuery("#flash").css({ height: pageSize[1] + "px" });
+
+}, false);
 
 </script>
 <?php $employeeData = !empty($this->request->data) ? $this->request->data : '';
@@ -1602,22 +1710,31 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
 
 
 <div class="modal fade" id="Camera" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width:55%">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">Take A Picture</h4>
             </div>
-            <div class="modal-body">
-            	<div id="result-table" style="text-align:center">
-            			<div id="webcam" style="margin:auto; "></div>
-            			<div id="status"></div>
+            <div class="modal-body" >
+            	<div id="result-table" style="width:100% !important">
+
+            			<div class="col-lg-6">
+            			<div id="webcam"></div>
+
             			<a class="btn btn-success" onclick="javascript:webcam.capture();void(0);"> <i class="fa fa-camera-retro"></i>  Take Picture</a>
 
-            	</div>
+            			<a class="btn btn-success" onclick="javascript:copy();void(0);"> <i class="fa fa-floppy-o"></i>  Save </a>
 
-            	<canvas id="canvas" height="240" width="320"></canvas>
-            </div>
+            			
+
+            			</div>
+    					<div class="col-lg-6"> <canvas id="canvas" height="240" width="320"></canvas> </div>
+    					
+    					<div class="clearfix"></div>
+    					<div id="status"></div>
+            	</div>
+			</div>
             
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
