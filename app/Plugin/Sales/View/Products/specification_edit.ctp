@@ -155,7 +155,6 @@
 					                                'empty' => '---Select Unit---',
 					                                'disabled' => true,
 							                        'default' => $specs['ProductSpecification']['quantity_unit_id']));
-
 					                        ?>
 										</div>
 										<div class="col-lg-3">
@@ -167,7 +166,6 @@
                                                     'disabled' => true,
                                                     'placeholder' => 'Stocks',
                                                     'value' => $specs['ProductSpecification']['stock']));
-
 					                        ?>
 										</div>
 									</div>
