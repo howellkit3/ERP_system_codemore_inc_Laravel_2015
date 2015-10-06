@@ -205,13 +205,15 @@ class TicketingSystemsController extends TicketAppController {
 
             $this->set(compact('parameter'));
 
-            if (in_array($processId,array('11','61'))) {
+            if (in_array($processId,array('11','61',))) {
 
                  $this->render('TicketingSystems/forms/cutting', false);
 
-            }
+            } else if (in_array($processId,array('21'))) {
 
-             else if (in_array($processId,array('20'))) {
+                   $this->render('TicketingSystems/forms/offset', false);
+
+            } else if (in_array($processId,array('20'))) {
                  $this->render('TicketingSystems/forms/wood_mould', false);
              } else {
 
@@ -700,7 +702,6 @@ class TicketingSystemsController extends TicketAppController {
             )
         ));
 
-
         
         $formatDataSpecs = $this->ProductSpecificationDetail->findData($productUuid);
        //pr($formatDataSpecs);
@@ -748,9 +749,16 @@ class TicketingSystemsController extends TicketAppController {
         if (in_array($processId,array('11','61'))) {
 
             $output = $view->render('print_process_cutting', false);
-        }  else if (in_array($processId,array('20'))) {
+        
+        }  else if (in_array($processId,array('21'))) {
+
+            $output = $view->render('print_process_offset', false);
+   
+
+        } else if (in_array($processId,array('20'))) {
 
             $output = $view->render('print_process_woodmold', false);
+            
         } else {
             
             $output = $view->render('print_process', false);

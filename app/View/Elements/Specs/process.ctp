@@ -8,10 +8,13 @@
         	<?php 
 
         		if (!empty($subProcessData[$processList['ProductSpecificationProcessHolder']['sub_process_id']])) {
+                   /*   11 - cutting
+                        21 - offset ctp
+                        20 - wood mold                    
+                    */
+                    $process = array('11','21','20');
 
-                    $process = array('Wood Mould','Cutting');
-
-        			if (in_array($subProcessData[$processList['ProductSpecificationProcessHolder']['sub_process_id']],$process)) {
+        			if (in_array($processList['ProductSpecificationProcessHolder']['sub_process_id'],$process)) {
 
         					// echo $this->Html->link($subProcess[$processList['ProductSpecificationProcessHolder']['sub_process_id']], 
         					// array(

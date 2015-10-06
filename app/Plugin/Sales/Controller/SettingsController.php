@@ -162,5 +162,12 @@ class SettingsController extends SalesAppController {
 	}
 	
 
+	public function process() {
+
+	}
+
+	public function machines() {
+
+	}
 
 }

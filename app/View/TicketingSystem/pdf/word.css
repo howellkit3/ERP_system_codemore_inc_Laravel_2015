@@ -78,3 +78,9 @@ h1 {
 .large-padding {
 	padding: 10px;
 }
+.bold {
+	font-weight: bold;
+}
+.grey-label {
+	color:#313333;
+}
