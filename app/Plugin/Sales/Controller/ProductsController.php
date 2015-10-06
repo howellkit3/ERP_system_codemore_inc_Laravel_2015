@@ -18,7 +18,6 @@ class ProductsController extends SalesAppController {
         $this->set(compact('userData'));
 	}
 
-
 	public function index() {
 
 		$userData = $this->Session->read('Auth');
@@ -69,7 +68,6 @@ class ProductsController extends SalesAppController {
 		$userData = $this->Session->read('Auth');
 
         if($this->request->is('post')){
-
         	
             if(!empty($this->request->data)){
             	
