@@ -11,6 +11,7 @@ echo $this->Html->css(array(
                     'jquery.maskedinput.min',
                     'HumanResource.select2.min',
                     'HumanResource.employee',
+                    'HumanResource.webcam_master/jquery.webcam'
 
 ));  ?>
 <div style="clear:both"></div>
@@ -82,8 +83,12 @@ echo $this->Html->css(array(
                 format: 'yyyy-mm-dd',
                 startView: "decade", 
             });
+
+
             
     });
+
+
 
      </script>
    
