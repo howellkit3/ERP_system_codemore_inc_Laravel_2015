@@ -88,7 +88,7 @@ class RequestsController extends PurchasingAppController {
 
 		//$requestData = $this->Request->find('all', array('order' => array('Request.created' => 'DESC')));
 
-		$limit = 1;
+		$limit = 10;
 
 		$conditions = array('Request.status >' => 0);
 

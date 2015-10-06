@@ -42,7 +42,6 @@
 	                                            ?>
 											</div>
 										</div>
-
 									</div>
 								</div>
 							</div>
@@ -64,7 +63,6 @@
 										
 										<div class="main-box-body clearfix">
 											<div class="form-horizontal">
-
 												<div class="form-group" >
 													<label class="col-lg-2 control-label"><span style="color:red">*</span>Item</label>
 													<div class="col-lg-5">
@@ -228,7 +226,7 @@
 															echo $this->Form->input('WarehouseRequestItem.0.unit', array(
 										                        'options' => array($unitData), 
 										                        'value' => 14,
-										                        'disabled' => 'disabled',
+										                        // 'disabled' => 'disabled',
 										                        'label' => false,
 										                        'class' => 'form-control required',
 										                        'empty' => '---Select Unit---'
