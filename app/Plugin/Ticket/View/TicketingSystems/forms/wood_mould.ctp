@@ -88,6 +88,7 @@
                             ', 
                             array(
                              'controller' => 'ticketing_systems','action' => 'print_process',
+                            'productId' => !empty( $parameter['product']) ?  $parameter['product'] : '',
                              $parameter['processId'],
                              $parameter['productId'],
                             $parameter['ticketId']

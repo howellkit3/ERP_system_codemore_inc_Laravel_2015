@@ -62,7 +62,7 @@
 				</tr>
 				<tr>
 					<td>
-						<?php echo $processData['ProductSpecificationPart']['material']; ?>
+						<?php echo $part['ProductSpecificationPart']['material']; ?>
 					</td>
 					<td class="text-right">
 						

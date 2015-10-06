@@ -681,28 +681,27 @@ class TicketingSystemsController extends TicketAppController {
                    
             );
         if (!empty($this->params['named']['productId'])) {
-            
-              $foreign_key = $this->params['named']['productId'];
+             $processCond = array_merge(
+                $processCond,
+                    array(
+                    'ProductSpecificationDetail.foreign_key' => $this->params['named']['productId'],
+               
+                ));
+        } 
 
-        } else {
-
-         $processData = $this->ProductSpecificationDetail->find('first',array(
+        $processData = $this->ProductSpecificationDetail->find('first',array(
             'conditions' =>  $processCond
 
         ));
-
-         $foreign_key = $processData['ProductSpecificationDetail']['foreign_key'];
     
-
-        }
-
-       
         $part = $this->ProductSpecificationPart->find('first',array(
             'conditions' => array(
-                    'ProductSpecificationPart.id' => $foreign_key
+                    'ProductSpecificationPart.id' => $processData['ProductSpecificationDetail']['foreign_key']
             )
         ));
 
+
+        
         $formatDataSpecs = $this->ProductSpecificationDetail->findData($productUuid);
        //pr($formatDataSpecs);
      
@@ -743,7 +742,7 @@ class TicketingSystemsController extends TicketAppController {
 
         $view->viewPath = 'TicketingSystem'.DS.'pdf';  
 
-        $view->set(compact('userData','ticketData','modelData','formatDataSpecs','productData','specs','companyData','unitData','subProcess','ticketUuid','delData','processId','processData',' modelData','part'));
+        $view->set(compact('userData','ticketData','modelData','formatDataSpecs','productData','specs','companyData','part','unitData','subProcess','ticketUuid','delData','processId','processData',' modelData','part'));
         
 
         if (in_array($processId,array('11','61'))) {
