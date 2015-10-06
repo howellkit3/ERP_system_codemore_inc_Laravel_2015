@@ -21,7 +21,7 @@ class ItemsController extends WareHouseAppController {
 		
 		$this->Item->bind(array('ItemCategory'));	
 
-		$limit = 1;
+		$limit = 10;
 
 		$conditions = array();
 
