@@ -4,6 +4,7 @@
 <div style="clear:both"></div>
 <?php echo $this->element('ware_house_option');?>
 
+<?php $page = !empty($this->params['named']['page']) ? $this->params['named']['page'] : ''; ?>
 
 <div class="row">
     <div class="col-lg-12">
@@ -118,7 +119,9 @@
                                     <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
                                     </span> ',
                                     array('controller' => 'items',
-                                    'action' => 'edit',$list['Item']['id']
+                                    'action' => 'edit',
+                                    $list['Item']['id'],
+                                    'page' => $page
                                     ),
                                     array('class' =>' table-link',
                                     'escape' => false,
@@ -148,15 +151,14 @@
                      </table>
                     <hr>
                 </div>
-                <div class="paging" id="item_type_pagination">
-                                        <?php
-                                       
-                                        echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'Employee','model' => 'Employee'), null, array('class' => 'disable','model' => 'ClientOrder'));
-                                        echo $this->Paginator->numbers(array('separator' => '','paginate' => 'Employee'), array('paginate' => 'Employee'));
-                                        echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'Employee','model' => 'Employee'), null, array('class' => 'disable'));
+             
+                <ul class="pagination pull-left">
+                    <?php 
+                     echo $this->Paginator->prev('< ' . __('previous'), array('before' => 'a','tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'prev disabled'));
+                     echo $this->Paginator->numbers(array('separator' => '','tag' => 'li'));
+                     echo $this->Paginator->next(__('next') . ' >', array('tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'next disabled')); ?>
 
-                                        ?>
-                                </div>
+                </ul>
 
               
             </div>

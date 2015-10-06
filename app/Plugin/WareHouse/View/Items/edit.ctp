@@ -5,6 +5,8 @@
 
 <?php echo $this->element('ware_house_option');?>
 
+<?php $page = !empty($this->params['named']['page']) ? $this->params['named']['page'] : ''; ?>
+
 <div class="row">
     <div class="col-lg-12">
         <div class="main-box">
@@ -23,7 +25,7 @@
             </header>
             <div class="main-box-body clearfix">
 
-                <?php echo $this->Form->create('Item',array('url'=>(array('controller' => 'items','action' => 'edit')),'class' => 'form-horizontal'));?>
+                <?php echo $this->Form->create('Item',array('url'=>(array('controller' => 'items','action' => 'edit','page' => $page )),'class' => 'form-horizontal'));?>
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="main-box">

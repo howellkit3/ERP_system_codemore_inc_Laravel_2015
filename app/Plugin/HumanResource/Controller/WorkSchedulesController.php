@@ -247,6 +247,8 @@ class WorkSchedulesController  extends HumanResourceAppController {
 				$conditions  = array_merge($conditions, array('WorkSchedule.model' => 'Employee','WorkSchedule.foreign_key' => $query['employee_id']));
 			}
 
+	
+
 			if (!empty($query['from']) && !empty($query['to'])) {
 
 				// $conditions  = array_merge($conditions,array(
@@ -255,22 +257,101 @@ class WorkSchedulesController  extends HumanResourceAppController {
 				// 	));
 
 				$conditions = array_merge($conditions,array(
-					'date(WorkSchedule.from) BETWEEN ? AND ?' => array($query['from'],$query['to']), 
+					'date(WorkSchedule.day) BETWEEN ? AND ?' => array($query['from'],$query['to']), 
 				));
 			}
 
 			$params['conditions'] = $conditions;
-			$params['order'] = array('WorkSchedule.from ASC');
+			$params['order'] = array('WorkSchedule.day ASC');
 
 			$this->WorkSchedule->bind(array('WorkShift','Employee'));
 
 	    	$workSchedules = $this->WorkSchedule->find('all',$params);
-
+	    	
 	    	$this->set(compact('workSchedules'));
 
 	  		$this->render('WorkSchedules/ajax/work_schedules');
   
 		}
+	}
+
+
+	public function change_schedule() {
+
+
+		$this->loadModel('HumanResource.Employee');
+
+		$this->loadModel('HumanResource.Attendance');
+
+		$this->loadModel('HumanResource.DailyInfo');
+
+		$this->loadModel('HumanResource.Workshift');
+
+		$this->loadModel('HumanResource.Holiday');
+
+		$this->loadModel('HumanResource.OvertimeLimit');
+
+		$conditions = array();
+		$employees = $this->Employee->getList($conditions);
+
+		$conditions = array('overtime_id' => NULL);
+		$workshifts = $this->Workshift->getList($conditions);
+
+		$conditions = array('Holiday.year' => date('Y'));
+
+		$auth = $this->Session->read('Auth.User');
+
+		$holidays = $this->Holiday->find('all',array('conditions' => $conditions ,'order' =>  array('Holiday.start_date ASC'),'fields' => array('id','name','type','start_date','end_date','year') ));
+
+
+		if ($this->request->is('post')) {	
+				//save attendance
+			$create_schedules = $this->WorkSchedule->formatData($this->request->data,$holidays);
+
+			//pr($create_schedules);exit();
+
+			// $conditionAttendance = array();
+
+			// $conditionAttendance = array_merge($conditionAttendance,array('Attendance.in' => null));
+
+			// $this->Attendance->find('all',)
+
+			if (!empty($create_schedules)) {
+
+				if ($this->WorkSchedule->saveAll($create_schedules['WorkSchedule'])) {
+
+				//$attendance = $this->Attendance->saveRecord($this->request->data['WorkSchedule'],$this->WorkSchedule->id,$holidays);
+				
+				//create ovetime limit
+				$this->OvertimeLimit->createLimit($this->request->data['WorkSchedule'],$auth);
+				
+				$data['employee_id'] = $this->request->data['WorkSchedule']['foreign_key'];
+				$data['date'] = $this->request->data['WorkSchedule']['day'];
+				$data['type'] = $this->request->data['WorkSchedule']['type'];
+				//must save daily info
+				$dailynfo = $this->DailyInfo->saveDailyInfo($data);
+
+				$this->Session->setFlash('Work Schedule saved successfully','success');
+	 		   
+	 		   	$this->redirect( array(
+                         'controller' => 'schedules', 
+                         'action' => 'work_schedules',
+                         'tab'	=> 'work_schedules'
+                    ));
+			} else  {
+
+				$this->Session->setFlash('There\'s an error saving Schedule','error');
+
+			}
+		} else {
+				$this->Session->setFlash('There\'s an error saving Schedule','error');
+		}
+			
+			
+		}
+
+		$this->set(compact('employees','workshifts'));
+
 	}
 
 }
