@@ -336,9 +336,9 @@ class EmployeesController  extends HumanResourceAppController {
 					//save employee address
 			 		$save = $this->Address->saveAddress($data['Address'],$employeeId,'Employee',$auth['id']);	
 			 		//save employee contact
-			 		//$this->loadModel('HumanResource.Contact');
+			 		$this->loadModel('HumanResource.Contact');
 
-			 		//$save = $this->Contact->saveContact($data['Contact'],$employeeId,'Employee',$auth['id']);
+			 		$save = $this->Contact->saveContact($data['Contact'],$employeeId,'Employee',$auth['id']);
 					//save employee_goverment record
 			 		$save = $this->GovernmentRecord->saveRecord($data['EmployeeAgencyRecord'],$employeeId,$auth['id']);
 
@@ -355,13 +355,13 @@ class EmployeesController  extends HumanResourceAppController {
 			 		}
 			 		if (!empty($data['ContactPersonData'])) {
 
-			 			//$this->HumanResourceContactPerson->saveContact($data['ContactPersonData'],$employeeId,$auth['id']);
+			 			$this->HumanResourceContactPerson->saveContact($data['ContactPersonData'],$employeeId,$auth['id']);
 				
 			 		}
 			 		//save salary settings
 			 		$this->Salary->saveSettings($data);
 					//save contactPerson emails
-			 		//$save = $this->Email->saveEmails($employeeId,'ContactPerson',$data['ContactPersonData']['Email'],$auth['id']);
+			 		$save = $this->Email->saveEmails($employeeId,'ContactPerson',$data['ContactPersonData']['Email'],$auth['id']);
 
 
 			 		$this->Session->setFlash('Saving employee information successfully','success');
