@@ -1054,6 +1054,19 @@ class SalesInvoiceController extends AccountingAppController {
 
     }
 
+    public function invoice_modal($deliveryId = null) {
+
+
+        if (!empty($deliveryId)) {
+
+             $this->render('SalesInvoice/modal_body', false);
+         } else {
+
+            echo "no Forms Yet";
+        }
+
+    }
+
     public function search_order($hint = null, $view = null){
 
         if($view == 'add'){
