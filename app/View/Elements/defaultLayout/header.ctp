@@ -220,7 +220,7 @@
 					</a>
 					<ul class="dropdown-menu dropdown-menu-right">
 						<!-- <li><a href="user-profile.html"><i class="fa fa-user"></i>Profile</a></li> -->
-						<?php if($userData['User']['role_id'] == 8 ){ ?>
+						<?php if($userData['User']['role_id'] == 8 || $userData['User']['role_id'] == 7 || $userData['User']['role_id'] == 4){ ?>
 
 						<li>
 								<?php
@@ -229,6 +229,8 @@
 			 			</li>
 
 			 			<?php  }?>
+
+			 			
 						
 		 				<?php if($userData['User']['role_id'] == 1 || $userData['User']['role_id'] == 2){ ?>
 		 					<li>
