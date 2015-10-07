@@ -243,14 +243,14 @@ window.addEventListener("load", function() {
  }
  
  var pageSize = getPageSize();
- jQuery("#flash").css({ height: pageSize[1] + "px" });
+ //jQuery("#flash").css({ height: pageSize[1] + "px" });
 
 }, false);
 
 window.addEventListener("resize", function() {
 
  var pageSize = getPageSize();
- jQuery("#flash").css({ height: pageSize[1] + "px" });
+	// jQuery("#flash").css({ height: pageSize[1] + "px" });
 
 }, false);
 

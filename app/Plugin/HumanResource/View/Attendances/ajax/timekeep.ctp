@@ -8,28 +8,52 @@
         <?php echo $this->CustomText->getFullname($attendance['Employee']); ?>
     </div>
 </div>
-<div class="form-group text-left">
+<!--  <div class="form-group text-left">
     <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Type :   </label>
-    <div class="col-lg-9">
+   <div class="col-lg-9">
        <div class="radio">
             <?php if (!empty($attendance['Attendance']['in'])) :?>
-                <input type="radio" name="data[Attendance][type]" id="categoryRadio1" value="in" disabled="disabled">
+                <input type="radio" name="data[Attendance][type]" id="categoryRadio1" value="in">
                 <label for="categoryRadio1">
                    Time in : <?php echo date('h:i:s',strtotime($attendance['Attendance']['in'])); ?>
                 </label>
             <?php else :?>
-                <input type="radio" name="data[Attendance][type]" id="categoryRadio1" value="in" checked>
+                <input type="radio" name="data[Attendance][type]" id="categoryRadio1" value="in">
                 <label for="categoryRadio1">
                    In
                 </label>
             <?php endif; ?> 
+
+              <input type="radio" name="data[Attendance][type]" id="categoryRadio1" value="in">
+                <label for="categoryRadio1">
+                   In
+                </label>
+
                 <input type="radio" name="data[Attendance][type]" id="categoryRadio2" value="out" <?php echo !empty($attendance['Attendance']['in']) ? 'checked' : ''?>>
                 <label for="categoryRadio2" >
                    Out
                 </label>
+
+
         </div>
-    </div>
-</div>
+    </div> 
+</div>-->
+<div class="form-group">
+                            <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Type :   </label>
+                                <div class="col-lg-9">
+                                       <div >
+                                                        <input type="radio" name="data[Attendance][type]" id="categoryRadio1" value="in" checked>
+                                                        <label for="categoryRadio1">
+                                                           In
+                                                        </label>
+                                                        <input type="radio" name="data[Attendance][type]" id="categoryRadio2" value="out">
+                                                        <label for="categoryRadio2">
+                                                           Out
+                                                        </label>
+                                        </div>
+
+                                </div>
+                        </div>
 
 <div class="form-group">
     <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Time :   </label>

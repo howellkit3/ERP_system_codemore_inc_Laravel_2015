@@ -36,9 +36,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 						<header class="main-box-header clearfix">
 							<br>
 			                <div class="filter-block">
-
-
-			                 	<?php echo $this->Form->create('Attendance',array('controller' => 'attendances','action' => 'index', 'type'=> 'get')); ?>
+								<?php echo $this->Form->create('Attendance',array('controller' => 'attendances','action' => 'index', 'type'=> 'get')); ?>
 			                 <div class="form-group pull-left">
 			                 	<div class="input-group">
 	                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
@@ -173,12 +171,12 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 								                        </td>
 								                        <td class="attendance-status"> 
 								                           <?php 
-								                           		if ($schedule['Attendance']['status'] == 'OnTime') {
-								                           			echo "<span class='label label-success'>OnTime</span>";
-								                           		}
-								                           		if ($schedule['Attendance']['status'] == 'Late') {
-								                           			echo "<span class='label label-danger'>&nbsp;&emsp;&emsp;Late&emsp;&emsp;&nbsp;</span>";
-								                           		}
+								                           		// if ($schedule['Attendance']['status'] == 'OnTime') {
+								                           		// 	echo "<span class='label label-success'>OnTime</span>";
+								                           		// }
+								                           		// if ($schedule['Attendance']['status'] == 'Late') {
+								                           		// 	echo "<span class='label label-danger'>&nbsp;&emsp;&emsp;Late&emsp;&emsp;&nbsp;</span>";
+								                           		// }
 								                           			
 								                           ?> 
 								                        </td>
