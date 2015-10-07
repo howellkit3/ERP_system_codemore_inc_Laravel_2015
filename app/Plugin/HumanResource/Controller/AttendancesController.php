@@ -960,4 +960,57 @@ public function daily_info() {
 
 	}
 
-}
+	public function edit_attendance($id = null) {
+
+		$this->layout = false;
+
+		$this->loadModel('HumanResource.Employee');
+
+		$query = $this->request->query('attendanceId');
+
+		if (!empty($this->request->data)) {
+
+
+
+			$data = $this->request->data;
+
+			pr($data);
+		
+			if ($this->Attendance->save($data)) {
+				//rediect  
+				$this->Session->setFlash('Time Sucessfully updated','success');
+
+				
+			} else {
+
+				$this->Session->setFlash('There\'s an error updating attendance','success');
+
+			}
+
+
+			$this->redirect( array(
+                         'controller' => 'attendances', 
+                         'action' => 'index',
+                         'tab' => 'attendance',
+                         'plugin' => 'human_resource'
+				));
+
+		}
+		if (!empty($query['attendanceId'])) {
+
+			$this->Attendance->bind(array('Employee'));
+
+			$attendance = $this->request->data = $this->Attendance->find('first',array(
+				'conditions' => array('Attendance.id' => $id)
+			));
+		
+		}
+
+		$this->set(compact('attendance'));
+
+		$this->render('Attendances/ajax/edit_attendance');
+
+	}
+
+}	
+

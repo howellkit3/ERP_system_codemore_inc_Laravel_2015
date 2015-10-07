@@ -429,4 +429,33 @@ $(document).ready(function(){
     });
 
 
+
+    $('body').on('click','.edit_attendance',function(e){
+
+            var url = $(this).data('url');
+
+            $attendaceId = $(this).attr('data-id');
+
+            $resultContainer = $('#resultAttendance');
+
+
+            $.ajax({
+            type: "GET",
+            url: serverPath+'human_resource'+url,
+            data : { 'attendanceId' :  $attendaceId },
+            dataType: "html",
+            success: function(data) {
+               
+                 $resultContainer.html(data);
+
+
+            }
+        });
+
+
+        e.preventDefault();
+
+
+    });
+
 });

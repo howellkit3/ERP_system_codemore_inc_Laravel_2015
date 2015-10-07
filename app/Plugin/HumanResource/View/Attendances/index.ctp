@@ -187,7 +187,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 								                      	<?php
 														echo $this->Html->link('<span class="fa-stack">
 														<i class="fa fa-square fa-stack-2x"></i>
-														<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> view </font></span>
+														<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> View </font></span>
 														</span> ','#personalAttendance',
 														array('class' =>'view_attendance table-link',
 															   'escape' => false,
@@ -196,6 +196,9 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 															   'data-toggle' => 'modal',
 															   'data-id' => $schedule['Attendance']['id'],
 															));
+
+
+
 
 														if ($schedule['Attendance']['type'] != 'leave') {
 															
@@ -227,6 +230,18 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																	));
 
 															}
+
+															echo $this->Html->link('<span class="fa-stack">
+														<i class="fa fa-square fa-stack-2x"></i>
+														<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit </font></span>
+														</span> ','#editAttendance',
+														array('class' =>'edit_attendance table-link',
+															   'escape' => false,
+															   'data-url' => '/attendances/edit_attendance/'.$schedule['Attendance']['id'],
+															   'title'=>'Edit Information',
+															   'data-toggle' => 'modal',
+															   'data-id' => $schedule['Attendance']['id'],
+															));
 
 															
 														}
@@ -264,6 +279,8 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 <?php echo $this->element('modals/time_in_attendance',array('employeeList' => $employeeList)); ?>
 
 <?php echo $this->element('modals/time_in_attendance_log',array('employeeList' => $employeeList)); ?>
+
+<?php echo $this->element('modals/time_in_edit',array('employeeList' => $employeeList )); ?>
 
 <div class="modal fade" id="myAttendance" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
