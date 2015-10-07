@@ -665,6 +665,8 @@ class EmployeesController  extends HumanResourceAppController {
 
 	public function print_employee() {
 
+		Configure::write('debug',0);
+
 		if (!empty($this->request->data)) {
 			//pr($this->request->data);exit();
 			$this->loadModel('HumanResource.Position');
