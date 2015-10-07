@@ -21,6 +21,7 @@ echo $this->Html->css(array(
 
 <div style="clear:both"></div>
 
+
 <?php echo $this->element('hr_options'); ?><br><br>
 <?php echo $this->Form->create('Employee',array('url'=>(array('controller' => 'employees','action' => 'edit','page' => $page)),
 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data' ));?>
@@ -91,3 +92,5 @@ echo $this->Html->css(array(
     });
 
      </script>
+
+        <?php echo $this->element('modals/employee_webcam'); ?>

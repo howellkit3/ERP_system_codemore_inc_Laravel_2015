@@ -2,6 +2,9 @@
 App::uses('AppController', 'Controller');
 App::uses('SessionComponent', 'Controller/Component');
 
+App::import('Vendor', 'DOMPDF', true, array(), 'dompdf'.DS.'dompdf_config.inc.php', false);
+
+
 App::uses('ImageUploader', 'Vendor');
 
 class EmployeesController  extends HumanResourceAppController {
@@ -960,5 +963,128 @@ class EmployeesController  extends HumanResourceAppController {
 
 		}	
 	}
+
+	public function print_id($id = null) {
+
+		$this->layout = false;
+
+
+		if (!empty($id)) {
+			
+			$employee = $this->Employee->findById($id);
+		}
+
+		$this->set(compact('employee'));
+
+		$view = new View(null, false);
+		//pr($formatDataSpecs);exit();
+		$view->set(compact('employees'));
+
+		$view->viewPath = 'Employees'.DS.'pdf';	
+   
+        $output = $view->render('print_id', false);
+   	   
+        $dompdf = new DOMPDF();
+        //$dompdf->set_paper("id");
+
+        $dompdf->set_paper("A4");
+
+
+		// $paper_size = array(0,0,96,56);
+		//  $dompdf->set_paper($paper_size);
+
+
+        //$dompdf->set_paper(array(0, 0, 595, 841), 'portrait');
+//
+
+        //$output = mb_convert_encoding($output, 'HTML-ENTITIES', 'UTF-8');
+        $dompdf->load_html($output);
+        $dompdf->load_html($output, 'UTF-8');
+        $dompdf->render();
+        $canvas = $dompdf->get_canvas();
+        $font = "DejaVu Sans";
+        //body { font-family: DejaVu Sans, sans-serif; }
+        //$pdf->SetFont('dejavusans', '', 14, '', true);
+      //  $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
+        //
+        $output = $dompdf->output();
+        
+        $random = rand(0, 1000000) . '-' . time();
+        if (empty($filename)) {
+        	//$filename = 'product-'.$quotation['ProductDetail']['name'].'-quotation'.time();
+        	$filename = 'employee-'.time();
+        }
+      	$filePath = 'view_pdf/'.strtolower(Inflector::slug( $filename , '-')).'.pdf';
+        $file_to_save = WWW_ROOT .DS. $filePath;
+         //pr($output);exit();	
+        if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
+        		unlink($file_to_save);
+        }
+       
+
+	}
+
+
+	public function saveImage() {
+
+			//WWW_ROOT .DS. $filePath;
+
+		// $fileName = time().'-image.jpg';
+
+		// $savePath = WWW_ROOT.'/img/uploads/employee/';
+
+		// $str = file_get_contents("php://input");
+
+		// file_put_contents($savePath."upload.jpg", pack("H*", $str));
+
+
+
+		if (!empty($_POST)) {
+
+	
+			$employee = array();
+
+			if (!empty($_POST['employeeId'])) {
+
+				$employee = $this->Employee->findById($_POST['employeeId']);
+
+			}
+
+			$image=$_POST['save_image']; //assing post to variable
+			
+			$savePath = WWW_ROOT.'/img/uploads/employee/';
+			
+			$image=base64_decode(str_replace('data:image/png;base64,', '', $image));
+
+			$imageName = date('ymdhis').'-'.time().'.png'; 
+
+			file_put_contents($savePath.$imageName, $image);
+
+			if (!empty($employee['Employee']['id'])) {
+
+				$employee['Employee']['image'] = $imageName;
+
+				if ($this->Employee->save($employee)) {
+
+					$this->redirect( array(
+                                 'controller' => 'employees', 
+                                 'action' => 'view',
+                                 $this->Employee->id
+                            ));
+				} else {
+
+			 		$this->Session->setFlash('There\'s an error saving employee information','error');
+			 	}
+
+			}
+			 // decode string with base64 and replace desnecessary header to write to file
+			//save picture to disk
+
+		}
+
+	
+
+	}	
+
 	
 }

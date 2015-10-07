@@ -127,6 +127,11 @@ jQuery("#webcam").webcam({
 
  if (pos >= 0x4B000) {
  ctx.putImageData(img, 0, 0);
+  
+  var canvas = document.getElementById("canvas");
+var save_image = canvas.toDataURL("image/png");
+
+  $('#saveImage').val(save_image);
  pos = 0;
  }
 
@@ -249,10 +254,13 @@ window.addEventListener("resize", function() {
 
 }, false);
 
+
 </script>
 <?php $employeeData = !empty($this->request->data) ? $this->request->data : '';
 $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
  ?>
+
+
 
  <div class="row">
                 <div class="col-lg-12">
@@ -1706,40 +1714,3 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
     	$('.showMarriedSection').show();
 
     </script>
-
-
-
-<div class="modal fade" id="Camera" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="width:55%">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Take A Picture</h4>
-            </div>
-            <div class="modal-body" >
-            	<div id="result-table" style="width:100% !important">
-
-            			<div class="col-lg-6">
-            			<div id="webcam"></div>
-
-            			<a class="btn btn-success" onclick="javascript:webcam.capture();void(0);"> <i class="fa fa-camera-retro"></i>  Take Picture</a>
-
-            			<a class="btn btn-success" onclick="javascript:copy();void(0);"> <i class="fa fa-floppy-o"></i>  Save </a>
-
-            			
-
-            			</div>
-    					<div class="col-lg-6"> <canvas id="canvas" height="240" width="320"></canvas> </div>
-    					
-    					<div class="clearfix"></div>
-    					<div id="status"></div>
-            	</div>
-			</div>
-            
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-
-
-</script>

@@ -92,4 +92,4 @@ echo $this->Html->css(array(
 
 
      </script>
-   
+   <?php echo $this->element('modals/employee_webcam'); ?>
