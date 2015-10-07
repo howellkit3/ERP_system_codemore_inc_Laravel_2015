@@ -63,5 +63,9 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }*/
 
 #first {
-  background-image:url('img/id/1.jpg');
+  /*background-image:url('img/id/1-small.jpg');*/
+}
+
+#second {
+ /*   background-image:url('img/id/2-small.jpg');*/
 }

@@ -30,6 +30,7 @@ class Contact extends AppModel {
     						
   					}
 
+
   					$save = $this->saveAll($contacts);
 
   				} else {

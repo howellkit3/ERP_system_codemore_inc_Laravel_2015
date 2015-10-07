@@ -338,7 +338,12 @@ class EmployeesController  extends HumanResourceAppController {
 			 		//save employee contact
 			 		$this->loadModel('HumanResource.Contact');
 
+
+
 			 		$save = $this->Contact->saveContact($data['Contact'],$employeeId,'Employee',$auth['id']);
+
+
+
 					//save employee_goverment record
 			 		$save = $this->GovernmentRecord->saveRecord($data['EmployeeAgencyRecord'],$employeeId,$auth['id']);
 
@@ -358,6 +363,10 @@ class EmployeesController  extends HumanResourceAppController {
 			 			$this->HumanResourceContactPerson->saveContact($data['ContactPersonData'],$employeeId,$auth['id']);
 				
 			 		}
+
+
+			 		//pr($data);
+			 		//exit();
 			 		//save salary settings
 			 		$this->Salary->saveSettings($data);
 					//save contactPerson emails
@@ -406,11 +415,11 @@ class EmployeesController  extends HumanResourceAppController {
 				'GovernmentRecord',
 				'Address',
 				'Contact',
-				//'ContactPerson',
-				//'HumanResourceContactPerson',
-				// 'ContactPersonEmail',
-				// 'ContactPersonAddress',
-				// 'ContactPersonNumber',
+				'ContactPerson',
+				'HumanResourceContactPerson',
+				'ContactPersonEmail',
+				'ContactPersonAddress',
+				'ContactPersonNumber',
 				'EmployeeEducationalBackground',
 				'Dependent',
 				'Salary'
@@ -508,6 +517,7 @@ class EmployeesController  extends HumanResourceAppController {
 		$agencyList = $this->Agency->find('all',array('fields' => array('id','name','field')));
 
 		$nameList = array();
+
 		foreach ($agencyList as $key => $value) {
 			$nameList[$value['Agency']['id']] = array('name' => $value['Agency']['name'],'field' =>$value['Agency']['field']);
 		}
@@ -995,38 +1005,44 @@ class EmployeesController  extends HumanResourceAppController {
 
 	public function print_id($id = null) {
 
+		$this->loadModel('HumanResource.ContactPerson');
 
-		Configure::write('debug',0);
+
+		$this->loadModel('HumanResource.Contact');
+
+
+		$this->loadModel('HumanResource.Address');
+
+		//Configure::write('debug',0);
 
 		$this->layout = false;
 
 
 		if (!empty($id)) {
+
+			$this->Employee->bind(array('Department','Position','ContactPerson','Contact','ContactPersonNumber','ContactPersonAddress'));
 			
 			$employee = $this->Employee->findById($id);
 		}
+
 
 		$this->set(compact('employee'));
 
 		$view = new View(null, false);
 		//pr($formatDataSpecs);exit();
-		$view->set(compact('employees'));
+		$view->set(compact('employee'));
 
 		$view->viewPath = 'Employees'.DS.'pdf';	
    
         $output = $view->render('print_id', false);
    	   
+      
         $dompdf = new DOMPDF();
-        //$dompdf->set_paper("id");
-
-        //$dompdf->set_paper("A4");
+        $dompdf->set_paper("A5");
 
 
 		//$paper_size = array(0,0,96,56);
 		//  $dompdf->set_paper($paper_size);
-
-
-        $dompdf->set_paper(array(0, 0, 400, 600), 'portrait');
 //
 
         //$output = mb_convert_encoding($output, 'HTML-ENTITIES', 'UTF-8');
