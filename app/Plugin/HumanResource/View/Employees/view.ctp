@@ -35,6 +35,15 @@
 
                     </div>
 
+
+                    <div class="form-group pull-right" style="margin-right:10px;">
+                    	
+                    	<?php echo $this->Html->link('<i class="fa fa-credit-card"></i>
+ Print ID', array('controller' => 'employees', 'action' => 'print_id',$employee['Employee']['id']),array('class' =>'btn btn-primary pull-right','escape' => false,'target' => '_blank'));
+						?>
+
+                    </div>
+
                 </header>
 			</div>
         </div>
@@ -160,7 +169,7 @@
 			                                        <i class="fa fa-envelope-o"></i>	
 			                                        Email</label>
 				                                      <div class="col-lg-9 value"> 
-				                                      <?php echo $employee['Email'][0]['email'];  ?>
+				                                      <?php echo !empty($employee['Email'][0]['email']) ? $employee['Email'][0]['email'] : ''  ?>
 				                                       </div>
 			                                     </div>
 			                                     <div class="clearfix"></div>
@@ -224,7 +233,7 @@
 				                                        	<i class="fa fa-phone"></i>
 				                                        Contact #</label>
 					                                      <div class="col-lg-9 value"> 
-					                                     	 <?php echo $employee['Contact'][0]['number']; ?>
+					                                     	 <?php echo !empty($employee['Contact'][0]['number']) ? $employee['Contact'][0]['number'] : '' ; ?>
 					                                       </div>
 				                                     </div>
 				                                      
