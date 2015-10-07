@@ -63,7 +63,7 @@ class EmployeesController  extends HumanResourceAppController {
         
 		$positions = $this->Position->find('list',array('fields' => array('id','name')));
 
-		$departments = $this->Department->find('list',array('fields' => array('id','department_position')));
+		$departments = $this->Department->find('list',array('fields' => array('id','notes')));
 		
         $employeeList = $this->Employee->find('list',array('fields' => array('id','fullname')));
 
@@ -677,10 +677,10 @@ class EmployeesController  extends HumanResourceAppController {
 			$this->loadModel('HumanResource.Contact');
 			$this->loadModel('HumanResource.Email');
 
-			// ini_set('max_execution_time', 3600);
-			// ini_set('memory_input_time', 1024);
-			// ini_set('max_input_nesting_level', 1024);
-			// ini_set('memory_limit', '1024M');
+			ini_set('max_execution_time', 3600);
+			ini_set('memory_input_time', 1024);
+			ini_set('max_input_nesting_level', 1024);
+			ini_set('memory_limit', '1024M');
 
 			$this->Employee->bind(array('Position','Department','Contact','Status','EmployeeAdditionalInformation','Address','Salary','SSS','PhilHealth','TIN','Pagibig','Email'));
 
@@ -712,8 +712,33 @@ class EmployeesController  extends HumanResourceAppController {
 			$employeeData = $this->Employee->find('all',array(
 				'conditions' => $conditions,
 				'order' => array('Employee.last_name','Employee.first_name'),
-				'group' => 'Employee.id'
+				'group' => 'Employee.id',
+				'fields' => array(
+					'id',
+					'Employee.code',
+					'Employee.last_name',
+					'Employee.first_name',
+					'Employee.middle_name',
+					'EmployeeAdditionalInformation.gender',
+					'EmployeeAdditionalInformation.status',
+					'Employee.status',
+					'Status.name',
+					//'Address',
+					'Department.name',
+					'Department.description',
+					'Salary.employee_salary_type',
+					'Salary.basic_pay',
+					'Salary.ctpa',
+					'Salary.sea',
+					'SSS.value',
+					'PhilHealth.value',
+					'Pagibig.value',
+					'Tin.value',
+
+					)
 			));
+
+
 			
 			//pr($employeeData);exit();
 			

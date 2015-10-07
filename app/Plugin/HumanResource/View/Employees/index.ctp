@@ -82,7 +82,7 @@ $page = !empty($this->params['named']['page']) ? $this->params['named']['page'] 
 			                            <input type="hidden" name="department" value="" class="form-control departmentHidden"  />
 			                            <input type="hidden" name="status" value="" class="form-control statusHidden"  />
 			                            <input type="hidden" name="input_search" value="" class="form-control searchHidden"  />
-			                            <button type="submit" class="btn btn-success pull-right exportEmployeeDatatest"><i class="fa fa-share-square-o fa-lg"></i> Export</button>
+			                            <button type="submit" class="btn btn-success pull-right "><i class="fa fa-share-square-o fa-lg"></i> Export</button>
 			                         <?php echo $this->Form->end(); ?>
 			                    </div>
 
@@ -135,7 +135,7 @@ $page = !empty($this->params['named']['page']) ? $this->params['named']['page'] 
 								                        </td>
 								                        
 								                        <td class="text-center">
-								                           <?php echo !empty($employee['Department']['name']) ? $employee['Department']['name'] : '';  ?>
+								                           <?php echo !empty($employee['Department']['notes']) ? $employee['Department']['notes'] : '';  ?>
 								                        </td>
 
 								                         <td class="text-center">

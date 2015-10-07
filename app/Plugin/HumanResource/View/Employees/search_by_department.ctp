@@ -11,7 +11,7 @@ if(!empty($employeeData)){
             </td>
             
             <td class="text-center">
-               <?php echo !empty($employee['Department']['name']) ? $employee['Department']['name'] : '';  ?>
+               <?php echo !empty($employee['Department']['notes']) ? $employee['Department']['notes'] : '';  ?>
             </td>
 
              <td class="text-center">

@@ -34,8 +34,12 @@
                 $sheet->setCellValue('C'.$counter, $employeeList['Employee']['last_name']);
                 $sheet->setCellValue('D'.$counter, $employeeList['Employee']['first_name']);
                 $sheet->setCellValue('E'.$counter, $employeeList['Employee']['middle_name']);
-                $sheet->setCellValue('F'.$counter, $employeeList['EmployeeAdditionalInformation']['gender']);
-                $sheet->setCellValue('G'.$counter, $employeeList['EmployeeAdditionalInformation']['status']);
+
+                $gender = ($employeeList['EmployeeAdditionalInformation']['gender'] == 'M') ? 'Male' : 'Female';
+                $sheet->setCellValue('F'.$counter,$gender );
+
+                $status = ($employeeList['EmployeeAdditionalInformation']['status'] == 'M') ? 'Married' : 'Single';
+                $sheet->setCellValue('G'.$counter, $status);
                 $sheet->setCellValue('H'.$counter, $employeeList['Address'][0]['address1']);
                 $sheet->setCellValue('I'.$counter, $employeeList['Address'][0]['city']);
                 $sheet->setCellValue('J'.$counter, $employeeList['Address'][0]['zipcode']);
@@ -57,9 +61,31 @@
 
                 $sheet->setCellValue('L'.$counter, $number['mobile'] );
 
-                $sheet->setCellValue('M'.$counter,$employeeList['Address']);
+                $sheet->setCellValue('M'.$counter,$employeeList['Email'][0]['email']);
 
-                $sheet->setCellValue('N'.$counter,$employeeList['Address'][0]['zipcode']);
+                $sheet->setCellValue('N'.$counter,$employeeList['Department']['notes']);
+
+                $sheet->setCellValue('O'.$counter,$employeeList['Position']['name']);
+
+                //salary
+
+                $sheet->setCellValue('P'.$counter,$employeeList['Salary']['employee_salary_type']);
+
+                $sheet->setCellValue('Q'.$counter,$employeeList['Salary']['basic_pay']);
+
+                 $sheet->setCellValue('R'.$counter,$employeeList['Salary']['ctpa']);
+
+                $sheet->setCellValue('S'.$counter,$employeeList['Salary']['sea']);
+
+                $sheet->setCellValue('T'.$counter,$employeeList['SSS']['value']);
+
+                $sheet->setCellValue('U'.$counter,$employeeList['PhilHealth']['value']);
+
+                $sheet->setCellValue('V'.$counter,$employeeList['Pagibig']['value']);
+
+                $sheet->setCellValue('W'.$counter,$employeeList['TIN']['value']);
+
+                 $sheet->setCellValue('X'.$counter,$employeeList['Status']['name']);
                     
         $counter++;  
         
