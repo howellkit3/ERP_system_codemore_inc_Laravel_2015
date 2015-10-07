@@ -100,7 +100,7 @@
 					 
 					<li class="<?php echo ($this->params['plugin'] == 'purchasing') ? 'active' : '' ?>">
 
-						<?php  if(in_array($userData['User']['role_id'],array('1','2','7','10','6','8'))) {
+						<?php  if(in_array($userData['User']['role_id'],array('1','2','7','10','6','8','4'))) {
 
 						 echo $this->Html->link( " <i class='fa fa-th-large'></i> <span>Purchasing</span>",   array('controller' =>'suppliers','action'=>'index?'.rand(1000,9999).'='.date("is"),'plugin' => 'purchasing'),array('escape' => false) );
 						}
