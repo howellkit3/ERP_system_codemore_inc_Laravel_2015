@@ -5,6 +5,11 @@ App::uses('SessionComponent', 'Controller/Component');
 App::import('Vendor', 'DOMPDF', true, array(), 'dompdf'.DS.'dompdf_config.inc.php', false);
 
 
+App::import('Vendor', 'fpdf', true, array(), 'fpdf'.DS.'fpdf.php', false);
+
+App::import('Vendor', 'FPDI', true, array(), 'FPDI'.DS.'fpdi.php', false);
+
+
 App::uses('ImageUploader', 'Vendor');
 
 class EmployeesController  extends HumanResourceAppController {
@@ -1026,48 +1031,105 @@ class EmployeesController  extends HumanResourceAppController {
 		}
 
 
-		$this->set(compact('employee'));
 
-		$view = new View(null, false);
-		//pr($formatDataSpecs);exit();
-		$view->set(compact('employee'));
+			$pdf = new FPDI();
 
-		$view->viewPath = 'Employees'.DS.'pdf';	
+			$pageCount = $pdf->setSourceFile(WWW_ROOT."img/id/koufu_id.pdf");
+
+
+			// iterate through all pages
+				for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
+				// import a page
+				$templateId = $pdf->importPage($pageNo);
+				// get the size of the imported page
+				$size = $pdf->getTemplateSize($templateId);
+
+				// create a page (landscape or portrait depending on the imported page size)
+				if ($size['w'] > $size['h']) {
+				$pdf->AddPage('L', array($size['w'], $size['h']));
+				} else {
+				$pdf->AddPage('P', array($size['w'], $size['h']));
+			}
+
+			// use the imported page
+			$pdf->useTemplate($templateId);
+
+				$pdf->SetFont('Helvetica');
+				if ($pageNo == 1) {
+
+						    $serverPath =  Router::url('/', true);
+
+							if (!empty($employee['Employee']['image'])) { 
+
+                            	$background =  $serverPath.'img/uploads/employee/'.$employee['Employee']['image'];	
+                            
+                           
+							 } else {
+
+                       	 	  $background =  $serverPath.'img/default-profile.png';	
+                       	 	} 
+
+
+					// $pdf->Image( $background , 17, 27, 25, '', '', '', '', false, 300);
+
+					// $pdf->SetXY(15, 58);
+					// $pdf->SetFont('Arial','B',10);
+
+					// $pdf->Write(5,$employee['Employee']['full_name']);	
+
+					$pdf->SetFont('Arial', '', 14);
+					$pdf->Ln(10);
+					$pdf->Write(5, 'The file uses font subsetting.');
+				}
+				
+			}
+
+			// Output the new PDF
+			$pdf->Output();
+
+
+// 		$this->set(compact('employee'));
+
+// 		$view = new View(null, false);
+// 		//pr($formatDataSpecs);exit();
+// 		$view->set(compact('employee'));
+
+// 		$view->viewPath = 'Employees'.DS.'pdf';	
    
-        $output = $view->render('print_id', false);
+//         $output = $view->render('print_id', false);
    	   
       
-        $dompdf = new DOMPDF();
-        $dompdf->set_paper("A5");
+//         $dompdf = new DOMPDF();
+//         $dompdf->set_paper("A5");
 
 
-		//$paper_size = array(0,0,96,56);
-		//  $dompdf->set_paper($paper_size);
-//
+// 		//$paper_size = array(0,0,96,56);
+// 		//  $dompdf->set_paper($paper_size);
+// //
 
-        //$output = mb_convert_encoding($output, 'HTML-ENTITIES', 'UTF-8');
-        $dompdf->load_html($output);
-        $dompdf->load_html($output, 'UTF-8');
-        $dompdf->render();
-        $canvas = $dompdf->get_canvas();
-        $font = "DejaVu Sans";
-        //body { font-family: DejaVu Sans, sans-serif; }
-        //$pdf->SetFont('dejavusans', '', 14, '', true);
-      //  $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
-        //
-        $output = $dompdf->output();
+//         //$output = mb_convert_encoding($output, 'HTML-ENTITIES', 'UTF-8');
+//         $dompdf->load_html($output);
+//         $dompdf->load_html($output, 'UTF-8');
+//         $dompdf->render();
+//         $canvas = $dompdf->get_canvas();
+//         $font = "DejaVu Sans";
+//         //body { font-family: DejaVu Sans, sans-serif; }
+//         //$pdf->SetFont('dejavusans', '', 14, '', true);
+//       //  $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
+//         //
+//         $output = $dompdf->output();
         
-        $random = rand(0, 1000000) . '-' . time();
-        if (empty($filename)) {
-        	//$filename = 'product-'.$quotation['ProductDetail']['name'].'-quotation'.time();
-        	$filename = 'employee-'.time();
-        }
-      	$filePath = 'view_pdf/'.strtolower(Inflector::slug( $filename , '-')).'.pdf';
-        $file_to_save = WWW_ROOT .DS. $filePath;
-         //pr($output);exit();	
-        if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
-        		unlink($file_to_save);
-        }
+//         $random = rand(0, 1000000) . '-' . time();
+//         if (empty($filename)) {
+//         	//$filename = 'product-'.$quotation['ProductDetail']['name'].'-quotation'.time();
+//         	$filename = 'employee-'.time();
+//         }
+//       	$filePath = 'view_pdf/'.strtolower(Inflector::slug( $filename , '-')).'.pdf';
+//         $file_to_save = WWW_ROOT .DS. $filePath;
+//          //pr($output);exit();	
+//         if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
+//         		unlink($file_to_save);
+//         }
        
 
 	}
