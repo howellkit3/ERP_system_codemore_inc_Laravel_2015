@@ -727,6 +727,8 @@ class EmployeesController  extends HumanResourceAppController {
 					'Status.name',
 					//'Address',
 					'Department.name',
+					'Department.notes',
+					'Position.name',
 					'Department.description',
 					'Salary.employee_salary_type',
 					'Salary.basic_pay',
@@ -993,6 +995,9 @@ class EmployeesController  extends HumanResourceAppController {
 
 	public function print_id($id = null) {
 
+
+		Configure::write('debug',0);
+
 		$this->layout = false;
 
 
@@ -1014,14 +1019,14 @@ class EmployeesController  extends HumanResourceAppController {
         $dompdf = new DOMPDF();
         //$dompdf->set_paper("id");
 
-        $dompdf->set_paper("A4");
+        //$dompdf->set_paper("A4");
 
 
-		// $paper_size = array(0,0,96,56);
+		//$paper_size = array(0,0,96,56);
 		//  $dompdf->set_paper($paper_size);
 
 
-        //$dompdf->set_paper(array(0, 0, 595, 841), 'portrait');
+        $dompdf->set_paper(array(0, 0, 400, 600), 'portrait');
 //
 
         //$output = mb_convert_encoding($output, 'HTML-ENTITIES', 'UTF-8');
