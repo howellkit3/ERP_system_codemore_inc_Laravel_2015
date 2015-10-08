@@ -1113,7 +1113,7 @@ class EmployeesController  extends HumanResourceAppController {
 					// $pdf->SetFont('Arial','B',10);
 					$pdf->SetFont('Arial','',8);
 
-					$middle = !empty($employee['Employee']['middle_name']) ? ucfirst($employee['Employee']['middle_name'][1]) : '';
+					$middle = !empty($employee['Employee']['middle_name']) ? ucfirst($employee['Employee']['middle_name'][0]) : '';
 					
 					//name
 					$name = !empty($employee['Employee']['full_name']) ? ucwords($employee['Employee']['first_name']).' '. ucwords($employee['Employee']['last_name']).' '.$middle  : '';
