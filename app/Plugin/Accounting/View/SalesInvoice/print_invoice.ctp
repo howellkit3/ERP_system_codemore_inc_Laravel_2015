@@ -45,6 +45,12 @@
 
 	}
 
+   
+  //  $words = explode(" ", $companyData['Address'][0]['address1']);
+  //  $part = $count($words[]);
+
+    //pr(count($words)); exit;
+    
     $objTpl->setActiveSheetIndex(0)
                 ->setCellValue('C7', ucfirst($companyData['Company']['company_name']))
                 ->setCellValue('J7', (new \DateTime())->format('m/d/Y'))
