@@ -40,6 +40,14 @@ echo $this->Html->css(array(
                         <?php 
                             echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'employees', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
                         ?>
+                        
+                         <div class="form-group pull-right" style="margin-right:10px;">
+                        
+                        <?php echo $this->Html->link('<i class="fa fa-credit-card"></i>
+ Print ID', array('controller' => 'employees', 'action' => 'print_id',$this->request->data['Employee']['id']),array('class' =>'btn btn-primary pull-right','escape' => false,'target' => '_blank'));
+                        ?>
+
+                    </div>
                     </header>
 
                 </div>
@@ -58,6 +66,8 @@ echo $this->Html->css(array(
                 <div class="main-box-body clearfix">
                     <div class="main-box-body clearfix">
                         <div class="form-horizontal">
+
+
                 
                             <div class="multi-field clearfix">
                                 <div class="col-xs-2 col-md-2"></div>
