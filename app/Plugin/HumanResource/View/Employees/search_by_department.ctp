@@ -3,6 +3,25 @@ if(!empty($employeeData)){
     foreach ($employeeData as $key => $employee): ?>
 		
 		<tr class="">
+
+            <td class="">
+            <?php
+            $style = '';
+            $serverPath = $this->Html->url('/',true);   
+            if (!empty($employee['Employee']['image'])) {
+
+
+            $background =  $serverPath.'img/uploads/employee/'.$employee['Employee']['image'];  
+            } else {
+
+            $background =  $serverPath.'img/default-profile.png';   
+            }
+
+            ?>
+            <img src="<?php echo $background; ?>" width="35" height="35" />
+            </td>
+
+
 			<td class="">
                 <?php echo $employee['Employee']['code'];?> 
             </td>
