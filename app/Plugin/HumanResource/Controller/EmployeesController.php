@@ -130,6 +130,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 	public function add () {
 
+				Configure::wriet('debug',0);
 
 		if ($this->request->is('post')) {
 
@@ -232,6 +233,9 @@ class EmployeesController  extends HumanResourceAppController {
 						$this->HumanResourceContactPerson->saveContact($data['ContactPersonData'],$employeeId,$auth['id']);
 			 		}
 					//save contactPerson emails
+
+					 $this->loadModel('HumanResource.Email');
+
 			 		$save = $this->Email->saveEmails($employeeId,'ContactPerson',$data['ContactPersonData']['Email'],$auth['id']);
 
 			 		$save = $this->Email->saveEmails($data['ContactPersonData']['Email'],$employeeId,'ContactPerson',$auth['id']);
@@ -280,6 +284,8 @@ class EmployeesController  extends HumanResourceAppController {
 	}
 
 	public function edit($id){
+
+		Configure::wriet('debug',0);
 		
 		$this->loadModel('HumanResource.EmployeeAdditionalInformation');
 
@@ -379,6 +385,7 @@ class EmployeesController  extends HumanResourceAppController {
 			 		//save salary settings
 			 		$this->Salary->saveSettings($data);
 					//save contactPerson emails
+					 $this->loadModel('HumanResource.Email');
 			 		$save = $this->Email->saveEmails($employeeId,'ContactPerson',$data['ContactPersonData']['Email'],$auth['id']);
 
 
@@ -1194,7 +1201,6 @@ class EmployeesController  extends HumanResourceAppController {
 					$address =  !empty($employee['ContactPersonAddress']['address_1']) ? trim(nl2br($employee['ContactPersonAddress']['address_1'])).',' : '';
 					$address .=  !empty($employee['ContactPersonAddress']['city']) ? $employee['ContactPersonAddress']['city'].',' : '';
 					$address .= !empty($employee['ContactPersonAddress']['state_province']) ? $employee['ContactPersonAddress']['state_province'].', ' : '';
-
 					$address .= !empty($employee['ContactPersonAddress']['zipcode']) ? $employee['ContactPersonAddress']['zipcode'] : '';
 					
 					//	pr(str_replace(' ','',$address));

@@ -42,7 +42,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 				                                'escape' => false));
 
 
-				                   	echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Chage Sched', 
+				                   	echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Change Sched', 
 				                            array('controller' => 'work_schedules', 
 				                                    'action' => 'change_schedule'),
 				                            array('class' =>'btn btn-primary',
