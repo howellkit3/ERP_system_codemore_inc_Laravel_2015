@@ -37,17 +37,28 @@ echo $this->Html->css(array(
                                 Employee Information
                             </h1>
                         </center>
-                        <?php 
-                            echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'employees', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
-                        ?>
-                        
-                         <div class="form-group pull-right" style="margin-right:10px;">
-                        
-                        <?php echo $this->Html->link('<i class="fa fa-credit-card"></i>
- Print ID', array('controller' => 'employees', 'action' => 'print_id',$this->request->data['Employee']['id']),array('class' =>'btn btn-primary pull-right','escape' => false,'target' => '_blank'));
-                        ?>
 
-                    </div>
+                          <div class="filter-block">
+                            <?php 
+                            echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'employees', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                            ?>
+
+                            <div class="form-group pull-right" style="margin-right:10px;">
+
+                            <?php echo $this->Html->link('<i class="fa fa-credit-card"></i>
+                            Print ID', array('controller' => 'employees', 'action' => 'print_id',$this->request->data['Employee']['id']),array('class' =>'btn btn-primary pull-right','escape' => false,'target' => '_blank'));
+                            ?>
+
+                            </div>
+
+                            <div class="form-group pull-right" style="margin-right:25px;">
+
+                            <?php echo $this->Html->link('<i class="fa fa-money fa-lg"></i> Salary Settings', array('controller' => 'salaries', 'action' => 'employee_settings',$this->request->data['Employee']['id']),array('class' =>'btn btn-primary pull-right','escape' => false));
+                            ?>
+
+                          </div>
+                     
+                    </div
                     </header>
 
                 </div>

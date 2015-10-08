@@ -1024,6 +1024,9 @@ class EmployeesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.GovernmentRecord');
 
+
+		$this->loadModel('HumanResource.Email');
+
 		//Configure::write('debug',0);
 
 		$this->layout = false;
@@ -1031,7 +1034,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 		if (!empty($id)) {
 
-			$this->Employee->bind(array('Department','Position','ContactPerson','Contact','ContactPersonNumber','ContactPersonAddress','SSS','TIN'));
+			$this->Employee->bind(array('Department','Position','ContactPerson','Contact','ContactPersonNumber','ContactPersonAddress','ContactPersonEmail','SSS','TIN'));
 			
 			$employee = $this->Employee->findById($id);
 		}
@@ -1176,19 +1179,25 @@ class EmployeesController  extends HumanResourceAppController {
 					$pdf->SetFont('Arial','',7);
 					
 					//
-					$contactPerson = !empty($employee['ContactPerson']['firstname']) ? ucfirst($employee['ContactPerson']['firstname']).', '. ucfirst($employee['ContactPerson']['middlename'][0]).' '.ucfirst($employee['ContactPerson']['lastname']): '';
+
+					$middlename = !empty($employee['ContactPerson']['middlename']) ? $employee['ContactPerson']['middlename'][0] : '';
+					$contactPerson = !empty($employee['ContactPerson']['firstname']) ? ucfirst($employee['ContactPerson']['firstname']).', '. ucfirst($middlename ).' '.ucfirst($employee['ContactPerson']['lastname']): '';
 					$pdf->Write(10,$contactPerson);	
 
-					$pdf->SetXY(20, 31);
-					$pdf->SetFont('Arial','',7);
+					$pdf->SetXY(20, 32.);
+					$pdf->SetFont('Arial','',6);
 
-					$address =  !empty($employee['ContactPersonAddress']['address_1']) ? $employee['ContactPersonAddress']['address_1'].', ' : '';
-					$address .=  !empty($employee['ContactPersonAddress']['city']) ? $employee['ContactPersonAddress']['city'].', ' : '';
-					$address .= !empty($employee['ContactPersonAddress']['province']) ? $employee['ContactPersonAddress']['province'].' ' : '';
+					$address =  !empty($employee['ContactPersonAddress']['address_1']) ? trim(nl2br($employee['ContactPersonAddress']['address_1'])).',' : '';
+					$address .=  !empty($employee['ContactPersonAddress']['city']) ? $employee['ContactPersonAddress']['city'].',' : '';
+					$address .= !empty($employee['ContactPersonAddress']['state_province']) ? $employee['ContactPersonAddress']['state_province'].', ' : '';
 
-					$pdf->MultiCell( 35, 5, $address);
+					$address .= !empty($employee['ContactPersonAddress']['zipcode']) ? $employee['ContactPersonAddress']['zipcode'] : '';
+					
+					//	pr(str_replace(' ','',$address));
 
-					$contact_number = !empty($employee['ContactPersonNumber']['number']) ? ucfirst($employee['ContactPersonNumber']['number']) : '';
+					$pdf->MultiCell( 35, 4, trim($address));
+
+					$contact_number = !empty($employee['ContactPersonNumber']['number']) ? $employee['ContactPersonNumber']['number'] : '';
 
 					$pdf->SetXY(20, 44.5);		
 					//$pdf->Write(10,$contact_number);
@@ -1202,50 +1211,6 @@ class EmployeesController  extends HumanResourceAppController {
 			$pdfData = $pdf->Output($employee['Employee']['code'].'.pdf', 'D');
 
 			//$pdf->Output();
-
-// 		$this->set(compact('employee'));
-
-// 		$view = new View(null, false);
-// 		//pr($formatDataSpecs);exit();
-// 		$view->set(compact('employee'));
-
-// 		$view->viewPath = 'Employees'.DS.'pdf';	
-   
-//         $output = $view->render('print_id', false);
-   	   
-      
-//         $dompdf = new DOMPDF();
-//         $dompdf->set_paper("A5");
-
-
-// 		//$paper_size = array(0,0,96,56);
-// 		//  $dompdf->set_paper($paper_size);
-// //
-
-//         //$output = mb_convert_encoding($output, 'HTML-ENTITIES', 'UTF-8');
-//         $dompdf->load_html($output);
-//         $dompdf->load_html($output, 'UTF-8');
-//         $dompdf->render();
-//         $canvas = $dompdf->get_canvas();
-//         $font = "DejaVu Sans";
-//         //body { font-family: DejaVu Sans, sans-serif; }
-//         //$pdf->SetFont('dejavusans', '', 14, '', true);
-//       //  $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
-//         //
-//         $output = $dompdf->output();
-        
-//         $random = rand(0, 1000000) . '-' . time();
-//         if (empty($filename)) {
-//         	//$filename = 'product-'.$quotation['ProductDetail']['name'].'-quotation'.time();
-//         	$filename = 'employee-'.time();
-//         }
-//       	$filePath = 'view_pdf/'.strtolower(Inflector::slug( $filename , '-')).'.pdf';
-//         $file_to_save = WWW_ROOT .DS. $filePath;
-//          //pr($output);exit();	
-//         if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
-//         		unlink($file_to_save);
-//         }
-       
 
 	}
 

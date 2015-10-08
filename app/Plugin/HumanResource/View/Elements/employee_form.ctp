@@ -1562,6 +1562,10 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
 		                                    <label for="inputPassword1" class="col-lg-2 control-label">Email</label>
 		                                  
 		                                    <div class="col-lg-9">
+
+		                                     <?php 
+		                                            echo $this->Form->input('ContactPersonData.Email.0.id', array('class' => 'form-control email','label' => false));
+		                                        ?>
 		                                        <?php 
 		                                            echo $this->Form->input('ContactPersonData.Email.0.email', array('class' => 'form-control email','label' => false));
 		                                        ?>
@@ -1587,6 +1591,13 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
 		                                    
 		                                    <div class="col-lg-6">
 		                                        <?php 
+
+		                                        	 echo $this->Form->input('ContactPersonData.Contact.0.id', array('class' => 'form-control',
+		                                                'alt' => 'number',
+		                                                'label' => false,
+		                                                ));
+
+
 		                                            echo $this->Form->input('ContactPersonData.Contact.0.number', array('class' => 'form-control',
 		                                                'alt' => 'number',
 		                                                'label' => false,
