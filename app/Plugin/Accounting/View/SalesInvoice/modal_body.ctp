@@ -38,8 +38,6 @@
                                 </div>
                             </div>
 
-                            
-
                             <div class="form-group">
                                 <label class="col-lg-3 control-label"><span style="color:red">*</span>Invoice Number</label>
                                 <div class="col-lg-8">
@@ -53,8 +51,6 @@
                                     ?>
                                 </div>
                             </div>
-
-                            
 
                             <div class="form-group delivery_number" >
                                 <label class="col-lg-3 control-label"><span style="color:red">*</span>Delivery Number</label>
@@ -71,12 +67,12 @@
                                 </div>
                             </div>
 
-                            
                             <div class="modal-footer">
 
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i> Submit</button>
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
                             </div>
+                            
                         <?php echo $this->Form->end();  ?> 
                     </div>
