@@ -83,7 +83,6 @@ class DeliveriesController extends DeliveryAppController {
 
     public function add($deliveryScheduleId = null,$quotationId = null, $clientsOrderUuid = null){
 
-
         $userData = $this->Session->read('Auth');
       
         $this->loadModel('Sales.ClientOrderDeliverySchedule');
@@ -124,6 +123,19 @@ class DeliveriesController extends DeliveryAppController {
         $this->request->data['DeliveryDetail']['delivery_uuid']  = $this->request->data['Delivery']['dr_uuid'];
         $this->request->data['DeliveryDetail']['remaining_quantity'] = ($this->request->data['ClientOrderDeliverySchedule']['quantity']) - ($this->request->data['DeliveryDetail']['quantity']);
         $this->request->data['Delivery']['company_id']  = $scheduleInfo['ClientOrder']['company_id'];
+
+         $Scheddate = $scheduleInfo['ClientOrderDeliverySchedule']['schedule'];
+
+         //pr($Scheddate); exit;
+       //  $Currentdate = date("Y-m-d h:i:s");
+
+       // // $Scheddate = str_replace('-', '', $Scheddate);
+
+       //  $Scheddate = date('Y-m-d',strtotime($Scheddate)).' 23:00:00';
+
+       //  if(strtotime($Scheddate) > strtotime($Currentdate)) { 
+
+       //  }
 
         $this->Delivery->create();
 

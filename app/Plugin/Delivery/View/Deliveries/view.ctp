@@ -31,20 +31,11 @@ $totalremaining = 0;
 
                      <!-- <a data-toggle="modal" href="#myModalDeliveries" class="btn btn-primary pull-right addSchedButton "><i class="fa fa-edit fa-lg"></i> Edit Schedule</a> -->
 
-                <?php }}else{ 
-
-                    $Scheddate = $scheduleInfo['ClientOrderDeliverySchedule']['schedule'];
-                    $Currentdate = date("Y-m-d h:i:s");
-
-                   // $Scheddate = str_replace('-', '', $Scheddate);
-
-                    $Scheddate = date('Y-m-d',strtotime($Scheddate)).' 23:00:00';
-
-                    if(strtotime($Scheddate) > strtotime($Currentdate)) { ?>
+                <?php }}else{ ?>
 
                         <a data-toggle="modal" href="#myModalApprove" class="btn btn-primary mrg-b-lg pull-right "><i class="fa fa-edit fa-lg"></i>Approve Schedule</a>
 
-                <?php } } ?>
+                <?php } ?>
 
                 <br><br>
             </div>
