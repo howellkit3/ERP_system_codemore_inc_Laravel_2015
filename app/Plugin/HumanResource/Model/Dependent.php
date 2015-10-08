@@ -10,11 +10,21 @@ class Dependent extends AppModel {
 
  	public function saveDependent($data = null,$employeeId = null,$auth = null){
 
+
+ 		$this->deleteAll(array(
+ 			'Dependent.employee_id' => $employeeId
+
+ 		),false);
+
  		if (!empty($data)) {
 
  			$record = array();
 
  			foreach ($data as $key => $values) {
+
+ 				if (!empty($values['name'])) {
+
+ 				}
  				$record[$key] = $values;
  				$record[$key]['employee_id'] = $employeeId;
  				$record[$key]['created_by'] = $auth;
