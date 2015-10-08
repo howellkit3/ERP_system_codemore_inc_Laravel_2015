@@ -11,17 +11,17 @@
         
         echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'requests', 'action' => 'request_list'),array('class' =>'btn btn-primary pull-right','escape' => false));
 
-        if ($requestData['Request']['status_id'] == 1) {
+     //   if ($requestData['Request']['status_id'] == 1) {
 
             echo $this->Html->link('<i class="fa fa fa-pencil-square-o fa-lg"></i> Create Order', array('controller' => 'requests', 'action' => 'create_order',$requestId),array('class' =>'btn btn-primary pull-right','escape' => false));
 
-        }
+        //}
 
-        if ($requestData['Request']['status_id'] == 0) {
+        // if ($requestData['Request']['status_id'] == 0) {
 
-            echo $this->Html->link('<i class="fa fa-gift fa-lg"></i> Purchase Order', array('controller' => 'requests', 'action' => 'create_order',$requestId),array('class' =>'btn btn-primary pull-right disabled','escape' => false));
+        //     echo $this->Html->link('<i class="fa fa-gift fa-lg"></i> Purchase Order', array('controller' => 'requests', 'action' => 'create_order',$requestId),array('class' =>'btn btn-primary pull-right disabled','escape' => false));
 
-        }
+        // }
 
         if ($requestData['Request']['status_id'] == 8) {
 
