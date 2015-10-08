@@ -870,7 +870,6 @@ class ProductsController extends SalesAppController {
 				
 		if (!empty($this->request->data)) {
 
-
 			if(!empty($this->request->data['IdHolder'])){
 				
 				$this->Product->ProductSpecification->delete($this->request->data['ProductSpecification']['id']);
@@ -899,32 +898,37 @@ class ProductsController extends SalesAppController {
 					array_push($processArray, $key);
 				}
 			}
-
-
-
-			if (isset($this->request->data['ProductSpecificationComponent'])) {
-				foreach ($this->request->data['ProductSpecificationComponent'] as $key => $value) {
-					$this->request->data['ProductSpecificationComponent'][$key]['order'] = $componentArray[$key];
-				}
-			}
 			
-			if (isset($this->request->data['ProductSpecificationPart'])) {
-
-				foreach ($this->request->data['ProductSpecificationPart'] as $key => $value) {
-					if (isset($partArray[$key])) {
-						$this->request->data['ProductSpecificationPart'][$key]['order'] = $partArray[$key];
-					}
+			if (isset($this->request->data['ProductSpecificationComponent'])) {
+				
+				foreach (array_values($this->request->data['ProductSpecificationComponent']) as $key => $value) {
+					
+					$this->request->data['ProductSpecificationComponent'][$key] = $value;
+					$this->request->data['ProductSpecificationComponent'][$key]['order'] = $componentArray[$key];
 					
 				}
 
-
 			}
+
+			if (isset($this->request->data['ProductSpecificationPart'])) {
+
+				foreach (array_values($this->request->data['ProductSpecificationPart']) as $key => $value) {
+					if (isset($partArray[$key])) {
+						$this->request->data['ProductSpecificationPart'][$key] = $value;
+						$this->request->data['ProductSpecificationPart'][$key]['order'] = $partArray[$key];
+						
+					}
+					
+				}
+				
+			}
+			
 			if (!empty($this->request->data['ProductSpecificationProcess'])) {
 
 				foreach ($this->request->data['ProductSpecificationProcess'] as $key => $value) {
 
 						if (isset($processArray[$key])) {
-
+							$this->request->data['ProductSpecificationProcess'][$key] = $value;
 							$this->request->data['ProductSpecificationProcess'][$key]['order'] = $processArray[$key];
 						}
 				}

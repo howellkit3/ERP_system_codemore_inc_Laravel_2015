@@ -167,7 +167,7 @@
 																	$newClass = ' ';
 																}
 															?>
-																<button type="button" class="remove remove-purchase-order btn btn-danger <?php echo $newClass ?>"><i class="fa fa-minus" ></i></button>
+																<button type="button" class="remove remove-purchase-order btn btn-danger <?php //echo $newClass ?>"><i class="fa fa-minus" ></i></button>
 														
 														</div>
 

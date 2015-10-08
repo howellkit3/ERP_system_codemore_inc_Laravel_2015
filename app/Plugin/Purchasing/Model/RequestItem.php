@@ -53,12 +53,13 @@ class RequestItem extends AppModel {
 
 	public function saveRequestItemPrice($priceData = null)
 	{
-	 //pr($priceData); exit;
-		foreach ($priceData['RequestItem'] as $key => $priceDataValue)
-		{
-			$this->create();
-			
-			$this->save($priceDataValue);
+	 	if(!empty($priceData['RequestItem'])){
+			foreach ($priceData['RequestItem'] as $key => $priceDataValue)
+			{
+				$this->create();
+				
+				$this->save($priceDataValue);
+			}
 		}
 
 		return true;
