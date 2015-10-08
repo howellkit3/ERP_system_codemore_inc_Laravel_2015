@@ -164,10 +164,96 @@ class SettingsController extends SalesAppController {
 
 	public function process() {
 
+	
 	}
-
 	public function machines() {
 
+		$this->loadModel('Machine');
+
+		$conditions = array();
+
+		$limit = 10;
+
+        $params =  array(
+	            'conditions' => $conditions,
+	            'limit' => $limit,
+	            //'fields' => array('id', 'status','created'),
+	            'order' => 'Machine.name ASC',
+	    );
+
+		$this->paginate = $params;
+
+		$machines = $this->paginate('Machine');
+
+		$noPermission = ' '; 
+
+		$this->set(compact('machines','noPermission'));
+
+
+		$this->render('Settings/process/machine');
+
+	}
+
+	public function add_machine() {
+
+		if (!empty($this->request->data)) {
+
+			$this->loadModel('Machine');
+
+			$auth = $this->Session->read('Auth.User');
+
+
+			$data = $this->request->data;
+
+			$data['Machine']['created_by'] = $auth['id'];
+			$data['Machine']['modified_by'] = $auth['id'];
+
+
+
+
+			if ($this->Machine->save($data)) {
+
+					$this->Session->setFlash(__('Machine Has been saved'));
+					$this->redirect(
+					array('controller' => 'settings', 'action' => 'machines')
+				);
+
+			} else {
+
+				$this->Session->setFlash(__('Error Deleting Information.'));
+		
+			}
+
+
+		}	
+	}
+
+	public function delete_machine($id = null) {
+
+
+		if (!empty($id)) {
+
+
+			$this->loadModel('Machine');
+
+			if($this->Machine->delete($id)){
+
+			
+			$this->Session->setFlash(__('Machine Data remove successfully.'),'success');	
+
+			} else {
+
+
+			$this->Session->setFlash(__('Error Deleting Information.'),'error');
+
+			}
+
+			$this->redirect(
+					array('controller' => 'settings', 'action' => 'machines')
+				);
+
+
+		}
 	}
 
 }

@@ -211,7 +211,16 @@ class TicketingSystemsController extends TicketAppController {
 
             } else if (in_array($processId,array('21'))) {
 
-                   $this->render('TicketingSystems/forms/offset', false);
+                $this->loadModel('Machine');
+
+                $machines = $this->Machine->find('list',array(
+                    'conditions' => array(),
+                    'order' => array('Machine.name DESC')
+                ));
+
+                $this->set(compact('machines'));
+                
+                $this->render('TicketingSystems/forms/offset', false);
 
             } else if (in_array($processId,array('20'))) {
                  $this->render('TicketingSystems/forms/wood_mould', false);
