@@ -19,16 +19,20 @@
             
             <td>
 
-               <!-- <button type="submit" class="btn btn-success modal_button" value="<?php echo $deliveryDataList['Delivery']['id']?>"><i class="fa fa-plus-circle fa-lg"></i></button>  -->
+             <!--  <?php  echo $this->Html->link($subProcessData[$processList['ProductSpecificationProcessHolder']['sub_process_id']], 
+                            '#processModal'
+                            ); ?> -->
+
+               <!-- <button type="submit" class="btn btn-success modal_button" value="<?php echo $deliveryDataList['Delivery']['id']?>"><i class="fa fa-plus-circle fa-lg"></i></button> -->
                 
-                <a data-toggle="modal" href="#myModalReturn<?php echo $deliveryDataList['Delivery']['id'] ?>" class="table-link test"><i class="fa fa-lg "></i><span class="fa-stack">
+                <a data-toggle="modal" href="#processModal" class="modal_button table-link " value="<?php echo $deliveryDataList['Delivery']['id']?>" deliveryUUID="<?php echo $deliveryDataList['Delivery']['dr_uuid']?>"><i class="fa fa-lg "></i><span class="fa-stack">
                                             <i class="fa fa-square fa-stack-2x "></i>
                                             <i class="fa  fa-plus-circle fa-stack-1x fa-inverse  "></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Invoice</font></span></a> 
       
             </td>
         </tr>
 
-    <div class="modal fade" id="myModalReturn<?php echo $deliveryDataList['Delivery']['id'] ?>" role="dialog" >
+    <!-- <div class="modal fade" id="myModalReturn<?php echo $deliveryDataList['Delivery']['id'] ?>" role="dialog" >
             <div class="modal-dialog">
                 <div class="modal-content margintop">
 
@@ -121,9 +125,9 @@
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>  -->
 
- <!--    <div class="modal fade" id="processModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="processModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -138,7 +142,7 @@
                 
             </div>
         </div>
-    </div> -->
+    </div>
 
 <?php endforeach; ?> 
 
@@ -148,12 +152,13 @@
 
         $('body').on('click','.modal_button',function(){
 
-            deliveryId = $(this).parent().find('.modal_button').val();
-
+            var deliveryId = $(this).attr('value');
+            var deliveryUUID = $(this).attr('deliveryUUID');
+            
             $container = $('#result-table');
 
             $.ajax({
-            url: serverPath + "accounting/sales_invoice/invoice_modal/"+deliveryId,
+            url: serverPath + "accounting/sales_invoice/invoice_modal/"+deliveryId+"/"+deliveryUUID,
             type: "GET",
             dataType: "html",
            // data : { 'processId' : $processId , 'subProcess' : $subProcess , 'ticketId' : $ticketUuid },

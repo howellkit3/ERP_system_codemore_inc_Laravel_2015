@@ -3,7 +3,7 @@
                         <?php 
 
                             echo $this->Form->create('InvoiceForm',array(
-                                'url'=>(array('controller' => 'sales_invoice','action' => 'add_invoice', $deliveryDataList['Delivery']['dr_uuid'] )),'class' => 'form-horizontal')); 
+                                'url'=>(array('controller' => 'sales_invoice','action' => 'add_invoice', $deliveryUUID )),'class' => 'form-horizontal')); 
                         ?>
 
                             <div class="form-group">
@@ -64,7 +64,7 @@
                                             'class' => 'form-control item_type required ',
                                             'label' => false,
                                             'readonly' => true,
-                                            'value' => $deliveryDataList['Delivery']['dr_uuid'],
+                                            'value' => $deliveryUUID,
                                             'placeholder' => 'Invoice No.'));
                                     ?>
 

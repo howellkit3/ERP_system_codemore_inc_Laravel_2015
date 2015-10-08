@@ -1054,8 +1054,27 @@ class SalesInvoiceController extends AccountingAppController {
 
     }
 
-    public function invoice_modal($deliveryId = null) {
+    public function invoice_modal($deliveryId = null, $deliveryUUID = null) {
 
+        $seriesNo = $this->SalesInvoice->find('first', array(
+                'order' => array('SalesInvoice.id DESC')));
+
+        if(!empty($seriesNo)){
+
+            $nextSalesNo = intval($seriesNo['SalesInvoice']['sales_invoice_no']);
+
+            $seriesSalesNo = str_pad(++$nextSalesNo,6,'0',STR_PAD_LEFT); 
+
+        }else{
+
+            $nextSalesNo = intval(0);
+
+            $seriesSalesNo = str_pad(++$nextSalesNo,6,'0',STR_PAD_LEFT);
+
+        }
+ 
+
+        $this->set(compact('deliveryUUID', 'seriesSalesNo'));
 
         if (!empty($deliveryId)) {
 
@@ -1064,6 +1083,7 @@ class SalesInvoiceController extends AccountingAppController {
 
             echo "no Forms Yet";
         }
+
 
     }
 
