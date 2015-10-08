@@ -130,7 +130,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 	public function add () {
 
-				Configure::wriet('debug',0);
+		Configure::write('debug',0);
 
 		if ($this->request->is('post')) {
 
@@ -285,7 +285,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 	public function edit($id){
 
-		Configure::wriet('debug',0);
+		Configure::write('debug',0);
 		
 		$this->loadModel('HumanResource.EmployeeAdditionalInformation');
 
