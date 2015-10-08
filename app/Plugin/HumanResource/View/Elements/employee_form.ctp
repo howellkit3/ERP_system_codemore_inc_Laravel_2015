@@ -518,7 +518,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
 			                                        } 
 
 			                                        ?>
-		                                        	<div class="image_profile" style="<?php echo $style; ?>">
+		                                        	<div class="image_profile emp" style="<?php echo $style; ?>">
 
 
 

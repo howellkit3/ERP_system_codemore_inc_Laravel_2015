@@ -5,7 +5,9 @@ function readURL(input,element) {
 
         reader.onload = function (e) {
 
-            $('.'+element).attr('style','background:url('+ e.target.result +')')
+            //$('.'+element).attr('style','background:url('+ e.target.result +')')
+
+            $('.image_profile.emp').attr('style','background:url('+ e.target.result +')')
 
         }
 
@@ -210,12 +212,12 @@ $('.name-check').blur(function(){
     }
 });
 
-$body.on('click','.btn.btn-success.upload-image',function(e){
+// $body.on('click','.btn.btn-success.upload-image',function(e){
 
-    $('.image_profile input').click();
+//     $('.image_profile input').click();
 
-    e.preventDefault();
-});
+//     e.preventDefault();
+// });
 
 // $( ".datepick" ).datepicker({
 //     format: 'yyyy-mm-dd', 
