@@ -1070,16 +1070,28 @@ class EmployeesController  extends HumanResourceAppController {
                        	 	} 
 
 
-					// $pdf->Image( $background , 17, 27, 25, '', '', '', '', false, 300);
+					$pdf->Image( $background , 17, 27, 25, '', '', '', '', false, 300);
 
-					// $pdf->SetXY(15, 58);
+					$pdf->SetXY(15, 58);
 					// $pdf->SetFont('Arial','B',10);
+					$pdf->SetFont('Arial','B',10);
 
-					// $pdf->Write(5,$employee['Employee']['full_name']);	
+					//name
+					$name = !empty($employee['Employee']['full_name']) ? $employee['Employee']['full_name'] : '';
+					$pdf->Write(10,$name."\n");	
 
-					$pdf->SetFont('Arial', '', 14);
-					$pdf->Ln(10);
-					$pdf->Write(5, 'The file uses font subsetting.');
+					//department
+					$pdf->SetXY(15, 65);
+					$department = !empty($employee['Department']['section']) ? $employee['Department']['section'] : '';
+					$pdf->Write(7,$department."\n"));	
+
+
+					//department
+					$pdf->SetXY(15, 80);
+					$position = !empty($employee['Position']['name']) ? $employee['Position']['name'] : '';
+					$pdf->Write(9,'Position' );	
+
+
 				}
 				
 			}
