@@ -107,6 +107,7 @@ $page = !empty($this->params['named']['page']) ? $this->params['named']['page'] 
 								<table class="table table-striped table-hover">
 									<thead>
 										<tr>
+											<th><a href="#"><span> &nbsp </span></a></th>
 											<th><a href="#"><span>Code</span></a></th>
 			                                <!-- <th><a href="#"><span>Statement of Account No.</span></a></th> -->
 											<th><a href="#"><span>Name</span></a></th>
@@ -127,6 +128,23 @@ $page = !empty($this->params['named']['page']) ? $this->params['named']['page'] 
 								            foreach ($employees as $key => $employee): ?>
 												<tbody aria-relevant="all" aria-live="polite" role="alert" class="default-table">
 													<tr class="">
+														<td class="">
+														<?php
+														$style = '';
+															$serverPath = $this->Html->url('/',true);	
+														if (!empty($employee['Employee']['image'])) {
+
+													
+														$background =  $serverPath.'img/uploads/employee/'.$employee['Employee']['image'];	
+														} else {
+
+															$background =  $serverPath.'img/default-profile.png';	
+														}
+
+														?>
+															<img src="<?php echo $background; ?>" width="35" height="35" />
+								                        </td>
+
 														<td class="">
 								                            <?php echo $employee['Employee']['code'];?> 
 								                        </td>

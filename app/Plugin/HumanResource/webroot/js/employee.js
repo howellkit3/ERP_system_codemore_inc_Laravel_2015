@@ -1,4 +1,28 @@
 
+function ajaxCallSearchEmployee(DepartmentId,thisStatus,inputSearch){
+
+    $container =  $('.append-table-department');
+
+     $container.html('<img src="'+serverPath+'/img/loader.gif"/>');
+
+
+    $.ajax({
+        type: "GET",
+        url: serverPath + "human_resource/employees/search_by_department/"+DepartmentId+"/"+thisStatus+"/"+inputSearch,
+        dataType: "html",
+        success: function(data) {
+           
+            if(data){
+                $container.html(data); 
+            }else{
+                $container.html('<font color="red"><b>No result..</b></font>'); 
+            }
+            
+        }
+    });
+
+}
+
 function readURL(input,element) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
@@ -130,11 +154,53 @@ var checkExistingCode = function(element){
 
 }
 
+
+function searchEmployee() {
+
+         //some filter
+    var DepartmentId = $('.select-department-view option:selected').val();
+    if (!DepartmentId) {
+        DepartmentId = 0;
+    };
+
+    var status = $('.select-status-view option:selected').val();
+    if (!status) {
+        status = 0;
+    };
+   
+    var inputSearch = $('.searchEmployee').val();
+    $('.searchHidden').val(inputSearch);
+
+    $('.default-table').hide();
+    $('.append-table-department').show();
+
+    //ajax function to search
+    ajaxCallSearchEmployee(DepartmentId,status,inputSearch);
+}
+
+
+
+
 $(document).ready(function(){
+
+
+    var timeout;
+
+$('body').on('keypress','.searchEmployee',function(){
+   
+    if(timeout) {
+        clearTimeout(timeout);
+        timeout = null;
+    }
+
+    timeout = setTimeout(searchEmployee,450)
+});
+
 
 $body = $('body');
 
 $('#EmployeeAddForm').submit(function(e){
+
 
     // var error = $('.error-appended');
 
@@ -286,29 +352,29 @@ $('body').on('change','.select-status-view',function(e){
    
 });
 
-$('body').on('keyup','.searchEmployee',function(e){
+// $('body').on('keyup','.searchEmployee',function(e){
 
-    //some filter
-    var DepartmentId = $('.select-department-view option:selected').val();
-    if (!DepartmentId) {
-        DepartmentId = 0;
-    };
+//     //some filter
+//     var DepartmentId = $('.select-department-view option:selected').val();
+//     if (!DepartmentId) {
+//         DepartmentId = 0;
+//     };
 
-    var status = $('.select-status-view option:selected').val();
-    if (!status) {
-        status = 0;
-    };
+//     var status = $('.select-status-view option:selected').val();
+//     if (!status) {
+//         status = 0;
+//     };
    
-    var inputSearch = $(this).val();
-    $('.searchHidden').val(inputSearch);
+//     var inputSearch = $(this).val();
+//     $('.searchHidden').val(inputSearch);
 
-    $('.default-table').hide();
-    $('.append-table-department').show();
+//     $('.default-table').hide();
+//     $('.append-table-department').show();
 
-    //ajax function to search
-    ajaxCallSearchEmployee(DepartmentId,status,inputSearch);
+//     //ajax function to search
+//     ajaxCallSearchEmployee(DepartmentId,status,inputSearch);
    
-});
+// });
 
 $('body').on('click','.select-status',function(e){
 
@@ -324,6 +390,10 @@ $('body').on('click','.select-status',function(e){
     }
    
 });
+
+
+
+
 
 //select other department
 
@@ -357,22 +427,3 @@ $('body').on('change','#EmployeePositionId',function(){
 
 });
 
-
-function ajaxCallSearchEmployee(DepartmentId,thisStatus,inputSearch){
-
-    $.ajax({
-        type: "GET",
-        url: serverPath + "human_resource/employees/search_by_department/"+DepartmentId+"/"+thisStatus+"/"+inputSearch,
-        dataType: "html",
-        success: function(data) {
-           
-            if(data){
-                $('.append-table-department').html(data); 
-            }else{
-                $('.append-table-department').html('<font color="red"><b>No result..</b></font>'); 
-            }
-            
-        }
-    });
-
-}

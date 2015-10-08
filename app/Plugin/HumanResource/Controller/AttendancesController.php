@@ -966,16 +966,13 @@ public function daily_info() {
 
 		$this->loadModel('HumanResource.Employee');
 
-		$query = $this->request->query('attendanceId');
+		$query = $this->request->query;
 
 		if (!empty($this->request->data)) {
 
-
-
 			$data = $this->request->data;
 
-			pr($data);
-		
+
 			if ($this->Attendance->save($data)) {
 				//rediect  
 				$this->Session->setFlash('Time Sucessfully updated','success');
@@ -996,6 +993,8 @@ public function daily_info() {
 				));
 
 		}
+		$attendance  = array();
+
 		if (!empty($query['attendanceId'])) {
 
 			$this->Attendance->bind(array('Employee'));
@@ -1003,6 +1002,7 @@ public function daily_info() {
 			$attendance = $this->request->data = $this->Attendance->find('first',array(
 				'conditions' => array('Attendance.id' => $id)
 			));
+	
 		
 		}
 

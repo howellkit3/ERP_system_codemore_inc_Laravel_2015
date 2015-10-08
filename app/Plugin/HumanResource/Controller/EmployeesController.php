@@ -130,6 +130,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 	public function add () {
 
+		Configure::write('debug',0);
 
 		if ($this->request->is('post')) {
 
@@ -232,6 +233,9 @@ class EmployeesController  extends HumanResourceAppController {
 						$this->HumanResourceContactPerson->saveContact($data['ContactPersonData'],$employeeId,$auth['id']);
 			 		}
 					//save contactPerson emails
+
+					 $this->loadModel('HumanResource.Email');
+
 			 		$save = $this->Email->saveEmails($employeeId,'ContactPerson',$data['ContactPersonData']['Email'],$auth['id']);
 
 			 		$save = $this->Email->saveEmails($data['ContactPersonData']['Email'],$employeeId,'ContactPerson',$auth['id']);
@@ -280,6 +284,8 @@ class EmployeesController  extends HumanResourceAppController {
 	}
 
 	public function edit($id){
+
+		Configure::write('debug',0);
 		
 		$this->loadModel('HumanResource.EmployeeAdditionalInformation');
 
@@ -379,6 +385,7 @@ class EmployeesController  extends HumanResourceAppController {
 			 		//save salary settings
 			 		$this->Salary->saveSettings($data);
 					//save contactPerson emails
+					 $this->loadModel('HumanResource.Email');
 			 		$save = $this->Email->saveEmails($employeeId,'ContactPerson',$data['ContactPersonData']['Email'],$auth['id']);
 
 
@@ -1121,7 +1128,7 @@ class EmployeesController  extends HumanResourceAppController {
 					//name
 					$name = !empty($employee['Employee']['full_name']) ? ucwords($employee['Employee']['first_name']).' '. ucwords($employee['Employee']['last_name']).' '.$middle  : '';
 					$pdf->SetFont('Arial','B',8);
-					$pdf->MultiCell(38, 1 , ucwords($name) , '', 'C');	
+					$pdf->MultiCell(38, 1 , ucwords(utf8_decode($name)) , '', 'C');	
 
 					//department
 					$pdf->SetXY(15, 65.5);
@@ -1129,7 +1136,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 					//$pdf->Write(7,$department);	
 					 $pdf->SetFont('Arial','B',8);
-					$pdf->MultiCell(38, 2 ,$department, '', 'C');
+					$pdf->MultiCell(38, 2 ,utf8_decode($department), '', 'C');
 
 					//$pdf->SetXY(20, );		
 					//$pdf->Write(10,$contact_number);
@@ -1138,7 +1145,7 @@ class EmployeesController  extends HumanResourceAppController {
 					
 					$pdf->SetXY(15, 70);
 					 $pdf->SetFont('Arial','B',8);
-					$pdf->MultiCell(38, 1 , $position, '', 'C');
+					$pdf->MultiCell(38, 1 , utf8_decode($position), '', 'C');
 
 					//department
 					// $pdf->SetXY(15, 64.6);
@@ -1194,12 +1201,11 @@ class EmployeesController  extends HumanResourceAppController {
 					$address =  !empty($employee['ContactPersonAddress']['address_1']) ? trim(nl2br($employee['ContactPersonAddress']['address_1'])).',' : '';
 					$address .=  !empty($employee['ContactPersonAddress']['city']) ? $employee['ContactPersonAddress']['city'].',' : '';
 					$address .= !empty($employee['ContactPersonAddress']['state_province']) ? $employee['ContactPersonAddress']['state_province'].', ' : '';
-
 					$address .= !empty($employee['ContactPersonAddress']['zipcode']) ? $employee['ContactPersonAddress']['zipcode'] : '';
 					
 					//	pr(str_replace(' ','',$address));
 
-					$pdf->MultiCell( 35, 4, trim($address));
+					$pdf->MultiCell( 35, 4, trim(utf8_decode($address)));
 
 					$contact_number = !empty($employee['ContactPersonNumber']['number']) ? $employee['ContactPersonNumber']['number'] : '';
 
