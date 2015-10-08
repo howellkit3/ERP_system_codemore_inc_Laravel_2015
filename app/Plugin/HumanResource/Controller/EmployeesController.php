@@ -1092,13 +1092,13 @@ class EmployeesController  extends HumanResourceAppController {
 							$width = 25;
 							$height = 25;
 
-							$A4_HEIGHT = $size['h'] - 31.3;
+							$A4_HEIGHT = $size['h'] - 31.5;
 							$A4_WIDTH = $size['w'] + 19.8;
 						
 
 							$pdf->Image(
-								$background, ($A4_HEIGHT- $width) / 2,
-								($A4_WIDTH - $height) / 2,
+								$background, ( ($A4_HEIGHT- $width) / 2 ) ,
+								(($A4_WIDTH - $height) / 2),
 								$width,
 								$height
 							);
