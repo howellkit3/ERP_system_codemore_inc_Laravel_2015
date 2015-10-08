@@ -1112,7 +1112,7 @@ class EmployeesController  extends HumanResourceAppController {
 					$pdf->Write(10,$employee['Employee']['code']);	
 
 
-					$pdf->SetXY(16, 57);
+					$pdf->SetXY(16, 61.5);
 					// $pdf->SetFont('Arial','B',10);
 					$pdf->SetFont('Arial','',8);
 
@@ -1120,22 +1120,26 @@ class EmployeesController  extends HumanResourceAppController {
 					
 					//name
 					$name = !empty($employee['Employee']['full_name']) ? ucwords($employee['Employee']['first_name']).' '. ucwords($employee['Employee']['last_name']).' '.$middle  : '';
-					$pdf->Write(10,ucwords($name));	
+					 $pdf->SetFont('Arial','B',8);
+					$pdf->MultiCell(38, 1 , ucwords($name) , '', 'L');	
 
 					//department
-					$pdf->SetXY(16, 64.5);
+					$pdf->SetXY(16, 65.5);
 					$department = !empty($employee['Department']['notes']) ? $employee['Department']['notes'] : '';
 
-					$position = !empty($employee['Position']['name']) ? $employee['Position']['name'] : '';
 					//$pdf->Write(7,$department);	
-
-					$pdf->Multicell(0,3.3,$department."\n",2);
+					 $pdf->SetFont('Arial','B',8);
+					$pdf->MultiCell(38, 2 ,$department, '', 'L');
 
 					//$pdf->SetXY(20, );		
 					//$pdf->Write(10,$contact_number);
 					//$pdf->MultiCell( 35, 5, $position,2);
-					$pdf->SetXY(16, 70.5);
-					$pdf->MultiCell('15', '0', $position, '', 'L');
+					$position = !empty($employee['Position']['name']) ? $employee['Position']['name'] : '';
+					
+					$pdf->SetXY(16, 70);
+					 $pdf->SetFont('Arial','B',8);
+					$pdf->MultiCell(38, 1 , $position, '', 'L');
+
 					//department
 					// $pdf->SetXY(15, 64.6);
 					// //$position = !empty($employee['Position']['name']) ? $employee['Position']['name'] : '';
