@@ -1093,12 +1093,12 @@ class EmployeesController  extends HumanResourceAppController {
 							$height = 25;
 
 							$A4_HEIGHT = $size['h'] - 31.5;
-							$A4_WIDTH = $size['w'] + 20;
+							$A4_WIDTH = $size['w'] + 19.8;
 						
 
 							$pdf->Image(
-								$background, ($A4_HEIGHT- $width) / 2,
-								($A4_WIDTH - $height) / 2,
+								$background, ( ($A4_HEIGHT- $width) / 2 ) ,
+								(($A4_WIDTH - $height) / 2),
 								$width,
 								$height
 							);
@@ -1112,7 +1112,7 @@ class EmployeesController  extends HumanResourceAppController {
 					$pdf->Write(10,$employee['Employee']['code']);	
 
 
-					$pdf->SetXY(16, 61.5);
+					$pdf->SetXY(15, 61.5);
 					// $pdf->SetFont('Arial','B',10);
 					$pdf->SetFont('Arial','',8);
 
@@ -1120,25 +1120,25 @@ class EmployeesController  extends HumanResourceAppController {
 					
 					//name
 					$name = !empty($employee['Employee']['full_name']) ? ucwords($employee['Employee']['first_name']).' '. ucwords($employee['Employee']['last_name']).' '.$middle  : '';
-					 $pdf->SetFont('Arial','B',8);
-					$pdf->MultiCell(38, 1 , ucwords($name) , '', 'L');	
+					$pdf->SetFont('Arial','B',8);
+					$pdf->MultiCell(38, 1 , ucwords($name) , '', 'C');	
 
 					//department
-					$pdf->SetXY(16, 65.5);
+					$pdf->SetXY(15, 65.5);
 					$department = !empty($employee['Department']['notes']) ? $employee['Department']['notes'] : '';
 
 					//$pdf->Write(7,$department);	
 					 $pdf->SetFont('Arial','B',8);
-					$pdf->MultiCell(38, 2 ,$department, '', 'L');
+					$pdf->MultiCell(38, 2 ,$department, '', 'C');
 
 					//$pdf->SetXY(20, );		
 					//$pdf->Write(10,$contact_number);
 					//$pdf->MultiCell( 35, 5, $position,2);
 					$position = !empty($employee['Position']['name']) ? $employee['Position']['name'] : '';
 					
-					$pdf->SetXY(16, 70);
+					$pdf->SetXY(15, 70);
 					 $pdf->SetFont('Arial','B',8);
-					$pdf->MultiCell(38, 1 , $position, '', 'L');
+					$pdf->MultiCell(38, 1 , $position, '', 'C');
 
 					//department
 					// $pdf->SetXY(15, 64.6);
@@ -1172,7 +1172,7 @@ class EmployeesController  extends HumanResourceAppController {
 					//department
 					$pdf->SetXY(20, 18.5);
 
-					$dateHired = !empty($employee['Employee']['date_hired']) ? date('Y/m/d',strtotime($employee['Employee']['date_hired'])) : ''; 
+					$dateHired = !empty($employee['Employee']['date_hired']) ? date('Y / m / d',strtotime($employee['Employee']['date_hired'])) : ''; 
 
 					$pdf->Multicell(0,3,$dateHired);
 
