@@ -21,7 +21,7 @@
                                 </div>
                             </div>
                             
-                            <br><br>
+                            
 
                             <div class="form-group">
                                 <label class="col-lg-3 control-label"><span style="color:red">*</span>Status</label>
@@ -38,7 +38,7 @@
                                 </div>
                             </div>
 
-                            <br><br>
+                            
 
                             <div class="form-group">
                                 <label class="col-lg-3 control-label"><span style="color:red">*</span>Invoice Number</label>
@@ -54,9 +54,9 @@
                                 </div>
                             </div>
 
-                            <br><br>
+                            
 
-                            <div class="form-group delivery_number" style = "margin-bottom:60px;" >
+                            <div class="form-group delivery_number" >
                                 <label class="col-lg-3 control-label"><span style="color:red">*</span>Delivery Number</label>
                                 <div class="col-lg-8">
                                     <?php 
