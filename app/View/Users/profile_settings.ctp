@@ -45,7 +45,7 @@
 		                            $style = 'background:url('.$background.')';
 
 		                        ?>
-	                            <div class="image_profile" style="<?php echo $style; ?>">
+	                            <div class="image_profile nav" style="<?php echo $style; ?>">
 										<?php 
 				                    		echo $this->Form->input('file', array(
 				                    		'type' => 'file',

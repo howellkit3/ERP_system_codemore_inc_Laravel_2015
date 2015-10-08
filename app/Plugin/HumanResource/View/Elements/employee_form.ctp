@@ -518,7 +518,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
 			                                        } 
 
 			                                        ?>
-		                                        	<div class="image_profile" style="<?php echo $style; ?>">
+		                                        	<div class="image_profile emp" style="<?php echo $style; ?>">
 
 
 
@@ -1621,6 +1621,10 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
                     									'type' => 'hidden',
 		                    							'value' => 'Employee',
 		                                                'data-name' => 'Address'
+		                                            ));
+		                             	echo $this->Form->input('ContactPersonData.Address.0.id', array(
+                    									'type' => 'hidden',
+		                                                'data-name' => 'Id'
 		                                            ));
 		                               ?>
                                 <div class="form-group">

@@ -5,6 +5,11 @@ App::uses('SessionComponent', 'Controller/Component');
 App::import('Vendor', 'DOMPDF', true, array(), 'dompdf'.DS.'dompdf_config.inc.php', false);
 
 
+App::import('Vendor', 'fpdf', true, array(), 'fpdf'.DS.'fpdf.php', false);
+
+App::import('Vendor', 'FPDI', true, array(), 'FPDI'.DS.'fpdi.php', false);
+
+
 App::uses('ImageUploader', 'Vendor');
 
 class EmployeesController  extends HumanResourceAppController {
@@ -358,9 +363,13 @@ class EmployeesController  extends HumanResourceAppController {
 			 			$save = $this->Dependent->saveDependent($data['Dependent'],$employeeId,$auth['id']);
 
 			 		}
+
+
 			 		if (!empty($data['ContactPersonData'])) {
 
-			 			$this->HumanResourceContactPerson->saveContact($data['ContactPersonData'],$employeeId,$auth['id']);
+
+
+			 			$this->ContactPerson->saveContact($data['ContactPersonData'],$employeeId,$auth['id']);
 				
 			 		}
 
@@ -1013,6 +1022,8 @@ class EmployeesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Address');
 
+		$this->loadModel('HumanResource.GovernmentRecord');
+
 		//Configure::write('debug',0);
 
 		$this->layout = false;
@@ -1020,54 +1031,220 @@ class EmployeesController  extends HumanResourceAppController {
 
 		if (!empty($id)) {
 
-			$this->Employee->bind(array('Department','Position','ContactPerson','Contact','ContactPersonNumber','ContactPersonAddress'));
+			$this->Employee->bind(array('Department','Position','ContactPerson','Contact','ContactPersonNumber','ContactPersonAddress','SSS','TIN'));
 			
 			$employee = $this->Employee->findById($id);
 		}
 
+		// pr($employee);
+		// exit();
 
-		$this->set(compact('employee'));
 
-		$view = new View(null, false);
-		//pr($formatDataSpecs);exit();
-		$view->set(compact('employee'));
+			$pdf = new FPDI();
 
-		$view->viewPath = 'Employees'.DS.'pdf';	
+	
+
+			$pageCount = $pdf->setSourceFile(WWW_ROOT."img/id/koufu_id.pdf");
+
+
+			// iterate through all pages
+				for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
+				// import a page
+				$templateId = $pdf->importPage($pageNo);
+				// get the size of the imported page
+				$size = $pdf->getTemplateSize($templateId);
+
+				// create a page (landscape or portrait depending on the imported page size)
+				if ($size['w'] > $size['h']) {
+				//$pdf->AddPage('L', array($size['w'], $size['h']));
+				} else {
+				$pdf->AddPage('P', array($size['w'], $size['h'] + 0.1));
+
+				
+			}
+
+			// use the imported page
+			$pdf->useTemplate($templateId);
+			//$pdf->Cell(212,363);
+				$pdf->SetFont('Helvetica');
+
+					$pdf->SetMargins(0, 0);
+					$pdf->cMargin = 0;
+
+					if ($pageNo == 1) {
+
+						    $serverPath =  Router::url('/', true);
+
+							if (!empty($employee['Employee']['image'])) { 
+
+                            	$background =  $serverPath.'img/uploads/employee/'.$employee['Employee']['image'];	
+                            
+                           
+							 } else {
+
+                       	 	  	$background =  $serverPath.'img/default-profile.png';	
+                       	 	} 
+
+
+							$width = 25;
+							$height = 25;
+
+							$A4_HEIGHT = $size['h'] - 31.5;
+							$A4_WIDTH = $size['w'] + 20;
+						
+
+							$pdf->Image(
+								$background, ($A4_HEIGHT- $width) / 2,
+								($A4_WIDTH - $height) / 2,
+								$width,
+								$height
+							);
+							
+
+					//$pdf->HTMLCell(100, 50, 10, 10, '<img src="'.$background .'" height="150" /> Curabitur at porta dui...');
+
+					$pdf->SetXY(26, 50);
+					$pdf->SetFont('Arial','',10);
+	
+					$pdf->Write(10,$employee['Employee']['code']);	
+
+
+					$pdf->SetXY(16, 57);
+					// $pdf->SetFont('Arial','B',10);
+					$pdf->SetFont('Arial','',8);
+
+					$middle = !empty($employee['Employee']['middle_name']) ? ucfirst($employee['Employee']['middle_name'][1]) : '';
+					
+					//name
+					$name = !empty($employee['Employee']['full_name']) ? ucwords($employee['Employee']['first_name']).' '. ucwords($employee['Employee']['last_name']).' '.$middle  : '';
+					$pdf->Write(10,ucwords($name));	
+
+					//department
+					$pdf->SetXY(16, 64.5);
+					$department = !empty($employee['Department']['notes']) ? $employee['Department']['notes'] : '';
+
+					$position = !empty($employee['Position']['name']) ? $employee['Position']['name'] : '';
+					//$pdf->Write(7,$department);	
+
+					$pdf->Multicell(0,3.3,$department."\n",2);
+
+					//$pdf->SetXY(20, );		
+					//$pdf->Write(10,$contact_number);
+					//$pdf->MultiCell( 35, 5, $position,2);
+					$pdf->SetXY(16, 70.5);
+					$pdf->MultiCell('15', '0', $position, '', 'L');
+					//department
+					// $pdf->SetXY(15, 64.6);
+					// //$position = !empty($employee['Position']['name']) ? $employee['Position']['name'] : '';
+					
+					// // $pdf->SetXY(15, 64.8);
+					// $pdf->Write(7,$position);	
+
+
+				}
+
+				if ($pageNo == 2) {
+
+					//SSS
+
+					$pdf->SetXY(20, 9.5);
+
+					$sss = !empty($employee['SSS']['value']) ? $employee['SSS']['value'] : ''; 
+
+					$pdf->Multicell(0,3,$sss);
+
+					//tin
+
+					$pdf->SetXY(20, 14);
+
+					$tin = !empty($employee['TIN']['value']) ? $employee['TIN']['value'] : ''; 
+
+					$pdf->Multicell(0,3,$tin);
+
+
+					//department
+					$pdf->SetXY(20, 18.5);
+
+					$dateHired = !empty($employee['Employee']['date_hired']) ? date('Y/m/d',strtotime($employee['Employee']['date_hired'])) : ''; 
+
+					$pdf->Multicell(0,3,$dateHired);
+
+
+					//contact person
+
+					$pdf->SetXY(20, 24);
+					$pdf->SetFont('Arial','',7);
+					
+					//
+					$contactPerson = !empty($employee['ContactPerson']['firstname']) ? ucfirst($employee['ContactPerson']['firstname']).', '. ucfirst($employee['ContactPerson']['middlename'][0]).' '.ucfirst($employee['ContactPerson']['lastname']): '';
+					$pdf->Write(10,$contactPerson);	
+
+					$pdf->SetXY(20, 31);
+					$pdf->SetFont('Arial','',7);
+
+					$address =  !empty($employee['ContactPersonAddress']['address_1']) ? $employee['ContactPersonAddress']['address_1'].', ' : '';
+					$address .=  !empty($employee['ContactPersonAddress']['city']) ? $employee['ContactPersonAddress']['city'].', ' : '';
+					$address .= !empty($employee['ContactPersonAddress']['province']) ? $employee['ContactPersonAddress']['province'].' ' : '';
+
+					$pdf->MultiCell( 35, 5, $address);
+
+					$contact_number = !empty($employee['ContactPersonNumber']['number']) ? ucfirst($employee['ContactPersonNumber']['number']) : '';
+
+					$pdf->SetXY(20, 44.5);		
+					//$pdf->Write(10,$contact_number);
+					$pdf->MultiCell( 35, 5, $contact_number,2);
+
+				}
+				
+			}
+
+			// Output the new PDF
+			$pdfData = $pdf->Output($employee['Employee']['code'].'.pdf', 'D');
+
+			//$pdf->Output();
+
+// 		$this->set(compact('employee'));
+
+// 		$view = new View(null, false);
+// 		//pr($formatDataSpecs);exit();
+// 		$view->set(compact('employee'));
+
+// 		$view->viewPath = 'Employees'.DS.'pdf';	
    
-        $output = $view->render('print_id', false);
+//         $output = $view->render('print_id', false);
    	   
       
-        $dompdf = new DOMPDF();
-        $dompdf->set_paper("A5");
+//         $dompdf = new DOMPDF();
+//         $dompdf->set_paper("A5");
 
 
-		//$paper_size = array(0,0,96,56);
-		//  $dompdf->set_paper($paper_size);
-//
+// 		//$paper_size = array(0,0,96,56);
+// 		//  $dompdf->set_paper($paper_size);
+// //
 
-        //$output = mb_convert_encoding($output, 'HTML-ENTITIES', 'UTF-8');
-        $dompdf->load_html($output);
-        $dompdf->load_html($output, 'UTF-8');
-        $dompdf->render();
-        $canvas = $dompdf->get_canvas();
-        $font = "DejaVu Sans";
-        //body { font-family: DejaVu Sans, sans-serif; }
-        //$pdf->SetFont('dejavusans', '', 14, '', true);
-      //  $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
-        //
-        $output = $dompdf->output();
+//         //$output = mb_convert_encoding($output, 'HTML-ENTITIES', 'UTF-8');
+//         $dompdf->load_html($output);
+//         $dompdf->load_html($output, 'UTF-8');
+//         $dompdf->render();
+//         $canvas = $dompdf->get_canvas();
+//         $font = "DejaVu Sans";
+//         //body { font-family: DejaVu Sans, sans-serif; }
+//         //$pdf->SetFont('dejavusans', '', 14, '', true);
+//       //  $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
+//         //
+//         $output = $dompdf->output();
         
-        $random = rand(0, 1000000) . '-' . time();
-        if (empty($filename)) {
-        	//$filename = 'product-'.$quotation['ProductDetail']['name'].'-quotation'.time();
-        	$filename = 'employee-'.time();
-        }
-      	$filePath = 'view_pdf/'.strtolower(Inflector::slug( $filename , '-')).'.pdf';
-        $file_to_save = WWW_ROOT .DS. $filePath;
-         //pr($output);exit();	
-        if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
-        		unlink($file_to_save);
-        }
+//         $random = rand(0, 1000000) . '-' . time();
+//         if (empty($filename)) {
+//         	//$filename = 'product-'.$quotation['ProductDetail']['name'].'-quotation'.time();
+//         	$filename = 'employee-'.time();
+//         }
+//       	$filePath = 'view_pdf/'.strtolower(Inflector::slug( $filename , '-')).'.pdf';
+//         $file_to_save = WWW_ROOT .DS. $filePath;
+//          //pr($output);exit();	
+//         if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
+//         		unlink($file_to_save);
+//         }
        
 
 	}

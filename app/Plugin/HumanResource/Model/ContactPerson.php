@@ -113,10 +113,11 @@ class ContactPerson extends AppModel {
 					$address[$key]['foreign_key'] = $this->id;
 					$address[$key]['created_by'] = $auth_id;
 					$address[$key]['modified_by'] = $auth_id;
-			
+				
+					$this->Address->save($address[$key]);	
 				}
 
-				$this->Address->saveAll($address);	
+			
 
 			}
 
