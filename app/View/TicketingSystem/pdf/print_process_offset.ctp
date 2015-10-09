@@ -1,6 +1,7 @@
 <?php
 // header("Content-disposition: attachment; filename="'this.pdf');
 // header("Content-type: application/pdf");
+Configure::write('debug',0);
 ?>
 <style>
 <?php include('word.css'); ?>
