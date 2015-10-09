@@ -17,7 +17,7 @@
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
             <header class="main-box-header clearfix">
-                <h2 class="pull-left"><b>Process Category List</b></h2>
+                <h2 class="pull-left"><b>Machines</b></h2>
                 
                 <div class="filter-block pull-right">
                     <div class="form-group pull-left">
@@ -28,7 +28,7 @@
                     </div>
                     <?php
 
-                        echo $this->Html->link('<i class="fa fa-plus-circle fa-lg"></i> Add Categories ','#CategoryModal',array('class' =>'btn btn-primary pull-right '. $noPermission,'escape' => false,'data-toggle' => 'modal'));
+                        echo $this->Html->link('<i class="fa fa-plus-circle fa-lg"></i> Add Machine ','#machineModal',array('class' =>'btn btn-primary pull-right '. $noPermission,'escape' => false,'data-toggle' => 'modal'));
                        
                     ?>
                 </div>
@@ -41,15 +41,45 @@
                             <tr> 
                                 <th><a href="#"><span>Name</span></a></th>
                                 <th><a href="#"><span>Description</span></a></th>
+                                <th><a href="#"><span>Plate</span></a></th>
+                                <th><a href="#"><span>Paper Gripper</span></a></th>
+                                <th><a href="#"><span>Plate Gripper</span></a></th>
+
+                                <th><a href="#"><span>Actions</span></a></th>
                                <!--  <th>Action</th> -->
                             </tr>
                         </thead>
 
                         <tbody aria-relevant="all" aria-live="polite" class="customerFields" role="alert">
-                        	<?php foreach ($categories as $key => $list) { ?>
+                        	<?php foreach ($machines as $key => $list) { ?>
                         			<tr>
-                            			<td> <?php echo $list['ProcessCategory']['name'] ?></td>
-                            			<td> <?php echo $list['ProcessCategory']['description'] ?> </td>
+                            			<td> <?php echo $list['Machine']['name'] ?></td>
+                            			<td> <?php echo $list['Machine']['description'] ?> </td>
+                                        <td> <?php echo $list['Machine']['plate'] ?> </td>
+                                        <td> <?php echo $list['Machine']['paper_gripper'] ?> </td>
+                                        <td> <?php echo $list['Machine']['plate_gripper'] ?> </td>
+                                        <td> 
+
+
+                                         <?php
+                                                        echo $this->Html->link('<span class="fa-stack">
+                                                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Delete </font></span>
+                                                                                </span>', 
+                                                                                        array(
+                                                                               'controller' => 'settings', 
+                                                                               'action' => 'delete_machine',
+                                                                               $list['Machine']['id']
+
+                                                                                        ), 
+                                                                                        array(
+                                                                                'class' =>' table-link', 
+                                                                                'escape' => false, 
+                                                                                'title'=>'Delete Machine', 
+                                                                                'confirm' => 'Do you want to delete this machine ?'
+                                                                                ));
+                                                    ?>
+                                         </td>
                             	</tr>	
                         	<?php } ?>
                             	
@@ -88,4 +118,4 @@
     </div>
 </div>
 </div>
-<?php echo $this->element('modal/categories');?>
+<?php echo $this->element('modal/machine');?>
