@@ -886,16 +886,19 @@ class ProductsController extends SalesAppController {
 			$componentArray = array();
 			$partArray = array();
 			$processArray = array();
-			foreach ($this->request->data['ProductSpecificationDetail'] as $key => $value) {
-				
-				if($value == 'Component'){
-					array_push($componentArray, $key);
-				}
-				if($value == 'Part'){
-					array_push($partArray, $key);
-				}
-				if($value == 'Process'){
-					array_push($processArray, $key);
+			if (!empty($this->request->data['ProductSpecificationDetail'])) {
+			
+				foreach ($this->request->data['ProductSpecificationDetail'] as $key => $value) {
+					
+					if($value == 'Component'){
+						array_push($componentArray, $key);
+					}
+					if($value == 'Part'){
+						array_push($partArray, $key);
+					}
+					if($value == 'Process'){
+						array_push($processArray, $key);
+					}
 				}
 			}
 			
@@ -925,7 +928,7 @@ class ProductsController extends SalesAppController {
 			
 			if (!empty($this->request->data['ProductSpecificationProcess'])) {
 
-				foreach ($this->request->data['ProductSpecificationProcess'] as $key => $value) {
+				foreach (array_values($this->request->data['ProductSpecificationProcess']) as $key => $value) {
 
 						if (isset($processArray[$key])) {
 							$this->request->data['ProductSpecificationProcess'][$key] = $value;
@@ -952,17 +955,17 @@ class ProductsController extends SalesAppController {
 			$getIds = array_merge($getIds,$thisProcessIds);
 
 			$saveArray = array();
+			if (!empty($this->request->data['ProductSpecificationDetail'])) {
+				foreach ($this->request->data['ProductSpecificationDetail'] as $key => $data) {
 
-			foreach ($this->request->data['ProductSpecificationDetail'] as $key => $data) {
-
-				if (!empty($getIds[$key])) {
-					$newdata = split('-', $getIds[$key]);
-					$saveArray[$key]['ProductSpecificationDetail']['model'] = $newdata[2];
-					$saveArray[$key]['ProductSpecificationDetail']['order'] = $newdata[1];
-					$saveArray[$key]['ProductSpecificationDetail']['foreign_key'] = $newdata[0];
+					if (!empty($getIds[$key])) {
+						$newdata = split('-', $getIds[$key]);
+						$saveArray[$key]['ProductSpecificationDetail']['model'] = $newdata[2];
+						$saveArray[$key]['ProductSpecificationDetail']['order'] = $newdata[1];
+						$saveArray[$key]['ProductSpecificationDetail']['foreign_key'] = $newdata[0];
+					}
+					
 				}
-				
-
 			}
 
 			$this->ProductSpecificationDetail->saveSpecDetail($saveArray,$userData['User']['id'],$this->request->data['Product']['uuid']);
