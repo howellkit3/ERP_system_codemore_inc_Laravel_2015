@@ -29,14 +29,4 @@ class MachinesController extends AppController
 	}
     
 
-    public function save_process_to_ticket() {
-
-
-        if (!empty($this->request->data)) {
-
-
-            pr($this->request->data);
-            exit();
-        }
-    }
 }

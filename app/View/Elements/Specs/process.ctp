@@ -40,6 +40,7 @@
                                 'data-toggle' => 'modal',
                                 'data-product' => $product['foreign_key'],
                                 'class' => 'process_link',
+                                'id' => 'processID-'.$dataSpecs['ProductSpecificationDetail']['product_id'].'-'.$processList['ProductSpecificationProcessHolder']['sub_process_id']
                             )
                             );
         			} else  {

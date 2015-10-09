@@ -1,4 +1,4 @@
-   <?php echo $this->Form->create('JobTicketProcess',array('url'=>(array('controller' => 'ticketing_systems','action' => 'save_job_ticket_process','type' => 'wood_mold')),'class' => 'form-horizontal','id' => 'offsetForm'));?>
+   <?php echo $this->Form->create('PlateMakingProcess',array('url'=>(array('controller' => 'ticketing_systems','action' => 'save_process_to_ticket','type' => 'wood_mold')),'class' => 'form-horizontal','id' => 'offsetForm'));?>
                
 
                     <div class="form-group">
@@ -13,6 +13,10 @@
 
                               ));
                             echo $this->Form->input('product_id',array('type' => 'hidden','value' => $parameter['productId']
+
+                              ));
+
+                            echo $this->Form->input('FormId',array('type' => 'hidden','value' => $parameter['formProcesId']
 
                               ))
                           ?>
@@ -126,7 +130,8 @@
                              //'title' => 'Print '. $subProcess[$processList['ProductSpecificationProcessHolder']['sub_process_id']],
                                 'target' => '_blank',
                                 'escape' => false,
-                                'class' => 'btn btn-success'
+                                'class' => 'btn btn-success',
+                                'data-dismiss' => 'modal'
                             )
                             );
 
@@ -135,7 +140,7 @@
                          <button type="submit" id="submitOffset" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i>  Save </button>
 
 
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" id="closeModal" class="btn btn-default" data-dismiss="modal">Close</button>
                         
                     </div>
                 </form>

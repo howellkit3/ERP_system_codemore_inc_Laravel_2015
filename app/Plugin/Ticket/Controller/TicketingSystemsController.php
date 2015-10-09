@@ -188,7 +188,7 @@ class TicketingSystemsController extends TicketAppController {
 		return $this->redirect(array('controller' => 'ticketing_systems', 'action' => 'index'));
 	}
 
-    public function find_process($processId = null, $productId = null , $ticketId = null,$product = null) {
+    public function find_process($processId = null, $productId = null , $ticketId = null,$product = null, $formProcesId = null) {
 
         $query = $this->request->query;
 
@@ -202,6 +202,8 @@ class TicketingSystemsController extends TicketAppController {
 
 
             $parameter['product'] = $product;
+
+            $parameter['formProcesId'] = $formProcesId;
 
             $this->set(compact('parameter'));
 
@@ -925,5 +927,54 @@ class TicketingSystemsController extends TicketAppController {
         // }
 
 
+    }
+
+
+    public function save_process_to_ticket() {
+
+
+        if (!empty($this->request->data)) {
+
+            $this->loadModel('Ticket.PlateMakingProcess');
+
+
+            $this->loadModel('Machine');
+
+            $auth = $this->Session->read('Auth.User');
+
+            if (!empty($this->request->data['PlateMakingProcess']['machine'])) {
+
+                  $data = $this->request->data;
+
+                  $data['PlateMakingProcess']['created_by'] = $auth['id'];
+
+                  $data['PlateMakingProcess']['modified_by'] = $auth['id'];
+
+
+                  if ($this->PlateMakingProcess->save($data)) {
+
+                    $process = $this->PlateMakingProcess->read(null,$this->PlateMakingProcess->id);
+
+                    $machines = $this->Machine->find('list');
+
+                    if (!empty($process['PlateMakingProcess']['id'])) {
+                        $process['PlateMakingProcess']['machine_name'] = $machines[$process['PlateMakingProcess']['machine']];
+
+                    }
+
+                    
+
+                    $process = array_merge($process, array('formProcessId' => $data['PlateMakingProcess']['FormId']));
+
+                    echo json_encode(array('result' =>  $process));
+
+                  } else {
+
+                     echo json_encode(array('result' => 'error'));
+                  }
+            }
+          
+          exit();
+        }
     }
 }
