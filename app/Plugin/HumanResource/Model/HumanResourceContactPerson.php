@@ -56,18 +56,24 @@ class HumanResourceContactPerson extends AppModel {
 		$this->contain($model);
 	}
 	
-	public function saveContact($data, $employee_id = null,$auth_id = null)
+	public function saveContact($data, $employee_id = null,$auth_id = null,$type = 'null')
 	{	
 
 		$contact_person = array();		
 
 		if (!empty($data)){
-			$contact_person = $data[0];
-			$contact_person['employee_id'] = $employee_id;
-			$contact_person['created_by'] = $auth_id;
-			$contact_person['modified_by'] = $auth_id;
 
-			$this->save($contact_person);
+			if ($type == 'ContactPerson') {
+				
+				$contact_person = $data[0];
+				$contact_person['employee_id'] = $employee_id;
+				$contact_person['created_by'] = $auth_id;
+				$contact_person['modified_by'] = $auth_id;
+
+				$this->save($contact_person);
+			}
+		
+
 
 			$this->bind(array('Contact','Email'));
 
@@ -98,10 +104,11 @@ class HumanResourceContactPerson extends AppModel {
 					$contacts[$key]['foreign_key'] = $this->id;
 					$contacts[$key]['created_by'] = $auth_id;
 					$contacts[$key]['modified_by'] = $auth_id;
+
+					$this->Email->save($contacts[$key]);	
 			
 				}
 
-				$this->Contact->saveAll($contacts);	
 
 			}
 

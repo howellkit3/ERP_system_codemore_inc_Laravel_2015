@@ -130,7 +130,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 	public function add () {
 
-		Configure::write('debug',0);
+		Configure::write('debug',2);
 
 		if ($this->request->is('post')) {
 
@@ -210,7 +210,7 @@ class EmployeesController  extends HumanResourceAppController {
 			 		//save additional info
 			 		$save = $this->EmployeeAdditionalInformation->saveInfo($employeeId,$data['EmployeeAdditionalInformation']);
 			 		//save employee emails
-			 		//$save = $this->Email->saveEmails($data['Emails'],$employeeId,'Employee',$auth['id']);
+			 		$save = $this->Email->saveEmails($data['Emails'],$employeeId,'Employee',$auth['id']);
 					//save employee address
 			 		$save = $this->Address->saveAddress($data['Address'],$employeeId,'Employee',$auth['id']);	
 			 		//save employee contact
@@ -218,7 +218,9 @@ class EmployeesController  extends HumanResourceAppController {
 
 			 		$this->loadModel('HumanResource.HumanResourceContactPerson');
 
-			 		$save = $this->HumanResourceContactPerson->saveContact($data['Contact'],$employeeId,'Employee',$auth['id']);
+
+			 		//$save = $this->HumanResourceContactPerson->saveContact($data['Contact'],$employeeId,'Employee',$auth['id']);
+
 					//save employee_goverment record
 			 		$save = $this->GovernmentRecord->saveRecord($data['EmployeeAgencyRecord'],$employeeId,$auth['id']);
 
@@ -230,16 +232,20 @@ class EmployeesController  extends HumanResourceAppController {
 
 			 		if (!empty($data['ContactPersonData'])) {
 						
-						$this->HumanResourceContactPerson->saveContact($data['ContactPersonData'],$employeeId,$auth['id']);
+						$contactId = $this->HumanResourceContactPerson->saveContact($data['ContactPersonData'],$employeeId,$auth['id'],'ContactPerson');
+			 			
+			 		
+						$save = $this->Email->saveEmails($data['ContactPersonData']['Email'],$contactId,'ContactPerson',$auth['id']);
+
 			 		}
+
 					//save contactPerson emails
 
 					 $this->loadModel('HumanResource.Email');
 
 			 		//$save = $this->Email->saveEmails($employeeId,'ContactPerson',$data['ContactPersonData']['Email'],$auth['id']);
 
-			 		$save = $this->Email->saveEmails($data['ContactPersonData']['Email'],$employeeId,'ContactPerson',$auth['id']);
-
+			 		
 			 		//$save
 			 		$this->Session->setFlash('Saving employee information successfully, Please add Salary setting','success');
 			 		   $this->redirect( array(
@@ -346,7 +352,7 @@ class EmployeesController  extends HumanResourceAppController {
 			 		//save additional info
 			 		$save = $this->EmployeeAdditionalInformation->saveInfo($employeeId,$data['EmployeeAdditionalInformation']);
 			 		//save employee emails
-			 		//$save = $this->Email->saveEmails($data['Emails'],$employeeId,'Employee',$auth['id']);
+			 		$save = $this->Email->saveEmails($data['Emails'],$employeeId,'Employee',$auth['id']);
 					//save employee address
 			 		$save = $this->Address->saveAddress($data['Address'],$employeeId,'Employee',$auth['id']);	
 			 		//save employee contact
@@ -374,9 +380,13 @@ class EmployeesController  extends HumanResourceAppController {
 			 		if (!empty($data['ContactPersonData'])) {
 
 
+					 	$this->loadModel('HumanResource.HumanResourceEmail');
 
-			 			$this->HumanResourceContactPerson->saveContact($data['ContactPersonData'],$employeeId,$auth['id']);
-				
+
+			 			$contactId = $this->HumanResourceContactPerson->saveContact($data['ContactPersonData'],$employeeId,$auth['id'],'ContactPerson');
+						
+						$save = $this->Email->saveEmails($data['ContactPersonData']['Email'],$contactId,'ContactPerson',$auth['id']);
+
 			 		}
 
 
@@ -385,12 +395,10 @@ class EmployeesController  extends HumanResourceAppController {
 			 		//save salary settings
 			 		$this->Salary->saveSettings($data);
 					//save contactPerson emails
-					 $this->loadModel('HumanResource.HumanResourceEmail');
 
 			 		//$save = $this->HumanResourceEmail->saveEmails($employeeId,'ContactPerson',$data['ContactPersonData']['Email'],$auth['id']);
 
-			 		$save = $this->Email->saveEmails($data['ContactPersonData']['Email'],$employeeId,'ContactPerson',$auth['id']);
-
+			 		
 			 		$this->Session->setFlash('Saving employee information successfully','success');
 			 		   $this->redirect( array(
                                  'controller' => 'employees', 
