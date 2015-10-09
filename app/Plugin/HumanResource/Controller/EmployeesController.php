@@ -291,7 +291,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 	public function edit($id){
 
-		Configure::write('debug',0);
+		Configure::write('debug',2);
 		
 		$this->loadModel('HumanResource.EmployeeAdditionalInformation');
 

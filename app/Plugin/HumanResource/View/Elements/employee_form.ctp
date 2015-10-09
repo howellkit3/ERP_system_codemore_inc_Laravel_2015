@@ -1630,7 +1630,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
 
 		    <!-- address -->
 
-		         <section class="cloneMe addressSection">
+		         <section class="cloneMe addressSectionContactPerson">
         <div class="row">
             <div class="col-lg-12">
                 <div class="main-box">
@@ -1715,13 +1715,13 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
                                 <hr style="height:1px; border:none; color:#b2b2b2; background-color:#b2b2b2;">
                             
 
-                                <!-- <div class="form-group">
+                                <div class="form-group">
                                     <label for="inputPassword1" class="col-lg-2 control-label"></label>
                                     <div class="col-lg-10">
-                                        <button type="button" data-model='Address' class="add-field table-link danger btn btn-success" onclick="cloneData('addressSection',this)"> <i class="fa fa-plus"></i></button>
-                                        <button type="button" class="remove-field btn btn-danger remove" onclick="removeClone('addressSection')" style="display:none"><i class="fa fa-minus"></i> </button>
+                                        <button type="button" data-model='Address' class="add-field table-link danger btn btn-success" onclick="cloneData('addressSectionContactPerson',this)"> <i class="fa fa-plus"></i></button>
+                                        <button type="button" class="remove-field btn btn-danger remove" onclick="removeClone('addressSectionContactPerson')" style="display:none"><i class="fa fa-minus"></i> </button>
                                     </div>
-                                </div> -->
+                                </div> 
                             </div>
                         </div>
                     </div>
