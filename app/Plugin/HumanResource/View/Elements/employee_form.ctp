@@ -1056,7 +1056,8 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
 		                                        <?php 
 		                                            echo $this->Form->input('Address.'.$address_key.'.address_1', array('class' => 'form-control item_type required',
 		                                                'alt' => 'address1',
-		                                                'label' => false));
+		                                                'label' => false
+		                                               ));
 		                                        ?>
 		                                    </div>
 		                                </div>
@@ -1107,7 +1108,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
 		                                    <label for="inputPassword1" class="col-lg-2 control-label"></label>
 		                                    <div class="col-lg-10">
 		                                       <button type="button" data-model='Address' class="add-field table-link danger btn btn-success" onclick="cloneData('EmployeeAddressSection',this)"> <i class="fa fa-plus"></i></button>
-		                                        <button type="button" class="remove-field btn btn-danger remove <?php echo $address_key <= 0  ? 'hide' : ''; ?>" onclick="removeClone('EmployeeAddressSection')"><i class="fa fa-minus"></i> </button>
+		                                        <button type="button" class="remove-field btn btn-danger remove " <?php echo $address_key <= 0  ? 'style="display:none"' : ''; ?> onclick="removeClone('EmployeeAddressSection')"><i class="fa fa-minus"></i> </button>
 		                                    </div>
 		                                </div>
 		                            </div>
