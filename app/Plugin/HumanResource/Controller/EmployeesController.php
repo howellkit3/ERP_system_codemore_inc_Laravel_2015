@@ -130,7 +130,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 	public function add () {
 
-		Configure::write('debug',2);
+		Configure::write('debug',0);
 
 		if ($this->request->is('post')) {
 
@@ -489,7 +489,7 @@ class EmployeesController  extends HumanResourceAppController {
 			$nameList[$value['Agency']['id']] = array('name' => $value['Agency']['name'],'field' =>$value['Agency']['field']);
 		}
 		
-		$this->set(compact('positionList','departmentList','statusList','nameList','contractList','bankList'));
+		$this->set(compact('positionList','departmentList','statusList','nameList','contractList','bankList','agencyList'));
 	}
 
 	function view($id){
@@ -1203,7 +1203,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 					$middlename = !empty($employee['ContactPerson']['middlename']) ? $employee['ContactPerson']['middlename'][0] : '';
 					$contactPerson = !empty($employee['ContactPerson']['firstname']) ? ucfirst($employee['ContactPerson']['firstname']).', '. ucfirst($middlename ).' '.ucfirst($employee['ContactPerson']['lastname']): '';
-					$pdf->Write(10,$contactPerson);	
+					$pdf->Write(10, utf8_decode($contactPerson));	
 
 					$pdf->SetXY(20, 32.);
 					$pdf->SetFont('Arial','',6);

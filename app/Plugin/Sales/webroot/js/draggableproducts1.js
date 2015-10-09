@@ -258,7 +258,7 @@ $(document).ready(function() {
             });
 
             if (counterData != 0) {
-                process_button.trigger( 'click' );
+                //process_button.trigger( 'click' );
             }
 
             //start//computation for outs,paper quantity and rate
