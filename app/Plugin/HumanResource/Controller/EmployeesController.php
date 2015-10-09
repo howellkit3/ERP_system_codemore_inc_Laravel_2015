@@ -1203,7 +1203,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 					$middlename = !empty($employee['ContactPerson']['middlename']) ? $employee['ContactPerson']['middlename'][0] : '';
 					$contactPerson = !empty($employee['ContactPerson']['firstname']) ? ucfirst($employee['ContactPerson']['firstname']).', '. ucfirst($middlename ).' '.ucfirst($employee['ContactPerson']['lastname']): '';
-					$pdf->Write(10,$contactPerson);	
+					$pdf->Write(10, utf8_decode($contactPerson));	
 
 					$pdf->SetXY(20, 32.);
 					$pdf->SetFont('Arial','',6);
