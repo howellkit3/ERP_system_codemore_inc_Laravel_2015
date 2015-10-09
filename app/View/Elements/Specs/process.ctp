@@ -38,7 +38,7 @@
                                 'data-productId' => $dataSpecs['ProductSpecificationDetail']['product_id'],
                                 'data-ticket_uuid' =>  $ticketData['JobTicket']['uuid'],
                                 'data-toggle' => 'modal',
-                                'data-product' => $product['foreign_key'],
+                                'data-product' => !empty($product['foreign_key']) ? $product['foreign_key'] : '0',
                                 'class' => 'process_link',
                                 'id' => 'processID-'.$processList['ProductSpecificationProcessHolder']['id'].'-'.$processList['ProductSpecificationProcessHolder']['sub_process_id']
                             )

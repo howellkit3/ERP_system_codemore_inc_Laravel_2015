@@ -171,15 +171,13 @@
 									<thead>
 										<?php 
 										
-										$product = array();
+											$product = array();
 
 										foreach ($formatDataSpecs as $key => $specLists) { ?>
 											
 											<?php
 
 												$component  = '';
-
-												$product = array();
 
 										      	if($specLists['ProductSpecificationDetail']['model'] == 'Component'){
 
@@ -190,7 +188,7 @@
 										      		$component = $formatDataSpecs[$key];
 										      	}
 
-										   
+
 
 										      	if($specLists['ProductSpecificationDetail']['model'] == 'Part'){
 										      			
@@ -202,7 +200,13 @@
 										      			 ));
 										      		$partCounter++;
 
-										      		$product = $specLists['ProductSpecificationDetail'];
+										      		if (!empty($specLists['ProductSpecificationDetail'])) {
+										      				$product = $specLists['ProductSpecificationDetail'];
+
+
+										      		}
+										      	
+
 										      		
 										      	}
 										      	if($specLists['ProductSpecificationDetail']['model'] == 'Process'){
@@ -211,6 +215,7 @@
 										      			,'key' => $processCounter,
 										      			'product' => $product
 										      			));
+
 
 										      		$processCounter++;
 

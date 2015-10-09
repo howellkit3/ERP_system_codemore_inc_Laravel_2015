@@ -40,7 +40,7 @@ th, td {
 							<td></td>
 							<td></td>
 							<td ></td>
-							<td align="right" style="line-height:8px;"><span style="font-size:70%"; ><b>No: </b>RQ<?php echo $request['Request']['uuid'] ?><br><br><b>Date: </b><?php echo (new \DateTime())->format('d/m/Y') ?></span></td>
+							<td align="right" style="line-height:8px;"><span style="font-size:70%"; ><b>No: </b>RQ<?php echo $request['Request']['uuid'] ?><br><br><b>Date: </b><?php echo date('Y/m/d') ?></span></td>
 						</tr>
 
 					</tbody>
@@ -95,9 +95,29 @@ th, td {
 
 						<td align = "center" style="border:1px solid black; font-size:50% "><?php echo date("Y-m-d", strtotime($value['RequestItem']['date_needed'])) ?></td>
 
-						<td align = "center" style="border:1px solid black; font-size:50% "><?php echo $value['RequestItem']['purpose'] ?></td>
+						
+						<?php
 
-						<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:50%"><?php echo $value['RequestItem']['remarks'] ?></td>
+						 $lengthName = strlen($requestRequestItem[$key]['RequestItem']['purpose']);
+
+						 if($lengthName >= 30 && $lengthName <= 70){ ?>
+
+							<td style="border:1px solid black; width:50px"><span style="font-size:35%"; ><?php echo $value['RequestItem']['purpose'] ?></span>
+							</td>
+
+						<?php } else if($lengthName >= 70) { ?>
+
+							<td style="border:1px solid black; width:50px"><span style="font-size:30%"; ><?php echo $value['RequestItem']['purpose'] ?></span>
+							</td>
+
+						<?php }else{ ?>
+
+							<td style="border:1px solid black;width:50px"><span style="font-size:50%"; ><?php echo $value['RequestItem']['purpose'] ?></span>
+							</td>
+
+						<?php } ?>
+
+						<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:50%; max-width:50px"><?php echo $value['RequestItem']['remarks'] ?></td>
 						
 					</tr>
 
@@ -182,7 +202,7 @@ th, td {
 									<td></td>
 									<td></td>
 									<td ></td>
-									<td align="right" style="line-height:8px;"><span style="font-size:70%"; ><b>No: </b>RQ<?php echo $request['Request']['uuid'] ?><br><br><b>Date: </b><?php echo (new \DateTime())->format('d/m/Y') ?></span></td>
+									<td align="right" style="line-height:8px;"><span style="font-size:70%"; ><b>No: </b>RQ<?php echo $request['Request']['uuid'] ?><br><br><b>Date: </b><?php echo date('Y/m/d') ?></span></td>
 								</tr>
 
 							</tbody>
@@ -237,7 +257,29 @@ th, td {
 
 						<td align = "center" style="border:1px solid black; font-size:50% "><?php echo date("Y-m-d", strtotime($value['RequestItem']['date_needed'])) ?></td>
 
-						<td align = "center" style="border:1px solid black; font-size:50% "><?php echo $value['RequestItem']['purpose'] ?></td>
+					
+
+						
+						<?php
+
+						 $lengthName = strlen($requestRequestItem[$key]['RequestItem']['purpose']);
+
+						 if($lengthName >= 30 && $lengthName <= 70){ ?>
+
+							<td style="border:1px solid black; width:50px"><span style="font-size:35%"; ><?php echo $value['RequestItem']['purpose'] ?></span>
+							</td>
+
+						<?php } else if($lengthName >= 70) { ?>
+
+							<td style="border:1px solid black; width:50px"><span style="font-size:30%"; ><?php echo $value['RequestItem']['purpose'] ?></span>
+							</td>
+
+						<?php }else{ ?>
+
+							<td style="border:1px solid black;width:50px"><span style="font-size:50%"; ><?php echo $value['RequestItem']['purpose'] ?></span>
+							</td>
+
+						<?php } ?>
 
 						<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:50%"><?php echo $value['RequestItem']['remarks'] ?></td>	
 					</tr>

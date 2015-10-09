@@ -121,17 +121,17 @@
                             ', 
                             array(
                              'controller' => 'ticketing_systems','action' => 'print_process',
-                            'productId' => !empty( $parameter['product']) ?  $parameter['product'] : '',
+                            'productId' => !empty( $parameter['product']) ?  $parameter['product'] : '0',
                              $parameter['processId'],
-                             $parameter['productId'],
-                            $parameter['ticketId']
+                                !empty( $parameter['productId']) ?  $parameter['productId'] : '0' ,
+                             $parameter['ticketId']
                             ),
                             array(
                              //'title' => 'Print '. $subProcess[$processList['ProductSpecificationProcessHolder']['sub_process_id']],
                                 'target' => '_blank',
                                 'escape' => false,
                                 'class' => 'btn btn-success',
-                                'data-dismiss' => 'modal'
+                                //'data-dismiss' => 'modal'
                             )
                             );
 
