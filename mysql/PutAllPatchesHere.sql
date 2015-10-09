@@ -2129,3 +2129,25 @@ CREATE TABLE `wood_mold_job_tickets` (
 
 ALTER TABLE `koufu_purchasing`.`requests`   
   CHANGE `status` `status` INT(11) DEFAULT 1  NOT NULL  AFTER `status_id`;
+
+
+  /* aldrin added this oct-9-2015 koufu_ticketing*/
+
+  DROP TABLE IF EXISTS `plate_making_process`;
+
+CREATE TABLE `plate_making_process` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `job_ticket_id` int(11) DEFAULT NULL,
+  `process_id` int(11) DEFAULT NULL,
+  `machine` int(11) DEFAULT NULL,
+  `item` varchar(255) DEFAULT NULL,
+  `plate` varchar(255) DEFAULT NULL,
+  `paper_gripper` varchar(255) DEFAULT NULL,
+  `plate_gripper` varchar(255) DEFAULT NULL,
+  `remarks` text,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;

@@ -10,10 +10,12 @@ $(document).ready(function(){
 
     $product = $(this).data('product');
 
+    $id = $(this).attr('id');
+
 		$container = $('#result-table');
 
 		$.ajax({
-        url: serverPath + "ticket/ticketing_systems/find_process/"+$processId+'/'+$productId+'/'+$ticketUuid+'/'+$product,
+        url: serverPath + "ticket/ticketing_systems/find_process/"+$processId+'/'+$productId+'/'+$ticketUuid+'/'+$product+'/'+$id,
         type: "GET",
         dataType: "html",
        // data : { 'processId' : $processId , 'subProcess' : $subProcess , 'ticketId' : $ticketUuid },
@@ -26,7 +28,7 @@ $(document).ready(function(){
 	});
 
 
-  $('body').on('change','#JobTicketProcessMachine',function(){
+  $('body').on('change','#PlateMakingProcessMachine',function(){
 
     //check existing data
     if ($(this).val() != '') {
@@ -43,13 +45,13 @@ $(document).ready(function(){
         data : { 'machineId' :  $id },
         success: function(data) {
 
-         $container.find('#JobTicketProcessPaperGripper').val(data.Machine.paper_gripper);
+         $container.find('#PlateMakingProcessPaperGripper').val(data.Machine.paper_gripper);
 
 
-         $container.find('#JobTicketProcessPlate').val(data.Machine.plate);
+         $container.find('#PlateMakingProcessPlate').val(data.Machine.plate);
 
 
-         $container.find('#JobTicketProcessPlateGripper').val(data.Machine.plate_gripper);
+         $container.find('#PlateMakingProcessPlateGripper').val(data.Machine.plate_gripper);
 
             }
         });
@@ -62,20 +64,20 @@ $(document).ready(function(){
 
       $form = $(this);
 
+      $url = $(this).attr('action');
+
        $.ajax({
-        url: serverPath + "machines/save_process_to_ticket",
+        url: $url,
         type: "POST",
         dataType: "json",
         data : $form.serialize(),
         success: function(data) {
 
-         $container.find('#JobTicketProcessPaperGripper').val(data.Machine.paper_gripper);
 
+            $text = data.result.PlateMakingProcess.machine_name;
+            $('#'+data.result.formProcessId).parent().next().text($text);
 
-         $container.find('#JobTicketProcessPlate').val(data.Machine.plate);
-
-
-         $container.find('#JobTicketProcessPlateGripper').val(data.Machine.plate_gripper);
+            $('#closeModal').click();
 
             }
         });

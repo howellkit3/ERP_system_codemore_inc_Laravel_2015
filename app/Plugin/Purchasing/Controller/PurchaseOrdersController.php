@@ -15,6 +15,21 @@ class PurchaseOrdersController extends PurchasingAppController {
 
 		$this->loadModel('User');
 
+		$limit = 10;
+
+		$conditions = "";
+
+		$params =  array(
+	            'conditions' => $conditions,
+	            'limit' => $limit,
+	            //'fields' => array('id', 'status','created'),
+	            'order' => 'PurchaseOrder.created DESC',
+	    );
+
+		$this->paginate = $params;
+
+		$purchaseOrderData = $this->paginate('PurchaseOrder');
+
     	$supplierData = $this->Supplier->find('list', array(
 														'fields' => array('Supplier.id', 'Supplier.name'),
 														));
@@ -22,7 +37,7 @@ class PurchaseOrdersController extends PurchasingAppController {
     	$userName = $this->User->find('list', array('fields' => array('id', 'fullname')
 															));
 
-		$purchaseOrderData = $this->PurchaseOrder->find('all',array('order' => 'PurchaseOrder.id DESC'));
+	//	$purchaseOrderData = $this->PurchaseOrder->find('all',array('order' => 'PurchaseOrder.id DESC'));
 
 		$this->set(compact('purchaseOrderData','supplierData', 'userName'));
 

@@ -594,21 +594,24 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
 		                                        <label for="inputEmail1" class="col-lg-2 control-label"> Email </label>
 		                                        <div class="col-lg-9">
 		                                         	<?php
+
+		                                         	$emailData = !empty($employeeData['Email']) ? $employeeData['Email'] : '';
+
 		                                                echo $this->Form->input('Emails.id',array(
 		                                              		'type' => 'hidden',
 		                                                 	'label' => false,
-		                                                 	'value' => !empty($employeeData['Email'][0]['id']) ? $employeeData['Email'][0]['id'] : ''
+		                                                 	'value' => !empty($emailData[0]['id']) ? $emailData[0]['id'] : ''
 		                                                 ));
 
 		                                                echo $this->Form->input('Emails.type', array(
 		                                                	'type' => 'hidden',
 		                                                	'label' => false,
-		                                                	'value' => !empty($employeeData['Email'][0]['type']) ? $employeeData['Email'][0]['type'] : '0'
+		                                                	'value' => !empty($emailData[0]['type']) ? $emailData[0]['type'] : '0'
 		                                                ));
 		                                           
 		                                                echo $this->Form->input('Emails.email', array('class' => 'form-control col-lg-6',
 		                                                	'label' => false,
-		                                                	'value' => !empty($employeeData['Email'][0]['email']) ? $employeeData['Email'][0]['email'] : ''
+		                                                	'value' => !empty($emailData[0]['email']) ? $emailData[0]['email'] : ''
 		                                                	));
 		                                            ?>
 		                                        </div>
@@ -1010,11 +1013,12 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
 	            </div>
 	        </div>
 
-		   	<section class="cloneMe addressSection">
+		
 		   		<?php if (!empty($employeeData['Address'])) : ?>
 		   			<?php foreach ($employeeData['Address'] as $address_key => $adress) {
 		   					$this->request->data['Address'][$address_key] = $adress;
 		   			 ?>
+		   <section class="cloneMe EmployeeAddressSection">
 		   			<div class="row">
 		            <div class="col-lg-12">
 		                <div class="main-box">
@@ -1102,8 +1106,8 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
 		                                <div class="form-group">
 		                                    <label for="inputPassword1" class="col-lg-2 control-label"></label>
 		                                    <div class="col-lg-10">
-		                                      <!--   <button type="button" data-model='Address' class="add-field table-link danger btn btn-success" onclick="cloneData('addressSection',this)"> <i class="fa fa-plus"></i></button>
-		                                        <button type="button" class="remove-field btn btn-danger remove" onclick="removeClone('addressSection')" style="display:none"><i class="fa fa-minus"></i> </button> -->
+		                                       <button type="button" data-model='Address' class="add-field table-link danger btn btn-success" onclick="cloneData('EmployeeAddressSection',this)"> <i class="fa fa-plus"></i></button>
+		                                        <button type="button" class="remove-field btn btn-danger remove <?php echo $address_key <= 0  ? 'hide' : ''; ?>" onclick="removeClone('EmployeeAddressSection')"><i class="fa fa-minus"></i> </button>
 		                                    </div>
 		                                </div>
 		                            </div>
@@ -1114,7 +1118,12 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
 		   			<?php } ?>
 		   			
 		        </div>
+
+		       
+		    </section>
+
 		   		<?php else : ?>
+		   			<section class="cloneMe EmployeeAddressSection">
 		   		<div class="row">
 		            <div class="col-lg-12">
 		                <div class="main-box">
@@ -1208,10 +1217,8 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
 		                </div>
 		            </div>
 		        </div>
-		   		<?php endif; ?>	
-		       
-		    </section>
-
+		        </section>
+		   		<?php endif; ?>
 
 		    <section class="cloneMe1 contact_section">
 		    <?php if (!empty($employeeData['Contact'])) : ?>
@@ -1564,7 +1571,9 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
 		                                    <div class="col-lg-9">
 
 		                                     <?php 
-		                                            echo $this->Form->input('ContactPersonData.Email.0.id', array('class' => 'form-control email','label' => false));
+		                                            echo $this->Form->input('ContactPersonData.Email.0.id', array('class' => 'form-control email',
+		                                                'type' => 'hidden',
+		                                                'label' => false));
 		                                        ?>
 		                                        <?php 
 		                                            echo $this->Form->input('ContactPersonData.Email.0.email', array('class' => 'form-control email','label' => false));
@@ -1595,6 +1604,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
 		                                        	 echo $this->Form->input('ContactPersonData.Contact.0.id', array('class' => 'form-control',
 		                                                'alt' => 'number',
 		                                                'label' => false,
+		                                                'type' => 'hidden'
 		                                                ));
 
 

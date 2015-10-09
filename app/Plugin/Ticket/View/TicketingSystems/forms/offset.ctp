@@ -1,4 +1,4 @@
-   <?php echo $this->Form->create('JobTicketProcess',array('url'=>(array('controller' => 'ticketing_systems','action' => 'save_job_ticket_process','type' => 'wood_mold')),'class' => 'form-horizontal'));?>
+   <?php echo $this->Form->create('PlateMakingProcess',array('url'=>(array('controller' => 'ticketing_systems','action' => 'save_process_to_ticket','type' => 'wood_mold')),'class' => 'form-horizontal','id' => 'offsetForm'));?>
                
 
                     <div class="form-group">
@@ -14,6 +14,10 @@
                               ));
                             echo $this->Form->input('product_id',array('type' => 'hidden','value' => $parameter['productId']
 
+                              ));
+
+                            echo $this->Form->input('FormId',array('type' => 'hidden','value' => $parameter['formProcesId']
+
                               ))
                           ?>
                           
@@ -26,7 +30,7 @@
                             <?php 
                                 echo $this->Form->input('machine', array(
                                     'label' => false,
-                                    'options' => array('1' => 'Expose LetterPress Plate Goann'),
+                                    'options' => $machines,
                                     'empty' => '-- Select Machine ---',
                                     'class' => 'form-control ',
                                   //  'value' => !empty($ticketData['JobTicket']['remarks']) ? $ticketData['JobTicket']['remarks'] : ' '
@@ -35,13 +39,31 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="inputPassword1" class="col-lg-2 control-label">  </label>
+                        <div class="col-lg-9">
+                            <?php 
+                                echo $this->Form->input('item', array(
+                                    'label' => false,
+                                    'class' => 'form-control number',
+                                    'empty' => false,
+                                    'value' => '1'
+                                  //  'value' => !empty($ticketData['JobTicket']['remarks']) ? $ticketData['JobTicket']['remarks'] : ' '
+                                )); ?>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
                         <label for="inputPassword1" class="col-lg-2 control-label"> Plate </label>
                         <div class="col-lg-9">
                             <?php 
                                 echo $this->Form->input('plate', array(
                                     'label' => false,
-                                    'class' => 'form-control ',
+                                    'class' => 'form-control number',
                                     'empty' => false,
+
+                                    'readonly' => 'readonly',
                                   //  'value' => !empty($ticketData['JobTicket']['remarks']) ? $ticketData['JobTicket']['remarks'] : ' '
                                 )); ?>
                         </div>
@@ -53,8 +75,10 @@
                             <?php 
                                 echo $this->Form->input('paper_gripper', array(
                                     'label' => false,
-                                    'class' => 'form-control ',
+                                    'class' => 'form-control',
                                     'empty' => false,
+                                    'readonly' => 'readonly',
+
                                   //  'value' => !empty($ticketData['JobTicket']['remarks']) ? $ticketData['JobTicket']['remarks'] : ' '
                                 )); ?>
                         </div>
@@ -69,6 +93,8 @@
                                     'label' => false,
                                     'class' => 'form-control ',
                                     'empty' => false,
+
+                                    'readonly' => 'readonly',
                                   //  'value' => !empty($ticketData['JobTicket']['remarks']) ? $ticketData['JobTicket']['remarks'] : ' '
                                 )); ?>
                         </div>
@@ -104,16 +130,17 @@
                              //'title' => 'Print '. $subProcess[$processList['ProductSpecificationProcessHolder']['sub_process_id']],
                                 'target' => '_blank',
                                 'escape' => false,
-                                'class' => 'btn btn-success'
+                                'class' => 'btn btn-success',
+                                'data-dismiss' => 'modal'
                             )
                             );
 
                         ?>
 
-                         <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i>  Save </button>
+                         <button type="submit" id="submitOffset" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i>  Save </button>
 
 
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" id="closeModal" class="btn btn-default" data-dismiss="modal">Close</button>
                         
                     </div>
                 </form>

@@ -277,7 +277,7 @@
         jQuery(document).ready(function($){
                //datepicker
 
-               $("#EmployeeIndexForm").validate();
+             //  $("#EmployeeIndexForm").validate();
                 $('.datepick').datepicker();
 
                 // $("#HolidayDate").click(function() {

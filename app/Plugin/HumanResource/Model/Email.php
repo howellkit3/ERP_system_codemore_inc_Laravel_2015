@@ -10,12 +10,48 @@ class Email extends AppModel {
 
     var $useTable = 'emails';
 
-  	
+
+    public $actsAs = array('Containable');
+
+    public function bind($model = array('Group')){
+  	$this->bindModel(array(
+      'belongsTo' => array(
+        'ContactPerson' => array(
+          'className' => 'Contact',
+          'foreignKey' => false,
+          'dependent' => true,
+          'conditions' => array(
+            'Contact.model = ContactPerson',
+            'Contact.foreign_key = ContactPerson.id' 
+            )
+        ),
+        'Employee' => array(
+          'className' => 'Email',
+          'foreignKey' => false,
+          'dependent' => true,
+          'conditions' => array(
+            'Email.model = Employee',
+            'Email.foreign_key = ContactPerson.id' 
+            )
+        )
+      )
+    ),false);
+
+  }
+
+
   	public function saveEmails($data = null,$foreignKey = null,$model = null ,$authid = null){
 
-  		$save = false;
+
 
   		if (!empty($foreignKey) && !empty($model) && !empty($data))  {
+
+        $this->deleteAll(array(
+            'Email.model' => $model,
+            'Email.foreign_key' => $foreignKey,
+            'Email.email' => ''
+        ));
+
 
   				if (!empty($data[0])) {
             
@@ -27,13 +63,15 @@ class Email extends AppModel {
   						$emails[$key]['foreign_key'] = $foreignKey;
   						$emails[$key]['created_by'] =  $authid;
   						$emails[$key]['modified_by'] =  $authid;
+
+
+               $save = $this->save($emails[$key]);
   						
 					}
           
-					$save = $this->saveAll($emails);
   				} else {
 
-  					$emails = $data;
+  				$emails = $data;
 					$emails['model'] = $model;
 					$emails['foreign_key'] = $foreignKey;
 					$emails['created_by'] =  $authid;
@@ -43,6 +81,7 @@ class Email extends AppModel {
   			
 
   		}
+
 
   		return $save;
   	}
