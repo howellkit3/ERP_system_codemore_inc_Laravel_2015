@@ -31,6 +31,14 @@ class Address extends AppModel {
 
   		$save = false;
 
+        $this->deleteAll(array(
+      'Address.model' =>$model,
+      'Address.foreign_key' => $foreignKey
+
+    ),false);
+
+
+
   		if (!empty($foreignKey) && !empty($model) && !empty($data))  {
 
   				if (!empty($data[0])) {

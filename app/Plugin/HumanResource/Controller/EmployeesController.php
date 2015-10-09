@@ -130,7 +130,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 	public function add () {
 
-		Configure::write('debug',2);
+		Configure::write('debug',0);
 
 		if ($this->request->is('post')) {
 
@@ -291,7 +291,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 	public function edit($id){
 
-		Configure::write('debug',2);
+		Configure::write('debug',0);
 		
 		$this->loadModel('HumanResource.EmployeeAdditionalInformation');
 
@@ -489,7 +489,7 @@ class EmployeesController  extends HumanResourceAppController {
 			$nameList[$value['Agency']['id']] = array('name' => $value['Agency']['name'],'field' =>$value['Agency']['field']);
 		}
 		
-		$this->set(compact('positionList','departmentList','statusList','nameList','contractList','bankList'));
+		$this->set(compact('positionList','departmentList','statusList','nameList','contractList','bankList','agencyList'));
 	}
 
 	function view($id){
