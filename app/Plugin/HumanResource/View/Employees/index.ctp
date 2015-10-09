@@ -90,7 +90,7 @@ $page = !empty($this->params['named']['page']) ? $this->params['named']['page'] 
 			                   
 			                      	echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Add Employee', 
 			                            array('controller' => 'employees', 
-			                                    'action' => 'add',),
+			                                    'action' => 'add?'.rand(1000,9999).'='.date("is")),
 			                            array('class' =>'btn btn-primary',
 			                                'escape' => false)); 
 
@@ -174,13 +174,16 @@ $page = !empty($this->params['named']['page']) ? $this->params['named']['page'] 
 								                            if (!empty($this->params['named']['page'])) {
 								                            	$view_url = array('controller' => 'employees', 'action' => 'view',$employee['Employee']['id'
 											                    	],
-											                    	'page' => $page
+											                    	'page' => $page .'?'.rand(1000,9999).'='.date("is")
 											                    	);
-								                            	$edit_url = array('controller' => 'employees', 'action' => 'edit',$employee['Employee']['id'],'page' => $page);
+								                            	$edit_url = array('controller' => 'employees', 'action' => 'edit',$employee['Employee']['id'],'page' => $page.'?'.rand(1000,9999).'='.date("is")
+								                            	);
 								                            } else {
 								                            	$view_url = array('controller' => 'employees', 'action' => 'view',$employee['Employee']['id'
-											                    	]);
-								                            	$edit_url = array('controller' => 'employees', 'action' => 'edit',$employee['Employee']['id']);
+											                    	].'?'.rand(1000,9999).'='.date("is")
+											                    );
+								                            	$edit_url = array('controller' => 'employees', 'action' => 'edit',$employee['Employee']['id'].'?'.rand(1000,9999).'='.date("is")
+								                            		);
 
 								                            }
 

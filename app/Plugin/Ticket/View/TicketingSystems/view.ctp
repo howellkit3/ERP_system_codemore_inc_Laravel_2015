@@ -179,6 +179,8 @@
 
 												$component  = '';
 
+												$product = array();
+
 										      	if($specLists['ProductSpecificationDetail']['model'] == 'Component'){
 
 										      		echo $this->element('Specs/component', array('formatDataSpecs' => $formatDataSpecs[$key],'key' => $componentCounter));
