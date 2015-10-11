@@ -919,8 +919,20 @@ class ReceivingsController extends WareHouseAppController {
 
     // }
 
-        public function out_record_item() {
+    public function receive_receipt() {
 
+    	$this->loadModel('Supplier');
+
+		$supplierData = $this->Supplier->find('list', array('fields' => array('Supplier.id', 'Supplier.name')
+																));
+
+	 	if ($this->request->is(array('post','put'))) {
+		
+	 		pr(':)'); exit;
+
+		}		
+
+		$this->set(compact('supplierData'));
    
     }
 
