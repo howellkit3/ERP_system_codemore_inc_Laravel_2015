@@ -77,7 +77,7 @@
                         <td></td>
                         <td></td>
                         <td ></td>
-                        <td align="right" style="line-height:8px;"><b>No: </b>RQ<?php echo $requestData['Request']['uuid']; ?><br><br><br><b>Date: </b><?php echo (new \DateTime())->format('d/m/Y') ?><br></td>
+                        <td align="right" style="line-height:8px;"><b>No: </b>RQ<?php echo $requestData['Request']['uuid']; ?><br><br><br><b>Date: </b><?php echo date('Y/m/d') ?><br></td>
                     </tr>
 
                 </tbody>

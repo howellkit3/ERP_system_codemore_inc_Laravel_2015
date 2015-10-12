@@ -496,10 +496,14 @@ class EmployeesController  extends HumanResourceAppController {
 
 		if (!empty($id)) {
 
-		// $query = tru	
-		// if (!empty($)) {
+			if (!isset($_GET['rand'])) {
 
-		// }
+					$this->redirect( array(
+					'controller' => 'employees', 
+					'action' => 'view',
+					$id.'?rand='.time()
+				));
+			}
 
 		 $this->loadModel('HumanResource.EmployeeAdditionalInformation');
 
@@ -1240,7 +1244,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 			//$pdf->Output();
 
-			
+
 			//return true;
 		} else {
 

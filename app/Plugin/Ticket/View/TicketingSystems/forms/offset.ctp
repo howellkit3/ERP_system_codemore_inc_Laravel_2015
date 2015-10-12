@@ -1,4 +1,6 @@
-   <?php echo $this->Form->create('PlateMakingProcess',array('url'=>(array('controller' => 'ticketing_systems','action' => 'save_process_to_ticket','type' => 'wood_mold')),'class' => 'form-horizontal','id' => 'offsetForm'));?>
+   <?php
+
+    echo $this->Form->create('PlateMakingProcess',array('url'=>(array('controller' => 'ticketing_systems','action' => 'save_process_to_ticket','type' => 'wood_mold')),'class' => 'form-horizontal','id' => 'offsetForm'));?>
                
 
                     <div class="form-group">
@@ -16,6 +18,11 @@
 
                               ));
 
+
+                             echo $this->Form->input('product',array('type' => 'hidden','value' => $parameter['product']
+
+                                                          ));
+
                             echo $this->Form->input('FormId',array('type' => 'hidden','value' => $parameter['formProcesId']
 
                               ))
@@ -28,6 +35,9 @@
                         <label for="inputPassword1" class="col-lg-2 control-label"> Machine </label>
                         <div class="col-lg-9">
                             <?php 
+
+                                echo $this->Form->input('id');
+
                                 echo $this->Form->input('machine', array(
                                     'label' => false,
                                     'options' => $machines,
@@ -116,24 +126,27 @@
    
                     <div class="modal-footer">
                      <?php 
+                            if (!empty($this->request->data['PlateMakingProcess'])) {
+                                    
+                                    echo $this->Html->link('<i class="fa fa-print"></i> Print Ticket
+                                    ', 
+                                    array(
+                                     'controller' => 'ticketing_systems','action' => 'print_process',
+                                    'productId' => !empty( $parameter['product']) ?  $parameter['product'] : '0',
+                                     $parameter['processId'],
+                                        !empty( $parameter['productId']) ?  $parameter['productId'] : '0' ,
+                                     $parameter['ticketId']
+                                    ),
+                                    array(
+                                     //'title' => 'Print '. $subProcess[$processList['ProductSpecificationProcessHolder']['sub_process_id']],
+                                        'target' => '_blank',
+                                        'escape' => false,
+                                        'class' => 'btn btn-success',
+                                        //'data-dismiss' => 'modal'
+                                    )
+                                    );
 
-                            echo $this->Html->link('<i class="fa fa-print"></i> Print Ticket
-                            ', 
-                            array(
-                             'controller' => 'ticketing_systems','action' => 'print_process',
-                            'productId' => !empty( $parameter['product']) ?  $parameter['product'] : '0',
-                             $parameter['processId'],
-                                !empty( $parameter['productId']) ?  $parameter['productId'] : '0' ,
-                             $parameter['ticketId']
-                            ),
-                            array(
-                             //'title' => 'Print '. $subProcess[$processList['ProductSpecificationProcessHolder']['sub_process_id']],
-                                'target' => '_blank',
-                                'escape' => false,
-                                'class' => 'btn btn-success',
-                                //'data-dismiss' => 'modal'
-                            )
-                            );
+                            } 
 
                         ?>
 

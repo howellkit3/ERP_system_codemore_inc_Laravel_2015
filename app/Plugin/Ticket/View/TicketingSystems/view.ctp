@@ -196,7 +196,8 @@
 										      		
 										      		echo $this->element('Specs/part', array('formatDataSpecs' => $formatDataSpecs[$key],
 										      			'key' => $partCounter,
-										      			'component' => $component
+										      			'component' => $component,
+										      			'machines' => $machines
 										      			 ));
 										      		$partCounter++;
 

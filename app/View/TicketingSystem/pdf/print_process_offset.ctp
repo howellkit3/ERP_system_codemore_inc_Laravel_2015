@@ -57,8 +57,12 @@ Configure::write('debug',0);
 					<td style="vertical-align:top; width: 350px">
 						<table >
 								<tr>
-									<td> <span class="grey-label bold"> Plate Type </span> </td>
-									<td> Offset CTP Plate Film Type </td>
+									<td style="width:200px"> <span class="grey-label bold"> Plate Type </span> </td>
+									<td> 
+										<?php echo !empty($subProcess[$processId]) ? $subProcess[$processId] : ''; ?>
+									</td>
+									<td> <span class="grey-label bold"> Film Type </span> </td>
+									<td> </td>
 								</tr>
 								<tr>
 									<td> <span class="grey-label bold"> Color </span> </td>
@@ -70,7 +74,9 @@ Configure::write('debug',0);
 								</tr>
 								<tr>
 									<td> Sample </td>
-									<td>  </td>
+									<td> 
+
+									 </td>
 								</tr>
 						</table>
 					</td>

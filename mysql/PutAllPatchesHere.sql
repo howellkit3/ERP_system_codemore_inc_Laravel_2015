@@ -2151,3 +2151,7 @@ CREATE TABLE `plate_making_process` (
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+
+
+ALTER TABLE `koufu_ticketing`.`plate_making_process`   
+  ADD COLUMN `product_id` INT(11) NULL AFTER `process_id`;
