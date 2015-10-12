@@ -65,7 +65,7 @@
                             $machineProcess = $this->PlateMaking->getOffsetDetail($ticketData['JobTicket']['uuid'],$processList['ProductSpecificationProcessHolder']['sub_process_id'], $product);
 
                             if (!empty( $machineProcess)) {
-                                 echo $machines[$machineProcess['PlateMakingProcess']['machine']];
+                                 echo $machineProcess['Machine']['name'];
                             }
                            
                         }

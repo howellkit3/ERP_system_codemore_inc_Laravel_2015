@@ -530,6 +530,8 @@ class TicketingSystemsController extends TicketAppController {
 
         $this->loadModel('Sales.ClientOrder');
 
+        $this->loadModel('Machine');
+
         $this->loadModel('Unit');
 
 
@@ -584,8 +586,15 @@ class TicketingSystemsController extends TicketAppController {
             Cache::write('unitData', $unitData);
         }
 
+           $machines = $this->Machine->find('list', array('fields' => 
+                                                array('id',
+                                                    'name'
+                                                 )
+                                                ));
 
-        $this->set(compact('userData','ticketData','formatDataSpecs','productData','specs','companyData','unitData','subProcess','ticketUuid','delData'));
+
+
+        $this->set(compact('userData','ticketData','formatDataSpecs','productData','specs','companyData','unitData','subProcess','ticketUuid','delData','machines'));
         
 
         if ($type == 'excel') {
@@ -594,12 +603,13 @@ class TicketingSystemsController extends TicketAppController {
 
         if ($type == 'pdf') {
 
+                $this->helpers[] = 'Ticket.PlateMaking';
 
                 $view = new View(null, false);
 
                 $view->viewPath = 'TicketingSystem'.DS.'pdf';  
 
-                $view->set(compact('userData','ticketData','formatDataSpecs','productData','specs','companyData','unitData','subProcess','ticketUuid','delData'));
+                $view->set(compact('userData','ticketData','formatDataSpecs','productData','specs','companyData','unitData','subProcess','ticketUuid','delData','machines'));
                 
                 $output = $view->render('print_ticket_export', false);
 
@@ -717,6 +727,7 @@ class TicketingSystemsController extends TicketAppController {
                     'ProductSpecificationDetail.model' => 'Part',
                    
             );
+
         if (!empty($this->params['named']['productId'])) {
              $processCond = array_merge(
                 $processCond,
@@ -800,17 +811,17 @@ class TicketingSystemsController extends TicketAppController {
             //         )
             //     ));
 
-
+            $product  = !empty($this->request->params['named']['productId']) ? $this->request->params['named']['productId'] : '';
             //plateMaking Process
             $PlateMakingProcess = $this->PlateMakingProcess->getProcess(
                 array(
-                    $ticketUuid, $processId ,  $productUuid
+                    'ticketId' => $ticketUuid, 'processID' =>  $processId , 'productId' =>  $productUuid,
+                    'product' => $product
                 )
             );
 
-            pr($PlateMakingProcess);
-            exit();
-
+            $view->set(compact('PlateMakingProcess','subProcess'));
+            
             $output = $view->render('print_process_offset', false);
    
 

@@ -2155,3 +2155,9 @@ CREATE TABLE `plate_making_process` (
 
 ALTER TABLE `koufu_ticketing`.`plate_making_process`   
   ADD COLUMN `product_id` INT(11) NULL AFTER `process_id`;
+
+  /* aldrin added this oct-12-2015 koufu_ticketing*/
+
+ALTER TABLE `plate_making_process`
+DROP COLUMN `product`,
+ADD COLUMN `product`  int(11) NULL AFTER `modified`;

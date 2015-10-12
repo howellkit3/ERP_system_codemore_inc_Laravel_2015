@@ -1213,9 +1213,17 @@ class EmployeesController  extends HumanResourceAppController {
 					
 					//
 
-					$middlename = !empty($employee['ContactPerson']['middlename']) ? $employee['ContactPerson']['middlename'][0] : '';
-					$contactPerson = !empty($employee['ContactPerson']['firstname']) ? ucfirst($employee['ContactPerson']['firstname']).', '. ucfirst($middlename ).' '.ucfirst($employee['ContactPerson']['lastname']): '';
-					$pdf->Write(10, utf8_decode($contactPerson));	
+
+					$contactPerson = '';
+
+					$contactPerson .= !empty($employee['ContactPerson']['firstname']) ?  str_replace(","," ",$employee['ContactPerson']['firstname']) : '';
+
+					$contactPerson .= !empty($employee['ContactPerson']['lastname']) ? ', '.str_replace(","," ",$employee['ContactPerson']['lastname'])  : '';
+
+					$contactPerson .= !empty($employee['ContactPerson']['middlename']) ? ', '.str_replace(","," ",$employee['ContactPerson']['middlename']) : '';
+
+					//echo $contactPesronName;
+					$pdf->Write(10, ucwords(utf8_decode($contactPerson)));	
 
 					$pdf->SetXY(20, 32.);
 					$pdf->SetFont('Arial','',6);
@@ -1240,9 +1248,9 @@ class EmployeesController  extends HumanResourceAppController {
 			}
 
 			// Output the new PDF
-			$pdfData = $pdf->Output($employee['Employee']['code'].'.pdf', 'D');
+			//$pdfData = $pdf->Output($employee['Employee']['code'].'.pdf', 'D');
 
-			//$pdf->Output();
+			$pdf->Output();
 
 
 			//return true;

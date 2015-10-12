@@ -1,7 +1,7 @@
 <?php
 // header("Content-disposition: attachment; filename="'this.pdf');
 // header("Content-type: application/pdf");
-Configure::write('debug',0);
+Configure::write('debug',2);
 ?>
 <style>
 <?php include('word.css'); ?>
@@ -90,6 +90,9 @@ Configure::write('debug',0);
 									<thead>
 										<?php $countSpecs = count($formatDataSpecs);  
 
+
+											$product = array();
+
 										foreach ($formatDataSpecs as $key => $specLists) { ?>
 							
 											<?php
@@ -104,10 +107,18 @@ Configure::write('debug',0);
 										      		echo $this->element('Specs/reports/part', array('formatDataSpecs' => $formatDataSpecs[$key],'key' => $partCounter,'ticketUuid' => $ticketUuid));
 										      		$partCounter++;
 										      		
+
+										      			if (!empty($specLists['ProductSpecificationDetail'])) {
+										      				$product = $specLists['ProductSpecificationDetail'];
+
+
+										      		}
+
+
 										      	}
 										      	if($specLists['ProductSpecificationDetail']['model'] == 'Process'){
 										      		
-										      		echo $this->element('Specs/reports/process', array('formatDataSpecs' => $formatDataSpecs[$key],'key' => $processCounter,'ticketUuid' => $ticketUuid));
+										      		echo $this->element('Specs/reports/process', array('formatDataSpecs' => $formatDataSpecs[$key],'key' => $processCounter,'ticketUuid' => $ticketUuid ,'product'=> $product));
 										      		$processCounter++;
 
 										      		$countSpecs = count($formatDataSpecs[$key]['ProductSpecificationProcess']['ProcessHolder']);
