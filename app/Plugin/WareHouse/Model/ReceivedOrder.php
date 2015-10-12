@@ -44,6 +44,16 @@ class ReceivedOrder extends AppModel {
 		$data['purchase_order_id'] = $order_id;
 		$data['status_id'] = 11;
 
+		if(!empty($data['ReceiveReceipt'])){
+
+			$data['supplier_id'] = $data['ReceiveReceipt']['supplier_id'];
+			$data['address'] = $data['ReceiveReceipt']['address'];
+			$data['purchase_order_uuid'] = $data['ReceiveReceipt']['po_number'];
+
+		}
+
+		//pr($data); exit;
+
 		
 		$this->save($data);
 
