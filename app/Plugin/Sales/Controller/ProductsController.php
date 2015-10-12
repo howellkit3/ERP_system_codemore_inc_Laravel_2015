@@ -940,14 +940,14 @@ class ProductsController extends SalesAppController {
 			$getIds = array();
 
 
-			if (!empty($this->request->data['ProductSpecificationComponent']) {
+			if (!empty($this->request->data['ProductSpecificationComponent'])) {
 
 				$thisComponentIds = $this->ProductSpecificationComponent->saveComponent($this->request->data,$userData['User']['id'],$specId);
 
 				$getIds = array_merge($getIds,$thisComponentIds);
 			}
 			
-			if (!empty($this->request->data['ProductSpecificationPart']) {
+			if (!empty($this->request->data['ProductSpecificationPart'])) {
 
 				$thisPartIds = $this->ProductSpecificationPart->savePart($this->request->data,$userData['User']['id'],$specId);
 				
@@ -955,7 +955,7 @@ class ProductsController extends SalesAppController {
 
 			}
 
-			if (!empty($this->request->data['ProductSpecificationProcess']) {
+			if (!empty($this->request->data['ProductSpecificationProcess'])) {
 
 				$thisProcessIds = $this->ProductSpecificationProcess->saveProcess($this->request->data,$userData['User']['id'],$specId);
 				
