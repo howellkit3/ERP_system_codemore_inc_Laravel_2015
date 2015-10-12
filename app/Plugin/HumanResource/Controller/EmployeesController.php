@@ -82,7 +82,7 @@ class EmployeesController  extends HumanResourceAppController {
 	}
 
 
-	public function search_by_department($departmentId = null , $status = null,$hintKey = null){
+	public function search_by_department($departmentId = null , $status = null,$hintKey = null,$profile = null){
 
 		$this->loadModel('HumanResource.Position');
 		$this->loadModel('HumanResource.Department');
@@ -104,6 +104,17 @@ class EmployeesController  extends HumanResourceAppController {
 
 		}
 
+		if (!empty($profile) && $profile == 'profile') {
+
+			$conditions = array_merge($conditions,array('Employee.image NOT' => '' ));
+
+		}
+		if (!empty($profile) && $profile == 'no_profile') {
+				$conditions = array_merge($conditions,array('Employee.image' => '' ));
+		} 
+
+	
+
 		if (!empty($hintKey)) {
 
 			$conditions = array_merge($conditions,array(
@@ -116,7 +127,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 		}
 
-		$employeeData = $this->Employee->find('all',array(
+			$employeeData = $this->Employee->find('all',array(
 			'conditions' => $conditions,
 			'order' => array('Employee.code DESC')
 			));
@@ -756,6 +767,19 @@ class EmployeesController  extends HumanResourceAppController {
 
 			}
 
+			$profile = $this->request->data['profile'];
+
+			if (!empty($profile) && $profile == 'profile') {
+
+			$conditions = array_merge($conditions,array('Employee.image NOT' => '' ));
+
+			}
+			if (!empty($profile) && $profile == 'no_profile') {
+			$conditions = array_merge($conditions,array('Employee.image' => '' ));
+			} 
+
+		
+
 			$employeeData = $this->Employee->find('all',array(
 				'conditions' => $conditions,
 				'order' => array('Employee.last_name','Employee.first_name'),
@@ -1236,9 +1260,54 @@ class EmployeesController  extends HumanResourceAppController {
 
 					//	pr(str_replace(' ','',$address));
 
+
+				
 					if (strlen($address) > 40) {
 						$pdf->SetFont('Arial','',5);	
 					}
+
+					// $addressprovince = stripslashes($addressprovince);
+					// //$pdf->Multicell(0,3,$dateHired);
+
+					// $pdf->MultiCell( 35, 4, trim(utf8_decode($address)));
+
+
+					// $pdf->SetXY(19.5, 36);
+					// $pdf->MultiCell( 40,4, trim(utf8_decode($addresscity)));
+					// $pdf->SetXY(19.5, 40.5);
+					// $pdf->MultiCell( 40, 4, trim(utf8_decode($addressprovince)));
+
+
+
+
+				
+					if (strlen($address) > 40) {
+						$pdf->SetFont('Arial','',5);	
+					}
+
+					if (strlen($address) > 43) {
+
+
+
+					$addressprovince = stripslashes($addressprovince);
+					//$pdf->Multicell(0,3,$dateHired);
+
+					$address = $address.' '. str_replace(',',' ',$addresscity);
+
+					$pdf->MultiCell( 35, 4, trim(utf8_decode($address)),'',false);
+
+
+					// $pdf->SetXY(19.5, 36);
+					// $pdf->MultiCell( 40,4, trim(utf8_decode($addresscity)));
+
+
+					$pdf->SetXY(19.5, 40.5);
+					$pdf->MultiCell( 40, 4, trim(utf8_decode($addressprovince)));
+
+
+					} else {
+
+
 
 					$addressprovince = stripslashes($addressprovince);
 					//$pdf->Multicell(0,3,$dateHired);
@@ -1248,8 +1317,13 @@ class EmployeesController  extends HumanResourceAppController {
 
 					$pdf->SetXY(19.5, 36);
 					$pdf->MultiCell( 40,4, trim(utf8_decode($addresscity)));
+
+
 					$pdf->SetXY(19.5, 40.5);
 					$pdf->MultiCell( 40, 4, trim(utf8_decode($addressprovince)));
+
+					}
+
 
 
 					$pdf->SetFont('Arial','',6);
