@@ -904,60 +904,71 @@ class ProductsController extends SalesAppController {
 			
 			if (isset($this->request->data['ProductSpecificationComponent'])) {
 				
-				foreach (array_values($this->request->data['ProductSpecificationComponent']) as $key => $value) {
+				$componentData['ProductSpecificationComponent'] = array_values($this->request->data['ProductSpecificationComponent']);
+				
+				foreach ($componentData['ProductSpecificationComponent'] as $key => $value) {
 					
-					$this->request->data['ProductSpecificationComponent'][$key] = $value;
-					$this->request->data['ProductSpecificationComponent'][$key]['order'] = $componentArray[$key];
+					$componentData['ProductSpecificationComponent'][$key] = $value;
+					$componentData['ProductSpecificationComponent'][$key]['order'] = $componentArray[$key];
 					
 				}
-
+				$componentData['Product'] = $this->request->data['Product']['id'];
+				
 			}
-
+			
 			if (isset($this->request->data['ProductSpecificationPart'])) {
 
-				foreach (array_values($this->request->data['ProductSpecificationPart']) as $key => $value) {
+				$partData['ProductSpecificationPart'] = array_values($this->request->data['ProductSpecificationPart']);
+				
+				foreach ($partData['ProductSpecificationPart'] as $key => $value) {
+					
 					if (isset($partArray[$key])) {
-						$this->request->data['ProductSpecificationPart'][$key] = $value;
-						$this->request->data['ProductSpecificationPart'][$key]['order'] = $partArray[$key];
+						
+						$partData['ProductSpecificationPart'][$key] = $value;
+						$partData['ProductSpecificationPart'][$key]['order'] = $partArray[$key];
 						
 					}
 					
 				}
+				$partData['Product'] = $this->request->data['Product']['id'];
 				
 			}
 			
 			if (!empty($this->request->data['ProductSpecificationProcess'])) {
 
-				foreach (array_values($this->request->data['ProductSpecificationProcess']) as $key => $value) {
+				$processData['ProductSpecificationProcess'] = array_values($this->request->data['ProductSpecificationProcess']);
+				
+				foreach ($processData['ProductSpecificationProcess'] as $key => $value) {
 
-						if (isset($processArray[$key])) {
-							$this->request->data['ProductSpecificationProcess'][$key] = $value;
-							$this->request->data['ProductSpecificationProcess'][$key]['order'] = $processArray[$key];
-						}
+					if (isset($processArray[$key])) {
+						$processData['ProductSpecificationProcess'][$key] = $value;
+						$processData['ProductSpecificationProcess'][$key]['order'] = $processArray[$key];
+					}
 				}
+				$processData['Product'] = $this->request->data['Product']['id'];
 
 			}
 			$getIds = array();
 
 
-			if (!empty($this->request->data['ProductSpecificationComponent']) {
+			if (!empty($this->request->data['ProductSpecificationComponent'])) {
 
-				$thisComponentIds = $this->ProductSpecificationComponent->saveComponent($this->request->data,$userData['User']['id'],$specId);
+				$thisComponentIds = $this->ProductSpecificationComponent->saveComponent($componentData,$userData['User']['id'],$specId);
 
 				$getIds = array_merge($getIds,$thisComponentIds);
 			}
 			
-			if (!empty($this->request->data['ProductSpecificationPart']) {
+			if (!empty($this->request->data['ProductSpecificationPart'])) {
 
-				$thisPartIds = $this->ProductSpecificationPart->savePart($this->request->data,$userData['User']['id'],$specId);
+				$thisPartIds = $this->ProductSpecificationPart->savePart($partData,$userData['User']['id'],$specId);
 				
 				$getIds = array_merge($getIds,$thisPartIds);
 
 			}
 
-			if (!empty($this->request->data['ProductSpecificationProcess']) {
+			if (!empty($this->request->data['ProductSpecificationProcess'])) {
 
-				$thisProcessIds = $this->ProductSpecificationProcess->saveProcess($this->request->data,$userData['User']['id'],$specId);
+				$thisProcessIds = $this->ProductSpecificationProcess->saveProcess($processData,$userData['User']['id'],$specId);
 				
 				$getIds = array_merge($getIds,$thisProcessIds);
 

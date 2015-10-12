@@ -42,15 +42,18 @@ class ProductSpecificationPart extends AppModel {
 			if (!empty($partdata[$this->name])) {
 
 				foreach ($partdata[$this->name] as $key => $partList) {
+					
 					$this->create();
 					$partList['created_by'] = $auth;
 					$partList['modified_by'] = $auth;
 					$partList['product_specification_id'] = $specId;
-					$partList['product_id'] = $partdata['Product']['id'];
+					$partList['product_id'] = $partdata['Product'];
 					
 					$this->save($partList);
-						
-					array_push($Ids, $this->id.'-'.$partList['order'].'-'.'Part');
+					if (!empty($partList['order'])) {
+						array_push($Ids, $this->id.'-'.$partList['order'].'-'.'Part');
+					}
+					
 				}
 
 		}
