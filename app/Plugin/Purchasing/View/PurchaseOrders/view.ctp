@@ -104,10 +104,14 @@
                         <?php  $total = 0; foreach ($purchaseItemData as $key => $value) {  $key++ ?>
                             <tr>
                                <?php  $dividend = floor($value[$modelTable]['quantity'] / $value[$modelTable]['pieces']);
-                                $difference = $value[$modelTable]['quantity'] - (floor($dividend) * $value[$modelTable]['pieces']); ?>
+                                $difference = $value[$modelTable]['quantity'] - (floor($dividend) * $value[$modelTable]['pieces']);
+
+                                    $itemdescription = $value[$modelTable]['name'] . " " . $value[$modelTable]['size1'] . " " .$unitData[$value[$modelTable]['size1_unit_id']] . " " .  "x" . " " . $value[$modelTable]['size2'] . " " . $unitData[$value[$modelTable]['size2_unit_id']] . " " . "x" . " " .$value[$modelTable]['size3'] . " " . $unitData[$value[$modelTable]['size3_unit_id']];
+
+                                 ?>
 
                                 <td><?php echo $key ?></td>
-                                <td class="text-center"><?php echo $value[$modelTable]['name']?></td>
+                                <td class="text-center"><?php echo $itemdescription ?></td>
                                 <td class="text-center"><?php echo ($difference == 0 ? $value[$modelTable]['pieces'] . " " . $unitData[$value[$modelTable]['quantity_unit_id']] : $value[$modelTable]['pieces'] . " " . $unitData[$value[$modelTable]['quantity_unit_id']])?></td>
                                 <td class="text-center"><?php echo number_format($value[$modelTable]['unit_price'],2)?><?php //echo $unitData[$value[$modelTable]['unit_price_unit_id']]?></td>
                                 <td class="text-center">

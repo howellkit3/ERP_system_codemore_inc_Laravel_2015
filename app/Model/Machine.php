@@ -17,6 +17,22 @@ class Machine extends AppModel {
     
 	public $actsAs = array('Containable');
 
+      public function bind($model = array('Group')){
+
+        $this->bindModel(array(
+            
+            'belongsTo' => array(
+                'PlateMakingProcess' => array(
+                    'className' => 'PlateMakingProcess',
+                    'foreignKey' => false,
+                    'dependent' => 'PlateMakingProcess.machine = Machine.id'
+                ),
+            )
+        ));
+
+        $this->contain($model);
+    } 
+
     public $validate = array(
 
         'name' => array(

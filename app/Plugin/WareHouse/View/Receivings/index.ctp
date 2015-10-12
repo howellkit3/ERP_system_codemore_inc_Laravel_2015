@@ -9,6 +9,12 @@
 
                 <h2 class="pull-left"><b>Order List</b></h2>
 
+                <?php
+
+                    echo $this->Html->link('<i class="fa fa-plus-circle fa-lg"></i> Receive Receipt ', array('controller' => 'receivings', 'action' => 'receive_receipt'),array('class' =>'btn btn-primary pull-right ','escape' => false));
+                           
+                ?>
+
             </header>
             
             <div class="main-box-body clearfix">

@@ -112,7 +112,10 @@ for ($x = 0; $x <= 1; $x++) { ?>
 					</tr>
 					<?php $total = 0; $addRow2 = 8; foreach ($purchaseItemData as $key => $value) {  $key++; $addRow2 = $addRow2 - 1; 
 					$dividend = floor($value[$modelTable]['quantity'] / $value[$modelTable]['pieces']);
-                    $difference = $value[$modelTable]['quantity'] - (floor($dividend) * $value[$modelTable]['pieces']); ?>
+                    $difference = $value[$modelTable]['quantity'] - (floor($dividend) * $value[$modelTable]['pieces']); 
+                    $itemdescription = $value[$modelTable]['name'] . " " . $value[$modelTable]['size1'] . " " .$unitData[$value[$modelTable]['size1_unit_id']] . " " .  "x" . " " . $value[$modelTable]['size2'] . " " . $unitData[$value[$modelTable]['size2_unit_id']] . " " . "x" . " " .$value[$modelTable]['size3'] . " " . $unitData[$value[$modelTable]['size3_unit_id']];
+
+                    ?>
 
 						<tr>
 							<td align="center" style="width:2%; border:1px solid black; "><?php echo $key ?></td>
@@ -121,19 +124,19 @@ for ($x = 0; $x <= 1; $x++) { ?>
 							
 							<?php if($lengthName >= 35 && $lengthName <= 70){ ?>
 
-								<td class="td-heigth; " style = "border:1px solid black;" ><span style="font-size:55% !important; word-spacing: 0px;white-space: nowrap;  "><center><?php echo $value[$modelTable]['name']?></center></td>
+								<td class="td-heigth; " style = "border:1px solid black;" ><span style="font-size:55% !important; word-spacing: 0px;white-space: nowrap;  "><center><?php echo $itemdescription ?></center></td>
 
 							<?php } else if($lengthName >= 70  && $lengthName <= 80) { ?>
 
-								<td class="td-heigth" style = "border:1px solid black;width:200px;word-wrap: break-word;" ><span style="font-size:50%"; ><center><?php echo $value[$modelTable]['name']?></center></td>
+								<td class="td-heigth" style = "border:1px solid black;width:200px;word-wrap: break-word;" ><span style="font-size:50%"; ><center><?php echo $itemdescription?></center></td>
 
 							<?php } else if($lengthName >= 80 ) { ?>
 
-								<td class="td-heigth" style = "border:1px solid black;width:200px;word-wrap: break-word;" ><span style="font-size:50%"; ><center><?php echo $value[$modelTable]['name']?></center></td>
+								<td class="td-heigth" style = "border:1px solid black;width:200px;word-wrap: break-word;" ><span style="font-size:50%"; ><center><?php echo $itemdescription?></center></td>
 
 							<?php }else{ ?>
 
-								<td class="td-heigth;" style="border:1px solid black;" ><span style=" font-size:90%; height:10px !important; white-space:nowrap;padding:0;margin:0"; ><center><?php echo $value[$modelTable]['name']?></center></td>
+								<td class="td-heigth;" style="border:1px solid black;" ><span style=" font-size:90%; height:10px !important; white-space:nowrap;padding:0;margin:0"; ><center><?php echo $itemdescription?></center></td>
 
 							<?php } ?>
 
@@ -313,7 +316,9 @@ for ($x = 0; $x <= 1; $x++) { ?>
 					</tr>
 					<?php $total = 0; $addRow2 = 8; foreach ($purchaseItemData as $key => $value) {  $key++; $addRow2 = $addRow2 - 1; 
 					$dividend = floor($value[$modelTable]['quantity'] / $value[$modelTable]['pieces']);
-                    $difference = $value[$modelTable]['quantity'] - (floor($dividend) * $value[$modelTable]['pieces']);?>
+                    $difference = $value[$modelTable]['quantity'] - (floor($dividend) * $value[$modelTable]['pieces']);
+                    $itemdescription = $value[$modelTable]['name'] . " " . $value[$modelTable]['size1'] . " " .$unitData[$value[$modelTable]['size1_unit_id']] . " " .  "x" . " " . $value[$modelTable]['size2'] . " " . $unitData[$value[$modelTable]['size2_unit_id']] . " " . "x" . " " .$value[$modelTable]['size3'] . " " . $unitData[$value[$modelTable]['size3_unit_id']];
+                    ?>
 
 						<tr>
 							<td align="center" style="width:2%; border:1px solid black; "><?php echo $key ?></td>
@@ -322,19 +327,19 @@ for ($x = 0; $x <= 1; $x++) { ?>
 							
 							<?php if($lengthName >= 35 && $lengthName <= 70){ ?>
 
-								<td class="td-heigth; " style = "border:1px solid black;" ><span style="font-size:55% !important; word-spacing: 0px;white-space: nowrap;  "><center><?php echo $value[$modelTable]['name']?></center></td>
+								<td class="td-heigth; " style = "border:1px solid black;" ><span style="font-size:55% !important; word-spacing: 0px;white-space: nowrap;  "><center><?php echo $itemdescription?></center></td>
 
 							<?php } else if($lengthName >= 70  && $lengthName <= 80) { ?>
 
-								<td class="td-heigth" style = "border:1px solid black;width:200px;word-wrap: break-word;" ><span style="font-size:50%"; ><center><?php echo $value[$modelTable]['name']?></center></td>
+								<td class="td-heigth" style = "border:1px solid black;width:200px;word-wrap: break-word;" ><span style="font-size:50%"; ><center><?php echo $itemdescription?></center></td>
 
 							<?php } else if($lengthName >= 80 ) { ?>
 
-								<td class="td-heigth" style = "border:1px solid black;width:200px;word-wrap: break-word;" ><span style="font-size:50%"; ><center><?php echo $value[$modelTable]['name']?></center></td>
+								<td class="td-heigth" style = "border:1px solid black;width:200px;word-wrap: break-word;" ><span style="font-size:50%"; ><center><?php echo $itemdescription?></center></td>
 
 							<?php }else{ ?>
 
-								<td class="td-heigth;" style="border:1px solid black;" ><span style=" font-size:90%; height:10px !important; white-space:nowrap;padding:0;margin:0"; ><center><?php echo $value[$modelTable]['name']?></center></td>
+								<td class="td-heigth;" style="border:1px solid black;" ><span style=" font-size:90%; height:10px !important; white-space:nowrap;padding:0;margin:0"; ><center><?php echo $itemdescription?></center></td>
 
 							<?php } ?>
 
@@ -516,7 +521,9 @@ for ($x = 0; $x <= 1; $x++) { ?>
 					<?php 
 						$total = 0; $addRow2 = 8; foreach ($purchaseItemData as $key => $value) {  $key++; $addRow2 = $addRow2 - 1; 
 						$dividend = floor($value[$modelTable]['quantity'] / $value[$modelTable]['pieces']);
-                   		$difference = $value[$modelTable]['quantity'] - (floor($dividend) * $value[$modelTable]['pieces']);?>
+                   		$difference = $value[$modelTable]['quantity'] - (floor($dividend) * $value[$modelTable]['pieces']);
+                   		$itemdescription = $value[$modelTable]['name'] . " " . $value[$modelTable]['size1'] . " " .$unitData[$value[$modelTable]['size1_unit_id']] . " " .  "x" . " " . $value[$modelTable]['size2'] . " " . $unitData[$value[$modelTable]['size2_unit_id']] . " " . "x" . " " .$value[$modelTable]['size3'] . " " . $unitData[$value[$modelTable]['size3_unit_id']];
+                   		?>
 						<tr>
 							<td align="center" style="width:2%; border:1px solid black; "><?php echo $key ?></td>
 							<?php $lengthName = strlen($value[$modelTable]['name'])?>
@@ -524,19 +531,19 @@ for ($x = 0; $x <= 1; $x++) { ?>
 							
 							<?php if($lengthName >= 35 && $lengthName <= 70){ ?>
 
-								<td class="td-heigth; " style = "border:1px solid black;" ><span style="font-size:55% !important; word-spacing: 0px;white-space: nowrap;  "><center><?php echo $value[$modelTable]['name']?></center></td>
+								<td class="td-heigth; " style = "border:1px solid black;" ><span style="font-size:55% !important; word-spacing: 0px;white-space: nowrap;  "><center><?php echo $itemdescription?></center></td>
 
 							<?php } else if($lengthName >= 70  && $lengthName <= 80) { ?>
 
-								<td class="td-heigth" style = "border:1px solid black;width:200px;word-wrap: break-word;" ><span style="font-size:50%"; ><center><?php echo $value[$modelTable]['name']?></center></td>
+								<td class="td-heigth" style = "border:1px solid black;width:200px;word-wrap: break-word;" ><span style="font-size:50%"; ><center><?php echo $itemdescription?></center></td>
 
 							<?php } else if($lengthName >= 80 ) { ?>
 
-								<td class="td-heigth" style = "border:1px solid black;width:200px;word-wrap: break-word;" ><span style="font-size:50%"; ><center><?php echo $value[$modelTable]['name']?></center></td>
+								<td class="td-heigth" style = "border:1px solid black;width:200px;word-wrap: break-word;" ><span style="font-size:50%"; ><center><?php echo $itemdescription?></center></td>
 
 							<?php }else{ ?>
 
-								<td class="td-heigth;" style="border:1px solid black;" ><span style=" font-size:90%; height:10px !important; white-space:nowrap;padding:0;margin:0"; ><center><?php echo $value[$modelTable]['name']?></center></td>
+								<td class="td-heigth;" style="border:1px solid black;" ><span style=" font-size:90%; height:10px !important; white-space:nowrap;padding:0;margin:0"; ><center><?php echo $itemdescription?></center></td>
 
 							<?php } ?>
 

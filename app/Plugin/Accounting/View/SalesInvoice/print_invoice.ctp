@@ -50,36 +50,34 @@
      //$part = $count($words);
     //pr($words); exit;
     $halfAddress = floor(count($words)/2);
-
+    //pr(count($words)); exit;
     $r = array();
     for ($i = 0; $i <= $halfAddress; $i++) {
 
         if($i == 0){
 
             $Addresspart1 = $words[$i];
-            $Addresspart2 = $words[$i + $halfAddress];
+            $Addresspart2 = $words[$i + $halfAddress + 1];
 
         }else{
-
+            $addindex = $halfAddress + 1;
             $Addresspart1 = $Addresspart1 . " " . $words[$i];
-            $Addresspart2 = $Addresspart2 . " " . $words[$i + $halfAddress ];
+
+            if($i != $halfAddress){
+            $Addresspart2 = $Addresspart2 . " " . $words[$i + $halfAddress + 1];
+            }   
         }
 
         
-      //  pr($r); exit;
+    
     }
-   // return $halfAddress == 1 ? $r[0] : $r;
-
-    //$fullAddress = $Addresspart1 . " " . $Addresspart2;
-
-    //pr($fullAddress); exit;
-
+ 
     $objTpl->setActiveSheetIndex(0)
-                ->setCellValue('C7', ucwords($Addresspart1))
-                ->setCellValue('C8', ucwords($Addresspart2))
+                ->setCellValue('C7', ucwords($companyData['Company']['company_name']))
+                ->setCellValue('C8', ucwords($Addresspart1))
+                ->setCellValue('C9', ucwords($Addresspart2))
                 ->setCellValue('J7', (new \DateTime())->format('m/d/Y'))
                 ->setCellValue('J8', $companyData['Company']['tin'])
-                ->setCellValue('C8', ucfirst($companyData['Address'][0]['address1']))
                 ->setCellValue('J9', $paymentTermData[$clientData['ClientOrder']['payment_terms']])
                 ->setCellValue('A12', $clientData['ClientOrder']['po_number'])
                 ->setCellValue('F12', ucfirst($clientData['Product']['name']))

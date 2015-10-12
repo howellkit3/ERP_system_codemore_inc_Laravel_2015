@@ -919,9 +919,53 @@ class ReceivingsController extends WareHouseAppController {
 
     // }
 
-        public function out_record_item() {
+    public function receive_receipt() {
 
-   
+    	$this->loadModel('Supplier');
+
+    	$this->loadModel('Purchasing.Address');
+
+		$supplierData = $this->Supplier->find('list', array('fields' => array('Supplier.id', 'Supplier.name')
+																,'order' => array('Supplier.name' => 'ASC')
+															));
+
+		$supplierAddressData = $this->Address->find('list', array('fields' => array('Address.foreign_key', 'Address.address1')
+																,'order' => array('Address.address1' => 'ASC')
+															));
+
+		if ($this->request->is(array('post','put'))) {
+
+			//pr($this->request->data); exit;
+
+			$userData = $this->Session->read('Auth');
+
+			$this->loadModel('Purchasing.ReceivedItem');
+
+			$this->loadModel('WareHouse.ReceivedOrder');
+
+			$this->loadModel('WareHouse.DeliveredOrder');
+
+			$this->loadModel('WareHouse.ReceivedReceiptItem');
+
+			$id = 0;
+
+			$itemId = $this->ReceivedOrder->saveReceivedOrders($this->request->data,$userData['User']['id'],$id);
+
+			$deliveryUUID = $this->DeliveredOrder->saveDeliveredOrder($userData['User']['id'], $itemId, $id);
+
+			$this->ReceivedReceiptItem->saveReceivedReceiptItems($itemId, $this->request->data, $deliveryUUID);
+
+			$this->Session->setFlash(__('Receipt has been Received'), 'success');
+          
+            $this->redirect( array(
+                'controller' => 'receivings',   
+                'action' => 'receive_receipt'
+            )); 
+
+		}
+
+		$this->set(compact('supplierData'));
+
     }
 
 }

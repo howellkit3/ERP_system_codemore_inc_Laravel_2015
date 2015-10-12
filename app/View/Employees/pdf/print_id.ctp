@@ -40,9 +40,6 @@
 								<div style="margin-top:5px"><?php echo !empty($employee['Department']['notes']) ? $employee['Department']['notes'] : '' ?></div> 
 									<div style="margin-top:6px"><?php echo !empty($employee['Position']['name']) ? $employee['Position']['name'] : '' ?></div> 
 								</div>
-
-
-
 						</td>
 				</tr>
 		</table>
@@ -73,7 +70,7 @@
 
 										<br>
 
-										<?php echo !empty($employee['ContactPersonAddress']['address_1']) ? $employee['ContactPersonAddress']['address_1'].', ' : '' ?> 
+											<?php echo !empty($employee['ContactPersonAddress']['address_1']) ? $employee['ContactPersonAddress']['address_1'].', ' : '' ?> 
 											<?php echo !empty($employee['ContactPersonAddress']['city']) ? $employee['ContactPersonAddress']['city'].', ' : '' ?>
 											<?php echo !empty($employee['ContactPersonAddress']['province']) ? $employee['ContactPersonAddress']['province'].' ' : '' ?>
 

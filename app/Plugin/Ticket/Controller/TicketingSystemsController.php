@@ -8,7 +8,7 @@ class TicketingSystemsController extends TicketAppController {
 	public $uses = array('Ticket.JobTicket');
 
 	//public $helpers = array('Ticket.PhpExcel','Sales.Country','Sales.Status','Cache','Sales.DateFormat');
-    public $helpers = array('Ticket.PhpExcel');
+    public $helpers = array('Ticket.PhpExcel','Ticket.PlateMaking');
 	public function beforeFilter() {
 
         parent::beforeFilter();
@@ -82,6 +82,8 @@ class TicketingSystemsController extends TicketAppController {
 
         $this->loadModel('Unit');
 
+        $this->loadModel('Machine');
+
         $this->loadModel('SubProcess');
 
         $this->loadModel('Sales.Product');
@@ -114,6 +116,12 @@ class TicketingSystemsController extends TicketAppController {
                                                     'SubProcess.name'
                                                  )
                                                 ));
+
+        $machines = $this->Machine->find('list', array('fields' => 
+                                                array('id',
+                                                    'name'
+                                                 )
+                                                ));
         //$subProcess =  $subProcess['SubProcess'];
 
         //set to cache in first load
@@ -140,7 +148,7 @@ class TicketingSystemsController extends TicketAppController {
         }
 
 		
-		$this->set(compact('userData','delData','ticketData','formatDataSpecs','specs','unitData','subProcess','productData','companyData','clientOrderId','noPermissionSales','subProcessData'));
+		$this->set(compact('userData','delData','ticketData','formatDataSpecs','specs','machines','unitData','subProcess','productData','companyData','clientOrderId','noPermissionSales','subProcessData'));
 	}
 
 	public function updatePendingStatus($ticketId = null) {
@@ -192,7 +200,9 @@ class TicketingSystemsController extends TicketAppController {
 
         $query = $this->request->query;
 
-        if (!empty($processId) && !empty($productId) && !empty($productId)) {
+        $this->autoRender = false;
+
+        if (!empty($processId) && !empty($productId) && !empty($formProcesId)) {
 
             $parameter['processId'] = $processId;
 
@@ -207,17 +217,28 @@ class TicketingSystemsController extends TicketAppController {
 
             $this->set(compact('parameter'));
 
+
             if (in_array($processId,array('11','61',))) {
 
-                 $this->render('TicketingSystems/forms/cutting', false);
+                $this->render('TicketingSystems/forms/cutting', false);
 
             } else if (in_array($processId,array('21'))) {
+
+                $this->loadModel('Ticket.PlateMakingProcess');
 
                 $this->loadModel('Machine');
 
                 $machines = $this->Machine->find('list',array(
                     'conditions' => array(),
                     'order' => array('Machine.name DESC')
+                ));
+
+                $this->request->data = $this->PlateMakingProcess->find('first',array(
+                    'conditions' => array(
+                            'PlateMakingProcess.job_ticket_id' =>  $ticketId,
+                            'PlateMakingProcess.process_id' => $processId,
+                            'PlateMakingProcess.product' => $product
+                    )
                 ));
 
                 $this->set(compact('machines'));
@@ -232,6 +253,7 @@ class TicketingSystemsController extends TicketAppController {
              }
 
         }
+
     }
 
 
@@ -508,6 +530,8 @@ class TicketingSystemsController extends TicketAppController {
 
         $this->loadModel('Sales.ClientOrder');
 
+        $this->loadModel('Machine');
+
         $this->loadModel('Unit');
 
 
@@ -562,8 +586,15 @@ class TicketingSystemsController extends TicketAppController {
             Cache::write('unitData', $unitData);
         }
 
+           $machines = $this->Machine->find('list', array('fields' => 
+                                                array('id',
+                                                    'name'
+                                                 )
+                                                ));
 
-        $this->set(compact('userData','ticketData','formatDataSpecs','productData','specs','companyData','unitData','subProcess','ticketUuid','delData'));
+
+
+        $this->set(compact('userData','ticketData','formatDataSpecs','productData','specs','companyData','unitData','subProcess','ticketUuid','delData','machines'));
         
 
         if ($type == 'excel') {
@@ -572,12 +603,13 @@ class TicketingSystemsController extends TicketAppController {
 
         if ($type == 'pdf') {
 
+                $this->helpers[] = 'Ticket.PlateMaking';
 
                 $view = new View(null, false);
 
                 $view->viewPath = 'TicketingSystem'.DS.'pdf';  
 
-                $view->set(compact('userData','ticketData','formatDataSpecs','productData','specs','companyData','unitData','subProcess','ticketUuid','delData'));
+                $view->set(compact('userData','ticketData','formatDataSpecs','productData','specs','companyData','unitData','subProcess','ticketUuid','delData','machines'));
                 
                 $output = $view->render('print_ticket_export', false);
 
@@ -657,6 +689,8 @@ class TicketingSystemsController extends TicketAppController {
 
         $this->loadModel('Sales.ClientOrder');
 
+        $this->loadModel('Ticket.PlateMakingProcess');
+
         $this->loadModel('Unit');
 
         $modelData = array();
@@ -693,6 +727,7 @@ class TicketingSystemsController extends TicketAppController {
                     'ProductSpecificationDetail.model' => 'Part',
                    
             );
+
         if (!empty($this->params['named']['productId'])) {
              $processCond = array_merge(
                 $processCond,
@@ -706,13 +741,18 @@ class TicketingSystemsController extends TicketAppController {
             'conditions' =>  $processCond
 
         ));
-    
-        $part = $this->ProductSpecificationPart->find('first',array(
-            'conditions' => array(
-                    'ProductSpecificationPart.id' => $processData['ProductSpecificationDetail']['foreign_key']
-            )
-        ));
 
+
+        $part = array();
+         
+         if (!empty($processData['ProductSpecificationDetail']['foreign_key'])) {
+
+            $part = $this->ProductSpecificationPart->find('first',array(
+                'conditions' => array(
+                        'ProductSpecificationPart.id' => $processData['ProductSpecificationDetail']['foreign_key']
+                )
+            ));
+         }   
         
         $formatDataSpecs = $this->ProductSpecificationDetail->findData($productUuid);
        //pr($formatDataSpecs);
@@ -763,6 +803,25 @@ class TicketingSystemsController extends TicketAppController {
         
         }  else if (in_array($processId,array('21'))) {
 
+            // $this->PlateMakingProcess->find('first',array(
+            //         'conditions' => array(
+            //                 'PlateMakingProcess.job_ticket_id' =>  $ticketId,
+            //                 'PlateMakingProcess.process_id' => $processId,
+            //                 'PlateMakingProcess.product' => $product
+            //         )
+            //     ));
+
+            $product  = !empty($this->request->params['named']['productId']) ? $this->request->params['named']['productId'] : '';
+            //plateMaking Process
+            $PlateMakingProcess = $this->PlateMakingProcess->getProcess(
+                array(
+                    'ticketId' => $ticketUuid, 'processID' =>  $processId , 'productId' =>  $productUuid,
+                    'product' => $product
+                )
+            );
+
+            $view->set(compact('PlateMakingProcess','subProcess'));
+            
             $output = $view->render('print_process_offset', false);
    
 
