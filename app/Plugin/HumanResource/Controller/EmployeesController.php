@@ -1183,7 +1183,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 					//SSS
 
-					$pdf->SetXY(20, 9.5);
+					$pdf->SetXY(19.5, 9.5);
 
 					$sss = !empty($employee['SSS']['value']) ? $employee['SSS']['value'] : ''; 
 
@@ -1191,7 +1191,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 					//tin
 
-					$pdf->SetXY(20, 14);
+					$pdf->SetXY(19.5, 14);
 
 					$tin = !empty($employee['TIN']['value']) ? $employee['TIN']['value'] : ''; 
 
@@ -1199,7 +1199,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 
 					//department
-					$pdf->SetXY(20, 18.5);
+					$pdf->SetXY(19.5, 18.5);
 
 					$dateHired = !empty($employee['Employee']['date_hired']) ? date('Y / m / d',strtotime($employee['Employee']['date_hired'])) : ''; 
 
@@ -1208,7 +1208,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 					//contact person
 
-					$pdf->SetXY(20, 24);
+					$pdf->SetXY(19.5, 24);
 					$pdf->SetFont('Arial','',7);
 					
 					//
@@ -1225,7 +1225,7 @@ class EmployeesController  extends HumanResourceAppController {
 					//echo $contactPesronName;
 					$pdf->Write(10, ucwords(utf8_decode($contactPerson)));	
 
-					$pdf->SetXY(20, 31.5);
+					$pdf->SetXY(19.5, 31.5);
 
 					$pdf->SetFont('Arial','',6);
 

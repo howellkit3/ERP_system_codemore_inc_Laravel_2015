@@ -80,7 +80,7 @@
 
                                                 <div class="form-group" >
                                                     <label class="col-lg-2 control-label"><span style="color:red">*</span>Item Name</label>
-                                                    <div class="col-lg-5">
+                                                    <div class="col-lg-6">
                                                         
                                                         <?php 
                                                             echo $this->Form->input('ReceiveReceipt.0.item_name', 

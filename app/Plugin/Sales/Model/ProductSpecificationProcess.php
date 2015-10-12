@@ -62,11 +62,13 @@ class ProductSpecificationProcess extends AppModel {
 			$processList['created_by'] = $auth;
 			$processList['modified_by'] = $auth;
 			$processList['product_specification_id'] = $specId;
-			$processList['product_id'] = $processdata['Product']['id'];
+			$processList['product_id'] = $processdata['Product'];
 			
 			$this->save($processList);
-			
-			array_push($Ids, $this->id.'-'.$processList['order'].'-'.'Process');
+
+			if (!empty($processList['order'])) {
+				array_push($Ids, $this->id.'-'.$processList['order'].'-'.'Process');
+			}
 			
 			unset($processdata[$this->name][$key1]['order']);
 			
