@@ -228,6 +228,24 @@ class SettingsController extends SalesAppController {
 		}	
 	}
 
+	public function edit_machine($id = null) {
+
+		if (!empty($id)) {
+
+				$this->layout = false;
+
+				$this->autoRender = false;
+
+				$this->loadModel('Machine');
+
+				$this->request->data = $this->Machine->findById($id);
+
+				$this->render('Settings/Forms/machine');
+		}
+
+		
+	}
+
 	public function delete_machine($id = null) {
 
 

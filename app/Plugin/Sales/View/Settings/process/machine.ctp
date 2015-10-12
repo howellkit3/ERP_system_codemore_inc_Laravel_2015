@@ -1,5 +1,6 @@
 <?php $this->Html->addCrumb('Sales', array('controller' => 'customer_sales', 'action' => 'index')); ?>
 <?php echo $this->Html->script('Sales.searchQuotation');?>
+<?php echo $this->Html->script('Sales.searchMachine');?>
 <div style="clear:both"></div>
 
 <?php 
@@ -62,6 +63,25 @@
 
 
                                          <?php
+
+
+                                                  echo $this->Html->link('<span class="fa-stack">
+                                                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                                                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit </font></span>
+                                                                                </span>',
+                                                                                '#machineModal' 
+                                                                                        , 
+                                                                                        array(
+                                                                                 'data-url' => 'sales/settings/edit_machine/'.
+                                                                               $list['Machine']['id'],         
+                                                                                'class' =>' table-link', 
+                                                                                'id' => 'EditMachine',
+                                                                                'escape' => false, 
+                                                                                'title'=>'Edit Machine',
+                                                                                'data-toggle' => 'modal'
+                                                                                ));
+
+
                                                         echo $this->Html->link('<span class="fa-stack">
                                                                                 <i class="fa fa-square fa-stack-2x"></i>
                                                                                 <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Delete </font></span>
