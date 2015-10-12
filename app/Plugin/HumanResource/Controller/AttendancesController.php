@@ -344,6 +344,31 @@ class AttendancesController  extends HumanResourceAppController {
 }
 
 
+public function delete($id = null) {
+
+	
+		if (!empty($id)) {
+
+			if ($this->Attendance->delete($id)) {
+                $this->Session->setFlash(
+                    __('Successfully deleted.', h($id))
+                );
+            } else {
+                $this->Session->setFlash(
+                    __('Attendance cannot be deleted.', h($id))
+                );
+            }
+
+            return  $this->redirect( array(
+                             'controller' => 'attendances', 
+                             'action' => 'index',
+                             'tab' => 'attendance',
+                             'plugin' => 'human_resource'
+
+                        ));
+		}
+}
+
 private function _getDuration($time1 = null,$time2 = null){
 
 
