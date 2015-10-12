@@ -5,19 +5,26 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title"> Machine </h4>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" id="result_cont">
                  <?php echo $this->Form->create('Machine',array('url'=>(array('controller' => 'settings','action' => 'add_machine')),'class' => 'form-horizontal'));?>
                         <div class="form-group">
                             <label for="inputEmail1" class="col-lg-2 control-label">  Name</label>
                            
                             <div class="col-lg-10">
-                                <?php
+                                 <?php
 
-                                    echo $this->Form->input('name', array(
+                                    echo $this->Form->input('id', array(
                                         'alt' => 'type',
                                         'label' => false,
                                         'class' => 'form-control col-lg-4',
                                         'data-name' => 'Address'
+                                    ));
+                              
+                                    echo $this->Form->input('name', array(
+                                        'alt' => 'type',
+                                        'label' => false,
+                                        'class' => 'form-control col-lg-4',
+                                        'data-name' => 'Name'
                                     ));
                                 ?>
                             </div>
@@ -33,7 +40,7 @@
                                         'alt' => 'type',
                                         'label' => false,
                                         'class' => 'form-control col-lg-4',
-                                        'data-name' => 'Address'
+                                        'data-name' => 'Description'
                                     ));
                                 ?>
                             </div>
@@ -49,7 +56,7 @@
                                         'alt' => 'type',
                                         'label' => false,
                                         'class' => 'form-control col-lg-4',
-                                        'data-name' => 'Address'
+                                        'data-name' => 'Plate'
                                     ));
                                 ?>
                             </div>
@@ -65,7 +72,7 @@
                                         'alt' => 'type',
                                         'label' => false,
                                         'class' => 'form-control col-lg-4',
-                                        'data-name' => 'Address'
+                                        'data-name' => 'Paper Gripper'
                                     ));
                                 ?>
                             </div>
@@ -81,7 +88,7 @@
                                         'alt' => 'type',
                                         'label' => false,
                                         'class' => 'form-control col-lg-4',
-                                        'data-name' => 'Address'
+                                        'data-name' => 'Plate Gripper'
                                     ));
                                 ?>
                             </div>
