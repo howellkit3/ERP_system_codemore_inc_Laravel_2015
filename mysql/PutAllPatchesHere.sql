@@ -2161,3 +2161,22 @@ ALTER TABLE `koufu_ticketing`.`plate_making_process`
 ALTER TABLE `plate_making_process`
 DROP COLUMN `product`,
 ADD COLUMN `product`  int(11) NULL AFTER `modified`;
+
+/* howell added this oct-9-2015 koufu_ticketing*/
+ALTER TABLE `received_orders` ADD `supplier_id` INT(11)  NULL  DEFAULT NULL  AFTER `purchase_order_id`;
+ALTER TABLE `received_orders`  ADD `address` VARCHAR(60) NULL  AFTER `supplier_id`;
+ALTER TABLE `received_orders`  ADD `purchase_order_uuid` VARCHAR(60) NULL  AFTER `purchase_order_id`;
+
+CREATE TABLE `received_receipt_items` (
+  `id` INT(11) ,
+  `delivered_order_id` INT(11),
+  `received_orders_id` INT(11) ,
+  `model` VARCHAR (90),
+  `item_type` VARCHAR (90),
+  `foreign_key` INT(11) ,
+  `quantity` INT(11) ,
+  `number_of_boxes` INT(11) ,
+  `quantity_per_boxes` INT(11) ,
+  `lot` INT(11) ,
+  `request_uuid` DOUBLE 
+); 
