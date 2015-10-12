@@ -53,22 +53,22 @@
             <table  width = "100%" style="margin-left:2%;" >
                 
                     <tr>
-                        <td align = "left" width = "25%">Supplier </td>
-                        <td align = "left" width = "25%">:<?php echo ucfirst($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]); ?></td>
-                         
-                        <td align = "left" width = "25%">Date </td>
-                        <td align = "left" width = "25%">:<?php echo (new \DateTime())->format('M d, Y') ?>
+                        <td align = "left" width = "20%">Supplier </td>
+                        <td align = "left" width = "20%">:<?php echo ucfirst($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]); ?></td>
+                        <td align = "left" width = "20%"></td>
+                        <td align = "left" width = "20%">Date </td>
+                        <td align = "left" width = "20%">:<?php echo (new \DateTime())->format('M d, Y') ?>
                         </td>
                     </tr>
             </table>
 
             <table  width = "100%" style="margin-left:2%;" >
                     <tr>
-                        <td align = "left" width = "25%">Contact Person</td>
-                        <td align = "left" width = "25%">:<?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']); ?> <?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
-                        
-                        <td align = "left" width = "25%">Terms </td>
-                        <td align = "left" width = "25%">:<?php echo $paymentTermData[$purchaseOrderData['PurchaseOrder']['payment_term']]; ?>   
+                        <td align = "left" width = "20%">Contact Person</td>
+                        <td align = "left" width = "20%">:<?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']); ?> <?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
+                        <td align = "left" width = "20%"></td>
+                        <td align = "left" width = "20%">Terms </td>
+                        <td align = "left" width = "20%">:<?php echo $paymentTermData[$purchaseOrderData['PurchaseOrder']['payment_term']]; ?>   
                         </td>
                         
                     </tr>
@@ -77,11 +77,11 @@
 
             <table  width = "100%"  style="margin-left:2%;">
                     <tr>
-                        <td align = "left" width = "25%">Telephone</td>
-                        <td align = "left" width = "25%">:<?php echo $purchaseOrderData['Contact']['number']; ?></td>
-                         
-                        <td align = "left" width = "25%">Delivery Date:</td>
-                        <td align = "left" width = "25%">:<?php echo date('M d, Y', strtotime($purchaseOrderData['PurchaseOrder']['delivery_date'])); ?> 
+                        <td align = "left" width = "20%">Telephone</td>
+                        <td align = "left" width = "20%">:<?php echo !empty($telContactData['Contact']['number']) ? $telContactData['Contact']['number'] : " "; ?></td>
+                        <td align = "left" width = "20%">Fax #:  <?php echo !empty($faxContactData['Contact']['number']) ? $faxContactData['Contact']['number'] : " "; ?></td>
+                        <td align = "left" width = "20%">Delivery Date:</td>
+                        <td align = "left" width = "20%">:<?php echo date('M d, Y', strtotime($purchaseOrderData['PurchaseOrder']['delivery_date'])); ?> 
                         </td>
                         
                     </tr>
@@ -176,7 +176,7 @@
                             <th class="text-center">Requested by :</th>
                             <th class="text-center">Approved by :</th>
                             <th class="text-center">Purchased by :</th>
-                            </thead>
+                        </thead>
                         <tr>
                             <td class="text-center"><?php echo ucfirst($preparedData['User']['first_name'])?> <?php echo ucfirst($preparedData['User']['last_name'])?></td>
                             <td class="text-center">Ms. Carryl Yu</td>
