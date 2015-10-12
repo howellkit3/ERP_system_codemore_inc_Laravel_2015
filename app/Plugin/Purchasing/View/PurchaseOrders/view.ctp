@@ -106,9 +106,15 @@
                                <?php  $dividend = floor($value[$modelTable]['quantity'] / $value[$modelTable]['pieces']);
                                 $difference = $value[$modelTable]['quantity'] - (floor($dividend) * $value[$modelTable]['pieces']);
 
-                                    $itemdescription = $value[$modelTable]['name'] . " " . $value[$modelTable]['size1'] . " " .$unitData[$value[$modelTable]['size1_unit_id']] . " " .  "x" . " " . $value[$modelTable]['size2'] . " " . $unitData[$value[$modelTable]['size2_unit_id']] . " " . "x" . " " .$value[$modelTable]['size3'] . " " . $unitData[$value[$modelTable]['size3_unit_id']];
+                                $itemdescription = $value[$modelTable]['name'];
 
-                                 ?>
+                                $itemdescription .= !empty($value[$modelTable]['size1']) ? $value[$modelTable]['size1'] . " " .$unitData[$value[$modelTable]['size1_unit_id']] : " ";
+
+                                $itemdescription .= !empty($value[$modelTable]['size2']) ? " " .  "x" . " " . $value[$modelTable]['size2'] . " " . $unitData[$value[$modelTable]['size2_unit_id']] : " ";
+
+                                $itemdescription .= !empty($value[$modelTable]['size3']) ? " " . "x" . " " .$value[$modelTable]['size3'] . " " . $unitData[$value[$modelTable]['size3_unit_id']] : " ";
+
+                                ?>
 
                                 <td><?php echo $key ?></td>
                                 <td class="text-center"><?php echo $itemdescription ?></td>
