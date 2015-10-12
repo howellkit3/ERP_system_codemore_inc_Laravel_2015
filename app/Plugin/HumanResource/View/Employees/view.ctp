@@ -86,8 +86,18 @@
                              		<div class="form-group">
                                         <label for="inputEmail1" class="col-lg-12 control-label strong">Name</label>
 	                                      <div class="col-lg-12 value">
+											<?php //echo $this->CustomText->getFullname($employee['Employee']); 
 
-	                                       <?php echo $this->CustomText->getFullname($employee['Employee']);  ?>
+													$name = '';
+
+													$name .= !empty($employee['Employee']['first_name']) ?  str_replace(","," ",$employee['Employee']['first_name']) : '';
+
+													$name .= !empty($employee['Employee']['last_name']) ? ' '.$employee['Employee']['last_name'].' ' : '';
+
+													$name .= !empty($employee['Employee']['middle_name']) ? ' '.$employee['Employee']['middle_name'].' ' : '';
+
+													echo $name;
+											?>
 	                                       </div>
                                     </div>
                                     <div class="form-group">
@@ -307,7 +317,20 @@
 				                                        Name :
 				                                         </label>
 					                                      <div class="col-lg-9 value"> 
-					                                        <?php echo $this->CustomText->getFullname($employee['ContactPerson'],'firstname','middlename','lastname');  ?>
+					                                        <?php 
+					                                        		//echo $this->CustomText->getFullname($employee['ContactPerson'],'firstname','middlename','lastname'); 
+
+																	$contactPesronName = '';
+
+																	$contactPesronName .= !empty($employee['ContactPerson']['firstname']) ?  str_replace(","," ",$employee['ContactPerson']['firstname']) : '';
+
+																	$contactPesronName .= !empty($employee['ContactPerson']['lastname']) ? ', '.str_replace(","," ",$employee['ContactPerson']['lastname'])  : '';
+
+																	$contactPesronName .= !empty($employee['ContactPerson']['middlename']) ? ', '.str_replace(","," ",$employee['ContactPerson']['middlename']) : '';
+
+																	echo $contactPesronName;
+
+					                                        ?>
 					                                       </div>
 								                 	</div>
 								                 	<div class="clearfix"></div>

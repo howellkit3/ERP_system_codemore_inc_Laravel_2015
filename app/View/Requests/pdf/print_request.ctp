@@ -24,27 +24,17 @@ th, td {
 						<td>
 							<img src="<?php echo Router::url('/', true) ?>img/koufu_logo.jpg" alt="logo" style="width:155px;height:20px;padding-bottom:10;">
 						</td>
-					<td>
+					<td colspan="2" style="width:235px">
 						<center>
-							<h4 style = "margin-bottom:0px; margin-top:0px; padding-top:0px;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PURCHASE REQUISITION</h4>
+							<h4 style = "margin-bottom:0px; margin-top:0px; padding-top:0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PURCHASE REQUISITION</h4>
 						</center>
 					</td>
+					<td align="right" style="line-height:8px; text-align:right;; width:155px">
+						
+						<span style="font-size:70%"; ><b>No: </b>RQ<?php echo $request['Request']['uuid'] ?><br><br><b>Date: </b><?php echo date('Y/m/d') ?></span></td>
 					</tr>
 
 				</table>	
-
-				<table border="0" width="100%" style = "margin:0px; padding:0px; line-height:0px;">
-					<tbody>
-					
-						<tr>
-							<td></td>
-							<td></td>
-							<td ></td>
-							<td align="right" style="line-height:8px;"><span style="font-size:70%"; ><b>No: </b>RQ<?php echo $request['Request']['uuid'] ?><br><br><b>Date: </b><?php echo (new \DateTime())->format('d/m/Y') ?></span></td>
-						</tr>
-
-					</tbody>
-				</table>
 
 				<table style=" border:1px solid black;border-collapse:collapse; margin-bottom:0px;  ">
 					<tr>
@@ -95,9 +85,29 @@ th, td {
 
 						<td align = "center" style="border:1px solid black; font-size:50% "><?php echo date("Y-m-d", strtotime($value['RequestItem']['date_needed'])) ?></td>
 
-						<td align = "center" style="border:1px solid black; font-size:50% "><?php echo $value['RequestItem']['purpose'] ?></td>
+						
+						<?php
 
-						<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:50%"><?php echo $value['RequestItem']['remarks'] ?></td>
+						 $lengthName = strlen($requestRequestItem[$key]['RequestItem']['purpose']);
+
+						 if($lengthName >= 30 && $lengthName <= 70){ ?>
+
+							<td style="border:1px solid black; width:50px"><span style="font-size:35%"; ><?php echo $value['RequestItem']['purpose'] ?></span>
+							</td>
+
+						<?php } else if($lengthName >= 70) { ?>
+
+							<td style="border:1px solid black; width:50px"><span style="font-size:30%"; ><?php echo $value['RequestItem']['purpose'] ?></span>
+							</td>
+
+						<?php }else{ ?>
+
+							<td style="border:1px solid black;width:50px"><span style="font-size:50%"; ><?php echo $value['RequestItem']['purpose'] ?></span>
+							</td>
+
+						<?php } ?>
+
+						<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:50%; max-width:50px"><?php echo $value['RequestItem']['remarks'] ?></td>
 						
 					</tr>
 
@@ -167,26 +177,17 @@ th, td {
 						<td>
 							<img src="<?php echo Router::url('/', true) ?>img/koufu_logo.jpg" alt="logo" style="width:155px;height:20px;padding-bottom:10;">
 						</td>
-					<td>
+					<td colspan="2" style="width:235px">
 						<center>
-							<h4 style = "margin-bottom:0px; margin-top:0px; padding-top:0px;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PURCHASE REQUISITION</h4>
+							<h4 style = "margin-bottom:0px; margin-top:0px; padding-top:0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PURCHASE REQUISITION</h4>
 						</center>
 					</td>
+					<td align="right" style="line-height:8px; text-align:right;; width:155px">
+						
+						<span style="font-size:70%"; ><b>No: </b>RQ<?php echo $request['Request']['uuid'] ?><br><br><b>Date: </b><?php echo date('Y/m/d') ?></span></td>
 					</tr>
 
-				</table>	
-					
-						<table border="0" width="100%" style = "margin:0px; padding:0px; line-height:0px;">
-							<tbody>
-								<tr>
-									<td></td>
-									<td></td>
-									<td ></td>
-									<td align="right" style="line-height:8px;"><span style="font-size:70%"; ><b>No: </b>RQ<?php echo $request['Request']['uuid'] ?><br><br><b>Date: </b><?php echo (new \DateTime())->format('d/m/Y') ?></span></td>
-								</tr>
-
-							</tbody>
-						</table>
+				</table>
 
 					<table style=" border:1px solid black;border-collapse:collapse; margin-bottom:0px;  ">
 					<tr>
@@ -237,7 +238,29 @@ th, td {
 
 						<td align = "center" style="border:1px solid black; font-size:50% "><?php echo date("Y-m-d", strtotime($value['RequestItem']['date_needed'])) ?></td>
 
-						<td align = "center" style="border:1px solid black; font-size:50% "><?php echo $value['RequestItem']['purpose'] ?></td>
+					
+
+						
+						<?php
+
+						 $lengthName = strlen($requestRequestItem[$key]['RequestItem']['purpose']);
+
+						 if($lengthName >= 30 && $lengthName <= 70){ ?>
+
+							<td style="border:1px solid black; width:50px"><span style="font-size:35%"; ><?php echo $value['RequestItem']['purpose'] ?></span>
+							</td>
+
+						<?php } else if($lengthName >= 70) { ?>
+
+							<td style="border:1px solid black; width:50px"><span style="font-size:30%"; ><?php echo $value['RequestItem']['purpose'] ?></span>
+							</td>
+
+						<?php }else{ ?>
+
+							<td style="border:1px solid black;width:50px"><span style="font-size:50%"; ><?php echo $value['RequestItem']['purpose'] ?></span>
+							</td>
+
+						<?php } ?>
 
 						<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:50%"><?php echo $value['RequestItem']['remarks'] ?></td>	
 					</tr>

@@ -581,6 +581,8 @@ class RequestsController extends PurchasingAppController {
 
     public function print_request($requestId = null) {
 
+    	Configure::write('debug',0);
+
 		$this->loadModel('Purchasing.Request');
 
 		$this->loadModel('Purchasing.RequestItem');

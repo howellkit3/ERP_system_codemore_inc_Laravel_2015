@@ -251,7 +251,7 @@ class EmployeesController  extends HumanResourceAppController {
 			 		   $this->redirect( array(
                                  'controller' => 'salaries', 
                                  'action' => 'employee_settings',
-                                 $this->Employee->id
+                                 $this->Employee->id.'?'.rand(1000,9999).'='.date("is")
                             ));
                 
                 	} else {
@@ -404,7 +404,7 @@ class EmployeesController  extends HumanResourceAppController {
                                  'controller' => 'employees', 
                                  'action' => 'index',
                                  'page' => !empty($this->request->params['named']['page']) ? $this->request->params['named']['page'] : '',
-                                 'model' => 'Employee'
+                                 'model' => 'Employee?'.rand(1000,9999).'='.date("is")
                             ));
                 
                 	} else {
@@ -495,6 +495,15 @@ class EmployeesController  extends HumanResourceAppController {
 	function view($id){
 
 		if (!empty($id)) {
+
+			if (!isset($_GET['rand'])) {
+
+					$this->redirect( array(
+					'controller' => 'employees', 
+					'action' => 'view',
+					$id.'?rand='.time()
+				));
+			}
 
 		 $this->loadModel('HumanResource.EmployeeAdditionalInformation');
 
@@ -1031,7 +1040,10 @@ class EmployeesController  extends HumanResourceAppController {
 
 	public function print_id($id = null) {
 
-		$this->loadModel('HumanResource.ContactPerson');
+		if (isset($_GET['rand'])) {
+
+
+			$this->loadModel('HumanResource.ContactPerson');
 
 
 		$this->loadModel('HumanResource.Contact');
@@ -1201,9 +1213,17 @@ class EmployeesController  extends HumanResourceAppController {
 					
 					//
 
-					$middlename = !empty($employee['ContactPerson']['middlename']) ? $employee['ContactPerson']['middlename'][0] : '';
-					$contactPerson = !empty($employee['ContactPerson']['firstname']) ? ucfirst($employee['ContactPerson']['firstname']).', '. ucfirst($middlename ).' '.ucfirst($employee['ContactPerson']['lastname']): '';
-					$pdf->Write(10,$contactPerson);	
+
+					$contactPerson = '';
+
+					$contactPerson .= !empty($employee['ContactPerson']['firstname']) ?  str_replace(","," ",$employee['ContactPerson']['firstname']) : '';
+
+					$contactPerson .= !empty($employee['ContactPerson']['lastname']) ? ', '.str_replace(","," ",$employee['ContactPerson']['lastname'])  : '';
+
+					$contactPerson .= !empty($employee['ContactPerson']['middlename']) ? ', '.str_replace(","," ",$employee['ContactPerson']['middlename']) : '';
+
+					//echo $contactPesronName;
+					$pdf->Write(10, ucwords(utf8_decode($contactPerson)));	
 
 					$pdf->SetXY(20, 32.);
 					$pdf->SetFont('Arial','',6);
@@ -1228,9 +1248,22 @@ class EmployeesController  extends HumanResourceAppController {
 			}
 
 			// Output the new PDF
-			$pdfData = $pdf->Output($employee['Employee']['code'].'.pdf', 'D');
+			//$pdfData = $pdf->Output($employee['Employee']['code'].'.pdf', 'D');
 
-			//$pdf->Output();
+			$pdf->Output();
+
+
+			//return true;
+		} else {
+
+			 $this->redirect( array(
+                                 'controller' => 'employees', 
+                                 'action' => 'print_id',
+                                 $id.'?rand='.time()
+                            ));
+		}
+
+		
 
 	}
 

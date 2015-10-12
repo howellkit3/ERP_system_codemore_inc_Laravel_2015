@@ -940,19 +940,28 @@ class ProductsController extends SalesAppController {
 			$getIds = array();
 
 
+			if (!empty($this->request->data['ProductSpecificationComponent']) {
 
-			$thisComponentIds = $this->ProductSpecificationComponent->saveComponent($this->request->data,$userData['User']['id'],$specId);
+				$thisComponentIds = $this->ProductSpecificationComponent->saveComponent($this->request->data,$userData['User']['id'],$specId);
 
-
-			$getIds = array_merge($getIds,$thisComponentIds);
+				$getIds = array_merge($getIds,$thisComponentIds);
+			}
 			
-			$thisPartIds = $this->ProductSpecificationPart->savePart($this->request->data,$userData['User']['id'],$specId);
-			
-			$getIds = array_merge($getIds,$thisPartIds);
+			if (!empty($this->request->data['ProductSpecificationPart']) {
 
-			$thisProcessIds = $this->ProductSpecificationProcess->saveProcess($this->request->data,$userData['User']['id'],$specId);
-			
-			$getIds = array_merge($getIds,$thisProcessIds);
+				$thisPartIds = $this->ProductSpecificationPart->savePart($this->request->data,$userData['User']['id'],$specId);
+				
+				$getIds = array_merge($getIds,$thisPartIds);
+
+			}
+
+			if (!empty($this->request->data['ProductSpecificationProcess']) {
+
+				$thisProcessIds = $this->ProductSpecificationProcess->saveProcess($this->request->data,$userData['User']['id'],$specId);
+				
+				$getIds = array_merge($getIds,$thisProcessIds);
+
+			}
 
 			$saveArray = array();
 			if (!empty($this->request->data['ProductSpecificationDetail'])) {
@@ -968,7 +977,10 @@ class ProductsController extends SalesAppController {
 				}
 			}
 
-			$this->ProductSpecificationDetail->saveSpecDetail($saveArray,$userData['User']['id'],$this->request->data['Product']['uuid']);
+			if (!empty($saveArray)) {
+				$this->ProductSpecificationDetail->saveSpecDetail($saveArray,$userData['User']['id'],$this->request->data['Product']['uuid']);
+			}
+			
 			
 			$this->Session->setFlash(
                 __('Product specification successfully completed', 'success')

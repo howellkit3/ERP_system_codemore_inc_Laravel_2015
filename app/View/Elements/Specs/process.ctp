@@ -5,9 +5,7 @@
         <td class="td-heigth indent" style="width:85px;border:1px solid #EAEAEA;"> >>PP<?php echo $key ?></td>
         <td class="td-heigth" style="width:220px;border:1px solid #EAEAEA;">
 
-        	<?php 
-
-        		if (!empty($subProcessData[$processList['ProductSpecificationProcessHolder']['sub_process_id']])) {
+        	<?php  if (!empty($subProcessData[$processList['ProductSpecificationProcessHolder']['sub_process_id']])) {
                    /*   11 - cutting
                         21 - offset ctp
                         20 - wood mold                    
@@ -29,6 +27,7 @@
         					// )
         					// );
 
+
                         echo $this->Html->link($subProcessData[$processList['ProductSpecificationProcessHolder']['sub_process_id']], 
                             '#processModal',
                             array(
@@ -38,7 +37,7 @@
                                 'data-productId' => $dataSpecs['ProductSpecificationDetail']['product_id'],
                                 'data-ticket_uuid' =>  $ticketData['JobTicket']['uuid'],
                                 'data-toggle' => 'modal',
-                                'data-product' => $product['foreign_key'],
+                                'data-product' => !empty($product['foreign_key']) ? $product['foreign_key'] : '0',
                                 'class' => 'process_link',
                                 'id' => 'processID-'.$processList['ProductSpecificationProcessHolder']['id'].'-'.$processList['ProductSpecificationProcessHolder']['sub_process_id']
                             )
@@ -52,6 +51,30 @@
         	?>
             <?php //echo !empty($subProcess[$processList['ProductSpecificationProcessHolder']['sub_process_id']]) ? $subProcess[$processList['ProductSpecificationProcessHolder']['sub_process_id']] : '' ?>
         </td>
-        <td class="td-heigth" style="width:270px;border:1px solid #EAEAEA;"> </td>
+        <td class="td-heigth" style="width:270px;border:1px solid #EAEAEA;">
+
+                    <?php  if (!empty($subProcessData[$processList['ProductSpecificationProcessHolder']['sub_process_id']])) {
+
+                        $process = array('21');
+
+                        if (in_array($processList['ProductSpecificationProcessHolder']['sub_process_id'],$process)) {
+
+                            $product = !empty($product['foreign_key']) ? $product['foreign_key'] : '0';
+
+
+                            $machineProcess = $this->PlateMaking->getOffsetDetail($ticketData['JobTicket']['uuid'],$processList['ProductSpecificationProcessHolder']['sub_process_id'], $product);
+
+                            if (!empty( $machineProcess)) {
+                                 echo $machineProcess['Machine']['name'];
+                            }
+                           
+                        }
+
+                     ?>
+
+
+
+                    <?php } ?>
+        </td>
     </tr>
 <?php } ?> 
