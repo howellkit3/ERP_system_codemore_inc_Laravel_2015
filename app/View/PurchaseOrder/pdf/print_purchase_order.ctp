@@ -113,13 +113,18 @@ for ($x = 0; $x <= 1; $x++) { ?>
 					<?php $total = 0; $addRow2 = 8; foreach ($purchaseItemData as $key => $value) {  $key++; $addRow2 = $addRow2 - 1; 
 					$dividend = floor($value[$modelTable]['quantity'] / $value[$modelTable]['pieces']);
                     $difference = $value[$modelTable]['quantity'] - (floor($dividend) * $value[$modelTable]['pieces']); 
-                    $itemdescription = $value[$modelTable]['name'] . " " . $value[$modelTable]['size1'] . " " .$unitData[$value[$modelTable]['size1_unit_id']] . " " .  "x" . " " . $value[$modelTable]['size2'] . " " . $unitData[$value[$modelTable]['size2_unit_id']] . " " . "x" . " " .$value[$modelTable]['size3'] . " " . $unitData[$value[$modelTable]['size3_unit_id']];
+                    $itemdescription = $value[$modelTable]['name'];
 
+                    $itemdescription .= !empty($value[$modelTable]['size1']) ? $value[$modelTable]['size1'] . " " .$unitData[$value[$modelTable]['size1_unit_id']] : " ";
+
+                    $itemdescription .= !empty($value[$modelTable]['size2']) ? " " .  "x" . " " . $value[$modelTable]['size2'] . " " . $unitData[$value[$modelTable]['size2_unit_id']] : " ";
+
+                    $itemdescription .= !empty($value[$modelTable]['size3']) ? " " . "x" . " " .$value[$modelTable]['size3'] . " " . $unitData[$value[$modelTable]['size3_unit_id']] : " ";
                     ?>
 
 						<tr>
 							<td align="center" style="width:2%; border:1px solid black; "><?php echo $key ?></td>
-							<?php $lengthName = strlen($value[$modelTable]['name'])?>
+							<?php $lengthName = strlen($value[$modelTable]['name'] . $itemdescription)?>
 
 							
 							<?php if($lengthName >= 35 && $lengthName <= 70){ ?>
@@ -317,12 +322,18 @@ for ($x = 0; $x <= 1; $x++) { ?>
 					<?php $total = 0; $addRow2 = 8; foreach ($purchaseItemData as $key => $value) {  $key++; $addRow2 = $addRow2 - 1; 
 					$dividend = floor($value[$modelTable]['quantity'] / $value[$modelTable]['pieces']);
                     $difference = $value[$modelTable]['quantity'] - (floor($dividend) * $value[$modelTable]['pieces']);
-                    $itemdescription = $value[$modelTable]['name'] . " " . $value[$modelTable]['size1'] . " " .$unitData[$value[$modelTable]['size1_unit_id']] . " " .  "x" . " " . $value[$modelTable]['size2'] . " " . $unitData[$value[$modelTable]['size2_unit_id']] . " " . "x" . " " .$value[$modelTable]['size3'] . " " . $unitData[$value[$modelTable]['size3_unit_id']];
+                    $itemdescription = $value[$modelTable]['name'];
+
+                    $itemdescription .= !empty($value[$modelTable]['size1']) ? $value[$modelTable]['size1'] . " " .$unitData[$value[$modelTable]['size1_unit_id']] : " ";
+
+                    $itemdescription .= !empty($value[$modelTable]['size2']) ? " " .  "x" . " " . $value[$modelTable]['size2'] . " " . $unitData[$value[$modelTable]['size2_unit_id']] : " ";
+
+                    $itemdescription .= !empty($value[$modelTable]['size3']) ? " " . "x" . " " .$value[$modelTable]['size3'] . " " . $unitData[$value[$modelTable]['size3_unit_id']] : " ";
                     ?>
 
 						<tr>
 							<td align="center" style="width:2%; border:1px solid black; "><?php echo $key ?></td>
-							<?php $lengthName = strlen($value[$modelTable]['name'])?>
+							<?php $lengthName = strlen($value[$modelTable]['name'] . $itemdescription)?>
 
 							
 							<?php if($lengthName >= 35 && $lengthName <= 70){ ?>
@@ -522,11 +533,17 @@ for ($x = 0; $x <= 1; $x++) { ?>
 						$total = 0; $addRow2 = 8; foreach ($purchaseItemData as $key => $value) {  $key++; $addRow2 = $addRow2 - 1; 
 						$dividend = floor($value[$modelTable]['quantity'] / $value[$modelTable]['pieces']);
                    		$difference = $value[$modelTable]['quantity'] - (floor($dividend) * $value[$modelTable]['pieces']);
-                   		$itemdescription = $value[$modelTable]['name'] . " " . $value[$modelTable]['size1'] . " " .$unitData[$value[$modelTable]['size1_unit_id']] . " " .  "x" . " " . $value[$modelTable]['size2'] . " " . $unitData[$value[$modelTable]['size2_unit_id']] . " " . "x" . " " .$value[$modelTable]['size3'] . " " . $unitData[$value[$modelTable]['size3_unit_id']];
+                   		$itemdescription = $value[$modelTable]['name'];
+
+	                    $itemdescription .= !empty($value[$modelTable]['size1']) ? $value[$modelTable]['size1'] . " " .$unitData[$value[$modelTable]['size1_unit_id']] : " ";
+
+	                    $itemdescription .= !empty($value[$modelTable]['size2']) ? " " .  "x" . " " . $value[$modelTable]['size2'] . " " . $unitData[$value[$modelTable]['size2_unit_id']] : " ";
+
+	                    $itemdescription .= !empty($value[$modelTable]['size3']) ? " " . "x" . " " .$value[$modelTable]['size3'] . " " . $unitData[$value[$modelTable]['size3_unit_id']] : " ";
                    		?>
 						<tr>
 							<td align="center" style="width:2%; border:1px solid black; "><?php echo $key ?></td>
-							<?php $lengthName = strlen($value[$modelTable]['name'])?>
+							<?php $lengthName = strlen($value[$modelTable]['name'] . $itemdescription)?>
 
 							
 							<?php if($lengthName >= 35 && $lengthName <= 70){ ?>
