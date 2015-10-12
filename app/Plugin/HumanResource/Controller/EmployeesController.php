@@ -404,7 +404,7 @@ class EmployeesController  extends HumanResourceAppController {
                                  'controller' => 'employees', 
                                  'action' => 'index',
                                  'page' => !empty($this->request->params['named']['page']) ? $this->request->params['named']['page'] : '',
-                                 'model' => 'Employee?'.rand(1000,9999).'='.date("is")
+                                 'model' => 'Employee'
                             ));
                 
                 	} else {
@@ -496,14 +496,14 @@ class EmployeesController  extends HumanResourceAppController {
 
 		if (!empty($id)) {
 
-			if (!isset($_GET['rand'])) {
+			// if (!isset($_GET['rand'])) {
 
-					$this->redirect( array(
-					'controller' => 'employees', 
-					'action' => 'view',
-					$id.'?rand='.time()
-				));
-			}
+			// 		$this->redirect( array(
+			// 		'controller' => 'employees', 
+			// 		'action' => 'view',
+			// 		$id.'?rand='.time()
+			// 	));
+			// }
 
 		 $this->loadModel('HumanResource.EmployeeAdditionalInformation');
 
@@ -540,7 +540,7 @@ class EmployeesController  extends HumanResourceAppController {
 			'Address',
 			'Contact',
 			'ContactPerson',
-			// 'HumanResourceContactPerson',
+			'HumanResourceContactPerson',
 			'ContactPersonEmail',
 			'ContactPersonAddress',
 			'ContactPersonNumber',
@@ -1148,7 +1148,7 @@ class EmployeesController  extends HumanResourceAppController {
 					$middle = !empty($employee['Employee']['middle_name']) ? ucfirst($employee['Employee']['middle_name'][0]) : '';
 					
 					//name
-					$name = !empty($employee['Employee']['full_name']) ? ucwords($employee['Employee']['first_name']).' '. ucwords($employee['Employee']['last_name']).' '.$middle  : '';
+					$name = !empty($employee['Employee']['full_name']) ? str_replace(',','',ucwords($employee['Employee']['first_name'])).' '.$middle .'. '. str_replace(',','',ucwords($employee['Employee']['last_name'])) : '';
 					$pdf->SetFont('Arial','B',8);
 					$pdf->MultiCell(38, 1 , ucwords(utf8_decode($name)) , '', 'C');	
 
@@ -1218,9 +1218,9 @@ class EmployeesController  extends HumanResourceAppController {
 
 					$contactPerson .= !empty($employee['ContactPerson']['firstname']) ?  str_replace(","," ",$employee['ContactPerson']['firstname']) : '';
 
-					$contactPerson .= !empty($employee['ContactPerson']['lastname']) ? ', '.str_replace(","," ",$employee['ContactPerson']['lastname'])  : '';
+					$contactPerson .= !empty($employee['ContactPerson']['middlename']) ? ' '.str_replace(","," ",$employee['ContactPerson']['middlename'][0]).'.' : '';
 
-					$contactPerson .= !empty($employee['ContactPerson']['middlename']) ? ', '.str_replace(","," ",$employee['ContactPerson']['middlename']) : '';
+					$contactPerson .= !empty($employee['ContactPerson']['lastname']) ? ' '.str_replace(","," ",$employee['ContactPerson']['lastname'])  : '';
 
 					//echo $contactPesronName;
 					$pdf->Write(10, ucwords(utf8_decode($contactPerson)));	
@@ -1235,7 +1235,9 @@ class EmployeesController  extends HumanResourceAppController {
 					
 					//	pr(str_replace(' ','',$address));
 
-					$pdf->MultiCell( 35, 4, trim(utf8_decode($address)));
+					$address = stripslashes($address);
+
+					$pdf->MultiCell( 35, 4, trim(utf8_decode($address)),'',false);
 
 					$contact_number = !empty($employee['ContactPersonNumber']['number']) ? $employee['ContactPersonNumber']['number'] : '';
 
@@ -1248,9 +1250,9 @@ class EmployeesController  extends HumanResourceAppController {
 			}
 
 			// Output the new PDF
-			//$pdfData = $pdf->Output($employee['Employee']['code'].'.pdf', 'D');
+			$pdfData = $pdf->Output($employee['Employee']['code'].'.pdf', 'D');
 
-			$pdf->Output();
+			//$pdf->Output();
 
 
 			//return true;
