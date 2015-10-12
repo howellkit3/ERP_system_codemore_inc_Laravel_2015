@@ -1225,23 +1225,38 @@ class EmployeesController  extends HumanResourceAppController {
 					//echo $contactPesronName;
 					$pdf->Write(10, ucwords(utf8_decode($contactPerson)));	
 
-					$pdf->SetXY(20, 32.);
+					$pdf->SetXY(20, 31.5);
+
 					$pdf->SetFont('Arial','',6);
 
 					$address =  !empty($employee['ContactPersonAddress']['address_1']) ? trim(nl2br($employee['ContactPersonAddress']['address_1'])).',' : '';
-					$address .=  !empty($employee['ContactPersonAddress']['city']) ? $employee['ContactPersonAddress']['city'].',' : '';
-					$address .= !empty($employee['ContactPersonAddress']['state_province']) ? $employee['ContactPersonAddress']['state_province'].', ' : '';
-					$address .= !empty($employee['ContactPersonAddress']['zipcode']) ? $employee['ContactPersonAddress']['zipcode'] : '';
-					
+					$addresscity =  !empty($employee['ContactPersonAddress']['city']) ? $employee['ContactPersonAddress']['city'].',' : '';
+					$addressprovince = !empty($employee['ContactPersonAddress']['state_province']) ? $employee['ContactPersonAddress']['state_province'].', ' : '';
+					$addressprovince .= !empty($employee['ContactPersonAddress']['zipcode']) ? $employee['ContactPersonAddress']['zipcode'] : '';
+
 					//	pr(str_replace(' ','',$address));
 
-					$address = stripslashes($address);
+					if (strlen($address) > 40) {
+						$pdf->SetFont('Arial','',5);	
+					}
 
-					$pdf->MultiCell( 35, 4, trim(utf8_decode($address)),'',false);
+					$addressprovince = stripslashes($addressprovince);
+					//$pdf->Multicell(0,3,$dateHired);
+
+					$pdf->MultiCell( 35, 4, trim(utf8_decode($address)));
+
+
+					$pdf->SetXY(19.5, 36);
+					$pdf->MultiCell( 40,4, trim(utf8_decode($addresscity)));
+					$pdf->SetXY(19.5, 40.5);
+					$pdf->MultiCell( 40, 4, trim(utf8_decode($addressprovince)));
+
+
+					$pdf->SetFont('Arial','',6);
 
 					$contact_number = !empty($employee['ContactPersonNumber']['number']) ? $employee['ContactPersonNumber']['number'] : '';
 
-					$pdf->SetXY(20, 44.5);		
+					$pdf->SetXY(19.5, 44.5);		
 					//$pdf->Write(10,$contact_number);
 					$pdf->MultiCell( 35, 5, $contact_number,2);
 
