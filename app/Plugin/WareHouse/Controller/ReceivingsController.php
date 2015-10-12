@@ -935,8 +935,6 @@ class ReceivingsController extends WareHouseAppController {
 
 		if ($this->request->is(array('post','put'))) {
 
-			//pr($this->request->data); exit;
-
 			$userData = $this->Session->read('Auth');
 
 			$this->loadModel('Purchasing.ReceivedItem');
@@ -953,7 +951,7 @@ class ReceivingsController extends WareHouseAppController {
 
 			$deliveryUUID = $this->DeliveredOrder->saveDeliveredOrder($userData['User']['id'], $itemId, $id);
 
-			$this->ReceivedReceiptItem->saveReceivedReceiptItems($itemId, $this->request->data, $deliveryUUID);
+			$this->ReceivedReceiptItem->saveReceivedReceiptItems($itemId, $this->request->data['ReceiveReceipt'], $deliveryUUID);
 
 			$this->Session->setFlash(__('Receipt has been Received'), 'success');
           
