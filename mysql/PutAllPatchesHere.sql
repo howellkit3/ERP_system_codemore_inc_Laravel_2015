@@ -2162,7 +2162,7 @@ ALTER TABLE `plate_making_process`
 DROP COLUMN `product`,
 ADD COLUMN `product`  int(11) NULL AFTER `modified`;
 
-/* howell added this oct-9-2015 koufu_purchasing*/
+/* howell added this oct-9-2015 koufu_ticketing*/
 ALTER TABLE `received_orders` ADD `supplier_id` INT(11)  NULL  DEFAULT NULL  AFTER `purchase_order_id`;
 ALTER TABLE `received_orders`  ADD `address` VARCHAR(60) NULL  AFTER `supplier_id`;
 ALTER TABLE `received_orders`  ADD `purchase_order_uuid` VARCHAR(60) NULL  AFTER `purchase_order_id`;
@@ -2183,9 +2183,5 @@ CREATE TABLE `received_receipt_items` (
 
 ALTER TABLE `received_receipt_items`  ADD `remarks` VARCHAR(60) NULL  AFTER `lot`;
 
-/* howell added this oct-9-2015 koufu_purchasing*/
-
-ALTER TABLE `request_items` ADD `category` INT(11)  NULL  DEFAULT NULL  AFTER `quantity_unit_id`;
-ALTER TABLE `request_items` ADD `width` INT(11)  NULL  DEFAULT NULL  AFTER `category`;
-ALTER TABLE `request_items` ADD `width_unit_id` INT(11)  NULL  DEFAULT NULL  AFTER `width`;
-
+/* Bien added this oct-13-2015 koufu_sale*/
+ALTER TABLE `koufu_sale`.`product_specification_parts`     ADD COLUMN `name` VARCHAR(80) NULL AFTER `product_id`;

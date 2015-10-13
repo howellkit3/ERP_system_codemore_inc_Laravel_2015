@@ -43,7 +43,7 @@ function getDuration($time1 = null,$time2 = null)
 			}
 			else{
 				if ($interval->h != 0){
-					$difference .= $interval->h  . ' hours';
+					$difference .= $interval->h  . 'h';
 				} 
 			}
 
@@ -51,13 +51,96 @@ function getDuration($time1 = null,$time2 = null)
 				if ($interval->h != 0) {
 				  $difference .= ' & ';
 				}
-				$minutes = ' min';
+				$minutes = 'm';
 
 				if ($interval->i > 1) {
-					$minutes = ' mins';
+					$minutes = 'm';
 				}
 				$difference .= $interval->i  .$minutes;
 			}
+
+		return $difference;
+	}
+}
+
+function getDurationSchedule($time1 = null,$time2 = null,$workschedules = null,$workschedulesBreaks = null)
+{	
+
+
+	if (!empty($time1) && $time2 && !empty($workschedulesBreaks['id'])) {
+
+		//workschedules
+		$timeIn = date('h:i:s',strtotime($time1));
+
+		if (!empty($workschedules)) {
+
+			if (strtotime($time1) > strtotime($workschedules['from'])) {
+
+				$timeIn = $time1;
+			} else {
+
+				$timeIn = $workschedules['from'];
+			}
+
+			if (strtotime($time2) > strtotime($workschedules['to'])) {
+
+				$timeOut = $workschedules['to'];
+
+			} else {
+
+				$timeOut = $time2;
+			}
+
+		}
+
+		if (!empty($workschedulesBreaks)) {
+
+			//substract lunchbreaktime
+			if ($timeOut > $workschedulesBreaks['from'] && $timeOut >  $workschedulesBreaks['to']) {
+
+					$timeOut = strtotime($timeOut) - 3600;
+					$timeOut = date('H:i:s',$timeOut);
+
+			}
+
+
+		}
+
+		
+		$date = date('Y-m-d');
+		$date1 = new DateTime($timeIn);
+		$date2 = new DateTime($timeOut);
+
+		$interval = $date1->diff($date2);
+
+		$difference = '';
+
+			if ($interval->d != 0) {
+
+				$days = ($interval->d > 1) ? 'days' : 'day';
+				$difference	.= $interval->d  .' '.$days;
+
+			} else {
+
+				if ($interval->h != 0){
+					$difference .= $interval->h  . 'h';
+				} 
+			}
+
+			if ($interval->d == 0 && $interval->invert == 0 && $interval->i != 0) {
+				
+				if ($interval->h != 0) {
+				  $difference .= ' & ';
+				}
+				$minutes = 'm';
+
+				if ($interval->i > 1) {
+					$minutes = 'm';
+				}
+
+				$difference .= $interval->i  .$minutes;
+			}
+
 
 		return $difference;
 	}

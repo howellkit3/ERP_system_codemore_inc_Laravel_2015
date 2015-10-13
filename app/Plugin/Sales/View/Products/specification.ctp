@@ -9,6 +9,7 @@
 
 <?php echo $this->element('sales_option');?><br><br>
 	<?php echo $this->Html->script('Sales.draggableproducts');?>
+	<?php echo $this->Html->script('Sales.main-specs');?>
 	<?php //echo $this->Html->script('Sales.editableProductSpecs'); ?>
 	<div class="row">
 		<div class="col-lg-12">
@@ -176,6 +177,9 @@
 
 										<div class="form-group">
 											<div class="col-lg-2"></div>
+											<!-- <div class="col-lg-2 button-spec">
+												<button type="button" data="0" class=" process_btn add_panel_button btn btn-primary pull-rigth">Main Panel</button>
+											</div> -->
 											<div class="col-lg-2 button-spec">
 												<button type="button" data="0" class=" process_btn add_field_button btn btn-primary pull-rigth">Component </button>
 											</div>
@@ -185,8 +189,8 @@
 											<div class="col-lg-2 button-spec">
 												<button type="button" data="0" class=" process_btn btn btn-primary pull-rigth add_process_button">Process</button>
 											</div>
-										</div>	
-
+										</div>
+										
 										<!--text fields -->
 										<section class="label-draggable-section">
 											<ul id="sortable">
@@ -243,3 +247,8 @@
 	});
 
 </script>
+<style type="text/css">
+	.dragField.blueback {
+  		background: #daf4f0 none repeat scroll 0 0 !important;
+	}
+</style>
