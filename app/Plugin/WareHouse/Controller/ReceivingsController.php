@@ -312,7 +312,7 @@ class ReceivingsController extends WareHouseAppController {
 		//$received_orders = $this->DeliveredOrder->find('all',array('order' => 'DeliveredOrder.id DESC'));
 
 	
-		$this->DeliveredOrder->bind('ReceivedItem', 'PurchaseOrder', 'ReceivedOrder');
+		$this->DeliveredOrder->bind('ReceivedItem', 'ReceivedOrder');
 
         $this->DeliveredOrder->recursive = 1;
 
@@ -327,6 +327,9 @@ class ReceivingsController extends WareHouseAppController {
                 'ReceivedOrder.uuid',
                 'ReceivedOrder.created',
                 'ReceivedOrder.id',  
+                'ReceivedOrder.status_id', 
+                'ReceivedOrder.purchase_order_uuid', 
+                'ReceivedOrder.supplier_id',
                 // 'PurchaseOrder.uuid', 
                 // 'PurchaseOrder.supplier_id', 
                 // 'PurchaseOrder.request_id',
@@ -337,7 +340,17 @@ class ReceivingsController extends WareHouseAppController {
             'order' => 'DeliveredOrder.id DESC',
         );
 
+        //pr($conditions); exit;
+
         $received_orders = $this->paginate('DeliveredOrder');
+
+        //pr($received_orders); exit;
+
+      	$purchaseOrderSupplierData = $this->PurchaseOrder->find('list', array('fields' => array('PurchaseOrder.id', 'PurchaseOrder.supplier_id')
+																));
+
+      	$purchaseOrderUUIDData = $this->PurchaseOrder->find('list', array('fields' => array('PurchaseOrder.id', 'PurchaseOrder.uuid')
+																));
 
         if(!empty($received_orders[0]['PurchaseOrder']['request_id'])){
 
@@ -345,7 +358,7 @@ class ReceivingsController extends WareHouseAppController {
 
 		}
 
-		$this->set(compact('received_orders', 'supplierData', 'userName', 'uuid', 'userName', 'userNameList', 'areaList'));
+		$this->set(compact('received_orders', 'supplierData', 'userName', 'uuid', 'userName', 'userNameList', 'areaList', 'purchaseOrderUUIDData', 'purchaseOrderSupplierData'));
 
     }
 	    	    
@@ -615,7 +628,7 @@ class ReceivingsController extends WareHouseAppController {
 
 		$receivedItemData = $this->DeliveredOrder->find('all', array('conditions' => array('DeliveredOrder.id' => $id)));
 		
-	//	pr($receivedItemData); exit;
+		//pr($receivedItemData); exit;
 
 		$deliveredDataID = $receivedItemData[0]['DeliveredOrder']['id'];
 
