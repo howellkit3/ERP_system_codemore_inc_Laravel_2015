@@ -1,14 +1,13 @@
 <?php   foreach ($received_orders as $requestOrderDataList ): ?>
     
         <tr class="">
-
-            <td class="">
-                <?php echo 'RCV' . ucfirst($requestOrderDataList['ReceivedOrder']['uuid']) ?>  
+            <td>
+                <?php  echo 'RCV' . ucfirst($requestOrderDataList['ReceivedOrder']['uuid']) ?>  
             </td>
 
-            <td class="">
+            <td class="text-center">
 
-                <?php echo ucfirst($requestOrderDataList['PurchaseOrder']['uuid']) ?>
+                <?php  echo ($requestOrderDataList['DeliveredOrder']['purchase_orders_id'] != 0) ? $purchaseOrderUUIDData[$requestOrderDataList['DeliveredOrder']['purchase_orders_id']] : $requestOrderDataList['ReceivedOrder']['purchase_order_uuid']; ?>
 
             </td>
 
@@ -17,7 +16,8 @@
             </td>
 
             <td class="">
-                <?php echo ucfirst($supplierData[$requestOrderDataList['PurchaseOrder']['supplier_id']]) ?>
+
+                <?php  echo !empty($purchaseOrderSupplierData[$requestOrderDataList['DeliveredOrder']['purchase_orders_id']]) ? $supplierData[$purchaseOrderSupplierData[$requestOrderDataList['DeliveredOrder']['purchase_orders_id']]] : $supplierData[$requestOrderDataList['ReceivedOrder']['supplier_id']]; ?>
             </td>
 
             <td class="">
@@ -25,16 +25,19 @@
             </td>
 
             <td align = "center">
-                <?php if($requestOrderDataList['DeliveredOrder']['status_id'] == 1){
+                <?php if($requestOrderDataList['DeliveredOrder']['status_id'] == 1){ 
 
                     echo "<span class='label label-success'>Approved</span>";
 
-                     }else if($requestOrderDataList['DeliveredOrder']['status_id'] == 13){
+                    }else if($requestOrderDataList['ReceivedOrder']['status_id'] == 14){
                         
-                    echo "<span class='label label-info'>Stored</span>"; 
+                    echo "<span class='label label-info'>Encoded</span>"; 
 
-                     }else{
+                    }else if($requestOrderDataList['DeliveredOrder']['status_id'] == 13){
 
+                        echo "<span class='label label-info'>Stored</span>"; 
+
+                    }else{
                      echo "<span class='label label-warning'>Received</span>"; 
 
                      }
