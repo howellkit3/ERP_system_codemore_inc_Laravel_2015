@@ -53,6 +53,8 @@ class PurchaseOrdersController extends PurchasingAppController {
 
 		$this->loadModel('Purchasing.RequestItem');
 
+		$this->loadModel('Purchasing.Contact');
+
 		$this->loadModel('GeneralItem');
 
 		$this->loadModel('Substrate');
@@ -91,7 +93,11 @@ class PurchaseOrdersController extends PurchasingAppController {
         $this->PurchaseOrder->bind(array('Contact','SupplierContactPerson'));
 
 		$purchaseOrderData = $this->PurchaseOrder->find('first',array('conditions' => array('PurchaseOrder.id' => $purchaseOrderid),'order' => 'PurchaseOrder.id DESC'));
-
+		
+		$faxContactData = $this->Contact->find('first',array('conditions' => array('Contact.foreign_key' => $purchaseOrderData['PurchaseOrder']['supplier_id'], 'Contact.type' => 1),'order' => 'Contact.id DESC'));
+		
+		$telContactData = $this->Contact->find('first',array('conditions' => array('Contact.foreign_key' => $purchaseOrderData['PurchaseOrder']['supplier_id'], 'Contact.type' => 0),'order' => 'Contact.id DESC'));
+		
 		$requestData = $this->Request->find('first', array('conditions' => array('Request.id' => $purchaseOrderData['PurchaseOrder']['request_id'])));
 
 		$purchaseItemData = $this->PurchasingItem->find('all', array('conditions' => array('PurchasingItem.request_uuid' => $requestData['Request']['uuid'])));
@@ -103,8 +109,6 @@ class PurchaseOrdersController extends PurchasingAppController {
     	} else {
     		$modelTable = 'PurchasingItem'; 
     	}
-
-		
 
 		foreach ($purchaseItemData as $key => $value) {
 			
@@ -144,7 +148,7 @@ class PurchaseOrdersController extends PurchasingAppController {
 														'conditions' => array('User.id' => $purchaseOrderData['PurchaseOrder']['created_by']),
 														));
 		
-		$this->set(compact('modelTable','purchaseOrderData','supplierData','purchaseOrderid','unitData','paymentTermData','purchaseItemData','preparedData', 'currencyData'));
+		$this->set(compact('modelTable','purchaseOrderData','supplierData','purchaseOrderid','unitData','paymentTermData','purchaseItemData','preparedData', 'currencyData', 'faxContactData', 'telContactData'));
 
     }
 
@@ -318,6 +322,8 @@ class PurchaseOrdersController extends PurchasingAppController {
 
 		$this->loadModel('Purchasing.RequestItem');
 
+		$this->loadModel('Purchasing.Contact');
+
 		$this->loadModel('GeneralItem');
 
 		$this->loadModel('Substrate');
@@ -355,6 +361,10 @@ class PurchaseOrdersController extends PurchasingAppController {
 
 		$purchaseOrderData = $this->PurchaseOrder->find('first',array('conditions' => array('PurchaseOrder.id' => $purchaseOrderId),'order' => 'PurchaseOrder.id DESC'));
 
+		$faxContactData = $this->Contact->find('first',array('conditions' => array('Contact.foreign_key' => $purchaseOrderData['PurchaseOrder']['supplier_id'], 'Contact.type' => 1),'order' => 'Contact.id DESC'));
+		
+		$telContactData = $this->Contact->find('first',array('conditions' => array('Contact.foreign_key' => $purchaseOrderData['PurchaseOrder']['supplier_id'], 'Contact.type' => 0),'order' => 'Contact.id DESC'));
+		
 		$requestData = $this->Request->find('first', array('conditions' => array('Request.id' => $purchaseOrderData['PurchaseOrder']['request_id'])));
 
 		$purchaseItemData = $this->PurchasingItem->find('all', array('conditions' => array('PurchasingItem.request_uuid' => $requestData['Request']['uuid'])));
@@ -407,7 +417,7 @@ class PurchaseOrdersController extends PurchasingAppController {
 
     	$view = new View(null, false);
 
-		$view->set(compact('modelTable','purchaseOrderData','supplierData','purchaseOrderId','unitData','paymentTermData','purchaseItemData','preparedData', 'currencyData'));
+		$view->set(compact('modelTable','purchaseOrderData','supplierData','purchaseOrderId','unitData','paymentTermData','purchaseItemData','preparedData', 'currencyData', 'telContactData', 'faxContactData'));
 		
 		$view->viewPath = 'PurchaseOrder'.DS.'pdf';	
    

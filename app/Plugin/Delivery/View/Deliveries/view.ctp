@@ -104,7 +104,7 @@ $totalremaining = 0;
                                      <tr>
                                         <td>Total Quantity</td>
                                         <td>
-                                            <?php if(!empty($productSpecification['ProductSpecification']['quantity'])) : ?>
+                                            <?php  if(!empty($productSpecification['ProductSpecification']['quantity'])) : ?>
                                                 <?php echo  number_format($productSpecification['ProductSpecification']['quantity'],2); ?>
                                             <?php endif; ?>
                                             <?php //echo $scheduleInfo['ClientOrderDeliverySchedule']['quantity']; ?></td>

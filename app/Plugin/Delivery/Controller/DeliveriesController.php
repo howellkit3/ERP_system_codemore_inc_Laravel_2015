@@ -194,7 +194,7 @@ class DeliveriesController extends DeliveryAppController {
                                           'ClientOrderDeliverySchedule.id' => $deliveryScheduleId
                                         )
                                     ));
-           $productSpecification = $this->ProductSpecification->find('first',array('conditions' => array(
+        $productSpecification = $this->ProductSpecification->find('first',array('conditions' => array(
                     'ProductSpecification.product_id' => $scheduleInfo['QuotationDetail']['product_id']
         )));
 

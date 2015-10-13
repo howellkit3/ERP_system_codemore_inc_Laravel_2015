@@ -190,7 +190,7 @@ class SalesOrdersController extends SalesAppController {
 
                             $this->request->data['ClientOrderDeliverySchedule']['quantity'] = $abc;
                            
-                            $this->ClientOrder->ClientOrderDeliverySchedule->saveClientOrderDeliverySchedule($result,$userData['User']['id'],$this->request->data['ClientOrderDeliverySchedule']['client_order_id']);
+                            $this->ClientOrder->ClientOrderDeliverySchedule->editClientOrderDeliverySchedule($result,$userData['User']['id'],$this->request->data['ClientOrderDeliverySchedule']['client_order_id']);
                                         
                         }else{
                          
@@ -211,7 +211,7 @@ class SalesOrdersController extends SalesAppController {
 
                       $result['ClientOrderDeliverySchedule'] = Set::classicExtract($this->request->data,'{s}');
                      
-                      $this->ClientOrder->ClientOrderDeliverySchedule->saveClientOrderDeliverySchedule($result,$userData['User']['id'],$this->request->data['ClientOrderDeliverySchedule']['client_order_id']);
+                      $this->ClientOrder->ClientOrderDeliverySchedule->editClientOrderDeliverySchedule($result,$userData['User']['id'],$this->request->data['ClientOrderDeliverySchedule']['client_order_id']);
                     
                       $this->Session->setFlash(__('Client order delivery details has been updated'), 'success');
 

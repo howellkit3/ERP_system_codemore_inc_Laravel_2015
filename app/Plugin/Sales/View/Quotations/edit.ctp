@@ -266,7 +266,7 @@
 												<div class="col-lg-3">
 													<?php 
 			                                            echo $this->Form->input('QuotationItemDetail.0.unit_price', array(
-                            								'class' => 'form-control item_type unitprice vatEx number  ',
+                            								'class' => 'form-control item_type unitprice  prEx number  ',
 		                                                    'data' => 'unitprice',
 		                                                    'type' => 'text',
 		                                                    'label' => false,
@@ -310,8 +310,23 @@
 													
 												</div>
 											</div>
-												
+
 											<div class="form-group">
+												<label class="col-lg-2 control-label"></label>
+												<div class="col-lg-8">
+
+													<input id="checkbox-1" class="checkEx vat-exclusive" type="checkbox" data-section='quotationItemDetail' name="[QuotationItemDetail][0][unit_price]"rel=".12" name ="togglecheckboxtext"><label>
+													<font color="gray"> Check to enable VAT Price   </font></label>
+
+
+													&nbsp &nbsp
+													
+													<input id="checkbox-1" class="checkvat checkIn checkbox-nice vat-price" type="checkbox" data-section='quotationItemDetail' name="[QuotationItemDetail][0][vat_price]" rel=".12"><label><font color="gray"> Click to Compute the Unit Price/VAT Exclusive</font></label>
+														
+												</div>
+											</div>
+												
+											<!-- <div class="form-group">
 												<label class="col-lg-2 control-label"></label>
 												<div class="col-lg-8">
 												<?php if(!empty($itemDetailDetails['QuotationItemDetail']['vat_price'])){ 
@@ -333,7 +348,7 @@
 													<font color="gray"> Click to Compute the Unit Price with VAT </font>
 														
 												</div>
-											</div>
+											</div> -->
 
 											<div class="form-group">
 												<label class="col-lg-2 control-label">Material</label>

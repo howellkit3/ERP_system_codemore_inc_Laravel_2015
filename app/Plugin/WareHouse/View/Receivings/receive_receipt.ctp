@@ -83,7 +83,7 @@
                                                     <div class="col-lg-6">
                                                         
                                                         <?php 
-                                                            echo $this->Form->input('ReceiveReceipt.0.item_name', 
+                                                            echo $this->Form->input('ReceiveReceipt.itemdetails.0.item_name', 
                                                                             array( 
                                                                 // 'options' => array($itemData),  
                                                                 'class' => 'form-control col-lg-4 required item_name',
@@ -94,7 +94,7 @@
                                                         ?>
 
                                                         <?php 
-                                                            echo $this->Form->input('ReceiveReceipt.0.foreign_key', 
+                                                            echo $this->Form->input('ReceiveReceipt.itemdetails.0.foreign_key', 
                                                                             array( 
                                                                 'class' => 'form-control item_id required', 
                                                                 'type' => 'hidden',
@@ -104,7 +104,7 @@
                                                         ?>
 
                                                         <?php 
-                                                            echo $this->Form->input('ReceiveReceipt.0.model', 
+                                                            echo $this->Form->input('ReceiveReceipt.itemdetails.0.model', 
                                                                             array( 
                                                                 'class' => 'form-control item_model required ', 
                                                                 'type' => 'hidden',
@@ -130,7 +130,7 @@
                                                         <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span>Item Type</label>
                                                         <div class="col-lg-8">
                                                             <?php 
-                                                                echo $this->Form->input('ReceiveReceipt.0.item_type', array('class' => 'form-control item_type',
+                                                                echo $this->Form->input('ReceiveReceipt.itemdetails.0.item_type', array('class' => 'form-control item_type',
                                                                     'alt' => 'Contact',
                                                                     'label' => false,
                                                                     'class' => 'form-control col-lg-4 required'
@@ -143,9 +143,10 @@
                                                         <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span>Quantity</label>
                                                         <div class="col-lg-8">
                                                             <?php 
-                                                                echo $this->Form->input('ReceiveReceipt.0.quantity', array('class' => 'form-control item_type',
+                                                                echo $this->Form->input('ReceiveReceipt.itemdetails.0.quantity', array('class' => 'form-control item_type',
                                                                     'alt' => 'Contact',
                                                                     'label' => false,
+                                                                    'type' => 'number',
                                                                     'class' => 'form-control col-lg-4 required'
                                                                 ));
                                                             ?>
@@ -156,8 +157,9 @@
                                                         <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span>No. of Packs of Boxes</label>
                                                         <div class="col-lg-8">
                                                             <?php 
-                                                                echo $this->Form->input('ReceiveReceipt.0.number_of_boxes', array('class' => 'form-control item_type',
+                                                                echo $this->Form->input('ReceiveReceipt.itemdetails.0.number_of_boxes', array('class' => 'form-control item_type',
                                                                     'label' => false,
+                                                                    'type' => 'number',
                                                                     'class' => 'form-control col-lg-4 required'
                                                                     ));
                                                             ?>
@@ -168,8 +170,9 @@
                                                         <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span>Quantity per box</label>
                                                         <div class="col-lg-8">
                                                             <?php 
-                                                                echo $this->Form->input('ReceiveReceipt.0.quantity_per_boxes', array('class' => 'form-control item_type',
+                                                                echo $this->Form->input('ReceiveReceipt.itemdetails.0.quantity_per_boxes', array('class' => 'form-control item_type',
                                                                     'label' => false,
+                                                                    'type' => 'number',
                                                                     'class' => 'form-control col-lg-4 required'
                                                                     ));
                                                             ?>
@@ -180,8 +183,9 @@
                                                         <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span>Lot /Batch No.</label>
                                                         <div class="col-lg-8">
                                                             <?php 
-                                                                echo $this->Form->input('ReceiveReceipt.0.lot', array('class' => 'form-control item_type',
+                                                                echo $this->Form->input('ReceiveReceipt.itemdetails.0.lot', array('class' => 'form-control item_type',
                                                                     'label' => false,
+                                                                    'type' => 'number',
                                                                     'class' => 'form-control col-lg-4 required'
                                                                     ));
                                                             ?>
@@ -192,7 +196,7 @@
                                                         <label for="inputPassword1" class="col-lg-2 control-label"> Remarks</label>
                                                         <div class="col-lg-8">
                                                             <?php 
-                                                                echo $this->Form->textarea('ReceiveReceipt.0.quotes', array('class' => 'form-control item_type',
+                                                                echo $this->Form->textarea('ReceiveReceipt.itemdetails.0.remarks', array('class' => 'form-control item_type',
                                                                     'label' => false,
                                                                     'class' => 'form-control col-lg-4 ',
                                                                     'rows' => '4'));

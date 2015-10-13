@@ -270,3 +270,9 @@ div.value {
 #webcam {
   width: 400px;
 }
+
+.form-group.employee-result li {
+  display: inline-block;
+  list-style: outside none none;
+  width: 49%;
+}
