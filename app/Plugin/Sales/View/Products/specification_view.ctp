@@ -121,6 +121,7 @@
 
 					<hr>
 
+					<?php //$mainpanelCounter = 1?>
 					<?php $componentCounter = 1?>
 					<?php $partCounter = 1?>
 					<?php $processCounter = 1?>
@@ -130,6 +131,12 @@
 								<?php foreach ($formatDataSpecs as $key => $specLists) {  ?>
 									
 									<?php
+									
+										// if($specLists['ProductSpecificationDetail']['model'] == 'MainPanel'){
+											
+								  //     		echo $this->element('ViewSpecs/mainpanel', array('formatDataSpecs' => $formatDataSpecs[$key],'key' => $mainpanelCounter));
+								  //     		$mainpanelCounter++;
+								  //     	}
 
 								      	if($specLists['ProductSpecificationDetail']['model'] == 'Component'){
 

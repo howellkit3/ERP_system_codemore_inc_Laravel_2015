@@ -2180,3 +2180,6 @@ CREATE TABLE `received_receipt_items` (
   `lot` INT(11) ,
   `request_uuid` DOUBLE 
 ); 
+
+/* Bien added this oct-13-2015 koufu_sale*/
+ALTER TABLE `koufu_sale`.`product_specification_parts`     ADD COLUMN `name` VARCHAR(80) NULL AFTER `product_id`;
