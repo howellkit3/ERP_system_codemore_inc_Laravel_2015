@@ -2182,3 +2182,6 @@ CREATE TABLE `received_receipt_items` (
 ); 
 
 ALTER TABLE `received_receipt_items`  ADD `remarks` VARCHAR(60) NULL  AFTER `lot`;
+
+/* Bien added this oct-13-2015 koufu_sale*/
+ALTER TABLE `koufu_sale`.`product_specification_parts`     ADD COLUMN `name` VARCHAR(80) NULL AFTER `product_id`;

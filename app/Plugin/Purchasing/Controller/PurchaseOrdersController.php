@@ -17,7 +17,7 @@ class PurchaseOrdersController extends PurchasingAppController {
 
 		$limit = 10;
 
-		$conditions = "";
+		$conditions = array('NOT' => array('PurchaseOrder.status' => 5));
 
 		$params =  array(
 	            'conditions' => $conditions,
@@ -481,5 +481,26 @@ class PurchaseOrdersController extends PurchasingAppController {
             $this->render('search_order');
         }
     }
+
+    public function delete($id = null){
+
+    	$userData = $this->Session->read('Auth');
+
+		$this->loadModel('Purchasing.PurchaseOrder');
+
+		$this->PurchaseOrder->id = $id;
+
+		$this->PurchaseOrder->saveField('status', 5);
+
+		$this->Session->setFlash(__('Purchase Order has been removed'), 'success');
+      
+        $this->redirect( array(
+            'controller' => 'purchase_orders',   
+            'action' => 'index'
+        ));  
+
+
+    }
+
 
 }

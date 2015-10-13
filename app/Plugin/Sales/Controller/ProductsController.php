@@ -638,6 +638,13 @@ class ProductsController extends SalesAppController {
 		echo json_encode($checkData);
     }
 
+    public function get_main($varCounter,$realName){
+
+    	$this->set(compact('varCounter','realName'));
+		$this->render('main_panel');
+
+    }
+
     public function component($varCounter,$realName){
 
     	$this->set(compact('varCounter','realName'));
@@ -688,6 +695,8 @@ class ProductsController extends SalesAppController {
 
         $this->loadModel('Sales.ProductSpecificationDetail');
 
+        $this->loadModel('Sales.ProductSpecificationMainPanel');
+
         $this->loadModel('Sales.ProductSpecificationComponent');
 
 		$this->loadModel('Sales.Product');
@@ -733,7 +742,7 @@ class ProductsController extends SalesAppController {
 		
 		//find if product has specs
 		$formatDataSpecs = $this->ProductSpecificationDetail->findData($product['Product']['uuid']);
-
+		
 		$companyData = $this->Company->read(null,$product['Product']['company_id']);
 
 		$this->request->data['Company'] = $companyData['Company'];
@@ -854,6 +863,8 @@ class ProductsController extends SalesAppController {
 
     	$this->loadModel('Sales.ProductSpecificationDetail');
 
+    	$this->loadModel('Sales.ProductSpecificationMainPanel');
+
     	$this->loadModel('Sales.ProductSpecificationComponent');
 
     	$this->loadModel('Sales.ProductSpecificationPart');
@@ -869,7 +880,7 @@ class ProductsController extends SalesAppController {
     	$this->ProductSpecificationDetail->bind(array('Sales.ProductSpecificationComponent','Sales.ProductSpecificationPart','Sales.ProductSpecificationProcess'));
 				
 		if (!empty($this->request->data)) {
-
+			//pr($this->request->data);exit();
 			if(!empty($this->request->data['IdHolder'])){
 				
 				$this->Product->ProductSpecification->delete($this->request->data['ProductSpecification']['id']);
@@ -883,6 +894,7 @@ class ProductsController extends SalesAppController {
 
 			$specId = $this->Product->ProductSpecification->saveSpec($this->request->data,$userData['User']['id']);
 			
+			//$mainPanelArray = array();
 			$componentArray = array();
 			$partArray = array();
 			$processArray = array();
@@ -890,6 +902,9 @@ class ProductsController extends SalesAppController {
 			
 				foreach ($this->request->data['ProductSpecificationDetail'] as $key => $value) {
 					
+					// if($value == 'MainPanel'){
+					// 	array_push($mainPanelArray, $key);
+					// }
 					if($value == 'Component'){
 						array_push($componentArray, $key);
 					}
@@ -901,6 +916,20 @@ class ProductsController extends SalesAppController {
 					}
 				}
 			}
+			
+			// if (isset($this->request->data['ProductSpecificationMainPanel'])) {
+				
+			// 	$mainPanelData['ProductSpecificationMainPanel'] = array_values($this->request->data['ProductSpecificationMainPanel']);
+				
+			// 	foreach ($mainPanelData['ProductSpecificationMainPanel'] as $key => $value) {
+					
+			// 		$mainPanelData['ProductSpecificationMainPanel'][$key] = $value;
+			// 		$mainPanelData['ProductSpecificationMainPanel'][$key]['order'] = $mainPanelArray[$key];
+					
+			// 	}
+			// 	$mainPanelData['Product'] = $this->request->data['Product']['id'];
+				
+			// }
 			
 			if (isset($this->request->data['ProductSpecificationComponent'])) {
 				
@@ -948,8 +977,15 @@ class ProductsController extends SalesAppController {
 				$processData['Product'] = $this->request->data['Product']['id'];
 
 			}
+
 			$getIds = array();
 
+			// if (!empty($this->request->data['ProductSpecificationMainPanel'])) {
+
+			// 	$thisMainPanelIds = $this->ProductSpecificationMainPanel->saveMainPanel($mainPanelData,$userData['User']['id'],$specId);
+
+			// 	$getIds = array_merge($getIds,$thisMainPanelIds);
+			// }
 
 			if (!empty($this->request->data['ProductSpecificationComponent'])) {
 

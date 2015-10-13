@@ -366,6 +366,8 @@ class RequestsController extends PurchasingAppController {
 
 	    if ($this->request->is(array('post','put'))) {
 
+	    //	pr($this->request->data); exit;
+
 	    	foreach ($this->request->data['RequestItemIdHolder'] as $key => $value) {
 
     			
