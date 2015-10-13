@@ -45,7 +45,6 @@
                                         echo $this->Form->input('SalesInvoice.sales_invoice_no', array(
                                             'class' => 'form-control item_type required',
                                             'label' => false,
-                                            'readonly' => true,
                                             'value' => $seriesSalesNo,
                                             'placeholder' => 'Invoice No.'));
                                     ?>
