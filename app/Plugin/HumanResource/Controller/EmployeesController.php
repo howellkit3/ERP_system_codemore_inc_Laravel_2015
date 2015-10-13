@@ -1262,7 +1262,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 
 				
-					if (strlen($address) > 40) {
+					if (strlen($address) > 30) {
 						$pdf->SetFont('Arial','',5);	
 					}
 
@@ -1281,11 +1281,12 @@ class EmployeesController  extends HumanResourceAppController {
 
 
 				
-					if (strlen($address) > 40) {
+					if (strlen($address) > 30) {
 						$pdf->SetFont('Arial','',5);	
 					}
 
-					if (strlen($address) > 43) {
+
+					if (strlen($address) > 35) {
 
 
 
@@ -1312,15 +1313,15 @@ class EmployeesController  extends HumanResourceAppController {
 					$addressprovince = stripslashes($addressprovince);
 					//$pdf->Multicell(0,3,$dateHired);
 
-					$pdf->MultiCell( 35, 4, trim(utf8_decode($address)));
+					$pdf->MultiCell( 35, 4, trim(utf8_decode($address)),'',false);
 
 
 					$pdf->SetXY(19.5, 36);
-					$pdf->MultiCell( 40,4, trim(utf8_decode($addresscity)));
+					$pdf->MultiCell( 40,4, trim(utf8_decode($addresscity)),'',false);
 
 
 					$pdf->SetXY(19.5, 40.5);
-					$pdf->MultiCell( 40, 4, trim(utf8_decode($addressprovince)));
+					$pdf->MultiCell( 40, 4, trim(utf8_decode($addressprovince)),'',false);
 
 					}
 
@@ -1339,9 +1340,9 @@ class EmployeesController  extends HumanResourceAppController {
 			}
 
 			// Output the new PDF
-			$pdfData = $pdf->Output($employee['Employee']['code'].'.pdf', 'D');
+			//$pdfData = $pdf->Output($employee['Employee']['code'].'.pdf', 'D');
 
-			//$pdf->Output();
+			$pdf->Output();
 
 
 			//return true;
