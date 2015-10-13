@@ -53,21 +53,84 @@
                                                 <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span>  Add schedule by :   </label>
                                                 <div class="col-lg-9">
                                                    <div class="radio">
-                                                                            <input type="radio" name="data[WorkSchedule][model]" id="categoryRadio1" value="Employee" checked>
+                                                                            <input type="radio" name="data[WorkSchedule][model]" class="category" id="categoryRadio1" value="Employee" checked>
                                                                             <label for="categoryRadio1">
                                                                                 Employee
                                                                             </label>
-                                                                           <!--  <input type="radio" name="data[WorkSchedule][model]" id="categoryRadio2" value="Department">
+                                                                            <input type="radio" name="data[WorkSchedule][model]" class="category" id="categoryRadio2" value="Department">
                                                                             <label for="categoryRadio2">
                                                                                 Department
-                                                                            </label> -->
+                                                                            </label>
                                                                 </div>
 
                                                 </div>
                                              </div>
                                         </div>
-                                    </div>                   
-                                    <div class="form-group select2-cont">
+                                    </div>
+
+                                     <div class="form-group select2-cont category-section category-Department"  style="display:none">
+                                       <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span> Select Department </label>
+                                                <div class="col-lg-9">
+                                                  
+                                                    <?php
+                                                        echo $this->Form->input('WorkSchedule.foreign_key',
+                                                            array(
+                                                                'id' => 'SearchDepartment',
+                                                                'class' => 'col-lg-6 required autocomplete',
+                                                                'label' => false,
+                                                                'options' => $departmentList,
+                                                                'empty' => '-- Select Department --'
+                                                                ));
+                                                    ?>
+
+                                                </div>
+                                             </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group select2-cont category-section category-Department" style="display:none">
+                                       <div class="col-lg-12">
+                                            <div class="form-group employee-result">
+                                            <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span> Select Employee </label>
+                                                  <div class="col-lg-9">
+                                                    <div class="checkbox-nice">
+                                                                    <input type="checkbox" value="" id="checkbox-check">
+                                                                    <label for="checkbox-check">
+                                                                        Select All
+                                                                    </label>
+                                                        </div>
+                                                </div>
+                                                <div class="clearfix"></div>
+
+                                               <label for="inputEmail1" class="col-lg-3 control-label"></label>
+                                                  <div class="col-lg-9">
+                                                   
+                                                    <ul style="margin:0;padding:0" id="result_employee">
+                                                      <!--   <?php foreach ($employees as $KeyId => $value) { ?>
+                                                            <li> 
+
+                                                                <div class="checkbox-nice">
+                                                                    <input type="checkbox" class="select_employee" value="<?php echo $KeyId; ?>" id="checkbox-<?php echo $KeyId; ?>">
+                                                                    <label for="checkbox-<?php echo $KeyId; ?>">
+                                                                        <?php echo $value ?>
+                                                                    </label>
+                                                                </div>
+
+
+                                                            </li> 
+                                                        <?php } ?>-->
+                                                      </ul>  
+                                                </div>
+
+
+                                             </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group select2-cont  category-section category-Employee">
                                        <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span>Employee Name</label>

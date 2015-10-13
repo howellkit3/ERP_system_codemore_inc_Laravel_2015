@@ -83,21 +83,30 @@ class AttendancesController  extends HumanResourceAppController {
 		$params =  array(
 	            'conditions' => $conditions,
 	            'limit' => $limit,
-	            // 'fields' => array(
-	            // 	'id',
-	            // 	'status',
-	            // 	'created',
-	            // 	'Employee.first_name',
-	            // 	'Employee.last_name',
-	            // 	'Employee.middle_name',
-	            // 	'Employee.code',
-	            // 	'Attendance.in',
-	            // 	'Attendance.out',
-	            // 	'Attendance.type',
-	            // 	'Attendance.schedule_id',
-	            // 	'Attendance.notes'
+	            'fields' => array(
+	            	'id',
+	            	'status',
+	            	'created',
+	            	'Employee.first_name',
+	            	'Employee.last_name',
+	            	'Employee.middle_name',
+	            	'Employee.code',
+	            	'Attendance.in',
+	            	'Attendance.out',
+	            	'Attendance.type',
+	            	'Attendance.schedule_id',
+	            	'Attendance.notes',
+	            	'Attendance.date',
+	            	'MySchedule.day',
+	            	'MyWorkshift.from',
+	            	'MyWorkshift.to',
+	            	//'MyWorkshift.overtime_id',
+	            	'MyWorkShiftBreak.breaktime_id',
+	            	// /'MyWorkshift.ovetime_id',
+	            	'MyBreakTime.from',
+	            	'MyBreakTime.to'
 
-	            // 	),
+	            	),
 	            'order' => 'Attendance.in DESC',
 	    );
 
@@ -1054,6 +1063,7 @@ public function daily_info() {
 				));
 
 		}
+
 		$attendance  = array();
 
 		if (!empty($query['attendanceId'])) {

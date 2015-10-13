@@ -164,7 +164,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 								                        </td> 
 								                         <td class="text-center duration" > 
 								                           <?php 
-								                           echo $this->CustomTime->getDurationSchedule($timeIn,$timeOut,$schedule['MyWorkshift'],$schedule['MyBreakTime']); ?> 
+								                           echo $this->CustomTime->getDurationSchedule($schedule['Attendance']['in'],$schedule['Attendance']['out'],$schedule['MyWorkshift'],$schedule['MyBreakTime']); ?> 
 								                        </td>
 								                         <td class="text-center duration" > 
 								                           <?php echo $this->CustomTime->getDuration($timeIn,$timeOut); ?> 

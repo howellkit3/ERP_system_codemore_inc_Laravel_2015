@@ -22,6 +22,8 @@ class WorkSchedulesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.OvertimeLimit');
 
+		$this->loadModel('HumanResource.Department');
+
 		$conditions = array();
 		$employees = $this->Employee->getList($conditions);
 
@@ -35,12 +37,13 @@ class WorkSchedulesController  extends HumanResourceAppController {
 		$holidays = $this->Holiday->find('all',array('conditions' => $conditions ,'order' =>  array('Holiday.start_date ASC'),'fields' => array('id','name','type','start_date','end_date','year') ));
 
 
+		$departmentList = $this->Department->find('list',array('fields' => array('id','notes')));
+
+
 		if ($this->request->is('post')) {	
 				//save attendance
 			$create_schedules = $this->WorkSchedule->formatData($this->request->data,$holidays);
 
-
-			//pr($create_schedules);exit();
 
 			// $conditionAttendance = array();
 
@@ -48,33 +51,67 @@ class WorkSchedulesController  extends HumanResourceAppController {
 
 			// $this->Attendance->find('all',)
 
+
+
 			if (!empty($create_schedules)) {
 
-				if ($this->WorkSchedule->saveAll($create_schedules['WorkSchedule'])) {
+				if (!empty($this->request->data['WorkSchedule']['empId'])) {
 
-				//$attendance = $this->Attendance->saveRecord($this->request->data['WorkSchedule'],$this->WorkSchedule->id,$holidays);
+
+						//pr( $create_schedules['WorkSchedule'] );
+
+					foreach ($create_schedules['WorkSchedule'] as $key => $value)  :
+
+
+						$save = $this->WorkSchedule->saveAll($value,array('deep' => true ));
+
+					endforeach;
+
+					if ($save) {
+
+						$this->Session->setFlash('Work Schedule saved successfully','success');
+				 		   
+				 		   	$this->redirect( array(
+			                         'controller' => 'schedules', 
+			                         'action' => 'work_schedules',
+			                         'tab'	=> 'work_schedules'
+			                    ));
+					} else {
+
+					$this->Session->setFlash('There\'s an error saving Schedule','error');
+					}
+						
+				} else {
+
+
+						if ($this->WorkSchedule->saveAll($create_schedules['WorkSchedule'],array('deep' => true ))) {
+
+							//$attendance = $this->Attendance->saveRecord($this->request->data['WorkSchedule'],$this->WorkSchedule->id,$holidays);
+							
+							//create ovetime limit
+							$this->OvertimeLimit->createLimit($this->request->data['WorkSchedule'],$auth);
+							
+							$data['employee_id'] = $this->request->data['WorkSchedule']['foreign_key'];
+							$data['date'] = $this->request->data['WorkSchedule']['day'];
+							$data['type'] = $this->request->data['WorkSchedule']['type'];
+							//must save daily info
+							$dailynfo = $this->DailyInfo->saveDailyInfo($data);
+
+							$this->Session->setFlash('Work Schedule saved successfully','success');
+				 		   
+				 		   	$this->redirect( array(
+			                         'controller' => 'schedules', 
+			                         'action' => 'work_schedules',
+			                         'tab'	=> 'work_schedules'
+			                    ));
+						} else  {
+
+							$this->Session->setFlash('There\'s an error saving Schedule','error');
+
+						}
+
+				}
 				
-				//create ovetime limit
-				$this->OvertimeLimit->createLimit($this->request->data['WorkSchedule'],$auth);
-				
-				$data['employee_id'] = $this->request->data['WorkSchedule']['foreign_key'];
-				$data['date'] = $this->request->data['WorkSchedule']['day'];
-				$data['type'] = $this->request->data['WorkSchedule']['type'];
-				//must save daily info
-				$dailynfo = $this->DailyInfo->saveDailyInfo($data);
-
-				$this->Session->setFlash('Work Schedule saved successfully','success');
-	 		   
-	 		   	$this->redirect( array(
-                         'controller' => 'schedules', 
-                         'action' => 'work_schedules',
-                         'tab'	=> 'work_schedules'
-                    ));
-			} else  {
-
-				$this->Session->setFlash('There\'s an error saving Schedule','error');
-
-			}
 		} else {
 				$this->Session->setFlash('There\'s an error saving Schedule','error');
 		}
@@ -82,13 +119,15 @@ class WorkSchedulesController  extends HumanResourceAppController {
 			
 		}
 
-		$this->set(compact('employees','workshifts'));
+		$this->set(compact('employees','workshifts','departmentList'));
 	}
 
 	public function edit($id = null) {
 
 
 		if (!empty($id)) {
+
+		$this->loadModel('HumanResource.Department');
 
 		$this->loadModel('HumanResource.Employee');
 
@@ -124,6 +163,12 @@ class WorkSchedulesController  extends HumanResourceAppController {
 		$workshifts = $this->Workshift->getList($conditions);
 		
 		$this->request->data = $this->WorkSchedule->findById($id);
+
+		$departmentList = $this->Department->find('list',array('fields' => array('id','name')));
+
+		pr($departmentList);
+		exit();
+
 
 		$this->set(compact('employees','workshifts'));
 

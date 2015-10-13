@@ -14,30 +14,31 @@ class Email extends AppModel {
     public $actsAs = array('Containable');
 
     public function bind($model = array('Group')){
-  	$this->bindModel(array(
-      'belongsTo' => array(
-        'ContactPerson' => array(
-          'className' => 'Contact',
-          'foreignKey' => false,
-          'dependent' => true,
-          'conditions' => array(
-            'Contact.model = ContactPerson',
-            'Contact.foreign_key = ContactPerson.id' 
+      	
+        $this->bindModel(array(
+          'belongsTo' => array(
+            'ContactPerson' => array(
+              'className' => 'Contact',
+              'foreignKey' => false,
+              'dependent' => true,
+              'conditions' => array(
+                'Contact.model = ContactPerson',
+                'Contact.foreign_key = ContactPerson.id' 
+                )
+            ),
+            'Employee' => array(
+              'className' => 'Email',
+              'foreignKey' => false,
+              'dependent' => true,
+              'conditions' => array(
+                'Email.model = Employee',
+                'Email.foreign_key = ContactPerson.id' 
+                )
             )
-        ),
-        'Employee' => array(
-          'className' => 'Email',
-          'foreignKey' => false,
-          'dependent' => true,
-          'conditions' => array(
-            'Email.model = Employee',
-            'Email.foreign_key = ContactPerson.id' 
-            )
-        )
-      )
-    ),false);
+          )
+        ),false);
 
-  }
+    }
 
 
   	public function saveEmails($data = null,$foreignKey = null,$model = null ,$authid = null){
