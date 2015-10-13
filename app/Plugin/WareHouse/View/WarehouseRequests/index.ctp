@@ -53,9 +53,9 @@
                 <div class="paging" id="dr_pagination">
                     
                     <?php
-                        echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'DeliveredOrder','model' => 'DeliveredOrder'), null, array('class' => 'disable','model' => 'DeliveredOrder'));
-                        echo $this->Paginator->numbers(array('separator' => '','paginate' => 'DeliveredOrder'), array('paginate' => 'DeliveredOrder'));
-                        echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'DeliveredOrder','model' => 'DeliveredOrder'), null, array('class' => 'disable'));
+                        echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'WarehouseRequest','model' => 'WarehouseRequest'), null, array('class' => 'disable','model' => 'WarehouseRequest'));
+                        echo $this->Paginator->numbers(array('separator' => '','paginate' => 'WarehouseRequest'), array('paginate' => 'WarehouseRequest'));
+                        echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'WarehouseRequest','model' => 'WarehouseRequest'), null, array('class' => 'disable'));
                     ?>
                 </div>
               
