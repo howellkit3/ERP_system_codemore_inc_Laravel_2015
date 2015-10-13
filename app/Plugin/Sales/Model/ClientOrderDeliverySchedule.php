@@ -124,6 +124,33 @@ class ClientOrderDeliverySchedule extends AppModel {
 		}
 	}
 
+	public function editClientOrderDeliverySchedule($clientOrderData = null, $auth = null, $clientOrderId = null){
+
+		foreach ($clientOrderData[$this->name] as $key => $clientOrderDetails)
+		{
+			$month = date("m"); 
+		    $year = date("y");
+		    $hour = date("H");
+		    $minute = date("i");
+		    $seconds = date("s");
+		    $random = rand(1000, 10000);
+	        
+		$code =  $year. $month .$random;
+
+			$this->create();
+			
+			if (!empty($clientOrderData[$this->name])) {
+				
+				//$clientOrderDetails['delivery_type'] = 'Once';
+				$clientOrderDetails['created_by'] = $auth;
+				$clientOrderDetails['modified_by'] = $auth;
+				$clientOrderDetails['client_order_id'] = $clientOrderId;
+				$this->save($clientOrderDetails);
+	
+			}				
+		}
+	}
+
 	public function saveDelivery($clientOrderData = null, $auth = null){
 		
 		
