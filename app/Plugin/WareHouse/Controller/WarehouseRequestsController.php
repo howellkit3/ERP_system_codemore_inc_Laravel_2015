@@ -25,9 +25,33 @@ class WarehouseRequestsController extends WareHouseAppController {
 															'order' => array('Unit.unit' => 'ASC')
 															));
 
-		$this->WarehouseRequest->bind('WarehouseRequestItem');		
+		$this->WarehouseRequest->bind('WarehouseRequestItem');			
 
-		$requestData = $this->WarehouseRequest->find('all', array('order' => array('WarehouseRequest.created' => 'DESC')));
+        $this->WarehouseRequest->recursive = 1;
+
+        $limit = 10;
+
+        $conditions = array();
+
+        $this->paginate = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            'fields' => array(
+                'WarehouseRequest.uuid', 
+                'WarehouseRequest.name',
+                'WarehouseRequest.id',
+                'WarehouseRequest.status_id',
+                'WarehouseRequest.created_by'),
+            'order' => 'WarehouseRequest.id DESC',
+        );
+
+        //pr($conditions); exit;
+
+        $requestData = $this->paginate('WarehouseRequest');
+
+        //pr($requestData); exit;
+
+	//	$requestData = $this->WarehouseRequest->find('all', array('order' => array('WarehouseRequest.created' => 'DESC')));
 
 		foreach ($requestData as $key => $value) {
 
