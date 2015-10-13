@@ -79,7 +79,7 @@
                     <tr>
                         <td align = "left" width = "20%">Telephone</td>
                         <td align = "left" width = "20%">:<?php echo !empty($telContactData['Contact']['number']) ? $telContactData['Contact']['number'] : " "; ?></td>
-                        <td align = "left" width = "20%">Fax #:  <?php echo !empty($faxContactData['Contact']['number']) ? $faxContactData['Contact']['number'] : " "; ?></td>
+                        <td align = "left" width = "20%"><?php echo  !empty($faxContactData['Contact']['number']) ? "Fax # :  " .  $faxContactData['Contact']['number'] : " "; ?></td>
                         <td align = "left" width = "20%">Delivery Date:</td>
                         <td align = "left" width = "20%">:<?php echo date('M d, Y', strtotime($purchaseOrderData['PurchaseOrder']['delivery_date'])); ?> 
                         </td>

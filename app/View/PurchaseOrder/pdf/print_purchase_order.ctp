@@ -88,10 +88,9 @@ for ($x = 0; $x <= 1; $x++) { ?>
 			<table class="" style ="line-height: 13px; width:750px; padding:1px; border:1px solid black;">
 					<tr>
 						<td style="width:110px;" >Telephone</td>
-						<td style="width:120px;" class="border-bot">:<?php echo !empty($telContactData['Contact']['number']) ? $telContactData['Contact']['number'] : " "; ?></td>
+						<td style="width:160px;" class="border-bot">:<?php echo !empty($telContactData['Contact']['number']) ? $telContactData['Contact']['number'] : " "; ?></td>
 						
-						<td align = "right" style="width:70px;">FAX #: </td>
-						<td align = "right" style="width:90px;"><?php echo !empty($faxContactData['Contact']['number']) ? $faxContactData['Contact']['number'] : " "; ?> </td>
+						<td align = "right" style="width:120px; "> <?php echo  !empty($faxContactData['Contact']['number']) ? "Fax # :  " .  $faxContactData['Contact']['number'] : " "; ?> </td>
 						<td  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delivery Date:
 						</td>
@@ -300,8 +299,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 						<td style="width:110px;" >Telephone</td>
 						<td style="width:120px;" class="border-bot">:<?php echo !empty($telContactData['Contact']['number']) ? $telContactData['Contact']['number'] : " "; ?></td>
 						
-						<td align = "right" style="width:70px;">FAX #: </td>
-						<td align = "right" style="width:90px;"><?php echo !empty($faxContactData['Contact']['number']) ? $faxContactData['Contact']['number'] : " "; ?> </td>
+						<td align = "right" style="width:160px; "> <?php echo  !empty($faxContactData['Contact']['number']) ? "Fax # :  " .  $faxContactData['Contact']['number'] : " "; ?> </td>
 						<td  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delivery Date:
 						</td>
@@ -511,8 +509,8 @@ for ($x = 0; $x <= 1; $x++) { ?>
 						<td style="width:110px;" >Telephone</td>
 						<td style="width:120px;" class="border-bot">:<?php echo !empty($telContactData['Contact']['number']) ? $telContactData['Contact']['number'] : " "; ?></td>
 						
-						<td align = "right" style="width:70px;">FAX #: </td>
-						<td align = "right" style="width:90px;"><?php echo !empty($faxContactData['Contact']['number']) ? $faxContactData['Contact']['number'] : " "; ?> </td>
+						
+						<td align = "right" style="width:160px; "> <?php echo  !empty($faxContactData['Contact']['number']) ? "Fax # :  " .  $faxContactData['Contact']['number'] : " "; ?> </td>
 						<td  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delivery Date:
 						</td>
