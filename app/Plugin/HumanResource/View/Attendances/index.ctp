@@ -243,6 +243,23 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 															   'data-id' => $schedule['Attendance']['id'],
 															));
 
+
+																echo $this->Html->link('<span class="fa-stack">
+														<i class="fa fa-square fa-stack-2x"></i>
+														<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Delete </font></span>
+														</span> ',array(
+															'controller' => 'attendances',
+															'action' =>'delete',
+															 $schedule['Attendance']['id']
+															),
+														array('class' =>'table-link',
+															   'escape' => false,
+															   'data-url' => '/attendances/view/'.$schedule['Attendance']['id'],
+															   'title'=>'Edit Information',
+															   'confirm' => 'Are you sure you want to delete this attendances ? ',
+															));
+
+
 															
 														}
 														?>
