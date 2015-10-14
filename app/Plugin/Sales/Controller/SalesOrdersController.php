@@ -38,22 +38,22 @@ class SalesOrdersController extends SalesAppController {
 
       if (!empty($query['name'])) {
 
-      $conditions = array_merge($conditions,array(
-        'OR' => array(
-           // 'ClientOrder.uuid like' => '%'. $query['name'] . '%',
-            'Company.company_name like' => '%'. $query['name'] . '%',
-            'Product.name like' => '%'. $query['name'] . '%',
-          )
-      ));
+        $conditions = array_merge($conditions,array(
+          'OR' => array(
+              'ClientOrder.uuid like' => '%'. $query['name'] . '%',
+              //'Company.company_name like' => '%'. $query['name'] . '%',
+              'Product.name like' => '%'. $query['name'] . '%',
+            )
+        ));
 
-    }
+      }
 
     }
 
     $this->paginate = array(
             'conditions' => $conditions,
             'limit' => $limit,
-            'order' => 'ClientOrder.uuid DESC',
+            'order' => 'ClientOrder.id DESC',
             'group' => 'ClientOrder.id'
         );
 
@@ -83,12 +83,6 @@ class SalesOrdersController extends SalesAppController {
       $noPermission = ' ';
     }
 		
-
-
-   // pr($clientOrder);
-    //exit();
-
-
 		$this->set(compact('clientOrder','quoteName','companyData','inquiryId','noPermission'));
 
      if ($this->request->is('ajax')) {
@@ -146,8 +140,6 @@ class SalesOrdersController extends SalesAppController {
     $noPermission = ' ';
 
 		$this->set(compact('noPermission','checkSpec','clientOrderData','quotationData','companyName','quotationItemDetail','paymentTermData','currencies','units'));
-
-    
 
 	}
 
