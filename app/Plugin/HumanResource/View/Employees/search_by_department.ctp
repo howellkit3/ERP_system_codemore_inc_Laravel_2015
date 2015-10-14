@@ -11,7 +11,7 @@ if(!empty($employeeData)){
             if (!empty($employee['Employee']['image'])) {
 
 
-            $background =  $serverPath.'img/uploads/employee/'.$employee['Employee']['image'];  
+            $background =  $serverPath.'img/uploads/employee/'.$employee['Employee']['image'].'?d='.rand(0,1000).time(); 
             } else {
 
             $background =  $serverPath.'img/default-profile.png';   

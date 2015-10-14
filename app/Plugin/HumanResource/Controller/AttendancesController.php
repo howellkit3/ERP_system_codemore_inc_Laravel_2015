@@ -9,6 +9,8 @@ class AttendancesController  extends HumanResourceAppController {
 	//,'HumanResource.CustomText'
 	public function index() {
 
+		Configure::write('debug',2);
+
 		$this->loadModel('HumanResource.WorkSchedule');
 
 		$this->loadModel('HumanResource.Employee');
@@ -29,7 +31,7 @@ class AttendancesController  extends HumanResourceAppController {
 		
 		$search = '';
 
-		$date = date('Y/m/d').' - '. date('Ys/m/d');
+		$date = date('Y-m-d');
 
 		$date2 = date('Y-m-d', strtotime($date . ' +1 day'));
 		
@@ -54,7 +56,7 @@ class AttendancesController  extends HumanResourceAppController {
   						'date(Attendance.date) BETWEEN ? AND ?' => array($date1,$date2), 
   			));
 
-			$date = $query['data']['date'];
+			//$date = $query['data']['date'];
 		}
 	
 		// $conditions = array(
@@ -82,6 +84,7 @@ class AttendancesController  extends HumanResourceAppController {
 		//$this->Employee->virtualFields['totalItem'] = 'COUNT(`OrderDetail`.`order_id`)';
 		//$conditions = array();
 
+	
 		$params =  array(
 	            'conditions' => $conditions,
 	            'limit' => $limit,

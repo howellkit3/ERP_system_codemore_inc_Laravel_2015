@@ -302,8 +302,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 	public function edit($id){
 
-		Configure::write('debug',2);
-		
+
 		$this->loadModel('HumanResource.EmployeeAdditionalInformation');
 
 		$this->loadModel('HumanResource.Email');
@@ -354,6 +353,7 @@ class EmployeesController  extends HumanResourceAppController {
                
                 	$data['Employee']['image'] = $file['name'];
            		 }
+
 
 
 			 	if ($this->Employee->save($data)) {
@@ -633,6 +633,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 	public function findByDepartment($id = null) {
 
+			Configure::write('debug',2);
 			$this->layout = false;
 
 			if (!empty($id)) {
@@ -658,15 +659,13 @@ class EmployeesController  extends HumanResourceAppController {
 
 
 				$conditions = array_merge($conditions,array(
-  						'date(Attendance.date) BETWEEN ? AND ?' => array($date,$date), 
+  						'date(Attendance.in) BETWEEN ? AND ?' => array($date,$date), 
   				));
   				
 
 				$conditions = array_merge($conditions,array('Employee.department_id' => $id, 'Attendance.in !=' => ' '));
 
 
-				pr($conditions);
-				exit();
 
 				// $employees = $this->Employee->find('all',array(
 				// 	'conditions' => $conditions,
@@ -701,14 +700,15 @@ class EmployeesController  extends HumanResourceAppController {
 					'Employee.image',
 					'Attendance.schedule_id',
 					'Attendance.type',
+					'Attendance.date',
 					'Attendance.in',
 					'Attendance.out'
 					//'Position.name'
 					),
+
 					
 				));
 
-				//pr($employees);exit();
 
 				if (count($employees) == 0) {
 
@@ -1145,7 +1145,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 							if (!empty($employee['Employee']['image'])) { 
 
-                            	$background =  $serverPath.'img/uploads/employee/'.$employee['Employee']['image'];	
+                            	$background =  $serverPath.'img/uploads/employee/'.$employee['Employee']['image'].'?d='.rand(0,1000).time();
                             
                            
 							 } else {
@@ -1185,7 +1185,13 @@ class EmployeesController  extends HumanResourceAppController {
 					
 					//name
 					$name = !empty($employee['Employee']['full_name']) ? str_replace(',','',ucwords($employee['Employee']['first_name'])).' '.$middle .'. '. str_replace(',','',ucwords($employee['Employee']['last_name'])) : '';
+					
 					$pdf->SetFont('Arial','B',8);
+					if (strlen($name) > 25) {
+
+					$pdf->SetFont('Arial','B',7);
+					}
+
 					$pdf->MultiCell(38, 1 , ucwords(utf8_decode($name)) , '', 'C');	
 
 					//department
