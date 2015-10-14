@@ -108,11 +108,18 @@
 
                                 $itemdescription = $value[$modelTable]['name'];
 
-                                $itemdescription .= !empty($value[$modelTable]['size1']) ? $value[$modelTable]['size1'] . " " .$unitData[$value[$modelTable]['size1_unit_id']] : " ";
+                                if($value[$modelTable]['category'] == 0){ 
 
-                                $itemdescription .= !empty($value[$modelTable]['size2']) ? " " .  "x" . " " . $value[$modelTable]['size2'] . " " . $unitData[$value[$modelTable]['size2_unit_id']] : " ";
+                                    $itemdescription .= !empty($value[$modelTable]['width']) ? " " .$value[$modelTable]['width'] . " " .$unitData[$value[$modelTable]['width_unit_id']] : " ";
 
-                                $itemdescription .= !empty($value[$modelTable]['size3']) ? " " . "x" . " " .$value[$modelTable]['size3'] . " " . $unitData[$value[$modelTable]['size3_unit_id']] : " ";
+                                }else{
+
+                                    $itemdescription .= !empty($value[$modelTable]['size1']) ? " " . $value[$modelTable]['size1'] . " " .$unitData[$value[$modelTable]['size1_unit_id']] : " ";
+
+                                    $itemdescription .= !empty($value[$modelTable]['size2']) ? " " .  "x" . " " . $value[$modelTable]['size2'] . " " . $unitData[$value[$modelTable]['size2_unit_id']] : " ";
+
+                                    $itemdescription .= !empty($value[$modelTable]['size3']) ? " " . "x" . " " .$value[$modelTable]['size3'] . " " . $unitData[$value[$modelTable]['size3_unit_id']] : " ";
+                                }
 
                                 ?>
 
@@ -123,7 +130,7 @@
                                 <td class="text-center">
                                     <?php 
                                         $amount = $value[$modelTable]['quantity'] * $value[$modelTable]['unit_price'];
-                                        echo $currencyData[$value[$modelTable]['unit_price_unit_id']] ." ".  number_format($amount,2);
+                                        echo ($value[$modelTable]['category']== 0) ?  " " :$currencyData[$value[$modelTable]['unit_price_unit_id']] ." ".  number_format($amount,2);
 
                                         $total = $total + $amount;
                                     ?>
@@ -142,7 +149,7 @@
                             <td class="text-center"></td>
                             <td class="text-center"> </td>
                             <td class="text-center"> </td>
-                            <td class="text-center"><b>Total : PHP <?php echo number_format($total,2)?></b></td>
+                            <td class="text-center"><b> <?php echo ($value[$modelTable]['category']== 0) ? " " : "Total : PHP" . " " .number_format($total,2)?></b></td>
                         </tr>
                     </table>
 

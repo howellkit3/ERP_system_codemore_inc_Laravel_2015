@@ -2192,3 +2192,7 @@ ALTER TABLE `koufu_sale`.`product_specification_parts`     ADD COLUMN `name` VAR
 ALTER TABLE `request_items` ADD `category` INT(11)  NULL  DEFAULT NULL  AFTER `quantity_unit_id`;
 ALTER TABLE `request_items` ADD `width` INT(11)  NULL  DEFAULT NULL  AFTER `category`;
 ALTER TABLE `request_items` ADD `width_unit_id` INT(11)  NULL  DEFAULT NULL  AFTER `width`;
+
+ALTER TABLE `purchasing_items` ADD `category` INT(11)  NULL  DEFAULT NULL  AFTER `quantity_unit_id`;
+ALTER TABLE `purchasing_items` ADD `width` INT(11)  NULL  DEFAULT NULL  AFTER `category`;
+ALTER TABLE `purchasing_items` ADD `width_unit_id` INT(11)  NULL  DEFAULT NULL  AFTER `width`;

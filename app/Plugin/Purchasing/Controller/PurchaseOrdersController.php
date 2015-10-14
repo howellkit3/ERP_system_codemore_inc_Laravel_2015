@@ -253,6 +253,8 @@ class PurchaseOrdersController extends PurchasingAppController {
 
     	if (!empty($this->request->data)) {
     		
+    		//pr($this->request->data); exit;
+
     		foreach ($this->request->data['PurchasingItemIdHolder'] as $key => $value) {
 
     			

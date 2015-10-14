@@ -25,7 +25,7 @@
 							Edit Purchase Request
 						</h1>
 						<?php 
-	                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'requests', 'action' => 'create'),array('class' =>'btn btn-primary pull-right','escape' => false));
+	                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'requests', 'action' => 'view'),array('class' =>'btn btn-primary pull-right','escape' => false));
 	                    ?>
 					</header>
 
@@ -116,7 +116,7 @@
 						                ?>
 						                <section class="cloneMe">
 											<div class="main-box-body clearfix">
-												<div class="form-horizontal">
+												<div class="form-horizontal item-category">
 
 													<div class="form-group">
 														<label class="col-lg-2 control-label"><span style="color:red">*</span>Item</label>
@@ -321,7 +321,7 @@
 
 													<?php //} ?>
 
-													<div class="form-group">
+													<div class="form-group other-items">
 														<label class="col-lg-2 control-label"><span style="color:red">*</span>Quantity</label>
 														<div class="col-lg-3">
 															<?php 
@@ -509,17 +509,17 @@
 
 		var thisMe = $(this);
         
-        $('.form-horizontal').find('.category').each(function(){
+        $('.item-category').find('.category').each(function(){
 
            var category = $(this).val();
 
             if(category == 0){
 
-	        	$(this).parents('.form-horizontal').find('.other-items').hide();
+	        	$(this).parents('.item-category').find('.other-items').hide();
 
 	        }else{
 
-	        	$(this).parents('.form-horizontal').find('.rolls').hide();
+	        	$(this).parents('.item-category').find('.rolls').hide();
 
 	        }
 

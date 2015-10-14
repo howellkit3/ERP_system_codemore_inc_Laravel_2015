@@ -59,6 +59,7 @@ class RequestsController extends PurchasingAppController {
 
 	 	if ($this->request->is(array('post','put'))) {
 
+
 			$requestUuid = $this->Request->saveRequest($this->request->data['Request'],$userData['User']['id']);
 
 			$this->RequestItem->saveRequestItem($this->request->data ,$requestUuid);
@@ -295,7 +296,7 @@ class RequestsController extends PurchasingAppController {
 														'conditions' => array('User.id' => $requestData['Request']['prepared_by']),
 														));
 	    //pr($requestPurchasingItem);exit();
-    	$this->set(compact('requestId','requestData','requestPurchasingItem','unitData','preparedData'));
+    	$this->set(compact('requestId','requestData','requestPurchasingItem','unitData','preparedData' , 'userData'));
     }
 
     public function edit($requestId = null){
@@ -507,8 +508,6 @@ class RequestsController extends PurchasingAppController {
     	$this->loadModel('Purchasing.Request');
 
     	$this->loadModel('Purchasing.RequestItem');
-
-    //	pr($this->request->data); exit;
 
     	if (!empty($this->request->data)) {
 

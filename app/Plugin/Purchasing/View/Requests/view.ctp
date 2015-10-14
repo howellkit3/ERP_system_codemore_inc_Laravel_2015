@@ -7,25 +7,25 @@
 
 <div class="filter-block pull-right">
                     
-    <?php 
+    <?php
+
+        if($userData['User']['role_id'] != 1 && $userData['User']['role_id'] != 2 && $userData['User']['role_id'] != 4  ){
+
+            $active = "not-active" ;
+        }else {
+
+            $active = "" ;
+        }
         
-        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'requests', 'action' => 'request_list'),array('class' =>'btn btn-primary pull-right','escape' => false));
+        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'requests', 'action' => 'request_list'),array('class' =>'btn btn-primary pull-right ' ,'escape' => false));
 
-     //   if ($requestData['Request']['status_id'] == 1) {
 
-            echo $this->Html->link('<i class="fa fa fa-pencil-square-o fa-lg"></i> Create Order', array('controller' => 'requests', 'action' => 'create_order',$requestId),array('class' =>'btn btn-primary pull-right','escape' => false));
+        echo $this->Html->link('<i class="fa fa fa-pencil-square-o fa-lg"></i> Create Order', array('controller' => 'requests', 'action' => 'create_order',$requestId),array('class' =>'btn btn-primary pull-right','escape' => false));
 
-        //}
-
-        // if ($requestData['Request']['status_id'] == 0) {
-
-        //     echo $this->Html->link('<i class="fa fa-gift fa-lg"></i> Purchase Order', array('controller' => 'requests', 'action' => 'create_order',$requestId),array('class' =>'btn btn-primary pull-right disabled','escape' => false));
-
-        // }
 
         if ($requestData['Request']['status_id'] == 8) {
 
-            echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i> Approved', array('controller' => 'requests', 'action' => 'approved',$requestId),array('class' =>'btn btn-primary pull-right','escape' => false));
+            echo $this->Html->link('<i class= "fa fa-check-square-o fa-lg "></i> Approved', array('controller' => 'requests', 'action' => 'approved',$requestId),array('class' => 'btn btn-primary pull-right ' . $active   ,'escape' => false));
 
             // echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit', array('controller' => 'requests', 'action' => 'edit',$requestId),array('class' =>'btn btn-primary pull-right','escape' => false));
         }

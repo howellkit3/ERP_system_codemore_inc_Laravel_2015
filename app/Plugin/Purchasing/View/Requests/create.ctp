@@ -98,7 +98,7 @@
 									<section class="cloneMe">
 										
 										<div class="main-box-body clearfix">
-											<div class="form-horizontal">
+											<div class="form-horizontal item-category">
 
 												<div class="form-group" >
 													<label class="col-lg-2 control-label"><span style="color:red">*</span>Item </label>
@@ -287,8 +287,6 @@
 
 										                ?>
 													</div>
-
-													<label class="col-lg-3 sizeWith">&emsp;&emsp;x </label>
 
 												</div>
 

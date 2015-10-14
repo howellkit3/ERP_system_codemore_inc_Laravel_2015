@@ -3,7 +3,7 @@
 <?php $this->Html->addCrumb('Create Order', array('controller' => 'requests', 'action' => 'create_order',$requestId)); ?>
 
 <?php  echo $this->Html->script('Purchasing.create_order_selector');?>
-
+<?php  echo $this->Html->script('Purchasing.category_purchase');?>
 <?php  echo $this->Html->script('Purchasing.modal_clone');?>
 
 <div style="clear:both"></div>
@@ -228,7 +228,9 @@
 									
 									<?php foreach ($requestItem as $key => $value) { ?>
 										
-										<div class = "cloneMe">
+										 <section class="cloneMe">
+								<div class="main-box-body clearfix">
+									<div class="form-horizontal item-category">
 
 										<?php $dataPlus = $key + 1; ?>
 
@@ -240,6 +242,8 @@
 						                        'placeholder' => 'Size',
 						                        'value' => $value['RequestItem']['id']));
 						                ?>
+
+						               
 								               
 
 										<div class="form-group" >
@@ -314,11 +318,30 @@
 
 										<div class="form-group">
 
+											<label class="col-lg-2 control-label">Category</label>
+											
+											<div class="col-lg-6">
+												<?php 
+													echo $this->Form->input('RequestItem.'.$key.'.category', array(
+								                        'options' => array('Rolls', 'Other Items'),  
+								                        'label' => false,
+								                        'class' => 'form-control category',
+								                        'empty' => '---Select Category---',
+								                        'value' =>  $value['RequestItem']['category']
+								                         )); 
+								                ?>
+
+											</div>
+
+										</div>
+
+										<div class="form-group other-items">
+
 											<label class="col-lg-2 control-label">Size</label>
 											<div class="col-lg-3">
 												<?php 
 								                    echo $this->Form->input('RequestItem.'.$key.'.size1', array(
-														'class' => 'form-control item_type ',
+														'class' => 'form-control item_type other-element',
 								                        'label' => false,
 								                        'placeholder' => 'Size',
 								                        'disabled' => false,
@@ -332,7 +355,7 @@
 													echo $this->Form->input('RequestItem.'.$key.'.size1_unit_id', array(
 								                        'options' => array($unitData),  
 								                        'label' => false,
-								                        'class' => 'form-control ',
+								                        'class' => 'form-control other-element',
 								                        'empty' => '---Select Unit---',
 								                        'disabled' => false,
 								                        'value' => $value['RequestItem']['size1_unit_id']
@@ -346,12 +369,12 @@
 
 										</div>
 
-										<div class="form-group">
+										<div class="form-group other-items">
 											<label class="col-lg-2 control-label"> </label>
 											<div class="col-lg-3">
 												<?php 
 													echo $this->Form->input('RequestItem.'.$key.'.size2', array(
-														'class' => 'form-control item_type ',
+														'class' => 'form-control item_type other-element',
 								                        'label' => false,
 								                        'placeholder' => 'Size',
 								                        'disabled' => false,
@@ -366,7 +389,7 @@
 													echo $this->Form->input('RequestItem.'.$key.'.size2_unit_id', array(
 								                        'options' => array($unitData),  
 								                        'label' => false,
-								                        'class' => 'form-control ',
+								                        'class' => 'form-control other-element',
 								                        'empty' => '---Select Unit---',
 								                        'disabled' => false,
 								                        'default' => $value['RequestItem']['size2_unit_id']
@@ -379,12 +402,12 @@
 
 										</div>
 
-										<div class="form-group">
+										<div class="form-group other-items">
 											<label class="col-lg-2 control-label"> </label>
 											<div class="col-lg-3">
 												<?php 
 													echo $this->Form->input('RequestItem.'.$key.'.size3', array(
-														'class' => 'form-control item_type ',
+														'class' => 'form-control item_type other-element',
 								                        'label' => false,
 								                        'placeholder' => 'Size',
 								                        'disabled' => false,
@@ -399,7 +422,7 @@
 													echo $this->Form->input('RequestItem.'.$key.'.size3_unit_id', array(
 								                        'options' => array($unitData),  
 								                        'label' => false,
-								                        'class' => 'form-control ',
+								                        'class' => 'form-control other-element',
 								                        'empty' => '---Select Unit---',
 								                        'disabled' => false,
 								                        'default' => $value['RequestItem']['size3_unit_id']
@@ -412,7 +435,36 @@
 
 										</div>
 
-										<div class="form-group">
+										<div class="form-group rolls">
+											<label class="col-lg-2 control-label"><span style="color:red">*</span> Width</label>
+											<div class="col-lg-3">
+												<?php 
+													echo $this->Form->input('RequestItem.'.$key.'.width', array(
+														'class' => 'form-control item_type roll-element required',
+								                        'label' => false,
+								                        'type' => 'number',
+								                        'value' => $value['RequestItem']['width'],
+								                        'placeholder' => 'Width'));
+
+								                ?>
+											</div>
+
+											<div class="col-lg-3 ">
+												<?php 
+													echo $this->Form->input('RequestItem.'.$key.'.width_unit_id', array(
+								                        'options' => array($unitData),  
+								                        'label' => false,
+								                        'class' => 'form-control item_type roll-element required',
+								                        'empty' => '---Select Unit---',
+								                        'default' => $value['RequestItem']['width_unit_id']
+								                         )); 
+
+								                ?>
+											</div>
+
+										</div>
+
+										<div class="form-group other-items">
 													<label class="col-lg-2 control-label"><span style="color:red">*</span>Quantity</label>
 													<div class="col-lg-6">
 														<?php 
@@ -475,10 +527,22 @@
 								                ?>
 											</div>
 
-											<div class="col-lg-3">
+											<div class="col-lg-3 other-items">
 												<?php 
 													echo $this->Form->input('RequestItem.'.$key.'.unit_price_unit_id', array(
 								                        'options' => array($currencyData),  
+								                        'label' => false,
+								                        'class' => 'form-control required',
+								                        'empty' => '---Select Unit---'
+								                         )); 
+
+								                ?>
+											</div>
+
+											<div class="col-lg-3 rolls">
+												<?php 
+													echo $this->Form->input('RequestItem.'.$key.'.unit_price_unit_id', array(
+								                        'options' => array($unitData),  
 								                        'label' => false,
 								                        'class' => 'form-control required',
 								                        'empty' => '---Select Unit---'
@@ -492,6 +556,8 @@
 										<hr>
 
 									</div>
+								</div>
+							</section>
 									<?php } ?>
 
 								</div>
@@ -616,6 +682,29 @@
 
 <script>
 	$(document).ready(function() {
+
+		var thisMe = $(this);
+        
+        $('.item-category').find('.category').each(function(){
+
+           var category = $(this).val();
+
+            if(category == 0){
+
+	        	$(this).parents('.item-category').find('.other-items').hide();
+	        	$(this).parents('.item-category').find( ".other-element" ).prop( "disabled", true );
+            	$(this).parents('.item-category').find( ".roll-element" ).prop( "disabled", false );
+
+	        }else{
+
+	        	$(this).parents('.item-category').find('.rolls').hide();
+	        	$(this).parents('.item-category').find( ".other-element" ).prop( "disabled", false );
+           		$(this).parents('.item-category').find( ".roll-element" ).prop( "disabled", true );
+
+
+	       }
+
+        });
 
 		test = $('.remove-purchase-order').length;
 

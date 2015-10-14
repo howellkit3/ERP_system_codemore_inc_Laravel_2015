@@ -81,16 +81,17 @@
 					</li>
 
 					<li class="<?php echo ($this->params['plugin'] == 'sales') ? 'active' : '' ?>">
-						<?php if($userData['User']['role_id'] == 1 OR $userData['User']['role_id'] == 2 OR $userData['User']['role_id'] == 3 OR $userData['User']['role_id'] == 8 OR $userData['User']['role_id'] == 6 OR $userData['User']['role_id'] == 9
-							OR $userData['User']['role_id'] == 15
-							){
+
+						<?php  if(in_array($userData['User']['role_id'],array('1','2','3','8', '6', '9', '15'))) {
+
 	 						echo $this->Html->link( " <i class='fa fa-shopping-cart '></i> <span>Sales </span> ",   array('controller' =>'customer_sales','action'=>'index?'.rand(1000,9999).'='.date("is"),'plugin' => 'sales'),array('escape' => false) );
 	 					}
 	 					?>
 					</li>
 
 					<li class="<?php echo ($this->params['plugin'] == 'ticket') ? 'active' : '' ?>">
-						<?php  if($userData['User']['role_id'] == 1 OR $userData['User']['role_id'] == 2 OR $userData['User']['role_id'] == 3 OR $userData['User']['role_id'] == 8){
+						
+						<?php  if(in_array($userData['User']['role_id'],array('1','2','3','8'))) {
 
 	 						echo $this->Html->link( " <i class='fa fa-ticket'></i> <span>Ticketing System</span>",   array('controller' =>'ticketing_systems','action'=>'index?'.rand(1000,9999).'='.date("is"),'plugin' => 'ticket'),array('escape' => false) );
 
@@ -100,7 +101,7 @@
 					 
 					<li class="<?php echo ($this->params['plugin'] == 'purchasing') ? 'active' : '' ?>">
 
-						<?php  if(in_array($userData['User']['role_id'],array('1','2','7','10','6','8','4'))) {
+						<?php  if(in_array($userData['User']['role_id'],array('1','2','7','10','6','8','4','16'))) {
 
 						 echo $this->Html->link( " <i class='fa fa-th-large'></i> <span>Purchasing</span>",   array('controller' =>'suppliers','action'=>'index?'.rand(1000,9999).'='.date("is"),'plugin' => 'purchasing'),array('escape' => false) );
 						}
@@ -111,7 +112,7 @@
 					
 					<li class="<?php echo ($this->params['plugin'] == 'ware_house') ? 'active' : '' ?>">
 
-						<?php  if($userData['User']['role_id'] == 1 OR $userData['User']['role_id'] == 2 OR $userData['User']['role_id'] == 4 OR $userData['User']['role_id'] == 7 OR $userData['User']['role_id'] == 15 OR $userData['User']['role_id'] == 8){
+						<?php  if(in_array($userData['User']['role_id'],array('1','2','4','7','15','8','16'))) {
 
 	 						  echo $this->Html->link( " <i class='fa fa-archive'></i> <span>Ware House</span>",   array('controller' =>'receivings','action'=>'index?'.rand(1000,9999).'='.date("is"),'plugin' => 'ware_house'),array('escape' => false) );
 								// echo $this->Html->link( " <i class='fa fa-archive'></i> <span>Ware House</span>",   array('controller' =>'ware_house_systems','action'=>'dashboard','plugin' => 'ware_house'),array('escape' => false) );
@@ -128,9 +129,8 @@
 					<!-- </li> -->
 					<li class="<?php echo ($this->params['plugin'] == 'delivery') ? 'active' : '' ?>">
 
-						<?php  if($userData['User']['role_id'] == 1 OR $userData['User']['role_id'] == 2 OR $userData['User']['role_id'] == 5 OR $userData['User']['role_id'] == 3 OR $userData['User']['role_id'] == 9 OR $userData['User']['role_id'] == 6 OR $userData['User']['role_id'] == 15 OR $userData['User']['role_id'] == 8){
+						<?php  if(in_array($userData['User']['role_id'],array('1','2','5','3','9','6','15','8'))) {	
 
-						
 	 						echo $this->Html->link( " <i class='fa fa-truck'></i> <span>Delivery</span>",   array('controller' =>'deliveries',
 	 											'action'=>'index?'.rand(1000,9999).'='.date("is"),
 	 											'plugin' => 'delivery'),
@@ -140,8 +140,7 @@
 					</li>
 					<li class="<?php echo ($this->params['plugin'] == 'accounting') ? 'active' : '' ?>">
 
-						<?php if($userData['User']['role_id'] == 1 OR $userData['User']['role_id'] == 2 OR $userData['User']['role_id'] == 6 OR $userData['User']['role_id'] == 9 OR $userData['User']['role_id'] == 10 OR $userData['User']['role_id'] == 11){
-
+						<?php  if(in_array($userData['User']['role_id'],array('1','2','6','9','10','11'))) {	
 
 	 						echo $this->Html->link( " <i class='fa fa-money'></i> <span>Accounting</span>",   array('controller' =>'sales_invoice',
 	 											'action'=>'index?'.rand(1000,9999).'='.date("is"),
