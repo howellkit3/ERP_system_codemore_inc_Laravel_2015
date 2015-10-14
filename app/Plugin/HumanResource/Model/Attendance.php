@@ -363,6 +363,8 @@ class Attendance extends AppModel {
 
 		if (!empty($conditions)) {
 			
+			$this->bindMyWorkshift();
+
 			$attendances = $this->find('all',array('conditions' => $conditions));
 
 			foreach ($attendances as $key => $attendance) {
