@@ -15,14 +15,14 @@
 									'plugin' => 'human_resource'
 						)); ?>
 					</li> -->
-					<li class="<?php echo ($this->params['controller'] == 'salaries' && $this->params['action'] == 'export') ? 'active' : '' ?>" alt="tab-type">
+				<!-- 	<li class="<?php echo ($this->params['controller'] == 'salaries' && $this->params['action'] == 'export') ? 'active' : '' ?>" alt="tab-type">
 						<?php echo $this->Html->link('Salary',array(
 									'controller' => 'salaries',
 									'action' => 'export',
 									'tab' => 'export',
 									'plugin' => 'human_resource'
 						)); ?>
-					</li>
+					</li> -->
 
 					<li class="<?php echo ($this->params['controller'] == 'salaries' && in_array($this->params['action'], array('payroll','payroll_view'))) ? 'active' : '' ?>" alt="tab-type">
 						<?php echo $this->Html->link('Payroll',array(

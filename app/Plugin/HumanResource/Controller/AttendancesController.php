@@ -83,21 +83,30 @@ class AttendancesController  extends HumanResourceAppController {
 		$params =  array(
 	            'conditions' => $conditions,
 	            'limit' => $limit,
-	            // 'fields' => array(
-	            // 	'id',
-	            // 	'status',
-	            // 	'created',
-	            // 	'Employee.first_name',
-	            // 	'Employee.last_name',
-	            // 	'Employee.middle_name',
-	            // 	'Employee.code',
-	            // 	'Attendance.in',
-	            // 	'Attendance.out',
-	            // 	'Attendance.type',
-	            // 	'Attendance.schedule_id',
-	            // 	'Attendance.notes'
+	            'fields' => array(
+	            	'id',
+	            	'status',
+	            	'created',
+	            	'Employee.first_name',
+	            	'Employee.last_name',
+	            	'Employee.middle_name',
+	            	'Employee.code',
+	            	'Attendance.in',
+	            	'Attendance.out',
+	            	'Attendance.type',
+	            	'Attendance.schedule_id',
+	            	'Attendance.notes',
+	            	'Attendance.date',
+	            	'MySchedule.day',
+	            	'MyWorkshift.from',
+	            	'MyWorkshift.to',
+	            	//'MyWorkshift.overtime_id',
+	            	'MyWorkShiftBreak.breaktime_id',
+	            	// /'MyWorkshift.ovetime_id',
+	            	'MyBreakTime.from',
+	            	'MyBreakTime.to'
 
-	            // 	),
+	            	),
 	            'order' => 'Attendance.in DESC',
 	    );
 
@@ -1035,25 +1044,61 @@ public function daily_info() {
 
 
 			if ($this->Attendance->save($data)) {
-				//rediect  
-				$this->Session->setFlash('Time Sucessfully updated','success');
+
+				if ($this->request->is('ajax'))  {
+
+					$save = true;
+				}  else {
+
+					$this->Session->setFlash('Time Sucessfully updated','success');
+				} 
 
 				
 			} else {
 
-				$this->Session->setFlash('There\'s an error updating attendance','success');
+				if ($this->request->is('ajax'))  {
+
+					$save = false;
+				}  else {
+
+						$this->Session->setFlash('There\'s an error updating attendance','success');
+				} 
+
+			
 
 			}
 
 
-			$this->redirect( array(
-                         'controller' => 'attendances', 
-                         'action' => 'index',
-                         'tab' => 'attendance',
-                         'plugin' => 'human_resource'
-				));
+			if ($this->request->is('ajax'))  {
+
+					$attendance = $this->Attendance->read(null,$id);
+
+					$attendance['Attendance']['in'] = date('y/m/d h:i a',strtotime($attendance['Attendance']['in']));
+
+					if (!empty($attendance['Attendance']['out'])) {
+
+						$attendance['Attendance']['out'] = date('y/m/d h:i a',strtotime($attendance['Attendance']['out']));
+
+					}
+					echo json_encode($attendance);
+
+					exit();
+
+				}  else {
+
+					
+				
+				$this->redirect( array(
+	                         'controller' => 'attendances', 
+	                         'action' => 'index',
+	                         'tab' => 'attendance',
+	                         'plugin' => 'human_resource'
+					));
+				} 
+
 
 		}
+
 		$attendance  = array();
 
 		if (!empty($query['attendanceId'])) {

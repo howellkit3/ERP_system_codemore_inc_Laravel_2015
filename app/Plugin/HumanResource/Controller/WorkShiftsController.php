@@ -82,9 +82,12 @@ public function edit($id = null) {
 				if ($this->Workshift->save($this->request->data['WorkShift'])) {
 
 					$this->Workshift->bind(array('WorkShiftBreak'));
+
+					$lastID = $this->request->data['WorkShift']['id'];
 					//save BreakTime
-					$data['WorkShiftBreak'] = $this->Workshift->WorkShiftBreak->saveBreaks($this->request->data,$this->Workshift->id,$auth['id']);
-					
+					$data['WorkShiftBreak'] = $this->Workshift->WorkShiftBreak->saveBreaks($this->request->data,$lastID,$auth['id']);
+
+		
 					$this->Session->setFlash('Saving Workshift information successfully','success');
 		 		  	
 		 		  	$this->redirect( array(
@@ -101,6 +104,7 @@ public function edit($id = null) {
 				
 				}
 		}
+		$breaks = array();
 
 		if (!empty($id)) {
 
@@ -110,8 +114,11 @@ public function edit($id = null) {
 
 			$breaks = Set::classicExtract($this->request->data['WorkShiftBreak'], '{n}.breaktime_id');
 
+			$breaks = !empty($breaks) && is_array($breaks) ? $breaks : array();
+
 			//pr($this->request->data); exit();
 		}
+
 
 
 		$breaktimes = $this->BreakTime->find('all',array(

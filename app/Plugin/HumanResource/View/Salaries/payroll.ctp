@@ -138,6 +138,12 @@
 
                                                           }
 
+                                                          echo $this->Html->link('<span class="fa-stack">
+                                                            <i class="fa fa-square fa-stack-2x"></i>
+                                                            <i class="fa fa-trash fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Delete </font></span>
+                                                            </span> ', array('controller' => 'salaries', 
+                                                              'action' => 'payroll_delete',$payroll['Payroll']['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Information'));
+
                                                         ?>
                                                         </td>
                                                       

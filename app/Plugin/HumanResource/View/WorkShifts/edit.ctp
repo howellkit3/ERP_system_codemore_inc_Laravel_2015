@@ -116,13 +116,13 @@
                                                         <div class="clearfix"></div>
                                                         <div class="selected_breaks" >
                                                             <ul>
-                                                                <?php foreach ($breaktimes as $key => $time) { ?>
+                                                                <?php foreach ($breaktimes as $key => $time) {  ?>
                                                                     <li>
 
                                                                     <div class="radio">
-                                                                        <input type="radio"  id="checkbox-<?php echo $time['BreakTime']['id']?>" value="<?php echo $time['BreakTime']['id']?>" name="data[Workshift][breakids][]" <?php echo (in_array($time['BreakTime']['id'], $breaks)) ? 'checked' : ''; ?>>
+                                                                        <input type="radio"  id="checkbox-<?php echo $time['BreakTime']['id']?>" value="<?php echo $time['BreakTime']['id']?>" name="data[Workshift][breakids][]" <?php echo !empty($time['BreakTime']['id']) && (in_array($time['BreakTime']['id'], $breaks)) ? 'checked' : ''; ?>>
                                                                             <label for="checkbox-<?php echo $time['BreakTime']['id']?>">
-                                                                            <?php echo date('H:i: a',strtotime($time['BreakTime']['from'])); ?>~<?php echo date('H:i: a',strtotime($time['BreakTime']['to'])); ?>
+                                                                            <?php echo $time['BreakTime']['name'].' ( '.date('H:i: a',strtotime($time['BreakTime']['from'])); ?>~<?php echo date('H:i: a',strtotime($time['BreakTime']['to'])) .' )'; ?>
                                                                             </label>
                                                                         </div>
 

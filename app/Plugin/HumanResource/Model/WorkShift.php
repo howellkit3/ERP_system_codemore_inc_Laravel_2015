@@ -59,7 +59,6 @@ class WorkShift extends AppModel {
 			$editWorkshift =  $this->find('first',array('conditions' => array('WorkShift.overtime_id' => $overtimeId )));
 		}
 
-
 		$workshift = array();
 
 		$this->create();

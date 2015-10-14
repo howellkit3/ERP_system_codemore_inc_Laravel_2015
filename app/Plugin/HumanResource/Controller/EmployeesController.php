@@ -127,10 +127,10 @@ class EmployeesController  extends HumanResourceAppController {
 
 		}
 
-			$employeeData = $this->Employee->find('all',array(
-			'conditions' => $conditions,
-			'order' => array('Employee.code DESC')
-			));
+		$employeeData = $this->Employee->find('all',array(
+		'conditions' => $conditions,
+		'order' => array('Employee.code DESC')
+		));
 
 		$this->set(compact('employeeData'));
 		
@@ -1262,7 +1262,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 
 				
-					if (strlen($address) > 40) {
+					if (strlen($address) > 30) {
 						$pdf->SetFont('Arial','',5);	
 					}
 
@@ -1281,11 +1281,12 @@ class EmployeesController  extends HumanResourceAppController {
 
 
 				
-					if (strlen($address) > 40) {
+					if (strlen($address) > 30) {
 						$pdf->SetFont('Arial','',5);	
 					}
 
-					if (strlen($address) > 43) {
+
+					if (strlen($address) > 35) {
 
 
 
@@ -1312,15 +1313,15 @@ class EmployeesController  extends HumanResourceAppController {
 					$addressprovince = stripslashes($addressprovince);
 					//$pdf->Multicell(0,3,$dateHired);
 
-					$pdf->MultiCell( 35, 4, trim(utf8_decode($address)));
+					$pdf->MultiCell( 35, 4, trim(utf8_decode($address)),'',false);
 
 
 					$pdf->SetXY(19.5, 36);
-					$pdf->MultiCell( 40,4, trim(utf8_decode($addresscity)));
+					$pdf->MultiCell( 40,4, trim(utf8_decode($addresscity)),'',false);
 
 
 					$pdf->SetXY(19.5, 40.5);
-					$pdf->MultiCell( 40, 4, trim(utf8_decode($addressprovince)));
+					$pdf->MultiCell( 40, 4, trim(utf8_decode($addressprovince)),'',false);
 
 					}
 
@@ -1339,9 +1340,9 @@ class EmployeesController  extends HumanResourceAppController {
 			}
 
 			// Output the new PDF
-			$pdfData = $pdf->Output($employee['Employee']['code'].'.pdf', 'D');
+			//$pdfData = $pdf->Output($employee['Employee']['code'].'.pdf', 'D');
 
-			//$pdf->Output();
+			$pdf->Output();
 
 
 			//return true;
@@ -1358,6 +1359,39 @@ class EmployeesController  extends HumanResourceAppController {
 
 	}
 
+
+
+	public function searchEmployee() {
+
+		$this->autoRender = false;
+
+		$this->layout = false;
+
+		if ($this->request->is('ajax')) {
+
+			$query = $this->request->query;
+
+			$conditions = array();
+
+			if ($query['departmentId']) {
+					
+				$conditions = array_merge($conditions,array('Employee.department_id' => $query['departmentId'] ));
+			} 
+
+			$employees = $this->Employee->find('list',array(
+				'conditions' => $conditions,
+				'order' => array('Employee.code DESC'),
+				'fields' => array('Employee.id','Employee.full_name')
+			));
+
+			$this->set(compact('employees'));
+
+			$this->render('Employees/ajax/employee_list');
+
+	}
+
+
+	}
 
 	public function saveImage() {
 

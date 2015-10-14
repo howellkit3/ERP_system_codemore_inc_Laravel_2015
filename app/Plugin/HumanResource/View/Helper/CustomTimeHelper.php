@@ -67,7 +67,7 @@ function getDurationSchedule($time1 = null,$time2 = null,$workschedules = null,$
 {	
 
 
-	if (!empty($time1) && $time2 && !empty($workschedulesBreaks['id'])) {
+	if (!empty($time1) && !empty($time2) && !empty($workschedulesBreaks['id'])) {
 
 		//workschedules
 		$timeIn = date('h:i:s',strtotime($time1));
@@ -77,12 +77,15 @@ function getDurationSchedule($time1 = null,$time2 = null,$workschedules = null,$
 			if (strtotime($time1) > strtotime($workschedules['from'])) {
 
 				$timeIn = $time1;
+
 			} else {
 
 				$timeIn = $workschedules['from'];
 			}
 
-			if (strtotime($time2) > strtotime($workschedules['to'])) {
+			$timeOut = date('H:i:s',strtotime($time2));
+
+			if (strtotime($timeOut) > strtotime($workschedules['to'])) {
 
 				$timeOut = $workschedules['to'];
 
@@ -91,6 +94,7 @@ function getDurationSchedule($time1 = null,$time2 = null,$workschedules = null,$
 				$timeOut = $time2;
 			}
 
+		
 		}
 
 		if (!empty($workschedulesBreaks)) {
@@ -103,10 +107,8 @@ function getDurationSchedule($time1 = null,$time2 = null,$workschedules = null,$
 
 			}
 
-
 		}
 
-		
 		$date = date('Y-m-d');
 		$date1 = new DateTime($timeIn);
 		$date2 = new DateTime($timeOut);
