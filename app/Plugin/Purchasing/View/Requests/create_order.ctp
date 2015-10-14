@@ -17,7 +17,6 @@
 			<div class="col-lg-12">
 				<header class="main-box-header clearfix">
 					
-                    
 					<h1 class="pull-left">
 						Create Purchase Order
 					</h1>
