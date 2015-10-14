@@ -159,7 +159,7 @@
 
 
 	 						echo $this->Html->link( " <i class='fa fa-money'></i> <span> Payroll </span>",   array('controller' =>'salaries',
-	 											'action'=>'export',
+	 											'action'=>'payroll',
 	 											'plugin' => 'human_resource'),
 	 											array('escape' => false) );
 	 					}
