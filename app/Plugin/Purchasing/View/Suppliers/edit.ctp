@@ -664,7 +664,7 @@
 
                 foreach ($this->request->data['ContactPersonData'] as $key => $value) {
 
-                foreach ($value['Contact'] as $indexkey => $indexvalue) {
+                foreach ($this->request->data['Contact'] as $indexkey => $indexvalue) {
                   
                   
                     echo $this->Form->input('ContactPersonData.'.$key.'.Contact.'.$indexkey.'.id', array('class' => 'form-control item_type',

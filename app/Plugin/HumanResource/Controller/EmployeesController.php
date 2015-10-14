@@ -127,10 +127,10 @@ class EmployeesController  extends HumanResourceAppController {
 
 		}
 
-			$employeeData = $this->Employee->find('all',array(
-			'conditions' => $conditions,
-			'order' => array('Employee.code DESC')
-			));
+		$employeeData = $this->Employee->find('all',array(
+		'conditions' => $conditions,
+		'order' => array('Employee.code DESC')
+		));
 
 		$this->set(compact('employeeData'));
 		
@@ -1359,6 +1359,39 @@ class EmployeesController  extends HumanResourceAppController {
 
 	}
 
+
+
+	public function searchEmployee() {
+
+		$this->autoRender = false;
+
+		$this->layout = false;
+
+		if ($this->request->is('ajax')) {
+
+			$query = $this->request->query;
+
+			$conditions = array();
+
+			if ($query['departmentId']) {
+					
+				$conditions = array_merge($conditions,array('Employee.department_id' => $query['departmentId'] ));
+			} 
+
+			$employees = $this->Employee->find('list',array(
+				'conditions' => $conditions,
+				'order' => array('Employee.code DESC'),
+				'fields' => array('Employee.id','Employee.full_name')
+			));
+
+			$this->set(compact('employees'));
+
+			$this->render('Employees/ajax/employee_list');
+
+	}
+
+
+	}
 
 	public function saveImage() {
 

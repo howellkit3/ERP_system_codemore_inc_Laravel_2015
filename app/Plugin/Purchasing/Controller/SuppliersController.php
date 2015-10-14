@@ -113,6 +113,8 @@ class SuppliersController extends PurchasingAppController {
 
         	$this->request->data = $this->Supplier->formatData($this->request->data,$user['id']);
 
+
+
         	if ($this->Supplier->saveAssociated($this->request->data)) {
 
         

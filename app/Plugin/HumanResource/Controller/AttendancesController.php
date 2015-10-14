@@ -15,6 +15,10 @@ class AttendancesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Workshift');
 
+		$this->loadModel('HumanResource.WorkshiftBreak');
+
+		$this->loadModel('HumanResource.Breaktime');
+
 		$this->loadModel('HumanResource.Department');
 
 		$this->loadModel('HumanResource.Overtime');
@@ -60,7 +64,9 @@ class AttendancesController  extends HumanResourceAppController {
 
 
 		if (!empty($query['data']['name'])) {
+
 			$search = $query['data']['name'];
+			
 			$conditions = array_merge($conditions,array(
 					'OR' => array(
 					'Employee.first_name LIKE' => '%'.$search.'%',
@@ -69,21 +75,55 @@ class AttendancesController  extends HumanResourceAppController {
 			)));
 		}
 
-		$this->Attendance->bind(array('WorkSchedule','Employee','WorkShift','Overtime'));
+		$this->Attendance->bind(array('Employee','Overtime','MySchedule','MyWorkshift','MyWorkShiftBreak','MyBreakTime'));
 
-
-
+		//$this->Employee->virtualFields['totalItem'] = 'COUNT(`OrderDetail`.`order_id`)';
 		//$conditions = array();
+
 		$params =  array(
 	            'conditions' => $conditions,
 	            'limit' => $limit,
-	            //'fields' => array('id', 'status','created'),
+	            'fields' => array(
+	            	'id',
+	            	'status',
+	            	'created',
+	            	'Employee.first_name',
+	            	'Employee.last_name',
+	            	'Employee.middle_name',
+	            	'Employee.code',
+	            	'Attendance.in',
+	            	'Attendance.out',
+	            	'Attendance.type',
+	            	'Attendance.schedule_id',
+	            	'Attendance.notes',
+	            	'Attendance.date',
+	            	'MySchedule.day',
+	            	'MyWorkshift.from',
+	            	'MyWorkshift.to',
+	            	//'MyWorkshift.overtime_id',
+	            	'MyWorkShiftBreak.breaktime_id',
+	            	// /'MyWorkshift.ovetime_id',
+	            	'MyBreakTime.from',
+	            	'MyBreakTime.to'
+
+	            	),
 	            'order' => 'Attendance.in DESC',
 	    );
 
 		$this->paginate = $params;
 		
 		$attendances = $this->paginate();
+
+
+		if (!empty($_GET['test'])) {
+
+			
+			pr(	$attendances );
+
+			exit();
+
+		}
+		
 		
 		$conditions = array();
 		
@@ -265,23 +305,26 @@ class AttendancesController  extends HumanResourceAppController {
 			//update attendance
 			if (!empty($attendance)) {
 
+				$rawAttendance = $attendance;
+
 				$this->Attendance->save($attendance);
 
 				if ($this->request->is('ajax')) {
 
+
 					if (!empty($attendance['Attendance']['in'])) {
 
-						$attendance['Attendance']['in'] = date('h:i a',strtotime($attendance['Attendance']['in']));
+						$attendance['Attendance']['in'] = date('H:i a',strtotime($attendance['Attendance']['in']));
 					}
 
 					if (!empty($attendance['Attendance']['out'])) {
 
-						$attendance['Attendance']['out'] = date('h:i a',strtotime($attendance['Attendance']['out']));
+						$attendance['Attendance']['out'] = date('H:i a',strtotime($attendance['Attendance']['out']));
 
-						$attendance['Attendance']['duration'] = $this->_getDuration($attendance['Attendance']['in'],$attendance['Attendance']['out']);
+						$attendance['Attendance']['duration'] = $this->_getDuration($rawAttendance['Attendance']['in'],$rawAttendance['Attendance']['out']);
 					
 					}
-					 
+
 					echo json_encode($attendance);
 					exit();
 				}
@@ -375,8 +418,10 @@ private function _getDuration($time1 = null,$time2 = null){
 		if (!empty($time1) && $time2) {
 
 		$date = date('Y-m-d');
-		$date1 = new DateTime($date.' '.$time1);
-		$date2 = new DateTime($date.' '.$time2);
+
+	
+		$date1 = new DateTime($time1);
+		$date2 = new DateTime($time2);
 
 		$interval = $date1->diff($date2);
 
@@ -1018,6 +1063,7 @@ public function daily_info() {
 				));
 
 		}
+
 		$attendance  = array();
 
 		if (!empty($query['attendanceId'])) {

@@ -158,6 +158,8 @@
         <?php echo $this->Form->end(); ?>   
     </div>
 </div>
+
+<?php if(!empty($receiveItem)){ ?>
  
 <div class="col-lg-6">
     <div class="main-box clearfix">
@@ -276,6 +278,8 @@
     </div>
 
 </div>
+
+<?php } ?>
 
 <div class="modal fade" id="myModalInRecord<?php echo $receivedItemData[0]['DeliveredOrder']['id'] ?>" role="dialog" >
                 <div class="modal-dialog">

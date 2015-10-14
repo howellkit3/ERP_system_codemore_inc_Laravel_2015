@@ -141,6 +141,8 @@ $(document).ready(function() {
         }
 
     });
+
+    component_button.trigger( 'click' );
     
     $(part_button).click(function(e){ //on add input button click
         submitCount++;
@@ -262,7 +264,7 @@ $(document).ready(function() {
             });
             
             if (counterData != 0) {
-                process_button.trigger( 'click' );
+               // process_button.trigger( 'click' );
             }
 
             //start//computation for outs,paper quantity and rate
@@ -346,6 +348,8 @@ $(document).ready(function() {
         }
 
     });
+
+    part_button.trigger( 'click' );
 
     $(process_button).click(function(e){ //on add input button click
         e.preventDefault();
@@ -457,8 +461,8 @@ $(document).ready(function() {
        
     });
 
-    component_button.trigger( 'click' ); 
-    part_button.trigger( 'click' );
+    // component_button.trigger( 'click' ); 
+    // part_button.trigger( 'click' );
     process_button.trigger( 'click' );
     
     
@@ -501,7 +505,21 @@ $(document).ready(function() {
       
     });
     //$( "#sortable" ).disableSelection();
-   
+
+    //new code 
+    $('body').on("click",".click-multiple", function(e){ 
+        if ($(this).is(":checked")) {
+            $(this).parents('.input-group').find('.show-multiple').attr('readonly' ,false);
+
+            var name = $(this).parents('.dragField').find('.material').val();
+
+            $(this).parents('.input-group').find('.show-multiple').val(name);
+        }else{
+            $(this).parents('.input-group').find('.show-multiple').attr('readonly' ,true);
+
+            $(this).parents('.input-group').find('.show-multiple').val('');
+        }
+    });
 
 });
 

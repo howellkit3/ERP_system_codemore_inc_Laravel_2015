@@ -88,9 +88,9 @@ for ($x = 0; $x <= 1; $x++) { ?>
 			<table class="" style ="line-height: 13px; width:750px; padding:1px; border:1px solid black;">
 					<tr>
 						<td style="width:110px;" >Telephone</td>
-						<td style="width:200px;" class="border-bot">:<?php echo $purchaseOrderData['Contact']['number']; ?></td>
+						<td style="width:160px;" class="border-bot">:<?php echo !empty($telContactData['Contact']['number']) ? $telContactData['Contact']['number'] : " "; ?></td>
 						
-						<td align = "right" style="width:80px;"> 
+						<td align = "right" style="width:120px; "> <?php echo  !empty($faxContactData['Contact']['number']) ? "Fax # :  " .  $faxContactData['Contact']['number'] : " "; ?> </td>
 						<td  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delivery Date:
 						</td>
@@ -105,7 +105,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 				<thead>
 					<tr>
 						<td class="td-heigth" align = "center" style=" vertical-align:center; line-height:13px; center;width:2%;border:1px solid black; font-size:15px;"><b>No</b></td>
-						<td class="td-heigth" style="line-height:15px;  verticalline-height:10px; -align: center;  border:1px solid black;"><center><b>Item Description</b></center></td>
+						<td class="td-heigth" style="line-height:15px;  verticalline-height:10px; -align: center;  border:1px solid black;"><center><b>Item Description </b></center></td>
 						<td class="td-heigth" style="line-height:15px;  verticalline-height:10px; -align: center;  border:1px solid black;"><center><b>Quantity</b></center></td>
 						<td class="td-heigth" style="line-height:15px;  verticalline-height:10px; -align: center;  border:1px solid black;"><center><b>Unit Price</b></center></td>
 						<td class="td-heigth" style="line-height:15px;  verticalline-height:10px; -align: center;  border:1px solid black;"><center><b>Amount</b></center></td>
@@ -297,9 +297,9 @@ for ($x = 0; $x <= 1; $x++) { ?>
 			<table class="" style ="line-height: 13px; width:750px; padding:1px; border:1px solid black;">
 					<tr>
 						<td style="width:110px;" >Telephone</td>
-						<td style="width:200px;" class="border-bot">:<?php echo $purchaseOrderData['Contact']['number']; ?></td>
+						<td style="width:120px;" class="border-bot">:<?php echo !empty($telContactData['Contact']['number']) ? $telContactData['Contact']['number'] : " "; ?></td>
 						
-						<td align = "right" style="width:80px;"> 
+						<td align = "right" style="width:160px; "> <?php echo  !empty($faxContactData['Contact']['number']) ? "Fax # :  " .  $faxContactData['Contact']['number'] : " "; ?> </td>
 						<td  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delivery Date:
 						</td>
@@ -507,9 +507,10 @@ for ($x = 0; $x <= 1; $x++) { ?>
 			<table class="" style ="line-height: 13px; width:750px; padding:1px; border:1px solid black;">
 					<tr>
 						<td style="width:110px;" >Telephone</td>
-						<td style="width:200px;" class="border-bot">:<?php echo $purchaseOrderData['Contact']['number']; ?></td>
+						<td style="width:120px;" class="border-bot">:<?php echo !empty($telContactData['Contact']['number']) ? $telContactData['Contact']['number'] : " "; ?></td>
 						
-						<td align = "right" style="width:80px;"> 
+						
+						<td align = "right" style="width:160px; "> <?php echo  !empty($faxContactData['Contact']['number']) ? "Fax # :  " .  $faxContactData['Contact']['number'] : " "; ?> </td>
 						<td  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delivery Date:
 						</td>
@@ -540,6 +541,8 @@ for ($x = 0; $x <= 1; $x++) { ?>
 	                    $itemdescription .= !empty($value[$modelTable]['size2']) ? " " .  "x" . " " . $value[$modelTable]['size2'] . " " . $unitData[$value[$modelTable]['size2_unit_id']] : " ";
 
 	                    $itemdescription .= !empty($value[$modelTable]['size3']) ? " " . "x" . " " .$value[$modelTable]['size3'] . " " . $unitData[$value[$modelTable]['size3_unit_id']] : " ";
+
+
                    		?>
 						<tr>
 							<td align="center" style="width:2%; border:1px solid black; "><?php echo $key ?></td>

@@ -79,6 +79,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 											<th><a href="#"><span>In</span></a></th>
 											<th><a href="#"><span>Out</span></a></th>
 											<th><a href="#"><span>OT</span></a></th>
+											<th><a href="#"><span>Time Work</span></a></th>
 											<th><a href="#"><span>Duration</span></a></th>
 											<th><a href="#" class="text-center"><span>Status</span></a></th>
 											<th><a href="#"><span>Remarks</span></a></th>
@@ -94,15 +95,10 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 													<tr class="parent-tr-<?php echo $schedule['Attendance']['id'] ?>">
 														<td> <?php echo $schedule['Employee']['code']; ?></td>
 														<td class="">
-								                          <?php 
-									                        //  if ($schedule['WorkSchedule']['model'] == 'Employee') {
+								                          <?php $name =  $this->CustomText->getFullname($schedule['Employee']);
 
-									                          		echo $this->CustomText->getFullname($schedule['Employee']);
+								                          	echo !empty($name) ? $name : '';
 
-									                        //  } else if ($schedule['WorkSchedule']['model'] == 'Department') {
-
-									                          	//	echo "Department";
-									                        //  }
 									                        ?>
 								                        </td>
 								                        <td class="text-center"> 
@@ -119,11 +115,11 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 								                        </td> -->
 
 								                        <td>
-								                        <?php if (!empty($schedule['WorkShift']['to'])) : ?>
+								                        <?php if (!empty($schedule['MyWorkshift']['to'])) : ?>
 
-								                          <?php echo date('Y/m/d',strtotime($schedule['Attendance']['date'])).' '.date('h:i a',strtotime($schedule['WorkShift']['from'])); ?> 
+								                          <?php echo date('h:i a',strtotime($schedule['MyWorkshift']['from'])); ?> 
 								                          - 
-								                          <?php echo date('Y/m/d',strtotime($schedule['Attendance']['date'])).' '.date('h:i a',strtotime($schedule['WorkShift']['to'])); ?> 
+								                          <?php echo date('h:i a',strtotime($schedule['MyWorkshift']['to'])); ?> 
 								                    	<?php else : ?>
 								                    		<span class="label label-default"> No Sched </span>
 								                        <?php endif; ?>
@@ -166,6 +162,10 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 								                           		}
 								                           	?> 
 								                        </td> 
+								                         <td class="text-center duration" > 
+								                           <?php 
+								                           echo $this->CustomTime->getDurationSchedule($schedule['Attendance']['in'],$schedule['Attendance']['out'],$schedule['MyWorkshift'],$schedule['MyBreakTime']); ?> 
+								                        </td>
 								                         <td class="text-center duration" > 
 								                           <?php echo $this->CustomTime->getDuration($timeIn,$timeOut); ?> 
 								                        </td>

@@ -49,7 +49,7 @@ class ReceivedOrder extends AppModel {
 			$data['supplier_id'] = $data['ReceiveReceipt']['supplier_id'];
 			$data['address'] = $data['ReceiveReceipt']['address'];
 			$data['purchase_order_uuid'] = $data['ReceiveReceipt']['po_number'];
-
+			$data['status_id'] = 14;
 		}
 
 		//pr($data); exit;

@@ -8,6 +8,7 @@
                 </a>
             <?php } ?>
         </header>
+        
         <div class="form-group">
             <label class="col-lg-2 control-label"><span style="color:red">*</span>Material</label>
             <div class="col-lg-6 materialName<?php echo $varCounter ;?>" >
@@ -17,6 +18,16 @@
                 <button type="button" data-toggle="modal" href="#myModal<?php echo $varCounter ;?>" class="modalMaterial btn btn-primary edit-button<?php echo $varCounter ;?>">
                 <i class="fa fa-plus-circle fa-lg"></i> Select Material</button>
             </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-2 control-label"><span style="color:red">*</span>Name</label>
+            <div class=" col-lg-6 input-group materialName<?php echo $varCounter ;?>" style="padding-left:8px;">
+                <span class="input-group-addon">
+                    <input type="checkbox" class="click-multiple">
+                </span>
+                <input type="text" placeholder="Click checkbox for multiple part" name="data[ProductSpecificationPart][<?php echo $counterData ;?>][name]" class="show-multiple form-control part_multiple<?php echo $varCounter ;?>" readonly="readonly">
+            </div>
+            
         </div>
         <section class="allFieldPart<?php echo $varCounter ;?>" style="display:none;">
             <div class="form-group">

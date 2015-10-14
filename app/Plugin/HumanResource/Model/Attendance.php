@@ -9,8 +9,17 @@ class Attendance extends AppModel {
     public $name = 'Attendance';
 
     public $actsAs = array('Containable');
+
+    	public $virtualFields = array(
+			'concat_date' => 'CONCAT_WS(" ", DATE_FORMAT( Attendance.date ,"%Y-%m-%d"))'
+		);
     
      public function bind($model = array('Group')){
+
+ //     	public $virtualFields = array(
+	// 	'date_' => 'CONCAT_WS(" ",Employee.last_name , Employee.middle_name , Employee.first_name  )',
+	// );
+
 
 		$this->bindModel(array(
 				'belongsTo' => array (
@@ -20,6 +29,7 @@ class Attendance extends AppModel {
 						'conditions' => array('WorkSchedule.id = Attendance.schedule_id'),
 						'dependent' => true,
 					),
+					
 					'WorkShift' => array(
 						'className' => 'WorkShift',
 						'foreignKey' => false,
@@ -32,11 +42,39 @@ class Attendance extends AppModel {
 						'conditions' => array('Employee.id = Attendance.employee_id'),
 						'dependent' => true,
 					),
+					
 					'Overtime' => array(
 						'className' => 'Overtime',
 						'foreignKey' => false,
 						'conditions' => array('Overtime.id = Attendance.overtime_id')
-					)
+					),
+					'MySchedule' => array(
+						'className' => 'WorkSchedule',
+						'foreignKey' => false,
+						'conditions' => array(
+							'MySchedule.model' => 'Employee',
+							'MySchedule.foreign_key = Attendance.employee_id',
+							'MySchedule.day BETWEEN DATE_FORMAT( Attendance.date ,"%Y-%m-%d") and DATE_FORMAT( Attendance.date ,"%Y-%m-%d")'
+							),
+					),
+					'MyWorkshift' => array(
+						'className' => 'WorkShift',
+						'foreignKey' => false,
+						'dependent' => false,
+						'conditions' => array('MyWorkshift.id = MySchedule.work_shift_id')
+					),
+					'MyWorkShiftBreak' => array(
+						'className' => 'WorkShiftBreak',
+						'foreignKey' => false,
+						'dependent' => false,
+						'conditions' => array('MyWorkShiftBreak.workshift_id = MySchedule.work_shift_id')
+					),
+					 'MyBreakTime' => array(
+						'className' => 'BreakTime',
+						'foreignKey' => false,
+						'dependent' => false,
+						'conditions' => array('MyBreakTime.id = MyWorkShiftBreak.breaktime_id')
+					),
 					// 'WorkShiftBreak' => array(
 					// 	'className' => 'WorkShiftBreak',
 					// 	'foreignKey' => false,
@@ -50,8 +88,7 @@ class Attendance extends AppModel {
 					// 	'conditions' => array('BreakTime.id = WorkShiftBreak.breaktime_id')
 					// ),
 					
-				)
-			),false);
+				),			),false);
 
 		$this->contain($model);
 	}
@@ -366,13 +403,13 @@ class Attendance extends AppModel {
 
 		if ($data['Attendance']['type'] == 'in') {
 
-			$data['Attendance']['in'] = date('Y-m-d h:i:s',strtotime($data['Attendance']['time'])); 
+			$data['Attendance']['in'] = date('Y-m-d H:i:s',strtotime($data['Attendance']['time'])); 
 		
 		}
 
 		if ($data['Attendance']['type'] == 'out') {
 
-			$data['Attendance']['out'] = date('Y-m-d h:i:s',strtotime($data['Attendance']['time'])); 
+			$data['Attendance']['out'] = date('Y-m-d H:i:s',strtotime($data['Attendance']['time'])); 
 		
 		}
 
@@ -383,6 +420,7 @@ class Attendance extends AppModel {
 		} else {
 			$data['Attendance']['type'] = 'work';
 		}
+
 
 		$attendance = $this->save($data);
 
