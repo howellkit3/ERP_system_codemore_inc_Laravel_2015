@@ -1574,15 +1574,24 @@ class SalariesController  extends HumanResourceAppController {
 
 	public function payroll_create() {
 
+
+		$this->loadModel('HumanResource.Department');
+
 		$this->loadModel('Payroll.Payroll');
 
-		$date = date('Y-m-d');		
 
-		$this->set(compact('date'));	
+		$date = date('Y-m-d');	
+
+
+		$departments = $this->Department->find('list',array('fields' => array('id','notes')));
+
+		$this->set(compact('date','departments'));	
 
 		$auth = $this->Session->read('Auth.User');
 
 		if ($this->request->is('post')) {
+
+
 
 			$data = $this->Payroll->createPayroll($this->request->data,$auth);
 
@@ -1593,8 +1602,10 @@ class SalariesController  extends HumanResourceAppController {
 				//make data save in file
                 $this->Session->setFlash(__('Saving data completed.'),'success');
 
+                $departmentId = $this->request->data['Payroll']['department'];
+
                 $this->redirect(
-                    array('controller' => 'salaries', 'action' => 'employee_select',$this->Payroll->id)
+                    array('controller' => 'salaries', 'action' => 'employee_select',$this->Payroll->id, $departmentId )
                 );
 
             } else {
@@ -1603,6 +1614,31 @@ class SalariesController  extends HumanResourceAppController {
             }
 
 		}	
+	}
+
+
+	public function payroll_delete($id) {
+
+	
+		if (!empty($id)) {
+
+			$this->loadModel('Payroll.Payroll');
+
+			if ($this->Payroll->delete($id)) {
+
+				$this->Session->setFlash(__('Payroll data delete successfully.'),'success');
+
+			} else {
+
+				  $this->Session->setFlash(__('There\'s an error deleting data, Please try again'),'error');
+			}
+
+		    $this->redirect(
+                array('controller' => 'salaries', 'action' => 'payroll')
+            );
+
+		}
+
 	}
 
 	public function process_payroll_save() {
@@ -1617,7 +1653,7 @@ class SalariesController  extends HumanResourceAppController {
 		}
 	}
 
-	public function employee_select($id = null) {
+	public function employee_select($id = null,$departmentId = null) {
 
 		$this->loadModel('Payroll.Payroll');
 
@@ -1628,6 +1664,13 @@ class SalariesController  extends HumanResourceAppController {
 			$payroll = $this->Payroll->findById($id);
 
 			$conditions = array();
+
+			if (!empty($departmentId)) {
+
+				$conditions = array_merge($conditions,array(
+						'Employee.department_id' => $departmentId
+				));
+			}
 
 			$employees = $this->Employee->find('all',array(
 				'conditions' => $conditions,
@@ -1715,6 +1758,7 @@ class SalariesController  extends HumanResourceAppController {
 				$data =  file_get_contents("salaries/files/payroll-".$id.".txt");
 
 				$salaries = $this->Payroll->objectToArray(json_decode($data)); 
+
 			}
 			
 			$deductions = $this->Loan->find('list',array('fields' => array('id','name')));
@@ -1938,10 +1982,13 @@ class SalariesController  extends HumanResourceAppController {
 					foreach ($employees as $key => $emp) {
 							
 							$conditions =  array_merge($conditions,array('Attendance.employee_id' => $emp['Employee']['id']));
-							$this->Attendance->bindWorkshift(); 
+							$this->Attendance->bindMyWorkshift(); 
 							$employees[$key]['Attendance'] = $this->Attendance->computeAttendance($conditions);
 							
 					}
+
+
+
 
 					//$this->Components->load('HumanResource.SalaryComputation');
 					$this->loadModel('HumanResource.SalaryReport');
@@ -1966,7 +2013,7 @@ class SalariesController  extends HumanResourceAppController {
 
 					$payrollSettings = $this->Setting->find('first');
 
-					$salaries = $this->SalaryComputation->calculateBenifits($employees,$payScheds,$customDate,$updateDatabase,$payrollSettings);
+				//	$salaries = $this->SalaryComputation->calculateBenifits($employees,$payScheds,$customDate,$updateDatabase,$payrollSettings);
 
 			}
 			else {
@@ -2021,13 +2068,14 @@ class SalariesController  extends HumanResourceAppController {
 			if ($payroll['Payroll']['type'] == '13_month') {
 
 				$data = file_get_contents("salaries/files/payroll-thirteen-month-".$payroll_id.".txt");
-			} else {
 
+			} else {
 
 				$data = file_get_contents("salaries/files/payroll-".$payroll_id.".txt");
 			}
 
 			$salaries = $this->Payroll->objectToArray(json_decode($data)); 
+
 
 			$this->Employee->bindPrimary();
 
@@ -2086,18 +2134,23 @@ class SalariesController  extends HumanResourceAppController {
 
 				$view->set(compact('salaries','payroll','payrollDate','deductions'));
 
-				$view->viewPath = 'Salaries'.DS.'pdf';	
-
-				$view->viewPath = 'Salaries'.DS.'pdf';	
+				$view->viewPath = 'Salaries'.DS.'pdf';
 		   	
 		        $output = $view->render('payslip', false);
 
+
 		        $dompdf = new DOMPDF();
+
 		        $dompdf->set_paper("A5", 'portrait');
+		        
 		        $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));
+		        
 		        $dompdf->render();
+		        
 		        $canvas = $dompdf->get_canvas();
+		        
 		        $font = Font_Metrics::get_font("helvetica", "bold");
+		        
 		        $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
 
 		        $output = $dompdf->output();
@@ -2106,6 +2159,7 @@ class SalariesController  extends HumanResourceAppController {
 		        if (empty($filename)) {
 		        	$filename = 'payslip-record'.time();
 		        }
+
 		      	$filePath = $filename.'.pdf';
 
 		        $file_to_save = WWW_ROOT .DS. $filePath;
@@ -2116,9 +2170,10 @@ class SalariesController  extends HumanResourceAppController {
 		        }
 
 				$dompdf->render();
-				 if ($dompdf->stream('payslip-'.$payroll['Payroll']['id'].'-'.str_replace(' ','-',strtolower($payrollDate)).'-'.time().'.pdf')){
 
-				 	unlink($file_to_save);
+				if ($dompdf->stream('payslip-'.$payroll['Payroll']['id'].'-'.str_replace(' ','-',strtolower($payrollDate)).'-'.time().'.pdf')){
+
+				 //	unlink($file_to_save);
 				}
 
 				exit();
