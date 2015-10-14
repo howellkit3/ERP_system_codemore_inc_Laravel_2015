@@ -73,12 +73,16 @@ class SalaryComputationComponent extends Component
 
         				if ($employee['Salary']['employee_salary_type'] == 'daily') {
 
-							$salary[$key] = $this->_dailyRate($employee,$models);
+							//$salary[$key] = $this->_dailyRate($employee,$models);
 						}
 						if ($employee['Salary']['employee_salary_type'] == 'monthly') {
 
 							$salary[$key] = $this->_monthlyRate($employee,$models,8,$workingDays,$payrollSettings);
+						} else {
+
+							$salary[$key] = $this->_dailyRate($employee,$models);
 						}
+
 
 
         				$salary[$key]['id'] = !empty($checkExisting['SalaryReport']['id']) ? $checkExisting['SalaryReport']['id'] : '';
@@ -128,6 +132,8 @@ class SalaryComputationComponent extends Component
 
 						// //additional income 
 						// $salary[$key]['total_pay'] = $gross['gross']; 
+
+					
 
 						$total_pay = 
 						$net_pay_no_tax = $salary[$key]['gross'];
@@ -260,17 +266,18 @@ class SalaryComputationComponent extends Component
 
     	$days['total_hours'] = 0.00;
 
-		$workshiftFrom = date('Y-m-d',strtotime($data['Attendance']['in'])).' '.$data['WorkShift']['from'];
+		$workshiftFrom = date('Y-m-d',strtotime($data['Attendance']['in'])).' '.$data['MyWorkshift']['from'];
 
-		if (strtotime($data['Attendance']['in']) >= strtotime($workshiftFrom) ) {
+
+		//if (strtotime($data['Attendance']['in']) >= strtotime($workshiftFrom) ) {
 						
 			$from = new DateTime($data['Attendance']['in']);
 
 			$to = new DateTime($data['Attendance']['out']);
 
-			if ($data['Attendance']['out'] > $data['WorkShift']['to']) {
+			if ($data['Attendance']['out'] > $data['MyWorkshift']['to']) {
 				
-				$to = new DateTime( $data['WorkShift']['to'] );
+				$to = new DateTime( $data['MyWorkshift']['to'] );
 			}
 						
 			$days['total_hours'] =  $from->diff($to)->format('%h.%i'); 
@@ -279,13 +286,11 @@ class SalaryComputationComponent extends Component
 
 			if (!empty($data['BreakTime']['id'])) {
 
-				if (strtotime($data['Attendance']['out']) >= strtotime($data['BreakTime']['from']) && strtotime($data['Attendance']['out']) >= strtotime($data['BreakTime']['to'])) {
+				if (strtotime($data['Attendance']['out']) >= strtotime($data['MyBreakTime']['from']) && strtotime($data['Attendance']['out']) >= strtotime($data['MyBreakTime']['to'])) {
 			
 					$days['total_hours'] -= 1;
 				}
 			}
-
-		}
 
     	return $days['total_hours'];
     }
@@ -580,8 +585,9 @@ class SalaryComputationComponent extends Component
 					$countDays++;
 
 				}
-    		
-    		//check if days is not holiday or sundays
+
+
+    			//check if days is not holiday or sundays
 				if (!in_array($today, $daysGet) && date("w",strtotime($today)) != 0) {
 
 					$data['hours_regular'] += $this->_total_hours($days);

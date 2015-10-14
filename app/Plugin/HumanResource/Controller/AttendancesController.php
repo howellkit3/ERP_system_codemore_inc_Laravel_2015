@@ -296,6 +296,8 @@ class AttendancesController  extends HumanResourceAppController {
                          'plugin' => 'human_resource'
 				));
 			} */
+
+
 		
 			if ($this->Timekeep->saveTime($data,null,$auth['id'])) {
 

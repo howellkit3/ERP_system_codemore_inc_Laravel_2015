@@ -134,6 +134,57 @@ class Attendance extends AppModel {
 		$this->recursive = 1;
 	}
 
+	public function bindMyWorkshift() {
+
+
+		$this->bindModel(array(
+				'belongsTo' => array (
+						
+					// 'Overtime' => array(
+					// 	'className' => 'Overtime',
+					// 	'foreignKey' => false,
+					// 	'conditions' => array('Overtime.id = Attendance.overtime_id')
+					// ),
+					'MySchedule' => array(
+						'className' => 'WorkSchedule',
+						'foreignKey' => false,
+						'conditions' => array(
+							'MySchedule.model' => 'Employee',
+							'MySchedule.foreign_key = Attendance.employee_id',
+							'MySchedule.day BETWEEN DATE_FORMAT( Attendance.date ,"%Y-%m-%d") and DATE_FORMAT( Attendance.date ,"%Y-%m-%d")'
+							),
+					),
+					'MyWorkshift' => array(
+						'className' => 'WorkShift',
+						'foreignKey' => false,
+						'dependent' => false,
+						'conditions' => array('MyWorkshift.id = MySchedule.work_shift_id')
+					),
+					'MyWorkShiftBreak' => array(
+						'className' => 'WorkShiftBreak',
+						'foreignKey' => false,
+						'dependent' => false,
+						'conditions' => array('MyWorkShiftBreak.workshift_id = MySchedule.work_shift_id')
+					),
+					 'MyBreakTime' => array(
+						'className' => 'BreakTime',
+						'foreignKey' => false,
+						'dependent' => false,
+						'conditions' => array('MyBreakTime.id = MyWorkShiftBreak.breaktime_id')
+					),
+				),
+				'hasOne' => array(
+
+					'OvertimeExcess' => array(
+						'className' => 'OvertimeExcess',
+						'foreignKey' => 'attendance_id',
+						'dependent' => false,
+					),
+				)
+		));
+		$this->recursive = 1;
+
+	}
 
 
 	public function saveRecord($data = null,$sched_id = null,$holidays = array()) {
@@ -312,20 +363,22 @@ class Attendance extends AppModel {
 
 		if (!empty($conditions)) {
 			
+			$this->bindMyWorkshift();
+
 			$attendances = $this->find('all',array('conditions' => $conditions));
 
 			foreach ($attendances as $key => $attendance) {
 
 				// if (strtotime($attendance['Attendance']['in']) >= strtotime($attendance['WorkShift']['from']) && strtotime($attendance['Attendance']['out']) <= strtotime($attendance['WorkShift']['to'])) {
-				if (strtotime($attendance['Attendance']['in']) >= strtotime($attendance['WorkShift']['from']) && strtotime($attendance['Attendance']['out']) <= strtotime($attendance['WorkShift']['to'])) {
+				if (strtotime($attendance['Attendance']['in']) >= strtotime($attendance['MyWorkshift']['from']) && strtotime($attendance['Attendance']['out']) <= strtotime($attendance['MyWorkshift']['to'])) {
 						
 						$from = new DateTime($attendance['Attendance']['in']);
 						$to = new DateTime($attendance['Attendance']['out']);
 						
 						$attendances[$key]['total_hours'] =  $from->diff($to)->format('%h.%i'); 
 
-						if (!empty($attendance['BreakTime']['id'])) {
-							if (strtotime($attendance['Attendance']['out']) >= strtotime($attendance['BreakTime']['from']) && strtotime($attendance['Attendance']['out']) >= strtotime($attendance['BreakTime']['to'])) {
+						if (!empty($attendance['MyBreakTime']['id'])) {
+							if (strtotime($attendance['Attendance']['out']) >= strtotime($attendance['MyBreakTime']['from']) && strtotime($attendance['Attendance']['out']) >= strtotime($attendance['MyBreakTime']['to'])) {
 						
 								$attendances[$key]['total_hours'] -= 1;
 							}
@@ -386,6 +439,7 @@ class Attendance extends AppModel {
 
 		$dateNow = date('Y-m-d');
 
+
 		foreach ($holidayList as $key => $holiday) {
 			
 			if ($dateNow >= $holiday['Holiday']['start_date'] && $dateNow <= $holiday['Holiday']['end_date'] ) {
@@ -400,14 +454,20 @@ class Attendance extends AppModel {
 
 		$data['Attendance']['date'] = date('Y-m-d').' 00:00:00';
 
+		if (!empty($data['Attendance']['time_in'])) {
+			$data['Attendance']['in'] = date('Y-m-d H:i:s',strtotime($data['Attendance']['time_in'])); 
+		}
 
-		if ($data['Attendance']['type'] == 'in') {
+		else if (!empty($data['Attendance']['time']) && $data['Attendance']['type'] == 'in') {
 
 			$data['Attendance']['in'] = date('Y-m-d H:i:s',strtotime($data['Attendance']['time'])); 
 		
 		}
+		if (!empty($data['Attendance']['time_out'])) {
+			$data['Attendance']['out'] = date('Y-m-d H:i:s',strtotime($data['Attendance']['time_out'])); 
+		}
 
-		if ($data['Attendance']['type'] == 'out') {
+		else if (!empty($data['Attendance']['time']) && $data['Attendance']['type'] == 'out') {
 
 			$data['Attendance']['out'] = date('Y-m-d H:i:s',strtotime($data['Attendance']['time'])); 
 		
