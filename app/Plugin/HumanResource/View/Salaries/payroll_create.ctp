@@ -57,6 +57,24 @@
                                              </div>
                                         </div>
                                     </div> 
+
+                                    <div class="form-group">
+                                       <div class="col-lg-11">
+                                            <div class="form-group">
+                                                <label for="inputEmail1" class="col-lg-3 control-label"><span style="color:red">*</span> Departments </label>
+                                                <div class="col-lg-9">
+                                                  <?php 
+                                                        echo $this->Form->input('department', array(
+                                                        'options' => $departments,
+                                                        'class' => 'form-control col-lg-6 required',
+                                                        'empty' => '-- All --',
+                                                        'label' => false));
+                                                    ?>
+                                                </div>
+                                             </div>
+                                        </div>
+                                    </div> 
+
                                     <div class="payroll_type normal">
 
                                      <div class="form-group">

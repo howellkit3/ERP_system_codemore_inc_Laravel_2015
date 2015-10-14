@@ -150,6 +150,11 @@ echo $this->element('payroll_options');
 		            					<tr>
 		            						<td> Description : </td>
 		            						<td> <?php echo $payroll['Payroll']['description'] ?></td>
+		            					</tr>
+
+		            					<tr>
+		            						<td> Total Employee : </td>
+		            						<td> <?php echo count($salaries); ?></td>
 		            					</tr>	
 		            					</tbody>
 		            					
@@ -191,15 +196,12 @@ echo $this->element('payroll_options');
 														           <?php foreach ($salariesList as $key => $salary): ?>
 																			<tr>
 																			<td> 
-																			<?php 
-
-																			echo !empty( $salary['Employee'] ) ?  $salary['Employee']['code'] : ''; ?>   
+																			<?php echo !empty( $salary['Employee'] ) ?  $salary['Employee']['code'] : ''; ?>   
 																			</td>
 																				<td class="">
 														                          <?php echo $this->CustomText->getFullname($salary['Employee']);  ?>
 														                        </td>
-
-														                         <td class="">
+																				<td class="">
 														                          <?php echo date('Y/m/d')  ?>
 														                        </td>
 														                          <td class="">
@@ -210,7 +212,7 @@ echo $this->element('payroll_options');
 														                        </td>
 
 														                        <td class="">
-														                           <?php echo number_format($salary['gross'],2); ?>
+														                           <?php echo !empty($salary['gross']) ? number_format($salary['gross'],2) : '0.00'; ?>
 														                        </td>
 														                        <td class="">
 														                       

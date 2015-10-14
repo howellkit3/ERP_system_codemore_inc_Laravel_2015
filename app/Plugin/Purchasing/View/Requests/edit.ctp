@@ -101,9 +101,7 @@
 									<input type="hidden" value="1" name="getCounter" class="get-counter" />
 								</header>
 
-								<div class="main-box-body clearfix">
-
-									
+								<div class="main-box-body clearfix ">
 
 									<?php foreach ($requestRequestItem as $key => $value) { ?>
 
@@ -120,7 +118,7 @@
 											<div class="main-box-body clearfix">
 												<div class="form-horizontal">
 
-													<div class="form-group" >
+													<div class="form-group">
 														<label class="col-lg-2 control-label"><span style="color:red">*</span>Item</label>
 														<div class="col-lg-5">
 
@@ -180,12 +178,12 @@
 														
 														<div class="col-lg-6">
 															<?php 
-																echo $this->Form->input('RequestItem.0.category', array(
+																echo $this->Form->input('RequestItem.'.$key.'.category', array(
 											                        'options' => array('Rolls', 'Other Items'),  
 											                        'label' => false,
 											                        'class' => 'form-control category',
 											                        'empty' => '---Select Category---',
-											                        'value' => ($value['RequestItem']['category'] == 0) ? 0 : $value['RequestItem']['category']
+											                        'value' =>  $value['RequestItem']['category']
 											                         )); 
 											                ?>
 
@@ -510,19 +508,23 @@
 	jQuery(document).ready(function($){
 
 		var thisMe = $(this);
-        var category = $('.form-horizontal').find('.category').val();
+        
+        $('.form-horizontal').find('.category').each(function(){
 
-        if(category == 0){
+           var category = $(this).val();
 
-        	$('.form-horizontal').find('.other-items').hide();
+            if(category == 0){
 
-        }else{
+	        	$(this).parents('.form-horizontal').find('.other-items').hide();
 
-        	$('.form-horizontal').find('.rolls').hide();
+	        }else{
 
-        }
+	        	$(this).parents('.form-horizontal').find('.rolls').hide();
 
+	        }
 
+        });
+	  
 		$(".hide-remove").hide();
 
 		$("#QuotationCreateForm").validate();
@@ -612,7 +614,7 @@
         
     });
 
-	 </script>
+	</script>
 
 
 		
