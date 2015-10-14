@@ -1044,23 +1044,58 @@ public function daily_info() {
 
 
 			if ($this->Attendance->save($data)) {
-				//rediect  
-				$this->Session->setFlash('Time Sucessfully updated','success');
+
+				if ($this->request->is('ajax'))  {
+
+					$save = true;
+				}  else {
+
+					$this->Session->setFlash('Time Sucessfully updated','success');
+				} 
 
 				
 			} else {
 
-				$this->Session->setFlash('There\'s an error updating attendance','success');
+				if ($this->request->is('ajax'))  {
+
+					$save = false;
+				}  else {
+
+						$this->Session->setFlash('There\'s an error updating attendance','success');
+				} 
+
+			
 
 			}
 
 
-			$this->redirect( array(
-                         'controller' => 'attendances', 
-                         'action' => 'index',
-                         'tab' => 'attendance',
-                         'plugin' => 'human_resource'
-				));
+			if ($this->request->is('ajax'))  {
+
+					$attendance = $this->Attendance->read(null,$id);
+
+					$attendance['Attendance']['in'] = date('y/m/d h:i a',strtotime($attendance['Attendance']['in']));
+
+					if (!empty($attendance['Attendance']['out'])) {
+
+						$attendance['Attendance']['out'] = date('y/m/d h:i a',strtotime($attendance['Attendance']['out']));
+
+					}
+					echo json_encode($attendance);
+
+					exit();
+
+				}  else {
+
+					
+				
+				$this->redirect( array(
+	                         'controller' => 'attendances', 
+	                         'action' => 'index',
+	                         'tab' => 'attendance',
+	                         'plugin' => 'human_resource'
+					));
+				} 
+
 
 		}
 
