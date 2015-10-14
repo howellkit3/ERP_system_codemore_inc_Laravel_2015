@@ -1645,11 +1645,37 @@ class SalariesController  extends HumanResourceAppController {
 		
 		if (!empty($this->request->data)) {
 
+			$this->loadModel('Payroll.Payroll');
+
 			$data = $this->request->data;
 			
-			if( $this->process_payroll($data['Payroll']['payroll_id'],$data['Payroll']['emp'])) {
+			/* if( $this->process_payroll($data['Payroll']['payroll_id'],$data['Payroll']['emp'])) {
 
-			}
+			} */
+
+			$payrollData = array();
+
+
+			$payroll = $this->Payroll->findById($data['Payroll']['payroll_id']);
+
+
+			$payrollData['Payroll']['id'] = $data['Payroll']['payroll_id'];
+
+			$payrollData['Payroll']['employeeIds'] = json_encode($data['Payroll']['emp']);
+
+			$payrollData['Payroll']['status'] = 2;
+
+			$this->Payroll->save($payrollData);
+			//exit();
+
+			$salariesList = $this->_checkPayroll($payroll,false,$data['Payroll']['emp']);
+
+			$this->set(compact('payroll','salariesList'));
+
+			$this->render('Salaries/payroll_view');
+	
+
+			//	private function _checkPayroll($payroll = null , $update = false , $empConditions = array() ){
 		}
 	}
 
@@ -1775,13 +1801,23 @@ class SalariesController  extends HumanResourceAppController {
 			}
 
 			} else {
-				
+
+				$empIds = array();
+
+				if (!empty($payroll['Payroll']['employeeIds'])) {
+
+					$empIds = (array)json_decode($payroll['Payroll']['employeeIds']);
+
+				}	
+
+		
 				switch ($payroll['Payroll']['type']) {
 					case 'normal':
-						$salariesList = $this->_checkPayroll($payroll);
-					break;
+
+						$salariesList = $this->_checkPayroll($payroll,false,$empIds);
+
 					case '13_month':
-						$salariesList = $this->_checkThirteenPayroll($payroll);
+						$salariesList = $this->_checkThirteenPayroll($payroll,false,$empIds);
 
 					break;
 										
@@ -1796,7 +1832,7 @@ class SalariesController  extends HumanResourceAppController {
 
 		switch ($payroll['Payroll']['type']) {
 					case 'normal':
-						
+						$this->render('Salaries/payroll_view');
 					break;
 					case '13_month':
 					
@@ -1822,6 +1858,10 @@ class SalariesController  extends HumanResourceAppController {
 
 			$payroll = $this->Payroll->findById($id);
 
+			if (!empty($payroll['Payroll']['employeeIds'])) {
+
+				$employeeId = (array)json_decode($payroll['Payroll']['employeeIds']);
+			}
 
 			if ($payroll['Payroll']['type'] == '13_month') {
 
@@ -1831,7 +1871,6 @@ class SalariesController  extends HumanResourceAppController {
 				
 				$salaries = $this->_checkPayroll($payroll,null,$employeeId);
 			}
-
 
 			if ($salaries) {
 				//save to salary report data
@@ -1962,6 +2001,9 @@ class SalariesController  extends HumanResourceAppController {
 								'group' => array('Employee.id')
 							));
 
+
+
+
 			$customDate['start'] = $payroll['Payroll']['from'];
 
 			$customDate['end'] = $payroll['Payroll']['to'];
@@ -1987,9 +2029,6 @@ class SalariesController  extends HumanResourceAppController {
 							
 					}
 
-
-
-
 					//$this->Components->load('HumanResource.SalaryComputation');
 					$this->loadModel('HumanResource.SalaryReport');
 					$this->loadModel('HumanResource.Holiday');
@@ -2013,7 +2052,7 @@ class SalariesController  extends HumanResourceAppController {
 
 					$payrollSettings = $this->Setting->find('first');
 
-				//	$salaries = $this->SalaryComputation->calculateBenifits($employees,$payScheds,$customDate,$updateDatabase,$payrollSettings);
+					$salaries = $this->SalaryComputation->calculateBenifits($employees,$payScheds,$customDate,$updateDatabase,$payrollSettings);
 
 			}
 			else {

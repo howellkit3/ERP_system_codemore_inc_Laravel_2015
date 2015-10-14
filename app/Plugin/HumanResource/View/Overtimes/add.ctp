@@ -208,7 +208,7 @@ echo $this->Html->script(array(
                                                         </div>
                                                         <div class="clearfix"></div>
                                                         <div class="employees result">
-                                                            <ul class="widget-users row">
+                                                           <!--  <ul class="widget-users row">
                                                             <?php foreach ($employees as $key => $employee) : ?>
                                                                 <li class="col-md-6">
                                                                     <?php
@@ -257,7 +257,7 @@ echo $this->Html->script(array(
                                                                 </div>
                                                                 </li>
                                                             <?php endforeach; ?>    
-                                                            </ul>
+                                                            </ul> -->
                                                         </div>
                                                     </div>
                                             </div>

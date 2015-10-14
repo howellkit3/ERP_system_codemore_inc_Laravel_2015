@@ -151,7 +151,7 @@ class Attendance extends AppModel {
 						'conditions' => array(
 							'MySchedule.model' => 'Employee',
 							'MySchedule.foreign_key = Attendance.employee_id',
-							'MySchedule.day BETWEEN DATE_FORMAT( Attendance.date ,"%Y-%m-%d") and DATE_FORMAT( Attendance.date ,"%Y-%m-%d")'
+							'MySchedule.day BETWEEN DATE_FORMAT( Attendance.in ,"%Y-%m-%d") and DATE_FORMAT( Attendance.in ,"%Y-%m-%d")'
 							),
 					),
 					'MyWorkshift' => array(
@@ -196,6 +196,8 @@ class Attendance extends AppModel {
 			$this->create();
 
 
+
+
 			if (is_array($data) && !empty($data[0]['overtime_id'])) {
 
 				//check overtime 
@@ -205,8 +207,13 @@ class Attendance extends AppModel {
 					$sched['Attendance']['id'] = !empty($dataList['Attendance']['id']) ? $dataList['Attendance']['id'] : '';
 
 					if ($dataList['overtime_id']) {
+
 						
-						$attendance = $this->find('first',array('conditions' => array('employee_id' => $dataList['foreign_key'], 'schedule_id' => $dataList['id'])));
+						$attendance = $this->find('first',array('conditions' => array(
+							'employee_id' => $dataList['foreign_key'],
+							'date(Attendance.date) BETWEEN ? AND ?' => array($dataList['day'],$dataList['day']), 
+							//'schedule_id' => $dataList['id']
+							)));
 
 						$sched['Attendance']['id'] = !empty($attendance['Attendance']['id']) ? $attendance['Attendance']['id'] : '';
 					}
@@ -231,7 +238,6 @@ class Attendance extends AppModel {
 					$this->save($sched);	
 
 				}
-
 
 			}  else {
 

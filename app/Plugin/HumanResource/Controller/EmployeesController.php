@@ -646,15 +646,27 @@ class EmployeesController  extends HumanResourceAppController {
 
 				$conditions = array();
 
-				$date = date('Y-m-d');
+				$query = $this->request->query;
+
+				if (!empty($this->request->data)) {
+
+					$date = $this->request->data['date'];
+				} else {
+
+					$date = date('Y-m-d');
+				}
+
 
 				$conditions = array_merge($conditions,array(
   						'date(Attendance.date) BETWEEN ? AND ?' => array($date,$date), 
   				));
   				
-				$conditions = array_merge($conditions,array('Attendance.in !=' => ' '));
 
-				$conditions = array_merge($conditions,array('Employee.department_id' => $id));
+				$conditions = array_merge($conditions,array('Employee.department_id' => $id, 'Attendance.in !=' => ' '));
+
+
+				pr($conditions);
+				exit();
 
 				// $employees = $this->Employee->find('all',array(
 				// 	'conditions' => $conditions,

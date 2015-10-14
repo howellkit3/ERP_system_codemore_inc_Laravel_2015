@@ -128,7 +128,7 @@
                                                         'title'=>'View Amorization'
                                                         ));
                                                         
-                                                        if($payroll['Payroll']['status'] == 'pending') {
+                                                        if ($payroll['Payroll']['status'] == 'pending') {
 
                                                           echo $this->Html->link('<span class="fa-stack">
                                                             <i class="fa fa-square fa-stack-2x"></i>

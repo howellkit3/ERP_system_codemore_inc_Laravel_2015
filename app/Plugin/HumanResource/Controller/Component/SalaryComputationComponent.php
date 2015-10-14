@@ -227,7 +227,7 @@ class SalaryComputationComponent extends Component
         			
         		}
 
-
+       
         		return $salary;
 			}
     }
@@ -360,6 +360,7 @@ class SalaryComputationComponent extends Component
 
 		}
 
+
 		return $data;
     }
 
@@ -367,7 +368,7 @@ class SalaryComputationComponent extends Component
     	
     	$data['night_diff'] = 0;
 
-    	if  ( $days['Attendance']['out'] > $days['WorkShift']['to'] ) {
+    	if  ( $days['Attendance']['out'] > $days['MyWorkshift']['to'] ) {
 				
 			//starts from 10:00 pm
 			$fromDate = date('Y-m-d',strtotime($days['Attendance']['date'])).' 22:00:00';
@@ -506,7 +507,7 @@ class SalaryComputationComponent extends Component
 				//holidays 
 				
 				//holidays 
-				$today = date('Y-m-d',strtotime($days['Attendance']['date']));
+				$today = date('Y-m-d',strtotime($days['Attendance']['in']));
 
 				$legal_holiday_work = 0.00;
 				$special_holiday_work = 0.00;
@@ -591,6 +592,7 @@ class SalaryComputationComponent extends Component
 				if (!in_array($today, $daysGet) && date("w",strtotime($today)) != 0) {
 
 					$data['hours_regular'] += $this->_total_hours($days);
+
 					//regular_ot 
 					$overtime = $this->_checkOvertime($days);
 					$data['hours_ot'] += $overtime['total_hours'];
@@ -636,6 +638,10 @@ class SalaryComputationComponent extends Component
 
 		$data['regular'] = ($employee['Salary']['basic_pay'] * $data['hours_regular']) / $hours;
 
+		// pr( $data['hours_regular'] );
+		// pr($employee['Salary']['basic_pay']);
+
+		// pr( $hours );
 		//sunday work
 		if ($data['hours_sunday_work'] > 0) {
 
@@ -738,6 +744,7 @@ class SalaryComputationComponent extends Component
 		$data['gross'] = $data['gross'];
 
     	}
+
 
     	return $data;
     }
@@ -1375,7 +1382,7 @@ class SalaryComputationComponent extends Component
 
 	if (!empty($data['Attendance']['in']) && !empty($data['Attendance']['out']) ) {
 
-		if (strtotime($data['Attendance']['in']) >= strtotime($data['WorkShift']['from'])) {
+		if (strtotime($data['Attendance']['in']) >= strtotime($data['MyWorkshift']['from'])) {
 						
 			$from = new DateTime($data['Attendance']['in']);
 
@@ -1383,7 +1390,7 @@ class SalaryComputationComponent extends Component
 
 			if ($data['Attendance']['out'] > $data['WorkShift']['to']) {
 				
-				$to = new DateTime( $data['WorkShift']['to'] );
+				$to = new DateTime( $data['MyWorkshift']['to'] );
 
 			}
 						
@@ -1448,9 +1455,9 @@ class SalaryComputationComponent extends Component
 
 				//$overtime = $Overtime->read(null,$data['Attendance']['overtime_id']);
 
-				if  ($data['Attendance']['out'] > $data['WorkShift']['to']) {
+				if  ($data['Attendance']['out'] > $data['MyWorkshift']['to']) {
 					
-					$from  =  new DateTime($data['WorkShift']['to']);
+					$from  =  new DateTime($data['MyWorkshift']['to']);
 					$to  =  new DateTime($data['Attendance']['out']);
 
 					$days['hours_ot'] =  $from->diff($to)->format('%h.%i'); 

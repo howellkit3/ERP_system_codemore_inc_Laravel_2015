@@ -184,7 +184,11 @@ $page = !empty($this->params['named']['page']) ? $this->params['named']['page'] 
 								                        </td>
 
 								                        <td class="text-center">
-															<?php echo !empty($employee['Employee']['status']) ? ' <span class="label label-success">'.ucwords($employee['Status']['name']).'</span>'  : '';  ?>
+															<?php 
+
+															$status = $employee['Status']['name'] == 'Resigned' ? 'label-danger' : 'label-success';
+
+															echo !empty($employee['Employee']['status']) ? ' <span class="label '.$status.' ">'.ucwords($employee['Status']['name']).'</span>'  : '';  ?>
 								                        </td>
 
 								                        <td>

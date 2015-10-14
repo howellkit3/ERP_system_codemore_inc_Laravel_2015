@@ -66,7 +66,7 @@
                                                   <?php 
                                                         echo $this->Form->input('department', array(
                                                         'options' => $departments,
-                                                        'class' => 'form-control col-lg-6 required',
+                                                        'class' => 'form-control col-lg-6',
                                                         'empty' => '-- All --',
                                                         'label' => false));
                                                     ?>

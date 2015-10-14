@@ -40,7 +40,7 @@ class ImageUploader {
 			if (!file_exists($folder_path)) {
 				mkdir($folder_path, 0777, true);
 			}
-			$image_name = $time.'_'.round($width)."x".$height."_".str_replace(' ','_',$name);
+			$image_name = $time.str_replace(' ','_',$name);
             $path = $folder_path.$image_name;
 
 		} else {
@@ -66,7 +66,7 @@ class ImageUploader {
 			if (!file_exists($folder_path)) {
 				mkdir($folder_path, 0777, true);
 			}
-			$image_name = $time.'_'.round($width)."x".$height."_".str_replace(' ','_',$name);
+			$image_name = $time.str_replace(' ','_',$name);
             $path = $folder_path.$image_name;
        
 		}
