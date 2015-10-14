@@ -2184,9 +2184,10 @@ CREATE TABLE `received_receipt_items` (
 ALTER TABLE `received_receipt_items`  ADD `remarks` VARCHAR(60) NULL  AFTER `lot`;
 
 /* Bien added this oct-13-2015 koufu_sale*/
+
 ALTER TABLE `koufu_sale`.`product_specification_parts`     ADD COLUMN `name` VARCHAR(80) NULL AFTER `product_id`;
 
-/* howell added this oct-9-2015 koufu_purchasing*/
+/* howell added this oct-13-2015 koufu_purchasing*/
 
 ALTER TABLE `request_items` ADD `category` INT(11)  NULL  DEFAULT NULL  AFTER `quantity_unit_id`;
 ALTER TABLE `request_items` ADD `width` INT(11)  NULL  DEFAULT NULL  AFTER `category`;
