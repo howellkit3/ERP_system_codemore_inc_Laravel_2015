@@ -18,14 +18,14 @@
                                                            In
                                                         </label>
                                                          <input type="text" name="data[Attendance][in]" id="categoryRadio1" value="<?php echo 
-                                                         !empty($attendance['Attendance']['in']) ? date('Y-m-d h:i',strtotime($attendance['Attendance']['in'])) : ''
+                                                         !empty($attendance['Attendance']['in']) ? date('Y-m-d H:i',strtotime($attendance['Attendance']['in'])) : ''
                                                          ; ?>" class="form-control time_input datetime" >
                                                       
                                                           <label for="categoryRadio2">
                                                            Out
                                                         </label>
                                                         <input type="text" name="data[Attendance][out]" id="categoryRadio1" value="<?php echo 
-                                                         !empty($attendance['Attendance']['out']) ? date('Y-m-d h:i',strtotime($attendance['Attendance']['out'])) : ''
+                                                         !empty($attendance['Attendance']['out']) ? date('Y-m-d H:i',strtotime($attendance['Attendance']['out'])) : ''
                                                          ; ?>" class="form-control time_input datetime">
                                                         
                                         </div>
