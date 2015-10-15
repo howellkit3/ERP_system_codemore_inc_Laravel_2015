@@ -40,7 +40,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 			                 <div class="form-group pull-left">
 			                 	<div class="input-group">
 	                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-	                                <input placeholder="Date Range" name="data[date]" data="1" type="text" class="form-control myDateRange"  >
+	                                <input placeholder="Date Range" name="data[date]" data="1" type="text" class="form-control myDateRange"  value="<?php echo $dateSelected ?>" >
 	                            </div>
 							</div>
 
@@ -52,9 +52,22 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 			                    	 <button class="btn btn-success">Go</button> 
 			                     </div>
 
-			                     <a data-toggle="modal" href="#myAttendance" class="btn btn-primary pull-right"><i class="fa fa-share-square-o fa-lg"></i> Export</a>
-			                     	
 			                   	 <?php echo $this->Form->end(); ?>
+
+			                     <?php echo $this->Form->create('Attendance',array('controller' => 'attendances','action' => 'export_attendance', 'type'=> 'POST'),array('id' => 'exportAttendance')); ?>
+
+			                      <input type="hidden" name="date" id="hidden_date" value="" />
+
+			                      <input type="hidden"  name="search" id="hidden_search" value="" />
+
+			                     <!-- <a data-toggle="modal" href="#myAttendance" class="btn btn-primary pull-right"><i class="fa fa-share-square-o fa-lg"></i> Export</a> -->
+
+			                      <button class="btn btn-primary pull-right"><i class="fa fa-share-square-o fa-lg"></i> Export</button>
+
+			                      	 <?php echo $this->Form->end(); ?>
+			                   	 
+
+			                     	
 
 			                     <div class="form-group pull-left">
 			                    	 <a data-toggle="modal" class="btn btn-success" href="#timeKeep"> <i class="fa fa-clock-o"></i> Add Attendances </a> 

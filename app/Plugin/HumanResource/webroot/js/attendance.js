@@ -520,4 +520,14 @@ $(document).ready(function(){
      });
 
 
+    $('#AttendanceExportAttendanceForm').submit(function(e){
+
+        $('#hidden_date').val($('.myDateRange').val());
+
+
+        $('#hidden_search').val($('.searchCustomer').val());   
+
+
+
+    });
 });

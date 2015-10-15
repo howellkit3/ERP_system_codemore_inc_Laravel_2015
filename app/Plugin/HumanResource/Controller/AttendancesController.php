@@ -42,9 +42,12 @@ class AttendancesController  extends HumanResourceAppController {
 			$conditions = array();
 		}
 
+		$dateSelected = date('Y/m/d').' - '. date('Y/m/d');
+
 		if (!empty($query['data']['date'])) {
 
 			//$fromDate =
+			$dateSelected = $query['data']['date'];
 
 			$date = explode('-', $query['data']['date']); 
 
@@ -139,7 +142,7 @@ class AttendancesController  extends HumanResourceAppController {
 		$employeeList = $this->Employee->getList($conditions);
 
 
-		$this->set(compact('attendances','date','search','departmentList','employeeList'));
+		$this->set(compact('attendances','date','search','departmentList','employeeList','dateSelected'));
 
 	}
 
@@ -838,6 +841,72 @@ public function daily_info() {
         ));
         
 		$this->set(compact('attendanceData','departmentList','departmentId'));
+
+		$this->render('Attendances/xls/attendance_report');
+	}
+
+	public function export_attendance() {
+
+		$this->loadModel('HumanResource.WorkSchedule');
+
+		$this->loadModel('HumanResource.Employee');
+
+		$this->loadModel('HumanResource.Workshift');
+
+		$this->loadModel('HumanResource.WorkShiftBreak');
+
+		$this->loadModel('HumanResource.BreakTime');
+
+		$this->loadModel('HumanResource.Department');
+
+		$conditions = array();
+
+		if (!empty($this->request->data)) {
+
+
+		if (!empty($this->request->data['date'])) {
+
+			$dateSplit = explode('-',$this->request->data['date']);
+			$date1 = trim($dateSplit[0]);
+			$date2 = trim($dateSplit[1]);
+			$date1 = date('Y-m-d',strtotime($date1));
+			$date2 = date('Y-m-d',strtotime($date2));
+			
+			$conditions = array_merge($conditions,array('date(Attendance.date) BETWEEN ? AND ?' => array($date1,$date2)));
+		
+		}
+	
+		if (!empty($this->request->data['search'])) {
+
+			$search = $this->request->data['search'];
+
+			$conditions = array_merge($conditions,array(
+								'OR' => array(
+								'Employee.first_name LIKE' => '%'.$search.'%',
+								'Employee.last_name LIKE' => '%'.$search.'%',
+								'Employee.middle_name' => '%'.$search.'%',
+						)));
+
+		}
+			
+		$this->Attendance->bind(array('Employee','MySchedule','MyWorkshift','MyWorkShiftBreak','MyBreakTime'));
+
+    
+
+    	}
+
+
+
+    	
+        $attendanceData = $this->Attendance->find('all', array(
+          'conditions' => $conditions,
+            'order' => 'Attendance.id ASC'
+        ));
+     	
+
+     
+
+		$this->set(compact('attendanceData'));
 
 		$this->render('Attendances/xls/attendance_report');
 	}

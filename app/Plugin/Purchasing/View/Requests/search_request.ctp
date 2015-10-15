@@ -1,5 +1,6 @@
 <?php  foreach ($requestData as $requestList ): ?>
-    
+
+
         <tr class="">
 
             <td class="">
@@ -17,7 +18,22 @@
             </td>
 
             <td class="">
+
                 <?php echo $type[$requestList['Request']['pur_type_id']];?>
+                
+            </td>
+
+             <td class="">
+
+                <?php 
+                echo date('Y/m/d',strtotime($requestList['Request']['created']));?>
+                
+            </td>
+
+            <td class="">
+
+                <?php echo $userName[$requestList['Request']['prepared_by']];?>
+                
             </td>
 
             <td class="text-center">
@@ -27,7 +43,7 @@
                         echo "<span class='label label-default'>Waiting</span>";
                     }
                     if($requestList['Request']['status_id'] == 1){ 
-                        echo "<span class='label label-success'>Approved</span>";
+                        echo "<span class='label label-info'>Approved</span>";
                     }
                     if($requestList['Request']['status_id'] == 0){ 
                         echo "<span class='label label-success'>Purchase Order</span>";
@@ -45,14 +61,15 @@
                 ?>
                
                 <?php
-                    // echo $this->Html->link('<span class="fa-stack">
-                    // <i class="fa fa-square fa-stack-2x"></i>
-                    // <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-                    // </span> ', array('controller' => 'customer_sales', 'action' => 'edit',$inquirylist['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Information'));
+                    echo $this->Html->link('<span class="fa-stack">
+                        <i class="fa fa-square fa-stack-2x"></i>
+                        <i class="fa fa-trash fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Remove </font></span>
+                        </span>', array('controller' => 'requests', 'action' => 'delete',$requestList['Request']['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Information'));
                 ?>
              
                 
             </td>
         </tr>
+
 
 <?php endforeach; ?> 
