@@ -174,9 +174,8 @@ class OvertimesController  extends HumanResourceAppController {
 			$this->Overtime->create();
 
 			$data = $this->Overtime->formatData($this->request->data,$auth['id']);
-
-			
-			if ($this->Overtime->save($data)) {
+	
+			if ($this->Overtime->save($data['Overtime'])) {
 
 				$overtime_id = $this->Overtime->id;
 				//create worshift and schedule
@@ -365,6 +364,9 @@ class OvertimesController  extends HumanResourceAppController {
 			$selectedEmployee = (array)json_decode($this->request->data['Overtime']['employee_ids']);
 
 			$date = $this->request->data['Overtime']['date'];
+
+
+
 		}
 
 		$breaktimes = $this->BreakTime->find('all',array(
@@ -387,9 +389,12 @@ class OvertimesController  extends HumanResourceAppController {
   				
 
 		$conditions = array_merge($conditions,array('Attendance.in !=' => ' '));
+		if (!empty( $this->request->data['Overtime']['department_id'])) {
+			$conditions = array_merge($conditions,array('Employee.department_id' => $this->request->data['Overtime']['department_id']));
 
-		$conditions = array_merge($conditions,array('Employee.department_id' => $this->request->data['Overtime']['department_id']));
+		}
 
+		
 		$employees = $this->Attendance->find('all',array(
 					'conditions' => $conditions,
 					'order' => array('Employee.last_name','Employee.code'),
@@ -408,9 +413,7 @@ class OvertimesController  extends HumanResourceAppController {
 					//'Position.name'
 					),
 
-				));
-
-
+				));	
 
 		$positionList = $this->Position->find('list',array('fields' => array('id','name')));
 		//pr($employees);exit();
@@ -565,7 +568,12 @@ class OvertimesController  extends HumanResourceAppController {
 
 		$conditions = array_merge($conditions,array('Attendance.in !=' => ' '));
 
-		$conditions = array_merge($conditions,array('Employee.department_id' => $this->request->data['Overtime']['department_id']));
+		
+		if (!empty( $this->request->data['Overtime']['department_id'])) {
+
+			$conditions = array_merge($conditions,array('Employee.department_id' => $this->request->data['Overtime']['department_id']));
+
+		}
 
 		$employees = $this->Attendance->find('all',array(
 					'conditions' => $conditions,

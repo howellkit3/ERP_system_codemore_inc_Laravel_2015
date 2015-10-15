@@ -50,7 +50,7 @@ echo $this->Html->script(array(
                                     <div class="form-group">
                                         <div class="col-lg-6">
                                             <div class="form-group">
-                                               <div class="col-lg-12">
+                                              <!--  <div class="col-lg-12">
                                                     <div class="form-group">
                                                         <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span>  <b> Department </b> </label>
                                                         <div class="col-lg-9">
@@ -65,7 +65,37 @@ echo $this->Html->script(array(
 
                                                         </div>
                                                      </div>
+                                                </div> -->
+
+
+
+
+                                                <div class="form-group">
+                                                  <div class="col-lg-2 text-right">
+                                                    <label for="exampleRadio"> <span style="color:red">*</span>  <b>Search Employee</b> </label>
+                                                  </div>
+                                                <div class="col-lg-9">
+                                                      
+                                                            <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                    <i class="fa fa-search"></i>
+                                                            </span>
+                                                            <input type="text" id="SearchEmployee" class="form-control">
+                                                    </div>
+                                                    </div>
+                                                </div>  
+
+                                                  <div class="clearfix"></div>
+
+                                               <label for="inputEmail1" class="col-lg-2 control-label"></label>
+                                                  <div class="col-lg-9"  id="selection" >
+                                                   
+                                                    <ul style="margin:0;padding:0" id="result-tale-employee">
+                                                 
+                                                      </ul>  
                                                 </div>
+
+
                                             </div>
 
                                              <div class="form-group">
@@ -195,7 +225,7 @@ echo $this->Html->script(array(
                                                         <label class="large-label"><span style="color:red;">*</span> <b>Employees </b> </label>
                                                         <label class="selected-text"></label>
 
-
+<!-- 
                                                         <div class="pull-right">
                                                         <label class="large-label"><b>Select ALL </b> </label>
                                                                  <div class="onoffswitch onoffswitch-success select-all">
@@ -205,7 +235,18 @@ echo $this->Html->script(array(
                                                                             <div class="onoffswitch-switch"></div>
                                                                             </label>
                                                                     </div>
+                                                        </div> -->
+
+                                                        <div class="clearfix"></div>
+                                                        <div id="resultList">
+<!-- 
+                                                            <table class="table table-border">
+
+                                                                
+                                                            </table> -->
+
                                                         </div>
+
                                                         <div class="clearfix"></div>
                                                         <div class="employees result">
                                                            <!--  <ul class="widget-users row">

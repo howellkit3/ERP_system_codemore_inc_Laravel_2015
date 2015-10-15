@@ -113,7 +113,7 @@ echo $this->element('hr_options');
 															<td> 
 									                           	<?php  
 									                           
-									                           	 	echo date('Y-m-d',strtotime($leaveList['Leave']['from']));
+									                           	 	echo !empty($leaveList['Leave']['from']) ? date('Y-m-d h:i a',strtotime($leaveList['Leave']['from'])) : '-';
 									                           							                           
 									                           	?> 
 									                        </td>
@@ -121,7 +121,7 @@ echo $this->element('hr_options');
 									                        <td > 
 									                            <?php  
 									                           
-									                           	 	echo date('Y-m-d',strtotime($leaveList['Leave']['to']));
+									                           	 echo !empty($leaveList['Leave']['to']) ? date('Y-m-d h:i a',strtotime($leaveList['Leave']['to'])) : '-';
 									                           							                           
 									                           	?> 
 									                        </td>

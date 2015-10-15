@@ -384,7 +384,7 @@ $(document).ready(function(){
         // });
 
 
-     $("#datetimepickerTime,#AttendanceTime").datetimepicker( {
+        $("#datetimepickerTime,#AttendanceTime").datetimepicker( {
             format:'Y-m-d H:i',
         });
 

@@ -6,6 +6,10 @@ $(document).ready(function(){
     //     }
     // });
 
+    $(".datetimepick").datetimepicker( {
+            format:'Y-m-d H:i',
+        });
+
     $('body').on('change','.from-date-range',function(e){
 
         var thisMe = $(this).val();

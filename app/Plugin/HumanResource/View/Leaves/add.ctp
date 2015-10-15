@@ -8,10 +8,14 @@
 <?php 
     echo $this->Html->css(array(
                     'HumanResource.default',
-                    'HumanResource.select2.css'
+                    'HumanResource.select2.css',
+                    
+                    'datetimepicker/jquery.datetimepicker'
                     //'timepicker'
     ));
      echo $this->Html->script(array(
+
+                    'datetimepicker/jquery.datetimepicker',
                     'jquery.maskedinput.min',
                     'HumanResource.custom',
                     'HumanResource.select2.min',
