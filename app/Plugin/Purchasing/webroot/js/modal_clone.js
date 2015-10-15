@@ -28,9 +28,7 @@ function testko($form, section)
     
     var count = $('.' + section).length;
     
-    // jQuery('.addressSection').addClass('io-'+count);
-  
-    $form.find('select, input,checkbox').each(function() {
+    $form.find('select, input,checkbox , textarea').each(function() {
 
         var $this = $(this),
             nameProp = $this.prop('name'),

@@ -267,10 +267,14 @@
 													<label class="col-lg-2 control-label">Purpose</label>
 													<div class="col-lg-6">
 														<?php 
-				                                            echo $this->Form->textarea('WarehouseRequestItem.0.purpose', array(
-				                                            								'class' => 'form-control item_type required',
-										                                                    'label' => false,
-										                                                    'placeholder' => 'Request Purpose'));
+                                   						 echo $this->Form->input('WarehouseRequestItem.0.purpose', array(
+					                                        'type' => 'text',
+					                                        'label' => false,
+					                                        'required' => 'required',
+					                                        'class' => 'form-control item_type required',
+					                                        'placeholder' => 'Request Purpose'
+					                                        ));
+                              	
 			                                            ?>
 													</div>
 												</div>
@@ -288,11 +292,7 @@
 
 													</div>
 												</div>
-
-
-
 												<hr>
-
 											</div>
 										    
 										</div>

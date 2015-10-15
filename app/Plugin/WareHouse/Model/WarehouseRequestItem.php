@@ -35,8 +35,6 @@ class WarehouseRequestItem extends AppModel {
 	public function saveRequestItem($requestData = null,$id = null)
 	{	
 
-		//pr($requestData); exit; 
-	
 		foreach ($requestData['WarehouseRequestItem'] as $key => $requestValue)
 		{
 			$this->create();
