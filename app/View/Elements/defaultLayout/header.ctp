@@ -230,7 +230,15 @@
 
 			 			<?php  }?>
 
-			 			
+			 			<?php if(in_array($userData['User']['role_id'],array('1','19'))) : ?>
+
+			 				<li>
+								<?php
+			 						echo $this->Html->link( "<i class='fa fa-cog'></i> Payroll Settings ",   array('controller' =>'payroll_settings','action'=>'settings','plugin' => null),array('escape' => false) );
+			 					?>
+			 				</li>
+			 			<?php endif; ?>	
+
 						
 		 				<?php if($userData['User']['role_id'] == 1 || $userData['User']['role_id'] == 2){ ?>
 		 					<li>

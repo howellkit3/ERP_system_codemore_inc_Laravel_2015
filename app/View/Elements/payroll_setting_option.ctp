@@ -27,11 +27,11 @@
             <?php echo $this->Html->link("<span class='count'> Benefits </span>", array('controller' => 'payroll_settings', 'action' => 'philhealth_ranges'),array('escape' => false,'class' => 'btn')); ?>
            
         </li> -->
-         <li class="dropdown hidden-xs">
+        <!--  <li class="dropdown hidden-xs">
            
             <?php echo $this->Html->link("<span class='count'> OT Rates </span>", array('controller' => 'payroll_settings', 'action' => 'ot_rates'),array('escape' => false,'class' => 'btn')); ?>
            
-        </li>
+        </li> -->
          <li class="dropdown hidden-xs">
            
             <?php echo $this->Html->link("<span class='count'> Wages </span>", array('controller' => 'payroll_settings', 'action' => 'wages'),array('escape' => false,'class' => 'btn')); ?>

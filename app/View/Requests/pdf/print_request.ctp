@@ -39,7 +39,7 @@ th, td {
 				<table style=" border:1px solid black;border-collapse:collapse; margin-bottom:0px;  ">
 					<tr>
 						<td align = "center" style="border:1px solid black; width:10px; font-size:70%;" ><b>No.</b></td>
-						<td align = "center" style =" width:180px; word-wrap: break-word;" ><b>Item Description</b></td>
+						<td align = "center" style =" width:150px; word-wrap: break-word;" ><b>Item Description</b></td>
 						<td align = "center" style="border:1px solid black; width:20px; font-size:70%;"><b>Qty Needed</b></td>
 						<td align = "center" style="border:1px solid black; width:35px; font-size:70%;"><b>UOM</b></td>
 						<td align = "center" style="border:1px solid black; width:35px; font-size:60%;"><b>Current Stock</b></td>
@@ -70,7 +70,7 @@ th, td {
 
 						<?php }else{ ?>
 
-							<td style="border:1px solid black; "><span style="font-size:70%"; ><?php echo $requestRequestItem[$key]['RequestItem']['name']?></span>
+							<td style="border:1px solid black; "><span style="font-size:60%"; ><?php echo $requestRequestItem[$key]['RequestItem']['name']?></span>
 							</td>
 
 						<?php } ?>
@@ -135,29 +135,28 @@ th, td {
 					
 				</table>
 
-					<br>
 
-					<table style=" margin-top:0px; border:0px solid black;border-collapse: separate; border-spacing: 0px; padding:0px; margin:0px; line-height:0px; ">
+					<table style=" margin-top:0px; border:0px solid black;border-collapse: separate; border-spacing: 0px; padding:0px; margin-top:15px 0; line-height:0px; ">
 					
 					<tr>
-						<td align = "left" style=" width:183px; vertical-align: text-top; height:25px; ">Requisitioner:</td>
-						<td align = "left" style=" width:182px; vertical-align: text-top;">Approved by:</td>
-						<td align = "left" style=" width:182px; vertical-align: text-top;">Purchased by:</td>
+						<td align = "left" style=" width:183px; vertical-align: text-top; height:8px; font-size:13px">Requisitioner:</td>
+						<td align = "left" style=" width:182px; vertical-align: text-top; font-size:13px">Approved by:</td>
+						<td align = "left" style=" width:182px; vertical-align: text-top; font-size:13px">Purchased by:</td>
 					</tr>
 
 					<tr>
-						<td align = "center" style=" width:183px; vertical-align: bottom; height:10px; margin:0px;"><?php echo ucwords($preparedFullName )?><br>____________________</td>
-						<td align = "center" style=" width:183px; vertical-align: bottom; height:10px; margin:0px; "> 
+						<td align = "center" style=" width:183px; vertical-align: bottom; height:10px; margin:0px; font-size:13px"><?php echo ucwords($preparedFullName )?><br>____________________</td>
+						<td align = "center" style=" width:183px; vertical-align: bottom; height:10px; margin:0px;font-size:13px "> 
 							Ms. Carryl Yu
 						<br>____________________</td>
-						<td align = "center" style=" width:183px; vertical-align: bottom; height:15px;margin:0px; ">____________________<br></td>
+						<td align = "center" style=" width:183px; vertical-align: bottom; height:10px;margin:0px;font-size:13px ">____________________<br></td>
 					</tr>
 
 					</table>
 						
 					<table style =" padding:0px; margin:0px;">
 					<tr>
-						<td align = "center" style="  vertical-align: text-top;; margin:0px; line-height:10px;font-size:60%;"><br>PRINT NAME AND SIGN</td>
+						<td align = "center" style="  vertical-align: text-top;; margin-top:10px; line-height:7px;font-size:60%;"><br>PRINT NAME AND SIGN</td>
 						<td align = "center" style="width:200px; vertical-align: text-top;; margin:0px; line-height:10px;font-size:60%; color:white;">Un </td>
 						<td align = "center" style=" vertical-align:text-top;margin:0px; font-size:60%; line-height:8px;"><br>PURCHASING PERSONNEL</td>
 					</tr>
@@ -168,6 +167,8 @@ th, td {
 						<td align = "center" style=" vertical-align:text-top;margin:0px; font-size:60%; line-height:8px;"><br>KP-FR-LG1-001 R0 <br>Effective Date: 10 Aug 2015</td>
 					</tr>
 				</table>
+					
+					
 					
 				</div>
 
@@ -192,7 +193,7 @@ th, td {
 					<table style=" border:1px solid black;border-collapse:collapse; margin-bottom:0px;  ">
 					<tr>
 						<td align = "center" style="border:1px solid black; width:10px; font-size:70%;" ><b>No.</b></td>
-						<td align = "center" style =" width:180px; word-wrap: break-word;" ><b>Item Description</b></td>
+						<td align = "center" style =" width:150px; word-wrap: break-word;" ><b>Item Description</b></td>
 						<td align = "center" style="border:1px solid black; width:20px; font-size:70%;"><b>Qty Needed</b></td>
 						<td align = "center" style="border:1px solid black; width:35px; font-size:70%;"><b>UOM</b></td>
 						<td align = "center" style="border:1px solid black; width:35px; font-size:60%;"><b>Current Stock</b></td>
@@ -223,7 +224,7 @@ th, td {
 
 						<?php }else{ ?>
 
-							<td style="border:1px solid black; "><span style="font-size:70%"; ><?php echo $requestRequestItem[$key]['RequestItem']['name']?></span>
+							<td style="border:1px solid black; "><span style="font-size:60%"; ><?php echo $requestRequestItem[$key]['RequestItem']['name']?></span>
 							</td>
 
 						<?php } ?>
@@ -289,35 +290,36 @@ th, td {
 					
 					</table>
 
-					<br>
-
-					<table style=" margin-top:0px; border:0px solid black;border-collapse: separate; border-spacing: 0px; padding:0px; margin:0px; line-height:0px; ">
+				
+					<table style=" margin-top:0px; border:0px solid black;border-collapse: separate; border-spacing: 0px; padding:0px; margin-top:15px; line-height:0px; ">
 					
 					<tr>
-						<td align = "left" style=" width:183px; vertical-align: text-top; height:25px; ">Requisitioner:</td>
-						<td align = "left" style=" width:182px; vertical-align: text-top;">Approved by:</td>
-						<td align = "left" style=" width:182px; vertical-align: text-top;">Purchased by:</td>
+						<td align = "left" style=" width:183px; vertical-align: text-top; height:8px; font-size:13px">Requisitioner:</td>
+						<td align = "left" style=" width:182px; vertical-align: text-top; font-size:13px">Approved by:</td>
+						<td align = "left" style=" width:182px; vertical-align: text-top; font-size:13px">Purchased by:</td>
 					</tr>
 
 					<tr>
-						<td align = "center" style=" width:183px; vertical-align: bottom; height:10px; margin:0px;"><?php echo ucwords($preparedFullName )?><br>____________________</td>
-						<td align = "center" style=" width:183px; vertical-align: bottom; height:10px; margin:0px; ">
-							Ms. Carryl Yu <br>____________________</td>
-						<td align = "center" style=" width:183px; vertical-align: bottom; height:15px;margin:0px; ">____________________<br></td>
+						<td align = "center" style=" width:183px; vertical-align: bottom; height:10px; margin:0px; font-size:13px"><?php echo ucwords($preparedFullName )?><br>____________________</td>
+						<td align = "center" style=" width:183px; vertical-align: bottom; height:10px; margin:0px;font-size:13px "> 
+							Ms. Carryl Yu
+						<br>____________________</td>
+						<td align = "center" style=" width:183px; vertical-align: bottom; height:10px;margin:0px;font-size:13px ">____________________<br></td>
 					</tr>
 
 					</table>
 						
+						
 					<table style =" padding:0px; margin:0px;">
 					<tr>
-						<td align = "center" style="  vertical-align: text-top;; margin:0px; line-height:10px;font-size:60%;"><br>PRINT NAME AND SIGN</td>
+						<td align = "center" style="  vertical-align: text-top;; margin-top:10px; line-height:7px;font-size:60%;"><br>PRINT NAME AND SIGN</td>
 						<td align = "center" style="width:200px; vertical-align: text-top;; margin:0px; line-height:10px;font-size:60%; color:white;">Un </td>
 						<td align = "center" style=" vertical-align:text-top;margin:0px; font-size:60%; line-height:8px;"><br>PURCHASING PERSONNEL</td>
 					</tr>
 
 					<tr>
-						<td align = "center" style="  vertical-align: text-top;; margin:0px; line-height:10px;font-size:60%;"><br>*Unit of Measure(UOM)  could be <I>pcs, kgs, liter, MT </I></td>
-						<td align = "center" style="width:200px; vertical-align: text-top;; margin:0px; line-height:10px;font-size:60%; color:white;"><br><br>Un </td>
+						<td align = "center" style="  vertical-align: text-top;; margin:0px; line-height:1;font-size:60%;"><br>*Unit of Measure(UOM)  could be <I>pcs, kgs, liter, MT </I></td>
+						<td align = "center" style="width:200px; vertical-align: text-top;; margin:0px; line-height:1px;font-size:60%; color:white;"><br><br>Un </td>
 						<td align = "center" style=" vertical-align:text-top;margin:0px; font-size:60%; line-height:8px;"><br>KP-FR-LG1-001 R0 <br>Effective Date: 10 Aug 2015</td>
 					</tr>
 				</table>

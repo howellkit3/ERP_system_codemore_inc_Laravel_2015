@@ -334,11 +334,11 @@
 												</div>
 
 												<div class="form-group">
-													<label class="col-lg-2 control-label"><span style="color:red">*</span>Purpose</label>
+													<label class="col-lg-2 control-label"> Purpose </label>
 													<div class="col-lg-6">
 														<?php 
 				                                            echo $this->Form->textarea('RequestItem.0.purpose', array(
-				                                            								'class' => 'form-control item_type required',
+				                                            								'class' => 'form-control item_type',
 										                                                    'label' => false,
 										                                                    'placeholder' => 'Request Purpose'));
 			                                            ?>
