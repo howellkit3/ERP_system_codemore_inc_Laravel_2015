@@ -343,6 +343,7 @@ class OvertimesController  extends HumanResourceAppController {
 			}
 
 		}
+		$date = date('Y-m-d');
 
 		if (!empty($id)) {
 
@@ -363,6 +364,7 @@ class OvertimesController  extends HumanResourceAppController {
 
 			$selectedEmployee = (array)json_decode($this->request->data['Overtime']['employee_ids']);
 
+			$date = $this->request->data['Overtime']['date'];
 		}
 
 		$breaktimes = $this->BreakTime->find('all',array(
@@ -376,7 +378,13 @@ class OvertimesController  extends HumanResourceAppController {
 
 		$conditions = array();
 
-		$conditions = array_merge($conditions,array('Attendance.date >=' => date('Y-m-d')));
+		$conditions = array_merge($conditions,array('Attendance.date >=' => $date ));
+
+
+		$conditions = array_merge($conditions,array(
+  						'date(Attendance.in) BETWEEN ? AND ?' => array($date,$date), 
+  				));
+  				
 
 		$conditions = array_merge($conditions,array('Attendance.in !=' => ' '));
 
@@ -401,6 +409,9 @@ class OvertimesController  extends HumanResourceAppController {
 					),
 
 				));
+
+
+
 		$positionList = $this->Position->find('list',array('fields' => array('id','name')));
 		//pr($employees);exit();
 		// $employees = $this->Employee->find('all',array(
@@ -478,7 +489,7 @@ class OvertimesController  extends HumanResourceAppController {
 						//workhift workschedule
 							$workSchedule = $this->WorkSchedule->createSchedule($overtime,$workshift['id'],$id,$auth['id']);
 
-							//$attendance = $this->Attendance->saveRecord($workSchedule);
+							$attendance = $this->Attendance->saveRecord($workSchedule);
 
 						}
 			 		}
@@ -508,8 +519,11 @@ class OvertimesController  extends HumanResourceAppController {
 
 		}
 
+		$date = date('Y-m-d');
+
 		if (!empty($id)) {
 
+			Configure::write('debug',2);
 			//$this->Overtime->bind(array('WorkSchedule'));
 
 			$this->request->data = $this->Overtime->findById($id);
@@ -527,6 +541,8 @@ class OvertimesController  extends HumanResourceAppController {
 
 			$selectedEmployee = (array)json_decode($this->request->data['Overtime']['employee_ids']);
 
+			$date = $this->request->data['Overtime']['date'];
+
 		}
 
 		$breaktimes = $this->BreakTime->find('all',array(
@@ -540,7 +556,12 @@ class OvertimesController  extends HumanResourceAppController {
 
 		$conditions = array();
 
-		$conditions = array_merge($conditions,array('Attendance.date >=' => date('Y-m-d')));
+		$conditions = array_merge($conditions,array('Attendance.date >=' => $date));
+
+		$conditions = array_merge($conditions,array(
+  						'date(Attendance.in) BETWEEN ? AND ?' => array($date,$date), 
+  				));
+  				
 
 		$conditions = array_merge($conditions,array('Attendance.in !=' => ' '));
 
@@ -565,7 +586,9 @@ class OvertimesController  extends HumanResourceAppController {
 					),
 
 				));
+
 		$positionList = $this->Position->find('list',array('fields' => array('id','name')));
+	
 		//pr($employees);exit();
 		// $employees = $this->Employee->find('all',array(
 		// 	'conditions' => array('Employee.department_id' => $this->request->data['Overtime']['department_id']),

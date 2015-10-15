@@ -31,9 +31,6 @@ function openMultiplePrompts(element,url,status){
         },
         function (isConfirm) {
 
-
-            console.log(url);
-            exit();
             if (isConfirm) {
 
                         swal("Successful!","Quotation "+status+".", "success");
