@@ -28,7 +28,13 @@ class Overtime extends AppModel {
     public function formatData($data = null,$auth = null) {
         
         $employeeIds = array();
-        foreach ($data['Employee']['id'] as $key => $value) {
+
+        if (is_array($data['Employee']['id'] )) {
+
+            $employeeIds = $data['Employee']['id'];
+        } else {
+
+         foreach ($data['Employee']['id'] as $key => $value) {
             
             $employeid = explode('-', $value);
 
@@ -37,6 +43,8 @@ class Overtime extends AppModel {
             $data['Attendance']['id'][$key] = $employeid[1];
             
         }
+        }
+      
 
     	if (!empty($data['Employee'])) {
 

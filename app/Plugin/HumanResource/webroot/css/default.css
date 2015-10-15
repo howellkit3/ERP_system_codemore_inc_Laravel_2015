@@ -276,3 +276,27 @@ div.value {
   list-style: outside none none;
   width: 49%;
 }
+#selection {
+  max-height: 160px;
+  overflow: auto;
+}
+#result-tale-employee > li {
+  display: inline-block;
+  list-style: outside none none;
+  width: 100%;
+}
+
+#result-tale-employee .time-in {
+  font-size: 10px;
+}
+.alert.alert-success > label {
+  color: #000;
+  font-size: 15px;
+  font-weight: bold;
+  margin: 0 11px;
+}
+
+.alert.alert-success label {
+  font-weight: bold;
+  color: #000;
+}

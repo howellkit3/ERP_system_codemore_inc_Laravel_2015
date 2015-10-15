@@ -1385,28 +1385,81 @@ class EmployeesController  extends HumanResourceAppController {
 
 		$this->layout = false;
 
-		if ($this->request->is('ajax')) {
+	//	if ($this->request->is('ajax')) {
 
 			$query = $this->request->query;
 
 			$conditions = array();
 
-			if ($query['departmentId']) {
-					
-				$conditions = array_merge($conditions,array('Employee.department_id' => $query['departmentId'] ));
-			} 
+			if (!empty($query['search'])) {
 
-			$employees = $this->Employee->find('list',array(
+
+				$conditions = array_merge($conditions,array(
+					'OR' => array(
+						array('Employee.first_name LIKE' => '%' . $query['search'] . '%'),
+						array('Employee.last_name LIKE' => '%' . $query['search'] . '%'),
+						array('Employee.code LIKE' => '%'. $query['search'] .'%')
+					)
+				));
+
+
+			}
+
+			if (!empty($query['date']) && $query['overtime'] == true) {
+
+				$this->loadModel('HumanResource.Attendance');
+
+				$this->loadModel('HumanResource.Employee');
+
+				$this->Attendance->bind(array('Employee'));
+
+				$attendance =  array_merge($conditions,array(
+  						'date(Attendance.date) BETWEEN ? AND ?' => array($query['date'],$query['date']), 
+  				));
+
+
+				$attendances = $this->Attendance->find('all',array(
+					'conditions' => $attendance
+				)
+				);
+
+
+				$this->set(compact('attendances'));	
+
+			} else {
+
+
+				if (!empty($query['departmentId']) && $query['departmentId']) {
+
+				$conditions = array_merge($conditions,array('Employee.department_id' => $query['departmentId'] ));
+				} 
+
+				$employees = $this->Employee->find('list',array(
 				'conditions' => $conditions,
 				'order' => array('Employee.code DESC'),
 				'fields' => array('Employee.id','Employee.full_name')
-			));
+				));
 
-			$this->set(compact('employees'));
+				$this->set(compact('employees'));	
+
+			}
+
+		
+
+			// $query = $this->request->query;
+
+			if (!empty($query['overtime']) && $query['overtime'] == true) {
+
+
+			$this->render('Employees/ajax/employee_list_overtime');
+
+			} else {
 
 			$this->render('Employees/ajax/employee_list');
+			}
 
-	}
+
+//	}
 
 
 	}
