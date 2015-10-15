@@ -322,7 +322,7 @@
 											<div class="col-lg-6">
 												<?php 
 													echo $this->Form->input('RequestItem.'.$key.'.category', array(
-								                        'options' => array('Rolls', 'Other Items'),  
+								                        'options' => array('No Amount Items', 'General Items'), 
 								                        'label' => false,
 								                        'class' => 'form-control category',
 								                        'empty' => '---Select Category---',
