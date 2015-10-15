@@ -58,7 +58,7 @@ class Department extends AppModel {
 
 	public function getList($conditions = array()) {
 
-		return  $this->find('list',array('conditions' => $conditions,'fields' => array('id','department_position')));
+		return  $this->find('list',array('conditions' => $conditions,'fields' => array('id','notes')));
 
 	}
 

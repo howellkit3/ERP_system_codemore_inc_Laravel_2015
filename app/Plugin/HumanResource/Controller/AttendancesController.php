@@ -29,7 +29,7 @@ class AttendancesController  extends HumanResourceAppController {
 		
 		$search = '';
 
-		$date = date('Y-m-d');
+		$date = date('Y/m/d').' - '. date('Ys/m/d');
 
 		$date2 = date('Y-m-d', strtotime($date . ' +1 day'));
 		
@@ -54,7 +54,7 @@ class AttendancesController  extends HumanResourceAppController {
   						'date(Attendance.date) BETWEEN ? AND ?' => array($date1,$date2), 
   			));
 
-			//$date = $query['data']['date'];
+			$date = $query['data']['date'];
 		}
 	
 		// $conditions = array(
@@ -75,6 +75,8 @@ class AttendancesController  extends HumanResourceAppController {
 			)));
 		}
 
+
+	
 		$this->Attendance->bind(array('Employee','Overtime','MySchedule','MyWorkshift','MyWorkShiftBreak','MyBreakTime'));
 
 		//$this->Employee->virtualFields['totalItem'] = 'COUNT(`OrderDetail`.`order_id`)';
@@ -83,30 +85,30 @@ class AttendancesController  extends HumanResourceAppController {
 		$params =  array(
 	            'conditions' => $conditions,
 	            'limit' => $limit,
-	            'fields' => array(
-	            	'id',
-	            	'status',
-	            	'created',
-	            	'Employee.first_name',
-	            	'Employee.last_name',
-	            	'Employee.middle_name',
-	            	'Employee.code',
-	            	'Attendance.in',
-	            	'Attendance.out',
-	            	'Attendance.type',
-	            	'Attendance.schedule_id',
-	            	'Attendance.notes',
-	            	'Attendance.date',
-	            	'MySchedule.day',
-	            	'MyWorkshift.from',
-	            	'MyWorkshift.to',
-	            	//'MyWorkshift.overtime_id',
-	            	'MyWorkShiftBreak.breaktime_id',
-	            	// /'MyWorkshift.ovetime_id',
-	            	'MyBreakTime.from',
-	            	'MyBreakTime.to'
+	            // 'fields' => array(
+	            // 	'id',
+	            // 	'status',
+	            // 	'created',
+	            // 	'Employee.first_name',
+	            // 	'Employee.last_name',
+	            // 	'Employee.middle_name',
+	            // 	'Employee.code',
+	            // 	'Attendance.in',
+	            // 	'Attendance.out',
+	            // 	'Attendance.type',
+	            // 	'Attendance.schedule_id',
+	            // 	'Attendance.notes',
+	            // 	'Attendance.date',
+	            // 	'MySchedule.day',
+	            // 	'MyWorkshift.from',
+	            // 	'MyWorkshift.to',
+	            // 	//'MyWorkshift.overtime_id',
+	            // 	'MyWorkShiftBreak.breaktime_id',
+	            // 	// /'MyWorkshift.ovetime_id',
+	            // 	'MyBreakTime.from',
+	            // 	'MyBreakTime.to'
 
-	            	),
+	            // 	),
 	            'order' => 'Attendance.in DESC',
 	    );
 

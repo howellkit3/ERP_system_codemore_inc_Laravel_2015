@@ -40,7 +40,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 			                 <div class="form-group pull-left">
 			                 	<div class="input-group">
 	                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-	                                <input placeholder="Date Range" name="data[date]" data="1" type="text" class="form-control myDateRange" >
+	                                <input placeholder="Date Range" name="data[date]" data="1" type="text" class="form-control myDateRange" value="<?php echo $date ?>" >
 	                            </div>
 							</div>
 

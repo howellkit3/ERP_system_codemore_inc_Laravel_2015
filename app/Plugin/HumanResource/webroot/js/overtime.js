@@ -31,6 +31,9 @@ function openMultiplePrompts(element,url,status){
         },
         function (isConfirm) {
 
+
+            console.log(url);
+            exit();
             if (isConfirm) {
 
                         swal("Successful!","Quotation "+status+".", "success");
@@ -49,7 +52,7 @@ function openMultiplePrompts(element,url,status){
 
 var checkDepartmentEmployee = function(element){
 
-    var departmentId = $(element).val();
+    $departmentId = $(element).val();
 
     $append_cont = $('.employees.result');
 
@@ -57,10 +60,16 @@ var checkDepartmentEmployee = function(element){
 
     $('#myonoffswitch-all').change().prop('checked',false);
 
+    $date = $('#OvertimeDate').val();
+
 	$.ajax({
-            type: "GET",
-            url: serverPath + "human_resource/employees/findbyDepartment/"+departmentId,
+            type: "POST",
+            url: serverPath + "human_resource/employees/findbyDepartment/"+$departmentId,
             dataType: "html",
+            data : {
+                'department_id' : $departmentId,
+                'date' : $date 
+            },
             success: function(data) {
             
 

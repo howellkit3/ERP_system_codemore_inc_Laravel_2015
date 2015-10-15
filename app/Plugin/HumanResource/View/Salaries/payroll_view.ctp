@@ -89,7 +89,7 @@ echo $this->element('payroll_options');
 
                         endif; 
 
-                        if($payroll['Payroll']['status'] == 'pending') : 
+                        if($payroll['Payroll']['status'] == 'pending' || $payroll['Payroll']['status'] == '2') : 
 
 
                           
@@ -154,7 +154,7 @@ echo $this->element('payroll_options');
 
 		            					<tr>
 		            						<td> Total Employee : </td>
-		            						<td> <?php echo count($salaries); ?></td>
+		            						<td> <?php echo count($salariesList); ?></td>
 		            					</tr>	
 		            					</tbody>
 		            					
