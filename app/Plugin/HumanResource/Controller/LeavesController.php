@@ -87,9 +87,9 @@ class LeavesController  extends HumanResourceAppController {
 
 			$this->request->data = $this->Leave->findById($id);
 
-			$from = new DateTime($this->request->data['Leave']['from'].'00:00:00');
+			$from = new DateTime($this->request->data['Leave']['from']);
 
-			$to = new DateTime($this->request->data['Leave']['to'].'00:00:00');
+			$to = new DateTime($this->request->data['Leave']['to']);
 
 			$diff = $from->diff($to);
 

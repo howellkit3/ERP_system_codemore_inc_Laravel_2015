@@ -100,14 +100,14 @@
                                     <label for="inputEmail1" class="col-lg-2 control-label">Date From</label>
                                     <div class="col-lg-2">
                                        
-                                        <input type="date" placeholder="Date From" value="<?php echo !empty($this->request->data['Leave']['from']) ? $this->request->data['Leave']['from'] : '' ?>" day-range="0" class="form-control datepick required from-date-range" name="data[Leave][from]" min="<?php echo !empty($this->request->data['Leave']['to']) ? $this->request->data['Leave']['from'] : date('Y-m-d') ?>">
+                                        <input type="text" placeholder="Date From" value="<?php echo !empty($this->request->data['Leave']['from']) ? $this->request->data['Leave']['from'] : '' ?>" day-range="0" class="form-control datetimepick required from-date-range" name="data[Leave][from]">
 
                                     </div>
 
                                     <label for="inputEmail1" class="col-lg-1 control-label">Date To</label>
                                     <div class="col-lg-2">
 
-                                        <input type="date" placeholder="Date To" value="<?php echo !empty($this->request->data['Leave']['to']) ? $this->request->data['Leave']['to'] : '' ?>" class="form-control datepick date-to-range required" name="data[Leave][to]" max="<?php echo !empty($this->request->data['Leave']['to']) ? $this->request->data['Leave']['to'] : '' ?>" min="<?php echo !empty($this->request->data['Leave']['to']) ? $this->request->data['Leave']['from'] : '' ?>">
+                                        <input type="text" placeholder="Date To" value="<?php echo !empty($this->request->data['Leave']['to']) ? $this->request->data['Leave']['to'] : '' ?>" class="form-control datetimepick date-to-range required" name="data[Leave][to]" >
                                        
                                     </div>
                                     

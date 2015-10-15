@@ -1145,7 +1145,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 							if (!empty($employee['Employee']['image'])) { 
 
-                            	$background =  $serverPath.'img/uploads/employee/'.$employee['Employee']['image'].'?d='.rand(0,1000).time();
+                            	$background =  $serverPath.'img/uploads/employee/'.$employee['Employee']['image'];
                             
                            
 							 } else {
@@ -1358,9 +1358,9 @@ class EmployeesController  extends HumanResourceAppController {
 			}
 
 			// Output the new PDF
-			//$pdfData = $pdf->Output($employee['Employee']['code'].'.pdf', 'D');
+			$pdfData = $pdf->Output($employee['Employee']['code'].'.pdf', 'D');
 
-			$pdf->Output();
+			//$pdf->Output();
 
 
 			//return true;

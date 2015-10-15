@@ -2196,3 +2196,10 @@ ALTER TABLE `request_items` ADD `width_unit_id` INT(11)  NULL  DEFAULT NULL  AFT
 ALTER TABLE `purchasing_items` ADD `category` INT(11)  NULL  DEFAULT NULL  AFTER `quantity_unit_id`;
 ALTER TABLE `purchasing_items` ADD `width` INT(11)  NULL  DEFAULT NULL  AFTER `category`;
 ALTER TABLE `purchasing_items` ADD `width_unit_id` INT(11)  NULL  DEFAULT NULL  AFTER `width`;
+
+
+/* howell added this oct-15-2015 koufu_purchasing*/
+
+ALTER TABLE `leaves`
+MODIFY COLUMN `from`  datetime NOT NULL AFTER `type_id`,
+MODIFY COLUMN `to`  datetime NOT NULL AFTER `from`;
