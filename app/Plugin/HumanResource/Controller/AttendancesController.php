@@ -279,7 +279,20 @@ class AttendancesController  extends HumanResourceAppController {
 
 			$this->LoadModel('HumanResource.WorkSchedule');		
 
-			$dateSplit = explode(' ', $data['Attendance']['time']);	
+			if (!empty($data['Attendance']['time'])) {
+
+				$dateSplit = explode(' ', $data['Attendance']['time']);	
+			}
+			if (!empty($data['Attendance']['time_in'])) {
+
+				$dateSplit = explode(' ', $data['Attendance']['time_in']);	
+			}
+			if (!empty($data['Attendance']['time_out'])) {
+
+				$dateSplit = explode(' ', $data['Attendance']['time_out']);	
+			}
+
+
 
 			$WorkSchedule = $this->WorkSchedule->find('first',array(
 					'conditions' => array(

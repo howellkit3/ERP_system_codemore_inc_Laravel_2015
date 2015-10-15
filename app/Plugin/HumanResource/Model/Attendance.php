@@ -458,25 +458,36 @@ class Attendance extends AppModel {
 
 		$data['Attendance'] = $data['Attendance'];
 
-		$data['Attendance']['date'] = date('Y-m-d').' 00:00:00';
+		 //date('Y-m-d').' 00:00:00';
+		$date_in = date('Y-m-d').' 00:00:00';
 
 		if (!empty($data['Attendance']['time_in'])) {
+			$date_in = $data['Attendance']['time_in'];
 			$data['Attendance']['in'] = date('Y-m-d H:i:s',strtotime($data['Attendance']['time_in'])); 
+
 		}
 
 		else if (!empty($data['Attendance']['time']) && $data['Attendance']['type'] == 'in') {
 
+			$date_in = $data['Attendance']['time'];
 			$data['Attendance']['in'] = date('Y-m-d H:i:s',strtotime($data['Attendance']['time'])); 
 		
 		}
 		if (!empty($data['Attendance']['time_out'])) {
+			//$date_in = $data['Attendance']['time_out'];
 			$data['Attendance']['out'] = date('Y-m-d H:i:s',strtotime($data['Attendance']['time_out'])); 
 		}
 
 		else if (!empty($data['Attendance']['time']) && $data['Attendance']['type'] == 'out') {
 
+		//	$date_in = $data['Attendance']['time'];
 			$data['Attendance']['out'] = date('Y-m-d H:i:s',strtotime($data['Attendance']['time'])); 
 		
+		}
+
+		if (empty($data['Attendance']['id'])) {
+
+			$data['Attendance']['date'] = date('Y-m-d H:i:s',strtotime($date_in));
 		}
 
 		if ( date("w",strtotime($dateNow)) == 0) {
