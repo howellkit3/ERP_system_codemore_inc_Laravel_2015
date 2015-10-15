@@ -2,7 +2,6 @@
 <div style="clear:both"></div>
 <?php  echo $this->element('ware_house_option');?>
 
-
     <div class="filter-block pull-right">
     <?php 
 
@@ -25,8 +24,6 @@
     <br><br>
 </div>
     
-   
-
 <br><br>
 
 <div class="row">
@@ -82,7 +79,7 @@
                                                                             'label' => false,
                                                                             'disabled' => true,
                                                                             'fields' =>array('name'),
-                                                                            'value' => ucwords($supplierData[$receivedItemData[0]['PurchaseOrder']['supplier_id']])));
+                                                                            'value' => ucwords($supplierData[$purchaseOrderSupplierData[$receivedItemData[0]['DeliveredOrder']['purchase_orders_id']]])));
                                         ?>
                                     </div>
                                 </div>
@@ -96,7 +93,7 @@
                                                                             'label' => false,
                                                                             'disabled' => true,
                                                                             'fields' =>array('name'),
-                                                                            'value' => $receivedItemData[0]['PurchaseOrder']['po_number']));
+                                                                            'value' => $purchaseOrderUUIDData[$receivedItemData[0]['DeliveredOrder']['purchase_orders_id']]));
                                         ?>
                                     </div>
                                 </div>
@@ -154,7 +151,6 @@
             </div>
         </div>
 
-   
         <?php echo $this->Form->end(); ?>   
     </div>
 </div>

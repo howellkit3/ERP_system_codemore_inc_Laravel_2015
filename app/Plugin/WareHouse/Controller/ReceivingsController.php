@@ -628,7 +628,11 @@ class ReceivingsController extends WareHouseAppController {
 
 		$receivedItemData = $this->DeliveredOrder->find('all', array('conditions' => array('DeliveredOrder.id' => $id)));
 		
-		//pr($receivedItemData); exit;
+		$purchaseOrderSupplierData = $this->PurchaseOrder->find('list', array('fields' => array('PurchaseOrder.id', 'PurchaseOrder.supplier_id')
+																));
+
+      	$purchaseOrderUUIDData = $this->PurchaseOrder->find('list', array('fields' => array('PurchaseOrder.id', 'PurchaseOrder.uuid')
+																));
 
 		$deliveredDataID = $receivedItemData[0]['DeliveredOrder']['id'];
 
@@ -728,7 +732,7 @@ class ReceivingsController extends WareHouseAppController {
         }
 
 
-   	$this->set(compact('purchaseOrderData', 'supplierData', 'firstName', 'lastName', 'requestData', 'itemDetails', 'receiveItem', 'itemData', 'receivedOrderData', 'type', 'requestItemData', 'itemHolder', 'deliveredDataID', 'receivedItemData', 'areaList', 'userNameList'));
+   	$this->set(compact('purchaseOrderSupplierData', 'purchaseOrderUUIDData', 'purchaseOrderData', 'supplierData', 'firstName', 'lastName', 'requestData', 'itemDetails', 'receiveItem', 'itemData', 'receivedOrderData', 'type', 'requestItemData', 'itemHolder', 'deliveredDataID', 'receivedItemData', 'areaList', 'userNameList'));
 
     }
 
