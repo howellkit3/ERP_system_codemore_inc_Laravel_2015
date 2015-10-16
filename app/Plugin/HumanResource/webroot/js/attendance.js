@@ -524,8 +524,13 @@ $(document).ready(function(){
 
         $('#hidden_date').val($('.myDateRange').val());
 
+        if ($('#hidden_search').val($('#selectEmployee').val())) {
 
-        $('#hidden_search').val($('#selectEmployee').val());   
+        } else {
+            
+            e.preventDefault();
+        }
+ 
 
 
 
