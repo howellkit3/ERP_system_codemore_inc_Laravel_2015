@@ -230,7 +230,6 @@ $totalremaining = 0;
 
                             if($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] == '1') { 
 
-
                                 foreach ($deliveryEdit as $deliveryDataList): 
 
                                    // pr($deliveryDataList['DeliveryReceipt']['type']);
@@ -249,11 +248,7 @@ $totalremaining = 0;
 
                                     }
 
-
-
                                 endforeach; 
-
-                               
 
                                 foreach ($pushRemaining as $key => $value) {
 

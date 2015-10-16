@@ -10,7 +10,6 @@ class DashboardsController  extends HumanResourceAppController {
 
 	public function index() {
 
-	
 		$this->loadModel('HumanResource.WorkSchedule');
 
 		$this->loadModel('HumanResource.Employee');
@@ -20,7 +19,6 @@ class DashboardsController  extends HumanResourceAppController {
 		$this->loadModel('HumanResource.Holiday');
 		
 		$date = date('Y-m-d');
-
 
 		$conditions = 	array('date(Attendance.date) BETWEEN ? AND ?' => array($date,$date));
 
