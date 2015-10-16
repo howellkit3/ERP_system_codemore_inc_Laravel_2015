@@ -1533,6 +1533,12 @@ class SalaryComputationComponent extends Component
 		$compensation = 0;
 		$pay = array();
 
+		$pay['sss_employees'] = 0;
+		$pay['sss_employer'] = 0;
+
+		$pay['sss_compensation'] = 0;
+
+
 		$government_record = array();
 
 		if  (!empty($models['GovernmentRecord'])) {
@@ -1542,7 +1548,7 @@ class SalaryComputationComponent extends Component
 			
 				if ($gov_values['agency_id'] == 1) {
 					
-					$government_record[$gov_values['id']] = $gov_values['value'];
+					$government_record[$gov_values['agency_id']] = $gov_values['value'];
 				
 				}
 			
@@ -1560,20 +1566,26 @@ class SalaryComputationComponent extends Component
 		3. second payroll
 		*/
 
+
+
 		if (!empty($models['Contibution'][1])) {
 
 			$SssRange = ClassRegistry::init('Payroll.SssRange');
 
+
 			switch ($models['Contibution'][1]) {
 				case '1':
-				
+
 				if ( $gross_pay != 0 && (!empty($government_record[1])) ) {
 						
 						$conditions = array('SssRange.credits <=' => $gross_pay );
 						
 						$range = $SssRange->find('first',array('conditions' => $conditions, 'order' => 'SssRange.credits DESC'));
 
-					//	$pay = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $pay;
+
+
+
+						$pay['sss_employees'] = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $pay;
 				}	
 				break;
 
@@ -1585,7 +1597,7 @@ class SalaryComputationComponent extends Component
 						
 						$range = $SssRange->find('first',array('conditions' => $conditions ,'order' => 'SssRange.credits DESC'));
 
-						$pay = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $pay;
+							$pay['sss_employees'] = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $pay;
 				}
 				case '3':	
 				
@@ -1595,7 +1607,7 @@ class SalaryComputationComponent extends Component
 						
 						$range = $SssRange->find('first',array('conditions' => $conditions ,'order' => 'SssRange.credits DESC'));
 
-						$pay = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $pay;
+							$pay['sss_employees'] = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $pay;
 				}
 				case '4':	
 				
@@ -1605,25 +1617,24 @@ class SalaryComputationComponent extends Component
 						
 						$range = $SssRange->find('first',array('conditions' => $conditions ,'order' => 'SssRange.credits DESC'));
 
-						$pay = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $pay;
+							$pay['sss_employees'] = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $pay;
 				}
 			}
 		
 		}
 
-		$pay['sss_employees'] = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $employees;
+		 $pay['sss_employer'] = !empty($range['SssRange']['employers']) ? $range['SssRange']['employers'] : $employer;
 
-		$pay['sss_employer'] = !empty($range['SssRange']['employers']) ? $range['SssRange']['employers'] : $employer;
-
-		$pay['sss_compensation'] = !empty($range['SssRange']['employee_compensations']) ? $range['SssRange']['employee_compensations'] : $compensation;
+		 $pay['sss_compensation'] = !empty($range['SssRange']['employee_compensations']) ? $range['SssRange']['employee_compensations'] : $compensation;
 
 		foreach ($government_record as $key => $list) {
 			
-				$pay['sss_id'] = $key;
+			//
+			$pay['sss_id'] = $key;
 		
 		 //!empty($list['SssRange']['employee_compensations']) ? $range['SssRange']['employee_compensations'] : $compensation;
 		}
-		
+
 		return $pay;
 	}
 
