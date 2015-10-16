@@ -1579,9 +1579,7 @@ class SalariesController  extends HumanResourceAppController {
 
 		$this->loadModel('Payroll.Payroll');
 
-
 		$date = date('Y-m-d');	
-
 
 		$departments = $this->Department->find('list',array('fields' => array('id','notes')));
 
@@ -1589,9 +1587,8 @@ class SalariesController  extends HumanResourceAppController {
 
 		$auth = $this->Session->read('Auth.User');
 
+
 		if ($this->request->is('post')) {
-
-
 
 			$data = $this->Payroll->createPayroll($this->request->data,$auth);
 
@@ -1663,7 +1660,7 @@ class SalariesController  extends HumanResourceAppController {
 
 			$payrollData['Payroll']['employeeIds'] = json_encode($data['Payroll']['emp']);
 
-			$payrollData['Payroll']['status'] = 2;
+			$payrollData['Payroll']['status'] = 3;
 
 			$this->Payroll->save($payrollData);
 			//exit();

@@ -226,7 +226,6 @@ class SalaryComputationComponent extends Component
 						$salary[$key]['EmployeeAdditionalInformation']	= !empty($employee['EmployeeAdditionalInformation']) ? $employee['EmployeeAdditionalInformation'] : array();
         			
         		}
-
        
         		return $salary;
 			}
@@ -1388,7 +1387,7 @@ class SalaryComputationComponent extends Component
 
 			$to = new DateTime($data['Attendance']['out']);
 
-			if ($data['Attendance']['out'] > $data['WorkShift']['to']) {
+			if ($data['Attendance']['out'] > $data['MyWorkshift']['to']) {
 				
 				$to = new DateTime( $data['MyWorkshift']['to'] );
 

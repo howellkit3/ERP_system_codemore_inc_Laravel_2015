@@ -2,9 +2,9 @@
     <li> 
 
         <div class="checkbox-nice">
-            <input type="checkbox" name="data[Employee][id][<?php echo $KeyId ?>]" class="select_employee" value="<?php echo  $value['Employee']['id']; ?>" id="checkbox-<?php echo $KeyId; ?>">
+            <input type="checkbox" name="data[Employee][id][<?php echo $KeyId ?>]" class="select_employee employee" value="<?php echo  $value['Employee']['id']; ?>" id="checkbox-<?php echo $KeyId; ?>">
 
-            <input type="hidden" name="data[Attendance][id][<?php echo $KeyId ?>]" class="select_employee" value="<?php echo $value['Attendance']['in'] ?>" id="checkbox-<?php echo $KeyId; ?>">
+            <input type="hidden" name="data[Attendance][id][<?php echo $KeyId ?>]" class="select_employee attendance" value="<?php echo $value['Attendance']['in'] ?>" id="checkbox-<?php echo $KeyId; ?>">
 
             <span class="time-in"> <?php echo !empty( $value['Attendance']['in']) ? 'Time in ( '.date('h:i a',strtotime($value['Attendance']['in'])).' )' : ''; ?>  </span>
             <label for="checkbox-<?php echo $KeyId; ?>">

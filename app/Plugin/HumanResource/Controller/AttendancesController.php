@@ -67,6 +67,18 @@ class AttendancesController  extends HumanResourceAppController {
 		//  	'Attendance.date >=' => $date
 		// );
 
+		$empId = '';
+
+		if (!empty($query['employee_id'])) {
+
+			$empId =$query['employee_id'];
+			
+			$conditions = array_merge($conditions,array(
+					'Attendance.employee_id' => $empId
+			));
+
+
+		}
 
 		if (!empty($query['data']['name'])) {
 
@@ -81,7 +93,7 @@ class AttendancesController  extends HumanResourceAppController {
 		}
 
 
-	
+
 		$this->Attendance->bind(array('Employee','Overtime','MySchedule','MyWorkshift','MyWorkShiftBreak','MyBreakTime'));
 
 		//$this->Employee->virtualFields['totalItem'] = 'COUNT(`OrderDetail`.`order_id`)';
@@ -142,7 +154,7 @@ class AttendancesController  extends HumanResourceAppController {
 		$employeeList = $this->Employee->getList($conditions);
 
 
-		$this->set(compact('attendances','date','search','departmentList','employeeList','dateSelected'));
+		$this->set(compact('attendances','date','search','departmentList','employeeList','dateSelected','empId'));
 
 	}
 
@@ -881,11 +893,8 @@ public function daily_info() {
 			$search = $this->request->data['search'];
 
 			$conditions = array_merge($conditions,array(
-								'OR' => array(
-								'Employee.first_name LIKE' => '%'.$search.'%',
-								'Employee.last_name LIKE' => '%'.$search.'%',
-								'Employee.middle_name' => '%'.$search.'%',
-						)));
+					'Attendance.employee_id' => $search
+			));
 
 		}
 			
@@ -894,9 +903,6 @@ public function daily_info() {
     
 
     	}
-
-
-
     	
         $attendanceData = $this->Attendance->find('all', array(
           'conditions' => $conditions,
@@ -904,9 +910,7 @@ public function daily_info() {
         ));
      	
 
-     
-
-		$this->set(compact('attendanceData'));
+    	$this->set(compact('attendanceData'));
 
 		$this->render('Attendances/xls/attendance_report');
 	}

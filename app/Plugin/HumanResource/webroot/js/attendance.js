@@ -525,7 +525,7 @@ $(document).ready(function(){
         $('#hidden_date').val($('.myDateRange').val());
 
 
-        $('#hidden_search').val($('.searchCustomer').val());   
+        $('#hidden_search').val($('#selectEmployee').val());   
 
 
 

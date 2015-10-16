@@ -141,25 +141,25 @@ $(document).ready(function(){
 
     }).trigger('change');
 
-    $body.on('submit','#ovetimeForm',function(e){
+    // $body.on('submit','#ovetimeForm',function(e){
    
-        $return = true;
+    //     $return = true;
         
-        if ($('.onoffswitch-checkbox:checked').length <= 0) {
+    //     if ($('.onoffswitch-checkbox:checked').length <= 0) {
 
-                 $('.selected-text').after('<label class="error appended-error" style="top:0;margin:0 10px;" >Please select employees to work.</label>');
+    //              $('.selected-text').after('<label class="error appended-error" style="top:0;margin:0 10px;" >Please select employees to work.</label>');
 
 
-            $('html, body').animate({
-                scrollTop: parseInt($('.error.appended-error').offset().top - 150 )
-            },300);
-              $return = false;
-              e.preventDefault();
-        }
+    //         $('html, body').animate({
+    //             scrollTop: parseInt($('.error.appended-error').offset().top - 150 )
+    //         },300);
+    //           $return = false;
+    //           e.preventDefault();
+    //     }
 
-        return $return;
+    //     return $return;
       
-    });
+    // });
 
 
     $body.on('change','.datetimepick',function(){
@@ -227,10 +227,18 @@ $(document).ready(function(){
 
   $('body').on('click','#selection .select_employee',function(){
 
-        $clone = $(this).parent().html();
+      
     
         if ($(this).is(':checked')) {
 
+                $count = $('#resultList .alert-success').size();
+
+               $(this).parent().find('.select_employee.attendance').attr('name','data[Attendance][id]['+ $count +']');
+
+               $(this).parent().find('.select_employee.employee').attr('name','data[Employee][id]['+ $count +']');
+
+                $clone = $(this).parent().html();
+             //  console.log( $clone );
 
                var html  = '<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><i class="fa fa-check-circle fa-fw fa-lg"></i>';
                  html  +=   '<b>' + $clone +'</b>';

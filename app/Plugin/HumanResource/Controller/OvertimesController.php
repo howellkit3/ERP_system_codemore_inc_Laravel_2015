@@ -11,6 +11,8 @@ class OvertimesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Department');
 
+		$this->loadModel('HumanResource.Employee');
+
 		$date = date('Y-m-d');
 		
 		$department = '';
@@ -25,16 +27,20 @@ class OvertimesController  extends HumanResourceAppController {
 
 		$date = date('Y-m-d');
 
+		$conditions = array(
+			'Overtime.status' => 'approved'
+		);
 		
 		if (!empty($query['date'])) {
 			$date = $query['date'];
+
+			$conditions = array_merge($conditions,array(
+			//'Overtime.date <=' => $date,
+		 	'Overtime.date >=' => $date,			
+		 ));
 		}
 	
-		$conditions = array(
-			//'Overtime.date <=' => $date,
-		 	'Overtime.date >=' => $date,
-			'Overtime.status' => 'approved'
-		);
+		
 
 		if (!empty($query['department_id'])) {
 			
@@ -59,7 +65,7 @@ class OvertimesController  extends HumanResourceAppController {
 	            	'status',
 	            	'approved_by',
 	            	'audit_date',
-	            	'Department.name'
+	            	'employee_ids'
 	            	),
 	            'order' => 'Overtime.date ASC',
 	    );
@@ -67,7 +73,7 @@ class OvertimesController  extends HumanResourceAppController {
 
 		$this->paginate = $params;
 
-		$this->Overtime->bind(array('Department'));
+		//$this->Overtime->bind(array('Department'));
 
 		$overtimes = $this->paginate();
 
@@ -95,16 +101,19 @@ class OvertimesController  extends HumanResourceAppController {
 		$date = date('Y-m-d');
 
 		
+		$conditions = array(
+			'Overtime.status' => ''
+		);
+		
 		if (!empty($query['date'])) {
 			$date = $query['date'];
+
+			$conditions = array_merge($conditions,array(
+			//'Overtime.date <=' => $date,
+		 	'Overtime.date >=' => $date,			
+		 ));
 		}
 	
-		$conditions = array(
-			//'Overtime.date <=' => $date,
-		 	'Overtime.date >=' => $date,
-		 	'Overtime.status' => ''
-		);
-
 		if (!empty($query['department_id'])) {
 			
 			$department = $query['department_id'];	
@@ -278,20 +287,26 @@ class OvertimesController  extends HumanResourceAppController {
 
 		if ($this->request->is('put')) {
 
-			//update overtime in attendance reset 0
-			foreach ($this->request->data['Idholder']['id'] as $key => $value) {
-				//$updateOverTime = $this->Attendance->find('first',array('conditions' => array('Attendance.id' => $value)));
-				$this->Attendance->id = $value;
-				$this->Attendance->savefield('overtime_id' , 0);
-			}
-			
+			// pr();
+
+			// //update overtime in attendance reset 0
+			// foreach ($this->request->data['Idholder']['id'] as $key => $value) {
+			// 	//$updateOverTime = $this->Attendance->find('first',array('conditions' => array('Attendance.id' => $value)));
+			// 	$this->Attendance->id = $value;
+			// 	$this->Attendance->savefield('overtime_id' , 0);
+			// }
+		
 			$this->Overtime->create();
 
+
 			$data = $this->Overtime->formatData($this->request->data,$auth['id']);
+
 			
-			$overtime = $this->Overtime->findById($id);
+	
 
 			if ($this->Overtime->save($data)) {
+
+						$overtime = $this->Overtime->findById($id);
 
 				$this->Session->setFlash('Saving overtime successfully','success');
 
@@ -390,10 +405,15 @@ class OvertimesController  extends HumanResourceAppController {
 
 		$conditions = array_merge($conditions,array('Attendance.in !=' => ' '));
 		if (!empty( $this->request->data['Overtime']['department_id'])) {
-			$conditions = array_merge($conditions,array('Employee.department_id' => $this->request->data['Overtime']['department_id']));
+			//$conditions = array_merge($conditions,array('Employee.department_id' => $this->request->data['Overtime']['department_id']));
 
 		}
 
+
+		if (!empty($selectedEmployee)) {
+			$conditions = array_merge($conditions,array('Attendance.employee_id' => $selectedEmployee ));
+
+		}
 		
 		$employees = $this->Attendance->find('all',array(
 					'conditions' => $conditions,
@@ -414,6 +434,8 @@ class OvertimesController  extends HumanResourceAppController {
 					),
 
 				));	
+
+
 
 		$positionList = $this->Position->find('list',array('fields' => array('id','name')));
 		//pr($employees);exit();

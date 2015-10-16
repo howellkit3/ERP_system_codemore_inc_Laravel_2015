@@ -14,6 +14,7 @@ class Employee extends AppModel {
 		'full_name' => 'CONCAT_WS(" ",Employee.last_name , Employee.middle_name , Employee.first_name  )',
 		'fullname' => 'CONCAT_WS(" ", Employee.first_name, Employee.middle_name, Employee.last_name   )',
 		'middle_fullname' => 'CONCAT_WS(" ", Employee.first_name, Employee.last_name , Employee.middle_name  )',
+		'last_fullname' => 'CONCAT_WS(" ", Employee.last_name, Employee.first_name , Employee.middle_name  )',
 	);
     
     public function bind($model = array('Group')){
@@ -273,7 +274,7 @@ class Employee extends AppModel {
 				'conditions' => array(),
 				'group' => array('Employee.id'),
 				'order' => array('Employee.last_name ASC','Employee.first_name ASC'),
-				'fields' => array('Employee.id','Employee.full_name')
+				'fields' => array('Employee.id','Employee.last_fullname')
 			));
 	}
 
@@ -387,7 +388,6 @@ class Employee extends AppModel {
 							));
 
 			return  Set::classicExtract($employee,'{n}.Employee.id');
-
 	}
 
 	public function findbyCode($code = null,$type = 'first',$fields = array(),$conditions = array()) {
