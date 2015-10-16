@@ -10,6 +10,8 @@ class WorkShift extends AppModel {
 
     public $actsAs = array('Containable');
 
+    public $useTable = 'work_shifts';
+
 
      public function bind($model = array('Group')){
 
