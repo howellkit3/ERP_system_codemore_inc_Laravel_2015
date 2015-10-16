@@ -78,21 +78,21 @@ echo $this->Html->script(array(
                                 <div class="form-horizontal">
                                     <div class="form-group">
                                         <div class="col-lg-6">
-                                       <!--      <div class="form-group">
+                                        <div class="form-group">
                                                <div class="col-lg-12">
                                                     <div class="form-group">
-                                                        <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span>  <b> Department </b> </label>
-                                                        <div class="col-lg-9">
+                                                        <!-- <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span>  <b> Department </b> </label>
+                                                       -->  <div class="col-lg-9">
                                                             <?php 
                                                             echo $this->Form->input('Overtime.id');
 
-                                                            echo $this->Form->input('Overtime.department_id', array(
-                                                                'class' => 'col-lg-6 required autocomplete',
-                                                                'options' => $departments,
-                                                                'empty' => '--- Select Department ---',
-                                                                'onchange' => 'checkDepartmentEmployee(this)',
-                                                                'label' => false,
-                                                                'disabled' => true));
+                                                            // echo $this->Form->input('Overtime.department_id', array(
+                                                            //     'class' => 'col-lg-6 required autocomplete',
+                                                            //     'options' => $departments,
+                                                            //     'empty' => '--- Select Department ---',
+                                                            //     'onchange' => 'checkDepartmentEmployee(this)',
+                                                            //     'label' => false,
+                                                            //     'disabled' => true));
 
                                                             // echo $this->Form->input('Overtime.department_id', array(
                                                             //     'class' => 'col-lg-6 required autocomplete',
@@ -105,7 +105,7 @@ echo $this->Html->script(array(
                                                         </div>
                                                      </div>
                                                 </div>
-                                            </div> -->
+                                            </div> 
 
 
                                               <div class="form-group">
@@ -123,8 +123,8 @@ echo $this->Html->script(array(
                                                     </div>
                                                 </div>  
 
-                                                  <div class="clearfix"></div>
-
+                                                       <div class="clearfix"></div>
+                                         <div class="form-group">
                                                <label for="inputEmail1" class="col-lg-2 control-label"></label>
                                                   <div class="col-lg-9"  id="selection" >
                                                    
@@ -133,8 +133,9 @@ echo $this->Html->script(array(
                                                       </ul>  
                                                 </div>
 
+                                                </div>
 
-
+                                                  <div class="clearfix"></div>
 
                                              <div class="form-group">
                                                <div class="col-lg-12">
@@ -233,14 +234,15 @@ echo $this->Html->script(array(
                                                         <label class="selected-text"></label>
                                                         <div class="clearfix"></div>
                                                         <div id="resultList">
-                                                                <?php foreach ($employees as $KeyId => $value) { ?>
+                                                                <?php $keys = 0; foreach ($employees as $KeyId => $value) { ?>
     <div class="alert alert-success"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><i class="fa fa-check-circle fa-fw fa-lg"></i>
      
-            <input type="checkbox" name="data[Employee][id][<?php echo $KeyId ?>]" class="select_employee" value="<?php echo  $value['Employee']['id']; ?>" id="checkbox-<?php echo $KeyId; ?>">
+            <input type="hidden" name="data[Employee][id][<?php echo $keys; ?>]" class="select_employee" value="<?php echo  $value['Employee']['id']; ?>" >
 
-            <input type="hidden" name="data[Attendance][id][<?php echo $KeyId ?>]" class="select_employee" value="<?php echo $value['Attendance']['in'] ?>" id="checkbox-<?php echo $KeyId; ?>">
+            <input type="hidden" name="data[Attendance][id][<?php echo $keys; ?>]" class="select_employee" value="<?php echo $value['Attendance']['in'] ?>" >
 
             <span class="time-in"> <?php echo !empty( $value['Attendance']['in']) ? 'Time in ( '.date('h:i a',strtotime($value['Attendance']['in'])).' )' : ''; ?>  </span>
+
             <label for="checkbox-<?php echo $KeyId; ?>">
                 <?php 
                 $name = $value['Employee']['first_name'];
@@ -253,12 +255,10 @@ echo $this->Html->script(array(
             </label>
     </div>
 
-<?php } ?>
+<?php $keys++; } ?>
                                                         </div>
 
                                                         <div class="clearfix"></div>
-                                                        <div class="employees result">
-                                                        </div>
                                                     </div>
                                             </div>
                                          </div>

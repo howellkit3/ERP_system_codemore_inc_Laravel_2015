@@ -2203,3 +2203,8 @@ ALTER TABLE `purchasing_items` ADD `width_unit_id` INT(11)  NULL  DEFAULT NULL  
 ALTER TABLE `leaves`
 MODIFY COLUMN `from`  datetime NOT NULL AFTER `type_id`,
 MODIFY COLUMN `to`  datetime NOT NULL AFTER `from`;
+
+ALTER TABLE `payrolls`
+MODIFY COLUMN `id`  int(11) NOT NULL AUTO_INCREMENT FIRST ,
+ADD COLUMN `department_id`  int(11) NULL AFTER `employeeIds`;
+

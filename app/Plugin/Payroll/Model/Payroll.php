@@ -53,6 +53,10 @@ class Payroll extends AppModel {
 			
 			$data[$this->alias]['modified_by'] = $auth['id'];
 
+			if (!empty($data[$this->alias]['department'])) {
+				$data[$this->alias]['department_id'] = $data[$this->alias]['department'];
+			}
+
 			if ($data[$this->alias]['type'] == 'normal') {
 
 				if (!empty($data[$this->alias]['date']) ){

@@ -89,7 +89,7 @@ echo $this->element('payroll_options');
 
                         endif; 
 
-                        if($payroll['Payroll']['status'] == 'pending' || $payroll['Payroll']['status'] == '2') : 
+                        if($payroll['Payroll']['status'] == 'pending' || $payroll['Payroll']['status'] == '3') : 
 
 
                           

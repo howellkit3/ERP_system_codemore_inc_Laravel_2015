@@ -44,16 +44,19 @@ class Overtime extends AppModel {
             
         }
         }
-      
+        
+
 
     	if (!empty($data['Employee'])) {
 
+            $employeeIds = array_values($employeeIds);
     		$data[$this->alias]['employee_ids']	= json_encode($employeeIds);	
             //$data['Employee']['id']
     	}
 
     	$data[$this->alias]['created_by'] = $auth;
     	$data[$this->alias]['modified_by'] = $auth;
+
 
     	return $data;
 

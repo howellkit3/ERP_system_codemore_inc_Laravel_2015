@@ -72,16 +72,19 @@ function getDurationSchedule($time1 = null,$time2 = null,$workschedules = null,$
 		//workschedules
 		$timeIn = date('h:i:s',strtotime($time1));
 
+
 		if (!empty($workschedules)) {
 
-			if (strtotime($time1) > strtotime($workschedules['from'])) {
 
-				$timeIn = $time1;
+			if (strtotime($timeIn) > strtotime($workschedules['from'])) {
+
+				$timeIn = $timeIn;
 
 			} else {
 
 				$timeIn = $workschedules['from'];
 			}
+
 
 			$timeOut = date('H:i:s',strtotime($time2));
 
@@ -146,6 +149,115 @@ function getDurationSchedule($time1 = null,$time2 = null,$workschedules = null,$
 
 		return $difference;
 	}
+}
+
+
+function getDurationScheduleTime($time1 = null,$time2 = null,$workschedules = null,$workschedulesBreaks = null)
+{	
+
+
+	if (!empty($time1) && !empty($time2) && !empty($workschedulesBreaks['id'])) {
+
+		//workschedules
+		$timeIn = date('h:i:s',strtotime($time1));
+
+
+		if (!empty($workschedules)) {
+
+
+			if (strtotime($timeIn) > strtotime($workschedules['from'])) {
+
+				$timeIn = $timeIn;
+
+			} else {
+
+				$timeIn = $workschedules['from'];
+			}
+
+
+			$timeOut = date('H:i:s',strtotime($time2));
+
+			if (strtotime($timeOut) > strtotime($workschedules['to'])) {
+
+				$timeOut = $workschedules['to'];
+
+			} else {
+
+				$timeOut = $time2;
+			}
+
+		
+		}
+
+		if (!empty($workschedulesBreaks)) {
+
+			//substract lunchbreaktime
+			if ($timeOut > $workschedulesBreaks['from'] && $timeOut >  $workschedulesBreaks['to']) {
+
+					$timeOut = strtotime($timeOut) - 3600;
+					$timeOut = date('H:i:s',$timeOut);
+
+			}
+
+		}
+
+		$date = date('Y-m-d');
+		$date1 = new DateTime($timeIn);
+		$date2 = new DateTime($timeOut);
+
+		$interval = $date1->diff($date2);
+
+		$difference = '';
+
+			if ($interval->d != 0) {
+
+				$days = ($interval->d > 1) ? 'days' : 'day';
+				$difference	.= $interval->d  .' '.$days;
+
+			} else {
+
+				if ($interval->h != 0){
+					$difference .= $interval->h ;
+				} 
+			}
+
+			if ($interval->d == 0 && $interval->invert == 0 && $interval->i != 0) {
+				
+				if ($interval->h != 0) {
+				  $difference .= ':';
+				}
+				// $minutes = 'm';
+
+				// if ($interval->i > 1) {
+				// 	$minutes = 'm';
+				// }
+
+				$difference .= $interval->i;
+			} else {
+
+				$difference .= ':00';
+
+			}
+
+
+		return $difference;
+	}
+}
+
+function addWorkTime($times = array()) {
+
+    // loop throught all the times
+    foreach ($times as $time) {
+        list($hour, $minute) = explode(':', $time);
+        $minutes += $hour * 60;
+        $minutes += $minute;
+    }
+
+    $hours = floor($minutes / 60);
+    $minutes -= $hours * 60;
+
+    // returns the time already formatted
+    return sprintf('%02d:%02d', $hours, $minutes);
 }
 
 function getDurationTime($time1 = null,$time2 = null)
