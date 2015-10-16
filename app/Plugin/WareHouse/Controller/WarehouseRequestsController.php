@@ -545,6 +545,15 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 	 	if ($this->request->is(array('post','put'))) {
 
+	 		foreach ($this->request->data['WarehouseRequestItem'] as $key => $value) {
+
+    			if (!empty($value['id'])) {
+
+    				$this->WarehouseRequestItem->delete($value['id']);
+
+    			}
+    			
+    		}
 
 			$requestId = $this->WarehouseRequest->saveRequest($this->request->data['Request'],$userData['User']['id']);
 

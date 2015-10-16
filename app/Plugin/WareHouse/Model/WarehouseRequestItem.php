@@ -37,12 +37,18 @@ class WarehouseRequestItem extends AppModel {
 
 		foreach ($requestData['WarehouseRequestItem'] as $key => $requestValue)
 		{
-			$this->create();
 
-			$requestValue['request_id'] = $id;
+			if(!empty($requestValue['request_id'])){
 
-			$this->save($requestValue);
-		}
+				$this->create();
+
+				$requestValue['request_id'] = $id;
+
+				$this->save($requestValue);
+
+			}	
+
+		} 
 
 		
 		return true;
