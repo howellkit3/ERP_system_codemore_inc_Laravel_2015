@@ -127,6 +127,7 @@ class AttendancesController  extends HumanResourceAppController {
 	            // 	'MyBreakTime.to'
 
 	            // 	),
+	            'group' => array('Attendance.id'),
 	            'order' => 'Attendance.in DESC',
 	    );
 

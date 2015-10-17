@@ -29,7 +29,7 @@ class TicketingSystemsController extends TicketAppController {
 
         $conditions = array();
 
-        $this->JobTicket->bindTicket();
+              $this->JobTicket->bindTicket();
 
         $query = $this->request->query;
 
@@ -41,7 +41,7 @@ class TicketingSystemsController extends TicketAppController {
                     'OR' => array(
                           'JobTicket.uuid like' => '%'.$query['name'].'%',
                           'JobTicket.po_number like' => '%'.$query['name'].'%',
-                          'Product.name like' => '%'.$query['name'].'%',
+                          //'Product.name like' => '%'.$query['name'].'%',
                         )
                       
                 ));
@@ -61,7 +61,13 @@ class TicketingSystemsController extends TicketAppController {
 
         $ticketData = $this->paginate('JobTicket');
 
- 
+        if (!empty($_GET['data'])) {
+
+            Configure::write('debug',2);
+
+            pr( $ticketData );
+        }
+
 		$companyData = $this->Company->find('list',array('fields' => array('id','company_name')));
 
 		$this->set(compact('ticketData','companyData'));
@@ -106,7 +112,19 @@ class TicketingSystemsController extends TicketAppController {
                                                  )
                                                 ));
 
-        $productData = $this->Product->find('first',array('conditions' => array('Product.uuid' => $productUuid) ,'order' => 'Product.id DESC'));
+
+        $conditions =  array('Product.id' => $ticketData['JobTicket']['product_id']);
+
+        // if (!empty($delData['ClientOrder']['company_id'])) {
+
+        //     $conditions = array_merge($conditions,array('Product.uuid' => $productUuid,
+
+        // 'Product.company_id' =>$delData['ClientOrder'][
+        // 'company_id'] ));
+
+
+        // }
+        $productData = $this->Product->find('first',array('conditions' => $conditions ,'order' => 'Product.id DESC'));
 
 
          // pr( $productData );
@@ -147,6 +165,20 @@ class TicketingSystemsController extends TicketAppController {
         }else{
             $noPermissionSales = ' ';
         }
+
+           if (!empty($_GET['data'])) {
+
+            Configure::write('debug',2);
+
+            pr( $ticketData  );
+
+            pr( $delData );
+
+            pr($specs);
+            
+            pr( $productData );
+        }
+
 
 		
 		$this->set(compact('userData','delData','ticketData','formatDataSpecs','specs','machines','unitData','subProcess','productData','companyData','clientOrderId','noPermissionSales','subProcessData'));

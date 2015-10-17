@@ -86,7 +86,7 @@ Configure::write('debug',2);
 							<?php $partCounter = 1?>
 							<?php $processCounter = 1?>
 							<div class="border">
-								<table class="table medium-font">
+								<table class="table small-font">
 									<thead>
 										<?php $countSpecs = count($formatDataSpecs);  
 
@@ -132,7 +132,7 @@ Configure::write('debug',2);
 										<?php 
 										 if ($countSpecs < 20) : 
 
-										$minimunTd = !empty($ticketData['JobTicket']['remarks']) ?  20 : 22;
+										$minimunTd = !empty($ticketData['JobTicket']['remarks']) ?  4 : 4;
 
 
 

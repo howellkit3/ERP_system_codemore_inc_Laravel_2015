@@ -39,7 +39,7 @@ class EmployeesController  extends HumanResourceAppController {
 	            'limit' => $limit,
 	            //'fields' => array('id', 'status','created'),
 	            'recursive' => -1,
-	            'order' => 'Employee.code DESC',
+	            'order' => array('Employee.last_name DESC','Employee.code DESC'),
 	        );
 
 	        $employees = $this->paginate();

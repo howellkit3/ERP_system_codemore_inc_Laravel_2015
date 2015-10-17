@@ -264,7 +264,12 @@ class WarehouseRequestsController extends WareHouseAppController {
 	    $preparedData = $this->User->find('first', array(
 														'conditions' => array('User.id' => $requestData['WarehouseRequest']['created_by']),
 														));
-	    
+	   if (!empty($_GET['data'])) {
+
+            Configure::write('debug',2);
+
+            pr( $requestData );
+        } 	
     	$this->set(compact('requestId','requestData','userData','unitData','preparedData','roleName', 'outRecordData'));
     }
 

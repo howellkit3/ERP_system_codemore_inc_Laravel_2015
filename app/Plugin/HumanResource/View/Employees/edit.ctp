@@ -43,6 +43,7 @@ echo $this->Html->css(array(
                             echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'employees', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
                             ?>
 
+
                             <div class="form-group pull-right" style="margin-right:10px;">
 
                             <?php echo $this->Html->link('<i class="fa fa-credit-card"></i>
@@ -51,12 +52,16 @@ echo $this->Html->css(array(
 
                             </div>
 
+                               <?php if(in_array($userData['User']['role_id'],array('19'))) { ?>
+                   
                             <div class="form-group pull-right" style="margin-right:25px;">
 
                             <?php echo $this->Html->link('<i class="fa fa-money fa-lg"></i> Salary Settings', array('controller' => 'salaries', 'action' => 'employee_settings',$this->request->data['Employee']['id']),array('class' =>'btn btn-primary pull-right','escape' => false));
                             ?>
 
                           </div>
+
+                          <?php } ?>
                      
                     </div
                     </header>

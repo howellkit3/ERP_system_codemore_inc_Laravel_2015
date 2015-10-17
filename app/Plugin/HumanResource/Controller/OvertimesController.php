@@ -591,16 +591,22 @@ class OvertimesController  extends HumanResourceAppController {
 		$conditions = array_merge($conditions,array('Attendance.in !=' => ' '));
 
 		
-		if (!empty( $this->request->data['Overtime']['department_id'])) {
+		// if (!empty( $this->request->data['Overtime']['department_id'])) {
 
-			$conditions = array_merge($conditions,array('Employee.department_id' => $this->request->data['Overtime']['department_id']));
+		// 	$conditions = array_merge($conditions,array('Employee.department_id' => $this->request->data['Overtime']['department_id']));
+
+		// }
+
+		if (!empty($selectedEmployee)) {
+			$conditions = array_merge($conditions,array('Attendance.employee_id' => $selectedEmployee ));
 
 		}
+
 
 		$employees = $this->Attendance->find('all',array(
 					'conditions' => $conditions,
 					'order' => array('Employee.last_name','Employee.code'),
-						'fields' => array(
+					'fields' => array(
 					'id',
 					'Employee.first_name',
 					'Employee.last_name',
