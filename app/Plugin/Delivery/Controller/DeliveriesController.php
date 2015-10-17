@@ -18,8 +18,6 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->loadModel('Sales.ClientOrder');
 
-        $this->loadModel('Sales.ClientOrderDeliverySchedule');
-
         $deliveryData = $this->Delivery->find('list',array('fields' => array('schedule_uuid','status'))); 
         
         $this->ClientOrder->bindDelivery();
@@ -36,7 +34,7 @@ class DeliveriesController extends DeliveryAppController {
 
         $orderListHelper = $this->Delivery->find('list',array('fields' => array('clients_order_id', 'dr_uuid')));
 
-        $orderDeliveryList = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid', 'uuid')));
+        $orderDeliveryList = $this->ClientOrder->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid', 'uuid')));
 
         $deliveryDetailList = $this->DeliveryDetail->find('list',array('fields' => array('delivery_uuid', 'delivered_quantity')));
 
@@ -67,9 +65,6 @@ class DeliveriesController extends DeliveryAppController {
 
         $clientsOrder = $this->paginate('ClientOrder');
 
-        //pr($clientsOrder); exit;
-
-        //no permission sales/Receivable Staff/Accounting Head
         if ($userData['User']['role_id'] == 3 || $userData['User']['role_id'] == 6 || $userData['User']['role_id'] == 9) {
 
             $noPermissionSales = 'disabled not-active';
@@ -400,15 +395,15 @@ class DeliveriesController extends DeliveryAppController {
 
         $userData = $this->Session->read('Auth');
 
-        $this->loadModel('Sales.ClientOrderDeliverySchedule');
+       // $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
-        $this->loadModel('Delivery.DeliveryReceipt');
+       $this->loadModel('Delivery.DeliveryReceipt');
 
-        $this->loadModel('Delivery.Transmittal');
+       $this->loadModel('Delivery.Transmittal');
 
         $this->loadModel('Sales.ClientOrder');
 
-        $this->Delivery->bindDeliveryView();
+        $this->Delivery->bindDeliveryClientOrder();
       
         $deliveryEdit = $this->Delivery->find('all', array(
                                              'conditions' => array(
@@ -425,13 +420,15 @@ class DeliveriesController extends DeliveryAppController {
 
         $TransmittalData =  $this->Transmittal->find('all');
 
+
+
         //pr($TranmisttalData); exit;
 
-        $this->ClientOrder->bindDelivery();
+      //  $this->ClientOrder->bindDelivery();
 
-        $clientOrderData = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid','id')));
+        //$clientOrderData = $this->ClientOrder->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid','id')));
 
-        $scheduleInfo = $this->ClientOrder->find('all');
+         //$scheduleInfo = $this->ClientOrder->find('all');
 
         // $this->Delivery->bindDeliveryView();
 
@@ -455,6 +452,8 @@ class DeliveriesController extends DeliveryAppController {
         // );
 
         // $deliveryEdit = $this->paginate('Delivery');
+
+       // pr($deliveryEdit); exit; 
 
         $noPermissionSales = ' '; 
 
@@ -616,9 +615,9 @@ class DeliveriesController extends DeliveryAppController {
 
       $userData = $this->Session->read('Auth');
 
-      $this->loadModel('Sales.ClientOrderDeliverySchedule');
+      // $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
-      $this->loadModel('Sales.ClientOrder');
+      // $this->loadModel('Sales.ClientOrder');
 
       $this->loadModel('Delivery.Transmittal');
 
@@ -649,12 +648,6 @@ class DeliveriesController extends DeliveryAppController {
         );
 
       $transmittalData = $this->paginate('Transmittal');
-
-      $this->ClientOrder->bindDelivery();
-
-      $clientOrderData = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid','id')));
-
-      $scheduleInfo = $this->ClientOrder->find('all');
 
       $noPermissionSales = ' ';
 

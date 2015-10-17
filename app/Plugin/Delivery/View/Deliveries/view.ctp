@@ -603,7 +603,7 @@ $totalremaining = 0;
         
     });
 
-    $('.refresh').on("click",function(){
+    $('.refreshg').on("click",function(){
         
        setTimeout(function (){
             location.reload();

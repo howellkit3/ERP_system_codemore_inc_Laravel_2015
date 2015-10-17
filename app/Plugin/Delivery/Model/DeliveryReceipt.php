@@ -46,7 +46,13 @@ class DeliveryReceipt extends AppModel {
 					'className' => 'Delivery.Delivery',
 					'foreignKey' => false,
 					'conditions' => 'DeliveryReceipt.dr_uuid = Delivery.dr_uuid'
-				),		
+				),	
+
+				'Transmittal' => array(
+					'className' => 'Delivery.Transmittal',
+					'foreignKey' => false,
+					'conditions' => 'DeliveryReceipt.dr_uuid = Transmittal.dr_uuid'
+				),	
 			
 			)
 		));
