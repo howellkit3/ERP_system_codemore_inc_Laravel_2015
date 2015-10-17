@@ -44,13 +44,13 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 	                            </div>
 							</div>
 
-			                  <!--   <div class="form-group pull-left">
+			                    <div class="form-group pull-left">
 			                 		 <input placeholder="Search..." class="form-control searchCustomer" value="<?php echo $search ?>" name="data[name]" />
 			                            <i class="fa fa-search search-icon"></i>
-								</div> -->
+								</div>
 
 
-			                 	<div class="form-group pull-left" style="min-width:200px;">
+			                 <!-- 	<div class="form-group pull-left" style="min-width:200px;">
 			                 		<?php echo $this->Form->input('employee_id',array(
 			                 			'type' => 'select',
 			                 			'options' => $employeeList,
@@ -61,7 +61,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 			                 			'default' => $empId
 			                 		)); ?>
 			                    </div>
-
+ -->
 
 			                     <div class="form-group pull-left">
 			                    	 <button class="btn btn-success">Go</button> 
