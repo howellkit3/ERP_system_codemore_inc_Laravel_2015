@@ -28,6 +28,8 @@
 
                     </div>
 
+                 <?php if(in_array($userData['User']['role_id'],array('19'))) { ?>
+                   
                     <div class="form-group pull-right" style="margin-right:10px;">
                     	
                     	<?php echo $this->Html->link('<i class="fa fa-money fa-lg"></i> Salary Settings', array('controller' => 'salaries', 'action' => 'employee_settings',$employee['Employee']['id']),array('class' =>'btn btn-primary pull-right','escape' => false));
@@ -35,7 +37,8 @@
 
                     </div>
 
-
+                <?php endif; ?>
+                
                     <div class="form-group pull-right" style="margin-right:10px;">
                     	
                     	<?php echo $this->Html->link('<i class="fa fa-credit-card"></i>

@@ -22,7 +22,9 @@
         <?php echo $formatDataSpecs['ProductSpecificationPart']['size1']?> x
         <?php echo $formatDataSpecs['ProductSpecificationPart']['size2']?> >>
         <?php echo $outs ?> Outs >>
-        <?php echo $formatDataSpecs['ProductSpecificationPart']['paper_quantity'] ?> 
+       <!--  <?php echo $formatDataSpecs['ProductSpecificationPart']['paper_quantity'] ?>  -->
+       
+         <?php echo $specs['ProductSpecification']['quantity'] ?> 
         <?php if(!empty($formatDataSpecs['ProductSpecificationPart']['allowance'])){ ?>
             + <?php echo $formatDataSpecs['ProductSpecificationPart']['allowance'] ?>
 

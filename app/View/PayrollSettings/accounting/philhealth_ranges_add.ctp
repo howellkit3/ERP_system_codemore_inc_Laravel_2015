@@ -15,7 +15,7 @@
 
 			</div>
 		</div>
-		<?php echo $this->Form->create('PhilHealthRange',array('url'=>(array('controller' => 'payroll_settings','action' => 'sss_ranges_add'))));?>
+		<?php echo $this->Form->create('PhilHealthRange',array('url'=>(array('controller' => 'payroll_settings','action' => 'philhealth_ranges_add'))));?>
 			
 			<div class="row">
 				<div class="col-lg-12">

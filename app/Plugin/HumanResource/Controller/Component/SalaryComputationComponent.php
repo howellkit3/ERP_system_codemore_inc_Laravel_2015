@@ -201,7 +201,8 @@ class SalaryComputationComponent extends Component
 						//no tax
 						$taxType = !empty($payrollSettings['Setting']['tax_pay']) ? $payrollSettings['Setting']['tax_pay'] : '';
 
-						$salary[$key]['with_holding_tax'] = $this->computeTax($employee,$salary[$key]['gross_pay'],$taxType,$minimumWage);	
+
+						$salary[$key]['with_holding_tax'] = $this->computeTax($employee,$salary[$key]['gross'],$taxType,$minimumWage);	
 
 						//add tax
 						$salary[$key]['total_deduction'] += $salary[$key]['with_holding_tax'];
@@ -263,33 +264,95 @@ class SalaryComputationComponent extends Component
 
     private function _total_hours($data = null){ 
 
-    	$days['total_hours'] = 0.00;
+    	//$days['total_hours'] = 0.00;
 
 		$workshiftFrom = date('Y-m-d',strtotime($data['Attendance']['in'])).' '.$data['MyWorkshift']['from'];
 
 
-		//if (strtotime($data['Attendance']['in']) >= strtotime($workshiftFrom) ) {
+		// //if (strtotime($data['Attendance']['in']) >= strtotime($workshiftFrom) ) {
 						
-			$from = new DateTime($data['Attendance']['in']);
+		// 	$from = new DateTime($data['Attendance']['in']);
 
-			$to = new DateTime($data['Attendance']['out']);
+		// 	$to = new DateTime($data['Attendance']['out']);
 
-			if ($data['Attendance']['out'] > $data['MyWorkshift']['to']) {
+		// 	pr($data);
+
+		// 	pr($data['Attendance']['in']);
+
+		// 	pr($data['Attendance']['out']);
+
+		// 	if ($data['Attendance']['out'] > $data['MyWorkshift']['to']) {
 				
-				$to = new DateTime( $data['MyWorkshift']['to'] );
+		// 		$to = new DateTime( $data['MyWorkshift']['to'] );
+		// 	}
+					
+
+
+		$timeIn = date('h:i:s',strtotime($data['Attendance']['in']));
+
+
+
+
+		if (!empty($data['MySchedule'])) {
+
+
+			if (strtotime($timeIn) > strtotime($data['MyWorkshift']['from'])) {
+
+				$timeIn = $timeIn;
+
+			} else {
+
+				$timeIn = $data['MyWorkshift']['from'];
 			}
-						
-			$days['total_hours'] =  $from->diff($to)->format('%h.%i'); 
 
-			$days['total_hours'] -= 1;
 
-			if (!empty($data['BreakTime']['id'])) {
+			$timeOut = date('H:i:s',strtotime($data['Attendance']['out']));
 
-				if (strtotime($data['Attendance']['out']) >= strtotime($data['MyBreakTime']['from']) && strtotime($data['Attendance']['out']) >= strtotime($data['MyBreakTime']['to'])) {
+			if (strtotime($timeOut) > strtotime($data['MyWorkshift']['to'])) {
+
+				$timeOut = $data['MyWorkshift']['to'];
+
+			} else {
+
+				$timeOut = $timeOut;
+			}
+
+		
+		}
+
+		if (!empty($data['MyBreakTime']['id'])) {
+
+			//substract lunchbreaktime
+			if ($timeOut > $data['MyBreakTime']['from'] && $timeOut >  $data['MyBreakTime']['to']) {
+
+					$timeOut = strtotime($timeOut) - 3600;
+					$timeOut = date('H:i:s',$timeOut);
+
+			}
+
+		}
+
+
+		$date = date('Y-m-d');
+		$date1 = new DateTime($timeIn);
+		$date2 = new DateTime($timeOut);
+
+
+		$days['total_hours'] = $date1->diff($date2)->format('%h.%i'); 
+
+
+			// $days['total_hours'] =  $from->diff($to)->format('%h.%i'); 
+
+			// $days['total_hours'] -= 1;
+
+			// if (!empty($data['MyBreakTime']['id'])) {
+
+			// 	if (strtotime($data['Attendance']['out']) >= strtotime($data['MyBreakTime']['from']) && strtotime($data['Attendance']['out']) >= strtotime($data['MyBreakTime']['to'])) {
 			
-					$days['total_hours'] -= 1;
-				}
-			}
+			// 		$days['total_hours'] -= 1;
+			// 	}
+			// }
+
 
     	return $days['total_hours'];
     }
@@ -386,6 +449,7 @@ class SalaryComputationComponent extends Component
 
     private function _dailyRate($employee = null, $models = array() ,$hours = 8, $workingDays = 26 ) {
 
+    	Configure::write('debug',2);
     	$countDays = 0;
      	$regular_days = 0;
      	$special_days = 0;
@@ -490,7 +554,7 @@ class SalaryComputationComponent extends Component
 
 					//$overtime = $Overtime->read(null,$data['Attendance']['overtime_id']);
 
-					if  ( $days['Attendance']['out'] > $data['WorkShift']['to'] ) {
+					if  ( $days['Attendance']['out'] > $data['MyWorkShift']['to'] ) {
 						
 						$from  =  new DateTime($data['WorkShift']['to']);
 						$to  =  new DateTime($data['Attendance']['out']);
@@ -1640,7 +1704,7 @@ class SalaryComputationComponent extends Component
 
 	public function philhealth_pay($attendance = null,$salaries = null,$sched = 'first',$gross_pay = 0 ,$models = array()){
 
-		//sss agency id = 2;
+		//sss agency id = 3;
 
 		$pay = 0;
 		$government_record = array();
@@ -1666,10 +1730,25 @@ class SalaryComputationComponent extends Component
 
 		$PhRange = ClassRegistry::init('Payroll.PhilHealthRange');
 
-		if ( $gross_pay != 0 && (!empty($government_record[2])) ) {
-				
+		if ( $gross_pay != 0 && (!empty($government_record[3])) ) {
+					
+
+
 				$conditions = array('PhilHealthRange.range_from >=' => $gross_pay);
 				$range = $PhRange->find('first',array('conditions' => $conditions ));
+
+				if (empty($range) && $gross <= 8999) {
+
+					$range = $PhRange->find('first');
+				}
+				if (empty($range) && $gross >= 35000) {
+
+					$conditions = array('PhilHealthRange.range_from >=' => '35000');
+
+					$range = $PhRange->find('first',array('conditions' => $conditions ));
+
+				}
+
 				$pay = !empty($range['PhilHealthRange']['employee']) ? $range['PhilHealthRange']['employee'] : $pay;
 			
 		}
@@ -1681,7 +1760,7 @@ class SalaryComputationComponent extends Component
 
 	public function pagibig_pay($attendance = null,$salaries = null,$sched = 'first',$gross_pay = 0,$models = array()){
 
-		//pagibig agency id = 2;
+		//pagibig agency id = 4;
 		$pay = 0;
 		$government_record = array();
 
@@ -1692,15 +1771,16 @@ class SalaryComputationComponent extends Component
 			}
 		}
 		
-		if ( $gross_pay != 0 && !empty($government_record['2'])) {
+		if ( $gross_pay != 0 && !empty($government_record['4'])) {
 				
-				// $phRange = ClassRegistry::init('PhilHealthRange');
-				// $conditions = array('PhilHealthRange.range_from >=' => $gross_pay);
-				// $range = $phRange->find('first',array('conditions' => $conditions ));
-				// $pay = !empty($range['PhilHealthRange']['employee']) ? $range['PhilHealthRange']['employee'] : $pay;
-				// $pay = $range['PhilHealthRange']['employees'];
+				$phRange = ClassRegistry::init('PhilHealthRange');
+				$conditions = array('PhilHealthRange.range_from >=' => $gross_pay);
 
-			$pay = '100.00';
+				$range = $phRange->find('first',array('conditions' => $conditions ));
+				$pay = !empty($range['PhilHealthRange']['employee']) ? $range['PhilHealthRange']['employee'] : $pay;
+				$pay = !empty($range['PhilHealthRange']['employees']) ? $range['PhilHealthRange']['employees'] : 0;
+
+			//$pay = '100.00';
 		}
 
 		return $pay;
@@ -1906,10 +1986,9 @@ class SalaryComputationComponent extends Component
 
 		if (!empty($minimumWage)) {
 
-
 		if ($data['Salary']['basic_pay'] >= $minimumWage['Wage']['amount']) {
 
-				$code = 'Z';
+				///$code = 'Z';
 
 				if (in_array($taxStatus,array('S','M'))) {
 					$code = 'S_ME';
@@ -1929,6 +2008,9 @@ class SalaryComputationComponent extends Component
 
 				}
 
+				if (!empty($code)) {
+
+				
 				$conditions = array('Tax.type' => $type, 'Tax.code' => $code);
 
 				$taxes = $Tax->find('first',array('conditions' => $conditions )); 
@@ -1952,14 +2034,18 @@ class SalaryComputationComponent extends Component
 
 				$taxDeductList = $TaxDeduction->find('first',array('conditions' => $conditions));
 
-				//computations
-				if (!empty($taxKey)) {
 
-					//$total_tax = $netPay - $range / $taxDeductList['TaxDeduction']['tax_'.$taxKey.'_percent'];
-					$total_tax = (double)$grossPay - (double)$range;
-					$total_tax = $total_tax * (str_replace('%','',$taxDeductList['TaxDeduction']['tax_'.$taxKey.'_percent']) / 100);
-					$total_tax = $total_tax +  $taxDeductList['TaxDeduction']['tax_'.$taxKey];
+					//computations
+					if (!empty($taxKey)) {
 
+						//$total_tax = $netPay - $range / $taxDeductList['TaxDeduction']['tax_'.$taxKey.'_percent'];
+						$total_tax = (double)$grossPay - (double)$range;
+
+						$total_tax = $total_tax * (str_replace('%','',$taxDeductList['TaxDeduction']['tax_'.$taxKey.'_percent']) / 100);
+
+						$total_tax = $total_tax +  $taxDeductList['TaxDeduction']['tax_'.$taxKey];
+
+					}
 				}
 
 			}
