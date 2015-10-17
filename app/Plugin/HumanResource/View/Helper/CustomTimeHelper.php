@@ -78,7 +78,7 @@ function getDurationSchedule($time1 = null,$time2 = null,$workschedules = null,$
 
 			if (strtotime($timeIn) > strtotime($workschedules['from'])) {
 
-				$timeIn = $timeIn;
+				$timeIn = date('H:i',strtotime($timeIn)).':00';
 
 			} else {
 
@@ -93,8 +93,8 @@ function getDurationSchedule($time1 = null,$time2 = null,$workschedules = null,$
 				$timeOut = $workschedules['to'];
 
 			} else {
-
-				$timeOut = $time2;
+				
+				$timeOut = date('H:i',strtotime($time2)).':00';
 			}
 
 		
