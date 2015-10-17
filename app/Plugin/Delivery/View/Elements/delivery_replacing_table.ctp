@@ -74,7 +74,6 @@ $totalremaining = 0;
 
                         <td>
 
-
                               <?php 
 
                               $dr_uuid_holder = $deliveryDataList['Delivery']['dr_uuid'];
