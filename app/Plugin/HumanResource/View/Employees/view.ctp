@@ -37,8 +37,8 @@
 
                     </div>
 
-                <?php endif; ?>
-                
+                <?php } ?>
+
                     <div class="form-group pull-right" style="margin-right:10px;">
                     	
                     	<?php echo $this->Html->link('<i class="fa fa-credit-card"></i>
