@@ -29,7 +29,7 @@ class SalesOrdersController extends SalesAppController {
 
     $limit = 10;
 
-    $conditions = array();
+    $conditions = array('ClientOrder.status_id' => null);
 
     if ($this->request->is('ajax')) {
 
@@ -254,16 +254,22 @@ class SalesOrdersController extends SalesAppController {
         //$this->set(compact('categoryData'));
     }
 
-    public function edit_PO() {
+    public function terminate($id = null) {
 
-     // pr($this->request->data);exit;
+     // pr('d'); exit;
 
-     
+      $userData = $this->Session->read('Auth');
 
-     
-      //pr($this->request->data); exit;
+      $this->ClientOrder->id = $id;
 
-       // $this->set(compact('supplierData'));
+      $this->ClientOrder->saveField('status_id', 1);
+
+      $this->Session->setFlash(__('Client Order has been removed'), 'success');
+      
+        $this->redirect( array(
+            'controller' => 'sales_orders',   
+            'action' => 'index'
+        ));  
 
     }
 	

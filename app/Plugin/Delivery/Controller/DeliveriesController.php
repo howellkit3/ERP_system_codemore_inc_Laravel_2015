@@ -46,7 +46,7 @@ class DeliveriesController extends DeliveryAppController {
 
         $limit = 10;
 
-        $conditions = array();
+        $conditions = array('ClientOrder.status_id' => null);
 
         $this->paginate = array(
             'conditions' => $conditions,
