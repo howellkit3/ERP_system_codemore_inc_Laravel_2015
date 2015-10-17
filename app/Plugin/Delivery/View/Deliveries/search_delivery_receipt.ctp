@@ -2,7 +2,7 @@
 $pushRemaining  = array();
 $totalremaining = 0;
 
-  if(!empty($DRData)){ ?>
+?>
 
       <?php  foreach ($DRData as $deliveryDataList): ?>
 
@@ -91,7 +91,7 @@ $totalremaining = 0;
                
         <?php 
           endforeach; 
-  } 
+  
   ?> 
 
 <?php echo $this->element('modals');

@@ -18,6 +18,8 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->loadModel('Sales.ClientOrder');
 
+       // $this->loadModel('Sales.ClientOrderDeliverySchedule');
+
         $deliveryData = $this->Delivery->find('list',array('fields' => array('schedule_uuid','status'))); 
         
         $this->ClientOrder->bindDelivery();
@@ -395,11 +397,11 @@ class DeliveriesController extends DeliveryAppController {
 
         $userData = $this->Session->read('Auth');
 
-       // $this->loadModel('Sales.ClientOrderDeliverySchedule');
+        //$this->loadModel('Sales.ClientOrderDeliverySchedule');
 
-       $this->loadModel('Delivery.DeliveryReceipt');
+        $this->loadModel('Delivery.DeliveryReceipt');
 
-       $this->loadModel('Delivery.Transmittal');
+        $this->loadModel('Delivery.Transmittal');
 
         $this->loadModel('Sales.ClientOrder');
 
@@ -420,15 +422,9 @@ class DeliveriesController extends DeliveryAppController {
 
         $TransmittalData =  $this->Transmittal->find('all');
 
-
-
         //pr($TranmisttalData); exit;
 
-      //  $this->ClientOrder->bindDelivery();
-
-        //$clientOrderData = $this->ClientOrder->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid','id')));
-
-         //$scheduleInfo = $this->ClientOrder->find('all');
+        
 
         // $this->Delivery->bindDeliveryView();
 
@@ -452,8 +448,6 @@ class DeliveriesController extends DeliveryAppController {
         // );
 
         // $deliveryEdit = $this->paginate('Delivery');
-
-       // pr($deliveryEdit); exit; 
 
         $noPermissionSales = ' '; 
 
@@ -649,6 +643,12 @@ class DeliveriesController extends DeliveryAppController {
 
       $transmittalData = $this->paginate('Transmittal');
 
+      // $this->ClientOrder->bindDelivery();
+
+      // $clientOrderData = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid','id')));
+
+      // $scheduleInfo = $this->ClientOrder->find('all');
+
       $noPermissionSales = ' ';
 
       $this->set(compact('noPermissionSales','transmittalData', 'scheduleInfo', 'clientOrderData'));     
@@ -710,6 +710,8 @@ class DeliveriesController extends DeliveryAppController {
 
         $DRData = $this->paginate('DeliveryReceipt');
 
+       // pr($DRData); exit;
+
         $this->set(compact('noPermissionSales','DRData','userFName','userLName'));     
         
     }
@@ -745,7 +747,7 @@ class DeliveriesController extends DeliveryAppController {
 
         $orderListHelper = $this->Delivery->find('list',array('fields' => array('clients_order_id', 'dr_uuid')));
 
-        $orderDeliveryList = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid', 'uuid')));
+        $orderDeliveryList = $this->ClientOrder->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid', 'uuid')));
 
         $deliveryDetailList = $this->DeliveryDetail->find('list',array('fields' => array('delivery_uuid', 'delivered_quantity')));
 
@@ -755,6 +757,55 @@ class DeliveriesController extends DeliveryAppController {
             $this->render('index');
         }else{
             $this->render('search_order');
+        }
+    }
+
+    public function search_delivery_receipt($hint = null){
+
+        $userData = $this->Session->read('Auth');
+
+        $this->loadModel('Sales.ClientOrderDeliverySchedule');
+
+        $this->loadModel('Sales.ClientOrder');
+
+        $this->loadModel('User');
+
+        $this->loadModel('Delivery.DeliveryReceipt');
+
+        $this->loadModel('Delivery.Delivery');
+
+        $this->Delivery->bindDelivery();
+
+        $this->DeliveryReceipt->bind('Delivery');
+
+        $this->ClientOrder->bindDelivery();
+
+        $userFName = $this->User->find('list',array('fields' => array('id','first_name')));
+
+        $userLName = $this->User->find('list',array('fields' => array('id','last_name')));
+
+        $this->DeliveryReceipt->bind('Delivery');
+
+        $noPermissionSales = ' ';
+
+        $DRData = $this->DeliveryReceipt->find('all',array(
+                      'conditions' => array(
+                        'OR' => array(
+                        array('DeliveryReceipt.dr_uuid LIKE' => '%' . $hint . '%'),
+                        array('DeliveryReceipt.schedule LIKE' => '%' . $hint . '%'),
+                        array('DeliveryReceipt.location LIKE' => '%' . $hint . '%'),
+                        array('DeliveryReceipt.quantity LIKE' => '%' . $hint . '%')
+                          )
+                        ),
+                      'limit' => 10
+                      )); 
+
+        $this->set(compact('noPermissionSales','DRData','userFName','userLName'));  
+
+        if ($hint == ' ') {
+            $this->render('index');
+        }else{
+            $this->render('search_delivery_receipt');
         }
     }
 
