@@ -368,8 +368,13 @@ class AttendancesController  extends HumanResourceAppController {
 
 						//update daily info
 						$this->Attendance->bindWorkshift();
-						$callAttendance = $this->Attendance->findById($data['Attendance']['id']);
 
+						
+						if (!empty($data['Attendance']['id'])) {
+							$callAttendance = $this->Attendance->findById($data['Attendance']['id']);
+
+						}
+						
 
 						//$this->DailyInfo->updateDailyInfo($attendance,$attendance['Attendance']['employee_id'],$attendance['Attendance']['date']);	
 
@@ -887,7 +892,8 @@ public function daily_info() {
 			$conditions = array_merge($conditions,array('date(Attendance.date) BETWEEN ? AND ?' => array($date1,$date2)));
 		
 		}
-	
+		
+
 		if (!empty($this->request->data['search'])) {
 
 			$search = $this->request->data['search'];
@@ -900,7 +906,7 @@ public function daily_info() {
 			
 		$this->Attendance->bind(array('Employee','MySchedule','MyWorkshift','MyWorkShiftBreak','MyBreakTime'));
 
-    
+    	
 
     	}
     	

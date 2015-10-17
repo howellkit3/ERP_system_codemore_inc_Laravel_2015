@@ -75,12 +75,16 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 
 			                      <input type="hidden"  name="search" id="hidden_search" value="" />
 
+
+
 			                     <!-- <a data-toggle="modal" href="#myAttendance" class="btn btn-primary pull-right"><i class="fa fa-share-square-o fa-lg"></i> Export</a> -->
 
 			                      <button class="btn btn-primary pull-right"><i class="fa fa-share-square-o fa-lg"></i> Export</button>
 
 			                      	 <?php echo $this->Form->end(); ?>
 			                   	 
+
+
 
 			                     	
 
@@ -92,6 +96,37 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 
 			               </div>
 			            </header>
+	            	<div class="main-box-body clearfix">
+		               <div class="form-group">
+	                                     <div class="col-lg-11">
+	                                    <div class="form-group">
+	                                        <?php echo $this->Form->create('Attendance',array( 
+	                                        	'url' => array('controller' => 'salaries','action' => 'export_all_attendance', 'type'=> 'POST'))); ?>   	
+	                                        <div class="col-lg-9">
+	                                           <div class="form-group pull-left">
+	                                            <div class="radio inline-block">
+	                                            <input type="radio" checked="checked" value="1:15" data-key="First Half ( 1- 15 )" class="mode_type required" id="optionsRadios1" name="data[Payroll][date]">
+	                                                <label for="optionsRadios1">
+	                                                    First Half ( 1- 15)
+	                                                </label>
+	                                            </div>
+	                                            <div class="radio inline-block">
+	                                            <input type="radio" class="mode_type required" value="16:31" data-key="Second Half ( 16 - 30 / 31 ) " id="optionsRadios2" name="data[Payroll][date]">
+	                                                <label for="optionsRadios2">
+	                                                    Second Half ( 16 - 30 / 31 )
+	                                                </label>
+	                                            </div>
+	                                            </div>
+	                                            <button class="btn btn-primary pull-left"><i class="fa fa-share-square-o fa-lg"></i> Export All</button>
+
+	                                        </div>
+
+
+	                                        <?php echo $this->Form->end(); ?>
+	                                     </div>
+	                                </div>      
+	                            </div>
+                        </div>
 
 			          	<div class="main-box-body clearfix">
 			            	<div class="table-responsive">
@@ -192,6 +227,8 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 								                        </td> 
 								                         <td class="text-center duration" > 
 								                           <?php 
+
+
 								                           echo $this->CustomTime->getDurationSchedule($schedule['Attendance']['in'],$schedule['Attendance']['out'],$schedule['MyWorkshift'],$schedule['MyBreakTime']); ?> 
 								                        </td>
 								                         <td class="text-center duration" > 

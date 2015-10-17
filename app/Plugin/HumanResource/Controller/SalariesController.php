@@ -2383,4 +2383,126 @@ class SalariesController  extends HumanResourceAppController {
 
 	return $employees;
 	}
+
+
+	public function export_all_attendance() {
+
+
+		Configure::write('debug',2);
+
+		$salaries = '';
+
+		if (!empty($this->request->data)) {
+
+			$data = $this->request->data;
+
+			if ($data['Payroll']['date'] == '1:15') {
+
+				$date = array(
+					'date1' => date('Y-m-1'),
+					'date2' => date('Y-m-15')
+
+					);
+			}
+
+			$this->loadModel('HumanResource.Attendance');
+			$this->loadModel('HumanResource.Employee');
+			$this->loadModel('HumanResource.EmployeeAdditionalInformation');
+			$this->loadModel('HumanResource.Department');
+			$this->loadModel('HumanResource.Position');
+			$this->loadModel('HumanResource.Salary');
+			$this->loadModel('HumanResource.GovernmentRecord');
+			$this->loadModel('HumanResource.WorkSchedule');
+			$this->loadModel('HumanResource.WorkShift');
+			$this->loadModel('HumanResource.WorkShiftBreak');
+			$this->loadModel('HumanResource.BreakTime');
+			$this->loadModel('HumanResource.OvertimeExcess');
+
+
+			$empConditions = array('Employee.status NOT' => '3');
+
+			$this->Employee->bind(array('Salary','GovernmentRecord','Department','Position','EmployeeAdditionalInformation'));	
+
+			// if (!empty($empConditions)) {
+
+			// 	$empConditions = array_merge($empConditions,array('EmployeeAdditionalInformation.id' => $empConditions));
+			// }
+
+			$employees = $this->Employee->find('all',array(
+								'conditions' => $empConditions,
+								'order' => array('Employee.last_name ASC'),
+								//'fields' => array('Employee.full_name','Employee.id'),	
+								'group' => array('Employee.id')
+							));
+
+
+			$customDate['start'] = $date['date1'];
+
+			$customDate['end'] = $date['date2'];
+
+			$days = explode('-', $customDate['start']);
+
+			$payScheds = ( $days[2] == '16' ) ? 'second' : 'first';
+
+
+			$conditions = array();
+
+			$conditions = array_merge($conditions,array(
+					'Attendance.date >=' => $customDate['start'],
+					'Attendance.date <=' => $customDate['end'] 
+				));
+
+			if (!empty($employees)) {
+
+					foreach ($employees as $key => $emp) {
+							
+							$conditions =  array_merge($conditions,array('Attendance.employee_id' => $emp['Employee']['id']));
+							$this->Attendance->bindMyWorkshift(); 
+							$employees[$key]['Attendance'] = $this->Attendance->computeAttendance($conditions);
+					}
+
+
+					//$this->Components->load('HumanResource.SalaryComputation');
+					$this->loadModel('HumanResource.SalaryReport');
+					$this->loadModel('HumanResource.Holiday');
+					$this->loadModel('HumanResource.Overtime');
+					$this->loadModel('Payroll.Deduction');
+					$this->loadModel('Payroll.Amortization');			
+					$this->loadModel('Payroll.OvertimeRate');
+					$this->loadModel('Payroll.Contribution');
+					$this->loadModel('Payroll.Loan');
+
+					$this->loadModel('Payroll.Adjustment');	
+
+					//taxes tables		
+					$this->loadModel('Payroll.Tax');
+					$this->loadModel('Payroll.TaxDeduction');
+					$this->loadModel('Payroll.Wage');
+					$this->loadModel('Payroll.Setting');
+
+					//$OvertimeRate = ClassRegistry::init('Amortization')->find('all');
+					$updateDatabase = !empty($update) && $update == true ? true : false;
+
+					$payrollSettings = $this->Setting->find('first');
+
+					$salaries = $this->SalaryComputation->calculateBenifits($employees,$payScheds,$customDate,$updateDatabase,$payrollSettings);
+
+			}
+			else {
+
+					// $this->Session->setFlash(__('There\'s an error Processing Payroll'),'error');
+					// $this->redirect(array('controller' => 'salaries','action' => 'payroll'));
+			}
+
+			$this->set(compact('salaries'));
+
+			$this->render('Attendances/xls/attendance_report_user');
+
+			pr($salaries);
+			exit();
+
+			
+	}
+
+	}
 }

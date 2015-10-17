@@ -29,7 +29,7 @@ class TicketingSystemsController extends TicketAppController {
 
         $conditions = array();
 
-              $this->JobTicket->bindTicket();
+        $this->JobTicket->bindTicket();
 
         $query = $this->request->query;
 
@@ -41,7 +41,7 @@ class TicketingSystemsController extends TicketAppController {
                     'OR' => array(
                           'JobTicket.uuid like' => '%'.$query['name'].'%',
                           'JobTicket.po_number like' => '%'.$query['name'].'%',
-                          //'Product.name like' => '%'.$query['name'].'%',
+                          'Product.name like' => '%'.$query['name'].'%',
                         )
                       
                 ));
@@ -61,6 +61,7 @@ class TicketingSystemsController extends TicketAppController {
 
         $ticketData = $this->paginate('JobTicket');
 
+ 
 		$companyData = $this->Company->find('list',array('fields' => array('id','company_name')));
 
 		$this->set(compact('ticketData','companyData'));

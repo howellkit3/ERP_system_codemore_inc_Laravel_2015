@@ -23,8 +23,8 @@ class SalaryComputationComponent extends Component
         	$Adjustments = ClassRegistry::init('Adjustment');
 
 			$holidays = $Holidays->find('all',array(
-			'conditions' => array('Holiday.year' => date('Y',strtotime($customDate['start']))),
-			'fields' => array('id','name','start_date','end_date','year','type')
+				'conditions' => array('Holiday.year' => date('Y',strtotime($customDate['start']))),
+				'fields' => array('id','name','start_date','end_date','year','type')
 			));
 
 			$conditions = array(
@@ -82,8 +82,6 @@ class SalaryComputationComponent extends Component
 
 							$salary[$key] = $this->_dailyRate($employee,$models);
 						}
-
-
 
         				$salary[$key]['id'] = !empty($checkExisting['SalaryReport']['id']) ? $checkExisting['SalaryReport']['id'] : '';
         				$salary[$key]['employee_id'] = $employee['Employee']['id'];
@@ -226,7 +224,6 @@ class SalaryComputationComponent extends Component
 						$salary[$key]['EmployeeAdditionalInformation']	= !empty($employee['EmployeeAdditionalInformation']) ? $employee['EmployeeAdditionalInformation'] : array();
         			
         		}
-       
         		return $salary;
 			}
     }
@@ -268,6 +265,9 @@ class SalaryComputationComponent extends Component
 		$workshiftFrom = date('Y-m-d',strtotime($data['Attendance']['in'])).' '.$data['MyWorkshift']['from'];
 
 
+		if  (!empty($data['MyWorkshift']['to'])) {
+
+		
 		//if (strtotime($data['Attendance']['in']) >= strtotime($workshiftFrom) ) {
 						
 			$from = new DateTime($data['Attendance']['in']);
@@ -290,6 +290,8 @@ class SalaryComputationComponent extends Component
 					$days['total_hours'] -= 1;
 				}
 			}
+
+		}
 
     	return $days['total_hours'];
     }
@@ -367,6 +369,11 @@ class SalaryComputationComponent extends Component
     	
     	$data['night_diff'] = 0;
 
+
+    	if (!empty( $days['MyWorkshift']['to'])) {
+
+    	
+
     	if  ( $days['Attendance']['out'] > $days['MyWorkshift']['to'] ) {
 				
 			//starts from 10:00 pm
@@ -379,6 +386,8 @@ class SalaryComputationComponent extends Component
 			}
 
 		}
+
+	}
 
 		return $data['night_diff'];
 				
@@ -490,9 +499,12 @@ class SalaryComputationComponent extends Component
 
 					//$overtime = $Overtime->read(null,$data['Attendance']['overtime_id']);
 
+					if (!empty($data['WorkShift']['to'] )) {
+
+					
 					if  ( $days['Attendance']['out'] > $data['WorkShift']['to'] ) {
 						
-						$from  =  new DateTime($data['WorkShift']['to']);
+						$from  = new DateTime($data['WorkShift']['to']);
 						$to  =  new DateTime($data['Attendance']['out']);
 
 						$days['hours_ot'] =  $from->diff($to)->format('%h.%i'); 
@@ -501,14 +513,16 @@ class SalaryComputationComponent extends Component
 					//regular ot is 1.25	
 					$data['OT'] = ($employee['Salary']['basic_pay'] * $days['hours_ot'] * 1.25 ) / $hours;
 
+					}
 				}
 
-				//holidays 
+
 				
 				//holidays 
 				$today = date('Y-m-d',strtotime($days['Attendance']['in']));
 
 				$legal_holiday_work = 0.00;
+				
 				$special_holiday_work = 0.00;
 
 				foreach ($models['Holiday'] as $holiday_key => $holiday) {
@@ -1640,7 +1654,7 @@ class SalaryComputationComponent extends Component
 
 	public function philhealth_pay($attendance = null,$salaries = null,$sched = 'first',$gross_pay = 0 ,$models = array()){
 
-		//sss agency id = 2;
+		//sss agency id = ;
 
 		$pay = 0;
 		$government_record = array();
