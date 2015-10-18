@@ -6,7 +6,7 @@
     $objTpl = PHPExcel_IOFactory::load("./img/attendance_report_list.xls");
     
     $objTpl->setActiveSheetIndex(0)
-    ->setCellValue('A2','Date : '. date('Y-m-d'))->getStyle('A3:AK3')->getFont()->setBold(true);
+    ->setCellValue('A2','Date : '. $selectedDate)->getStyle('A3:AK3')->getFont()->setBold(true);
 
     $counter = 5;
     $sheet = $objTpl->getActiveSheet();
@@ -14,7 +14,9 @@
     $workingTime = array(); 
 
     foreach ($attendanceData as $key => $employee) {
-            $key++;
+
+
+                        $key++;
            
                        // ->setCellValue('C8',)
                         $sheet->setCellValue('A'.$counter,$key);
@@ -30,12 +32,13 @@
 
                         $sheet->setCellValue('F'.$counter, ucwords($employee['Attendance']['date']));
 
-                        $in = !empty($employee['Attendance']['in']) ? date('H:i a',strtotime($employee['Attendance']['in'])) : ''; 
+                        $in = !empty($employee['Attendance']['in']) ? date('h:i a',strtotime($employee['Attendance']['in'])) : ''; 
                         $sheet->setCellValue('G'.$counter, $in);
 
-                        $out = !empty($employee['Attendance']['out']) ? date('H:i a',strtotime($employee['Attendance']['out'])) : ''; 
+                        $out = !empty($employee['Attendance']['out']) ? date('h:i a',strtotime($employee['Attendance']['out'])) : ''; 
                         $sheet->setCellValue('H'.$counter, $out);
 
+                        $timeWork = 0;
                         $timeWork =  $this->CustomTime->getDurationScheduleTime($employee['Attendance']['in'],$employee['Attendance']['out'],$employee['MyWorkshift'],$employee['MyBreakTime'],'Time'); 
                         $sheet->setCellValue('I'.$counter, $timeWork);
 
@@ -69,8 +72,8 @@
 
 
 
-    //prepare download
-    $filename = 'monthly-report-'.date('y-m-d').'-'.time().'.xls'; //just some random filename
+  // prepare download
+    $filename = 'attendance-report-'.date('y-m-d').'-'.time().'.xls'; //just some random filename
     //header('Content-Type: application/vnd.ms-office');
     header('Content-Type: application/vnd.ms-office');
     

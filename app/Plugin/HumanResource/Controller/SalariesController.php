@@ -2502,7 +2502,6 @@ class SalariesController  extends HumanResourceAppController {
 
 			$this->render('Attendances/xls/attendance_report_user');
 
-			pr($salaries);
 			exit();
 
 			

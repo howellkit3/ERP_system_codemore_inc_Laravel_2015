@@ -881,10 +881,14 @@ public function daily_info() {
 
 		$conditions = array();
 
+		$selectedDate = date('Y-m-d');
+
 		if (!empty($this->request->data)) {
 
 
 		if (!empty($this->request->data['date'])) {
+
+			$selectedDate = $this->request->data['date'];
 
 			$dateSplit = explode('-',$this->request->data['date']);
 			$date1 = trim($dateSplit[0]);
@@ -916,11 +920,12 @@ public function daily_info() {
         $attendanceData = $this->Attendance->find('all', array(
           'conditions' => $conditions,
             'order' => 'Attendance.date ASC',
-            'group' => 'Attendance.id'
+            'group' => 'Attendance.id',
+            //'fields'=> array('Attendance.in','Attendance.out')
         ));
-     	
+     		
 
-    	$this->set(compact('attendanceData'));
+    	$this->set(compact('attendanceData','selectedDate'));
 
 		$this->render('Attendances/xls/attendance_report');
 	}

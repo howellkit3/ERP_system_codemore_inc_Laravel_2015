@@ -30,18 +30,25 @@
                         $sheet->setCellValue('E'.$counter, ucwords($employee['Employee']['middle_name']));
                         // ->setCellValue('D'.$counter, 'work')
 
-                        $sheet->setCellValue('F'.$counter, ucwords($employee['days']));
+                        $sheet->setCellValue('F'.$counter, $employee['days']);
 
 
-                        $sheet->setCellValue('G'.$counter, ucwords($employee['hours_regular']));
+                        $sheet->setCellValue('G'.$counter, $employee['hours_regular']);
 
-                        $sheet->setCellValue('H'.$counter, ucwords($employee['hours_night_diff']));
+                        $sheet->setCellValue('H'.$counter, $employee['hours_night_diff']);
 
-                        $sheet->setCellValue('I'.$counter, ucwords($employee['hours_ot']));
+                        $sheet->setCellValue('I'.$counter, $employee['hours_ot']);
 
-                        $sheet->setCellValue('J'.$counter, ucwords($employee['hours_sunday_work']));
+                        $sheet->setCellValue('J'.$counter, $employee['hours_sunday_work']);
                         
-                        $sheet->setCellValue('K'.$counter, ucwords($employee['hours_sunday_work_ot']));
+                        $sheet->setCellValue('K'.$counter, $employee['hours_sunday_work_ot']);
+
+
+                        $sheet->setCellValue('L'.$counter,$employee['hours_sunday_night_diff']);
+
+                         $sheet->setCellValue('M'.$counter,$employee['sunday_ctpa']);
+
+                         $sheet->setCellValue('N'.$counter,$employee['sunday_sea']);
 
                         // ->setCellValue('D'.$counter, 'work')
                         // ->setCellValue('E'.$counter, $attendanceList['WorkShift']['from'])

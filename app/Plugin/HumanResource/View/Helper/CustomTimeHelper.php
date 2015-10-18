@@ -160,18 +160,21 @@ function getDurationSchedule($time1 = null,$time2 = null,$workschedules = null,$
 function getDurationScheduleTime($time1 = null,$time2 = null,$workschedules = null,$workschedulesBreaks = null)
 {	
 
+	$difference = '00:00';
 
 	if (!empty($time1) && !empty($time2) && !empty($workschedulesBreaks['id'])) {
+
 
 		$today = date('Y-m-d',strtotime($time1));
 		//workschedules
 		$timeIn = date('Y-m-d h:i',strtotime($time1)).':00';
 
-
 		if (!empty($workschedules)) {
 
+			$defaultFrom = $today.' '.$workschedules['from'];
 
-			if (strtotime($timeIn) > strtotime($workschedules['from'])) {
+
+			if (strtotime($timeIn) > strtotime($defaultFrom)) {
 
 				$timeIn = $timeIn;
 
@@ -202,16 +205,39 @@ function getDurationScheduleTime($time1 = null,$time2 = null,$workschedules = nu
 
 			$out = date('H:i:s', $timestamp);
 
+
 			//substract lunchbreaktime
 			if ($timeOut > $workschedulesBreaks['from'] && $out >  $workschedulesBreaks['to']) {
 
 					$timeOut = strtotime($timeOut) - 3600;
 					$timeOut = $today.' '.date('H:i',$timeOut).':00';
+	
+
+			}	
+
+			// if ($timeOut > $workschedulesBreaks['from']) {
+
+			// 	$timeOut = $today.' '.date('H:',strtotime($timeOut)).'00:00';
+			// }
+
+
+			$myBreakFrom = $today.' '.  $workschedulesBreaks['from'];
+			$myBreakTo = $today.' '.  $workschedulesBreaks['to'];
+
+
+			$breakHour = strtotime($workschedulesBreaks['from']) + 3600;
+
+			$todayBreak =  $today.' '.date('H:i:s',$breakHour);
+
+
+			if (strtotime($time2) >= strtotime($myBreakFrom) && strtotime($time2) <= strtotime($todayBreak)) {
+
+				$timeOut = $today.' '.date('H:',strtotime($time2)).'00:00';
+
 
 			}
 
 		}
-
 		$date = date('Y-m-d');
 		$date1 = new DateTime($timeIn);
 		$date2 = new DateTime($timeOut);
@@ -253,13 +279,9 @@ function getDurationScheduleTime($time1 = null,$time2 = null,$workschedules = nu
 
 			}
 
-
-
-
-			
-
-		return $difference;
+		
 	}
+	return $difference;
 }
 
 function addWorkTime($times = array()) {

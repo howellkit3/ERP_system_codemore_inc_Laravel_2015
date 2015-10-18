@@ -213,7 +213,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 
 									                           			$diff = $ex2[1] - $ex1[1];
 									                           			
-									                           			echo ' + '. $diff .' hr/s ';
+																		echo $this->CustomTime->getDuration($from,$schedule['Attendance']['out']); 
 
 									                           		}else {
 									                           			
