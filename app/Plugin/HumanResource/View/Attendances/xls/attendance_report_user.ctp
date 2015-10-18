@@ -37,7 +37,7 @@
 
                         $sheet->setCellValue('H'.$counter, ucwords($employee['hours_night_diff']));
 
-                        $sheet->setCellValue('I'.$counter, ucwords($employee['OT']));
+                        $sheet->setCellValue('I'.$counter, ucwords($employee['hours_ot']));
 
                         // ->setCellValue('D'.$counter, 'work')
                         // ->setCellValue('E'.$counter, $attendanceList['WorkShift']['from'])

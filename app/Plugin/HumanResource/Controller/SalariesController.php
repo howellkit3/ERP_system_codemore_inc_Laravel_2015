@@ -2399,7 +2399,7 @@ class SalariesController  extends HumanResourceAppController {
 			if ($data['Payroll']['date'] == '1:15') {
 
 				$date = array(
-					'date1' => date('Y-m-1'),
+					'date1' => date('Y-m-01'),
 					'date2' => date('Y-m-15')
 
 					);
@@ -2416,7 +2416,10 @@ class SalariesController  extends HumanResourceAppController {
 			$this->loadModel('HumanResource.WorkShift');
 			$this->loadModel('HumanResource.WorkShiftBreak');
 			$this->loadModel('HumanResource.BreakTime');
+
+			$this->loadModel('HumanResource.Overtime');
 			$this->loadModel('HumanResource.OvertimeExcess');
+
 
 
 			$empConditions = array('Employee.status NOT' => '3');
@@ -2436,6 +2439,7 @@ class SalariesController  extends HumanResourceAppController {
 							));
 
 
+
 			$customDate['start'] = $date['date1'];
 
 			$customDate['end'] = $date['date2'];
@@ -2447,10 +2451,9 @@ class SalariesController  extends HumanResourceAppController {
 
 			$conditions = array();
 
-			$conditions = array_merge($conditions,array(
-					'Attendance.date >=' => $customDate['start'],
-					'Attendance.date <=' => $customDate['end'] 
-				));
+			$conditions = array_merge($conditions,
+
+				array('date(Attendance.date) BETWEEN ? AND ?' => array($customDate['start'],$customDate['end'])) );
 
 			if (!empty($employees)) {
 
@@ -2462,6 +2465,7 @@ class SalariesController  extends HumanResourceAppController {
 					}
 
 
+					
 					//$this->Components->load('HumanResource.SalaryComputation');
 					$this->loadModel('HumanResource.SalaryReport');
 					$this->loadModel('HumanResource.Holiday');
@@ -2493,6 +2497,8 @@ class SalariesController  extends HumanResourceAppController {
 					// $this->Session->setFlash(__('There\'s an error Processing Payroll'),'error');
 					// $this->redirect(array('controller' => 'salaries','action' => 'payroll'));
 			}
+
+
 
 			$this->set(compact('salaries'));
 

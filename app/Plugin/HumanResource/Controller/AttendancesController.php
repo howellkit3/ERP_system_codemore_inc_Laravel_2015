@@ -913,7 +913,7 @@ public function daily_info() {
     	
         $attendanceData = $this->Attendance->find('all', array(
           'conditions' => $conditions,
-            'order' => 'Attendance.id ASC'
+            'order' => 'Attendance.date ASC'
         ));
      	
 

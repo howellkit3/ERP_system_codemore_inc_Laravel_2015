@@ -120,7 +120,7 @@ class Attendance extends AppModel {
 						'foreignKey' => false,
 						'dependent' => false,
 						'conditions' => array('BreakTime.id = WorkShiftBreak.breaktime_id')
-					)
+					),
 				),
 				'hasOne' => array(
 
@@ -171,6 +171,13 @@ class Attendance extends AppModel {
 						'foreignKey' => false,
 						'dependent' => false,
 						'conditions' => array('MyBreakTime.id = MyWorkShiftBreak.breaktime_id')
+					),
+					 
+					'Overtime' =>  array(
+						'className' => 'Overtime',
+						'foreignKey' => false,
+						'dependent' => false,
+						'conditions' => array('Overtime.id = Attendance.overtime_id')
 					),
 				),
 				'hasOne' => array(
@@ -371,7 +378,9 @@ class Attendance extends AppModel {
 			
 			$this->bindMyWorkshift();
 
-			$attendances = $this->find('all',array('conditions' => $conditions));
+			$attendances = $this->find('all',array('conditions' => $conditions,
+				'order' => 'Attendance.date ASC'
+			));
 
 			foreach ($attendances as $key => $attendance) {
 
