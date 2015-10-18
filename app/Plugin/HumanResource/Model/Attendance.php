@@ -379,7 +379,8 @@ class Attendance extends AppModel {
 			$this->bindMyWorkshift();
 
 			$attendances = $this->find('all',array('conditions' => $conditions,
-				'order' => 'Attendance.date ASC'
+				'order' => 'Attendance.date ASC',
+				'group' => 'Attendance.id'
 			));
 
 			foreach ($attendances as $key => $attendance) {
@@ -398,8 +399,6 @@ class Attendance extends AppModel {
 								$attendances[$key]['total_hours'] -= 1;
 							}
 						}
-
-
 						
 				}
 

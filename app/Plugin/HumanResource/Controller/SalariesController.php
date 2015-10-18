@@ -2388,7 +2388,7 @@ class SalariesController  extends HumanResourceAppController {
 	public function export_all_attendance() {
 
 
-		Configure::write('debug',2);
+		Configure::write('debug',0);
 
 		$salaries = '';
 
@@ -2419,9 +2419,7 @@ class SalariesController  extends HumanResourceAppController {
 
 			$this->loadModel('HumanResource.Overtime');
 			$this->loadModel('HumanResource.OvertimeExcess');
-
-
-
+			
 			$empConditions = array('Employee.status NOT' => '3');
 
 			$this->Employee->bind(array('Salary','GovernmentRecord','Department','Position','EmployeeAdditionalInformation'));	

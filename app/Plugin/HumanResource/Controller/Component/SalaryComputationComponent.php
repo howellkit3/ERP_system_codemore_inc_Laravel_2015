@@ -225,7 +225,7 @@ class SalaryComputationComponent extends Component
         			
         		}
 
-        		
+
         		return $salary;
 			}
     }
@@ -324,7 +324,7 @@ class SalaryComputationComponent extends Component
 			
 				
 					$timeOut = strtotime($timeOut) - 3600;
-					$timeOut = date('H:i:s',$timeOut);
+					$timeOut = date('Y-m-d',strtotime($data['Attendance']['in'])).' '.date('H:i:s',$timeOut);
 
 			}
 
@@ -333,7 +333,7 @@ class SalaryComputationComponent extends Component
 
 			if (strtotime($timeOut) > strtotime($data['MyWorkshift']['to'])) {
 				$timeOut = strtotime($timeOut) - 3600;
-				$timeOut = date('H:i:s',$timeOut);
+				$timeOut = date('Y-m-d',strtotime($data['Attendance']['in'])).' '.date('H:i:s',$timeOut);
 			}
 		}
 
@@ -387,68 +387,116 @@ class SalaryComputationComponent extends Component
     	$data['total_hours'] = 0;
     	$data['night_diff'] = 0;
     	$overtime = 0;
+    	$data['hours_ot'] = 0;
 
-    	if (!empty($days)) {
+    	if (!empty($days['Attendance']['overtime_id'])) {
+						
+					
+					$data['hours_ot'] = 0;
 
-				//check if OT
-				if (!empty($days['Attendance']['overtime_id'])) {
+					$Overtime = ClassRegistry::init('Overtime');
 
-						$Overtime = ClassRegistry::init('Overtime');
+					//$overtime = $Overtime->read(null,$data['Attendance']['overtime_id']);
 
-						$overtime = $Overtime->read(null,$days['Attendance']['overtime_id']);
+					if (!empty($days['MyWorkshift']['to'] )) {
 
-					// //pr($days['Attendance']['overtime_id']);
 
-					if (!empty($days['MyWorkShift']['to'])) {
+					//if  ( strtotime($days['Attendance']['out']) >= strtotime($days['Overtime']['to']) ) {
+						
+						$workshift = $days['Overtime']['from'];
+
+						$from  = new DateTime($workshift);
 
 					
-					if  ( $days['Attendance']['out'] >= $overtime['Overtime']['from'] ) {
-						
-						//add breatime before OT		
-						$from  =  new DateTime($overtime['Overtime']['from']);
-						
-						$to  =  new DateTime($days['Attendance']['out']);
+						if (strtotime($days['Attendance']['out']) > strtotime($days['Overtime']['to'])) {
 
-						if (strtotime($days['Attendance']['out']) > strtotime($overtime['Overtime']['to'])) {
+						$to  =  new DateTime($days['Overtime']['to']);
 
-							$to  =  new DateTime($overtime['Overtime']['to']);
+						} else {
+
+							$to  =  new DateTime($days['Attendance']['out']);	
 						}
 
-						$data['total_hours'] = $from->diff($to)->format('%h.%i'); 
-						//add breaktime
-						$data['total_hours'] -= 1;
 
-					}
+						$data['hours_ot'] =  $from->diff($to)->format('%h.%i');
+
+						
+					//}
 					
-					//regular ot is 1.25
-					$data['total_hours'] = $data['total_hours'];
+					//regular ot is 1.25	
+						// if (!empty($data['hours_ot'])) {
+						// 	$data['OT'] = ($employee['Salary']['basic_pay'] * $data['hours_ot'] * 1.25 ) / $hours;
 
-					//night differential
-
-					$fromDate = date('Y-m-d',strtotime($days['Attendance']['date'])).' 22:00:00';
-
-					$from  =  new DateTime($fromDate);
-					$to  =  new DateTime($days['Attendance']['out']);
-
-					if ($days['Attendance']['out'] > $fromDate) {
-
-						if (strtotime($days['Attendance']['out']) > strtotime($overtime['Overtime']['to'])) {
-
-							$to  =  new DateTime($overtime['Overtime']['to']);
-						}
-
-						$data['night_diff'] = $from->diff($to)->format('%h.%i'); 
-						$data['night_diff'] -= 1;
+						// } else {
+						// 	$data['OT'] = 0;
+						// }
+					
 					}
 
-					}
-
-				}
 
 		}
 
+  //   	if (!empty($days)) {
 
-		return $data;
+		// 		//check if OT
+		// 		if (!empty($days['Attendance']['overtime_id'])) {
+
+		// 				$Overtime = ClassRegistry::init('Overtime');
+
+		// 				$overtime = $Overtime->read(null,$days['Attendance']['overtime_id']);
+
+		// 			// //pr($days['Attendance']['overtime_id']);
+
+		// 			if (!empty($days['MyWorkShift']['to'])) {
+
+					
+		// 			if  ( $days['Attendance']['out'] >= $overtime['Overtime']['from'] ) {
+						
+		// 				//add breatime before OT		
+		// 				$from  =  new DateTime($overtime['Overtime']['from']);
+						
+		// 				$to  =  new DateTime($days['Attendance']['out']);
+
+		// 				if (strtotime($days['Attendance']['out']) > strtotime($overtime['Overtime']['to'])) {
+
+		// 					$to  =  new DateTime($overtime['Overtime']['to']);
+		// 				}
+
+		// 				$data['total_hours'] = $from->diff($to)->format('%h.%i'); 
+		// 				//add breaktime
+		// 				$data['total_hours'] -= 1;
+
+		// 			}
+					
+		// 			//regular ot is 1.25
+		// 			$data['total_hours'] = $data['total_hours'];
+
+		// 			//night differential
+
+		// 			$fromDate = date('Y-m-d',strtotime($days['Attendance']['date'])).' 22:00:00';
+
+		// 			$from  =  new DateTime($fromDate);
+		// 			$to  =  new DateTime($days['Attendance']['out']);
+
+		// 			if ($days['Attendance']['out'] > $fromDate) {
+
+		// 				if (strtotime($days['Attendance']['out']) > strtotime($overtime['Overtime']['to'])) {
+
+		// 					$to  =  new DateTime($overtime['Overtime']['to']);
+		// 				}
+
+		// 				$data['night_diff'] = $from->diff($to)->format('%h.%i'); 
+		// 				$data['night_diff'] -= 1;
+		// 			}
+
+		// 			}
+
+		// 		}
+
+		// }
+
+
+		return $data['hours_ot'];
     }
 
     private function _nightDiff($days = null) {
@@ -624,51 +672,51 @@ class SalaryComputationComponent extends Component
 
 
     			//check if OT
-				if (!empty($days['Attendance']['overtime_id'])) {
+				// if (!empty($days['Attendance']['overtime_id'])) {
 						
 					
-					$data['hours_ot'] = 0;
+				// 	$data['hours_ot'] = 0;
 
-					$Overtime = ClassRegistry::init('Overtime');
+				// 	$Overtime = ClassRegistry::init('Overtime');
 
-					//$overtime = $Overtime->read(null,$data['Attendance']['overtime_id']);
+				// 	//$overtime = $Overtime->read(null,$data['Attendance']['overtime_id']);
 
-					if (!empty($days['MyWorkshift']['to'] )) {
+				// 	if (!empty($days['MyWorkshift']['to'] )) {
 
 
-					//if  ( strtotime($days['Attendance']['out']) >= strtotime($days['Overtime']['to']) ) {
+				// 	//if  ( strtotime($days['Attendance']['out']) >= strtotime($days['Overtime']['to']) ) {
 						
-						$workshift = $days['Overtime']['from'];
+				// 		$workshift = $days['Overtime']['from'];
 
-						$from  = new DateTime($workshift);
+				// 		$from  = new DateTime($workshift);
 
 					
-						if (strtotime($days['Attendance']['out']) > strtotime($days['Overtime']['to'])) {
+				// 		if (strtotime($days['Attendance']['out']) > strtotime($days['Overtime']['to'])) {
 
-						$to  =  new DateTime($days['Overtime']['to']);
+				// 		$to  =  new DateTime($days['Overtime']['to']);
 
-						} else {
+				// 		} else {
 
-							$to  =  new DateTime($days['Attendance']['out']);	
-						}
+				// 			$to  =  new DateTime($days['Attendance']['out']);	
+				// 		}
 
 
-						$data['hours_ot'] =  $from->diff($to)->format('%h.%i');
+				// 		$data['hours_ot'] =  $from->diff($to)->format('%h.%i');
 
 						
-					//}
+				// 	//}
 					
-					//regular ot is 1.25	
-						if (!empty($data['hours_ot'])) {
-							$data['OT'] = ($employee['Salary']['basic_pay'] * $data['hours_ot'] * 1.25 ) / $hours;
+				// 	//regular ot is 1.25	
+				// 		if (!empty($data['hours_ot'])) {
+				// 			$data['OT'] = ($employee['Salary']['basic_pay'] * $data['hours_ot'] * 1.25 ) / $hours;
 
-						} else {
-							$data['OT'] = 0;
-						}
+				// 		} else {
+				// 			$data['OT'] = 0;
+				// 		}
 					
-					}
+				// 	}
 
-				}
+				// }
 
 
 				
@@ -780,6 +828,8 @@ class SalaryComputationComponent extends Component
 
 					$data['hours_ot'] += $overtime['total_hours'];
 
+					//$data['regular_out'] = $this->_checkOvertime($days);
+
 					//regular night differential
 
 					if (!empty($days['Attendance']['in']) && !empty($days['Attendance']['out'])) {
@@ -792,9 +842,15 @@ class SalaryComputationComponent extends Component
 
 		
 				}
+
 				//sunday work
-				if (date("w",strtotime($today)) == 0 && in_array($today, $daysGet)) {
+				if (date("w",strtotime($today)) == 0 && !in_array($today, $daysGet)) {
+							
+						// pr($today);
+
+						// pr($today);
 						
+
 					if (!empty($days['Attendance']['in']) && !empty($days['Attendance']['out'])) {
 
 						$sunday_days++;	

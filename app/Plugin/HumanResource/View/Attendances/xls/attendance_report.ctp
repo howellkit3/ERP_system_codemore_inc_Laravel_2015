@@ -45,7 +45,7 @@
                         $out = !empty($employee['Attendance']['out']) ? date('H:i a',strtotime($employee['Attendance']['out'])) : ''; 
                         $sheet->setCellValue('J'.$counter, '-');
 
-                        $sheet->setCellValue('K'.$counter, $employee['Attendance']['remarks']);
+                        $sheet->setCellValue('K'.$counter, $employee['Attendance']['notes']);
 
                         // ->setCellValue('D'.$counter, 'work')
                         // ->setCellValue('E'.$counter, $attendanceList['WorkShift']['from'])
@@ -67,7 +67,6 @@
     $sheet->setCellValue('A'.$counter, 'TOTAL')->getStyle('A'.$counter)->getFont()->setBold(true);
     $sheet->setCellValue('I'.$counter, $timeWork);
 
-        //ot
 
 
     //prepare download
