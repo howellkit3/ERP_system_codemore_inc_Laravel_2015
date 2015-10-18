@@ -42,7 +42,7 @@ class AttendancesController  extends HumanResourceAppController {
 			$conditions = array();
 		}
 
-		$dateSelected = date('Y/m/d').' - '. date('Y/m/d');
+		$dateSelected = '';
 
 		if (!empty($query['data']['date'])) {
 
@@ -865,6 +865,8 @@ public function daily_info() {
 
 	public function export_attendance() {
 
+			Configure::write('debug',2);
+
 		$this->loadModel('HumanResource.WorkSchedule');
 
 		$this->loadModel('HumanResource.Employee');
@@ -913,7 +915,8 @@ public function daily_info() {
     	
         $attendanceData = $this->Attendance->find('all', array(
           'conditions' => $conditions,
-            'order' => 'Attendance.date ASC'
+            'order' => 'Attendance.date ASC',
+            'group' => 'Attendance.id'
         ));
      	
 

@@ -67,6 +67,8 @@ function getDurationSchedule($time1 = null,$time2 = null,$workschedules = null,$
 {	
 
 
+
+
 	if (!empty($time1) && !empty($time2) && !empty($workschedulesBreaks['id'])) {
 
 		//workschedules
@@ -111,6 +113,9 @@ function getDurationSchedule($time1 = null,$time2 = null,$workschedules = null,$
 			}
 
 		}
+
+
+
 
 		$date = date('Y-m-d');
 		$date1 = new DateTime($timeIn);
@@ -158,8 +163,9 @@ function getDurationScheduleTime($time1 = null,$time2 = null,$workschedules = nu
 
 	if (!empty($time1) && !empty($time2) && !empty($workschedulesBreaks['id'])) {
 
+		$today = date('Y-m-d',strtotime($time1));
 		//workschedules
-		$timeIn = date('h:i:s',strtotime($time1));
+		$timeIn = date('Y-m-d h:i',strtotime($time1)).':00';
 
 
 		if (!empty($workschedules)) {
@@ -171,15 +177,15 @@ function getDurationScheduleTime($time1 = null,$time2 = null,$workschedules = nu
 
 			} else {
 
-				$timeIn = $workschedules['from'];
+				$timeIn = $today.' '.$workschedules['from'];
 			}
 
 
-			$timeOut = date('H:i:s',strtotime($time2));
+			$timeOut = date('H:i',strtotime($time2)).':00';
 
 			if (strtotime($timeOut) > strtotime($workschedules['to'])) {
 
-				$timeOut = $workschedules['to'];
+				$timeOut = $today.' '.$workschedules['to'];
 
 			} else {
 
@@ -191,11 +197,16 @@ function getDurationScheduleTime($time1 = null,$time2 = null,$workschedules = nu
 
 		if (!empty($workschedulesBreaks)) {
 
+	
+			$timestamp = strtotime($timeOut);
+
+			$out = date('H:i:s', $timestamp);
+
 			//substract lunchbreaktime
-			if ($timeOut > $workschedulesBreaks['from'] && $timeOut >  $workschedulesBreaks['to']) {
+			if ($timeOut > $workschedulesBreaks['from'] && $out >  $workschedulesBreaks['to']) {
 
 					$timeOut = strtotime($timeOut) - 3600;
-					$timeOut = date('H:i:s',$timeOut);
+					$timeOut = $today.' '.date('H:i',$timeOut).':00';
 
 			}
 
@@ -207,6 +218,8 @@ function getDurationScheduleTime($time1 = null,$time2 = null,$workschedules = nu
 
 		$interval = $date1->diff($date2);
 
+
+
 		$difference = '';
 
 			if ($interval->d != 0) {
@@ -217,7 +230,7 @@ function getDurationScheduleTime($time1 = null,$time2 = null,$workschedules = nu
 			} else {
 
 				if ($interval->h != 0){
-					$difference .= $interval->h ;
+					$difference .= sprintf("%02d", $interval->h);
 				} 
 			}
 
@@ -232,7 +245,8 @@ function getDurationScheduleTime($time1 = null,$time2 = null,$workschedules = nu
 				// 	$minutes = 'm';
 				// }
 
-				$difference .= $interval->i;
+				$difference .= sprintf("%02d", $interval->i);
+
 			} else {
 
 				$difference .= ':00';
@@ -240,12 +254,17 @@ function getDurationScheduleTime($time1 = null,$time2 = null,$workschedules = nu
 			}
 
 
+
+
+			
+
 		return $difference;
 	}
 }
 
 function addWorkTime($times = array()) {
 
+	  $minutes = '';
     // loop throught all the times
     foreach ($times as $time) {
         list($hour, $minute) = explode(':', $time);

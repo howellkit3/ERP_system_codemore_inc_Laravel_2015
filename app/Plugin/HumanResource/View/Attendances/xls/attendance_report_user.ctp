@@ -39,6 +39,10 @@
 
                         $sheet->setCellValue('I'.$counter, ucwords($employee['hours_ot']));
 
+                        $sheet->setCellValue('J'.$counter, ucwords($employee['hours_sunday_work']));
+                        
+                        $sheet->setCellValue('K'.$counter, ucwords($employee['hours_sunday_work_ot']));
+
                         // ->setCellValue('D'.$counter, 'work')
                         // ->setCellValue('E'.$counter, $attendanceList['WorkShift']['from'])
                         // ->setCellValue('F'.$counter, $attendanceList['WorkShift']['to'])
