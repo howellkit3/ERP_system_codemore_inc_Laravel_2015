@@ -413,31 +413,13 @@ class Attendance extends AppModel {
 
 		if (!empty($leaveData)) {
 
-			$attendances = $this->find('all',array(
-				'conditions' => array(
-					'date >=' => $leaveData['Leave']['from'],
-					'date <=' => $leaveData['Leave']['to'],
-					'employee_id' => $leaveData['Leave']['employee_id']
-				),
-				'fields' => array(
-					'Attendance.id',
-					'Attendance.employee_id',
-					'Attendance.date'
-				)
-
-			));
-
-			$leave = array();
-
-			foreach ($attendances as $key => $value) {
-					
-				if ( date("w",strtotime($value['Attendance']['date'])) != 0) {
-					$leave['id'] = $value['Attendance']['id'];
-					$leave['type'] = 'leave';
-					$leave['leave_id'] = $leaveData['Leave']['id'];
-					$this->save($leave);
-				}	
-			}
+		
+			
+					//$leave['id'] = $value['Attendance']['id'];
+					// $leave['type'] = 'leave';
+					// $leave['leave_id'] = $leaveData['Leave']['id'];	
+					return $this->save($leaveData);
+				
 		}
 	}
 
