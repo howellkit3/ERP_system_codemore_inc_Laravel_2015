@@ -73,17 +73,17 @@ class SalaryComputationComponent extends Component
 
         				$models['Salary'] = $employee['Salary'];
 
-        				if ($employee['Salary']['employee_salary_type'] == 'daily') {
+      //   				if ($employee['Salary']['employee_salary_type'] == 'daily') {
 
-							//$salary[$key] = $this->_dailyRate($employee,$models);
-						}
-						if ($employee['Salary']['employee_salary_type'] == 'monthly') {
+						// 	//$salary[$key] = $this->_dailyRate($employee,$models);
+						// }
+						// if ($employee['Salary']['employee_salary_type'] == 'monthly') {
 
-							$salary[$key] = $this->_monthlyRate($employee,$models,8,$workingDays,$payrollSettings);
-						} else {
+						// 	$salary[$key] = $this->_monthlyRate($employee,$models,8,$workingDays,$payrollSettings);
+						// } else {
 
-							$salary[$key] = $this->_dailyRate($employee,$models);
-						}
+						$salary[$key] = $this->_dailyRate($employee,$models);
+						//}
 
         				$salary[$key]['id'] = !empty($checkExisting['SalaryReport']['id']) ? $checkExisting['SalaryReport']['id'] : '';
         				$salary[$key]['employee_id'] = $employee['Employee']['id'];
