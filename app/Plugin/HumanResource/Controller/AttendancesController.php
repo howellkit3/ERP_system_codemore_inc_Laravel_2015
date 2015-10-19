@@ -99,7 +99,6 @@ class AttendancesController  extends HumanResourceAppController {
 		//$this->Employee->virtualFields['totalItem'] = 'COUNT(`OrderDetail`.`order_id`)';
 		//$conditions = array();
 
-	
 		$params =  array(
 	            'conditions' => $conditions,
 	            'limit' => $limit,
@@ -913,17 +912,54 @@ public function daily_info() {
 			
 		$this->Attendance->bind(array('Employee','MySchedule','MyWorkshift','MyWorkShiftBreak','MyBreakTime'));
 
-    	
-
     	}
+
+    	$conditions = array_merge($conditions,array(
+    		'Attendance.in NOT' => "",
+    		'Attendance.out NOT' => ''
+
+    	));
     	
         $attendanceData = $this->Attendance->find('all', array(
           'conditions' => $conditions,
-            'order' => 'Attendance.date ASC',
+            'order' => 'Attendance.date DESC',
             'group' => 'Attendance.id',
             //'fields'=> array('Attendance.in','Attendance.out')
         ));
-     		
+
+        //check duplicity
+
+    //     foreach ($attendanceData as $key => $value) {
+        
+    //     	if (!empty($value['Attendance']['in']) && !empty($value['Attendance']['out'])) {
+
+    //     		$dateIn = date('Y-m-d',strtotime($value['Attendance']['in']));
+
+    //     		$dateOut = date('Y-m-d',strtotime($value['Attendance']['out']));
+
+    //     		$timeIn = $dateIn;
+
+    //     		$workIn = $dateOut.' '.$value['MyWorkshift']['from'];
+
+    //     		$workOut = $dateOut.' '.$value['MyWorkshift']['to'];	
+
+				// if (strtotime($timeIn) >= strtotime($workIn)) {
+
+				// 	// $workshift = 
+
+	   //      	}
+
+
+    //     	} else {
+
+    //     		unset($attendanceData[$key]);
+    //     	}
+
+        	
+    //     }
+
+
+
 
     	$this->set(compact('attendanceData','selectedDate'));
 

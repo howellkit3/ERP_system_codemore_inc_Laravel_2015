@@ -227,7 +227,7 @@ class SalaryComputationComponent extends Component
         			
         		}
 
-    
+        
         		return $salary;
 			}
     }
@@ -317,12 +317,22 @@ class SalaryComputationComponent extends Component
 
 			// pr($timeIn);
 
-	//pr($data);
+			//pr($data);
+
+
 		if (!empty($data['MyBreakTime']['id'])) {
 
+			//#4 2nd shift
+			// if ($data['MyWorkshift']['id'] != 4) {
+
+
+			// }
+
+			
 			//substract lunchbreaktime
 
 			$myBreakFrom = $today.' '. $data['MyBreakTime']['from'];
+			
 			$myBreakTo = $today.' '. $data['MyBreakTime']['to'];
 
 			$breakHour = strtotime($data['MyBreakTime']['from']) + 3600;
@@ -355,10 +365,14 @@ class SalaryComputationComponent extends Component
 
 		
 
+
 		$date1 = new DateTime($timeIn);
 		$date2 = new DateTime($timeOut);
 
 		 $days['total_hours'] = $date1->diff($date2)->format('%h.%i'); 
+
+		// $days['total_hours'] += $days['total_hours'];
+
 	
 		} else {
 
@@ -592,7 +606,26 @@ class SalaryComputationComponent extends Component
 
 		return $data['night_diff'];
 				
-    }	
+    }
+
+
+   function addWorkTime($times = array()) {
+
+	$minutes = '';
+    // loop throught all the times
+    foreach ($times as $time) {
+        list($hour, $minute) = explode('.', $time);
+        $minutes += $hour * 60;
+        $minutes += $minute;
+    }
+
+    $hours = floor($minutes / 60);
+    $minutes -= $hours * 60;
+
+    // returns the time already formatted
+    return sprintf('%02d.%02d', $hours, $minutes);
+}
+
 
     private function _dailyRate($employee = null, $models = array() ,$hours = 8, $workingDays = 26 ) {
 
@@ -691,6 +724,8 @@ class SalaryComputationComponent extends Component
     	if (!empty($employee)) {
 
 		$daysGet = array();
+
+		$timeSunday = array();
 
     	foreach ($employee['Attendance'] as $key => $days) {
     				
@@ -836,19 +871,15 @@ class SalaryComputationComponent extends Component
 					$workEndToday = strtotime($today.' '.$days['MyWorkshift']['to']);
 
 
-					// pr($workEndToday );
-
-					// pr($inToday);
-
-
-
 				}
 
 
     			//check if days is not holiday or sundays
 				if (!in_array($today, $daysGet) && date("w",strtotime($today)) != 0) {
 
-					$data['hours_regular'] += $this->_total_hours($days);
+					//$data['hours_regular'] += $this->_total_hours($days);
+
+					$times[] = $this->_total_hours($days);
 					//regular_ot 
 					$over = $this->_checkOvertime($days);
 
@@ -876,7 +907,10 @@ class SalaryComputationComponent extends Component
 					if (!empty($days['Attendance']['in']) && !empty($days['Attendance']['out'])) {
 
 						$sunday_days++;	
-						$data['hours_sunday_work'] += $this->_total_hours($days);
+
+						//$data['hours_sunday_work'] += $this->_total_hours($days);
+
+						$timeSunday[] =  $this->_total_hours($days);
 
 						//pr($data['hours_sunday_work']);
 						//sunday_work_ot 
@@ -999,10 +1033,10 @@ class SalaryComputationComponent extends Component
 		}
 
 
-					if ($data['hours_regular'] > 0) {
-							
-							$countDays++;
-					}
+		if ($data['hours_regular'] > 0) {
+				
+				$countDays++;
+		}
 
 
 		$data['days'] = $countDays;
@@ -1019,6 +1053,10 @@ class SalaryComputationComponent extends Component
 		$data['gross'] = $data['gross'];
 
     	}
+
+
+    	$data['hours_regular'] = $this->addWorkTime($times);
+    	$data['hours_sunday_work'] = $this->addWorkTime($timeSunday);
 
 
     	return $data;
@@ -1134,6 +1172,7 @@ class SalaryComputationComponent extends Component
     	$data['excess_ot'] = 0;
     	$data['hours_excess_ot'] = 0;
 
+    	$times = array();
 		
     	if (!empty($employee)) {
 
@@ -1251,6 +1290,8 @@ class SalaryComputationComponent extends Component
 				if (!in_array($today, $daysGet) && date("w",strtotime($today)) != 0) {
 
 					$data['hours_regular'] += $this->_total_hours($days);
+
+					$times[] = $this->_total_hours($days);
 					//regular_ot 
 					$overtime = $this->_checkOvertime($days);
 					$data['hours_ot'] += $overtime['total_hours'];
@@ -1549,6 +1590,9 @@ class SalaryComputationComponent extends Component
 
     	}
 
+
+		$data['hours_regular'] = $this->addWorkTime($times);
+
     }
 
     	return $data;
@@ -1618,6 +1662,7 @@ class SalaryComputationComponent extends Component
 			$data['days'] = $countDays;
 
 		}
+
 
 		return $data;
 	}

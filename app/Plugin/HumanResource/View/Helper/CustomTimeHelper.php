@@ -328,7 +328,7 @@ function getDurationScheduleTime($time1 = null,$time2 = null,$workschedules = nu
 
 function addWorkTime($times = array()) {
 
-	  $minutes = '';
+	$minutes = '';
     // loop throught all the times
     foreach ($times as $time) {
         list($hour, $minute) = explode(':', $time);
