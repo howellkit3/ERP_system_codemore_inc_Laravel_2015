@@ -201,8 +201,7 @@ function getDurationScheduleTime($time1 = null,$time2 = null,$workschedules = nu
 		$logout = date('Y-m-d',strtotime($time2));
 		
 		//workschedules
-		$timeIn = date('Y-m-d h:i',strtotime($time1)).':00';
-
+		$timeIn = date('Y-m-d H:i',strtotime($time1)).':00';
 
 
 		if (!empty($workschedules)) {
