@@ -31,7 +31,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 
         $limit = 10;
 
-        $conditions = array();
+        $conditions = array('NOT' => array('WarehouseRequest.status_id' => 5));
 
         $this->paginate = array(
             'conditions' => $conditions,
@@ -113,6 +113,12 @@ class WarehouseRequestsController extends WareHouseAppController {
 															'order' => array('Unit.unit' => 'ASC')
 															));
 
+		$this->loadModel('Purchasing.PurchasingType');
+
+	 	$purchasingTypeData = $this->PurchasingType->find('list', array(
+														'fields' => array('PurchasingType.id', 'PurchasingType.name'),
+														));
+
 	 	if ($this->request->is(array('post','put'))) {
 
 			$requestId = $this->WarehouseRequest->saveRequest($this->request->data['Request'],$userData['User']['id']);
@@ -129,7 +135,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 
         }
 
-		$this->set(compact('unitData','itemData'));
+		$this->set(compact('unitData','itemData', 'purchasingTypeData'));
 			
 	}
 
@@ -504,6 +510,12 @@ class WarehouseRequestsController extends WareHouseAppController {
 															'WarehouseRequest.id' => $requestID)
 													));
 
+	 	$this->loadModel('Purchasing.PurchasingType');
+
+	 	$purchasingTypeData = $this->PurchasingType->find('list', array(
+														'fields' => array('PurchasingType.id', 'PurchasingType.name'),
+														));
+
 	 	foreach ($request['WarehouseRequestItem'] as $key => $value) {
 			
 			if($value['model'] == 'GeneralItem'){
@@ -562,7 +574,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 			$requestId = $this->WarehouseRequest->saveRequest($this->request->data['Request'],$userData['User']['id']);
 
-			$this->WarehouseRequestItem->saveRequestItem($this->request->data ,$requestId);
+			$this->WarehouseRequestItem->editRequestItem($this->request->data ,$requestId);
 		
 	 		$this->Session->setFlash(__('Request has been added.'));
 
@@ -574,7 +586,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 
         }
 
-		$this->set(compact('unitData','itemData', 'request', 'requestID'));
+		$this->set(compact('unitData','itemData', 'request', 'requestID', 'purchasingTypeData'));
 			
 	 }
 
@@ -796,6 +808,25 @@ class WarehouseRequestsController extends WareHouseAppController {
 		$this->set(compact('outRecordData','userName'));
         
         $this->render('summary_deducted');
+
+    }
+
+    public function delete($id = null){
+
+    	$userData = $this->Session->read('Auth');
+
+		$this->loadModel('WareHouse.WarehouseRequest');
+
+		$this->WarehouseRequest->id = $id;
+
+		$this->WarehouseRequest->saveField('status_id', 5);
+
+		$this->Session->setFlash(__('Request has been Removed'), 'success');
+      
+        $this->redirect( array(
+            'controller' => 'warehouse_requests',   
+            'action' => 'index'
+        ));  
 
     }
 

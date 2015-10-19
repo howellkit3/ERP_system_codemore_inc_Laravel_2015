@@ -37,13 +37,36 @@ class WarehouseRequestItem extends AppModel {
 
 		foreach ($requestData['WarehouseRequestItem'] as $key => $requestValue)
 		{
+		//	pr($requestValue); exit;
 
-			if(!empty($requestValue['request_id'])){
+			//if(!empty($requestValue['request_id'])){
 
 				$this->create();
 
 				$requestValue['request_id'] = $id;
 
+				$this->save($requestValue);
+
+		//	}	
+
+		} 
+
+		
+		return true;
+	}
+
+	public function editRequestItem($requestData = null,$id = null)
+	{	
+
+		foreach ($requestData['WarehouseRequestItem'] as $key => $requestValue)
+		{
+			//pr($requestValue); exit;
+			if(!empty($requestValue['request_id'])){
+
+				$this->create();
+
+				$requestValue['request_id'] = $id;
+				//pr($requestValue); exit;
 				$this->save($requestValue);
 
 			}	

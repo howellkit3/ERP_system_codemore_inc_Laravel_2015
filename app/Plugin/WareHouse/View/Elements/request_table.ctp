@@ -57,6 +57,13 @@
                         </span> ', array('controller' => 'warehouse_requests', 'action' => 'view',$requestList['WarehouseRequest']['id']),array('class' =>' table-link','escape' => false,'title'=>'Review Request'));
                 ?>
 
+                <?php
+                    echo $this->Html->link('<span class="fa-stack">
+                        <i class="fa fa-square fa-stack-2x"></i>
+                        <i class="fa fa-trash fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Remove </font></span>
+                        </span>', array('controller' => 'warehouse_requests', 'action' => 'delete',$requestList['WarehouseRequest']['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Information','confirm' => 'Do you want to remove this Request?'));
+                ?>
+
                 <!-- <a data-toggle="modal" href="#myModalOutRecord<?php echo $requestList['WarehouseRequest']['id'] ?>" class="table-link"><i class="fa fa-lg  "></i><span class="fa-stack ">
                                       <i class="fa fa-square fa-stack-2x "></i>
                                       <i class="fa  fa-sign-in fa-stack-1x fa-inverse "></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> OutRecord </font></span></a> -->

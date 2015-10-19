@@ -2,7 +2,6 @@
 <div style="clear:both"></div>
 <?php echo $this->element('ware_house_option');?>
 
-
 <div class="row">
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
@@ -28,9 +27,7 @@
                         </thead>
 
                         <?php echo $this->element('received_table'); ?>
-
-                        
-                            
+    
                      </table>
                     <hr>
                 </div>

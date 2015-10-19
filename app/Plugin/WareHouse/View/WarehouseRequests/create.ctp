@@ -42,10 +42,30 @@
 	                                            ?>
 											</div>
 										</div>
+
+										<div class="form-group" id="existing_items">
+												<label class="col-lg-2 control-label"><span style="color:red">*</span>Type</label>
+												<div class="col-lg-8">
+													<?php 
+		                                                echo $this->Form->input('Request.pur_type_id', 
+		                                                						array( 
+		                                                						'options' => array($purchasingTypeData),	
+		                                                						'type' => 'select',
+		                                                						'class' => 'form-control item_type categorylist required', 
+		                                                    					'label' => false, 
+		                                                    					'placeholder' => 'Item',
+		                                                    					'empty' => '--Select Category--'
+		                                                    					));
+		                                            ?>
+												</div>
+											</div>
+										
 									</div>
 								</div>
 							</div>
 						</div>
+
+
 				
 						<div class="main-box">
 							<div class="top-space"></div>
