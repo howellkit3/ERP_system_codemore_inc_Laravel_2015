@@ -9,7 +9,7 @@ class AttendancesController  extends HumanResourceAppController {
 	//,'HumanResource.CustomText'
 	public function index() {
 
-		Configure::write('debug',2);
+		//Configure::write('debug',2);
 
 		$this->loadModel('HumanResource.WorkSchedule');
 
@@ -864,7 +864,7 @@ public function daily_info() {
 
 	public function export_attendance() {
 
-			Configure::write('debug',2);
+			Configure::write('debug',0);
 
 		$this->loadModel('HumanResource.WorkSchedule');
 
@@ -922,7 +922,7 @@ public function daily_info() {
     	
         $attendanceData = $this->Attendance->find('all', array(
           'conditions' => $conditions,
-            'order' => 'Attendance.date DESC',
+            'order' => 'Attendance.out DESC',
             'group' => 'Attendance.id',
             //'fields'=> array('Attendance.in','Attendance.out')
         ));

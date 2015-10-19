@@ -379,7 +379,7 @@ class Attendance extends AppModel {
 			$this->bindMyWorkshift();
 
 			$attendances = $this->find('all',array('conditions' => $conditions,
-				'order' => 'Attendance.date ASC',
+			'order' => 'Attendance.out ASC',
 				'group' => 'Attendance.id'
 			));
 

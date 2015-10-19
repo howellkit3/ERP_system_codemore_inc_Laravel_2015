@@ -30,7 +30,7 @@
                         $sheet->setCellValue('E'.$counter, ucwords($employee['Employee']['middle_name']));
                         // ->setCellValue('D'.$counter, 'work')
 
-                        $sheet->setCellValue('F'.$counter, ucwords($employee['Attendance']['date']));
+                        $sheet->setCellValue('F'.$counter, ucwords($employee['Attendance']['in']));
 
                         $in = !empty($employee['Attendance']['in']) ? date('h:i a',strtotime($employee['Attendance']['in'])) : ''; 
                         $sheet->setCellValue('G'.$counter, $in);
@@ -39,6 +39,7 @@
                         $sheet->setCellValue('H'.$counter, $out);
 
                         $timeWork = 0;
+                        
                         $timeWork =  $this->CustomTime->getDurationScheduleTime($employee['Attendance']['in'],$employee['Attendance']['out'],$employee['MyWorkshift'],$employee['MyBreakTime'],'Time'); 
                         $sheet->setCellValue('I'.$counter, $timeWork);
 
@@ -72,7 +73,7 @@
 
 
 
-  // prepare download
+    //prepare download
     $filename = 'attendance-report-'.date('y-m-d').'-'.time().'.xls'; //just some random filename
     //header('Content-Type: application/vnd.ms-office');
     header('Content-Type: application/vnd.ms-office');

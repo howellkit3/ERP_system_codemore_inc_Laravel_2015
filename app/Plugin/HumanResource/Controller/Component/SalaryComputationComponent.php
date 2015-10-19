@@ -725,6 +725,8 @@ class SalaryComputationComponent extends Component
 
 		$daysGet = array();
 
+		$times = array();
+
 		$timeSunday = array();
 
     	foreach ($employee['Attendance'] as $key => $days) {
@@ -1056,8 +1058,8 @@ class SalaryComputationComponent extends Component
 
 
     	$data['hours_regular'] = $this->addWorkTime($times);
-    	$data['hours_sunday_work'] = $this->addWorkTime($timeSunday);
 
+    	$data['hours_sunday_work'] = $this->addWorkTime($timeSunday);
 
     	return $data;
     }
