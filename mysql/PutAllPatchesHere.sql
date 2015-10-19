@@ -2211,3 +2211,5 @@ ADD COLUMN `department_id`  int(11) NULL AFTER `employeeIds`;
 /* howell kit added this oct-15-2015 sales*/
 ALTER TABLE `client_orders`  ADD `status_id` INT(11)  NULL  DEFAULT NULL  AFTER `payment_terms`;
 
+/* howell kit added this oct-15-2015 sales*/
+ALTER TABLE `warehouse_requests`  ADD `pur_type_id` INT(11)  NULL  DEFAULT NULL  AFTER `name`;

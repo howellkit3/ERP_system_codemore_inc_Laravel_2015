@@ -21,7 +21,9 @@
             </td>
 
             <td class="">
+
                 <?php echo date('M d, Y', strtotime($requestOrderDataList['ReceivedOrder']['created'])) ?>
+
             </td>
 
             <td align = "center">
@@ -55,12 +57,12 @@
 
                     $disableButton = "not-active";
 
-                } ?>
+                }  ?>
 
-                <?php   echo $this->Html->link('<span class="fa-stack">
+                <?php echo $this->Html->link('<span class="fa-stack">
                           <i class="fa fa-square fa-stack-2x"></i>
                           <i class="fa  fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> View</font></span>
-                          </span> ', array('controller' => 'receivings', 'action' => 'view_receive', $requestOrderDataList['DeliveredOrder']['id'], $uuid),array('class' =>' table-link ','escape' => false,'title'=>'Print Transmittal Receipt')); ?>
+                          </span> ', array('controller' => 'receivings', 'action' => 'view_receive', $requestOrderDataList['DeliveredOrder']['id'], !empty($requestOrderDataList['ReceivedItem'][0]['request_uuid']) ? $requestOrderDataList['ReceivedItem'][0]['request_uuid'] : " "),array('class' =>' table-link ','escape' => false,'title'=>'Print Transmittal Receipt')); ?>
 
                     <!-- <a data-toggle="modal" href="#myModalInRecord<?php echo $requestOrderDataList['DeliveredOrder']['id'], $uuid ?>" class="table-link <?php echo $disableButton ?>"><i class="fa fa-lg  "></i><span class="fa-stack ">
                                       <i class="fa fa-square fa-stack-2x "></i>
