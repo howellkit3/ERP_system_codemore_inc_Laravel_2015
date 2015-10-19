@@ -1281,9 +1281,13 @@ class DeliveriesController extends DeliveryAppController {
 
         $ClientDeliveryList = $this->ClientOrder->find('list',array('fields' => array('id', 'company_id')));
 
+        $start = date('Y-m-d');
+        $end = date('Y-m-d', strtotime('+1 day'));
 
-        $dr_nos = $this->Delivery->find('all',array('conditions' => array('Delivery.company_id' => $companyId )));
-        
+        $conditions = array('Delivery.created <=' => $end, 'Delivery.created >=' => $start , 'Delivery.company_id' => $companyId);
+
+        $dr_nos = $this->Delivery->find('all',array('conditions' =>  $conditions));
+
         $deliveryUserData = $this->User->find('all',array('conditions' =>  array('User.role_id' => 4
                                             )));
 
