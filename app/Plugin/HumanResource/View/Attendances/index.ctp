@@ -219,8 +219,14 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 									                           			$ex2 = explode(' ', $to);
 
 									                           			$diff = $ex2[1] - $ex1[1];
+
+									                           			if (strtotime($schedule['Attendance']['out']) >= strtotime($to)) {
+									                           				$to = $to;
+									                           			} else {
+									                           				$to = $schedule['Attendance']['out'];
+									                           			}
 									                           			
-																		echo $this->CustomTime->getDuration($from,$schedule['Attendance']['out']); 
+																		echo $this->CustomTime->getDuration($from,$to); 
 
 									                           		}else {
 									                           			
