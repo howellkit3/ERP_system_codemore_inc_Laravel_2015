@@ -126,8 +126,8 @@ class AttendancesController  extends HumanResourceAppController {
 	            // 	'MyBreakTime.to'
 
 	            // 	),
-	            'group' => array('Attendance.id'),
-	            'order' => 'Attendance.in DESC',
+	            'group' => array('Attendance.date'),
+	            'order' => 'Attendance.out DESC',
 	    );
 
 		$this->paginate = $params;
@@ -429,8 +429,6 @@ class AttendancesController  extends HumanResourceAppController {
 
 public function delete($id = null) {
 
-
-
 		if (!empty($id)) {
 
 			if ($this->Attendance->delete($id)) {
@@ -452,7 +450,7 @@ public function delete($id = null) {
 
             } else {
 
-            		 return  $this->redirect( array(
+            	return  $this->redirect( array(
                              'controller' => 'attendances', 
                              'action' => 'index',
                              'tab' => 'attendance',
@@ -934,8 +932,11 @@ public function daily_info() {
     	
         $attendanceData = $this->Attendance->find('all', array(
           'conditions' => $conditions,
-            'order' => 'Attendance.out DESC',
-            'group' => 'Attendance.id',
+            // 'order' => 'Attendance.out DESC',
+            // 'group' => 'Attendance.id',
+	    
+	        'group' => array('Attendance.date'),
+	        'order' => 'Attendance.out DESC',
             //'fields'=> array('Attendance.in','Attendance.out')
         ));
 
