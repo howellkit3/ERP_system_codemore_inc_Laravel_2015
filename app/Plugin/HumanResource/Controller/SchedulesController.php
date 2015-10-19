@@ -94,7 +94,7 @@ class SchedulesController  extends HumanResourceAppController {
 
 		$limit = 10;
 
-		$conditions = array();
+		$conditions = array('WorkShift.overtime_id' => NULL);
 
 		$params =  array(
 	            'conditions' => $conditions,

@@ -66,9 +66,6 @@ function getDuration($time1 = null,$time2 = null)
 function getDurationSchedule($time1 = null,$time2 = null,$workschedules = null,$workschedulesBreaks = null)
 {	
 
-
-
-
 	if (!empty($time1) && !empty($time2) && !empty($workschedulesBreaks['id'])) {
 
 		//workschedules
@@ -166,8 +163,13 @@ function getDurationScheduleTime($time1 = null,$time2 = null,$workschedules = nu
 
 
 		$today = date('Y-m-d',strtotime($time1));
+
+		$logout = date('Y-m-d',strtotime($time2));
+		
 		//workschedules
 		$timeIn = date('Y-m-d h:i',strtotime($time1)).':00';
+
+
 
 		if (!empty($workschedules)) {
 
@@ -188,7 +190,7 @@ function getDurationScheduleTime($time1 = null,$time2 = null,$workschedules = nu
 
 			if (strtotime($timeOut) > strtotime($workschedules['to'])) {
 
-				$timeOut = $today.' '.$workschedules['to'];
+				$timeOut = $logout.' '.$workschedules['to'];
 
 			} else {
 
@@ -210,7 +212,7 @@ function getDurationScheduleTime($time1 = null,$time2 = null,$workschedules = nu
 			if ($timeOut > $workschedulesBreaks['from'] && $out >  $workschedulesBreaks['to']) {
 
 					$timeOut = strtotime($timeOut) - 3600;
-					$timeOut = $today.' '.date('H:i',$timeOut).':00';
+					$timeOut = $logout.' '.date('H:i',$timeOut).':00';
 	
 
 			}	
@@ -222,17 +224,17 @@ function getDurationScheduleTime($time1 = null,$time2 = null,$workschedules = nu
 
 
 			$myBreakFrom = $today.' '.  $workschedulesBreaks['from'];
-			$myBreakTo = $today.' '.  $workschedulesBreaks['to'];
+			$myBreakTo = $logout.' '.  $workschedulesBreaks['to'];
 
 
 			$breakHour = strtotime($workschedulesBreaks['from']) + 3600;
 
-			$todayBreak =  $today.' '.date('H:i:s',$breakHour);
+			$todayBreak =  $logout.' '.date('H:i:s',$breakHour);
 
 
 			if (strtotime($time2) >= strtotime($myBreakFrom) && strtotime($time2) <= strtotime($todayBreak)) {
 
-				$timeOut = $today.' '.date('H:',strtotime($time2)).'00:00';
+				$timeOut = $logout.' '.date('H:',strtotime($time2)).'00:00';
 
 
 			}
@@ -242,7 +244,9 @@ function getDurationScheduleTime($time1 = null,$time2 = null,$workschedules = nu
 		$date1 = new DateTime($timeIn);
 		$date2 = new DateTime($timeOut);
 
+
 		$interval = $date1->diff($date2);
+
 
 
 

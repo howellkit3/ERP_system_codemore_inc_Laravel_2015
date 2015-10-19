@@ -270,6 +270,7 @@ class SalaryComputationComponent extends Component
 
 		$today = date('Y-m-d',strtotime($data['Attendance']['in']));
 
+		$logout = date('Y-m-d',strtotime($data['Attendance']['out']));
 
 		if (!empty($data['Attendance']['in']) && !empty($data['Attendance']['out'])) {
 
@@ -305,7 +306,7 @@ class SalaryComputationComponent extends Component
 
 			if (strtotime($timeOut) > strtotime($data['MyWorkshift']['to'])) {
 
-				$timeOut = $today.' '.$data['MyWorkshift']['to'];
+				$timeOut = $logout.' '.$data['MyWorkshift']['to'];
 
 			} else {
 				
