@@ -17,6 +17,13 @@ echo $this->Html->script(array(
 
 )); 
 
+$params = $this->request->params;
+// pr($params);
+
+// pr($_SERVER);
+
+
+$page = base64_encode($_SERVER['REQUEST_URI']);
 
 echo $this->element('hr_options');
 
@@ -232,10 +239,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 								                           	?> 
 								                        </td> 
 								                         <td class="text-center duration" > 
-								                           <?php 
-
-
-								                           echo $this->CustomTime->getDurationSchedule($schedule['Attendance']['in'],$schedule['Attendance']['out'],$schedule['MyWorkshift'],$schedule['MyBreakTime']); ?> 
+								                           <?php echo $this->CustomTime->getDurationSchedule($schedule['Attendance']['in'],$schedule['Attendance']['out'],$schedule['MyWorkshift'],$schedule['MyBreakTime']); ?> 
 								                        </td>
 								                         <td class="text-center duration" > 
 								                           <?php echo $this->CustomTime->getDuration($timeIn,$timeOut); ?> 
@@ -321,7 +325,8 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 														</span> ',array(
 															'controller' => 'attendances',
 															'action' =>'delete',
-															 $schedule['Attendance']['id']
+															 $schedule['Attendance']['id'],
+															 'return' => $page
 															),
 														array('class' =>'table-link',
 															   'escape' => false,
@@ -329,9 +334,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 															   'title'=>'Edit Information',
 															   'confirm' => 'Are you sure you want to delete this attendances ? ',
 															));
-
-
-															
+			
 														}
 														?>
 

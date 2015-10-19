@@ -429,7 +429,8 @@ class AttendancesController  extends HumanResourceAppController {
 
 public function delete($id = null) {
 
-	
+
+
 		if (!empty($id)) {
 
 			if ($this->Attendance->delete($id)) {
@@ -442,13 +443,24 @@ public function delete($id = null) {
                 );
             }
 
-            return  $this->redirect( array(
+            if (!empty($this->params['named']['return'])) {
+            	$return = base64_decode($this->params['named']['return']);
+            	
+            	$return = str_replace('/koufunet','',$return);
+            	
+            	return $this->redirect($return);
+
+            } else {
+
+            		 return  $this->redirect( array(
                              'controller' => 'attendances', 
                              'action' => 'index',
                              'tab' => 'attendance',
                              'plugin' => 'human_resource'
 
                         ));
+            }
+           
 		}
 }
 
