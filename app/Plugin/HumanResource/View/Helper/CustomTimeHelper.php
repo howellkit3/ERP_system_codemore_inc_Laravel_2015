@@ -108,6 +108,7 @@ function getDurationSchedule($time1 = null,$time2 = null,$workschedules = null,$
 
 		
 		}
+	
 
 		if (!empty($workschedulesBreaks)) {
 
@@ -117,6 +118,8 @@ function getDurationSchedule($time1 = null,$time2 = null,$workschedules = null,$
 			$out = date('H:i:s', $timestamp);
 
 
+			if ($workschedules['id'] != 4) {
+
 			//substract lunchbreaktime
 			if ($timeOut > $workschedulesBreaks['from'] && $out >  $workschedulesBreaks['to']) {
 
@@ -124,7 +127,8 @@ function getDurationSchedule($time1 = null,$time2 = null,$workschedules = null,$
 					$timeOut = $logout.' '.date('H:i',$timeOut).':00';
 	
 
-			}	
+			}
+		}
 
 			// if ($timeOut > $workschedulesBreaks['from']) {
 
@@ -235,19 +239,20 @@ function getDurationScheduleTime($time1 = null,$time2 = null,$workschedules = nu
 
 		if (!empty($workschedulesBreaks)) {
 
-	
+			
 			$timestamp = strtotime($timeOut);
 
 			$out = date('H:i:s', $timestamp);
 
+			if ($workschedules['id'] != 4) {
+				//substract lunchbreaktime
+				if ($timeOut > $workschedulesBreaks['from'] && $out >  $workschedulesBreaks['to']) {
 
-			//substract lunchbreaktime
-			if ($timeOut > $workschedulesBreaks['from'] && $out >  $workschedulesBreaks['to']) {
+						$timeOut = strtotime($timeOut) - 3600;
+						$timeOut = $logout.' '.date('H:i',$timeOut).':00';
+		
 
-					$timeOut = strtotime($timeOut) - 3600;
-					$timeOut = $logout.' '.date('H:i',$timeOut).':00';
-	
-
+				}	
 			}	
 
 			// if ($timeOut > $workschedulesBreaks['from']) {
