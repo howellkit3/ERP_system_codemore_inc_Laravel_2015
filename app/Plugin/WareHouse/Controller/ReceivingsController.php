@@ -19,7 +19,7 @@ class ReceivingsController extends WareHouseAppController {
 		$this->PurchaseOrder->bind(array('Request'));
 
 		$purchaseOrderData = $this->PurchaseOrder->find('all', array('conditions' => array('PurchaseOrder.status' => 1),
-															'order' => array('PurchaseOrder.id' => 'DESC')
+															'order' => array('PurchaseOrder.created' => 'DESC')
 															));
 	
 		$this->set(compact('purchaseOrderData', 'supplierData'));
@@ -67,6 +67,9 @@ class ReceivingsController extends WareHouseAppController {
 		$this->PurchaseOrder->bindReceive();
 
 		$purchaseOrderData = $this->PurchaseOrder->find('first', array('conditions' => array('PurchaseOrder.id' => $id)));
+		//pr($purchaseOrderData); exit;
+		$receivedOrderData = $this->ReceivedOrder->find('first', array('conditions' => array('ReceivedOrder.purchase_order_id' => $purchaseOrderData['PurchaseOrder']['id'])));
+		//pr($receivedOrderData); exit;
 
 		if(empty($requestData['PurchasingItem'])){
 
@@ -245,7 +248,7 @@ class ReceivingsController extends WareHouseAppController {
 			ksort($this->request->data['requestPurchasingItem']);
 
 			$receivedData = $this->ReceivedOrder->find('first', array('conditions' => array('ReceivedOrder.purchase_order_id' => $id)));
-
+				//pr($this->request->data); exit;
 			if(empty($receivedData['ReceivedOrder']['id'])){
 
 				$itemId = $this->ReceivedOrder->saveReceivedOrders($this->request->data['ReceivedItems'],$userData['User']['id'],$id);
@@ -273,7 +276,7 @@ class ReceivingsController extends WareHouseAppController {
 
 		}
 	
-		$this->set(compact('requestData', 'requestPurchasingItem', 'purchaseOrderData', 'supplierData', 'unitData', 'itemHolder'));
+		$this->set(compact('requestData', 'requestPurchasingItem', 'purchaseOrderData', 'supplierData', 'unitData', 'itemHolder','receivedOrderData'));
 
     }
 
@@ -392,7 +395,7 @@ class ReceivingsController extends WareHouseAppController {
 		$purchaseOrderData = $this->PurchaseOrder->find('first', array('conditions' => array('PurchaseOrder.id' => $id)));
 
 		$receivedOrderData = $this->ReceivedOrder->find('first', array('conditions' => array('ReceivedOrder.purchase_order_id' => $purchaseOrderData['PurchaseOrder']['id'])));
-
+		//pr($receivedOrderData); exit;
 		$requestData = $this->PurchasingItem->find('first', array('conditions' => array('PurchasingItem.request_uuid' => $requestUUID)));
 
 		if(empty($requestData['PurchasingItem'])){
@@ -585,9 +588,9 @@ class ReceivingsController extends WareHouseAppController {
 
 		$this->loadModel('Purchasing.RequestItem');
 
-		$this->loadModel('WareHouse.ReceivedOrder');
+		//$this->loadModel('WareHouse.ReceivedOrder');
 
-		$this->loadModel('WareHouse.ReceivedItem');
+		//$this->loadModel('WareHouse.ReceivedItem');
 
 		$this->loadModel('WareHouse.DeliveredOrder');
 
@@ -733,6 +736,195 @@ class ReceivingsController extends WareHouseAppController {
 
 
    	$this->set(compact('purchaseOrderSupplierData', 'purchaseOrderUUIDData', 'purchaseOrderData', 'supplierData', 'firstName', 'lastName', 'requestData', 'itemDetails', 'receiveItem', 'itemData', 'receivedOrderData', 'type', 'requestItemData', 'itemHolder', 'deliveredDataID', 'receivedItemData', 'areaList', 'userNameList'));
+
+    }
+
+    public function view_receive_edit($id = null, $requestUUID = null, $type = null) {
+
+	 	$this->loadModel('Purchasing.PurchaseOrder');
+
+	 	$this->loadModel('Purchasing.Request');
+
+	 	$this->loadModel('Supplier');
+
+	 	$this->loadModel('User');
+
+	 	$this->loadModel('Area');
+
+	 	$this->loadModel('Purchasing.PurchasingItem');
+
+		$this->loadModel('Purchasing.RequestItem');
+
+		//$this->loadModel('WareHouse.ReceivedOrder');
+
+		//$this->loadModel('WareHouse.ReceivedItem');
+
+		$this->loadModel('WareHouse.DeliveredOrder');
+
+		$lastName = $this->User->find('list', array('fields' => array('User.id', 'User.last_name')
+																));
+
+		$firstName = $this->User->find('list', array('fields' => array('User.id', 'User.first_name')
+																));
+
+		$supplierData = $this->Supplier->find('list', array('fields' => array('Supplier.id', 'Supplier.name')
+																));
+
+
+		$requestData = $this->Request->find('first', array('conditions' => array('Request.uuid' => $requestUUID)));
+
+		$areaList = $this->Area->find('list', array('fields' => array('Area.id', 'Area.name')
+		 														));
+
+		$userNameList = $this->User->find('list', array('fields' => array('User.id', 'User.fullname'),
+		 												'conditions' => array( 
+		 													'User.role_id' => 4)));
+
+		if(empty($requestData['PurchaseItem'])){
+
+			$itemHolder = "ReceivedItem";
+
+			$itemData = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestUUID)));
+
+		}else{
+
+			$itemHolder = "ReceivedItem";
+
+			$itemData = $this->PurchaseItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestUUID)));
+
+		}
+
+		$this->DeliveredOrder->bind('ReceivedItem', 'PurchaseOrder', 'ReceivedOrder');
+
+		$receivedItemData = $this->DeliveredOrder->find('all', array('conditions' => array('DeliveredOrder.id' => $id)));
+
+	//	pr($receivedItemData); exit;
+		
+		$purchaseOrderSupplierData = $this->PurchaseOrder->find('list', array('fields' => array('PurchaseOrder.id', 'PurchaseOrder.supplier_id')
+																));
+
+      	$purchaseOrderUUIDData = $this->PurchaseOrder->find('list', array('fields' => array('PurchaseOrder.id', 'PurchaseOrder.uuid')
+																));
+
+		//$deliveredDataID = $receivedItemData[0]['DeliveredOrder']['id'];
+
+		foreach ($receivedItemData as $key1 => $value) {
+
+			foreach ($value['ReceivedItem'] as $key => $valueOfValue) {	
+
+				if($valueOfValue['model'] == 'GeneralItem'){
+
+					$this->loadModel('GeneralItem');
+
+					$itemDetails = $this->GeneralItem->find('list', array('fields' => array('GeneralItem.id', 'GeneralItem.name')
+					 													));  
+
+					$receiveItem[$key][$itemHolder]['name'] = $itemDetails[$valueOfValue['foreign_key']];	
+
+					$receiveItem[$key][$itemHolder]['model'] = $valueOfValue['model'];
+
+					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];		
+
+			 		$receiveItem[$key][$itemHolder]['original_quantity'] = $valueOfValue['original_quantity'];	
+
+					$receiveItem[$key][$itemHolder]['good_quantity'] = $valueOfValue['quantity'];
+					
+					$receiveItem[$key][$itemHolder]['reject_quantity'] = $valueOfValue['reject_quantity'];
+
+
+        			
+		        } 
+
+		        if($valueOfValue['model'] == 'Substrate'){
+
+		        	$this->loadModel('Substrate');
+
+		        	$itemDetails = $this->Substrate->find('list', array('fields' => array('Substrate.id', 'Substrate.name')
+					 													));  
+
+					$receiveItem[$key][$itemHolder]['name'] = $itemDetails[$valueOfValue['foreign_key']];	
+
+					$receiveItem[$key][$itemHolder]['model'] = $valueOfValue['model'];
+
+					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];		
+
+			 		$receiveItem[$key][$itemHolder]['original_quantity'] = $valueOfValue['original_quantity'];	
+
+					$receiveItem[$key][$itemHolder]['good_quantity'] = $valueOfValue['quantity'];
+					
+					$receiveItem[$key][$itemHolder]['reject_quantity'] = $valueOfValue['reject_quantity'];
+
+		        	
+		        } 
+
+		        if($valueOfValue['model'] == 'CompoundSubstrate'){
+
+		        	$this->loadModel('CompoundSubstrate');
+
+		        	$itemDetails = $this->CompoundSubstrate->find('list', array('fields' => array('CompoundSubstrate.id', 'CompoundSubstrate.name')
+					 													));  
+
+					$receiveItem[$key][$itemHolder]['name'] = $itemDetails[$valueOfValue['foreign_key']];	
+
+					$receiveItem[$key][$itemHolder]['model'] = $valueOfValue['model'];
+
+					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];		
+
+			 		$receiveItem[$key][$itemHolder]['original_quantity'] = $valueOfValue['original_quantity'];	
+
+					$receiveItem[$key][$itemHolder]['good_quantity'] = $valueOfValue['quantity'];
+					
+					$receiveItem[$key][$itemHolder]['reject_quantity'] = $valueOfValue['reject_quantity'];
+
+		        
+		        } 
+
+		        if($valueOfValue['model'] == 'CorrugatedPaper'){
+
+		        	$this->loadModel('CorrugatedPaper');
+
+		        	$itemDetails = $this->CorrugatedPaper->find('list', array('fields' => array('CorrugatedPaper.id', 'CorrugatedPaper.name')
+					 													));  
+
+					$receiveItem[$key][$itemHolder]['name'] = $itemDetails[$valueOfValue['foreign_key']];	
+
+					$receiveItem[$key][$itemHolder]['model'] = $valueOfValue['model'];
+
+					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];		
+
+			 		$receiveItem[$key][$itemHolder]['original_quantity'] = $valueOfValue['original_quantity'];	
+
+					$receiveItem[$key][$itemHolder]['good_quantity'] = $valueOfValue['quantity'];
+					
+					$receiveItem[$key][$itemHolder]['reject_quantity'] = $valueOfValue['reject_quantity'];
+
+		        
+		   		 }
+			}
+        }
+
+
+   	$this->set(compact('purchaseOrderSupplierData', 'purchaseOrderUUIDData', 'purchaseOrderData', 'supplierData', 'firstName', 'lastName', 'requestData', 'itemDetails', 'receiveItem', 'itemData', 'receivedOrderData', 'type', 'requestItemData', 'itemHolder', 'deliveredDataID', 'receivedItemData', 'areaList', 'userNameList'));
+
+   	if ($this->request->is(array('post','put'))) {
+
+   		$userData = $this->Session->read('Auth');
+
+		$this->loadModel('WareHouse.ReceivedOrder');
+
+		$this->ReceivedOrder->id = $this->request->data['ReceiveOrder']['id'];
+
+		$this->ReceivedOrder->saveField('dr_num', $this->request->data['ReceiveOrder']['dr_num']);
+
+		$this->Session->setFlash(__('DR Number has been Added'), 'success');
+      
+        $this->redirect( array(
+            'controller' => 'receivings',   
+            'action' => 'receive'
+        )); 
+   		
+   	}
+
 
     }
 

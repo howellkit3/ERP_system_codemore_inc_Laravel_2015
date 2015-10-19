@@ -85,6 +85,19 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label class="col-lg-2 control-label">Delivery Number</label>
+                                    <div class="col-lg-8">
+                                        <?php 
+                                            echo $this->Form->input('ReceivedItems.dr_num', array(
+                                                                            'class' => 'form-control item_type',
+                                                                            'label' => false,
+                                                                            'disabled' => true,
+                                                                             'value' => !empty($receivedItemData[0]['ReceivedOrder']['dr_num']) ? $receivedItemData[0]['ReceivedOrder']['dr_num'] : " "));
+                                        ?>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
                                     <label class="col-lg-2 control-label">P.O. Number</label>
                                     <div class="col-lg-8">
                                         <?php 
