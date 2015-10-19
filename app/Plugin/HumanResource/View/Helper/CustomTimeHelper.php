@@ -66,34 +66,44 @@ function getDuration($time1 = null,$time2 = null)
 function getDurationSchedule($time1 = null,$time2 = null,$workschedules = null,$workschedulesBreaks = null)
 {	
 
+	$difference = '';
+
 	if (!empty($time1) && !empty($time2) && !empty($workschedulesBreaks['id'])) {
 
+
+		$today = date('Y-m-d',strtotime($time1));
+
+		$logout = date('Y-m-d',strtotime($time2));
+		
 		//workschedules
-		$timeIn = date('h:i:s',strtotime($time1));
+		$timeIn = date('Y-m-d H:i',strtotime($time1)).':00';
+
 
 
 		if (!empty($workschedules)) {
 
+			$defaultFrom = $today.' '.$workschedules['from'];
 
-			if (strtotime($timeIn) > strtotime($workschedules['from'])) {
 
-				$timeIn = date('H:i',strtotime($timeIn)).':00';
+			if (strtotime($timeIn) > strtotime($defaultFrom)) {
+
+				$timeIn = $timeIn;
 
 			} else {
 
-				$timeIn = $workschedules['from'];
+				$timeIn = $today.' '.$workschedules['from'];
 			}
 
 
-			$timeOut = date('H:i:s',strtotime($time2));
+			$timeOut = date('H:i',strtotime($time2)).':00';
 
 			if (strtotime($timeOut) > strtotime($workschedules['to'])) {
 
-				$timeOut = $workschedules['to'];
+				$timeOut = $logout.' '.$workschedules['to'];
 
 			} else {
-				
-				$timeOut = date('H:i',strtotime($time2)).':00';
+
+				$timeOut = $time2;
 			}
 
 		
@@ -101,41 +111,66 @@ function getDurationSchedule($time1 = null,$time2 = null,$workschedules = null,$
 
 		if (!empty($workschedulesBreaks)) {
 
+	
+			$timestamp = strtotime($timeOut);
+
+			$out = date('H:i:s', $timestamp);
+
+
 			//substract lunchbreaktime
-			if ($timeOut > $workschedulesBreaks['from'] && $timeOut >  $workschedulesBreaks['to']) {
+			if ($timeOut > $workschedulesBreaks['from'] && $out >  $workschedulesBreaks['to']) {
 
 					$timeOut = strtotime($timeOut) - 3600;
-					$timeOut = date('H:i:s',$timeOut);
+					$timeOut = $logout.' '.date('H:i',$timeOut).':00';
+	
+
+			}	
+
+			// if ($timeOut > $workschedulesBreaks['from']) {
+
+			// 	$timeOut = $today.' '.date('H:',strtotime($timeOut)).'00:00';
+			// }
+
+
+			$myBreakFrom = $today.' '.  $workschedulesBreaks['from'];
+			$myBreakTo = $logout.' '.  $workschedulesBreaks['to'];
+
+
+			$breakHour = strtotime($workschedulesBreaks['from']) + 3600;
+
+			$todayBreak =  $logout.' '.date('H:i:s',$breakHour);
+
+
+			if (strtotime($time2) >= strtotime($myBreakFrom) && strtotime($time2) <= strtotime($todayBreak)) {
+
+				$timeOut = $logout.' '.date('H:',strtotime($time2)).'00:00';
+
 
 			}
 
 		}
-
-
-
-
+			
 		$date = date('Y-m-d');
 		$date1 = new DateTime($timeIn);
 		$date2 = new DateTime($timeOut);
 
+
+
+
 		$interval = $date1->diff($date2);
 
-		$difference = '';
 
-			if ($interval->d != 0) {
-
+			if ($interval->d != 0){
 				$days = ($interval->d > 1) ? 'days' : 'day';
 				$difference	.= $interval->d  .' '.$days;
-
-			} else {
-
+			}
+			else{
 				if ($interval->h != 0){
 					$difference .= $interval->h  . 'h';
 				} 
 			}
 
 			if ($interval->d == 0 && $interval->invert == 0 && $interval->i != 0) {
-				
 				if ($interval->h != 0) {
 				  $difference .= ' & ';
 				}
@@ -144,13 +179,12 @@ function getDurationSchedule($time1 = null,$time2 = null,$workschedules = null,$
 				if ($interval->i > 1) {
 					$minutes = 'm';
 				}
-
 				$difference .= $interval->i  .$minutes;
 			}
 
+			return $difference;
 
-		return $difference;
-	}
+		}
 }
 
 
@@ -167,8 +201,7 @@ function getDurationScheduleTime($time1 = null,$time2 = null,$workschedules = nu
 		$logout = date('Y-m-d',strtotime($time2));
 		
 		//workschedules
-		$timeIn = date('Y-m-d h:i',strtotime($time1)).':00';
-
+		$timeIn = date('Y-m-d H:i',strtotime($time1)).':00';
 
 
 		if (!empty($workschedules)) {
