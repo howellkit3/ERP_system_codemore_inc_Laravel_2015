@@ -226,7 +226,6 @@ class SalaryComputationComponent extends Component
 						$salary[$key]['EmployeeAdditionalInformation']	= !empty($employee['EmployeeAdditionalInformation']) ? $employee['EmployeeAdditionalInformation'] : array();
         			
         		}
-
         
         		return $salary;
 			}
@@ -544,7 +543,9 @@ class SalaryComputationComponent extends Component
     	if  ( $days['Attendance']['out'] > $days['MyWorkshift']['to'] ) {
 			
 
-			$today = date('Y-m-d',strtotime($days['Attendance']['date']));	
+			$today = date('Y-m-d',strtotime($days['Attendance']['in']));	
+
+			$out = date('Y-m-d',strtotime($days['Attendance']['out']));	
 			//starts from 10:00 pm
 			$fromDate = $today .' 22:00:00';
 			
@@ -578,16 +579,16 @@ class SalaryComputationComponent extends Component
 
 				if (strtotime($timeOut) > strtotime($days['MyWorkshift']['to'])) {
 
-					$timeOut = $days['MyWorkshift']['to'];
+					$timeOut = $out.' '.$days['MyWorkshift']['to'];
 
 				} else {
 					
-					$timeOut = date('Y-m-d',strtotime($days['Attendance']['in'])).' '.date('H:i',strtotime($timeOut)).':00';
+					$timeOut =  $out.' '.date('H:i',strtotime($timeOut)).':00';
 				}
 
 				//$data['night_diff'] = $from->diff($timeOut)->format('%h.%i'); 
 
-				
+						
 				$date1 = new DateTime($fromDate);
 				$date2 = new DateTime($timeOut);
 
@@ -597,10 +598,7 @@ class SalaryComputationComponent extends Component
 			}
 
 
-			
 		}
-
-		//pr($data['night_diff']);
 
 	}
 
