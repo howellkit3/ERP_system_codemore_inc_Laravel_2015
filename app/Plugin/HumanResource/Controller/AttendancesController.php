@@ -874,7 +874,7 @@ public function daily_info() {
 
 	public function export_attendance() {
 
-			Configure::write('debug',0);
+		Configure::write('debug',0);
 
 		$this->loadModel('HumanResource.WorkSchedule');
 
@@ -908,6 +908,7 @@ public function daily_info() {
 			$conditions = array_merge($conditions,array('date(Attendance.date) BETWEEN ? AND ?' => array($date1,$date2)));
 		
 		}
+
 		
 
 		if (!empty($this->request->data['search'])) {
@@ -920,7 +921,7 @@ public function daily_info() {
 
 		}
 			
-		$this->Attendance->bind(array('Employee','MySchedule','MyWorkshift','MyWorkShiftBreak','MyBreakTime'));
+			$this->Attendance->bind(array('Employee','MySchedule','MyWorkshift','MyWorkShiftBreak','MyBreakTime'));
 
     	}
 
@@ -929,17 +930,22 @@ public function daily_info() {
     		'Attendance.out NOT' => ''
 
     	));
+
+
+
     	
         $attendanceData = $this->Attendance->find('all', array(
           'conditions' => $conditions,
             // 'order' => 'Attendance.out DESC',
             // 'group' => 'Attendance.id',
-	    
+
 	        'group' => array('Attendance.date'),
 	        'order' => 'Attendance.out DESC',
             //'fields'=> array('Attendance.in','Attendance.out')
         ));
 
+
+ 
         //check duplicity
 
     //     foreach ($attendanceData as $key => $value) {

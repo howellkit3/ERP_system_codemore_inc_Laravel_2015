@@ -2388,7 +2388,7 @@ class SalariesController  extends HumanResourceAppController {
 	public function export_all_attendance() {
 
 
-		Configure::write('debug',0);
+		Configure::write('debug',2);
 
 		$salaries = '';
 
@@ -2428,6 +2428,13 @@ class SalariesController  extends HumanResourceAppController {
 
 			// 	$empConditions = array_merge($empConditions,array('EmployeeAdditionalInformation.id' => $empConditions));
 			// }
+
+			if (!empty($this->request->data['Attendance']['department_id'])) {
+
+				$empConditions = array_merge($empConditions,array(
+						'Employee.department_id' => $this->request->data['Attendance']['department_id']
+				));
+			}
 
 			$employees = $this->Employee->find('all',array(
 								'conditions' => $empConditions,

@@ -110,6 +110,16 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 	                                        <?php echo $this->Form->create('Attendance',array( 
 	                                        	'url' => array('controller' => 'salaries','action' => 'export_all_attendance', 'type'=> 'POST'))); ?>   	
 	                                        <div class="col-lg-9">
+												<div class="form-group">
+
+														<?php echo $this->Form->input('department_id',array(
+															'options' => $departmentList,
+															'class' => 'form-control',
+															'empty' => '---- Select All ----',
+														)); ?>
+
+
+	                                        	</div>
 	                                           <div class="form-group pull-left">
 	                                            <div class="radio inline-block">
 	                                            <input type="radio" checked="checked" value="1:15" data-key="First Half ( 1- 15 )" class="mode_type required" id="optionsRadios1" name="data[Payroll][date]">
