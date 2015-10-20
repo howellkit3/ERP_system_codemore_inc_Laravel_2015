@@ -18,8 +18,6 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->loadModel('Sales.ClientOrder');
 
-       // $this->loadModel('Sales.ClientOrderDeliverySchedule');
-
         $deliveryData = $this->Delivery->find('list',array('fields' => array('schedule_uuid','status'))); 
         
         $this->ClientOrder->bindDelivery();
@@ -399,7 +397,7 @@ class DeliveriesController extends DeliveryAppController {
 
         //$this->loadModel('Sales.ClientOrderDeliverySchedule');
 
-        $this->loadModel('Delivery.DeliveryReceipt');
+      //  $this->loadModel('Delivery.DeliveryReceipt');
 
         $this->loadModel('Delivery.Transmittal');
 
@@ -414,19 +412,19 @@ class DeliveriesController extends DeliveryAppController {
                                            // 'fields' => array('DISTINCT Delivery.dr_uuid', 'DeliveryDetail.schedule','DeliveryDetail.location', 'DeliveryDetail.quantity','DeliveryDetail.delivered_quantity', 'DeliveryDetail.status', 'DeliveryReceipt.type', 'Delivery.schedule_uuid','DeliveryDetail.id', 'Transmittal.type' ,'DeliveryDetail.delivery_uuid'),
                                         ));
 
-        $this->DeliveryReceipt->bindDelivery();
+        //$this->DeliveryReceipt->bindDelivery();
 
-        $DeliveryReceiptData =  $this->DeliveryReceipt->find('all');
+       // $DeliveryReceiptData =  $this->DeliveryReceipt->find('all');
 
-        $this->Transmittal->bindDelivery();
+         $this->Transmittal->bindDelivery();
 
-        $TransmittalData =  $this->Transmittal->find('all');
+         $TransmittalData =  $this->Transmittal->find('all');
 
-        //pr($TranmisttalData); exit;
+        // pr($TranmisttalData); exit;
 
         
 
-        // $this->Delivery->bindDeliveryView();
+        //$this->Delivery->bindDeliveryView();
 
         // $limit = 1;
 
