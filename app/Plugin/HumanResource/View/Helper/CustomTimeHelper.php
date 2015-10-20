@@ -136,7 +136,7 @@ function getDurationSchedule($time1 = null,$time2 = null,$workschedules = null,$
 			// }
 
 
-			$myBreakFrom = $today.' '.  $workschedulesBreaksf['from'];
+			$myBreakFrom = $today.' '.  $workschedulesBreaks['from'];
 			$myBreakTo = $logout.' '.  $workschedulesBreaks['to'];
 
 
