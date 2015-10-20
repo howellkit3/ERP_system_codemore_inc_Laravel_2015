@@ -674,8 +674,6 @@ class SettingsController extends AppController
 
       public function item_group($indicators = null) {
 
-       //pr($indicators); exit;
-
         $indicator = substr($indicators, 0, -10);  
 
         $this->loadModel('Supplier');
@@ -764,7 +762,7 @@ class SettingsController extends AppController
 
 
        if ($this->request->is('post')) {
-                
+            //pr($this->request->data); exit;
                $generalItemDetails = $this->request->data;
           
             if (!empty($generalItemDetails)) {
@@ -2789,11 +2787,9 @@ class SettingsController extends AppController
             }
     }
 
-    public function search_order($hint = null, $indicator = null ){
+    public function search_order($hint = null, $indicator = null , $model_num = null){
 
         $this->loadModel('Supplier');
-
-        $this->loadModel('GeneralItem');
 
         $this->loadModel('ItemCategoryHolder');
 
@@ -2818,28 +2814,108 @@ class SettingsController extends AppController
         
         //$this->GeneralItem->bind(array('ItemCategoryHolder', 'ItemTypeHolder', 'Supplier'));
 
-        $generalItemData = $this->GeneralItem->find('all',array('order' => 'GeneralItem.id DESC'));
+        if($model_num == 1){
+
+            $this->loadModel('GeneralItem');
+
+            $generalItemData = $this->GeneralItem->find('all',array('order' => 'GeneralItem.id DESC'));
+
+            $generalItemData = $this->GeneralItem->find('all',array(
+                          'conditions' => array(
+                            'OR' => array(
+                            array('GeneralItem.id LIKE' => '%' . $hint . '%'),
+                            array('GeneralItem.name LIKE' => '%' . $hint . '%')
+                              )
+                            ),
+                          'limit' => 10
+                          )); 
 
 
+             $this->set(compact('generalItemData','supplierData','typeData','categoryData', 'indicator'));
 
-        $generalItemData = $this->GeneralItem->find('all',array(
-                      'conditions' => array(
-                        'OR' => array(
-                        array('GeneralItem.id LIKE' => '%' . $hint . '%'),
-                        array('GeneralItem.name LIKE' => '%' . $hint . '%')
-                          )
-                        ),
-                      'limit' => 10
-                      )); 
+            if ($hint == ' ') {
+                $this->render('index');
+            }else{
+                $this->render('search_order');
+            }
+
+        } else if($model_num == 2){
+
+            $this->loadModel('Substrate');
+
+            $substrateData = $this->Substrate->find('all',array('order' => 'Substrate.id DESC'));
+
+            $substrateData = $this->Substrate->find('all',array(
+                          'conditions' => array(
+                            'OR' => array(
+                            array('Substrate.id LIKE' => '%' . $hint . '%'),
+                            array('Substrate.name LIKE' => '%' . $hint . '%')
+                              )
+                            ),
+                          'limit' => 10
+                          )); 
 
 
-         $this->set(compact('generalItemData','supplierData','typeData','categoryData', 'indicator'));
+             $this->set(compact('substrateData','supplierData','typeData','categoryData', 'indicator'));
 
-        if ($hint == ' ') {
-            $this->render('index');
-        }else{
-            $this->render('search_order');
+            if ($hint == ' ') {
+                $this->render('index');
+            }else{
+                $this->render('search_order_substrate');
+            }
+
+         } else if($model_num == 3){
+
+            $this->loadModel('CompoundSubstrate');
+
+            $compoundSubstrateData = $this->CompoundSubstrate->find('all',array('order' => 'CompoundSubstrate.id DESC'));
+
+            $compoundSubstrateData = $this->CompoundSubstrate->find('all',array(
+                          'conditions' => array(
+                            'OR' => array(
+                            array('CompoundSubstrate.id LIKE' => '%' . $hint . '%'),
+                            array('CompoundSubstrate.name LIKE' => '%' . $hint . '%')
+                              )
+                            ),
+                          'limit' => 10
+                          )); 
+
+
+             $this->set(compact('compoundSubstrateData','supplierData','typeData','categoryData', 'indicator'));
+
+            if ($hint == ' ') {
+                $this->render('index');
+            }else{
+                $this->render('search_order_compound_substrate');
+            }
+
+        } else if($model_num == 4){
+
+            $this->loadModel('CorrugatedPaper');
+
+            $corrugatedPaperData = $this->CorrugatedPaper->find('all',array('order' => 'CorrugatedPaper.id DESC'));
+
+            $corrugatedPaperData = $this->CorrugatedPaper->find('all',array(
+                          'conditions' => array(
+                            'OR' => array(
+                            array('CorrugatedPaper.id LIKE' => '%' . $hint . '%'),
+                            array('CorrugatedPaper.name LIKE' => '%' . $hint . '%')
+                              )
+                            ),
+                          'limit' => 10
+                          )); 
+
+
+             $this->set(compact('corrugatedPaperData','supplierData','typeData','categoryData', 'indicator'));
+
+            if ($hint == ' ') {
+                $this->render('index');
+            }else{
+                $this->render('search_order_corrugated_paper');
+            }
+
         }
+
     }
 
 }

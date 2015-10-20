@@ -3,38 +3,44 @@ $active_page = !empty($this->params['controller']) ? $this->params['controller']
 $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
 ?>
 
-<?php if(!empty($generalItemData)){ ?>
-    <?php foreach ($generalItemData as $generalItemDataList ):?>
+
+<?php foreach ($substrateData as $substrateDataList ):?>
     
+  
+
         <tr class="">
 
             <td class="text-center">
-                <?php echo ucfirst($generalItemDataList['GeneralItem']['uuid']) ?>
+                <?php echo ucfirst($substrateDataList['Substrate']['uuid']) ?>
             </td>
           
             <td class="text-center">
-                <?php echo ucfirst($generalItemDataList['GeneralItem']['name']) ?>
+                <?php echo ucfirst($substrateDataList['Substrate']['name']) ?>
             </td>
 
             <td class="text-center">
-                <?php echo ucfirst(!empty($categoryData[$generalItemDataList['GeneralItem']['category_id']]) ? $categoryData[$generalItemDataList['GeneralItem']['category_id']] : " ") ?>
+                <?php echo ucfirst($categoryData[$substrateDataList['Substrate']['category_id']]) ?>
             </td>
 
             <td class="text-center">
-                <?php echo ucfirst($typeData[$generalItemDataList['GeneralItem']['type_id']]) ?>
+                <?php echo ucfirst($typeData[$substrateDataList['Substrate']['type_id']]) ?>
             </td>
 
             <td class="text-center">
-                <?php echo ucfirst(!empty($supplierData[$generalItemDataList['GeneralItem']['manufacturer_id']]) ? $supplierData[$generalItemDataList['GeneralItem']['manufacturer_id']] : " ") ?>
+                <?php echo ucfirst(!empty($supplierData[$substrateDataList['Substrate']['manufacturer_id']]) ? $supplierData[$substrateDataList['Substrate']['manufacturer_id']] : " ") ?>
             </td>
 
             <td class="text-center">
-                <?php echo ucfirst($generalItemDataList['GeneralItem']['measure']) ?>
+                <?php echo ucfirst($substrateDataList['Substrate']['type']) ?>
+            </td>
+
+            <td class="text-center">
+                <?php echo ucfirst($substrateDataList['Substrate']['thickness']) ?>
             </td>
 
             <td class="text-center">
             
-                  <?php echo date('M d, Y', strtotime($generalItemDataList['GeneralItem']['created'])); ?>
+                  <?php echo date('M d, Y', strtotime($substrateDataList['Substrate']['created'])); ?>
             </td>
             <td>
                 <?php
@@ -44,7 +50,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
                         </span> ', array(
                                         'controller' => 'settings', 
                                         'action' => 'view_general_item',
-                                        $generalItemDataList['GeneralItem']['id'],$indicator), array(
+                                        $substrateDataList['Substrate']['id'],$indicator), array(
                                                                             'class' =>' table-link small-link-icon',
                                                                             'escape' => false, 
                                                                             'title'=>'View Information'));
@@ -54,14 +60,14 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
                     echo $this->Html->link('<span class="fa-stack">
                     <i class="fa fa-square fa-stack-2x"></i>
                     <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit </font></span>
-                    </span> ', array('controller' => 'settings', 'action' => 'general_item_edit',$generalItemDataList['GeneralItem']['id'],$indicator),array('class' =>' table-link small-link-icon','escape' => false,'title'=>'Edit Information'));
+                    </span> ', array('controller' => 'settings', 'action' => 'general_item_edit',$substrateDataList['Substrate']['id'],$indicator),array('class' =>' table-link small-link-icon','escape' => false,'title'=>'Edit Information'));
                 ?>
 
                  <?php
                     echo $this->Html->link('<span class="fa-stack">
                     <i class="fa fa-square fa-stack-2x"></i>
                     <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Delete </font></span>
-                    </span>', array('controller' => 'settings', 'action' => 'deleteGeneralItem',$generalItemDataList['GeneralItem']['id'],$indicator),array('class' =>' table-link small-link-icon','escape' => false,'title'=>'Delete Information','confirm' => 'Do you want to delete this General Item?'));
+                    </span>', array('controller' => 'settings', 'action' => 'deleteGeneralItem',$substrateDataList['Substrate']['id'],$indicator),array('class' =>' table-link small-link-icon','escape' => false,'title'=>'Delete Information','confirm' => 'Do you want to delete this General Item?'));
                 ?>
 
                
@@ -70,6 +76,4 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
         </tr>
 
 
-<?php endforeach; 
-
-}?> 
+<?php endforeach; ?> 

@@ -25,7 +25,7 @@ if($indicator == "purchasing"){
 $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : 'tab-general-items';
 ?>
 
-<div class="row">
+<div class="row ">
 	<div class="col-lg-12">
 		<div class="main-box clearfix">
 			<ul class="nav nav-tabs">
@@ -190,9 +190,9 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 										</div>
 											<?php echo $this->Form->end(); ?>
 
-										<div class="row" id="general-item-table">
+										<div class="row" id="general-item-table ">
 											<div class="col-lg-12">
-												<div class="main-box">
+												<div class="main-box model-row">
 
 												<header class="main-box-header clearfix">
 
@@ -201,10 +201,19 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 													 	<div class="col-xs-6">
 
 															<div class="filter-block pull-right">
-										                        <div class="form-group pull-left">
+										                        <div class="form-group pull-left model-search">
 										                            
 										                                <input placeholder="Search..." class="form-control searchOrder "  />
 										                                <i class="fa fa-search search-icon"></i>
+
+										                                <?php 
+
+																			echo $this->Form->input('CompoundSubstrate.model', array(
+																				'class' => 'form-control model-name',
+													                            'type' => 'hidden',
+													                            'value' => '1',
+													                            'placeholder' => 'Corrugated Paper Name'));
+																		?>
 										                            
 										                        </div>
 										                        
@@ -264,7 +273,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 								</div>
 							</div>
 							<div class="tab-pane fade  <?php echo ($active_tab == 'tab-substrates') ? 'in active' : '' ?>" id="tab-substrates">
-								<div class="row">
+								<div class="row ">
 									<div class="col-lg-12">
 									<div class="row">
 									<div class="col-lg-12">
@@ -308,6 +317,14 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																			                            'label' => false,
 																			                            'type' => 'hidden',
 																			                            'value' => $indicator));
+																			?>
+
+																			<?php 
+																			echo $this->Form->input('Substrate.model', array(
+																										'class' => 'form-control ',
+																			                            'label' => false,
+																			                            'type' => 'hidden',
+																			                            'value' => 'substrate'));
 																			?>
 																	</div>
 																</div>
@@ -401,9 +418,9 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 										</div>
 											<?php echo $this->Form->end(); ?>
 
-										<div class="row" id="substrate-table">
+										<div class="row" id="substrate-table ">
 											<div class="col-lg-12">
-												<div class="main-box">
+												<div class="main-box model-row">
 												<header class="main-box-header clearfix">
 
 													<div class="row">
@@ -411,10 +428,18 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 													 	<div class="col-xs-6">
 
 															<div class="filter-block pull-right">
-										                        <div class="form-group pull-left">
+										                        <div class="form-group pull-left model-search">
 										                            
 										                                <input placeholder="Search..." class="form-control searchOrder "  />
 										                                <i class="fa fa-search search-icon"></i>
+
+										                                <?php 
+
+																			echo $this->Form->input('CompoundSubstrate.model', array(
+																				'class' => 'form-control model-name',
+													                            'type' => 'hidden',
+													                            'value' => '2'));
+																		?>
 										                            
 										                        </div>
 										                        
@@ -442,10 +467,9 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 
 																<tbody aria-relevant="all" aria-live="polite" class="requestFields" role="alert" >
                           
-								                               		 <?php echo $this->element('substrate_table');  ?>
+								                                	<?php echo $this->element('substrate_table');  ?>
 								                         
 										                        </tbody>
-
 										                        <tbody aria-relevant="all" aria-live="polite" class="searchAppend" role="alert" >
 										                        </tbody>
 
@@ -626,7 +650,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 										</div>
 									<?php echo $this->Form->end(); ?>
 
-									<div class="row" id="compound-substrate">
+									<div class="row" id="compound-substrate model-row">
 										<div class="col-lg-12">
 											<div class="main-box">
 											<header class="main-box-header clearfix">
@@ -636,10 +660,19 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 													 	<div class="col-xs-6">
 
 															<div class="filter-block pull-right">
-										                        <div class="form-group pull-left">
+										                        <div class="form-group pull-left model-search">
 										                            
 										                                <input placeholder="Search..." class="form-control searchOrder "  />
-										                                <i class="fa fa-search search-icon"></i>
+										                                <i class="fa fa-search search-icon "></i>
+
+										                                <?php 
+
+																			echo $this->Form->input('CompoundSubstrate.model', array(
+																				'class' => 'form-control model-name',
+													                            'type' => 'hidden',
+													                            'value' => '3',
+													                            'placeholder' => 'Corrugated Paper Name'));
+																		?>
 										                            
 										                        </div>
 										                        
@@ -888,7 +921,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 										</div>
 									<?php echo $this->Form->end(); ?>
 
-									<div class="row" id="corrugated-paper-table">
+									<div class="row" id="corrugated-paper-table model-row">
 										<div class="col-lg-12">
 											<div class="main-box">
 											<header class="main-box-header clearfix">
@@ -897,11 +930,20 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 													  <div class="col-xs-6"><h1>Corrugated List </h1></div>
 													 	<div class="col-xs-6">
 
-															<div class="filter-block pull-right">
-										                        <div class="form-group pull-left">
+															<div class="filter-block pull-right ">
+										                        <div class="form-group pull-left model-search">
 										                            
 										                                <input placeholder="Search..." class="form-control searchOrder "  />
 										                                <i class="fa fa-search search-icon"></i>
+
+										                                <?php 
+
+																			echo $this->Form->input('CorrugatedPaper.model', array(
+																				'class' => 'form-control model-name',
+													                            'type' => 'hidden',
+													                            'value' => '4',
+													                            'placeholder' => 'Corrugated Paper Name'));
+																		?>
 										                            
 										                        </div>
 										                        
@@ -925,7 +967,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																</tr>
 															</thead>
 
-															<tbody aria-relevant="all" aria-live="polite" class="requestFields" role="alert" >
+															<tbody aria-relevant="all" aria-live="polite" class="requestFieldsCorrugated" role="alert" >
                           
 							                               		<?php echo $this->element('corrugated_paper_table'); ?>
 							                         
@@ -965,24 +1007,35 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 
     $("body").on('keyup','.searchOrder', function(e){
 
+    	var thisMe = $(this);
+        var model_name = thisMe.parents('.model-search').find('.model-name').val();
+     
         var searchInput = $(this).val();
     	var params = $('.params').val();
+
+    	//alert(model_name); 
     	
         if(searchInput != ''){
-
+        	//thisMe.parents('.model-row').find('.table-responsive .requestFields').hide();
+            //$('.requestFields').hide();
             $('.requestFields').hide();
             $('.searchAppend').show();
             //alert('hide');
 
         }else{
             $('.requestFields').show();
-            $('.searchAppend').hide();
+           	$('.searchAppend').hide();
+           //	console.log(thisMe.parents('.model-row').find('.table-responsive .requestFields'));
+           //	$('.requestFieldsCorrugated').hide();
+            //thisMe.parents('.model-row').find('.table-responsive .requestFields').hide();
+            //$('.requestFieldsCorrugated').hide();
+
             //alert('show');
-        }
+        } 
         
         $.ajax({
             type: "GET",
-            url: serverPath + "settings/search_order/"+searchInput+"/"+params,
+            url: serverPath + "settings/search_order/"+searchInput+"/"+params+"/"+model_name,
             dataType: "html",
             success: function(data) {
 
