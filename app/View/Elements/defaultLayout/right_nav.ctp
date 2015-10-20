@@ -101,7 +101,7 @@
 					 
 					<li class="<?php echo ($this->params['plugin'] == 'purchasing') ? 'active' : '' ?>">
 
-						<?php  if(in_array($userData['User']['role_id'],array('1','2','7','10','6','8','4','16'))) {
+						<?php  if(in_array($userData['User']['role_id'],array('1','2','7','10','6','8','4','16','3'))) {
 
 						 echo $this->Html->link( " <i class='fa fa-th-large'></i> <span>Purchasing</span>",   array('controller' =>'suppliers','action'=>'index?'.rand(1000,9999).'='.date("is"),'plugin' => 'purchasing'),array('escape' => false) );
 						}
@@ -112,7 +112,7 @@
 					
 					<li class="<?php echo ($this->params['plugin'] == 'ware_house') ? 'active' : '' ?>">
 
-						<?php  if(in_array($userData['User']['role_id'],array('1','2','4','7','15','8','16'))) {
+						<?php  if(in_array($userData['User']['role_id'],array('1','2','4','7','15','8','16','3','12'))) {
 
 	 						  echo $this->Html->link( " <i class='fa fa-archive'></i> <span>Ware House</span>",   array('controller' =>'receivings','action'=>'index?'.rand(1000,9999).'='.date("is"),'plugin' => 'ware_house'),array('escape' => false) );
 								// echo $this->Html->link( " <i class='fa fa-archive'></i> <span>Ware House</span>",   array('controller' =>'ware_house_systems','action'=>'dashboard','plugin' => 'ware_house'),array('escape' => false) );

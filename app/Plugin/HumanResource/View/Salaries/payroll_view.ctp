@@ -222,7 +222,7 @@ echo $this->element('payroll_options');
 																					<?php echo !empty($salary['philhealth']) ? number_format($salary['philhealth'],2) : '0.00'; ?>
 														                        </td>
 														                        <td class="">
-																					<?php echo !empty($salary['pagibig']) ? number_format($salary['pagibig'],2) : '0.00'; ?>
+																					<?php echo !empty($salary['pagibig']) ? $salary['pagibig'] : '0.00'; ?>
 														                        </td>
 														                        <td class="">
 														                            	 <?php echo number_format($salary['with_holding_tax'],2); ?>

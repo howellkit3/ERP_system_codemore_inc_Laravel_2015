@@ -8,6 +8,13 @@ class ReceivingsController extends WareHouseAppController {
 
 	public function index() {
 
+		$userData = $this->Session->read('Auth');
+		
+		if(!in_array($userData['User']['role_id'],array('1','2','4','7','15','8','16','3'))) {
+
+			$this->redirect(array('controller' => 'warehouse_requests', 'action' => 'index?'.rand(1000,9999).'='.date("is")));
+		}
+
 		$this->loadModel('Purchasing.PurchaseOrder');
 
 		$this->loadModel('Purchasing.Request');
