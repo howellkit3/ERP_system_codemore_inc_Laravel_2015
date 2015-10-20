@@ -18,8 +18,8 @@
                         </h1> 
                     </center>
                      <div class="form-group pull-right">
-                     	<?php echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'employees', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
-                   		?>
+                     
+                   		<a href="javascript:history.back(1)" class="btn btn-primary pull-right"> <i class="fa fa-arrow-circle-left fa-lg"></i> Go Back </a>
                     </div>
                     <div class="form-group pull-right" style="margin-right:10px;">
                     	
