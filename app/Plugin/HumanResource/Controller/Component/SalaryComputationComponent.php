@@ -226,7 +226,7 @@ class SalaryComputationComponent extends Component
 						$salary[$key]['EmployeeAdditionalInformation']	= !empty($employee['EmployeeAdditionalInformation']) ? $employee['EmployeeAdditionalInformation'] : array();
         			
         		}
-        
+
         		return $salary;
 			}
     }
@@ -273,7 +273,6 @@ class SalaryComputationComponent extends Component
 
 		if (!empty($data['Attendance']['in']) && !empty($data['Attendance']['out'])) {
 
-		
 		$in = strtotime($today.' '.$data['MyWorkshift']['from']);
 
 		if  (!empty($data['MyWorkshift']['to'])) {
@@ -370,8 +369,12 @@ class SalaryComputationComponent extends Component
 
 		 $days['total_hours'] = $date1->diff($date2)->format('%h.%i'); 
 
-		// $days['total_hours'] += $days['total_hours'];
+		//  pr($timeIn);
+		//  pr($days['total_hours']);
 
+		// // $days['total_ho`urs'] += $days['total_hours'];
+
+		// pr($days['total_hours']);
 	
 		} else {
 
@@ -437,7 +440,12 @@ class SalaryComputationComponent extends Component
 
 						$from  =  $workshift; //new DateTime($workshift);
 
-					
+						$overtimeDate = date('Y-m-d',strtotime($days['Overtime']['to']));
+
+						$overtimeIn = date('Y-m-d',strtotime($days['Attendance']['in']));
+
+						if ($overtimeDate == $overtimeIn) {
+
 						if (strtotime($days['Attendance']['out']) > strtotime($days['Overtime']['to'])) {
 
 						$to  =  $days['Overtime']['to']; //new DateTime($days['Overtime']['to']);
@@ -447,7 +455,7 @@ class SalaryComputationComponent extends Component
 							$to  =  $days['Attendance']['out']; // new DateTime($days['Attendance']['out']);	
 						}
 
-
+						
 						$from = new DateTime($from);
 
 						$to = new DateTime($to);
@@ -455,7 +463,9 @@ class SalaryComputationComponent extends Component
 
 
 						$data['total_hours'] =  $from->diff($to)->format('%h.%i');
-	
+
+						}
+			
 					//}
 					
 					//regular ot is 1.25	
@@ -530,6 +540,7 @@ class SalaryComputationComponent extends Component
 
 		// }
 
+
 		return $data;
     }
 
@@ -548,8 +559,8 @@ class SalaryComputationComponent extends Component
 			$out = date('Y-m-d',strtotime($days['Attendance']['out']));	
 			//starts from 10:00 pm
 			$fromDate = $today .' 22:00:00';
-			
-			//$nighIn 
+				
+			//$nighInn
 
 			$nightIn = strtotime($fromDate);
 
@@ -624,6 +635,33 @@ class SalaryComputationComponent extends Component
     return sprintf('%02d.%02d', $hours, $minutes);
 }
 
+
+	public function _getDifference($days) {
+
+		if (!empty($days)) {
+
+			$total = 0;
+
+			$today = date('Y-m-d',strtotime($days['Attendance']['in']));
+
+			if (!empty($days['MyWorkshift']['from']) && strtotime($days['Attendance']['in']) >= strtotime($today.' '.$days['MyWorkshift']['from']) ) {
+
+				$dateIn = date('Y-m-d h:i:00',strtotime($days['Attendance']['in']));
+
+				$timeIn = strtotime($dateIn); 
+				
+				$toTime = strtotime($today.' '.$days['MyWorkshift']['from']); 
+
+				$total = abs($toTime - $timeIn);
+
+				$total = round($total / 60);
+
+			}
+
+			return $total;
+
+		}
+	}
 
     private function _dailyRate($employee = null, $models = array() ,$hours = 8, $workingDays = 26 ) {
 
@@ -724,6 +762,8 @@ class SalaryComputationComponent extends Component
 		$daysGet = array();
 
 		$times = array();
+
+		$differences = array();
 
 		$timeSunday = array();
 
@@ -863,7 +903,6 @@ class SalaryComputationComponent extends Component
 					$timeIn =  date('Y-m-d H:i:s',strtotime($days['Attendance']['in']));
 
 					$inToday = strtotime($days['Attendance']['in']);
-					$inToday = strtotime($days['Attendance']['in']);
 
 					$workSched = strtotime($today.' '.$days['MyWorkshift']['from']);
 
@@ -877,9 +916,21 @@ class SalaryComputationComponent extends Component
     			//check if days is not holiday or sundays
 				if (!in_array($today, $daysGet) && date("w",strtotime($today)) != 0) {
 
+				
+
+					$inToday = date('Y-m-d',strtotime($days['Attendance']['in']));
 					//$data['hours_regular'] += $this->_total_hours($days);
 
-					$times[] = $this->_total_hours($days);
+					//$data['hours_regular'] += $this->_getDifference($days);
+
+					$differences[$key]['minutes'] = $this->_getDifference($days);
+
+					$differences[$key]['in'] = $days['Attendance']['in'];
+
+
+					$differences[$key]['from'] = $inToday.' '.$days['MyWorkshift']['from'];
+
+					//$times[] = $this->_total_hours($days);
 					//regular_ot 
 					$over = $this->_checkOvertime($days);
 
@@ -887,13 +938,30 @@ class SalaryComputationComponent extends Component
 
 					$data['regular_OT'] += $over['total_hours'];
 
+
 					//regular night differential
 
-					if (!empty($days['Attendance']['in']) && !empty($days['Attendance']['out'])) {
-						
-						$data['hours_night_diff'] += $this->_nightDiff($days);
+					if (!empty($days['Attendance']['in']) && !empty($days['Attendance']['out']) ) {
+							
+						$today = $days['MySchedule']['day'];
 
-						$data['hours_night_diff_ot'] += $over['night_diff'];
+						$fromDate = $today .' 22:00:00';
+						
+						$myShift = $today.' '.$days['MyWorkshift']['from'];
+
+						if (strtotime($myShift) >= $fromDate) {
+
+							$data['hours_night_diff'] += $this->_nightDiff($days);
+
+							$data['hours_night_diff_ot'] += $over['night_diff'];
+
+						}
+						
+					
+						$regular_days++;
+						// if () {
+
+						// }		
 					}
 
 
@@ -908,9 +976,9 @@ class SalaryComputationComponent extends Component
 
 						$sunday_days++;	
 
-						//$data['hours_sunday_work'] += $this->_total_hours($days);
+						$data['hours_sunday_work'] += $this->_total_hours($days);
 
-						$timeSunday[] =  $this->_total_hours($days);
+						//$timeSunday[] =  $this->_total_hours($days);
 
 						//pr($data['hours_sunday_work']);
 						//sunday_work_ot 
@@ -1055,9 +1123,18 @@ class SalaryComputationComponent extends Component
     	}
 
 
-    	$data['hours_regular'] = $this->addWorkTime($times);
+    	$data['hours_regular'] = ($regular_days * 8) - 0.127; //$this->addWorkTime($times);
 
-    	$data['hours_sunday_work'] = $this->addWorkTime($timeSunday);
+
+    	$regularDays = ($regular_days * 8);
+    	$data['hours_regular'] = ($regular_days * 8);
+
+    	foreach ($differences as $key => $value) {
+    	
+    		$data['hours_regular'] -= '0.'.$value['minutes'];
+
+    	}
+    	// $data['hours_sunday_work'] = $this->addWorkTime($timeSunday);
 
     	return $data;
     }

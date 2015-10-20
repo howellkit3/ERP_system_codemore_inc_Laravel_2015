@@ -30,7 +30,9 @@
                         $sheet->setCellValue('E'.$counter, ucwords($employee['Employee']['middle_name']));
                         // ->setCellValue('D'.$counter, 'work')
 
-                        $sheet->setCellValue('F'.$counter, $employee['days']);
+                        $days = $employee['hours_regular'] / 8; 
+
+                        $sheet->setCellValue('F'.$counter, number_format($days,2));
 
 
                         $sheet->setCellValue('G'.$counter, $employee['hours_regular']);

@@ -2401,8 +2401,14 @@ class SalariesController  extends HumanResourceAppController {
 				$date = array(
 					'date1' => date('Y-m-01'),
 					'date2' => date('Y-m-15')
-
 					);
+			} else {
+
+				$date = array(
+					'date1' => date('Y-m-01'),
+					'date2' => date('Y-m-t')
+					);
+
 			}
 
 			$this->loadModel('HumanResource.Attendance');
