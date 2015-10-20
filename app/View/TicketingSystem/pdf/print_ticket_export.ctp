@@ -113,9 +113,8 @@ Configure::write('debug',2);
 
 
 										      		}
-
-
 										      	}
+
 										      	if($specLists['ProductSpecificationDetail']['model'] == 'Process'){
 										      		
 										      		echo $this->element('Specs/reports/process', array('formatDataSpecs' => $formatDataSpecs[$key],'key' => $processCounter,'ticketUuid' => $ticketUuid ,'product'=> $product));
@@ -149,11 +148,12 @@ Configure::write('debug',2);
 										<?php } ?>
 
 										<?php endif; ?>
+											
 									</thead>
 							    </table>
 
-
 						   	</div> 
+
 						   	<?php if (!empty($ticketData['JobTicket']['remarks'])) : ?>
 						   		<table class="border full-width">
 

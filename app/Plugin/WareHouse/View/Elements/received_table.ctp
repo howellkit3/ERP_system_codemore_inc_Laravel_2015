@@ -64,6 +64,11 @@
                           <i class="fa  fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> View</font></span>
                           </span> ', array('controller' => 'receivings', 'action' => 'view_receive', $requestOrderDataList['DeliveredOrder']['id'], !empty($requestOrderDataList['ReceivedItem'][0]['request_uuid']) ? $requestOrderDataList['ReceivedItem'][0]['request_uuid'] : " "),array('class' =>' table-link ','escape' => false,'title'=>'Print Transmittal Receipt')); ?>
 
+                <?php echo $this->Html->link('<span class="fa-stack">
+                          <i class="fa fa-square fa-stack-2x"></i>
+                          <i class="fa  fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit</font></span>
+                          </span> ', array('controller' => 'receivings', 'action' => 'view_receive_edit', $requestOrderDataList['DeliveredOrder']['id'], !empty($requestOrderDataList['ReceivedItem'][0]['request_uuid']) ? $requestOrderDataList['ReceivedItem'][0]['request_uuid'] : " "),array('class' =>' table-link ','escape' => false,'title'=>'Print Transmittal Receipt')); ?>
+
                     <!-- <a data-toggle="modal" href="#myModalInRecord<?php echo $requestOrderDataList['DeliveredOrder']['id'], $uuid ?>" class="table-link <?php echo $disableButton ?>"><i class="fa fa-lg  "></i><span class="fa-stack ">
                                       <i class="fa fa-square fa-stack-2x "></i>
                                       <i class="fa  fa-sign-in fa-stack-1x fa-inverse "></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> InRecord </font></span></a> -->

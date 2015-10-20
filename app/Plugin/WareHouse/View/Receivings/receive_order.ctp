@@ -71,7 +71,21 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                                                             'value' => ucwords($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']])));
                                         ?>
                                     </div>
-                                </div>          
+                                </div>     
+
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label">Delivery Number</label>
+                                    <div class="col-lg-8">
+                                        <?php 
+                                            echo $this->Form->input('ReceivedItems.dr_num', array(
+                                                                            'class' => 'form-control item_type',
+                                                                            'label' => false,
+                                                                            'disabled' => true,
+                                                                            'fields' =>array('name'),
+                                                                            'value' => !empty($receivedOrderData['ReceivedOrder']['dr_num']) ? $receivedOrderData['ReceivedOrder']['dr_num'] : " "));
+                                        ?>
+                                    </div>
+                                </div>       
 
                                 <?php foreach ($requestPurchasingItem as $key => $requestDataList): 
 

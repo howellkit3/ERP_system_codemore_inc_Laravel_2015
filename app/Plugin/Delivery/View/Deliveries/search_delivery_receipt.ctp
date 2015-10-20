@@ -6,8 +6,6 @@ $totalremaining = 0;
 
       <?php  foreach ($DRData as $deliveryDataList): ?>
 
-
-
                     <tr class="">
 
                         <td class="">
