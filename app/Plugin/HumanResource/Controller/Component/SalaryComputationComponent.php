@@ -663,6 +663,61 @@ class SalaryComputationComponent extends Component
 		}
 	}
 
+	function _regularDays($days) {
+
+		if (!empty($days['Attendance']['in']) && !empty($days['Attendance']['out'])) {
+
+
+			$inToday = date('Y-m-d',strtotime($days['Attendance']['in']));
+			$outToday = date('Y-m-d',strtotime($days['Attendance']['out']));
+
+			$time1 = $days['Attendance']['in'];
+
+		if (strtotime($days['Attendance']['in']) <= strtotime($outToday.' '.$days['MyWorkshift']['from']) ) {
+
+
+			$time1 = $outToday.' '.$days['MyWorkshift']['from'];
+
+		}
+		$time2 = $days['Attendance']['out'];
+
+				
+		$date = date('Y-m-d');
+		$date1 = new DateTime($time1);
+		$date2 = new DateTime($time2);
+
+		$interval = $date1->diff($date2)->format('%h');
+
+		if ($interval > 8) {
+			$interval = 8;
+		}
+
+			// if ($interval->d != 0){
+			// 	$days = ($interval->d > 1) ? 'days' : 'day';
+			// $difference	.= $interval->d  .' '.$days;
+			// }
+			// else{
+			// 	if ($interval->h != 0){
+			// 		$difference .= $interval->h  . 'h';
+			// 	} 
+			// }
+
+			// if ($interval->d == 0 && $interval->invert == 0 && $interval->i != 0) {
+			// 	if ($interval->h != 0) {
+			// 	  $difference .= ' & ';
+			// 	}
+			// 	$minutes = 'm';
+
+			// 	if ($interval->i > 1) {
+			// 		$minutes = 'm';
+			// 	}
+			// 	$difference .= $interval->i  .$minutes;
+			// }
+		return $interval;
+	}
+
+	}
+
     private function _dailyRate($employee = null, $models = array() ,$hours = 8, $workingDays = 26 ) {
 
     	$countDays = 0;
@@ -756,6 +811,10 @@ class SalaryComputationComponent extends Component
 
     	$data['sunday_ctpa'] = 0;
     	$data['sunday_sea'] = 0;
+
+
+    	$data['regular_days'] = 0;
+
 
     	if (!empty($employee)) {
 
@@ -922,6 +981,11 @@ class SalaryComputationComponent extends Component
 					//$data['hours_regular'] += $this->_total_hours($days);
 
 					//$data['hours_regular'] += $this->_getDifference($days);
+
+					$data['regular_days'] += $this->_regularDays($days);
+
+
+
 
 					$differences[$key]['minutes'] = $this->_getDifference($days);
 
@@ -1123,17 +1187,20 @@ class SalaryComputationComponent extends Component
     	}
 
 
-    	$data['hours_regular'] = ($regular_days * 8) - 0.127; //$this->addWorkTime($times);
+    	//$data['hours_regular'] = ($regular_days * 8) - 0.127; //$this->addWorkTime($times);
 
 
-    	$regularDays = ($regular_days * 8);
-    	$data['hours_regular'] = ($regular_days * 8);
+    	//$regularDays = ($regular_days * 8);
+
+    	$data['hours_regular'] = $data['regular_days'];
+
 
     	foreach ($differences as $key => $value) {
     	
     		$data['hours_regular'] -= '0.'.$value['minutes'];
 
     	}
+
     	// $data['hours_sunday_work'] = $this->addWorkTime($timeSunday);
 
     	return $data;

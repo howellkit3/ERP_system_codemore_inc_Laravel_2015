@@ -136,7 +136,7 @@ function getDurationSchedule($time1 = null,$time2 = null,$workschedules = null,$
 			// }
 
 
-			$myBreakFrom = $today.' '.  $workschedulesBreaks['from'];
+			$myBreakFrom = $today.' '.  $workschedulesBreaksf['from'];
 			$myBreakTo = $logout.' '.  $workschedulesBreaks['to'];
 
 
@@ -157,9 +157,6 @@ function getDurationSchedule($time1 = null,$time2 = null,$workschedules = null,$
 		$date = date('Y-m-d');
 		$date1 = new DateTime($timeIn);
 		$date2 = new DateTime($timeOut);
-
-
-
 
 		$interval = $date1->diff($date2);
 
