@@ -425,6 +425,8 @@ class RequestsController extends PurchasingAppController {
 
     	$this->loadModel('Purchasing.Request');
 
+    	$this->loadModel('Purchasing.PurchaseOrder');
+
     	$this->loadModel('Purchasing.PurchasingType');
 
     	$this->loadModel('Purchasing.RequestItem');
@@ -437,7 +439,32 @@ class RequestsController extends PurchasingAppController {
 
 		$this->loadModel('CompoundSubstrate');
 
+		//$this->Request->bind(array('Purchase'));
+
+		// $purchaseOrderData = $this->PurchaseOrder->find('all', 'order' => array('PurchaseOrder.created' => 'ASC')
+		// 													);
+
+		$purchaseOrderData = $this->PurchaseOrder->find('first', array('fields' => array('id', 'po_number'),
+															'order' => array('PurchaseOrder.created' => 'DESC')
+															));
+
+		
+		//pr($purchaseOrderData); exit;
+		if($purchaseOrderData['PurchaseOrder']['po_number'] != 15100001){
+
+			$purchaseNumber = 15100001;
+
+		}else if($purchaseOrderData['PurchaseOrder']['po_number'] >= 15100001){
+
+			$purchaseNumber = $purchaseOrderData['PurchaseOrder']['po_number'] + 1;
+
+		}
+
+		//pr($purchaseNumber); exit;
+
     	$requestData = $this->Request->find('first', array('conditions' => array('Request.id' => $requestId)));
+
+    	//pr($requestData); exit;
 
     	$requestItem = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestData['Request']['uuid'])));
 
@@ -495,7 +522,7 @@ class RequestsController extends PurchasingAppController {
 															'order' => array('PurchasingType.id' => 'ASC')
 															));
 
-    	$this->set(compact('requestId','supplierData','paymentTermData','requestData','type','unitData','requestItem','currencyData'));
+    	$this->set(compact('purchaseNumber','requestId','supplierData','paymentTermData','requestData','type','unitData','requestItem','currencyData'));
 
     }
 
@@ -510,6 +537,10 @@ class RequestsController extends PurchasingAppController {
     	$this->loadModel('Purchasing.RequestItem');
 
     	if (!empty($this->request->data)) {
+
+    		$this->request->data['PurchaseOrder']['delivery_date'] = $this->request->data['PurchaseOrder']['deliveryDate'];
+
+    		//pr($this->request->data); exit;
 
     		if(!empty($this->request->data['RequestItemIdHolder'])){
     		

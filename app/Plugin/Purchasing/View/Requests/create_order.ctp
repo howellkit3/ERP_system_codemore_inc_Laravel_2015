@@ -108,6 +108,7 @@
 	                                                					'placeholder' => 'PUO Number',
 	                                                					'id' => 'generate-poNumber' 
 	                                                					));
+
 	                                            echo $this->Form->input('PurchaseOrder.request_id',array( 
 	                                            						'class' => 'form-control  required', 
 	                                                					'label' => false,
@@ -145,17 +146,18 @@
 									</div>
 
 									<div class="form-group">
-	                                	<label class="col-lg-2 control-label"><span style="color:red">*</span>Delivery Date</label>
-										<div class="col-lg-8">
-											<?php 
-	                                            echo $this->Form->input('PurchaseOrder.delivery_date',array( 
-	                                            						'class' => 'form-control datepick required', 
-	                                                					'label' => false,
-	                                                					'placeholder' => 'Delivery Date'  
-	                                                					));
-	                                        ?>
+	                                    	<label class="col-lg-2 control-label"><span style="color:red">*</span>Delivery Date</label>
+											<div class="col-lg-8">
+												<?php 
+	                                                echo $this->Form->input('PurchaseOrder.deliveryDate',array( 
+	                                                						'class' => 'form-control item_type datepick  required', 
+	                                                    					'label' => false,
+	                                                    					'readonly' => false,
+	                                                    					'placeholder' => 'Delivery Date Date'  
+	                                                    					));
+	                                            ?>
+											</div>
 										</div>
-									</div>
 
 									<div class="form-group">
 	                                	<label class="col-lg-2 control-label">Remarks</label>
@@ -217,6 +219,17 @@
 					                                'class' => 'form-control required',
 					                                'readonly' => true,
 					                                'value' => $type[$requestData['Request']['pur_type_id']]
+					                                 )); 
+
+					                            ?>
+
+					                            <?php echo $this->Form->input('PurchaseOrder.po_number', array(
+					                                'type' => 'text',
+					                                'label' => false,
+					                                'type' => 'hidden',
+ 					                                'class' => 'form-control po_number',
+					                                'readonly' => true,
+					                                'value' => $purchaseNumber
 					                                 )); 
 
 					                            ?>
@@ -724,38 +737,42 @@
 		var hour = currentTime.getHours()
 		var minute = currentTime.getMinutes()
 		var seconds = currentTime.getSeconds()
+		var uuid = $('.po_number').val();
+		
 
-		year = year.toString().substr(2,2);
+		// year = year.toString().substr(2,2);
 
-	    month = month + "";
+	 //    month = month + "";
 
-	    hour = hour + "";
+	 //    hour = hour + "";
 
-	    minute = minute + "";
+	 //    minute = minute + "";
 
-	    seconds = seconds + "";
+	 //    seconds = seconds + "";
 
-	    if (month.length == 1)
-	    {
-	        month = "0" + month;
-	    }
+	 //    if (month.length == 1)
+	 //    {
+	 //        month = "0" + month;
+	 //    }
 
-	    if (hour.length == 1)
-	    {
-	        hour = "0" + hour;
-	    }
+	 //    if (hour.length == 1)
+	 //    {
+	 //        hour = "0" + hour;
+	 //    }
 
-	    if (minute.length == 1)
-	    {
-	        minute = "0" + minute;
-	    }
+	 //    if (minute.length == 1)
+	 //    {
+	 //        minute = "0" + minute;
+	 //    }
 
-	    if (seconds.length == 1)
-	    {
-	        seconds = "0" + seconds;
-	    }
-	    var ranDom = Math.floor(Math.random()*9000) + 1000;
-	    var code = year.concat(month,ranDom);
+	 //    if (seconds.length == 1)
+	 //    {
+	 //        seconds = "0" + seconds;
+	 //    }
+	 //    var ranDom = Math.floor(Math.random()*9000) + 1000;
+	 //    var code = year.concat(month,ranDom);
+
+	 var code = uuid;
 	    
 		if($(this).is( ":checked" ) == true){
 			
