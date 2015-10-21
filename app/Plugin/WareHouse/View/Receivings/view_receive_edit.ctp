@@ -30,7 +30,7 @@
 
             </div>
         </div>
-                <?php echo $this->Form->create('PurchaseOrder',array('url'=>(array('controller' => 'receivings','action' => 'view_receive_edit'))));?>      
+                <?php echo $this->Form->create('PurchaseOrder',array('url'=>(array('controller' => 'receivings','action' => 'delivered_order_edit'))));?>      
 
         <div class="row">
             <div class="col-lg-12">
@@ -45,7 +45,7 @@
                     <div class="main-box-body clearfix">
                         <div class="main-box-body clearfix">
                             <div class="form-horizontal">                                   
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label class="col-lg-2 control-label">Purchase Order Number</label>
                                     
                                     <div class="col-lg-8">
@@ -60,7 +60,7 @@
 
                                         ?>
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Supplier</label>
@@ -113,12 +113,11 @@
                                     <label class="col-lg-2 control-label">P.O. Number</label>
                                     <div class="col-lg-8">
                                         <?php 
-                                            echo $this->Form->input('PurchaseOrder.quantity', array(
+                                            echo $this->Form->input('DeliveredOrder.purchase_order_uuid', array(
                                                                             'class' => 'form-control item_type',
                                                                             'label' => false,
-                                                                            'disabled' => true,
                                                                             'fields' =>array('name'),
-                                                                            'value' => $purchaseOrderData['PurchaseOrder']['po_number']));
+                                                                            'value' => !empty($receivedItemData[0]['DeliveredOrder']['purchase_order_uuid']) ? $receivedItemData[0]['DeliveredOrder']['purchase_order_uuid'] : " "));
                                         ?>
                                     </div>
                                 </div>

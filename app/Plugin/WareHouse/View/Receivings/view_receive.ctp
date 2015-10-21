@@ -53,7 +53,7 @@
                     <div class="main-box-body clearfix">
                         <div class="main-box-body clearfix">
                             <div class="form-horizontal">                                   
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label class="col-lg-2 control-label">Purchase Order Number</label>
                                     
                                     <div class="col-lg-8">
@@ -68,7 +68,7 @@
 
                                         ?>
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Supplier</label>
@@ -119,7 +119,7 @@
                                                                             'label' => false,
                                                                             'disabled' => true,
                                                                             'fields' =>array('name'),
-                                                                            'value' => $purchaseOrderData['PurchaseOrder']['po_number']));
+                                                                            'value' => !empty($receivedItemData[0]['DeliveredOrder']['purchase_order_uuid']) ? $receivedItemData[0]['DeliveredOrder']['purchase_order_uuid'] : " "));
                                         ?>
                                     </div>
                                 </div>

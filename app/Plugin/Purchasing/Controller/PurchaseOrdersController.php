@@ -300,9 +300,27 @@ class PurchaseOrdersController extends PurchasingAppController {
 
     public function approved($purchaseOrderId){
 
+    	$this->loadModel('Purchasing.PurchaseOrder');
+
+    	$purchaseOrderList = $this->PurchaseOrder->find('all', array('fields' => array('PurchaseOrder.id', 'PurchaseOrder.order'),
+															'order' => array('PurchaseOrder.id' => 'DESC')
+															));
+
+    	$array = array();
+
+    	foreach ($purchaseOrderList as $key => $value) {
+
+    		array_push($array, $value['PurchaseOrder']['order']);
+    		
+    	} 
+
+    	$highest_order = max($array) + 1;
+
     	$this->PurchaseOrder->id = $purchaseOrderId;
 
     	$this->PurchaseOrder->saveField('status',1);
+
+    	$this->PurchaseOrder->saveField('order', $highest_order);
 
     	$this->Session->setFlash(__('Purchase Order has been approved.'));
 

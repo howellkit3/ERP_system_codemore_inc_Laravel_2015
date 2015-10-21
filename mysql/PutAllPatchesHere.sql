@@ -2222,3 +2222,5 @@ ALTER TABLE `delivered_orders`  ADD `si_num` INT(11)  NULL  DEFAULT NULL  AFTER 
 /* howell kit added this oct-21-2015 warehouse*/
 ALTER TABLE `purchase_orders`  ADD `receive_item_status` INT(11)  NULL  DEFAULT NULL  AFTER `uuid`;
 ALTER TABLE `purchase_orders`  ADD `order` INT(11)  NULL  DEFAULT NULL  AFTER `dr_num`;
+ALTER TABLE `delivered_orders`  ADD `order` INT(11)  NULL  DEFAULT NULL  AFTER `status_id`;
+ALTER TABLE `delivered_orders`  ADD `purchase_order_uuid` INT(11)  NULL  DEFAULT NULL  AFTER `purchase_orders_id`;

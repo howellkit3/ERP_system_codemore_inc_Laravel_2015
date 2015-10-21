@@ -456,15 +456,11 @@ class RequestsController extends PurchasingAppController {
 
 		//}else if($purchaseOrderData['PurchaseOrder']['po_number'] >= 15100001){
 
-			$purchaseNumber = $purchaseOrderData['PurchaseOrder']['po_number'] + 1;
+		$purchaseNumber = $purchaseOrderData['PurchaseOrder']['po_number'] + 1;
 
 		//}
 
-		//pr($purchaseNumber); exit;
-
     	$requestData = $this->Request->find('first', array('conditions' => array('Request.id' => $requestId)));
-
-    	//pr($requestData); exit;
 
     	$requestItem = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestData['Request']['uuid'])));
 

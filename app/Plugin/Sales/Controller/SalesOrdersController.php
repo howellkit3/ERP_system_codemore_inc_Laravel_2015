@@ -20,6 +20,8 @@ class SalesOrdersController extends SalesAppController {
 	    	    
 	public function index() {
 
+    $this->loadModel('Sales.Product');
+
 		$userData = $this->Session->read('Auth');
 		
 		$this->Quotation->bind(array('ClientOrder'));
@@ -38,27 +40,47 @@ class SalesOrdersController extends SalesAppController {
 
       if (!empty($query['name'])) {
 
-        $conditions = array_merge($conditions,array(
-          'OR' => array(
-              'ClientOrder.uuid like' => '%'. $query['name'] . '%',
-              //'Company.company_name like' => '%'. $query['name'] . '%',
-              'Product.name like' => '%'. $query['name'] . '%',
-            )
-        ));
+        $this->loadModel('Sales.Product');
+        $this->Quotation->bind(array('ClientOrder'));
+        $this->Quotation->ClientOrder->bind(array('QuotationItemDetail','QuotationDetail','Company','Product'));
+        
 
+        // $clientOrder = $this->ClientOrder->find('all');
+       
+        // $conditions = array('ClientOrder.status_id' => null);
+        // $conditions = array_merge($conditions,array(
+        //   'OR' => array(
+        //       'ClientOrder.uuid like' => '%'. $query['name'] . '%',
+        //       //'Company.company_name like' => '%'. $query['name'] . '%',
+        //       'Product.name like' => '%'. $query['name'] . '%',
+        //     )
+        // ));
+
+        $clientOrder = $this->ClientOrder->find('all',array(
+                  'order' => 'ClientOrder.id DESC',
+                  'conditions' => array(
+                    'OR' => array(
+                      array('ClientOrder.status_id' => null),
+                      array('ClientOrder.uuid LIKE' => '%' .  $query['name'] . '%'),
+                      array('Product.name LIKE' => '%' . $query['name'] . '%')
+                      )
+                    )
+                )
+        );
+
+       
       }
 
-    }
-
-    $this->paginate = array(
+    } else {
+        $this->paginate = array(
             'conditions' => $conditions,
             'limit' => $limit,
             'order' => 'ClientOrder.id DESC',
             'group' => 'ClientOrder.id'
         );
 
-    $clientOrder = $this->paginate('ClientOrder');
-
+        $clientOrder = $this->paginate('ClientOrder');
+    }
 
 		$this->loadModel('Sales.Company');
 
