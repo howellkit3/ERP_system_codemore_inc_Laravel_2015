@@ -3,6 +3,7 @@
 <?php echo $this->element('ware_house_option');
 $int = 0;
 echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'receivings','action' => 'receive_order',$purchaseOrderData['PurchaseOrder']['id'], $purchaseOrderData['RequestItem']['request_uuid'] )),'class' => 'form-horizontal'));?>
+<?php $remainingQuantitySum = 0; ?>
 
 <br><br>
 
@@ -69,6 +70,12 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                                                             'disabled' => true,
                                                                             'fields' =>array('name'),
                                                                             'value' => ucwords($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']])));
+
+                                            echo $this->Form->input('PurchaseOrder.idholder', array(
+                                                                            'class' => 'form-control item_type idholder',
+                                                                            'type' => 'hidden',
+                                                                            'label' => false,
+                                                                            'value' => ucwords($purchaseOrderData['PurchaseOrder']['id'])));
                                         ?>
                                     </div>
                                 </div>     
@@ -98,6 +105,8 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                                                             'fields' =>array('name')
                                                                             ));
                                         ?>
+
+
                                     </div>
                                 </div>  
 
@@ -114,6 +123,7 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
 
                                 $remainingQuantity =  $requestDataList[$itemHolder]['original_quantity'] -  $requestDataList[$itemHolder]['good_quantity'];
 
+                                $remainingQuantitySum = $remainingQuantitySum + $remainingQuantity;
 
                                 if($remainingQuantity > 0){  ?>
 
@@ -124,6 +134,7 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                     <div class = "checkbox-nice">
                                     <input type="checkbox" class="check-ref-uuid checked" name="requestPurchasingItem[<?php echo $key ?>][<?php echo $requestDataList[$itemHolder]['foreign_key'] ?>]" id="<?php echo $key?>" >
                                                         <label for="<?php echo $key?>"> <?php  echo $requestDataList[$itemHolder]['name'] ?> &nbsp;<I>(<?php  echo (!empty( $requestDataList[$itemHolder]['good_quantity']) ? $remainingQuantity: $requestDataList[$itemHolder]['original_quantity']) ?>)</I></label>
+                                    ?>
 
                                     </div>
                                     <div class="form-group ">
@@ -220,8 +231,16 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                               
                                              <?php }
                                         endforeach; 
-                                              
-                                 ?>
+                                        //pr($remainingQuantitySum); exit;
+                             echo $this->Form->input('remainingquantity', array(
+                                                    'type' => 'hidden',
+                                                    'class' => 'form-control remaining_quantity',
+                                                    'value' => $remainingQuantitySum,
+                                                    'label' => false,
+                                                    
+                                                    ));
+                                       
+                            ?>
 
                             <div class="form-group ">
                                 <label class="col-lg-2 control-label"></label>
@@ -276,7 +295,42 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
 
 <script>
 
+
 jQuery("body").ready(function(){
+
+    var remaining_quantity = $('.remaining_quantity').val();
+
+    var idholder = $('.idholder').val();
+
+    //alert(idholder); 
+
+    if(remaining_quantity > 0){
+
+    var flag = 0;
+
+    }else{
+
+
+
+    var flag = 1;
+
+        $.ajax({
+            type: "GET",
+            url: serverPath + "ware_house/receivings/for_flag/"+flag+"/"+idholder,
+            dataType: "html",
+            success: function(data) {
+
+                //alert(data);
+
+       
+   
+                
+            }
+        });
+
+    }
+
+   // alert(remaining_quantity); 
 
     $('.limitQuantity').bind('change', quantityController); });
 
@@ -349,6 +403,9 @@ jQuery("body").ready(function(){
         
         }
     }
+
+
+
 
 
 

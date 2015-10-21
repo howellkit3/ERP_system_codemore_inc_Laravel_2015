@@ -8,8 +8,6 @@ class ReceivingsController extends WareHouseAppController {
 
 	public function index() {
 
-		//pr(); exit;
-
 		$this->loadModel('Purchasing.PurchaseOrder');
 
 		$this->loadModel('Purchasing.Request');
@@ -24,7 +22,7 @@ class ReceivingsController extends WareHouseAppController {
 
 		$this->PurchaseOrder->bind(array('Request'));
 
-		$purchaseOrderData = $this->PurchaseOrder->find('all', array('conditions' => array('PurchaseOrder.status' => 1),
+		$purchaseOrderData = $this->PurchaseOrder->find('all', array('conditions' => array('PurchaseOrder.status' => 1, 'PurchaseOrder.receive_item_status' => null),
 															'order' => array('PurchaseOrder.created' => 'DESC')
 															));
 		//pr($purchaseOrderData); exit;
@@ -1213,6 +1211,27 @@ class ReceivingsController extends WareHouseAppController {
 		}
 
 		$this->set(compact('supplierData'));
+
+    }
+
+    public function for_flag($flag = null, $id = null) {
+
+	//	$userData = $this->Session->read('Auth');
+
+		$this->loadModel('Purchasing.PurchaseOrder');
+
+		$this->PurchaseOrder->id = $id;
+
+		$this->PurchaseOrder->saveField('receive_item_status', $flag);
+
+		exit;
+
+		//$this->Session->setFlash(__('Delivered Order has been Approved'), 'success');
+      
+        // $this->redirect( array(
+        //     'controller' => 'receivings',   
+        //     'action' => 'receive'
+        // ));  
 
     }
 

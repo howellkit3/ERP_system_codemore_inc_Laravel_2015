@@ -65,12 +65,6 @@ class PurchaseOrder extends AppModel {
 					'foreignKey' =>  false,
 					'conditions' => array('Request.uuid = request_uuid')
 				),
-
-				// 'ReceivedItem' => array(
-				// 	'className' => 'WareHouse.ReceivedItem',
-				// 	'foreignKey' =>  false,
-				// 	'conditions' => array('ReceivedOrder.id = received_orders_id')
-				// ),
 			
 		)));
 

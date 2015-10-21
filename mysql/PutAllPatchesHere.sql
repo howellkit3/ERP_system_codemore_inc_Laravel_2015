@@ -2215,6 +2215,10 @@ ALTER TABLE `client_orders`  ADD `status_id` INT(11)  NULL  DEFAULT NULL  AFTER 
 ALTER TABLE `warehouse_requests`  ADD `pur_type_id` INT(11)  NULL  DEFAULT NULL  AFTER `name`;
 ALTER TABLE `received_orders`  ADD `dr_num` INT(11)  NULL  DEFAULT NULL  AFTER `purchase_order_uuid`;
 
-/* howell kit added this oct-15-2015 warehouse*/
+/* howell kit added this oct-20-2015 warehouse*/
 ALTER TABLE `delivered_orders`  ADD `dr_num` INT(11)  NULL  DEFAULT NULL  AFTER `uuid`;
 ALTER TABLE `delivered_orders`  ADD `si_num` INT(11)  NULL  DEFAULT NULL  AFTER `dr_num`;
+
+/* howell kit added this oct-21-2015 warehouse*/
+ALTER TABLE `purchase_orders`  ADD `receive_item_status` INT(11)  NULL  DEFAULT NULL  AFTER `uuid`;
+ALTER TABLE `purchase_orders`  ADD `order` INT(11)  NULL  DEFAULT NULL  AFTER `dr_num`;
