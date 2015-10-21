@@ -773,6 +773,10 @@ class ReceivingsController extends WareHouseAppController {
 
 		$this->loadModel('WareHouse.DeliveredOrder');
 
+		$idholder = $id;
+
+		//pr('$idholder'); exit;
+
 		$lastName = $this->User->find('list', array('fields' => array('User.id', 'User.last_name')
 																));
 
@@ -808,7 +812,8 @@ class ReceivingsController extends WareHouseAppController {
 
 		$this->DeliveredOrder->bind('ReceivedItem', 'PurchaseOrder', 'ReceivedOrder');
 
-		$receivedItemData = $this->DeliveredOrder->find('all', array('conditions' => array('DeliveredOrder.id' => $id)));
+		$receivedItemData = $this->DeliveredOrder->find('all', array('conditions' => array('DeliveredOrder.id' => $idholder)));
+
 
 		$purchaseOrderData = $this->PurchaseOrder->find('first', array('conditions' => array('PurchaseOrder.id' => $receivedItemData[0]['DeliveredOrder']['purchase_orders_id'])));
 
@@ -834,8 +839,6 @@ class ReceivingsController extends WareHouseAppController {
 					$receiveItem[$key][$itemHolder]['good_quantity'] = $valueOfValue['quantity'];
 					
 					$receiveItem[$key][$itemHolder]['reject_quantity'] = $valueOfValue['reject_quantity'];
-
-
         			
 		        } 
 
@@ -910,11 +913,16 @@ class ReceivingsController extends WareHouseAppController {
 
    	$this->set(compact('purchaseOrderSupplierData', 'purchaseOrderUUIDData', 'purchaseOrderData', 'supplierData', 'firstName', 'lastName', 'requestData', 'itemDetails', 'receiveItem', 'itemData', 'receivedOrderData', 'type', 'requestItemData', 'itemHolder', 'deliveredDataID', 'receivedItemData', 'areaList', 'userNameList'));
 
-   	if ($this->request->is(array('post','put'))) {
 
-   		$userData = $this->Session->read('Auth');
+    }
 
-		$this->loadModel('WareHouse.ReceivedOrder');
+    public function delivered_order_edit() {
+
+    	//pr($this->request->data); exit;
+
+	   	$userData = $this->Session->read('Auth');
+
+		$this->loadModel('WareHouse.DeliveredOrder');
 
 		$this->DeliveredOrder->id = $this->request->data['DeliveredOrder']['id'];
 
@@ -922,16 +930,15 @@ class ReceivingsController extends WareHouseAppController {
 
 		$this->DeliveredOrder->saveField('si_num', $this->request->data['DeliveredOrder']['si_num']);
 
+		$this->DeliveredOrder->saveField('purchase_order_uuid', $this->request->data['DeliveredOrder']['purchase_order_uuid']);
+
 		$this->Session->setFlash(__('Delivery Details has been Updated'), 'success');
       
         $this->redirect( array(
             'controller' => 'receivings',   
             'action' => 'receive'
         )); 
-   		
-   	}
-
-
+	   		
     }
 
 

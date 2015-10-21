@@ -23,7 +23,6 @@
                         <thead>
                             <tr>
                                 <th><a href="#"><span>Purchase Order No</span></a></th>
-                                <th><a href="#"><span>PO No.</span></a></th>
                                 <th><a href="#"><span>Supplier</span></a></th>
                                 <th><a href="#"><span>Status</span></a></th>
                                 <th>Action</th>

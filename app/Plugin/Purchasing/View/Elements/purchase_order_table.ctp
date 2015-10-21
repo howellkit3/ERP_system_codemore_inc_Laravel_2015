@@ -3,9 +3,9 @@
 
         <tr class="">
 
-            <td class="">
+            <!-- <td class="">
                 <?php echo ucfirst($purchaseOrderDataList['PurchaseOrder']['uuid']) ?>  
-            </td>
+            </td> -->
 
             <td class="">
 

@@ -50,7 +50,7 @@
                     <div class="main-box-body clearfix">
                         <div class="main-box-body clearfix">
                             <div class="form-horizontal">                                   
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label class="col-lg-2 control-label">Purchase Order Number</label>
                                     
                                     <div class="col-lg-8">
@@ -65,21 +65,9 @@
 
                                         ?>
                                     </div>
-                                </div>
+                                </div> -->
 
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label">Supplier</label>
-                                    <div class="col-lg-8">
-                                        <?php 
-                                            echo $this->Form->input('PurchaseOrder.quantity', array(
-                                                                            'class' => 'form-control item_type',
-                                                                            'label' => false,
-                                                                            'disabled' => true,
-                                                                            'fields' =>array('name'),
-                                                                            'value' => ucwords($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']])));
-                                        ?>
-                                    </div>
-                                </div>
+                                
 
                                 <!-- <div class="form-group">
                                     <label class="col-lg-2 control-label">Delivery Number</label>
@@ -105,6 +93,20 @@
                                                                             'disabled' => true,
                                                                             'fields' =>array('name'),
                                                                             'value' => $purchaseOrderData['PurchaseOrder']['po_number']));
+                                        ?>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label">Supplier</label>
+                                    <div class="col-lg-8">
+                                        <?php 
+                                            echo $this->Form->input('PurchaseOrder.quantity', array(
+                                                                            'class' => 'form-control item_type',
+                                                                            'label' => false,
+                                                                            'disabled' => true,
+                                                                            'fields' =>array('name'),
+                                                                            'value' => ucwords($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']])));
                                         ?>
                                     </div>
                                 </div>

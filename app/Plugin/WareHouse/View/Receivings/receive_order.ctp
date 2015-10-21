@@ -29,6 +29,7 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                     <div class="col-lg-8">
 
                                         <?php 
+
                                             echo $this->Form->input('ReceivedItems.id', array(
                                                                             'class' => 'form-control item_type',
                                                                             'type' => 'hidden',
@@ -47,14 +48,12 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                         ?>
 
                                         <?php 
-                                            echo $this->Form->input('PurchaseOrder.uuid', array(
+                                            echo $this->Form->input('DeliveredOrders.po_number', array(
                                                                             'class' => 'form-control item_type',
-                                                                            'disabled' => true,
+                                                                            'readonly' => 'readonly',
                                                                             'label' => false,       
-                                                                            'value' => $purchaseOrderData['PurchaseOrder']['uuid'],
+                                                                            'value' => $purchaseOrderData['PurchaseOrder']['po_number'],
                                                                             'fields' =>array('name')));
-
-
                                         ?>
                                     </div>
                                 </div>
@@ -80,11 +79,11 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                 </div>     
 
                                 <div class="form-group">
-                                    <label class="col-lg-2 control-label">Delivery Number</label>
+                                    <label class="col-lg-2 control-label"><span style="color:red">*</span>Delivery Number</label>
                                     <div class="col-lg-8">
                                         <?php 
                                             echo $this->Form->input('DeliveredOrders.dr_num', array(
-                                                                            'class' => 'form-control item_type',
+                                                                            'class' => 'form-control item_type required',
                                                                             'label' => false,
                                                                             'type' => 'number',
                                                                             'fields' =>array('name')
@@ -94,11 +93,11 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                 </div>      
 
                                 <div class="form-group">
-                                    <label class="col-lg-2 control-label">Sales Invoice Number</label>
+                                    <label class="col-lg-2 control-label"><span style="color:red">*</span>Sales Invoice Number</label>
                                     <div class="col-lg-8">
                                         <?php 
                                             echo $this->Form->input('DeliveredOrders.si_num', array(
-                                                                            'class' => 'form-control item_type',
+                                                                            'class' => 'form-control item_type required',
                                                                             'label' => false,
                                                                             'type' => 'number',
                                                                             'fields' =>array('name')
@@ -109,8 +108,32 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                     </div>
                                 </div>  
 
-                                <?php foreach ($requestPurchasingItem as $key => $requestDataList): 
+                                <div class="form-group">
+                                        <label class="col-lg-2 control-label"><span style="color:red">*</span>Tracking Number</label>
+                                        <div class="col-lg-8">
+                                            <?php 
+                                                echo $this->Form->input('DeliveredOrders.uuid',array( 
+                                                                        'class' => 'form-control  required', 
+                                                                        'label' => false,
+                                                                        'placeholder' => 'Tracking Number',
+                                                                        'id' => 'generate-poNumber' 
+                                                                        ));
+                                            ?>
+                                        </div>
+                                    </div>
 
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label"></label>
+                                        <div class="col-lg-8">
+                                            <div class="checkbox-nice">
+                                                <input id="checkbox-1" type="checkbox" class="generate-poNumber">
+                                                <label for="checkbox-1"> Generate Tracking Number </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                <?php foreach ($requestPurchasingItem as $key => $requestDataList): 
+                              //  pr($requestPurchasingItem); exit;
                                 if(empty($requestDataList[$itemHolder]['delivered_quantity'])){
 
                                     $deliveredQuantityHolder = 0;
@@ -404,7 +427,66 @@ jQuery("body").ready(function(){
     }
 
 
+    $('.generate-poNumber').change(function(){
 
+        var currentTime = new Date()
+        var month = currentTime.getMonth() + 1
+        var year = currentTime.getFullYear()
+        var hour = currentTime.getHours()
+        var minute = currentTime.getMinutes()
+        var seconds = currentTime.getSeconds()
+        var uuid = $('.po_number').val();
+        
+
+        year = year.toString().substr(2,2);
+
+        month = month + "";
+
+        hour = hour + "";
+
+        minute = minute + "";
+
+        seconds = seconds + "";
+
+        if (month.length == 1)
+        {
+            month = "0" + month;
+        }
+
+        if (hour.length == 1)
+        {
+            hour = "0" + hour;
+        }
+
+        if (minute.length == 1)
+        {
+            minute = "0" + minute;
+        }
+
+        if (seconds.length == 1)
+        {
+            seconds = "0" + seconds;
+        }
+        var ranDom = Math.floor(Math.random()*9000) + 1000;
+        var code = year.concat(month,ranDom);
+        
+        if($(this).is( ":checked" ) == true){
+            
+            var data = "RCV-" + code;
+            
+            $('#generate-poNumber').val(data);
+            
+            $('#generate-poNumber').attr('readonly','true');
+        }
+        
+        if($(this).is( ":checked" ) == false){
+            
+            $('#generate-poNumber').val('');
+            $('#generate-poNumber').removeAttr("readonly");
+           
+        }
+    
+    });
 
 
 
