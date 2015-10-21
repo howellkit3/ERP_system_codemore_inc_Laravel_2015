@@ -22,7 +22,7 @@ class ReceivingsController extends WareHouseAppController {
 
 		$this->PurchaseOrder->bind(array('Request'));
 
-		$purchaseOrderData = $this->PurchaseOrder->find('all', array('conditions' => array('PurchaseOrder.status' => 1, 'PurchaseOrder.receive_item_status' => null),
+		$purchaseOrderData = $this->PurchaseOrder->find('all', array('conditions' => array('PurchaseOrder.status' => 1),// 'PurchaseOrder.receive_item_status' => null),
 															'order' => array('PurchaseOrder.created' => 'DESC')
 															));
 		//pr($purchaseOrderData); exit;
@@ -320,8 +320,6 @@ class ReceivingsController extends WareHouseAppController {
 
     	$this->loadModel('WareHouse.DeliveredOrder');
 
-    	//$this->loadModel('Area');
-
     	$this->loadModel('Supplier');
 
     	$this->loadModel('User');
@@ -336,21 +334,10 @@ class ReceivingsController extends WareHouseAppController {
 		$supplierData = $this->Supplier->find('list', array('fields' => array('Supplier.id', 'Supplier.name')
 																));
 
-		// $areaList = $this->Area->find('list', array('fields' => array('Area.id', 'Area.name')
-		// 														));
 
 		$receiveData = $this->Request->find('list', array('fields' => array('Request.id', 'Request.uuid')
 																));
 
-		// $userNameList = $this->User->find('list', array('fields' => array('User.id', 'User.fullname'),
-		// 												'conditions' => array( 
-		// 													'User.role_id' => 4)));
-
-		
-
-		//$received_orders = $this->DeliveredOrder->find('all',array('order' => 'DeliveredOrder.id DESC'));
-
-	
 		$this->DeliveredOrder->bind('ReceivedItem', 'ReceivedOrder');
 
         $this->DeliveredOrder->recursive = 1;
@@ -379,11 +366,7 @@ class ReceivingsController extends WareHouseAppController {
             'order' => 'DeliveredOrder.id DESC',
         );
 
-        //pr($conditions); exit;
-
         $received_orders = $this->paginate('DeliveredOrder');
-
-        //pr($received_orders); exit;
 
       	$purchaseOrderSupplierData = $this->PurchaseOrder->find('list', array('fields' => array('PurchaseOrder.id', 'PurchaseOrder.supplier_id')
 																));

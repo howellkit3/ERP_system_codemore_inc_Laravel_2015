@@ -14,9 +14,9 @@
        if ($purchaseOrderData['PurchaseOrder']['status'] == 8) {
 
             echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i> Approved', array('controller' => 'purchase_orders', 'action' => 'approved',$purchaseOrderid),array('class' =>'btn btn-primary pull-right','escape' => false));
-         }
+
             echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit', array('controller' => 'purchase_orders', 'action' => 'edit',$purchaseOrderid),array('class' =>'btn btn-primary pull-right','escape' => false));
-       
+       }
 
         echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print', array('controller' => 'purchase_orders', 'action' => 'print_purchase_order',$purchaseOrderid),array('class' =>'btn btn-primary pull-right','escape' => false,'target' => '_blank'));
     ?>
