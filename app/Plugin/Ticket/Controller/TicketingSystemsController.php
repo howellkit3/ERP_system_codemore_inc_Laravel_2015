@@ -566,21 +566,18 @@ class TicketingSystemsController extends TicketAppController {
 
         $this->loadModel('Unit');
 
-
         $this->ClientOrder->bind(array('ClientOrderDeliverySchedule'));
 
         $delData = $this->ClientOrder->find('first',array('conditions' => array('id' => $clientOrderId)));
 
-        $productData = $this->Product->find('first',array('conditions' => array('Product.uuid' => $productUuid) ,'order' => 'Product.id ASC'));
+        $productData = $this->Product->find('first',array('conditions' => array('Product.uuid' => $productUuid) ,'order' => 'Product.id DESC'));
 
-        //pr($ticketData); exit;
+        $this->JobTicket->bindTicket();
 
         $ticketData = $this->JobTicket->find('first',array(
             'conditions' => array('JobTicket.uuid' => $ticketUuid)));
 
-
-        $specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productData['Product']['id'])));
-
+        $specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $ticketData['Product']['id'])));
 
         //find if product has specs
         $formatDataSpecs = $this->ProductSpecificationDetail->findData($productUuid);
