@@ -18,14 +18,13 @@ class ReceivingsController extends WareHouseAppController {
 
 		$supplierData = $this->Supplier->find('list', array('fields' => array('Supplier.id', 'Supplier.name')
 																));
-		//$this->PurchaseOrder->bindReceive();
 
 		$this->PurchaseOrder->bind(array('Request'));
 
-		$purchaseOrderData = $this->PurchaseOrder->find('all', array('conditions' => array('PurchaseOrder.status' => 1),// 'PurchaseOrder.receive_item_status' => null),
+		$purchaseOrderData = $this->PurchaseOrder->find('all', array('conditions' => array('PurchaseOrder.status' => 1, 'PurchaseOrder.receive_item_status' => null),
 															'order' => array('PurchaseOrder.created' => 'DESC')
 															));
-		//pr($purchaseOrderData); exit;
+		
 		//$receivedItemsData = $this->ReceivedItem->find('all');
 
 		$quantityData = $this->ReceivedItem->find('list', array('fields' => array('ReceivedItem.delivered_order_id','ReceivedItem.quantity')
