@@ -73,7 +73,7 @@ class AttendancesController  extends HumanResourceAppController {
 
 			$empId =$query['employee_id'];
 			
-			$conditions = array_merge($conditions,array(
+			$cray_onditions = armerge($conditions,array(
 					'Attendance.employee_id' => $empId
 			));
 
@@ -147,14 +147,18 @@ class AttendancesController  extends HumanResourceAppController {
 		
 		$conditions = array();
 		
-		$departmentList =  $this->Department->find('list',array('conditions' => $conditions,'fields' => array('id','department_position'),'order' => array('Department.department_position')));
+		$departmentList =  $this->Department->find('list',array(
+			'conditions' => $conditions,
+			'fields' => array('id','department_position'),
+			'group' => array('Department.id')
+		));
 		
 		$conditions = array();
 
 		$employeeList = $this->Employee->getList($conditions);
 
 
-		$this->set(compact('attendances','date','search','departmentList','employeeList','dateSelected','empId'));
+		$this->set(compact('attendances','date','empId','search','departmentList','employeeList','dateSelected','empId'));
 
 	}
 
@@ -1295,6 +1299,15 @@ public function daily_info() {
 
 		$this->render('Attendances/ajax/edit_attendance');
 
+	}
+
+	public function check_attendance() {
+
+
+		$this->bind(array('MySchedule','MyWorkshift'));
+
+		$attendances = $this->Attendance->find('all',array('conditions' => $con));
+		exit();
 	}
 
 }	
