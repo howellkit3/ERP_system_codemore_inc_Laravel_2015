@@ -87,15 +87,14 @@
 									</div>
 
 									<div class="form-group">
-										<label class="col-lg-2 control-label"><span style="color:red">*</span>Manufacturer</label>
+										<label class="col-lg-2 control-label">Manufacturer</label>
 										<div class="col-lg-8">
 											<?php echo $this->Form->input('GeneralItem.manufacturer_id', array(
 														'options' => array($supplierData),
 														'type' => 'select',
 														'label' => false,
-														'class' => 'form-control required categorylist',
+														'class' => 'form-control categorylist',
 														'empty' => '---Select Supplier---',
-														'required' => 'required'
 											)); 
 											?>
 										</div>
