@@ -127,7 +127,7 @@ class AttendancesController  extends HumanResourceAppController {
 
 	            // 	),
 	            'group' => array('Attendance.date'),
-	            'order' => 'Attendance.out DESC',
+	            'order' => 'Attendance.in DESC',
 	    );
 
 		$this->paginate = $params;
@@ -410,12 +410,28 @@ class AttendancesController  extends HumanResourceAppController {
 
 			} else {
 
-			$this->redirect( array(
-                         'controller' => 'attendances', 
-                         'action' => 'index',
-                         'plugin' => 'human_resource'
+				if (!empty($this->params['named']['return'])) {
 
-                    ));	
+
+	            	$return = base64_decode($this->params['named']['return']);
+	            	
+	            	$return = str_replace('/koufunet','',$return);
+
+	            	$this->redirect($return);
+            	
+				} else {
+
+						$this->redirect( array(
+	                         'controller' => 'attendances', 
+	                         'action' => 'index',
+	                         'plugin' => 'human_resource'
+
+	                    ));
+
+
+				}
+
+				
 			}
 
 			} else {
