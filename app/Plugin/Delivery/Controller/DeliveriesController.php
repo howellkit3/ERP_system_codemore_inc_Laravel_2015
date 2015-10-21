@@ -722,14 +722,14 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->ClientOrder->bindDelivery();
 
-        $clientsOrder = $this->ClientOrder->find('all',array(
-                      'conditions' => array(
-                        'OR' => array(
+        $conditions = array('ClientOrder.status_id' => null, 'OR' => array(
                         array('ClientOrder.po_number LIKE' => '%' . $hint . '%'),
                           array('Product.name LIKE' => '%' . $hint . '%'),
                           array('Company.company_name LIKE' => '%' . $hint . '%')
-                          )
-                        ),
+                          ));
+
+        $clientsOrder = $this->ClientOrder->find('all',array(
+                      'conditions' => $conditions,
                       'limit' => 10
                       )); 
 
