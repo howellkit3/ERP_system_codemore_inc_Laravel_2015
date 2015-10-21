@@ -450,15 +450,15 @@ class RequestsController extends PurchasingAppController {
 
 		
 		//pr($purchaseOrderData); exit;
-		if($purchaseOrderData['PurchaseOrder']['po_number'] != 15100001){
+		//if($purchaseOrderData['PurchaseOrder']['po_number'] != 15100001){
 
-			$purchaseNumber = 15100001;
+			//$purchaseNumber = 15100001;
 
-		}else if($purchaseOrderData['PurchaseOrder']['po_number'] >= 15100001){
+		//}else if($purchaseOrderData['PurchaseOrder']['po_number'] >= 15100001){
 
 			$purchaseNumber = $purchaseOrderData['PurchaseOrder']['po_number'] + 1;
 
-		}
+		//}
 
 		//pr($purchaseNumber); exit;
 
