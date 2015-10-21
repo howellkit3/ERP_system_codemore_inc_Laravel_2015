@@ -18,7 +18,6 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
 
                     </header>
 
-
                     <div class="top-space"></div>  
                     <div class="main-box-body clearfix">
                         <div class="main-box-body clearfix">

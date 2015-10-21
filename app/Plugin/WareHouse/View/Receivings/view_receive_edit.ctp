@@ -71,7 +71,7 @@
                                                                             'label' => false,
                                                                             'disabled' => true,
                                                                             'fields' =>array('name'),
-                                                                            'value' => ucwords($supplierData[$purchaseOrderSupplierData[$receivedItemData[0]['DeliveredOrder']['purchase_orders_id']]])));
+                                                                            'value' => ucwords($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']])));
                                         ?>
                                     </div>
                                 </div>
@@ -118,7 +118,7 @@
                                                                             'label' => false,
                                                                             'disabled' => true,
                                                                             'fields' =>array('name'),
-                                                                            'value' => $purchaseOrderUUIDData[$receivedItemData[0]['DeliveredOrder']['purchase_orders_id']]));
+                                                                            'value' => $purchaseOrderData['PurchaseOrder']['po_number']));
                                         ?>
                                     </div>
                                 </div>
@@ -140,11 +140,11 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Created by</label>
                                     <div class="col-lg-8">
-                                        <?php $Fname = $firstName[$receivedItemData[0]['PurchaseOrder']['created_by']];
+                                        <?php 
 
-                                            $Fname = ucfirst($firstName[$receivedItemData[0]['PurchaseOrder']['created_by']]); 
+                                            $Fname = ucfirst($firstName[$purchaseOrderData['PurchaseOrder']['created_by']]); 
 
-                                            $Lname = ucfirst($lastName[$receivedItemData[0]['PurchaseOrder']['created_by']]);
+                                            $Lname = ucfirst($lastName[$purchaseOrderData['PurchaseOrder']['created_by']]);
 
                                             echo $this->Form->input('PurchaseOrder.createdBy', array(
                                                                             'class' => 'form-control item_type',
@@ -165,7 +165,7 @@
                                                                             'label' => false,
                                                                             'disabled' => true,
                                                                             'fields' =>array('name'),
-                                                                            'value' => $receivedItemData[0]['PurchaseOrder']['remarks']));
+                                                                            'value' => $purchaseOrderData['PurchaseOrder']['created_by']));
                                         ?>
                                     </div>
                                 </div>
