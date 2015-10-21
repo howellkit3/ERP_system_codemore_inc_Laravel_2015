@@ -63,7 +63,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 		 			$itemData = $this->GeneralItem->find('list',array('fields' => array('id', 'name')));
 
-		 			$requestData[$key]['WarehouseRequestItem'][$key1]['name'] = $itemData[$valueOfRequest['foreign_key']];
+		 			$requestData[$key]['WarehouseRequestItem'][$key1]['name'] = !empty($itemData[$valueOfRequest['foreign_key']]) ? $itemData[$valueOfRequest['foreign_key']] : " ";
 		 		}
 
 		 		if($valueOfRequest['model'] == 'CorrugatedPaper'){
@@ -524,7 +524,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 	 			$itemData = $this->GeneralItem->find('list',array('fields' => array('id', 'name')));
 
-	 			$request['WarehouseRequestItem'][$key]['name'] = $itemData[$value['foreign_key']];
+	 			$request['WarehouseRequestItem'][$key]['name'] = !empty($itemData[$value['foreign_key']]) ? $itemData[$value['foreign_key']] : " ";
 	 		}
 
 	 		if($value['model'] == 'CorrugatedPaper'){

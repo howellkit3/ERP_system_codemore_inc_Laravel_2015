@@ -77,14 +77,29 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                     <label class="col-lg-2 control-label">Delivery Number</label>
                                     <div class="col-lg-8">
                                         <?php 
-                                            echo $this->Form->input('ReceivedItems.dr_num', array(
+                                            echo $this->Form->input('DeliveredOrders.dr_num', array(
                                                                             'class' => 'form-control item_type',
                                                                             'label' => false,
-                                                                            'fields' =>array('name'),
-                                                                            'value' => !empty($receivedOrderData['ReceivedOrder']['dr_num']) ? $receivedOrderData['ReceivedOrder']['dr_num'] : " "));
+                                                                            'type' => 'number',
+                                                                            'fields' =>array('name')
+                                                                            ));
                                         ?>
                                     </div>
-                                </div>       
+                                </div>      
+
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label">Sales Invoice Number</label>
+                                    <div class="col-lg-8">
+                                        <?php 
+                                            echo $this->Form->input('DeliveredOrders.si_num', array(
+                                                                            'class' => 'form-control item_type',
+                                                                            'label' => false,
+                                                                            'type' => 'number',
+                                                                            'fields' =>array('name')
+                                                                            ));
+                                        ?>
+                                    </div>
+                                </div>  
 
                                 <?php foreach ($requestPurchasingItem as $key => $requestDataList): 
 

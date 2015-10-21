@@ -46,6 +46,11 @@ class PurchaseOrder extends AppModel {
 					'foreignKey' =>  false,
 					'conditions' => array('ReceivedOrder.purchase_orders_id = PurchaseOrder.id')
 				),
+				'DeliveredOrder' => array(
+					'className' => 'WareHouse.DeliveredOrder',
+					'foreignKey' =>  false,
+					'conditions' => array('DeliveredOrder.purchase_orders_id = PurchaseOrder.id')
+				),
 			),
 
 			'hasMany' => array(	
@@ -60,6 +65,12 @@ class PurchaseOrder extends AppModel {
 					'foreignKey' =>  false,
 					'conditions' => array('Request.uuid = request_uuid')
 				),
+
+				// 'ReceivedItem' => array(
+				// 	'className' => 'WareHouse.ReceivedItem',
+				// 	'foreignKey' =>  false,
+				// 	'conditions' => array('ReceivedOrder.id = received_orders_id')
+				// ),
 			
 		)));
 

@@ -345,7 +345,7 @@
 
 		}
 
-		public function create_specification(){
+		public function create_specificationsdfasdf(){
 
 			$userData = $this->Session->read('Auth');
 
@@ -368,7 +368,7 @@
 	    	$this->ProductSpecificationDetail->bind(array('Sales.ProductSpecificationComponent','Sales.ProductSpecificationPart','Sales.ProductSpecificationProcess'));
 			
 			if (!empty($this->request->data)) {
-				
+				// pr($this->request->data);exit();
 				$this->JobTicket->saveTicket($this->request->data['JobTicket'],$userData['User']['id'],$this->request->data['JobTicket']['ClientOrder']['id']);
 				
 				if(!empty($this->request->data['IdHolder'])){
@@ -443,6 +443,191 @@
 				
 			}
 		}
+
+		public function create_specification(){
+
+	    	$userData = $this->Session->read('Auth');
+
+	    	$this->loadModel('Sales.ProductSpecificationDetail');
+
+	    	$this->loadModel('Sales.ProductSpecificationMainPanel');
+
+	    	$this->loadModel('Sales.ProductSpecificationComponent');
+
+	    	$this->loadModel('Sales.ProductSpecificationPart');
+
+	    	$this->loadModel('Sales.ProductSpecificationProcess');
+
+	    	$this->loadModel('Sales.Product');
+
+	    	$this->loadModel('Ticket.JobTicket');
+
+	    	$this->loadModel('Sales.ProductSpecificationProcessHolder');
+
+	    	$this->Product->bind(array('Sales.ProductSpecificationDetail','Sales.ProductSpecification'));
+
+	    	$this->ProductSpecificationDetail->bind(array('Sales.ProductSpecificationComponent','Sales.ProductSpecificationPart','Sales.ProductSpecificationProcess'));
+					
+			if (!empty($this->request->data)) {
+				
+				$this->JobTicket->saveTicket($this->request->data['JobTicket'],$userData['User']['id'],$this->request->data['JobTicket']['ClientOrder']['id']);
+				if(!empty($this->request->data['IdHolder'])){
+					
+					$this->Product->ProductSpecification->delete($this->request->data['ProductSpecification']['id']);
+					$this->ProductSpecificationComponent->deleteData($this->request->data['IdHolder']);
+					$this->ProductSpecificationPart->deleteData($this->request->data['IdHolder']);
+					$this->ProductSpecificationProcess->deleteData($this->request->data['IdHolder']);
+					$this->ProductSpecificationProcessHolder->deleteData($this->request->data['IdHolder']);
+					$this->ProductSpecificationDetail->deleteData($this->request->data['IdHolder']);
+				}
+				
+
+				$specId = $this->Product->ProductSpecification->saveSpec($this->request->data,$userData['User']['id']);
+				
+				//$mainPanelArray = array();
+				$componentArray = array();
+				$partArray = array();
+				$processArray = array();
+				if (!empty($this->request->data['ProductSpecificationDetail'])) {
+				
+					foreach ($this->request->data['ProductSpecificationDetail'] as $key => $value) {
+						
+						// if($value == 'MainPanel'){
+						// 	array_push($mainPanelArray, $key);
+						// }
+						if($value == 'Component'){
+							array_push($componentArray, $key);
+						}
+						if($value == 'Part'){
+							array_push($partArray, $key);
+						}
+						if($value == 'Process'){
+							array_push($processArray, $key);
+						}
+					}
+				}
+				
+				// if (isset($this->request->data['ProductSpecificationMainPanel'])) {
+					
+				// 	$mainPanelData['ProductSpecificationMainPanel'] = array_values($this->request->data['ProductSpecificationMainPanel']);
+					
+				// 	foreach ($mainPanelData['ProductSpecificationMainPanel'] as $key => $value) {
+						
+				// 		$mainPanelData['ProductSpecificationMainPanel'][$key] = $value;
+				// 		$mainPanelData['ProductSpecificationMainPanel'][$key]['order'] = $mainPanelArray[$key];
+						
+				// 	}
+				// 	$mainPanelData['Product'] = $this->request->data['Product']['id'];
+					
+				// }
+				
+				if (isset($this->request->data['ProductSpecificationComponent'])) {
+					
+					$componentData['ProductSpecificationComponent'] = array_values($this->request->data['ProductSpecificationComponent']);
+					
+					foreach ($componentData['ProductSpecificationComponent'] as $key => $value) {
+						
+						$componentData['ProductSpecificationComponent'][$key] = $value;
+						$componentData['ProductSpecificationComponent'][$key]['order'] = $componentArray[$key];
+						
+					}
+					$componentData['Product'] = $this->request->data['Product']['id'];
+					
+				}
+				
+				if (isset($this->request->data['ProductSpecificationPart'])) {
+
+					$partData['ProductSpecificationPart'] = array_values($this->request->data['ProductSpecificationPart']);
+					
+					foreach ($partData['ProductSpecificationPart'] as $key => $value) {
+						
+						if (isset($partArray[$key])) {
+							
+							$partData['ProductSpecificationPart'][$key] = $value;
+							$partData['ProductSpecificationPart'][$key]['order'] = $partArray[$key];
+							
+						}
+						
+					}
+					$partData['Product'] = $this->request->data['Product']['id'];
+					
+				}
+				
+				if (!empty($this->request->data['ProductSpecificationProcess'])) {
+
+					$processData['ProductSpecificationProcess'] = array_values($this->request->data['ProductSpecificationProcess']);
+					
+					foreach ($processData['ProductSpecificationProcess'] as $key => $value) {
+
+						if (isset($processArray[$key])) {
+							$processData['ProductSpecificationProcess'][$key] = $value;
+							$processData['ProductSpecificationProcess'][$key]['order'] = $processArray[$key];
+						}
+					}
+					$processData['Product'] = $this->request->data['Product']['id'];
+
+				}
+
+				$getIds = array();
+
+				// if (!empty($this->request->data['ProductSpecificationMainPanel'])) {
+
+				// 	$thisMainPanelIds = $this->ProductSpecificationMainPanel->saveMainPanel($mainPanelData,$userData['User']['id'],$specId);
+
+				// 	$getIds = array_merge($getIds,$thisMainPanelIds);
+				// }
+
+				if (!empty($this->request->data['ProductSpecificationComponent'])) {
+
+					$thisComponentIds = $this->ProductSpecificationComponent->saveComponent($componentData,$userData['User']['id'],$specId);
+
+					$getIds = array_merge($getIds,$thisComponentIds);
+				}
+				
+				if (!empty($this->request->data['ProductSpecificationPart'])) {
+
+					$thisPartIds = $this->ProductSpecificationPart->savePart($partData,$userData['User']['id'],$specId);
+					
+					$getIds = array_merge($getIds,$thisPartIds);
+
+				}
+
+				if (!empty($this->request->data['ProductSpecificationProcess'])) {
+
+					$thisProcessIds = $this->ProductSpecificationProcess->saveProcess($processData,$userData['User']['id'],$specId);
+					
+					$getIds = array_merge($getIds,$thisProcessIds);
+
+				}
+
+				$saveArray = array();
+				if (!empty($this->request->data['ProductSpecificationDetail'])) {
+					foreach ($this->request->data['ProductSpecificationDetail'] as $key => $data) {
+
+						if (!empty($getIds[$key])) {
+							$newdata = split('-', $getIds[$key]);
+							$saveArray[$key]['ProductSpecificationDetail']['model'] = $newdata[2];
+							$saveArray[$key]['ProductSpecificationDetail']['order'] = $newdata[1];
+							$saveArray[$key]['ProductSpecificationDetail']['foreign_key'] = $newdata[0];
+						}
+						
+					}
+				}
+
+				if (!empty($saveArray)) {
+					$this->ProductSpecificationDetail->saveSpecDetail($saveArray,$userData['User']['id'],$this->request->data['Product']['uuid']);
+				}
+				
+				
+				$this->Session->setFlash(
+	                __('Client Order Product specification successfully completed', 'success')
+	            );
+				return $this->redirect(array('controller' => 'create_order',
+											 'action' => 'view_specs',$this->request->data['JobTicket']['Product']['id'],1,$this->request->data['JobTicket']['ClientOrder']['id']));
+				
+			}
+
+	    }
 
 
 	}

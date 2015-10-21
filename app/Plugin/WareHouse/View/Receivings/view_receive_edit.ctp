@@ -80,19 +80,32 @@
                                     <label class="col-lg-2 control-label">Delivery Number</label>
                                     <div class="col-lg-8">
                                         <?php 
-                                            echo $this->Form->input('ReceiveOrder.dr_num', array(
+                                            echo $this->Form->input('DeliveredOrder.dr_num', array(
                                                                             'class' => 'form-control item_type',
                                                                             'label' => false,
-                                                                             'value' => !empty($receivedItemData[0]['ReceivedOrder']['dr_num']) ? $receivedItemData[0]['ReceivedOrder']['dr_num'] : " "));
+                                                                             'value' => !empty($receivedItemData[0]['DeliveredOrder']['dr_num']) ? $receivedItemData[0]['DeliveredOrder']['dr_num'] : " "));
                                         ?>
 
                                         <?php 
-                                            echo $this->Form->input('ReceiveOrder.id', array(
+                                            echo $this->Form->input('DeliveredOrder.id', array(
                                                                             'class' => 'form-control item_type',
                                                                             'label' => false,
                                                                             'type'  => 'hidden',
-                                                                             'value' => !empty($receivedItemData[0]['ReceivedOrder']['id']) ? $receivedItemData[0]['ReceivedOrder']['id'] : " "));
+                                                                             'value' => !empty($receivedItemData[0]['DeliveredOrder']['id']) ? $receivedItemData[0]['DeliveredOrder']['id'] : " "));
                                         ?>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label">Sales Invoice Number</label>
+                                    <div class="col-lg-8">
+                                        <?php 
+                                            echo $this->Form->input('DeliveredOrder.si_num', array(
+                                                                            'class' => 'form-control item_type',
+                                                                            'label' => false,
+                                                                             'value' => !empty($receivedItemData[0]['DeliveredOrder']['si_num']) ? $receivedItemData[0]['DeliveredOrder']['si_num'] : " "));
+                                        ?>
+
                                     </div>
                                 </div>
 
