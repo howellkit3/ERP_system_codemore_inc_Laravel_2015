@@ -33,6 +33,8 @@ class TicketingSystemsController extends TicketAppController {
 
         $query = $this->request->query;
 
+        //pr(); 
+
         if (!empty($query)) {
 
             if (!empty($query['name'])){
@@ -41,15 +43,12 @@ class TicketingSystemsController extends TicketAppController {
                     'OR' => array(
                           'JobTicket.uuid like' => '%'.$query['name'].'%',
                           'JobTicket.po_number like' => '%'.$query['name'].'%',
-                          //'Product.name like' => '%'.$query['name'].'%',
+                         // 'Product.name like' => '%'.$query['name'].'%',
                         )
-                      
                 ));
             }
 
         }
-
-   
 
         $this->paginate = array(
             'conditions' => $conditions,
@@ -572,11 +571,13 @@ class TicketingSystemsController extends TicketAppController {
 
         $delData = $this->ClientOrder->find('first',array('conditions' => array('id' => $clientOrderId)));
 
-        $productData = $this->Product->find('first',array('conditions' => array('Product.uuid' => $productUuid) ,'order' => 'Product.id DESC'));
+        $productData = $this->Product->find('first',array('conditions' => array('Product.uuid' => $productUuid) ,'order' => 'Product.id ASC'));
 
+        //pr($ticketData); exit;
 
         $ticketData = $this->JobTicket->find('first',array(
             'conditions' => array('JobTicket.uuid' => $ticketUuid)));
+
 
         $specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productData['Product']['id'])));
 
