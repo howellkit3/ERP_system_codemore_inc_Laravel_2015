@@ -6,22 +6,24 @@ jQuery(function($){
 
         $container = $('.result_client_table');
 
-        $container.html('<img src="'+serverPath+'/img/loader.gif"/>');
+        
+        console.log($this.val());
+        if ($this.val()) {
+        	$container.html('<img src="'+serverPath+'/img/loader.gif"/>');
+	        $.ajax({
 
+	            url: serverPath + "sales/sales_orders/index/",
+	            type: "GET",
+	            dataType: "html",
+	            data : {'name' : $this.val() },
+	            success: function(data) {
+	              	
 
-        $.ajax({
-
-            url: serverPath + "sales/sales_orders/index/",
-            type: "GET",
-            dataType: "html",
-            data : {'name' : $this.val() },
-            success: function(data) {
-              	
-
-                $container.html(data); 
-                
-                }
-        });
+	                $container.html(data); 
+	                
+	                }
+	        });
+	    };
 
     });
 
