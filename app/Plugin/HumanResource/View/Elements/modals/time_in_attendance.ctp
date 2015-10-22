@@ -7,7 +7,7 @@
                     <h4 class="modal-title"> Pressence Record </h4>
                 </div>
                 <div class="modal-body">
-                 <?php echo $this->Form->create('Attendance',array('url'=>(array('controller' => 'attendances','action' => 'add')),'id' => 'TimeInAttendance','class' => 'form-horizontal'));?>
+                 <?php echo $this->Form->create('Attendance',array('url'=>(array('controller' => 'attendances','action' => 'add','return' => $page)),'id' => 'TimeInAttendance','class' => 'form-horizontal'));?>
                         <div class="form-group">
                             <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Employee :</label>
                        
@@ -21,6 +21,7 @@
                                         'placeholder' => 'Employee name',
                                         'onchange' => 'checkexisting(this)',
                                         'empty' => '-- select employee --',
+                                        'default' => $empId,
                                         'label' => false));
 
                                 ?>
