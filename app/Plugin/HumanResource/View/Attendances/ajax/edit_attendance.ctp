@@ -26,7 +26,8 @@
                                                         </label>
                                                         <?php 
                                                          $value = '';
-                                                        if (!empty($value['Attendance']['out']) && $value['Attendance']['out'] != 'n\a' ) {
+
+                                                        if (!empty($attendance['Attendance']['out']) && $attendance['Attendance']['out'] != 'n\a' ) {
 
                                                            $value = date('Y-m-d H:i',strtotime($attendance['Attendance']['out']));
                                                         }
