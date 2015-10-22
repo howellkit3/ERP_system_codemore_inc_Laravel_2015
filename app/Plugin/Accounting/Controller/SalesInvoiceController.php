@@ -147,7 +147,7 @@ class SalesInvoiceController extends AccountingAppController {
                                             'conditions' => array('SalesInvoice.id' => $invoiceId
                                             )));
 
-
+       
         $prepared = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
                                                             'conditions' => array('User.id' => $invoiceData['SalesInvoice']['created_by'])
                                                             )); 
@@ -164,16 +164,14 @@ class SalesInvoiceController extends AccountingAppController {
             $drData = " ";
         }
 
-       // pr($invoiceData); exit;
-
+        $conditions = array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']);
+        $conditions = array_merge($conditions,array('ClientOrder.company_id' => $drData['Delivery']['company_id']));
         $clientData = $this->ClientOrder->find('first', array(
-                                            'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
+                                            'conditions' => array($conditions
                                             )));
 
-        
-        //pr($clientData); exit;
         $companyData = $this->Company->find('first', array(
-                                            'conditions' => array('Company.id' => $clientData['ClientOrder']['company_id']
+                                            'conditions' => array('Company.id' => $drData['Delivery']['company_id']
                                             )));
 
         $noPermissionPay = "";
