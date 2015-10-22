@@ -548,7 +548,7 @@ class TicketingSystemsController extends TicketAppController {
        
     }
 
-    public function print_ticket_export($productUuid = null,$ticketUuid = null, $clientOrderId = null,$type = 'excel') {
+    public function print_ticket_export($productUuid = null,$ticketUuid = null, $clientOrderId = null,$type = 'excel',$ticketId = null) {
         
         $userData = $this->Session->read('Auth');
 
@@ -575,8 +575,19 @@ class TicketingSystemsController extends TicketAppController {
         $this->JobTicket->bindTicket();
 
         $ticketData = $this->JobTicket->find('first',array(
-            'conditions' => array('JobTicket.uuid' => $ticketUuid)));
+            'conditions' => array('JobTicket.uuid' => $ticketUuid,'JobTicket.id' => $ticketId )));
 
+        
+        if (!empty($_GET['test'])) {
+
+
+            pr($companyData);
+            Configure::write('debug',2);
+                   pr($ticketData);
+
+        exit();
+
+        }
         $specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $ticketData['Product']['id'])));
 
         //find if product has specs
