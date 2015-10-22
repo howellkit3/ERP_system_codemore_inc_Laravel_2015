@@ -153,7 +153,7 @@
 									<td><b>VATABLE SALE</b></td>
 									<td>
 										<?php 
-											if($clientData['QuotationItemDetail']['vat_status'] == 'Vatable Sale'){
+											if($clientData['QuotationItemDetail']['vat_status'] == 'Vatable Sale' || $clientData['QuotationItemDetail']['unit_price_currency_id'] == 2){
 												$totalVat = ($totalQty * .12) + $totalQty;
 												echo number_format($totalVat,4);
 												//echo number_format((float)$totalQty, 4, '.', '');
