@@ -30,11 +30,11 @@ Configure::write('debug',2);
 					<td >
 						<table class="medium-font full-width">
 							<tr>
-								<td class="border-bottom-dashed"> <?php echo !empty($companyData[$productData['Product']['company_id']]) ? ucwords($companyData[$productData['Product']['company_id']]) : '';  ?> </td>
+								<td class="border-bottom-dashed"> <?php echo !empty($companyData[$ticketData['Product']['company_id']]) ? ucwords($companyData[$ticketData['Product']['company_id']]) : '';  ?> </td>
 								<td class="text-right border-bottom-dashed"><label class="strong">Schedule No</label> <?php echo $ticketUuid; ?></td>
 							</tr>
 							<tr>
-								<td class="border-bottom-dashed"><label class="strong">Item</label> <?php echo $productData['Product']['name']; ?></td>
+								<td class="border-bottom-dashed"><label class="strong">Item</label> <?php echo $ticketData['Product']['name']; ?></td>
 								<td class="text-right border-bottom-dashed"><label>   </label> <?php echo $ticketData['JobTicket']['po_number']; ?> </td>
 							</tr>
 							

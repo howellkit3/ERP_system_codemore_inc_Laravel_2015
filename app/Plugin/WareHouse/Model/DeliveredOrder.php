@@ -13,7 +13,7 @@ class DeliveredOrder extends AppModel {
     
   	public $name = 'DeliveredOrder';
 
-	public function saveDeliveredOrder($auth, $receivedOrdersId, $purchaseId){
+	public function saveDeliveredOrder($auth, $receivedOrdersId, $purchaseId, $deliveredItemsData = null){
 
 		$month = date("m"); 
 	    $year = date("y");
@@ -26,6 +26,8 @@ class DeliveredOrder extends AppModel {
 		
 		$this->create();
 
+		$data['dr_num'] = $deliveredItemsData['dr_num'];
+		$data['si_num'] = $deliveredItemsData['si_num'];
 		$data['created_by'] = $auth;
 		$data['modified_by'] = $auth;
 		$data['received_orders_id'] = $receivedOrdersId;
