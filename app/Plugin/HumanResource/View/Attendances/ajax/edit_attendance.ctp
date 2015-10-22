@@ -9,10 +9,8 @@
         <?php echo $this->CustomText->getFullname($attendance['Employee']); ?>
     </div>
 </div>
-
-<div class="form-group">
-                            <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Time :   </label>
-                                <div class="col-lg-9">
+                        
+                         <!--        <div class="col-lg-9">
                                        <div >
                                                           <label for="categoryRadio1">
                                                            In
@@ -38,8 +36,68 @@
                                         </div>
 
                                 </div>
+ -->
+
+
+
+                     <div class="form-group">
+                            <label for="exmaplePrependCheck"  class="col-lg-2 control-label">Time In</label>
+                            <div class="input-group col-lg-9">
+                            <span class="input-group-addon add_time" alt="time-in">
+                            <input type="checkbox">
+                            </span>
+
+                             <?php 
+
+                                  $value = '';
+
+                                    if (!empty($attendance['Attendance']['in']) && $attendance['Attendance']['in'] != 'n\a' ) {
+
+                                       $value = date('Y-m-d H:i',strtotime($attendance['Attendance']['in']));
+                                    }
+
+                                    echo $this->Form->input('Attendance.in',
+                                         array(
+                                        'class' => 'item_type form-control time_input datetime',  
+                                        'type' => 'text',
+                                        'placeholder' => 'Time',
+                                        'disabled' => 'disabled',
+                                         'value' => $value,
+                                        'id' => 'datetimepickerTime',
+                                        'label' => false));
+                             ?>
+                            </div>
                         </div>
 
+                        <div class="form-group">
+                        <label for="exmaplePrependCheck"  class="col-lg-2 control-label">Time Out</label>
+                        <div class="input-group col-lg-9 add_time" alt="time-in">
+                        <span class="input-group-addon">
+                        <input type="checkbox">
+                        </span>
+
+                             <?php 
+
+                                  $value = '';
+
+                                    if (!empty($attendance['Attendance']['out']) && $attendance['Attendance']['out'] != 'n\a' ) {
+
+                                       $value = date('Y-m-d H:i',strtotime($attendance['Attendance']['out']));
+                                    }
+
+
+                                    echo $this->Form->input('Attendance.out',
+                                         array(
+                                        'class' => 'item_type  form-control time_input datetime',  
+                                        'type' => 'text',
+                                        'placeholder' => 'Time',
+                                        'disabled' => 'disabled',
+                                        'value' => $value,
+                                        'id' => 'datetimepickerTime',
+                                        'label' => false));
+                             ?>
+                        </div>
+                     </div>
 
 <div class="form-group">
     <label for="inputEmail1" class="col-lg-2 control-label"> Notes :   </label>
@@ -64,10 +122,26 @@
 
 <?php echo $this->form->end(); ?>
 
+<script type="text/javascript">
+    $(document).ready(function(){
 
-<script>
-    
-     $(".datetime").datetimepicker( {
+          $(".datetime").datetimepicker( {
                 format:'Y-m-d H:i',
-          });
-</script>
+            });
+
+            $('.add_time input:checkbox').click(function(){
+
+                $this = $(this);
+
+                if ($(this).is(':checked')) {
+
+                    $this.parents('.form-group').find('.time_input').attr('disabled',false);
+                } else {
+
+                    $this.parents('.form-group').find('.time_input').attr('disabled','disabled');
+                }
+
+            });
+
+    });
+ </script>
