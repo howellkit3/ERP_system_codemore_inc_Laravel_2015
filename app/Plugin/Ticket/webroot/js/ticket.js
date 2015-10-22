@@ -12,10 +12,12 @@ $(document).ready(function(){
 
     $id = $(this).attr('id');
 
+    $ticketId = $(this).data('ticket_id');
+
 		$container = $('#result-table');
 
 		$.ajax({
-        url: serverPath + "ticket/ticketing_systems/find_process/"+$processId+'/'+$productId+'/'+$ticketUuid+'/'+$product+'/'+$id,
+        url: serverPath + "ticket/ticketing_systems/find_process/"+$processId+'/'+$productId+'/'+$ticketUuid+'/'+$product+'/'+$id+'/'+ $ticketId,
         type: "GET",
         dataType: "html",
        // data : { 'processId' : $processId , 'subProcess' : $subProcess , 'ticketId' : $ticketUuid },
