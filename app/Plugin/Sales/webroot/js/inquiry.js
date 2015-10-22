@@ -6,8 +6,6 @@ jQuery(function($){
 
         $container = $('.result_client_table');
 
-        
-        console.log($this.val());
         if ($this.val()) {
         	$container.html('<img src="'+serverPath+'/img/loader.gif"/>');
 	        $.ajax({

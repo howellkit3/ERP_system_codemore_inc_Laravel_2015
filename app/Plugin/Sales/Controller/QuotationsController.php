@@ -223,7 +223,7 @@ class QuotationsController extends SalesAppController {
 		if ($this->request->is(array('post','put'))) {
 
             if (!empty($this->request->data)) {
-            	
+            	//pr($this->request->data);exit();
             	if(!empty($this->request->data['IdHolder'])){
             		foreach ($this->request->data['IdHolder'] as $key => $value) {
             			$this->Quotation->QuotationItemDetail->delete($value['id']);

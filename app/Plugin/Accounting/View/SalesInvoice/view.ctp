@@ -103,24 +103,22 @@
 								<td><center><?php echo ucfirst($clientData['Product']['name'])?></center></td>
 								<td><center><?php echo number_format($drData['DeliveryDetail']['quantity'])?></center></td>
 								<td><center><?php echo number_format($clientData['QuotationItemDetail']['unit_price'],4)?></center></td>
-								<td><center><?php 
+								<td>
+									<center>
+										<?php 
 
-								if(!empty($drData['DeliveryDetail']['quantity'])){
+											if(!empty($drData['DeliveryDetail']['quantity'])){
 
-								  	$totalQty = $drData['DeliveryDetail']['quantity'] * number_format($clientData['QuotationItemDetail']['unit_price'],2);
+											  	$totalQty = $drData['DeliveryDetail']['quantity'] * $clientData['QuotationItemDetail']['unit_price'];
+											}else{
 
-								}else{
+												$totalQty = $clientData['ClientOrderDeliverySchedule'][0]['quantity'] * $clientData['QuotationItemDetail']['unit_price'];
+											}
 
-
-
-									$totalQty = $clientData['ClientOrderDeliverySchedule'][0]['quantity'] * number_format($clientData['QuotationItemDetail']['unit_price'],2);
-								}
-
-								  ?>
-							<?php echo number_format($totalQty,4) ;
-
-							
-							?></center></td>
+											echo number_format($totalQty,4) ;
+										?>
+									</center>
+								</td>
 							</tr>
 							<tr>
 								<td>-</td>
@@ -155,22 +153,35 @@
 									<td><b>VATABLE SALE</b></td>
 									<td>
 										<?php 
-											if($clientData['QuotationItemDetail']['unit_price_currency_id'] == 1){
-												echo number_format($totalQty,4);
+											if($clientData['QuotationItemDetail']['vat_status'] == 'Vatable Sale'){
+												$totalVat = ($totalQty * .12) + $totalQty;
+												echo number_format($totalVat,4);
 												//echo number_format((float)$totalQty, 4, '.', '');
+											}else{
+												echo "-";
 											}
 										?>
 									</td>
 								</tr>
 								<tr>
 									<td><b>VAT EXEMPT</b></td>
-									<td></td>
+									<td>
+										<?php 
+											if($clientData['QuotationItemDetail']['vat_status'] == 'Vat Exempt'){
+												
+												echo number_format($totalQty,4);
+												//echo number_format((float)$totalQty, 4, '.', '');
+											}else{
+												echo "-";
+											}
+										?>
+									</td>
 								</tr>
 								<tr>
 									<td><b>ZERO RATED SALE</b></td>
 									<td>
 										<?php 
-											if($clientData['QuotationItemDetail']['unit_price_currency_id'] == 2){
+											if($clientData['QuotationItemDetail']['unit_price_currency_id'] == 1 || $clientData['QuotationItemDetail']['vat_status'] == 'Zero Rated Sale'){
 												echo number_format($totalQty,4);
 											}else{
 												echo "-";
@@ -182,7 +193,7 @@
 									<td><b>12% VAT</b></td>
 									<td>
 										<?php 
-											if($clientData['QuotationItemDetail']['unit_price_currency_id'] == 1){
+											if($clientData['QuotationItemDetail']['unit_price_currency_id'] == 2){
 												$totalVat = $totalQty * .12;
 												echo number_format($totalVat,4);
 											}else{
@@ -195,11 +206,12 @@
 									<td><b>TOTAL AMOUNT DUE</b></td>
 									<td>
 										<?php 
-											if($clientData['QuotationItemDetail']['unit_price_currency_id'] == 1){
+											if($clientData['QuotationItemDetail']['unit_price_currency_id'] == 2){
 												$totalVat = $totalQty * .12;
 												$fullVat = $totalQty + $totalVat;
-												echo $currencyData[$clientData['QuotationItemDetail']['unit_price_currency_id']];
+												echo $currencyData[$clientData['QuotationItemDetail']['unit_price_currency_id']] . " ";
 												echo number_format($fullVat,4);
+												
 											}else{
 												echo $currencyData[$clientData['QuotationItemDetail']['unit_price_currency_id']] . " ";
 												echo number_format($totalQty,4);
