@@ -30,7 +30,10 @@ Configure::write('debug',2);
 					<td >
 						<table class="medium-font full-width">
 							<tr>
-								<td class="border-bottom-dashed"> <?php echo !empty($companyData[$ticketData['Product']['company_id']]) ? ucwords($companyData[$ticketData['Product']['company_id']]) : '';  ?> </td>
+								<td class="border-bottom-dashed"> <?php 
+										echo !empty($companyData[$productData['Product']['company_id']]) ? ucfirst($companyData[$productData['Product']['company_id']]) : '' ;
+
+									?> </td>
 								<td class="text-right border-bottom-dashed"><label class="strong">Schedule No</label> <?php echo $ticketUuid; ?></td>
 							</tr>
 							<tr>

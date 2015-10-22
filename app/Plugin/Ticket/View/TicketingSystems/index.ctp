@@ -43,13 +43,13 @@
 
                     </table>
                     <hr>
- <div class="paging" id="item_type_pagination">
-                                <?php
-                                echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
-                                echo $this->Paginator->numbers(array('separator' => ''));
-                                echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
-                                ?>
-                                </div>
+                        <div class="paging" id="item_type_pagination">
+                            <?php
+                            echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
+                            echo $this->Paginator->numbers(array('separator' => ''));
+                            echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
+                            ?>
+                        </div>
                 </div>
                 
             </div>
@@ -103,13 +103,6 @@ $('.searchTickets').keypress(function() {
 
     timeout = setTimeout(searchJobTicket,400)
 })
-
-
-
-        // $('body').on('keyup','.searchTickets',function(){
-
-
-        // });
 
 
      });

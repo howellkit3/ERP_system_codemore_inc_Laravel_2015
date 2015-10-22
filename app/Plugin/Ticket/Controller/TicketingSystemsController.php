@@ -241,7 +241,7 @@ class TicketingSystemsController extends TicketAppController {
 		return $this->redirect(array('controller' => 'ticketing_systems', 'action' => 'index'));
 	}
 
-    public function find_process($processId = null, $productId = null , $ticketId = null,$product = null, $formProcesId = null) {
+    public function find_process($processId = null, $productId = null , $ticketuuId = null,$product = null, $formProcesId = null,$ticketId =null) {
 
         $query = $this->request->query;
 
@@ -252,6 +252,8 @@ class TicketingSystemsController extends TicketAppController {
             $parameter['processId'] = $processId;
 
             $parameter['productId'] = $productId;
+
+            $parameter['ticketuuId'] = $ticketuuId;
 
             $parameter['ticketId'] = $ticketId;
 
@@ -561,7 +563,7 @@ class TicketingSystemsController extends TicketAppController {
        
     }
 
-    public function print_ticket_export($productUuid = null,$ticketUuid = null, $clientOrderId = null,$type = 'excel') {
+    public function print_ticket_export($productUuid = null,$ticketUuid = null, $clientOrderId = null,$type = 'excel',$ticketId = null) {
         
         $userData = $this->Session->read('Auth');
 
@@ -588,8 +590,19 @@ class TicketingSystemsController extends TicketAppController {
         $this->JobTicket->bindTicket();
 
         $ticketData = $this->JobTicket->find('first',array(
-            'conditions' => array('JobTicket.uuid' => $ticketUuid)));
+            'conditions' => array('JobTicket.uuid' => $ticketUuid,'JobTicket.id' => $ticketId )));
 
+        
+        if (!empty($_GET['test'])) {
+
+
+            pr($companyData);
+            Configure::write('debug',2);
+                   pr($ticketData);
+
+        exit();
+
+        }
         $specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $ticketData['Product']['id'])));
 
         //find if product has specs
@@ -715,7 +728,7 @@ class TicketingSystemsController extends TicketAppController {
     }
 
 
-    public function print_process($processId = null,$productUuid = null,$ticketUuid = null, $model = null , $lastId = null) {
+    public function print_process($processId = null,$productUuid = null,$ticketUuid = null, $model = null , $lastId = null,$ticketId = null) {
 
         if (!empty($processId) && !empty($productUuid)) {
 
@@ -739,7 +752,8 @@ class TicketingSystemsController extends TicketAppController {
 
         $modelData = array();
 
-        if (!empty($model)) {
+
+        if (!empty($model) && $model != 0) {
               $this->loadModel('Ticket.'.$model);
 
 
@@ -751,9 +765,13 @@ class TicketingSystemsController extends TicketAppController {
         $this->ClientOrder->bind(array('ClientOrderDeliverySchedule'));
 
        //$delData = $this->ClientOrder->find('first',array('ClientOrder.id' => $clientOrderId));
-       
-   
-        $productData = $this->Product->find('first',array('conditions' => array('Product.uuid' => $productUuid) ,'order' => 'Product.id DESC'));
+
+
+        $ticketData = $this->JobTicket->find('first',array(
+            'conditions' => array('JobTicket.uuid' => $ticketUuid,'JobTicket.id' => $ticketId  )));
+        
+
+        $productData = $this->Product->find('first',array('conditions' => array('Product.uuid' => $productUuid,'Product.id' =>   $ticketData['JobTicket']['product_id']) ,'order' => 'Product.id DESC'));
 
         // $ticketData = $this->JobTicket->find('first',array(
         //     'conditions' => array('JobTicket.uuid' => $ticketUuid)));
@@ -860,7 +878,8 @@ class TicketingSystemsController extends TicketAppController {
             $PlateMakingProcess = $this->PlateMakingProcess->getProcess(
                 array(
                     'ticketId' => $ticketUuid, 'processID' =>  $processId , 'productId' =>  $productUuid,
-                    'product' => $product
+                    'product' => $product,
+                    'ticketId' => $ticketId  
                 )
             );
 

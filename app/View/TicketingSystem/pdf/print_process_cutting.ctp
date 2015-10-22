@@ -40,7 +40,7 @@ Configure::write('debug',0);
 						<strong>CUSTOMER</strong> &nbsp;&nbsp; <?php echo !empty($companyData[$productData['Product']['company_id']]) ? ucwords($companyData[$productData['Product']['company_id']]) : '';  ?>
 					</td>
 					<td class="text-right">
-						<strong>SCHED No</strong>&nbsp;&nbsp; <?php echo $ticketUuid; ?>
+						<strong>SCHED No</strong>&nbsp;&nbsp; <?php  echo $ticketUuid; ?>
 					</td>
 					
 				</tr>
