@@ -132,7 +132,7 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                         </div>
                                     </div>
 
-                                <?php foreach ($requestPurchasingItem as $key => $requestDataList): 
+                                <?php  foreach ($requestPurchasingItem as $key => $requestDataList): 
                               //  pr($requestPurchasingItem); exit;
                                 if(empty($requestDataList[$itemHolder]['delivered_quantity'])){
 
@@ -156,7 +156,7 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                     <div class = "checkbox-nice">
                                     <input type="checkbox" class="check-ref-uuid checked" name="requestPurchasingItem[<?php echo $key ?>][<?php echo $requestDataList[$itemHolder]['foreign_key'] ?>]" id="<?php echo $key?>" >
                                                         <label for="<?php echo $key?>"> <?php  echo $requestDataList[$itemHolder]['name'] ?> &nbsp;<I>(<?php  echo (!empty( $requestDataList[$itemHolder]['good_quantity']) ? $remainingQuantity: $requestDataList[$itemHolder]['original_quantity']) ?>)</I></label>
-                                    ?>
+                                    
 
                                     </div>
                                     <div class="form-group ">
@@ -178,73 +178,112 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                             ?>
                                         </div>
 
-                                            <div class="col-lg-2 ">
-                                            <?php 
-                                                echo $this->Form->input('requestPurchasingItem.'.$key.'.condition', array(         
-                                                                        'required' => 'required',
-                                                                        'class' => 'form-control required condition ',
-                                                                        'options' => array('good', 'reject'),
-                                                                        'value' => 0,
-                                                                        'label' => false,
-                                                                        'disabled' => 'disabled',
-                                                                        'type' => 'select',
-                                                                        'required' => 'required',
-                                                                        ));
+                                        <?php if($requestDataList[$itemHolder]['unit_id'] != 1){ ?>
+
+                                                <div class="col-lg-2 ">
+                                                    <?php 
+                                                        echo $this->Form->input('requestPurchasingItem.'.$key.'.condition', array(         
+                                                                                'required' => 'required',
+                                                                                'class' => 'form-control required condition ',
+                                                                                'options' => array('good', 'reject'),
+                                                                                'value' => 0,
+                                                                                'label' => false,
+                                                                                'disabled' => 'disabled',
+                                                                                'type' => 'select',
+                                                                                'required' => 'required',
+                                                                                ));
+                                                    ?>
+                                            <?php
+                                                        echo $this->Form->input('requestPurchasingItem.'.$key.'.model', array(                    'type' => 'hidden',
+                                                                                'class' => 'form-control',
+                                                                                'value' => $requestDataList[$itemHolder]['model'],
+                                                                                'label' => false,
+                                                                                
+                                                                                ));
                                             ?>
-                                    <?php
-                                                echo $this->Form->input('requestPurchasingItem.'.$key.'.model', array(                    'type' => 'hidden',
-                                                                        'class' => 'form-control',
-                                                                        'value' =>$requestDataList[$itemHolder]['model'],
-                                                                        'label' => false,
-                                                                        
-                                                                        ));
-                                    ?>
 
-                                    <?php
-                                                echo $this->Form->input('requestPurchasingItem.'.$key.'.original_quantity', array(        
-                                                                        'type' => 'hidden',
-                                                                        'class' => 'form-control limiter',
-                                                                        'value' =>(!empty( $requestDataList[$itemHolder]['good_quantity']) ? $remainingQuantity: $requestDataList[$itemHolder]['original_quantity']),
-                                                                        'label' => false,
-                                                                        
-                                                                        ));
-                                    ?>
-
-
-                                       
-                                     </div>
-
-                                      <div class="col-lg-2">
-                                            
-                                            <?php 
-                                                echo $this->Form->input('requestPurchasingItem.'.$key.'.rejectQuantity', array(
-                                                                            'empty' => 'None',
-                                                                            'required' => 'required',
-                                                                            'class' => 'form-control item_type  reject',
-                                                                            'placeholder' => 'Quantity',
-                                                                            'label' => false,
-                                                                            'disabled' => 'disabled',
-                                                                            'value' => 0
-                                                ));
+                                            <?php
+                                                        echo $this->Form->input('requestPurchasingItem.'.$key.'.original_quantity', array(        
+                                                                                'type' => 'hidden',
+                                                                                'class' => 'form-control limiter',
+                                                                                'value' =>(!empty( $requestDataList[$itemHolder]['good_quantity']) ? $remainingQuantity: $requestDataList[$itemHolder]['original_quantity']),
+                                                                                'label' => false,
+                                                                                
+                                                                                ));
                                             ?>
-                                        </div>
 
-                                        <div class="col-lg-2">
-                                            
-                                            <?php 
-                                                echo $this->Form->input('requestPurchasingItem.'.$key.'.condition', array(         
-                                                                        'required' => 'required',
-                                                                        'class' => 'form-control required condition ',
-                                                                        'options' => array('good', 'reject'),
-                                                                        'value' => 1,
-                                                                        'label' => false,
-                                                                        'disabled' => 'disabled',
-                                                                        'type' => 'select',
-                                                                        'required' => 'required',
-                                                                        ));
-                                            ?>
-                                        </div>
-                                       
+
+                                               
+                                             </div>
+
+                                              <div class="col-lg-2">
+                                                    
+                                                    <?php 
+                                                        echo $this->Form->input('requestPurchasingItem.'.$key.'.rejectQuantity', array(
+                                                                                    'empty' => 'None',
+                                                                                    'required' => 'required',
+                                                                                    'class' => 'form-control item_type  reject',
+                                                                                    'placeholder' => 'Quantity',
+                                                                                    'label' => false,
+                                                                                    'disabled' => 'disabled',
+                                                                                    'value' => 0
+                                                        ));
+                                                    ?>
+                                                </div>
+
+                                                <div class="col-lg-2">
+                                                    
+                                                    <?php 
+                                                        echo $this->Form->input('requestPurchasingItem.'.$key.'.condition', array(         
+                                                                                'required' => 'required',
+                                                                                'class' => 'form-control required condition ',
+                                                                                'options' => array('good', 'reject'),
+                                                                                'value' => 1,
+                                                                                'label' => false,
+                                                                                'disabled' => 'disabled',
+                                                                                'type' => 'select',
+                                                                                'required' => 'required',
+                                                                                ));
+                                                    ?>
+                                                </div>
+                                    
+                                    <?php }else{ ?>
+
+                                            <div class="col-lg-2">
+                                                    
+                                                    <?php 
+                                                        echo $this->Form->input('requestPurchasingItem.'.$key.'.condition', array(         
+                                                                                'required' => 'required',
+                                                                                'class' => 'form-control required condition ',
+                                                                                'value' => $unitData[$requestDataList[$itemHolder]['unit_id']] ,
+                                                                                'label' => false,
+                                                                                'disabled' => 'disabled',
+                                                                                'required' => 'required',
+                                                                                ));
+                                                    ?>
+
+                                                    <?php
+                                                        echo $this->Form->input('requestPurchasingItem.'.$key.'.model', array(                    'type' => 'hidden',
+                                                                                'class' => 'form-control',
+                                                                                'value' => $requestDataList[$itemHolder]['model'],
+                                                                                'label' => false,
+                                                                                
+                                                                                ));
+                                                     ?>
+
+                                                    <?php
+                                                        echo $this->Form->input('requestPurchasingItem.'.$key.'.original_quantity', array(        
+                                                                                'type' => 'hidden',
+                                                                                'class' => 'form-control limiter',
+                                                                                'value' =>(!empty( $requestDataList[$itemHolder]['good_quantity']) ? $remainingQuantity: $requestDataList[$itemHolder]['original_quantity']),
+                                                                                'label' => false,
+                                                                                
+                                                                                ));
+                                                     ?>
+
+                                                </div>
+
+                                    <?php } ?>
                                     
                                     </div>                  
                                 </div>
@@ -264,7 +303,7 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                        
                             ?>
 
-                            <div class="form-group ">
+<!--                             <div class="form-group ">
                                 <label class="col-lg-2 control-label"></label>
 
                                 <div class="col-lg-6">
@@ -272,7 +311,7 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
 
                                 </div>
                             </div>
-                            
+                             -->
                         
                             <div class="form-group">
                                 <label for="inputPassword1" class="col-lg-2 control-label">Remarks</label>

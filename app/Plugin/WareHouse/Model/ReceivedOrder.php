@@ -13,17 +13,17 @@ class ReceivedOrder extends AppModel {
     
   	public $name = 'ReceivedOrder';
 
-  	public $validate = array(
+ //  	public $validate = array(
 
-		'dpurchase_order_id' => array(
+	// 	'dpurchase_order_id' => array(
 			
-			'unique' => array(
-				'rule'    => 'isUnique',
-			),
+	// 		'unique' => array(
+	// 			'rule'    => 'isUnique',
+	// 		),
 
-		)
+	// 	)
 		
-	);
+	// );
 
 	public function saveReceivedOrders($data, $auth, $order_id){
 

@@ -220,7 +220,7 @@
                                 <i class="fa fa-tags"></i>&nbsp;<?php echo $requestDataList[$itemHolder]['model'] ?> 
                                 </span>
                                 <span class="warranty">
-                                <i class="fa fa-certificate"></i>&nbsp; <?php echo $requestDataList[$itemHolder]['quantity'] ?> pcs
+                                <i class="fa fa-certificate"></i>&nbsp; <?php echo $requestDataList[$itemHolder]['quantity'] . " " . $unitData[$requestDataList[$itemHolder]['unit_id']] ?>  
                                 </span>
                             </td>
                         </tr>
@@ -270,11 +270,11 @@
                                 <?php echo $requestDataList[$itemHolder]['name'] ?>
                                 </span>
                                 <span class="price">
-                                <i class="fa fa-certificate"></i>&nbsp; <?php 
+                                <i class="fa fa-certificate"></i>&nbsp; <?php
 
                                 if(!empty($requestDataList[$itemHolder]['good_quantity'])){
 
-                                 echo $requestDataList[$itemHolder]['good_quantity'] ?> pcs
+                                 echo $requestDataList[$itemHolder]['good_quantity'] . " " . $unitData[$requestDataList[$itemHolder]['unit_id']]?> 
 
                                 <?php } ?>
                                 </span>
@@ -283,7 +283,7 @@
 
                                 if(!empty($requestDataList[$itemHolder]['reject_quantity'])){
 
-                                 echo $requestDataList[$itemHolder]['reject_quantity'] ?> pcs
+                                 echo $requestDataList[$itemHolder]['reject_quantity'] . " " . $unitData[$requestDataList[$itemHolder]['unit_id']]?> 
 
                                 <?php } ?>
                                 </span>
