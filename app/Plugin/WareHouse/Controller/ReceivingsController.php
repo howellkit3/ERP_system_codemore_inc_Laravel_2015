@@ -142,7 +142,7 @@ class ReceivingsController extends WareHouseAppController {
 
 				$requestPurchasingItem[$key][$itemHolder]['model'] = $value[$itemHolder]['model'];
 
-				$requestPurchasingItem[$key][$itemHolder]['unit_id'] = $unitType[$value[$itemHolder]['quantity_unit_id']];
+				$requestPurchasingItem[$key][$itemHolder]['unit_id'] = $value[$itemHolder]['quantity_unit_id'];
 
 				$requestPurchasingItem[$key][$itemHolder]['original_quantity'] = $value[$itemHolder]['quantity'];
 
@@ -181,7 +181,7 @@ class ReceivingsController extends WareHouseAppController {
 
 				$requestPurchasingItem[$key][$itemHolder]['model'] = $value[$itemHolder]['model'];
 
-				$requestPurchasingItem[$key][$itemHolder]['unit_id'] = $unitType[$value[$itemHolder]['quantity_unit_id']];
+				$requestPurchasingItem[$key][$itemHolder]['unit_id'] = $value[$itemHolder]['quantity_unit_id'];
 
 				$requestPurchasingItem[$key][$itemHolder]['original_quantity'] = $value[$itemHolder]['quantity'];
 
@@ -223,7 +223,7 @@ class ReceivingsController extends WareHouseAppController {
 
 				$requestPurchasingItem[$key][$itemHolder]['model'] = $value[$itemHolder]['model'];
 
-				$requestPurchasingItem[$key][$itemHolder]['unit_id'] = $unitType[$value[$itemHolder]['quantity_unit_id']];
+				$requestPurchasingItem[$key][$itemHolder]['unit_id'] = $value[$itemHolder]['quantity_unit_id'];
 
 				$requestPurchasingItem[$key][$itemHolder]['original_quantity'] = $value[$itemHolder]['quantity'];
 
@@ -262,7 +262,7 @@ class ReceivingsController extends WareHouseAppController {
 
 				$requestPurchasingItem[$key][$itemHolder]['model'] = $value[$itemHolder]['model'];
 
-				$requestPurchasingItem[$key][$itemHolder]['unit_id'] = $unitType[$value[$itemHolder]['quantity_unit_id']];
+				$requestPurchasingItem[$key][$itemHolder]['unit_id'] = $value[$itemHolder]['quantity_unit_id'];
 
 				$requestPurchasingItem[$key][$itemHolder]['original_quantity'] = $value[$itemHolder]['quantity'];
 
@@ -290,12 +290,10 @@ class ReceivingsController extends WareHouseAppController {
 
 		if (!empty($this->request->data)) {
 
-			//pr($this->request->data); exit;
-
 			ksort($this->request->data['requestPurchasingItem']);
 
 			$receivedData = $this->ReceivedOrder->find('first', array('conditions' => array('ReceivedOrder.purchase_order_id' => $id)));
-				//pr($this->request->data); exit;
+				
 			if(empty($receivedData['ReceivedOrder']['id'])){
 
 				$itemId = $this->ReceivedOrder->saveReceivedOrders($this->request->data['ReceivedItems'],$userData['User']['id'],$id);
@@ -323,7 +321,7 @@ class ReceivingsController extends WareHouseAppController {
 
 		}
 	
-		$this->set(compact('requestData', 'requestPurchasingItem', 'purchaseOrderData', 'supplierData', 'unitData', 'itemHolder','receivedOrderData'));
+		$this->set(compact('requestData', 'requestPurchasingItem', 'purchaseOrderData', 'supplierData', 'unitData', 'unitType', 'itemHolder','receivedOrderData'));
 
     }
 
@@ -707,7 +705,7 @@ class ReceivingsController extends WareHouseAppController {
 
 					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];		
 
-					$receiveItem[$key][$itemHolder]['unit_id'] = !empty($unitType[$valueOfValue['quantity_unit_id']]) ? $unitType[$valueOfValue['quantity_unit_id']] : 14 ;	
+					$receiveItem[$key][$itemHolder]['unit_id'] = !empty($valueOfValue['quantity_unit_id']) ? $valueOfValue['quantity_unit_id'] : 14 ;	
 
 			 		$receiveItem[$key][$itemHolder]['original_quantity'] = $valueOfValue['original_quantity'];	
 
@@ -730,7 +728,7 @@ class ReceivingsController extends WareHouseAppController {
 
 					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];
 
-					$receiveItem[$key][$itemHolder]['unit_id'] = !empty($unitType[$valueOfValue['quantity_unit_id']]) ? $unitType[$valueOfValue['quantity_unit_id']] : 14 ;	
+					$receiveItem[$key][$itemHolder]['unit_id'] = !empty($valueOfValue['quantity_unit_id']) ? $valueOfValue['quantity_unit_id'] : 14 ;	
 
 			 		$receiveItem[$key][$itemHolder]['original_quantity'] = $valueOfValue['original_quantity'];	
 
@@ -753,7 +751,7 @@ class ReceivingsController extends WareHouseAppController {
 
 					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];
 
-					$receiveItem[$key][$itemHolder]['unit_id'] = !empty($unitType[$valueOfValue['quantity_unit_id']]) ? $unitType[$valueOfValue['quantity_unit_id']] : 14 ;	
+					$receiveItem[$key][$itemHolder]['unit_id'] = !empty($valueOfValue['quantity_unit_id']) ? $valueOfValue['quantity_unit_id'] : 14 ;	
 
 			 		$receiveItem[$key][$itemHolder]['original_quantity'] = $valueOfValue['original_quantity'];	
 
@@ -777,7 +775,7 @@ class ReceivingsController extends WareHouseAppController {
 
 					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];	
 
-					$receiveItem[$key][$itemHolder]['unit_id'] = !empty($unitType[$valueOfValue['quantity_unit_id']]) ? $unitType[$valueOfValue['quantity_unit_id']] : 14 ;	
+					$receiveItem[$key][$itemHolder]['unit_id'] = !empty($valueOfValue['quantity_unit_id']) ? $valueOfValue['quantity_unit_id'] : 14 ;	
 
 			 		$receiveItem[$key][$itemHolder]['original_quantity'] = $valueOfValue['original_quantity'];	
 
@@ -813,10 +811,6 @@ class ReceivingsController extends WareHouseAppController {
 	 	$this->loadModel('Purchasing.PurchasingItem');
 
 		$this->loadModel('Purchasing.RequestItem');
-
-		//$this->loadModel('WareHouse.ReceivedOrder');
-
-		//$this->loadModel('WareHouse.ReceivedItem');
 
 		$this->loadModel('WareHouse.DeliveredOrder');
 
@@ -869,6 +863,8 @@ class ReceivingsController extends WareHouseAppController {
 
 			foreach ($value['ReceivedItem'] as $key => $valueOfValue) {	
 
+				//pr($valueOfValue); exit;
+
 				if($valueOfValue['model'] == 'GeneralItem'){
 
 					$this->loadModel('GeneralItem');
@@ -882,7 +878,7 @@ class ReceivingsController extends WareHouseAppController {
 
 					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];	
 
-					$receiveItem[$key][$itemHolder]['unit_id'] = !empty($unitType[$valueOfValue['quantity_unit_id']]) ? $unitType[$valueOfValue['quantity_unit_id']] : 14 ;		
+					$receiveItem[$key][$itemHolder]['unit_id'] = !empty($valueOfValue['quantity_unit_id']) ? $valueOfValue['quantity_unit_id'] : 14 ;		
 
 			 		$receiveItem[$key][$itemHolder]['original_quantity'] = $valueOfValue['original_quantity'];	
 
@@ -905,7 +901,7 @@ class ReceivingsController extends WareHouseAppController {
 
 					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];
 
-					$receiveItem[$key][$itemHolder]['unit_id'] = !empty($unitType[$valueOfValue['quantity_unit_id']]) ? $unitType[$valueOfValue['quantity_unit_id']] : 14 ;			
+					$receiveItem[$key][$itemHolder]['unit_id'] = !empty($valueOfValue['quantity_unit_id']) ? $valueOfValue['quantity_unit_id'] : 14 ;			
 
 			 		$receiveItem[$key][$itemHolder]['original_quantity'] = $valueOfValue['original_quantity'];	
 
@@ -929,7 +925,7 @@ class ReceivingsController extends WareHouseAppController {
 
 					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];	
 
-					$receiveItem[$key][$itemHolder]['unit_id'] = !empty($unitType[$valueOfValue['quantity_unit_id']]) ? $unitType[$valueOfValue['quantity_unit_id']] : 14 ;		
+					$receiveItem[$key][$itemHolder]['unit_id'] = !empty($valueOfValue['quantity_unit_id']) ? $valueOfValue['quantity_unit_id'] : 14 ;		
 
 			 		$receiveItem[$key][$itemHolder]['original_quantity'] = $valueOfValue['original_quantity'];	
 
@@ -953,7 +949,7 @@ class ReceivingsController extends WareHouseAppController {
 
 					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];	
 
-					$receiveItem[$key][$itemHolder]['unit_id'] = !empty($unitType[$valueOfValue['quantity_unit_id']]) ? $unitType[$valueOfValue['quantity_unit_id']] : 14 ;		
+					$receiveItem[$key][$itemHolder]['unit_id'] = !empty($valueOfValue['quantity_unit_id']) ? $valueOfValue['quantity_unit_id'] : 14 ;		
 
 			 		$receiveItem[$key][$itemHolder]['original_quantity'] = $valueOfValue['original_quantity'];	
 
@@ -963,7 +959,7 @@ class ReceivingsController extends WareHouseAppController {
 
 		        
 		   		 }
-			}
+			} 
         }
 
 

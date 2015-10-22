@@ -178,7 +178,7 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                             ?>
                                         </div>
 
-                                        <?php if($requestDataList[$itemHolder]['unit_id'] != 1){ ?>
+                                        <?php  if($unitType[$requestDataList[$itemHolder]['unit_id']] != 1){ ?>
 
                                                 <div class="col-lg-2 ">
                                                     <?php 
@@ -210,7 +210,20 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                                                                 'label' => false,
                                                                                 
                                                                                 ));
+
+
+
+                                                        echo $this->Form->input('requestPurchasingItem.'.$key.'.quantity_unit_id', array(                    
+                                                                                'type' => 'hidden',
+                                                                                'class' => 'form-control',
+                                                                                'value' => $requestDataList[$itemHolder]['unit_id'],
+                                                                                'label' => false,
+                                                                                
+                                                                                ));
+                                                     
                                             ?>
+
+
 
 
                                                
@@ -266,6 +279,16 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                                         echo $this->Form->input('requestPurchasingItem.'.$key.'.model', array(                    'type' => 'hidden',
                                                                                 'class' => 'form-control',
                                                                                 'value' => $requestDataList[$itemHolder]['model'],
+                                                                                'label' => false,
+                                                                                
+                                                                                ));
+                                                     ?>
+
+                                                     <?php
+                                                        echo $this->Form->input('requestPurchasingItem.'.$key.'.quantity_unit_id', array(                    
+                                                                                'type' => 'hidden',
+                                                                                'class' => 'form-control',
+                                                                                'value' => $requestDataList[$itemHolder]['unit_id'],
                                                                                 'label' => false,
                                                                                 
                                                                                 ));
