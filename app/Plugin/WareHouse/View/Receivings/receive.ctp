@@ -16,9 +16,8 @@
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th><a href="#"><span>Receive No</span></a></th>
-                                <th><a href="#"><span>Purchase Order No.</span></a></th>
                                 <th><a href="#"><span>Tracking No</span></a></th>
+                                <th><a href="#"><span>Purchase Order No.</span></a></th>
                                 <th><a href="#"><span>Supplier</span></a></th>
                                 <th><a href="#"><span>Received</span></a></th>
                                 <th class="text-center"><a  href="#"><span>Status</span></a></th>
