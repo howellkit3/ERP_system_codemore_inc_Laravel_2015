@@ -29,7 +29,7 @@ class TicketingSystemsController extends TicketAppController {
 
         $conditions = array();
 
-              $this->JobTicket->bindTicket();
+        $this->JobTicket->bindTicket();
 
         $query = $this->request->query;
 
@@ -41,11 +41,24 @@ class TicketingSystemsController extends TicketAppController {
 
                 $conditions = array_merge($conditions,array(
                     'OR' => array(
-                          'JobTicket.uuid like' => '%'.$query['name'].'%',
-                          'JobTicket.po_number like' => '%'.$query['name'].'%',
-                         // 'Product.name like' => '%'.$query['name'].'%',
+                        'JobTicket.uuid like' => '%'.$query['name'].'%',
+                        'JobTicket.po_number like' => '%'.$query['name'].'%',
+                        //'Product.name like' => '%'.$query['name'].'%',
                         )
                 ));
+               
+                // $ticketData = $this->JobTicket->find('all',array(
+                //           'order' => 'JobTicket.id DESC',
+                //           'conditions' => array(
+                //             'OR' => array(
+                //               array('JobTicket.uuid like' => '%'.$query['name'].'%'),
+                //               //array('JobTicket.po_number like' => '%'.$query['name'].'%'),
+                //               array('Product.name like' => '%'.$query['name'].'%')
+                //               )
+                //             )
+                //         )
+                // );
+                // pr($ticketData);exit();
             }
 
         }

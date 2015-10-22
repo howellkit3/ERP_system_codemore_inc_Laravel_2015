@@ -25,15 +25,15 @@
             
             <div class="main-box-body clearfix">
                 <div class="table-responsive">
-                    <table class="table table-striped table-hover">
+                    <table class="table table-striped table-hover sortable">
                         <thead>
                             <tr>
-                                <th><a href="#"><span>Ticket id</span></a></th>
-                                <th><a href="#"><span>Product No. </span></a></th>
-                                <th><a href="#"><span>PO No. </span></a></th>
-                                <th><a href="#"><span>Item Name </span></a></th>
-                                <th><a href="#"><span>Company </span></a></th>
-                                <th><a href="#"><span>Created</span></a></th>
+                                <th class="table-header" style="width:100px;">Ticket id</th>
+                                <th class="table-header" style="width:130px;">Product No.</th>
+                                <th class="table-header">PO No.</th>
+                                <th class="table-header">Item Name </th>
+                                <th class="table-header">Company</th>
+                                <th>Created</th>
                                 <th style="text-align:center">Action</th>
                             </tr>
                         </thead>
@@ -58,7 +58,14 @@
     </div>
 </div>
 <?php //echo $this->element('sql_dump'); ?>
-
+<style type="text/css">
+    .table-header:hover{
+        color: #03A9F4;
+    }
+    .table-header{
+        cursor: pointer;
+    }
+</style>
 <script>
     
     $('document').ready(function(e){

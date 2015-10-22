@@ -123,6 +123,64 @@ $('body').on('click','.vat-price',function(){
 
 });
 
+$('body').on('change','.currency-option',function(){
+
+    thisElement = $(this);
+
+    thisVal = $(this).val();
+
+    if (thisVal) {
+        if(thisVal == 2){
+            thisElement.parents('.form-horizontal').find('.vat-section').show();
+            thisElement.parents('.form-horizontal').find('.for-php').show();
+            thisElement.parents('.form-horizontal').find('.for-usd').hide();
+            thisElement.parents('.form-horizontal').find('.select-vat-status').val('');
+        }
+
+        if(thisVal == 1){
+            thisElement.parents('.form-horizontal').find('.vat-section').show();
+            thisElement.parents('.form-horizontal').find('.for-php').hide();
+            thisElement.parents('.form-horizontal').find('.for-usd').show();
+            thisElement.parents('.form-horizontal').find('.vat-option').hide();
+
+            
+        }
+    }else{
+        thisElement.parents('.form-horizontal').find('.vat-section').hide();
+        thisElement.parents('.form-horizontal').find('.for-php').hide();
+        thisElement.parents('.form-horizontal').find('.for-usd').hide();
+        thisElement.parents('.form-horizontal').find('.vat-option').hide();
+    };
+    // if(thisVal == 'Vatable Exempt' || thisVal == 'Vatable Exempt'){
+
+    //     thisElement.parents('.form-horizontal').find('.vat-option').hide();
+    // }
+
+});
+
+$('body').on('change','.select-vat-status',function(){
+
+    thisElement = $(this);
+
+    thisVal = $(this).val();
+
+    if (thisVal) {
+        if(thisVal == 'Vatable Sale'){
+
+            thisElement.parents('.form-horizontal').find('.vat-option').show();
+        }
+
+        if(thisVal == 'Vat Exempt' || thisVal == 'Zero Rated Sale'){
+
+            thisElement.parents('.form-horizontal').find('.vat-option').hide();
+        }
+    }else{
+        thisElement.parents('.form-horizontal').find('.vat-option').hide();
+    };
+});
+
+
+
 $('.unitprice').keypress(function(){
     console.log($(this).val());
 });

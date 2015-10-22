@@ -19,16 +19,22 @@ class JobTicket extends AppModel {
 	public function bindTicket() {
 		$this->bindModel(array(
 			'belongsTo' => array(
-				'ClientOrder' => array(
-					'className' => 'Sales.ClientOrder',
-					'foreignKey' => 'client_order_id',
-					//'conditions' => 'JobTicket.client_order_id = ClientOrder.id'
-				),				
+				// 'ClientOrder' => array(
+				// 	'className' => 'Sales.ClientOrder',
+				// 	'foreignKey' => 'client_order_id',
+				// 	//'conditions' => 'JobTicket.client_order_id = ClientOrder.id'
+				// ),				
 				'Product' => array(
 					'className' => 'Sales.Product',
 					'foreignKey' => 'product_id',
 					//'conditions' => 'Company.id = Product.company_id'
 				)
+				// 'Product' => array(
+				// 	'className' => 'Sales.Product',
+				// 	'foreignKey' => false,
+				// 	'conditions' => array('Product.id = JobTicket.product_id'),
+				// 	'dependent' => true
+				// ),
 			)
 			
 		));
