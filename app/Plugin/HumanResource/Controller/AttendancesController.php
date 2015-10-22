@@ -6,6 +6,12 @@ App::uses('SessionComponent', 'Controller/Component');
 class AttendancesController  extends HumanResourceAppController {
 
 	var $helpers = array('HumanResource.PhpExcel','HumanResource.CustomTime');
+
+	function beforeFilter() {
+		parent::beforeFilter();
+  		$this->Auth->allow('check_attendance');
+ 	}
+
 	//,'HumanResource.CustomText'
 	public function index() {
 
@@ -73,7 +79,7 @@ class AttendancesController  extends HumanResourceAppController {
 
 			$empId =$query['employee_id'];
 			
-			$cray_onditions = armerge($conditions,array(
+			$conditions = array_merge($conditions,array(
 					'Attendance.employee_id' => $empId
 			));
 
@@ -1304,9 +1310,54 @@ public function daily_info() {
 	public function check_attendance() {
 
 
-		$this->bind(array('MySchedule','MyWorkshift'));
+		$this->loadModel('HumanResource.WorkSchedule');
 
-		$attendances = $this->Attendance->find('all',array('conditions' => $con));
+		$this->loadModel('HumanResource.Workshift');
+
+		$this->loadModel('HumanResource.WorkshiftBreak');
+
+		$this->loadModel('HumanResource.Breaktime');
+
+		$this->loadModel('HumanResource.Overtime');
+
+		$this->Attendance->bind(array('MySchedule','MyWorkshift','Overtime'));
+
+		$dateNow = date('Y-m-d');
+
+		$tomorrow = date('Y-m-d',strtotime($dateNow . "+1 days"));
+
+		$conditions = 	array(
+			'date(Attendance.date) BETWEEN ? AND ?' => array($dateNow,$tomorrow),
+			'Attendance.in NOT' => NULL
+			);
+
+		$this->Attendance->bind(array('MySchedule','MyWorkshift'));
+
+		$attendances = $this->Attendance->find('all',array('conditions' => $conditions));
+
+		$attendanceData = array();
+
+		foreach ($attendances as $key => $attnd) {
+			
+					$attendanceData = $attnd['Attendance'];
+				//morning shift	
+				if ($attnd['MyWorkshift']['from'] = '08:00:00') {
+
+					if (empty($attnd['Attendance']['out']) && empty($attnd['Attendance']['overtime_id'])) {
+
+						$attendanceData['out'] = 'n/a';
+
+						if ( $this->Attendance->save($attendanceData)) {
+
+							echo "no timeout for : ". $attendanceData['id'];
+
+							echo "<br>";
+						}
+
+					}
+				}
+		}
+
 		exit();
 	}
 
