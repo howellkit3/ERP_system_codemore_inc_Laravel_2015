@@ -133,7 +133,7 @@ class AttendancesController  extends HumanResourceAppController {
 
 	            // 	),
 	            'group' => array('Attendance.date'),
-	            'order' => 'Attendance.in DESC',
+	            'order' => 'Attendance.date DESC',
 	    );
 
 		$this->paginate = $params;
@@ -1231,6 +1231,11 @@ public function daily_info() {
 
 			$data = $this->request->data;
 
+			$data['Attendance']['in'] = !empty($this->request->data['Attendance']['in']) ? $this->request->data['Attendance']['in'] : '';
+
+			$data['Attendance']['out'] = !empty($this->request->data['Attendance']['out']) ? $this->request->data['Attendance']['out'] : '';
+			
+
 
 			if ($this->Attendance->save($data)) {
 
@@ -1260,15 +1265,32 @@ public function daily_info() {
 
 			if ($this->request->is('ajax'))  {
 
+
+
 					$attendance = $this->Attendance->read(null,$id);
 
-					$attendance['Attendance']['in'] = date('y/m/d h:i a',strtotime($attendance['Attendance']['in']));
+
+
+					if (!empty($attendance['Attendance']['in'])) {
+
+						$attendance['Attendance']['in'] = date('y/m/d h:i a',strtotime($attendance['Attendance']['in']));
+
+					} else {
+
+						$attendance['Attendance']['in'] = '';
+					}
+
 
 					if (!empty($attendance['Attendance']['out'])) {
 
 						$attendance['Attendance']['out'] = date('y/m/d h:i a',strtotime($attendance['Attendance']['out']));
 
+					} else {
+
+							$attendance['Attendance']['out'] = '';
 					}
+
+				
 					echo json_encode($attendance);
 
 					exit();
