@@ -375,13 +375,13 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 		 </div>
     </div>
 </div>
-<?php echo $this->element('modals/personnal_attendance',array('employeeList' => $employeeList)); ?>
+<?php echo $this->element('modals/personnal_attendance',array('employeeList' => $employeeList,'page' => $page,'empId' => $empId)); ?>
 
-<?php echo $this->element('modals/time_in_attendance',array('employeeList' => $employeeList)); ?>
+<?php echo $this->element('modals/time_in_attendance',array('employeeList' => $employeeList,'page' => $page,'empId' => $empId)); ?>
 
-<?php echo $this->element('modals/time_in_attendance_log',array('employeeList' => $employeeList)); ?>
+<?php echo $this->element('modals/time_in_attendance_log',array('employeeList' => $employeeList,'page' => $page,'empId' => $empId)); ?>
 
-<?php echo $this->element('modals/time_in_edit',array('employeeList' => $employeeList )); ?>
+<?php echo $this->element('modals/time_in_edit',array('employeeList' => $employeeList,'page' => $page,'empId' => $empId)); ?>
 
 <div class="modal fade" id="myAttendance" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
