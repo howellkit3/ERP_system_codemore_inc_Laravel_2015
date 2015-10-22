@@ -36,7 +36,7 @@ class DeliveredOrder extends AppModel {
 		$data['purchase_orders_id'] = $purchaseId;
 		$data['purchase_order_uuid'] = $deliveredItemsData['po_number'];
 		$data['uuid'] = $mystring;
-		//pr($data); exit;
+		pr($data); exit;
 		$this->save($data);
 
 		return $this->id;
