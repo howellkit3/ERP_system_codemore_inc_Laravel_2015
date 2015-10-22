@@ -2224,3 +2224,9 @@ ALTER TABLE `purchase_orders`  ADD `receive_item_status` INT(11)  NULL  DEFAULT 
 ALTER TABLE `purchase_orders`  ADD `order` INT(11)  NULL  DEFAULT NULL  AFTER `dr_num`;
 ALTER TABLE `delivered_orders`  ADD `order` INT(11)  NULL  DEFAULT NULL  AFTER `status_id`;
 ALTER TABLE `delivered_orders`  ADD `purchase_order_uuid` INT(11)  NULL  DEFAULT NULL  AFTER `purchase_orders_id`;
+
+/* bien added this oct-21-2015 warehouse*/
+ALTER TABLE `koufu_sale`.`quotation_item_details`  ADD COLUMN `vat_status` VARCHAR(50) NULL AFTER `material`;
+
+/* howell kit added this oct-21-2015 system*/
+ALTER TABLE `units`  ADD COLUMN `type_measure` INT(11) NULL AFTER `unit`;

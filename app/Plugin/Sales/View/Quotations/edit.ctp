@@ -256,7 +256,7 @@
 					                                'options' => array($currencyData),  
 					                                'label' => false,
 					                                'default' => $itemDetailDetails['QuotationItemDetail']['unit_price_currency_id'],
-					                                'class' => 'form-control',
+					                                'class' => 'form-control currency-option',
 					                                'name' => 'data[QuotationItemDetail]['.$key.'][unit_price_currency_id]',
 					                                'empty' => '---Select Currency---'
 					                                 )); 
@@ -293,35 +293,68 @@
 											
 											</div>
 
-											<div class="form-group">
-												<label class="col-lg-2 control-label">Vat Price</label>
-												<div class="col-lg-8">
+											<div class="form-group vat-section">
+												<label class="col-lg-2 control-label">Vat Option</label>
+												<div class="col-lg-4">
 													<?php 
-			                                            echo $this->Form->input('QuotationItemDetail.0.vat_price', array(
-			                                            								'class' => 'form-control item_type vatIn vatprice',
-									                                                    'type' => 'text',
-									                                                    'label' => false,
-									                                                    'value' => $itemDetailDetails['QuotationItemDetail']['vat_price'],
-									                                                    'id' => 'QuotationItemDetail'.$key.'VatPrice',
-									                                                    'name' => 'data[QuotationItemDetail]['.$key.'][vat_price]',
-									                                                    'readonly' => 'readonly',
-									                                                    'placeholder' => 'Vat Price'));
-		                                            ?>
+														$vatType = array('Vatable Sale' => 'Vatable Sale',
+																'Vat Exempt' => 'Vat Exempt',
+																'Zero Rated Sale' => 'Zero Rated Sale');
+														$displayMe = '';
+														$displayMe1 = '';
+														if ($itemDetailDetails['QuotationItemDetail']['unit_price_currency_id'] == 2) {
+															$displayMe = 'dsplayShow';
+															
+														}else {
+															$displayMe1 = 'dsplayShow1';
+														}
+														echo $this->Form->input('QuotationItemDetail.0.vat_status', array( 
+							                                'options' => array($vatType),  
+							                                'label' => false,
+							                                'default' => !empty($itemDetailDetails['QuotationItemDetail']['unit_price']) ? $itemDetailDetails['QuotationItemDetail']['unit_price'] : '',
+							                                'class' => 'hide-me-first form-control for-php required select-vat-status '.$displayMe,
+							                                'empty' => '---Select Vat Type---'
+							                                 ));
+
+														echo $this->Form->input('QuotationItemDetail.0.vat_status', array( 
+							                                'value' => 'Zero Rated Sale',  
+							                                'label' => false,
+							                                'disabled' => true,
+							                                'class' => 'hide-me-first form-control required for-usd '.$displayMe1
+							                                 ));
+														 
+						                            ?>
 													
 												</div>
+												<?php if ($itemDetailDetails['QuotationItemDetail']['unit_price_currency_id'] == 2) { ?>
+													<div class="col-lg-4 vat-option">
+														<?php 
+				                                            echo $this->Form->input('QuotationItemDetail.0.vat_price', array(
+	                            								'class' => 'form-control item_type vatIn vatprice',
+			                                                    'type' => 'text',
+			                                                    'label' => false,
+			                                                    'value' => $itemDetailDetails['QuotationItemDetail']['vat_price'],
+			                                                    'id' => 'QuotationItemDetail'.$key.'VatPrice',
+			                                                    'name' => 'data[QuotationItemDetail]['.$key.'][vat_price]',
+			                                                    'readonly' => 'readonly',
+			                                                    'placeholder' => 'Vat Price'));
+			                                            ?>
+														
+													</div>
+												<?php } ?>
 											</div>
 
-											<div class="form-group">
+											<div class="form-group vat-option">
 												<label class="col-lg-2 control-label"></label>
 												<div class="col-lg-8">
 
 													<input id="checkbox-1" class="checkEx vat-exclusive" type="checkbox" data-section='quotationItemDetail' name="[QuotationItemDetail][0][unit_price]"rel=".12" name ="togglecheckboxtext"><label>
-													<font color="gray"> Check to enable VAT Price   </font></label>
+													<font color="gray">&nbsp; Check to enable VAT Price   </font></label>
 
 
-													&nbsp &nbsp
+													&nbsp; &nbsp;
 													
-													<input id="checkbox-1" class="checkvat checkIn checkbox-nice vat-price" type="checkbox" data-section='quotationItemDetail' name="[QuotationItemDetail][0][vat_price]" rel=".12"><label><font color="gray"> Click to Compute the Unit Price/VAT Exclusive</font></label>
+													<input id="checkbox-1" class="checkvat checkIn checkbox-nice vat-price" type="checkbox" data-section='quotationItemDetail' name="[QuotationItemDetail][0][vat_price]" rel=".12"><label><font color="gray">&nbsp; Click to Compute the Unit Price/VAT Exclusive</font></label>
 														
 												</div>
 											</div>
@@ -522,6 +555,17 @@
 <!-- 		</div>
 	</div>
  -->
+ <style type="text/css">
+ 	.hide-me-first{
+ 		display: none;
+ 	}
+ 	.dsplayShow{
+ 		display: block ;
+ 	}
+ 	.dsplayShow1{
+ 		display: block ;
+ 	}
+ </style>
 
 	<script>
 		

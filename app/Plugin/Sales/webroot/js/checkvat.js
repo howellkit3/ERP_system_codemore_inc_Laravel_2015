@@ -135,6 +135,7 @@ $('body').on('change','.currency-option',function(){
             thisElement.parents('.form-horizontal').find('.for-php').show();
             thisElement.parents('.form-horizontal').find('.for-usd').hide();
             thisElement.parents('.form-horizontal').find('.select-vat-status').val('');
+            thisElement.parents('.form-horizontal').find('.for-usd').removeClass('dsplayShow');
         }
 
         if(thisVal == 1){
@@ -142,6 +143,7 @@ $('body').on('change','.currency-option',function(){
             thisElement.parents('.form-horizontal').find('.for-php').hide();
             thisElement.parents('.form-horizontal').find('.for-usd').show();
             thisElement.parents('.form-horizontal').find('.vat-option').hide();
+            thisElement.parents('.form-horizontal').find('.for-usd').removeClass('dsplayShow1');
 
             
         }
