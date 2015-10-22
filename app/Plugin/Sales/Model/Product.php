@@ -40,6 +40,11 @@ class Product extends AppModel {
 					'foreignKey' => 'item_type_holder_id',
 					'dependent' => true
 				),
+				// 'ClientOrder' => array(
+				// 	'className' => 'ClientOrder',
+				// 	'foreignKey' => 'item_type_holder_id',
+				// 	'dependent' => true
+				// ),
 			),
 
 			'hasMany' => array(
