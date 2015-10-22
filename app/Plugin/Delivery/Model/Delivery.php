@@ -24,6 +24,21 @@ class Delivery extends AppModel {
 		
 	);
 
+	//  public function bind($model = array('Group')){
+
+	// 	$this->bindModel(array(
+	// 		'belongsTo' => array(
+	// 			'Company' => array(
+	// 				'className' => 'Sales.Company',
+	// 				'foreignKey' => 'company_id',
+	// 				'dependent' => true
+	// 			),
+	// 		)
+	// 	),false);
+
+	// 	$this->contain($model);
+	// }
+
 
  
 	public function saveDelivery($data = null, $auth = null){
@@ -146,7 +161,12 @@ class Delivery extends AppModel {
 					'className' => 'Sales.ClientOrder',
 					'foreignKey' => false,
 					'conditions' => 'Delivery.clients_order_id = ClientOrder.uuid'
-				),		
+				),	
+				'Company' => array(
+					'className' => 'Sales.Company',
+					'foreignKey' => false,
+					'conditions' => array('Company.id = Delivery.company_id')
+				),	
 			)
 		));
 		$this->recursive = 1;
