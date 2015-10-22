@@ -2,17 +2,13 @@
     
         <tr class="">
             <td>
-                <?php  echo 'RCV' . ucfirst($requestOrderDataList['ReceivedOrder']['uuid']) ?>  
+                <?php  echo 'RCV' . $requestOrderDataList['DeliveredOrder']['uuid']  ?>  
             </td>
 
             <td class="text-center">
 
-                <?php  echo ($requestOrderDataList['DeliveredOrder']['purchase_orders_id'] != 0) ? $purchaseOrderUUIDData[$requestOrderDataList['DeliveredOrder']['purchase_orders_id']] : $requestOrderDataList['ReceivedOrder']['purchase_order_uuid']; ?>
+                <?php  echo !empty($requestOrderDataList['DeliveredOrder']['purchase_order_uuid']) ? $requestOrderDataList['DeliveredOrder']['purchase_order_uuid'] : $requestOrderDataList['ReceivedOrder']['purchase_order_uuid']; ?>
 
-            </td>
-
-            <td class="">
-                <?php echo ucfirst($requestOrderDataList['DeliveredOrder']['uuid']) ?>
             </td>
 
             <td class="">

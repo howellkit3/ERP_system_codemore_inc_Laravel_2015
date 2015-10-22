@@ -361,6 +361,7 @@ class ReceivingsController extends WareHouseAppController {
                 'DeliveredOrder.uuid', 
                 'DeliveredOrder.status_id',
                 'DeliveredOrder.id',
+                'DeliveredOrder.purchase_order_uuid',
                 'DeliveredOrder.purchase_orders_id'),
             'order' => 'DeliveredOrder.id DESC',
         );

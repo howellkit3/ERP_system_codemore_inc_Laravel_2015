@@ -108,8 +108,7 @@
 	 					?>
 					</li>
 
-		
-					
+
 					<li class="<?php echo ($this->params['plugin'] == 'ware_house') ? 'active' : '' ?>">
 
 						<?php  if(in_array($userData['User']['role_id'],array('1','2','4','7','15','8','16','3','12','9'))) {
