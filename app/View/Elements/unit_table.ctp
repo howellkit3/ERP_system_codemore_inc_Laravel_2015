@@ -5,12 +5,18 @@
         <tr class="">
 
             <td>
-
          
                <?php  echo strtolower($UnitDataDataList['Unit']['unit']) ?>
                
             </td>
-            <td class="text-center">
+
+            <td>
+         
+               <?php  echo !empty($typeMeasureData[$UnitDataDataList['Unit']['type_measure']]) ? strtolower($typeMeasureData[$UnitDataDataList['Unit']['type_measure']]) : "Countable" ?>
+               
+            </td>
+
+            <td>
                 
             
                   <?php echo  date('M d, Y', strtotime($UnitDataDataList['Unit']['created'])); ?>
