@@ -424,12 +424,12 @@ class DeliveriesController extends DeliveryAppController {
 
         
 
-        //$this->Delivery->bindDeliveryView();
+        $this->Delivery->bindDeliveryClientOrder();
 
         // $limit = 1;
 
-        // $conditions =  array('DeliveryDetail.quantity != DeliveryDetail.delivered_quantity' , "DeliveryDetail.status !=" => "5");
-
+        // $conditions =  array('DeliveryDetail.quantity != DeliveryDetail.delivered_quantity' , 'DeliveryDetail.status !=' => '5');
+        // //pr($conditions ); exit;
         // $this->Delivery->paginate = array(
         //     'conditions' => $conditions,
         //     'limit' => '1',
@@ -446,7 +446,7 @@ class DeliveriesController extends DeliveryAppController {
         // );
 
         // $deliveryEdit = $this->paginate('Delivery');
-
+        //pr($deliveryEdit ); exit;
         $noPermissionSales = ' '; 
 
         $this->set(compact('noPermissionSales','deliveryEdit', 'scheduleInfo', 'clientOrderData', 'DeliveryReceiptData', 'TransmittalData'));     
@@ -724,6 +724,7 @@ class DeliveriesController extends DeliveryAppController {
 
         $conditions = array('ClientOrder.status_id' => null, 'OR' => array(
                         array('ClientOrder.po_number LIKE' => '%' . $hint . '%'),
+                        array('ClientOrder.uuid LIKE' => '%' . $hint . '%'),
                           array('Product.name LIKE' => '%' . $hint . '%'),
                           array('Company.company_name LIKE' => '%' . $hint . '%')
                           ));
