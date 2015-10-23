@@ -79,7 +79,7 @@
                 ->setCellValue('J7', (new \DateTime())->format('m/d/Y'))
                 ->setCellValue('J8', $companyData['Company']['tin'])
                 ->setCellValue('J9', $paymentTermData[$clientData['ClientOrder']['payment_terms']])
-                ->setCellValue('A12', $clientData['ClientOrder']['po_number'])
+                ->setCellValue('B12', $clientData['ClientOrder']['po_number'])
                 ->setCellValue('F12', ucfirst($clientData['Product']['name']))
                 ->setCellValue('D12', number_format($drData['DeliveryDetail']['quantity']))
                 ->setCellValue('I12', number_format($unitPrice,4))
