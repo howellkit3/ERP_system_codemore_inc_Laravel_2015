@@ -41,7 +41,7 @@ class AttendancesController  extends HumanResourceAppController {
 
 		$date2 = date('Y-m-d', strtotime($date . ' +1 day'));
 		
-		//$conditions = 	array('date(Attendance.date) BETWEEN ? AND ?' => array($date,$date2));
+		$conditions =array('date(Attendance.date) BETWEEN ? AND ?' => array($date,$date2));
 		
 		$conditions = array();
 
@@ -106,10 +106,6 @@ class AttendancesController  extends HumanResourceAppController {
 
 		//$this->Employee->virtualFields['totalItem'] = 'COUNT(`OrderDetail`.`order_id`)';
 		//$conditions = array();
-
-		$conditions = array_merge($conditions,array(
-					'Attendance.employee_id' => 4
-			));
 
 		$params =  array(
 	            'conditions' => $conditions,
