@@ -58,6 +58,7 @@ class SalesOrdersController extends SalesAppController {
 
         $conditions = array('ClientOrder.status_id' => null, 'OR' => array(
                         array('ClientOrder.po_number LIKE' => '%' . $query['name'] . '%'),
+                        array('ClientOrder.uuid LIKE' => '%' . $query['name'] . '%'),
                           array('Product.name LIKE' => '%' . $query['name'] . '%'),
                           array('Company.company_name LIKE' => '%' . $query['name'] . '%')
                           ));
