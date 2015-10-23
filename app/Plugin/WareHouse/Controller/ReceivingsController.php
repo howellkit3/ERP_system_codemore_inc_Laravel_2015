@@ -97,6 +97,9 @@ class ReceivingsController extends WareHouseAppController {
 		$unitData = $this->Unit->find('list', array('fields' => array('Unit.id', 'Unit.unit')
 																));
 
+		$unitType = $this->Unit->find('list', array('fields' => array('Unit.id', 'Unit.type_measure')
+																));
+
 		$this->PurchaseOrder->bindReceive();
 
 		$purchaseOrderData = $this->PurchaseOrder->find('first', array('conditions' => array('PurchaseOrder.id' => $id)));
@@ -139,6 +142,8 @@ class ReceivingsController extends WareHouseAppController {
 
 				$requestPurchasingItem[$key][$itemHolder]['model'] = $value[$itemHolder]['model'];
 
+				$requestPurchasingItem[$key][$itemHolder]['unit_id'] = $value[$itemHolder]['quantity_unit_id'];
+
 				$requestPurchasingItem[$key][$itemHolder]['original_quantity'] = $value[$itemHolder]['quantity'];
 
 				array_push($requestPurchasingItemArray, $itemDetails[$value[$itemHolder]['foreign_key']]);
@@ -176,9 +181,13 @@ class ReceivingsController extends WareHouseAppController {
 
 				$requestPurchasingItem[$key][$itemHolder]['model'] = $value[$itemHolder]['model'];
 
+				$requestPurchasingItem[$key][$itemHolder]['unit_id'] = $value[$itemHolder]['quantity_unit_id'];
+
 				$requestPurchasingItem[$key][$itemHolder]['original_quantity'] = $value[$itemHolder]['quantity'];
 
-				array_push($requestPurchasingItemArray, $itemDetails[$value[$itemHolder]['foreign_key']]);                 
+				array_push($requestPurchasingItemArray, $itemDetails[$value[$itemHolder]['foreign_key']]);      
+
+
 	        
 	        	foreach ($receivedItemData as $key1 => $receivedValue) {	
 
@@ -213,6 +222,8 @@ class ReceivingsController extends WareHouseAppController {
 				$requestPurchasingItem[$key][$itemHolder]['foreign_key'] = $value[$itemHolder]['foreign_key'];
 
 				$requestPurchasingItem[$key][$itemHolder]['model'] = $value[$itemHolder]['model'];
+
+				$requestPurchasingItem[$key][$itemHolder]['unit_id'] = $value[$itemHolder]['quantity_unit_id'];
 
 				$requestPurchasingItem[$key][$itemHolder]['original_quantity'] = $value[$itemHolder]['quantity'];
 
@@ -251,6 +262,8 @@ class ReceivingsController extends WareHouseAppController {
 
 				$requestPurchasingItem[$key][$itemHolder]['model'] = $value[$itemHolder]['model'];
 
+				$requestPurchasingItem[$key][$itemHolder]['unit_id'] = $value[$itemHolder]['quantity_unit_id'];
+
 				$requestPurchasingItem[$key][$itemHolder]['original_quantity'] = $value[$itemHolder]['quantity'];
 
 				array_push($requestPurchasingItemArray, $itemDetails[$value[$itemHolder]['foreign_key']]);                        
@@ -275,15 +288,12 @@ class ReceivingsController extends WareHouseAppController {
 
         }
 
-
 		if (!empty($this->request->data)) {
-
-			//pr($this->request->data); exit;
 
 			ksort($this->request->data['requestPurchasingItem']);
 
 			$receivedData = $this->ReceivedOrder->find('first', array('conditions' => array('ReceivedOrder.purchase_order_id' => $id)));
-				//pr($this->request->data); exit;
+				
 			if(empty($receivedData['ReceivedOrder']['id'])){
 
 				$itemId = $this->ReceivedOrder->saveReceivedOrders($this->request->data['ReceivedItems'],$userData['User']['id'],$id);
@@ -311,7 +321,7 @@ class ReceivingsController extends WareHouseAppController {
 
 		}
 	
-		$this->set(compact('requestData', 'requestPurchasingItem', 'purchaseOrderData', 'supplierData', 'unitData', 'itemHolder','receivedOrderData'));
+		$this->set(compact('requestData', 'requestPurchasingItem', 'purchaseOrderData', 'supplierData', 'unitData', 'unitType', 'itemHolder','receivedOrderData'));
 
     }
 
@@ -394,6 +404,8 @@ class ReceivingsController extends WareHouseAppController {
 
 	 	$this->loadModel('User');
 
+	 	$this->loadModel('Unit');
+
 	 	$this->loadModel('Purchasing.PurchasingItem');
 
 		$this->loadModel('Purchasing.RequestItem');
@@ -406,6 +418,12 @@ class ReceivingsController extends WareHouseAppController {
 																));
 
 		$firstName = $this->User->find('list', array('fields' => array('User.id', 'User.first_name')
+																));
+
+		$unitType = $this->Unit->find('list', array('fields' => array('Unit.id', 'Unit.type_measure')
+																));
+
+		$unitData = $this->Unit->find('list', array('fields' => array('Unit.id', 'Unit.unit')
 																));
 
 		$supplierData = $this->Supplier->find('list', array('fields' => array('Supplier.id', 'Supplier.name')
@@ -451,6 +469,8 @@ class ReceivingsController extends WareHouseAppController {
 
 					$requestPurchasingItem[$key1][$itemHolder]['model'] = $value[$itemHolder]['model'];
 
+					$requestPurchasingItem[$key1][$itemHolder]['unit_id'] = $unitType[$value[$itemHolder]['quantity_unit_id']];
+					
 					$requestPurchasingItem[$key1][$itemHolder]['quantity'] = $value[$itemHolder]['quantity'];		
 
 					foreach ($receivedItemData as $key => $receivedValue) {	
@@ -466,6 +486,7 @@ class ReceivingsController extends WareHouseAppController {
 						} 	
 
 					}  		 
+
 
 							$requestPurchasingItem[$key1][$itemHolder]['good_quantity'] = array_sum($arrayGoodQuantity);
 							
@@ -488,6 +509,8 @@ class ReceivingsController extends WareHouseAppController {
 					$requestPurchasingItem[$key1][$itemHolder]['name'] = $itemDetails[$value[$itemHolder]['foreign_key']];  
 
 					$requestPurchasingItem[$key1][$itemHolder]['model'] = $value[$itemHolder]['model'];
+
+					$requestPurchasingItem[$key1][$itemHolder]['unit_id'] = $unitType[$value[$itemHolder]['quantity_unit_id']];
 
 					$requestPurchasingItem[$key1][$itemHolder]['quantity'] = $value[$itemHolder]['quantity'];                 
 		        
@@ -524,6 +547,8 @@ class ReceivingsController extends WareHouseAppController {
 					$requestPurchasingItem[$key1][$itemHolder]['name'] = $itemDetails[$value[$itemHolder]['foreign_key']];
 
 					$requestPurchasingItem[$key1][$itemHolder]['model'] = $value[$itemHolder]['model'];
+
+					$requestPurchasingItem[$key1][$itemHolder]['unit_id'] = $unitType[$value[$itemHolder]['quantity_unit_id']];
 
 					$requestPurchasingItem[$key1][$itemHolder]['quantity'] = $value[$itemHolder]['quantity'];
 
@@ -562,6 +587,8 @@ class ReceivingsController extends WareHouseAppController {
 
 					$requestPurchasingItem[$key1][$itemHolder]['model'] = $value[$itemHolder]['model'];
 
+					$requestPurchasingItem[$key1][$itemHolder]['unit_id'] = $unitType[$value[$itemHolder]['quantity_unit_id']];
+					
 					$requestPurchasingItem[$key1][$itemHolder]['quantity'] = $value[$itemHolder]['quantity'];                    
 		    		
 		    		foreach ($receivedItemData as $key => $receivedValue) {	
@@ -588,7 +615,7 @@ class ReceivingsController extends WareHouseAppController {
         }
        //pr($requestPurchasingItem);  exit;
 
-   	$this->set(compact('purchaseOrderData', 'supplierData', 'firstName', 'lastName', 'requestData', 'itemDetails', 'requestPurchasingItem', 'itemData', 'receivedOrderData', 'type', 'requestItemData', 'itemHolder'));
+   	$this->set(compact('unitData','purchaseOrderData', 'supplierData', 'firstName', 'lastName', 'requestData', 'itemDetails', 'requestPurchasingItem', 'itemData', 'receivedOrderData', 'type', 'requestItemData', 'itemHolder'));
 
     }
 
@@ -602,15 +629,13 @@ class ReceivingsController extends WareHouseAppController {
 
 	 	$this->loadModel('User');
 
+	 	$this->loadModel('Unit');
+
 	 	$this->loadModel('Area');
 
 	 	$this->loadModel('Purchasing.PurchasingItem');
 
 		$this->loadModel('Purchasing.RequestItem');
-
-		//$this->loadModel('WareHouse.ReceivedOrder');
-
-		//$this->loadModel('WareHouse.ReceivedItem');
 
 		$this->loadModel('WareHouse.DeliveredOrder');
 
@@ -620,12 +645,18 @@ class ReceivingsController extends WareHouseAppController {
 		$firstName = $this->User->find('list', array('fields' => array('User.id', 'User.first_name')
 																));
 
+		$unitData = $this->Unit->find('list', array('fields' => array('Unit.id', 'Unit.unit')
+																));
+
+		$unitType = $this->Unit->find('list', array('fields' => array('Unit.id', 'Unit.type_measure')
+																));
+
 		$supplierData = $this->Supplier->find('list', array('fields' => array('Supplier.id', 'Supplier.name')
 																));
 
 
 		$requestData = $this->Request->find('first', array('conditions' => array('Request.uuid' => $requestUUID)));
-
+		//pr($requestData); exit;
 		$areaList = $this->Area->find('list', array('fields' => array('Area.id', 'Area.name')
 		 														));
 
@@ -659,6 +690,8 @@ class ReceivingsController extends WareHouseAppController {
 
 			foreach ($value['ReceivedItem'] as $key => $valueOfValue) {	
 
+				//pr($value); exit;
+
 				if($valueOfValue['model'] == 'GeneralItem'){
 
 					$this->loadModel('GeneralItem');
@@ -671,6 +704,8 @@ class ReceivingsController extends WareHouseAppController {
 					$receiveItem[$key][$itemHolder]['model'] = $valueOfValue['model'];
 
 					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];		
+
+					$receiveItem[$key][$itemHolder]['unit_id'] = !empty($valueOfValue['quantity_unit_id']) ? $valueOfValue['quantity_unit_id'] : 14 ;	
 
 			 		$receiveItem[$key][$itemHolder]['original_quantity'] = $valueOfValue['original_quantity'];	
 
@@ -691,7 +726,9 @@ class ReceivingsController extends WareHouseAppController {
 
 					$receiveItem[$key][$itemHolder]['model'] = $valueOfValue['model'];
 
-					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];		
+					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];
+
+					$receiveItem[$key][$itemHolder]['unit_id'] = !empty($valueOfValue['quantity_unit_id']) ? $valueOfValue['quantity_unit_id'] : 14 ;	
 
 			 		$receiveItem[$key][$itemHolder]['original_quantity'] = $valueOfValue['original_quantity'];	
 
@@ -712,7 +749,9 @@ class ReceivingsController extends WareHouseAppController {
 
 					$receiveItem[$key][$itemHolder]['model'] = $valueOfValue['model'];
 
-					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];		
+					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];
+
+					$receiveItem[$key][$itemHolder]['unit_id'] = !empty($valueOfValue['quantity_unit_id']) ? $valueOfValue['quantity_unit_id'] : 14 ;	
 
 			 		$receiveItem[$key][$itemHolder]['original_quantity'] = $valueOfValue['original_quantity'];	
 
@@ -734,7 +773,9 @@ class ReceivingsController extends WareHouseAppController {
 
 					$receiveItem[$key][$itemHolder]['model'] = $valueOfValue['model'];
 
-					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];		
+					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];	
+
+					$receiveItem[$key][$itemHolder]['unit_id'] = !empty($valueOfValue['quantity_unit_id']) ? $valueOfValue['quantity_unit_id'] : 14 ;	
 
 			 		$receiveItem[$key][$itemHolder]['original_quantity'] = $valueOfValue['original_quantity'];	
 
@@ -747,8 +788,9 @@ class ReceivingsController extends WareHouseAppController {
 			}
         }
 
+        //pr($receiveItem); exit;
 
-   	$this->set(compact('purchaseOrderData','userName', 'supplierData', 'firstName', 'lastName', 'requestData', 'itemDetails', 'receiveItem', 'itemData', 'receivedOrderData', 'type', 'requestItemData', 'itemHolder', 'deliveredDataID', 'receivedItemData', 'areaList', 'userNameList'));
+   	$this->set(compact('unitData','purchaseOrderData','userName', 'supplierData', 'firstName', 'lastName', 'requestData', 'itemDetails', 'receiveItem', 'itemData', 'receivedOrderData', 'type', 'requestItemData', 'itemHolder', 'deliveredDataID', 'receivedItemData', 'areaList', 'userNameList'));
 
     }
 
@@ -762,21 +804,20 @@ class ReceivingsController extends WareHouseAppController {
 
 	 	$this->loadModel('User');
 
+	 	$this->loadModel('Unit');
+
 	 	$this->loadModel('Area');
 
 	 	$this->loadModel('Purchasing.PurchasingItem');
 
 		$this->loadModel('Purchasing.RequestItem');
 
-		//$this->loadModel('WareHouse.ReceivedOrder');
-
-		//$this->loadModel('WareHouse.ReceivedItem');
-
 		$this->loadModel('WareHouse.DeliveredOrder');
 
 		$idholder = $id;
 
-		//pr('$idholder'); exit;
+		$unitData = $this->Unit->find('list', array('fields' => array('Unit.id', 'Unit.unit')
+																));
 
 		$lastName = $this->User->find('list', array('fields' => array('User.id', 'User.last_name')
 																));
@@ -822,6 +863,8 @@ class ReceivingsController extends WareHouseAppController {
 
 			foreach ($value['ReceivedItem'] as $key => $valueOfValue) {	
 
+				//pr($valueOfValue); exit;
+
 				if($valueOfValue['model'] == 'GeneralItem'){
 
 					$this->loadModel('GeneralItem');
@@ -833,7 +876,9 @@ class ReceivingsController extends WareHouseAppController {
 
 					$receiveItem[$key][$itemHolder]['model'] = $valueOfValue['model'];
 
-					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];		
+					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];	
+
+					$receiveItem[$key][$itemHolder]['unit_id'] = !empty($valueOfValue['quantity_unit_id']) ? $valueOfValue['quantity_unit_id'] : 14 ;		
 
 			 		$receiveItem[$key][$itemHolder]['original_quantity'] = $valueOfValue['original_quantity'];	
 
@@ -854,7 +899,9 @@ class ReceivingsController extends WareHouseAppController {
 
 					$receiveItem[$key][$itemHolder]['model'] = $valueOfValue['model'];
 
-					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];		
+					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];
+
+					$receiveItem[$key][$itemHolder]['unit_id'] = !empty($valueOfValue['quantity_unit_id']) ? $valueOfValue['quantity_unit_id'] : 14 ;			
 
 			 		$receiveItem[$key][$itemHolder]['original_quantity'] = $valueOfValue['original_quantity'];	
 
@@ -876,7 +923,9 @@ class ReceivingsController extends WareHouseAppController {
 
 					$receiveItem[$key][$itemHolder]['model'] = $valueOfValue['model'];
 
-					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];		
+					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];	
+
+					$receiveItem[$key][$itemHolder]['unit_id'] = !empty($valueOfValue['quantity_unit_id']) ? $valueOfValue['quantity_unit_id'] : 14 ;		
 
 			 		$receiveItem[$key][$itemHolder]['original_quantity'] = $valueOfValue['original_quantity'];	
 
@@ -898,7 +947,9 @@ class ReceivingsController extends WareHouseAppController {
 
 					$receiveItem[$key][$itemHolder]['model'] = $valueOfValue['model'];
 
-					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];		
+					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];	
+
+					$receiveItem[$key][$itemHolder]['unit_id'] = !empty($valueOfValue['quantity_unit_id']) ? $valueOfValue['quantity_unit_id'] : 14 ;		
 
 			 		$receiveItem[$key][$itemHolder]['original_quantity'] = $valueOfValue['original_quantity'];	
 
@@ -908,11 +959,11 @@ class ReceivingsController extends WareHouseAppController {
 
 		        
 		   		 }
-			}
+			} 
         }
 
 
-   	$this->set(compact('purchaseOrderSupplierData', 'purchaseOrderUUIDData', 'purchaseOrderData', 'supplierData', 'firstName', 'lastName', 'requestData', 'itemDetails', 'receiveItem', 'itemData', 'receivedOrderData', 'type', 'requestItemData', 'itemHolder', 'deliveredDataID', 'receivedItemData', 'areaList', 'userNameList'));
+   	$this->set(compact('unitData','purchaseOrderSupplierData', 'purchaseOrderUUIDData', 'purchaseOrderData', 'supplierData', 'firstName', 'lastName', 'requestData', 'itemDetails', 'receiveItem', 'itemData', 'receivedOrderData', 'type', 'requestItemData', 'itemHolder', 'deliveredDataID', 'receivedItemData', 'areaList', 'userNameList'));
 
 
     }

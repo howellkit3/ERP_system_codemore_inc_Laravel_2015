@@ -1732,12 +1732,14 @@ class SettingsController extends AppController
 
         $limit = 10;
 
+        $typeMeasureData = array('Countable', 'Measurable');
+
         $conditions = array();
 
         $this->paginate = array(
             'conditions' => $conditions,
             'limit' => $limit,
-            'fields' => array('id', 'unit','created'),
+            'fields' => array('id', 'unit','type_measure','created'),
             'order' => 'Unit.id DESC',
         );
 
@@ -1759,7 +1761,7 @@ class SettingsController extends AppController
                 }
             }
 
-        $this->set(compact('unitData'));
+        $this->set(compact('unitData', 'typeMeasureData'));
     }
 
     public function unit_edit($id = null) {

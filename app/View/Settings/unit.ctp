@@ -24,6 +24,7 @@
 						<div class="main-box-body clearfix">
 							<div class="main-box-body clearfix">
 								<div class="form-horizontal">
+
 									<div class="form-group">
 										<label class="col-lg-2 control-label"><span style="color:red">*</span>Unit</label>
 										<div class="col-lg-8">
@@ -34,6 +35,22 @@
 							                                                    'placeholder' => 'Unit Name'));
                                             ?> 
 
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-lg-2 control-label">Type</label>
+										<div class="col-lg-8">
+											<input type="hidden" id="selected_type" value="">
+												<?php echo $this->Form->input('Unit.type_measure', array(
+												'options' => array('Countable', 'Measurable'),
+												'type' => 'select',
+												'label' => false,
+												'class' => 'form-control required ',
+												'empty' => '---Select Item Type---',
+												'required' => 'required'
+												)); 
+											?>
 										</div>
 									</div>
 
@@ -67,10 +84,9 @@
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
-                              
                                 <th><a href="#"><span>Unit</span></a></th>
-                              
-                                <th class="text-center"><a href="#"><span>Created</span></a></th>
+                                <th ><a href="#"><span>Type</span></a></th>
+                                <th ><a href="#"><span>Created</span></a></th>
                                 <th style="width:135px">Action</th>
                             </tr>
                         </thead>

@@ -206,17 +206,38 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 								                        </td>
 								                        <td class="text-center time-in"> 
 								                           <?php 
-								                        	 echo (!empty($schedule['Attendance']['in']) && $schedule['Attendance']['in']  != '0000-00-00 00:00:00') ? date('y/m/d h:i a',strtotime($schedule['Attendance']['in'])) : '';
+								                           $timeIn = '';
+								                           if (!empty($schedule['Attendance']['in']) &&  $schedule['Attendance']['in'] == 'n/a' ) {
+
+								                           	echo "no time-in";
+
+								                           } else {
+
+								                           	echo (!empty($schedule['Attendance']['in']) && $schedule['Attendance']['in']  != '0000-00-00 00:00:00') ? date('y/m/d h:i a',strtotime($schedule['Attendance']['in'])) : '';
 															 $timeIn;
+
 								                            $timeIn = !empty($schedule['Attendance']['in']) ? date('Y/m/d h:i a',strtotime($schedule['Attendance']['in'])) : '';
+
+								                           }
+								                        	
 								                            ?> 
 								                        </td>
 								                        </td>
 								                        <td class="text-center time-out"> 
 								                           <?php 
-								                          echo  (!empty($schedule['Attendance']['out']) && $schedule['Attendance']['out']  != '0000-00-00 00:00:00') ? date('y/m/d h:i a',strtotime($schedule['Attendance']['out'])) : '';
+								                             $timeOut  = '';
+								                             
+								                            if (!empty($schedule['Attendance']['out']) &&  $schedule['Attendance']['out'] == 'n/a' ) {
 
-								                            $timeOut = !empty($schedule['Attendance']['out']) ? date('Y/m/d h:i a',strtotime($schedule['Attendance']['out'])) : '' ;
+								                            		echo "no time-out";
+
+								                           } else {
+								                            
+								                            	echo  (!empty($schedule['Attendance']['out']) && $schedule['Attendance']['out']  != '0000-00-00 00:00:00') ? date('y/m/d h:i a',strtotime($schedule['Attendance']['out'])) : '';
+
+									                            $timeOut = !empty($schedule['Attendance']['out']) ? date('Y/m/d h:i a',strtotime($schedule['Attendance']['out'])) : '' ;
+
+									                        }
 								                           ?> 
 								                        </td>
 								                        <td class="text-center" > 
@@ -249,10 +270,22 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 								                           	?> 
 								                        </td> 
 								                         <td class="text-center duration" > 
-								                           <?php echo $this->CustomTime->getDurationSchedule($schedule['Attendance']['in'],$schedule['Attendance']['out'],$schedule['MyWorkshift'],$schedule['MyBreakTime']); ?> 
+								                           <?php 
+								                         	if (!empty($schedule['Attendance']['out']) &&  $schedule['Attendance']['out'] == 'n/a' ) {
+
+								                         		 } else {
+
+								                           			 echo $this->CustomTime->getDurationSchedule($schedule['Attendance']['in'],$schedule['Attendance']['out'],$schedule['MyWorkshift'],$schedule['MyBreakTime']);
+								                          	 }
+								                           ?> 
 								                        </td>
 								                         <td class="text-center duration" > 
-								                           <?php echo $this->CustomTime->getDuration($timeIn,$timeOut); ?> 
+								                           <?php 
+								                           if (!empty($timeIn) && !empty($timeOut)) {
+
+								                           			 echo $this->CustomTime->getDuration($timeIn,$timeOut);
+								                         	 }
+								                           ?> 
 								                        </td>
 								                        <td class="attendance-status"> 
 								                           <?php 
@@ -375,13 +408,13 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 		 </div>
     </div>
 </div>
-<?php echo $this->element('modals/personnal_attendance',array('employeeList' => $employeeList)); ?>
+<?php echo $this->element('modals/personnal_attendance',array('employeeList' => $employeeList,'page' => $page,'empId' => $empId)); ?>
 
-<?php echo $this->element('modals/time_in_attendance',array('employeeList' => $employeeList)); ?>
+<?php echo $this->element('modals/time_in_attendance',array('employeeList' => $employeeList,'page' => $page,'empId' => $empId)); ?>
 
-<?php echo $this->element('modals/time_in_attendance_log',array('employeeList' => $employeeList)); ?>
+<?php echo $this->element('modals/time_in_attendance_log',array('employeeList' => $employeeList,'page' => $page,'empId' => $empId)); ?>
 
-<?php echo $this->element('modals/time_in_edit',array('employeeList' => $employeeList )); ?>
+<?php echo $this->element('modals/time_in_edit',array('employeeList' => $employeeList,'page' => $page,'empId' => $empId)); ?>
 
 <div class="modal fade" id="myAttendance" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
