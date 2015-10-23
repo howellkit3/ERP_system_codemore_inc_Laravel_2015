@@ -33,7 +33,7 @@ class SalesInvoiceController extends AccountingAppController {
         );
 
         $invoiceData = $this->paginate('SalesInvoice');
-       
+        //pr($invoiceData);exit();
         $companyName = $this->Company->find('list',array('fields' => array('id','company_name')));
         
         // $invoiceData = $this->SalesInvoice->find('all', array(
@@ -164,7 +164,7 @@ class SalesInvoiceController extends AccountingAppController {
 
             $drData = " ";
         }
-      
+        
         $conditions = array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']);
         $conditions = array_merge($conditions,array('ClientOrder.company_id' => $drData['Delivery']['company_id']));
         $clientData = $this->ClientOrder->find('first', array(
