@@ -7,7 +7,7 @@
                         <div class="col-lg-9">
 
                           <?php
-                            echo $this->Form->input('job_ticket_id',array('type' => 'hidden','value' => $parameter['ticketId']
+                            echo $this->Form->input('job_ticket_id',array('type' => 'hidden','value' => $parameter['ticketuuId']
 
                               ));
 
@@ -25,7 +25,11 @@
 
                             echo $this->Form->input('FormId',array('type' => 'hidden','value' => $parameter['formProcesId']
 
-                              ))
+                              ));
+
+                              echo $this->Form->input('ticket_id',array('type' => 'hidden','value' => $parameter['ticketId']
+
+                              ));
                           ?>
                           
                         </div>
@@ -134,8 +138,11 @@
                                      'controller' => 'ticketing_systems','action' => 'print_process',
                                     'productId' => !empty( $parameter['product']) ?  $parameter['product'] : '0',
                                      $parameter['processId'],
-                                        !empty( $parameter['productId']) ?  $parameter['productId'] : '0' ,
-                                     $parameter['ticketId']
+                                     !empty( $parameter['productId']) ?  $parameter['productId'] : '0' ,
+                                      $parameter['ticketuuId'],
+                                      0,
+                                      0,
+                                      $parameter['ticketId']
                                     ),
                                     array(
                                      //'title' => 'Print '. $subProcess[$processList['ProductSpecificationProcessHolder']['sub_process_id']],
