@@ -38,7 +38,7 @@
 								<th><a href="#"><span>Sales Invoice No.</span></a></th>
                                 <!-- <th><a href="#"><span>Statement of Account No.</span></a></th> -->
 								<th><a href="#"><span>Delivery No.</span></a></th>
-								<!-- <th><a href="#"><span>Company</span></a></th> -->
+								<th><a href="#"><span>Company</span></a></th>
 								<th class="text-center"><a href="#"><span>Status</span></a></th>
 								<th><a href="#"><span>Action</span></a></th>
 							</tr>
@@ -65,9 +65,9 @@
 					                            <?php echo $invoiceDataList['SalesInvoice']['dr_uuid'];?>
 					                        </td>
 
-					                        <!-- <td class="">
-					                            <?php echo $companyName[$invoiceDataList['Delivery']['company_id']];?>
-					                        </td> -->
+					                        <td class="">
+					                            <?php echo $companyName[$deliveryNum[$invoiceDataList['SalesInvoice']['dr_uuid']]];?>
+					                        </td> 
 					                        
 					                        <td class="text-center">
 					                            <?php 

@@ -13,6 +13,9 @@ class SalesInvoiceController extends AccountingAppController {
         $userData = $this->Session->read('Auth');
         
         $this->loadModel('Sales.Company');
+
+        $this->loadModel('Delivery.Delivery');
+
         //$this->SalesInvoice->bindInvoice();
 
         $limit = 10;
@@ -28,14 +31,17 @@ class SalesInvoiceController extends AccountingAppController {
                 'SalesInvoice.statement_no',  
                 'SalesInvoice.dr_uuid', 
                 'SalesInvoice.status',
+             //   'Delivery.company_id',
                 ),
             'order' => 'SalesInvoice.id DESC',
         );
 
         $invoiceData = $this->paginate('SalesInvoice');
-        //pr($invoiceData);exit();
+       //pr($invoiceData);exit();
         $companyName = $this->Company->find('list',array('fields' => array('id','company_name')));
-        
+
+        $deliveryNum = $this->Delivery->find('list',array('fields' => array('dr_uuid','company_id')));
+        //pr($deliveryNum); exit;
         // $invoiceData = $this->SalesInvoice->find('all', array(
         //                                             'fields' => array(
         //                                                 'id','sales_invoice_no',
@@ -64,7 +70,7 @@ class SalesInvoiceController extends AccountingAppController {
             $noPermissionPay = ' ';
         }
 
-        $this->set(compact('invoiceData','noPermissionReciv','noPermissionPay','companyName'));
+        $this->set(compact('invoiceData','noPermissionReciv','noPermissionPay','companyName', 'deliveryNum'));
 
     }
 
