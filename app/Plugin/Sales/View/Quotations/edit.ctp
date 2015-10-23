@@ -233,6 +233,16 @@
 		                                                    'name' => 'data[QuotationItemDetail]['.$key.'][quantity]',
 		                                                    'placeholder' => 'Quantity'));
 		                                            ?>
+
+		                                           <!--  <?php 
+			                                            echo $this->Form->input('QuotationItemDetail.0.id', array(
+                            								'class' => 'form-control item_type',
+		                                                    'type' => 'text',
+		                                                    'label' => false,
+		                                                    'value' => $itemDetailDetails['QuotationItemDetail']['id'],
+		                                                    'name' => 'data[QuotationItemDetail]['.$key.'][quantity]',
+		                                                    'placeholder' => 'Quantity'));
+		                                            ?> -->
 													 
 												</div>
 												<div class="col-lg-6">
@@ -326,11 +336,20 @@
 						                            ?>
 													
 												</div>
-												<?php if ($itemDetailDetails['QuotationItemDetail']['unit_price_currency_id'] == 2) { ?>
+
+												<?php $displayMe = '';
+														$displayMe1 = '';
+														if ($itemDetailDetails['QuotationItemDetail']['unit_price_currency_id'] == 2) {
+															$displayMe = 'dsplayShow';
+															
+														}else {
+															$displayMe1 = 'dsplayShow1';
+														} ?>
+
 													<div class="col-lg-4 vat-option">
 														<?php 
 				                                            echo $this->Form->input('QuotationItemDetail.0.vat_price', array(
-	                            								'class' => 'form-control item_type vatIn vatprice',
+	                            								'class' => 'form-control item_type vatIn vatprice '. $displayMe,
 			                                                    'type' => 'text',
 			                                                    'label' => false,
 			                                                    'value' => $itemDetailDetails['QuotationItemDetail']['vat_price'],
@@ -341,7 +360,7 @@
 			                                            ?>
 														
 													</div>
-												<?php } ?>
+												
 											</div>
 
 											<div class="form-group vat-option">
