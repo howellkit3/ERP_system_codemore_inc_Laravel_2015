@@ -56,17 +56,29 @@ class SalesOrdersController extends SalesAppController {
         //     )
         // ));
 
+        $conditions = array('ClientOrder.status_id' => null, 'OR' => array(
+                        array('ClientOrder.po_number LIKE' => '%' . $query['name'] . '%'),
+                          array('Product.name LIKE' => '%' . $query['name'] . '%'),
+                          array('Company.company_name LIKE' => '%' . $query['name'] . '%')
+                          ));
+
         $clientOrder = $this->ClientOrder->find('all',array(
-                  'order' => 'ClientOrder.id DESC',
-                  'conditions' => array(
-                    'OR' => array(
-                      array('ClientOrder.status_id' => null),
-                      array('ClientOrder.uuid LIKE' => '%' .  $query['name'] . '%'),
-                      array('Product.name LIKE' => '%' . $query['name'] . '%')
-                      )
-                    )
-                )
-        );
+                      'conditions' => $conditions,
+                      'limit' => 10
+                      )); 
+
+
+        // $clientOrder = $this->ClientOrder->find('all',array(
+        //           'order' => 'ClientOrder.id DESC',
+        //           'conditions' => array(
+        //             'OR' => array(
+        //               array('ClientOrder.status_id' => null),
+        //               array('ClientOrder.uuid LIKE' => '%' .  $query['name'] . '%'),
+        //               array('Product.name LIKE' => '%' . $query['name'] . '%')
+        //               )
+        //             )
+        //         )
+        // );
 
        
       }
