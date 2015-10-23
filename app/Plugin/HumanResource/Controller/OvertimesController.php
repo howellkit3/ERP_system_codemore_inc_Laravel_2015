@@ -5,7 +5,7 @@ App::uses('SessionComponent', 'Controller/Component');
 
 class OvertimesController  extends HumanResourceAppController {
 
-	var $helpers = array('HumanResource.CustomText','HumanResource.CustomTime');
+	var $helpers = array('HumanResource.CustomText','HumanResource.CustomTime','HumanResource.Employees');
 
 	public function index() {
 

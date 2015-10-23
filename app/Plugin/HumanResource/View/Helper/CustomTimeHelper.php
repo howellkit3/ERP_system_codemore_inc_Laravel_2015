@@ -38,7 +38,7 @@ function getDuration($time1 = null,$time2 = null)
 		$difference = '';
 
 			if ($interval->d != 0){
-				$days = ($interval->d > 1) ? 'days' : 'day';
+				$days = ($interval->d > 1) ? 'd' : 'd';
 			$difference	.= $interval->d  .' '.$days;
 			}
 			else{
@@ -78,9 +78,11 @@ function getDurationSchedule($time1 = null,$time2 = null,$workschedules = null,$
 		//workschedules
 		$timeIn = date('Y-m-d H:i',strtotime($time1)).':00';
 
+		$timeOut = date('Y-m-d H:i',strtotime($time2)).':00';
 
+		$schedFrom = $today.' '. $workschedules['from'];
 
-		if (!empty($workschedules)) {
+		if (!empty($workschedules) && strtotime($timeOut) >= strtotime($schedFrom)) {
 
 			$defaultFrom = $today.' '.$workschedules['from'];
 
@@ -107,7 +109,7 @@ function getDurationSchedule($time1 = null,$time2 = null,$workschedules = null,$
 			}
 
 		
-		}
+		
 	
 
 		if (!empty($workschedulesBreaks)) {
@@ -154,6 +156,8 @@ function getDurationSchedule($time1 = null,$time2 = null,$workschedules = null,$
 
 		}
 			
+
+
 		$date = date('Y-m-d');
 		$date1 = new DateTime($timeIn);
 		$date2 = new DateTime($timeOut);
@@ -186,6 +190,7 @@ function getDurationSchedule($time1 = null,$time2 = null,$workschedules = null,$
 			return $difference;
 
 		}
+	}
 }
 
 

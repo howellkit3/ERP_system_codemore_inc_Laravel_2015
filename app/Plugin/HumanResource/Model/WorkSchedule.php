@@ -96,8 +96,6 @@ class WorkSchedule extends AppModel {
 			$sched = array();
 			$keys = 0;
 
-
-
 			//check if employee had a schedule already		
 
 
@@ -298,6 +296,8 @@ class WorkSchedule extends AppModel {
 			} else {
 
 
+
+
 				if (!empty($data['WorkSchedule']['empId']) && is_array($data['WorkSchedule']['empId'])) {
 
 
@@ -365,18 +365,25 @@ class WorkSchedule extends AppModel {
 				'date(WorkSchedule.day) BETWEEN ? AND ?' => array($checkDate,$checkDate)
 				);
 				//check available schedules
-				$myschedules = $this->find('list',array('conditions' => $conditions,
+				$myschedules = $this->find('first',array('conditions' => $conditions,
 				'fields' => array('id','day')
-
 				));
 
-				if (!in_array($checkDate, $myschedules)) {
-
-				
 				if ( date("w",strtotime($checkDate)) != 0) {
 
 						$sched['WorkSchedule'][$keys] = $data['WorkSchedule'];
-						$sched['WorkSchedule'][$keys]['id'] = !empty($data['WorkSchedule']['id']) ? $data['WorkSchedule']['id'] : '';
+						
+						if (!empty($data['WorkSchedule']['id'])) {
+
+							$sched['WorkSchedule'][$keys]['id'] = $data['WorkSchedule']['id'];
+
+						} else if ($myschedules['WorkSchedule']['id']) {
+
+							$sched['WorkSchedule'][$keys]['id'] =  $myschedules['WorkSchedule']['id'];
+
+						}
+						
+
 
 							$sched['WorkSchedule'][$keys]['day'] = $checkDate;
 
@@ -400,7 +407,7 @@ class WorkSchedule extends AppModel {
 							} 
 
 						}
-				} 
+				
 
 
 				}

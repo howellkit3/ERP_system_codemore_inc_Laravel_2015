@@ -159,15 +159,12 @@ class WorkSchedulesController  extends HumanResourceAppController {
 		$conditions = array();
 		$employees = $this->Employee->getList($conditions);
 
-		$conditions = array();
+		$conditions = array('overtime_id' => NULL);
 		$workshifts = $this->Workshift->getList($conditions);
 		
 		$this->request->data = $this->WorkSchedule->findById($id);
 
 		$departmentList = $this->Department->find('list',array('fields' => array('id','name')));
-
-		pr($departmentList);
-		exit();
 
 
 		$this->set(compact('employees','workshifts'));
@@ -360,6 +357,7 @@ class WorkSchedulesController  extends HumanResourceAppController {
 			// $conditionAttendance = array_merge($conditionAttendance,array('Attendance.in' => null));
 
 			// $this->Attendance->find('all',)
+
 
 			if (!empty($create_schedules)) {
 

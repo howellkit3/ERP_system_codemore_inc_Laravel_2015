@@ -57,7 +57,6 @@ class Overtime extends AppModel {
     	$data[$this->alias]['created_by'] = $auth;
     	$data[$this->alias]['modified_by'] = $auth;
 
-
     	return $data;
 
 

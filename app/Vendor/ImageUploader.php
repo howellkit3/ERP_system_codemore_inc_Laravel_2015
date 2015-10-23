@@ -41,7 +41,8 @@ class ImageUploader {
 				mkdir($folder_path, 0777, true);
 			}
 			//
-			$pathInfo = pathinfo($img_tmp);
+			
+			$pathInfo = pathinfo($name);
 
 			$image_name = $time.date('ymdhis').'.'.$pathInfo['extension'];
             $path = $folder_path.$image_name;
@@ -94,7 +95,6 @@ class ImageUploader {
 				break;
 		}
 
-		pr($image_name);
 		return $image_name;
 		/* cleanup memory */
 		imagedestroy($image);
