@@ -26,9 +26,7 @@ class RequestItem extends AppModel {
 					'conditions' => array('RequestItem.request_uuid' => 'Request.uuid')
 				),
 			),
-
-		
-			
+	
 		));
 
 		$this->contain($model);

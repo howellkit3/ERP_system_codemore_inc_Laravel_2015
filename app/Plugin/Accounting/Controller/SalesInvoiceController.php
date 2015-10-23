@@ -9,10 +9,11 @@ class SalesInvoiceController extends AccountingAppController {
     public $helpers = array('Accounting.PhpExcel');
 
     public function index(){
-        
+
         $userData = $this->Session->read('Auth');
-
-
+        
+        $this->loadModel('Sales.Company');
+        //$this->SalesInvoice->bindInvoice();
 
         $limit = 10;
 
@@ -32,9 +33,9 @@ class SalesInvoiceController extends AccountingAppController {
         );
 
         $invoiceData = $this->paginate('SalesInvoice');
-
-
-
+        //pr($invoiceData);exit();
+        $companyName = $this->Company->find('list',array('fields' => array('id','company_name')));
+        
         // $invoiceData = $this->SalesInvoice->find('all', array(
         //                                             'fields' => array(
         //                                                 'id','sales_invoice_no',
@@ -63,7 +64,7 @@ class SalesInvoiceController extends AccountingAppController {
             $noPermissionPay = ' ';
         }
 
-        $this->set(compact('invoiceData','noPermissionReciv','noPermissionPay'));
+        $this->set(compact('invoiceData','noPermissionReciv','noPermissionPay','companyName'));
 
     }
 
@@ -142,7 +143,7 @@ class SalesInvoiceController extends AccountingAppController {
         Cache::write('currencyData', $currencyData);
 
         $this->Company->bind('Address');
-
+        //$this->SalesInvoice->bindInvoice();
         $invoiceData = $this->SalesInvoice->find('first', array(
                                             'conditions' => array('SalesInvoice.id' => $invoiceId
                                             )));
@@ -163,7 +164,7 @@ class SalesInvoiceController extends AccountingAppController {
 
             $drData = " ";
         }
-
+        
         $conditions = array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']);
         $conditions = array_merge($conditions,array('ClientOrder.company_id' => $drData['Delivery']['company_id']));
         $clientData = $this->ClientOrder->find('first', array(
@@ -173,7 +174,7 @@ class SalesInvoiceController extends AccountingAppController {
         $companyData = $this->Company->find('first', array(
                                             'conditions' => array('Company.id' => $drData['Delivery']['company_id']
                                             )));
-
+       
         $noPermissionPay = "";
 
         $noPermissionReciv = "";
