@@ -213,7 +213,7 @@ $('body').on('change','.checkEx',function(){
     if($(this).is(":checked")) {
         var checkboxtext =  $('.checkEx').next('label').text();
         $(this).parents('.form-horizontal').find('.checkEx').next('label').text('Check to disable VAT Price');
-        $(this).parents('.form-horizontal').find(".vatEx").prop('readonly', true);
+        //$(this).parents('.form-horizontal').find(".vatEx").prop('readonly', true);
         $(this).parents('.form-horizontal').find(".vatIn").prop('readonly', false);
         $(this).parents('.form-horizontal').find('.vatEx').val("");
         $(this).parents('.form-horizontal').find('.vatIn').val("");
@@ -221,7 +221,7 @@ $('body').on('change','.checkEx',function(){
   
     }else{
         $(this).parents('.form-horizontal').find('.checkEx').next('label').text('Check to enable VAT Price');
-        $(this).parents('.form-horizontal').find(".vatEx").prop('readonly', false);
+        //$(this).parents('.form-horizontal').find(".vatEx").prop('readonly', false);
         $(this).parents('.form-horizontal').find(".vatIn").prop('readonly', true);
         $(this).parents('.form-horizontal').find('.vatIn').val("");
         $(this).parents('.form-horizontal').find('.vatEx').val("");
