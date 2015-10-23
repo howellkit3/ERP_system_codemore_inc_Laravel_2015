@@ -41,8 +41,10 @@ class AttendancesController  extends HumanResourceAppController {
 
 		$date2 = date('Y-m-d', strtotime($date . ' +1 day'));
 		
-		$conditions = 	array('date(Attendance.date) BETWEEN ? AND ?' => array($date,$date2));
+		//$conditions = 	array('date(Attendance.date) BETWEEN ? AND ?' => array($date,$date2));
 		
+		$conditions = array();
+
 		if (!empty($query['data'])) {
 
 			$conditions = array();
@@ -65,7 +67,7 @@ class AttendancesController  extends HumanResourceAppController {
   						'date(Attendance.date) BETWEEN ? AND ?' => array($date1,$date2), 
   			));
 
-			//$date = $query['data']['date'];
+			$date = $query['data']['date'];
 		}
 	
 		// $conditions = array(
@@ -105,35 +107,43 @@ class AttendancesController  extends HumanResourceAppController {
 		//$this->Employee->virtualFields['totalItem'] = 'COUNT(`OrderDetail`.`order_id`)';
 		//$conditions = array();
 
+		$conditions = array_merge($conditions,array(
+					'Attendance.employee_id' => 4
+			));
+
 		$params =  array(
 	            'conditions' => $conditions,
 	            'limit' => $limit,
-	            // 'fields' => array(
-	            // 	'id',
-	            // 	'status',
-	            // 	'created',
-	            // 	'Employee.first_name',
-	            // 	'Employee.last_name',
-	            // 	'Employee.middle_name',
-	            // 	'Employee.code',
-	            // 	'Attendance.in',
-	            // 	'Attendance.out',
-	            // 	'Attendance.type',
-	            // 	'Attendance.schedule_id',
-	            // 	'Attendance.notes',
-	            // 	'Attendance.date',
-	            // 	'MySchedule.day',
-	            // 	'MyWorkshift.from',
-	            // 	'MyWorkshift.to',
-	            // 	//'MyWorkshift.overtime_id',
-	            // 	'MyWorkShiftBreak.breaktime_id',
-	            // 	// /'MyWorkshift.ovetime_id',
-	            // 	'MyBreakTime.from',
-	            // 	'MyBreakTime.to'
-
-	            // 	),
-	            'group' => array('Attendance.date'),
-	            'order' => 'Attendance.date DESC',
+	            'fields' => array(
+	            	'id',
+	            	'status',
+	            	'created',
+	            	'Employee.first_name',
+	            	'Employee.last_name',
+	            	'Employee.middle_name',
+	            	'Employee.code',
+	            	'Attendance.in',
+	            	'Attendance.out',
+	            	'Attendance.type',
+	            	'Attendance.schedule_id',
+	            	'Attendance.notes',
+	            	'Attendance.date',
+					'Attendance.overtime_id',
+	            	'MySchedule.day',
+	            	'MyWorkshift.from',
+	            	'MyWorkshift.to',
+	            	//'MyWorkshift.overtime_id',
+	            	'MyWorkShiftBreak.breaktime_id',
+	            	// /'MyWorkshift.ovetime_id',
+	            	'MyBreakTime.from',
+	            	'MyBreakTime.to',
+	            	'Overtime.from',
+	            	'Overtime.to',
+	            	'Overtime.employee_ids',
+	            	'Overtime.status'
+					),
+	           'group' => array('Attendance.date'),
+	            'order' => 'Attendance.date ASC',
 	    );
 
 		$this->paginate = $params;

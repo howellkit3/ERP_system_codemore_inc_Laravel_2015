@@ -56,8 +56,7 @@ class OvertimeLimit extends AppModel {
 					
 				}
 
-		}
-
+		
 		$index = 0;
 		$saveData = array();
 		end($limit);
@@ -104,6 +103,8 @@ class OvertimeLimit extends AppModel {
 			}
 
 			return $this->saveAll($saveData);
+			
+		}
 			// $this->save($data);
 		}
 	}

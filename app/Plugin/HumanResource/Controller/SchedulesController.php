@@ -126,7 +126,8 @@ class SchedulesController  extends HumanResourceAppController {
 
 		//$limit = 10;
         $employee = array_flip( $employeeList);
-		$conditions = array('WorkSchedule.model' => 'Employee','WorkSchedule.foreign_key' => current($employee) );
+
+		$conditions = array('WorkSchedule.model' => 'Employee','WorkSchedule.foreign_key' => current($employee) ,'WorkSchedule.overtime_id' => NULL);
 
 		$params =  array(
 	            'conditions' => $conditions,

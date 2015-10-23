@@ -242,6 +242,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 								                        </td>
 								                        <td class="text-center" > 
 								                           	<?php 
+
 								                           		if (!empty($schedule['Attendance']['overtime_id'])) {
 								                           			if ($schedule['Overtime']['status'] == 'approved') {
 								                           				$from = $schedule['Overtime']['from'];
@@ -275,7 +276,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 
 								                         		 } else {
 
-								                           			 echo $this->CustomTime->getDurationSchedule($schedule['Attendance']['in'],$schedule['Attendance']['out'],$schedule['MyWorkshift'],$schedule['MyBreakTime']);
+																	 echo $this->CustomTime->getDurationSchedule($schedule['Attendance']['in'],$schedule['Attendance']['out'],$schedule['MyWorkshift'],$schedule['MyBreakTime']);
 								                          	 }
 								                           ?> 
 								                        </td>
