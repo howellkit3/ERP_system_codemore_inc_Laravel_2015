@@ -139,7 +139,7 @@ class AttendancesController  extends HumanResourceAppController {
 	            	'Overtime.status'
 					),
 	           'group' => array('Attendance.date'),
-	            'order' => 'Attendance.date ASC',
+	            'order' => 'Attendance.date DESC',
 	    );
 
 		$this->paginate = $params;
