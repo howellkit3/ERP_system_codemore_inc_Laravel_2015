@@ -348,6 +348,9 @@ class TicketingSystemsController extends TicketAppController {
 
                         $lastID = $this->$model->id;
 
+                        $set = $this->$model->read(null,$lastID);
+
+
                         $this->redirect(array(
                             'controller' => 'ticketing_systems', 
                             'action' => 'print_process',
@@ -355,7 +358,9 @@ class TicketingSystemsController extends TicketAppController {
                             $data[$model]['product_id'],
                             $data[$model]['job_ticket_id'],
                             $model,
-                            $lastID));
+                            $lastID,
+                            $data[$model]['ticket_id']    
+                            ));
                        
                     }
                 } else {
@@ -753,15 +758,17 @@ class TicketingSystemsController extends TicketAppController {
         $modelData = array();
 
 
-        if (!empty($model) && $model != 0) {
+        if ($model != '0') {
+
               $this->loadModel('Ticket.'.$model);
 
 
             $modelData = $this->$model->findById( $lastId );
+
+
         }
 
-
-
+  
         $this->ClientOrder->bind(array('ClientOrderDeliverySchedule'));
 
        //$delData = $this->ClientOrder->find('first',array('ClientOrder.id' => $clientOrderId));
