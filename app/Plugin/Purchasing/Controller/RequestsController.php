@@ -536,8 +536,6 @@ class RequestsController extends PurchasingAppController {
 
     		$this->request->data['PurchaseOrder']['delivery_date'] = $this->request->data['PurchaseOrder']['deliveryDate'];
 
-    		//pr($this->request->data); exit;
-
     		if(!empty($this->request->data['RequestItemIdHolder'])){
     		
 	    		foreach ($this->request->data['RequestItemIdHolder'] as $key => $value) {

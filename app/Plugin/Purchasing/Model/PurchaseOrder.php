@@ -129,5 +129,4 @@ class PurchaseOrder extends AppModel {
 		));
 		$this->recursive = 1;
 	}
-
 }
