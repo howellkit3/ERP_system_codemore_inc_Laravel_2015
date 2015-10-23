@@ -52,7 +52,29 @@
                                                 </div>
                                             </div>
 
+                                     <div class="form-group">
+                                        <label for="inputPassword1" class="col-lg-2 control-label"> <span style="color:red">*</span> Item Group </label>
+                                        <div class="col-lg-9"> 
+                                                   <?php
+                                                    
+                                                    $itemGroups = array(
+                                                        'CorrugatedPaper' => 'Corrugated Paper',
+                                                        'GeneralItem' => 'General Item',
+                                                        'Substrate' => 'Substrate'
+                                                    );
 
+                                                    echo $this->Form->input('item_group', array(
+                                                                                'options' => $itemGroups , 
+                                                                                'alt' => 'type',
+                                                                                'label' => false,
+                                                                                'class' => 'form-control required',
+                                                                                'empty' => '--- Select Item Group---',
+                                                                                'data-alt' => 'supplier_others'
+                                                                        ));
+                                                    ?>
+                                                    <span class="help-block" style= "color:white"> &nbsp </span>
+                                        </div>
+                                    </div>
 						            	<div class="form-group">
 						            	    <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span> Category / Department </label>
 							                <div class="col-lg-9"> 
@@ -106,7 +128,8 @@
 								                           							'alt' => 'type',
 															    					'label' => false,
 															   						'class' => 'form-control',
-															   						'empty' => '--- Select Category ---'
+															   						'empty' => '--- Select Category ---',
+
 																			));
 						                        ?>
 													<span class="help-block" style= "color:white"> &nbsp </span>
@@ -184,12 +207,11 @@
                 </div>
                     
 
-                <div class="row">
+               <div class="row">
                     <div class="multi-field-wrapper clearfix">
                         <div class="multi-fields clearfix">
                             <div class="multi-field clearfix">
-                                <div class="col-xs-2 col-md-8"></div>
-                                <div class="col-xs-2 col-md-2 2">
+                                <div class="col-xs-2 col-md-4">
                                     <?php 
                                         echo $this->Form->submit('Submit', array('class' => 'btn btn-success pull-right',  'title' => 'Click here to add the customer'));
                                     ?>
@@ -204,6 +226,7 @@
                         </div>
                     </div>
                 </div>
+
 
                 <?php echo $this->Form->end(); ?>
                 <script>

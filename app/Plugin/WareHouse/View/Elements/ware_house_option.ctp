@@ -52,6 +52,12 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
            
         </li>
 
+          <li class="dropdown hidden-xs active">
+           <?php $page =($active_page == 'consumables' && $active_action == 'index') ? 'active tab' : '' ?>
+            <?php echo $this->Html->link("<span class='count'>Raw Materials</span>", array('controller' => 'raw_materials', 'action' => 'index?'.rand(1000,9999).'='.date("is")),array('escape' => false,'class' => 'btn '.$page )); ?>
+           
+        </li>
+
         <?php } ?>
 
          <!-- <li class="dropdown hidden-xs active">

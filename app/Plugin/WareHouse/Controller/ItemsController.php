@@ -12,7 +12,7 @@ class ItemsController extends WareHouseAppController {
 
 		$this->loadModel('WareHouse.Department');
 
-		$itemsCategory = $this->ItemCategory->find('list',array('fields' => array('id','name') ,'order' => array('ItemCategory.name ASC')));
+		$itemsCategory = $this->ItemCategory->find('list',array('conditions' => array('itemCategory.id NOT' => 2),'fields' => array('id','name') ,'order' => array('ItemCategory.name ASC')));
 
 		// $departments = $this->Department->find('list',array('fields' => array('id','name') ,'order' => array('Department.name ASC')));
 
@@ -23,7 +23,7 @@ class ItemsController extends WareHouseAppController {
 
 		$limit = 10;
 
-		$conditions = array();
+		$conditions = array('Item.category_type_id NOT' => 2 );
 
 		$params =  array(
 	            'conditions' => $conditions,
@@ -117,7 +117,7 @@ class ItemsController extends WareHouseAppController {
 
 		$categoryDataDropList = $this->ItemCategoryHolder->find('list',  array('order' => 'ItemCategoryHolder.name ASC'));
 
-		$itemsCategory = $this->ItemCategory->find('list',array('fields' => array('id','name') ,'order' => array('ItemCategory.name ASC')));
+		$itemsCategory = $this->ItemCategory->find('list',array('conditions' => array('itemCategory.id NOT' => 2),'fields' => array('id','name') ,'order' => array('ItemCategory.name ASC')));
 
 		$departments = $this->Department->find('list',array('fields' => array('id','name') ,'order' => array('Department.name ASC')));
 
@@ -179,7 +179,7 @@ class ItemsController extends WareHouseAppController {
 
 		//$categoryDataDropList = $this->ItemCategoryHolder->find('list',  array('order' => 'ItemCategoryHolder.name ASC'));
 
-		$itemsCategory = $this->ItemCategory->find('list',array('fields' => array('id','name') ,'order' => array('ItemCategory.name ASC')));
+		$itemsCategory = $this->ItemCategory->find('list',array('conditions' => array('itemCategory.id NOT' => 2),'fields' => array('id','name') ,'order' => array('ItemCategory.name ASC')));
 
 		$categoryDataDropList = $this->Department->find('list',array('fields' => array('id','name') ,'order' => array('Department.name ASC')));
 
