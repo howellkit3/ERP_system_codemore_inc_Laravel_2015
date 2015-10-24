@@ -166,7 +166,7 @@ class DeliveriesController extends DeliveryAppController {
 
     }
 
-    public function view($deliveryScheduleId = null, $quotationId = null, $clientsOrderUuid = null) {
+    public function view($deliveryScheduleId = null, $quotationId = null, $clientsOrderUuid = null, $clientUuid = null) {
 
         $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
@@ -207,11 +207,11 @@ class DeliveriesController extends DeliveryAppController {
         //                             ));
 
 
-
+        
         $this->Delivery->bindDeliveryView();
         $deliveryEdit = $this->Delivery->find('all', array(
                                          'conditions' => array(
-                                        'Delivery.schedule_uuid' => $clientsOrderUuid
+                                        'Delivery.schedule_uuid' => $clientsOrderUuid , 'Delivery.clients_order_id' => $clientUuid
                                         ),
                                         'order' => 'Delivery.id DESC'
                                     ));
