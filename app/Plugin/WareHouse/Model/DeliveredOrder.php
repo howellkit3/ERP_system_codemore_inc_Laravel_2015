@@ -46,8 +46,7 @@ class DeliveredOrder extends AppModel {
 
 
 	public function bind($model = array('Group')){
-
-
+		
 		$this->bindModel(array(
 			'hasMany' => array(
 				'ReceivedItem' => array(

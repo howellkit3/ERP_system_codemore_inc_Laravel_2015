@@ -13,21 +13,9 @@ class ReceivedOrder extends AppModel {
     
   	public $name = 'ReceivedOrder';
 
- //  	public $validate = array(
 
-	// 	'dpurchase_order_id' => array(
-			
-	// 		'unique' => array(
-	// 			'rule'    => 'isUnique',
-	// 		),
-
-	// 	)
-		
-	// );
 
 	public function saveReceivedOrders($data, $auth, $order_id){
-
-
 
 		$month = date("m"); 
 	    $year = date("y");
@@ -55,16 +43,13 @@ class ReceivedOrder extends AppModel {
 			$data['status_id'] = 14;
 		}
 
-		//pr($data); exit;
-
-		
 		$this->save($data);
 
 		return $this->id;
 
 	}
 
-	public function bind($model = array('PurchaseOrder', 'ReceivedItem')){
+	public function bind($model = array('PurchaseOrder', 'ReceivedItem', 'DeliveredOrder')){
 
 		$this->bindModel(array(
 			'belongsTo' => array(
@@ -73,10 +58,17 @@ class ReceivedOrder extends AppModel {
 					'foreignKey' => 'purchase_order_id',
 					'dependent' => true
 				),
+
 			),
 			'hasMany' => array(
 				'ReceivedItem' => array(
 					'className' => 'WareHouse.ReceivedItem',
+					'foreignKey' => 'received_orders_id',
+					'dependent' => true
+				),
+
+				'DeliveredOrder' => array(
+					'className' => 'WareHouse.DeliveredOrder',
 					'foreignKey' => 'received_orders_id',
 					'dependent' => true
 				),

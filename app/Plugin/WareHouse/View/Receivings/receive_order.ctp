@@ -203,6 +203,15 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                             ?>
 
                                             <?php
+                                                        echo $this->Form->input('requestPurchasingItem.'.$key.'.unit_price', array(                    'type' => 'hidden',
+                                                                                'class' => 'form-control',
+                                                                                'value' => $requestDataList[$itemHolder]['unit_price'],
+                                                                                'label' => false,
+                                                                                
+                                                                                ));
+                                            ?>
+
+                                            <?php
                                                         echo $this->Form->input('requestPurchasingItem.'.$key.'.original_quantity', array(        
                                                                                 'type' => 'hidden',
                                                                                 'class' => 'form-control limiter',

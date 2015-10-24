@@ -93,7 +93,9 @@ class RequestsController extends PurchasingAppController {
 
 		$limit = 10;
 
-		$conditions = array('Request.status >' => 0);
+		//$conditions = array('Request.status >' => 0);
+
+		$conditions = "";
 
 		$params =  array(
 	            'conditions' => $conditions,
@@ -411,7 +413,7 @@ class RequestsController extends PurchasingAppController {
 
         $this->redirect( array(
                  'controller' => 'requests', 
-                 'action' => 'request_list'
+                 'action' => 'view', $requestId
 
          ));
 
