@@ -85,9 +85,9 @@
                 ->setCellValue('I12', number_format($unitPrice,2))
                 ->setCellValue('K12', number_format($totalQty,2))
                 ->setCellValue('D26', 'DR#00'.$drData['Delivery']['dr_uuid'])
-                ->setCellValue('K30', number_format($vatSale))
-                ->setCellValue('K31', number_format($vatExem))
-                ->setCellValue('K32', number_format($vat12))
+                ->setCellValue('K30', number_format($vatSale,4))
+                ->setCellValue('K31', number_format($vatExem,4))
+                ->setCellValue('K32', number_format($vat12,4))
                 ->setCellValue('K33', $currency.' '.$totalAmount);
       
     //prepare download
