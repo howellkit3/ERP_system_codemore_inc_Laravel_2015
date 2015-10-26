@@ -404,7 +404,6 @@ jQuery("body").ready(function(){
     }else{
 
 
-
     var flag = 1;
 
         $.ajax({
@@ -558,8 +557,6 @@ jQuery("body").ready(function(){
         }
     
     });
-
-
 
 </script>
 

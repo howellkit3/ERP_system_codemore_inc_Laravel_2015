@@ -25,8 +25,9 @@ class TicketingSystemsController extends TicketAppController {
 
         $this->loadModel('Sales.Company');
 
-        $limit = 10;
+        $limit = 20;
 
+        //$conditions = array('JobTicket.po_number' => '15-1364');
         $conditions = array();
 
         $this->JobTicket->bindTicket();

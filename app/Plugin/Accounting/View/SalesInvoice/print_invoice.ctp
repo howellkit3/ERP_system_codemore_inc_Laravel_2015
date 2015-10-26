@@ -82,12 +82,12 @@
                 ->setCellValue('B12', $clientData['ClientOrder']['po_number'])
                 ->setCellValue('F12', ucfirst($clientData['Product']['name']))
                 ->setCellValue('D12', number_format($drData['DeliveryDetail']['quantity']))
-                ->setCellValue('I12', number_format($unitPrice,4))
-                ->setCellValue('K12', number_format($totalQty,4))
-                ->setCellValue('D26', 'DR#'.$drData['Delivery']['dr_uuid'])
-                ->setCellValue('K30', $vatSale)
-                ->setCellValue('K31', $vatExem)
-                ->setCellValue('K32', $vat12)
+                ->setCellValue('I12', number_format($unitPrice,2))
+                ->setCellValue('K12', number_format($totalQty,2))
+                ->setCellValue('D26', 'DR#00'.$drData['Delivery']['dr_uuid'])
+                ->setCellValue('K30', number_format($vatSale,4))
+                ->setCellValue('K31', number_format($vatExem,4))
+                ->setCellValue('K32', number_format($vat12,4))
                 ->setCellValue('K33', $currency.' '.$totalAmount);
       
     //prepare download

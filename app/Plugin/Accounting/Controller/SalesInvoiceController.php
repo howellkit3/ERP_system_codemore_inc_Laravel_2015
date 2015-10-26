@@ -1235,8 +1235,24 @@ class SalesInvoiceController extends AccountingAppController {
 
         $this->ReceivedItem->bind('DeliveredOrder', 'PurchaseOrder');
 
-        $receivedItemData = $this->ReceivedItem->find('all', array(
-                'order' => array('ReceivedItem.id DESC')));
+        // $receivedItemData = $this->ReceivedItem->find('all', array(
+        //         'order' => array('ReceivedItem.id DESC')));
+
+        $limit = 10;
+
+        $conditions = " ";
+
+        $params =  array(
+                'conditions' => $conditions,
+                'limit' => $limit,
+                //'fields' => array('id', 'status','created'),
+                'order' => 'ReceivedItem.id DESC',
+        );
+
+        $this->paginate = $params;
+
+        $receivedItemData = $this->paginate('ReceivedItem');
+
 
         foreach ($receivedItemData as $key => $value) {
 
@@ -1245,7 +1261,7 @@ class SalesInvoiceController extends AccountingAppController {
                 $this->loadModel('GeneralItem');
 
                 $itemData = $this->GeneralItem->find('list', array('fields' => array('id', 'name')));
-
+            
                 $receivedItemData[$key]['DeliveredOrder']['item_name'] = $itemData[$value['ReceivedItem']['foreign_key']];
 
             }
