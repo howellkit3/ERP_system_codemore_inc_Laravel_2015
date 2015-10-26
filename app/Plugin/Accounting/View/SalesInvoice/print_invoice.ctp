@@ -36,12 +36,12 @@
 		$totalVat = $totalQty * .12;
 		$fullVat = $totalQty + $totalVat;
 		$currency = $currencyData[$clientData['QuotationItemDetail']['unit_price_currency_id']];
-		$totalAmount = number_format($fullVat,4);
+		$totalAmount = number_format($fullVat,2);
 
 	}else{
 
 		$currency = $currencyData[$clientData['QuotationItemDetail']['unit_price_currency_id']];
-		$totalAmount = number_format($totalQty,4);
+		$totalAmount = number_format($totalQty,2);
 
 	}
 
@@ -68,8 +68,6 @@
             }   
         }
 
-        
-    
     }
  
     $objTpl->setActiveSheetIndex(0)
@@ -83,7 +81,7 @@
                 ->setCellValue('F12', ucfirst($clientData['Product']['name']))
                 ->setCellValue('D12', number_format($drData['DeliveryDetail']['quantity']))
                 ->setCellValue('I12', number_format($unitPrice,2))
-                ->setCellValue('K12', number_format($totalQty,2))
+                ->setCellValue('K12', $totalQty,2)
                 ->setCellValue('D26', 'DR#00'.$drData['Delivery']['dr_uuid'])
                 ->setCellValue('K30', $vatSale)
                 ->setCellValue('K31', $vatExem)

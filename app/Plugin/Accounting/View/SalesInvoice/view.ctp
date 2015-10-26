@@ -169,7 +169,7 @@
 										<?php 
 											if($clientData['QuotationItemDetail']['vat_status'] == 'Vat Exempt'){
 												
-												echo number_format($totalQty,4);
+												echo number_format($totalQty,4 );
 												//echo number_format((float)$totalQty, 4, '.', '');
 											}else{
 												echo "-";
@@ -210,16 +210,15 @@
 												$totalVat = $totalQty * .12;
 												$fullVat = $totalQty + $totalVat;
 												echo $currencyData[$clientData['QuotationItemDetail']['unit_price_currency_id']] . " ";
-												echo number_format($fullVat,4);
+												echo number_format($fullVat,2);
 												
 											}else{
 												echo $currencyData[$clientData['QuotationItemDetail']['unit_price_currency_id']] . " ";
-												echo number_format($totalQty,4);
+												echo number_format($totalQty,2);
 											}
 										?>
 									</td>
 								</tr>
-								
 							</thead>
 						</table>
 					</div>
