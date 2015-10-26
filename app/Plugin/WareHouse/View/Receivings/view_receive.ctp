@@ -267,7 +267,14 @@
                             </td>
                             <td>
                                 <span class="name">
-                                <?php echo $requestDataList[$itemHolder]['name'] ?>
+                                <?php echo $requestDataList[$itemHolder]['name'] ?> 
+
+                                <?php if(empty($requestDataList[$itemHolder]['unit_price'])){ ?>
+
+                                <a data-toggle="modal" href="#myModalUnitPrice<?php echo $requestDataList[$itemHolder]['id']?>" class="btn btn-primary mrg-b-lg pull-right addSchedButton" val = "<?php echo $requestDataList[$itemHolder]['id']?>"><i class="fa fa-plus-circle fa-lg tobeTrigger"></i> Add Unit Price</a>
+
+                                <?php } ?>
+
                                 </span>
                                 <span class="price">
                                 <i class="fa fa-certificate"></i>&nbsp; <?php
@@ -289,7 +296,60 @@
                                 </span>
                                 
                             </td>
+
+
                         </tr>
+
+                        <div class="modal fade" id="myModalUnitPrice<?php echo $requestDataList[$itemHolder]['id']?>" role="dialog"  >
+                            <div class="modal-dialog">
+                                <div class="modal-content margintop">
+
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h4 class="modal-title">In Record</h4>
+                                    </div> 
+
+                                    <div class="modal-body">
+
+                                        <?php 
+                                                $id = $requestDataList[$itemHolder]['id'];
+
+                                                $deliveredId = $receivedItemData[0]['DeliveredOrder']['dr_num'];
+
+                                                $uuid = $requestDataList[$itemHolder]['uuid'];
+
+                                            echo $this->Form->create('ReceivedItem',array(
+                                                'url'=>(array('controller' => 'receivings','action' => 'add_unit_price', $id, $deliveredDataID, $uuid)),'class' => 'form-horizontal')); 
+                                        ?>
+
+                                            <div class="form-group" id="existing_items">
+                                                <label class="col-lg-2 control-label">Unit Price</label>
+                                                <div class="col-lg-9">
+                                                    <?php 
+                                                        echo $this->Form->input('ReceivedItem.unit_price', array(
+                                                            'empty' => 'None',
+                                                            'required' => 'required',
+                                                            'type' => 'number', 
+                                                            'class' => 'form-control item_type editable limitQuantity',
+                                                            'label' => false
+                                                           
+                                                        ));
+                                                    ?>
+                                                </div>
+                                            </div>
+                                            <br><br>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i> Submit</button>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                                            </div>
+                                        <?php echo $this->Form->end();  ?> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
 
                     <?php  endforeach;  ?>
                     
@@ -301,84 +361,88 @@
 
 </div>
 
+
 <?php } ?>
 
 <div class="modal fade" id="myModalInRecord<?php echo $receivedItemData[0]['DeliveredOrder']['id'] ?>" role="dialog" >
-                <div class="modal-dialog">
-                    <div class="modal-content margintop">
+    <div class="modal-dialog">
+        <div class="modal-content margintop">
 
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title">In Record</h4>
-                        </div> 
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">In Record</h4>
+            </div> 
 
-                        <div class="modal-body">
+            <div class="modal-body">
 
-                            <?php  $id = $receivedItemData[0]['ReceivedOrder']['id'];
+                <?php  $id = $receivedItemData[0]['ReceivedOrder']['id'];
 
-                                 $DeliveredOrderId = $receivedItemData[0]['DeliveredOrder']['id'];
+                     $DeliveredOrderId = $receivedItemData[0]['DeliveredOrder']['id'];
 
 
-                                echo $this->Form->create('InRecord',array(
-                                    'url'=>(array('controller' => 'receivings','action' => 'in_record', $id, $DeliveredOrderId,$receivedItemData[0]['DeliveredOrder']['purchase_orders_id'],$receivedItemData[0]['PurchaseOrder']['supplier_id'] )),'class' => 'form-horizontal')); 
+                    echo $this->Form->create('InRecord',array(
+                        'url'=>(array('controller' => 'receivings','action' => 'in_record', $id, $DeliveredOrderId,$receivedItemData[0]['DeliveredOrder']['purchase_orders_id'],$receivedItemData[0]['PurchaseOrder']['supplier_id'] )),'class' => 'form-horizontal')); 
+                ?>
+
+                    <div class="form-group" id="existing_items">
+                        <label class="col-lg-2 control-label"><span style="color:red">*</span>Store Keeper</label>
+                        <div class="col-lg-9">
+                            <?php  
+                                echo $this->Form->input('InRecord.storekeeper', array(
+                                    'class' => 'form-control item_type editable required',
+                                    'label' => false,
+                                    'type' => 'select',
+                                    'options' => array($userNameList),
+                                    'required' => 'required',
+                                   
+                                    ));
                             ?>
 
-                                <div class="form-group" id="existing_items">
-                                    <label class="col-lg-2 control-label"><span style="color:red">*</span>Store Keeper</label>
-                                    <div class="col-lg-9">
-                                        <?php  
-                                            echo $this->Form->input('InRecord.storekeeper', array(
-                                                'class' => 'form-control item_type editable required',
-                                                'label' => false,
-                                                'type' => 'select',
-                                                'options' => array($userNameList),
-                                                'required' => 'required',
-                                               
-                                                ));
-                                        ?>
-
-                                    </div>
-                                </div>
-
-                                <div class="form-group" id="existing_items">
-                                    <label class="col-lg-2 control-label"><span style="color:red">*</span>Location</label>
-                                    <div class="col-lg-9">
-                                        <?php 
-                                            echo $this->Form->input('InRecord.location', array(
-                                                'class' => 'form-control item_type editable required',
-                                                'label' => false,
-                                                'type' => 'select',
-                                                'options' => array($areaList),
-                                                'required' => 'required',
-                                               
-                                                ));
-                                        ?>
-
-                                    </div>
-                                </div>
-
-                                <div class="form-group" id="existing_items">
-                                    <label class="col-lg-2 control-label">Remarks</label>
-                                    <div class="col-lg-9">
-                                        <?php 
-                                            echo $this->Form->textarea('InRecord.remarks', array(
-                                                'empty' => 'None',
-                                                'required' => 'required',
-                                                'class' => 'form-control item_type editable limitQuantity',
-                                                'label' => false
-                                               
-                                            ));
-                                        ?>
-                                    </div>
-                                </div>
-
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i> Submit</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-                                </div>
-                            <?php echo $this->Form->end();  ?> 
                         </div>
                     </div>
-                </div>
+
+                    <div class="form-group" id="existing_items">
+                        <label class="col-lg-2 control-label"><span style="color:red">*</span>Location</label>
+                        <div class="col-lg-9">
+                            <?php 
+                                echo $this->Form->input('InRecord.location', array(
+                                    'class' => 'form-control item_type editable required',
+                                    'label' => false,
+                                    'type' => 'select',
+                                    'options' => array($areaList),
+                                    'required' => 'required',
+                                   
+                                    ));
+                            ?>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="existing_items">
+                        <label class="col-lg-2 control-label">Remarks</label>
+                        <div class="col-lg-9">
+                            <?php 
+                                echo $this->Form->textarea('InRecord.remarks', array(
+                                    'empty' => 'None',
+                                    'required' => 'required',
+                                    'class' => 'form-control item_type editable limitQuantity',
+                                    'label' => false
+                                   
+                                ));
+                            ?>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i> Submit</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                    </div>
+                <?php echo $this->Form->end();  ?> 
             </div>
+        </div>
+    </div>
+</div>
+
+
+
