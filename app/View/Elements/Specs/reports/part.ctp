@@ -22,13 +22,18 @@
         <?php echo $formatDataSpecs['ProductSpecificationPart']['size1']?> x
         <?php echo $formatDataSpecs['ProductSpecificationPart']['size2']?> >>
         <?php echo $outs ?> Outs >>
-       <!--  <?php echo $formatDataSpecs['ProductSpecificationPart']['paper_quantity'] ?>  -->
-       <?php $quantityOut = $specs['ProductSpecification']['quantity'] / $outs; ?>
-         <?php echo round($quantityOut) ?> 
-        <?php if(!empty($formatDataSpecs['ProductSpecificationPart']['allowance'])){ ?>
-            + <?php echo $formatDataSpecs['ProductSpecificationPart']['allowance'] ?>
+       <?php echo $formatDataSpecs['ProductSpecificationPart']['paper_quantity'] ?>
+       <?php //$quantityOut = $specs['ProductSpecification']['quantity'] / $outs; ?>
+         <?php //echo round($quantityOut) ?> 
+        +
+        <?php 
 
-            <?php } ?>
+            if(!empty($formatDataSpecs['ProductSpecificationPart']['allowance'])){ 
+                echo $formatDataSpecs['ProductSpecificationPart']['allowance'];
+            } else{
+                echo $specs['ProductSpecification']['stock'];
+            }
+        ?>
         
         <?php echo !empty($unitData[$formatDataSpecs['ProductSpecificationPart']['quantity_unit_id']]) ? $unitData[$formatDataSpecs['ProductSpecificationPart']['quantity_unit_id']] : '' ?>
     </td>
