@@ -52,6 +52,7 @@ class DeliveriesController extends DeliveryAppController {
             'fields' => array(
                 'ClientOrder.uuid',
                 'ClientOrder.po_number',
+                'ClientOrder.id',
                 'Company.company_name',  
                 'Product.name', 
                 'ClientOrderDeliverySchedule.quantity', 
@@ -64,6 +65,7 @@ class DeliveriesController extends DeliveryAppController {
         );
 
         $clientsOrder = $this->paginate('ClientOrder');
+
 
         if ($userData['User']['role_id'] == 3 || $userData['User']['role_id'] == 6 || $userData['User']['role_id'] == 9) {
 

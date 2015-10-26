@@ -48,7 +48,7 @@
 
                                                   $IdClientsOrder = $orderListHelper[$value['Delivery']['clients_order_id']];
                                                                
-                                                    if($value['Delivery']['schedule_uuid'] == $orderDeliveryList[$uuidClients]  ){  
+                                                    if($value['Delivery']['schedule_uuid'] == $orderDeliveryList[$uuidClients] && $value['Delivery']['clients_order_id'] == $scheduleDataList['ClientOrder']['uuid']){  
 
                                                       if($value['DeliveryDetail']['status'] != 5){
                                                    
@@ -60,7 +60,7 @@
                                                                                                     
                                                   }
                                             
-                                            echo($scheduleDataList['ClientOrderDeliverySchedule']['quantity'] - array_sum($arrholder));?> 
+                                             echo($scheduleDataList['ClientOrderDeliverySchedule']['quantity'] - array_sum($arrholder));?> 
 
                                             <br>
 
