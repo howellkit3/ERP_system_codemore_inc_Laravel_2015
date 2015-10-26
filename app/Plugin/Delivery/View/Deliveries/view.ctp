@@ -429,30 +429,7 @@ $totalremaining = 0;
                                             <i class="fa fa-square fa-stack-2x "></i>
                                             <i class="fa  fa-mail-reply fa-stack-1x fa-inverse "></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Delivered </font></span></a>
 
-                                            
-                                            <?php //$deliveryScheduleId = null, $quotationId = null, $clientsOrderUuid = null, $clientUuid = null)
-
-                                              echo $this->Html->link('<span class="fa-stack">
-                                                            <i class="fa fa-square fa-stack-2x"></i>
-                                                            <i class="fa fa-trash fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Delete </font></span>
-                                                            </span> ', array('controller' => 'deliveries', 
-                                                              'action' => 'remove_dr_sched',
-                                                              $deliveryDataList['Delivery']['dr_uuid'],
-                                                              $deliveryScheduleId,
-                                                              $quotationId,
-                                                              $clientsOrderUuid,
-                                                               $clientUuid
-
-                                                              ),
-                                                            array(
-                                                                'label' => false,
-                                                              'class' =>' table-link',
-                                                              'escape' => false,'title'=>'Edit Information',
-                                                              'confirm' => 'Are you sure you want to delete this schedule ? ',
-                                                              'style' => 'margin-left:27px;'
-                                                              ));
-                                            ?>
-
+                                           
                                             <?php 
                                                 // echo $this->Html->link('<span class="fa-stack gatePass">
                                                 //     <i class="fa fa-square fa-stack-2x"></i>
@@ -519,6 +496,31 @@ $totalremaining = 0;
 
 
                                              }?>
+
+                                              
+                                            <?php //$deliveryScheduleId = null, $quotationId = null, $clientsOrderUuid = null, $clientUuid = null)
+
+                                              echo $this->Html->link('<span class="fa-stack">
+                                                            <i class="fa fa-square fa-stack-2x"></i>
+                                                            <i class="fa fa-trash fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Delete </font></span>
+                                                            </span> ', array('controller' => 'deliveries', 
+                                                              'action' => 'remove_dr_sched',
+                                                              $deliveryDataList['Delivery']['dr_uuid'],
+                                                              $deliveryScheduleId,
+                                                              $quotationId,
+                                                              $clientsOrderUuid,
+                                                            $clientUuid
+
+                                                              ),
+                                                            array(
+                                                                'label' => false,
+                                                              'class' =>' table-link',
+                                                              'escape' => false,'title'=>'Edit Information',
+                                                              'confirm' => 'Are you sure you want to delete this schedule ? ',
+                                                              'style' => 'margin-left:27px;'
+                                                              ));
+                                            ?>
+
                                                                     
                                     </td>
                                 </tr>
@@ -538,7 +540,7 @@ $totalremaining = 0;
                                             <?php 
 
                                                 echo $this->Form->create('ClientOrderDeliverySchedule',array(
-                                                    'url'=>(array('controller' => 'deliveries','action' => 'delivery_return',$scheduleInfo['ClientOrderDeliverySchedule']['id'],$scheduleInfo['QuotationDetail']['quotation_id'], $scheduleInfo['ClientOrderDeliverySchedule']['uuid']) ),'class' => 'form-horizontal')); 
+                                                    'url'=>(array('controller' => 'deliveries','action' => 'delivery_return',$scheduleInfo['ClientOrderDeliverySchedule']['id'],$scheduleInfo['QuotationDetail']['quotation_id'], $scheduleInfo['ClientOrderDeliverySchedule']['uuid'],$clientUuid) ),'class' => 'form-horizontal')); 
                                             ?>
 
                                                 <div class="form-group" id="existing_items">
@@ -617,7 +619,16 @@ $totalremaining = 0;
     </div>
 </div>   
 
-<?php echo $this->element('modals'); ?>
+<?php 
+
+     echo $this->element('modals',array(
+        'clientsOrderUuid' => $clientsOrderUuid, 
+        'deliveryScheduleId' => $deliveryScheduleId,
+        'quotationId' => $quotationId,
+        'clientUuid' => $clientUuid
+        ));
+
+ ?>
 
  
 <script>

@@ -17,9 +17,8 @@
                 <div class="modal-body">
                     
                          <?php   
-                         
                         echo $this->Form->create('ClientOrderDeliverySchedule',array(
-                                    'url'=>(array('controller' => 'deliveries','action' => 'add_schedule', $deliveryEdit[0]['Delivery']['id'], $deliveryEdit[0]['DeliveryDetail']['id'],$scheduleInfo['ClientOrderDeliverySchedule']['id'],$quotationId,$clientsOrderUuid)),'class' => 'form-horizontal')); ?>
+                                    'url'=>(array('controller' => 'deliveries','action' => 'add_schedule', $deliveryEdit[0]['Delivery']['id'], $deliveryEdit[0]['DeliveryDetail']['id'],$scheduleInfo['ClientOrderDeliverySchedule']['id'],$quotationId,$clientsOrderUuid,$clientUuid)),'class' => 'form-horizontal')); ?>
                     
                         <div class="form-group" id="existing_items">
                             <label class="col-lg-2 control-label"><span style="color:red">*</span>D.R. #</label>

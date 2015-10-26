@@ -21,7 +21,7 @@ class DeliveryDetail extends AppModel {
 	);
   
 
-  public function saveDeliveryDetail($data = null, $auth = null,$novalidate){
+  public function saveDeliveryDetail($data = null, $auth = null,$novalidate = null){
 
 		$this->create();
 

@@ -95,7 +95,7 @@ class DeliveriesController extends DeliveryAppController {
                       'Delivery.dr_uuid' => $this->request->data['Delivery']['dr_uuid'])
                     ));
 
-             
+
         if (!empty($DRdata)) {
 
             $this->Session->setFlash(__('The Delivery Receipt No. already exists'), 'error');
@@ -212,12 +212,12 @@ class DeliveriesController extends DeliveryAppController {
         $deliveryEdit = $this->Delivery->find('all', array(
                                          'conditions' => array(
                                             'Delivery.status NOT' => 2,    
-                                        'Delivery.schedule_uuid' => $clientsOrderUuid , 'Delivery.clients_order_id' => $clientUuid
+                                            'Delivery.schedule_uuid' => $clientsOrderUuid , 'Delivery.clients_order_id' => $clientUuid
                                         ),
                                         'order' => 'Delivery.id DESC'
                                     ));
 
-        //pr($deliveryEdit); exit;
+
 
         $this->Delivery->bindDelivery();
         $drData = $this->Delivery->find('all');
@@ -286,7 +286,7 @@ class DeliveriesController extends DeliveryAppController {
         //}
     }
 
-    public function add_schedule($idDelivery = null, $idDeliveryDetail = null,$deliveryScheduleId = null, $quotationId = null, $clientsOrderUuid = null) {
+    public function add_schedule($idDelivery = null, $idDeliveryDetail = null,$deliveryScheduleId = null, $quotationId = null, $clientsOrderUuid = null,$clientUuid = null) {
         //pr($idDelivery); pr($idDeliveryDetail); pr($deliveryScheduleId); pr($quotationId); pr($clientsOrderUuid); exit;
         $userData = $this->Session->read('Auth');
 
@@ -333,9 +333,12 @@ class DeliveriesController extends DeliveryAppController {
                 $this->request->data['DeliveryDetail']['id'] = $DRdata['DeliveryDetail']['id'];
                   $this->request->data['DeliveryDetail']['status'] = 3;
 
+
+                 // $clientsOrderUuid = $this->request->data['DeliveryDetail']['clients_order_id'];
                  //find delivery details
 
             }
+
 
 
             $this->request->data['Delivery']['company_id'] = $deliveryData['Delivery']['company_id']; 
@@ -344,7 +347,6 @@ class DeliveriesController extends DeliveryAppController {
             $this->request->data['Delivery']['status'] =  '1';   
             $this->request->data['Delivery']['modified_by'] =  $userData['User']['id']; 
 
-   
 
             $this->Delivery->saveDelivery($this->request->data,$userData['User']['id'],$disableValidation);
 
@@ -354,7 +356,7 @@ class DeliveriesController extends DeliveryAppController {
             $this->Session->setFlash(__('Schedule has been updated.'),'success');
             $this->redirect( array(
                            'controller' => 'deliveries', 
-                           'action' => 'view',$deliveryScheduleId,$quotationId,$clientsOrderUuid
+                           'action' => 'view',$deliveryScheduleId,$quotationId,$clientsOrderUuid,$clientUuid 
                       ));
             
             $this->Session->setFlash(__('Unable to update your post.'));
@@ -364,7 +366,7 @@ class DeliveriesController extends DeliveryAppController {
         
     }
 
-    public function delivery_return($deliveryScheduleId = null,$quotationId = null,$clientsOrderUuid =null) {
+    public function delivery_return($deliveryScheduleId = null,$quotationId = null,$clientsOrderUuid =null,$clientUuid = null) {
 
         $userData = $this->Session->read('Auth');
 
@@ -406,7 +408,7 @@ class DeliveriesController extends DeliveryAppController {
 
             $this->redirect( array(
                            'controller' => 'deliveries', 
-                           'action' => 'view',$deliveryScheduleId,$quotationId,$clientsOrderUuid
+                           'action' => 'view',$deliveryScheduleId,$quotationId,$clientsOrderUuid,$clientUuid
                       ));
             
         }
@@ -475,7 +477,7 @@ class DeliveriesController extends DeliveryAppController {
             
     }
 
-    public function delivery_edit($dr_uuid = null, $clientsOrderUuid = null) {
+    public function delivery_edit($dr_uuid = null, $clientsOrderUuid = null,$clientuuId = null) {
 
         $userData = $this->Session->read('Auth');
 
@@ -528,7 +530,8 @@ class DeliveriesController extends DeliveryAppController {
                  'controller' => 'deliveries', 
                  'action' => 'view',$clientsOrder['ClientOrderDeliverySchedule']['id'],
                                     $clientsOrder['QuotationDetail']['quotation_id'],
-                                    $deliveryEdit['Delivery']['schedule_uuid']
+                                    $deliveryEdit['Delivery']['schedule_uuid'],
+                                    $deliveryEdit['Delivery']['clients_order_id']
             ));
                 
             $this->Session->setFlash(__('Unable to update your post.'));
@@ -536,7 +539,7 @@ class DeliveriesController extends DeliveryAppController {
 
         $noPermissionSales = ' ';
         
-        $this->set(compact('deliveryEdit', 'clientOrderData', 'clientsOrder', 'deliveryData', 'scheduleInfo', 'userData', 'companyAddress', 'noPermissionSales'));      
+        $this->set(compact('deliveryEdit', 'clientOrderData', 'clientsOrder', 'deliveryData', 'scheduleInfo', 'userData', 'companyAddress', 'noPermissionSales','clientsOrderUuid'));      
     }
 
     public function delivery_transmittal($dr_uuid = null,$schedule_uuid,$paper = null) {
