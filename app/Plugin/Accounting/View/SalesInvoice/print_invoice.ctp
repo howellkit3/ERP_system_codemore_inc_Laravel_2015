@@ -6,26 +6,35 @@
     $objTpl = PHPExcel_IOFactory::load("./img/Invoice.xlsx");
  	
  	$totalQty = $drData['DeliveryDetail']['quantity'] * number_format($clientData['QuotationItemDetail']['unit_price'],4);
+
+
 	
 	$vatSale = '';
-	if($clientData['QuotationItemDetail']['unit_price_currency_id'] == 1){
+	if($clientData['QuotationItemDetail']['unit_price_currency_id'] == 2  || $clientData['QuotationItemDetail']['vat_status']  == "Vatable Sale"){
 		$vatSale = number_format($totalQty,4);
 	}
 
 	$vatExem = '';
-	if($clientData['QuotationItemDetail']['unit_price_currency_id'] == 2){
+	if($clientData['QuotationItemDetail']['unit_price_currency_id'] == 2 || $clientData['QuotationItemDetail']['vat_status']  == "Vat Exempted"){
 
 		$vatExem =  number_format($totalQty,4);
 
 	}
 
 	$vat12 = '';
-	if($clientData['QuotationItemDetail']['unit_price_currency_id'] == 1){
+	if($clientData['QuotationItemDetail']['unit_price_currency_id'] == 2 ){
 
 		$totalVat = $totalQty * .12;
 		$vat12 = number_format($totalVat,4);
 
 	}
+
+    $zeroRated = '';
+    if($clientData['QuotationItemDetail']['unit_price_currency_id'] == 1 || $clientData['QuotationItemDetail']['vat_status']  == "Zero Rated"){
+
+        $zeroRated =  number_format($totalQty,4);
+
+    }
 
 	$totalAmount = '';
 	$currency = '';
@@ -85,6 +94,7 @@
                 ->setCellValue('D26', 'DR#00'.$drData['Delivery']['dr_uuid'])
                 ->setCellValue('K30', $vatSale)
                 ->setCellValue('K31', $vatExem)
+                ->setCellValue('K32', $zeroRated)
                 ->setCellValue('K33', $vat12)
                 ->setCellValue('K34', $currency.' '. $totalAmount);
       
