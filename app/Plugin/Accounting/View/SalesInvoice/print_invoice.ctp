@@ -4,12 +4,15 @@
         ->setDefaultFont('Calibri', 12);
 
     $objTpl = PHPExcel_IOFactory::load("./img/Invoice.xlsx");
+
+    $unitPrice = (float) $clientData['QuotationItemDetail']['unit_price'];
+
+    $quantity = (float) $drData['DeliveryDetail']['quantity'] ;
  	
- 	$totalQty = $drData['DeliveryDetail']['quantity'] * number_format($clientData['QuotationItemDetail']['unit_price'],4);
+ 	$totalQty = $quantity * $unitPrice;
 
-
-	
 	$vatSale = '';
+    
 	if($clientData['QuotationItemDetail']['unit_price_currency_id'] == 2  || $clientData['QuotationItemDetail']['vat_status']  == "Vatable Sale"){
 		$vatSale = number_format($totalQty,4);
 	}
