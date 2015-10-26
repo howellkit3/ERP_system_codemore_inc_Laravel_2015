@@ -2234,3 +2234,8 @@ ALTER TABLE `units`  ADD COLUMN `type_measure` INT(11) NULL AFTER `unit`;
 
 /* bien added this oct-21-2015 warehouse*/
 ALTER TABLE `received_items`  ADD COLUMN `quantity_unit_id` INT(11) NULL AFTER `quantity`;
+
+
+/*aldrin addedd this oct-23-2015 */
+ALTER TABLE `items`
+ADD COLUMN `item_group` varchar(255) NULL AFTER `supplier`;
