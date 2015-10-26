@@ -18,7 +18,15 @@
                     
                          <?php   
                         echo $this->Form->create('ClientOrderDeliverySchedule',array(
-                                    'url'=>(array('controller' => 'deliveries','action' => 'add_schedule', $deliveryEdit[0]['Delivery']['id'], $deliveryEdit[0]['DeliveryDetail']['id'],$scheduleInfo['ClientOrderDeliverySchedule']['id'],$quotationId,$clientsOrderUuid,$clientUuid)),'class' => 'form-horizontal')); ?>
+                                    'url'=>(array(
+                                    'controller' => 'deliveries',
+                                    'action' => 'add_schedule', 
+                                    !empty($deliveryEdit[0]['Delivery']['id']) ? $deliveryEdit[0]['Delivery']['id'] : '',
+                                    !empty( $scheduleInfo['ClientOrderDeliverySchedule']['id']) ? $scheduleInfo['ClientOrderDeliverySchedule']['id'] : '',
+                                    $quotationId,
+                                    $clientsOrderUuid,
+                                    $clientUuid
+                                    )),'class' => 'form-horizontal')); ?>
                     
                         <div class="form-group" id="existing_items">
                             <label class="col-lg-2 control-label"><span style="color:red">*</span>D.R. #</label>
@@ -180,7 +188,7 @@
                                                                     'type' => 'select',
                                                                     'required' => 'required',
                                                                     'label' => false,
-                                                                     'value' => $deliveryEdit[0]['DeliveryDetail']['location']
+                                                                     'value' => !empty($deliveryEdit[0]['DeliveryDetail']['location']) ? $deliveryEdit[0]['DeliveryDetail']['location'] : ''
                                                                     ));
                                 ?>
                             </div>
@@ -209,7 +217,7 @@
                 </div>
                 <div class="modal-body">
                     <?php  echo $this->Form->create('Delivery',array('url'=>(array('controller' => 'deliveries', 
-                            'action' => 'add', $scheduleInfo['ClientOrderDeliverySchedule']['id'],$quotationId,$clientsOrderUuid)),'class' => 'form-horizontal'))?>
+                            'action' => 'add', $scheduleInfo['ClientOrderDeliverySchedule']['id'],$quotationId,$clientsOrderUuid,$clientUuid)),'class' => 'form-horizontal'))?>
                     
 
                         <div class="form-group" id="existing_items">

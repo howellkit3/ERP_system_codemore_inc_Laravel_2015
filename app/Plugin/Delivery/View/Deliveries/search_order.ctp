@@ -166,7 +166,7 @@
                                                                           <span class ="post"><font size = "1px">View</font></span>
                                                                           </span> ', array('controller' => 'deliveries', 
                                                                                          'action' => 'view',
-                                                                         $scheduleDataList['ClientOrderDeliverySchedule']['id'],$scheduleDataList['QuotationDetail']['quotation_id'],$scheduleDataList['ClientOrderDeliverySchedule']['uuid']),
+                                                                         $scheduleDataList['ClientOrderDeliverySchedule']['id'],$scheduleDataList['QuotationDetail']['quotation_id'],$scheduleDataList['ClientOrderDeliverySchedule']['uuid'],$scheduleDataList['ClientOrder']['uuid']),
                                                                           array('class' =>' table-link small-link-icon','escape' => false,'title'=>'Edit Information'
                                                                      )); 
                                             ?>     

@@ -228,7 +228,7 @@ $totalremaining = 0;
 
                         if(($totalremaining) == 0) {
 
-                            if($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] == '1' || $deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] == '2' ) { 
+                            if($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] == '1' ) { 
 
 
                                 foreach ($deliveryEdit as $deliveryDataList): 
@@ -283,7 +283,7 @@ $totalremaining = 0;
 
                     if(!empty($deliveryDataList['Delivery']['company_id'])){
 
-                        echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Create Gate Pass', array('controller' => 'deliveries', 'action' => 'gate_pass',$deliveryScheduleId,$quotationId,$clientsOrderUuid,$deliveryDataList['Delivery']['company_id']),array('class' =>' btn btn-primary ','escape' => false,'title'=>'Gate Pass'));
+                        echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Create Gate Pass', array('controller' => 'deliveries', 'action' => 'gate_pass',$deliveryScheduleId,$quotationId,$clientsOrderUuid,$deliveryDataList['Delivery']['company_id'],$clientUuid),array('class' =>' btn btn-primary ','escape' => false,'title'=>'Gate Pass'));
                     }
 
                     ?>
