@@ -40,7 +40,7 @@
 	$currency = '';
     $unitPrice = $clientData['QuotationItemDetail']['unit_price'];
 
-	if($clientData['QuotationItemDetail']['unit_price_currency_id'] == 1){
+	if($clientData['QuotationItemDetail']['unit_price_currency_id'] == 2){
 
 		$totalVat = $totalQty * .12;
 		$fullVat = $totalQty + $totalVat;
