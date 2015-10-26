@@ -142,6 +142,8 @@ class ReceivingsController extends WareHouseAppController {
 
 				$requestPurchasingItem[$key][$itemHolder]['model'] = $value[$itemHolder]['model'];
 
+				$requestPurchasingItem[$key][$itemHolder]['unit_price'] = $value[$itemHolder]['unit_price'];
+
 				$requestPurchasingItem[$key][$itemHolder]['unit_id'] = $value[$itemHolder]['quantity_unit_id'];
 
 				$requestPurchasingItem[$key][$itemHolder]['original_quantity'] = $value[$itemHolder]['quantity'];
@@ -180,6 +182,8 @@ class ReceivingsController extends WareHouseAppController {
 				$requestPurchasingItem[$key][$itemHolder]['foreign_key'] = $value[$itemHolder]['foreign_key']; 
 
 				$requestPurchasingItem[$key][$itemHolder]['model'] = $value[$itemHolder]['model'];
+
+				$requestPurchasingItem[$key][$itemHolder]['unit_price'] = $value[$itemHolder]['unit_price'];
 
 				$requestPurchasingItem[$key][$itemHolder]['unit_id'] = $value[$itemHolder]['quantity_unit_id'];
 
@@ -223,6 +227,8 @@ class ReceivingsController extends WareHouseAppController {
 
 				$requestPurchasingItem[$key][$itemHolder]['model'] = $value[$itemHolder]['model'];
 
+				$requestPurchasingItem[$key][$itemHolder]['unit_price'] = $value[$itemHolder]['unit_price'];
+
 				$requestPurchasingItem[$key][$itemHolder]['unit_id'] = $value[$itemHolder]['quantity_unit_id'];
 
 				$requestPurchasingItem[$key][$itemHolder]['original_quantity'] = $value[$itemHolder]['quantity'];
@@ -261,6 +267,8 @@ class ReceivingsController extends WareHouseAppController {
 				$requestPurchasingItem[$key][$itemHolder]['foreign_key'] = $value[$itemHolder]['foreign_key'];
 
 				$requestPurchasingItem[$key][$itemHolder]['model'] = $value[$itemHolder]['model'];
+
+				$requestPurchasingItem[$key][$itemHolder]['unit_price'] = $value[$itemHolder]['unit_price'];
 
 				$requestPurchasingItem[$key][$itemHolder]['unit_id'] = $value[$itemHolder]['quantity_unit_id'];
 

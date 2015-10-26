@@ -339,8 +339,8 @@
 								                        'label' => false,
 								                        'class' => 'form-control category',
 								                        'empty' => '---Select Category---',
-								                        'value' =>  $value['RequestItem']['category']
-								                         )); 
+								                        'value' =>  !empty($value['RequestItem']['category']
+								                         ))); 
 								                ?>
 
 											</div>
@@ -455,7 +455,7 @@
 														'class' => 'form-control item_type roll-element required',
 								                        'label' => false,
 								                        'type' => 'number',
-								                        'value' => $value['RequestItem']['width'],
+								                        'value' => !empty($value['RequestItem']['width']),
 								                        'placeholder' => 'Width'));
 
 								                ?>
@@ -468,7 +468,7 @@
 								                        'label' => false,
 								                        'class' => 'form-control item_type roll-element required',
 								                        'empty' => '---Select Unit---',
-								                        'default' => $value['RequestItem']['width_unit_id']
+								                        'default' => !empty($value['RequestItem']['width_unit_id'])
 								                         )); 
 
 								                ?>

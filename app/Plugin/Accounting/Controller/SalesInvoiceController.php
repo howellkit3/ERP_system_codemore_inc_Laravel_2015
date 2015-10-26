@@ -912,7 +912,105 @@ class SalesInvoiceController extends AccountingAppController {
         
     }
 
-    public function daterange_summary($from = null, $to = null,$whatreport = null){
+
+    public function payables_print($reportname = null) {
+
+        $this->loadModel('WareHouse.ReceivedItem');
+
+        $this->loadModel('Purchasing.PurchaseOrder');
+
+        $this->loadModel('Supplier');
+
+        $this->loadModel('User');
+
+        $this->ReceivedItem->bind('DeliveredOrder', 'PurchaseOrder');
+
+        if(!empty($this->request->data['from_date'])){
+
+            $dateRange = str_replace(' ', '', $this->request->data['from_date']);
+       
+            $splitDate = split('-', $dateRange);
+            $from = str_replace('/', '-', $splitDate[0]);
+            $to = str_replace('/', '-', $splitDate[1]);
+
+
+            $receivedItemData = $this->ReceivedItem->find('all', array(
+            'conditions' => array(
+                'AND' => array(
+                    'DeliveredOrder.created BETWEEN ? AND ?' => array($from.' '.'00:00:00:', $to.' '.'23:00:00:')
+                ),
+            ),
+            'order' => 'ReceivedItem.id DESC'
+            ));
+
+        } else {
+
+            $receivedItemData = $this->ReceivedItem->find('all', array(
+                'order' => array('ReceivedItem.id DESC')));
+ 
+        }
+
+        foreach ($receivedItemData as $key => $value) {
+
+            if ($value['ReceivedItem']['model'] ==  "GeneralItem"){
+
+                $this->loadModel('GeneralItem');
+
+                $itemData = $this->GeneralItem->find('list', array('fields' => array('id', 'name')));
+
+                $receivedItemData[$key]['DeliveredOrder']['item_name'] = $itemData[$value['ReceivedItem']['foreign_key']];
+
+            }
+
+            if ($value['ReceivedItem']['model'] ==  "Substrate"){
+
+                $this->loadModel('Substrate');
+
+                $itemData = $this->Substrate->find('list', array('fields' => array('id', 'name')));
+
+                $receivedItemData[$key]['DeliveredOrder']['item_name'] = $itemData[$value['ReceivedItem']['foreign_key']];
+
+            }
+
+            if ($value['ReceivedItem']['model'] ==  "CompoundSubstrate"){
+
+                $this->loadModel('CompoundSubstrate');
+
+                $itemData = $this->CompoundSubstrate->find('list', array('fields' => array('id', 'name')));
+
+                $receivedItemData[$key]['DeliveredOrder']['item_name'] = $itemData[$value['ReceivedItem']['foreign_key']];
+
+            }
+
+            if ($value['ReceivedItem']['model'] ==  "CorrugatedPaper"){
+
+                $this->loadModel('CorrugatedPaper');
+
+                $itemData = $this->CorrugatedPaper->find('list', array('fields' => array('id', 'name')));
+
+                $receivedItemData[$key]['DeliveredOrder']['item_name'] = $itemData[$value['ReceivedItem']['foreign_key']];
+
+            }
+
+
+        }
+
+        $purchaseOrderSupplier = $this->PurchaseOrder->find('list', array('fields' => array('id', 'supplier_id')));
+
+        $purchaseOrderPONum = $this->PurchaseOrder->find('list', array('fields' => array('id', 'po_number')));
+
+        $userName = $this->User->find('list', array('fields' => array('id', 'fullname')));
+
+        $supplierName = $this->Supplier->find('list', array('fields' => array('id', 'name')));
+
+        $this->set(compact('noPermissionReciv','noPermissionPay', 'userName', 'receivedItemData','purchaseOrderPONum', 'purchaseOrderSupplier','supplierName'));
+
+        $this->render('SalesInvoice/xls/payables_print');
+ 
+    }
+
+
+    public function daterange_summary($from = null, $to = null){
 
         $this->loadModel('Delivery.Delivery');
 
@@ -1024,6 +1122,92 @@ class SalesInvoiceController extends AccountingAppController {
         
     }
 
+    public function daterange_summary_payables($from = null, $to = null,$whatreport = null){
+
+        $this->loadModel('WareHouse.ReceivedItem');
+
+        $this->loadModel('Purchasing.PurchaseOrder');
+
+        $this->loadModel('Supplier');
+
+        $this->loadModel('User');
+
+        $this->ReceivedItem->bind('DeliveredOrder', 'PurchaseOrder');
+
+        // $receivedItemData = $this->ReceivedItem->find('all', array(
+        //         'order' => array('ReceivedItem.id DESC')));
+
+        $receivedItemData = $this->ReceivedItem->find('all', array(
+            'conditions' => array(
+                'AND' => array(
+                    'DeliveredOrder.created BETWEEN ? AND ?' => array($from.' '.'00:00:00:', $to.' '.'23:00:00:')
+                ),
+            ),
+            'order' => 'ReceivedItem.id DESC'
+        ));
+
+        foreach ($receivedItemData as $key => $value) {
+
+            if ($value['ReceivedItem']['model'] ==  "GeneralItem"){
+
+                $this->loadModel('GeneralItem');
+
+                $itemData = $this->GeneralItem->find('list', array('fields' => array('id', 'name')));
+
+                $receivedItemData[$key]['DeliveredOrder']['item_name'] = $itemData[$value['ReceivedItem']['foreign_key']];
+
+            }
+
+            if ($value['ReceivedItem']['model'] ==  "Substrate"){
+
+                $this->loadModel('Substrate');
+
+                $itemData = $this->Substrate->find('list', array('fields' => array('id', 'name')));
+
+                $receivedItemData[$key]['DeliveredOrder']['item_name'] = $itemData[$value['ReceivedItem']['foreign_key']];
+
+            }
+
+            if ($value['ReceivedItem']['model'] ==  "CompoundSubstrate"){
+
+                $this->loadModel('CompoundSubstrate');
+
+                $itemData = $this->CompoundSubstrate->find('list', array('fields' => array('id', 'name')));
+
+                $receivedItemData[$key]['DeliveredOrder']['item_name'] = $itemData[$value['ReceivedItem']['foreign_key']];
+
+            }
+
+            if ($value['ReceivedItem']['model'] ==  "CorrugatedPaper"){
+
+                $this->loadModel('CorrugatedPaper');
+
+                $itemData = $this->CorrugatedPaper->find('list', array('fields' => array('id', 'name')));
+
+                $receivedItemData[$key]['DeliveredOrder']['item_name'] = $itemData[$value['ReceivedItem']['foreign_key']];
+
+            }
+
+
+        }
+
+        $purchaseOrderSupplier = $this->PurchaseOrder->find('list', array('fields' => array('id', 'supplier_id')));
+
+        $purchaseOrderPONum = $this->PurchaseOrder->find('list', array('fields' => array('id', 'po_number')));
+
+        $userName = $this->User->find('list', array('fields' => array('id', 'fullname')));
+
+        $supplierName = $this->Supplier->find('list', array('fields' => array('id', 'name')));
+
+        $this->set(compact('userName', 'receivedItemData','purchaseOrderPONum', 'purchaseOrderSupplier','supplierName'));
+  
+
+        $this->render('daterange_summary_payables');
+       
+
+        
+    }
+
     public function payable(){
 
         $userData = $this->Session->read('Auth');
@@ -1041,7 +1225,73 @@ class SalesInvoiceController extends AccountingAppController {
             $noPermissionPay = ' ';
         }
 
-        $this->set(compact('noPermissionReciv','noPermissionPay'));
+        $this->loadModel('WareHouse.ReceivedItem');
+
+        $this->loadModel('Purchasing.PurchaseOrder');
+
+        $this->loadModel('Supplier');
+
+        $this->loadModel('User');
+
+        $this->ReceivedItem->bind('DeliveredOrder', 'PurchaseOrder');
+
+        $receivedItemData = $this->ReceivedItem->find('all', array(
+                'order' => array('ReceivedItem.id DESC')));
+
+        foreach ($receivedItemData as $key => $value) {
+
+            if ($value['ReceivedItem']['model'] ==  "GeneralItem"){
+
+                $this->loadModel('GeneralItem');
+
+                $itemData = $this->GeneralItem->find('list', array('fields' => array('id', 'name')));
+
+                $receivedItemData[$key]['DeliveredOrder']['item_name'] = $itemData[$value['ReceivedItem']['foreign_key']];
+
+            }
+
+            if ($value['ReceivedItem']['model'] ==  "Substrate"){
+
+                $this->loadModel('Substrate');
+
+                $itemData = $this->Substrate->find('list', array('fields' => array('id', 'name')));
+
+                $receivedItemData[$key]['DeliveredOrder']['item_name'] = $itemData[$value['ReceivedItem']['foreign_key']];
+
+            }
+
+            if ($value['ReceivedItem']['model'] ==  "CompoundSubstrate"){
+
+                $this->loadModel('CompoundSubstrate');
+
+                $itemData = $this->CompoundSubstrate->find('list', array('fields' => array('id', 'name')));
+
+                $receivedItemData[$key]['DeliveredOrder']['item_name'] = $itemData[$value['ReceivedItem']['foreign_key']];
+
+            }
+
+            if ($value['ReceivedItem']['model'] ==  "CorrugatedPaper"){
+
+                $this->loadModel('CorrugatedPaper');
+
+                $itemData = $this->CorrugatedPaper->find('list', array('fields' => array('id', 'name')));
+
+                $receivedItemData[$key]['DeliveredOrder']['item_name'] = $itemData[$value['ReceivedItem']['foreign_key']];
+
+            }
+
+
+        }
+
+        $purchaseOrderSupplier = $this->PurchaseOrder->find('list', array('fields' => array('id', 'supplier_id')));
+
+        $purchaseOrderPONum = $this->PurchaseOrder->find('list', array('fields' => array('id', 'po_number')));
+
+        $userName = $this->User->find('list', array('fields' => array('id', 'fullname')));
+
+        $supplierName = $this->Supplier->find('list', array('fields' => array('id', 'name')));
+
+        $this->set(compact('noPermissionReciv','noPermissionPay', 'userName', 'receivedItemData','purchaseOrderPONum', 'purchaseOrderSupplier','supplierName'));
     }
 
     public function change_to_invoice($id = null) {
