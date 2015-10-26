@@ -45,7 +45,7 @@
 
 	}
 
-   
+
     $words = explode(" ", $companyData['Address'][0]['address1']);
      //$part = $count($words);
     //pr($words); exit;
@@ -68,8 +68,6 @@
             }   
         }
 
-        
-    
     }
  
     $objTpl->setActiveSheetIndex(0)
@@ -87,8 +85,8 @@
                 ->setCellValue('D26', 'DR#00'.$drData['Delivery']['dr_uuid'])
                 ->setCellValue('K30', $vatSale)
                 ->setCellValue('K31', $vatExem)
-                ->setCellValue('K32', $vat12)
-                ->setCellValue('K33', $currency.' '. $totalAmount);
+                ->setCellValue('K33', $vat12)
+                ->setCellValue('K34', $currency.' '. $totalAmount);
       
     //prepare download
     $filename = mt_rand(1,100000).'.xlsx'; //just some random filename
