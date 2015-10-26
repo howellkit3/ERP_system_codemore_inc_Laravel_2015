@@ -21,13 +21,25 @@ class DeliveryDetail extends AppModel {
 	);
   
 
-  public function saveDeliveryDetail($data = null, $auth = null){
+  public function saveDeliveryDetail($data = null, $auth = null,$novalidate){
 
 		$this->create();
 
-				$data['DeliveryDetail']['modified_by'] = $auth;
+		$data['DeliveryDetail']['modified_by'] = $auth;
 				
-		$this->save($data);
+
+		if ($novalidate) {
+
+			$this->validate = array();
+		}
+
+		if ($this->save($data)) {
+
+		} else {
+
+			pr($this->validationErrors);
+		}
+
 
 
 	}

@@ -41,17 +41,28 @@ class Delivery extends AppModel {
 
 
  
-	public function saveDelivery($data = null, $auth = null){
+	public function saveDelivery($data = null, $auth = null,$novalidate = null){
 
 		$this->create();
 
 						
-				$data['Delivery']['created_by'] = $auth;
+		$data['Delivery']['created_by'] = $auth;
 			//	$data['Delivery']['modified_by'] = $auth;
 
 				//pr($data); exit;
-				
-		$this->save($data);
+
+
+		if ($novalidate) {
+
+			$this->validate = array();
+		}
+
+		if ($this->save($data)) {
+
+		} else {
+
+			pr($this->validationErrors);
+		}
 
 
 		// $this->create();

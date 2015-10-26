@@ -305,16 +305,19 @@ class DeliveriesController extends DeliveryAppController {
             $this->Delivery->id = $idDelivery;
             $this->DeliveryDetail->id = $idDeliveryDetail;
 
-            $DRdata = $this->Delivery->find('all', array(
+            $this->Delivery->bindDelivery();
+
+            $DRdata = $this->Delivery->find('first', array(
                     'conditions' => array(
                       'Delivery.dr_uuid' => $this->request->data['Delivery']['dr_uuid'],
-                        'Delivery.status NOT' => 2 
+                       // 'Delivery.status NOT' => 2 
                       )
                 ));
 
 
+            $disableValidation = '';
 
-            if (!empty($DRdata)) {
+            if (!empty($DRdata) && $DRdata['Delivery']['status'] == 1) {
 
                 $this->Session->setFlash(__('The Delivery Receipt No. already exists'), 'error');
               
@@ -322,9 +325,17 @@ class DeliveriesController extends DeliveryAppController {
                            'controller' => 'deliveries',   
                            'action' => 'view',$deliveryScheduleId,$quotationId,$clientsOrderUuid
                       ));  
+            } else if (!empty($DRdata) && $DRdata['Delivery']['status'] == 2) {
+
+                $disableValidation = 1;
+
+                 $this->request->data['Delivery']['id'] = $DRdata['Delivery']['id'];
+                $this->request->data['DeliveryDetail']['id'] = $DRdata['DeliveryDetail']['id'];
+                  $this->request->data['DeliveryDetail']['status'] = 3;
+
+                 //find delivery details
+
             }
-
-
 
 
             $this->request->data['Delivery']['company_id'] = $deliveryData['Delivery']['company_id']; 
@@ -334,9 +345,10 @@ class DeliveriesController extends DeliveryAppController {
             $this->request->data['Delivery']['modified_by'] =  $userData['User']['id']; 
 
    
-  
-            $this->Delivery->saveDelivery($this->request->data,$userData['User']['id']);
-            $this->DeliveryDetail->saveDeliveryDetail($this->request->data,$userData['User']['id']);
+
+            $this->Delivery->saveDelivery($this->request->data,$userData['User']['id'],$disableValidation);
+
+            $this->DeliveryDetail->saveDeliveryDetail($this->request->data,$userData['User']['id'],$disableValidation);
 
   
             $this->Session->setFlash(__('Schedule has been updated.'),'success');
@@ -1424,7 +1436,7 @@ class DeliveriesController extends DeliveryAppController {
 
                 $this->DeliveryDetail->save($deliverives['DeliveryDetail']);
 
-               $this->Session->setFlash(__('The Delivery Receipt No. already exists'), 'success');
+               $this->Session->setFlash(__('Delivery Scheddate Successfully deleted'), 'success');
      
                    
             } else  {
