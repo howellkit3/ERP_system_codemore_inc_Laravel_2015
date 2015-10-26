@@ -228,7 +228,7 @@ $totalremaining = 0;
 
                         if(($totalremaining) == 0) {
 
-                            if($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] == '1' ) { 
+                            if($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] == '1' || $deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] == '2' ) { 
 
 
                                 foreach ($deliveryEdit as $deliveryDataList): 
@@ -498,27 +498,29 @@ $totalremaining = 0;
                                              }?>
 
 
-                                            <?php //$deliveryScheduleId = null, $quotationId = null, $clientsOrderUuid = null, $clientUuid = null)
+                                            <?php 
 
-                                              // echo $this->Html->link('<span class="fa-stack">
-                                              //               <i class="fa fa-square fa-stack-2x"></i>
-                                              //               <i class="fa fa-trash fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Delete </font></span>
-                                              //               </span> ', array('controller' => 'deliveries', 
-                                              //                 'action' => 'remove_dr_sched',
-                                              //                 $deliveryDataList['Delivery']['dr_uuid'],
-                                              //                 $deliveryScheduleId,
-                                              //                 $quotationId,
-                                              //                 $clientsOrderUuid,
-                                              //                 $clientUuid
+                                            // $deliveryScheduleId = null, $quotationId = null, $clientsOrderUuid = null, $clientUuid = null)
 
-                                              //                 ),
-                                              //               array(
-                                              //                   'label' => false,
-                                              //                 'class' =>' table-link',
-                                              //                 'escape' => false,'title'=>'Edit Information',
-                                              //                 'confirm' => 'Are you sure you want to delete this schedule ? ',
-                                              //                 'style' => 'margin-left:27px;'
-                                              //                 ));
+                                              echo $this->Html->link('<span class="fa-stack">
+                                                            <i class="fa fa-square fa-stack-2x"></i>
+                                                            <i class="fa fa-trash fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Delete </font></span>
+                                                            </span> ', array('controller' => 'deliveries', 
+                                                              'action' => 'remove_dr_sched',
+                                                              $deliveryDataList['Delivery']['dr_uuid'],
+                                                              $deliveryScheduleId,
+                                                              $quotationId,
+                                                              $clientsOrderUuid,
+                                                              $clientUuid
+
+                                                              ),
+                                                            array(
+                                                                'label' => false,
+                                                              'class' =>' table-link',
+                                                              'escape' => false,'title'=>'Edit Information',
+                                                              'confirm' => 'Are you sure you want to delete this schedule ? ',
+                                                              'style' => 'margin-left:27px;'
+                                                              ));
                                             ?>
 
                                                                     

@@ -19,16 +19,21 @@ class JobTicket extends AppModel {
 	public function bindTicket() {
 		$this->bindModel(array(
 			'belongsTo' => array(
-				// 'ClientOrder' => array(
-				// 	'className' => 'Sales.ClientOrder',
-				// 	'foreignKey' => 'client_order_id',
-				// 	//'conditions' => 'JobTicket.client_order_id = ClientOrder.id'
-				// ),				
+				'ClientOrder' => array(
+					'className' => 'Sales.ClientOrder',
+					'foreignKey' => 'client_order_id',
+					//'conditions' => 'JobTicket.client_order_id = ClientOrder.id'
+				),				
 				'Product' => array(
 					'className' => 'Sales.Product',
 					'foreignKey' => 'product_id',
 					//'conditions' => 'Company.id = Product.company_id'
-				)
+				),
+				// 'Company' => array(
+				// 	'className' => 'Sales.Company',
+				// 	'foreignKey' => false,
+				// 	'conditions' => array('Company.id' => 'Product.company_id')
+				// )
 				// 'Product' => array(
 				// 	'className' => 'Sales.Product',
 				// 	'foreignKey' => false,
@@ -40,6 +45,42 @@ class JobTicket extends AppModel {
 		));
 		$this->recursive = 1;
 		//$this->contain($giveMeTheTableRelationship);
+	}
+
+	public function bindTicketSchedule(){
+			$this->bindModel(array(
+			'belongsTo' => array(
+				'ClientOrder' => array(
+					'className' => 'Sales.ClientOrder',
+					'foreignKey' => 'client_order_id',
+					//'conditions' => 'JobTicket.client_order_id = ClientOrder.id'
+				),
+				'ClientOrderDeliverySchedule' => array(
+					'className' => 'Sales.ClientOrderDeliverySchedule',
+					'foreignKey' => false,
+					'conditions' => array('ClientOrderDeliverySchedule.Client_order_id = JobTicket.client_order_id')
+					//'conditions' => 'Company.id = Product.company_id'
+				), 				
+				'Product' => array(
+					'className' => 'Sales.Product',
+					'foreignKey' => 'product_id',
+					//'conditions' => 'Company.id = Product.company_id'
+				),
+				// 'Company' => array(
+				// 	'className' => 'Sales.Company',
+				// 	'foreignKey' => false,
+				// 	'conditions' => array('Company.id' => 'Product.company_id')
+				// )
+				// 'Product' => array(
+				// 	'className' => 'Sales.Product',
+				// 	'foreignKey' => false,
+				// 	'conditions' => array('Product.id = JobTicket.product_id'),
+				// 	'dependent' => true
+				// ),
+			)
+			
+		));
+		$this->recursive = 1;
 	}
 
 	public function bindJobTicket() {

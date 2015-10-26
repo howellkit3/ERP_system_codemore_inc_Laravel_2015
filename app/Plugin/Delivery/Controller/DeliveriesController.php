@@ -215,7 +215,7 @@ class DeliveriesController extends DeliveryAppController {
         
         $this->Delivery->bindDeliveryView();
         
-        $deliveryConditions = array(  //'Delivery.status NOT' => 2,    
+        $deliveryConditions = array(  'Delivery.status NOT' => 2,    
                                     'Delivery.schedule_uuid' => $clientsOrderUuid 
                                         );
 
@@ -228,7 +228,6 @@ class DeliveriesController extends DeliveryAppController {
                                          'conditions' => $deliveryConditions ,
                                         'order' => 'Delivery.id DESC'
                                     ));
-
 
 
         $this->Delivery->bindDelivery();
@@ -336,14 +335,14 @@ class DeliveriesController extends DeliveryAppController {
               
                 $this->redirect( array(
                            'controller' => 'deliveries',   
-                           'action' => 'view',$deliveryScheduleId,$quotationId,$clientsOrderUuid
+                           'action' => 'view',$idDeliveryDetail,$deliveryScheduleId,$quotationId,$clientsOrderUuid
                       ));  
             } else if (!empty($DRdata) && $DRdata['Delivery']['status'] == 2) {
 
                 $disableValidation = 1;
 
                  $this->request->data['Delivery']['id'] = $DRdata['Delivery']['id'];
-                $this->request->data['DeliveryDetail']['id'] = $DRdata['DeliveryDetail']['id'];
+                    $this->request->data['DeliveryDetail']['id'] = $DRdata['DeliveryDetail']['id'];
                   $this->request->data['DeliveryDetail']['status'] = 3;
 
 
@@ -361,6 +360,8 @@ class DeliveriesController extends DeliveryAppController {
             $this->request->data['Delivery']['modified_by'] =  $userData['User']['id']; 
 
 
+            $data =  $this->request->data;
+
             $this->Delivery->saveDelivery($this->request->data,$userData['User']['id'],$disableValidation);
 
             $this->DeliveryDetail->saveDeliveryDetail($this->request->data,$userData['User']['id'],$disableValidation);
@@ -369,7 +370,7 @@ class DeliveriesController extends DeliveryAppController {
             $this->Session->setFlash(__('Schedule has been updated.'),'success');
             $this->redirect( array(
                            'controller' => 'deliveries', 
-                           'action' => 'view',$deliveryScheduleId,$quotationId,$clientsOrderUuid,$clientUuid 
+                           'action' => 'view',$idDeliveryDetail,$data['Delivery']['schedule_uuid'],$quotationId,$data['Delivery']['clients_order_id'] 
                       ));
             
             $this->Session->setFlash(__('Unable to update your post.'));
