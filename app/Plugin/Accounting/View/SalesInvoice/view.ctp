@@ -102,7 +102,7 @@
 								<td><center><?php echo $clientData['ClientOrder']['po_number']?></center></td>
 								<td><center><?php echo ucfirst($clientData['Product']['name'])?></center></td>
 								<td><center><?php echo number_format($drData['DeliveryDetail']['quantity'])?></center></td>
-								<td><center><?php echo number_format($clientData['QuotationItemDetail']['unit_price'],2)?></center></td>
+								<td><center><?php echo number_format($clientData['QuotationItemDetail']['unit_price'],4)?></center></td>
 								<td>
 									<center>
 										<?php 
@@ -115,7 +115,7 @@
 												$totalQty = $clientData['ClientOrderDeliverySchedule'][0]['quantity'] * $clientData['QuotationItemDetail']['unit_price'];
 											}
 
-											echo number_format($totalQty,2) ;
+											echo number_format($totalQty,4) ;
 										?>
 									</center>
 								</td>
@@ -169,7 +169,7 @@
 										<?php 
 											if($clientData['QuotationItemDetail']['vat_status'] == 'Vat Exempt'){
 												
-												echo number_format($totalQty,4);
+												echo number_format($totalQty,4 );
 												//echo number_format((float)$totalQty, 4, '.', '');
 											}else{
 												echo "-";
@@ -210,11 +210,11 @@
 												$totalVat = $totalQty * .12;
 												$fullVat = $totalQty + $totalVat;
 												echo $currencyData[$clientData['QuotationItemDetail']['unit_price_currency_id']] . " ";
-												echo number_format($fullVat,4);
+												echo number_format($fullVat,2);
 												
 											}else{
 												echo $currencyData[$clientData['QuotationItemDetail']['unit_price_currency_id']] . " ";
-												echo number_format($totalQty,4);
+												echo number_format($totalQty,2);
 											}
 										?>
 									</td>
