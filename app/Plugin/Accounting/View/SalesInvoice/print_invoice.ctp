@@ -15,7 +15,7 @@
 	}
 
 	$vatExem = '';
-	if($clientData['QuotationItemDetail']['unit_price_currency_id'] == 2 || $clientData['QuotationItemDetail']['vat_status']  == "Vat Exempted"){
+	if($clientData['QuotationItemDetail']['unit_price_currency_id'] == 2 && $clientData['QuotationItemDetail']['vat_status']  == "Vat Exempted"){
 
 		$vatExem =  number_format($totalQty,4);
 
