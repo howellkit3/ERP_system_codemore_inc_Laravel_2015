@@ -170,7 +170,7 @@ class TicketingSystemsController extends TicketAppController {
         
 		//find if product has specs
         $formatDataSpecs = $this->ProductSpecificationDetail->findData($productUuid);
-
+        //pr($formatDataSpecs);exit();
         //no permission sales
         if ($userData['User']['role_id'] == 3 OR $userData['User']['role_id'] == 8) {
             $noPermissionSales = 'disabled';

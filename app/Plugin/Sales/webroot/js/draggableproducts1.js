@@ -297,7 +297,8 @@ $(document).ready(function() {
                 }
             });
             $("body").on('keyup','.rate'+varCounter, function(e){
-
+                
+                var quantitySpec = parseInt($('#ProductSpecificationQuantity').val());
                 var rateval = $(this).val();
 
                 if(rateval <= 0){
