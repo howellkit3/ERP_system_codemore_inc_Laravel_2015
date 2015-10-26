@@ -68,7 +68,7 @@
             }   
         }
 
-        
+        //pr($vatSale); exit;
     
     }
  
