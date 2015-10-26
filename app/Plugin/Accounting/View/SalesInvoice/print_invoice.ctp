@@ -36,12 +36,12 @@
 		$totalVat = $totalQty * .12;
 		$fullVat = $totalQty + $totalVat;
 		$currency = $currencyData[$clientData['QuotationItemDetail']['unit_price_currency_id']];
-		$totalAmount = number_format($fullVat,4);
+		$totalAmount = number_format($fullVat,2);
 
 	}else{
 
 		$currency = $currencyData[$clientData['QuotationItemDetail']['unit_price_currency_id']];
-		$totalAmount = number_format($totalQty,4);
+		$totalAmount = number_format($totalQty,2);
 
 	}
 
@@ -88,7 +88,7 @@
                 ->setCellValue('K30', $vatSale)
                 ->setCellValue('K31', $vatExem)
                 ->setCellValue('K32', $vat12)
-                ->setCellValue('K33', $currency.' '$totalAmount,2);
+                ->setCellValue('K33', $currency.' '. $totalAmount);
       
     //prepare download
     $filename = mt_rand(1,100000).'.xlsx'; //just some random filename
