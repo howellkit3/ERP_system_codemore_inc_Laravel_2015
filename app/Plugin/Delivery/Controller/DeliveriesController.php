@@ -211,6 +211,7 @@ class DeliveriesController extends DeliveryAppController {
         $this->Delivery->bindDeliveryView();
         $deliveryEdit = $this->Delivery->find('all', array(
                                          'conditions' => array(
+                                            'Delivery.status NOT' => 2,    
                                         'Delivery.schedule_uuid' => $clientsOrderUuid , 'Delivery.clients_order_id' => $clientUuid
                                         ),
                                         'order' => 'Delivery.id DESC'
@@ -276,7 +277,7 @@ class DeliveriesController extends DeliveryAppController {
 
        // pr($productSpecification['ProductSpecification']['quantity']);
 
-        $this->set(compact('noPermissionSales','driverList','helperList','productSpecification','truckList','deliveryScheduleId','quotationId','clientsOrderUuid','scheduleInfo','deliveryData', 'quantityInfo','deliveryDataID','deliveryDetailsData', 'deliveryEdit', 'deliveryDetailList','deliveryList','deliveryStatus', 'orderList', 'orderListHelper', 'orderDeliveryList', 'clientsOrder', 'companyAddress', 'drData', 'deliveryDetailsData', 'DeliveryReceiptData', 'measureList'));
+        $this->set(compact('noPermissionSales','driverList','helperList','productSpecification','truckList','clientUuid','deliveryScheduleId','quotationId','clientsOrderUuid','scheduleInfo','deliveryData', 'quantityInfo','deliveryDataID','deliveryDetailsData', 'deliveryEdit', 'deliveryDetailList','deliveryList','deliveryStatus', 'orderList', 'orderListHelper', 'orderDeliveryList', 'clientsOrder', 'companyAddress', 'drData', 'deliveryDetailsData', 'DeliveryReceiptData', 'measureList'));
         
         //if ($gatepass == 1) {
           
@@ -304,10 +305,14 @@ class DeliveriesController extends DeliveryAppController {
             $this->Delivery->id = $idDelivery;
             $this->DeliveryDetail->id = $idDeliveryDetail;
 
-            $DRdata = $this->Delivery->find('first', array(
+            $DRdata = $this->Delivery->find('all', array(
                     'conditions' => array(
-                      'Delivery.dr_uuid' => $this->request->data['Delivery']['dr_uuid'])
-                    ));
+                      'Delivery.dr_uuid' => $this->request->data['Delivery']['dr_uuid'],
+                        'Delivery.status NOT' => 2 
+                      )
+                ));
+
+
 
             if (!empty($DRdata)) {
 
@@ -320,14 +325,19 @@ class DeliveriesController extends DeliveryAppController {
             }
 
 
+
+
             $this->request->data['Delivery']['company_id'] = $deliveryData['Delivery']['company_id']; 
             $this->request->data['DeliveryDetail']['delivery_uuid'] =  $this->request->data['Delivery']['dr_uuid']; 
             $this->request->data['DeliveryDetail']['created_by'] =  $userData['User']['id'];    
             $this->request->data['Delivery']['status'] =  '1';   
             $this->request->data['Delivery']['modified_by'] =  $userData['User']['id']; 
+
+   
   
             $this->Delivery->saveDelivery($this->request->data,$userData['User']['id']);
             $this->DeliveryDetail->saveDeliveryDetail($this->request->data,$userData['User']['id']);
+
   
             $this->Session->setFlash(__('Schedule has been updated.'),'success');
             $this->redirect( array(
@@ -1383,4 +1393,54 @@ class DeliveriesController extends DeliveryAppController {
             
     }
 
+
+    public function remove_dr_sched($id = null,$deliveryScheduleId = null, $quotationId = null, $clientsOrderUuid = null, $clientUuid = null) {
+
+
+
+        if (!empty($id)) {
+
+            $this->loadModel('Delivery.DeliveryDetail');
+
+            $this->Delivery->bindDelivery();
+
+            $deliverives = $this->Delivery->find('first',array(
+                        'conditions' => array(
+                                'Delivery.dr_uuid' => $id 
+                    )
+            ));
+
+            //set to delete
+            $deliverives['Delivery']['status'] = 2;
+
+            $deliverives['DeliveryDetail']['status'] = 4;
+
+
+            $this->Delivery->create();
+
+            if ($this->Delivery->save($deliverives)) {
+
+                //dave delivery detail
+
+                $this->DeliveryDetail->save($deliverives['DeliveryDetail']);
+
+               $this->Session->setFlash(__('The Delivery Receipt No. already exists'), 'success');
+     
+                   
+            } else  {
+
+                  $this->Session->setFlash(__('There\'s an error removing the data'), 'error');
+
+            }
+
+             $this->redirect( array(
+                        'controller' => 'deliveries',   
+                        'action' => 'view',$deliveryScheduleId,
+                        $quotationId,$clientsOrderUuid,$clientUuid
+
+
+                    ));  
+        }
+
+    }
 }
