@@ -15,7 +15,7 @@
 	$vatExem = '';
 	if($clientData['QuotationItemDetail']['unit_price_currency_id'] == 2){
 
-		$vatExem =  number_format($totalQty,2);
+		$vatExem =  number_format($totalQty,4);
 
 	}
 
@@ -88,7 +88,7 @@
                 ->setCellValue('K30', $vatSale)
                 ->setCellValue('K31', $vatExem)
                 ->setCellValue('K32', $vat12)
-                ->setCellValue('K33', $currency.' '.$totalAmount);
+                ->setCellValue('K33', $currency.' '.number_format($totalAmount,2));
       
     //prepare download
     $filename = mt_rand(1,100000).'.xlsx'; //just some random filename
