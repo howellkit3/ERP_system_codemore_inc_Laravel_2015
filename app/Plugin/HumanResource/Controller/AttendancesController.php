@@ -43,7 +43,7 @@ class AttendancesController  extends HumanResourceAppController {
 		
 		$conditions =array('date(Attendance.date) BETWEEN ? AND ?' => array($date,$date2));
 		
-		$conditions = array();
+		//$conditions = array();
 
 		if (!empty($query['data'])) {
 

@@ -90,7 +90,7 @@
 															<?php echo $receivedOrderDataList['DeliveredOrder']['created']?>
 														</td>
 														<td>
-															<?php echo $receivedOrderDataList['DeliveredOrder']['item_name']?>
+															<?php echo !empty($receivedOrderDataList['DeliveredOrder']['item_name']) ? $receivedOrderDataList['DeliveredOrder']['item_name'] : " " ?>
 														</td>
 														<td>
 														<?php 
@@ -127,6 +127,14 @@
 											</tbody>
 										</table>
 									</div>
+
+									<div class="paging" id="item_type_pagination">
+					                    <?php
+					                    echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
+					                    echo $this->Paginator->numbers(array('separator' => ''));
+					                    echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
+					                    ?>
+					                </div>
 								</div>
 
 							</div>

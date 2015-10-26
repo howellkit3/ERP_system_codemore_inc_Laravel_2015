@@ -662,9 +662,8 @@ class ReceivingsController extends WareHouseAppController {
 		$supplierData = $this->Supplier->find('list', array('fields' => array('Supplier.id', 'Supplier.name')
 																));
 
-
 		$requestData = $this->Request->find('first', array('conditions' => array('Request.uuid' => $requestUUID)));
-		//pr($requestData); exit;
+		
 		$areaList = $this->Area->find('list', array('fields' => array('Area.id', 'Area.name')
 		 														));
 
@@ -698,8 +697,6 @@ class ReceivingsController extends WareHouseAppController {
 
 			foreach ($value['ReceivedItem'] as $key => $valueOfValue) {	
 
-				//pr($value); exit;
-
 				if($valueOfValue['model'] == 'GeneralItem'){
 
 					$this->loadModel('GeneralItem');
@@ -707,11 +704,17 @@ class ReceivingsController extends WareHouseAppController {
 					$itemDetails = $this->GeneralItem->find('list', array('fields' => array('GeneralItem.id', 'GeneralItem.name')
 					 													));  
 
+					$receiveItem[$key][$itemHolder]['id']	= $valueOfValue['id'];
+
 					$receiveItem[$key][$itemHolder]['name'] = $itemDetails[$valueOfValue['foreign_key']];	
 
 					$receiveItem[$key][$itemHolder]['model'] = $valueOfValue['model'];
 
-					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];		
+					$receiveItem[$key][$itemHolder]['unit_price'] = $valueOfValue['unit_price'];
+
+					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];	
+
+					$receiveItem[$key][$itemHolder]['uuid'] = $valueOfValue['request_uuid'];		
 
 					$receiveItem[$key][$itemHolder]['unit_id'] = !empty($valueOfValue['quantity_unit_id']) ? $valueOfValue['quantity_unit_id'] : 14 ;	
 
@@ -730,11 +733,17 @@ class ReceivingsController extends WareHouseAppController {
 		        	$itemDetails = $this->Substrate->find('list', array('fields' => array('Substrate.id', 'Substrate.name')
 					 													));  
 
+		        	$receiveItem[$key][$itemHolder]['id']	= $valueOfValue['id'];
+
 					$receiveItem[$key][$itemHolder]['name'] = $itemDetails[$valueOfValue['foreign_key']];	
 
 					$receiveItem[$key][$itemHolder]['model'] = $valueOfValue['model'];
 
 					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];
+
+					$receiveItem[$key][$itemHolder]['unit_price'] = $valueOfValue['unit_price'];
+
+					$receiveItem[$key][$itemHolder]['uuid'] = $valueOfValue['request_uuid'];	
 
 					$receiveItem[$key][$itemHolder]['unit_id'] = !empty($valueOfValue['quantity_unit_id']) ? $valueOfValue['quantity_unit_id'] : 14 ;	
 
@@ -753,11 +762,17 @@ class ReceivingsController extends WareHouseAppController {
 		        	$itemDetails = $this->CompoundSubstrate->find('list', array('fields' => array('CompoundSubstrate.id', 'CompoundSubstrate.name')
 					 													));  
 
+		        	$receiveItem[$key][$itemHolder]['id']	= $valueOfValue['id'];
+
 					$receiveItem[$key][$itemHolder]['name'] = $itemDetails[$valueOfValue['foreign_key']];	
 
 					$receiveItem[$key][$itemHolder]['model'] = $valueOfValue['model'];
 
+					$receiveItem[$key][$itemHolder]['unit_price'] = $valueOfValue['unit_price'];
+
 					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];
+
+					$receiveItem[$key][$itemHolder]['uuid'] = $valueOfValue['request_uuid'];	
 
 					$receiveItem[$key][$itemHolder]['unit_id'] = !empty($valueOfValue['quantity_unit_id']) ? $valueOfValue['quantity_unit_id'] : 14 ;	
 
@@ -777,11 +792,17 @@ class ReceivingsController extends WareHouseAppController {
 		        	$itemDetails = $this->CorrugatedPaper->find('list', array('fields' => array('CorrugatedPaper.id', 'CorrugatedPaper.name')
 					 													));  
 
+		        	$receiveItem[$key][$itemHolder]['id']	= $valueOfValue['id'];
+
 					$receiveItem[$key][$itemHolder]['name'] = $itemDetails[$valueOfValue['foreign_key']];	
 
 					$receiveItem[$key][$itemHolder]['model'] = $valueOfValue['model'];
 
-					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];	
+					$receiveItem[$key][$itemHolder]['unit_price'] = $valueOfValue['unit_price'];
+
+					$receiveItem[$key][$itemHolder]['quantity'] = $valueOfValue['quantity'];
+
+					$receiveItem[$key][$itemHolder]['uuid'] = $valueOfValue['request_uuid'];	
 
 					$receiveItem[$key][$itemHolder]['unit_id'] = !empty($valueOfValue['quantity_unit_id']) ? $valueOfValue['quantity_unit_id'] : 14 ;	
 
@@ -796,7 +817,6 @@ class ReceivingsController extends WareHouseAppController {
 			}
         }
 
-        //pr($receiveItem); exit;
 
    	$this->set(compact('unitData','purchaseOrderData','userName', 'supplierData', 'firstName', 'lastName', 'requestData', 'itemDetails', 'receiveItem', 'itemData', 'receivedOrderData', 'type', 'requestItemData', 'itemHolder', 'deliveredDataID', 'receivedItemData', 'areaList', 'userNameList'));
 
@@ -1268,5 +1288,27 @@ class ReceivingsController extends WareHouseAppController {
         // ));  
 
     }
+
+    public function add_unit_price($id = null ,$deliveredId = null,  $uuid = null) {
+
+    	$this->loadModel('WareHouse.ReceivedItem');
+
+		$this->ReceivedItem->id = $id;
+
+		$this->ReceivedItem->saveField('unit_price', $this->request->data['ReceivedItem']['unit_price']);
+
+		$this->Session->setFlash(__('Unit Price has been added'), 'success');
+      
+        $this->redirect( array(
+            'controller' => 'receivings',   
+            'action' => 'view_receive',$deliveredId, $uuid
+        ));  
+
+    
+
+    }
+
+
+    
 
 }
