@@ -76,7 +76,7 @@ class DeliveriesController extends DeliveryAppController {
         $this->set(compact('noPermissionSales','clientsOrder','deliveryData', 'deliveryList', 'deliveryDetailList', 'clientsStatus', 'deliveryStatus', 'orderList', 'orderListHelper', 'orderDeliveryList'));
     }
 
-    public function add($deliveryScheduleId = null,$quotationId = null, $clientsOrderUuid = null){
+    public function add($deliveryScheduleId = null,$quotationId = null, $clientsOrderUuid = null,$clientUuid = null){
 
         $userData = $this->Session->read('Auth');
       
@@ -142,7 +142,7 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->redirect(
 
-            array('controller' => 'deliveries', 'action' => 'view',$deliveryScheduleId,$quotationId,$clientsOrderUuid)
+            array('controller' => 'deliveries', 'action' => 'view',$deliveryScheduleId,$quotationId,$clientsOrderUuid,$scheduleInfo['ClientOrder']['uuid'])
 
         );
 
