@@ -23,7 +23,6 @@
                                     'action' => 'add_schedule', 
                                     !empty($deliveryEdit[0]['Delivery']['id']) ? $deliveryEdit[0]['Delivery']['id'] : '',
                                     !empty( $scheduleInfo['ClientOrderDeliverySchedule']['id']) ? $scheduleInfo['ClientOrderDeliverySchedule']['id'] : '',
-                                    $quotationId,
                                     $clientsOrderUuid,
                                     $clientUuid
                                     )),'class' => 'form-horizontal')); ?>
@@ -35,13 +34,13 @@
                                 <?php 
                                     foreach ($deliveryEdit as $deliveryDataList): 
 
-                                        if($deliveryDataList['DeliveryDetail']['status'] == 3){
+                                        if($deliveryDataList['DeliveryDetail']['status'] == 3 && $deliveryDataList['Delivery']['status'] == 1){
 
                                           $difference = $deliveryDataList['DeliveryDetail']['delivered_quantity']; 
 
                                           array_push($pushRemaining,$difference );
 
-                                        }else if ($deliveryDataList['DeliveryDetail']['status'] != 5){
+                                        }else if ($deliveryDataList['DeliveryDetail']['status'] != 5 && $deliveryDataList['Delivery']['status'] == 1 ){
 
                                         $difference = $deliveryDataList['DeliveryDetail']['quantity']; 
 
@@ -57,6 +56,8 @@
 
                                           $totaldifference = $totaldifference + $value;
 
+
+
                                           }   
         
 
@@ -68,7 +69,6 @@
 
                                           $totalremaining = $scheduleInfo['ClientOrderDeliverySchedule']['quantity'];
                                           }
-
 
 
                                           ?>
@@ -217,7 +217,7 @@
                 </div>
                 <div class="modal-body">
                     <?php  echo $this->Form->create('Delivery',array('url'=>(array('controller' => 'deliveries', 
-                            'action' => 'add', $scheduleInfo['ClientOrderDeliverySchedule']['id'],$quotationId,$clientsOrderUuid,$clientUuid)),'class' => 'form-horizontal'))?>
+                            'action' => 'add', $scheduleInfo['ClientOrderDeliverySchedule']['id'],$clientsOrderUuid,$clientUuid)),'class' => 'form-horizontal'))?>
                     
 
                         <div class="form-group" id="existing_items">
@@ -348,7 +348,7 @@
                 </div>
                 <div class="modal-body">
                     <?php  echo $this->Form->create('Delivery',array('url'=>(array('controller' => 'deliveries', 
-                            'action' => 'add', $scheduleInfo['ClientOrderDeliverySchedule']['id'],$quotationId,$clientsOrderUuid)),'class' => 'form-horizontal'))?>
+                            'action' => 'add', $scheduleInfo['ClientOrderDeliverySchedule']['id'],$clientsOrderUuid)),'class' => 'form-horizontal'))?>
                     
 
                         <div class="form-group" id="existing_items">

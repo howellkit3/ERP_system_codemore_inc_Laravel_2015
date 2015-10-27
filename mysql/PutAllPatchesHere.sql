@@ -2240,3 +2240,7 @@ ALTER TABLE `received_items`  ADD `unit_price` INT(11)  NULL  DEFAULT NULL  AFTE
 /*aldrin addedd this oct-23-2015 */
 ALTER TABLE `items`
 ADD COLUMN `item_group` varchar(255) NULL AFTER `supplier`;
+
+/*howell addedd this oct-27-2015 Delivery */
+ALTER TABLE `deliveries` CHANGE `dr_uuid` `dr_uuid` VARCHAR(50) NOT NULL;
+ALTER TABLE `delivery_details` CHANGE `delivery_uuid` `delivery_uuid` VARCHAR(50) NOT NULL;
