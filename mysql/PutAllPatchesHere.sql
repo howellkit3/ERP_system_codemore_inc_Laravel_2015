@@ -2240,3 +2240,14 @@ ALTER TABLE `received_items`  ADD `unit_price` INT(11)  NULL  DEFAULT NULL  AFTE
 /*aldrin addedd this oct-23-2015 */
 ALTER TABLE `items`
 ADD COLUMN `item_group` varchar(255) NULL AFTER `supplier`;
+
+
+/* aldrin added this oct-27-2015 */
+ALTER TABLE `items`
+MODIFY COLUMN `created`  datetime NULL DEFAULT NULL AFTER `description`,
+ADD COLUMN `type`  varchar(255) NULL AFTER `modified`,
+ADD COLUMN `gsm`  varchar(255) NULL AFTER `type`,
+ADD COLUMN `width`  varchar(255) NULL AFTER `GSM`,
+ADD COLUMN `length`  varchar(255) NULL AFTER `width`,
+ADD COLUMN `quantity`  varchar(255) NULL AFTER `length`,
+ADD COLUMN `location`  text NULL AFTER `quantity`;
