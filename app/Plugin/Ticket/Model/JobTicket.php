@@ -48,6 +48,15 @@ class JobTicket extends AppModel {
 				// 	'conditions' => array('Product.id = JobTicket.product_id'),
 				// 	'dependent' => true
 				// ),
+			),
+		'hasMany' => array(
+				'TicketProcessSchedule' => array(
+					'className' => 'Production.TicketProcessSchedule',
+					'foreignKey' => 'job_ticket_id',
+					'order' => array('TicketProcessSchedule.order ASC'),
+					//'conditions' => 'TicketProcessSchedule.job_ticket_id = JobTicket.id'
+				),				
+
 			)
 			
 		),false);

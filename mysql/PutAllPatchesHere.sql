@@ -2240,3 +2240,7 @@ ALTER TABLE `received_items`  ADD `unit_price` INT(11)  NULL  DEFAULT NULL  AFTE
 /*aldrin addedd this oct-23-2015 */
 ALTER TABLE `items`
 ADD COLUMN `item_group` varchar(255) NULL AFTER `supplier`;
+
+ALTER TABLE `ticket_process_schedules`
+ADD COLUMN `status`  int(11) NULL DEFAULT 0 AFTER `remarks`;
+
