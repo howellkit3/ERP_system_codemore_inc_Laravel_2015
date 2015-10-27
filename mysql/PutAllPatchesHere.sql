@@ -2251,3 +2251,8 @@ ADD COLUMN `width`  varchar(255) NULL AFTER `GSM`,
 ADD COLUMN `length`  varchar(255) NULL AFTER `width`,
 ADD COLUMN `quantity`  varchar(255) NULL AFTER `length`,
 ADD COLUMN `location`  text NULL AFTER `quantity`;
+
+/*howell addedd this oct-27-2015 Delivery */
+ALTER TABLE `deliveries` CHANGE `dr_uuid` `dr_uuid` VARCHAR(50) NOT NULL;
+ALTER TABLE `delivery_receipts` CHANGE `dr_uuid` `dr_uuid` VARCHAR(50) NOT NULL;
+ALTER TABLE `delivery_details` CHANGE `delivery_uuid` `delivery_uuid` VARCHAR(50) NOT NULL;

@@ -184,12 +184,11 @@
                                     echo $this->Form->input('DeliveryDetail.location', array(
                                                                     'empty' => '--Select Location--',
                                                                     'class' => 'form-control item_type editable addquantityLimit',
-                                                                    'options' => array($companyAddress[$clientsOrder['ClientOrder']['company_id']]),
+                                                                    'options' => array(!empty($scheduleInfo['ClientOrder']['company_id'])) ? $companyAddress[$scheduleInfo['ClientOrder']['company_id']] : "" ,
                                                                     'type' => 'select',
                                                                     'required' => 'required',
                                                                     'label' => false,
-                                                                     'value' => !empty($deliveryEdit[0]['DeliveryDetail']['location']) ? $deliveryEdit[0]['DeliveryDetail']['location'] : ''
-                                                                    ));
+                                                                     'value' => !empty($deliveryEdit[0]['DeliveryDetail']['location']) ? $deliveryEdit[0]['DeliveryDetail']['location'] : " "                                                                    ));
                                 ?>
                             </div>
                         </div>
