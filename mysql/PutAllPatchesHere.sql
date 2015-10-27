@@ -2241,6 +2241,13 @@ ALTER TABLE `received_items`  ADD `unit_price` INT(11)  NULL  DEFAULT NULL  AFTE
 ALTER TABLE `items`
 ADD COLUMN `item_group` varchar(255) NULL AFTER `supplier`;
 
-/*howell addedd this oct-27-2015 Delivery */
-ALTER TABLE `deliveries` CHANGE `dr_uuid` `dr_uuid` VARCHAR(50) NOT NULL;
-ALTER TABLE `delivery_details` CHANGE `delivery_uuid` `delivery_uuid` VARCHAR(50) NOT NULL;
+
+/* aldrin added this oct-27-2015 */
+ALTER TABLE `items`
+MODIFY COLUMN `created`  datetime NULL DEFAULT NULL AFTER `description`,
+ADD COLUMN `type`  varchar(255) NULL AFTER `modified`,
+ADD COLUMN `gsm`  varchar(255) NULL AFTER `type`,
+ADD COLUMN `width`  varchar(255) NULL AFTER `GSM`,
+ADD COLUMN `length`  varchar(255) NULL AFTER `width`,
+ADD COLUMN `quantity`  varchar(255) NULL AFTER `length`,
+ADD COLUMN `location`  text NULL AFTER `quantity`;
