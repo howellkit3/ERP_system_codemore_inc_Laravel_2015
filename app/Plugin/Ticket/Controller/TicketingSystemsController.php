@@ -154,6 +154,8 @@ class TicketingSystemsController extends TicketAppController {
                                                     'name'
                                                  )
                                                 ));
+
+
         //$subProcess =  $subProcess['SubProcess'];
 
         //set to cache in first load
@@ -179,7 +181,7 @@ class TicketingSystemsController extends TicketAppController {
             $noPermissionSales = ' ';
         }
 
-           if (!empty($_GET['data'])) {
+        if (!empty($_GET['data'])) {
 
             Configure::write('debug',2);
 
@@ -283,11 +285,12 @@ class TicketingSystemsController extends TicketAppController {
 
                 $this->request->data = $this->PlateMakingProcess->find('first',array(
                     'conditions' => array(
-                            'PlateMakingProcess.job_ticket_id' =>  $ticketId,
+                            'PlateMakingProcess.job_ticket_id' =>  $ticketuuId,
                             'PlateMakingProcess.process_id' => $processId,
                             'PlateMakingProcess.product' => $product
                     )
                 ));
+
 
                 $this->set(compact('machines'));
                 
@@ -883,13 +886,20 @@ class TicketingSystemsController extends TicketAppController {
 
             $product  = !empty($this->request->params['named']['productId']) ? $this->request->params['named']['productId'] : '';
             //plateMaking Process
+            $query = $this->request->query;
+
+
+            $productId = !empty($query['productId']) ? $query['productId'] : $product;
             $PlateMakingProcess = $this->PlateMakingProcess->getProcess(
                 array(
-                    'ticketId' => $ticketUuid, 'processID' =>  $processId , 'productId' =>  $productUuid,
-                    'product' => $product,
+                    'ticketuuId' => $ticketUuid, 'processID' =>  $processId , 
+                    'productId' =>  $productUuid,
+                    'product' => $productId,
                     'ticketId' => $ticketId  
                 )
             );
+
+
 
             $view->set(compact('PlateMakingProcess','subProcess'));
             
