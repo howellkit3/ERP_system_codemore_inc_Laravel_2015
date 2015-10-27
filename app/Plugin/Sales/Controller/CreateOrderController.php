@@ -86,7 +86,7 @@
 		    $seconds = date("s");
 		    $random = rand(1000, 10000);
 		        
-			$code =  $year. $month .$random;
+			$code =  strtotime(date('y-m-d h:i:s'));  
 
 			$currencies = $this->Currency->getList();
 

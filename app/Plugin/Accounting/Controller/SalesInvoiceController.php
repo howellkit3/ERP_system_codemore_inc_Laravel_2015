@@ -565,7 +565,7 @@ class SalesInvoiceController extends AccountingAppController {
         $invoiceData = $this->SalesInvoice->find('first', array(
                                             'conditions' => array('SalesInvoice.id' => $invoiceId
                                             )));
-
+        
         $prepared = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
                                                             'conditions' => array('User.id' => $invoiceData['SalesInvoice']['created_by'])
                                                             )); 
@@ -575,6 +575,8 @@ class SalesInvoiceController extends AccountingAppController {
         $drData = $this->Delivery->find('first', array(
                                             'conditions' => array('Delivery.dr_uuid' => $invoiceData['SalesInvoice']['dr_uuid']
                                             )));
+
+
        
         $clientData = $this->ClientOrder->find('first', array(
                                             'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']

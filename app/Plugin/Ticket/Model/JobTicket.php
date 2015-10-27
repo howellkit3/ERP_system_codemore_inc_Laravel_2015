@@ -202,13 +202,17 @@ class JobTicket extends AppModel {
 	    $year = date("y");
 	    $hour = date("H");
 	    $minute = date("i");
+	    $day = date("d");
 	    $seconds = date("s");
 	    $random = rand(1000, 10000);
+	    $hoho = 99;
 
-	    $code =  $year. $month .$random;
+	    $timestamp = strtotime(date('y-m-d h:i:s'));  
+
+	    $code =  $year. $month .$day .$minute .$seconds ;
 	    $this->create();
 
-	    $data[$this->name]['uuid'] = $code;
+	    $data[$this->name]['uuid'] = $timestamp;
 	    $data[$this->name]['product_id'] = $clientData['Product']['id'];
 	    $data[$this->name]['client_order_id'] = $clientOrderId;
 	    $data[$this->name]['po_number'] = $clientData['ClientOrder']['po_number'];
