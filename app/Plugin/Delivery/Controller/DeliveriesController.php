@@ -27,8 +27,10 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->Delivery->bindDelivery();
         $deliveryStatus = $this->Delivery->find('all',array( 'conditions' => array(
-                                        'DeliveryDetail.status' => 1
+                                        'DeliveryDetail.status' => 3
                                         )));
+
+        //pr($deliveryStatus); exit;
 
         $deliveryList = $this->Delivery->find('list',array('fields' => array('schedule_uuid', 'dr_uuid')));
 
@@ -207,13 +209,16 @@ class DeliveriesController extends DeliveryAppController {
          //    $deliveryConditions = array_merge($deliveryConditions,array('Delivery.clients_order_id' => $clientUuid));
         // }
 
-        $deliveryConditions = array('Delivery.clients_order_id' => $clientUuid);
+        //pr($clientUuid); exit;
+
+        $deliveryConditions = array('Delivery.schedule_uuid' => $clientsOrderUuid);
 
         $deliveryEdit = $this->Delivery->find('all', array(
                                          'conditions' => $deliveryConditions ,
                                         'order' => 'Delivery.id DESC'
                                     ));
 
+       // pr($deliveryEdit); exit; 
 
         $this->Delivery->bindDelivery();
 
@@ -248,9 +253,13 @@ class DeliveriesController extends DeliveryAppController {
  
         $this->ClientOrder->bindDelivery();
 
+        //pr($scheduleInfo['ClientOrder']['quotation_id']); exit;
+
         $clientsOrder = $this->ClientOrder->find('first', array(
-                                              'conditions' => array('ClientOrderDeliverySchedule.uuid' => $clientsOrderUuid
+                                              'conditions' => array('ClientOrderDeliverySchedule.uuid' => $scheduleInfo['ClientOrderDeliverySchedule']['uuid']
                                               )));    
+
+        //pr($clientsOrder); exit;
 
         $measureList = $this->Measure->find('list',array('fields' => array('id', 'name'))); 
 
@@ -283,8 +292,8 @@ class DeliveriesController extends DeliveryAppController {
         //}
     }
 
-    public function add_schedule($idDelivery = null, $idDeliveryDetail = null,$deliveryScheduleId = null, $clientsOrderUuid = null,$clientUuid = null) {
-        //pr($idDelivery); pr($idDeliveryDetail); pr($deliveryScheduleId); pr($quotationId); pr($clientsOrderUuid); exit;
+    public function add_schedule($idDelivery = null, $idDeliveryDetail = null,$deliveryScheduleId = null) {
+        //pr($idDelivery);  pr($idDeliveryDetail); pr($deliveryScheduleId);  pr($clientUuid); exit;
         $userData = $this->Session->read('Auth');
 
         $this->loadModel('Delivery.DeliveryDetail');
@@ -322,7 +331,7 @@ class DeliveriesController extends DeliveryAppController {
               
                 $this->redirect( array(
                            'controller' => 'deliveries',   
-                           'action' => 'view',$idDeliveryDetail,$deliveryScheduleId,$quotationId,$clientsOrderUuid
+                           'action' => 'view',$idDeliveryDetail,$deliveryScheduleId,$clientsOrderUuid
                       ));  
             }// } else if (!empty($DRdata) && $DRdata['DeliveryDetail']['status'] == 2) {
 
@@ -339,6 +348,8 @@ class DeliveriesController extends DeliveryAppController {
             $this->request->data['DeliveryDetail']['created_by'] =  $userData['User']['id'];    
             $this->request->data['Delivery']['status'] =  '1';   
             $this->request->data['Delivery']['modified_by'] =  $userData['User']['id']; 
+
+            //pr($this->request->data); exit;
 
             $data =  $this->request->data;
 

@@ -81,6 +81,8 @@
   
                                                     if($value['Delivery']['schedule_uuid'] == $orderDeliveryList[$uuidClientsOrder]  ){  
 
+                                                     // pr(array_sum($arr)); 
+
                                                       if($value['DeliveryDetail']['status'] != 5){
                                                    
                                                       array_push($arr,$value['DeliveryDetail']['delivered_quantity']);
@@ -161,7 +163,7 @@
                                                                           <span class ="post"><font size = "1px">View</font></span>
                                                                           </span> ', array('controller' => 'deliveries', 
                                                                                          'action' => 'view',
-                                                                         $scheduleDataList['ClientOrderDeliverySchedule']['id'],$scheduleDataList['ClientOrderDeliverySchedule']['uuid'], $scheduleDataList['ClientOrder']['uuid']),
+                                                                         $scheduleDataList['ClientOrderDeliverySchedule']['id'], $scheduleDataList['ClientOrderDeliverySchedule']['uuid'], $scheduleDataList['ClientOrder']['uuid']),
                                                                           array('class' =>' table-link small-link-icon '.$noPermissionSales,'escape' => false,'title'=>'Edit Information'
                                                                      )); 
                                             ?>     
