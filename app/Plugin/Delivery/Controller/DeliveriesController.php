@@ -749,11 +749,21 @@ class DeliveriesController extends DeliveryAppController {
 
     public function search_order($hint = null){
 
+        $userData = $this->Session->read('Auth');
+
         $this->loadModel('Sales.ClientOrder');
 
         $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
         $this->ClientOrder->bindDelivery();
+
+        if ($userData['User']['role_id'] == 3 || $userData['User']['role_id'] == 6 || $userData['User']['role_id'] == 9) {
+
+            $noPermissionSales = 'disabled not-active';
+
+        }else{
+            $noPermissionSales = ' ';
+        }
 
         $conditions = array('ClientOrder.status_id' => null, 'OR' => array(
                         array('ClientOrder.po_number LIKE' => '%' . $hint . '%'),
@@ -783,7 +793,7 @@ class DeliveriesController extends DeliveryAppController {
 
         $deliveryDetailList = $this->DeliveryDetail->find('list',array('fields' => array('delivery_uuid', 'delivered_quantity')));
 
-        $this->set(compact('clientsOrder', 'deliveryStatus', 'deliveryList', 'orderListHelper', 'orderDeliveryList', 'deliveryDetailList' , 'deliveryData'));
+        $this->set(compact('clientsOrder','noPermissionSales',  'deliveryStatus', 'deliveryList', 'orderListHelper', 'orderDeliveryList', 'deliveryDetailList' , 'deliveryData'));
 
         if ($hint == ' ') {
             $this->render('index');
