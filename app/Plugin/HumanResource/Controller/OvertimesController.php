@@ -661,7 +661,6 @@ class OvertimesController  extends HumanResourceAppController {
 			$overtime['Overtime']['id'] = $otId;
 			$overtime['Overtime']['status'] = $status;
 
-
 			if ($this->Overtime->save($overtime['Overtime'])) {
 
 				if ($status == 'approved') {

@@ -146,7 +146,6 @@ class AttendancesController  extends HumanResourceAppController {
 		
 		$attendances = $this->paginate();
 
-
 		if (!empty($_GET['test'])) {
 
 			

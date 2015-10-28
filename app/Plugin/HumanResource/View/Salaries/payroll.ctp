@@ -91,7 +91,6 @@
                                            <?php foreach ($payrolls as $key => $payroll): ?>
                                                     
                                                     <tr>
-                                                       
                                                         <td class="">
                                                            <?php echo !empty($payroll['Payroll']['date']) ? date('Y/m/d', strtotime($payroll['Payroll']['date']))  : ''; ?>
                                                         </td>

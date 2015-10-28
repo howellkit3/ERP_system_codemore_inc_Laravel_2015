@@ -32,26 +32,26 @@ echo $this->element('hr_options');
 						<header class="main-box-header clearfix"><!-- 
 			                <h2 class="pull-left"><b>Salaries</b> </h2> -->
 			                <div class="filter-block pull-left">
-			              <div class="form-group pull-left">
-			                 	
-			                 		<input type="text" type="date" name="range[month]" id="changeDate" class="form-control monthpick" value="<?php echo $date ?>">
-									     <i class="fa fa fa-calendar calendar-icon"></i>
-								</div>
+                        <div class="form-group pull-left">
+                           	
+                           		<input type="text" type="date" name="range[month]" id="changeDate" class="form-control monthpick" value="<?php echo $date ?>">
+                           <i class="fa fa fa-calendar calendar-icon"></i>
+                        </div>
 
-							<div class="form-group pull-left">
-								<div class="radio inline-block">
-									<input type="radio" checked="" value="1:15" id="optionsRadios1" name="range[days]">
-									<label for="optionsRadios1">
-										1 - 15
-									</label>
-								</div>
-								<div class="radio inline-block">
-									<input type="radio" value="16:31" id="optionsRadios2" name="range[days]">
-									<label for="optionsRadios2">
-										16 - 31
-									</label>
-								</div>
-							</div>
+            							<div class="form-group pull-left">
+            								<div class="radio inline-block">
+            									<input type="radio" checked="" value="1:15" id="optionsRadios1" name="range[days]">
+            									<label for="optionsRadios1">
+            										1 - 15
+            									</label>
+            								</div>
+            								<div class="radio inline-block">
+            									<input type="radio" value="16:31" id="optionsRadios2" name="range[days]">
+            									<label for="optionsRadios2">
+            										16 - 31
+            									</label>
+            								</div>
+            							</div>
 
 			               </div>
 			               <div class="filter-block pull-right">

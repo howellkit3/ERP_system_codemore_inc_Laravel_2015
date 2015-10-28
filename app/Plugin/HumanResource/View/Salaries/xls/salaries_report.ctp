@@ -341,6 +341,7 @@
                       }
 
                   $sheet->getStyle($next_field_inner)->applyFromArray($styleArrayBorder);
+                  
                   $sheet->getStyle($next_field_inner)->getNumberFormat()->setFormatCode('#,##0.00');
 
                   $next_field_inner = implode($split);

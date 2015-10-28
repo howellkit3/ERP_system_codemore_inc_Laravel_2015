@@ -530,6 +530,24 @@ class SalariesController  extends HumanResourceAppController {
 		$this->render('/Salaries/philhealth_table');
 
 	}
+
+	public function pagibig_table() {
+
+	 	$this->loadModel('Payroll.PagibigRange');
+
+	    $conditions = array();
+
+	    $ranges = $this->PagibigRange->find('all',array(
+	        'conditions' => $conditions,
+	        'order' => array('PagibigRange.range_from ASC')
+	    ));
+
+	    $this->set(compact('ranges'));
+
+		$this->render('/Salaries/pagibig_table');
+
+	}
+
 	public function adjustments() {
 
 
@@ -1621,7 +1639,18 @@ class SalariesController  extends HumanResourceAppController {
 
 			$this->loadModel('Payroll.Payroll');
 
+			$this->loadModel('Payroll.SalaryReport');
+
+			$payroll = $this->Payroll->read(null,$id);
+
 			if ($this->Payroll->delete($id)) {
+
+				//delete salary report
+				$this->SalaryReport->deleteAll(array(
+					'SalaryReport.from' => $payroll['Payroll']['from'],
+					'SalaryReport.from' => $payroll['Payroll']['to'],
+				
+				));
 
 				$this->Session->setFlash(__('Payroll data delete successfully.'),'success');
 
@@ -1644,6 +1673,9 @@ class SalariesController  extends HumanResourceAppController {
 
 			$this->loadModel('Payroll.Payroll');
 
+
+			$this->loadModel('Payroll.Loan');
+
 			$data = $this->request->data;
 			
 			/* if( $this->process_payroll($data['Payroll']['payroll_id'],$data['Payroll']['emp'])) {
@@ -1652,9 +1684,7 @@ class SalariesController  extends HumanResourceAppController {
 
 			$payrollData = array();
 
-
 			$payroll = $this->Payroll->findById($data['Payroll']['payroll_id']);
-
 
 			$payrollData['Payroll']['id'] = $data['Payroll']['payroll_id'];
 
@@ -1663,11 +1693,15 @@ class SalariesController  extends HumanResourceAppController {
 			$payrollData['Payroll']['status'] = 3;
 
 			$this->Payroll->save($payrollData);
+
+
+			$deductions = $this->Loan->find('list',array('fields' => array('id','name')));
+
 			//exit();
 
 			$salariesList = $this->_checkPayroll($payroll,false,$data['Payroll']['emp']);
 
-			$this->set(compact('payroll','salariesList'));
+			$this->set(compact('payroll','salariesList','deductions'));
 
 			$this->render('Salaries/payroll_view');
 	
@@ -1785,17 +1819,21 @@ class SalariesController  extends HumanResourceAppController {
 			}
 			
 			$deductions = $this->Loan->find('list',array('fields' => array('id','name')));
+
+			$salariesList = $salaries;
 		
-			$salarySplit = array_chunk($salaries , 10);
+			// $salarySplit = array_chunk($salaries , 10);
 
-			if (!empty($this->params['named']['page'])) {
+			// if (!empty($this->params['named']['page'])) {
 
-				$salariesList = $salarySplit[$this->params['named']['page']];
+			// 	$salariesList = $salarySplit[$this->params['named']['page']];
 
-			} else {
+			// } else {
 
-				$salariesList = $salarySplit[0];
-			}
+			// 	$salariesList = $salarySplit[0];
+			// }
+
+
 
 			} else {
 
@@ -1969,6 +2007,8 @@ class SalariesController  extends HumanResourceAppController {
 		
 		$salaries = '';
 
+		ini_set('max_execution_time', 300);
+
 		if (!empty($payroll)) {
 
 			$this->loadModel('HumanResource.Attendance');
@@ -1982,6 +2022,8 @@ class SalariesController  extends HumanResourceAppController {
 			$this->loadModel('HumanResource.WorkShift');
 			$this->loadModel('HumanResource.WorkShiftBreak');
 			$this->loadModel('HumanResource.BreakTime');
+
+			$this->loadModel('HumanResource.Overtime');
 			$this->loadModel('HumanResource.OvertimeExcess');
 
 			$this->Employee->bind(array('Salary','GovernmentRecord','Department','Position','EmployeeAdditionalInformation'));	
@@ -1994,13 +2036,32 @@ class SalariesController  extends HumanResourceAppController {
 			$employees = $this->Employee->find('all',array(
 								'conditions' => $empConditions,
 								'order' => array('Employee.last_name ASC'),
-								//'fields' => array('')
+								'fields' => array(
+									'Employee.id',
+									'Employee.code',
+									'Employee.first_name',
+									'Employee.middle_name',
+									'Employee.last_name',
+									'Employee.suffix',
+									'Employee.full_name',
+									'Position.name',
+									'Position.id',
+									'Department.id',
+									'Department.name',
+									'Salary.id',
+									'Salary.wage',
+									'Salary.tax_status',
+									'Salary.basic_pay',
+									'Salary.basic_pay_per_month',
+									'Salary.ctpa',
+									'Salary.sea',
+									'Salary.allowances',
+									'Salary.employee_salary_type'
+
+								),
 								'group' => array('Employee.id')
 							));
-
-
-
-
+		
 			$customDate['start'] = $payroll['Payroll']['from'];
 
 			$customDate['end'] = $payroll['Payroll']['to'];
@@ -2396,21 +2457,33 @@ class SalariesController  extends HumanResourceAppController {
 
 			$data = $this->request->data;
 
+			$month = date('m');
+
+			if (!empty($data['Attendance']['month'])) {
+
+				$month = $data['Attendance']['month'];
+			}
+
+
+			$monthDate = date('Y').'-'.$month.'-';
+
 			if ($data['Payroll']['date'] == '1:15') {
 
-				$date = array(
-					'date1' => date('Y-m-01'),
-					'date2' => date('Y-m-15')
-					);
-			} else {
 
 				$date = array(
-					'date1' => date('Y-m-01'),
-					'date2' => date('Y-m-t')
+					'date1' => date($monthDate.'01'),
+					'date2' => date($monthDate.'15')
+					);
+			} elseif ($data['Payroll']['date'] == '16:31') {
+
+				$date = array(
+					'date1' => date($monthDate.'16'),
+					'date2' => date($monthDate.'t')
 					);
 
 			}
 
+	
 			$this->loadModel('HumanResource.Attendance');
 			$this->loadModel('HumanResource.Employee');
 			$this->loadModel('HumanResource.EmployeeAdditionalInformation');
@@ -2450,7 +2523,6 @@ class SalariesController  extends HumanResourceAppController {
 							));
 
 
-
 			$customDate['start'] = $date['date1'];
 
 			$customDate['end'] = $date['date2'];
@@ -2474,9 +2546,6 @@ class SalariesController  extends HumanResourceAppController {
 							$this->Attendance->bindMyWorkshift(); 
 							$employees[$key]['Attendance'] = $this->Attendance->computeAttendance($conditions);
 					}
-
-
-					
 					//$this->Components->load('HumanResource.SalaryComputation');
 					$this->loadModel('HumanResource.SalaryReport');
 					$this->loadModel('HumanResource.Holiday');

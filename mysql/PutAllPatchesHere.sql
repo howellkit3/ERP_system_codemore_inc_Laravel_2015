@@ -2251,3 +2251,25 @@ ADD COLUMN `width`  varchar(255) NULL AFTER `GSM`,
 ADD COLUMN `length`  varchar(255) NULL AFTER `width`,
 ADD COLUMN `quantity`  varchar(255) NULL AFTER `length`,
 ADD COLUMN `location`  text NULL AFTER `quantity`;
+
+
+/*aldrin added this oct 28 2015 */
+-- ----------------------------
+DROP TABLE IF EXISTS `pagibig_ranges`;
+CREATE TABLE `pagibig_ranges` (
+  `id` int(11) NOT NULL DEFAULT '0',
+  `range_from` varchar(255) DEFAULT NULL,
+  `range_to` varchar(255) DEFAULT NULL,
+  `conditions` varchar(255) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of pagibig_ranges
+-- ----------------------------
+INSERT INTO `pagibig_ranges` VALUES ('0', '1500', '0', 'below', null, null, null, null);
+INSERT INTO `pagibig_ranges` VALUES ('1', '1,500', null, null, null, null, null, null);

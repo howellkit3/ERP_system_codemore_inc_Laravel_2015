@@ -55,3 +55,8 @@ table td {
 .calculate label{
   width: 99%;
 }
+
+
+.table-payroll th {
+  min-width: 100px;
+}
