@@ -320,7 +320,7 @@ class TicketingSystemsController extends TicketAppController {
 
     public function save_job_ticket_process() {
 
-        Configure::write('debug',2);
+       // Configure::write('debug',2);
 
         $this->loadModel('Ticket.WoodMoldJobTicket');
 
