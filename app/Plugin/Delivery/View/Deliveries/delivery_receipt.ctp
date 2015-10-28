@@ -59,6 +59,15 @@
                         ?>
 
                         <?php 
+                            echo $this->Form->input('Delivery.company_id', array(
+                            'class' => 'form-control item_type',
+                            'label' => false,
+                            'type' => 'hidden',
+                            'required' => 'required',
+                            'value' => $drData['Delivery']['company_id']));
+                        ?>
+
+                        <?php 
                             echo $this->Form->input('Print.form', array(
                             'class' => 'form-control item_type',
                             'label' => false,

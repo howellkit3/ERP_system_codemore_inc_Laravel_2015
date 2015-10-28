@@ -47,10 +47,10 @@
                                                  foreach ($deliveryStatus as $key => $value) {
 
                                                   $IdClientsOrder = $orderListHelper[$value['Delivery']['clients_order_id']];
-                                                               
+                                                                // pr($orderDeliveryList[$uuidClients]); 
                                                     if($value['Delivery']['schedule_uuid'] == $orderDeliveryList[$uuidClients] && $value['Delivery']['clients_order_id'] == $scheduleDataList['ClientOrder']['uuid']){  
 
-                                                      if($value['DeliveryDetail']['status'] != 5){
+                                                      if($value['DeliveryDetail']['status'] != 5 || $value['DeliveryDetail']['status'] != 2){
                                                    
                                                       array_push($arrholder,$value['DeliveryDetail']['delivered_quantity']);
 
@@ -80,6 +80,8 @@
                                                   $IdClientsOrder = $orderListHelper[$value['Delivery']['clients_order_id']];
   
                                                     if($value['Delivery']['schedule_uuid'] == $orderDeliveryList[$uuidClientsOrder]  ){  
+
+                                                     // pr(array_sum($arr)); 
 
                                                       if($value['DeliveryDetail']['status'] != 5){
                                                    
@@ -161,7 +163,7 @@
                                                                           <span class ="post"><font size = "1px">View</font></span>
                                                                           </span> ', array('controller' => 'deliveries', 
                                                                                          'action' => 'view',
-                                                                         $scheduleDataList['ClientOrderDeliverySchedule']['id'],$scheduleDataList['QuotationDetail']['quotation_id'],$scheduleDataList['ClientOrderDeliverySchedule']['uuid'], $scheduleDataList['ClientOrder']['uuid']),
+                                                                         $scheduleDataList['ClientOrderDeliverySchedule']['id'], $scheduleDataList['ClientOrderDeliverySchedule']['uuid'], $scheduleDataList['ClientOrder']['uuid']),
                                                                           array('class' =>' table-link small-link-icon '.$noPermissionSales,'escape' => false,'title'=>'Edit Information'
                                                                      )); 
                                             ?>     

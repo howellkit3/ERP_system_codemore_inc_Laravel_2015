@@ -5,7 +5,6 @@ $pushRemaining  = array();
 $totaldifference = 0; 
 $totalremaining = 0;
 
-
 ?>
 <div class="row1">
     <div class="col-lg-12">
@@ -229,27 +228,22 @@ $totalremaining = 0;
                         if(($totalremaining) == 0) {
 
                             if($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] == '1' || $deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] == '2' ) { 
-
+                           //     pr($deliveryEdit); exit;
 
                                 foreach ($deliveryEdit as $deliveryDataList): 
 
-                                   // pr($deliveryDataList['DeliveryReceipt']['type']);
 
-                                     if($deliveryDataList['DeliveryDetail']['status'] == 3 ){
+                                     if($deliveryDataList['DeliveryDetail']['status'] == 3 && $deliveryDataList['Delivery']['status'] == 1){
                                         
-
-
                                         $difference = $deliveryDataList['DeliveryDetail']['delivered_quantity']; 
 
                                         array_push($pushRemaining,$difference );
 
-                                    }else if ($deliveryDataList['DeliveryDetail']['status'] != 5){
+                                    }else if ($deliveryDataList['DeliveryDetail']['status'] != 5 && $deliveryDataList['Delivery']['status'] == 1){
 
                                         $difference = $deliveryDataList['DeliveryDetail']['quantity']; 
 
                                         array_push($pushRemaining,$difference );
-
-                                    
 
                                     }
 
@@ -283,7 +277,7 @@ $totalremaining = 0;
 
                     if(!empty($deliveryDataList['Delivery']['company_id'])){
 
-                        echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Create Gate Pass', array('controller' => 'deliveries', 'action' => 'gate_pass',$deliveryScheduleId,$quotationId,$clientsOrderUuid,$deliveryDataList['Delivery']['company_id'],$clientUuid),array('class' =>' btn btn-primary ','escape' => false,'title'=>'Gate Pass'));
+                        echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Create Gate Pass', array('controller' => 'deliveries', 'action' => 'gate_pass',$deliveryScheduleId,$clientsOrderUuid,$deliveryDataList['Delivery']['company_id'],$clientUuid),array('class' =>' btn btn-primary ','escape' => false,'title'=>'Gate Pass'));
                     }
 
                     ?>
@@ -360,7 +354,12 @@ $totalremaining = 0;
 
                                             if (!empty($deliveryDataList['DeliveryDetail']['status'])) {  
 
-                                                if($deliveryDataList['DeliveryDetail']['status'] == '4'){
+                                                if($deliveryDataList['DeliveryDetail']['status'] == '4' && $deliveryDataList['Delivery']['status'] == '2'){
+
+                                                    echo "<span class='label label-danger'>Deleted</span>"; 
+                                                }
+
+                                                else if($deliveryDataList['DeliveryDetail']['status'] == '4'){
 
                                                     echo "<span class='label label-success'>Delivered</span>"; 
 
@@ -427,15 +426,31 @@ $totalremaining = 0;
 
                                             <a data-toggle="modal" href="#myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" class="table-link not-active"><i class="fa fa-lg "></i><span class="fa-stack">
                                             <i class="fa fa-square fa-stack-2x "></i>
-                                            <i class="fa  fa-mail-reply fa-stack-1x fa-inverse "></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Delivered </font></span></a>
-
-                                           
+                                            <i class="fa  fa-mail-reply fa-stack-1x fa-inverse "></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Update </font></span></a>
+                                            
                                             <?php 
-                                                // echo $this->Html->link('<span class="fa-stack gatePass">
-                                                //     <i class="fa fa-square fa-stack-2x"></i>
-                                                //     <i class="fa fa-truck fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> GatePass</font></span>
-                                                //     </span> ', array('controller' => 'deliveries', 'action' => 'gate_pass',$deliveryScheduleId, $quotationId,$clientsOrderUuid,$deliveryDataList['Delivery']['id'],$deliveryDataList['Delivery']['dr_uuid']),array('class' =>' table-link not-active','escape' => false,'title'=>'Gate Pass'));
+                                                
+                                            if($deliveryDataList['DeliveryDetail']['status'] != '5'){
 
+                                                echo $this->Html->link('<span class="fa-stack">
+                                                            <i class="fa fa-square fa-stack-2x"></i>
+                                                            <i class="fa fa-trash fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Delete </font></span>
+                                                            </span> ', array('controller' => 'deliveries', 
+                                                              'action' => 'remove_dr_sched',
+                                                              $deliveryDataList['Delivery']['dr_uuid'],
+                                                              $deliveryScheduleId,
+                                                              $clientsOrderUuid,
+                                                              $clientUuid
+
+                                                              ),
+                                                            array(
+                                                                'label' => false,
+                                                              'class' =>' table-link',
+                                                              'escape' => false,'title'=>'Edit Information',
+                                                              'confirm' => 'Are you sure you want to delete this schedule ? '
+                                                              ));
+
+                                            }
                                         }else{
 
 
@@ -464,6 +479,25 @@ $totalremaining = 0;
                                              <a data-toggle="modal" href="#myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" class="table-link"><i class="fa fa-lg "></i><span class="fa-stack">
                                             <i class="fa fa-square fa-stack-2x "></i>
                                             <i class="fa  fa-mail-reply fa-stack-1x fa-inverse "></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Update </font></span></a> <?php
+
+                                            echo $this->Html->link('<span class="fa-stack">
+                                                            <i class="fa fa-square fa-stack-2x"></i>
+                                                            <i class="fa fa-trash fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Delete </font></span>
+                                                            </span> ', array('controller' => 'deliveries', 
+                                                              'action' => 'remove_dr_sched',
+                                                              $deliveryDataList['Delivery']['dr_uuid'],
+                                                              $deliveryScheduleId,
+                                                              $clientsOrderUuid,
+                                                              $clientUuid
+
+                                                              ),
+                                                            array(
+                                                                'label' => false,
+                                                              'class' =>' table-link',
+                                                              'escape' => false,'title'=>'Edit Information',
+                                                              'confirm' => 'Are you sure you want to delete this schedule ? '
+                                                              ));
+
 
                                         }else{
 
@@ -497,33 +531,6 @@ $totalremaining = 0;
 
                                              }?>
 
-
-                                            <?php 
-
-                                            // $deliveryScheduleId = null, $quotationId = null, $clientsOrderUuid = null, $clientUuid = null)
-
-                                              echo $this->Html->link('<span class="fa-stack">
-                                                            <i class="fa fa-square fa-stack-2x"></i>
-                                                            <i class="fa fa-trash fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Delete </font></span>
-                                                            </span> ', array('controller' => 'deliveries', 
-                                                              'action' => 'remove_dr_sched',
-                                                              $deliveryDataList['Delivery']['dr_uuid'],
-                                                              $deliveryScheduleId,
-                                                              $quotationId,
-                                                              $clientsOrderUuid,
-                                                              $clientUuid
-
-                                                              ),
-                                                            array(
-                                                                'label' => false,
-                                                              'class' =>' table-link',
-                                                              'escape' => false,'title'=>'Edit Information',
-                                                              'confirm' => 'Are you sure you want to delete this schedule ? ',
-                                                              'style' => 'margin-left:27px;'
-                                                              ));
-                                            ?>
-
-                                                                    
                                     </td>
                                 </tr>
                             </tbody>
@@ -542,7 +549,7 @@ $totalremaining = 0;
                                             <?php 
 
                                                 echo $this->Form->create('ClientOrderDeliverySchedule',array(
-                                                    'url'=>(array('controller' => 'deliveries','action' => 'delivery_return',$scheduleInfo['ClientOrderDeliverySchedule']['id'],$scheduleInfo['QuotationDetail']['quotation_id'], $scheduleInfo['ClientOrderDeliverySchedule']['uuid'],$clientUuid) ),'class' => 'form-horizontal')); 
+                                                    'url'=>(array('controller' => 'deliveries','action' => 'delivery_return',$scheduleInfo['ClientOrderDeliverySchedule']['id'], $scheduleInfo['ClientOrderDeliverySchedule']['uuid'],$clientUuid) ),'class' => 'form-horizontal')); 
                                             ?>
 
                                                 <div class="form-group" id="existing_items">
@@ -626,7 +633,6 @@ $totalremaining = 0;
      echo $this->element('modals',array(
         'clientsOrderUuid' => $clientsOrderUuid, 
         'deliveryScheduleId' => $deliveryScheduleId,
-        'quotationId' => $quotationId,
         'clientUuid' => $clientUuid
         ));
 
