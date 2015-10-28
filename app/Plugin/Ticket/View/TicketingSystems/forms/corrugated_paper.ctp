@@ -22,32 +22,36 @@
                         </div>
                     </div> -->
 
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label for="inputPassword1" class="col-lg-2 control-label"> Cutting Size </label>
                         <div class="col-lg-9">
                             <?php 
 
-                                echo $this->Form->input('process_id',array('type' => 'hidden','value' => $parameter['processId']));
-
-                                echo $this->Form->input('product_id',array('type' => 'hidden','value' => $parameter['productId']));
-
-                                echo $this->Form->input('job_ticket_id',array('type' => 'hidden','value' => $parameter['ticketuuId']));
-
-                                echo $this->Form->input('ticket_id',array('type' => 'hidden','value' => $parameter['ticketId']));
+                                
 
                                 echo $this->Form->input('cutting_size', array(
                                     'label' => false,
                                     'class' => 'form-control ',
                                     'empty' => false,
-                            )); ?>
+                            )); 
+                            ?>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="form-group">
                         <label for="inputPassword1" class="col-lg-2 control-label">Corrugated Paper</label>
                         <div class="col-lg-9">
                             <?php 
-                                echo $this->Form->input('corrugated_id', array(
+
+                              echo $this->Form->input('process_id',array('type' => 'hidden','value' => $parameter['processId']));
+
+                              echo $this->Form->input('product_id',array('type' => 'hidden','value' => $parameter['productId']));
+
+                              echo $this->Form->input('job_ticket_id',array('type' => 'hidden','value' => $parameter['ticketuuId']));
+
+                              echo $this->Form->input('ticket_id',array('type' => 'hidden','value' => $parameter['ticketId']));
+
+                              echo $this->Form->input('corrugated_id', array(
                                     'options' => array($corrugated),
                                     'label' => false,
                                     'style' => 'text-transform:capitalize',

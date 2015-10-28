@@ -78,7 +78,20 @@ Configure::write('debug',0);
 
 								
 								<tr>
-									<td style = "align:right; "><?php echo $flutecombination ?></td>
+									<?php if($flutecombination == " "){ 
+
+										$flutecombination = 'kit'; ?>
+
+										<td style = "align:right; color:white;"><?php echo $flutecombination ?></td>
+
+									<?php }else{ ?>
+
+										<td style = "align:right; "><?php echo $flutecombination ?></td>
+
+									<?php } ?>
+									
+									<?php ?>
+
 									<td></td>
 								</tr>
 							
@@ -92,11 +105,17 @@ Configure::write('debug',0);
 									<td style="width:200px"><strong>Cutting size</strong></td>
 									<td><strong>Qty + Allowance = Total Qty</strong></td>
 								</tr>
-
-
-								
 								<tr>
-									<td style = "align:right; "><?php echo $corrugatedJobTicket['CorrugatedPaperJobTicket']['cutting_size'] ?></td>
+									<?php 
+
+										$size1 = !empty($specs['ProductSpecification']['size1']) ? $specs['ProductSpecification']['size1'] . " mm " : " ";
+										$size2 = !empty($specs['ProductSpecification']['size2']) ? " x " . $specs['ProductSpecification']['size2'] . " mm " : " ";
+										$size3 = !empty($specs['ProductSpecification']['size3']) ? " x " . $specs['ProductSpecification']['size3'] . " mm " : " ";
+
+										$cuttingSize = $size1 . " " . $size2 . " " . $size3;
+
+									?>
+									<td style = "align:right; "><?php echo $cuttingSize ?></td>
 									<td><?php  echo $specs['ProductSpecification']['quantity'] ?> + <?php  echo !empty($part['ProductSpecificationDetail']['allowance']) ? $part['ProductSpecificationDetail']['allowance'] : 0 ?> = <?php echo $total ?> </td>
 								</tr>
 							</table>

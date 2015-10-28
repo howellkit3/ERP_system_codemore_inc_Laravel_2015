@@ -439,7 +439,7 @@
 	        
 	    });
 
-		$("body").on('keyup','.searchItem', function(e){
+	$("body").on('keyup','.searchItem', function(e){
         var searchInput = $(this).val();
         var thisMe = $(this);
         var itemGroup = $('.ItemGroup').val();

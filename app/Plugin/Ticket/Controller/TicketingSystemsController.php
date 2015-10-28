@@ -808,7 +808,6 @@ class TicketingSystemsController extends TicketAppController {
 
         $specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productData['Product']['id'])));
 
-       // pr($productUuid);
         //find if product has specs
 
         //find process part
