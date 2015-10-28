@@ -99,7 +99,7 @@
 
                                                   $DeliveredHolder = $deliveryDetailList[$value['Delivery']['dr_uuid']];
   
-                                                    if($value['Delivery']['schedule_uuid'] == $orderDeliveryList[$uuidClientsOrder] AND $value['DeliveryDetail']['status'] != 5 ){  
+                                                    if($value['Delivery']['schedule_uuid'] == $orderDeliveryList[$uuidClientsOrder] AND $value['DeliveryDetail']['status'] != 5 && $value['Delivery']['status'] != 2){  
 
                                                       array_push($arrDelivered,$DeliveredHolder);
 

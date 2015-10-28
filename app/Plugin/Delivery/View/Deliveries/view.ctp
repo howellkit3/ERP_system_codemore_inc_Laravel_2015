@@ -133,7 +133,7 @@ $totalremaining = 0;
                                                 
                                                     if($value['Delivery']['schedule_uuid'] == $orderDeliveryList[$uuidClientsOrder]){  
 
-                                                        if($value['DeliveryDetail']['status'] != 5){
+                                                        if($value['DeliveryDetail']['status'] != 5 && $value['Delivery']['status'] != 2){
                                                    
                                                         array_push($arr,$value['DeliveryDetail']['delivered_quantity']);
 
@@ -162,7 +162,6 @@ $totalremaining = 0;
                                                 $Scheddate = $scheduleInfo['ClientOrderDeliverySchedule']['schedule'];
                                                 
                                                 $Currentdate = date("Y-m-d H:i:s");
-
 
                                                 if (!empty($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']]) || !empty($deliveryList[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']])) {   
 
