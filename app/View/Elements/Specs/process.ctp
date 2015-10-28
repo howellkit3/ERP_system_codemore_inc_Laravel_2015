@@ -10,7 +10,7 @@
                         21 - offset ctp
                         20 - wood mold                    
                     */
-                    $process = array('11','21','20');
+                    $process = array('11','21','20','13');
 
         			if (in_array($processList['ProductSpecificationProcessHolder']['sub_process_id'],$process)) {
 

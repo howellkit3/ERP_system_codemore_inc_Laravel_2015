@@ -23,7 +23,7 @@
         <?php echo $formatDataSpecs['ProductSpecificationPart']['size2']?> >>
         <?php echo $outs ?> Outs >>
         <?php //$quantityOuts = $specs['ProductSpecification']['quantity'] / $outs; ?>
-         <?php echo $formatDataSpecs['ProductSpecificationPart']['quantity'] //round($quantityOuts) ?> 
+        <?php echo $formatDataSpecs['ProductSpecificationPart']['quantity'] //round($quantityOuts) ?> 
         +
         <?php 
 
