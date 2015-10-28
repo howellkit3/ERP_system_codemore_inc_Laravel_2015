@@ -140,7 +140,7 @@
 							<td>
 							<table class="full-width border-right">	
 								<tr>
-									<td>Basic pay (Days : <?php echo $salary['days']; ?>)</td>
+									<td> Basic pay (Days : <?php echo $salary['days']; ?>)</td>
 									<td class="text-right"><?php echo $hours_regular;  $total_hours = $hours_regular   ?></td>
 									<td class="text-right"><?php echo !empty($salary['regular']) ? number_format($salary['regular'],2) : '0.00'; $total_earnings = 0.00; ?></td>
 								</tr>
@@ -149,11 +149,15 @@
 									<td class="text-right"><?php echo !empty($salary['hours_ot']) ?  $salary['hours_ot'] : 0; 
 									$total_hours += !empty($salary['hours_ot']) ? $salary['hours_ot'] : 0;?></td>
 									<td class="text-right"><?php 
+									
 									$total_overtime =  !empty($salary['OT']) ? $salary['OT'] : 0;
+									
 									//add excess overtime
 									$total_overtime += !empty($salary['excess_ot']) ? $salary['excess_ot'] : 0;
 
-									echo number_format($total_overtime,2) ?></td>
+									echo number_format($total_overtime,2);
+
+									?></td>
 								</tr>
 								<tr>
 									<td>Sun</td>
@@ -275,7 +279,8 @@
 							</td>
 							<td style="vertical-align:top"> 
 							<table class="full-width" >	
-								<?php foreach ($deductions as $deduction_key => $list) : ?>
+							
+							<?php foreach ($deductions as $deduction_key => $list) : ?>
 								<tr style="vertical-align:top">
 									<td><?php echo $list; ?></td>
 									<td class="text-right"><?php 
@@ -286,34 +291,38 @@
 							<?php endforeach; ?>
 
 								<tr>
-									<td  class="border-top"><strong>Tax </strong> </td>
+									<td class="border-top"><strong> Tax </strong> </td>
 									<td class="border-top text-right"> </td>
 								</tr>
 
 								<tr>
 									<td>SSS </td>
 									<td class="text-right">
-									<?php echo !empty($salary['sss'])  ? number_format($salary['sss'],2) : '0.00'; ?>
+										<?php echo !empty($salary['sss'])  ? number_format($salary['sss'],2) : '0.00'; ?>
 									</td>
 								</tr>
+
 								<tr>
 									<td>PhilHealth</td>
 									<td class="text-right">
-									<?php echo !empty($salary['philhealth'])  ? number_format($salary['philhealth'],2) : '0.00'; ?>
+										<?php echo !empty($salary['philhealth'])  ? number_format($salary['philhealth'],2) : '0.00'; ?>
 									</td>
 								</tr>
+
 								<tr>
 									<td>Pagibig</td>
 									<td class="text-right">
 										<?php echo !empty($salary['pagibig'])  ? number_format($salary['pagibig'],2) : '0.00'; ?>
 									</td>
 								</tr>
+								
 								<tr>
 									<td>Withholding Tax</td>
 									<td class="text-right">
 										<?php echo !empty($salary['with_holding_tax'])  ? number_format($salary['with_holding_tax'],2) : '0.00'; ?>
 									</td>
 								</tr>
+
 							</table>
 						 </td>
 						</tr>

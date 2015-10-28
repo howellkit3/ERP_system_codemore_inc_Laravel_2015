@@ -90,11 +90,6 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 
 			                      	 <?php echo $this->Form->end(); ?>
 			                   	 
-
-
-
-			                     	
-
 			                     <div class="form-group pull-left">
 			                    	 <a data-toggle="modal" class="btn btn-success" href="#timeKeep"> <i class="fa fa-clock-o"></i> Add Attendances </a> 
 			                     </div>
@@ -109,31 +104,60 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 	                                    <div class="form-group">
 	                                        <?php echo $this->Form->create('Attendance',array( 
 	                                        	'url' => array('controller' => 'salaries','action' => 'export_all_attendance', 'type'=> 'POST'))); ?>   	
-	                                        <div class="col-lg-9">
-												<div class="form-group">
+	                                        <div class="col-lg-12">
+												<div class="form-group col-lg-7">
 
 														<?php echo $this->Form->input('department_id',array(
 															'options' => $departmentList,
-															'class' => 'form-control',
+															'class' => 'form-control col-lg-7',
 															'empty' => '---- Select All ----',
 														)); ?>
 
 
 	                                        	</div>
-	                                           <div class="form-group pull-left">
+	                                        	<div class="clearfix"></div>
+	                                           <div class="form-group col-lg-6 pull-left">
+	                                           	 <div class="col-lg-5 pull-left" style="padding:0;margin-right:10px">
+	                                              	<?php
+
+		                                           $month = array(
+		                                           	'01' => 'January',
+		                                           	'02' => 'February',
+		                                           	'03' => 'March',
+		                                           	'04' => 'April',
+		                                           	'05' => 'May',
+		                                           	'06' => 'June',
+		                                           	'07' => 'July',
+		                                           	'08' => 'August',
+		                                           	'09' => 'September',
+		                                           	'10' => 'October',
+		                                           	'11' => 'November',
+		                                           	'12' => 'December'
+		                                           );		
+
+	                                           	 echo $this->Form->input('month',array(
+															'options' => $month,
+															'class' => 'form-control inline-block',
+															'empty' => '---- Select All ----',
+															'label' => false
+														)); ?>
+												</div>	
+	                                         
+
 	                                            <div class="radio inline-block">
 	                                            <input type="radio" checked="checked" value="1:15" data-key="First Half ( 1- 15 )" class="mode_type required" id="optionsRadios1" name="data[Payroll][date]">
 	                                                <label for="optionsRadios1">
 	                                                    First Half ( 1- 15)
 	                                                </label>
 	                                            </div>
-	                                            <div class="radio inline-block">
+	                                            <div class="radio inline-block ">
 	                                            <input type="radio" class="mode_type required" value="16:31" data-key="Second Half ( 16 - 30 / 31 ) " id="optionsRadios2" name="data[Payroll][date]">
 	                                                <label for="optionsRadios2">
 	                                                    Second Half ( 16 - 30 / 31 )
 	                                                </label>
 	                                            </div>
 	                                            </div>
+	                                           	
 	                                            <button class="btn btn-primary pull-left"><i class="fa fa-share-square-o fa-lg"></i> Export All</button>
 
 	                                        </div>

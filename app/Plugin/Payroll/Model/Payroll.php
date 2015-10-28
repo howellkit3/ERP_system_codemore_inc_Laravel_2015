@@ -116,6 +116,11 @@ class Payroll extends AppModel {
 	    		$object[$key]['Position'] = (array)$value->Position;
 	    			
 	    		}
+	    		if (is_object($value) && !empty($value->Salary)) {
+
+	    		$object[$key]['Salary'] = (array)$value->Salary;
+	    			
+	    		}
 
 			if (is_object($value) && !empty($value->EmployeeAdditionalInformation)) {
 
