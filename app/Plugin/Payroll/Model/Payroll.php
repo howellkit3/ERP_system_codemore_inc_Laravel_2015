@@ -179,4 +179,38 @@ class Payroll extends AppModel {
    	
    		
     }
+
+    public function checkEmployee($payroll = array()) {
+
+
+    		$employeeIds = array();
+    	if (!empty($payroll)) {
+
+    		
+    		$payroll = $this->find('all',array(
+    				'conditions' => array(
+    						'Payroll.from' => $payroll['Payroll']['from'],
+    						'Payroll.to' => $payroll['Payroll']['to']
+
+    					)
+
+    			));
+
+
+    		foreach ($payroll as $key => $value) {
+    			
+    			if (!empty($value['Payroll']['employeeIds'])) {
+
+    				$emp = json_decode($value['Payroll']['employeeIds']);
+
+    				$employeeIds = array_merge($employeeIds,$emp);
+
+    			}
+
+    		}
+
+    	}
+
+    	return $employeeIds;
+    }
 }

@@ -328,7 +328,19 @@ echo $this->element('payroll_options');
 														                        </td>
 
 														                       <td class="">
-														                       		<?php  echo $salary['Salary']['basic_pay']; ?>
+														                       		<?php 
+														                       		if ($salary['Salary']['employee_salary_type'] == 'monthly') {
+
+														                       			$wage = $salary['Salary']['basic_pay'] / 2; 
+
+														                       		} else {
+
+														                       			$wage = $salary['Salary']['basic_pay'] ; 
+														                       		}
+
+														                       		echo $wage;
+
+														                       		?>
 														                       </td>
 														                       <td class="">
 														                       		<?php echo $salary['hours_regular']; ?>
@@ -354,7 +366,7 @@ echo $this->element('payroll_options');
 
 														                       <td class="">
 														                   
-														                       		<?php echo $salary['OT'] ?>
+														                       		<?php echo number_format($salary['OT'],2) ?>
 														                       </td>
 
 

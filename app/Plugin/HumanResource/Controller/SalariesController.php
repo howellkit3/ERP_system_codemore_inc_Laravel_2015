@@ -1643,14 +1643,20 @@ class SalariesController  extends HumanResourceAppController {
 
 			$payroll = $this->Payroll->read(null,$id);
 
+
+			//check employees
+
+			$employeeId = json_decode($payroll['Payroll']['employeeIds']);
+
 			if ($this->Payroll->delete($id)) {
 
 				//delete salary report
 				$this->SalaryReport->deleteAll(array(
-					'SalaryReport.from' => $payroll['Payroll']['from'],
-					'SalaryReport.from' => $payroll['Payroll']['to'],
-				
-				));
+				'SalaryReport.from' => $payroll['Payroll']['from'],
+				'SalaryReport.to' => $payroll['Payroll']['to'],
+				'SalaryReport.employee_id' => $employeeId
+			
+			));
 
 				$this->Session->setFlash(__('Payroll data delete successfully.'),'success');
 
@@ -1718,7 +1724,11 @@ class SalariesController  extends HumanResourceAppController {
 
 		if (!empty($id)) {
 
+	
 			$payroll = $this->Payroll->findById($id);
+
+			//find employee by date
+			//$employees = $this->Payroll->checkEmployee($payroll);
 
 			$conditions = array();
 
@@ -1832,8 +1842,6 @@ class SalariesController  extends HumanResourceAppController {
 
 			// 	$salariesList = $salarySplit[0];
 			// }
-
-
 
 			} else {
 
@@ -1985,8 +1993,20 @@ class SalariesController  extends HumanResourceAppController {
 		if (!empty($id)) {
 
             $this->loadModel('Payroll.Payroll');
-           
+           	
+           	//find payroll
+           	$payroll = $this->Payroll->read(null,$id);
+
+
             if ($this->Payroll->delete($id)) {
+
+            	//delete salary report
+				$this->SalaryReport->deleteAll(array(
+				'SalaryReport.from' => $payroll['Payroll']['from'],
+				'SalaryReport.to' => $payroll['Payroll']['to'],
+				'SalaryReport.employee_id' => $employeeId
+			
+				));
 
                 $this->Session->setFlash(
                     __('Payroll have been rejected.', h($id)), 'success'

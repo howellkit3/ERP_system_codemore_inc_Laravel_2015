@@ -1240,8 +1240,6 @@ public function daily_info() {
 
 			$data['Attendance']['out'] = !empty($this->request->data['Attendance']['out']) ? $this->request->data['Attendance']['out'] : '';
 			
-
-
 			if ($this->Attendance->save($data)) {
 
 				if ($this->request->is('ajax'))  {
