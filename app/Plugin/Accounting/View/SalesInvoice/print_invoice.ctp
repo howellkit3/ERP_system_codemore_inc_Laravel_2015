@@ -95,11 +95,11 @@
                 ->setCellValue('I12', number_format($unitPrice,4))
                 ->setCellValue('K12', number_format($totalQty,4))
                 ->setCellValue('D26', 'DR#00'.$drData['Delivery']['dr_uuid'])
-                ->setCellValue('K30', $vatSale)
-                ->setCellValue('K31', $vatExem)
-                ->setCellValue('K32', $zeroRated)
-                ->setCellValue('K33', $vat12)
-                ->setCellValue('K34', $currency.' '. $totalAmount);
+                ->setCellValue('K29', $vatSale)
+                ->setCellValue('K30', $vatExem)
+                ->setCellValue('K31', $zeroRated)
+                ->setCellValue('K32', $vat12)
+                ->setCellValue('K33', $currency.' '. $totalAmount);
       
     //prepare download
     $filename = mt_rand(1,100000).'.xlsx'; //just some random filename
