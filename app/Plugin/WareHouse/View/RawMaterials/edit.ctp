@@ -214,7 +214,7 @@
 
 
                                        <div class="form-group">
-                                        <label for="inputPassword1" class="col-lg-2 control-label"> <span style="color:red">*</span> Supplier </label>
+                                        <label for="inputPassword1" class="col-lg-2 control-label"> Supplier </label>
                                         <div class="col-lg-9"> 
                                                    <?php
                                                     
@@ -224,7 +224,7 @@
                                                                                 'options' => $suppliers, 
                                                                                 'alt' => 'type',
                                                                                 'label' => false,
-                                                                                'class' => 'form-control required select_option supplier_select',
+                                                                                'class' => 'form-control select_option supplier_select',
                                                                                 'empty' => '--- Select Supplier---',
                                                                                 'data-alt' => 'supplier_others'
                                                                         ));

@@ -43,9 +43,6 @@
                      <div class="form-group">
                             <label for="exmaplePrependCheck"  class="col-lg-2 control-label">Time In</label>
                             <div class="input-group col-lg-9">
-                            <span class="input-group-addon add_time" alt="time-in">
-                            <input type="checkbox">
-                            </span>
 
                              <?php 
 
@@ -58,10 +55,9 @@
 
                                     echo $this->Form->input('Attendance.in',
                                          array(
-                                        'class' => 'item_type form-control time_input datetime',  
+                                        'class' => 'item_type form-control datetime',  
                                         'type' => 'text',
                                         'placeholder' => 'Time',
-                                        'disabled' => 'disabled',
                                          'value' => $value,
                                         'id' => 'datetimepickerTime',
                                         'label' => false));
@@ -72,9 +68,6 @@
                         <div class="form-group">
                         <label for="exmaplePrependCheck"  class="col-lg-2 control-label">Time Out</label>
                         <div class="input-group col-lg-9 add_time" alt="time-in">
-                        <span class="input-group-addon">
-                        <input type="checkbox">
-                        </span>
 
                              <?php 
 
@@ -88,10 +81,9 @@
 
                                     echo $this->Form->input('Attendance.out',
                                          array(
-                                        'class' => 'item_type  form-control time_input datetime',  
+                                        'class' => 'item_type  form-control  datetime',  
                                         'type' => 'text',
                                         'placeholder' => 'Time',
-                                        'disabled' => 'disabled',
                                         'value' => $value,
                                         'id' => 'datetimepickerTime',
                                         'label' => false));

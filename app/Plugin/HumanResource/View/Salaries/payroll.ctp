@@ -145,7 +145,7 @@
                                                             array(
                                                               'class' =>' table-link',
                                                               'escape' => false,'title'=>'Edit Information',
-                                                              'confirm' => 'Are you sure you want to delete this attendances ? ',
+                                                              'confirm' => 'Are you sure you want to delete this Payroll? ',
                                                               ));
 
                                                         ?>
