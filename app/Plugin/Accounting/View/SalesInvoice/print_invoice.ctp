@@ -61,8 +61,8 @@
     $words = explode(" ", $companyData['Address'][0]['address1']);
      //$part = $count($words);
     //pr($words); exit;
-    $halfAddress = floor(count($words)/2);
-   // pr($halfAddress); exit;
+    $halfAddress = floor(count($words)/3);
+  //  pr($halfAddress); exit;
     $r = array();
     for ($i = 0; $i <= $halfAddress; $i++) {
 
@@ -70,28 +70,40 @@
 
             $Addresspart1 = $words[$i];
             $Addresspart2 = $words[$i + $halfAddress + 1];
+            $Addresspart3 = $words[$i + $halfAddress + $halfAddress + 1];
 
         }else{
+
             $addindex = $halfAddress + 1;
             $Addresspart1 = $Addresspart1 . " " . $words[$i];
 
-        //   if($halfAddress >= $halfAddress){
+           if(count($words) == ($i + $halfAddress + 1)){
 
                 if($i != $halfAddress){
-                $Addresspart2 = $Addresspart2 . " " . $words[$i + $halfAddress ];
+                    $Addresspart2 = $Addresspart2 . " " . $words[$i + $halfAddress  ];
+                    $Addresspart3 = $Addresspart3 . " " . $words[$i + $halfAddress + $halfAddress ];
                 }   
 
-           // }
+            }else{
+
+                if($i != $halfAddress){
+
+                    $Addresspart2 = $Addresspart2 . " " . $words[$i + $halfAddress + 1 ];
+                    $Addresspart3 = $Addresspart3 . " " . $words[$i + $halfAddress + $halfAddress + 1 ];
+
+                }   
+
+            }
         }
     }
 
-   // pr(count($words)); exit;
+ //   pr($Addresspart2); exit;
 
- 
     $objTpl->setActiveSheetIndex(0)
                 ->setCellValue('C7', ucwords($companyData['Company']['company_name']))
                 ->setCellValue('C8', ucwords($Addresspart1))
                 ->setCellValue('C9', ucwords($Addresspart2))
+                ->setCellValue('C10', ucwords($Addresspart3))
                 ->setCellValue('J7', date('M d, Y', strtotime($drData['Delivery']['created'])))
                 ->setCellValue('J8', $companyData['Company']['tin'])
                 ->setCellValue('J9', $paymentTermData[$clientData['ClientOrder']['payment_terms']])
