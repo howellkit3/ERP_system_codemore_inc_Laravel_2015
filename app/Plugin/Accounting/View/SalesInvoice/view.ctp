@@ -10,7 +10,8 @@
         	'controller' => 'sales_invoice', 
         	'action' => 'print_invoice',
         	//'ext' => 'pdf',
-        	$invoiceId),
+        	$invoiceId,
+        	$clientOrderId),
         	array('class' =>'btn btn-info pull-right ','escape' => false));
 	?>
 
