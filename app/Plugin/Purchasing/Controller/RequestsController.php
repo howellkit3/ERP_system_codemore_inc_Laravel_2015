@@ -93,9 +93,9 @@ class RequestsController extends PurchasingAppController {
 
 		$limit = 10;
 
-		//$conditions = array('Request.status >' => 0);
+		$conditions = array('Request.status >' => 0);
 
-		$conditions = "";
+		//$conditions = "";
 
 		$params =  array(
 	            'conditions' => $conditions,
