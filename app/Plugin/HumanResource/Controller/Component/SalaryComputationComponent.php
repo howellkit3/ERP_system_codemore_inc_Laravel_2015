@@ -1220,6 +1220,7 @@ class SalaryComputationComponent extends Component
 		$data['legal_holiday_work'] =  0;
 		$data['night_diff_legal_holiday'] =  0;
 		$data['night_diff_legal_holiday_work'] =  0;
+		$data['night_diff_legal_holiday_work_ot'] = 0;
 		$data['special_holiday'] =  0;
 		$data['special_holiday_work'] =  0;
 		$data['special_holiday_work_ot'] =  0;
@@ -1560,6 +1561,11 @@ class SalaryComputationComponent extends Component
 				if ($data['hours_legal_holiday_work_night_diff'] > 0) {
 
 					$data['legal_holiday_work_night_diff'] = ($getDaily) * ($data['hours_legal_holiday_work_night_diff'] * 2.0 * 0.1) / $hours;	
+				}
+
+				if ($data['hours_legal_holiday_work_night_diff_ot'] > 0) {
+
+					$data['legal_holiday_work_night_diff_ot'] = ($getDaily) * ($data['hours_legal_holiday_work_night_diff'] * 2.0 * 1.3 * 1.1) / $hours;	
 				}
 
 				//legal holiday sunday work night diff

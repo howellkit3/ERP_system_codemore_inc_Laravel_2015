@@ -1843,8 +1843,6 @@ class SalariesController  extends HumanResourceAppController {
 			// 	$salariesList = $salarySplit[0];
 			// }
 
-
-
 			} else {
 
 				$empIds = array();
@@ -2194,6 +2192,7 @@ class SalariesController  extends HumanResourceAppController {
 			}
 
 			$salaries = $this->Payroll->objectToArray(json_decode($data)); 
+
 
 			$this->Employee->bindPrimary();
 

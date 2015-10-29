@@ -366,7 +366,7 @@ echo $this->element('payroll_options');
 
 														                       <td class="">
 														                   
-														                       		<?php echo $salary['OT'] ?>
+														                       		<?php echo number_format($salary['OT'],2) ?>
 														                       </td>
 
 

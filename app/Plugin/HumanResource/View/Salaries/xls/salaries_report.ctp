@@ -3,9 +3,7 @@
     $this->PhpExcel->createWorksheet()
         ->setDefaultFont('Calibri', 10);
 
-    //$objTpl = PHPExcel_IOFactory::load("./img/salaries/salaries_edited.xls");
-   
-    $objTpl = PHPExcel_IOFactory::load("./img/salaries/payroll_report.xlsx");
+   $objTpl = PHPExcel_IOFactory::load("./img/salaries/payroll_report.xlsx");
 
     $counter = 5;
 
@@ -217,7 +215,7 @@
           $sheet->setCellValue('K'.$counter, $emp['hours_ot']);
           $sheet->getStyle('K'.$counter)->applyFromArray($styleArrayBorder);
 
-          $sheet->setCellValue('L'.$counter, $emp['OT']);
+          $sheet->setCellValue('L'.$counter, number_format($emp['OT'],2));
           $sheet->getStyle('L'.$counter)->applyFromArray($styleArrayBorder);
 
 
@@ -249,8 +247,31 @@
           //legal holiday 
           $lholiday = $emp['legal_holiday'] + $emp['legal_holiday_work'];
 
-          $sheet->setCellValue(''.$counter, $lholiday );
-          $sheet->getStyle('R'.$counter)->applyFromArray($styleArrayBorder);   
+          $sheet->setCellValue('S'.$counter, $lholiday );
+          $sheet->getStyle('S'.$counter)->applyFromArray($styleArrayBorder);   
+
+
+          //special holiday
+          $sholiday = $emp['special_holiday'] + $emp['special_holiday_work'];
+
+          $sheet->setCellValue('T'.$counter, $sholiday);
+          $sheet->getStyle('T'.$counter)->applyFromArray($styleArrayBorder);   
+
+          //special holiday work night diff
+          $sheet->setCellValue('U'.$counter, $emp['hours_special_holiday_work_night_diff']);
+          $sheet->getStyle('U'.$counter)->applyFromArray($styleArrayBorder);
+
+
+          $sheet->setCellValue('V'.$counter, $emp['special_holiday_work_night_diff']);
+          $sheet->getStyle('V'.$counter)->applyFromArray($styleArrayBorder);
+        
+          //legal holiday work night diff
+          $sheet->setCellValue('W'.$counter, $emp['hours_legal_holiday_work_night_diff']);
+          $sheet->getStyle('W'.$counter)->applyFromArray($styleArrayBorder);
+
+
+          $sheet->setCellValue('X'.$counter, $emp['hours_legal_holiday_work_night_diff']);
+          $sheet->getStyle('X'.$counter)->applyFromArray($styleArrayBorder);
 
 
         $countEmp++; 
