@@ -495,7 +495,6 @@ class ReceivingsController extends WareHouseAppController {
 
 					}  		 
 
-
 							$requestPurchasingItem[$key1][$itemHolder]['good_quantity'] = array_sum($arrayGoodQuantity);
 							
 							$requestPurchasingItem[$key1][$itemHolder]['reject_quantity'] = array_sum($arrayRejectQuantity);
@@ -621,7 +620,7 @@ class ReceivingsController extends WareHouseAppController {
 
 
         }
-       //pr($requestPurchasingItem);  exit;
+
 
    	$this->set(compact('unitData','purchaseOrderData', 'supplierData', 'firstName', 'lastName', 'requestData', 'itemDetails', 'requestPurchasingItem', 'itemData', 'receivedOrderData', 'type', 'requestItemData', 'itemHolder'));
 
@@ -673,17 +672,20 @@ class ReceivingsController extends WareHouseAppController {
 
 		if(empty($requestData['PurchaseItem'])){
 
-			$itemHolder = "ReceivedItem";
+			$itemTypeHolder = "RequestItem";
 
 			$itemData = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestUUID)));
 
 		}else{
 
-			$itemHolder = "ReceivedItem";
+			$itemTypeHolder = "PurchaseItem";
 
 			$itemData = $this->PurchaseItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestUUID)));
 
 		}
+
+		$itemHolder = "ReceivedItem";
+
 
 		$this->DeliveredOrder->bind('ReceivedItem', 'PurchaseOrder', 'ReceivedOrder');
 
@@ -818,7 +820,7 @@ class ReceivingsController extends WareHouseAppController {
         }
 
 
-   	$this->set(compact('unitData','purchaseOrderData','userName', 'supplierData', 'firstName', 'lastName', 'requestData', 'itemDetails', 'receiveItem', 'itemData', 'receivedOrderData', 'type', 'requestItemData', 'itemHolder', 'deliveredDataID', 'receivedItemData', 'areaList', 'userNameList'));
+   	$this->set(compact('itemTypeHolder','unitData','purchaseOrderData','userName', 'supplierData', 'firstName', 'lastName', 'requestData', 'itemDetails', 'receiveItem', 'itemData', 'receivedOrderData', 'type', 'requestItemData', 'itemHolder', 'deliveredDataID', 'receivedItemData', 'areaList', 'userNameList'));
 
     }
 
@@ -868,30 +870,31 @@ class ReceivingsController extends WareHouseAppController {
 
 		if(empty($requestData['PurchaseItem'])){
 
-			$itemHolder = "ReceivedItem";
+			$itemTypeHolder = "RequestItem";
 
 			$itemData = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestUUID)));
 
 		}else{
 
-			$itemHolder = "ReceivedItem";
+			$itemTypeHolder = "PurchaseItem";
 
 			$itemData = $this->PurchaseItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestUUID)));
 
 		}
 
+		$itemHolder = "ReceivedItem";
+
 		$this->DeliveredOrder->bind('ReceivedItem', 'PurchaseOrder', 'ReceivedOrder');
 
 		$receivedItemData = $this->DeliveredOrder->find('all', array('conditions' => array('DeliveredOrder.id' => $idholder)));
-
 
 		$purchaseOrderData = $this->PurchaseOrder->find('first', array('conditions' => array('PurchaseOrder.id' => $receivedItemData[0]['DeliveredOrder']['purchase_orders_id'])));
 
 		foreach ($receivedItemData as $key1 => $value) {
 
-			foreach ($value['ReceivedItem'] as $key => $valueOfValue) {	
+			//pr($itemData); exit;
 
-				//pr($valueOfValue); exit;
+			foreach ($value['ReceivedItem'] as $key => $valueOfValue) {	
 
 				if($valueOfValue['model'] == 'GeneralItem'){
 
@@ -990,8 +993,9 @@ class ReceivingsController extends WareHouseAppController {
 			} 
         }
 
+       // pr($receiveItem); exit;
 
-   	$this->set(compact('unitData','purchaseOrderSupplierData', 'purchaseOrderUUIDData', 'purchaseOrderData', 'supplierData', 'firstName', 'lastName', 'requestData', 'itemDetails', 'receiveItem', 'itemData', 'receivedOrderData', 'type', 'requestItemData', 'itemHolder', 'deliveredDataID', 'receivedItemData', 'areaList', 'userNameList'));
+   	$this->set(compact('itemTypeHolder','unitData','purchaseOrderSupplierData', 'purchaseOrderUUIDData', 'purchaseOrderData', 'supplierData', 'firstName', 'lastName', 'requestData', 'itemDetails', 'receiveItem', 'itemData', 'receivedOrderData', 'type', 'requestItemData', 'itemHolder', 'deliveredDataID', 'receivedItemData', 'areaList', 'userNameList'));
 
 
     }

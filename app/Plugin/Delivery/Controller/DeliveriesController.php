@@ -445,6 +445,7 @@ class DeliveriesController extends DeliveryAppController {
                                            // 'fields' => array('DISTINCT Delivery.dr_uuid', 'DeliveryDetail.schedule','DeliveryDetail.location', 'DeliveryDetail.quantity','DeliveryDetail.delivered_quantity', 'DeliveryDetail.status', 'DeliveryReceipt.type', 'Delivery.schedule_uuid','DeliveryDetail.id', 'Transmittal.type' ,'DeliveryDetail.delivery_uuid'),
                                         ));
 
+  
         //$this->DeliveryReceipt->bindDelivery();
 
        // $DeliveryReceiptData =  $this->DeliveryReceipt->find('all');
@@ -621,6 +622,8 @@ class DeliveriesController extends DeliveryAppController {
         $clientData = $this->ClientOrder->find('first', array(
                                             'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
                                             )));
+
+
         
         $companyData = $this->Company->find('first', array(
                                             'conditions' => array('Company.id' => $clientData['ClientOrder']['company_id']
@@ -851,7 +854,9 @@ class DeliveriesController extends DeliveryAppController {
         }
     }
 
-    public function dr($dr_uuid = null,$schedule_uuid) {
+    public function dr($dr_uuid = null,$schedule_uuid = null, $client_id = null) {
+
+        //pr($client_uuid); exit;
 
         $this->loadModel('Sales.ClientOrder');
 
@@ -870,13 +875,13 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->Delivery->bindDelivery();
         $drData = $this->Delivery->find('first', array(
-                                            'conditions' => array('Delivery.dr_uuid' => $dr_uuid
+                                            'conditions' => array('Delivery.dr_uuid' => $dr_uuid, 'Delivery.schedule_uuid' => $schedule_uuid
                                             )));
 
         $clientData = $this->ClientOrder->find('first', array(
-                                            'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
+                                            'conditions' => array('ClientOrder.id' => $client_id
                                             )));
-        
+    
         $companyData = $this->Company->find('first', array(
                                             'conditions' => array('Company.id' => $clientData['ClientOrder']['company_id']
                                             )));

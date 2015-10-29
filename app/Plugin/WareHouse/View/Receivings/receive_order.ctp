@@ -132,7 +132,7 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                         </div>
                                     </div>
 
-                                <?php  foreach ($requestPurchasingItem as $key => $requestDataList): 
+                                <?php foreach ($requestPurchasingItem as $key => $requestDataList): 
                               //  pr($requestPurchasingItem); exit;
                                 if(empty($requestDataList[$itemHolder]['delivered_quantity'])){
 
@@ -154,8 +154,14 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                     <div class="col-lg-8 bgcolor"  >
                                         
                                     <div class = "checkbox-nice">
+
+                                    <?php 
+                                       $originalQuantity = $requestDataList[$itemHolder]['original_quantity'];
+                                       $goodQuantity = $requestDataList[$itemHolder]['good_quantity'];
+                                       $quantityUnit = $requestDataList[$itemHolder]['unit_id'] 
+                                    ?> 
                                     <input type="checkbox" class="check-ref-uuid checked" name="requestPurchasingItem[<?php echo $key ?>][<?php echo $requestDataList[$itemHolder]['foreign_key'] ?>]" id="<?php echo $key?>" >
-                                                        <label for="<?php echo $key?>"> <?php  echo $requestDataList[$itemHolder]['name'] ?> &nbsp;<I>(<?php  echo (!empty( $requestDataList[$itemHolder]['good_quantity']) ? $remainingQuantity: $requestDataList[$itemHolder]['original_quantity']) ?>)</I></label>
+                                                        <label for="<?php echo $key?>"> <?php  echo $requestDataList[$itemHolder]['name'] ?> &nbsp;<I>(<?php  echo (!empty( $goodQuantity) ? $remainingQuantity:  $originalQuantity ) ?>) <?php echo $unitData[$quantityUnit] ?> </I></label>
                                     
 
                                     </div>
