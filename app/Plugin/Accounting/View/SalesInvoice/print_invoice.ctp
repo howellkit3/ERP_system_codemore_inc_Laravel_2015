@@ -14,13 +14,13 @@
 	$vatSale = '';
     
 	if($clientData['QuotationItemDetail']['unit_price_currency_id'] == 2  || $clientData['QuotationItemDetail']['vat_status']  == "Vatable Sale"){
-		$vatSale = number_format($totalQty,4);
+		$vatSale = number_format($totalQty,2);
 	}
 
 	$vatExem = '';
 	if($clientData['QuotationItemDetail']['unit_price_currency_id'] == 2 && $clientData['QuotationItemDetail']['vat_status']  == "Vat Exempted"){
 
-		$vatExem =  number_format($totalQty,4);
+		$vatExem =  number_format($totalQty,2);
 
 	}
 
@@ -28,14 +28,14 @@
 	if($clientData['QuotationItemDetail']['unit_price_currency_id'] == 2 ){
 
 		$totalVat = $totalQty * .12;
-		$vat12 = number_format($totalVat,4);
+		$vat12 = number_format($totalVat,2);
 
 	}
 
     $zeroRated = '';
     if($clientData['QuotationItemDetail']['unit_price_currency_id'] == 1 || $clientData['QuotationItemDetail']['vat_status']  == "Zero Rated"){
 
-        $zeroRated =  number_format($totalQty,4);
+        $zeroRated =  number_format($totalQty,2);
 
     }
 
@@ -62,7 +62,7 @@
      //$part = $count($words);
     //pr($words); exit;
     $halfAddress = floor(count($words)/2);
-    //pr(count($words)); exit;
+   // pr($halfAddress); exit;
     $r = array();
     for ($i = 0; $i <= $halfAddress; $i++) {
 
@@ -75,32 +75,37 @@
             $addindex = $halfAddress + 1;
             $Addresspart1 = $Addresspart1 . " " . $words[$i];
 
-            if($i != $halfAddress){
-            $Addresspart2 = $Addresspart2 . " " . $words[$i + $halfAddress + 1];
-            }   
-        }
+        //   if($halfAddress >= $halfAddress){
 
+                if($i != $halfAddress){
+                $Addresspart2 = $Addresspart2 . " " . $words[$i + $halfAddress ];
+                }   
+
+           // }
+        }
     }
+
+   // pr(count($words)); exit;
+
  
     $objTpl->setActiveSheetIndex(0)
                 ->setCellValue('C7', ucwords($companyData['Company']['company_name']))
                 ->setCellValue('C8', ucwords($Addresspart1))
                 ->setCellValue('C9', ucwords($Addresspart2))
-                ->setCellValue('J7', (new \DateTime())->format('m/d/Y'))
+                ->setCellValue('J7', date('M d, Y', strtotime($drData['Delivery']['created'])))
                 ->setCellValue('J8', $companyData['Company']['tin'])
                 ->setCellValue('J9', $paymentTermData[$clientData['ClientOrder']['payment_terms']])
                 ->setCellValue('B12', $clientData['ClientOrder']['po_number'])
                 ->setCellValue('F12', ucfirst($clientData['Product']['name']))
                 ->setCellValue('D12', number_format($drData['DeliveryDetail']['quantity']))
                 ->setCellValue('I12', number_format($unitPrice,4))
-                ->setCellValue('K12', number_format($totalQty,4))
+                ->setCellValue('K12', number_format($totalQty,2))
                 ->setCellValue('D26', 'DR#00'.$drData['Delivery']['dr_uuid'])
                 ->setCellValue('K29', $vatSale)
                 ->setCellValue('K30', $vatExem)
                 ->setCellValue('K31', $zeroRated)
                 ->setCellValue('K32', $vat12)
-                ->setCellValue('K33', $currency.' '. $totalAmount);
-      
+                ->setCellValue('K33', $currency.' '. $totalAmount);      
     //prepare download
     $filename = mt_rand(1,100000).'.xlsx'; //just some random filename
     header('Content-Type: application/vnd.ms-office');
