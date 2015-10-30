@@ -875,7 +875,7 @@ class DeliveriesController extends DeliveryAppController {
         $units = $this->Unit->getList();
 
         $this->Company->bind('Address');
-
+       
         $this->Delivery->bindDelivery();
         $drData = $this->Delivery->find('first', array(
                                             'conditions' => array('Delivery.dr_uuid' => $dr_uuid, 'Delivery.schedule_uuid' => $schedule_uuid
@@ -923,6 +923,8 @@ class DeliveriesController extends DeliveryAppController {
         $this->request->data['DeliveryReceipt']['printed'] = date("y-m-d");
 
         if ($this->request->is(array('post', 'put'))) {
+
+
 
             $this->request->data['DeliveryReceipt']['remarks'] = $this->request->data['DeliveryDetail']['remarks'];
 
@@ -996,12 +998,14 @@ class DeliveriesController extends DeliveryAppController {
 
                     $this->request->data['Delivery']['status'] = 1;
 
+                    $this->request->data['Delivery']['company_id'] = $this->request->data['Delivery']['company_id'];
+
                     $this->request->data['Delivery']['dr_uuid'] = $this->request->data['DeliveryDetail']['delivery_uuid'];
 
                     $this->request->data['DeliveryDetail']['status'] = 11;
 
                     $this->request->data['DeliveryDetail']['delivered_quantity'] = $drData['DeliveryDetail']['delivered_quantity'];
-
+                   // pr($this->request->data); exit;
                     $this->DeliveryDetail->saveDeliveryDetail($this->request->data);
 
                     $this->Delivery->save($this->request->data['Delivery']);
