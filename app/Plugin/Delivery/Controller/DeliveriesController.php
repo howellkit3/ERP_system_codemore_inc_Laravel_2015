@@ -16,12 +16,12 @@ class DeliveriesController extends DeliveryAppController {
 
         $userData = $this->Session->read('Auth');
 
-        $this->loadModel('Sales.ClientOrder');
+        $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
         $deliveryData = $this->Delivery->find('list',array('fields' => array('schedule_uuid','status'))); 
         
-        $this->ClientOrder->bindDelivery();
-        $clientsStatus = $this->ClientOrder->find('all',array( 'conditions' => array(
+       // $this->ClientOrder->bindDelivery();
+        $clientsStatus = $this->ClientOrderDeliverySchedule->find('all',array( 'conditions' => array(
                                         'ClientOrderDeliverySchedule.client_order_id' => 86
                                         )));
 
@@ -38,18 +38,19 @@ class DeliveriesController extends DeliveryAppController {
 
         $orderListHelper = $this->Delivery->find('list',array('fields' => array('clients_order_id', 'dr_uuid')));
 
-        $orderDeliveryList = $this->ClientOrder->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid', 'uuid')));
+        $orderDeliveryList = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid', 'uuid')));
 
         $deliveryDetailList = $this->DeliveryDetail->find('list',array('fields' => array('delivery_uuid', 'delivered_quantity')));
 
-        $this->ClientOrder->bindDelivery();
+        $this->ClientOrderDeliverySchedule->bind(array('ClientOrder', 'QuotationDetail','Company', 'Product'));
+        //$clientsOrder = $this->ClientOrderDeliverySchedule->find('all');
 
-        $this->ClientOrder->recursive = 1;
+        $this->ClientOrderDeliverySchedule->recursive = 1;
 
         $limit = 10;
 
-        $conditions = array('ClientOrder.status_id' => null);
-
+       // $conditions = array('ClientOrder.status_id' => 1);
+        $conditions = "";
         $this->paginate = array(
             'conditions' => $conditions,
             'limit' => $limit,
@@ -68,8 +69,9 @@ class DeliveriesController extends DeliveryAppController {
             'order' => 'ClientOrder.id DESC',
         );
 
-        $clientsOrder = $this->paginate('ClientOrder');
+        $clientsOrder = $this->paginate('ClientOrderDeliverySchedule');
 
+       // pr($clientsOrder); exit;
 
         if ($userData['User']['role_id'] == 3 || $userData['User']['role_id'] == 6 || $userData['User']['role_id'] == 9) {
 
@@ -188,7 +190,7 @@ class DeliveriesController extends DeliveryAppController {
                                           'ClientOrderDeliverySchedule.id' => $deliveryScheduleId
                                         )
                                     ));
-
+        //pr($scheduleInfo); exit;
 
         $productSpecification = $this->ProductSpecification->find('first',array('conditions' => array(
                     'ProductSpecification.product_id' => $scheduleInfo['QuotationDetail']['product_id']
@@ -255,11 +257,10 @@ class DeliveriesController extends DeliveryAppController {
 
         //pr($scheduleInfo['ClientOrder']['quotation_id']); exit;
 
-        $clientsOrder = $this->ClientOrder->find('first', array(
+        $clientsOrder = $this->ClientOrderDeliverySchedule->find('first', array(
                                               'conditions' => array('ClientOrderDeliverySchedule.uuid' => $scheduleInfo['ClientOrderDeliverySchedule']['uuid']
                                               )));    
 
-        //pr($clientsOrder); exit;
 
         $measureList = $this->Measure->find('list',array('fields' => array('id', 'name'))); 
 
@@ -758,8 +759,8 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
-        $this->ClientOrder->bindDelivery();
-
+        $this->ClientOrderDeliverySchedule->bind(array('ClientOrder', 'QuotationDetail','Company', 'Product'));
+        
         if ($userData['User']['role_id'] == 3 || $userData['User']['role_id'] == 6 || $userData['User']['role_id'] == 9) {
 
             $noPermissionSales = 'disabled not-active';
@@ -775,10 +776,12 @@ class DeliveriesController extends DeliveryAppController {
                           array('Company.company_name LIKE' => '%' . $hint . '%')
                           ));
 
-        $clientsOrder = $this->ClientOrder->find('all',array(
+        $clientsOrder = $this->ClientOrderDeliverySchedule->find('all',array(
                       'conditions' => $conditions,
                       'limit' => 10
                       )); 
+
+      //  pr($clientsOrder); exit; 
 
 
         $deliveryData = $this->Delivery->find('list',array('fields' => array('schedule_uuid','status')));
@@ -792,7 +795,7 @@ class DeliveriesController extends DeliveryAppController {
 
         $orderListHelper = $this->Delivery->find('list',array('fields' => array('clients_order_id', 'dr_uuid')));
 
-        $orderDeliveryList = $this->ClientOrder->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid', 'uuid')));
+        $orderDeliveryList = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid', 'uuid')));
 
         $deliveryDetailList = $this->DeliveryDetail->find('list',array('fields' => array('delivery_uuid', 'delivered_quantity')));
 

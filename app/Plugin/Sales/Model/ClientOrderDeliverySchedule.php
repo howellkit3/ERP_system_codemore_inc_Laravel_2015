@@ -51,7 +51,7 @@ class ClientOrderDeliverySchedule extends AppModel {
 			'belongsTo' => array(
 				'ClientOrder' => array(
 					'className' => 'Sales.ClientOrder',
-					'foreignKey' => 'client_order_id',
+					'conditions' => array('ClientOrderDeliverySchedule.client_order_id = ClientOrder.id'),
 					'dependent' => true
 				),
 				'QuotationDetail' => array(
@@ -75,7 +75,8 @@ class ClientOrderDeliverySchedule extends AppModel {
 				),
 				'Company' => array(
 					'className' => 'Sales.Company',
-					'foreignKey' => 'company_id', 
+					'foreignKey' => false,
+					'conditions' => array('Company.id = ClientOrder.company_id'),
 					'dependent' => true
 				),
 				

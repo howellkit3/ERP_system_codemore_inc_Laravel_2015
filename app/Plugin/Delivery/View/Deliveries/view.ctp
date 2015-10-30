@@ -62,7 +62,7 @@ $totalremaining = 0;
 
                                     <tr>
                                         <td>Delivery Type</td>
-                                        <td><?php echo  $scheduleInfo['ClientOrderDeliverySchedule']['delivery_type']; ?></td>
+                                        <td><?php echo  $clientsOrder['ClientOrderDeliverySchedule']['delivery_type']; ?></td>
                                     </tr>
                                     
 
@@ -88,7 +88,7 @@ $totalremaining = 0;
 
                         </div>
                     </div>
-
+                    
                     <div class="col-lg-6 col-md-6 col-sm-6">
                         <div class="main-box clearfix">
                        
@@ -98,7 +98,7 @@ $totalremaining = 0;
 
                                     <tr>
                                         <td>Schedule</td>
-                                        <td><?php echo date('M d, Y', strtotime($scheduleInfo['ClientOrderDeliverySchedule']['schedule'])); ?></td>
+                                        <td><?php echo date('M d, Y', strtotime($clientsOrder['ClientOrderDeliverySchedule']['schedule'])); ?></td>
                                     </tr>
                                      <tr>
                                         <td>Total Quantity</td>
@@ -112,11 +112,11 @@ $totalremaining = 0;
                                     <tr>
                                         <td>Schedule Quantity</td>
                                         <td>
-                                            <?php echo number_format($scheduleInfo['ClientOrderDeliverySchedule']['quantity'],2); ?></td>
+                                            <?php echo number_format($clientsOrder['ClientOrderDeliverySchedule']['quantity'],2); ?></td>
                                     </tr>
                                     <tr>
                                         <td>Location</td>
-                                        <td><?php echo  substr($scheduleInfo['ClientOrderDeliverySchedule']['location'],0,25); ?></td>
+                                        <td><?php echo  substr($clientsOrder['ClientOrderDeliverySchedule']['location'],0,25); ?></td>
                                     </tr>
 
                                     <tr>
