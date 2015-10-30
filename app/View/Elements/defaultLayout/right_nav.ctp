@@ -153,7 +153,7 @@
 						<?php 
 
 
-						 if(in_array($userData['User']['role_id'],array('1','19'))) {
+						 if(in_array($userData['User']['role_id'],array('19'))) {
 
 	 						echo $this->Html->link( " <i class='fa fa-money'></i> <span> Payroll </span>",   array('controller' =>'salaries',
 	 											'action'=>'payroll',
