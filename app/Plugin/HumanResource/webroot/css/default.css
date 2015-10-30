@@ -304,3 +304,7 @@ div.value {
 .table-payroll th {
   min-width: 100px;
 }
+
+.deductions_th {
+  min-width: 130px;
+}
