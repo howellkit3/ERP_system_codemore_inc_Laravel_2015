@@ -14,14 +14,11 @@
                     </div>
                     <?php
 
-                       
                     ?>
                 </div>
             </header>
 
-         
-
-                <div class="clearfix"></div>
+            <div class="clearfix"></div>
             
             <div class="main-box-body clearfix">
                 <div class="table-responsive">
