@@ -1,5 +1,4 @@
-  <?php  //pr($orderDeliveryList); exit;
-       
+  <?php  
                         if(!empty($clientsOrder)){
                               
 ?>
