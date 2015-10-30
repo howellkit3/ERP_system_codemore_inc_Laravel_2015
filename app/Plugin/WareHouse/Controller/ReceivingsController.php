@@ -25,8 +25,6 @@ class ReceivingsController extends WareHouseAppController {
 															'order' => array('PurchaseOrder.created' => 'DESC')
 															));
 		
-		//$receivedItemsData = $this->ReceivedItem->find('all');
-
 		$quantityData = $this->ReceivedItem->find('list', array('fields' => array('ReceivedItem.delivered_order_id','ReceivedItem.quantity')
 																));
 
@@ -103,9 +101,9 @@ class ReceivingsController extends WareHouseAppController {
 		$this->PurchaseOrder->bindReceive();
 
 		$purchaseOrderData = $this->PurchaseOrder->find('first', array('conditions' => array('PurchaseOrder.id' => $id)));
-		//pr($purchaseOrderData); exit;
+	
 		$receivedOrderData = $this->ReceivedOrder->find('first', array('conditions' => array('ReceivedOrder.purchase_order_id' => $purchaseOrderData['PurchaseOrder']['id'])));
-		//pr($receivedOrderData); exit;
+	
 
 		if(empty($requestData['PurchasingItem'])){
 
@@ -191,8 +189,6 @@ class ReceivingsController extends WareHouseAppController {
 
 				array_push($requestPurchasingItemArray, $itemDetails[$value[$itemHolder]['foreign_key']]);      
 
-
-	        
 	        	foreach ($receivedItemData as $key1 => $receivedValue) {	
 
 					if($receivedValue['ReceivedItem']['model'] == 'Substrate' && $receivedValue['ReceivedItem']['foreign_key'] == $value[$itemHolder]['foreign_key']){
@@ -296,7 +292,21 @@ class ReceivingsController extends WareHouseAppController {
 
         }
 
+        
 		if (!empty($this->request->data)) {
+
+			//pr($this->request->data); exit;
+
+			if(empty($this->request->data['requestPurchasingItem'])){
+        	
+	        	$this->Session->setFlash(__('No Items Selected'), 'error'); 
+	          
+	            $this->redirect( array(
+	                'controller' => 'receivings',   
+	                'action' => 'receive_order', $id, $requestUUID
+	            ));  
+
+        	}
 
 			ksort($this->request->data['requestPurchasingItem']);
 
@@ -313,6 +323,14 @@ class ReceivingsController extends WareHouseAppController {
 			}else{
 
 				$itemId = $receivedData['ReceivedOrder']['id'];
+
+			}
+
+			if(!empty($this->request->data['Receivings']['receive_status'])){
+
+				$this->PurchaseOrder->id = $id;
+
+				$this->PurchaseOrder->saveField('receive_item_status', 1);
 
 			}
 
