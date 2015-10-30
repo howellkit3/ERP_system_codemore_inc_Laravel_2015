@@ -40,7 +40,20 @@ class SalesInvoiceController extends AccountingAppController {
        //pr($invoiceData);exit();
         $companyName = $this->Company->find('list',array('fields' => array('id','company_name')));
 
-        $deliveryNum = $this->Delivery->find('list',array('fields' => array('dr_uuid','company_id')));
+        $deliveryNumHolder = $this->Delivery->find('list',array('fields' => array('dr_uuid','company_id')));
+        //pr($deliveryNum); exit;
+        foreach($deliveryNumHolder as $key => $deliveryList) {
+          //  pr($deliveryList);    
+           //$keyHolder = strval($key);
+           //pr( $keyHolder);
+           $keyHolder = ltrim($key, '0');
+           $deliveryNum[$keyHolder] = $deliveryList;
+        }
+
+        //pr($deliveryNum); exit;
+       
+        // $deliveryNum = ltrim(strval$deliveryNum, '0');
+        // pr($deliveryNum); exit;
         //pr($deliveryNum); exit;
         // $invoiceData = $this->SalesInvoice->find('all', array(
         //                                             'fields' => array(
@@ -153,7 +166,6 @@ class SalesInvoiceController extends AccountingAppController {
         $invoiceData = $this->SalesInvoice->find('first', array(
                                             'conditions' => array('SalesInvoice.id' => $invoiceId
                                             )));
-
        
         $prepared = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
                                                             'conditions' => array('User.id' => $invoiceData['SalesInvoice']['created_by'])
@@ -170,12 +182,17 @@ class SalesInvoiceController extends AccountingAppController {
 
             $drData = " ";
         }
-        
+
+       // pr($drData); exit;
+
+    //pr($invoiceData['SalesInvoice']['dr_uuid']); exit;
         $conditions = array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']);
         $conditions = array_merge($conditions,array('ClientOrder.company_id' => $drData['Delivery']['company_id']));
         $clientData = $this->ClientOrder->find('first', array(
                                             'conditions' => array($conditions
                                             )));
+
+        $clientOrderId = $clientData['ClientOrder']['id'];
 
         $companyData = $this->Company->find('first', array(
                                             'conditions' => array('Company.id' => $drData['Delivery']['company_id']
@@ -185,7 +202,7 @@ class SalesInvoiceController extends AccountingAppController {
 
         $noPermissionReciv = "";
 
-        $this->set(compact('invoiceId','prepared','approved','drData','clientData','companyData','units','invoiceData','paymentTermData','currencyData', 'noPermissionPay', 'noPermissionReciv','quotationData'));
+        $this->set(compact('invoiceId','prepared','approved','drData','clientData','companyData','units','invoiceData','paymentTermData','currencyData', 'noPermissionPay', 'noPermissionReciv','quotationData', 'clientOrderId'));
         
         if (!empty($saNo)) {
 
@@ -516,7 +533,7 @@ class SalesInvoiceController extends AccountingAppController {
 
     public function create_sales_invoice(){ }
  
-    public function print_invoice($invoiceId = null ,$saNo = null) {
+    public function print_invoice($invoiceId = null ,$clientsId = null) {
 
         $userData = $this->Session->read('Auth');
 
@@ -565,7 +582,7 @@ class SalesInvoiceController extends AccountingAppController {
         $invoiceData = $this->SalesInvoice->find('first', array(
                                             'conditions' => array('SalesInvoice.id' => $invoiceId
                                             )));
-        
+
         $prepared = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
                                                             'conditions' => array('User.id' => $invoiceData['SalesInvoice']['created_by'])
                                                             )); 
@@ -576,17 +593,21 @@ class SalesInvoiceController extends AccountingAppController {
                                             'conditions' => array('Delivery.dr_uuid' => $invoiceData['SalesInvoice']['dr_uuid']
                                             )));
 
+        //pr($drData); exit;
 
+      //  pr($drData);  exit;
        
         $clientData = $this->ClientOrder->find('first', array(
-                                            'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
+                                            'conditions' => array('ClientOrder.id' => $clientsId
                                             )));
 
         //pr($clientData); exit;
         
         $companyData = $this->Company->find('first', array(
-                                            'conditions' => array('Company.id' => $clientData['ClientOrder']['company_id']
+                                            'conditions' => array('Company.id' => $drData['Delivery']['company_id']
                                             )));
+
+       // pr($companyData); exit;
 
         //$view = new View(null, false);
         
