@@ -31,7 +31,7 @@
 										<?php 	
 												echo $this->Form->input('id',array('type' => 'hidden' ));
 	                                            echo $this->Form->input('name', 
-	                                            		array('class' => 'form-control item_type col-lg-4',
+	                                            		array('class' => 'form-control item_type col-lg-4 required',
 							                                   'label' => false,
 							                                   'placeholder' => 'Name'));
                                             
@@ -40,7 +40,7 @@
 									</div>
 
 									<div class="form-group">
-										<label class="col-lg-2 control-label"><span style="color:red">*</span> Description </label>
+										<label class="col-lg-2 control-label"> Description </label>
 										<div class="col-lg-8">
 											<?php 
 	                                            echo $this->Form->input('description', array(

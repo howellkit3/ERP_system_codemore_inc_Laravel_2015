@@ -234,8 +234,6 @@ class SalaryComputationComponent extends Component
         			
         		}
 
-        		// pr($salary);
-        		// exit();
 				
 				return $salary;
 			}

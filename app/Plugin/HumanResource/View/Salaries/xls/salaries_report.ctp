@@ -15,9 +15,22 @@
             
     $styleArrayHeader = array(
                   'font'  => array(
-                  'color' => array('rgb' => '0070C0'),
-                  'bold' =>true
-                  ));
+                  'color' => array('rgb' => '000000'),
+                  'bold' => true,
+                  'name' => 'arial',
+                  'alignment' => array(
+                    'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+                  )
+              ));
+
+    $styleArrayBorder = array(
+            'borders' => array(
+              'allborders' => array(
+                'style' => PHPExcel_Style_Border::BORDER_THIN
+              )
+            )
+          );
+
 
     $counter = 6;
     $header = 4;
@@ -29,17 +42,63 @@
    //load all the deductions needed
     foreach ($deductions as $deduction_key => $list) : 
 
-       $split = PHPExcel_Cell::coordinateFromString($address);
-             ++$split[0];
+        $split = PHPExcel_Cell::coordinateFromString($address);
+        ++$split[0];
+        
         $nextRow = preg_replace('/\d/', $next_header ,$address);
-               
-          $sheet->setCellValue($address,$list['Loan']['name']);
-          $sheet->getStyle($address)->applyFromArray($styleArrayHeader);
 
-            $address = implode($split);
-                
+        $sheet->setCellValue($address,$list['Loan']['name']);
+        
+        $sheet->getStyle($address)->applyFromArray($styleArrayHeader);
+
+        $sheet->getStyle($address)->applyFromArray($styleArrayBorder);   
+
+        if (!empty($list['Loan']['description']) ) {
+
+          $sheet->setCellValue($nextRow,$list['Loan']['description']);
+
+          $sheet->getStyle($nextRow)->applyFromArray($styleArrayHeader); 
+
+          $sheet->getStyle($nextRow)->applyFromArray($styleArrayBorder);   
+
+        }
+
+        $sheet->getStyle($address)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+        $address = implode($split);
+
     endforeach; 
 
+
+    $counter = 6;
+    $header = 4;
+    $next_header = 5;
+
+    $sheet = $objTpl->getActiveSheet();
+
+
+    $nextFields = array('Net Pay','Irreg OT','Adjustments','Total NET PAY','Tax Status');
+
+    foreach ($nextFields as $key => $list) :
+        
+        $split = PHPExcel_Cell::coordinateFromString($address);
+        ++$split[0];
+        
+        $nextRow = preg_replace('/\d/', $next_header ,$address);
+
+        $sheet->mergeCells($address.":".$nextRow);
+
+        $sheet->setCellValue($address,$list);
+        
+        $sheet->getStyle($address)->applyFromArray($styleArrayHeader);
+
+        $sheet->getStyle($address.":".$nextRow)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+        $sheet->getStyle($address.":".$nextRow)->applyFromArray($styleArrayBorder);   
+
+        $address = implode($split);
+
+    endforeach;
 
     //next row
 
@@ -355,14 +414,65 @@
           $sheet->setCellValue('AO'.$counter, $emp['with_holding_tax']);
           $sheet->getStyle('AO'.$counter)->applyFromArray($styleArrayBorder);   
 
+          //last porsition
+          $address = 'AP'.$counter;
+
+          $next_field = $address;
+
           //load all the deductions needed
           foreach ($deductions as $deduction_key => $list) : 
-                   
-                    
+
+               $split = PHPExcel_Cell::coordinateFromString($next_field);
+                ++$split[0];
+
+
+              $nextRow = preg_replace('/\d/', $next_header ,$address);
+
+              $field = $list['Loan']['name'];
+
+              if (!empty($list['Loan']['description'])) {
+
+                $field .= ' '.$list['Loan']['description'];
+              }
+              
+              $index = str_replace(' ','_',strtolower($field));
+
+              $value = !empty($emp[$index]) ? $emp[$index] : '0';
+
+              $sheet->setCellValue($next_field, number_format($value,2));
+
+             // $sheet->setCellValue($next_field,$list['Loan']['name']);
+              
+              $sheet->getStyle($next_field)->applyFromArray($styleArrayBorder);    
+
+              $next_field = implode($split);
+      
           endforeach; 
 
-        $key++;
+          $nextFields = array('net_pay','excess_ot','adjustments','total_pay');
 
+          foreach ($nextFields as $key => $value) {
+
+             $split = PHPExcel_Cell::coordinateFromString($next_field);
+                ++$split[0];
+
+              
+             $list_value = !empty($emp[$value]) ? $emp[$value] : '0';
+
+             $sheet->setCellValue($next_field, number_format($list_value,2));
+
+
+              $sheet->getStyle($next_field)->applyFromArray($styleArrayBorder);   
+
+             $next_field = implode($split);
+          }
+
+
+        //withholding tax
+        $sheet->setCellValue($next_field, $emp['EmployeeAdditionalInformation']['status']);
+        $sheet->getStyle($next_field)->applyFromArray($styleArrayBorder);  
+
+        $key++;
         $counter++;
     }
 

@@ -1701,7 +1701,6 @@ class SalariesController  extends HumanResourceAppController {
 
 			$this->Payroll->save($payrollData);
 
-
 			$deductions = $this->Loan->find('all',array('fields' => array('id','name','description')));
 
 			//exit();
@@ -1711,7 +1710,7 @@ class SalariesController  extends HumanResourceAppController {
 			$this->set(compact('payroll','salariesList','deductions'));
 
 			$this->render('Salaries/payroll_view');
-	
+				
 
 			//	private function _checkPayroll($payroll = null , $update = false , $empConditions = array() ){
 		}
@@ -2078,12 +2077,15 @@ class SalariesController  extends HumanResourceAppController {
 									'Salary.ctpa',
 									'Salary.sea',
 									'Salary.allowances',
-									'Salary.employee_salary_type'
-
-								),
+									'Salary.employee_salary_type',
+									'Salary.tax_status',
+									'EmployeeAdditionalInformation.id',
+									'EmployeeAdditionalInformation.status'
+									),
 								'group' => array('Employee.id')
 							));
-		
+			
+
 			$customDate['start'] = $payroll['Payroll']['from'];
 
 			$customDate['end'] = $payroll['Payroll']['to'];
@@ -2148,7 +2150,6 @@ class SalariesController  extends HumanResourceAppController {
 
 	public function export_salaries($payroll_id = null, $type = 'excel') {
 
-
 		$query = $this->request->query;
 
 		if (!empty($query)) {
@@ -2162,6 +2163,7 @@ class SalariesController  extends HumanResourceAppController {
 			}
 
 		}
+
 		if (!empty($payroll_id)) {
 
 			$this->loadModel('Payroll.Payroll');
@@ -2202,12 +2204,15 @@ class SalariesController  extends HumanResourceAppController {
 				$emp_conditions = array();
 
 				if (!empty($query['departments'])) {
+
 					$emp_conditions = array_merge($emp_conditions, array(
 							'Employee.department_id' => $query['departments']
 					));
+
 				}
 
 				if (!empty($query['employee_type'])) {
+					
 					$emp_conditions = array_merge($emp_conditions, array(
 							'Salary.employee_salary_type' => $query['employee_type']
 					));
@@ -2232,11 +2237,11 @@ class SalariesController  extends HumanResourceAppController {
 				}
 
 				$filterEmp = $this->Employee->filter($emp_conditions);
+
 				$salaries = $this->Payroll->filterData($salaries,$filterEmp);
 			}
-
-
-			$deductions = $this->Loan->find('list',array('fields' => array('id','name')));
+		
+			$deductions = $this->Loan->find('all',array('fields' => array('id','name','description')));
 			
 			ini_set('max_execution_time', 3600);
 			ini_set('memory_input_time', 1024);
@@ -2256,7 +2261,6 @@ class SalariesController  extends HumanResourceAppController {
 				$view->viewPath = 'Salaries'.DS.'pdf';
 		   	
 		        $output = $view->render('payslip', false);
-
 
 		        $dompdf = new DOMPDF();
 
