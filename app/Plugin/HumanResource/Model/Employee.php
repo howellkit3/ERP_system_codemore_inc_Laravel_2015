@@ -11,10 +11,10 @@ class Employee extends AppModel {
     public $actsAs = array('Containable');
 
 	public $virtualFields = array(
-		'full_name' => 'CONCAT_WS(" ",Employee.last_name , Employee.middle_name , Employee.first_name  )',
-		'fullname' => 'CONCAT_WS(" ", Employee.first_name, Employee.middle_name, Employee.last_name   )',
-		'middle_fullname' => 'CONCAT_WS(" ", Employee.first_name, Employee.last_name , Employee.middle_name  )',
-		'last_fullname' => 'CONCAT_WS(" ", Employee.last_name, Employee.first_name , Employee.middle_name  )',
+		'full_name' => 'CONCAT_WS(" ",Employee.last_name , Employee.middle_name , Employee.first_name ,Employee.suffix)',
+		'fullname' => 'CONCAT_WS(" ", Employee.first_name, Employee.middle_name, Employee.last_name ,Employee.suffix)',
+		'middle_fullname' => 'CONCAT_WS(" ", Employee.first_name, Employee.last_name , Employee.middle_name ,Employee.suffix)',
+		'last_fullname' => 'CONCAT_WS(" ", Employee.last_name, Employee.first_name , Employee.middle_name ,Employee.suffix )',
 	);
     
     public function bind($model = array('Group')){

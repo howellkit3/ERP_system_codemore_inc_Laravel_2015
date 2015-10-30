@@ -1831,7 +1831,8 @@ class SalariesController  extends HumanResourceAppController {
 			$deductions = $this->Loan->find('list',array('fields' => array('id','name')));
 
 			$salariesList = $salaries;
-		
+
+
 			// $salarySplit = array_chunk($salaries , 10);
 
 			// if (!empty($this->params['named']['page'])) {
@@ -2234,6 +2235,7 @@ class SalariesController  extends HumanResourceAppController {
 				$salaries = $this->Payroll->filterData($salaries,$filterEmp);
 			}
 
+	
 			$deductions = $this->Loan->find('list',array('fields' => array('id','name')));
 			
 			ini_set('max_execution_time', 3600);
