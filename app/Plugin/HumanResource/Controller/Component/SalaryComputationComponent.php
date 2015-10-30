@@ -234,6 +234,9 @@ class SalaryComputationComponent extends Component
         			
         		}
 
+        		// pr($salary);
+        		// exit();
+				
 				return $salary;
 			}
     }
@@ -760,8 +763,12 @@ class SalaryComputationComponent extends Component
 		$data['night_diff_legal_holiday'] =  0;
 		$data['night_diff_legal_holiday_work'] =  0;
 		$data['special_holiday_work_night_diff'] = 0;
+		$data['legal_holiday_work_night_diff_ot'] = 0;
+
 
 		$data['legal_holiday_work_night_diff'] = 0;
+		$data['legal_holiday_work_night_diff_ot'] = 0;
+
 		$data['special_holiday'] =  0;
 		$data['special_holiday_work'] =  0;
 		$data['special_holiday_work_ot'] =  0;
@@ -769,8 +776,8 @@ class SalaryComputationComponent extends Component
 		$data['night_diff_special_holiday_work'] =  0;
 		$data['sunday_work'] =  0;
 		$data['sunday_work_ot'] =  0;
-		$data['night_diff_sunday_work'] =  0;
-		$data['night_diff_sunday_work_ot'] =  0;
+		$data['sunday_work_night_diff'] =  0;
+		$data['sunday_work_night_diff_ot'] =  0;
 		$data['leave'] =  0;
 		$data['sunday_legal_holiday'] =  0;
 		$data['sunday_work_legal_holiday'] =  0;
@@ -783,6 +790,9 @@ class SalaryComputationComponent extends Component
 
     	$data['hours_sunday_work'] = 0;
     	$data['hours_sunday_work_ot'] = 0;
+
+    	$data['hours_sunday_work_night_diff'] = 0;
+    	$data['hours_sunday_work_night_diff_ot'] = 0;
 
     	$data['hours_sunday_night_diff'] = 0;
     	$data['hours_sunday_night_diff_ot'] = 0;
@@ -817,13 +827,10 @@ class SalaryComputationComponent extends Component
     	$data['hours_excess_ot'] = 0;
     	$data['regular_OT'] = 0;
 
-
     	$data['sunday_ctpa'] = 0;
     	$data['sunday_sea'] = 0;
 
-
     	$data['regular_days'] = 0;
-
 
     	if (!empty($employee)) {
 
@@ -1001,16 +1008,15 @@ class SalaryComputationComponent extends Component
 
 						if (!empty($days['Attendance']['in']) && !empty($days['Attendance']['out'])) {
 						
-							$data['hours_sunday_night_diff'] += $this->_nightDiff($days);
+							$data['hours_sunday_work_night_diff'] += $this->_nightDiff($days);
 
-							$data['hours_sunday_night_diff_ot'] += $overtime['night_diff'];
+							$data['hours_sunday_work_night_diff_ot'] += $overtime['night_diff'];
 						}
 
 						$data['sunday_ctpa'] = !empty($models['Salary']['ctpa']) ? $models['Salary']['ctpa'] : 0;
 
 						$data['sunday_sea'] = !empty($models['Salary']['sea']) ? $models['Salary']['sea'] : 0;
 			
-
 					}
 				}	
 
@@ -1019,7 +1025,9 @@ class SalaryComputationComponent extends Component
 
     	}
 
-		$data['regular'] = ($employee['Salary']['basic_pay'] * $data['hours_regular']) / $hours;
+    	$basicPay = $employee['Salary']['basic_pay'];
+
+		$data['regular'] = ($basicPay * $data['hours_regular']) / $hours;
 
 
 		// pr( $data['hours_regular'] );
@@ -1029,17 +1037,17 @@ class SalaryComputationComponent extends Component
 		//sunday work
 		if ($data['hours_sunday_work'] > 0) {
 
-			$data['sunday_work'] = ($employee['Salary']['basic_pay'] * $data['hours_sunday_work'] * 1.3 ) / $hours;
+			$data['sunday_work'] = ($basicPay * $data['hours_sunday_work'] * 1.3 ) / $hours;
 
 			if ( $data['hours_sunday_work_ot'] > 0) {
 
-				$data['sunday_work_ot'] = ($employee['Salary']['basic_pay'] * $data['hours_sunday_work_ot'] * 1.3 * 1.3 ) / $hours;
+				$data['sunday_work_ot'] = ($basicPay * $data['hours_sunday_work_ot'] * 1.3 * 1.3 ) / $hours;
 
 			}
 
 			//sunday night diff	
-			if (  $data['hours_sunday_night_diff']  > 0) {
-					$data['sunday_night_diff'] = ($employee['Salary']['basic_pay'] * $data['hours_sunday_night_diff'] * 1.3 * 0.1 ) / $hours;
+			if (  $data['hours_sunday_work_night_diff']  > 0) {
+					$data['sunday_work_night_diff'] = ($basicPay * $data['hours_sunday_work_night_diff'] * 1.3 * 0.1 ) / $hours;
 			}
 		
 		}
@@ -1047,29 +1055,35 @@ class SalaryComputationComponent extends Component
 		//legal holiday 
 		if ($legal_holiday_days > 0) {
 			
-			$data['legal_holiday'] = ($employee['Salary']['basic_pay'] * $hours ) / $hours; //($employee['Salary']['basic_pay'] * $legal_holiday_hours ) /  ($workingDays * $hours);
+			$data['legal_holiday'] = ($basicPay * $hours ) / $hours; //($employee['Salary']['basic_pay'] * $legal_holiday_hours ) /  ($workingDays * $hours);
 
-			$data['legal_holiday_work'] = ($employee['Salary']['basic_pay'] * $data['hours_legal_holiday_work'] ) / $hours;  //($employee['Salary']['basic_pay'] * $legal_holiday_work )  / ($workingDays * 8);
+			$data['legal_holiday_work'] = ($basicPay * $data['hours_legal_holiday_work'] ) / $hours;  //($employee['Salary']['basic_pay'] * $legal_holiday_work )  / ($workingDays * 8);
 
-			$data['legal_holiday_work_ot'] = ($employee['Salary']['basic_pay'] * $data['hours_legal_holiday_work_ot'] * 2.30 ) / $hours;
+			$data['legal_holiday_work_ot'] = ($basicPay * $data['hours_legal_holiday_work_ot'] * 2.30 ) / $hours;
 
 			if ($data['hours_legal_holiday_sunday_work']  > 0) {
 				
-			 	$data['legal_holiday_sunday_work'] = ($employee['Salary']['basic_pay'] * $data['hours_legal_holiday_sunday_work'] * 2 * 1.3 ) / $hours;
+			 	$data['legal_holiday_sunday_work'] = ($basicPay * $data['hours_legal_holiday_sunday_work'] * 2 * 1.3 ) / $hours;
 			}
 
 			if ($data['hours_legal_holiday_sunday_work_night_diff'] > 0) {
 				
-				$data['legal_holiday_sunday_work_night_diff'] = ($employee['Salary']['basic_pay'] * $data['hours_legal_holiday_sunday_work_night_diff'] * 2.0 * 0.1 ) / $hours;
+				$data['legal_holiday_sunday_work_night_diff'] = ($basicPay * $data['hours_legal_holiday_sunday_work_night_diff'] * 2.0 * 0.1 ) / $hours;
 			}
 			if ($data['hours_legal_holiday_sunday_work_night_diff_ot'] > 0) {
 
-				$data['legal_holiday_sunday_work_night_diff_ot'] = ($employee['Salary']['basic_pay'] * $data['hours_legal_holiday_sunday_work_night_diff'] * 2.0 * 1.3 * 1.1 ) / $hours; 
+				$data['legal_holiday_sunday_work_night_diff_ot'] = ($basicPay * $data['hours_legal_holiday_sunday_work_night_diff'] * 2.0 * 1.3 * 1.1 ) / $hours; 
 			}
 
 			if ($data['hours_legal_holiday_work_night_diff']) {
 
-				$data['legal_holiday_work_night_diff'] = ($employee['Salary']['basic_pay'] * $data['hours_legal_holiday_work_night_diff'] * 2.0 * 0.1 ) / $hours; 
+				$data['legal_holiday_work_night_diff'] = ($basicPay * $data['hours_legal_holiday_work_night_diff'] * 2.0 * 0.1 ) / $hours; 
+			}
+			//need yo change because it was the same as for regular night diff
+			if ($data['hours_legal_holiday_work_night_diff_ot'] > 0) {
+
+				$data['legal_holiday_work_night_diff_ot'] = ($basicPay * $data['hours_legal_holiday_work_night_diff'] * 2.0 * 0.1 ) / $hours; 
+		
 			}
 		
 		}	
@@ -1080,46 +1094,77 @@ class SalaryComputationComponent extends Component
 			//$data['special_holiday_new'] = ($employee['Salary']['basic_pay'] * $special_holiday_hours ) /  ($workingDays * $hours);
 			if ( $data['special_holiday_work'] > 0 ) {
 
-				$data['special_holiday_work'] = ($employee['Salary']['basic_pay'] * $data['hours_special_holiday_work'] * 1.3 ) /  $hours; //($workingDays * $hours); $daily * $data['hours_special_holiday_work']; //($employee['Salary']['basic_pay'] * $special_holiday_work )  / ($workingDays * 8);
+				$data['special_holiday_work'] = ($basicPay * $data['hours_special_holiday_work'] * 1.3 ) /  $hours; //($workingDays * $hours); $daily * $data['hours_special_holiday_work']; //($employee['Salary']['basic_pay'] * $special_holiday_work )  / ($workingDays * 8);
 			}
 
 			if ( $data['hours_special_holiday_work_ot'] > 0 ) {
 
-				$data['special_holiday_work_ot'] = ($employee['Salary']['basic_pay'] * $data['hours_special_holiday_work_ot'] * 1.3  * 1.3) /  $hours; 
+				$data['special_holiday_work_ot'] = ($basicPay * $data['hours_special_holiday_work_ot'] * 1.3  * 1.3) /  $hours; 
 			}
 
 			if ( $data['hours_special_holiday_sunday_work'] > 0 ) {
 
-				$data['special_holiday_work_ot'] = ($employee['Salary']['basic_pay'] * $data['hours_special_holiday_work_ot'] * 1.3  * 1.3) /  $hours; 
+				$data['special_holiday_work_ot'] = ($basicPay * $data['hours_special_holiday_work_ot'] * 1.3  * 1.3) /  $hours; 
 			}
 			
 		
 			if ($data['hours_special_holiday_sunday_work']  > 0) {
 				
-				$data['special_holiday_sunday_work'] = ($employee['Salary']['basic_pay'] * $data['hours_special_holiday_work_ot'] * 1.5 ) /  $hours; 
+				$data['special_holiday_sunday_work'] = ($basicPay * $data['hours_special_holiday_work_ot'] * 1.5 ) /  $hours; 
 			}
 
 			if ($data['hours_special_holiday_sunday_work_night_diff'] > 0) {
 				
-				$data['special_holiday_sunday_work_night_diff'] = ($employee['Salary']['basic_pay'] * $data['hours_special_holiday_sunday_work_night_diff'] * 1.5 * 1.3 * 1.1 ) /  $hours; 
+				$data['special_holiday_sunday_work_night_diff'] = ($basicPay * $data['hours_special_holiday_sunday_work_night_diff'] * 1.5 * 1.3 * 1.1 ) /  $hours; 
 			}
 
 			if ($data['hours_special_holiday_sunday_work_night_diff_ot'] > 0) {
 
-				$data['special_holiday_sunday_work_night_diff_ot'] == ($employee['Salary']['basic_pay'] * $data['hours_special_holiday_sunday_work_night_diff'] * 2.6 * 1.3 * 1.1 ) /  $hours; 
+				$data['special_holiday_sunday_work_night_diff_ot'] == ($basicPay * $data['hours_special_holiday_sunday_work_night_diff'] * 2.6 * 1.3 * 1.1 ) /  $hours; 
 			}
 			
-			if ($data['hours_special_holiday_sunday_work_night_diff']) {
+			if ($data['hours_special_holiday_work_night_diff']) {
 
-				$data['special_holiday_work_night_diff'] = ($employee['Salary']['basic_pay'] * $data['hours_special_holiday_sunday_work_night_diff'] * 1.25 * 1.1 ) / $hours; 
+				$data['special_holiday_work_night_diff'] = ($basicPay* $data['hours_special_holiday_sunday_work_night_diff'] * 1.25 * 1.1 ) / $hours; 
+			}
+
+			//special holiday nightdiff ot
+			if ($data['hours_special_holiday_work_night_diff_ot']) {
+
+				$data['special_holiday_work_night_diff_ot'] = ( $basicPay * $data['hours_special_holiday_sunday_work_night_diff'] * 1.3 * 1.3 * 1.1 ) / $hours; 
 			}
 		}
  
 		foreach ($data as $pay_keys => $list) {
 			
-			if (in_array($pay_keys,array('regular','OT','legal_holiday','legal_holiday_work','night_diff_legal_holiday', 'night_diff_legal_holiday_work', 'special_holiday', 'special_holiday_work', 'night_diff_special_holiday', 'night_diff_special_holiday_work','sunday_work','sunday_work_ot','night_diff_sunday_work','night_diff_sunday_work_ot','leave','legal_holiday_work_night_diff','special_holiday_work_night_diff'))) {
+			if (in_array($pay_keys,array(
+				'regular',
+				'OT',
+				'legal_holiday',
+				'legal_holiday_work',
+				'night_diff_legal_holiday',
+				'night_diff_legal_holiday_work',
+				'special_holiday',
+				'special_holiday_work',
+				'night_diff_special_holiday',
+				'night_diff_special_holiday_work',
+				'sunday_work',
+				'sunday_work_ot',
+				'sunday_work_night_diff',
+				'sunday_work_night_diff_ot',
+				'night_diff_sunday_work',
+				'night_diff_sunday_work_ot',
+				'leave',
+				'legal_holiday_work_night_diff',
+				'legal_holiday_work_night_diff_ot',
+				'special_holiday_work_night_diff',
+				'special_holiday_work_night_diff_ot',
+				'sunday_ctpa',
+				'sunday_sea'
+
+				))) {
 							
-						$data['gross'] += $list;
+					$data['gross'] += $list;
 				}
 		}
 
@@ -1159,6 +1204,8 @@ class SalaryComputationComponent extends Component
     		$data['hours_regular'] -= '0.'.$value['minutes'];
 
     	}
+
+    	$data['sunday_days'] = $sunday_days;
 
     	// $data['hours_sunday_work'] = $this->addWorkTime($timeSunday);
 
@@ -2410,7 +2457,8 @@ class SalaryComputationComponent extends Component
 
 		if ($data['Salary']['basic_pay'] >= $minimumWage['Wage']['amount']) {
 
-				$code = 'Z';
+				//default is 
+				$code = 'S_ME';
 
 				if (in_array($taxStatus,array('S','M'))) {
 					$code = 'S_ME';
@@ -2442,11 +2490,12 @@ class SalaryComputationComponent extends Component
 
 				for ($i=1; $i < 8 ; $i++) { 
 						
-						//pr($taxes['Tax']['taxes_'.$i]);
+					//pr($taxes['Tax']['taxes_'.$i]);
 					if ( ( $grossPay >= $taxes['Tax']['taxes_'.$i] ) && $grossPay > $taxes['Tax']['exempt_rate']) {
 						$range = $taxes['Tax']['taxes_'.$i];
 						$taxKey = $i;
 					}
+					
 				}
 
 				$conditions = array('TaxDeduction.type' => $type);

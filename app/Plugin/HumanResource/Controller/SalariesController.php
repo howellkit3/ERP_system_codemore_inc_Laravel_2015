@@ -398,7 +398,8 @@ class SalariesController  extends HumanResourceAppController {
 
 			$salaries = $this->SalaryComputation->calculateBenifits($employees,$payScheds,$customDate,$updateDatabase);
 
-		//	pr($salaries); exit();
+			//pr($salaries); exit();
+			
 			//save for salary report
 			// if (!empty($salaries) && $updateDatabase) {
 
@@ -1701,7 +1702,7 @@ class SalariesController  extends HumanResourceAppController {
 			$this->Payroll->save($payrollData);
 
 
-			$deductions = $this->Loan->find('list',array('fields' => array('id','name')));
+			$deductions = $this->Loan->find('all',array('fields' => array('id','name','description')));
 
 			//exit();
 
@@ -1828,7 +1829,7 @@ class SalariesController  extends HumanResourceAppController {
 
 			}
 			
-			$deductions = $this->Loan->find('list',array('fields' => array('id','name')));
+			$deductions = $this->Loan->find('all',array('fields' => array('id','name','description')));
 
 			$salariesList = $salaries;
 
@@ -2192,8 +2193,7 @@ class SalariesController  extends HumanResourceAppController {
 				$data = file_get_contents("salaries/files/payroll-".$payroll_id.".txt");
 			}
 
-			$salaries = $this->Payroll->objectToArray(json_decode($data)); 
-
+			$salaries = $this->Payroll->objectToArray(json_decode($data));
 
 			$this->Employee->bindPrimary();
 
@@ -2235,7 +2235,7 @@ class SalariesController  extends HumanResourceAppController {
 				$salaries = $this->Payroll->filterData($salaries,$filterEmp);
 			}
 
-	
+
 			$deductions = $this->Loan->find('list',array('fields' => array('id','name')));
 			
 			ini_set('max_execution_time', 3600);

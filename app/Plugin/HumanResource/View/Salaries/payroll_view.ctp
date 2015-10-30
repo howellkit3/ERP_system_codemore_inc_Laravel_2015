@@ -284,7 +284,11 @@ echo $this->element('payroll_options');
 
 											<?php foreach ($deductions as $deduction_key => $list) : ?>
 											
-												<th><a href="#"><span><?php echo $list; ?></span></a></th>
+												<th class="deductions_th"><a href="#"><span><?php echo $list['Loan']['name']; ?></span></a>
+													<?php if(!empty($list['Loan']['description'])) : ?>
+																( <?php echo $list['Loan']['description']; ?> )
+													<?php endif; ?>
+												</th>
 											
 											<?php endforeach; ?>
 
@@ -593,9 +597,9 @@ echo $this->element('payroll_options');
 
 																				<?php foreach ($deductions as $deduction_key => $list) : ?>
 																				
-																				   <td class=""> <?php 
+																				   <td class="deductions_th"> <?php 
 
-																				   $index = str_replace(' ','_',strtolower($list));
+																				   $index = str_replace(' ','_',strtolower($list['Loan']['name']));
 																					echo !empty($salary[$index]) ? number_format($salary[$index],2) : '0.00';
 
 																					?></td>
