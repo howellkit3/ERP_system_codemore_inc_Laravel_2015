@@ -126,7 +126,7 @@
 
                                                             echo "<span class='label label-success'>Delivered</span>";
 
-                                                    }elseif ($deliveryData[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']] == '1') { 
+                                                    }elseif ($deliveryData[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']] == '1' || $sumDelivered == "0") { 
                                                     
                                                          echo "<span class='label label-warning'>Approved</span>"; ?> &nbsp<?php
                                                     } 

@@ -103,6 +103,12 @@ class Delivery extends AppModel {
 					'foreignKey' => false,
 					'conditions' => 'Delivery.dr_uuid = DeliveryReceipt.dr_uuid'
 				),	
+				
+				'Transmittal' => array(
+					'className' => 'Delivery.Transmittal',
+					'foreignKey' => false,
+					'conditions' => 'Delivery.dr_uuid = Transmittal.dr_uuid'
+				),	
 
 			)
 		));

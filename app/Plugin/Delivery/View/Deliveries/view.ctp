@@ -149,7 +149,7 @@ $totalremaining = 0;
 
                                                   $DeliveredHolder = $deliveryDetailList[$value['Delivery']['dr_uuid']];
   
-                                                    if($value['Delivery']['schedule_uuid'] == $orderDeliveryList[$uuidClientsOrder] AND $value['DeliveryDetail']['status'] != 5 ){  
+                                                    if($value['Delivery']['schedule_uuid'] == $orderDeliveryList[$uuidClientsOrder] AND $value['DeliveryDetail']['status'] != 5 && $value['Delivery']['status'] != 2 ){  
 
                                                       array_push($arrDelivered,$DeliveredHolder);
 
@@ -169,11 +169,9 @@ $totalremaining = 0;
 
                                                         echo "<span class='label label-success'>Completed</span>";
 
-                                                    }elseif ($sumDelivered == $scheduleInfo['ClientOrderDeliverySchedule']['quantity']){
+                                                    
 
-                                                            echo "<span class='label label-success'>Delivered</span>";
-
-                                                    }elseif ($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] == '1') { 
+                                                    }elseif ($deliveryData[$scheduleInfo['ClientOrderDeliverySchedule']['uuid']] == '1' || $sumDelivered == 0) { 
                                                     
                                                          echo "<span class='label label-warning'>Approved</span>"; ?> &nbsp<?php
                                                     } 
@@ -366,7 +364,7 @@ $totalremaining = 0;
 
                                                     echo "<span class='label label-info'>Incomplete</span>";  
 
-                                                }else if($deliveryDataList['DeliveryDetail']['status'] == '3'){
+                                                }else if($deliveryDataList['DeliveryDetail']['status'] == '3' ){
 
                                                      echo "<span class='label label-success'>Delivered</span>"; 
 
@@ -395,140 +393,64 @@ $totalremaining = 0;
 
                                     $dr_holder = null;
 
-                                        foreach ($DeliveryReceiptData as $key) {
+                                    if($deliveryDataList['Delivery']['status'] != '2'){
 
-                                            if($key['DeliveryReceipt']['dr_uuid'] == $deliveryDataList['Delivery']['dr_uuid']){
+                                        if(!empty($deliveryDataList['DeliveryReceipt']['dr_uuid'])){
 
-                                                  $dr_holder = 'matched';
+                                            $activeStatus = "not-active";
+                                            $updateStatus = ($deliveryDataList['DeliveryDetail']['status'] == 3) ? "not-active" : "active";
+                                            $deleteStatus = ($deliveryDataList['DeliveryDetail']['status'] == 3) ? "active" : "not-active";
 
-                                                  break;
-
-                                                }else{
-
-                                                  $dr_holder = 'not matched';
-     
-                                                }
-
-                                            } 
-
-                                        if($deliveryDataList['DeliveryDetail']['status'] == '3' || $deliveryDataList['DeliveryDetail']['status'] == '5'){
-
-                                            echo $this->Html->link('<span class="fa-stack">
-                                                <i class="fa fa-square fa-stack-2x"></i>
-                                                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit</font></span>
-                                                </span> ', array('controller' => 'deliveries', 'action' => 'delivery_edit',$deliveryDataList['Delivery']['dr_uuid'], $scheduleInfo['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link not-active','escape' => false,'title'=>'Review Inquiry'));
-
-                                            echo $this->Html->link('<span class="fa-stack">
-                                                <i class="fa fa-square fa-stack-2x"></i>
-                                                <i class="fa fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Print </font></span>
-                                                </span>', array('controller' => 'deliveries', 'action' => 'dr',$deliveryDataList['Delivery']['dr_uuid'],$scheduleInfo['ClientOrderDeliverySchedule']['uuid'], $scheduleInfo['ClientOrder']['id']),array('class' =>' table-link not-active refresh','escape' => false,'title'=>'Print Delivery Receipt')); ?>
-
-                                            <a data-toggle="modal" href="#myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" class="table-link not-active"><i class="fa fa-lg "></i><span class="fa-stack">
-                                            <i class="fa fa-square fa-stack-2x "></i>
-                                            <i class="fa  fa-mail-reply fa-stack-1x fa-inverse "></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Update </font></span></a>
-                                            
-                                            <?php 
-                                                
-                                            if($deliveryDataList['DeliveryDetail']['status'] != '5'){
-
-                                                echo $this->Html->link('<span class="fa-stack">
-                                                            <i class="fa fa-square fa-stack-2x"></i>
-                                                            <i class="fa fa-trash fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Delete </font></span>
-                                                            </span> ', array('controller' => 'deliveries', 
-                                                              'action' => 'remove_dr_sched',
-                                                              $deliveryDataList['Delivery']['dr_uuid'],
-                                                              $deliveryScheduleId,
-                                                              $clientsOrderUuid,
-                                                              $clientUuid
-
-                                                              ),
-                                                            array(
-                                                                'label' => false,
-                                                              'class' =>' table-link',
-                                                              'escape' => false,'title'=>'Edit Information',
-                                                              'confirm' => 'Are you sure you want to delete this schedule ? '
-                                                              ));
-
-                                            }
                                         }else{
 
+                                            $activeStatus = "active";
+                                            $updateStatus = "not-active";
+                                            $deleteStatus = "not-active";
+     
+                                        }
 
-                                        if($dr_holder == 'matched'){
+                                    }else{
 
-                                            echo $this->Html->link('<span class="fa-stack">
+                                            $activeStatus = "not-active";
+                                            $updateStatus = "not-active";
+                                            $deleteStatus = "not-active";
+
+                                    }
+
+                                   // pr($deliveryDataList); 
+
+                                        echo $this->Html->link('<span class="fa-stack">
                                                 <i class="fa fa-square fa-stack-2x"></i>
-                                                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit</font></span>
-                                                </span> ', array('controller' => 'deliveries', 'action' => 'delivery_edit',$deliveryDataList['Delivery']['dr_uuid'], $scheduleInfo['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link not-active','escape' => false,'title'=>'Review Inquiry'));
+                                                <i class="fa fa-pencil  fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit</font></span>
+                                                </span>', array('controller' => 'deliveries', 'action' => 'delivery_edit',$deliveryDataList['Delivery']['dr_uuid'], $scheduleInfo['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link '. $activeStatus,'escape' => false,'title'=>'Review Inquiry'));
 
-                                            if($scheduleInfo['ClientOrder']['company_id'] == '1223'){        
+                                        if($scheduleInfo['ClientOrder']['company_id'] == '1223'){        
 
                                                     echo $this->Html->link('<span class="fa-stack">
                                                         <i class="fa fa-square fa-stack-2x"></i>
                                                         <i class="fa fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> APC</font></span>
-                                                        </span>', array('controller' => 'deliveries', 'action' => 'apc',$deliveryDataList['Delivery']['dr_uuid'],$scheduleInfo['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link  ','escape' => false,'title'=>'Print Delivery Receipt')); 
-                                                }    
-                              
-                                            echo $this->Html->link('<span class="fa-stack">
+                                                        </span>', array('controller' => 'deliveries', 'action' => 'apc',$deliveryDataList['Delivery']['dr_uuid'],$scheduleInfo['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link '. $activeStatus,'escape' => false,'title'=>'Print Delivery Receipt')); 
+                                                }   
+                                        
+                                        echo $this->Html->link('<span class="fa-stack">
                                                 <i class="fa fa-square fa-stack-2x"></i>
                                                 <i class="fa fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Print </font></span>
-                                                </span>', array('controller' => 'deliveries', 'action' => 'dr',$deliveryDataList['Delivery']['dr_uuid'],$scheduleInfo['ClientOrderDeliverySchedule']['uuid'],$scheduleInfo['ClientOrder']['id']),array('class' =>' table-link  refresh','escape' => false,'title'=>'Print Delivery Receipt')); 
+                                                </span>', array('controller' => 'deliveries', 'action' => 'dr',$deliveryDataList['Delivery']['dr_uuid'],$scheduleInfo['ClientOrderDeliverySchedule']['uuid'],$scheduleInfo['ClientOrder']['id']),array('class' =>' table-link  refresh ' . $activeStatus,'escape' => false,'title'=>'Print Delivery Receipt')); 
 
-                                            ?>
+                                        ?>
 
-                                             <a data-toggle="modal" href="#myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" class="table-link"><i class="fa fa-lg "></i><span class="fa-stack">
+                                             <a data-toggle="modal" href="#myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" class="table-link <?php echo $updateStatus ?>"><i class="fa fa-lg "></i><span class="fa-stack">
                                             <i class="fa fa-square fa-stack-2x "></i>
                                             <i class="fa  fa-mail-reply fa-stack-1x fa-inverse "></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Update </font></span></a> <?php
 
                                             echo $this->Html->link('<span class="fa-stack">
-                                                            <i class="fa fa-square fa-stack-2x"></i>
-                                                            <i class="fa fa-trash fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Delete </font></span>
-                                                            </span> ', array('controller' => 'deliveries', 
-                                                              'action' => 'remove_dr_sched',
-                                                              $deliveryDataList['Delivery']['dr_uuid'],
-                                                              $deliveryScheduleId,
-                                                              $clientsOrderUuid,
-                                                              $clientUuid
-
-                                                              ),
-                                                            array(
-                                                                'label' => false,
-                                                              'class' =>' table-link',
-                                                              'escape' => false,'title'=>'Edit Information',
-                                                              'confirm' => 'Are you sure you want to delete this schedule ? '
+                                                <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-trash fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Delete </font></span></span> ', array('controller' => 'deliveries', 'action' => 'remove_dr_sched', $deliveryDataList['Delivery']['dr_uuid'], $deliveryScheduleId,$clientsOrderUuid,$clientUuid ),
+                                                            array( 'label' => false,'class' =>' table-link '. $deleteStatus,'escape' => false,'title'=>'Edit Information', 'confirm' => 'Are you sure you want to delete this schedule ? '
                                                               ));
 
 
-                                        }else{
 
-
-                                            echo $this->Html->link('<span class="fa-stack">
-                                                <i class="fa fa-square fa-stack-2x"></i>
-                                                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit</font></span>
-                                                </span> ', array('controller' => 'deliveries', 'action' => 'delivery_edit',$deliveryDataList['Delivery']['dr_uuid'], $scheduleInfo['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link','escape' => false,'title'=>'Review Inquiry'));
-                                        
-                                                if($scheduleInfo['ClientOrder']['company_id'] == '1223'){        
-
-                                                    echo $this->Html->link('<span class="fa-stack">
-                                                        <i class="fa fa-square fa-stack-2x"></i>
-                                                        <i class="fa fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> APC</font></span>
-                                                        </span>', array('controller' => 'deliveries', 'action' => 'apc',$deliveryDataList['Delivery']['dr_uuid'],$scheduleInfo['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link  ','escape' => false,'title'=>'Print Delivery Receipt')); 
-                                                }       
-
-                                            echo $this->Html->link('<span class="fa-stack">
-                                                <i class="fa fa-square fa-stack-2x"></i>
-                                                <i class="fa fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Print </font></span>
-                                                </span>', array('controller' => 'deliveries', 'action' => 'dr',$deliveryDataList['Delivery']['dr_uuid'],$scheduleInfo['ClientOrderDeliverySchedule']['uuid'],$scheduleInfo['ClientOrder']['id']),array('class' =>' table-link refresh','escape' => false,'title'=>'Print Delivery Receipt')); 
-
-                                                ?>
-
-                                        <a data-toggle="modal" href="#myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" class="table-link not-active"><i class="fa fa-lg "></i><span class="fa-stack">
-                                            <i class="fa fa-square fa-stack-2x "></i>
-                                            <i class="fa  fa-mail-reply fa-stack-1x fa-inverse "></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Update </font></span></a> <?php 
-
-                                       } 
-
-
-                                             }?>
+                                      ?>
 
                                     </td>
                                 </tr>
