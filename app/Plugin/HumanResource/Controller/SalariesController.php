@@ -2069,6 +2069,7 @@ class SalariesController  extends HumanResourceAppController {
 									'Position.id',
 									'Department.id',
 									'Department.name',
+									'Department.description',
 									'Salary.id',
 									'Salary.wage',
 									'Salary.tax_status',
