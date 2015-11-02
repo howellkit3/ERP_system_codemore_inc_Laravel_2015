@@ -948,27 +948,49 @@ public function daily_info() {
 			$filter = array();
 
 			$start_date = $date1;
-
-
-				$selectedDate = $date1.' - '. $date2;
+			
+			//Configure::write('debug',2);
+			
+			$selectedDate = $date1.' - '. $date2;
 			
 			$this->Attendance->bind(array('MySchedule','MyWorkshift','Employee'));
 
-				$attendanceKey = 0;
+
+				//$dateKey = 0;
 
 					while (strtotime($start_date) <= strtotime($date2)) {
 
 							$att_conditions = array('date(Attendance.date) BETWEEN ? AND ?' => array($start_date,$start_date),'Attendance.employee_id NOT' => 'NULL');
 
+							$filter[$start_date] = array();
+
 							$attendances = $this->Attendance->find('all',array(
 								'conditions' => $att_conditions,
 								'recursive' => -1,
-								'contain' => array('MyWorkshift','MySchedule'),
+								//'limit' => ,
+ 								'contain' => array('MyWorkshift','MySchedule','Employee'),
+ 								// 'fields' => array(
+ 								// 'MyWorkshift.from',
+ 								// 	'MyWorkshift.to',
+ 								// 	'MySchedule.work_shift_id',
+ 								// 	'MySchedule.foreign_key',
+ 								// 	'MySchedule.day',
+ 								// 	'Employee.first_name',
+ 								// 	'Employee.last_name',
+ 								// 	'Employee.middle_name',
+ 								// 	//'Employee.full_name',
+ 								// 	'Attendance.in',
+ 								// 	'Attendance.out',
+ 								// 	'Attendance.date'
+ 								// 	),
 								'group' => array('Attendance.id')
 							));
 
 
+						
 							//$employeeIds = Set::extract($attendances, '{n}.Attendance.employee_id');
+							$attendanceKey = 0;
+
 
 							foreach ($attendances as $key => $alist) {
 
@@ -986,65 +1008,65 @@ public function daily_info() {
 
 									// pr('-------');
 
-									if (!empty($alist['Employee']['id'])) {
-
-
+									if (!empty($alist['Attendance']['employee_id'])) {
 										
 										if (strtotime($alist['Attendance']['in']) > strtotime($inToday.' '.$alist['MyWorkshift']['from'])) {
 
-											$filter[$attendanceKey]['Attendance'] = $alist['Attendance'];
+											$filter[$start_date][$attendanceKey]['Attendance'] = $alist['Attendance'];
 
-											$filter[$attendanceKey]['MyWorkshift'] = $alist['MyWorkshift'];
+											$filter[$start_date][$attendanceKey]['MyWorkshift'] = $alist['MyWorkshift'];
 
-											$filter[$attendanceKey]['MySchedule'] = $alist['MySchedule'];
+											$filter[$start_date][$attendanceKey]['MySchedule'] = $alist['MySchedule'];
 
 
-											$filter[$attendanceKey]['Employee'] = !empty($alist['Employee']['id']) ? $alist['Employee'] : array();
-											$filter[$attendanceKey]['Time']['date'] = $start_date;
+											$filter[$start_date][$attendanceKey]['Employee'] = !empty($alist['Attendance']['employee_id']) ? $alist['Employee'] : array();
+											$filter[$start_date][$attendanceKey]['Time']['date'] = $start_date;
 										//	
-											$filter[$attendanceKey]['Time']['status'] = 'late';
+											$filter[$start_date][$attendanceKey]['Time']['status'] = 'late';
 
-											$filter[$attendanceKey]['Time']['timeIn'] = $alist['Attendance']['in'];
+											$filter[$start_date][$attendanceKey]['Time']['timeIn'] = $alist['Attendance']['in'];
 										}
 
-										$attendanceKey++;
+										
 									}
 
 								}
 
-
+								$attendanceKey++;
 
 								# code...
 							}
 
-							if (!empty($attendances)) {
+							//	pr($filter);
 
-								//check if late
-								if (!empty($attendances['MyWorkshift']['from'])) {
+								//pr($filter);
+
+					// 		if (!empty($attendances)) {
+
+					// 			//check if late
+					// 			if (!empty($attendances['MyWorkshift']['from'])) {
 
 								
-								//	$time2 = $attendances[$attendanceKey]['Attendance']['out'];
+					// 			//	$time2 = $attendances[$attendanceKey]['Attendance']['out'];
 
 
-								}
+					// 			}
 
 
-					} else {
+					// } else {
 
-						$filter[$attendanceKey]['Employee']['status'] = 'no_attendance';
+					// 	$filter[$attendanceKey]['Employee']['status'] = 'no_attendance';
 
-					}
+					// }
 
 
 						$start_date = date ("Y-m-d", strtotime("+1 days", strtotime($start_date)));
 
-						
+						//$dateKey++;
 					}
 
 				
 					if (!empty($filter)) {
-
-
 
 					$this->set(compact('filter','selectedDate'));
 
@@ -1064,7 +1086,7 @@ public function daily_info() {
 
 	public function export_attendance() {
 
-		Configure::write('debug',2);
+		//Configure::write('debug',2);
 
 		$this->loadModel('HumanResource.WorkSchedule');
 
