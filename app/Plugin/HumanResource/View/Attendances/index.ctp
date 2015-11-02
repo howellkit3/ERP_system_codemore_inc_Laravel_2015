@@ -83,16 +83,23 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 			                      <input type="hidden"  name="search" id="hidden_search" value="" />
 
 
+			                      <input type="hidden"  name="lates" id="hidden_late" value="" />
+
+
 
 			                     <!-- <a data-toggle="modal" href="#myAttendance" class="btn btn-primary pull-right"><i class="fa fa-share-square-o fa-lg"></i> Export</a> -->
+			                       <div class="form-group pull-left">
+			                    	 <a data-toggle="modal" class="btn btn-success" href="#timeKeep"> <i class="fa fa-clock-o"></i> Add Attendances </a> 
+			                     </div>
+			                      <button class="btn btn-primary pull-left" class="export"><i class="fa fa-share-square-o fa-lg"></i> Export</button>
 
-			                      <button class="btn btn-primary pull-right"><i class="fa fa-share-square-o fa-lg"></i> Export</button>
+
+			                       <button class="btn btn-primary pull-right" id="exportLate"><i class="fa fa-share-square-o fa-lg"></i>
+			                       	Export Late / Absences </button>
 
 			                      	 <?php echo $this->Form->end(); ?>
 			                   	 
-			                     <div class="form-group pull-left">
-			                    	 <a data-toggle="modal" class="btn btn-success" href="#timeKeep"> <i class="fa fa-clock-o"></i> Add Attendances </a> 
-			                     </div>
+			                   
 
 			                   <br><br>
 

@@ -535,4 +535,13 @@ $(document).ready(function(){
 
 
     });
+
+
+    $('#exportLate').click(function(e){
+
+        $('#hidden_late').val('true');
+
+       // e.preventDefault();
+    });
+
 });

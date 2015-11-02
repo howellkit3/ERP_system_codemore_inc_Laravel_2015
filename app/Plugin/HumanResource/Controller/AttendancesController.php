@@ -903,9 +903,168 @@ public function daily_info() {
 		$this->render('Attendances/xls/attendance_report');
 	}
 
+
+	function _regularDays($days) {
+
+		if (!empty($days['Attendance']['in']) && !empty($days['Attendance']['out'])) {
+
+				$inToday = date('Y-m-d',strtotime($days['Attendance']['in']));
+				
+				$outToday = date('Y-m-d',strtotime($days['Attendance']['out']));
+
+				$time1 = $days['Attendance']['in'];
+
+			if (strtotime($days['Attendance']['in']) <= strtotime($outToday.' '.$days['MyWorkshift']['from']) ) {
+
+
+				$time1 = $outToday.' '.$days['MyWorkshift']['from'];
+
+			}
+			$time2 = $days['Attendance']['out'];
+
+					
+			$date = date('Y-m-d');
+			$date1 = new DateTime($time1);
+			$date2 = new DateTime($time2);
+
+			$interval = $date1->diff($date2)->format('%h');
+
+			if ($interval > 8) {
+				$interval = 8;
+			}
+
+			return $interval;
+		}
+
+	}
+
+
+	public function _getLates($data = array(),$conditions = array(),$date1 = null,$date2 = null) {
+
+		if (!empty($data)) {
+
+			$this->loadModel('HumanResource.Overtime');
+
+			$filter = array();
+
+			$start_date = $date1;
+
+
+				$selectedDate = $date1.' - '. $date2;
+			
+			$this->Attendance->bind(array('MySchedule','MyWorkshift','Employee'));
+
+				$attendanceKey = 0;
+
+					while (strtotime($start_date) <= strtotime($date2)) {
+
+							$att_conditions = array('date(Attendance.date) BETWEEN ? AND ?' => array($start_date,$start_date),'Attendance.employee_id NOT' => 'NULL');
+
+							$attendances = $this->Attendance->find('all',array(
+								'conditions' => $att_conditions,
+								'recursive' => -1,
+								'contain' => array('MyWorkshift','MySchedule'),
+								'group' => array('Attendance.id')
+							));
+
+
+							//$employeeIds = Set::extract($attendances, '{n}.Attendance.employee_id');
+
+							foreach ($attendances as $key => $alist) {
+
+									$inToday = date('Y-m-d',strtotime($alist['Attendance']['in']));
+
+									$outToday = date('Y-m-d',strtotime($alist['Attendance']['out']));
+
+									$time1 = $alist['Attendance']['in'];
+
+								if (!empty($alist['MyWorkshift']['from'])) {
+
+									// pr(strtotime($alist['Attendance']['in']));
+
+									// pr( strtotime($inToday.' '.$alist['MyWorkshift']['from']));
+
+									// pr('-------');
+
+									if (!empty($alist['Employee']['id'])) {
+
+
+										
+										if (strtotime($alist['Attendance']['in']) > strtotime($inToday.' '.$alist['MyWorkshift']['from'])) {
+
+											$filter[$attendanceKey]['Attendance'] = $alist['Attendance'];
+
+											$filter[$attendanceKey]['MyWorkshift'] = $alist['MyWorkshift'];
+
+											$filter[$attendanceKey]['MySchedule'] = $alist['MySchedule'];
+
+
+											$filter[$attendanceKey]['Employee'] = !empty($alist['Employee']['id']) ? $alist['Employee'] : array();
+											$filter[$attendanceKey]['Time']['date'] = $start_date;
+										//	
+											$filter[$attendanceKey]['Time']['status'] = 'late';
+
+											$filter[$attendanceKey]['Time']['timeIn'] = $alist['Attendance']['in'];
+										}
+
+										$attendanceKey++;
+									}
+
+								}
+
+
+
+								# code...
+							}
+
+							if (!empty($attendances)) {
+
+								//check if late
+								if (!empty($attendances['MyWorkshift']['from'])) {
+
+								
+								//	$time2 = $attendances[$attendanceKey]['Attendance']['out'];
+
+
+								}
+
+
+					} else {
+
+						$filter[$attendanceKey]['Employee']['status'] = 'no_attendance';
+
+					}
+
+
+						$start_date = date ("Y-m-d", strtotime("+1 days", strtotime($start_date)));
+
+						
+					}
+
+				
+					if (!empty($filter)) {
+
+
+
+					$this->set(compact('filter','selectedDate'));
+
+					$this->render('Attendances/xls/lates');
+
+
+					}
+
+
+			}
+
+
+			exit();
+
+	
+	}
+
 	public function export_attendance() {
 
-		Configure::write('debug',0);
+		Configure::write('debug',2);
 
 		$this->loadModel('HumanResource.WorkSchedule');
 
@@ -938,6 +1097,14 @@ public function daily_info() {
 			
 			$conditions = array_merge($conditions,array('date(Attendance.date) BETWEEN ? AND ?' => array($date1,$date2)));
 		
+		}
+
+		if (!empty($this->request->data['lates'])) {
+
+
+			$this->_getLates($this->request->data,$conditions,$date1,$date2);
+
+			exit();
 		}
 
 		
