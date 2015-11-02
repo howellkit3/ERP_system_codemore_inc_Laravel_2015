@@ -371,6 +371,18 @@ class Attendance extends AppModel {
 
 	}
 
+		public function is_date( $str ){ 
+		    $stamp = strtotime( $str ); 
+		    if (!is_numeric($stamp)) 
+		        return FALSE; 
+		    $month = date( 'm', $stamp ); 
+		    $day   = date( 'd', $stamp ); 
+		    $year  = date( 'Y', $stamp ); 
+		    if (checkdate($month, $day, $year)) 
+		        return TRUE; 
+		    return FALSE; 
+		}
+
 	public function computeAttendance($conditions = array()){
 
 
@@ -425,6 +437,10 @@ class Attendance extends AppModel {
 
 			foreach ($attendances as $key => $attendance) {
 
+				
+				if ($this->is_date($attendance['Attendance']['in']) && $this->is_date($attendance['Attendance']['out']) ) {
+
+				
 				// if (strtotime($attendance['Attendance']['in']) >= strtotime($attendance['WorkShift']['from']) && strtotime($attendance['Attendance']['out']) <= strtotime($attendance['WorkShift']['to'])) {
 				if (strtotime($attendance['Attendance']['in']) >= strtotime($attendance['MyWorkshift']['from']) && strtotime($attendance['Attendance']['out']) <= strtotime($attendance['MyWorkshift']['to'])) {
 						
@@ -441,6 +457,7 @@ class Attendance extends AppModel {
 						}
 						
 				}
+			}
 
 			}
 
