@@ -390,7 +390,7 @@
           $sheet->getStyle('AI'.$counter)->applyFromArray($styleArrayBorder);
         
           //sunday ctpa + sea days
-          $cptasea = $emp['sunday_ctpa'] + $emp['sea'];
+          $cptasea = $emp['sunday_ctpa'] + $emp['sunday_sea'];
           $sheet->setCellValue('AJ'.$counter, $cptasea);
           $sheet->getStyle('AJ'.$counter)->applyFromArray($styleArrayBorder);
 
