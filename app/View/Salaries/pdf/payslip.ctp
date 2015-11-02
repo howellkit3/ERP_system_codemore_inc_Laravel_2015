@@ -14,8 +14,10 @@
 </head>
 	<body style="max-width:800px">
 		<?php  
-				
+			$startKey = 1;	
 			foreach ($salaries as $key => $salary) :
+
+				$total_hours= 0;
 
 				$employee_name = $this->CustomText->getFullname($salary['Employee']);
 				
@@ -59,7 +61,8 @@
 
 
 		 ?>
-		 	<div class="container">
+		 	<div class="main-container pull-left">
+		 	<div class="border">
 			<table class="center container medium-font">
 						<tr>
 						<td>
@@ -117,6 +120,7 @@
 				</table>
 				<br>
 				<br>
+			</div>
 				<table class="border container center">
 						<tr>
 							<td class="border-bottom">
@@ -288,7 +292,7 @@
 									<td><?php echo $list['Loan']['name']; ?></td>
 									<td class="text-right"><?php 
 										$index = str_replace(' ','_',strtolower($list['Loan']['name']));
-										echo !empty($salary[$index]) ? number_format($salary[$index],2) : '0.00';
+										echo !empty($salary[$index]) && is_int($salary[$index]) ? number_format($salary[$index],2) : '0.00';
 									 ?></td>
 								</tr>
 							<?php endforeach; ?>
@@ -300,7 +304,8 @@
 								<tr>
 									<td>SSS </td>
 									<td class="text-right">
-										<?php echo !empty($salary['sss'])  ? number_format($salary['sss'],2) : '0.00'; ?>
+										<?php
+										 echo !empty($salary['sss']) && is_int($salary['sss'])  ? number_format($salary['sss'],2) : '0.00'; ?>
 									</td>
 								</tr>
 
@@ -358,8 +363,16 @@
 					</tr>
 				</table>
 			</div>
-		
+			<?php if($startKey % 3 == 0 && $key != 0) : ?>
+				<div class="clearfix"></div>
+			<?php endif; ?>
+
+			<?php if($startKey % 6 == 0 && $key != 0) : ?>
+				<div style="page-break-before: always;"></div>
+			<?php endif; ?>
+
+
 			<!-- 	 <div style="page-break-before: always;"></div>  -->
-<?php endforeach; ?>
+<?php $startKey++; endforeach; ?>
 	</body>
 </html>

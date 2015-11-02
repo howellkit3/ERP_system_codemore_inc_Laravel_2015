@@ -435,6 +435,8 @@ class SalariesController  extends HumanResourceAppController {
 				
 				//$this->layout = 'pdf';
 
+
+
 				$view = new View(null, false);
 
 				$view->set(compact('salaries','payroll','payrollDate','deductions'));
@@ -448,24 +450,45 @@ class SalariesController  extends HumanResourceAppController {
 		        $dompdf = new DOMPDF();
 		        $dompdf->set_paper("A5",'portrait');
 		        $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));
-		        $dompdf->render();
+		        // $dompdf->render();
 		        $canvas = $dompdf->get_canvas();
 		        $font = Font_Metrics::get_font("helvetica", "bold");
 		        $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
 
-		        $output = $dompdf->output();
-		        $random = rand(0, 1000000) . '-' . time();
+		       // $output = $dompdf->output();
+		       //  $random = rand(0, 1000000) . '-' . time();
 
-		        if (empty($filename)) {
-		        	$filename = 'payslip-record'.time();
-		        }
-		      	$filePath = $filename.'.pdf';
+		       //  if (empty($filename)) {
+		       //  	$filename = 'payslip-record'.time();
+		       //  }
+		      	// $filePath = $filename.'.pdf';
 
-		        $file_to_save = WWW_ROOT .DS. $filePath;
+		       //  $file_to_save = WWW_ROOT .DS. $filePath;
 		        	
-		        if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
+		       //  if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
 		        		
-		        		unlink($file_to_save);
+		       //  		unlink($file_to_save);
+		       //  }
+
+
+				// Get the style section out of the HTML 
+				$styles = $doc->getElementsByTagName('style'); 
+				$style = $styles->item(0); 
+
+				// Get all the divs with class page (separate pages) 
+				$xpath = new DOMXPath($dompdf); 
+				$pages = $xpath->query('//div[contains(@class, "page")]'); 
+
+				// insert each page individually 
+				foreach($pages as $page) { 
+				    $html = $doc->saveXML($style) . $doc->saveXML($page); 
+				    $dompdf->insert_html($html); 
+				} 
+
+				
+				if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
+		        		
+		        	//	unlink($file_to_save);
 		        }
 
                 break; 	
@@ -2255,6 +2278,8 @@ class SalariesController  extends HumanResourceAppController {
 
 				case 'payslip':
 
+
+				
 				$view = new View(null, false);
 
 				$view->set(compact('salaries','payroll','payrollDate','deductions'));
@@ -2300,7 +2325,7 @@ class SalariesController  extends HumanResourceAppController {
 
 				if ($dompdf->stream('payslip-'.$payroll['Payroll']['id'].'-'.str_replace(' ','-',strtolower($payrollDate)).'-'.time().'.pdf')){
 
-				 //	unlink($file_to_save);
+				 	unlink($file_to_save);
 				}
 
 				exit();
@@ -2478,8 +2503,6 @@ class SalariesController  extends HumanResourceAppController {
 
 	public function export_all_attendance() {
 
-
-		Configure::write('debug',2);
 
 		$salaries = '';
 

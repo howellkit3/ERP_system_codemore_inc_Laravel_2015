@@ -65,6 +65,11 @@
 
         $sheet->getStyle($address)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
+
+          $sheet->getStyle($address)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FFFF99');
+
+          $sheet->getStyle($nextRow)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FFFF99');
+
         $address = implode($split);
 
     endforeach; 
@@ -95,6 +100,9 @@
         $sheet->getStyle($address.":".$nextRow)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
         $sheet->getStyle($address.":".$nextRow)->applyFromArray($styleArrayBorder);   
+
+
+          $sheet->getStyle($address)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FFFF99');
 
         $address = implode($split);
 
@@ -411,7 +419,8 @@
           $sheet->getStyle('AN'.$counter)->applyFromArray($styleArrayBorder); 
 
           //withholding tax
-          $sheet->setCellValue('AO'.$counter, $emp['with_holding_tax']);
+          $tax = !empty($emp['with_holding_tax']) ? number_format($emp['with_holding_tax'],2) : 0;
+          $sheet->setCellValue('AO'.$counter, $tax );
           $sheet->getStyle('AO'.$counter)->applyFromArray($styleArrayBorder);   
 
           //last porsition
@@ -443,7 +452,9 @@
 
              // $sheet->setCellValue($next_field,$list['Loan']['name']);
               
-              $sheet->getStyle($next_field)->applyFromArray($styleArrayBorder);    
+              $sheet->getStyle($next_field)->applyFromArray($styleArrayBorder);   
+
+
 
               $next_field = implode($split);
       

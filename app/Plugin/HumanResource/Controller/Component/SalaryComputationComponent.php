@@ -239,6 +239,18 @@ class SalaryComputationComponent extends Component
 			}
     }
 
+    public function is_date( $str ){ 
+	    $stamp = strtotime( $str ); 
+	    if (!is_numeric($stamp)) 
+	        return FALSE; 
+	    $month = date( 'm', $stamp ); 
+	    $day   = date( 'd', $stamp ); 
+	    $year  = date( 'Y', $stamp ); 
+	    if (checkdate($month, $day, $year)) 
+	        return TRUE; 
+	    return FALSE; 
+}
+
     private function workingDays($date = null) {
 
 
@@ -688,6 +700,9 @@ class SalaryComputationComponent extends Component
 		}
 		$time2 = $days['Attendance']['out'];
 
+
+		if ($this->is_date($days['Attendance']['in']) && $this->is_date($days['Attendance']['out']) ) {
+
 				
 		$date = date('Y-m-d');
 		$date1 = new DateTime($time1);
@@ -721,6 +736,8 @@ class SalaryComputationComponent extends Component
 			// 	$difference .= $interval->i  .$minutes;
 			// }
 		return $interval;
+
+		}
 	}
 
 	}
@@ -1927,8 +1944,12 @@ class SalaryComputationComponent extends Component
 
 	if (!empty($data['Attendance']['in']) && !empty($data['Attendance']['out']) ) {
 
+	
+		
 		if (strtotime($data['Attendance']['in']) >= strtotime($data['MyWorkshift']['from'])) {
-						
+			
+			if ($this->is_date($data['Attendance']['in']) && $this->is_date($data['Attendance']['out'])) {
+					
 			$from = new DateTime($data['Attendance']['in']);
 
 			$to = new DateTime($data['Attendance']['out']);
@@ -1947,7 +1968,8 @@ class SalaryComputationComponent extends Component
 			
 					$days['total_hours'] -= 1;
 				}
-			}						
+			}	
+			}					
 		}
 
 		//sunday work is nonly for monthly employee
@@ -2248,7 +2270,7 @@ class SalaryComputationComponent extends Component
 				// $pay = !empty($range['PhilHealthRange']['employee']) ? $range['PhilHealthRange']['employee'] : $pay;
 				// $pay = $range['PhilHealthRange']['employees'];
 
-			$pay = '100.00';
+			$pay = 100 / 2;
 		}
 
 		return $pay;
