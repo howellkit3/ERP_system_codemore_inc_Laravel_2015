@@ -733,47 +733,21 @@
 
 		var currentTime = new Date()
 		var month = currentTime.getMonth() + 1
-		var year = currentTime.getFullYear()
+		var year = currentTime.getFullYear().toString().substr(2, 2);
 		var hour = currentTime.getHours()
 		var minute = currentTime.getMinutes()
 		var seconds = currentTime.getSeconds()
+
+
+		//alert(month); 
 		var uuid = $('.po_number').val();
 		
+	 	var code = uuid;
 
-		// year = year.toString().substr(2,2);
+	 	var seriesNumber = code.substr(code.length - 4);
 
-	 //    month = month + "";
+	 	var code = year.toString() + month.toString() + seriesNumber.toString();
 
-	 //    hour = hour + "";
-
-	 //    minute = minute + "";
-
-	 //    seconds = seconds + "";
-
-	 //    if (month.length == 1)
-	 //    {
-	 //        month = "0" + month;
-	 //    }
-
-	 //    if (hour.length == 1)
-	 //    {
-	 //        hour = "0" + hour;
-	 //    }
-
-	 //    if (minute.length == 1)
-	 //    {
-	 //        minute = "0" + minute;
-	 //    }
-
-	 //    if (seconds.length == 1)
-	 //    {
-	 //        seconds = "0" + seconds;
-	 //    }
-	 //    var ranDom = Math.floor(Math.random()*9000) + 1000;
-	 //    var code = year.concat(month,ranDom);
-
-	 var code = uuid;
-	    
 		if($(this).is( ":checked" ) == true){
 			
             var data = "PUO-" + code;
