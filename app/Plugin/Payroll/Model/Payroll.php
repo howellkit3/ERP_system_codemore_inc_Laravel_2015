@@ -97,6 +97,9 @@ class Payroll extends AppModel {
 
 	public function objectToArray( $object = null )
     {
+
+    	if (!empty( $object )) {
+
 	    	foreach ($object as $key => $value) {
 
 	    		$object[$key] = (array)$value;
@@ -147,6 +150,7 @@ class Payroll extends AppModel {
 		    			}
 		    	}
 	    	}
+	    }
    		 
         return $object;
     }

@@ -59,7 +59,7 @@
 
 
 		 ?>
-		 <div class="container">
+		 <div class="container pull-left">
 			<table class="center container medium-font">
 						<tr>
 						<td>
@@ -84,7 +84,7 @@
 							<?php echo $employee_name; ?>
 							</td>
 							<td class="label-table">
-								<strong>Employee Number : </strong>
+								<strong>Emp # : </strong>
 							</td>
 							<td>
 								<?php echo $salary['Employee']['code']; ?>
@@ -92,13 +92,13 @@
 						</tr>
 						<tr>
 							<td class="label-table">
-								<strong>Payroll Period : </strong>
+								<strong>Period : </strong>
 							</td>
 							<td>
 								<?php echo $payrollDate; ?>
 							</td>
 							<td class="label-table">
-								<strong>Department : </strong>
+								<strong>Dpt : </strong>
 							</td>
 							<td>
 								<?php  echo ucwords($salary['Department']['name']) ; ?>
@@ -280,7 +280,7 @@
 							<td style="vertical-align:top"> 
 							<table class="full-width" >	
 							
-							<?php foreach ($deductions as $deduction_key => $list) : ?>
+							<!-- <?php foreach ($deductions as $deduction_key => $list) : ?>
 								<tr style="vertical-align:top">
 									<td><?php echo $list; ?></td>
 									<td class="text-right"><?php 
@@ -288,10 +288,10 @@
 										echo !empty($salary[$index]) ? number_format($salary[$index],2) : '0.00';
 									 ?></td>
 								</tr>
-							<?php endforeach; ?>
+							<?php endforeach; ?> -->
 
 								<tr>
-									<td class="border-top"><strong> Tax </strong> </td>
+									<td class="border-top"><strong> Deductions </strong> </td>
 									<td class="border-top text-right"> </td>
 								</tr>
 
@@ -346,8 +346,7 @@
 							</td>
 						</tr>
 
-				</table>
-				<br><br>
+				</table><!-- 
 				<table class="container border">
 					<tr>
 						<td colspan="2"> <strong>Total Net Pay : </strong> </td> 
@@ -355,10 +354,9 @@
 						 	<strong><?php echo number_format($salary['total_pay'],2);	?></strong> 
 						 </td>
 					</tr>
-				</table>
-					<br><br>
+				</table> -->
 			</div>
-				 <div style="page-break-before: always;"></div> 
+			<!-- 	 <div style="page-break-before: always;"></div>  -->
 <?php endforeach; ?>
 	</body>
 </html>

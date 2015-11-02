@@ -5,9 +5,9 @@ body {
 	height: 100%;
 	padding: 0px;
 	margin: 0px;
-	font-size: 12px;
+	font-size: 8px;
 }
-@page { margin: 20px; }
+@page { margin: 5px; margin-bottom:0; }
 .table {
 	vertical-align: top;
 }
@@ -30,7 +30,10 @@ body {
 	border-top: 1px solid #000;
 }
 .container {
-	width: 100%;
+	width: 259.5px;
+}
+.pull-left {
+	display: inline-block;
 }
 .full-width {
 	width: 100%;
@@ -45,8 +48,8 @@ body {
 	width: 20%;
 }
 .medium-font {
-	font-size: 10px;
+	font-size: 8px;
 }
 .small-font {
-	font-size: 7px;
+	font-size: 5px;
 }

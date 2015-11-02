@@ -1447,7 +1447,6 @@ class SalaryComputationComponent extends Component
 
 					$inToday = date('Y-m-d',strtotime($days['Attendance']['in']));
 
-
 					$data['hours_regular'] += $this->_total_hours($days);
 
 					//$data['hours_regular'] += $this->_getDifference($days);
@@ -1808,14 +1807,17 @@ class SalaryComputationComponent extends Component
 
 	$data['hours_regular'] = $data['regular_days'];
 
+	if (!empty($differences)) {
 
-	// /pr($differences);
-
-	foreach ($differences as $key => $value) {
+			foreach ($differences as $key => $value) {
 	
 		$data['hours_regular'] -= '0.'.$value['minutes'];
 
 	}
+
+
+	}
+
 
 
 	return $data;

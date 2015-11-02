@@ -1827,6 +1827,7 @@ class SalariesController  extends HumanResourceAppController {
 				$salaries = $this->Payroll->objectToArray(json_decode($data)); 
 
 			}
+
 			
 			$deductions = $this->Loan->find('all',array('fields' => array('id','name','description')));
 
@@ -1857,7 +1858,6 @@ class SalariesController  extends HumanResourceAppController {
 		
 				switch ($payroll['Payroll']['type']) {
 					case 'normal':
-
 						$salariesList = $this->_checkPayroll($payroll,false,$empIds);
 
 					case '13_month':
@@ -2264,7 +2264,10 @@ class SalariesController  extends HumanResourceAppController {
 
 		        $dompdf = new DOMPDF();
 
-		        $dompdf->set_paper("A5", 'portrait');
+		       	$dompdf->set_paper("A4", 'portrait');
+
+				//$customPaper = array(0,0,240,350);
+				//$dompdf->set_paper($customPaper,'portrait');
 		        
 		        $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));
 		        
@@ -2274,7 +2277,7 @@ class SalariesController  extends HumanResourceAppController {
 		        
 		        $font = Font_Metrics::get_font("helvetica", "bold");
 		        
-		        $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
+		       // $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
 
 		        $output = $dompdf->output();
 		        $random = rand(0, 1000000) . '-' . time();
