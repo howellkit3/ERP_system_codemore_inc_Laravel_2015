@@ -5,8 +5,6 @@
 <?php echo $this->Html->script('Sales.checkvat');?>
 <style type="text/css">#QuotationField12Description{background-color:#fff;}</style>
 <div style="clear:both"></div>
-
-
         
 <?php echo $this->element('sales_option');?><br><br>
 
@@ -44,11 +42,38 @@
 									<div class="form-horizontal">
 										
 	                                    <?php 
+
+	                                    if($quotationData['Quotation']['status'] == 0){
 	                                        echo $this->Form->input('Quotation.id', array('class' => 'form-control item_type',
 						                        'hidden' => 'hidden',
 						                        'readonly' => 'readonly',
 						                        'label' => false,
 						                        'id' => 'id'));
+	                                    }
+	                                    ?>
+
+	                                    <?php 
+	                                        echo $this->Form->input('Quotation.status', array('class' => 'form-control item_type',
+						                        'type' => 'hidden',
+						                        'readonly' => 'readonly',
+						                        'label' => false,
+						                        'id' => 'status'));
+	                                    ?>
+
+	                                    <?php 
+	                                        echo $this->Form->input('Quotation.status', array('class' => 'form-control item_type',
+						                        'type' => 'hidden',
+						                        'readonly' => 'readonly',
+						                        'label' => false,
+						                        'id' => 'status'));
+	                                    ?>
+
+	                                    <?php 
+	                                        echo $this->Form->input('Quotation.uuid', array('class' => 'form-control item_type',
+						                        'type' => 'hidden',
+						                        'readonly' => 'readonly',
+						                        'label' => false,
+						                        'id' => 'uuid'));
 	                                    ?>
 
 	                                     <?php 
@@ -139,6 +164,7 @@
 
 	                                                    					));
 	                                            ?>
+
 											</div>
 										</div>
 
@@ -149,12 +175,23 @@
 					                                'options' => array($companyData),
 					                                'type' => 'select',
 					                                'label' => false,
+					                                'disabled' => 'disabled',
 					                                'class' => 'form-control required contacpersonlist',
 					                                'empty' => '---Select Company---',
 					                                'id' => 'select_company'
 					                                 )); 
 
 					                            ?>
+
+					                            <?php echo $this->Form->input('Quotation.company_id', array(
+					                                'type' => 'hidden',
+					                                'class' => 'form-control required contacpersonlist',
+					                                'empty' => '---Select Company---',
+					                                'id' => 'select_company'
+					                                 )); 
+
+					                            ?>
+
 											</div>
 										</div>
 
@@ -187,6 +224,14 @@
 		                                            echo $this->Form->input('QuotationDetail.size', array(
 		                                            								'class' => 'form-control item_type',
 								                                                    'type' => 'text',
+								                                                    'label' => false,
+								                                                    'placeholder' => 'Size'));
+	                                            ?>
+
+	                                            <?php 
+		                                            echo $this->Form->input('QuotationDetail.quotation_id', array(
+		                                            								'class' => 'form-control item_type',
+								                                                    'type' => 'hidden',
 								                                                    'label' => false,
 								                                                    'placeholder' => 'Size'));
 	                                            ?>

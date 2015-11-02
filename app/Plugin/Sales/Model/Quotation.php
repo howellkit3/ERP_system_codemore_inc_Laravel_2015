@@ -357,5 +357,18 @@ class Quotation extends AppModel {
 		
 		return $this->id;
 	}
+
+	public function saveEdit($data, $auth){
+
+		$this->create();
+		$data['created_by'] = $auth;
+		$data['modified_by'] = $auth;
+
+		//pr($data); exit;
+		$this->save($data);
+
+		return $this->id;
+
+	}
 	
 }

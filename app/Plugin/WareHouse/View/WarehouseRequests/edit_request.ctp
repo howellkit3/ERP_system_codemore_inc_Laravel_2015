@@ -306,7 +306,6 @@
 						                                        'class' => 'form-control item_type datepick required',
 						                                        'value' => date("Y-m-d", strtotime($value['date_needed']))
 						                                        ));
-	                              	
 				                                            ?>
 														</div>
 													</div>

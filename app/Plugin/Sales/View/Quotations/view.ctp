@@ -97,17 +97,17 @@
                      if(in_array('2', $rolesPermissionData)){
 
                         
-						echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit ', array('controller' => 'quotations', 'action' => 'edit',$quotation['Quotation']['id'],$companyId),array('class' =>'btn btn-info pull-right '. $status.' '.$editQuotation ,'escape' => false)) ;
+						echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit ', array('controller' => 'quotations', 'action' => 'edit',$quotation['Quotation']['id'],$companyId),array('class' =>'btn btn-info pull-right '. $editQuotation ,'escape' => false)) ;
 
                     }else{
 
                          
-						echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit ', array('controller' => 'quotations', 'action' => 'edit',$quotation['Quotation']['id'],$companyId),array('class' =>'btn btn-info pull-right not-active'. $status.' '.$editQuotation ,'escape' => false)) ;
+						echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit ', array('controller' => 'quotations', 'action' => 'edit',$quotation['Quotation']['id'],$companyId),array('class' =>'btn btn-info pull-right not-active'. $editQuotation ,'escape' => false)) ;
                     }
                 }else  {
                 
                   
-						echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit ', array('controller' => 'quotations', 'action' => 'edit',$quotation['Quotation']['id'],$companyId),array('class' =>'btn btn-info pull-right not-active'. $status.' '.$editQuotation ,'escape' => false)) ;
+						echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit ', array('controller' => 'quotations', 'action' => 'edit',$quotation['Quotation']['id'],$companyId),array('class' =>'btn btn-info pull-right not-active'. $editQuotation ,'escape' => false)) ;
                 }    
 	
     	$status = (!$this->Status->isQuotationApproved($quotation['Quotation']['status'])) ? 'disabled' : '';
@@ -203,7 +203,7 @@
 							Item
 						</div>
 						<div class="col-lg-8">
-							:&emsp;<?php echo $quotation['Product']['name']?>
+							:&emsp;<?php  echo $quotation['Product']['name']?>
 						</div>
 
 				</div>
