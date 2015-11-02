@@ -749,8 +749,13 @@ class RequestsController extends PurchasingAppController {
 
 		$this->loadModel('Purchasing.PurchasingType');
 
+		$this->loadModel('User');
+
 		$requestData = $this->Request->find('all', array('order' => array('Request.created' => 'DESC')));
 		
+		$userName = $this->User->find('list', array('fields' => array('id', 'fullname')
+															));
+
 		$statusData = $this->StatusFieldHolder->find('list', array('fields' => array('id', 'status'),
 															'order' => array('StatusFieldHolder.status' => 'ASC')
 															));
@@ -769,7 +774,7 @@ class RequestsController extends PurchasingAppController {
                       )); 
 
 
-       $this->set(compact('requestData', 'type','statusData'));
+       $this->set(compact('requestData', 'type','statusData', 'userName'));
 
         if ($hint == ' ') {
             $this->render('index');
