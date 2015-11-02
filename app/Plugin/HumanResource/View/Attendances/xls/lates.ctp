@@ -16,52 +16,59 @@
        
     $workingTime = array(); 
 
-    foreach ($filter as $key => $employee) {
+    foreach ($filter as $key => $list) {
+
+        $dateNow = date('Y-m-d',strtotime($key));
 
 
-        // ->setCellValue('C8',)
-        //
-        $dateNow = date('Y-m-d',strtotime($date['Attendance']['date']));
+            $sheet->setCellValue('A'.$counter,$dateNow);
+             
+        foreach ($list as $key => $employee) {
 
-        $sheet->setCellValue('A'.$counter,$employee['Attendance']['date']);
-
-        $sheet->setCellValue('B'.$counter, $employee['Employee']['code']);
-
-        $sheet->setCellValue('C'.$counter, ucwords($employee['Employee']['full_name']));
+            // ->setCellValue('C8',)
+            //
+           
 
 
-        $sheet->setCellValue('D'.$counter, ucwords($employee['MyWorkshift']['from']));
+            $sheet->setCellValue('B'.$counter, $employee['Employee']['code']);
 
-        $sheet->setCellValue('E'.$counter, ucwords($employee['MyWorkshift']['to']));
+            $sheet->setCellValue('C'.$counter, ucwords($employee['Employee']['full_name']));
 
 
-        $sheet->setCellValue('F'.$counter, ucwords($employee['Attendance']['in']));
+            $sheet->setCellValue('D'.$counter, ucwords($employee['MyWorkshift']['from']));
 
-        $sheet->setCellValue('G'.$counter, ucwords($employee['Attendance']['out']));
+            $sheet->setCellValue('E'.$counter, ucwords($employee['MyWorkshift']['to']));
 
-         $sheet->setCellValue('H'.$counter, ucwords($employee['Time']['status']));
 
-        if ($employee['Time']['status'] == 'late') {
+            $sheet->setCellValue('F'.$counter, ucwords($employee['Attendance']['in']));
 
-            $sheet->getStyle('H'.$counter)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FF6600');
+            $sheet->setCellValue('G'.$counter, ucwords($employee['Attendance']['out']));
 
-        } 
-        if ($employee['Time']['status'] == 'absent') {
+             $sheet->setCellValue('H'.$counter, ucwords($employee['Time']['status']));
 
-            $sheet->getStyle('H'.$counter)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FF0000');
+            if ($employee['Time']['status'] == 'late') {
+
+                $sheet->getStyle('H'.$counter)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FF6600');
+
+            } 
+            if ($employee['Time']['status'] == 'absent') {
+
+                $sheet->getStyle('H'.$counter)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FF0000');
+
+            }
+
+            //  if ($employee['Time']['status'] == 'no_in') {
+
+            //     $sheet->getStyle('H'.$counter)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FF0000');
+
+            // }
+           
+
+            $counter++;  
+
+          $key++;
 
         }
-
-        //  if ($employee['Time']['status'] == 'no_in') {
-
-        //     $sheet->getStyle('H'.$counter)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FF0000');
-
-        // }
-       
-
-        $counter++;  
-
-      $key++;
     }
 
     //prepare download

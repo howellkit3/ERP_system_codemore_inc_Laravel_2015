@@ -287,12 +287,14 @@
 							</td>
 							<td style="vertical-align:top"> 
 							<table class="full-width" >	
-							<?php foreach ($deductions as $deduction_key => $list) : ?>
+							<?php foreach ($deductions as $deduction_key => $list) :
+							 ?>
 								<tr style="vertical-align:top">
 									<td><?php echo $list['Loan']['name']; ?></td>
 									<td class="text-right"><?php 
 										$index = str_replace(' ','_',strtolower($list['Loan']['name']));
-										echo !empty($salary[$index]) && is_int($salary[$index]) ? number_format($salary[$index],2) : '0.00';
+										echo !empty($salary[$index]) ? number_format($salary[$index],2) : '0.00';
+
 									 ?></td>
 								</tr>
 							<?php endforeach; ?>
