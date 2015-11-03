@@ -953,12 +953,12 @@ public function daily_info() {
 			
 			$selectedDate = $date1.' - '. $date2;
 			
+			$employees = $this->Employee->find('list',array('fields' => array('id','full_name')));
+
 			$this->Attendance->bind(array('MySchedule','MyWorkshift','Employee'));
 
-
 				//$dateKey = 0;
-
-					while (strtotime($start_date) <= strtotime($date2)) {
+				while (strtotime($start_date) <= strtotime($date2)) {
 
 							$att_conditions = array('date(Attendance.date) BETWEEN ? AND ?' => array($start_date,$start_date),'Attendance.employee_id NOT' => 'NULL');
 
@@ -969,25 +969,15 @@ public function daily_info() {
 								'recursive' => -1,
 								//'limit' => ,
  								'contain' => array('MyWorkshift','MySchedule','Employee'),
- 								// 'fields' => array(
- 								// 'MyWorkshift.from',
- 								// 	'MyWorkshift.to',
- 								// 	'MySchedule.work_shift_id',
- 								// 	'MySchedule.foreign_key',
- 								// 	'MySchedule.day',
- 								// 	'Employee.first_name',
- 								// 	'Employee.last_name',
- 								// 	'Employee.middle_name',
- 								// 	//'Employee.full_name',
- 								// 	'Attendance.in',
- 								// 	'Attendance.out',
- 								// 	'Attendance.date'
- 								// 	),
+ 								// s
 								'group' => array('Attendance.id')
 							));
 							//$employeeIds = Set::extract($attendances, '{n}.Attendance.employee_id');
 							$attendanceKey = 0;
 
+							$employeeIds = array();
+
+							//pr($attendances);
 
 							foreach ($attendances as $key => $alist) {
 
@@ -1015,7 +1005,6 @@ public function daily_info() {
 
 											$filter[$start_date][$attendanceKey]['MySchedule'] = $alist['MySchedule'];
 
-
 											$filter[$start_date][$attendanceKey]['Employee'] = !empty($alist['Attendance']['employee_id']) ? $alist['Employee'] : array();
 											$filter[$start_date][$attendanceKey]['Time']['date'] = $start_date;
 										//	
@@ -1024,14 +1013,34 @@ public function daily_info() {
 											$filter[$start_date][$attendanceKey]['Time']['timeIn'] = $alist['Attendance']['in'];
 										}
 
+										$employeeIds[] = $alist['Attendance']['employee_id'];
 										
-									}
+									} 
 
 								}
 
 								$attendanceKey++;
 
 								# code...
+							}
+
+
+							$noAttendanceKey = 0;
+							//check employee with no attendances
+							foreach ($employees as $empList => $empId) {
+								
+								if (!in_array($empId,$employeeIds)) {
+										
+										$filter[$start_date][$noAttendanceKey]['Time']['date'] = $start_date;
+
+										$filter[$start_date][$noAttendanceKey]['Time']['status'] = 'no Attendance';
+
+										$filter[$start_date][$noAttendanceKey]['Employee']['name'] = $empId; 
+									
+									$noAttendanceKey++;
+								}
+
+
 							}
 
 							//	pr($filter);
@@ -1064,6 +1073,9 @@ public function daily_info() {
 
 				
 					if (!empty($filter)) {
+
+						// pr($filter);
+						// exit();
 
 					$this->set(compact('filter','selectedDate'));
 

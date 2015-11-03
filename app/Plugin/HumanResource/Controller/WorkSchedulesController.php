@@ -78,7 +78,8 @@ class WorkSchedulesController  extends HumanResourceAppController {
 			                    ));
 					} else {
 
-					$this->Session->setFlash('There\'s an error saving Schedule','error');
+						$this->Session->setFlash('There\'s an error saving Schedule','error');
+
 					}
 						
 				} else {
@@ -395,6 +396,32 @@ class WorkSchedulesController  extends HumanResourceAppController {
 
 		$this->set(compact('employees','workshifts'));
 
+	}
+
+
+	public function schedules() {
+
+		$date = date('Y-m-d');
+
+		$this->loadModel('HumanResource.Department');
+
+		$this->loadModel('HumanResource.Employee');
+
+		$limit = 10;
+
+		$conditions = array('Department.prefix' => 'PO');
+
+		$departments = $this->Department->find('list',array('conditions' => $conditions,'fields' => array('id','id')));
+
+		$conditions = array('Employee.department_id' => $departments);
+
+		$employeeList = $this->Employee->getList($conditions);
+
+		$this->set(compact('employeeList','date'));
+
+		//schedules for productions
+
+		//$this->render('WorkSchedule/add');
 	}
 
 }

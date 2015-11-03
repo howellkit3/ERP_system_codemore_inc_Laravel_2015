@@ -271,7 +271,7 @@ class Employee extends AppModel {
 	public function getList($conditions = array()) {
 
 		return $this->find('list',array(
-				'conditions' => array(),
+				'conditions' => $conditions ,
 				'group' => array('Employee.id'),
 				'order' => array('Employee.last_name ASC','Employee.first_name ASC'),
 				'fields' => array('Employee.id','Employee.last_fullname')
