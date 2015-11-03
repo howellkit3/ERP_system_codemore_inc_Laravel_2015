@@ -985,9 +985,6 @@ public function daily_info() {
  								// 	),
 								'group' => array('Attendance.id')
 							));
-
-
-						
 							//$employeeIds = Set::extract($attendances, '{n}.Attendance.employee_id');
 							$attendanceKey = 0;
 
