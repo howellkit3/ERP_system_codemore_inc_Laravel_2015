@@ -948,7 +948,6 @@ public function daily_info() {
 
 			ini_set('max_execution_time', 300);
 			
-
 			$conditions = array();
 
 			if (!empty($this->request->data['date'])) {

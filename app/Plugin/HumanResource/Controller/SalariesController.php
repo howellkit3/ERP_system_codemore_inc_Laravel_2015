@@ -2265,6 +2265,7 @@ class SalariesController  extends HumanResourceAppController {
 				$salaries = $this->Payroll->filterData($salaries,$filterEmp);
 			}
 		
+
 			$deductions = $this->Loan->find('all',array('fields' => array('id','name','description')));
 			
 			ini_set('max_execution_time', 3600);
@@ -2278,7 +2279,7 @@ class SalariesController  extends HumanResourceAppController {
 
 				case 'payslip':
 
-
+				//$this->render('Salaries/xls/payslip');
 				
 				$view = new View(null, false);
 
@@ -2290,10 +2291,10 @@ class SalariesController  extends HumanResourceAppController {
 
 		        $dompdf = new DOMPDF();
 
-		       	$dompdf->set_paper("A4", 'portrait');
+		       	//$dompdf->set_paper("A4", 'portrait');
 
-				//$customPaper = array(0,0,240,350);
-				//$dompdf->set_paper($customPaper,'portrait');
+				$customPaper = array(0,0,235,370);
+				$dompdf->set_paper($customPaper,'portrait');
 		        
 		        $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));
 		        
@@ -2316,12 +2317,12 @@ class SalariesController  extends HumanResourceAppController {
 
 		        $file_to_save = WWW_ROOT .DS. $filePath;
 		        	
-		        if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
+		  //       if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
 		        		
-		        		unlink($file_to_save);
-		        }
+		  //       		unlink($file_to_save);
+		  //       }
 
-				$dompdf->render();
+				// $dompdf->render();
 
 				if ($dompdf->stream('payslip-'.$payroll['Payroll']['id'].'-'.str_replace(' ','-',strtolower($payrollDate)).'-'.time().'.pdf')){
 

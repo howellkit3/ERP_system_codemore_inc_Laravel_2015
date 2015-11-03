@@ -1,6 +1,6 @@
 <?php
-//header("Content-disposition: attachment; filename=".'payslip-'.$payroll['Payroll']['id'].'-'.time().".pdf");
-//header("Content-type: application/pdf");
+header("Content-disposition: attachment; filename=".'payslip-'.$payroll['Payroll']['id'].'-'.time().".pdf");
+header("Content-type: application/pdf");
 ?>
 <style>
 <?php include('payslip.css'); ?>
@@ -61,7 +61,7 @@
 
 
 		 ?>
-		 	<div class="main-container pull-left">
+		 	<div class="main-container">
 		 	<div class="border">
 			<table class="center container medium-font">
 						<tr>
@@ -365,11 +365,7 @@
 					</tr>
 				</table>
 			</div>
-			<?php if($startKey % 3 == 0 && $key != 0) : ?>
-				<div class="clearfix"></div>
-			<?php endif; ?>
-
-			<?php if($startKey % 6 == 0 && $key != 0) : ?>
+			<?php if($key != 0) : ?>
 				<div style="page-break-before: always;"></div>
 			<?php endif; ?>
 
