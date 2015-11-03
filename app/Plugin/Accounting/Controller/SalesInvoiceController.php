@@ -16,7 +16,7 @@ class SalesInvoiceController extends AccountingAppController {
 
         $this->loadModel('Delivery.Delivery');
 
-        //$this->SalesInvoice->bindInvoice();
+        $this->SalesInvoice->bindInvoice();
 
         $limit = 10;
 
@@ -37,6 +37,8 @@ class SalesInvoiceController extends AccountingAppController {
         );
 
         $invoiceData = $this->paginate('SalesInvoice');
+
+
        //pr($invoiceData);exit();
         $companyName = $this->Company->find('list',array('fields' => array('id','company_name')));
 
@@ -164,22 +166,18 @@ class SalesInvoiceController extends AccountingAppController {
             $drData = " ";
         }
 
-      //  pr($drData); exit;
+       //pr($drData); exit;
 
-    //pr($invoiceData['SalesInvoice']['dr_uuid']); exit;
+        //pr($invoiceData['SalesInvoice']['dr_uuid']); exit;
         $conditions = array('ClientOrderDeliverySchedule.uuid' => $drData['Delivery']['schedule_uuid']);
-     //   $conditions = array_merge($conditions,array('ClientOrder.company_id' => $drData['Delivery']['company_id']));
+      // $conditions = array_merge($conditions,array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']));
         $clientData = $this->ClientOrderDeliverySchedule->find('first', array(
                                             'conditions' => array($conditions
                                             )));
 
-     //   pr($clientData); exit;
-
         $clientOrderId = $clientData['ClientOrder']['id'];
 
         $companyData = $clientData['Company']['company_name'];
-
-       // pr($companyData); exit;
        
         $noPermissionPay = "";
 
@@ -188,8 +186,6 @@ class SalesInvoiceController extends AccountingAppController {
         $this->set(compact('invoiceId','prepared','approved','drData','clientData','companyData','units','invoiceData','paymentTermData','currencyData', 'noPermissionPay', 'noPermissionReciv','quotationData', 'clientOrderId'));
         
         if (!empty($saNo)) {
-
-            pr($saNo); exit;
 
             $this->render('view_statement');
 
