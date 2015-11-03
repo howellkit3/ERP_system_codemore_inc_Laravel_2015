@@ -1,5 +1,6 @@
-<?php foreach ($deliveryData as $deliveryDataList ):?>
+<?php foreach ($deliveryData as $deliveryDataList ):
 
+    if($deliveryDataList['Delivery']['status'] != 2 ){?>
 
         <tr class="">
 
@@ -43,7 +44,10 @@
         </div>
     </div>
 
-<?php endforeach; ?> 
+<?php 
+    }
+    
+    endforeach; ?> 
 
 <script>
 

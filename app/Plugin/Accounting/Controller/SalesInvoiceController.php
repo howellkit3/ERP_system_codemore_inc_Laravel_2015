@@ -123,15 +123,11 @@ class SalesInvoiceController extends AccountingAppController {
        //pr($saNo); exit;
         $userData = $this->Session->read('Auth');
 
-        $this->loadModel('Sales.ClientOrder');
+        $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
-        $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule',
-                                        'QuotationItemDetail','QuotationDetail',
-                                        'Product'));
-        
+        $this->ClientOrderDeliverySchedule->bind(array('ClientOrder', 'QuotationDetail','Company', 'Product', 'Quotation', 'QuotationItemDetail', 'Company', 'Address'));
+
         $this->loadModel('Delivery.Delivery');
-
-        $this->loadModel('Sales.Company');
 
         $this->loadModel('Sales.PaymentTermHolder');
 
@@ -161,7 +157,7 @@ class SalesInvoiceController extends AccountingAppController {
 
         Cache::write('currencyData', $currencyData);
 
-        $this->Company->bind('Address');
+        
         //$this->SalesInvoice->bindInvoice();
         $invoiceData = $this->SalesInvoice->find('first', array(
                                             'conditions' => array('SalesInvoice.id' => $invoiceId
@@ -183,20 +179,22 @@ class SalesInvoiceController extends AccountingAppController {
             $drData = " ";
         }
 
-       // pr($drData); exit;
+      //  pr($drData); exit;
 
     //pr($invoiceData['SalesInvoice']['dr_uuid']); exit;
-        $conditions = array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']);
+        $conditions = array('ClientOrderDeliverySchedule.uuid' => $drData['Delivery']['schedule_uuid']);
         $conditions = array_merge($conditions,array('ClientOrder.company_id' => $drData['Delivery']['company_id']));
-        $clientData = $this->ClientOrder->find('first', array(
+        $clientData = $this->ClientOrderDeliverySchedule->find('first', array(
                                             'conditions' => array($conditions
                                             )));
 
+      //  pr($clientData); exit;
+
         $clientOrderId = $clientData['ClientOrder']['id'];
 
-        $companyData = $this->Company->find('first', array(
-                                            'conditions' => array('Company.id' => $drData['Delivery']['company_id']
-                                            )));
+        $companyData = $clientData['Company']['company_name'];
+
+       // pr($companyData); exit;
        
         $noPermissionPay = "";
 
@@ -368,6 +366,8 @@ class SalesInvoiceController extends AccountingAppController {
 
         $this->loadModel('Sales.Company');
 
+      //  $this->Delivery->bindInvoice();
+
         $limit = 10;
 
         $conditions = array();
@@ -379,6 +379,7 @@ class SalesInvoiceController extends AccountingAppController {
                 'Delivery.id',
                 'Delivery.clients_order_id',
                 'Delivery.company_id',  
+                'Delivery.status',
                 'Delivery.dr_uuid', 
                 ),
             'order' => 'Delivery.id DESC',
@@ -386,19 +387,11 @@ class SalesInvoiceController extends AccountingAppController {
 
         $deliveryData = $this->paginate('Delivery');
 
-       // $this->Delivery->bindInvoice('ClientOrder');
-
-        //$deliveryData = $this->Delivery->find('all');
-
-        //$clientData = $this->ClientOrder->find('all');
-
-        //pr($clientData); exit;
+     // pr($deliveryData); exit;
 
         $poNumber = $this->ClientOrder->find('list', array('fields' => array('uuid', 'po_number')));
 
         $companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')));
-
-        //pr($deliveryData); exit;
 
         $seriesNo = $this->SalesInvoice->find('first', array(
                 'order' => array('SalesInvoice.sales_invoice_no DESC')));

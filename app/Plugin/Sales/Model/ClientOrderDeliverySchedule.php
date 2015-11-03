@@ -54,10 +54,18 @@ class ClientOrderDeliverySchedule extends AppModel {
 					'conditions' => array('ClientOrderDeliverySchedule.client_order_id = ClientOrder.id'),
 					'dependent' => true
 				),
+
 				'QuotationDetail' => array(
 					'className' => 'Sales.QuotationDetail',
 					'foreignKey' => false,
 					'conditions' => array('QuotationDetail.quotation_id = ClientOrder.quotation_id'),
+					'dependent' => true
+				),
+
+				'Quotation' => array(
+					'className' => 'Sales.Quotation',
+					'foreignKey' => false,
+					'conditions' => array('Quotation.id = QuotationDetail.quotation_id'),
 					'dependent' => true
 				),
 
@@ -77,6 +85,12 @@ class ClientOrderDeliverySchedule extends AppModel {
 					'className' => 'Sales.Company',
 					'foreignKey' => false,
 					'conditions' => array('Company.id = ClientOrder.company_id'),
+					'dependent' => true
+				),
+				'Address' => array(
+					'className' => 'Sales.Address',
+					'foreignKey' => false,
+					'conditions' => array('Address.foreign_key = Company.id'),
 					'dependent' => true
 				),
 				
