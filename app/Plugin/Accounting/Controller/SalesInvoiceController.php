@@ -50,22 +50,7 @@ class SalesInvoiceController extends AccountingAppController {
            $deliveryNum[$keyHolder] = $deliveryList;
         }
 
-        //pr($deliveryNum); exit;
-       
-        // $deliveryNum = ltrim(strval$deliveryNum, '0');
-        // pr($deliveryNum); exit;
-        //pr($deliveryNum); exit;
-        // $invoiceData = $this->SalesInvoice->find('all', array(
-        //                                             'fields' => array(
-        //                                                 'id','sales_invoice_no',
-        //                                                 'dr_uuid','statement_no',
-        //                                                 'status'),
-        //                                             'conditions' => array(
-        //                                                 'NOT' => array(
-        //                                                     'SalesInvoice.status' => 2) ),
-        //                                             'order' => 'SalesInvoice.id DESC'
-        //                                         ));
-        
+      
         if ($userData['User']['role_id'] == 9 ) {
             $noPermissionReciv = 'disabled not-active';
         } else {
@@ -120,7 +105,7 @@ class SalesInvoiceController extends AccountingAppController {
 
     public function view($invoiceId = null,$saNo = null){
 
-       //pr($saNo); exit;
+       
         $userData = $this->Session->read('Auth');
 
         $this->loadModel('Sales.ClientOrderDeliverySchedule');
@@ -183,12 +168,12 @@ class SalesInvoiceController extends AccountingAppController {
 
     //pr($invoiceData['SalesInvoice']['dr_uuid']); exit;
         $conditions = array('ClientOrderDeliverySchedule.uuid' => $drData['Delivery']['schedule_uuid']);
-        $conditions = array_merge($conditions,array('ClientOrder.company_id' => $drData['Delivery']['company_id']));
+     //   $conditions = array_merge($conditions,array('ClientOrder.company_id' => $drData['Delivery']['company_id']));
         $clientData = $this->ClientOrderDeliverySchedule->find('first', array(
                                             'conditions' => array($conditions
                                             )));
 
-      //  pr($clientData); exit;
+     //   pr($clientData); exit;
 
         $clientOrderId = $clientData['ClientOrder']['id'];
 
@@ -203,6 +188,8 @@ class SalesInvoiceController extends AccountingAppController {
         $this->set(compact('invoiceId','prepared','approved','drData','clientData','companyData','units','invoiceData','paymentTermData','currencyData', 'noPermissionPay', 'noPermissionReciv','quotationData', 'clientOrderId'));
         
         if (!empty($saNo)) {
+
+            pr($saNo); exit;
 
             $this->render('view_statement');
 
