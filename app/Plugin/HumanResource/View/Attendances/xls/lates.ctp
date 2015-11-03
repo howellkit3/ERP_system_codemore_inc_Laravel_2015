@@ -21,28 +21,43 @@
         $dateNow = date('Y-m-d',strtotime($key));
 
 
-            $sheet->setCellValue('A'.$counter,$dateNow);
              
         foreach ($list as $key => $employee) {
 
             // ->setCellValue('C8',)
             //
+            $full_name = '';
+
+            $sheet->setCellValue('A'.$counter,$dateNow);
            
 
+            $code = !empty($employee['Employee']['code']) ? $employee['Employee']['code'] : '';
 
-            $sheet->setCellValue('B'.$counter, $employee['Employee']['code']);
+            $sheet->setCellValue('B'.$counter,$code);
 
-            $sheet->setCellValue('C'.$counter, ucwords($employee['Employee']['full_name']));
+            $full_name  = !empty($employee['Employee']['last_name']) ?  ucfirst($employee['Employee']['last_name']).' ': '';
 
+            $full_name  .= !empty($employee['Employee']['first_name']) ?  ucfirst($employee['Employee']['first_name']).' ' : '';
 
-            $sheet->setCellValue('D'.$counter, ucwords($employee['MyWorkshift']['from']));
+            $full_name  .= !empty($employee['Employee']['middle_name']) ? ucfirst($employee['Employee']['middle_name'][0]) : '';
 
-            $sheet->setCellValue('E'.$counter, ucwords($employee['MyWorkshift']['to']));
+            $full_name  .= !empty($employee['Employee']['suffix']) ?  ucfirst($employee['Employee']['suffix']) : '';
 
+            $sheet->setCellValue('C'.$counter,$full_name);
 
-            $sheet->setCellValue('F'.$counter, ucwords($employee['Attendance']['in']));
+            $from = !empty($employee['MyWorkshift']['from']) ?  $employee['MyWorkshift']['from']  : '';
+            $sheet->setCellValue('D'.$counter,  $from );
 
-            $sheet->setCellValue('G'.$counter, ucwords($employee['Attendance']['out']));
+            $to = !empty($employee['MyWorkshift']['to']) ?  $employee['MyWorkshift']['to']  : '';
+            $sheet->setCellValue('E'.$counter, $to);
+
+            $in = !empty($employee['Attendance']['in']) ? $employee['Attendance']['in']  : '';
+
+            $sheet->setCellValue('F'.$counter, $in);
+
+            $out = !empty($employee['Attendance']['in']) ? $employee['Attendance']['in']  : '';
+
+            $sheet->setCellValue('G'.$counter,$out);
 
              $sheet->setCellValue('H'.$counter, ucwords($employee['Time']['status']));
 
@@ -50,8 +65,7 @@
 
                 $sheet->getStyle('H'.$counter)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FF6600');
 
-            } 
-            if ($employee['Time']['status'] == 'absent') {
+            } else if ($employee['Time']['status'] == 'no_attendance') {
 
                 $sheet->getStyle('H'.$counter)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FF0000');
 
