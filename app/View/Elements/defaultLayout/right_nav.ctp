@@ -164,7 +164,7 @@
 
 						 if(in_array($userData['User']['role_id'],array('19'))) {
 
-	 						echo $this->Html->link( " <i class='fa fa-money'></i> <span> Payroll </span>",   array('controller' =>'salaries',
+	 						echo $this->Html->link( " <i class='fa fa-money'></i> <span> Payroll </span>", array('controller' =>'salaries',
 	 											'action'=>'payroll',
 	 											'plugin' => 'human_resource'),
 	 											array('escape' => false) );
@@ -183,6 +183,21 @@
 	 						}
 	 					?>
 					</li> 
+
+
+					<li class="<?php echo ($this->params['plugin'] == 'human_resource' && !in_array($this->params['controller'],array('salaries')))  ? 'active' : '' ?>">
+
+						<?php 
+
+						 if(in_array($userData['User']['role_id'],array('1','12','19'))) {
+						
+	 						echo $this->Html->link( " <i class='fa fa-clock-o'></i> <span>Schedules</span>",   array('controller' =>'work_schedules','action'=>'schedules?'.rand(1000,9999).'='.date("is"),'plugin' => 'human_resource'),
+	 											array('escape' => false) );
+	 						}
+	 					?>
+					</li> 
+
+
 
 					<li class="<?php echo ($this->params['plugin'] == 'production') ? 'active' : '' ?>">
 
