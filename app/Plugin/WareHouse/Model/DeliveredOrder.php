@@ -25,8 +25,8 @@ class DeliveredOrder extends AppModel {
 		$code =  $year. $month .$random;
 
 		$this->create();
-
-		if(!empty($deliveredItemsData['uuid'])){
+		//pr($deliveredItemsData); exit;
+		if(!empty($deliveredItemsData['purchase_orders_id'])){
 
 			$mystring = mb_substr($deliveredItemsData['uuid'],4,9);
 			$data['uuid'] = $mystring;
@@ -39,6 +39,7 @@ class DeliveredOrder extends AppModel {
 		$data['received_orders_id'] = $receivedOrdersId;
 		$data['purchase_orders_id'] = $purchaseId;
 		$data['dr_num'] = $deliveredItemsData['dr_num'];
+		$data['uuid'] = $deliveredItemsData['uuid'];
 
 		$this->save($data);
 

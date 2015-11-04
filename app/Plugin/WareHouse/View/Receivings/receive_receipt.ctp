@@ -78,11 +78,11 @@
                                     </div>
                                 </div>  --> 
 
-                              <!--   <div class="form-group">
+                              <div class="form-group">
                                         <label class="col-lg-2 control-label"><span style="color:red">*</span>Tracking Number</label>
                                         <div class="col-lg-8">
                                             <?php 
-                                                echo $this->Form->input('ReceiveReceipt.po_number',array( 
+                                                echo $this->Form->input('DeliveredOrder.uuid',array( 
                                                                         'class' => 'form-control  required', 
                                                                         'label' => false,
                                                                         'placeholder' => 'Tracking Number',
@@ -100,7 +100,7 @@
                                                 <label for="checkbox-1"> Generate Tracking Number </label>
                                             </div>
                                         </div>
-                                    </div> -->
+                                    </div> 
 
                         
                         <div class="form-group">
@@ -483,7 +483,7 @@
     console.log(ranDom);
         if($(this).is( ":checked" ) == true){
             
-            var data = "RCV-" + code;
+            var data = code;
             // data.substr(0,-3);
             $('#generate-poNumber').val(data);
             

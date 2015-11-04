@@ -203,6 +203,13 @@
                             <img src="<?php echo Router::url('/', true) ?>img/itemboxopen.png" alt="logo" style="width:60px;height:60px;padding-bottom:10;">
                             </td>
                             <td>
+
+                                <?php 
+
+                                 $unitHolder = !empty($requestDataList[$itemHolder]['unit_id']) ? $unitData[$requestDataList[$itemHolder]['unit_id']] : " ";
+
+                                ?>
+
                                 <span class="name">
                                 <?php echo $requestDataList[$itemHolder]['name'] ?>
                                 </span>
@@ -210,7 +217,7 @@
                                 <i class="fa fa-tags"></i>&nbsp;<?php echo $requestDataList[$itemHolder]['model'] ?> 
                                 </span>
                                 <span class="warranty">
-                                <i class="fa fa-certificate"></i>&nbsp; <?php echo $requestDataList[$itemHolder]['quantity'] . " " . $unitData[$requestDataList[$itemHolder]['unit_id']] ?>  
+                                <i class="fa fa-certificate"></i>&nbsp; <?php echo $requestDataList[$itemHolder]['quantity'] . " " . $unitHolder  ?>  
                                 </span>
                             </td>
                         </tr>
@@ -271,7 +278,9 @@
 
                                 if(!empty($requestDataList[$itemHolder]['good_quantity'])){
 
-                                 echo $requestDataList[$itemHolder]['good_quantity'] . " " . $unitData[$requestDataList[$itemHolder]['unit_id']]?> 
+                                    $unitHolder = !empty($requestDataList[$itemHolder]['unit_id']) ? $unitData[$requestDataList[$itemHolder]['unit_id']] : " ";
+
+                                    echo $requestDataList[$itemHolder]['good_quantity'] . " " . $unitHolder ?> 
 
                                 <?php } ?>
                                 </span>
@@ -280,7 +289,9 @@
 
                                 if(!empty($requestDataList[$itemHolder]['reject_quantity'])){
 
-                                 echo $requestDataList[$itemHolder]['reject_quantity'] . " " . $unitData[$itemData[$itemTypeHolder]['quantity_unit_id']]?> 
+                                    $unitHolder = !empty($requestDataList[$itemHolder]['unit_id']) ? $unitData[$requestDataList[$itemHolder]['unit_id']] : " ";
+
+                                    echo $requestDataList[$itemHolder]['reject_quantity'] . " " . $unitHolder ?> 
 
                                 <?php } ?>
                                 </span>
