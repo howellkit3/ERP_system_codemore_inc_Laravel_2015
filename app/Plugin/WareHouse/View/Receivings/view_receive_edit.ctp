@@ -8,7 +8,7 @@
         echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i>  Go Back ', array('controller' => 'receivings','action' => 'receive'),array('class' =>'btn btn-primary pull-right','escape' => false)); 
             ?> &nbsp;
 
-        <?php  if ($receivedItemData[0]['DeliveredOrder']['status_id'] != 13){  ?>
+        <?php  if ($receivedItemData['DeliveredOrder']['status_id'] != 13){  ?>
 
 
         <?php } ?>
@@ -45,24 +45,7 @@
                     <div class="main-box-body clearfix">
                         <div class="main-box-body clearfix">
                             <div class="form-horizontal">                                   
-                                <!-- <div class="form-group">
-                                    <label class="col-lg-2 control-label">Purchase Order Number</label>
-                                    
-                                    <div class="col-lg-8">
-                                        <?php 
-                                            echo $this->Form->input('PurchaseOrder.uuid', array(
-                                                                            'class' => 'form-control item_type',
-                                                                            'disabled' => true,
-                                                                            'label' => false,       
-                                                                            'value' => $receivedItemData[0]['PurchaseOrder']['uuid'],
-                                                                            'fields' =>array('name')));
-
-
-                                        ?>
-                                    </div>
-                                </div> -->
-
-                                <div class="form-group">
+                               <div class="form-group">
                                     <label class="col-lg-2 control-label">Supplier</label>
                                     <div class="col-lg-8">
                                         <?php 
@@ -71,27 +54,22 @@
                                                                             'label' => false,
                                                                             'disabled' => true,
                                                                             'fields' =>array('name'),
-                                                                            'value' => ucwords($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']])));
+                                                                            'value' => ucwords(empty($receivedItemData['ReceivedOrder']['supplier_id']) ? $supplierData[$receivedItemData['PurchaseOrder']['supplier_id']] : $supplierData[$receivedItemData['ReceivedOrder']['supplier_id']])));
                                         ?>
                                     </div>
                                 </div>
+
+                                <?php if(!empty($receivedItemData['ReceivedOrder']['dr_num'])){?>
 
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Delivery Number</label>
                                     <div class="col-lg-8">
                                         <?php 
-                                            echo $this->Form->input('DeliveredOrder.dr_num', array(
-                                                                            'class' => 'form-control item_type',
-                                                                            'label' => false,
-                                                                             'value' => !empty($receivedItemData[0]['DeliveredOrder']['dr_num']) ? $receivedItemData[0]['DeliveredOrder']['dr_num'] : " "));
-                                        ?>
-
-                                        <?php 
-                                            echo $this->Form->input('DeliveredOrder.id', array(
-                                                                            'class' => 'form-control item_type',
-                                                                            'label' => false,
-                                                                            'type'  => 'hidden',
-                                                                             'value' => !empty($receivedItemData[0]['DeliveredOrder']['id']) ? $receivedItemData[0]['DeliveredOrder']['id'] : " "));
+                                            echo $this->Form->input('ReceivedItems.dr_num', array(
+                                                                    'class' => 'form-control item_type',
+                                                                    'label' => false,
+                                                                    'disabled' => true,
+                                                                     'value' => !empty($receivedItemData['DeliveredOrder']['dr_num']) ? $receivedItemData['DeliveredOrder']['dr_num'] : " "));
                                         ?>
                                     </div>
                                 </div>
@@ -100,24 +78,27 @@
                                     <label class="col-lg-2 control-label">Sales Invoice Number</label>
                                     <div class="col-lg-8">
                                         <?php 
-                                            echo $this->Form->input('DeliveredOrder.si_num', array(
+                                            echo $this->Form->input('ReceivedItems.dr_num', array(
                                                                             'class' => 'form-control item_type',
                                                                             'label' => false,
-                                                                             'value' => !empty($receivedItemData[0]['DeliveredOrder']['si_num']) ? $receivedItemData[0]['DeliveredOrder']['si_num'] : " "));
+                                                                            'disabled' => true,
+                                                                             'value' => !empty($receivedItemData['DeliveredOrder']['dr_num']) ? $receivedItemData['DeliveredOrder']['si_num'] : " "));
                                         ?>
-
                                     </div>
                                 </div>
+
+                                <?php }?>
 
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">P.O. Number</label>
                                     <div class="col-lg-8">
                                         <?php 
-                                            echo $this->Form->input('DeliveredOrder.purchase_order_uuid', array(
-                                                                            'class' => 'form-control item_type',
-                                                                            'label' => false,
-                                                                            'fields' =>array('name'),
-                                                                            'value' => !empty($receivedItemData[0]['DeliveredOrder']['purchase_order_uuid']) ? $receivedItemData[0]['DeliveredOrder']['purchase_order_uuid'] : " "));
+                                            echo $this->Form->input('PurchaseOrder.quantity', array(
+                                                                    'class' => 'form-control item_type',
+                                                                    'label' => false,
+                                                                    'disabled' => true,
+                                                                    'fields' =>array('name'),
+                                                                    'value' => !empty($receivedItemData['DeliveredOrder']['purchase_order_uuid']) ? $receivedItemData['DeliveredOrder']['purchase_order_uuid'] : $receivedItemData['ReceivedOrder']['purchase_order_uuid']));
                                         ?>
                                     </div>
                                 </div>
@@ -130,7 +111,7 @@
                                                                             'class' => 'form-control item_type',
                                                                             'label' => false,
                                                                             'disabled' => true,
-                                                                            'value' => date("F j, Y ", strtotime($receivedItemData[0]['PurchaseOrder']['created'])),
+                                                                            'value' => date("F j, Y ", strtotime(!empty($receivedItemData['PurchaseOrder']['created']) ? $receivedItemData['PurchaseOrder']['created'] : $receivedItemData['ReceivedOrder']['created'])),
                                                                             'fields' =>array('name')));
                                         ?>
                                     </div>
@@ -139,11 +120,13 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Created by</label>
                                     <div class="col-lg-8">
-                                        <?php 
+                                        <?php  
 
-                                            $Fname = ucfirst($firstName[$purchaseOrderData['PurchaseOrder']['created_by']]); 
+                                            $nameHolder = !empty($purchaseOrderData['PurchaseOrder']['created_by']) ? $purchaseOrderData['PurchaseOrder']['created_by'] : $receivedItemData['ReceivedOrder']['received_by'];
 
-                                            $Lname = ucfirst($lastName[$purchaseOrderData['PurchaseOrder']['created_by']]);
+                                            $Fname = ucfirst($firstName[$nameHolder]); 
+
+                                            $Lname = ucfirst($lastName[$nameHolder]);
 
                                             echo $this->Form->input('PurchaseOrder.createdBy', array(
                                                                             'class' => 'form-control item_type',
@@ -164,7 +147,7 @@
                                                                             'label' => false,
                                                                             'disabled' => true,
                                                                             'fields' =>array('name'),
-                                                                            'value' => $purchaseOrderData['PurchaseOrder']['created_by']));
+                                                                            'value' => !empty($purchaseOrderData['PurchaseOrder']['remarks']) ? $purchaseOrderData['PurchaseOrder']['remarks'] : $receivedItemData['ReceivedOrder']['remarks']));
                                         ?>
                                     </div>
                                 </div>
@@ -237,7 +220,7 @@
                                 <i class="fa fa-tags"></i>&nbsp;<?php echo $requestDataList[$itemHolder]['model'] ?> 
                                 </span>
                                 <span class="warranty">
-                                <i class="fa fa-certificate"></i>&nbsp; <?php echo $requestDataList[$itemHolder]['quantity'] . " " . $unitData[$itemData[$key][$itemTypeHolder]['quantity_unit_id']]?> 
+                                <i class="fa fa-certificate"></i>&nbsp; <?php echo $requestDataList[$itemHolder]['quantity'] . " " . $unitData[$requestDataList[$itemHolder]['unit_id']] ?>  
 
                                 </span>
                             </td>
@@ -292,7 +275,7 @@
 
                                 if(!empty($requestDataList[$itemHolder]['good_quantity'])){
 
-                                 echo $requestDataList[$itemHolder]['good_quantity'] . " " . $unitData[$itemData[$key][$itemTypeHolder]['quantity_unit_id']]?> 
+                                 echo $requestDataList[$itemHolder]['good_quantity'] . " " . $unitData[$requestDataList[$itemHolder]['unit_id']]?> 
 
                                 <?php } ?>
                                 </span>
@@ -301,7 +284,7 @@
 
                                 if(!empty($requestDataList[$itemHolder]['reject_quantity'])){
 
-                                 echo $requestDataList[$itemHolder]['reject_quantity'] . " " . $unitData[$itemData[$key][$itemTypeHolder]['quantity_unit_id']]?> 
+                                 echo $requestDataList[$itemHolder]['reject_quantity'] . " " . $unitData[$requestDataList[$itemHolder]['unit_id']]?> 
 
                                 <?php } ?>
                                 </span>

@@ -5,7 +5,7 @@
                 <?php  echo 'RCV' . $requestOrderDataList['DeliveredOrder']['uuid']  ?>  
             </td>
 
-            <td class="text-center">
+            <td >
 
                 <?php  echo !empty($requestOrderDataList['DeliveredOrder']['purchase_order_uuid']) ? $requestOrderDataList['DeliveredOrder']['purchase_order_uuid'] : $requestOrderDataList['ReceivedOrder']['purchase_order_uuid']; ?>
 

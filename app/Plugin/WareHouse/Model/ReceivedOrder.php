@@ -36,13 +36,13 @@ class ReceivedOrder extends AppModel {
 		//$data['purchase_order_uuid'] = $data;
 
 		if(!empty($data['ReceiveReceipt'])){
-
+		//	pr($data); exit;
 			$data['supplier_id'] = $data['ReceiveReceipt']['supplier_id'];
 			$data['address'] = $data['ReceiveReceipt']['address'];
-			$data['purchase_order_uuid'] = $data['po_number'];
+			$data['purchase_order_uuid'] = $data['ReceiveReceipt']['po_number'];
 			$data['status_id'] = 14;
 		}
-
+	
 		$this->save($data);
 
 		return $this->id;

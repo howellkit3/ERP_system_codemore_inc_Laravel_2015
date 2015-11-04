@@ -15,9 +15,6 @@ class ReceivedReceiptItem extends AppModel {
 
 	public function saveReceivedReceiptItems($id, $data, $uuid){
 
-		//pr($data); exit;
-		
-
 		foreach ($data['itemdetails'] as $key => $value)
 		{
 
@@ -28,10 +25,9 @@ class ReceivedReceiptItem extends AppModel {
 				//pr( $value); exit;
 		 		$this->save($value);
 
-
-			return $this->id;
-			
 		}
+
+		return $this->id;
 	}
 
 

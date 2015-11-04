@@ -47,6 +47,61 @@
                             ?>
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label"><span style="color:red">*</span>Delivery Number</label>
+                            <div class="col-lg-8">
+                                <?php 
+                                    echo $this->Form->input('DeliveredOrder.dr_num', array(
+                                                                    'class' => 'form-control item_type required',
+                                                                    'label' => false,
+                                                                    'type' => 'number',
+                                                                    'fields' =>array('name')
+                                                                    ));
+                                ?>
+                            </div>
+                        </div>      
+
+                                <!-- <div class="form-group">
+                                    <label class="col-lg-2 control-label"><span style="color:red">*</span>Sales Invoice Number</label>
+                                    <div class="col-lg-8">
+                                        <?php 
+                                            echo $this->Form->input('ReceiveReceipt.si_num', array(
+                                                                            'class' => 'form-control item_type required',
+                                                                            'label' => false,
+                                                                            'type' => 'number',
+                                                                            'fields' =>array('name')
+                                                                            ));
+                                        ?>
+
+
+                                    </div>
+                                </div>  --> 
+
+                              <!--   <div class="form-group">
+                                        <label class="col-lg-2 control-label"><span style="color:red">*</span>Tracking Number</label>
+                                        <div class="col-lg-8">
+                                            <?php 
+                                                echo $this->Form->input('ReceiveReceipt.po_number',array( 
+                                                                        'class' => 'form-control  required', 
+                                                                        'label' => false,
+                                                                        'placeholder' => 'Tracking Number',
+                                                                        'id' => 'generate-poNumber' 
+                                                                        ));
+                                            ?>
+                                        </div>
+                                    </div>
+
+                                     <div class="form-group">
+                                        <label class="col-lg-2 control-label"></label>
+                                        <div class="col-lg-8">
+                                            <div class="checkbox-nice">
+                                                <input id="checkbox-1" type="checkbox" class="generate-poNumber">
+                                                <label for="checkbox-1"> Generate Tracking Number </label>
+                                            </div>
+                                        </div>
+                                    </div> -->
+
                         
                         <div class="form-group">
                             <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span>Address</label>
@@ -86,7 +141,7 @@
                                                             echo $this->Form->input('ReceiveReceipt.itemdetails.0.item_name', 
                                                                             array( 
                                                                 // 'options' => array($itemData),  
-                                                                'class' => 'form-control col-lg-4 required item_name',
+                                                                'class' => ' form-control col-lg-4 required item_name',
                                                                 'label' => false,
                                                                 'readonly' => true,
                                                                 'placeholder' => 'Item'
@@ -130,7 +185,7 @@
                                                         <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span>Item Type</label>
                                                         <div class="col-lg-8">
                                                             <?php 
-                                                                echo $this->Form->input('ReceiveReceipt.itemdetails.0.item_type', array('class' => 'form-control item_type',
+                                                                echo $this->Form->input('ReceiveReceipt.itemdetails.0.item_type', array('class' => 'required form-control item_type',
                                                                     'alt' => 'Contact',
                                                                     'label' => false,
                                                                     'class' => 'form-control col-lg-4 required'
@@ -141,7 +196,7 @@
 
                                                     <div class="form-group">
                                                         <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span>Quantity</label>
-                                                        <div class="col-lg-8">
+                                                        <div class="col-lg-4">
                                                             <?php 
                                                                 echo $this->Form->input('ReceiveReceipt.itemdetails.0.quantity', array('class' => 'form-control item_type',
                                                                     'alt' => 'Contact',
@@ -151,6 +206,19 @@
                                                                 ));
                                                             ?>
                                                         </div>
+
+                                                         <div class="col-lg-4">
+                                                            <?php 
+                                                                  echo $this->Form->input('ReceiveReceipt.itemdetails.0.quantity_unit_id', array(
+                                                                        'options' => array($unitData),
+                                                                        'type' => 'select',
+                                                                        'label' => false,
+                                                                        'class' => 'form-control col-lg-4 required',
+                                                                        'empty' => '---Select Unit---'
+                                                                         ));
+                                                            ?>
+                                                        </div>
+
                                                     </div>
 
                                                     <div class="form-group">
@@ -362,6 +430,73 @@
 
         }
         
+    });
+
+    $('.generate-poNumber').change(function(){
+
+    var currentTime = new Date()
+    var month = currentTime.getMonth() + 1
+    var year = currentTime.getFullYear()
+    var hour = currentTime.getHours()
+    var minute = currentTime.getMinutes()
+    var seconds = currentTime.getSeconds()
+
+    year = year.toString().substr(2,2);
+
+    month = month + "";
+
+    hour = hour + "";
+
+    minute = minute + "";
+
+    seconds = seconds + "";
+
+    if (month.length == 1)
+    {
+        month = "0" + month;
+    }
+
+    if (hour.length == 1)
+    {
+        hour = "0" + hour;
+    }
+
+    if (minute.length == 1)
+    {
+        minute = "0" + minute;
+    }
+
+    if (seconds.length == 1)
+    {
+        seconds = "0" + seconds;
+    }
+
+    timestamp = event.timeStamp;
+    var timeToString = timestamp.toString();
+
+    timeSlice = timeToString.slice(-6);
+
+    var ranDom = Math.floor(Math.random()*9000) + 1000;
+    var code = year.concat( month, timeSlice);
+    console.log(year);
+    console.log(month);
+    console.log(ranDom);
+        if($(this).is( ":checked" ) == true){
+            
+            var data = "RCV-" + code;
+            // data.substr(0,-3);
+            $('#generate-poNumber').val(data);
+            
+            $('#generate-poNumber').attr('readonly','true');
+        }
+        
+        if($(this).is( ":checked" ) == false){
+            
+            $('#generate-poNumber').val('');
+            $('#generate-poNumber').removeAttr("readonly");
+           
+        }
+    
     });
 
     

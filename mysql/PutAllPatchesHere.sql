@@ -2309,3 +2309,7 @@ ALTER TABLE `corrugated_paper_job_tickets` ADD `corrugated_id` INT(11)  NULL  DE
 
 /*howell kit addedd this oct-28-2015 Accounting */
 ALTER TABLE `sales_invoices` CHANGE `dr_uuid` `dr_uuid` VARCHAR(50) NOT NULL;
+
+/*howell kit addedd this oct-28-2015 Warehouse */
+ALTER TABLE `received_receipt_items` ADD `quantity_unit_id` INT(11)  NULL  DEFAULT NULL  AFTER `quantity`;
+
