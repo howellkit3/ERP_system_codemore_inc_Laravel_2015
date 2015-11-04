@@ -148,6 +148,8 @@ class SalesOrdersController extends SalesAppController {
             );
     }
 
+
+
     $currencies = $this->Currency->getList();
 
     $units = $this->Unit->getList();
@@ -156,11 +158,13 @@ class SalesOrdersController extends SalesAppController {
        
 		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','Product','ContactPerson'));
 
-		$this->ClientOrder->bind(array('ClientOrderDeliverySchedule'));
+		$this->ClientOrder->bind(array('ClientOrderDeliverySchedule', 'QuotationItemDetail'));
 
 		$clientOrderData = $this->ClientOrder->find('first',array('conditions' => array('ClientOrder.id' => $clientOrderId)));
 
 		$quotationData = $this->Quotation->findById($clientOrderData['ClientOrder']['quotation_id']);
+
+  // pr($clientOrderData); exit;
 
     $checkSpec = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $quotationData['QuotationDetail']['product_id'])));
     
@@ -168,7 +172,7 @@ class SalesOrdersController extends SalesAppController {
      													'fields' => array('id','company_name')
      												));
 
-		$quotationItemDetail = $this->Quotation->QuotationItemDetail->find('first',array('conditions' => array('QuotationItemDetail.id' => $clientOrderData['ClientOrder']['client_order_item_details_id'])));
+		//$quotationItemDetail = $this->Quotation->QuotationItemDetail->find('first',array('conditions' => array('QuotationItemDetail.id' => $clientOrderData['ClientOrder']['client_order_item_details_id'])));
       
 		$paymentTermData = $this->PaymentTermHolder->find('list',array('fields' => array('id','name')));
 					
