@@ -30,7 +30,7 @@ class TicketingSystemsController extends TicketAppController {
         //$conditions = array('JobTicket.po_number' => '15-1364');
         $conditions = array();
 
-        $this->JobTicket->bindTicket();
+        $this->JobTicket->bindTicketSchedule();
 
         $query = $this->request->query;
 
@@ -73,7 +73,7 @@ class TicketingSystemsController extends TicketAppController {
 
 
         $ticketData = $this->paginate('JobTicket');
-
+        
         if (!empty($_GET['data'])) {
 
             Configure::write('debug',2);
@@ -618,7 +618,7 @@ class TicketingSystemsController extends TicketAppController {
 
         $productData = $this->Product->find('first',array('conditions' => array('Product.uuid' => $productUuid) ,'order' => 'Product.id DESC'));
 
-        $this->JobTicket->bindTicket();
+        $this->JobTicket->bindTicketSchedule();
 
         $ticketData = $this->JobTicket->find('first',array(
             'conditions' => array('JobTicket.uuid' => $ticketUuid,'JobTicket.id' => $ticketId )));
