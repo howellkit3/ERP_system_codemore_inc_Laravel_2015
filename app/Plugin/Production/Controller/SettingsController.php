@@ -20,7 +20,7 @@ class SettingsController extends ProductionAppController {
                 'conditions' => $conditions,
                 'limit' => $limit,
                 //'fields' => array('id', 'status','created'),
-                'order' => 'Machine.id ASC',
+                'order' => 'Machine.id DESC',
             );
 
         $this->paginate = $params;
