@@ -203,8 +203,15 @@ jQuery(function($){
     {
         seconds = "0" + seconds;
     }
+
+    timestamp = event.timeStamp;
+    var timeToString = timestamp.toString();
+
+    timeSlice = timeToString.slice(-6);
+
     var ranDom = Math.floor(Math.random()*9000) + 1000;
-    var code = year.concat(month,ranDom);
+    var code = year.concat( month, timeSlice);
+
     console.log(year);
     console.log(month);
     console.log(ranDom);

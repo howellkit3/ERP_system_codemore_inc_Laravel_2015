@@ -351,7 +351,7 @@ class ReceivingsController extends WareHouseAppController {
 
     }
 
-    public function receive($id = null) {
+    public function receive() {
 
     	$this->loadModel('WareHouse.DeliveredOrder');
 
@@ -368,7 +368,6 @@ class ReceivingsController extends WareHouseAppController {
 
 		$supplierData = $this->Supplier->find('list', array('fields' => array('Supplier.id', 'Supplier.name')
 																));
-
 
 		$receiveData = $this->Request->find('list', array('fields' => array('Request.id', 'Request.uuid')
 																));
@@ -646,6 +645,8 @@ class ReceivingsController extends WareHouseAppController {
 
     public function view_receive($id = null, $requestUUID = null, $type = null) {
 
+    	//pr($id ); pr($requestUUID); exit;
+
 	 	$this->loadModel('Purchasing.PurchaseOrder');
 
 	 	$this->loadModel('Purchasing.Request');
@@ -801,7 +802,6 @@ class ReceivingsController extends WareHouseAppController {
 					$receiveItem[$key][$itemHolder]['good_quantity'] = $valueOfValue['quantity'];
 					
 					$receiveItem[$key][$itemHolder]['reject_quantity'] = $valueOfValue['reject_quantity'];
-
 		        
 		        } 
 

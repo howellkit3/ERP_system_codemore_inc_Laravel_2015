@@ -623,9 +623,7 @@
 					</div>
 				</div>
 			<?php echo $this->Form->end(); ?>
-<!-- 		</div>
-	</div>
- -->
+
  <style type="text/css">
  	.hide-me-first{
  		display: none;

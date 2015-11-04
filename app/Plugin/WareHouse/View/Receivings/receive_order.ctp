@@ -538,45 +538,49 @@ jQuery("body").ready(function(){
     $('.generate-poNumber').change(function(){
 
         var currentTime = new Date()
-        var month = currentTime.getMonth() + 1
-        var year = currentTime.getFullYear()
-        var hour = currentTime.getHours()
-        var minute = currentTime.getMinutes()
-        var seconds = currentTime.getSeconds()
-        var uuid = $('.po_number').val();
-        
+    var month = currentTime.getMonth() + 1
+    var year = currentTime.getFullYear()
+    var hour = currentTime.getHours()
+    var minute = currentTime.getMinutes()
+    var seconds = currentTime.getSeconds()
 
-        year = year.toString().substr(2,2);
+    year = year.toString().substr(2,2);
 
-        month = month + "";
+    month = month + "";
 
-        hour = hour + "";
+    hour = hour + "";
 
-        minute = minute + "";
+    minute = minute + "";
 
-        seconds = seconds + "";
+    seconds = seconds + "";
 
-        if (month.length == 1)
-        {
-            month = "0" + month;
-        }
+    if (month.length == 1)
+    {
+        month = "0" + month;
+    }
 
-        if (hour.length == 1)
-        {
-            hour = "0" + hour;
-        }
+    if (hour.length == 1)
+    {
+        hour = "0" + hour;
+    }
 
-        if (minute.length == 1)
-        {
-            minute = "0" + minute;
-        }
+    if (minute.length == 1)
+    {
+        minute = "0" + minute;
+    }
 
-        if (seconds.length == 1)
-        {
-            seconds = "0" + seconds;
-        }
-        var ranDom = Math.floor(Math.random()*9000) + 1000;
-        var code = year.concat(month,ranDom);
+    if (seconds.length == 1)
+    {
+        seconds = "0" + seconds;
+    }
+
+    timestamp = event.timeStamp;
+    var timeToString = timestamp.toString();
+
+    timeSlice = timeToString.slice(-6);
+
+    var ranDom = Math.floor(Math.random()*9000) + 1000;
+    var code = year.concat( month, timeSlice);
         
         if($(this).is( ":checked" ) == true){
             
