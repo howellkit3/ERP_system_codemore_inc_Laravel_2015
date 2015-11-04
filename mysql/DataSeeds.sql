@@ -2563,3 +2563,20 @@ INSERT INTO `taxes_deductions` (`id`, `type`, `tax_1`, `tax_1_percent`, `tax_2`,
 
 /* 9/24/15 aldrin added this koufu_warehouse*/
 insert  into `item_categories`(`id`,`name`,`description`,`created_by`,`modified_by`,`created`,`modified`) values (1,'Consumables','consumemables',1,1,NULL,NULL),(2,'Raw Materials',NULL,NULL,NULL,NULL,NULL),(3,'Finished Goods',NULL,NULL,NULL,NULL,NULL);
+
+
+
+/* aldrin  added this oct 27 2015*/
+INSERT INTO `process_departments` VALUES ('1', 'Sheeting / Cutting', null, null, null, null, null, null);
+INSERT INTO `process_departments` VALUES ('2', 'Printing', null, null, null, null, null, null);
+INSERT INTO `process_departments` VALUES ('3', 'Coating', null, null, null, null, null, null);
+INSERT INTO `process_departments` VALUES ('4', 'Corrugated Lamination', null, null, null, null, null, null);
+INSERT INTO `process_departments` VALUES ('5', 'DieCutting', null, null, null, null, null, null);
+INSERT INTO `process_departments` VALUES ('6', 'Stripping', null, null, null, null, null, null);
+INSERT INTO `process_departments` VALUES ('7', 'Browsing', null, null, null, null, null, null);
+INSERT INTO `process_departments` VALUES ('8', 'Gluing', null, null, null, null, null, null);
+INSERT INTO `process_departments` VALUES ('9', 'Final Inspection', null, null, null, null, null, null);
+INSERT INTO `process_departments` VALUES ('10', 'Scrap Items', null, null, null, null, null, null);
+INSERT INTO `process_departments` VALUES ('11', 'Packing', null, null, null, null, null, null);
+INSERT INTO `process_departments` VALUES ('12', 'Corrugation / Single Face', null, null, null, null, null, null);
+INSERT INTO `process_departments` VALUES ('13', 'RM warehouse', null, null, null, null, null, null);

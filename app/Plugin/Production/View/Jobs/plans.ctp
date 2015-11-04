@@ -3,14 +3,16 @@
 <?php $this->Html->addCrumb('Plans', array('controller' => 'jobs', 'action' => 'plans')); 
 	$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
 ?>
-<?php echo $this->Html->css(array('HumanResource.default'));?>
-<?php echo $this->Html->css(array('Production.default'));?>
-<?php //echo $this->Html->script('Sales.jquery-sortable');?>
-<?php //echo $this->Html->script('Sales.draggableproducts');?>
+<?php echo $this->Html->css(array(
+	'HumanResource.default',
+	'Production.default',
+	'datetimepicker/jquery.datetimepicker'
+));?>
 <?php echo $this->Html->script(array(
 						'jquery.maskedinput.min',
 						'HumanResource.custom',
-                        'Production.machine_schedule'
+                        'Production.machine_schedule',
+                        'datetimepicker/jquery.datetimepicker'
 )); ?>
 
 				
@@ -29,9 +31,12 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 					<div class="tab-content">
 						<div class="tab-pane active" id="tab-calendar">
 							<header class="main-box-header clearfix">
-				                <h2 class="pull-left"><b>Items</b> </h2>
-				                <div class="filter-block pull-right">
+				                <h2 class="pull-left"><b>Recent Job tickets</b> </h2>
+				                <div class="clearfix"></div>
+				                <div class="filter-block pull-left">
 
+
+				                <?php echo $this->Form->create('Jobs',array('url' => array('controller' => 'jobs','action' => 'plans'),'type' => 'GET')); ?>
 				                	<div class="form-group pull-left search-dropdown">
 				                 		<?php 
 				                 			echo $this->Form->input('process_id',array(
@@ -54,14 +59,25 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 				                         <?php //echo $this->Form->end(); ?>
 				                    </div>
 
-				                    <div class="form-group pull-left">
+				                    <!-- <div class="form-group pull-left">
 			                 	
 			                 			<input type="text" name="data[date]" id="changeDate" class="form-control datepick" value="<?php echo date('Y-m-d'); ?>">
 
 			                            <i class="fa fa fa-calendar calendar-icon"></i>
 
-			                    	</div>
+			                    	</div> -->
 
+					                  <div class="form-group pull-left">
+					                 	<div class="input-group">
+			                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+			                                <input placeholder="Date Range" name="data[date]" data="1" type="text" class="form-control myDateRange"  value="<?php echo $dateSelected ?>" >
+			                            </div>
+									</div>
+
+									 <div class="form-group pull-left">
+			                    	 <button class="btn btn-success">Go</button> 
+			                     </div>
+			                     <?php echo $this->Form->end(); ?>
 				                   <br><br>
 				               	</div>
 				            </header>
@@ -72,6 +88,9 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 										<thead>
 											<tr>
 												<th><a href="#"><span>Schedule No.</span></a></th>
+
+												<th><a href="#"><span>Del Schedule.</span></a></th>
+
 												<th><a href="#"><span>Customer</span></a></th>
 												<th><a href="#" class="text-center"><span>Product</span></a></th>
 												<th><a href="#" class="text-center"><span>Quantity</span></a></th>
@@ -92,6 +111,10 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 									                        </td>
 
 									                        <td class="">
+									                           <?php echo !empty($jobList['ClientOrderDeliverySchedule']['schedule']) ? date('Y-m-d',strtotime($jobList['ClientOrderDeliverySchedule']['schedule'])) : '' ?>
+									                        </td>
+
+									                        <td class="">
 									                           <?php echo ucfirst($companyData[$jobList['Product']['company_id']]); ?>
 									                        </td>
 
@@ -108,9 +131,24 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 									                           		if (empty($jobList['JobTicket']['status_production_id'])) {
 									                           			echo "<span class='label label-default'>Waiting For Schedule</span>";
 									                           		}else{
-									                           			if ($jobList['JobTicket']['status_production_id'] == 1) {
-									                           				echo "<span class='label label-success'>Sheeter / Cutting</span>";
-									                           			} 
+
+									                           			if (!empty($jobList['TicketProcessSchedule'])) {
+
+									                           				$count = 0;
+
+									                           				foreach ($jobList['TicketProcessSchedule'] as $key => $list) {
+
+									                           						if ($list['status'] == 0 && $count ==0) {
+
+									                           							echo  "<span class='label label-success'>".$departmentProcess[$list['department_process_id']]."</span>";
+									                           							$count++;
+									                           							
+																					}
+									                           				}
+									                           			}
+									                           			// if ($jobList['JobTicket']['status_production_id'] == 1) {
+									                           			// 	echo "<span class='label label-success'>Sheeter / Cutting</span>";
+									                           			// } 
 									                           		}
 									                           	?>
 									                        </td>
@@ -392,6 +430,9 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 		$('.datepick').datepicker({
 			format: 'yyyy-mm-dd'
 		});
+
+
+		$('.myDateRange').daterangepicker();
 
 		$('.timepicker').timepicker({
 		    minuteStep: 5,

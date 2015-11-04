@@ -2241,16 +2241,10 @@ ALTER TABLE `received_items`  ADD `unit_price` INT(11)  NULL  DEFAULT NULL  AFTE
 ALTER TABLE `items`
 ADD COLUMN `item_group` varchar(255) NULL AFTER `supplier`;
 
+ALTER TABLE `ticket_process_schedules`
+ADD COLUMN `status`  int(11) NULL DEFAULT 0 AFTER `remarks`;
 
-/* aldrin added this oct-27-2015 */
-ALTER TABLE `items`
-MODIFY COLUMN `created`  datetime NULL DEFAULT NULL AFTER `description`,
-ADD COLUMN `type`  varchar(255) NULL AFTER `modified`,
-ADD COLUMN `gsm`  varchar(255) NULL AFTER `type`,
-ADD COLUMN `width`  varchar(255) NULL AFTER `GSM`,
-ADD COLUMN `length`  varchar(255) NULL AFTER `width`,
-ADD COLUMN `quantity`  varchar(255) NULL AFTER `length`,
-ADD COLUMN `location`  text NULL AFTER `quantity`;
+
 
 
 /*aldrin added this oct 28 2015 */
