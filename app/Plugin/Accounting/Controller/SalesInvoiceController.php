@@ -16,7 +16,7 @@ class SalesInvoiceController extends AccountingAppController {
 
         $this->loadModel('Delivery.Delivery');
 
-        $this->SalesInvoice->bindInvoice();
+        //$this->SalesInvoice->bindInvoice();
 
         $limit = 10;
 
@@ -51,7 +51,7 @@ class SalesInvoiceController extends AccountingAppController {
            $keyHolder = ltrim($key, '0');
            $deliveryNum[$keyHolder] = $deliveryList;
         }
-
+      //  pr($deliveryNum); exit;
       
         if ($userData['User']['role_id'] == 9 ) {
             $noPermissionReciv = 'disabled not-active';
@@ -70,7 +70,7 @@ class SalesInvoiceController extends AccountingAppController {
             $noPermissionPay = ' ';
         }
 
-        $this->set(compact('invoiceData','noPermissionReciv','noPermissionPay','companyName', 'deliveryNum'));
+        $this->set(compact('invoiceData','noPermissionReciv','noPermissionPay','companyName', 'deliveryNumHolder'));
 
     }
 
@@ -107,7 +107,6 @@ class SalesInvoiceController extends AccountingAppController {
 
     public function view($invoiceId = null,$saNo = null){
 
-       
         $userData = $this->Session->read('Auth');
 
         $this->loadModel('Sales.ClientOrderDeliverySchedule');
@@ -149,7 +148,7 @@ class SalesInvoiceController extends AccountingAppController {
         $invoiceData = $this->SalesInvoice->find('first', array(
                                             'conditions' => array('SalesInvoice.id' => $invoiceId
                                             )));
-       
+
         $prepared = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
                                                             'conditions' => array('User.id' => $invoiceData['SalesInvoice']['created_by'])
                                                             )); 
@@ -166,9 +165,7 @@ class SalesInvoiceController extends AccountingAppController {
             $drData = " ";
         }
 
-       //pr($drData); exit;
 
-        //pr($invoiceData['SalesInvoice']['dr_uuid']); exit;
         $conditions = array('ClientOrderDeliverySchedule.uuid' => $drData['Delivery']['schedule_uuid']);
       // $conditions = array_merge($conditions,array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']));
         $clientData = $this->ClientOrderDeliverySchedule->find('first', array(
@@ -511,6 +508,8 @@ class SalesInvoiceController extends AccountingAppController {
  
     public function print_invoice($invoiceId = null ,$clientsId = null) {
 
+  //      pr($clientsId); pr($invoiceId); exit;
+
         $userData = $this->Session->read('Auth');
 
         $this->loadModel('Sales.ClientOrder');
@@ -562,6 +561,9 @@ class SalesInvoiceController extends AccountingAppController {
         $prepared = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
                                                             'conditions' => array('User.id' => $invoiceData['SalesInvoice']['created_by'])
                                                             )); 
+
+      //  pr($prepared); exit;
+
         
         $this->Delivery->bindDelivery();
 
@@ -569,21 +571,17 @@ class SalesInvoiceController extends AccountingAppController {
                                             'conditions' => array('Delivery.dr_uuid' => $invoiceData['SalesInvoice']['dr_uuid']
                                             )));
 
-        //pr($drData); exit;
-
-      //  pr($drData);  exit;
-       
         $clientData = $this->ClientOrder->find('first', array(
                                             'conditions' => array('ClientOrder.id' => $clientsId
                                             )));
 
-        //pr($clientData); exit;
         
+       // pr($clientData); exit;
         $companyData = $this->Company->find('first', array(
                                             'conditions' => array('Company.id' => $drData['Delivery']['company_id']
                                             )));
 
-       // pr($companyData); exit;
+    //    pr($companyData); exit;
 
         //$view = new View(null, false);
         
@@ -1415,5 +1413,32 @@ class SalesInvoiceController extends AccountingAppController {
 
         }
     }
+
+        public function change_vat_status($invoiceId = null){
+
+          //  pr($this->request->data); exit;
+
+            $this->loadModel('Sales.QuotationItemDetail');
+
+            //$this->QuotationItemDetail->bind(array('ClientOrder', 'QuotationDetail','Company', 'Product', 'Quotation', 'QuotationItemDetail', 'Company', 'Address'));
+
+            // $clientVatStatus = $this->QuotationItemDetail->find('all', array(
+            //                                 'conditions' => array('ClientOrder.id' => $clientOrderId
+            //                                 )));
+
+           // pr($this->request->data); exit;
+       //     $this->QuotationItemDetail->id = $id;
+
+            $this->QuotationItemDetail->saveFromInvoice( $this->request->data);
+
+            $this->Session->setFlash(__('Vat Details has been Updated'), 'success');
+      
+            $this->redirect( array(
+                'controller' => 'sales_invoice',   
+                'action' => 'view',
+                $invoiceId
+            ));  
+    //
+     }
 
 }
