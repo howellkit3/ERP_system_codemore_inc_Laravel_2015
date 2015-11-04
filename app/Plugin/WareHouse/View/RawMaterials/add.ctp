@@ -31,7 +31,7 @@
                                             'alt' => 'type',
                                             'label' => false,
                                             'class' => 'form-control',
-                                            'value' => 4,
+                                            'value' => 2,
                                             'type' => 'hidden'
                                              ));
                 ?>
@@ -45,7 +45,7 @@
                                 <br/>            
                                             
                                   <div class="form-group">
-                                        <label for="inputPassword1" class="col-lg-2 control-label"> <span style="color:red">*</span> Item</label>
+                                        <label for="inputPassword1" class="col-lg-2 control-label"> <span style="color:red">*</span> Item </label>
                                         <div class="col-lg-9"> 
                                             <?php echo $this->Form->input('name', array( 
                                                                         'alt' => 'type',
@@ -54,9 +54,88 @@
                                                                 ));
                                             ?>
                                         </div>
-                                    </div>    
+                                    </div> 
+
+                                      <div class="form-group">
+                                        <label for="inputPassword1" class="col-lg-2 control-label"> <span style="color:red">*</span> Type </label>
+                                            
+                                            <div class="col-lg-9"> 
+                                                       <?php 
+
+                                                        $items = array( 'rolls' => 'Rolls', 'sheets' => 'Sheets');
+
+                                                        echo $this->Form->input('type', array(
+                                                                                    'class' => 'form-control',
+                                                                                    'options' =>  $items , 
+                                                                                    'alt' => 'type',
+                                                                                    'empty' => '--- Select Type ---',
+                                                                                    'label' => false,
+                                                                            ));
+                                                        ?>
+                                                    <span class="help-block" style= "color:white"> &nbsp </span>
+                                            </div>
+
+                                    </div>
 
                                     <div class="form-group">
+                                        <label for="inputPassword1" class="col-lg-2 control-label"> <span style="color:red">*</span> GSM </label>
+                                            
+                                            <div class="col-lg-9"> 
+                                                       <?php //$items = array( 'rolls' => 'Rolls', 'sheets' => 'Sheets');
+
+                                                        echo $this->Form->input('gsm', array(
+                                                                                    'class' => 'form-control',
+                                                                                    'alt' => 'type',
+                                                                                    'label' => false,
+                                                                                    'type' => 'number'
+                                                                            ));
+                                                        ?>
+                                                    <span class="help-block" style= "color:white"> &nbsp </span>
+                                            </div>
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="inputPassword1" class="col-lg-2 control-label"> <span style="color:red">*</span> Width </label>
+                                            
+                                            <div class="col-lg-9"> 
+                                                       <?php //$items = array( 'rolls' => 'Rolls', 'sheets' => 'Sheets');
+
+                                                        echo $this->Form->input('width', array(
+                                                                                    'class' => 'form-control',
+                                                                                    'alt' => 'type',
+                                                                                    'label' => false,
+                                                                                    'type' => 'number',
+                                                                                    'placeholder' => 'mm'
+                                                                            ));
+                                                        ?>
+                                                    <span class="help-block" style= "color:white"> &nbsp </span>
+                                            </div>
+
+                                    </div>
+                                      
+                                       <div class="form-group">
+                                        <label for="inputPassword1" class="col-lg-2 control-label"> <span style="color:red">*</span> Length </label>
+                                            
+                                            <div class="col-lg-9"> 
+                                                       <?php //$items = array( 'rolls' => 'Rolls', 'sheets' => 'Sheets');
+
+                                                        echo $this->Form->input('length', array(
+                                                                                    'class' => 'form-control',
+                                                                                    'alt' => 'type',
+                                                                                    'label' => false,
+                                                                                    'type' => 'number',
+                                                                                    'placeholder' => 'mm'
+                                                                            ));
+                                                        ?>
+                                                    <span class="help-block" style= "color:white"> &nbsp </span>
+                                            </div>
+
+                                    </div>
+                                       
+
+
+                                <!--     <div class="form-group">
                                                 <label for="inputPassword1" class="col-lg-2 control-label"> Measure </label>
                                                 <div class="col-lg-9">
                                                    <?php 
@@ -64,7 +143,7 @@
                                                     ?>
                                                 </div>
                                             </div>
-
+ -->
 
 
                                        <div class="form-group">
@@ -91,14 +170,14 @@
                                         </div>
                                     </div>
                                       
-                                        <div class="form-group">
+                                       <!--  <div class="form-group">
                                             <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span> Category / Department </label>
                                             <div class="col-lg-9"> 
-                                                <?php  $categoryDataDropList = array_merge($categoryDataDropList,
-                                                        array('others' => 'Others' ));
+                                                <?php 
+
+                                                       $categoryDataDropList = array_merge($categoryDataDropList,array('others' => 'Others' ));
                                                        
-                                                       echo $this->Form->input('department_id',
-                                                                            array( 
+                                                       echo $this->Form->input('department_id',array( 
                                                                                     'options' => $categoryDataDropList,
                                                                                     'alt' => 'type',
                                                                                     'label' => false,
@@ -110,9 +189,9 @@
                                                 ?>
                                                 <span class="help-block" style= "color:white"> &nbsp </span>
                                            </div>
-                                       </div>
+                                       </div> -->
 
-
+<!-- 
                                        <div class="form-group department_others others hide">
                                             <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span> Other Department </label>
                                             <div class="col-lg-9"> 
@@ -127,11 +206,11 @@
                                                 ?>
                                                     <span class="help-block" style= "color:white"> &nbsp </span>
                                            </div>
-                                       </div>
+                                       </div> -->
 
 
                                        <div class="form-group">
-                                        <label for="inputPassword1" class="col-lg-2 control-label"> <span style="color:red">*</span> Supplier </label>
+                                        <label for="inputPassword1" class="col-lg-2 control-label"> Supplier </label>
                                         <div class="col-lg-9"> 
                                                    <?php
                                                     
@@ -141,7 +220,7 @@
                                                                                 'options' => $suppliers, 
                                                                                 'alt' => 'type',
                                                                                 'label' => false,
-                                                                                'class' => 'form-control required select_option supplier_select',
+                                                                                'class' => 'form-control select_option supplier_select',
                                                                                 'empty' => '--- Select Supplier---',
                                                                                 'data-alt' => 'supplier_others'
                                                                         ));
@@ -166,7 +245,7 @@
                                            </div>
                                        </div>
                                            
-                                        
+                                       <!--  
                                             <div class="form-group">
                                                 <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span>Stocks</label>
                                                 <div class="col-lg-9">
@@ -174,10 +253,28 @@
                                                         echo $this->Form->input('remaining_stocks', array('class' => 'form-control required number','label' => false,'type' => 'text'));
                                                     ?>
                                                 </div>
-                                            </div>
+                                            </div> -->
+
+                                          <div class="form-group">
+                                                <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span> Quantity / KGS </label>
+                                                <div class="col-lg-9">
+                                                    <?php 
+                                                        echo $this->Form->input('quantity', array('class' => 'form-control required number','label' => false,'type' => 'text'));
+                                                    ?>
+                                                </div>
+                                            </div> 
+                                            
+                                            <div class="form-group">
+                                                <label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span> Location </label>
+                                                <div class="col-lg-9">
+                                                    <?php 
+                                                        echo $this->Form->input('location', array('class' => 'form-control required','placeholder' => 'Address','label' => false,'type' => 'text'));
+                                                    ?>
+                                                </div>
+                                            </div> 
 
                                             <div class="form-group">
-                                                <label for="inputPassword1" class="col-lg-2 control-label">Description</label>
+                                                <label for="inputPassword1" class="col-lg-2 control-label">Remarks</label>
                                                 <div class="col-lg-9">
                                                      <?php 
                                                         echo $this->Form->textarea('description', array('class' => 'form-control ','label' => false));

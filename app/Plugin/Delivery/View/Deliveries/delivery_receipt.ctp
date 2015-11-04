@@ -27,7 +27,7 @@
         </div>
 
       <?php echo $this->Form->create('ClientOrderDeliverySchedule',array(
-      'url'=>(array('controller' => 'deliveries', 'action' => 'dr',$drData['Delivery']['dr_uuid'],$drData['Delivery']['schedule_uuid'], $drData['Delivery']['clients_order_id'])),'class' => 'form-horizontal')); ?>
+      'url'=>(array('controller' => 'deliveries', 'action' => 'dr',$drData['Delivery']['dr_uuid'],$drData['Delivery']['schedule_uuid'], $clientData['ClientOrder']['id'])),'class' => 'form-horizontal')); ?>
         <div class="col-lg-12">
           <div class="main-box">
             <div class="top-space"></div>
@@ -56,6 +56,15 @@
                             'type' => 'hidden',
                             'required' => 'required',
                             'value' => $drData['Delivery']['dr_uuid']));
+                        ?>
+
+                        <?php 
+                            echo $this->Form->input('Delivery.company_id', array(
+                            'class' => 'form-control item_type',
+                            'label' => false,
+                            'type' => 'hidden',
+                            'required' => 'required',
+                            'value' => $drData['Delivery']['company_id']));
                         ?>
 
                         <?php 

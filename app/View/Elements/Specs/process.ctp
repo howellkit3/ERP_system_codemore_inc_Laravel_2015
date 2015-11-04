@@ -10,7 +10,7 @@
                         21 - offset ctp
                         20 - wood mold                    
                     */
-                    $process = array('11','21','20');
+                    $process = array('11','21','20','13');
 
         			if (in_array($processList['ProductSpecificationProcessHolder']['sub_process_id'],$process)) {
 
@@ -65,8 +65,10 @@
 
                             $machineProcess = $this->PlateMaking->getOffsetDetail($ticketData['JobTicket']['uuid'],$processList['ProductSpecificationProcessHolder']['sub_process_id'], $product);
 
-                            if (!empty( $machineProcess)) {
-                                 echo $machineProcess['Machine']['name'];
+                            if (!empty( $machineProcess['PlateMakingProcess']['machine'])) {
+
+                                 echo $machines[$machineProcess['PlateMakingProcess']['machine']];
+                            
                             }
                            
                         }

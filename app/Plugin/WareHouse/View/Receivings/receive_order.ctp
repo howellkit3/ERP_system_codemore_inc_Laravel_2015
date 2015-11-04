@@ -132,7 +132,7 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                         </div>
                                     </div>
 
-                                <?php  foreach ($requestPurchasingItem as $key => $requestDataList): 
+                                <?php foreach ($requestPurchasingItem as $key => $requestDataList): 
                               //  pr($requestPurchasingItem); exit;
                                 if(empty($requestDataList[$itemHolder]['delivered_quantity'])){
 
@@ -154,8 +154,14 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                     <div class="col-lg-8 bgcolor"  >
                                         
                                     <div class = "checkbox-nice">
+
+                                    <?php 
+                                       $originalQuantity = $requestDataList[$itemHolder]['original_quantity'];
+                                       $goodQuantity = $requestDataList[$itemHolder]['good_quantity'];
+                                       $quantityUnit = $requestDataList[$itemHolder]['unit_id'] 
+                                    ?> 
                                     <input type="checkbox" class="check-ref-uuid checked" name="requestPurchasingItem[<?php echo $key ?>][<?php echo $requestDataList[$itemHolder]['foreign_key'] ?>]" id="<?php echo $key?>" >
-                                                        <label for="<?php echo $key?>"> <?php  echo $requestDataList[$itemHolder]['name'] ?> &nbsp;<I>(<?php  echo (!empty( $requestDataList[$itemHolder]['good_quantity']) ? $remainingQuantity: $requestDataList[$itemHolder]['original_quantity']) ?>)</I></label>
+                                                        <label for="<?php echo $key?>"> <?php  echo $requestDataList[$itemHolder]['name'] ?> &nbsp;<I>(<?php  echo (!empty( $goodQuantity) ? $remainingQuantity:  $originalQuantity ) ?>) <?php echo $unitData[$quantityUnit] ?> </I></label>
                                     
 
                                     </div>
@@ -195,7 +201,8 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                                     ?>
                                             <?php
                                                         echo $this->Form->input('requestPurchasingItem.'.$key.'.model', array(                    'type' => 'hidden',
-                                                                                'class' => 'form-control',
+                                                                                'class' => 'form-control toBeDisabled',
+                                                                                'disabled' => 'disabled',
                                                                                 'value' => $requestDataList[$itemHolder]['model'],
                                                                                 'label' => false,
                                                                                 
@@ -203,8 +210,10 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                             ?>
 
                                             <?php
-                                                        echo $this->Form->input('requestPurchasingItem.'.$key.'.unit_price', array(                    'type' => 'hidden',
-                                                                                'class' => 'form-control',
+                                                        echo $this->Form->input('requestPurchasingItem.'.$key.'.unit_price', array(                   
+                                                                                'type' => 'hidden',
+                                                                                'class' => 'form-control toBeDisabled',
+                                                                                'disabled' => 'disabled',
                                                                                 'value' => $requestDataList[$itemHolder]['unit_price'],
                                                                                 'label' => false,
                                                                                 
@@ -214,7 +223,8 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                             <?php
                                                         echo $this->Form->input('requestPurchasingItem.'.$key.'.original_quantity', array(        
                                                                                 'type' => 'hidden',
-                                                                                'class' => 'form-control limiter',
+                                                                                'disabled' => 'disabled',
+                                                                                'class' => 'form-control limiter toBeDisabled',
                                                                                 'value' =>(!empty( $requestDataList[$itemHolder]['good_quantity']) ? $remainingQuantity: $requestDataList[$itemHolder]['original_quantity']),
                                                                                 'label' => false,
                                                                                 
@@ -224,7 +234,8 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
 
                                                         echo $this->Form->input('requestPurchasingItem.'.$key.'.quantity_unit_id', array(                    
                                                                                 'type' => 'hidden',
-                                                                                'class' => 'form-control',
+                                                                                'class' => 'form-control toBeDisabled',
+                                                                                'disabled' => 'disabled',
                                                                                 'value' => $requestDataList[$itemHolder]['unit_id'],
                                                                                 'label' => false,
                                                                                 
@@ -245,6 +256,7 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                                                                     'empty' => 'None',
                                                                                     'required' => 'required',
                                                                                     'class' => 'form-control item_type  reject',
+                                                                                    'disabled' => 'disabled',
                                                                                     'placeholder' => 'Quantity',
                                                                                     'label' => false,
                                                                                     'disabled' => 'disabled',
@@ -286,17 +298,30 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
 
                                                     <?php
                                                         echo $this->Form->input('requestPurchasingItem.'.$key.'.model', array(                    'type' => 'hidden',
-                                                                                'class' => 'form-control',
+                                                                                'class' => 'form-control toBeDisabled',
                                                                                 'value' => $requestDataList[$itemHolder]['model'],
+                                                                                'disabled' => 'disabled',
                                                                                 'label' => false,
                                                                                 
                                                                                 ));
                                                      ?>
 
                                                      <?php
+                                                        echo $this->Form->input('requestPurchasingItem.'.$key.'.unit_price', array(                   
+                                                                                'type' => 'hidden',
+                                                                                'class' => 'form-control toBeDisabled',
+                                                                                'disabled' => 'disabled',
+                                                                                'value' => $requestDataList[$itemHolder]['unit_price'],
+                                                                                'label' => false,
+                                                                                
+                                                                                ));
+                                            ?>
+
+                                                     <?php
                                                         echo $this->Form->input('requestPurchasingItem.'.$key.'.quantity_unit_id', array(                    
                                                                                 'type' => 'hidden',
-                                                                                'class' => 'form-control',
+                                                                                'class' => 'form-control toBeDisabled',
+                                                                                'disabled' => 'disabled',
                                                                                 'value' => $requestDataList[$itemHolder]['unit_id'],
                                                                                 'label' => false,
                                                                                 
@@ -306,7 +331,8 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                                     <?php
                                                         echo $this->Form->input('requestPurchasingItem.'.$key.'.original_quantity', array(        
                                                                                 'type' => 'hidden',
-                                                                                'class' => 'form-control limiter',
+                                                                                'class' => 'form-control limiter toBeDisabled',
+                                                                                'disabled' => 'disabled',
                                                                                 'value' =>(!empty( $requestDataList[$itemHolder]['good_quantity']) ? $remainingQuantity: $requestDataList[$itemHolder]['original_quantity']),
                                                                                 'label' => false,
                                                                                 
@@ -331,6 +357,12 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                                     'value' => $remainingQuantitySum,
                                                     'label' => false,
                                                     
+                                                    ));
+
+                             echo $this->Form->input('receive_status', array(
+                                                    'type' => 'hidden',
+                                                    'class' => 'form-control receive_status',
+                                                    'label' => false
                                                     ));
                                        
                             ?>
@@ -403,7 +435,6 @@ jQuery("body").ready(function(){
 
     }else{
 
-
     var flag = 1;
 
         $.ajax({
@@ -414,9 +445,6 @@ jQuery("body").ready(function(){
 
                 //alert(data);
 
-       
-   
-                
             }
         });
 
@@ -428,23 +456,33 @@ jQuery("body").ready(function(){
 
     $('.checked').on("click", function() {
 
-    if($(this).parents('.bgcolor').find('.checked').prop('checked') == true){
+        if($(this).parents('.bgcolor').find('.checked').prop('checked') == true){
 
-        $(this).parents('.bgcolor').find('.limitQuantity').prop('disabled', false);
+            $(this).parents('.modal-main-body').find('.limitQuantity').addClass("tobeSumUp");
 
-        $(this).parents('.bgcolor').find('.reject').prop('disabled', false);
+            $(this).parents('.bgcolor').find('.limitQuantity').prop('disabled', false);
 
-        $(this).parents('.bgcolor').css("background-color", "#eee");
+            $(this).parents('.bgcolor').find('.toBeDisabled').prop('disabled', false);
 
-    } else{
+            $(this).parents('.bgcolor').find('.reject').prop('disabled', false);
 
-        $(this).parents('.bgcolor').find('.limitQuantity').prop('disabled', true);
+            $(this).parents('.bgcolor').css("background-color", "#eee");
 
-        $(this).parents('.bgcolor').find('.reject').prop('disabled', true);
+        } else{
 
-        $(this).parents('.bgcolor').css("background-color", "#FFFFFF");
+            $(this).parents('.modal-main-body').find('.limitQuantity').removeClass("tobeSumUp");
 
-    }
+            $(this).parents('.bgcolor').find('.limitQuantity').prop('disabled', true);
+
+            $(this).parents('.bgcolor').find('.reject').prop('disabled', true);
+
+            $(this).parents('.bgcolor').find('.toBeDisabled').prop('disabled', true);
+
+            $(this).parents('.bgcolor').css("background-color", "#FFFFFF");
+
+        }
+
+      receiveStatus();
 
     });
 
@@ -557,6 +595,41 @@ jQuery("body").ready(function(){
         }
     
     });
+
+    $("body").on('keyup','.limitQuantity', function(e){
+
+        receiveStatus();
+
+    }); 
+
+    function receiveStatus(){
+
+        var remainingQuantity = $('.remaining_quantity').val();
+        
+        var UsedQuantity = 0;
+
+        $('.tobeSumUp').each(function(){
+
+            UsedQuantity += parseInt($(this).parents('.modal-main-body').find('.tobeSumUp').val())
+ 
+        }) 
+
+        statusIndicator = UsedQuantity - remainingQuantity;
+
+        if(statusIndicator == 0){
+
+            $('.receive_status').val('1');
+
+        }else{
+
+            $('.receive_status').val('');
+
+        }
+    } 
+
+    function checkDisable(){
+
+    }
 
 </script>
 

@@ -5,9 +5,9 @@ body {
 	height: 100%;
 	padding: 0px;
 	margin: 0px;
-	font-size: 12px;
+	font-size: 8px;
 }
-@page { margin: 20px; }
+@page { margin: 5px; margin-bottom:0; }
 .table {
 	vertical-align: top;
 }
@@ -29,8 +29,19 @@ body {
 .border-top {
 	border-top: 1px solid #000;
 }
+.main-container {
+	/*width: 100%;*/
+}
+
 .container {
 	width: 100%;
+
+}
+.pull-left {
+	display: inline-block;
+	/*width: 32.7%;
+	height: 48%; */
+
 }
 .full-width {
 	width: 100%;
@@ -45,8 +56,8 @@ body {
 	width: 20%;
 }
 .medium-font {
-	font-size: 10px;
+	font-size: 8px;
 }
 .small-font {
-	font-size: 7px;
+	font-size: 5px;
 }

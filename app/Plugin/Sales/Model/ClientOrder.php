@@ -110,14 +110,8 @@ class ClientOrder extends AppModel {
 					'foreignKey' => false,
 					'conditions' => 'Product.id = QuotationDetail.product_id'
 				),
-			
-				// 'QuotationItemDetail' => array(
-				// 	'className' => 'Sales.QuotationItemDetail',
-				// 	'foreignKey' => false,
-				// 	'conditions' => 'QuotationItemDetail.quotation_id = ClientOrder.quotation_id'
-				// ),
+			),
 
-			)
 		));
 		$this->recursive = 1;
 		//$this->contain($giveMeTheTableRelationship);
@@ -170,6 +164,7 @@ class ClientOrder extends AppModel {
 		$clientOrderData['ClientOrder']['modified_by'] = $auth;
 		$clientOrderData['ClientOrder']['company_id'] = $clientOrderData['Company']['id'];
 		$clientOrderData['ClientOrder']['quotation_id'] = $clientOrderData['Quotation']['id'];
+
 		
 		$this->save($clientOrderData);
 

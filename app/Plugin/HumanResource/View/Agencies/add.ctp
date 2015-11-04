@@ -31,7 +31,6 @@
                 </div>
             </div>
            <?php echo $this->element('agency_form'); ?>
-
             <div class="row">
                 <div class="col-lg-12">
                     <div class="main-box">

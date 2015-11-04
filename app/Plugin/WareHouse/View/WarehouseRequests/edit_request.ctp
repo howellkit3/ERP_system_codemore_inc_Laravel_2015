@@ -296,6 +296,38 @@
 													</div>
 
 													<div class="form-group">
+														<label class="col-lg-2 control-label">Date Needed</label>
+														<div class="col-lg-6">
+															<?php 
+	                                   						 echo $this->Form->input('WarehouseRequestItem.'.$key.'.date_needed', array(
+						                                        'type' => 'text',
+						                                        'label' => false,
+						                                        'required' => 'required',
+						                                        'class' => 'form-control item_type datepick required',
+						                                        'value' => date("Y-m-d", strtotime($value['date_needed']))
+						                                        ));
+				                                            ?>
+														</div>
+													</div>
+
+													<div class="form-group">
+														<label class="col-lg-2 control-label">Purpose</label>
+														<div class="col-lg-6">
+															<?php 
+		                               						 echo $this->Form->input('WarehouseRequestItem.'.$key.'.purpose', array(
+						                                        'type' => 'text',
+						                                        'label' => false,
+						                                        'required' => 'required',
+						                                        'class' => 'form-control item_type required',
+						                                        'placeholder' => 'Request Purpose',
+						                                        'value' => $value['purpose']
+						                                        ));
+		                          	
+				                                            ?>
+														</div>
+													</div>
+
+													<div class="form-group">
 														<label class="col-lg-2 control-label">Remarks</label>
 														
 

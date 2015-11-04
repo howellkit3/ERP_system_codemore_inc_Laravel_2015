@@ -1,12 +1,10 @@
 <?php $this->Html->addCrumb('Sales', array('controller' => 'customer_sales', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Quotation', array('controller' => 'quotation', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Create', array('controller' => 'quotation', 'action' => 'create')); ?>
-<?php  echo $this->Html->script('Sales.company_quotation');?>
+<?php echo $this->Html->script('Sales.company_quotation');?>
 <?php echo $this->Html->script('Sales.checkvat');?>
 <style type="text/css">#QuotationField12Description{background-color:#fff;}</style>
 <div style="clear:both"></div>
-
-
         
 <?php echo $this->element('sales_option');?><br><br>
 
@@ -44,11 +42,38 @@
 									<div class="form-horizontal">
 										
 	                                    <?php 
+
+	                                    if($quotationData['Quotation']['status'] == 0){
 	                                        echo $this->Form->input('Quotation.id', array('class' => 'form-control item_type',
 						                        'hidden' => 'hidden',
 						                        'readonly' => 'readonly',
 						                        'label' => false,
 						                        'id' => 'id'));
+	                                    }
+	                                    ?>
+
+	                                    <?php 
+	                                        echo $this->Form->input('Quotation.status', array('class' => 'form-control item_type',
+						                        'type' => 'hidden',
+						                        'readonly' => 'readonly',
+						                        'label' => false,
+						                        'id' => 'status'));
+	                                    ?>
+
+	                                    <?php 
+	                                        echo $this->Form->input('Quotation.status', array('class' => 'form-control item_type',
+						                        'type' => 'hidden',
+						                        'readonly' => 'readonly',
+						                        'label' => false,
+						                        'id' => 'status'));
+	                                    ?>
+
+	                                    <?php 
+	                                        echo $this->Form->input('Quotation.uuid', array('class' => 'form-control item_type',
+						                        'type' => 'hidden',
+						                        'readonly' => 'readonly',
+						                        'label' => false,
+						                        'id' => 'uuid'));
 	                                    ?>
 
 	                                     <?php 
@@ -139,6 +164,7 @@
 
 	                                                    					));
 	                                            ?>
+
 											</div>
 										</div>
 
@@ -149,12 +175,23 @@
 					                                'options' => array($companyData),
 					                                'type' => 'select',
 					                                'label' => false,
+					                                'disabled' => 'disabled',
 					                                'class' => 'form-control required contacpersonlist',
 					                                'empty' => '---Select Company---',
 					                                'id' => 'select_company'
 					                                 )); 
 
 					                            ?>
+
+					                            <?php echo $this->Form->input('Quotation.company_id', array(
+					                                'type' => 'hidden',
+					                                'class' => 'form-control required contacpersonlist',
+					                                'empty' => '---Select Company---',
+					                                'id' => 'select_company'
+					                                 )); 
+
+					                            ?>
+
 											</div>
 										</div>
 
@@ -187,6 +224,14 @@
 		                                            echo $this->Form->input('QuotationDetail.size', array(
 		                                            								'class' => 'form-control item_type',
 								                                                    'type' => 'text',
+								                                                    'label' => false,
+								                                                    'placeholder' => 'Size'));
+	                                            ?>
+
+	                                            <?php 
+		                                            echo $this->Form->input('QuotationDetail.quotation_id', array(
+		                                            								'class' => 'form-control item_type',
+								                                                    'type' => 'hidden',
 								                                                    'label' => false,
 								                                                    'placeholder' => 'Size'));
 	                                            ?>
@@ -310,6 +355,11 @@
 														$vatType = array('Vatable Sale' => 'Vatable Sale',
 																'Vat Exempt' => 'Vat Exempt',
 																'Zero Rated Sale' => 'Zero Rated Sale');
+
+														$vatTypeUSD = array(
+																'Vat Exempt' => 'Vat Exempt',
+																'Zero Rated Sale' => 'Zero Rated Sale');
+
 														$displayMe = '';
 														$displayMe1 = '';
 														if ($itemDetailDetails['QuotationItemDetail']['unit_price_currency_id'] == 2) {
@@ -327,9 +377,11 @@
 							                                 ));
 
 														echo $this->Form->input('QuotationItemDetail.0.vat_status', array( 
-							                                'value' => 'Zero Rated Sale',  
+															'options' => array($vatTypeUSD),
+															'default' => !empty($itemDetailDetails['QuotationItemDetail']['unit_price']) ? $itemDetailDetails['QuotationItemDetail']['unit_price'] : '',    
 							                                'label' => false,
-							                                'disabled' => true,
+							                              //  'disabled' => true,
+							                                'empty' => '---Select Vat Type---',
 							                                'class' => 'hide-me-first form-control required for-usd '.$displayMe1
 							                                 ));
 														 

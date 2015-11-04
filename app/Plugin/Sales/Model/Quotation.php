@@ -169,13 +169,14 @@ class Quotation extends AppModel {
 	public function addQuotation($quotationData = null,$auth){
 	
 	    $month = date("m"); 
-	    $year = date("y");
-	    $hour = date("H");
-	    $minute = date("i");
-	    $seconds = date("s");
-	    $random = rand(1000, 10000);
-	        
-		$code =  $year. $month .$random;
+        $year = date("y");
+        $hour = date("H");
+        $minute = date("i");
+        $day = date("d");
+        $seconds = date("s");
+       
+        $timestamp = strtotime(date('h:i:s'));  
+        $code = $year . $month. substr($timestamp, 4);
 
 
 									
@@ -355,6 +356,19 @@ class Quotation extends AppModel {
 		}
 		
 		return $this->id;
+	}
+
+	public function saveEdit($data, $auth){
+
+		$this->create();
+		$data['created_by'] = $auth;
+		$data['modified_by'] = $auth;
+
+		//pr($data); exit;
+		$this->save($data);
+
+		return $this->id;
+
 	}
 	
 }

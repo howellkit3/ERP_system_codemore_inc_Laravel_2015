@@ -245,13 +245,15 @@ class JobTicket extends AppModel {
 	public function saveTicket($clientData = null,$auth = null,$clientOrderId = null){
 		
 		$month = date("m"); 
-	    $year = date("y");
-	    $hour = date("H");
-	    $minute = date("i");
-	    $seconds = date("s");
-	    $random = rand(1000, 10000);
-
-	    $code =  $year. $month .$random;
+        $year = date("y");
+        $hour = date("H");
+        $minute = date("i");
+        $day = date("d");
+        $seconds = date("s");
+       
+        $timestamp = strtotime(date('h:i:s'));  
+        $code = $year . $month. substr($timestamp, 4);
+        
 	    $this->create();
 
 	    $data[$this->name]['uuid'] = $code;

@@ -1,9 +1,10 @@
-  <?php  //pr($orderDeliveryList); exit;
-       
+  <?php  
                         if(!empty($clientsOrder)){
                               
 ?>
-                                <?php foreach ($clientsOrder as $scheduleDataList): ?>
+                                <?php foreach ($clientsOrder as $scheduleDataList): 
+
+                                  if($scheduleDataList['ClientOrder']['status_id'] == null){ ?>
 
                                    <tr class="">
 
@@ -46,20 +47,30 @@
 
                                                  foreach ($deliveryStatus as $key => $value) {
 
+                                              
                                                   $IdClientsOrder = $orderListHelper[$value['Delivery']['clients_order_id']];
-                                                               
+                                                                
                                                     if($value['Delivery']['schedule_uuid'] == $orderDeliveryList[$uuidClients] && $value['Delivery']['clients_order_id'] == $scheduleDataList['ClientOrder']['uuid']){  
 
-                                                      if($value['DeliveryDetail']['status'] != 5){
-                                                   
-                                                      array_push($arrholder,$value['DeliveryDetail']['delivered_quantity']);
+                                                      if($value['DeliveryDetail']['status'] == 3 && $value['Delivery']['status'] == 1){
+                                        
+                                                          $difference = empty($value['DeliveryDetail']['delivered_quantity']) ? $value['DeliveryDetail']['quantity'] : $value['DeliveryDetail']['delivered_quantity'] ; 
 
+                                                            array_push($arrholder,$difference);
+                                                          
+                                                      }else if ($value['DeliveryDetail']['status'] != 5 && $value['Delivery']['status'] == 1){
+
+                                                          $difference = $value['DeliveryDetail']['quantity']; 
+
+                                                            array_push($arrholder,$difference);
+                                            
                                                       }
 
                                                     }  
                                                                                                     
                                                   }
-                                            
+
+
                                              echo($scheduleDataList['ClientOrderDeliverySchedule']['quantity'] - array_sum($arrholder));?> 
 
                                             <br>
@@ -79,56 +90,34 @@
 
                                                   $IdClientsOrder = $orderListHelper[$value['Delivery']['clients_order_id']];
   
-                                                    if($value['Delivery']['schedule_uuid'] == $orderDeliveryList[$uuidClientsOrder]  ){  
+                                                    if($value['Delivery']['schedule_uuid'] == $orderDeliveryList[$uuidClientsOrder] &&  $value['DeliveryDetail']['status'] == 3 ){  
 
                                                       if($value['DeliveryDetail']['status'] != 5){
                                                    
                                                       array_push($arr,$value['DeliveryDetail']['delivered_quantity']);
 
-                                                      }
+                                                    }
 
-                                                    }  
+                                                  }  
                                                     
-                                                  }
-
-                                                  $arrDelivered = array();
-
-                                                  foreach ($deliveryStatus as $key => $value) {
-
-                                                  $DeliveredHolder = $deliveryDetailList[$value['Delivery']['dr_uuid']];
-  
-                                                    if($value['Delivery']['schedule_uuid'] == $orderDeliveryList[$uuidClientsOrder] AND $value['DeliveryDetail']['status'] != 5 ){  
-
-                                                      array_push($arrDelivered,$DeliveredHolder);
-
-                                                    }  
-
                                                 }
 
-                                                $sumDelivered = array_sum($arrDelivered);
-                                               
                                                 $Scheddate = $scheduleDataList['ClientOrderDeliverySchedule']['schedule'];
 
                                                 $Currentdate = date("Y-m-d H:i:s");
 
                                                 $Scheddate = str_replace('-', '', $Scheddate);
                                                 
-                                                $Currentdate = str_replace('-', '', $Currentdate); // pr($deliveryData);  
+                                                $Currentdate = str_replace('-', '', $Currentdate); 
 
-                                                  if (!empty($deliveryData[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']]) || !empty($deliveryList[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']])) {   
+                                                if (array_sum($arr) == $scheduleDataList['ClientOrderDeliverySchedule']['quantity']){ 
 
-                                                    if (array_sum($arr) == $scheduleDataList['ClientOrderDeliverySchedule']['quantity']){ 
-
-                                                        echo "<span class='label label-success'>Completed</span>";
-
-                                                    }elseif ($sumDelivered == $scheduleDataList['ClientOrderDeliverySchedule']['quantity']){
-
-                                                            echo "<span class='label label-success'>Delivered</span>";
-
-                                                    }elseif ($deliveryData[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']] == '1') { 
-                                                    
-                                                         echo "<span class='label label-warning'>Approved</span>"; ?> &nbsp<?php
-                                                    } 
+                                                    echo "<span class='label label-success'>Completed</span>";
+                                  
+                                                }elseif (array_sum($arrholder) != 0) { 
+                                                      
+                                                     echo "<span class='label label-warning'>Approved</span>"; ?> &nbsp<?php
+                                                  
   
                                                 }else{
 
@@ -161,7 +150,7 @@
                                                                           <span class ="post"><font size = "1px">View</font></span>
                                                                           </span> ', array('controller' => 'deliveries', 
                                                                                          'action' => 'view',
-                                                                         $scheduleDataList['ClientOrderDeliverySchedule']['id'],$scheduleDataList['QuotationDetail']['quotation_id'],$scheduleDataList['ClientOrderDeliverySchedule']['uuid'], $scheduleDataList['ClientOrder']['uuid']),
+                                                                         $scheduleDataList['ClientOrderDeliverySchedule']['id'], $scheduleDataList['ClientOrderDeliverySchedule']['uuid'], $scheduleDataList['ClientOrder']['uuid']),
                                                                           array('class' =>' table-link small-link-icon '.$noPermissionSales,'escape' => false,'title'=>'Edit Information'
                                                                      )); 
                                             ?>     
@@ -173,7 +162,8 @@
                                     
 
                         <?php 
-                            endforeach; 
+                            }
+                          endforeach; 
                         } ?> 
 
                         <style type="text/css">

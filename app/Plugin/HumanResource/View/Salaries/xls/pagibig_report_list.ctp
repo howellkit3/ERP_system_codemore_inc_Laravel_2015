@@ -3,7 +3,7 @@
     $this->PhpExcel->createWorksheet()
         ->setDefaultFont('Calibri', 10);
 
-    $objTpl = PHPExcel_IOFactory::load("./img/reports/pagibig_report_list.xls");
+    $objTpl = PHPExcel_IOFactory::load("./img/salaries/test_payslip.xls");
     $counter = 5;
     
     // $objTpl->setActiveSheetIndex(0)

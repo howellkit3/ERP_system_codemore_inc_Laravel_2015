@@ -97,6 +97,9 @@ class Payroll extends AppModel {
 
 	public function objectToArray( $object = null )
     {
+
+    	if (!empty( $object )) {
+
 	    	foreach ($object as $key => $value) {
 
 	    		$object[$key] = (array)$value;
@@ -114,6 +117,11 @@ class Payroll extends AppModel {
 	    		if (is_object($value) && !empty($value->Position)) {
 
 	    		$object[$key]['Position'] = (array)$value->Position;
+	    			
+	    		}
+	    		if (is_object($value) && !empty($value->Salary)) {
+
+	    		$object[$key]['Salary'] = (array)$value->Salary;
 	    			
 	    		}
 
@@ -142,6 +150,7 @@ class Payroll extends AppModel {
 		    			}
 		    	}
 	    	}
+	    }
    		 
         return $object;
     }
@@ -173,5 +182,39 @@ class Payroll extends AppModel {
     private function _byDepartment($data = null,$filterBy = null) {
    	
    		
+    }
+
+    public function checkEmployee($payroll = array()) {
+
+
+    		$employeeIds = array();
+    	if (!empty($payroll)) {
+
+    		
+    		$payroll = $this->find('all',array(
+    				'conditions' => array(
+    						'Payroll.from' => $payroll['Payroll']['from'],
+    						'Payroll.to' => $payroll['Payroll']['to']
+
+    					)
+
+    			));
+
+
+    		foreach ($payroll as $key => $value) {
+    			
+    			if (!empty($value['Payroll']['employeeIds'])) {
+
+    				$emp = json_decode($value['Payroll']['employeeIds']);
+
+    				$employeeIds = array_merge($employeeIds,$emp);
+
+    			}
+
+    		}
+
+    	}
+
+    	return $employeeIds;
     }
 }

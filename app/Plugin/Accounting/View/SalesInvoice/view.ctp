@@ -10,7 +10,8 @@
         	'controller' => 'sales_invoice', 
         	'action' => 'print_invoice',
         	//'ext' => 'pdf',
-        	$invoiceId),
+        	$invoiceId,
+        	$clientOrderId),
         	array('class' =>'btn btn-info pull-right ','escape' => false));
 	?>
 
@@ -58,7 +59,7 @@
 						</div>
 						<div class="col-lg-6">
 							:&emsp;
-							<?php echo ucfirst($companyData['Company']['company_name'])?>
+							<?php echo ucfirst($clientData['Company']['company_name'])?>
 						</div>
 						<div class="col-lg-4">&emsp;&emsp;&nbsp;&nbsp;&nbsp;
 							DATE : <?php echo (new \DateTime())->format('m/d/Y'); ?>
@@ -70,7 +71,7 @@
 						</div>
 						<div class="col-lg-6">:&emsp;</div>
 						<div class="col-lg-4">&emsp;&emsp;&nbsp;&nbsp;&nbsp;
-							TIN : <?php echo ucfirst($companyData['Company']['tin'])?>
+							TIN : <?php echo ucfirst($clientData['Company']['tin'])?>
 						</div>
 					</div>
 					<div class="form-group">
@@ -78,7 +79,7 @@
 							ADDRESS
 						</div>
 						<div class="col-lg-6">
-							:&emsp;<?php echo ucfirst($companyData['Address'][0]['address1'])?>
+							:&emsp;<?php echo ucfirst($drData['DeliveryDetail']['location'])?>
 						</div>
 						<div class="col-lg-4">&emsp;&emsp;&nbsp;&nbsp;&nbsp;
 							TERMS : <?php echo ucfirst($paymentTermData[$clientData['ClientOrder']['payment_terms']])
@@ -115,7 +116,9 @@
 												$totalQty = $clientData['ClientOrderDeliverySchedule'][0]['quantity'] * $clientData['QuotationItemDetail']['unit_price'];
 											}
 
-											echo number_format($totalQty,4) ;
+										//	pr($clientData['QuotationItemDetail']['unit_price']); exit;
+
+											echo number_format($totalQty,2) ;
 										?>
 									</center>
 								</td>
@@ -154,8 +157,9 @@
 									<td>
 										<?php 
 											if($clientData['QuotationItemDetail']['vat_status'] == 'Vatable Sale' || $clientData['QuotationItemDetail']['unit_price_currency_id'] == 2){
-												$totalVat = ($totalQty * .12) + $totalQty;
-												echo number_format($totalVat,4);
+												//$totalVat = ($totalQty * .12) + $totalQty;
+												$totalVat = $totalQty;
+												echo number_format($totalVat,2);
 												//echo number_format((float)$totalQty, 4, '.', '');
 											}else{
 												echo "-";
@@ -169,7 +173,7 @@
 										<?php 
 											if($clientData['QuotationItemDetail']['vat_status'] == 'Vat Exempt'){
 												
-												echo number_format($totalQty,4 );
+												echo number_format($totalQty,2 );
 												//echo number_format((float)$totalQty, 4, '.', '');
 											}else{
 												echo "-";
@@ -182,7 +186,7 @@
 									<td>
 										<?php 
 											if($clientData['QuotationItemDetail']['unit_price_currency_id'] == 1 || $clientData['QuotationItemDetail']['vat_status'] == 'Zero Rated Sale'){
-												echo number_format($totalQty,4);
+												echo number_format($totalQty,2);
 											}else{
 												echo "-";
 											}
@@ -195,7 +199,7 @@
 										<?php 
 											if($clientData['QuotationItemDetail']['unit_price_currency_id'] == 2){
 												$totalVat = $totalQty * .12;
-												echo number_format($totalVat,4);
+												echo number_format($totalVat,2);
 											}else{
 												echo "-";
 											}

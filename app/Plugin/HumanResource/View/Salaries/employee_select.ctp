@@ -175,6 +175,7 @@ echo $this->element('payroll_options');
 												<header class="clearfix pull-left">
 													<h2 class="pull-left"><b>Employee</b> </h2>
 												</header>
+												 
 												 <div class="filter-block pull-right">
 
 													<div class="form-group pull-left">
@@ -187,7 +188,8 @@ echo $this->element('payroll_options');
 
 
 												 </div>
-												<br>
+													
+													<br>
 													<table class="table table-bordered table-hover" style="margin:0px;">
 														<thead>
 															<tr>

@@ -16,7 +16,7 @@ class SalesInvoiceController extends AccountingAppController {
 
         $this->loadModel('Delivery.Delivery');
 
-        //$this->SalesInvoice->bindInvoice();
+        $this->SalesInvoice->bindInvoice();
 
         $limit = 10;
 
@@ -37,22 +37,22 @@ class SalesInvoiceController extends AccountingAppController {
         );
 
         $invoiceData = $this->paginate('SalesInvoice');
+
+
        //pr($invoiceData);exit();
         $companyName = $this->Company->find('list',array('fields' => array('id','company_name')));
 
-        $deliveryNum = $this->Delivery->find('list',array('fields' => array('dr_uuid','company_id')));
+        $deliveryNumHolder = $this->Delivery->find('list',array('fields' => array('dr_uuid','company_id')));
         //pr($deliveryNum); exit;
-        // $invoiceData = $this->SalesInvoice->find('all', array(
-        //                                             'fields' => array(
-        //                                                 'id','sales_invoice_no',
-        //                                                 'dr_uuid','statement_no',
-        //                                                 'status'),
-        //                                             'conditions' => array(
-        //                                                 'NOT' => array(
-        //                                                     'SalesInvoice.status' => 2) ),
-        //                                             'order' => 'SalesInvoice.id DESC'
-        //                                         ));
-        
+        foreach($deliveryNumHolder as $key => $deliveryList) {
+          //  pr($deliveryList);    
+           //$keyHolder = strval($key);
+           //pr( $keyHolder);
+           $keyHolder = ltrim($key, '0');
+           $deliveryNum[$keyHolder] = $deliveryList;
+        }
+
+      
         if ($userData['User']['role_id'] == 9 ) {
             $noPermissionReciv = 'disabled not-active';
         } else {
@@ -107,18 +107,14 @@ class SalesInvoiceController extends AccountingAppController {
 
     public function view($invoiceId = null,$saNo = null){
 
-       //pr($saNo); exit;
+       
         $userData = $this->Session->read('Auth');
 
-        $this->loadModel('Sales.ClientOrder');
+        $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
-        $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule',
-                                        'QuotationItemDetail','QuotationDetail',
-                                        'Product'));
-        
+        $this->ClientOrderDeliverySchedule->bind(array('ClientOrder', 'QuotationDetail','Company', 'Product', 'Quotation', 'QuotationItemDetail', 'Company', 'Address'));
+
         $this->loadModel('Delivery.Delivery');
-
-        $this->loadModel('Sales.Company');
 
         $this->loadModel('Sales.PaymentTermHolder');
 
@@ -148,12 +144,11 @@ class SalesInvoiceController extends AccountingAppController {
 
         Cache::write('currencyData', $currencyData);
 
-        $this->Company->bind('Address');
+        
         //$this->SalesInvoice->bindInvoice();
         $invoiceData = $this->SalesInvoice->find('first', array(
                                             'conditions' => array('SalesInvoice.id' => $invoiceId
                                             )));
-
        
         $prepared = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
                                                             'conditions' => array('User.id' => $invoiceData['SalesInvoice']['created_by'])
@@ -170,22 +165,25 @@ class SalesInvoiceController extends AccountingAppController {
 
             $drData = " ";
         }
-        
-        $conditions = array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']);
-        $conditions = array_merge($conditions,array('ClientOrder.company_id' => $drData['Delivery']['company_id']));
-        $clientData = $this->ClientOrder->find('first', array(
+
+       //pr($drData); exit;
+
+        //pr($invoiceData['SalesInvoice']['dr_uuid']); exit;
+        $conditions = array('ClientOrderDeliverySchedule.uuid' => $drData['Delivery']['schedule_uuid']);
+      // $conditions = array_merge($conditions,array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']));
+        $clientData = $this->ClientOrderDeliverySchedule->find('first', array(
                                             'conditions' => array($conditions
                                             )));
 
-        $companyData = $this->Company->find('first', array(
-                                            'conditions' => array('Company.id' => $drData['Delivery']['company_id']
-                                            )));
+        $clientOrderId = $clientData['ClientOrder']['id'];
+
+        $companyData = $clientData['Company']['company_name'];
        
         $noPermissionPay = "";
 
         $noPermissionReciv = "";
 
-        $this->set(compact('invoiceId','prepared','approved','drData','clientData','companyData','units','invoiceData','paymentTermData','currencyData', 'noPermissionPay', 'noPermissionReciv','quotationData'));
+        $this->set(compact('invoiceId','prepared','approved','drData','clientData','companyData','units','invoiceData','paymentTermData','currencyData', 'noPermissionPay', 'noPermissionReciv','quotationData', 'clientOrderId'));
         
         if (!empty($saNo)) {
 
@@ -351,6 +349,8 @@ class SalesInvoiceController extends AccountingAppController {
 
         $this->loadModel('Sales.Company');
 
+      //  $this->Delivery->bindInvoice();
+
         $limit = 10;
 
         $conditions = array();
@@ -362,6 +362,7 @@ class SalesInvoiceController extends AccountingAppController {
                 'Delivery.id',
                 'Delivery.clients_order_id',
                 'Delivery.company_id',  
+                'Delivery.status',
                 'Delivery.dr_uuid', 
                 ),
             'order' => 'Delivery.id DESC',
@@ -369,19 +370,11 @@ class SalesInvoiceController extends AccountingAppController {
 
         $deliveryData = $this->paginate('Delivery');
 
-       // $this->Delivery->bindInvoice('ClientOrder');
-
-        //$deliveryData = $this->Delivery->find('all');
-
-        //$clientData = $this->ClientOrder->find('all');
-
-        //pr($clientData); exit;
+     // pr($deliveryData); exit;
 
         $poNumber = $this->ClientOrder->find('list', array('fields' => array('uuid', 'po_number')));
 
         $companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')));
-
-        //pr($deliveryData); exit;
 
         $seriesNo = $this->SalesInvoice->find('first', array(
                 'order' => array('SalesInvoice.sales_invoice_no DESC')));
@@ -516,7 +509,7 @@ class SalesInvoiceController extends AccountingAppController {
 
     public function create_sales_invoice(){ }
  
-    public function print_invoice($invoiceId = null ,$saNo = null) {
+    public function print_invoice($invoiceId = null ,$clientsId = null) {
 
         $userData = $this->Session->read('Auth');
 
@@ -575,16 +568,22 @@ class SalesInvoiceController extends AccountingAppController {
         $drData = $this->Delivery->find('first', array(
                                             'conditions' => array('Delivery.dr_uuid' => $invoiceData['SalesInvoice']['dr_uuid']
                                             )));
+
+        //pr($drData); exit;
+
+      //  pr($drData);  exit;
        
         $clientData = $this->ClientOrder->find('first', array(
-                                            'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
+                                            'conditions' => array('ClientOrder.id' => $clientsId
                                             )));
 
         //pr($clientData); exit;
         
         $companyData = $this->Company->find('first', array(
-                                            'conditions' => array('Company.id' => $clientData['ClientOrder']['company_id']
+                                            'conditions' => array('Company.id' => $drData['Delivery']['company_id']
                                             )));
+
+       // pr($companyData); exit;
 
         //$view = new View(null, false);
         

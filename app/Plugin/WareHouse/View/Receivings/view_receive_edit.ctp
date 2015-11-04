@@ -224,7 +224,7 @@
                 <table class="table table-products table-hover">
                     <tbody>
 
-                         <?php  foreach ($receiveItem as $requestDataList): ?>
+                         <?php  foreach ($receiveItem as $key => $requestDataList): ?>
                         <tr>
                             <td>
                             <img src="<?php echo Router::url('/', true) ?>img/itemboxopen.png" alt="logo" style="width:60px;height:60px;padding-bottom:10;">
@@ -237,7 +237,7 @@
                                 <i class="fa fa-tags"></i>&nbsp;<?php echo $requestDataList[$itemHolder]['model'] ?> 
                                 </span>
                                 <span class="warranty">
-                                <i class="fa fa-certificate"></i>&nbsp; <?php echo $requestDataList[$itemHolder]['quantity'] . " " . $unitData[$requestDataList[$itemHolder]['unit_id']]?> 
+                                <i class="fa fa-certificate"></i>&nbsp; <?php echo $requestDataList[$itemHolder]['quantity'] . " " . $unitData[$itemData[$key][$itemTypeHolder]['quantity_unit_id']]?> 
 
                                 </span>
                             </td>
@@ -278,7 +278,7 @@
                     <tbody> 
 
                     <?php  
-                         foreach ($receiveItem as $requestDataList):?>
+                         foreach ($receiveItem as $key => $requestDataList): ?>
                         <tr>
                             <td>
                             <img src="<?php echo Router::url('/', true) ?>img/itembox.png" alt="logo" style="width:85px;height:60px;padding-bottom:10;">
@@ -292,7 +292,7 @@
 
                                 if(!empty($requestDataList[$itemHolder]['good_quantity'])){
 
-                                 echo $requestDataList[$itemHolder]['good_quantity'] . " " . $unitData[$requestDataList[$itemHolder]['unit_id']]?> 
+                                 echo $requestDataList[$itemHolder]['good_quantity'] . " " . $unitData[$itemData[$key][$itemTypeHolder]['quantity_unit_id']]?> 
 
                                 <?php } ?>
                                 </span>
@@ -301,7 +301,7 @@
 
                                 if(!empty($requestDataList[$itemHolder]['reject_quantity'])){
 
-                                 echo $requestDataList[$itemHolder]['reject_quantity'] . " " . $unitData[$requestDataList[$itemHolder]['unit_id']]?> 
+                                 echo $requestDataList[$itemHolder]['reject_quantity'] . " " . $unitData[$itemData[$key][$itemTypeHolder]['quantity_unit_id']]?> 
 
                                 <?php } ?>
                                 </span>

@@ -38,9 +38,10 @@ class PlateMakingProcess extends AppModel {
 
      $this->bind(array('Machine'));
 
+
      $process = $this->find('first',array(
                     'conditions' => array(
-                            'PlateMakingProcess.job_ticket_id' =>  $data['ticketId'],
+                            'PlateMakingProcess.job_ticket_id' =>  $data['ticketuuId'],
                             'PlateMakingProcess.process_id' =>  $data['processID'],
                             'PlateMakingProcess.product' => $data['product']
                     )

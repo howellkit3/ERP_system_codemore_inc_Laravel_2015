@@ -83,10 +83,11 @@
 		    $year = date("y");
 		    $hour = date("H");
 		    $minute = date("i");
+		    $day = date("d");
 		    $seconds = date("s");
-		    $random = rand(1000, 10000);
-		        
-			$code =  $year. $month .$random;
+		   
+		    $timestamp = strtotime(date('h:i:s'));  
+		    $code = $year . $month. substr($timestamp, 4); 
 
 			$currencies = $this->Currency->getList();
 
@@ -124,6 +125,7 @@
 		}
 
 		public function order_create(){
+
 
 			$userData = $this->Session->read('Auth');
 

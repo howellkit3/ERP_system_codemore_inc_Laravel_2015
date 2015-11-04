@@ -77,33 +77,7 @@
                                              </div>
                                         </div>
                                     </div>
-                                   <!--    <div class="form-group">
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Year</label>
-                                                <div class="col-lg-9">
-                                                
-
-                                                    <?php
-                                                        $years = [];
-                                                        for ($i=date('Y'); $i > 1990 ; $i--) { 
-                                                           $years[] = $i;
-                                                        }
-                                                        echo $this->Form->input('Holiday.year', array(
-                                                            'options' => $years,
-                                                            'class' => 'form-control col-lg-6 required',
-                                                            'label' => false,
-
-                                                            'value' => date('Y'),
-                                                            'empty' => '-- Select Year --',
-                                                            ));
-                                                    ?>
-
-                                                </div>
-                                             </div>
-                                        </div>
-                                    </div>
- -->
+                                 
                                         <div class="form-group">
                                         <div class="col-lg-6">
                                             <div class="form-group">

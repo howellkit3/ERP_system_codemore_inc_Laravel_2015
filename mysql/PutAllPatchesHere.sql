@@ -2244,3 +2244,68 @@ ADD COLUMN `item_group` varchar(255) NULL AFTER `supplier`;
 ALTER TABLE `ticket_process_schedules`
 ADD COLUMN `status`  int(11) NULL DEFAULT 0 AFTER `remarks`;
 
+
+
+
+/*aldrin added this oct 28 2015 */
+-- ----------------------------
+DROP TABLE IF EXISTS `pagibig_ranges`;
+CREATE TABLE `pagibig_ranges` (
+  `id` int(11) NOT NULL DEFAULT '0',
+  `range_from` varchar(255) DEFAULT NULL,
+  `range_to` varchar(255) DEFAULT NULL,
+  `conditions` varchar(255) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of pagibig_ranges
+-- ----------------------------
+INSERT INTO `pagibig_ranges` VALUES ('0', '1500', '0', 'below', null, null, null, null);
+INSERT INTO `pagibig_ranges` VALUES ('1', '1,500', null, null, null, null, null, null);
+
+
+/*howell kit addedd this oct-27-2015 Delivery */
+ALTER TABLE `deliveries` CHANGE `dr_uuid` `dr_uuid` VARCHAR(50) NOT NULL;
+ALTER TABLE `delivery_receipts` CHANGE `dr_uuid` `dr_uuid` VARCHAR(50) NOT NULL;
+ALTER TABLE `delivery_details` CHANGE `delivery_uuid` `delivery_uuid` VARCHAR(50) NOT NULL;
+
+/*howell kit addedd this oct-28-2015 Job Ticket */
+
+CREATE TABLE `corrugated_paper_job_tickets` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `process_id` INT(11) DEFAULT NULL,
+  `product_id` INT(11) DEFAULT NULL,
+  `job_ticket_id` INT(11) DEFAULT NULL,
+  `created_by` INT(11) DEFAULT NULL,
+  `modified_by` INT(11) DEFAULT NULL,
+  `created` DATETIME DEFAULT NULL,
+  `modified` DATETIME DEFAULT NULL,
+  `flute_combi` VARCHAR(255) DEFAULT NULL,
+  `cutting_size` VARCHAR(255) DEFAULT NULL,
+  `quantity` INT(11) DEFAULT NULL,
+  `allowance` INT(11) DEFAULT NULL,
+  `remarks` TEXT,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `corrugated_process_details` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `corrugated_job_ticket_id` INT(11) DEFAULT NULL,
+  `no` INT(11) DEFAULT NULL,
+  `foreign_key` INT(11) DEFAULT NULL,
+  `model` VARCHAR(255) DEFAULT NULL,
+  `flute` INT(11) DEFAULT NULL,
+  `gsm` INT(11) DEFAULT NULL,
+  `estimated_kg` INT(11) DEFAULT NULL, 
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+ALTER TABLE `corrugated_paper_job_tickets` ADD `corrugated_id` INT(11)  NULL  DEFAULT NULL  AFTER `job_ticket_id`;
+
+/*howell kit addedd this oct-28-2015 Accounting */
+ALTER TABLE `sales_invoices` CHANGE `dr_uuid` `dr_uuid` VARCHAR(50) NOT NULL;

@@ -28,7 +28,7 @@
 						<?php echo $this->Html->link('Payroll',array(
 									'controller' => 'salaries',
 									'action' => 'payroll',
-									'tab' => 'export',
+									'tab' => 'index',
 									'plugin' => 'human_resource'
 						)); ?>
 					</li>
@@ -59,7 +59,8 @@
 									'tab' => 'sss_table',
 									'plugin' => 'human_resource'
 						)); ?>
-					</li> 
+			
+
 					 <li class="<?php echo ($this->params['controller'] == 'salaries' && $this->params['action'] == 'philhealth_table') ? 'active' : '' ?>" alt="tab-type">
 						<?php echo $this->Html->link('PhilHealth',array(
 									'controller' => 'salaries',
@@ -68,6 +69,19 @@
 									'plugin' => 'human_resource'
 						)); ?>
 					</li> 
+
+							</li> 
+
+					<li class="<?php echo ($this->params['controller'] == 'salaries' && $this->params['action'] == 'pagibig_table') ? 'active' : '' ?>" alt="tab-type">
+						<?php echo $this->Html->link('Pagibig',array(
+									'controller' => 'salaries',
+									'action' => 'pagibig_table',
+									'tab' => 'pagibig_table',
+									'plugin' => 'human_resource'
+						)); ?>
+					</li> 
+
+
 					 <li class="<?php echo ($this->params['controller'] == 'salaries' && $this->params['action'] == 'tax_table') ? 'active' : '' ?>" alt="tab-type">
 						<?php echo $this->Html->link('Tax Table',array(
 									'controller' => 'salaries',

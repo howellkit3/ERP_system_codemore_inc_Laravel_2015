@@ -371,6 +371,18 @@ class Attendance extends AppModel {
 
 	}
 
+		public function is_date( $str ){ 
+		    $stamp = strtotime( $str ); 
+		    if (!is_numeric($stamp)) 
+		        return FALSE; 
+		    $month = date( 'm', $stamp ); 
+		    $day   = date( 'd', $stamp ); 
+		    $year  = date( 'Y', $stamp ); 
+		    if (checkdate($month, $day, $year)) 
+		        return TRUE; 
+		    return FALSE; 
+		}
+
 	public function computeAttendance($conditions = array()){
 
 
@@ -379,12 +391,56 @@ class Attendance extends AppModel {
 			$this->bindMyWorkshift();
 
 			$attendances = $this->find('all',array('conditions' => $conditions,
-			'order' => 'Attendance.out ASC',
+				'order' => 'Attendance.out ASC',
+				'fields' => array(
+					'Attendance.id',
+					'Attendance.date',
+					'Attendance.schedule_id',
+					'Attendance.type',
+					'Attendance.is_holiday',
+					'Attendance.leave_id',
+					'Attendance.in',
+					'Attendance.out',
+					'Attendance.notes',
+					'Attendance.status',
+					'Attendance.overtime_id',
+					'MySchedule.id',
+					'MySchedule.model',
+					'MySchedule.foreign_key',
+					'MySchedule.work_shift_id',
+					'MySchedule.day',
+					'MySchedule.holiday',
+					'MyWorkshift.id',
+					'MyWorkshift.from',
+					'MyWorkshift.to',
+					'MyWorkShiftBreak.id',
+					'MyWorkShiftBreak.workshift_id',
+					'MyWorkShiftBreak.overtime_id',
+					'MyWorkShiftBreak.breaktime_id',
+					'MyBreakTime.id',
+					'MyBreakTime.from',
+					'MyBreakTime.to',
+					'Overtime.id',
+					'Overtime.date',
+					'Overtime.from',
+					'Overtime.to',
+					'Overtime.employee_ids',
+					'Overtime.status',
+					'OvertimeExcess.id',
+					'Overtime.id',
+					'OvertimeExcess.employee_id',
+					'OvertimeExcess.from',
+					'OvertimeExcess.to'
+				),
 				'group' => 'Attendance.id'
 			));
 
 			foreach ($attendances as $key => $attendance) {
 
+				
+				if ($this->is_date($attendance['Attendance']['in']) && $this->is_date($attendance['Attendance']['out']) ) {
+
+				
 				// if (strtotime($attendance['Attendance']['in']) >= strtotime($attendance['WorkShift']['from']) && strtotime($attendance['Attendance']['out']) <= strtotime($attendance['WorkShift']['to'])) {
 				if (strtotime($attendance['Attendance']['in']) >= strtotime($attendance['MyWorkshift']['from']) && strtotime($attendance['Attendance']['out']) <= strtotime($attendance['MyWorkshift']['to'])) {
 						
@@ -401,6 +457,7 @@ class Attendance extends AppModel {
 						}
 						
 				}
+			}
 
 			}
 

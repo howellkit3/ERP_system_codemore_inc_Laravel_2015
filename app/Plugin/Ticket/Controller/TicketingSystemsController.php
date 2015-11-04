@@ -154,6 +154,8 @@ class TicketingSystemsController extends TicketAppController {
                                                     'name'
                                                  )
                                                 ));
+
+
         //$subProcess =  $subProcess['SubProcess'];
 
         //set to cache in first load
@@ -179,7 +181,7 @@ class TicketingSystemsController extends TicketAppController {
             $noPermissionSales = ' ';
         }
 
-           if (!empty($_GET['data'])) {
+        if (!empty($_GET['data'])) {
 
             Configure::write('debug',2);
 
@@ -192,8 +194,6 @@ class TicketingSystemsController extends TicketAppController {
             pr( $productData );
         }
 
-
-		
 		$this->set(compact('userData','delData','ticketData','formatDataSpecs','specs','machines','unitData','subProcess','productData','companyData','clientOrderId','noPermissionSales','subProcessData'));
 	}
 
@@ -283,11 +283,12 @@ class TicketingSystemsController extends TicketAppController {
 
                 $this->request->data = $this->PlateMakingProcess->find('first',array(
                     'conditions' => array(
-                            'PlateMakingProcess.job_ticket_id' =>  $ticketId,
+                            'PlateMakingProcess.job_ticket_id' =>  $ticketuuId,
                             'PlateMakingProcess.process_id' => $processId,
                             'PlateMakingProcess.product' => $product
                     )
                 ));
+
 
                 $this->set(compact('machines'));
                 
@@ -295,7 +296,19 @@ class TicketingSystemsController extends TicketAppController {
 
             } else if (in_array($processId,array('20'))) {
                  $this->render('TicketingSystems/forms/wood_mould', false);
-             } else {
+
+            } else if (in_array($processId,array('13'))) {
+
+                $this->loadModel('CorrugatedPaper');
+
+                $corrugated = $this->CorrugatedPaper->find('list',array('fields' => array('CorrugatedPaper.id','CorrugatedPaper.name' ),
+                    'order' => 'CorrugatedPaper.name ASC'));
+
+                $this->set(compact('corrugated'));
+
+                $this->render('TicketingSystems/forms/corrugated_paper', false);
+
+            } else {
 
                 echo "no Forms Yet";
              }
@@ -307,9 +320,13 @@ class TicketingSystemsController extends TicketAppController {
 
     public function save_job_ticket_process() {
 
+       // Configure::write('debug',2);
+
         $this->loadModel('Ticket.WoodMoldJobTicket');
 
         $this->loadModel('Ticket.CuttingJobTicket');
+
+        $this->loadModel('Ticket.CorrugatedPaperJobTicket');
 
         $auth = $this->Session->read('Auth.User');
 
@@ -325,26 +342,34 @@ class TicketingSystemsController extends TicketAppController {
 
                      $data['WoodMoldJobTicket'] = $this->request->data['JobTicketProcess'];
 
-                   
-
                     break;
                     case 'cutting':
                      $model = 'CuttingJobTicket';  
 
                      $data['CuttingJobTicket'] = $this->request->data['JobTicketProcess'];
 
-                    break;    
+                    break;
+
+                    case 'corrugated':
+
+                    //pr($this->request->data); exit;
+                     $model = 'CorrugatedPaperJobTicket';  
+
+                     $data['CorrugatedPaperJobTicket'] = $this->request->data['JobTicketProcess'];
+
+                    break;
+
                     default:
                         # code...
                     break;
                 }
-
 
                 if (!empty($model)) {
 
                       $data[$model]['created_by'] = $auth['id'];
                       $data[$model]['modified_by'] = $auth['id'];
 
+                      //pr($data); exit;
                     if ( $this->$model->save($data)) {
 
                         $lastID = $this->$model->id;
@@ -758,26 +783,23 @@ class TicketingSystemsController extends TicketAppController {
 
         $modelData = array();
 
-
         if ($model != '0') {
 
-              $this->loadModel('Ticket.'.$model);
-
+            $this->loadModel('Ticket.'.$model);
 
             $modelData = $this->$model->findById( $lastId );
 
-
         }
 
-  
         $this->ClientOrder->bind(array('ClientOrderDeliverySchedule'));
+
 
        //$delData = $this->ClientOrder->find('first',array('ClientOrder.id' => $clientOrderId));
 
 
         $ticketData = $this->JobTicket->find('first',array(
             'conditions' => array('JobTicket.uuid' => $ticketUuid,'JobTicket.id' => $ticketId  )));
-        
+       // pr($ticketData); exit;
 
         $productData = $this->Product->find('first',array('conditions' => array('Product.uuid' => $productUuid,'Product.id' =>   $ticketData['JobTicket']['product_id']) ,'order' => 'Product.id DESC'));
 
@@ -786,8 +808,6 @@ class TicketingSystemsController extends TicketAppController {
 
         $specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productData['Product']['id'])));
 
-
-       // pr($productUuid);
         //find if product has specs
 
         //find process part
@@ -807,11 +827,12 @@ class TicketingSystemsController extends TicketAppController {
                 ));
         } 
 
+
+
         $processData = $this->ProductSpecificationDetail->find('first',array(
             'conditions' =>  $processCond
 
         ));
-
 
         $part = array();
          
@@ -824,8 +845,10 @@ class TicketingSystemsController extends TicketAppController {
             ));
          }   
         
+
+
         $formatDataSpecs = $this->ProductSpecificationDetail->findData($productUuid);
-       //pr($formatDataSpecs);
+        
      
         $this->loadModel('SubProcess');
 
@@ -870,6 +893,48 @@ class TicketingSystemsController extends TicketAppController {
         if (in_array($processId,array('11','61'))) {
 
             $output = $view->render('print_process_cutting', false);
+
+        } else if (in_array($processId,array('13'))) {
+
+            $this->loadModel('Ticket.CorrugatedPaperJobTicket');
+
+            $this->loadModel('CorrugatedPaper');
+
+            $corrugatedJobTicket = $this->CorrugatedPaperJobTicket->find('first',array('conditions' => array('CorrugatedPaperJobTicket.process_id' => $processId,'CorrugatedPaperJobTicket.product_id' => $productUuid, 'CorrugatedPaperJobTicket.job_ticket_id' => $ticketUuid ),
+                                                            'order' => array('CorrugatedPaperJobTicket.id' => 'DESC')
+                                                            ));
+
+            $this->CorrugatedPaper->bind(array('ItemGroupLayer'));
+
+            $corrugated = $this->CorrugatedPaper->find('first',array('conditions' => array('CorrugatedPaper.id' => $corrugatedJobTicket['CorrugatedPaperJobTicket']['corrugated_id'] )));
+           // pr($corrugated); exit;
+
+            $flutecombination = " ";
+            $counter =  0;
+
+            foreach ($corrugated['ItemGroupLayer'] as $key => $layerList){
+                //pr($layerList); 
+                if(!empty($layerList['flute'] )){
+                    if($counter == 0){
+
+                        $flutecombination =  $layerList['flute'] ;
+                        $counter += 1;
+
+                    }else{
+
+                        $flutecombination = $flutecombination . " x " . $layerList['flute'];
+
+                    }
+
+
+                 }
+            }
+
+            $total = $specs['ProductSpecification']['quantity'] + $part['ProductSpecificationPart']['allowance'] ;
+
+            $view->set(compact('corrugatedJobTicket','corrugated', 'total', 'flutecombination'));
+
+            $output = $view->render('print_process_corrugated', false);
         
         }  else if (in_array($processId,array('21'))) {
 
@@ -883,13 +948,20 @@ class TicketingSystemsController extends TicketAppController {
 
             $product  = !empty($this->request->params['named']['productId']) ? $this->request->params['named']['productId'] : '';
             //plateMaking Process
+            $query = $this->request->query;
+
+
+            $productId = !empty($query['productId']) ? $query['productId'] : $product;
             $PlateMakingProcess = $this->PlateMakingProcess->getProcess(
                 array(
-                    'ticketId' => $ticketUuid, 'processID' =>  $processId , 'productId' =>  $productUuid,
-                    'product' => $product,
+                    'ticketuuId' => $ticketUuid, 'processID' =>  $processId , 
+                    'productId' =>  $productUuid,
+                    'product' => $productId,
                     'ticketId' => $ticketId  
                 )
             );
+
+
 
             $view->set(compact('PlateMakingProcess','subProcess'));
             

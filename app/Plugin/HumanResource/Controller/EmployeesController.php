@@ -1185,7 +1185,12 @@ class EmployeesController  extends HumanResourceAppController {
 					
 					//name
 					$name = !empty($employee['Employee']['full_name']) ? str_replace(',','',ucwords($employee['Employee']['first_name'])).' '.$middle .'. '. str_replace(',','',ucwords($employee['Employee']['last_name'])) : '';
-					
+						
+					if (!empty($employee['Employee']['suffix'])) {
+
+						$name .= " ".ucfirst($employee['Employee']['suffix']);
+					}
+
 					$pdf->SetFont('Arial','B',8);
 					if (strlen($name) > 25) {
 

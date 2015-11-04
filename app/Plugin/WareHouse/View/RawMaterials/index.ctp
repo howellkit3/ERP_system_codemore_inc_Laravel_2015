@@ -38,6 +38,8 @@
                                 <th><a href="#"><span>Description</span></a></th>
                                 <th><a href="#"><span>Measure</span></a></th>
                                 <th><a href="#"><span>Type</span></a></th>
+
+                                <th><a href="#"><span>Quantity</span></a></th>
                                 <th><a href="#"><span>Stocks</span></a></th>
                                 <th class="text-center">Action</th>
                             </tr>
@@ -55,7 +57,21 @@
                                     <?php echo $list['Item']['description'] ?>
                                 </td>
                                 <td>
-                                    <?php echo $list['Item']['measure'] ?>
+                                    <?php 
+
+                                        if (!empty($list['Item']['width']) && !empty($list['Item']['length'])) {
+
+
+                                            echo $list['Item']['width'].' mm'.' X '. $list['Item']['length'].' mm';
+
+                                        } else {
+
+                                            if (!empty($list['Item']['measure'])) {
+
+                                                echo  $list['Item']['measure'];
+                                            }
+                                        }
+                                  ?>
                                 </td>
                                 
                                 <td>
@@ -65,9 +81,11 @@
                                     }
                                     ?>
                                 </td>
-
                                 <td>
-                                    <?php echo $list['Item']['remaining_stocks'] ?>
+                                    <?php echo !empty($list['Item']['quantity']) ?  $list['Item']['quantity'] : '-' ?>
+                                </td>
+                                <td>
+                                    <?php echo !empty($list['Item']['remaining_stocks']) ? $list['Item']['remaining_stocks'] : '-';  ?>
                                 </td>
                               
                                 <td  class="text-center">

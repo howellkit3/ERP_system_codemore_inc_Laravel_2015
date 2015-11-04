@@ -11,18 +11,18 @@ class Delivery extends AppModel {
     
     public $name = 'Delivery';
 
-    public $validate = array(
+ //    public $validate = array(
 
-		'dr_uuid' => array(
+	// 	'dr_uuid' => array(
 			
-			'unique' => array(
-				'rule'    => 'isUnique',
-				'message' => 'Delivery receipt should be unique.'
-			),
+	// 		'unique' => array(
+	// 			'rule'    => 'isUnique',
+	// 			'message' => 'Delivery receipt should be unique.'
+	// 		),
 
-		)
+	// 	)
 		
-	);
+	// );
 
 	//  public function bind($model = array('Group')){
 
@@ -50,19 +50,19 @@ class Delivery extends AppModel {
 			//	$data['Delivery']['modified_by'] = $auth;
 
 				//pr($data); exit;
+		//pr($data); exit;
 
+		//if ($novalidate) {
 
-		if ($novalidate) {
+		//	$this->validate = array();
+		//}
 
-			$this->validate = array();
-		}
+		$this->save($data);
 
-		if ($this->save($data)) {
+		//} else {
 
-		} else {
-
-			pr($this->validationErrors);
-		}
+			//pr($this->validationErrors);
+		//}
 
 
 		// $this->create();
@@ -102,6 +102,12 @@ class Delivery extends AppModel {
 					'className' => 'Delivery.DeliveryReceipt',
 					'foreignKey' => false,
 					'conditions' => 'Delivery.dr_uuid = DeliveryReceipt.dr_uuid'
+				),	
+				
+				'Transmittal' => array(
+					'className' => 'Delivery.Transmittal',
+					'foreignKey' => false,
+					'conditions' => 'Delivery.dr_uuid = Transmittal.dr_uuid'
 				),	
 
 			)

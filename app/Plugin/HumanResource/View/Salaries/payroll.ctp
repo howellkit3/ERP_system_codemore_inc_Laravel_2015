@@ -91,7 +91,6 @@
                                            <?php foreach ($payrolls as $key => $payroll): ?>
                                                     
                                                     <tr>
-                                                       
                                                         <td class="">
                                                            <?php echo !empty($payroll['Payroll']['date']) ? date('Y/m/d', strtotime($payroll['Payroll']['date']))  : ''; ?>
                                                         </td>
@@ -146,7 +145,7 @@
                                                             array(
                                                               'class' =>' table-link',
                                                               'escape' => false,'title'=>'Edit Information',
-                                                              'confirm' => 'Are you sure you want to delete this attendances ? ',
+                                                              'confirm' => 'Are you sure you want to delete this Payroll? ',
                                                               ));
 
                                                         ?>
