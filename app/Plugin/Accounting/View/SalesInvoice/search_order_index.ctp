@@ -1,6 +1,9 @@
 <?php 
-foreach ($invoiceData as $invoiceDataList): ?>
+foreach ($invoiceData as $invoiceDataList): 
 
+    if($invoiceDataList['SalesInvoice']['status'] != '2'){
+
+    ?>    
     <tr class="">
 
         <td class="">
@@ -42,5 +45,6 @@ foreach ($invoiceData as $invoiceDataList): ?>
         </td>
     </tr>
 
-                            <?php 
-                                endforeach; ?>
+<?php 
+     }
+        endforeach; ?>
