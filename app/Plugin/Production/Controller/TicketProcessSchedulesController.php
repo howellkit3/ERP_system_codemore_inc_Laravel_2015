@@ -34,6 +34,7 @@ class TicketProcessSchedulesController extends ProductionAppController {
 
             //update status of jobticket
             $this->JobTicket->id = $data['Ticket']['job_ticket_id'];
+            
             $this->JobTicket->saveField('status_production_id',$departmentProcess);
 
             $TicketProcessScheduleID = $this->TicketProcessSchedule->saveTicketProcessSchedule($data,$auth['id']);
@@ -64,73 +65,144 @@ class TicketProcessSchedulesController extends ProductionAppController {
 
     public function ticket_data_view($jobTicketID = null ,$schedule = null){
 
-        $this->loadModel('Ticket.JobTicket');
+        // $this->loadModel('Ticket.JobTicket');
 
-        $this->JobTicket->bindTicket();
+        // $this->JobTicket->bindTicket();
 
-        $ticketData = $this->JobTicket->find('first', array(
-                                        'conditions' => array('JobTicket.id' => $jobTicketID)
-                                        ));
+        // $ticketData = $this->JobTicket->find('first', array(
+        //                                 'conditions' => array('JobTicket.id' => $jobTicketID)
+        //                                 ));
 
-        $this->loadModel('Sales.ProductSpecificationDetail');
+        // pr($ticketData);
 
-        $this->loadModel('Sales.ProductSpecification');
+        // $this->loadModel('Sales.ProductSpecificationDetail');
 
-        $this->loadModel('Unit');
+        // $this->loadModel('Sales.ProductSpecification');
 
-        $this->loadModel('SubProcess');
+        // $this->loadModel('Unit');
 
-        $this->loadModel('Sales.Product');
+        // $this->loadModel('SubProcess');
 
-        $this->loadModel('Sales.Company');
+        // $this->loadModel('Sales.Product');
 
-        $this->loadModel('Sales.ClientOrder');
+        // $this->loadModel('Sales.Company');
 
-        $this->ClientOrder->bind(array('ClientOrderDeliverySchedule'));
+        // $this->loadModel('Sales.ClientOrder');
 
-        $delData = $this->ClientOrder->find('first',array('id' => $ticketData['ClientOrder']['id']));
+        // $this->ClientOrder->bind(array('ClientOrderDeliverySchedule'));
 
-        $companyData = $this->Company->find('list',
-                                            array('fields' => 
-                                                array('Company.id',
-                                                    'Company.company_name'
-                                                 )
-                                                ));
+        // $delData = $this->ClientOrder->find('first',array('id' => $ticketData['ClientOrder']['id']));
 
-        $productData = $this->Product->find('first',array('conditions' => array('Product.uuid' => $ticketData['Product']['uuid'] )));
+        // $companyData = $this->Company->find('list',
+        //                                     array('fields' => 
+        //                                         array('Company.id',
+        //                                             'Company.company_name'
+        //                                          )
+        //                                         ));
 
-        $subProcess = $this->SubProcess->find('list',
+        // $productData = $this->Product->find('first',array('conditions' => array('Product.uuid' => $ticketData['Product']['uuid'] )));
+
+        // $subProcess = $this->SubProcess->find('list',
+        //                                     array('fields' => 
+        //                                         array('SubProcess.id',
+        //                                             'SubProcess.name'
+        //                                          )
+        //                                         ));
+
+
+        // $specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productData['Product']['id'])));
+        
+        // //find if product has specs
+        // $formatDataSpecs = $this->ProductSpecificationDetail->findData($ticketData['Product']['uuid']);
+
+        // $this->loadModel('Production.ProcessDepartment');
+        // $
+            
+            $this->loadModel('Unit');
+
+            $this->loadModel('Ticket.JobTicket');
+
+            //machines
+            $this->loadModel('Machine');
+
+            //process
+            $this->loadModel('SubProcess');
+
+            $this->loadModel('Sales.Product');
+
+            $this->loadModel('Sales.Company');
+
+            $this->loadModel('Sales.ClientOrder');
+
+            $this->loadModel('Sales.ProductSpecificationDetail');
+
+            $this->loadModel('Sales.ProductSpecification');
+
+            $this->loadModel('Production.ProcessDepartment');
+
+            $subProcessData = $this->SubProcess->find('list',
                                             array('fields' => 
                                                 array('SubProcess.id',
                                                     'SubProcess.name'
                                                  )
                                                 ));
 
-        //set to cache in first load
-        $unitData = Cache::read('unitData');
-        
-        if (!$unitData) {
+            $machines = $this->Machine->find('list', array('fields' => 
+                                                array('id',
+                                                    'name'
+                                                 )
+                                                ));
             
-            $unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
-                                                            'order' => array('Unit.unit' => 'ASC')
-                                                            ));
+            //$subProcess =  $subProcess['SubProcess'];
+            $conditions = array('id' => $jobTicketID);   
 
-            Cache::write('unitData', $unitData);
-        }
+            $processDepartmentData = $this->ProcessDepartment->find('list',array('fields' => array('id','name'))); 
 
-        $specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productData['Product']['id'])));
+
+            //set to cache in first load
+            $unitData = Cache::read('unitData');
+            
+            if (!$unitData) {
+                
+                $unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
+                                                                'order' => array('Unit.unit' => 'ASC')
+                                                                ));
+
+                Cache::write('unitData', $unitData);
+            }
+
+            $this->JobTicket->bind(array('ClientOrder','ClientOrderDeliverySchedule','Product'));
+
+            $jobTickets = $this->JobTicket->find('first',array(
+                'conditions' => $conditions
+            ));
+
+            $specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $jobTickets['JobTicket']['product_id'])));
         
-        //find if product has specs
-        $formatDataSpecs = $this->ProductSpecificationDetail->findData($ticketData['Product']['uuid']);
+            //find if product has specs
+            $formatDataSpecs = $this->ProductSpecificationDetail->findData($jobTickets['Product']['uuid']);
 
-        $this->loadModel('Production.ProcessDepartment');
-        $processDepartmentData = $this->ProcessDepartment->find('list',array('fields' => array('id','name')));
+            $companyData = $this->Company->find('list',
+                                            array('fields' => 
+                                                array('Company.id',
+                                                    'Company.company_name'
+                                                 )
+                                                ));
 
-        $this->set(compact('formatDataSpecs','specs','unitData','subProcess','productData','companyData','delData','ticketData','processDepartmentData'));
+            if (!empty($_GET['test'])) {
 
-        if (!empty($schedule)) {
-           $this->render('schedule_process');
-        }
+            pr($jobTickets);
+
+            pr($formatDataSpecs);
+            exit();
+            }
+
+
+            $this->set(compact('formatDataSpecs','specs','unitData','subProcess','productData','companyData','delData','ticketData','processDepartmentData','jobTickets','subProcessData'));
+
+            if (!empty($schedule)) {
+               $this->render('schedule_process');
+            }
        
     }
    

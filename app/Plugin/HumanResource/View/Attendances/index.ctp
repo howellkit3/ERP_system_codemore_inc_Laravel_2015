@@ -78,12 +78,9 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 
 			                     <?php echo $this->Form->create('Attendance',array('controller' => 'attendances','action' => 'export_attendance', 'type'=> 'POST'),array('id' => 'exportAttendance')); ?>
 
-			                      <input type="hidden" name="date" id="hidden_date" value="" />
+			                      <input type="hidden" name="date" class="hidden_date" value="" />
 
-			                      <input type="hidden"  name="search" id="hidden_search" value="" />
-
-
-			                      <input type="hidden"  name="lates" id="hidden_late" value="" />
+			                      <input type="hidden"  name="search" class="hidden_search" value="" />
 
 
 
@@ -91,14 +88,25 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 			                       <div class="form-group pull-left">
 			                    	 <a data-toggle="modal" class="btn btn-success" href="#timeKeep"> <i class="fa fa-clock-o"></i> Add Attendances </a> 
 			                     </div>
-			                      <button class="btn btn-primary pull-left" class="export"><i class="fa fa-share-square-o fa-lg"></i> Export</button>
+ 			                      <button class="btn btn-primary pull-left" class="export"><i class="fa fa-share-square-o fa-lg"></i> Export </button>
+
+						 			<?php echo $this->Form->end(); ?>
+			                   	 	
+
+						 	<?php echo $this->Form->create('Attendance',array('controller' => 'attendances','action' => 'get_lates', 'type'=> 'POST'),array('id' => 'exportAttendance')); ?>
+
+						 		 <input type="hidden" name="date" class="hidden_date" value="" />
+
+			                      <input type="hidden"  name="search" class="hidden_search" value="" />
+
+			                      <input type="hidden"  name="lates" class="hidden_late" value="" />
 
 
 			                       <button class="btn btn-primary pull-right" id="exportLate"><i class="fa fa-share-square-o fa-lg"></i>
 			                       	Export Late / Absences </button>
 
-			                      	 <?php echo $this->Form->end(); ?>
-			                   	 
+
+			                       	<?php ?>
 			                   
 
 			                   <br><br>

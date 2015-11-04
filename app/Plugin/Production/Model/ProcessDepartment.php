@@ -4,7 +4,7 @@ App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
 
 class ProcessDepartment extends AppModel {
 
-    public $useDbConfig = 'koufu_production_system';
+    public $useDbConfig = 'koufu_production';
     public $name = 'ProcessDepartment';
 
      public $recursive = -1;

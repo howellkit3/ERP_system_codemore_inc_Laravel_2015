@@ -249,6 +249,10 @@
 																'Vat Exempt' => 'Vat Exempt',
 																'Zero Rated Sale' => 'Zero Rated Sale');
 
+														$vatTypeUSD = array(
+																'Vat Exempt' => 'Vat Exempt',
+																'Zero Rated Sale' => 'Zero Rated Sale');
+
 														echo $this->Form->input('QuotationItemDetail.0.vat_status', array( 
 							                                'options' => array($vatType),  
 							                                'label' => false,
@@ -257,9 +261,9 @@
 							                                 )); 
 
 														echo $this->Form->input('QuotationItemDetail.0.vat_status', array( 
-							                                'value' => 'Zero Rated Sale',  
+							                                'options' => array($vatTypeUSD),  
 							                                'label' => false,
-							                                'disabled' => true,
+							                                'empty' => '---Select Vat Type---',
 							                                'class' => 'form-control required for-usd'
 							                                 ));
 

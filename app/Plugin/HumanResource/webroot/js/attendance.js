@@ -520,18 +520,17 @@ $(document).ready(function(){
      });
 
 
-    $('#AttendanceExportAttendanceForm').submit(function(e){
+    $('#AttendanceExportAttendanceForm,#AttendanceGetLatesForm').submit(function(e){
 
-        $('#hidden_date').val($('.myDateRange').val());
+        $('.hidden_date').val($('.myDateRange').val());
 
-        if ($('#hidden_search').val($('#selectEmployee').val())) {
+        if ($('.hidden_search').val($('#selectEmployee').val())) {
 
         } else {
             
             e.preventDefault();
         }
  
-
 
 
     });

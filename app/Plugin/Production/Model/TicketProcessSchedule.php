@@ -4,7 +4,7 @@ App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
 
 class TicketProcessSchedule extends AppModel {
 
-    public $useDbConfig = 'koufu_production_system';
+    public $useDbConfig = 'koufu_production';
     public $name = 'TicketProcessSchedule';
 
      public $recursive = -1;

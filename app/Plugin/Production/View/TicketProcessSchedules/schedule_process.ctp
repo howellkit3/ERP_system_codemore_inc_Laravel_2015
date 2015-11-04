@@ -17,7 +17,7 @@
 						<div class="col-lg-5">
 							:&emsp;
 							<?php 
-								echo !empty($productData['Product']['name']) ? ucfirst($productData['Product']['name']) : '' ;
+								echo !empty($jobTickets['Product']['name']) ? ucfirst($jobTickets['Product']['name']) : '' ;
 							?>
 						</div>
 						<div class="col-lg-4">
@@ -59,7 +59,7 @@
 								      	}
 								      	if($specLists['ProductSpecificationDetail']['model'] == 'Process'){
 								      		
-								      		echo $this->element('Specs/process', array('formatDataSpecs' => $formatDataSpecs[$key],'key' => $processCounter));
+								      			echo $this->element('Specs/process', array('dataSpecs' => $formatDataSpecs[$key],'key' => $processCounter,'subProcessData' => $subProcessData,'ticketData' => $jobTickets));
 								      		$processCounter++;
 
 								      	}
@@ -103,14 +103,14 @@
                                                     'class' => 'form-control ',
                                                     'label' => false,
                                                     'readonly' => true,
-                                                    'value' => ucfirst($subProcess[$processList['ProductSpecificationProcessHolder']['sub_process_id']])
+                                                    'value' => ucfirst($subProcessData[$processList['ProductSpecificationProcessHolder']['sub_process_id']])
                                                     ));
                                                 //hidden data
                                                 echo $this->Form->input('Ticket.job_ticket_id', array(
                                                     'class' => 'form-control ',
                                                     'label' => false,
                                                     'type' => 'hidden',
-                                                    'value' => $ticketData['JobTicket']['id']
+                                                    'value' => $jobTickets['JobTicket']['id']
                                                     ));
                                             ?>
                                             <input type="hidden" name="data[TicketProcessSchedule][<?php echo $key ?>][order]" value="<?php echo $no ?>">

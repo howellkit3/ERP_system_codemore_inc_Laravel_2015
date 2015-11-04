@@ -42,7 +42,7 @@ class QuotationItemDetail extends AppModel {
 		{
 			
 			$quotationItem['quotation_id'] = $quoteId;
-
+		//	pr($quotationData); exit;
 			$this->saveAll($quotationItem);
 			
 		}
@@ -70,5 +70,30 @@ class QuotationItemDetail extends AppModel {
 		return $this->id;
 
 	}
-	
+
+	public function saveFromInvoice($data = null){
+
+
+		if($data['QuotationItemDetail']['vat_status'] == 1){
+
+			$data['QuotationItemDetail']['vat_status'] = 'Vatable Sale';
+		}
+
+		if($data['QuotationItemDetail']['vat_status'] == 2){
+
+			$data['QuotationItemDetail']['vat_status'] = 'Vat Exempt';
+		}
+
+		if($data['QuotationItemDetail']['vat_status'] == 3){
+
+			$data['QuotationItemDetail']['vat_status'] = 'Zero Rated Sale';
+		}
+
+		$this->create();
+		//pr($data); exit;
+		$this->save($data);
+
+
+	}
+
 }

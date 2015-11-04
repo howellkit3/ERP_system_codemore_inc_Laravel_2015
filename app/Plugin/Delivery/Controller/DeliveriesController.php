@@ -179,7 +179,8 @@ class DeliveriesController extends DeliveryAppController {
         $this->ClientOrderDeliverySchedule->bind(array('ClientOrder','QuotationItemDetail','QuotationDetail','Product', 'Company'));
 
         $clientsOrder = $this->ClientOrderDeliverySchedule->find('first', array(
-                                              'conditions' => array('ClientOrderDeliverySchedule.uuid' => $clientsOrderUuid
+                                              'conditions' => array('ClientOrderDeliverySchedule.uuid' => $clientsOrderUuid,
+                                                'ClientOrder.uuid' => $clientUuid
                                               )));   
 
         $scheduleInfo = $clientsOrder;
@@ -194,7 +195,8 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->Delivery->bindDelivery();
 
-        $deliveryConditions = array('Delivery.schedule_uuid' => $clientsOrderUuid);
+        $deliveryConditions = array('Delivery.schedule_uuid' => $clientsOrderUuid,
+                                                'Delivery.clients_order_id' => $clientUuid);
 
         $deliveryEdit = $this->Delivery->find('all', array(
                                          'conditions' => $deliveryConditions ,

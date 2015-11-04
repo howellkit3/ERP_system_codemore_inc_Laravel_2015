@@ -204,11 +204,11 @@
 						<?php if($userData['User']['role_id'] == 1 OR $userData['User']['role_id'] == 2 OR $userData['User']['role_id'] == 13 OR $userData['User']['role_id'] == 15 ){
 
 
-	 						echo $this->Html->link( " <i class='fa fa-cogs'></i> <span>Production</span>",   array('controller' =>'production_dashboards',
-	 											'action'=>'index?'.rand(1000,9999).'='.date("is"),
-	 											'plugin' => 'production'),
-	 											array('escape' => false) );
-	 					}
+		 						echo $this->Html->link( " <i class='fa fa-cogs'></i> <span>Production</span>",   array('controller' =>'production_dashboards',
+		 											'action'=>'index?'.rand(1000,9999).'='.date("is"),
+		 											'plugin' => 'production'),
+		 											array('escape' => false) );
+		 						}
 	 					?>
 					</li> 
 
