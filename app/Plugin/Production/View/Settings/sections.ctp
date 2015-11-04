@@ -119,8 +119,6 @@
 											echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
 										?>
 										</div>
-              
-				                    </div>
 				                </div>
 							</div>
 				        </div>
