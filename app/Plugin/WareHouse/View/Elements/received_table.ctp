@@ -27,13 +27,15 @@
 
                     echo "<span class='label label-success'>Approved</span>";
 
-                    }else if($requestOrderDataList['ReceivedOrder']['status_id'] == 14){
-                        
-                    echo "<span class='label label-info'>Encoded</span>"; 
-
+                    
                     }else if($requestOrderDataList['DeliveredOrder']['status_id'] == 13){
 
                         echo "<span class='label label-info'>Stored</span>"; 
+
+                    }else if($requestOrderDataList['ReceivedOrder']['status_id'] == 14){
+                        
+                    echo "<span class='label label-default'>Encoded</span>"; 
+
 
                     }else{
                      echo "<span class='label label-warning'>Received</span>"; 
