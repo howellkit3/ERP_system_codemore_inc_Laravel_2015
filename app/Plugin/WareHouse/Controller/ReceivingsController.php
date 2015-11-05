@@ -1125,7 +1125,8 @@ class ReceivingsController extends WareHouseAppController {
       
         $this->redirect( array(
             'controller' => 'receivings',   
-            'action' => 'receive'
+            'action' => 'view_receive',
+            $id
         ));  
 
     }
@@ -1305,8 +1306,8 @@ class ReceivingsController extends WareHouseAppController {
 			$this->Session->setFlash(__('Received Items has been moved to stocks'), 'success');
           
             $this->redirect( array(
-                'controller' => 'receivings',   
-                'action' => 'receive'
+                'controller' => 'warehouse_requests',   
+                'action' => 'stock'
             ));  
 
 		}
