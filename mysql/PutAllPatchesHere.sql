@@ -2313,3 +2313,9 @@ ALTER TABLE `sales_invoices` CHANGE `dr_uuid` `dr_uuid` VARCHAR(50) NOT NULL;
 /*howell kit addedd this oct-28-2015 Warehouse */
 ALTER TABLE `received_receipt_items` ADD `quantity_unit_id` INT(11)  NULL  DEFAULT NULL  AFTER `quantity`;
 
+
+/* aldrin added this nov-5-2015 koufu_system */
+ALTER TABLE `users`
+MODIFY COLUMN `id`  int(11) UNSIGNED NOT NULL AUTO_INCREMENT FIRST ,
+ADD COLUMN `in_charge`  int(11) NULL DEFAULT 0 AFTER `image`,
+ADD COLUMN `departments_handle`  text NULL AFTER `in_charge`;

@@ -82,7 +82,7 @@ class EmployeesController  extends HumanResourceAppController {
 	}
 
 
-	public function search_by_department($departmentId = null , $status = null,$hintKey = null,$profile = null){
+	public function search_by_department($departmentId = null , $status = null,$hintKey = null,$profile = null,$type = "html"){
 
 		$this->loadModel('HumanResource.Position');
 		$this->loadModel('HumanResource.Department');
@@ -128,9 +128,23 @@ class EmployeesController  extends HumanResourceAppController {
 		}
 
 		$employeeData = $this->Employee->find('all',array(
-		'conditions' => $conditions,
-		'order' => array('Employee.code DESC')
+			'conditions' => $conditions,
+			'order' => array('Employee.code DESC')
 		));
+
+
+		if ($type == 'json') {
+
+			$employee = array();
+
+			foreach ($employeeData as $key => $list) {
+
+				$employee[$list['Employee']['id']] = $list['Employee']['full_name'];
+
+			}
+			echo json_encode($employee);
+			exit();
+		}
 
 		$this->set(compact('employeeData'));
 		

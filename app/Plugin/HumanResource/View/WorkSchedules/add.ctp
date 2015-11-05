@@ -16,7 +16,18 @@
 
 )); ?>
 <div style="clear:both"></div>
-<?php echo $this->element('hr_options'); ?><br><br>
+<?php 
+if (!empty($this->params['named']['in_charged']) && $this->params['named']['in_charged'] == 1) {
+
+echo $this->element('in_charge_option'); 
+
+$incharge = true;
+} else {
+$incharge = false;
+echo $this->element('hr_options'); 
+}
+
+?><br><br>
 <?php echo $this->Form->create('WorkSchedule',array('url'=>(array('controller' => 'work_schedules','action' => 'add')),
 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data' ));?>
     <div class="row">
@@ -30,7 +41,9 @@
                             </h1>
                         </center>
                         <?php 
-                            echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'schedules', 'action' => 'work_schedules'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                            echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array(
+                            	'controller' => 'schedules', 'action' => 'work_schedules','in_charged' => $incharge),array(
+                            	'class' =>'btn btn-primary pull-right','escape' => false));
                         ?>
                     </header>
 

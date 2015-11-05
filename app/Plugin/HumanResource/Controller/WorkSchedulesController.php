@@ -24,8 +24,7 @@ class WorkSchedulesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Department');
 
-		$conditions = array();
-		$employees = $this->Employee->getList($conditions);
+		$this->loadModel('User');
 
 		$conditions = array('overtime_id' => NULL);
 		$workshifts = $this->Workshift->getList($conditions);
@@ -35,9 +34,42 @@ class WorkSchedulesController  extends HumanResourceAppController {
 		$auth = $this->Session->read('Auth.User');
 
 		$holidays = $this->Holiday->find('all',array('conditions' => $conditions ,'order' =>  array('Holiday.start_date ASC'),'fields' => array('id','name','type','start_date','end_date','year') ));
+		
+		$dpConditions = array();
+
+		if ($auth['in_charge'] == 1) {
+
+				$dpHelds = json_decode($auth['departments_handle']);
+
+				$dpConditions = array('Department.id' => $dpHelds);
+
+			
+				///$departmentIds = array();
+				//$departmentList = array();
+
+				/* foreach ($departments as $key => $list) {
+					$departmentList[$list['Department']['id']] = $list['Department']['department_position'];
+					$departmentIds[] = $list['Department']['id'];
+				} */
+		}
+
+			$departmentList = $this->Department->find('all',array('conditions' => $dpConditions,'fields' => array('id','name','description','notes','department_position')));
 
 
-		$departmentList = $this->Department->find('list',array('fields' => array('id','notes')));
+		$conditions = array();
+
+		if (!empty($dpHelds )) {
+			$conditions = array('Employee.department_id' => $dpHelds);
+		}
+		$employees = $this->Employee->getList($conditions);
+
+
+			/* foreach ($departments as $key => $list) {
+					$departmentList[$list['Department']['id']] = $list['Department']['department_position'];
+					$departmentIds[] = $list['Department']['id'];
+				} */
+
+		//$departmentList = $this->Department->find('list',array('fields' => array('id','notes')));
 
 
 		if ($this->request->is('post')) {	
@@ -409,15 +441,34 @@ class WorkSchedulesController  extends HumanResourceAppController {
 
 		$limit = 10;
 
-		$conditions = array('Department.prefix' => 'PO');
+		$userData = $this->Session->read('Auth.User');
 
-		$departments = $this->Department->find('list',array('conditions' => $conditions,'fields' => array('id','id')));
+		$conditions = array();
 
-		$conditions = array('Employee.department_id' => $departments);
+		if ($userData['in_charge'] == 1) {	
+
+
+			//departIds 
+
+			$departments = json_decode($userData['departments_handle']);
+			$conditions = array_merge($conditions,array('Department.id' => $departments));
+		}
+
+		$departments = $this->Department->find('all',array('conditions' => $conditions,'fields' => array('id','name','description','department_position')));
+
+		$departmentIds = array();
+		$departmentList = array();
+
+		foreach ($departments as $key => $list) {
+			$departmentList[$list['Department']['id']] = $list['Department']['department_position'];
+			$departmentIds[] = $list['Department']['id'];
+		}
+
+		$conditions = array('Employee.department_id' => $departmentIds);
 
 		$employeeList = $this->Employee->getList($conditions);
 
-		$this->set(compact('employeeList','date'));
+		$this->set(compact('employeeList','date','departments','departmentList'));
 
 		//schedules for productions
 

@@ -2108,6 +2108,8 @@ class SettingsController extends AppController
         $this->loadModel('Role');
         $this->loadModel('Permission');
 
+        $this->loadModel('HumanResource.Department');
+
         $userDatList = $this->User->find('list',array('fields' => array('id','fullname')));
         $roleDataListAll = $this->Role->find('list',array('fields' => array('id','name')));
         $permissionDataList = $this->Permission->find('all',array('fields' => array('id','name')));
@@ -2116,6 +2118,9 @@ class SettingsController extends AppController
                                             'conditions' => array('Role.id NOT' => array(1))
                                             ));
        
+
+        $departments = $this->Department->find('list',array('order' => array('Department.name'),'fields' => array('id','department_position')));
+
         if (!empty($this->request->data)) {
 
             if(!empty($this->request->data['Role']['id']) && ($this->request->data['User']['id'])){
@@ -2148,7 +2153,7 @@ class SettingsController extends AppController
             }   
         }
 
-        $this->set(compact('userDatList','roleDataListAll','permissionDataList','roleDataListLimit'));
+        $this->set(compact('userDatList','roleDataListAll','permissionDataList','roleDataListLimit','departments'));
     }
 
     public function permissionData($roleId = null){
@@ -2616,10 +2621,22 @@ class SettingsController extends AppController
 
             $this->loadModel('User');
 
+            $this->loadModel('HumanResource.Department');
+
             $roleDatList = $this->Role->find('list', array('conditions' => array('NOT' => array('Role.id' => array(1, 2)))));
 
+            $departments = $this->Department->find('list',array('order' => array('Department.name'),'fields' => array('id','department_position')));
+
+
             if ($this->request->is('post')) {
-        
+
+
+
+               // pr($this->request->data); exit();
+
+                //check if in_charge
+
+            
                 if (!empty($this->request->data)) {
                    
                     $this->User->create();
@@ -2627,7 +2644,16 @@ class SettingsController extends AppController
                     $this->request->data['User']['rxt'] = $this->request->data['User']['password'];
 
                     $this->request->data['User']['role_id'] = $this->request->data['Role']['id'];
-                    
+
+                    if (!empty($this->request->data['User']['in_charge'])) {
+                        if (is_array($this->request->data['User']['departments_handle'])) {
+
+                         $this->request->data['User']['departments_handle'] = json_encode( $this->request->data['User']['departments_handle'] );
+                        }
+                      }
+                        
+                    $this->request->data['User']['uuid'] = 0;
+    
                     if($this->User->save($this->request->data)){
 
                         $this->Session->setFlash(__('Register Complete.'));
@@ -2644,7 +2670,7 @@ class SettingsController extends AppController
                 } 
             }
 
-            $this->set(compact('roleDatList'));
+            $this->set(compact('roleDatList','departments'));
 
         }
 
@@ -2920,6 +2946,53 @@ class SettingsController extends AppController
 
     }
 
+    public function checkData($id = null) {
+
+        $this->loadModel('User');
+
+        if (!empty($id)) {
+
+            $employees = $this->User->findById($id);
+
+            if (is_array($employees)) {
+
+                echo json_encode($employees);
+            }
+
+        }
+
+        exit();
+    }
+
+
+   public function update_in_charge() {
+
+        if ($this->request->data) {
+
+            $this->loadModel('User');
+
+
+            if (!empty($this->request->data['User']['departments_handle'])) {
+                $this->request->data['User']['departments_handle']  = json_encode($this->request->data['User']['departments_handle']); 
+            }
+             if ($this->request->data['User']['in_charge'] == 'on') {
+                $this->request->data['User']['in_charge'] = 1;
+            }
+
+            if($this->User->save($this->request->data)){
+
+                        $this->Session->setFlash(__('Register Complete.'));
+
+                        $this->redirect(
+                            array('controller' => 'settings', 'action' => 'role_perm')
+                        );
+            } else {
+
+                $this->Session->setFlash(__('The invalid data. Please, try again.'),'error');
+                
+            }
+        }
+    }
 }
             
 
