@@ -1140,101 +1140,128 @@ class ReceivingsController extends WareHouseAppController {
 
     	$this->DeliveredOrder->bind('ReceivedItem', 'PurchaseOrder', 'ReceivedOrder', 'Request');
 
-    	$receivedData = $this->DeliveredOrder->find('first', array('conditions' => array('DeliveredOrder.id' => $DeliveredOrderId)));
+    	$receivedData = $this->DeliveredOrder->find('first', array('conditions' => array('DeliveredOrder.id' => $DeliveredOrderId)));	
     	
-    	$requestItemData = $this->PurchasingItem->find('all', array('conditions' => array('PurchasingItem.request_uuid' => $receivedData['ReceivedItem'][0]['request_uuid'])));
-
     	$itemHolder = "PurchasingItem";
 
-    	if(empty($requestItemData)){
+    	if(!empty($receivedData['ReceivedItem'])){
 
-    		$this->loadModel('Purchasing.RequestItem');
+    		$modelHolder = "ReceivedItem";
 
-    		$requestItemData = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $receivedData['ReceivedItem'][0]['request_uuid'])));
+	    	$requestItemData = $this->PurchasingItem->find('all', array('conditions' => array('PurchasingItem.request_uuid' => $receivedData[$modelHolder][0]['request_uuid'])));
 
-    		$itemHolder = "RequestItem";
+	    	if(empty($requestItemData)){
+
+	    		$this->loadModel('Purchasing.RequestItem');
+
+	    		$requestItemData = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $receivedData[$modelHolder][0]['request_uuid'])));
+
+	    		$itemHolder = "RequestItem";
+
+	    	}
+
+	    	foreach ($receivedData['ReceivedItem'] as $key => $value) {	
+
+	    		foreach ($requestItemData as $key1 => $valueOfRequestItem) {	
+
+	    	 		if($value['model'] == 'GeneralItem' && $value['foreign_key'] == $valueOfRequestItem[$itemHolder]['foreign_key']){
+
+	    	 			$receivedData['ReceivedItem'][$key]['size1'] = $valueOfRequestItem[$itemHolder]['size1'];
+
+	    	 			$receivedData['ReceivedItem'][$key]['size1_unit_id'] = $valueOfRequestItem[$itemHolder]['size1_unit_id'];
+
+	    	 			$receivedData['ReceivedItem'][$key]['size2'] = $valueOfRequestItem[$itemHolder]['size2'];
+
+	    	 			$receivedData['ReceivedItem'][$key]['size2_unit_id'] = $valueOfRequestItem[$itemHolder]['size2_unit_id'];
+
+	    	 			$receivedData['ReceivedItem'][$key]['size3'] = $valueOfRequestItem[$itemHolder]['size3'];
+
+	    	 			$receivedData['ReceivedItem'][$key]['size3_unit_id'] = $valueOfRequestItem[$itemHolder]['size3_unit_id'];
+
+	    	 			$receivedData['ReceivedItem'][$key]['quantity_unit_id'] = $valueOfRequestItem[$itemHolder]['quantity_unit_id'];
+
+	    	 		}
+
+	    	 		if($value['model'] == 'Substrate' && $value['foreign_key'] == $valueOfRequestItem[$itemHolder]['foreign_key']){
+
+	    	 			$receivedData['ReceivedItem'][$key]['size1'] = $valueOfRequestItem[$itemHolder]['size1'];
+
+	    	 			$receivedData['ReceivedItem'][$key]['size1_unit_id'] = $valueOfRequestItem[$itemHolder]['size1_unit_id'];
+
+	    	 			$receivedData['ReceivedItem'][$key]['size2'] = $valueOfRequestItem[$itemHolder]['size2'];
+
+	    	 			$receivedData['ReceivedItem'][$key]['size2_unit_id'] = $valueOfRequestItem[$itemHolder]['size2_unit_id'];
+
+	    	 			$receivedData['ReceivedItem'][$key]['size3'] = $valueOfRequestItem[$itemHolder]['size3'];
+
+	    	 			$receivedData['ReceivedItem'][$key]['size3_unit_id'] = $valueOfRequestItem[$itemHolder]['size3_unit_id'];
+
+	    	 			$receivedData['ReceivedItem'][$key]['quantity_unit_id'] = $valueOfRequestItem[$itemHolder]['quantity_unit_id'];
+
+	    	 		}
+
+	    	 		if($value['model'] == 'CompoundSubstrate' && $value['foreign_key'] == $valueOfRequestItem[$itemHolder]['foreign_key']){
+
+	    	 			$receivedData['ReceivedItem'][$key]['size1'] = $valueOfRequestItem[$itemHolder]['size1'];
+
+	    	 			$receivedData['ReceivedItem'][$key]['size1_unit_id'] = $valueOfRequestItem[$itemHolder]['size1_unit_id'];
+
+	    	 			$receivedData['ReceivedItem'][$key]['size2'] = $valueOfRequestItem[$itemHolder]['size2'];
+
+	    	 			$receivedData['ReceivedItem'][$key]['size2_unit_id'] = $valueOfRequestItem[$itemHolder]['size2_unit_id'];
+
+	    	 			$receivedData['ReceivedItem'][$key]['size3'] = $valueOfRequestItem[$itemHolder]['size3'];
+
+	    	 			$receivedData['ReceivedItem'][$key]['size3_unit_id'] = $valueOfRequestItem[$itemHolder]['size3_unit_id'];
+
+	    	 			$receivedData['ReceivedItem'][$key]['quantity_unit_id'] = $valueOfRequestItem[$itemHolder]['quantity_unit_id'];
+
+	    	 		}
+
+	    	 		if($value['model'] == 'CorrugatedPaper' && $value['foreign_key'] == $valueOfRequestItem[$itemHolder]['foreign_key']){
+
+	    	 			$receivedData['ReceivedItem'][$key]['size1'] = $valueOfRequestItem[$itemHolder]['size1'];
+
+	    	 			$receivedData['ReceivedItem'][$key]['size1_unit_id'] = $valueOfRequestItem[$itemHolder]['size1_unit_id'];
+
+	    	 			$receivedData['ReceivedItem'][$key]['size2'] = $valueOfRequestItem[$itemHolder]['size2'];
+
+	    	 			$receivedData['ReceivedItem'][$key]['size2_unit_id'] = $valueOfRequestItem[$itemHolder]['size2_unit_id'];
+
+	    	 			$receivedData['ReceivedItem'][$key]['size3'] = $valueOfRequestItem[$itemHolder]['size3'];
+
+	    	 			$receivedData['ReceivedItem'][$key]['size3_unit_id'] = $valueOfRequestItem[$itemHolder]['size3_unit_id'];
+
+	    	 			$receivedData['ReceivedItem'][$key]['quantity_unit_id'] = $valueOfRequestItem[$itemHolder]['quantity_unit_id'];
+
+	    	 		} 
+	    	 			
+	    	 	}
+
+	    	 	$receiveDataHolder = $receivedData; 
+	    	}
+    	}else{
+
+    		foreach ($receivedData['ReceivedReceiptItem'] as $key => $value) {	
+    			
+    			$receivedData['ReceivedItem'][$key]['delivered_order_id'] = $value['delivered_order_id'];
+    			$receivedData['ReceivedItem'][$key]['received_orders_id'] = $value['received_orders_id'];
+    			$receivedData['ReceivedItem'][$key]['model'] = $value['model']; 
+    			$receivedData['ReceivedItem'][$key]['item_type'] = $value['item_type']; 
+    			$receivedData['ReceivedItem'][$key]['foreign_key'] = $value['foreign_key'];
+    			$receivedData['ReceivedItem'][$key]['quantity'] = $value['quantity'];
+    			$receivedData['ReceivedItem'][$key]['quantity_unit_id'] = $value['quantity_unit_id'];
+    			$receivedData['ReceivedItem'][$key]['number_of_boxes'] = $value['number_of_boxes'];
+    			$receivedData['ReceivedItem'][$key]['quantity_per_boxes'] = $value['quantity_per_boxes'];
+    			$receivedData['ReceivedItem'][$key]['lot'] = $value['lot'];
+    			$receivedData['ReceivedItem'][$key]['remarks'] = $value['remarks'];
+    		
+    		}
+
+    		$receiveDataHolder = $receivedData;
 
     	} 
 
-    	foreach ($receivedData['ReceivedItem'] as $key => $value) {	
-
-    		foreach ($requestItemData as $key1 => $valueOfRequestItem) {	
-
-    	 		if($value['model'] == 'GeneralItem' && $value['foreign_key'] == $valueOfRequestItem[$itemHolder]['foreign_key']){
-
-    	 			$receivedData['ReceivedItem'][$key]['size1'] = $valueOfRequestItem[$itemHolder]['size1'];
-
-    	 			$receivedData['ReceivedItem'][$key]['size1_unit_id'] = $valueOfRequestItem[$itemHolder]['size1_unit_id'];
-
-    	 			$receivedData['ReceivedItem'][$key]['size2'] = $valueOfRequestItem[$itemHolder]['size2'];
-
-    	 			$receivedData['ReceivedItem'][$key]['size2_unit_id'] = $valueOfRequestItem[$itemHolder]['size2_unit_id'];
-
-    	 			$receivedData['ReceivedItem'][$key]['size3'] = $valueOfRequestItem[$itemHolder]['size3'];
-
-    	 			$receivedData['ReceivedItem'][$key]['size3_unit_id'] = $valueOfRequestItem[$itemHolder]['size3_unit_id'];
-
-    	 			$receivedData['ReceivedItem'][$key]['quantity_unit_id'] = $valueOfRequestItem[$itemHolder]['quantity_unit_id'];
-
-    	 		}
-
-    	 		if($value['model'] == 'Substrate' && $value['foreign_key'] == $valueOfRequestItem[$itemHolder]['foreign_key']){
-
-    	 			$receivedData['ReceivedItem'][$key]['size1'] = $valueOfRequestItem[$itemHolder]['size1'];
-
-    	 			$receivedData['ReceivedItem'][$key]['size1_unit_id'] = $valueOfRequestItem[$itemHolder]['size1_unit_id'];
-
-    	 			$receivedData['ReceivedItem'][$key]['size2'] = $valueOfRequestItem[$itemHolder]['size2'];
-
-    	 			$receivedData['ReceivedItem'][$key]['size2_unit_id'] = $valueOfRequestItem[$itemHolder]['size2_unit_id'];
-
-    	 			$receivedData['ReceivedItem'][$key]['size3'] = $valueOfRequestItem[$itemHolder]['size3'];
-
-    	 			$receivedData['ReceivedItem'][$key]['size3_unit_id'] = $valueOfRequestItem[$itemHolder]['size3_unit_id'];
-
-    	 			$receivedData['ReceivedItem'][$key]['quantity_unit_id'] = $valueOfRequestItem[$itemHolder]['quantity_unit_id'];
-
-    	 		}
-
-    	 		if($value['model'] == 'CompoundSubstrate' && $value['foreign_key'] == $valueOfRequestItem[$itemHolder]['foreign_key']){
-
-    	 			$receivedData['ReceivedItem'][$key]['size1'] = $valueOfRequestItem[$itemHolder]['size1'];
-
-    	 			$receivedData['ReceivedItem'][$key]['size1_unit_id'] = $valueOfRequestItem[$itemHolder]['size1_unit_id'];
-
-    	 			$receivedData['ReceivedItem'][$key]['size2'] = $valueOfRequestItem[$itemHolder]['size2'];
-
-    	 			$receivedData['ReceivedItem'][$key]['size2_unit_id'] = $valueOfRequestItem[$itemHolder]['size2_unit_id'];
-
-    	 			$receivedData['ReceivedItem'][$key]['size3'] = $valueOfRequestItem[$itemHolder]['size3'];
-
-    	 			$receivedData['ReceivedItem'][$key]['size3_unit_id'] = $valueOfRequestItem[$itemHolder]['size3_unit_id'];
-
-    	 			$receivedData['ReceivedItem'][$key]['quantity_unit_id'] = $valueOfRequestItem[$itemHolder]['quantity_unit_id'];
-
-    	 		}
-
-    	 		if($value['model'] == 'CorrugatedPaper' && $value['foreign_key'] == $valueOfRequestItem[$itemHolder]['foreign_key']){
-
-    	 			$receivedData['ReceivedItem'][$key]['size1'] = $valueOfRequestItem[$itemHolder]['size1'];
-
-    	 			$receivedData['ReceivedItem'][$key]['size1_unit_id'] = $valueOfRequestItem[$itemHolder]['size1_unit_id'];
-
-    	 			$receivedData['ReceivedItem'][$key]['size2'] = $valueOfRequestItem[$itemHolder]['size2'];
-
-    	 			$receivedData['ReceivedItem'][$key]['size2_unit_id'] = $valueOfRequestItem[$itemHolder]['size2_unit_id'];
-
-    	 			$receivedData['ReceivedItem'][$key]['size3'] = $valueOfRequestItem[$itemHolder]['size3'];
-
-    	 			$receivedData['ReceivedItem'][$key]['size3_unit_id'] = $valueOfRequestItem[$itemHolder]['size3_unit_id'];
-
-    	 			$receivedData['ReceivedItem'][$key]['quantity_unit_id'] = $valueOfRequestItem[$itemHolder]['quantity_unit_id'];
-
-    	 		} 
-    	 			
-    	 	}$receiveDataHolder = $receivedData; 
-
-    	} 
 
 		if (!empty($this->request->data)) {
 
