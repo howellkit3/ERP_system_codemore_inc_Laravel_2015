@@ -15,7 +15,7 @@
             }
         }  ?>   
 
-        <?php  if ($receivedItemData['DeliveredOrder']['status_id'] != 13){  ?>
+        <?php  if ($receivedItemData['DeliveredOrder']['status_id'] == 1 ){  ?>
 
         <a data-toggle="modal" href="#myModalInRecord<?php echo $receivedItemData['DeliveredOrder']['id'] ?>" class="btn btn-primary mrg-b-lg pull-right addSchedButton "><i class="fa fa-plus-circle fa-lg tobeTrigger"></i> In Record</a>
     
