@@ -707,7 +707,6 @@ class TicketingSystemsController extends TicketAppController {
                 $dompdf->render();
                 $canvas = $dompdf->get_canvas();
                 $font = Font_Metrics::get_font("helvetica", "bold");
-                $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
 
                 $output = $dompdf->output();
                 $random = rand(0, 1000000) . '-' . time();
