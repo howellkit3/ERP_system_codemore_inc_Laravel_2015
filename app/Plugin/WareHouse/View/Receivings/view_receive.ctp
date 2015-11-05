@@ -365,7 +365,7 @@
 
 <?php } ?>
 
-<div class="modal fade" id="myModalInRecord<?php echo $receivedItemData[0]['DeliveredOrder']['id'] ?>" role="dialog" >
+<div class="modal fade" id="myModalInRecord<?php echo $receivedItemData['DeliveredOrder']['id'] ?>" role="dialog" >
     <div class="modal-dialog">
         <div class="modal-content margintop">
 
@@ -376,13 +376,13 @@
 
             <div class="modal-body">
 
-                <?php  $id = $receivedItemData[0]['ReceivedOrder']['id'];
+                <?php  $id = $receivedItemData['ReceivedOrder']['id'];
 
-                     $DeliveredOrderId = $receivedItemData[0]['DeliveredOrder']['id'];
+                     $DeliveredOrderId = $receivedItemData['DeliveredOrder']['id'];
 
 
                     echo $this->Form->create('InRecord',array(
-                        'url'=>(array('controller' => 'receivings','action' => 'in_record', $id, $DeliveredOrderId,$receivedItemData[0]['DeliveredOrder']['purchase_orders_id'],$receivedItemData[0]['PurchaseOrder']['supplier_id'] )),'class' => 'form-horizontal')); 
+                        'url'=>(array('controller' => 'receivings','action' => 'in_record', $id, $DeliveredOrderId,$receivedItemData['DeliveredOrder']['purchase_orders_id'],$receivedItemData['PurchaseOrder']['supplier_id'] )),'class' => 'form-horizontal')); 
                 ?>
 
                     <div class="form-group" id="existing_items">
