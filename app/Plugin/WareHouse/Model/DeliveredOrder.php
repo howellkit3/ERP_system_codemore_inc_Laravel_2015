@@ -31,16 +31,16 @@ class DeliveredOrder extends AppModel {
 			$mystring = mb_substr($deliveredItemsData['uuid'],4,9);
 			$data['uuid'] = $mystring;
 			$data['si_num'] = $deliveredItemsData['si_num'];
-			$data['purchase_order_uuid'] = $deliveredItemsData['po_number'];
+			
 
 		}
-	
+		$data['purchase_order_uuid'] = $deliveredItemsData['po_number'];
 		$data['modified_by'] = $auth;
 		$data['received_orders_id'] = $receivedOrdersId;
 		$data['purchase_orders_id'] = $purchaseId;
 		$data['dr_num'] = $deliveredItemsData['dr_num'];
 		$data['uuid'] = $deliveredItemsData['uuid'];
-
+		//pr($data); exit;
 		$this->save($data);
 
 		return $this->id;
