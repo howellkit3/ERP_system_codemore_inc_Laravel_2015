@@ -2319,3 +2319,16 @@ ALTER TABLE `users`
 MODIFY COLUMN `id`  int(11) UNSIGNED NOT NULL AUTO_INCREMENT FIRST ,
 ADD COLUMN `in_charge`  int(11) NULL DEFAULT 0 AFTER `image`,
 ADD COLUMN `departments_handle`  text NULL AFTER `in_charge`;
+
+
+ALTER TABLE `koufu_warehouse`.`items`   
+  ADD COLUMN `gsm` VARCHAR(255) NULL AFTER `modified`,
+  ADD COLUMN `type` VARCHAR(255) NULL AFTER `gsm`,
+  ADD COLUMN `width` VARCHAR(255) NULL AFTER `type`,
+  ADD COLUMN `length` VARCHAR(255) NULL AFTER `width`,
+  ADD COLUMN `item_group` VARCHAR(255) NULL AFTER `length`,
+  ADD COLUMN `quantity` VARCHAR(255) NULL AFTER `item_group`,
+  ADD COLUMN `location` VARCHAR(255) NULL AFTER `quantity`;
+
+ALTER TABLE `koufu_warehouse`.`items` 
+ADD COLUMN `inch` VARCHAR(255) NULL AFTER `width`;

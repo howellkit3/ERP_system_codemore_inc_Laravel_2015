@@ -18,6 +18,7 @@
                         <u>
                            Add Raw Material
                         </u>
+                    </h1>
                          <?php 
                             echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'raw_materials', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
                         ?>
@@ -137,6 +138,42 @@
 
                                     </div>
                                        
+                                         <div class="form-group">
+                                        <label for="inputPassword1" class="col-lg-2 control-label"> <span style="color:red">*</span> Inch 1</label>
+                                            
+                                            <div class="col-lg-9"> 
+                                                       <?php //$items = array( 'rolls' => 'Rolls', 'sheets' => 'Sheets');
+
+                                                        echo $this->Form->input('inch_x', array(
+                                                                                    'class' => 'form-control',
+                                                                                    'alt' => 'type',
+                                                                                    'label' => false,
+                                                                                    'type' => 'number',
+                                                                                    'placeholder' => 'inch'
+                                                                            ));
+                                                        ?>
+                                                    <span class="help-block" style= "color:white"> &nbsp </span>
+                                            </div>
+
+                                    </div>
+                                       <div class="form-group">
+                                        <label for="inputPassword1" class="col-lg-2 control-label"> <span style="color:red">*</span> Inch 2</label>
+                                            
+                                            <div class="col-lg-9"> 
+                                                       <?php //$items = array( 'rolls' => 'Rolls', 'sheets' => 'Sheets');
+
+                                                        echo $this->Form->input('inch_y', array(
+                                                                                    'class' => 'form-control',
+                                                                                    'alt' => 'type',
+                                                                                    'label' => false,
+                                                                                    'type' => 'number',
+                                                                                    'placeholder' => 'inch'
+                                                                            ));
+                                                        ?>
+                                                    <span class="help-block" style= "color:white"> &nbsp </span>
+                                            </div>
+
+                                    </div>
 
 
                                 <!--     <div class="form-group">

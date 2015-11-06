@@ -2972,7 +2972,6 @@ class SettingsController extends AppController
 
             $this->loadModel('User');
 
-
             if (!empty($this->request->data['User']['departments_handle'])) {
                 $this->request->data['User']['departments_handle']  = json_encode($this->request->data['User']['departments_handle']); 
             }

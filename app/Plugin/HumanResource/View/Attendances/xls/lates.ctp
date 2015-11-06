@@ -16,6 +16,8 @@
        
     $workingTime = array(); 
 
+    $sheet->setAutoFilter('A5:H5');
+
     foreach ($filter as $key => $list) {
 
         $dateNow = date('Y-m-d',strtotime($key));
@@ -25,11 +27,9 @@
         foreach ($list as $key => $employee) {
 
             // ->setCellValue('C8',)
-            //
             $full_name = '';
 
             $sheet->setCellValue('A'.$counter,$dateNow);
-           
 
             $code = !empty($employee['Employee']['code']) ? $employee['Employee']['code'] : '';
 
@@ -51,15 +51,15 @@
             $to = !empty($employee['MyWorkshift']['to']) ?  $employee['MyWorkshift']['to']  : '';
             $sheet->setCellValue('E'.$counter, $to);
 
-            $in = !empty($employee['Attendance']['in']) ? $employee['Attendance']['in']  : '';
+            $in = !empty($employee['Attendance']['in']) ? date('H:i:s',strtotime($employee['Attendance']['in']))  : '';
 
             $sheet->setCellValue('F'.$counter, $in);
 
-            $out = !empty($employee['Attendance']['in']) ? $employee['Attendance']['in']  : '';
+            $out = !empty($employee['Attendance']['out']) ?  date('H:i:s',strtotime($employee['Attendance']['out']))   : '';
 
             $sheet->setCellValue('G'.$counter,$out);
 
-             $sheet->setCellValue('H'.$counter, ucwords($employee['Time']['status']));
+            $sheet->setCellValue('H'.$counter, ucwords($employee['Time']['status']));
 
             if ($employee['Time']['status'] == 'late') {
 

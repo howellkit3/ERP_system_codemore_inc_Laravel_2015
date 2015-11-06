@@ -8,10 +8,7 @@
                         'HumanResource.workshifts'
 )); ?>
 <div style="clear:both"></div>
-<?php echo $this->element('hr_options'); ?><br><br>
-
 <?php 
-$us
 if (!empty($this->params['named']['in_charged']) && $this->params['named']['in_charged'] == 1) {
 
 echo $this->element('in_charge_option'); 
@@ -21,11 +18,7 @@ $incharge = true;
 $incharge = false;
 echo $this->element('hr_options'); 
 }
-
-?>
-
-
-<?php echo $this->Form->create('Breaktime',array('url'=>(array('controller' => 'workshifts','action' => 'add')),
+echo $this->Form->create('Breaktime',array('url'=>(array('controller' => 'workshifts','action' => 'add')),
 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data' ));?>
 
     <div class="row">
