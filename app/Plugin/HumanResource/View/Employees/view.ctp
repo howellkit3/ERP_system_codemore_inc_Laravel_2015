@@ -98,6 +98,7 @@
 													$name .= !empty($employee['Employee']['last_name']) ? ' '.$employee['Employee']['last_name'].' ' : '';
 
 													$name .= !empty($employee['Employee']['middle_name']) ? ' '.$employee['Employee']['middle_name'].' ' : '';
+													$name .= !empty($employee['Employee']['suffix']) ? ' '.ucwords($employee['Employee']['suffix']).' ' : '';
 
 													echo $name;
 											?>

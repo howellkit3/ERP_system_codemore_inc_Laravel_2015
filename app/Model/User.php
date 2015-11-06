@@ -12,6 +12,7 @@ class User extends AppModel {
 	
 	public $actsAs = array('Containable');
 
+	
 	public $validate = array(
 
 		'email' => array(
@@ -58,6 +59,13 @@ class User extends AppModel {
 					'className' => 'Role',
 					'foreignKey' => 'id',
 					'dependent' => true
+				),
+			), 
+			'belongsTo' => array(
+				'Overtime' => array(
+					'className' => 'Overtime',
+					'foreignKey' => false,
+					'conditions' => array('Overtime.created_by' => 'User.id')
 				),
 			), 
 

@@ -20,6 +20,17 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
                 'class' => 'btn '.$page 
               )); ?>
         </li>
+
+        
+        <li class="">
+          <?php $page =($active_page == 'overtimes') ? 'active' : '' ?>
+            <?php echo $this->Html->link("<span class='count'>Overtime</span>",
+             array('controller' => 'overtimes',
+              'action' => 'index?'.rand(1000,9999).'='.date("is")),
+              array('escape' => false,
+                'class' => 'btn '.$page 
+              )); ?>
+        </li>
       
       
     </ul>

@@ -13,9 +13,21 @@
                         'HumanResource.work_schedules'
 )); ?>
 <div style="clear:both"></div>
-<?php echo $this->element('hr_options'); ?><br><br>
+<?php 
+if (!empty($this->params['named']['in_charge']) && $this->params['named']['in_charge'] == 1) {
+
+echo $this->element('in_charge_option'); 
+
+$incharge = true;
+} else {
+$incharge = false;
+echo $this->element('hr_options'); 
+}
+?>
 <?php echo $this->Form->create('WorkSchedule',array('url'=>(array('controller' => 'work_schedules','action' => 'edit')),
 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data' ));?>
+
+<?php echo $this->Form->input('in_charge',array('type' => 'hidden','value' => $incharge )); ?>
 
     <div class="row">
         <div class="col-lg-12">

@@ -2650,6 +2650,7 @@ class SettingsController extends AppController
 
                          $this->request->data['User']['departments_handle'] = json_encode( $this->request->data['User']['departments_handle'] );
                         }
+                        $this->request->data['User']['in_charge'] = !empty($this->request->data['User']['in_charge']) && $this->request->data['User']['in_charge'] == 'on' ? '1' : ''; 
                       }
                         
                     $this->request->data['User']['uuid'] = 0;

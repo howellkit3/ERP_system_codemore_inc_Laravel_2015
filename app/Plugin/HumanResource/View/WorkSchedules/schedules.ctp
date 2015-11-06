@@ -14,9 +14,19 @@ echo $this->Html->script(array(
 
 )); 
 
-// /echo $this->element('in_charge_option');
+if (!empty($userData['User']['in_charge']) && $userData['User']['in_charge'] == 1) {
+
+echo $this->element('in_charge_option'); 
+
+$incharge = true;
+} else {
+$incharge = false;
+echo $this->element('hr_options'); 
+} 
+
 
 $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
+
 
  ?>
 
@@ -89,7 +99,8 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 				                 			'options' => $employeeList,
 				                 			'class' => 'autocomplete',
 				                 			'label' => false,
-				                 			'id' => 'selectEmployee'
+				                 			'id' => 'selectEmployee',
+				                 			'default' => $defaults
 				                 		)); ?>
 				                    </div>
 				                   
@@ -176,10 +187,10 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 									                       	<td class="text-right">
 									                      	<?php
 
-									                      	echo $this->Html->link('<span class="fa-stack">
-															<i class="fa fa-square fa-stack-2x"></i>
-															<i class="fa fa-search fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> View </font></span>
-															</span> ', array('controller' => 'schedules', 'action' => 'view',$schedule['WorkSchedule']['id'],$schedule['WorkSchedule']['foreign_key']),array('class' =>' table-link','escape' => false,'title'=>'View Information'));
+									      //                 	echo $this->Html->link('<span class="fa-stack">
+															// <i class="fa fa-square fa-stack-2x"></i>
+															// <i class="fa fa-search fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> View </font></span>
+															// </span> ', array('controller' => 'schedules', 'action' => 'view',$schedule['WorkSchedule']['id'],$schedule['WorkSchedule']['foreign_key']),array('class' =>' table-link','escape' => false,'title'=>'View Information'));
 									                      	
 
 															echo $this->Html->link('<span class="fa-stack">
@@ -282,7 +293,9 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 <script>
     
         jQuery(document).ready(function($){
-              
+              	
+              	  $('#selectEmployee').change();
+
                $("#WorkScheduleWorkSchedulesForm").validate();
                
 

@@ -30,6 +30,8 @@ echo $this->element('hr_options');
 ?><br><br>
 <?php echo $this->Form->create('WorkSchedule',array('url'=>(array('controller' => 'work_schedules','action' => 'add')),
 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data' ));?>
+
+<?php echo $this->Form->input('in_charge',array('type' => 'hidden','value' => $incharge )); ?>
     <div class="row">
         <div class="col-lg-12">
         	<div class="row">

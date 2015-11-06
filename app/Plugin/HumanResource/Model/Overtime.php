@@ -18,8 +18,13 @@ class Overtime extends AppModel {
 			'belongsTo' => array(
 				'Department' => array(
 					'className' => 'Department',
-					'foreignKey' => 'department_id')
-								)
+					'foreignKey' => 'department_id'),
+                'User' => array(
+                    'className' => 'User',
+                    'foreignKey' => 'created_by',
+                    //'conditions' => array('id = Overtime.created_by')
+                    )
+				)
 			),false);
 
 		$this->contain($model);

@@ -14,9 +14,14 @@ echo $this->Html->script(array(
 
 )); 
 
+if (!empty($userData['User']['in_charge']) && $userData['User']['in_charge'] == 1) {
+echo $this->element('in_charge_option'); 
 
-echo $this->element('hr_options');
-
+$incharge = true;
+} else {
+$incharge = false;
+echo $this->element('hr_options'); 
+}
 $active_tab = 'overtimes';
  ?>
 
@@ -76,6 +81,7 @@ $active_tab = 'overtimes';
 									<thead>
 										<tr>
 											<th><a href="#"><span>Date</span></a></th>
+											<th><a href="#"><span>Requested By</span></a></th>
 											<th><a href="#" ><span>From</span></a></th>
 											<th><a href="#" ><span>To</span></a></th>
 											<th><a href="#"><span>Status</span></a></th> 
@@ -98,6 +104,9 @@ $active_tab = 'overtimes';
 								                        <td > 
 								                           <?php echo $overtime['Overtime']['date'] ?> 
 								                        </td>
+								                          <td > 
+                                                           <?php echo !empty($overtime['User']['fullname']) ? $overtime['User']['fullname'] : ''; ?> 
+                                                        </td>
 														<td> 
 								                           <?php  $from = (!empty($overtime['Overtime']['from']) && $overtime['Overtime']['from']  != '00:00:00') ? date('Y-m-d h:i a',strtotime($overtime['Overtime']['from'])) : '';
 															echo $from;
