@@ -14,6 +14,7 @@
             <td class="">
 
                 <?php  echo !empty($purchaseOrderSupplierData[$requestOrderDataList['DeliveredOrder']['purchase_orders_id']]) ? $supplierData[$purchaseOrderSupplierData[$requestOrderDataList['DeliveredOrder']['purchase_orders_id']]] : $supplierData[$requestOrderDataList['ReceivedOrder']['supplier_id']]; ?>
+                
             </td>
 
             <td class="">
@@ -23,11 +24,11 @@
             </td>
 
             <td align = "center">
+
                 <?php if($requestOrderDataList['DeliveredOrder']['status_id'] == 1){ 
 
                     echo "<span class='label label-success'>Approved</span>";
 
-                    
                     }else if($requestOrderDataList['DeliveredOrder']['status_id'] == 13){
 
                         echo "<span class='label label-info'>Stored</span>"; 
@@ -41,8 +42,8 @@
                      echo "<span class='label label-warning'>Received</span>"; 
 
                      }
-
                 ?>
+
             </td>
 
             <td align = "center">

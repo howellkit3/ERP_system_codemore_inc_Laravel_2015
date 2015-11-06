@@ -14,9 +14,6 @@
                    <td class="">
                     <?php echo !empty($clientOderData['Product']['name']) ? $clientOderData['Product']['name'] : ''; ?>
                 </td> 
-                <td class="text-center">
-                    <?php //echo $clientOderlist['SalesOrder']['status'] != (0) ? '<span class="label label-success">Approved</span>' : '<span class="label label-danger">Pending</span>' ; ?>
-                </td>
 
                 <td class="text-center">
                     <?php echo date('M d, Y', strtotime($clientOderData['ClientOrder']['created'])); ?>

@@ -26,9 +26,7 @@ function vatprice(whatsection, thisElement){
 } 
 
 function findValue($form, thisElement){
-
-
-   
+ 
     var $unit_value = thisElement.parents('.'+$form).find('.unitprice').val();
     var $vat_value = thisElement.parents('.'+$form).find('.vatIn').val();
 
@@ -83,7 +81,6 @@ function findValue($form, thisElement){
             console.log('check');
             console.log($vat_value);
             quotient = $vat_value / 1.12;
-            //total = (sum + parseFloat($unit_value));
             thisElement.parents('.quotationItemDetail').find('.unitprice').val(quotient);
 
          } else {

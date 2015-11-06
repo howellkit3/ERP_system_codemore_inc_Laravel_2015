@@ -359,15 +359,7 @@
                                                     					'id' => 'quantity',
                                                     					'value' => $quotationData['QuotationItemDetail'][0]['quantity']
                                                     					));
-                                                
-                                                // echo $this->Form->input('QuotationItemDetail.quantity_proxy',array( 
-                                                // 						'class' => 'form-control item_type ', 
-                                                //     					'label' => false, 
-                                                //     					'placeholder' => 'Quantity',
-                                                //     					//'disabled' => 'disabled',
-                                                //     					'id' => 'quantity_proxy',
-                                                //     					'value' => number_format($quotationData['QuotationItemDetail'][0]['quantity'])
-                                                //     					));
+          
                                                     					
 
                                             ?>
@@ -389,15 +381,7 @@
                                                     					'value' => $quotationData['QuotationItemDetail'][0]['unit_price']
                                                     					));
                                                     					
-                                                // echo $this->Form->input('QuotationItemDetail.unit_price_proxy',array( 
-                                                // 						'type' => 'text',
-                                                // 						'class' => 'form-control item_type ', 
-                                                //     					'label' => false, 
-                                                //     					'placeholder' => 'Unit Price',
-                                                //     					//'disabled' => 'disabled',
-                                                //     					'id' => 'unit_price_proxy',
-                                                //     					'value' => number_format($quotationData['QuotationItemDetail'][0]['unit_price'],4)
-                                                //     					));
+                                             
                                             ?>
 										</div>
 									</div>
