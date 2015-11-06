@@ -37,6 +37,12 @@ class JobTicket extends AppModel {
 					'foreignKey' => 'product_id',
 					//'conditions' => 'Company.id = Product.company_id'
 				),
+				'TicketProcess' => array(
+					'className' => 'Production.TicketProcessSchedule',
+					'foreignKey' => false,
+					'conditions' => 'TicketProcess.job_ticket_id = JobTicket.id'
+				),
+
 				// 'Company' => array(
 				// 	'className' => 'Sales.Company',
 				// 	'foreignKey' => false,
@@ -290,6 +296,26 @@ class JobTicket extends AppModel {
 	    return $this->id;
 
 
+	}
+
+	public function addTicket($machineScheduleData = array()) {
+
+			if (!empty($machineScheduleData )) {
+
+				foreach ($machineScheduleData as $key => $list) {
+					
+					$machineScheduleData[$key]['JobTicket'] = array();
+
+					if (!empty($list['TicketProcessSchedule']['job_ticket_id'])) {
+
+						$jobs = $this->find('first',array('conditions' => array('JobTicket.id' => $list['TicketProcessSchedule']['job_ticket_id'])));
+
+						$machineScheduleData[$key]['JobTicket'] = $jobs['JobTicket'];
+					}
+				}
+			}
+
+			return $machineScheduleData;
 	}
 
 }

@@ -108,7 +108,9 @@ class JobsController extends ProductionAppController {
     }
 
     public function sheeting(){
-       
+        
+        $limit = 10;
+
         $this->loadModel('Sales.Company');
 
         $this->loadModel('Ticket.JobTicket');
@@ -119,19 +121,36 @@ class JobsController extends ProductionAppController {
 
         $this->loadModel('Sales.Product');
 
+        $this->loadModel('Production.TicketProcess');
+
         $companyData = $this->Company->find('list',array('fields' => array('id','company_name')));
 
         $machineData = $this->Machine->find('list',array('fields' => array('id','name')));
 
         $productName = $this->Product->find('list',array('fields' => array('id','name')));
 
-        $this->MachineLog->bindTicket(); 
+
+        //process_department =
 
         $machineScheduleData = $this->MachineLog->find('all');
 
-        //calling data
-        //$machineScheduleData = $this->_find_machine_schedule_data(1);
-     //   pr($machineScheduleData);exit();
+         $conditions = array('TicketProcessSchedule.department_process_id' => 1);
+         $params =  array(
+                'conditions' => $conditions,
+                'limit' => $limit,
+                //'group' => array('Attendance.date'),
+                'order' => 'MachineLog.id DESC',
+        );
+
+        $this->paginate = $params;
+        
+        $this->MachineLog->bindTicket(); 
+
+        $machineScheduleData = $this->paginate('MachineLog');
+
+        //get Jobticket 
+        $machineScheduleData = $this->JobTicket->addTicket( $machineScheduleData );
+ 
         $this->set(compact('machineScheduleData','companyData','machineData','productName'));
 
     }
