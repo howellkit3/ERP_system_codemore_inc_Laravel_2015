@@ -1,26 +1,29 @@
-<?php
-    if (count($ticketData) > 0) : 
-    foreach ($ticketData as $ticketDataList): ?>
+<?php foreach ($ticketData as $ticketDataList): ?>
+
         <tr class="">
 
             <td class="">
                 <?php echo $ticketDataList['JobTicket']['uuid'] ?>  
             </td>
+
             <td class="">
-                <?php echo $ticketDataList['Product']['uuid'] ?>  
+                <?php echo substr($companyData[$ticketDataList['Product']['company_id']],0,25); ?> ..
             </td>
+
+            <td class="">
+                <?php echo 'CO-'.$ticketDataList['ClientOrder']['uuid'] ?>  
+            </td>
+           <!--  <td class="">
+                <?php echo $ticketDataList['Product']['uuid'] ?>  
+            </td> -->
             <td class="">
                 <?php echo $ticketDataList['JobTicket']['po_number'] ?> 
             </td>
             <td class="">
-                <?php echo $ticketDataList['Product']['name'] ?> 
+                <?php echo substr($ticketDataList['Product']['name'],0,25); ?> ..
             </td>
-            <td class="">
-                <?php echo $companyData[$ticketDataList['Product']['company_id']] ?> 
-            </td>
-            <td class="">
-                 <?php echo date('M d, Y', strtotime($ticketDataList['JobTicket']['created'])); ?>
-            </td>
+          
+
             <td style="text-align:center">
                 <?php
                
@@ -35,6 +38,3 @@
         </tr>
 
 <?php endforeach; ?> 
-<?php else : ?>
-   <font color="red"><b>No result..</b></font>
-<?php endif; ?>
