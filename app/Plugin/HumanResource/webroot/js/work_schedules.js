@@ -67,7 +67,7 @@
                 }
           });
       }
-    });
+    }).trigger('change');
 
 
     $body.on('submit','#search_schedules',function(e){

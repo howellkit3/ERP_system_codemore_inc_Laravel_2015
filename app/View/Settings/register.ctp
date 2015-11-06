@@ -87,6 +87,38 @@
 										</div>
 									</div>
 
+
+
+						
+									<div class="form-group">
+										<label class="col-lg-2 control-label"> </label>
+										<div class="col-lg-8">
+											<div class="checkbox-nice">
+												<input type="checkbox" id="inCharge" name="data[User][in_charge]">
+												<label for="inCharge">
+													In Charge
+												</label>
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group department-list hide ">
+										<label class="col-lg-2 control-label"> Departments </label>
+										<div class="col-lg-8" style="margin-left:10px;">
+											<div class="form-group">	
+												<?php foreach ($departments as $key => $list) { ?>
+													<div class="checkbox-nice">
+															<input type="checkbox" class="dp-selection" value="<?php echo $key; ?>" id="dp-<?php echo $key; ?>" name="data[User][departments_handle][]">
+															<label for="dp-<?php echo $key; ?>">
+																<?php echo $list; ?>
+														</label>
+													</div>
+												<?php } ?>		
+										</div>
+									</div>
+									</div>
+
+									<div class="clearfix"></div>
 									<div class="form-group">
 										<label class="col-lg-2 control-label"> </label>
 										<div class="col-lg-3">
@@ -111,6 +143,16 @@
             $("#UserRegisterForm").validate();
             //datepicker
            
+           $('#inCharge').click(function(){
+
+           		if ($(this).is(':checked')) {
+           			$('.department-list').removeClass('hide').find('input').attr('disabled',false);
+           		} else {
+
+           			$('.department-list').addClass('hide').find('input').attr('disabled',false);
+           		}
+
+           });
             
     });
 

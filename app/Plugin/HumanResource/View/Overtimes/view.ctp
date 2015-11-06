@@ -40,26 +40,40 @@ echo $this->Html->script(array(
 
                         <div class="filter-block pull-right">
 
+
                          <?php 
 
-                        echo $this->Html->script('Approved',array('controler' => 'overtimes' )); 
 
                         echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back', array('controller' => 'overtimes', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
                         
-                        echo $this->Html->link('<i class="fa fa-times fa-lg"></i> Rejected ', array('controller' => 'overtimes', 'action' => 'process',$this->request->data['Overtime']['id'],'reject'),
+
+                         if ($userData['User']['in_charge'] == 1) {
+
+                         } else {
+
+
+                             echo $this->Html->script('Approved',array('controler' => 'overtimes' )); 
+
+                              echo $this->Html->link('<i class="fa fa-times fa-lg"></i> Rejected ', array('controller' => 'overtimes', 'action' => 'process',$this->request->data['Overtime']['id'],'reject'),
                             array('class' =>' table-link btn btn-primary pull-right overtime-process',
                             'escape' => false,
                             'data-process' => 'reject',  
                             'title'=>'Edit Information',
                             ));
 
-                        echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i> Approved ', array('controller' => 'overtimes',
+                                 echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i> Approved ', array('controller' => 'overtimes',
                             'action' => 'process',
                             $this->request->data['Overtime']['id'],'approved'),
                             array('class' =>' table-link btn btn-primary pull-right overtime-process',
                                   'data-process' => 'approved',   
                                   'escape' => false));
                                             
+
+                         }
+
+                       
+
+                     
                         ?>
                         </div>
 

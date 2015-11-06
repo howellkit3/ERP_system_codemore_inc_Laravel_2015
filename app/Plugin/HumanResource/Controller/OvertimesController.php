@@ -31,6 +31,15 @@ class OvertimesController  extends HumanResourceAppController {
 			'Overtime.status' => 'approved'
 		);
 		
+		$auth = $this->Session->read('Auth.User');
+
+		if (!empty($auth['in_charge']) && $auth['in_charge'] == 1) {
+
+			$conditions = array_merge($conditions,array(
+				'Overtime.created_by' => $auth['id']
+			));
+		}
+
 		if (!empty($query['date'])) {
 			$date = $query['date'];
 
@@ -39,8 +48,7 @@ class OvertimesController  extends HumanResourceAppController {
 		 	'Overtime.date >=' => $date,			
 		 ));
 		}
-	
-		
+
 
 		if (!empty($query['department_id'])) {
 			
@@ -57,27 +65,28 @@ class OvertimesController  extends HumanResourceAppController {
 		$params =  array(
 	            'conditions' => $conditions,
 	            'limit' => $limit,
-	            'fields' => array(
-	            	'id', 
-	            	'date',
-	            	'from',
-	            	'to',
-	            	'status',
-	            	'approved_by',
-	            	'audit_date',
-	            	'employee_ids'
-	            	),
-	            'order' => 'Overtime.date ASC',
+	            // 'fields' => array(
+	            // 	'id', 
+	            // 	'date',
+	            // 	'from',
+	            // 	'to',
+	            // 	'status',
+	            // 	'approved_by',
+	            // 	'audit_date',
+	            // 	'employee_ids'
+	            // 	),
+	            'order' => 'Overtime.date DESC',
 	    );
 
 
 		$this->paginate = $params;
 
-		//$this->Overtime->bind(array('Department'));
+		$this->Overtime->bind(array('Department','User'));
 
 		$overtimes = $this->paginate();
 
-		$this->set(compact('date','search','department','departments','overtimes'));
+
+		$this->set(compact('date','search','department','departments','overtimes','auth'));
 	}
 
 
@@ -85,6 +94,8 @@ class OvertimesController  extends HumanResourceAppController {
 	public function pendings() {
 
 		$this->loadModel('HumanResource.Department');
+
+		$this->loadModel('User');
 
 		$date = date('Y-m-d');
 		
@@ -113,7 +124,7 @@ class OvertimesController  extends HumanResourceAppController {
 		 	'Overtime.date >=' => $date,			
 		 ));
 		}
-	
+		
 		if (!empty($query['department_id'])) {
 			
 			$department = $query['department_id'];	
@@ -123,33 +134,41 @@ class OvertimesController  extends HumanResourceAppController {
 			));
 		}
 
-		//$this->Attendance->bind(array('WorkSchedule','Employee','WorkShift'));
+		$auth = $this->Session->read('Auth.User');
+
+		if (!empty($auth['in_charge']) && $auth['in_charge'] == 1) {
+
+			$conditions = array_merge($conditions,array(
+				'Overtime.created_by' => $auth['id']
+			));
+		}
 
 		
 		$params =  array(
 	            'conditions' => $conditions,
 	            'limit' => $limit,
-	            'fields' => array(
-	            	'id', 
-	            	'date',
-	            	'from',
-	            	'to',
-	            	'status',
-	            	'approved_by',
-	            	'audit_date',
-	            	'Department.name'
-	            	),
-	            'order' => 'Overtime.date ASC',
+	            // 'fields' => array(
+	            // 	'id', 
+	            // 	'date',
+	            // 	'from',
+	            // 	'to',
+	            // 	'status',
+	            // 	'approved_by',
+	            // 	'audit_date',
+	            // 	'Department.name'
+	            // 	),
+	            'order' => 'Overtime.date DESC',
 	    );
 
 
 		$this->paginate = $params;
 
-		$this->Overtime->bind(array('Department'));
+		$this->Overtime->bind(array('Department','User'));
 
 		$overtimes = $this->paginate();
 
-		$this->set(compact('date','search','department','departments','overtimes'));
+
+		$this->set(compact('date','search','department','departments','overtimes','auth'));
 	}
 
 

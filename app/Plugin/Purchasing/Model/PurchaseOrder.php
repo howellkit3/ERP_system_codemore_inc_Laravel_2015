@@ -87,7 +87,7 @@ class PurchaseOrder extends AppModel {
 
 		$code =  $year. $month .$random;
 
-		$this->create();
+		//$this->create();
 
 		if (empty($purchaseOrderData['PurchaseOrder']['id'])) {
 

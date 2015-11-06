@@ -63,28 +63,40 @@ class OvertimeLimit extends AppModel {
 
 		$lastKey = key($limit);
 
+		
 			foreach ($limit as $key => $value) {
 				
 				if ($index == 0) {
 					$saveData[$key]['from'] = $begin->format("Y-m-d");
+
 				} else {
+					if (!is_array($lastDate)) {
+						$last = new DateTime($lastDate);
+						$last = $last->modify('+2 day');
 
-					$last = new DateTime($lastDate);
-					$last = $last->modify('+2 day');
-
-					$saveData[$key]['from'] = $last->format("Y-m-d");
+						$saveData[$key]['from'] = $last->format("Y-m-d");
+					}
 				}	
 				
 				$saveData[$key]['to'] =  $value;
 
-				if ($key !=  $lastKey) {
-					
+
+				if ($key !=  $lastKey && !is_array($value)) {
+				
 					$toDate =  new DateTime($value);
 					$to = $toDate->modify('+1 day');
 					$saveData[$key]['to'] =  $to->format("Y-m-d");
 				}
-			
-				$lastDate = $saveData[$key]['to'];
+				
+
+				if (is_array($value)) {
+
+					foreach ($value as $lkey => $lvalue) {
+						$lastValue = $lvalue;
+					}
+					$saveData[$key]['to'] = $lastValue;
+				
+				}
 				
 				$saveData[$key]['employee_id'] = $data['foreign_key'];
 				
@@ -98,13 +110,17 @@ class OvertimeLimit extends AppModel {
 				$saveData[$key]['used'] = $used;
 				$saveData[$key]['created_by'] = $auth['id'];
 				$saveData[$key]['modifiy_by'] = $auth['id'];
+
+				$lastDate = $saveData[$key]['to'];
 				$index++;
 
 			}
-
 			return $this->saveAll($saveData);
 			
 		}
+
+
+
 			// $this->save($data);
 		}
 	}

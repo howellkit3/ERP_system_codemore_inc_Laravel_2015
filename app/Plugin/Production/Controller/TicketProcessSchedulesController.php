@@ -20,8 +20,6 @@ class TicketProcessSchedulesController extends ProductionAppController {
 
     	if (!empty($this->request->data)) {
 
-           // pr($this->request->data);exit();
-          
             $data = $this->request->data;
 
            // fin list department procee
@@ -32,10 +30,10 @@ class TicketProcessSchedulesController extends ProductionAppController {
 
             $departmentName = $departmentData[$data['TicketProcessSchedule'][0]['department_process_id']];
 
-            //update status of jobticket
-            $this->JobTicket->id = $data['Ticket']['job_ticket_id'];
+            // //update status of jobticket
+            // $this->JobTicket->id = $data['Ticket']['job_ticket_id'];
             
-            $this->JobTicket->saveField('status_production_id',$departmentProcess);
+            // $this->JobTicket->saveField('status_production_id',$departmentProcess);
 
             $TicketProcessScheduleID = $this->TicketProcessSchedule->saveTicketProcessSchedule($data,$auth['id']);
 

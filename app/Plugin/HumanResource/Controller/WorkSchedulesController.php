@@ -24,8 +24,7 @@ class WorkSchedulesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Department');
 
-		$conditions = array();
-		$employees = $this->Employee->getList($conditions);
+		$this->loadModel('User');
 
 		$conditions = array('overtime_id' => NULL);
 		$workshifts = $this->Workshift->getList($conditions);
@@ -35,16 +34,50 @@ class WorkSchedulesController  extends HumanResourceAppController {
 		$auth = $this->Session->read('Auth.User');
 
 		$holidays = $this->Holiday->find('all',array('conditions' => $conditions ,'order' =>  array('Holiday.start_date ASC'),'fields' => array('id','name','type','start_date','end_date','year') ));
+		
+		$dpConditions = array();
+
+		if ($auth['in_charge'] == 1) {
+
+				$dpHelds = json_decode($auth['departments_handle']);
+
+				$dpConditions = array('Department.id' => $dpHelds);
+
+			
+				///$departmentIds = array();
+				//$departmentList = array();
+
+				/* foreach ($departments as $key => $list) {
+					$departmentList[$list['Department']['id']] = $list['Department']['department_position'];
+					$departmentIds[] = $list['Department']['id'];
+				} */
+		}
+
+		$departmentList = $this->Department->find('all',array('conditions' => $dpConditions,'fields' => array('id','name','description','notes','department_position')));
 
 
-		$departmentList = $this->Department->find('list',array('fields' => array('id','notes')));
+		$conditions = array();
+
+		if (!empty($dpHelds )) {
+
+			$conditions = array('Employee.department_id' => $dpHelds);
+		}
+
+		$employees = $this->Employee->getList($conditions);
+
+
+			/* foreach ($departments as $key => $list) {
+					$departmentList[$list['Department']['id']] = $list['Department']['department_position'];
+					$departmentIds[] = $list['Department']['id'];
+				} */
+
+		//$departmentList = $this->Department->find('list',array('fields' => array('id','notes')));
 
 
 		if ($this->request->is('post')) {	
-				//save attendance
+			//save attendance
+			
 			$create_schedules = $this->WorkSchedule->formatData($this->request->data,$holidays);
-
-
 			// $conditionAttendance = array();
 
 			// $conditionAttendance = array_merge($conditionAttendance,array('Attendance.in' => null));
@@ -128,6 +161,11 @@ class WorkSchedulesController  extends HumanResourceAppController {
 
 		if (!empty($id)) {
 
+
+		//check if in_charghe
+		$auth = $this->Session->read('Auth.User');
+
+
 		$this->loadModel('HumanResource.Department');
 
 		$this->loadModel('HumanResource.Employee');
@@ -138,14 +176,31 @@ class WorkSchedulesController  extends HumanResourceAppController {
 			if ($this->request->is('put')) {
 
 
+
+
 				if ($this->WorkSchedule->save($this->request->data['WorkSchedule'])) {
 
-					$this->Session->setFlash('Work Schedule saved successfully','success');
-			 		   $this->redirect( array(
+					$in_charge  = !empty($this->request->data['WorkSchedule']['in_charge']) && $this->request->data['WorkSchedule']['in_charge'] == 1  ? 1 : '';
+
+					if (!empty($in_charge) && $in_charge == 1) {
+						$this->redirect( array(
+	                             'controller' => 'work_schedules', 
+	                             'action' => 'schedules',
+	                             'tab'	=> 'schedules',
+	                             'in_charge' => $in_charge,
+	                             'default' => $this->request->data['WorkSchedule']['foreign_key']
+	                        ));
+					} else {
+
+						$this->redirect( array(
 	                             'controller' => 'schedules', 
 	                             'action' => 'work_schedules',
-	                             'tab'	=> 'work_schedules'
+	                             'tab'	=> 'work_schedules',
+	                             'in_charge' => $in_charge
 	                        ));
+					}
+					$this->Session->setFlash('Work Schedule saved successfully','success');
+			 		   
 				} else  {
 
 					$this->Session->setFlash('There\'s an error saving Schedule','error');
@@ -155,6 +210,20 @@ class WorkSchedulesController  extends HumanResourceAppController {
 
 
 			}
+
+
+
+		if (!empty($auth['in_charge']) && $auth['in_charge'] == 1 && empty($this->params['named']['in_charge'])) {
+
+				  $this->redirect( array(
+	                             'controller' => 'work_schedules', 
+	                             'action' => 'edit',
+	                             'in_charge' => 1,
+	                             'tab'	=> 'work_schedules',
+
+	                             $id,
+	                        ));
+		}
 
 
 		$conditions = array();
@@ -376,12 +445,27 @@ class WorkSchedulesController  extends HumanResourceAppController {
 				$dailynfo = $this->DailyInfo->saveDailyInfo($data);
 
 				$this->Session->setFlash('Work Schedule saved successfully','success');
-	 		   
-	 		   	$this->redirect( array(
-                         'controller' => 'schedules', 
-                         'action' => 'work_schedules',
-                         'tab'	=> 'work_schedules'
-                    ));
+
+				$in_charge  = !empty($this->request->data['WorkSchedule']['in_charge']) && $this->request->data['WorkSchedule']['in_charge'] == 1  ? 1 : '';
+
+					
+				if (!empty($in_charge) && $in_charge == 1) {
+						$this->redirect( array(
+				                 'controller' => 'work_schedules', 
+				                 'action' => 'schedules',
+				                 'tab'	=> 'schedules',
+				                 'in_charge' => $in_charge,
+				                 'default' => $this->request->data['WorkSchedule']['foreign_key']
+				            ));
+					} else {
+					   
+				   	$this->redirect( array(
+				         'controller' => 'schedules', 
+				         'action' => 'work_schedules',
+				         'tab'	=> 'work_schedules'
+				    ));
+
+				   }
 			} else  {
 
 				$this->Session->setFlash('There\'s an error saving Schedule','error');
@@ -409,15 +493,36 @@ class WorkSchedulesController  extends HumanResourceAppController {
 
 		$limit = 10;
 
-		$conditions = array('Department.prefix' => 'PO');
+		$userData = $this->Session->read('Auth.User');
 
-		$departments = $this->Department->find('list',array('conditions' => $conditions,'fields' => array('id','id')));
+		$conditions = array();
 
-		$conditions = array('Employee.department_id' => $departments);
+		if ($userData['in_charge'] == 1) {	
+
+
+			//departIds 
+
+			$departments = json_decode($userData['departments_handle']);
+			$conditions = array_merge($conditions,array('Department.id' => $departments));
+		}
+
+		$departments = $this->Department->find('all',array('conditions' => $conditions,'fields' => array('id','name','description','department_position')));
+
+		$departmentIds = array();
+		$departmentList = array();
+
+		foreach ($departments as $key => $list) {
+			$departmentList[$list['Department']['id']] = $list['Department']['department_position'];
+			$departmentIds[] = $list['Department']['id'];
+		}
+
+		$conditions = array('Employee.department_id' => $departmentIds);
 
 		$employeeList = $this->Employee->getList($conditions);
 
-		$this->set(compact('employeeList','date'));
+		$defaults = !empty($this->params['named']['default']) ? $this->params['named']['default'] : '';
+
+		$this->set(compact('employeeList','date','departments','departmentList','defaults'));
 
 		//schedules for productions
 

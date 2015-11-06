@@ -82,11 +82,31 @@
 									                        </td>
 
 									                        <td class="">
-									                           <?php echo $machineScheduleList['MachineSchedule']['quantity']; ?>
+									                           <?php //echo $machineScheduleList['MachineSchedule']['quantity']; ?>
+
+									                            <td class="">
+									                        	<?php 
+											                 			echo $this->Form->input('good',array(
+													                 		'class' => 'select-department-view form-control'
+													                 		));  ?>
+
+									                        	<?php 
+											                 			echo $this->Form->input('rejected',array(
+													                 		'class' => 'select-department-view form-control'
+													                 		));  ?>
+									                          
+									                        </td>
 									                        </td>
 
 									                        <td class="">
-									                           <?php echo $machineScheduleList['MachineSchedule']['date'].' '.$machineScheduleList['MachineSchedule']['from'].' - '.$machineScheduleList['MachineSchedule']['to']; ?>
+									                           <?php 
+
+									                           if (!empty( $machineScheduleList['MachineSchedule']['date'] )) {
+
+									                           echo $machineScheduleList['MachineSchedule']['date'].' '.$machineScheduleList['MachineSchedule']['from'].' - '.$machineScheduleList['MachineSchedule']['to']; 
+									                           }
+
+									                           ?>
 									                        </td>
 
 									                        <td class="">
@@ -95,10 +115,6 @@
 
 									                        <td class="">
 									                           <?php echo !empty($machineScheduleList['MachineLog']['start']) ? $machineScheduleList['MachineLog']['end'] : ''; ?>
-									                        </td>
-
-															<td class="">
-									                           
 									                        </td>
 
 									                       	<td>

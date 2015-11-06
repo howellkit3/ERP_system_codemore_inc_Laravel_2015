@@ -8,7 +8,20 @@
 )); ?>
 <div style="clear:both"></div>
 
-<?php echo $this->element('hr_options'); ?><br><br>
+<?php
+
+if (!empty($userData['User']['in_charge']) && $userData['User']['in_charge'] == 1) {
+
+echo $this->element('in_charge_option'); 
+
+$incharge = true;
+} else {
+$incharge = false;
+echo $this->element('hr_options'); 
+} 
+
+
+ ?><br><br>
 <?php echo $this->Form->create('Breaktime',array('url'=>(array('controller' => 'breaktimes','action' => 'add')),
 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data' ));?>
 
