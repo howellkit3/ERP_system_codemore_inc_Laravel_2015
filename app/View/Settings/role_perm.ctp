@@ -312,11 +312,9 @@
 					$('.department-list').removeClass('hide').find('input').attr('disabled',false);
 					$('#inCharge').attr('checked',true);
 
-					$('#UserID').val(data.User.id);
+					
 
 					$checkDepartments = JSON.parse(data.User.departments_handle);
-					console.log($checkDepartments);
-
 						//$('.dp-selection').attr('checked',false);
 
 						$('.department-list .dp-selection').each(function(){
@@ -329,6 +327,7 @@
 				} else {
 					$('.department-list').addClass('hide').find('input').attr('disabled',true);
 				}
+				$('#UserID').val(data.User.id);
 			
 			}
 		});
