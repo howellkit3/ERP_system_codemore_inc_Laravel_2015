@@ -27,7 +27,6 @@ class TicketingSystemsController extends TicketAppController {
 
         $limit = 20;
 
-        //$conditions = array('JobTicket.po_number' => '15-1364');
         $conditions = array();
 
         $this->JobTicket->bindTicketSchedule();
@@ -44,7 +43,7 @@ class TicketingSystemsController extends TicketAppController {
                     'OR' => array(
                         'JobTicket.uuid like' => '%'.$query['name'].'%',
                         'JobTicket.po_number like' => '%'.$query['name'].'%',
-                        //'Product.name like' => '%'.$query['name'].'%',
+                        //'ClientOrder.uuid like' => '%'.$query['name'].'%',
                         )
                 ));
                
@@ -73,6 +72,8 @@ class TicketingSystemsController extends TicketAppController {
 
 
         $ticketData = $this->paginate('JobTicket');
+
+        //pr($ticketData); exit;
         
         if (!empty($_GET['data'])) {
 
@@ -1178,4 +1179,69 @@ class TicketingSystemsController extends TicketAppController {
           exit();
         }
     }
+
+
+
+
+    public function search_ticket($hint = null){
+        
+        $this->loadModel('Sales.Company');
+
+        $joins = array(
+
+               array('table'=>'koufu_sale.client_orders', 
+                     'alias' => 'ClientOrder',
+                     'type'=>'left',
+                     'conditions'=> array(
+                     'ClientOrder.id = JobTicket.client_order_id'
+               )),
+          
+               array('table'=>'koufu_sale.products', 
+                     'alias' => 'Product',
+                     'type'=>'left',
+                     'conditions'=> array(
+                     'Product.id = JobTicket.product_id'
+               )),
+
+               array('table'=>'koufu_sale.companies', 
+                     'alias' => 'Company',
+                     'type'=>'left',
+                     'conditions'=> array(
+                     'Company.id = ClientOrder.company_id'
+               )),
+        );
+
+        $this->JobTicket->bindTicketingSearch();
+
+        $ticketData = $this->JobTicket->find('all',array(
+                    'joins'=>$joins,
+                    'conditions' => array(
+                    'OR' => array(
+                        array('JobTicket.uuid LIKE' => '%' . $hint . '%'),
+                        array('JobTicket.po_number LIKE' => '%' . $hint . '%'),
+                        array('ClientOrder.uuid LIKE' => '%' . $hint . '%'),
+                        array('ClientOrder.po_number LIKE' => '%' . $hint . '%'),
+                        array('Product.name LIKE' => '%' . $hint . '%')
+                          )
+                        ),
+                      'limit' => 15,
+                      )); 
+     
+        $companyData = $this->Company->find('list',array('fields' => array('id','company_name')));
+
+        $this->set(compact('ticketData','companyData'));
+
+
+        if ($hint == ' ') {
+
+            $this->render('index');
+
+        }else{
+
+            $this->render('TicketingSystems/ajax/index');
+
+        }
+    }
+
+
 }

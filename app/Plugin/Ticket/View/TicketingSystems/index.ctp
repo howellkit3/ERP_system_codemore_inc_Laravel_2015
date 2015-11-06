@@ -25,18 +25,23 @@
                     <table class="table table-striped table-hover sortable">
                         <thead>
                             <tr>
-                                <th class="table-header" style="width:100px;">Ticket id</th>
-                                <th class="table-header" style="width:130px;">Product No.</th>
+                                <th class="table-header" >Ticket id</th>
+                                <th class="table-header">Company</th>
+                                <th class="table-header" >Client Order #</th>
+                             <!--    <th class="table-header" >Product No.</th> -->
                                 <th class="table-header">PO No.</th>
                                 <th class="table-header">Item Name </th>
-                                <th class="table-header">Company</th>
-                                <th>Created</th>
                                 <th style="text-align:center">Action</th>
                             </tr>
                         </thead>
 
-                        <?php echo $this->element('ticket_table'); ?>
-
+                        <tbody aria-relevant="all" aria-live="polite" class="requestFields" role="alert" >
+                          
+                              <?php echo $this->element('ticket_table'); ?>
+                         
+                        </tbody>
+                        <tbody aria-relevant="all" aria-live="polite" class="searchAppend" role="alert" >
+                        </tbody>
 
                     </table>
                     <hr>
@@ -64,47 +69,50 @@
     }
 </style>
 <script>
-    
-    $('document').ready(function(e){
 
-function searchJobTicket() {
+    $("body").on('keyup','.searchTickets', function(e){
 
-        $this = $('.searchTickets');
+        var searchInput = $(this).val();
+      
+        if(searchInput != ''){
 
-        $container = $('.result_ticket_table');
+            $('.requestFields').hide();
+            $('.searchAppend').show();
+            //alert('hide');
 
-        $container.html('<img src="'+serverPath+'/img/loader.gif"/>');
+        }else{
 
+            $('.requestFields').show();
+            $('.searchAppend').hide();
+            //alert('show');
+        }
+        
         $.ajax({
+            type: "GET",
+            url: serverPath + "ticket/ticketing_systems/search_ticket/"+searchInput,
+            dataType: "html",
+            success: function(data) {
 
-        url: serverPath + "ticket/ticketing_systems/index/",
-        type: "GET",
-        dataType: "html",
-        data : {'name' : $this.val() },
-        success: function(data) {
-            
+                //alert(data);
 
-             $container.html(data); 
-            
+                if(data){
+
+                    $('.searchAppend').html(data);
+
+                } 
+                if (data.length < 5 ) {
+
+                    $('.searchAppend').html('<font color="red"><b>No result..</b></font>');
+                     
+                }
+                
             }
-        }); 
-}
+        });
 
-var timeout;
-
-$('.searchTickets').keypress(function() {
-    if(timeout) {
-        clearTimeout(timeout);
-        timeout = null;
-    }
-
-    timeout = setTimeout(searchJobTicket,400)
-})
-
-
-     });
-
-
-
+    });
 
 </script>
+
+
+
+

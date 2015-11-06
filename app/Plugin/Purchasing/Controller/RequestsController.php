@@ -741,7 +741,7 @@ class RequestsController extends PurchasingAppController {
 
 	}
 
-		public function search_request($hint = null){
+	public function search_request($hint = null){
 
         $this->loadModel('Purchasing.Request');
 
