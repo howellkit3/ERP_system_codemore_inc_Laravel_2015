@@ -312,11 +312,11 @@ class ReceivingsController extends WareHouseAppController {
 
 			$receivedData = $this->ReceivedOrder->find('first', array('conditions' => array('ReceivedOrder.purchase_order_id' => $id)));
 				
+			$this->PurchaseOrder->id = $id;
+
 			if(empty($receivedData['ReceivedOrder']['id'])){
 
 				$itemId = $this->ReceivedOrder->saveReceivedOrders($this->request->data['ReceivedItems'],$userData['User']['id'],$id);
-
-				$this->PurchaseOrder->id = $id;
 
 				$this->PurchaseOrder->saveField('status_id', 10);
 
@@ -326,17 +326,28 @@ class ReceivingsController extends WareHouseAppController {
 
 			}
 
-			if(!empty($this->request->data['Receivings']['receive_status'])){
-
-				$this->PurchaseOrder->id = $id;
-
-				$this->PurchaseOrder->saveField('receive_item_status', 1);
-
-			}
+			
 
 			$deliveryUUID = $this->DeliveredOrder->saveDeliveredOrder($userData['User']['id'], $itemId, $id, $this->request->data['DeliveredOrders']);
 
 			$this->ReceivedItem->saveReceivedItems($itemId, $this->request->data, $deliveryUUID);
+
+			$remaining = 0;
+
+			foreach ($this->request->data['requestPurchasingItem'] as $key => $requestDataList){
+
+				$remaining = $remaining + $requestDataList['quantity']; 
+
+			}
+
+			$totalRemaining = $this->request->data['Receivings']['remainingquantity'] - $remaining;
+
+			if(!empty($this->request->data['Receivings']['receive_status']) || $totalRemaining <= 0){
+
+
+				$this->PurchaseOrder->saveField('receive_item_status', 1);
+
+			}
 
 			$this->Session->setFlash(__('Order has been received'), 'success'); 
           
