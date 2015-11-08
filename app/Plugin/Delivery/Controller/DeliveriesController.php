@@ -18,7 +18,7 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
-        $deliveryData = $this->Delivery->find('list',array('fields' => array('schedule_uuid','status'))); 
+     //   $deliveryData = $this->Delivery->find('list',array('fields' => array('schedule_uuid','status'))); 
         
        // $this->ClientOrder->bindDelivery();
         $clientsStatus = $this->ClientOrderDeliverySchedule->find('all',array( 'conditions' => array(
@@ -28,15 +28,15 @@ class DeliveriesController extends DeliveryAppController {
         $this->Delivery->bindDelivery();
         $deliveryStatus = $this->Delivery->find('all');
 
-       // pr($deliveryStatus); exit;
+     //  pr($deliveryStatus); exit;
 
-        $orderList = $this->DeliveryDetail->find('list',array('fields' => array('delivery_uuid', 'status')));
+      //  $orderList = $this->DeliveryDetail->find('list',array('fields' => array('delivery_uuid', 'status')));
 
-        $orderListHelper = $this->Delivery->find('list',array('fields' => array('clients_order_id', 'dr_uuid')));
+       // $orderListHelper = $this->Delivery->find('list',array('fields' => array('clients_order_id', 'dr_uuid')));
 
         $orderDeliveryList = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid', 'uuid')));
 
-        $deliveryDetailList = $this->DeliveryDetail->find('list',array('fields' => array('delivery_uuid', 'delivered_quantity')));
+        //$deliveryDetailList = $this->DeliveryDetail->find('list',array('fields' => array('delivery_uuid', 'delivered_quantity')));
 
         $this->ClientOrderDeliverySchedule->bind(array('ClientOrder', 'QuotationDetail','Company', 'Product'));
 
@@ -67,6 +67,25 @@ class DeliveriesController extends DeliveryAppController {
         );
 
         $clientsOrder = $this->paginate('ClientOrderDeliverySchedule');
+
+        foreach ($clientsOrder as $key => $value){
+
+            foreach ($deliveryStatus as $key1 => $valueofDelivery){
+    
+                if($value['ClientOrderDeliverySchedule']['uuid'] == $valueofDelivery['Delivery']['schedule_uuid']){
+
+
+                    $clientsOrder[$key]['DeliveryDetail']['quantity'] = $valueofDelivery['DeliveryDetail']['quantity'];
+                    $clientsOrder[$key]['DeliveryDetail']['delivered_quantity'] = $valueofDelivery['DeliveryDetail']['delivered_quantity'];
+                    $clientsOrder[$key]['Delivery']['status'] = $valueofDelivery['Delivery']['status'];
+                    $clientsOrder[$key]['Delivery']['dr_uuid'] = $valueofDelivery['Delivery']['dr_uuid'];
+                    $clientsOrder[$key]['DeliveryDetail']['status'] = $valueofDelivery['DeliveryDetail']['status'];
+
+
+                }
+
+            }
+        }
 
        // pr($clientsOrder); exit;
 
