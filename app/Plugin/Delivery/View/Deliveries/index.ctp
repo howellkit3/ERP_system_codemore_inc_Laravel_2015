@@ -39,7 +39,12 @@
                                 <div class="tab-content">
                                     <div class="tab-pane fade  <?php echo ($active_tab == 'tab-waiting') ? 'in active' : '' ?>" id="tab-waiting">
                                          waiting
+
+                                        <?php //$tableHolder = "1"; ?>
+
                                         <?php echo $this->element('index'); ?><br><br>
+
+
                                         
                                     </div>
 

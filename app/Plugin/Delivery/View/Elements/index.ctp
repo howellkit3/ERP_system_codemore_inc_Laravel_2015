@@ -17,9 +17,13 @@
                         </thead>
 
                         <tbody aria-relevant="all" aria-live="polite" class="OrderFields" role="alert" >
-                            <!-- <div class ="field"> -->
-                            <?php echo $this->element('schedule_requests_table'); ?> 
-                            <!-- </div> -->
+                            
+                            <?php// if($tableHolder == "1"){?>
+
+                                <?php echo $this->element('schedule_requests_table'); ?> 
+
+                            <?php //} ?>
+
                         </tbody>
                         <tbody aria-relevant="all" aria-live="polite" class="searchAppend" role="alert" >
                         </tbody>
