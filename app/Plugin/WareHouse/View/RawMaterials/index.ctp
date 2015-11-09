@@ -59,6 +59,17 @@
                                 <td>
                                     <?php 
 
+                                        if (!empty($list['ItemSpec'][0]['id'])) {
+
+
+                                                    foreach ($list['ItemSpec'] as $key => $measure) {
+                                                        
+                                                        echo $measure['width'].' X '.$measure['length'].' '.$measure['unit'];
+
+                                                         echo  ($key >= 0) ? '<br>' : '';
+                                                    }
+                                        } else {
+
                                         if (!empty($list['Item']['width']) && !empty($list['Item']['length'])) {
 
 
@@ -71,6 +82,9 @@
                                                 echo  $list['Item']['measure'];
                                             }
                                         }
+
+                                        }
+                                      
                                   ?>
                                 </td>
                                 

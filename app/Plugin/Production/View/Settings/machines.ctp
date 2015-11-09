@@ -1,12 +1,11 @@
-<?php $this->Html->addCrumb('Production', array('controller' => 'dashboards', 'action' => 'index')); ?>
-<?php $this->Html->addCrumb('Settings', array('controller' => 'settings', 'action' => 'machines')); ?>
-<?php $this->Html->addCrumb('Machine', array('controller' => 'settings', 'action' => 'machines')); 
-	$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
-?>
-
 <?php 
+	$this->Html->addCrumb('Production', array('controller' => 'dashboards', 'action' => 'index')); 
+	$this->Html->addCrumb('Settings', array('controller' => 'settings', 'action' => 'machines'));
+	$this->Html->addCrumb('Machine', array('controller' => 'settings', 'action' => 'machines')); 
 	$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
- 	echo $this->element('tab/jobs',array('active_tab' => $active_tab)); 
+	$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
+ 	echo $this->element('tab/jobs',array('active_tab' => $active_tab));
+
  ?>
 
 <div class="row">
