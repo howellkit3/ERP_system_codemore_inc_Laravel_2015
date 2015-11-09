@@ -6,49 +6,37 @@ $totalremaining = 0;
 
       <?php  foreach ($DRData as $deliveryDataList): ?>
 
-
-
                     <tr class="">
 
                         <td class="">
                               <?php echo $deliveryDataList['DeliveryReceipt']['dr_uuid']; ?>
                         </td>
 
-                        <td class="">
+                        <!-- <td class="">
 
                             <?php  echo date('M d, Y',strtotime($deliveryDataList['DeliveryReceipt']['schedule'])); ?>
                         
-                        </td>
+                        </td> -->
 
                         <td class="">
 
-                            <?php echo ucfirst($deliveryDataList['DeliveryReceipt']['location']); ?>
+                            <?php echo substr($deliveryDataList['Company']['name'],0,25); ?> ..
                         
                         </td>
 
                         <td class="">
 
-                            <?php echo $deliveryDataList['DeliveryReceipt']['quantity']; ?>
+                            <?php echo ucfirst(substr($deliveryDataList['Product']['name'],0,25)); ?>..
                         
                         </td>
                       
-                        <td class="">
-                            <?php if(!empty($deliveryDataList['DeliveryReceipt']['remarks'])){ ?>
-                                <?php echo $deliveryDataList['DeliveryReceipt']['remarks']; ?>
-                             <?php } ?>
-                        </td>
 
-                        <td class="">
+                        <td class="text-center">
 
-                            <?php echo ucfirst($userFName[$deliveryDataList['DeliveryReceipt']['printed_by']]) . " " . ucfirst($userLName[$deliveryDataList['DeliveryReceipt']['printed_by']]); ?>
-                        
-                        </td>
+                           <?php echo ucfirst($deliveryDataList['DeliveryReceipt']['quantity']); ?>
 
-                        <td class="">
-
-                            <?php  echo date('M d, Y',strtotime($deliveryDataList['DeliveryReceipt']['printed'])); ?>
-                        
-                        </td>
+                         
+                       </td>
 
                          <td class="">
 
@@ -63,9 +51,31 @@ $totalremaining = 0;
 
                         </td>
 
-                        <td>
+                        <td class="">
+                            <?php if(!empty($deliveryDataList['DeliveryReceipt']['remarks'])){ ?>
+                                <?php echo $deliveryDataList['DeliveryReceipt']['remarks']; ?>
+                             <?php } ?>
+                        </td>
 
-                           <?php 
+                        <td class="">
+
+                            <?php  echo date('M d, Y',strtotime($deliveryDataList['DeliveryReceipt']['printed'])); ?>
+                        
+                        </td>
+
+                        <td class="">
+
+                            <?php echo ucfirst($userFName[$deliveryDataList['DeliveryReceipt']['printed_by']]) . " " . ucfirst($userLName[$deliveryDataList['DeliveryReceipt']['printed_by']]); ?>
+                        
+                        </td>
+
+                       
+
+                       
+                    </tr>
+
+
+                     <!--  <?php 
 
                             echo $this->Html->link('<span class="fa-stack">
                                                      <i class="fa fa-square fa-stack-2x"></i>
@@ -76,7 +86,7 @@ $totalremaining = 0;
                                                      $deliveryDataList['DeliveryReceipt']['id']),
                                                       array('class' =>' table-link small-link-icon '.$noPermissionSales,'escape' => false,'title'=>'Edit Information'
                                                  )); 
-                                            ?>     
+                            ?>  -->    
 
                             <?php  
                                 // echo $this->Html->link('<span class="fa-stack">
@@ -85,8 +95,6 @@ $totalremaining = 0;
                                 // </span>', array('controller' => 'deliveries', 'action' => 'dr',$deliveryDataList['DeliveryReceipt']['dr_uuid'],$deliveryDataList['Delivery']['schedule_uuid']),array('class' =>' table-link','escape' => false,'title'=>'Print Delivery Receipt'));
 
                             ?>
-                       </td>
-                    </tr>
      
                
         <?php 

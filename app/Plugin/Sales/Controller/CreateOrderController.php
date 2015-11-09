@@ -154,8 +154,7 @@
 	            											'ProductSpecification.product_id' => 
 	            													$this->request->data['Product']['id'])));
 
-
-
+	            	
 	            	if(empty($checkSpec)){
 
 	            		$checkSpec = 0;
@@ -166,6 +165,8 @@
 	            		$this->JobTicket->saveTicket($this->request->data, $userData['User']['id'], $clientOrderId);
 	            		
 	            	}
+
+
 
 
 	            	//update quotation details
@@ -193,6 +194,30 @@
 
 	            }
 	        }
+		}
+
+		public function create_ticket($productId = null, $clientOrderId = null, $po_number = null, $productUUID = null){
+
+			$this->loadModel('Ticket.JobTicket');
+
+			$userData = $this->Session->read('Auth');
+
+			$data['Product']['id'] = $productId;
+			$data['ClientOrder']['po_number'] = $po_number;
+
+			$jobTicketID = $this->JobTicket->saveTicket($data, $userData['User']['id'], $clientOrderId);
+
+			$this->Session->setFlash(
+	                __('Client Order Product specification successfully completed', 'success')
+	            );
+
+			return $this->redirect(array('controller' => 'ticketing_systems',
+						'action' => 'view',
+						$productUUID,
+						$jobTicketID,
+						$clientOrderId,
+						'plugin' => 'ticket'));
+
 		}
 
 		public function view_specs($productId = null,$ifSpec = null,$clientOrderId = null){
@@ -252,11 +277,12 @@
 												 )
 												));
 
+	        $this->Product->bindProduct();
+
 			$productData = $this->Product->findById($productId);
 
-
 			
-
+			
 			$specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productData['Product']['id'])));
 			
 			//find if product has specs
