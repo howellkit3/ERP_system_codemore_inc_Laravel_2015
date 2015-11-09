@@ -40,6 +40,8 @@ class Product extends AppModel {
 					'foreignKey' => 'item_type_holder_id',
 					'dependent' => true
 				),
+
+			
 				// 'ClientOrder' => array(
 				// 	'className' => 'ClientOrder',
 				// 	'foreignKey' => 'item_type_holder_id',
@@ -92,6 +94,13 @@ class Product extends AppModel {
 					'className' => 'Sales.Company',
 					'foreignKey' => false,
 					'conditions' => 'Product.company_id = Company.id'
+				),	
+
+
+				'JobTicket' => array(
+					'className' => 'Ticket.JobTicket',
+					'foreignKey' => 'product_id',
+					//'conditions' => 'Product.id = JobTicket.product_id'
 				),		
 			)
 		));
