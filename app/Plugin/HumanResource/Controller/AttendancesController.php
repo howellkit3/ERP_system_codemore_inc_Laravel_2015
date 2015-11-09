@@ -1040,8 +1040,10 @@ public function daily_info() {
 									// pr('-------');
 
 									if (!empty($alist['Attendance']['employee_id'])) {
+
+										$dateIn = date('Y-m-d h:i',strtotime($alist['Attendance']['in'])).':00';
 										
-										if (strtotime($alist['Attendance']['in']) > strtotime($inToday.' '.$alist['MyWorkshift']['from'])) {
+										if (strtotime($dateIn) > strtotime($inToday.' '.$alist['MyWorkshift']['from'])) {
 
 											$filter[$start_date][$attendanceKey]['Attendance'] = $alist['Attendance'];
 

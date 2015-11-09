@@ -23,13 +23,13 @@
 					<tr>
 						<td style="width:123px;font-family: Calibri;">Attention</td>
 						<td style="width:20px;">:</td>
-						<td style="width:400px;">
+						<td style="width:350px;">
 							<?php 
 							// 	echo $quotation['Quotation']['attention_details']
 								echo ucfirst($quotation['ContactPerson']['firstname']).' '.ucfirst($quotation['ContactPerson']['lastname'])
 							?>
 						</td>
-						<td>
+						<td style="line-height:1;text-align:right">
 							No : <u>PQ-<?php echo $quotation['Quotation']['uuid'] ?></u>
 						</td>
 					</tr>
@@ -37,7 +37,7 @@
 						<td style="width:123px;font-family: Calibri;">Company</td>
 						<td style="width:20px;">:</td>
 						<td> <?php echo !empty($quotation['Quotation']['company_id']) ? ucfirst($companyData[$quotation['Quotation']['company_id']]) : ucfirst($companyData[$inquiryId[$quotation['Quotation']['inquiry_id']]]) ?></td>
-						<td>Date:
+						<td style="line-height:1;text-align:right">Date:
 							<?php echo !empty($quotation['Quotation']['created']) ? date('Y/m/d', strtotime($quotation['Quotation']['created'])) : '' 
 							?>
 						</td>
