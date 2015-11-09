@@ -91,7 +91,6 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 												<th><a href="#"><span>Del Schedule.</span></a></th>
 												<th><a href="#"><span>Customer</span></a></th>
 												<th><a href="#" class="text-center"><span>Product</span></a></th>
-												<th><a href="#" class="text-center"><span>Quantity</span></a></th>
 												<th><a href="#" class="text-center"><span>Production Status</span></a></th>
 												<th><a href="#"><span>Remarks</span></a></th>
 												<th><a href="#"><span>Action</span></a></th>
@@ -119,21 +118,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 									                        <td class="">
 									                           <?php echo ucfirst($jobList['Product']['name']); ?>
 									                        </td>
-
-									                        <td class="">
-									                        	<?php 
-											                 			echo $this->Form->input('good',array(
-													                 		'class' => 'select-department-view form-control'
-													                 		));  ?>
-
-									                        	<?php 
-											                 			echo $this->Form->input('rejected',array(
-													                 		'class' => 'select-department-view form-control'
-													                 		));  ?>
-									                          
-									                        </td>
-
-									                        <td class="text-center">
+															<td class="text-center">
 									                           <?php 
 									                           		if (empty($jobList['JobTicket']['status_production_id'])) {
 									                           			echo "<span class='label label-default'>Waiting For Schedule</span>";
