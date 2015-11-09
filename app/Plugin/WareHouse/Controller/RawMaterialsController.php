@@ -15,7 +15,7 @@ class RawMaterialsController extends WareHouseAppController {
 
 
 
-		$this->Item->bind(array('ItemCategory'));	
+		$this->Item->bind(array('ItemCategory','ItemSpec'));	
 
 		$limit = 10;
 
@@ -25,7 +25,7 @@ class RawMaterialsController extends WareHouseAppController {
 	            'conditions' => $conditions,
 	            'limit' => $limit,
 	            //'fields' => array('id', 'status','created'),
-	            'order' => 'Item.name ASC',
+	            'order' => 'Item.id DESC',
 	    );
 
 		$this->paginate = $params;
@@ -41,6 +41,8 @@ class RawMaterialsController extends WareHouseAppController {
 
 		$this->loadModel('ItemCategoryHolder');
 
+		$this->loadModel('WareHouse.ItemSpec');
+
 		$this->loadModel('WareHouse.Item');
 
 		$this->loadModel('WareHouse.Department');
@@ -53,9 +55,11 @@ class RawMaterialsController extends WareHouseAppController {
 
 			$this->request->data['Item']['created_by'] = 
 			$this->request->data['Item']['modified_by'] = $auth['id'];
-			
+				
+	
+
 			//check if others
-			if ($this->request->data['Item']['department_id'] == 'others' ) {
+			if (!empty($this->request->data['Item']['department_id'] ) && $this->request->data['Item']['department_id'] == 'others' ) {
 
 				$data['name'] = $this->request->data['Item']['department_id_others'];
 
@@ -63,7 +67,7 @@ class RawMaterialsController extends WareHouseAppController {
 
 				$this->request->data['Item']['department_id'] = $departmentId;
 			}
-			if ($this->request->data['Item']['supplier'] == 'others' ) {
+			if (!empty($this->request->data['Item']['supplier'] ) && $this->request->data['Item']['supplier'] == 'others' ) {
 
 				$data['name'] = $this->request->data['Item']['supplier_id_others'];
 
@@ -71,9 +75,13 @@ class RawMaterialsController extends WareHouseAppController {
 
 				$this->request->data['Item']['supplier'] = $supplierId;
 			}
-			
+
+		
 
 			if ($this->Item->save($this->request->data['Item'])) {
+
+				//check specs 
+			$specs = $this->ItemSpec->saveSpec($this->Item->id,$this->request->data);
 
 				$this->Session->setFlash('Raw Material successfully added!','success');
 		  		 $this->redirect( array('controller' => 'raw_materials', 'action' => 'index'));
@@ -152,6 +160,8 @@ class RawMaterialsController extends WareHouseAppController {
 
 		$this->loadModel('WareHouse.Item');
 
+		$this->loadModel('WareHouse.ItemSpec');
+
 		$this->loadModel('WareHouse.Department');
 
 		$this->loadModel('Supplier');
@@ -165,6 +175,12 @@ class RawMaterialsController extends WareHouseAppController {
 
 		
 			if ($this->Item->save($this->request->data['Item'])) {
+
+
+				//check specs 
+				$specs = $this->ItemSpec->saveSpec($this->Item->id,$this->request->data);
+
+		
 
 				$this->Session->setFlash('Item updated!','success');
 					
@@ -189,7 +205,10 @@ class RawMaterialsController extends WareHouseAppController {
 
 		if (!empty($id)) {
 
+			$this->Item->bind(array('ItemCategory','ItemSpec'));
+
 			$this->request->data = 	$this->Item->findById($id);
+
 		}
 
 
@@ -208,11 +227,15 @@ class RawMaterialsController extends WareHouseAppController {
 	public function delete($id = null){
 
 
-
 		$this->loadModel('WareHouse.Item');
+
+		$this->loadModel('WareHouse.ItemSpec');
 
 		if ($this->Item->delete($id)) {
 			
+			//delete all specs
+			$this->ItemSpec->removeItemSpec($id);
+
 			$this->Session->setFlash(__('Item has been deleted successfully.'),'success');
 			$this->redirect(
 				array('controller' => 'raw_materials', 'action' => 'index')

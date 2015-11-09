@@ -2332,3 +2332,47 @@ ALTER TABLE `koufu_warehouse`.`items`
 
 ALTER TABLE `koufu_warehouse`.`items` 
 ADD COLUMN `inch` VARCHAR(255) NULL AFTER `width`;
+
+
+/* aldrin added this nov 9 2015 */
+DROP TABLE IF EXISTS `item_specs`;
+CREATE TABLE `item_specs` (
+  `id` int(11) DEFAULT NULL,
+  `items_id` int(11) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `unit` varchar(255) DEFAULT NULL,
+  `item_group_id` int(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+ALTER TABLE `item_specs`
+ADD COLUMN `width`  varchar(255) NULL AFTER `unit`,
+ADD COLUMN `length`  varchar(255) NULL AFTER `width`;
+-- ----------------------------
+-- Table structure for `item_specs`
+-- ----------------------------
+DROP TABLE IF EXISTS `item_specs`;
+CREATE TABLE `item_specs` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `items_id` int(11) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `unit` varchar(255) DEFAULT NULL,
+  `width` varchar(255) DEFAULT NULL,
+  `length` varchar(255) DEFAULT NULL,
+  `item_group` varchar(255) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `item_specs`
+ADD COLUMN `unit_width`  varchar(255) NULL AFTER `length`,
+ADD COLUMN `unit_length`  varchar(255) NULL AFTER `unit_width`;
+

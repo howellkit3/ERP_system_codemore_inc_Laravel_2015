@@ -23,7 +23,14 @@ class Item extends AppModel {
 	          'className' => 'WareHouse.ItemCategory',
 	          'foreignKey' => 'category_type_id'
 	        ),
-	      )
+	      ),
+	     'hasMany' => array(
+	     	'ItemSpec' => array(
+	          'className' => 'WareHouse.ItemSpec',
+	          'foreignKey' => 'items_id',
+	        ),
+
+	     )
 
 	    ), false);
 
