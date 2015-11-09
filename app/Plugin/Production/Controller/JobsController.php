@@ -107,6 +107,63 @@ class JobsController extends ProductionAppController {
         
     }
 
+    public function view_process($id = null) {
+
+        if (!empty($id)) {
+
+            $limit = 10;
+
+            $this->loadModel('Production.ProcessDepartment');
+
+            $this->loadModel('Sales.Company');
+
+            $this->loadModel('Ticket.JobTicket');
+
+            $this->loadModel('Production.Machine');
+
+            $this->loadModel('Production.MachineLog');
+
+            $this->loadModel('Sales.Product');
+
+            $this->loadModel('Production.TicketProcess');
+
+            $companyData = $this->Company->find('list',array('fields' => array('id','company_name')));
+
+            $machineData = $this->Machine->find('list',array('fields' => array('id','name')));
+
+            $productName = $this->Product->find('list',array('fields' => array('id','name')));
+
+            $processDepartment = $this->ProcessDepartment->findById($id);
+
+            //process_department =
+
+            $machineScheduleData = $this->MachineLog->find('all');
+
+            $conditions = array('TicketProcessSchedule.department_process_id' => $id);
+             $params =  array(
+                    'conditions' => $conditions,
+                    'limit' => $limit,
+                    //'group' => array('Attendance.date'),
+                    'order' => 'MachineLog.id DESC',
+            );
+
+            $this->paginate = $params;
+            
+            $this->MachineLog->bindTicket(); 
+
+            $machineScheduleData = $this->paginate('MachineLog');
+
+
+        //get Jobticket 
+        $machineScheduleData = $this->JobTicket->addTicket( $machineScheduleData );
+ 
+        $this->set(compact('machineScheduleData','companyData','machineData','productName','processDepartment'));
+
+        $this->render('Jobs/processes/default');
+           
+        }
+    }
+
     public function sheeting(){
         
         $limit = 10;
@@ -147,6 +204,9 @@ class JobsController extends ProductionAppController {
         $this->MachineLog->bindTicket(); 
 
         $machineScheduleData = $this->paginate('MachineLog');
+
+        pr( $machineScheduleData );
+        exit();
 
         //get Jobticket 
         $machineScheduleData = $this->JobTicket->addTicket( $machineScheduleData );

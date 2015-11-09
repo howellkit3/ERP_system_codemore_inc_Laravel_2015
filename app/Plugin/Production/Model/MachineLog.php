@@ -52,9 +52,11 @@ class MachineLog extends AppModel {
 			$data['MachineLog']['start'] = $timeHolder;
 			$data['MachineLog']['start_by'] = $auth;
 			//pr($data); exit;
-			$this->save($data);
+			$id = $this->save($data);
 
 		} 
+
+		return $id;
 	}
 	
 }

@@ -109,18 +109,20 @@
 								      	if($specLists['ProductSpecificationDetail']['model'] == 'Component'){
 
 								      		echo $this->element('Specs/component', array('formatDataSpecs' => $formatDataSpecs[$key],'key' => $componentCounter));
+								      		
 								      		$componentCounter++;
 								      	}
 								      	if($specLists['ProductSpecificationDetail']['model'] == 'Part'){
 								      		
 								      		echo $this->element('Specs/part', array('formatDataSpecs' => $formatDataSpecs[$key],'key' => $partCounter));
+								      		
 								      		$partCounter++;
 								      		
 								      	}
 								      	if($specLists['ProductSpecificationDetail']['model'] == 'Process'){
-
+											
+											echo $this->element('Specs/process', array('dataSpecs' => $formatDataSpecs[$key],'key' => $processCounter,'subProcessData' => $subProcessData,'ticketData' => $jobTickets));
 								      		
-								      		echo $this->element('Specs/process', array('dataSpecs' => $formatDataSpecs[$key],'key' => $processCounter,'subProcessData' => $subProcessData,'ticketData' => $jobTickets));
 								      		$processCounter++;
 
 								      	}

@@ -24,17 +24,17 @@ class TicketProcessSchedulesController extends ProductionAppController {
 
            // fin list department procee
 
-            $departmentData = $this->ProcessDepartment->find('list', array('fields' => array('id', 'name')));
+            // $departmentData = $this->ProcessDepartment->find('list', array('fields' => array('id', 'name')));
 
-            $departmentProcess = $data['TicketProcessSchedule'][0]['department_process_id'];
+            // $departmentProcess = $data['TicketProcessSchedule'][0]['department_process_id'];
 
-            $departmentName = $departmentData[$data['TicketProcessSchedule'][0]['department_process_id']];
-
+            // $departmentName = $departmentData[$data['TicketProcessSchedule'][0]['department_process_id']];
             // //update status of jobticket
             // $this->JobTicket->id = $data['Ticket']['job_ticket_id'];
             
             // $this->JobTicket->saveField('status_production_id',$departmentProcess);
 
+   
             $TicketProcessScheduleID = $this->TicketProcessSchedule->saveTicketProcessSchedule($data,$auth['id']);
 
             $this->MachineLog->saveMachineLog($TicketProcessScheduleID, $auth['id']);
@@ -45,6 +45,7 @@ class TicketProcessSchedulesController extends ProductionAppController {
                 $ajaxData['JobTicket']['id'] = $data['Ticket']['job_ticket_id'];
                 $ajaxData['JobTicket']['process_name'] = $departmentName;
 
+                pr($ajaxData);
                 echo json_encode($ajaxData);
                 exit();
             }

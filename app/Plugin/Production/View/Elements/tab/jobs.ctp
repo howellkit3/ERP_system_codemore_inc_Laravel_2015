@@ -33,7 +33,7 @@
 					'plugin' => 'production')); ?>
 					
 				</li>
-				<li>
+<!-- 				<li>
 					<?php echo $this->Html->link('Sheeting / Cutting',array(
 					'controller' => 'jobs',
 					'action' => 'sheeting?'.rand(1000,9999).'='.date("is"),
@@ -126,8 +126,22 @@
 					'action' => 'machines?'.rand(1000,9999).'='.date("is"),
 					'tab' => 'machines',
 					'plugin' => 'production')); ?>
+				</li> -->
+
+				<?php if (!empty($processesDpt)) : ?>
+
+					<?php foreach($processesDpt as $processKey => $action) :?>
+						<li>
+					<?php echo $this->Html->link(ucwords($action['ProcessDepartment']['name']),array(
+					'controller' => 'jobs',
+					'action' => 'view_process',
+					$action['ProcessDepartment']['id'],
+					'tab' => strtolower(Inflector::slug($action['ProcessDepartment']['name'], '-')),
+					'plugin' => 'production')); ?>
 				</li>
 
+					<?php endforeach; ?>	
+				<?php endif; ?>	
 			</ul>
 		</div>
 	</div>
