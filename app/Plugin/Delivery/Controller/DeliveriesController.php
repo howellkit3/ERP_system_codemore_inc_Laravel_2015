@@ -668,21 +668,11 @@ class DeliveriesController extends DeliveryAppController {
 
         $userData = $this->Session->read('Auth');
 
-        $this->loadModel('Sales.ClientOrderDeliverySchedule');
-
-        $this->loadModel('Sales.ClientOrder');
-
         $this->loadModel('User');
 
         $this->loadModel('Delivery.DeliveryReceipt');
 
-        $this->loadModel('Delivery.Delivery');
-
-        $this->Delivery->bindDelivery();
-
-        $this->DeliveryReceipt->bind('Delivery');
-
-        $this->ClientOrder->bindDelivery();
+        $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
         $userFName = $this->User->find('list',array('fields' => array('id','first_name')));
 
@@ -690,36 +680,56 @@ class DeliveriesController extends DeliveryAppController {
 
         $noPermissionSales = ' ';
 
-        $this->DeliveryReceipt->bind('Delivery');
+        $this->DeliveryReceipt->bindDelivery();
 
         $this->DeliveryReceipt->recursive = 1;
 
         $limit = 10;
 
-        $conditions = array();
-    
+        $conditions = "";
         $this->paginate = array(
             'conditions' => $conditions,
             'limit' => $limit,
             'fields' => array(
-                'DeliveryReceipt.id', 
-                'DeliveryReceipt.dr_uuid', 
+                'DeliveryReceipt.id',
+                'DeliveryReceipt.dr_uuid',
                 'DeliveryReceipt.schedule',
                 'DeliveryReceipt.quantity',
-                'DeliveryReceipt.location',
-                'DeliveryReceipt.remarks',
-                'DeliveryReceipt.printed_by',
-                'DeliveryReceipt.printed',
+                'DeliveryReceipt.location',  
+                'DeliveryReceipt.remarks', 
+                'DeliveryReceipt.printed_by', 
+                'DeliveryReceipt.printed', 
                 'DeliveryReceipt.type',
                 'Delivery.id',
-                'Delivery.schedule_uuid'
+                'Delivery.schedule_uuid',
+                'Delivery.clients_order_id',
+                'DeliveryDetail.id',
                 ),
             'order' => 'DeliveryReceipt.id DESC',
         );
 
         $DRData = $this->paginate('DeliveryReceipt');
 
-       // pr($DRData); exit;
+        $this->ClientOrderDeliverySchedule->bind(array('ClientOrder', 'QuotationDetail','Company', 'Product'));
+
+        $clientOrderData = $this->ClientOrderDeliverySchedule->find('all');
+
+        
+        foreach ($clientOrderData as $key1 => $value){
+
+            foreach ($DRData as $key => $valueOfDelivery){
+
+                if($value['ClientOrder']['uuid'] == $valueOfDelivery['Delivery']['clients_order_id']){
+
+                    $DRData[$key]['Product']['name'] = $value['Product']['name'];
+
+                    $DRData[$key]['Company']['name'] = $value['Company']['company_name'];
+
+                }
+
+            } 
+
+        }
 
         $this->set(compact('noPermissionSales','DRData','userFName','userLName'));     
         

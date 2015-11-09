@@ -34,15 +34,15 @@
           <table class="table table-striped table-hover ">
             <thead>
             <tr >
-              <th class=""><a href="#"><span>Delivery Receipt #</span></a></th>
-              <th class=""><a href="#"><span>Schedule</span></a></th>
-              <th class=""><a href="#"><span>Location</span></a></th>
+              <th class=""><a href="#"><span>DR #</span></a></th>
+              <!-- <th class=""><a href="#"><span>Schedule</span></a></th> -->
+              <th class=""><a href="#"><span>Company</span></a></th>
+              <th class=""><a href="#"><span>Item Name</span></a></th>
               <th class=""><a href="#"><span>Quantity</span></a></th>
+              <th class=""><a href="#"><span>Type</span></a></th>
               <th class=""><a href="#"><span>Remarks</span></a></th>
-              <th class=""><a href="#"><span>Printed by</span></a></th>
               <th class=""><a href="#"><span>Printed Date</span></a></th>
-               <th class=""><a href="#"><span>Type</span></a></th>
-              <th class=""><a href="#"><span>Action</span></a></th>
+              <th class=""><a href="#"><span>Printed by</span></a></th>
             </tr>
             </thead>
 
