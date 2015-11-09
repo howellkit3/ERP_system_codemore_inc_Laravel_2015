@@ -127,6 +127,25 @@
                                                         ?>
                                                     <span class="help-block" style= "color:white"> &nbsp </span>
                                             </div>
+
+
+                                            <div class="col-lg-1"> 
+
+                                                       <?php 
+
+                                                            $items = array( 'inch' => 'Inch', 'mm' => 'mm');
+
+                                                            echo $this->Form->input('ItemSpec.'.$key.'.unit_width', array(
+                                                                                        'class' => 'form-control required',
+                                                                                        'alt' => 'type',
+                                                                                        'label' => false,
+                                                                                        'options' => $items,
+                                                                                        'empty' => 'Unit'
+                                                                                ));
+                                                        ?>
+                                                    <span class="help-block" style= "color:white"> &nbsp </span>
+                                            </div>
+
                                             <label for="inputPassword1" class="col-lg-1 control-label"> <span style="color:red">*</span> Length </label>
                                                  
                                             <div class="col-lg-1"> 
@@ -144,20 +163,20 @@
                                                         ?>
                                                     <span class="help-block" style= "color:white"> &nbsp </span>
                                             </div>
-                                            <label  class="col-lg-1 control-label"> <span style="color:red">*</span> Unit </label>
-                                                <div class="col-lg-1"> 
+                                               <div class="col-lg-1"> 
 
                                                        <?php $items = array( 'inch' => 'Inch', 'mm' => 'mm');
 
-                                                            echo $this->Form->input('ItemSpec.'.$key.'.unit', array(
+                                                            echo $this->Form->input('ItemSpec.'.$key.'.unit_length', array(
                                                                                         'class' => 'form-control',
                                                                                         'alt' => 'type',
                                                                                         'label' => false,
-                                                                                        'options' => $items
+                                                                                        'options' => $items,
+                                                                                        'empty' => 'Unit'
                                                                                 ));
                                                         ?>
                                                     <span class="help-block" style= "color:white"> &nbsp </span>
-                                                </div>
+                                            </div>
                                                 <?php $style = 'display:none'; ?>
                                                 <div class="col-lg-2">
                                                     <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneContactData('mesurement_section', this)"><i class="fa fa-plus"></i></button>
@@ -171,7 +190,8 @@
 
                                          <?php else: ?>
                                             <div class="form-group mesurement_section">
-                                            <label for="inputPassword1" class="col-lg-2 control-label"> <span style="color:red">*</span> Width </label>
+                                         <div class="clearfix"></div>
+                                        <label for="inputPassword1" class="col-lg-2 control-label"> <span style="color:red">*</span> Width </label>
                                             
                                             <div class="col-lg-1"> 
                                                        <?php //$items = array( 'rolls' => 'Rolls', 'sheets' => 'Sheets');
@@ -186,6 +206,22 @@
                                                         ?>
                                                     <span class="help-block" style= "color:white"> &nbsp </span>
                                             </div>
+                                              <div class="col-lg-1"> 
+
+                                                       <?php 
+
+                                                            $items = array( 'inch' => 'Inch', 'mm' => 'mm');
+
+                                                            echo $this->Form->input('ItemSpec.0.unit_width', array(
+                                                                                        'class' => 'form-control required',
+                                                                                        'alt' => 'type',
+                                                                                        'label' => false,
+                                                                                        'options' => $items,
+                                                                                        'empty' => 'Unit'
+                                                                                ));
+                                                        ?>
+                                                    <span class="help-block" style= "color:white"> &nbsp </span>
+                                            </div>
                                             <label for="inputPassword1" class="col-lg-1 control-label"> <span style="color:red">*</span> Length </label>
                                                  
                                             <div class="col-lg-1"> 
@@ -193,7 +229,7 @@
                                                      <?php //$items = array( 'rolls' => 'Rolls', 'sheets' => 'Sheets');
 
                                                         echo $this->Form->input('ItemSpec.0.length', array(
-                                                                                    'class' => 'form-control',
+                                                                                    'class' => 'form-control required',
                                                                                     'alt' => 'type',
                                                                                     'label' => false,
                                                                                     'type' => 'number',
@@ -203,16 +239,16 @@
                                                         ?>
                                                     <span class="help-block" style= "color:white"> &nbsp </span>
                                             </div>
-                                            <label  class="col-lg-1 control-label"> <span style="color:red">*</span> Unit </label>
                                                 <div class="col-lg-1"> 
 
                                                        <?php $items = array( 'inch' => 'Inch', 'mm' => 'mm');
 
-                                                            echo $this->Form->input('ItemSpec.0.unit', array(
+                                                            echo $this->Form->input('ItemSpec.0.unit_length', array(
                                                                                         'class' => 'form-control',
                                                                                         'alt' => 'type',
                                                                                         'label' => false,
-                                                                                        'options' => $items
+                                                                                        'options' => $items,
+                                                                                        'empty' => 'Unit'
                                                                                 ));
                                                         ?>
                                                     <span class="help-block" style= "color:white"> &nbsp </span>
@@ -221,7 +257,8 @@
                                                     <button type="button" class="add-field1 table-link danger btn btn-success" onclick="cloneContactData('mesurement_section', this)"><i class="fa fa-plus"></i></button>
                                                     <button type="button" style="display:none;" class="remove-field btn btn-danger remove" onclick="removeClone('mesurement_section')"><i class="fa fa-minus"></i> </button>
                                                 </div>
-                                            </div>
+
+                                    </div>
                                         <?php endif; ?> 
                                       
                                       

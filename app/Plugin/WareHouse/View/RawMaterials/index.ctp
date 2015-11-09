@@ -63,8 +63,16 @@
 
 
                                                     foreach ($list['ItemSpec'] as $key => $measure) {
-                                                        
-                                                        echo $measure['width'].' X '.$measure['length'].' '.$measure['unit'];
+
+                                                            $width =  $measure['width'];
+                                                            $width .= !empty($measure['unit_width']) ? ' '.$measure['unit_width'] : '';
+
+                                                            $length =  $measure['length'];
+
+                                                            $length .= !empty($measure['unit_length']) ?  ' '.$measure['unit_length'] : '';
+
+                                                            echo $width.' X '.$length;
+                                                    
 
                                                          echo  ($key >= 0) ? '<br>' : '';
                                                     }

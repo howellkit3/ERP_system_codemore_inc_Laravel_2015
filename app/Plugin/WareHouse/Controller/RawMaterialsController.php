@@ -227,11 +227,15 @@ class RawMaterialsController extends WareHouseAppController {
 	public function delete($id = null){
 
 
-
 		$this->loadModel('WareHouse.Item');
+
+		$this->loadModel('WareHouse.ItemSpec');
 
 		if ($this->Item->delete($id)) {
 			
+			//delete all specs
+			$this->ItemSpec->removeItemSpec($id);
+
 			$this->Session->setFlash(__('Item has been deleted successfully.'),'success');
 			$this->redirect(
 				array('controller' => 'raw_materials', 'action' => 'index')

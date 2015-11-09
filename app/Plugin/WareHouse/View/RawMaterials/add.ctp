@@ -112,6 +112,22 @@
                                                         ?>
                                                     <span class="help-block" style= "color:white"> &nbsp </span>
                                             </div>
+                                              <div class="col-lg-1"> 
+
+                                                       <?php 
+
+                                                            $items = array( 'inch' => 'Inch', 'mm' => 'mm');
+
+                                                            echo $this->Form->input('ItemSpec.0.unit_width', array(
+                                                                                        'class' => 'form-control required',
+                                                                                        'alt' => 'type',
+                                                                                        'label' => false,
+                                                                                        'options' => $items,
+                                                                                        'empty' => 'Unit'
+                                                                                ));
+                                                        ?>
+                                                    <span class="help-block" style= "color:white"> &nbsp </span>
+                                            </div>
                                             <label for="inputPassword1" class="col-lg-1 control-label"> <span style="color:red">*</span> Length </label>
                                                  
                                             <div class="col-lg-1"> 
@@ -119,7 +135,7 @@
                                                      <?php //$items = array( 'rolls' => 'Rolls', 'sheets' => 'Sheets');
 
                                                         echo $this->Form->input('ItemSpec.0.length', array(
-                                                                                    'class' => 'form-control',
+                                                                                    'class' => 'form-control required',
                                                                                     'alt' => 'type',
                                                                                     'label' => false,
                                                                                     'type' => 'number',
@@ -129,16 +145,16 @@
                                                         ?>
                                                     <span class="help-block" style= "color:white"> &nbsp </span>
                                             </div>
-                                            <label  class="col-lg-1 control-label"> <span style="color:red">*</span> Unit </label>
                                                 <div class="col-lg-1"> 
 
                                                        <?php $items = array( 'inch' => 'Inch', 'mm' => 'mm');
 
-                                                            echo $this->Form->input('ItemSpec.0.unit', array(
+                                                            echo $this->Form->input('ItemSpec.0.unit_length', array(
                                                                                         'class' => 'form-control',
                                                                                         'alt' => 'type',
                                                                                         'label' => false,
-                                                                                        'options' => $items
+                                                                                        'options' => $items,
+                                                                                        'empty' => 'Unit'
                                                                                 ));
                                                         ?>
                                                     <span class="help-block" style= "color:white"> &nbsp </span>

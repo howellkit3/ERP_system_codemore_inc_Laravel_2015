@@ -35,5 +35,16 @@ class ItemSpec extends AppModel {
 		}
   	}
 
+
+  	public function removeItemSpec($id = null) {
+
+
+  		if (!empty($id)) {
+
+  			return $this->deleteAll(array('ItemSpec.items_id' => $id));
+  		
+  		}
+  	}
+
   	
 }

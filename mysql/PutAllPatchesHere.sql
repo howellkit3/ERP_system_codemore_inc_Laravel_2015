@@ -2353,9 +2353,6 @@ CREATE TABLE `item_specs` (
 ALTER TABLE `item_specs`
 ADD COLUMN `width`  varchar(255) NULL AFTER `unit`,
 ADD COLUMN `length`  varchar(255) NULL AFTER `width`;
-
-
-
 -- ----------------------------
 -- Table structure for `item_specs`
 -- ----------------------------
@@ -2374,3 +2371,8 @@ CREATE TABLE `item_specs` (
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `item_specs`
+ADD COLUMN `unit_width`  varchar(255) NULL AFTER `length`,
+ADD COLUMN `unit_length`  varchar(255) NULL AFTER `unit_width`;
+
