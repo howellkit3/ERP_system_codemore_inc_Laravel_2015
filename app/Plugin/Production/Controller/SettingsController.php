@@ -75,7 +75,7 @@ class SettingsController extends ProductionAppController {
                 'conditions' => $conditions,
                 'limit' => $limit,
                 //'fields' => array('id', 'status','created'),
-                'order' => 'Section.id ASC',
+                'order' => 'Section.id DESC',
             );
 
         $this->paginate = $params;
@@ -87,5 +87,28 @@ class SettingsController extends ProductionAppController {
         $this->set(compact('sectionData','departmentList'));
         
     }
+
+    public function processes() {
+
+        $this->loadModel('Production.ProcessDepartment');
+
+        $limit = 10;
+
+        $conditions = array();
+
+        $params =  array(
+                'conditions' => $conditions,
+                'limit' => $limit,
+                //'fields' => array('id', 'status','created'),
+                'order' => 'ProcessDepartment.id DESC',
+            );
+
+        $this->paginate = $params;
+
+        $process = $this->paginate('ProcessDepartment');
+
+        $this->set(compact('process'));
+        
+    } 
 
 }
