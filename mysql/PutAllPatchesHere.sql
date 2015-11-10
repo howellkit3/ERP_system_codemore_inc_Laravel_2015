@@ -2376,3 +2376,10 @@ ALTER TABLE `item_specs`
 ADD COLUMN `unit_width`  varchar(255) NULL AFTER `length`,
 ADD COLUMN `unit_length`  varchar(255) NULL AFTER `unit_width`;
 
+
+/* howell kit added this nov 11 2015 Purchasing Table*/
+ALTER TABLE `request_items` CHANGE COLUMN `purpose` `purpose` VARCHAR(300) NULL DEFAULT NULL;
+ALTER TABLE `request_items` CHANGE COLUMN `remarks` `remarks` VARCHAR(300) NULL DEFAULT NULL;
+ALTER TABLE `koufu_purchasing`.`purchasing_items` ADD COLUMN `purpose` VARCHAR(300) NULL AFTER `unit_price_unit_id`;
+ALTER TABLE `koufu_purchasing`.`purchasing_items` ADD COLUMN `remarks` VARCHAR(300) NULL AFTER `purpose`;
+
