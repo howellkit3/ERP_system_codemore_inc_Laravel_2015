@@ -64,6 +64,7 @@ class SalesOrdersController extends SalesAppController {
                           ));
 
         $clientOrder = $this->ClientOrder->find('all',array(
+                      'group' => array('ClientOrder.id'),
                       'conditions' => $conditions,
                       'limit' => 10
                       )); 

@@ -3,7 +3,7 @@ $pushRemaining  = array();
 $totalremaining = 0;
 
   if(!empty($DRData)){ ?>
-
+      <?php  ?>
       <?php  foreach ($DRData as $deliveryDataList): ?>
 
                     <tr class="">
@@ -29,8 +29,13 @@ $totalremaining = 0;
                             <?php echo ucfirst(substr($deliveryDataList['Product']['name'],0,25)); ?>..
                         
                         </td>
-                      
 
+                         <td class="">
+
+                            <?php echo $deliveryDataList['ClientOrder']['po_number']; ?>
+
+                        </td>
+                      
                         <td class="text-center">
 
                            <?php echo ucfirst($deliveryDataList['DeliveryReceipt']['quantity']); ?>
@@ -49,12 +54,6 @@ $totalremaining = 0;
 
                             } ?>  
 
-                        </td>
-
-                        <td class="">
-                            <?php if(!empty($deliveryDataList['DeliveryReceipt']['remarks'])){ ?>
-                                <?php echo $deliveryDataList['DeliveryReceipt']['remarks']; ?>
-                             <?php } ?>
                         </td>
 
                         <td class="">
