@@ -490,9 +490,16 @@ class PurchaseOrdersController extends PurchasingAppController {
                      'conditions'=> array(
                      'User.id = PurchaseOrder.created_by'
                )),
+
+               array('table'=>'koufu_system.suppliers', 
+                     'alias' => 'Supplier',
+                     'type'=>'left',
+                     'conditions'=> array(
+                     'Supplier.id = PurchaseOrder.supplier_id'
+               )),
         );
 
-        $this->PurchaseOrder->bind(array('User'));
+        $this->PurchaseOrder->bind(array('User', 'Supplier'));
 
         $purchaseOrderData = $this->PurchaseOrder->find('all',array(
         			'joins'=>$joins,
@@ -501,13 +508,13 @@ class PurchaseOrdersController extends PurchasingAppController {
                     array('PurchaseOrder.po_number LIKE' => '%' . $hint . '%'),
                     array('PurchaseOrder.name LIKE' => '%' . $hint . '%'),
                     array('User.first_name LIKE' => '%' . $hint . '%'),
-                    array('User.last_name LIKE' => '%' . $hint . '%')
+                    array('User.last_name LIKE' => '%' . $hint . '%'),
+                    array('Supplier.name LIKE' => '%' . $hint . '%')
                       )
                     ),
                   'limit' => 10
                   )); 
 
-        
 		$userName = $this->User->find('list', array('fields' => array('id', 'fullname')));
 
      	$this->set(compact('purchaseOrderData','supplierData', 'userName'));
