@@ -51,26 +51,38 @@ th, td {
 
 					<?php $ctr = 8;
 
-					foreach($requestItem as $key=>$value) { ?>
+					foreach($requestItem as $key=> $value) { 
+
+						$specs1 = !empty($value['RequestItem']['size1']) ? $value['RequestItem']['size1'] . " " . $unitData[$value['RequestItem']['size1_unit_id']] : "";
+
+						$specs2 = !empty($value['RequestItem']['size2']) ? " x " . $value['RequestItem']['size2'] . " " . $unitData[$value['RequestItem']['size2_unit_id']] : "";
+
+						$specs3 = !empty($value['RequestItem']['size3']) ? " x " .  $value['RequestItem']['size3'] . " " . $unitData[$value['RequestItem']['size3_unit_id']] : "";
+
+						$specsAll = $specs1 . " " . $specs2  . " " . $specs3 ;
+
+						$nameWithSpecs = $requestRequestItem[$key]['RequestItem']['name'] . " " . $specsAll;
+
+						$lengthName = strlen($nameWithSpecs);
+
+					?>
 
 					<tr>
 						<td  align = "center" style="border:1px solid black; width:10px;   word-wrap: break-word; "><span style="font-size:70%"; ><?php echo $key + 1 ?></span></td>
 
-						<?php $lengthName = strlen($requestRequestItem[$key]['RequestItem']['name'])?>
-
 						<?php if($lengthName >= 30 && $lengthName <= 70){ ?>
 
-							<td style="border:1px solid black; "><span style="font-size:45%"; ><?php echo $requestRequestItem[$key]['RequestItem']['name']?></span>
+							<td style="border:1px solid black; "><span style="font-size:45%"; ><?php echo $nameWithSpecs?></span>
 							</td>
 
 						<?php } else if($lengthName >= 70) { ?>
 
-							<td style="border:1px solid black; "><span style="font-size:40%"; ><?php echo $requestRequestItem[$key]['RequestItem']['name']?></span>
+							<td style="border:1px solid black; "><span style="font-size:40%"; ><?php echo $nameWithSpecs  ?></span>
 							</td>
 
 						<?php }else{ ?>
 
-							<td style="border:1px solid black; "><span style="font-size:60%"; ><?php echo $requestRequestItem[$key]['RequestItem']['name']?></span>
+							<td style="border:1px solid black; "><span style="font-size:60%"; ><?php echo $nameWithSpecs ?></span> 
 							</td>
 
 						<?php } ?>
@@ -88,16 +100,16 @@ th, td {
 						
 						<?php
 
-						 $lengthName = strlen($requestRequestItem[$key]['RequestItem']['purpose']);
+						 $lengthName = strlen($value['RequestItem']['purpose']);
 
-						 if($lengthName >= 30 && $lengthName <= 70){ ?>
+						 if($lengthName >= 20 && $lengthName <= 40){ ?>
 
-							<td style="border:1px solid black; width:50px"><span style="font-size:35%"; ><?php echo $value['RequestItem']['purpose'] ?></span>
+							<td style="border:1px solid black; width:50px"><span style="font-size:40%"; ><?php echo $value['RequestItem']['purpose'] ?></span>
 							</td>
 
-						<?php } else if($lengthName >= 70) { ?>
+						<?php } else if($lengthName >= 40) { ?>
 
-							<td style="border:1px solid black; width:50px"><span style="font-size:30%"; ><?php echo $value['RequestItem']['purpose'] ?></span>
+							<td style="border:1px solid black; width:50px"><span style="font-size:35%"; ><?php echo $value['RequestItem']['purpose'] ?></span>
 							</td>
 
 						<?php }else{ ?>
@@ -107,8 +119,24 @@ th, td {
 
 						<?php } ?>
 
-						<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:50%; max-width:50px"><?php echo $value['RequestItem']['remarks'] ?></td>
-						
+						<?php
+
+						$lengthRemarks = strlen($value['RequestItem']['remarks']);
+
+						 if($lengthRemarks >= 20 && $lengthRemarks <= 40){ ?>
+
+							<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:40%; max-width:50px"><?php echo $value['RequestItem']['remarks'] ?></td>
+
+						<?php } else if($lengthRemarks >= 40) { ?>
+
+							<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:35%; max-width:50px"><?php echo $value['RequestItem']['remarks'] ?></td>
+
+						<?php }else{ ?>
+
+							<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:50%; max-width:50px"><?php echo $value['RequestItem']['remarks'] ?></td>
+
+						<?php } ?>
+
 					</tr>
 
 					<?php 
@@ -205,26 +233,38 @@ th, td {
 
 					<?php $ctr = 8;
 
-					foreach($requestItem as $key=>$value) { ?>
+					foreach($requestItem as $key=> $value) { 
+
+						$specs1 = !empty($value['RequestItem']['size1']) ? $value['RequestItem']['size1'] . " " . $unitData[$value['RequestItem']['size1_unit_id']] : "";
+
+						$specs2 = !empty($value['RequestItem']['size2']) ? " x " . $value['RequestItem']['size2'] . " " . $unitData[$value['RequestItem']['size2_unit_id']] : "";
+
+						$specs3 = !empty($value['RequestItem']['size3']) ? " x " .  $value['RequestItem']['size3'] . " " . $unitData[$value['RequestItem']['size3_unit_id']] : "";
+
+						$specsAll = $specs1 . " " . $specs2  . " " . $specs3 ;
+
+						$nameWithSpecs = $requestRequestItem[$key]['RequestItem']['name'] . " " . $specsAll;
+
+						$lengthName = strlen($nameWithSpecs);
+
+					?>
 
 					<tr>
 						<td  align = "center" style="border:1px solid black; width:10px;   word-wrap: break-word; "><span style="font-size:70%"; ><?php echo $key + 1 ?></span></td>
 
-						<?php $lengthName = strlen($requestRequestItem[$key]['RequestItem']['name'])?>
-
 						<?php if($lengthName >= 30 && $lengthName <= 70){ ?>
 
-							<td style="border:1px solid black; "><span style="font-size:45%"; ><?php echo $requestRequestItem[$key]['RequestItem']['name']?></span>
+							<td style="border:1px solid black; "><span style="font-size:45%"; ><?php echo $nameWithSpecs?></span>
 							</td>
 
 						<?php } else if($lengthName >= 70) { ?>
 
-							<td style="border:1px solid black; "><span style="font-size:40%"; ><?php echo $requestRequestItem[$key]['RequestItem']['name']?></span>
+							<td style="border:1px solid black; "><span style="font-size:40%"; ><?php echo $nameWithSpecs  ?></span>
 							</td>
 
 						<?php }else{ ?>
 
-							<td style="border:1px solid black; "><span style="font-size:60%"; ><?php echo $requestRequestItem[$key]['RequestItem']['name']?></span>
+							<td style="border:1px solid black; "><span style="font-size:60%"; ><?php echo $nameWithSpecs ?></span> 
 							</td>
 
 						<?php } ?>
@@ -244,16 +284,16 @@ th, td {
 						
 						<?php
 
-						 $lengthName = strlen($requestRequestItem[$key]['RequestItem']['purpose']);
+						 $lengthName = strlen($value['RequestItem']['purpose']);
 
-						 if($lengthName >= 30 && $lengthName <= 70){ ?>
+						 if($lengthName >= 20 && $lengthName <= 40){ ?>
 
-							<td style="border:1px solid black; width:50px"><span style="font-size:35%"; ><?php echo $value['RequestItem']['purpose'] ?></span>
+							<td style="border:1px solid black; width:50px"><span style="font-size:40%"; ><?php echo $value['RequestItem']['purpose'] ?></span>
 							</td>
 
-						<?php } else if($lengthName >= 70) { ?>
+						<?php } else if($lengthName >= 40) { ?>
 
-							<td style="border:1px solid black; width:50px"><span style="font-size:30%"; ><?php echo $value['RequestItem']['purpose'] ?></span>
+							<td style="border:1px solid black; width:50px"><span style="font-size:35%"; ><?php echo $value['RequestItem']['purpose'] ?></span>
 							</td>
 
 						<?php }else{ ?>
@@ -263,7 +303,23 @@ th, td {
 
 						<?php } ?>
 
-						<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:50%"><?php echo $value['RequestItem']['remarks'] ?></td>	
+						<?php
+
+						$lengthRemarks = strlen($value['RequestItem']['remarks']);
+
+						 if($lengthRemarks >= 20 && $lengthRemarks <= 40){ ?>
+
+							<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:40%; max-width:50px"><?php echo $value['RequestItem']['remarks'] ?></td>
+
+						<?php } else if($lengthRemarks >= 40) { ?>
+
+							<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:35%; max-width:50px"><?php echo $value['RequestItem']['remarks'] ?></td>
+
+						<?php }else{ ?>
+
+							<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:50%; max-width:50px"><?php echo $value['RequestItem']['remarks'] ?></td>
+
+						<?php } ?>
 					</tr>
 
 					<?php 

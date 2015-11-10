@@ -95,11 +95,26 @@
                             <th class="text-center">Purpose</th>
                             <th class="text-center">Remarks</th>
                         </thead>
+
                         <?php  foreach ($requestPurchasingItem as $key => $value) {  $key++ ?>
-                           
+
+                        <?php 
+
+                        $specs1 = !empty($value['RequestItem']['size1']) ? $value['RequestItem']['size1'] . " " . $unitData[$value['RequestItem']['size1_unit_id']] : "";
+
+                        $specs2 = !empty($value['RequestItem']['size2']) ? " x " . $value['RequestItem']['size2'] . " " . $unitData[$value['RequestItem']['size2_unit_id']] : "";
+
+                        $specs3 = !empty($value['RequestItem']['size3']) ? " x " .  $value['RequestItem']['size3'] . " " . $unitData[$value['RequestItem']['size3_unit_id']] : "";
+
+                        $specsAll = $specs1 . " " . $specs2  . " " . $specs3 ;
+
+                        $nameWithSpecs = $value['RequestItem']['name'] . " " . $specsAll;
+
+                        ?>
+
                             <tr>
                                 <td><?php echo $key ?></td>
-                                <td class="text-center"><?php echo $value['RequestItem']['name']?></td>
+                                <td class="text-center"><?php echo $nameWithSpecs?></td>
                                 <td class="text-center">
                                     <?php  
                                     if(!empty($value['RequestItem']['quantity'])){ 
