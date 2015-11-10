@@ -476,24 +476,41 @@ class PurchaseOrdersController extends PurchasingAppController {
 
     	$this->loadModel('Supplier');
 
+    	$this->loadModel('User');
+
 		$supplierData = $this->Supplier->find('list', array(
 														'fields' => array('Supplier.id', 'Supplier.name'),
 														));
 
-		$purchaseOrderData = $this->PurchaseOrder->find('all',array('order' => 'PurchaseOrder.id DESC'));
+        $joins = array(
+
+               array('table'=>'koufu_system.users', 
+                     'alias' => 'User',
+                     'type'=>'left',
+                     'conditions'=> array(
+                     'User.id = PurchaseOrder.created_by'
+               )),
+        );
+
+        $this->PurchaseOrder->bind(array('User'));
 
         $purchaseOrderData = $this->PurchaseOrder->find('all',array(
-                      'conditions' => array(
-                        'OR' => array(
-                        array('PurchaseOrder.uuid LIKE' => '%' . $hint . '%'),
-                        array('PurchaseOrder.name LIKE' => '%' . $hint . '%')
-                          )
-                        ),
-                      'limit' => 10
-                      )); 
+        			'joins'=>$joins,
+                  	'conditions' => array(
+                    'OR' => array(
+                    array('PurchaseOrder.po_number LIKE' => '%' . $hint . '%'),
+                    array('PurchaseOrder.name LIKE' => '%' . $hint . '%'),
+                    array('User.first_name LIKE' => '%' . $hint . '%'),
+                    array('User.last_name LIKE' => '%' . $hint . '%')
+                      )
+                    ),
+                  'limit' => 10
+                  )); 
 
+        
+		$userName = $this->User->find('list', array('fields' => array('id', 'fullname')));
 
-     	 $this->set(compact('purchaseOrderData','supplierData'));
+     	$this->set(compact('purchaseOrderData','supplierData', 'userName'));
 
         if ($hint == ' ') {
             $this->render('index');

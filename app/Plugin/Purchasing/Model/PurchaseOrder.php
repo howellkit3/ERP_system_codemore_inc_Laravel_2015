@@ -51,6 +51,11 @@ class PurchaseOrder extends AppModel {
 					'foreignKey' =>  false,
 					'conditions' => array('DeliveredOrder.purchase_orders_id = PurchaseOrder.id')
 				),
+				'User' => array(
+					'className' => 'User',
+					'foreignKey' =>  false,
+					'conditions' => array('User.id = PurchaseOrder.created_by')
+				),
 			),
 
 			'hasMany' => array(	

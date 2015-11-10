@@ -9,7 +9,7 @@
 
             <td class="">
 
-                <?php echo ucfirst($purchaseOrderDataList['PurchaseOrder']['po_number']) ?>
+                PUO-<?php echo ucfirst($purchaseOrderDataList['PurchaseOrder']['po_number']) ?>
 
             </td>
 
