@@ -37,6 +37,12 @@ class JobTicket extends AppModel {
 					'foreignKey' => 'product_id',
 					//'conditions' => 'Company.id = Product.company_id'
 				),
+				'TicketProcess' => array(
+					'className' => 'Production.TicketProcessSchedule',
+					'foreignKey' => false,
+					'conditions' => 'TicketProcess.job_ticket_id = JobTicket.id'
+				),
+
 				// 'Company' => array(
 				// 	'className' => 'Sales.Company',
 				// 	'foreignKey' => false,
@@ -147,6 +153,28 @@ class JobTicket extends AppModel {
 					//'foreignKey' => 'client_order_id',
 					'conditions' => 'ClientOrderDeliverySchedule.client_order_id => 11'
 				)
+
+			)
+			
+		));
+		$this->recursive = 1;
+		//$this->contain($giveMeTheTableRelationship);
+	}
+
+	public function bindTicketingSearch() {
+		$this->bindModel(array(
+			'belongsTo' => array(
+				'ClientOrder' => array(
+					'className' => 'Sales.ClientOrder',
+					'foreignKey' => 'client_order_id',
+					//'conditions' => 'JobTicket.client_order_id = ClientOrder.id'
+				),				
+				'Product' => array(
+					'className' => 'Sales.Product',
+					'foreignKey' => 'product_id',
+					//'conditions' => 'Company.id = Product.company_id'
+				)
+			
 
 			)
 			
@@ -268,6 +296,26 @@ class JobTicket extends AppModel {
 	    return $this->id;
 
 
+	}
+
+	public function addTicket($machineScheduleData = array()) {
+
+			if (!empty($machineScheduleData )) {
+
+				foreach ($machineScheduleData as $key => $list) {
+					
+					$machineScheduleData[$key]['JobTicket'] = array();
+
+					if (!empty($list['TicketProcessSchedule']['job_ticket_id'])) {
+
+						$jobs = $this->find('first',array('conditions' => array('JobTicket.id' => $list['TicketProcessSchedule']['job_ticket_id'])));
+
+						$machineScheduleData[$key]['JobTicket'] = $jobs['JobTicket'];
+					}
+				}
+			}
+
+			return $machineScheduleData;
 	}
 
 }

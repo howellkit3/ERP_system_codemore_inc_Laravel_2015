@@ -369,35 +369,56 @@
 
                     </div>
 
+                    <?php
+
+                    $displayMe = '';
+					$displayMe1 = '';
+
+					if ($clientData['QuotationItemDetail']['unit_price_currency_id'] == 2) {
+
+						$displayMe = 'dsplayShow';
+						$hide = 'hide-me-first';
+													
+					}else {
+
+						$displayMe1 = 'dsplayShow1';
+						$hide = '';
+					}
+
+					?>
+
+                    
                     <div class="form-group" id="existing_items">
                         <label class="col-lg-2 control-label">Vat Status</label>
                         <div class="col-lg-9">
 
                             <?php 
-
                             $vatType = array(1 => 'Vatable Sale',
-																2 => 'Vat Exempt',
-																3 => 'Zero Rated Sale');
+											2 => 'Vat Exempt',
+											3 => 'Zero Rated Sale');
 
 							$vatTypeUSD = array(
 									2 => 'Vat Exempt',
 									3 => 'Zero Rated Sale');
 
-							$displayMe = '';
-							$displayMe1 = '';
-							//pr(); 
-							if ($clientData['QuotationItemDetail']['unit_price_currency_id'] == 2) {
+							if($clientData['QuotationItemDetail']['vat_status'] == 'Vatable Sale'){
 
-								$displayMe = 'dsplayShow';
-															
-							}else {
-								$displayMe1 = 'dsplayShow1';
+								$vatName = 1;
+
+							} else if($clientData['QuotationItemDetail']['vat_status'] == 'Vat Exempt'){
+
+								$vatName = 2;
+
+							} else{
+
+
+								$vatName = 3;
 							}
 
                             echo $this->Form->input('QuotationItemDetail.vat_status', array( 
                                 'options' => array($vatType),  
                                 'label' => false,
-                                'value' => !empty($clientData['QuotationItemDetail']['vat_status']) ? $clientData['QuotationItemDetail']['vat_status'] : "",
+                                'default' => $vatName,
                                 'disabled' => true,
                                 'class' => 'hide-me-first form-control for-php required select-vat-status '.$displayMe,
                                 'empty' => '---Select Vat Type---'
@@ -405,7 +426,7 @@
 
 							echo $this->Form->input('QuotationItemDetail.vat_status', array( 
 								'options' => array($vatTypeUSD),
-								'value' => !empty($clientData['QuotationItemDetail']['vat_status']) ? $clientData['QuotationItemDetail']['vat_status'] : "",    
+								'default' => $vatName,    
                                 'label' => false,
                                 'disabled' => true,
                                 'empty' => '---Select Vat Type---',
@@ -415,45 +436,72 @@
 
                         </div>
                     </div>
-                    <div class = "vat-option">
-                    	<div class="form-group" id="existing_items">
-	                        <label class="col-lg-2 control-label"><span style="color:red">*</span>Vat Price</label>
-	                        <div class="col-lg-9">
 
-	                            <?php 
+	                <div class = "vat <?php echo $hide?>">
 
-	                                echo $this->Form->input('QuotationItemDetail.vat_price', array(
-	                                    'empty' => 'None',
-	                                    'required' => 'required',
-	                                    'class' => 'form-control item_type editable limitQuantity vat-price',
-	                                    'label' => false,
-	                                    'value' => $clientData['QuotationItemDetail']['vat_price']
-	                                    ));
+	                    <div class = "vat-option">
+	                    	<div class="form-group" id="existing_items">
+		                        <label class="col-lg-2 control-label"><span style="color:red">*</span>Vat Price</label>
+		                        <div class="col-lg-9">
 
-	                            ?>
-	                        </div>
+		                            <?php 
 
-                    	</div>
-                    
-		               <!--  <div class="form-group">
-							<label class="col-lg-1 control-label"></label>
-							<div class="col-lg-8">
+		                                echo $this->Form->input('QuotationItemDetail.vat_price', array(
+		                                    'empty' => 'None',
+		                                    'required' => 'required',
+		                                    'class' => 'form-control item_type editable limitQuantity vat-price',
+		                                    'label' => false,
+		                                    'value' => $clientData['QuotationItemDetail']['vat_price']
+		                                    ));
 
-								<input id="checkbox-1" class="checkEx vat-exclusive" type="checkbox" data-section='quotationItemDetail' name="[QuotationItemDetail][0][unit_price]"rel=".12" name ="togglecheckboxtext"><label>
-								<font color="gray">&nbsp; Check to enable VAT Price   </font></label>
+		                            ?>
+		                        </div>
+
+	                    	</div>
+	                    
+							<div class="form-group">
+								<label class="col-lg-1  control-label"></label>
+								<div class="col-lg-5">	
+									<input id="checkbox-1" class="checkvat checkIn checkbox-nice vat-price" type="checkbox" data-section='quotationItemDetail' name="[QuotationItemDetail][0][vat_price]" rel=".12"><label><font color="gray">&nbsp;Click to Compute the Vat Price</font></label>
+										
+								</div>
+
+								<div class="col-lg-5">
+
+									<input id="checkbox-1" class="checkEx vat-exclusive" type="checkbox" data-section='quotationItemDetail' name="[QuotationItemDetail][0][unit_price]"rel=".12" name ="togglecheckboxtext"><label>
+
+									<font color="gray">&nbsp;Click to Compute the Unit Price</font></label>
+
+								</div>
+
+								
 							</div>
-						</div> -->
 
-						<div class="form-group">
-							<label class="col-lg-1  control-label"></label>
-							<div class="col-lg-8">	
-								<input id="checkbox-1" class="checkvat checkIn checkbox-nice vat-price" type="checkbox" data-section='quotationItemDetail' name="[QuotationItemDetail][0][vat_price]" rel=".12"><label><font color="gray">&nbsp; Click to Compute the Unit Price/VAT Exclusive</font></label>
-									
+							<div class="form-group">
+								<label class="col-lg-1 control-label"></label>
+
+								<div class="col-lg-5">	
+									<input id="checkbox-1" class=" checkbox-nice vat-in" type="checkbox" data-section='quotationItemDetail' name="[QuotationItemDetail][0][vat_price]" rel=".12"><label><font color="gray">&nbsp;Click for Vat-Inclusive</font></label>
+										
+								</div>
+
+								<div class="col-lg-5">
+
+									<input id="checkbox-1" class="clear" type="checkbox" data-section='quotationItemDetail' name="[QuotationItemDetail][0][unit_price]"rel=".12" name ="togglecheckboxtext"><label>
+
+									<font color="gray">&nbsp;Clear All</font></label>
+
+								</div>
+
+
+
 							</div>
+
 						</div>
 					</div>
 
                     <br><br>
+
                     <div class="modal-footer">
 
                         <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i> Submit</button>
@@ -466,7 +514,6 @@
     </div>
 </div>
 
- 
 
  <script>
 
@@ -478,11 +525,29 @@
  		if(unitprice == 1){
 
             $('.for-usd').prop('disabled', false);
+            // $(".vat").addClass("hide-me-first");
 
  		}else{
 
  			$('.for-php').prop('disabled', false);
+ 			
  		}
+
+ 		$('body').on('change','.select-vat-status',function(){
+
+ 			statusType = $('.select-vat-status').val();
+
+ 			if(statusType == 1){
+
+ 				$(".vat").removeClass("hide-me-first");
+
+ 			}else{
+
+ 				$(".vat").addClass("hide-me-first");
+
+ 			}
+
+ 		});		
 
  	});
 
@@ -504,7 +569,7 @@
             thisElement.parents('.form-horizontal').find('.select-vat-status').val('');
             thisElement.parents('.form-horizontal').find('.for-usd').removeClass('dsplayShow');
             thisElement.parents('.form-horizontal').find('.for-usd').addClass('dsplayShow1');
-            
+           // /VAT Exclusive
         }
 
         if(thisVal == 1){
@@ -530,18 +595,114 @@
 	});
 
 $('body').on('change','.checkIn',function(){
+
     if($(this).is(":checked")) {
+
+	    unitprice = $('.unitPrice').val();
+
+    	if (unitprice.length === 0 || unitprice == 0) {
+
+    		alert('Unit Price has no value'); 
+
+			$('.vat-in').prop('checked', false);  
+
+    	}else{
         
-        unitprice = $('.unitPrice').val();
+	        vatprice = unitprice * .12;
 
-        vatprice = unitprice * .12;
+	        $('.vat-price').val(vatprice);
 
-        $('.vat-price').val(vatprice);
+	        $('.vat-in').prop('checked', false);
 
-  
-    }else{
+	        $('.checkEx').prop('checked', false);
+
+    	}	
+
+    }
+
+}); 
+
+
+$('body').on('change','.checkEx',function(){
+
+
+    if($(this).is(":checked")) {
+
+	    vatprice = $('.vat-price').val();
+
+    	if (vatprice.length === 0 || vatprice == 0) {
+
+    		alert('Unit Price has no value'); 
+
+			$('.vat-in').prop('checked', false);  
+
+    	}else{
         
+	        unitprice = vatprice / 1.12;
+
+	        $('.unitPrice').val(unitprice);
+
+	        $('.vat-in').prop('checked', false);
+
+			$('.checkIn').prop('checked', false);
+
+    	}	
+
     }
 
 });
+
+$('body').on('change','.vat-in',function(){
+
+	vatprice = $('.vat-price').val();
+
+		if($(this).is(":checked")) {
+
+			if (vatprice.length === 0 || vatprice == 0) {
+
+				alert('Unit Price has no value'); 
+
+				$('.vat-in').prop('checked', false);  
+		    	
+	    	}else{
+
+	    		quantity = $('.limitQuantity').val();
+
+	    		// vatprice = $('.vat-price').val();
+
+	    		// amount = quantity * unitPrice;
+
+	    		// vatQuotient = amount / 1.12;
+
+	    		// vatProduct = vatQuotient * 0.12 ;
+
+	    		//paulo's formula
+
+	    		//unitPrice = vatprice / quantity; 
+
+	    		unitPrice = vatprice * 0.12; 
+
+		        $('.unitPrice').val(unitPrice.toFixed(2));
+
+		        $('.checkEx').prop('checked', false);
+
+		        $('.checkIn').prop('checked', false);
+
+		    }
+
+    	}
+
+});
+
+$('body').on('change','.clear',function(){
+
+	if($(this).is(":checked")) {
+
+		$('.unitPrice').val(" ");
+		$('.vat-price').val(" ");
+
+	}
+
+});
+
  </script>

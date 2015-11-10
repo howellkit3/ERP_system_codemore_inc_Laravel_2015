@@ -17,8 +17,17 @@ echo $this->Html->script(array(
 )); 
 ?>
 <div style="clear:both"></div>
+<?php 
+if (!empty($this->params['named']['in_charge']) && $this->params['named']['in_charge'] == 1) {
 
-<?php echo $this->element('hr_options'); ?><br><br>
+echo $this->element('in_charge_option'); 
+
+$incharge = true;
+} else {
+$incharge = false;
+echo $this->element('hr_options'); 
+}
+?><br><br>
 <?php echo $this->Form->create('Overtime',array('url'=>(array('controller' => 'overtimes','action' => 'add')),
 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data' ));?>
  <div class="row">

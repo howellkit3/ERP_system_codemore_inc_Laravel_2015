@@ -5,7 +5,7 @@
                 <?php  echo 'RCV' . $requestOrderDataList['DeliveredOrder']['uuid']  ?>  
             </td>
 
-            <td class="text-center">
+            <td >
 
                 <?php  echo !empty($requestOrderDataList['DeliveredOrder']['purchase_order_uuid']) ? $requestOrderDataList['DeliveredOrder']['purchase_order_uuid'] : $requestOrderDataList['ReceivedOrder']['purchase_order_uuid']; ?>
 
@@ -14,6 +14,7 @@
             <td class="">
 
                 <?php  echo !empty($purchaseOrderSupplierData[$requestOrderDataList['DeliveredOrder']['purchase_orders_id']]) ? $supplierData[$purchaseOrderSupplierData[$requestOrderDataList['DeliveredOrder']['purchase_orders_id']]] : $supplierData[$requestOrderDataList['ReceivedOrder']['supplier_id']]; ?>
+                
             </td>
 
             <td class="">
@@ -23,24 +24,26 @@
             </td>
 
             <td align = "center">
+
                 <?php if($requestOrderDataList['DeliveredOrder']['status_id'] == 1){ 
 
                     echo "<span class='label label-success'>Approved</span>";
-
-                    }else if($requestOrderDataList['ReceivedOrder']['status_id'] == 14){
-                        
-                    echo "<span class='label label-info'>Encoded</span>"; 
 
                     }else if($requestOrderDataList['DeliveredOrder']['status_id'] == 13){
 
                         echo "<span class='label label-info'>Stored</span>"; 
 
+                    }else if($requestOrderDataList['ReceivedOrder']['status_id'] == 14){
+                        
+                    echo "<span class='label label-default'>Encoded</span>"; 
+
+
                     }else{
                      echo "<span class='label label-warning'>Received</span>"; 
 
                      }
-
                 ?>
+
             </td>
 
             <td align = "center">
@@ -58,12 +61,12 @@
                 <?php echo $this->Html->link('<span class="fa-stack">
                           <i class="fa fa-square fa-stack-2x"></i>
                           <i class="fa  fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> View</font></span>
-                          </span> ', array('controller' => 'receivings', 'action' => 'view_receive', $requestOrderDataList['DeliveredOrder']['id'], !empty($requestOrderDataList['ReceivedItem'][0]['request_uuid']) ? $requestOrderDataList['ReceivedItem'][0]['request_uuid'] : " "),array('class' =>' table-link ','escape' => false,'title'=>'Print Transmittal Receipt')); ?>
+                          </span> ', array('controller' => 'receivings', 'action' => 'view_receive',$requestOrderDataList['DeliveredOrder']['id'],!empty($requestOrderDataList['ReceivedItem'][0]['request_uuid']) ?$requestOrderDataList['ReceivedItem'][0]['request_uuid']: ""),array('class' =>' table-link ','escape' => false,'title'=>'Print Transmittal Receipt')); ?>
 
                 <?php echo $this->Html->link('<span class="fa-stack">
                           <i class="fa fa-square fa-stack-2x"></i>
                           <i class="fa  fa-pencil fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit</font></span>
-                          </span> ', array('controller' => 'receivings', 'action' => 'view_receive_edit', $requestOrderDataList['DeliveredOrder']['id'], !empty($requestOrderDataList['ReceivedItem'][0]['request_uuid']) ? $requestOrderDataList['ReceivedItem'][0]['request_uuid'] : " "),array('class' =>' table-link ','escape' => false,'title'=>'Print Transmittal Receipt')); ?>
+                          </span> ', array('controller' => 'receivings', 'action' => 'view_receive_edit',$requestOrderDataList['DeliveredOrder']['id'],!empty($requestOrderDataList['ReceivedItem'][0]['request_uuid'])?$requestOrderDataList['ReceivedItem'][0]['request_uuid'] : ""),array('class' =>' table-link ','escape' => false,'title'=>'Print Transmittal Receipt')); ?>
 
                     <!-- <a data-toggle="modal" href="#myModalInRecord<?php echo $requestOrderDataList['DeliveredOrder']['id'], $uuid ?>" class="table-link <?php echo $disableButton ?>"><i class="fa fa-lg  "></i><span class="fa-stack ">
                                       <i class="fa fa-square fa-stack-2x "></i>

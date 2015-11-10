@@ -2309,3 +2309,70 @@ ALTER TABLE `corrugated_paper_job_tickets` ADD `corrugated_id` INT(11)  NULL  DE
 
 /*howell kit addedd this oct-28-2015 Accounting */
 ALTER TABLE `sales_invoices` CHANGE `dr_uuid` `dr_uuid` VARCHAR(50) NOT NULL;
+
+/*howell kit addedd this oct-28-2015 Warehouse */
+ALTER TABLE `received_receipt_items` ADD `quantity_unit_id` INT(11)  NULL  DEFAULT NULL  AFTER `quantity`;
+
+
+/* aldrin added this nov-5-2015 koufu_system */
+ALTER TABLE `users`
+MODIFY COLUMN `id`  int(11) UNSIGNED NOT NULL AUTO_INCREMENT FIRST ,
+ADD COLUMN `in_charge`  int(11) NULL DEFAULT 0 AFTER `image`,
+ADD COLUMN `departments_handle`  text NULL AFTER `in_charge`;
+
+
+ALTER TABLE `koufu_warehouse`.`items`   
+  ADD COLUMN `gsm` VARCHAR(255) NULL AFTER `modified`,
+  ADD COLUMN `type` VARCHAR(255) NULL AFTER `gsm`,
+  ADD COLUMN `width` VARCHAR(255) NULL AFTER `type`,
+  ADD COLUMN `length` VARCHAR(255) NULL AFTER `width`,
+  ADD COLUMN `item_group` VARCHAR(255) NULL AFTER `length`,
+  ADD COLUMN `quantity` VARCHAR(255) NULL AFTER `item_group`,
+  ADD COLUMN `location` VARCHAR(255) NULL AFTER `quantity`;
+
+ALTER TABLE `koufu_warehouse`.`items` 
+ADD COLUMN `inch` VARCHAR(255) NULL AFTER `width`;
+
+
+/* aldrin added this nov 9 2015 */
+DROP TABLE IF EXISTS `item_specs`;
+CREATE TABLE `item_specs` (
+  `id` int(11) DEFAULT NULL,
+  `items_id` int(11) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `unit` varchar(255) DEFAULT NULL,
+  `item_group_id` int(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+ALTER TABLE `item_specs`
+ADD COLUMN `width`  varchar(255) NULL AFTER `unit`,
+ADD COLUMN `length`  varchar(255) NULL AFTER `width`;
+-- ----------------------------
+-- Table structure for `item_specs`
+-- ----------------------------
+DROP TABLE IF EXISTS `item_specs`;
+CREATE TABLE `item_specs` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `items_id` int(11) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `unit` varchar(255) DEFAULT NULL,
+  `width` varchar(255) DEFAULT NULL,
+  `length` varchar(255) DEFAULT NULL,
+  `item_group` varchar(255) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `item_specs`
+ADD COLUMN `unit_width`  varchar(255) NULL AFTER `length`,
+ADD COLUMN `unit_length`  varchar(255) NULL AFTER `unit_width`;
+

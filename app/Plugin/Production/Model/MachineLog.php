@@ -28,14 +28,12 @@ class MachineLog extends AppModel {
 
 	public function bindTicket() {
 		$this->bindModel(array(
-			'hasOne' => array(
+			'belongsTo' => array(
 				'TicketProcessSchedule' => array(
 					'className' => 'Production.TicketProcessSchedule',
 					'foreignKey' => false,
 					'conditions' => 'TicketProcessSchedule.id = MachineLog.ticket_process_schedule_id'
-				),		
-				
-
+				),
 			)
 		));
 		$this->recursive = 1;

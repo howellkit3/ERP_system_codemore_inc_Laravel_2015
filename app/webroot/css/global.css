@@ -399,3 +399,9 @@ body.dragging, body.dragging * {
 .datepicker-dropdown {
   z-index: 9999 !important;
 }
+
+.department-list .checkbox-nice {
+  display: inline-block;
+  font-size: 10px;
+  width: 30%;
+}

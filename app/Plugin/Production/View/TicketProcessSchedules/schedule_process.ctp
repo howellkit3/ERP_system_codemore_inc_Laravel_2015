@@ -39,7 +39,7 @@
 					<?php $componentCounter = 1?>
 					<?php $partCounter = 1?>
 					<?php $processCounter = 1?>
-					<div class="table-responsive">
+				<!-- 	<div class="table-responsive">
 						<table class="table table-bordered">
 							<thead>
 								<?php foreach ($formatDataSpecs as $key => $specLists) { ?>
@@ -68,7 +68,7 @@
 								<?php } ?>
 							</thead>
 					    </table>
-				   	</div> 
+				   	</div>  -->
 				</form>
 			</div>
 		</div>

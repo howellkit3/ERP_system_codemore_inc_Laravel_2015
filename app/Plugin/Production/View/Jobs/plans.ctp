@@ -88,9 +88,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 										<thead>
 											<tr>
 												<th><a href="#"><span>Schedule No.</span></a></th>
-
 												<th><a href="#"><span>Del Schedule.</span></a></th>
-
 												<th><a href="#"><span>Customer</span></a></th>
 												<th><a href="#" class="text-center"><span>Product</span></a></th>
 												<th><a href="#" class="text-center"><span>Quantity</span></a></th>
@@ -123,7 +121,16 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 									                        </td>
 
 									                        <td class="">
-									                           <?php echo $clientOrderQuantity[$jobList['JobTicket']['client_order_id']]; ?>
+									                        	<?php 
+											                 			echo $this->Form->input('good',array(
+													                 		'class' => 'select-department-view form-control'
+													                 		));  ?>
+
+									                        	<?php 
+											                 			echo $this->Form->input('rejected',array(
+													                 		'class' => 'select-department-view form-control'
+													                 		));  ?>
+									                          
 									                        </td>
 
 									                        <td class="text-center">

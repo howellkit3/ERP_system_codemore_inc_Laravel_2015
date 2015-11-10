@@ -14,16 +14,26 @@ echo $this->Html->script(array(
 
 )); 
 
-echo $this->element('hr_options');
+if (!empty($userData['User']['in_charge']) && $userData['User']['in_charge'] == 1) {
+
+echo $this->element('in_charge_option'); 
+
+$incharge = true;
+} else {
+$incharge = false;
+echo $this->element('hr_options'); 
+} 
+
 
 $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
+
 
  ?>
 
  <div class="row">
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
-    		<?php echo $this->element('tab/schedules',array('active_tab' => $active_tab)); ?>
+    		<?php echo $this->element('tab/in_charge_schedules',array('active_tab' => $active_tab)); ?>
 			<div class="main-box-body clearfix">
 			 
 				<div class="tabs-wrapper">
@@ -31,22 +41,27 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 						<div class="tab-pane active" id="tab-calendar">
 							<header class="main-box-header clearfix">
 				                <h2 class="pull-left"><b>Work Schedules</b> </h2>
-
+				                <br>
 				                <div class="filter-block pull-right">
 				                	 <?php
 
-				                   	echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Add', 
-				                            array('controller' => 'work_schedules', 
-				                                    'action' => 'add'),
-				                            array('class' =>'btn btn-primary',
-				                                'escape' => false));
+					                   	echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Add', 
+					                            array('controller' => 'work_schedules', 
+					                                   'action' => 'add',
+					                                   'in_charged' => true
+					                                    ),
+					                            array('class' =>'btn btn-primary',
+					                                'escape' => false));
 
 
-				                   	echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Change Sched', 
-				                            array('controller' => 'work_schedules', 
-				                                    'action' => 'change_schedule'),
-				                            array('class' =>'btn btn-primary',
-				                                'escape' => false));
+					                   	echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Change Sched', 
+					                            array(
+					                            	'controller' => 'work_schedules', 
+					                                  'action' => 'change_schedule',
+					                                  'in_charged' => true
+					                                    ),
+					                            array('class' =>'btn btn-primary',
+					                                'escape' => false));
 
 				                    ?> 
 				                  	
@@ -54,9 +69,10 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 				                  	
 				                </div>
 				                <div class="clearfix"></div>
+				                 <br>
 				                <?php echo $this->Form->create('Schedule',array('url' => array( 'controller' => 'schedules','action' => 'search_schedules') , 'id' => 'search_schedules','type' => 'GET')) ?>
 				                <div class="filter-block pull-left">
-				                 
+				                 <!-- 
 						             <div class="form-group pull-left">
 										<div class="radio inline-block">
 											<input type="radio" checked="" value="employee" id="optionsRadios1" name="by">
@@ -64,7 +80,18 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 												By Employee
 											</label>
 										</div>
-									</div>
+									</div> -->
+
+										<div class="form-group pull-left" style="min-width:200px;">
+				                 		<?php echo $this->Form->input('departments',array(
+				                 			'type' => 'select',
+				                 			'options' => $departmentList,
+				                 			'class' => 'autocomplete',
+				                 			'label' => false,
+				                 			'id' => 'DepartmentList',
+				                 			'empty' => 'Select Department'
+				                 		)); ?>
+				                    </div>
 
 				                 	<div class="form-group pull-left" style="min-width:200px;">
 				                 		<?php echo $this->Form->input('employee_id',array(
@@ -72,7 +99,8 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 				                 			'options' => $employeeList,
 				                 			'class' => 'autocomplete',
 				                 			'label' => false,
-				                 			'id' => 'selectEmployee'
+				                 			'id' => 'selectEmployee',
+				                 			'default' => $defaults
 				                 		)); ?>
 				                    </div>
 				                   
@@ -159,10 +187,10 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 									                       	<td class="text-right">
 									                      	<?php
 
-									                      	echo $this->Html->link('<span class="fa-stack">
-															<i class="fa fa-square fa-stack-2x"></i>
-															<i class="fa fa-search fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> View </font></span>
-															</span> ', array('controller' => 'schedules', 'action' => 'view',$schedule['WorkSchedule']['id'],$schedule['WorkSchedule']['foreign_key']),array('class' =>' table-link','escape' => false,'title'=>'View Information'));
+									      //                 	echo $this->Html->link('<span class="fa-stack">
+															// <i class="fa fa-square fa-stack-2x"></i>
+															// <i class="fa fa-search fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> View </font></span>
+															// </span> ', array('controller' => 'schedules', 'action' => 'view',$schedule['WorkSchedule']['id'],$schedule['WorkSchedule']['foreign_key']),array('class' =>' table-link','escape' => false,'title'=>'View Information'));
 									                      	
 
 															echo $this->Html->link('<span class="fa-stack">
@@ -265,9 +293,32 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 <script>
     
         jQuery(document).ready(function($){
-              
+              	
+              	  $('#selectEmployee').change();
+
                $("#WorkScheduleWorkSchedulesForm").validate();
                
+
+               $('#DepartmentList').change(function(){
+               		$this = $(this)
+		       		if ($this.val() != '' ) {
+
+		       			$departmentId = $this.val();
+
+				          $.ajax({
+					            type: "GET",
+					            url: serverPath + "human_resource/employees/search_by_department/" + $departmentId + '/0/0/0/json',
+					            dataType: "json",
+					            success: function(result) {
+
+					            	
+								$("#selectEmployee").select2({data:result})   
+
+					            }
+					        });
+
+               		}
+               });
         });
 
 </script>

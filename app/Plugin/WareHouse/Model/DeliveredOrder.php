@@ -24,19 +24,22 @@ class DeliveredOrder extends AppModel {
 	        
 		$code =  $year. $month .$random;
 
-		$mystring = mb_substr($deliveredItemsData['uuid'],4,9);
-	//	$mystring = mb_substr($deliveredItemsData['po_number'],4,9);
-		
 		$this->create();
+		//pr($deliveredItemsData); exit;
+		if(!empty($deliveredItemsData['purchase_orders_id'])){
 
-		$data['dr_num'] = $deliveredItemsData['dr_num'];
-		$data['si_num'] = $deliveredItemsData['si_num'];
-		$data['created_by'] = $auth;
+			$mystring = mb_substr($deliveredItemsData['uuid'],4,9);
+			$data['uuid'] = $mystring;
+			$data['si_num'] = $deliveredItemsData['si_num'];
+			
+
+		}
+		$data['purchase_order_uuid'] = $deliveredItemsData['po_number'];
 		$data['modified_by'] = $auth;
 		$data['received_orders_id'] = $receivedOrdersId;
 		$data['purchase_orders_id'] = $purchaseId;
-		$data['purchase_order_uuid'] = $deliveredItemsData['po_number'];
-		$data['uuid'] = $mystring;
+		$data['dr_num'] = $deliveredItemsData['dr_num'];
+		$data['uuid'] = $deliveredItemsData['uuid'];
 		//pr($data); exit;
 		$this->save($data);
 
@@ -51,6 +54,12 @@ class DeliveredOrder extends AppModel {
 			'hasMany' => array(
 				'ReceivedItem' => array(
 					'className' => 'WareHouse.ReceivedItem',
+					'foreignKey' => 'delivered_order_id'
+					//'conditions' => 'ReceivedItem.delivered_order_id = DeliveredOrder.id'
+				),
+
+				'ReceivedReceiptItem' => array(
+					'className' => 'WareHouse.ReceivedReceiptItem',
 					'foreignKey' => 'delivered_order_id'
 					//'conditions' => 'ReceivedItem.delivered_order_id = DeliveredOrder.id'
 				),

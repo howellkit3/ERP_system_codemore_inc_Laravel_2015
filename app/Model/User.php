@@ -12,6 +12,7 @@ class User extends AppModel {
 	
 	public $actsAs = array('Containable');
 
+	
 	public $validate = array(
 
 		'email' => array(
@@ -60,6 +61,13 @@ class User extends AppModel {
 					'dependent' => true
 				),
 			), 
+			'belongsTo' => array(
+				'Overtime' => array(
+					'className' => 'Overtime',
+					'foreignKey' => false,
+					'conditions' => array('Overtime.created_by' => 'User.id')
+				),
+			), 
 
 
 		));
@@ -89,10 +97,11 @@ class User extends AppModel {
     } 
 
 	public function beforeSave($options = array()) {
-	    if (isset($this->data[$this->alias]['password'])) {
+	   
+	   if (isset($this->data['User']['password'])) {
 	        $passwordHasher = new SimplePasswordHasher();
-	        $this->data[$this->alias]['password'] = $passwordHasher->hash(
-	            $this->data[$this->alias]['password']
+	        $this->data['User']['password'] = $passwordHasher->hash(
+	            $this->data['User']['password']
 	        );
 	    }
 
@@ -107,4 +116,21 @@ class User extends AppModel {
 
 	// }
 	
+
+	public function findHeldDeparment($auth = null) {
+
+			if (!empty($auth)) {
+				
+				$departments = ClassRegistry::init('HumanResource.Department');
+
+				$departmentIds = json_decode($auth['departments_handle']);
+
+				$conditions  = array('Department.id' => $departmentIds );
+
+				return  $this->$departments->find('list',array('conditions' => $conditions,'fields' => array('id','notes')));
+			}
+		
+
+	
+	}
 }

@@ -2,10 +2,21 @@
  echo $this->Html->css(array( 'HumanResource.default' ));
 
 
-	echo $this->element('hr_options');
 
-	$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
- ?>
+$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
+
+if (!empty($userData['User']['in_charge']) && $userData['User']['in_charge'] == 1) {
+
+echo $this->element('in_charge_option'); 
+
+$incharge = true;
+} else {
+$incharge = false;
+echo $this->element('hr_options'); 
+} 
+
+
+?>
 
  <div class="row">
     <div class="col-lg-12">

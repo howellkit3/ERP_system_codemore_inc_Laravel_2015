@@ -5,7 +5,8 @@ Configure::write('debug',2);
 ?>
 <style>
 <?php include('word.css'); ?>
-
+@page { margin: 5px; }
+body { margin: 5px; }
 </style>
 
 <<html>
@@ -14,23 +15,23 @@ Configure::write('debug',2);
 </head>
 <body style="font-family:sans-serif;">
 
-		<table class="border full-width" style="">
+		<table class="border full-width" style="font-size:10px">
 				<tr>
-						<td><h2>Koufu Packaging Corp.</h2></td>
+						<td><h2 style="font-size:12px">Koufu Packaging Corp.</h2></td>
 				</tr>
 				<tr>
-						<td><h1>Main Job Ticket</h1></td>  <td class="text-right"> <b>Date</b> <?php echo date('Y/m/d'); ?> </td>
+						<td><h1 style="font-size:12px">Main Job Ticket</h1></td>  <td class="text-right"> <b>Date</b> <?php echo date('Y/m/d'); ?> </td>
 				</tr>
 
 		</table>
 
-		<table class="border full-width">
+		<table class="border full-width" style="font-size:10px; margin:0px">
 
 				<tr class="border">
 					<td >
-						<table class="medium-font full-width">
+						<table class="small-font full-width" style="font-size:9px">
 							<tr>
-								<td class="border-bottom-dashed"> <?php 
+								<td class="border-bottom-dashed" style="font-size:9px"> <?php 
 										echo !empty($companyData[$productData['Product']['company_id']]) ? ucfirst($companyData[$productData['Product']['company_id']]) : '' ;
 
 									?> </td>
@@ -50,21 +51,17 @@ Configure::write('debug',2);
 									<?php echo !empty($specs['ProductSpecification']['size3']) ? $specs['ProductSpecification']['size3'] : '0' ?></td>
 								<td class="text-right"><label class="strong">Del Date</label> <?php 
 								echo !empty($delData['ClientOrderDeliverySchedule'][0]['schedule']) ? date('M d, Y', strtotime($delData['ClientOrderDeliverySchedule'][0]['schedule'])) : ''; ?>
-
-							
-
-								 </td>
+								</td>
 							</tr>
 						</table>
 					</td>
 				</tr>
 		</table>
 
-		<table class="border full-width">
-
+		<table class="border full-width" style="line-height:0.5">
 				<tr class="">
 					<td>
-						<table class="medium-font full-width">
+						<table class="small-font full-width" style="font-size:8px">
 							
 							<tr>
 								<td><label class="strong">PO Quantity</label>
@@ -185,11 +182,11 @@ Configure::write('debug',2);
 						</table>
 					<?php endif; ?>
 
-						<table class="border full-width">
+						<table class="border full-width" style="font-size:10px" style="line-height:0">
 
 								<tr class="">
 									<td>
-										<table class="medium-font full-width">
+										<table class="small-font full-width">
 											
 											<tr>
 												<td class="border-bottom-dashed"><label class="strong">Packing Option</label></td>
@@ -204,11 +201,11 @@ Configure::write('debug',2);
 								</tr>
 						</table>
 
-						<table class="full-width">
+						<table class="full-width" style="line-height:0;margin-top:2.5px">
 
 								<tr class="">
 									<td>
-										<table class="medium-font full-width">
+										<table class="small-font full-width">
 											
 											<tr>
 												<td><label class="strong">Sales</label>

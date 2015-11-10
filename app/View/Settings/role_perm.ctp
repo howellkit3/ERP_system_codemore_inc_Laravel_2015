@@ -151,11 +151,79 @@
 						</div>
 					</div>
 				</div>
+
+				<!-- in_charge permmision -->
+
+				<div class="main-box">
+					<div class="top-space"></div>
+					<h1 class="pull-left">
+						In Charge Departments
+					</h1>
+					<br><br><br>
+					<div class="main-box-body clearfix">
+						<div class="main-box-body clearfix">
+							<div class="form-horizontal">
+								<?php echo $this->Form->create('User',array('url'=>(array('controller' => 'settings','action' => 'update_in_charge'))));?>
+
+
+								<?php
+		                                        echo $this->Form->input('id', array(
+		                                        	'class' => 'required form-control col-lg-6',
+		                                        	'label' => false,
+		                                        	'placeholder' => 'id',
+		                                        	'id' => 'UserID'
+		                                        	));
+		                                    ?>
+
+
+								<div class="form-group">
+										<label class="col-lg-2 control-label"> </label>
+										<div class="col-lg-8">
+											<div class="checkbox-nice">
+												<input type="checkbox" id="inCharge" name="data[User][in_charge]">
+												<label for="inCharge">
+													In Charge
+												</label>
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group department-list hide">
+										<div class="col-lg-12" style="margin-left:10px;">
+											<div class="form-group">	
+												<?php foreach ($departments as $key => $list) { ?>
+													<div class="checkbox-nice">
+															<input type="checkbox" class="dp-selection" value="<?php echo $key; ?>" id="dp-<?php echo $key; ?>" name="data[User][departments_handle][]">
+															<label for="dp-<?php echo $key; ?>">
+																<?php echo $list; ?>
+														</label>
+													</div>
+												<?php } ?>		
+										</div>
+									</div>
+									</div>
+									<div class="form-group">
+										<div class="col-lg-2"></div>
+										<div class="col-lg-8">
+											<button type="submit" class="btn btn-primary pull-left">Save Departments</button>&nbsp;
+											<?php 
+						                        echo $this->Html->link('Cancel', array('controller' => 'settings', 'action' => 'index'),array('class' =>'btn btn-default','escape' => false));
+						                    ?>
+										</div>
+									</div>
+								<?php echo $this->Form->end(); ?>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				
+				<!-- add -->
 			</div>
 		</div>
 	</div>
 </div>
-<script>
+<script> 
 	$('.myRole').change(function(){
 		var roleId = $(this).val();
 
@@ -228,5 +296,53 @@
 			}
 		});
 	});
+
+
+	$('#UserId').change(function(){
+
+		var UserId = $(this).val();
+
+		$.ajax({
+			url: serverPath + "settings/checkData/"+UserId,
+			type: "get",
+			dataType: "json",
+			success: function(data) {
+
+				if (data.User.in_charge == 1) {
+					$('.department-list').removeClass('hide').find('input').attr('disabled',false);
+					$('#inCharge').attr('checked',true);
+
+					
+
+					$checkDepartments = JSON.parse(data.User.departments_handle);
+						//$('.dp-selection').attr('checked',false);
+
+						$('.department-list .dp-selection').each(function(){
+							if ($.inArray($(this).val(),$checkDepartments) > 0) {
+								$(this).attr('checked',true);
+							}
+						});
+
+
+				} else {
+					$('.department-list').addClass('hide').find('input').attr('disabled',true);
+				}
+				$('#UserID').val(data.User.id);
+			
+			}
+		});
+
+	});
+
+   $('#inCharge').click(function(){
+
+   		if ($(this).is(':checked')) {
+   			$('.department-list').removeClass('hide').find('input').attr('disabled',false);
+   		} else {
+
+   			$('.department-list').addClass('hide').find('input').attr('disabled',false);
+   		}
+
+   });
 
 </script>

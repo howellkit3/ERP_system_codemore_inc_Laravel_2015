@@ -14,7 +14,17 @@ echo $this->Html->script(array(
 
 )); 
 
-echo $this->element('hr_options');
+
+if (!empty($userData['User']['in_charge']) && $userData['User']['in_charge'] == 1) {
+
+echo $this->element('in_charge_option'); 
+
+$incharge = true;
+} else {
+$incharge = false;
+echo $this->element('hr_options'); 
+} 
+
 
 $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
 
