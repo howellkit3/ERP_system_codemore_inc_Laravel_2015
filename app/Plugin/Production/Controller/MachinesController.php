@@ -115,4 +115,40 @@ class MachinesController extends ProductionAppController {
 
     }
     
+
+    public function view_schedules($logId = null) {
+
+        if (!empty($logId)) {
+
+            $this->loadModel('Production.MachineLog');
+
+            $this->loadModel('Ticket.JobTicket');
+
+            $this->loadModel('Production.TicketProcessSchedule');
+
+
+            $this->loadModel('Sales.Company');
+
+            $this->loadModel('Production.Machine');
+
+            $this->loadModel('Sales.Product');
+
+            $this->MachineLog->bindTicket();
+
+            $logs = $this->MachineLog->findById($logId);
+
+            $companyData = $this->Company->find('list',array('fields' => array('id','company_name')));
+
+            $machineData = $this->Machine->find('list',array('fields' => array('id','name')));
+
+            $productName = $this->Product->find('list',array('fields' => array('id','name')));
+
+            $ticketData =$this->JobTicket->findById($logs['TicketProcessSchedule']['job_ticket_id']);
+
+
+            $this->set(compact('ticketData','logs','productName','machineData','companyData'));
+
+            $this->render('Machines/ajax/view_logs');
+        }
+    }
 }

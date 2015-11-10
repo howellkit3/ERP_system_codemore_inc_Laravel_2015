@@ -46,10 +46,14 @@ class MachineLog extends AppModel {
 			
 			$this->create();
 
-			$timeHolder = date("H:i:s");
-			 
+			// $timeHolder = date("H:i:s");
+				
+
+			// pr();
+
+
 			$data['MachineLog']['ticket_process_schedule_id'] = $value;
-			$data['MachineLog']['start'] = $timeHolder;
+			//$data['MachineLog']['start'] = $timeHolder;
 			$data['MachineLog']['start_by'] = $auth;
 			//pr($data); exit;
 			$id = $this->save($data);

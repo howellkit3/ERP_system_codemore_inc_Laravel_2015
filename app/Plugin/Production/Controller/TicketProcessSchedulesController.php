@@ -34,7 +34,6 @@ class TicketProcessSchedulesController extends ProductionAppController {
             
             // $this->JobTicket->saveField('status_production_id',$departmentProcess);
 
-   
             $TicketProcessScheduleID = $this->TicketProcessSchedule->saveTicketProcessSchedule($data,$auth['id']);
 
             $this->MachineLog->saveMachineLog($TicketProcessScheduleID, $auth['id']);

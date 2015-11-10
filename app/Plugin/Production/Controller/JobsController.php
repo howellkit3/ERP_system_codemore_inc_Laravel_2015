@@ -86,7 +86,6 @@ class JobsController extends ProductionAppController {
         
         $jobData = $this->paginate('JobTicket');
 
-
       //  $jobData = $this->JobTicket->find('all',array('order' => 'JobTicket.id DESC','conditions' => $conditions ));
 
         //pr($jobData ); exit;
@@ -140,7 +139,8 @@ class JobsController extends ProductionAppController {
             $machineScheduleData = $this->MachineLog->find('all');
 
             $conditions = array('TicketProcessSchedule.department_process_id' => $id);
-             $params =  array(
+            
+            $params =  array(
                     'conditions' => $conditions,
                     'limit' => $limit,
                     //'group' => array('Attendance.date'),
@@ -153,13 +153,12 @@ class JobsController extends ProductionAppController {
 
             $machineScheduleData = $this->paginate('MachineLog');
 
+            //get Jobticket 
+            $machineScheduleData = $this->JobTicket->addTicket( $machineScheduleData );
+     
+            $this->set(compact('machineScheduleData','companyData','machineData','productName','processDepartment'));
 
-        //get Jobticket 
-        $machineScheduleData = $this->JobTicket->addTicket( $machineScheduleData );
- 
-        $this->set(compact('machineScheduleData','companyData','machineData','productName','processDepartment'));
-
-        $this->render('Jobs/processes/default');
+            $this->render('Jobs/processes/default');
            
         }
     }

@@ -37,42 +37,41 @@ class TicketProcessSchedule extends AppModel {
 		
 		$ticketID = array();	
 
-
-
-	
 		$idHolder = array();
-
+		
 		foreach ($data['TicketProcessSchedule'] as $mainKey => $value) {
 				
 			$this->create();
 
 			if (is_array($value)) {
 
-				$ticketData = array();
+			
 				
 				foreach ($value as $key => $innerValue) {
 
+						$ticketData = array();
+
 					if (!empty($innerValue['department_process_id'])) {
 
-						
+						$ticketData = $innerValue;
+						$ticketData['job_ticket_id'] = $data['Ticket']['job_ticket_id'];
+						$ticketData['component_id'] = $mainKey;
+						$ticketData['remarks'] = '';
+						$ticketData['status'] = '';
 
-						$ticketData[$key]= $innerValue;
-						$ticketData[$key]['job_ticket_id'] = $data['Ticket']['job_ticket_id'];
+						$ticketData['id'] = !empty($innerValue['id']) ? $innerValue['id'] : '';
 
-						$ticketData[$key]['component_id'] = $mainKey;
-
-
-						if ($this->save($ticketData[$key]) ) {
+						if( $this->save($ticketData) ) {
 
 							$idHolder = $this->id;
-							array_push($ticketID, $idHolder);
+							$ticketID[] = $idHolder;
 						}
-
+					
 					}
 
-
-
+					
 				}
+
 			} else {
 
 

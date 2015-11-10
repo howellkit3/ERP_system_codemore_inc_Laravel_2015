@@ -127,7 +127,7 @@
 
 																<div class="form-group col-md-12">
 																		<div class="input-group input-append bootstrap-timepicker">
-																		<input type="text" class="form-control timepicker" name="data[MachineLog][start]" value="<?php echo $machineScheduleList['MachineLog']['start']; ?>">
+																		<input type="text" class="form-control timepicker" name="data[MachineLog][start]" value="<?php echo !empty($machineScheduleList['MachineLog']['start']) ? $machineScheduleList['MachineLog']['start'] : '00:00:00'; ?>">
 																		<span class="add-on input-group-addon"><i class="fa fa-clock-o"></i></span>
 																		</div>
 																</div>
@@ -156,7 +156,7 @@
 
 																<div class="form-group col-md-12">
 																		<div class="input-group input-append bootstrap-timepicker">
-																		<input type="text" class="form-control timepicker" name="data[MachineLog][start]" value="<?php echo $machineScheduleList['MachineLog']['start']; ?>">
+																		<input type="text" class="form-control timepicker" name="data[MachineLog][start]" value="<?php echo !empty($machineScheduleList['MachineLog']['dt_start']) ? $machineScheduleList['MachineLog']['dt_start'] : '00:00:00' ; ?>">
 																		<span class="add-on input-group-addon"><i class="fa fa-clock-o"></i></span>
 																		</div>
 																</div>
@@ -168,7 +168,7 @@
 									                          
 									                           <div class="form-group col-md-12">
 																		<div class="input-group input-append bootstrap-timepicker">
-																		<input type="text" class="form-control timepicker" name="data[MachineLog][end]" value="<?php echo !empty($machineScheduleList['MachineLog']['end']) ? $machineScheduleList['MachineLog']['end'] : '00:00:00'; ?>">
+																		<input type="text" class="form-control timepicker" name="data[MachineLog][end]" value="<?php echo !empty($machineScheduleList['MachineLog']['dt_end']) ? $machineScheduleList['MachineLog']['dt_end'] : '00:00:00'; ?>">
 																		<span class="add-on input-group-addon"><i class="fa fa-clock-o"></i></span>
 																		</div>
 																</div>
@@ -178,7 +178,7 @@
 									                        </td>
 
 									                       	<td>
-										                       	<a data-id="<?php echo $machineScheduleList['JobTicket']['id']; ?>" data-toggle="modal" title="Edit Information" data-url="/machine_shedules/ticket_data_view/<?php echo $machineScheduleList['JobTicket']['id']; ?>" class="view_full_ticket_details table-link" href="#ticketDataFullDetails">
+										                       	<a data-id="<?php echo $machineScheduleList['JobTicket']['id']; ?>" data-toggle="modal" title="View" data-url="/machines/view_schedules/<?php echo $machineScheduleList['MachineLog']['id']; ?>" class="view_full_ticket_details table-link" href="#ticketDataFullDetails">
 										                       		<span class="fa-stack">
 																		<i class="fa fa-square fa-stack-2x"></i>
 																		<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>

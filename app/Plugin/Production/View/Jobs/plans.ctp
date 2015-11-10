@@ -120,7 +120,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 									                        </td>
 															<td class="text-center">
 									                           <?php 
-									                           		if (empty($jobList['JobTicket']['status_production_id'])) {
+									                           		if (empty($jobList['TicketProcessSchedule'])) {
 									                           			echo "<span class='label label-default'>Waiting For Schedule</span>";
 									                           		}else{
 
