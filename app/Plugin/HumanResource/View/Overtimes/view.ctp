@@ -47,12 +47,7 @@ echo $this->Html->script(array(
                         echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back', array('controller' => 'overtimes', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
                         
 
-                         if (!empty( $userData['User']['in_charge'] ) && in_array($userData['User']['role_id'],array('19','12'))) {
-
-
-
-                         } else {
-
+                         if (in_array($userData['User']['role_id'],array('19','12'))) {
 
                              echo $this->Html->script('Approved',array('controler' => 'overtimes' )); 
 
