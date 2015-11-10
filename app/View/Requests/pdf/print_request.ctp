@@ -109,7 +109,7 @@ th, td {
 
 						<?php } else if($lengthName >= 40) { ?>
 
-							<td style="border:1px solid black; width:50px"><span style="font-size:35%"; ><?php echo $value['RequestItem']['purpose'] ?></span>
+							<td style="border:1px solid black; width:50px"><span style="font-size:25%"; ><?php echo $value['RequestItem']['purpose'] ?></span>
 							</td>
 
 						<?php }else{ ?>
@@ -129,7 +129,7 @@ th, td {
 
 						<?php } else if($lengthRemarks >= 40) { ?>
 
-							<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:35%; max-width:50px"><?php echo $value['RequestItem']['remarks'] ?></td>
+							<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:25%; max-width:50px"><?php echo $value['RequestItem']['remarks'] ?></td>
 
 						<?php }else{ ?>
 
@@ -293,7 +293,7 @@ th, td {
 
 						<?php } else if($lengthName >= 40) { ?>
 
-							<td style="border:1px solid black; width:50px"><span style="font-size:35%"; ><?php echo $value['RequestItem']['purpose'] ?></span>
+							<td style="border:1px solid black; width:50px"><span style="font-size:25%"; ><?php echo $value['RequestItem']['purpose'] ?></span>
 							</td>
 
 						<?php }else{ ?>
@@ -313,7 +313,7 @@ th, td {
 
 						<?php } else if($lengthRemarks >= 40) { ?>
 
-							<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:35%; max-width:50px"><?php echo $value['RequestItem']['remarks'] ?></td>
+							<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:20%; max-width:50px"><?php echo $value['RequestItem']['remarks'] ?></td>
 
 						<?php }else{ ?>
 
