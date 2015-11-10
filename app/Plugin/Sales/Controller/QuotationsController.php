@@ -70,10 +70,12 @@ class QuotationsController extends SalesAppController {
 
             ),
             'order' => 'Quotation.id DESC',
-            'group' => 'Quotation.uuid'
+            'group' => 'Quotation.id'
         );
 
         $quotationData = $this->paginate('Quotation');
+
+       // pr($quotationData); exit;
 
 		$this->Company->bind(array('Inquiry'));
 
@@ -1320,7 +1322,7 @@ class QuotationsController extends SalesAppController {
 											)
 										),
 									'limit' => 10,
-									'group' => 'Quotation.uuid'
+									'group' => 'Quotation.id'
 								)
 		);
 		//pr($quotationData); exit;
