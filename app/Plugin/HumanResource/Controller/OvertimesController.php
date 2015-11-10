@@ -2,6 +2,8 @@
 App::uses('AppController', 'Controller');
 App::uses('SessionComponent', 'Controller/Component');
 
+App::import('Vendor', 'DOMPDF', true, array(), 'dompdf'.DS.'dompdf_config.inc.php', false);
+
 
 class OvertimesController  extends HumanResourceAppController {
 
@@ -233,8 +235,9 @@ class OvertimesController  extends HumanResourceAppController {
 		 		
 		 		$this->redirect( array(
                              'controller' => 'overtimes', 
-                             'action' => 'pendings',
-                             'tab' => 'pendings',
+                             'action' => 'view',
+                             $overtime_id,
+                             'tab' => 'view',
                              'plugin' => 'human_resource'
 
                         ));
@@ -322,9 +325,7 @@ class OvertimesController  extends HumanResourceAppController {
 
 			$data = $this->Overtime->formatData($this->request->data,$auth['id']);
 
-			
-	
-
+		
 			if ($this->Overtime->save($data)) {
 
 					$overtime = $this->Overtime->findById($id);
@@ -400,8 +401,6 @@ class OvertimesController  extends HumanResourceAppController {
 			$selectedEmployee = (array)json_decode($this->request->data['Overtime']['employee_ids']);
 
 			$date = $this->request->data['Overtime']['date'];
-
-
 
 		}
 
@@ -761,4 +760,67 @@ class OvertimesController  extends HumanResourceAppController {
 		}
 
 	}
+
+
+	public function print_request($id = null) {
+
+		if (!empty($id)) {
+
+		$this->loadModel('HumanResource.Employee');
+
+		$request = $this->Overtime->findById($id);
+
+		$employees = array();
+		
+		if (!empty($request['Overtime']['employee_ids'])) {
+
+			$empIds = json_decode($request['Overtime']['employee_ids']);
+
+			$employees = $this->Employee->find('all',array('conditions' => array(
+					'Employee.id' => $empIds
+
+			)));
+
+		}
+
+		$this->set(compact('request','employees'));
+
+		$view = new View(null, false);
+
+		$view->viewPath = 'Overtimes'.DS.'pdf';  
+
+		$view->set(compact('request','employees'));
+
+		$output = $view->render('print_request', false);
+
+		$dompdf = new DOMPDF();
+        $dompdf->set_paper("A5", 'landscape');
+        $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));
+        $dompdf->render();
+        $canvas = $dompdf->get_canvas();
+        $font = Font_Metrics::get_font("helvetica", "bold");
+
+        $output = $dompdf->output();
+        $random = rand(0, 1000000) . '-' . time();
+
+         $filename = 'overtime-request'.time();
+        
+        $filePath = $filename.'.pdf';
+
+        $file_to_save = WWW_ROOT .DS. $filePath;
+            
+        if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
+                
+                unlink($file_to_save);
+        }
+
+        $dompdf->render();
+        
+
+        exit();
+        break;  
+		}
+	}
+
+
 }
