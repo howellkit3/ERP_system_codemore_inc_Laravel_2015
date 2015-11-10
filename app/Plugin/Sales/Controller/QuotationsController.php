@@ -70,7 +70,7 @@ class QuotationsController extends SalesAppController {
 
             ),
             'order' => 'Quotation.id DESC',
-            'group' => 'Quotation.id'
+            'group' => 'Quotation.uuid'
         );
 
         $quotationData = $this->paginate('Quotation');
@@ -1320,10 +1320,10 @@ class QuotationsController extends SalesAppController {
 											)
 										),
 									'limit' => 10,
-									'group' => 'Quotation.id'
+									'group' => 'Quotation.uuid'
 								)
 		);
-
+		//pr($quotationData); exit;
 		$userData = $this->User->read(null,$this->Session->read('Auth.User.id'));
 
 		$rolesPermissionData = $this->RolesPermission->find('list', array(
