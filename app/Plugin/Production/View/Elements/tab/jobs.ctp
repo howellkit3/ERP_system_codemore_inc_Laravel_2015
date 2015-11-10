@@ -142,6 +142,15 @@
 
 					<?php endforeach; ?>	
 				<?php endif; ?>	
+
+				<li>
+					<?php echo $this->Html->link('Settings',array(
+					'controller' => 'settings',
+					'action' => 'machines?'.rand(1000,9999).'='.date("is"),
+					'tab' => 'machines',
+					'plugin' => 'production')); ?>
+				</li>
+				
 			</ul>
 		</div>
 	</div>
