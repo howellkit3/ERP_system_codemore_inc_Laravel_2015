@@ -201,7 +201,9 @@ class OvertimesController  extends HumanResourceAppController {
 
 			$this->Overtime->create();
 
+
 			$data = $this->Overtime->formatData($this->request->data,$auth['id']);
+
 	
 			if ($this->Overtime->save($data['Overtime'])) {
 
@@ -325,9 +327,9 @@ class OvertimesController  extends HumanResourceAppController {
 
 			if ($this->Overtime->save($data)) {
 
-						$overtime = $this->Overtime->findById($id);
+					$overtime = $this->Overtime->findById($id);
 
-				$this->Session->setFlash('Saving overtime successfully','success');
+					$this->Session->setFlash('Saving overtime successfully','success');
 
 					if ($overtime['Overtime']['status'] == 'approved') {
 
@@ -336,8 +338,8 @@ class OvertimesController  extends HumanResourceAppController {
 						$workshift = $this->Workshift->createWorkshift($overtime,$id,$auth['id']);
 
 						if (!empty($workshift['id'])) {
-						//workhift break
-						$workshiftBreak = $this->WorkshiftBreak->createWorkshiftBreak($overtime,$workshift['id'],$id,$auth['id']);
+							//workhift break
+							$workshiftBreak = $this->WorkshiftBreak->createWorkshiftBreak($overtime,$workshift['id'],$id,$auth['id']);
 
 						}
 
@@ -583,6 +585,7 @@ class OvertimesController  extends HumanResourceAppController {
 				'fields' => array('id','breaktime_id')
 				)); 
 
+
 			$selectedEmployee = (array)json_decode($this->request->data['Overtime']['employee_ids']);
 
 			$date = $this->request->data['Overtime']['date'];
@@ -620,7 +623,6 @@ class OvertimesController  extends HumanResourceAppController {
 			$conditions = array_merge($conditions,array('Attendance.employee_id' => $selectedEmployee ));
 
 		}
-
 
 		$employees = $this->Attendance->find('all',array(
 					'conditions' => $conditions,

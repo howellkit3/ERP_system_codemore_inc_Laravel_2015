@@ -188,7 +188,7 @@
 
 						<?php 
 
-						 if(in_array($userData['User']['in_charge'],array('1'))) {
+						 if(!empty($userData['User']['in_charge']) && in_array($userData['User']['in_charge'],array('1'))) {
 						
 	 						echo $this->Html->link( " <i class='fa fa-clock-o'></i> <span>Schedules</span>",   array(
 	 							'controller' =>'work_schedules',

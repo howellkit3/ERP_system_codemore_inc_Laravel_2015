@@ -118,7 +118,6 @@ echo $this->element('hr_options');
                                                                             'type' => 'text',
                                                                             'label' => false,
                                                                             'value' => date('Y-m-d'),
-                                                                            'readonly' => true
                                                                             ));
                                                                  ?>
 
@@ -196,7 +195,7 @@ echo $this->element('hr_options');
 
                                             <div class="form-group">
                                                     <div class="col-lg-12">
-                                                        <label class="large-label"><span style="color:red;">*</span> <b>Breaktime </b> </label>
+                                                        <label class="large-label"> <b>Breaktime </b> </label>
                                                         <div class="clearfix"></div>
                                                         <div class="selected_breaks" >
                                                             <ul>
@@ -361,13 +360,17 @@ echo $this->element('hr_options');
 
                 $('body').on('change','#OvertimeDate',function(){
                     
+                    $("#OvertimeFrom,#OvertimeTo").val($(this).val()+ ' 00:00');
+
                     var selectedDate = $.datepicker.formatDate('yy/mm/dd', new Date($(this).val()));
                     
                     $("#OvertimeFrom,#OvertimeTo").datetimepicker( {
                         format:'Y-m-d H:i',
-                        minDate: selectedDate
+                        current : $(this).val()+ ' 00:00',
+                       // current: '2015-11-20 00:00'
                     });
                 });
+
 
                 $('#OvertimeDepartmentId').change();
 
