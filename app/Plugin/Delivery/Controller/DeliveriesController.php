@@ -218,9 +218,46 @@ class DeliveriesController extends DeliveryAppController {
                                                 'Delivery.clients_order_id' => $clientUuid);
 
         $deliveryEdit = $this->Delivery->find('all', array(
-                                         'conditions' => $deliveryConditions ,
+                                        'fields'=>'DISTINCT Delivery.id,
+                                                            Delivery.dr_uuid,
+                                                            Delivery.from,
+                                                            Delivery.schedule_uuid,
+                                                            Delivery.clients_order_id,
+                                                            Delivery.company_id,
+                                                            Delivery.status,
+                                                            Delivery.created_by,
+                                                            Delivery.modified_by,
+                                                            Delivery.modified,
+                                                            Delivery.created,
+                                                            DeliveryDetail.id,
+                                                            DeliveryDetail.schedule,
+                                                            DeliveryDetail.quantity,
+                                                            DeliveryDetail.pieces,
+                                                            DeliveryDetail.measure,
+                                                            DeliveryDetail.location,
+                                                            DeliveryDetail.delivery_type,
+                                                            DeliveryDetail.remarks,
+                                                            DeliveryDetail.schedule,
+                                                            DeliveryDetail.modified_by,
+                                                            DeliveryDetail.created_by,
+                                                            DeliveryDetail.modified,
+                                                            DeliveryDetail.created,
+                                                            DeliveryDetail.status,
+                                                            DeliveryReceipt.id,
+                                                            DeliveryReceipt.schedule,
+                                                            DeliveryReceipt.quantity,
+                                                            DeliveryReceipt.location,
+                                                            DeliveryReceipt.type,
+                                                            DeliveryReceipt.remarks,
+                                                            DeliveryReceipt.printed_by,
+                                                            DeliveryReceipt.approved_by,
+                                                            DeliveryReceipt.printed,
+                                                            DeliveryDetail.delivered_quantity',
+                                        'conditions' => $deliveryConditions ,
                                         'order' => 'Delivery.id DESC'
                                     ));
+
+      //  pr($deliveryEdit); exit;
 
         $this->Delivery->bindDelivery();
 
@@ -714,7 +751,7 @@ class DeliveriesController extends DeliveryAppController {
 
         $clientOrderData = $this->ClientOrderDeliverySchedule->find('all');
 
-        
+       // pr($clientOrderData); exit;
         foreach ($clientOrderData as $key1 => $value){
 
             foreach ($DRData as $key => $valueOfDelivery){
@@ -724,6 +761,8 @@ class DeliveriesController extends DeliveryAppController {
                     $DRData[$key]['Product']['name'] = $value['Product']['name'];
 
                     $DRData[$key]['Company']['name'] = $value['Company']['company_name'];
+
+                    $DRData[$key]['ClientOrder']['po_number'] = $value['ClientOrder']['po_number'];
 
                 }
 
@@ -796,27 +835,19 @@ class DeliveriesController extends DeliveryAppController {
 
         $userData = $this->Session->read('Auth');
 
-        $this->loadModel('Sales.ClientOrderDeliverySchedule');
-
-        $this->loadModel('Sales.ClientOrder');
-
         $this->loadModel('User');
 
         $this->loadModel('Delivery.DeliveryReceipt');
 
-        $this->loadModel('Delivery.Delivery');
-
-        $this->Delivery->bindDelivery();
-
-        $this->DeliveryReceipt->bind('Delivery');
-
-        $this->ClientOrder->bindDelivery();
+        $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
         $userFName = $this->User->find('list',array('fields' => array('id','first_name')));
 
         $userLName = $this->User->find('list',array('fields' => array('id','last_name')));
 
-        $this->DeliveryReceipt->bind('Delivery');
+        $this->DeliveryReceipt->bindDelivery();
+
+        $this->DeliveryReceipt->recursive = 1;
 
         $noPermissionSales = ' ';
 
@@ -831,6 +862,30 @@ class DeliveriesController extends DeliveryAppController {
                         ),
                       'limit' => 10
                       )); 
+
+        $this->ClientOrderDeliverySchedule->bind(array('ClientOrder', 'QuotationDetail','Company', 'Product'));
+
+        $clientOrderData = $this->ClientOrderDeliverySchedule->find('all');
+
+        
+        foreach ($clientOrderData as $key1 => $value){
+
+            foreach ($DRData as $key => $valueOfDelivery){
+
+                if($value['ClientOrder']['uuid'] == $valueOfDelivery['Delivery']['clients_order_id']){
+
+                    $DRData[$key]['Product']['name'] = $value['Product']['name'];
+
+                    $DRData[$key]['Company']['name'] = $value['Company']['company_name'];
+
+                    $DRData[$key]['ClientOrder']['po_number'] = $value['ClientOrder']['po_number'];
+
+
+                }
+
+            } 
+
+        }
 
         $this->set(compact('noPermissionSales','DRData','userFName','userLName'));  
 

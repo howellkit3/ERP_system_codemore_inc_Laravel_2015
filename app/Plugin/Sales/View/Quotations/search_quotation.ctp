@@ -1,9 +1,10 @@
 <?php if (!empty($quotationData)) { ?>
-    <?php foreach ($quotationData as $quotationList): ?>
+    <?php foreach ($quotationData as $quotationList): 
+        if($quotationList['Quotation']['status'] != 2 ){ ?>
         
             <tr class="">
                  <td class="">
-                    PQ-<?php echo $quotationList['Quotation']['uuid'] ?>  
+                    PQ-<?php echo  $quotationList['Quotation']['uuid'] ?>  
                 </td>
                 <td class="">
                     <?php echo ucfirst($quotationList['Product']['name']) ?>  
@@ -60,7 +61,8 @@
                 </td>
             </tr>
         
-    <?php endforeach; ?> 
+    <?php } 
+    endforeach; ?> 
 <?php }else{
     echo "<font color='red'><b>No result..</b></font>";
     } ?> 
