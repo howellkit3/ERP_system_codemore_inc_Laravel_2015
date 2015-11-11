@@ -20,8 +20,7 @@ $totalremaining = 0;
                             'escape' => false));
                 ?>  
 
-                
-                <?php  if (empty($value['Delivery']['status'])) { ?> 
+                <?php  if (empty($deliveryEdit)) { ?> 
 
                         <a data-toggle="modal" href="#myModalApprove" class="btn btn-primary mrg-b-lg pull-right "><i class="fa fa-edit fa-lg"></i>Approve Schedule</a>
 
@@ -40,12 +39,8 @@ $totalremaining = 0;
                 <div class="table-responsive">
                     <div class="col-lg-6 col-md-6 col-sm-6">
                         <div class="main-box clearfix">
-                       
                             <table class="table table-striped table-hover">
-                        
                                 <tbody>
-
-                                
                                     <tr>
                                         <td>Client Order Number</td>
                                         <td><?php echo  $clientsOrder['ClientOrder']['uuid']; ?></td>
@@ -74,9 +69,7 @@ $totalremaining = 0;
                                     </tr>
                                
                                 </tbody>
-                        
                             </table>
-
                         </div>
                     </div>
                     
@@ -249,8 +242,7 @@ $totalremaining = 0;
                                     $totalremaining = $clientsOrder['ClientOrderDeliverySchedule']['quantity'];
                                 }
 
-                                if($totalremaining != 0){ ?>
-
+                                if($totalremaining != 0 && !empty($deliveryEdit)){ ?>
                                      &nbsp;
 
                                     <a data-toggle="modal" href="#myModalDeliveries" class="btn btn-primary   "><i class="fa fa-edit fa-lg"></i> Add Schedule</a>
