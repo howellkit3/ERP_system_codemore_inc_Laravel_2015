@@ -189,13 +189,9 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
-        $this->loadModel('Sales.ProductSpecification');
-
-        $this->loadModel('Sales.Address');
-
         $this->loadModel('Delivery.Measure');
 
-        $this->ClientOrderDeliverySchedule->bind(array('ClientOrder','QuotationItemDetail','QuotationDetail','Product', 'Company'));
+        $this->ClientOrderDeliverySchedule->bind(array('ClientOrder','QuotationItemDetail','QuotationDetail','Product', 'Company', 'Address'));
 
         $clientsOrder = $this->ClientOrderDeliverySchedule->find('first', array(
                                               'conditions' => array('ClientOrderDeliverySchedule.uuid' => $clientsOrderUuid,
@@ -204,9 +200,7 @@ class DeliveriesController extends DeliveryAppController {
 
         $scheduleInfo = $clientsOrder;
 
-        $productSpecification = $this->ProductSpecification->find('first',array('conditions' => array(
-                    'ProductSpecification.product_id' => $clientsOrder['QuotationDetail']['product_id']
-        )));
+      //  pr($clientsOrder); exit;
 
         $this->Delivery->bindDelivery();
 
@@ -244,7 +238,7 @@ class DeliveriesController extends DeliveryAppController {
 
         $orderListHelper = $this->Delivery->find('list',array('fields' => array('clients_order_id', 'dr_uuid')));
 
-        $companyAddress = $this->Address->find('list',array('fields' => array('address1','address1','foreign_key')));
+        //$companyAddress = $this->Address->find('list',array('fields' => array('address1','address1','foreign_key')));
  
         $measureList = $this->Measure->find('list',array('fields' => array('id', 'name'))); 
 
@@ -266,7 +260,7 @@ class DeliveriesController extends DeliveryAppController {
 
         $noPermissionSales = ' ';
 
-        $this->set(compact('noPermissionSales','driverList','helperList','productSpecification','truckList','clientUuid','deliveryScheduleId','clientsOrderUuid','scheduleInfo','deliveryData', 'quantityInfo','deliveryDataID','deliveryDetailsData', 'deliveryEdit','deliveryList','deliveryStatus', 'orderListHelper', 'clientsOrder', 'companyAddress', 'drData', 'deliveryDetailsData', 'DeliveryReceiptData', 'measureList'));
+        $this->set(compact('noPermissionSales','driverList','helperList','truckList','clientUuid','deliveryScheduleId','clientsOrderUuid','scheduleInfo','deliveryData', 'quantityInfo','deliveryDataID','deliveryDetailsData', 'deliveryEdit','deliveryList','deliveryStatus', 'orderListHelper', 'clientsOrder', 'drData', 'deliveryDetailsData', 'DeliveryReceiptData', 'measureList'));
         
     }
 
