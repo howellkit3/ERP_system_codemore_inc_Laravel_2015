@@ -841,7 +841,7 @@ class TicketingSystemsController extends TicketAppController {
             ));
          }   
         
-
+        //pr($part); exit;
 
         $formatDataSpecs = $this->ProductSpecificationDetail->findData($productUuid);
         
@@ -928,7 +928,9 @@ class TicketingSystemsController extends TicketAppController {
 
             $total = $specs['ProductSpecification']['quantity'] + $part['ProductSpecificationPart']['allowance'] ;
 
-            $view->set(compact('corrugatedJobTicket','corrugated', 'total', 'flutecombination'));
+            $allowance = $part['ProductSpecificationPart']['allowance'] ;
+
+            $view->set(compact('corrugatedJobTicket','corrugated', 'total', 'flutecombination', 'allowance'));
 
             $output = $view->render('print_process_corrugated', false);
         
