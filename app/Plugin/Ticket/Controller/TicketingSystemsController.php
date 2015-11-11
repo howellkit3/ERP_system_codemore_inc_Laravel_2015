@@ -156,10 +156,6 @@ class TicketingSystemsController extends TicketAppController {
                                                  )
                                                 ));
 
-
-        //$subProcess =  $subProcess['SubProcess'];
-
-        //set to cache in first load
         $unitData = Cache::read('unitData');
         
         if (!$unitData) {
@@ -1139,7 +1135,6 @@ class TicketingSystemsController extends TicketAppController {
 
             $this->loadModel('Ticket.PlateMakingProcess');
 
-
             $this->loadModel('Machine');
 
             $auth = $this->Session->read('Auth.User');
@@ -1179,9 +1174,6 @@ class TicketingSystemsController extends TicketAppController {
           exit();
         }
     }
-
-
-
 
     public function search_ticket($hint = null){
         
@@ -1243,5 +1235,18 @@ class TicketingSystemsController extends TicketAppController {
         }
     }
 
+    public function single_face($id = null){
+        
+        $this->loadModel('CorrugatedPaper'); 
+
+        $this->CorrugatedPaper->bind(array('ItemGroupLayer'));
+
+        $corrugatedData = $this->CorrugatedPaper->find('first',array('conditions' => array('CorrugatedPaper.id' => $id )));
+
+        $this->set(compact('corrugatedData'));
+
+        $this->render('TicketingSystems/single_face');
+
+    }
 
 }
