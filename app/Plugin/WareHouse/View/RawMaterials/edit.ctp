@@ -6,7 +6,12 @@
 
 <div style="clear:both"></div>
 
-<?php echo $this->element('ware_house_option');?>
+<?php 
+
+
+ $page = !empty($this->params['named']['page']) ? $this->params['named']['page'] : ''; 
+
+echo $this->element('ware_house_option');?>
 
 <div class="row">
     <div class="col-lg-12">
@@ -25,7 +30,7 @@
             </header>
             <div class="main-box-body clearfix">
 
-                <?php echo $this->Form->create('Item',array('url'=>(array('controller' => 'raw_materials','action' => 'edit')),'class' => 'form-horizontal'));?>
+                <?php echo $this->Form->create('Item',array('url'=>(array('controller' => 'raw_materials','action' => 'edit','page' => $page )),'class' => 'form-horizontal'));?>
 
                  <?php 
 
@@ -445,7 +450,7 @@
                                 </div>
                                 <div class="col-xs-2 col-md-2 2">
                                     <?php 
-                                        echo $this->Html->link('Cancel ', array('controller' => 'raw_materials', 'action' => 'index'),array('class' =>'btn btn-primary','escape' => false));
+                                        echo $this->Html->link('Cancel ', array('controller' => 'raw_materials', 'action' => 'index','page' => $page),array('class' =>'btn btn-primary','escape' => false));
                                     ?>
                                 </div>
                             </div>
