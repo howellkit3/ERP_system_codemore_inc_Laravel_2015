@@ -297,7 +297,7 @@ echo $this->element('ware_house_option');?>
                                                                                 'label' => false,
                                                                                 'class' => 'form-control required',
                                                                                 'empty' => '--- Select Item Group---',
-                                                                                'data-alt' => 'supplier_others'
+                                                                                'data-alt' => 'supplier_others',
                                                                         ));
                                                     ?>
                                                     <span class="help-block" style= "color:white"> &nbsp </span>
@@ -348,15 +348,15 @@ echo $this->element('ware_house_option');?>
                                         <div class="col-lg-9"> 
                                                    <?php
                                                     
-                                                    $suppliers = array_merge($suppliers,array('others' => 'Others'));
 
                                                     echo $this->Form->input('supplier', array(
-                                                                                'options' => $suppliers, 
+                                                                                'options' => $supplierList, 
                                                                                 'alt' => 'type',
                                                                                 'label' => false,
                                                                                 'class' => 'form-control select_option supplier_select',
                                                                                 'empty' => '--- Select Supplier---',
-                                                                                'data-alt' => 'supplier_others'
+                                                                                'data-alt' => 'supplier_others',
+                                                                                'default' => $this->request->data['Item']['supplier']
                                                                         ));
                                                     ?>
                                                     <span class="help-block" style= "color:white"> &nbsp </span>

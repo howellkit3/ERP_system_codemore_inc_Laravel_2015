@@ -8,7 +8,7 @@
 				</header>
 			</center>
 				
-<?php echo $this->Form->create('MachineLog',array('url' => array('controller' => 'machine_logs','action' => 'save_logs'))); ?>	
+			<?php echo $this->Form->create('MachineLog',array('url' => array('controller' => 'machine_logs','action' => 'save_logs'))); ?>	
 			<div class="main-box-body clearfix">	
 					
 					<div class="form-group">
@@ -32,8 +32,7 @@
 						</div>
 						<div class="col-lg-5">
 							<div class="form-group">
-
-	                                        <label class="col-lg-3 control-label"><span style="color:red">*</span> Good </label>
+								<label class="col-lg-3 control-label"><span style="color:red">*</span> Good </label>
 	                                        <div class="col-lg-9">
 	                                        	
 	                                            <?php echo $this->Form->input('good',
@@ -43,7 +42,7 @@
 				                                        'label' => false)); ?>
 
 	                                        </div>
-	                             </div>
+	                         </div>
 						</div>
 						<div class="col-lg-5">
 							<div class="form-group">
@@ -56,7 +55,8 @@
 				                                        'class' => 'form-control required',
 				                                        'placeholder' => '00',
 				                                        'type' => 'number',
-				                                        'label' => false)); ?>
+				                                        'label' => false));
+				                                 ?>
 				                           </div>
 	                             </div>
 						</div>
@@ -181,10 +181,9 @@
 			</div>
 
 			  <div class="modal-footer pull-left">
-                             <button type="submit" class="btn btn-primary"><i class="fa icon-save"></i> Save</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            
-                        </div>
+               <button type="submit" class="btn btn-primary"><i class="fa icon-save"></i> Save</button>
+               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
 
 				<?php echo $this->Form->end(); ?>
 		</div>

@@ -122,6 +122,9 @@ class ItemsController extends WareHouseAppController {
 		$departments = $this->Department->find('list',array('fields' => array('id','name') ,'order' => array('Department.name ASC')));
 
 		$suppliers = $this->Supplier->find('list',  array('order' => 'Supplier.name ASC'));
+
+		$suppliers['others'] = 'Others';
+		
 		//consumebles items
 
 		$this->set(compact('itemsCategory','departments','suppliers','categoryDataDropList'));
@@ -184,6 +187,8 @@ class ItemsController extends WareHouseAppController {
 		$categoryDataDropList = $this->Department->find('list',array('fields' => array('id','name') ,'order' => array('Department.name ASC')));
 
 		$suppliers = $this->Supplier->find('list',  array('order' => 'Supplier.name ASC'));
+
+		$suppliers['others'] = 'Others';
 		//consumebles items
 
 		$this->set(compact('itemsCategory','departments','suppliers','categoryDataDropList'));

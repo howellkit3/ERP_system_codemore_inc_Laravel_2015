@@ -247,10 +247,8 @@
                                         <div class="col-lg-9"> 
                                                    <?php
                                                     
-                                                    $suppliers = array_merge($suppliers,array('others' => 'Others'));
-
                                                     echo $this->Form->input('supplier', array(
-                                                                                'options' => $suppliers, 
+                                                                                'options' => $supplierList, 
                                                                                 'alt' => 'type',
                                                                                 'label' => false,
                                                                                 'class' => 'form-control select_option supplier_select',

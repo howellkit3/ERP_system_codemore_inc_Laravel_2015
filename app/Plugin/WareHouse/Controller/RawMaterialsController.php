@@ -100,10 +100,12 @@ class RawMaterialsController extends WareHouseAppController {
 
 		$departments = $this->Department->find('list',array('fields' => array('id','name') ,'order' => array('Department.name ASC')));
 
-		$suppliers = $this->Supplier->find('list',  array('order' => 'Supplier.name ASC'));
+		$supplierList = $this->Supplier->find('list',  array('order' => 'Supplier.name ASC'));
+		
+		$supplierList['others'] = 'Others';
 		//consumebles items
 
-		$this->set(compact('itemsCategory','departments','suppliers','categoryDataDropList'));
+		$this->set(compact('itemsCategory','departments','suppliers','categoryDataDropList','supplierList'));
 
 
 	}
@@ -173,8 +175,31 @@ class RawMaterialsController extends WareHouseAppController {
 			$this->request->data['Item']['created_by'] = 
 			$this->request->data['Item']['modified_by'] = $auth['id'];
 
+
+			//check if others
+			if ($this->request->data['Item']['department_id'] == 'others' ) {
+
+				$data['name'] = $this->request->data['Item']['department_id_others'];
+
+				$departmentId = $this->Department->saveDepartment($data,$auth['id']);
+
+				$this->request->data['Item']['department_id'] = $departmentId;
+			}
+			if ($this->request->data['Item']['supplier'] == 'others' ) {
+
+				$data['name'] = $this->request->data['Item']['supplier_id_others'];
+
+				$supplierId = $this->Supplier->saveSupplier($data,$auth['id']);
+
+				$this->request->data['Item']['supplier'] = $supplierId;
+			}
+
+
 		
 			if ($this->Item->save($this->request->data['Item'])) {
+
+
+
 
 
 				//check specs 
@@ -209,6 +234,8 @@ class RawMaterialsController extends WareHouseAppController {
 
 			$this->request->data = 	$this->Item->findById($id);
 
+//			pr($this->request->data);
+
 		}
 
 
@@ -218,10 +245,15 @@ class RawMaterialsController extends WareHouseAppController {
 
 		$categoryDataDropList = $this->Department->find('list',array('fields' => array('id','name') ,'order' => array('Department.name ASC')));
 
-		$suppliers = $this->Supplier->find('list',  array('order' => 'Supplier.name ASC'));
+		$supplierList = $this->Supplier->find('list',  array('order' => 'Supplier.name ASC'));
+
+
+
+		$supplierList['others'] = 'Others';
+
 		//consumebles items
 
-		$this->set(compact('itemsCategory','departments','suppliers','categoryDataDropList'));
+		$this->set(compact('itemsCategory','departments','supplierList','categoryDataDropList'));
 	}
 
 	public function delete($id = null){

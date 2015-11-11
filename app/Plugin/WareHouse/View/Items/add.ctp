@@ -80,8 +80,7 @@
 							                <div class="col-lg-9"> 
 												<?php 
 
-                                                    $categoryDataDropList = array_merge($categoryDataDropList,
-                                                        array('others' => 'Others' ));
+                                                    $categoryDataDropList['others'] = 'Others'; 
 													   
                                                        echo $this->Form->input('department_id',
 																			array( 
@@ -143,7 +142,6 @@
 						                <div class="col-lg-9"> 
 												   <?php
 					                           		
-					                           		$suppliers = array_merge($suppliers,array('others' => 'Others'));
 
 					                           		echo $this->Form->input('supplier', array(
 					                           									'options' => $suppliers, 
