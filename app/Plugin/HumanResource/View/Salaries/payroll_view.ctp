@@ -82,7 +82,7 @@ echo $this->element('payroll_options');
 
                      		echo $this->Html->link('<i class="fa fa-file-text-o fa-lg"></i> Generate Payslip','#printPayslip', array(
                          		'escape' => false,
-                         		'data-type' => 'payslip',
+                         		'data-type' => 'word',
                          		'class' => 'ble-link btn btn-primary pull-right summary-btn',
                          		'data-toggle' => 'modal',
                      		 ));
