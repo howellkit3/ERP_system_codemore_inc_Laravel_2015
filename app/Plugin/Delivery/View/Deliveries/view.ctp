@@ -251,8 +251,8 @@ $totalremaining = 0;
                     <?php  }  } } } ?>
                     &nbsp; 
                     <?php 
-
-                    if(!empty($deliveryDataList['Delivery']['company_id'])){
+                   // pr($deliveryDataList); exit;
+                    if(!empty($deliveryDataList['DeliveryReceipt']['id'])){
 
                         echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Create Gate Pass', array('controller' => 'deliveries', 'action' => 'gate_pass',$deliveryScheduleId,$clientsOrderUuid,$deliveryDataList['Delivery']['company_id'],$clientUuid),array('class' =>' btn btn-primary ','escape' => false,'title'=>'Gate Pass'));
                     }
