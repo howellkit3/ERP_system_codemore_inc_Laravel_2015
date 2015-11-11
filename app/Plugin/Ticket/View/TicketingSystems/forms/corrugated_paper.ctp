@@ -56,12 +56,17 @@
                                     'label' => false,
                                     'style' => 'text-transform:capitalize',
                                     'class' => 'form-control',
+                                    'id' => 'corrugated', 
                                     'empty' => '--Select Corrugated Paper--'
                                 ));
                             ?>
 
                         </div>
                     </div>
+
+                    <section class = "append">
+
+                    </section>
 
                     <div class="form-group">
                         <label for="inputPassword1" class="col-lg-2 control-label"> Remarks </label>

@@ -57,8 +57,8 @@
 
 	}
 
-    $words = explode(" ", $companyData['Address'][0]['address1']);
-    
+    $words = explode(" ", $clientData['Address']['address1']);
+
     if(count($words) > 3){
 
         $halfAddress = floor(count($words)/3);
@@ -105,19 +105,19 @@
         }
     }else{
 
-        $Addresspart1 = $companyData['Address'][0]['address1'];
+        $Addresspart1 = $clientData['Address']['address1'];
         $Addresspart2 = "";
         $Addresspart3 = "";
       
     }
 
     $objTpl->setActiveSheetIndex(0)
-                ->setCellValue('C7', ucwords($companyData['Company']['company_name']))
+                ->setCellValue('C7', ucwords($clientData['Company']['company_name']))
                 ->setCellValue('C8', ucwords($Addresspart1))
                 ->setCellValue('C9', ucwords($Addresspart2))
                 ->setCellValue('C10', ucwords($Addresspart3))
                 ->setCellValue('J7', date('M d, Y', strtotime($drData['Delivery']['created'])))
-                ->setCellValue('J8', $companyData['Company']['tin'])
+                ->setCellValue('J8', $clientData['Company']['tin'])
                 ->setCellValue('J9', $paymentTermData[$clientData['ClientOrder']['payment_terms']])
                 ->setCellValue('B12', $clientData['ClientOrder']['po_number'])
                 ->setCellValue('F12', ucfirst($clientData['Product']['name']))

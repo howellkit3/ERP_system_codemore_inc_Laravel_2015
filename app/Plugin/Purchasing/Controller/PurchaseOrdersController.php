@@ -512,7 +512,7 @@ class PurchaseOrdersController extends PurchasingAppController {
                     array('Supplier.name LIKE' => '%' . $hint . '%')
                       )
                     ),
-                  'limit' => 10
+                //  'limit' => 10
                   )); 
 
 		$userName = $this->User->find('list', array('fields' => array('id', 'fullname')));

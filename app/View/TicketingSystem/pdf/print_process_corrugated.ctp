@@ -116,7 +116,7 @@ Configure::write('debug',0);
 
 									?>
 									<td style = "align:right; "><?php echo $cuttingSize ?></td>
-									<td><?php  echo $specs['ProductSpecification']['quantity'] ?> + <?php  echo !empty($part['ProductSpecificationDetail']['allowance']) ? $part['ProductSpecificationDetail']['allowance'] : 0 ?> = <?php echo $total ?> </td>
+									<td><?php  echo $specs['ProductSpecification']['quantity'] ?> + <?php  echo !empty($allowance) ? $allowance : 0 ?> = <?php echo $total ?> </td>
 								</tr>
 							</table>
 					</td>
