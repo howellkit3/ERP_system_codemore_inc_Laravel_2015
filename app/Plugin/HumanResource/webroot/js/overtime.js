@@ -225,6 +225,12 @@ $(document).ready(function(){
 
     });
 
+  // $('body').on('click','#printRequest',function(e){
+
+  //       window.open($(this).attr('href'),'Print Request','width = 800,height=500');
+
+  //       e.preventDefault();
+  // });
   $('body').on('click','#selection .select_employee',function(){
 
       
