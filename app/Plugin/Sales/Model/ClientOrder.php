@@ -36,7 +36,7 @@ class ClientOrder extends AppModel {
 				'QuotationItemDetail' => array(
 					'className' => 'Sales.QuotationItemDetail',
 					'foreignKey' => false,
-					'conditions' => array('QuotationItemDetail.quotation_id = ClientOrder.quotation_id'),
+					'conditions' => array('QuotationItemDetail.id = ClientOrder.client_order_item_details_id'),
 					'dependent' => true
 				),
 				'Product' => array(
@@ -146,7 +146,8 @@ class ClientOrder extends AppModel {
 				'QuotationItemDetail' => array(
 					'className' => 'Sales.QuotationItemDetail',
 					'foreignKey' => false,
-					'conditions' => 'QuotationItemDetail.quotation_id = ClientOrder.quotation_id'
+					'conditions' => 'QuotationItemDetail.id = ClientOrder.client_order_item_details_id'
+					
 				),
 
 			)
