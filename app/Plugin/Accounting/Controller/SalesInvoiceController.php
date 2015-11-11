@@ -16,7 +16,7 @@ class SalesInvoiceController extends AccountingAppController {
 
         $this->loadModel('Delivery.Delivery');
 
-        //$this->SalesInvoice->bindInvoice();
+       // $this->SalesInvoice->bindInvoice();
 
         $limit = 10;
 
@@ -38,8 +38,6 @@ class SalesInvoiceController extends AccountingAppController {
 
         $invoiceData = $this->paginate('SalesInvoice');
 
-
-       //pr($invoiceData);exit();
         $companyName = $this->Company->find('list',array('fields' => array('id','company_name')));
 
         $deliveryNumHolder = $this->Delivery->find('list',array('fields' => array('dr_uuid','company_id')));
@@ -512,14 +510,11 @@ class SalesInvoiceController extends AccountingAppController {
 
         $userData = $this->Session->read('Auth');
 
-        $this->loadModel('Sales.ClientOrder');
+        $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
-        $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule',
-                                        'QuotationItemDetail','QuotationDetail','Product'));
+        $this->ClientOrderDeliverySchedule->bind(array('ClientOrder', 'QuotationDetail','Company', 'Product', 'Quotation', 'QuotationItemDetail', 'Company', 'Address'));
         
         $this->loadModel('Delivery.Delivery');
-
-        $this->loadModel('Sales.Company');
 
         $this->loadModel('Sales.PaymentTermHolder');
 
@@ -552,7 +547,7 @@ class SalesInvoiceController extends AccountingAppController {
 
         Cache::write('currencyData', $currencyData);
      
-        $this->Company->bind('Address');
+     // $this->Company->bind('Address');
 
         $invoiceData = $this->SalesInvoice->find('first', array(
                                             'conditions' => array('SalesInvoice.id' => $invoiceId
@@ -571,15 +566,15 @@ class SalesInvoiceController extends AccountingAppController {
                                             'conditions' => array('Delivery.dr_uuid' => $invoiceData['SalesInvoice']['dr_uuid']
                                             )));
 
-        $clientData = $this->ClientOrder->find('first', array(
+        $clientData = $this->ClientOrderDeliverySchedule->find('first', array(
                                             'conditions' => array('ClientOrder.id' => $clientsId
                                             )));
 
         
-       // pr($clientData); exit;
-        $companyData = $this->Company->find('first', array(
-                                            'conditions' => array('Company.id' => $drData['Delivery']['company_id']
-                                            )));
+        //pr($clientData); exit;
+        // $companyData = $this->Company->find('first', array(
+        //                                     'conditions' => array('Company.id' => $drData['Delivery']['company_id']
+        //                                     )));
 
     //    pr($companyData); exit;
 
