@@ -21,7 +21,6 @@
 				</tr>				
 		</table>
 		<br>
-			<br>
 		<table class="full-width border" style="border-bottom:0">
 				<tr>
 					<td style="width:430px">

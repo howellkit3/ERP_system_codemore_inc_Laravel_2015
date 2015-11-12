@@ -205,7 +205,6 @@ class OvertimesController  extends HumanResourceAppController {
 
 
 			$data = $this->Overtime->formatData($this->request->data,$auth['id']);
-
 	
 			if ($this->Overtime->save($data['Overtime'])) {
 
@@ -235,9 +234,9 @@ class OvertimesController  extends HumanResourceAppController {
 		 		
 		 		$this->redirect( array(
                              'controller' => 'overtimes', 
-                             'action' => 'view',
+                             'action' => 'edit',
                              $overtime_id,
-                             'tab' => 'view',
+                             'tab' => 'edit',
                              'plugin' => 'human_resource'
 
                         ));
@@ -364,7 +363,8 @@ class OvertimesController  extends HumanResourceAppController {
 
 		 			$this->redirect( array(
                              'controller' => 'overtimes', 
-                             'action' => 'index',
+                             'action' => 'edit',
+                             $id,
                              'tab' => 'overtimes',
                              'plugin' => 'human_resource'
 
