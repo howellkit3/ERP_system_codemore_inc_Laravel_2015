@@ -225,12 +225,12 @@ $(document).ready(function(){
 
     });
 
-  // $('body').on('click','#printRequest',function(e){
+  $('body').on('click','#printRequest',function(e){
 
-  //       window.open($(this).attr('href'),'Print Request','width = 800,height=500');
+        window.open($(this).attr('href'),'Print Request','width = 800,height=500');
 
-  //       e.preventDefault();
-  // });
+        e.preventDefault();
+  });
   $('body').on('click','#selection .select_employee',function(){
 
       
@@ -239,9 +239,9 @@ $(document).ready(function(){
 
                 $count = $('#resultList .alert-success').size();
 
-               $(this).parent().find('.select_employee.attendance').attr('name','data[Attendance][id]['+ $count +']');
+                $(this).parent().find('.select_employee.attendance').attr('name','data[Attendance][id]['+ $count +']');
 
-               $(this).parent().find('.select_employee.employee').attr('name','data[Employee][id]['+ $count +']');
+                $(this).parent().find('.select_employee.employee').attr('Ename','data[mployee][id]['+ $count +']').attr('disabled',false);
 
                 $clone = $(this).parent().html();
              //  console.log( $clone );
