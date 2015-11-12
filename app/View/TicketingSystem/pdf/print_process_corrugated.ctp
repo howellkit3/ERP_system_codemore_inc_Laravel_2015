@@ -108,13 +108,13 @@ Configure::write('debug',0);
 								<tr>
 									<?php 
 
-										$size1 = !empty($specs['ProductSpecification']['size1']) ? $specs['ProductSpecification']['size1'] . " mm " : " ";
-										$size2 = !empty($specs['ProductSpecification']['size2']) ? " x " . $specs['ProductSpecification']['size2'] . " mm " : " ";
-										$size3 = !empty($specs['ProductSpecification']['size3']) ? " x " . $specs['ProductSpecification']['size3'] . " mm " : " ";
+										// $size1 = !empty($specs['ProductSpecification']['size1']) ? $specs['ProductSpecification']['size1'] . " mm " : " ";
+										// $size2 = !empty($specs['ProductSpecification']['size2']) ? " x " . $specs['ProductSpecification']['size2'] . " mm " : " ";
+										// $size3 = !empty($specs['ProductSpecification']['size3']) ? " x " . $specs['ProductSpecification']['size3'] . " mm " : " ";
 
-										$cuttingSize = $size1 . " " . $size2 . " " . $size3;
+										// $cuttingSize = $size1 . " " . $size2 . " " . $size3;
 
-										//$cuttingSize = $size1 . " x " . $size2;
+										$cuttingSize = $size1 . " x " . $size2;
 
 									?>
 									<td style = "align:right; "><?php echo $cuttingSize ?></td>
