@@ -22,9 +22,9 @@
         <?php echo $formatDataSpecs['ProductSpecificationPart']['size1']?> x
         <?php echo $formatDataSpecs['ProductSpecificationPart']['size2']?> >>
         <?php echo $outs ?> Outs >>
-       <?php echo $formatDataSpecs['ProductSpecificationPart']['paper_quantity'] ?>
-       <?php //$quantityOut = $specs['ProductSpecification']['quantity'] / $outs; ?>
-         <?php //echo round($quantityOut) ?> 
+       <?php //echo $formatDataSpecs['ProductSpecificationPart']['paper_quantity'] ?>
+       <?php $quantityOut = $formatDataSpecs['ProductSpecificationPart']['quantity'] / $outs; ?>
+         <?php echo round($quantityOut) ?> 
         +
         <?php 
 
