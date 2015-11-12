@@ -315,9 +315,7 @@ class TicketingSystemsController extends TicketAppController {
     }
 
 
-    public function save_job_ticket_process() {
-
-       // Configure::write('debug',2);
+    public function save_job_ticket_process($productId = null) {
 
         $this->loadModel('Ticket.WoodMoldJobTicket');
 
@@ -373,7 +371,6 @@ class TicketingSystemsController extends TicketAppController {
 
                         $set = $this->$model->read(null,$lastID);
 
-
                         $this->redirect(array(
                             'controller' => 'ticketing_systems', 
                             'action' => 'print_process',
@@ -382,7 +379,8 @@ class TicketingSystemsController extends TicketAppController {
                             $data[$model]['job_ticket_id'],
                             $model,
                             $lastID,
-                            $data[$model]['ticket_id']    
+                            $data[$model]['ticket_id'],
+                            $productId    
                             ));
                        
                     }
@@ -755,7 +753,7 @@ class TicketingSystemsController extends TicketAppController {
     }
 
 
-    public function print_process($processId = null,$productUuid = null,$ticketUuid = null, $model = null , $lastId = null,$ticketId = null) {
+    public function print_process($processId = null,$productUuid = null,$ticketUuid = null, $model = null , $lastId = null,$ticketId = null, $productId = null) {
 
         if (!empty($processId) && !empty($productUuid)) {
 
@@ -808,13 +806,16 @@ class TicketingSystemsController extends TicketAppController {
 
         //find process part
 
+        //pr($productUuid); exit;
+
         $processCond = array(
-                    'ProductSpecificationDetail.product_id' => $productUuid,
+                    'ProductSpecificationDetail.foreign_key' => $productId,
                     'ProductSpecificationDetail.model' => 'Part',
                    
             );
 
         if (!empty($this->params['named']['productId'])) {
+
              $processCond = array_merge(
                 $processCond,
                     array(
@@ -832,18 +833,18 @@ class TicketingSystemsController extends TicketAppController {
 
         $part = array();
          
-         if (!empty($processData['ProductSpecificationDetail']['foreign_key'])) {
+        if (!empty($processData['ProductSpecificationDetail']['foreign_key'])) {
 
             $part = $this->ProductSpecificationPart->find('first',array(
                 'conditions' => array(
                         'ProductSpecificationPart.id' => $processData['ProductSpecificationDetail']['foreign_key']
                 )
             ));
-         }   
+        }   
         
-        //pr($part); exit;
-
         $formatDataSpecs = $this->ProductSpecificationDetail->findData($productUuid);
+
+       // pr($formatDataSpecs); exit;
         
         $this->loadModel('SubProcess');
 
@@ -926,6 +927,8 @@ class TicketingSystemsController extends TicketAppController {
 
                  }
             }
+
+          //  pr($part); exit;
 
             $total = $specs['ProductSpecification']['quantity'] + $part['ProductSpecificationPart']['allowance'] ;
 

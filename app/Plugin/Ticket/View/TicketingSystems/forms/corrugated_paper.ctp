@@ -1,4 +1,10 @@
-   <?php echo $this->Form->create('JobTicketProcess',array('url'=>(array('controller' => 'ticketing_systems','action' => 'save_job_ticket_process','type' => 'corrugated')),'class' => 'form-horizontal'));?>
+    <?php 
+
+        $productID = $parameter['product'];
+
+    ?>
+
+   <?php echo $this->Form->create('JobTicketProcess',array('url'=>(array('controller' => 'ticketing_systems','action' => 'save_job_ticket_process',$productID,'type' => 'corrugated')),'class' => 'form-horizontal'));?>
                
 
 <!--                     <div class="form-group">
